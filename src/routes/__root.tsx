@@ -89,6 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla i HP-frågor mot andra studenter. ELO-ranking, realtidsmatcher, alla delprov.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "HP Kampen — Tävla i Högskoleprovet" },
+      { name: "description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
+      { property: "og:description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
+      { name: "twitter:description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0fa3d851-8258-480c-ba74-bedc4d2e872f/id-preview-242ed19f--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778453183570.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0fa3d851-8258-480c-ba74-bedc4d2e872f/id-preview-242ed19f--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778453183570.png" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
