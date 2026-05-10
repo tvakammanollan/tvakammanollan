@@ -72,6 +72,7 @@ function MatchPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [waitingForOpp, setWaitingForOpp] = useState(false);
   const [oppSecondsLeft, setOppSecondsLeft] = useState(30);
+  const [oppProgress, setOppProgress] = useState(0);
   const submittedRef = useRef(false);
 
   // Load match + questions
