@@ -369,7 +369,7 @@ function MatchPage() {
         <div className="mx-auto max-w-3xl px-4 pb-2">
           <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
             <span className="truncate">{opponentName || "Motståndare"}</span>
-            <span className="tabular-nums">{Math.round(oppProgress * 100)}%</span>
+            <span className="tabular-nums">{Math.round(oppProgress * 8)}/8</span>
           </div>
           <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
             <div
