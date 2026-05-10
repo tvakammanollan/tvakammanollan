@@ -312,6 +312,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_leaderboard: {
+        Args: { _match_type: string }
+        Returns: {
+          elo: number
+          games_played: number
+          losses: number
+          rank: number
+          user_id: string
+          username: string
+          wins: number
+        }[]
+      }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
         Returns: boolean
