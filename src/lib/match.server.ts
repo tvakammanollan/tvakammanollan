@@ -222,33 +222,34 @@ export async function processMatchResultServer(matchId: string) {
   const { data: p1User } = await supabaseAdmin.from("users").select("*").eq("id", match.player1_id).single();
   if (!p1User) throw new Error("p1 missing");
 
-  const p1Elo = (p1User as Record<string, number>)[eloField] ?? 1000;
-  const p1Peak = (p1User as Record<string, number>)[peakField] ?? 1000;
+  const p1Any = p1User as unknown as Record<string, number>;
+  const p1Elo = p1Any[eloField] ?? 1000;
+  const p1Peak = p1Any[peakField] ?? 1000;
 
   let p2EloOld = 1000;
-  let p2User: Record<string, unknown> | null = null;
+  let p2Any: Record<string, number> | null = null;
   if (match.is_bot_match) {
     p2EloOld = match.bot_elo ?? 1000;
   } else {
+    if (!match.player2_id) throw new Error("p2 id missing");
     const { data } = await supabaseAdmin.from("users").select("*").eq("id", match.player2_id).single();
-    p2User = data as Record<string, unknown> | null;
-    if (!p2User) throw new Error("p2 missing");
-    p2EloOld = (p2User[eloField] as number) ?? 1000;
+    if (!data) throw new Error("p2 missing");
+    p2Any = data as unknown as Record<string, number>;
+    p2EloOld = p2Any[eloField] ?? 1000;
   }
 
   const p1NewElo = calcNewElo(p1Elo, p2EloOld, r1);
   const p1Change = p1NewElo - p1Elo;
 
-  await supabaseAdmin
-    .from("users")
-    .update({
-      [eloField]: p1NewElo,
-      [peakField]: Math.max(p1Peak, p1NewElo),
-      games_played: ((p1User as Record<string, number>).games_played ?? 0) + 1,
-      wins: ((p1User as Record<string, number>).wins ?? 0) + (r1 === 1 ? 1 : 0),
-      losses: ((p1User as Record<string, number>).losses ?? 0) + (r1 === 0 ? 1 : 0),
-    })
-    .eq("id", match.player1_id);
+  const p1Update: Record<string, number> = {
+    [eloField]: p1NewElo,
+    [peakField]: Math.max(p1Peak, p1NewElo),
+    games_played: (p1Any.games_played ?? 0) + 1,
+    wins: (p1Any.wins ?? 0) + (r1 === 1 ? 1 : 0),
+    losses: (p1Any.losses ?? 0) + (r1 === 0 ? 1 : 0),
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await supabaseAdmin.from("users").update(p1Update as any).eq("id", match.player1_id);
 
   await supabaseAdmin.from("elo_history").insert({
     user_id: match.player1_id,
@@ -259,22 +260,21 @@ export async function processMatchResultServer(matchId: string) {
     elo_change: p1Change,
   });
 
-  if (!match.is_bot_match && p2User && match.player2_id) {
-    const p2Old = (p2User[eloField] as number) ?? 1000;
-    const p2Peak = (p2User[peakField] as number) ?? 1000;
+  if (!match.is_bot_match && p2Any && match.player2_id) {
+    const p2Old = p2Any[eloField] ?? 1000;
+    const p2Peak = p2Any[peakField] ?? 1000;
     const p2NewElo = calcNewElo(p2Old, p1Elo, r2);
     const p2Change = p2NewElo - p2Old;
 
-    await supabaseAdmin
-      .from("users")
-      .update({
-        [eloField]: p2NewElo,
-        [peakField]: Math.max(p2Peak, p2NewElo),
-        games_played: ((p2User.games_played as number) ?? 0) + 1,
-        wins: ((p2User.wins as number) ?? 0) + (r2 === 1 ? 1 : 0),
-        losses: ((p2User.losses as number) ?? 0) + (r2 === 0 ? 1 : 0),
-      })
-      .eq("id", match.player2_id);
+    const p2Update: Record<string, number> = {
+      [eloField]: p2NewElo,
+      [peakField]: Math.max(p2Peak, p2NewElo),
+      games_played: (p2Any.games_played ?? 0) + 1,
+      wins: (p2Any.wins ?? 0) + (r2 === 1 ? 1 : 0),
+      losses: (p2Any.losses ?? 0) + (r2 === 0 ? 1 : 0),
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await supabaseAdmin.from("users").update(p2Update as any).eq("id", match.player2_id);
 
     await supabaseAdmin.from("elo_history").insert({
       user_id: match.player2_id,
