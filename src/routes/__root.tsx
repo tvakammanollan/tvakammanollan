@@ -127,7 +127,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main>
+        <main className="animate-fade-up">
           <Outlet />
         </main>
         <Toaster richColors position="top-center" />
