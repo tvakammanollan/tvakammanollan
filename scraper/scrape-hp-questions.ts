@@ -87,12 +87,13 @@ async function listTerminer(): Promise<Termin[]> {
 /* ------------------------------------------------------------------ */
 /* Facit-parser: 4 kolumner (pp1, pp2, pp4, pp5)                        */
 /* ------------------------------------------------------------------ */
-function parseFacit(text: string): Record<Pass, Map<number, string>> {
+function parseFacitOldFourCol(text: string): Record<Pass, Map<number, string>> | null {
   const empty = (): Map<number, string> => new Map();
   const result: Record<Pass, Map<number, string>> = {
     verb1: empty(), kvant1: empty(), verb2: empty(), kvant2: empty(),
   };
   const passByCol: Pass[] = ["verb1", "kvant1", "verb2", "kvant2"];
+  let hits = 0;
   for (const line of text.split(/\r?\n/)) {
     const pairs = [...line.matchAll(/\b(\d{1,2})\s+([A-E])\b/g)];
     if (pairs.length < 2) continue;
@@ -102,8 +103,99 @@ function parseFacit(text: string): Record<Pass, Map<number, string>> {
     pairs.forEach((p, i) => {
       if (i < 4) result[passByCol[i]].set(firstNum, p[2]);
     });
+    hits++;
   }
+  return hits >= 10 ? result : null;
+}
+
+function parseFacitNewSections(text: string): Record<Pass, Map<number, string>> {
+  const empty = (): Map<number, string> => new Map();
+  const result: Record<Pass, Map<number, string>> = {
+    verb1: empty(), kvant1: empty(), verb2: empty(), kvant2: empty(),
+  };
+
+  type Section = { kind: "verbal" | "kvant"; pairs: Map<number, string> };
+  const sections: Section[] = [];
+  let current: Section | null = null;
+
+  // Buffrar för column-stil: när vi ser stackade siffror följt av stackade bokstäver
+  let pendingNums: number[] = [];
+  let pendingLetters: string[] = [];
+
+  const flushColumn = () => {
+    if (!current) return;
+    const n = Math.min(pendingNums.length, pendingLetters.length);
+    for (let i = 0; i < n; i++) {
+      if (!current.pairs.has(pendingNums[i])) {
+        current.pairs.set(pendingNums[i], pendingLetters[i]);
+      }
+    }
+    pendingNums = [];
+    pendingLetters = [];
+  };
+
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    // Sektionsheader
+    const isVerbal = /verbal\s*del/i.test(line);
+    const isKvant = /kvantitativ\s*del/i.test(line);
+    if (isVerbal || isKvant) {
+      flushColumn();
+      current = { kind: isVerbal ? "verbal" : "kvant", pairs: new Map() };
+      sections.push(current);
+      continue;
+    }
+    if (!current) continue;
+
+    // Rad med pair "12\tA" eller "12 A"
+    const pair = line.match(/^(\d{1,2})\s+([A-E])$/);
+    if (pair) {
+      flushColumn();
+      const n = Number(pair[1]);
+      if (n >= 1 && n <= 40 && !current.pairs.has(n)) {
+        current.pairs.set(n, pair[2]);
+      }
+      continue;
+    }
+
+    // Rad med endast siffra
+    const numOnly = line.match(/^(\d{1,2})$/);
+    if (numOnly) {
+      const n = Number(numOnly[1]);
+      if (n >= 1 && n <= 40) {
+        // Om bokstäver redan börjat samlas, töm först
+        if (pendingLetters.length > 0) flushColumn();
+        pendingNums.push(n);
+      }
+      continue;
+    }
+
+    // Rad med endast bokstav
+    const letOnly = line.match(/^([A-E])$/);
+    if (letOnly) {
+      pendingLetters.push(letOnly[1]);
+      continue;
+    }
+
+    // Övriga rader (rubriker, brus) → ignorera men flusha column om vi har data
+    if (pendingLetters.length > 0 && pendingNums.length > 0) flushColumn();
+  }
+  flushColumn();
+
+  // Tilldela: 1:a verbal-sektion → verb1, 2:a → verb2; samma för kvant
+  const verbal = sections.filter((s) => s.kind === "verbal");
+  const kvant = sections.filter((s) => s.kind === "kvant");
+  if (verbal[0]) result.verb1 = verbal[0].pairs;
+  if (verbal[1]) result.verb2 = verbal[1].pairs;
+  if (kvant[0]) result.kvant1 = kvant[0].pairs;
+  if (kvant[1]) result.kvant2 = kvant[1].pairs;
   return result;
+}
+
+function parseFacit(text: string): Record<Pass, Map<number, string>> {
+  return parseFacitOldFourCol(text) ?? parseFacitNewSections(text);
 }
 
 /* ------------------------------------------------------------------ */
