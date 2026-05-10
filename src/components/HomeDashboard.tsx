@@ -15,10 +15,10 @@ export function HomeDashboard() {
   if (!user || !profile) {
     return (
       <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12" aria-busy="true">
-        <div className="h-48 animate-pulse rounded-2xl bg-muted" />
+        <div className="skeleton-shimmer h-48 rounded-2xl" />
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="h-40 animate-pulse rounded-2xl bg-muted" />
-          <div className="h-40 animate-pulse rounded-2xl bg-muted" />
+          <div className="skeleton-shimmer h-72 rounded-2xl" />
+          <div className="skeleton-shimmer h-72 rounded-2xl" />
         </div>
       </div>
     );
