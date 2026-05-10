@@ -173,15 +173,18 @@ function MatchPage() {
     const isCorrect = choice !== null && choice === q.correct_answer;
     await supabase
       .from("match_answers")
-      .insert({
-        match_id: matchId,
-        user_id: user.id,
-        question_id: qId,
-        selected_answer: choice,
-        is_correct: isCorrect,
-      })
+      .upsert(
+        {
+          match_id: matchId,
+          user_id: user.id,
+          question_id: qId,
+          selected_answer: choice,
+          is_correct: isCorrect,
+        },
+        { onConflict: "match_id,user_id,question_id" },
+      )
       .then(({ error }) => {
-        if (error && !String(error.message).includes("duplicate")) {
+        if (error) {
           console.error("answer save failed", error);
         }
       });
