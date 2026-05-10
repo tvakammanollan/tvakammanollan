@@ -112,14 +112,17 @@ function StatChip({
     accent === "primary"
       ? "text-primary"
       : accent === "gold"
-      ? "text-gold-foreground"
+      ? "text-[#c49a0e]"
       : "text-foreground";
   return (
-    <div className="rounded-xl border border-border bg-background/60 px-3 py-2.5">
+    <div
+      className="rounded-xl border border-l-4 border-border border-l-[#1a5c3a] bg-white px-3 py-2.5"
+      style={{ boxShadow: "var(--shadow-sm)" }}
+    >
       <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
         {label}
       </div>
-      <div className={`mt-0.5 text-xl font-semibold tabular-nums ${valueColor}`}>
+      <div className={`mt-0.5 text-2xl font-semibold tabular-nums ${valueColor}`}>
         {value}
       </div>
     </div>
@@ -144,57 +147,88 @@ function BattleCard({
   const isDark = variant === "dark";
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-elevated ${
+      onClick={onStart}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onStart();
+        }
+      }}
+      className={`relative flex min-h-[260px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-6 transition-all duration-200 ease-out hover:-translate-y-1 sm:min-h-[280px] ${
         isDark
-          ? "border-secondary/30 bg-secondary text-secondary-foreground"
-          : "border-primary/30 bg-card"
+          ? "border-[#1a5c3a]/40 bg-[#1a5c3a] text-white"
+          : "border-border bg-white"
       }`}
+      style={{
+        boxShadow: "var(--shadow-md)",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-lg)")}
+      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
     >
-      <div className="flex items-start justify-between">
+      {/* Pattern overlay */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 ${isDark ? "bg-diag" : "bg-dots"}`}
+      />
+
+      <div className="relative flex items-start justify-between">
         <div
           className={`flex h-12 w-12 items-center justify-center rounded-xl ${
-            isDark ? "bg-gold/20 text-gold" : "bg-primary text-primary-foreground"
+            isDark ? "bg-[#d4a017]/20 text-[#d4a017]" : "bg-[#e8f2ec] text-[#1a5c3a]"
           }`}
         >
           {icon}
         </div>
         <Trophy
-          className={`h-5 w-5 ${isDark ? "text-gold/60" : "text-muted-foreground/40"}`}
+          className={`h-5 w-5 ${isDark ? "text-[#d4a017]/70" : "text-muted-foreground/40"}`}
         />
       </div>
 
       <h3
-        className="mt-4 text-2xl font-semibold"
-        style={{ fontFamily: "var(--font-display)" }}
+        className="relative mt-4 text-2xl font-semibold"
+        style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
       >
         {title}
       </h3>
       <p
-        className={`mt-1 text-xs uppercase tracking-[0.18em] ${
-          isDark ? "text-secondary-foreground/60" : "text-muted-foreground"
+        className={`relative mt-1 text-xs uppercase tracking-[0.18em] ${
+          isDark ? "text-white/60" : "text-muted-foreground"
         }`}
       >
         {subtitle}
       </p>
 
-      <div className="mt-5 flex items-end justify-between gap-3">
-        <div>
-          <div
-            className={`text-[11px] uppercase tracking-wider ${
-              isDark ? "text-secondary-foreground/60" : "text-muted-foreground"
-            }`}
-          >
-            Din ELO
+      <div className="relative mt-auto pt-6">
+        <div className="mb-4 flex items-end justify-between gap-3">
+          <div>
+            <div
+              className={`text-[11px] uppercase tracking-wider ${
+                isDark ? "text-white/60" : "text-muted-foreground"
+              }`}
+            >
+              Din ELO
+            </div>
+            <div
+              className={`text-2xl font-semibold tabular-nums ${
+                isDark ? "text-[#d4a017]" : "text-[#c49a0e]"
+              }`}
+            >
+              {elo}
+            </div>
           </div>
-          <div className="text-3xl font-semibold tabular-nums">{elo}</div>
         </div>
         <Button
-          onClick={onStart}
-          className={
+          onClick={(e) => {
+            e.stopPropagation();
+            onStart();
+          }}
+          className={`w-full ${
             isDark
-              ? "bg-gold text-gold-foreground hover:bg-gold/90"
-              : ""
-          }
+              ? "bg-[#d4a017] text-[#1a1a1a] hover:bg-[#c49a0e]"
+              : "bg-[#1a5c3a] text-white hover:bg-[#154d31]"
+          }`}
         >
           Starta Battle
         </Button>
