@@ -277,10 +277,13 @@ function ResultPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       {/* Banner */}
-      <div className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}>
-        <Icon className="mx-auto h-14 w-14" />
+      <div
+        className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
+        style={{ animationDelay: "60ms" }}
+      >
+        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#1a5c3a]" : ""}`} />
         <h1
-          className="mt-3 text-3xl font-bold sm:text-4xl"
+          className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
           {verdict}
