@@ -92,22 +92,82 @@ function parseFacit(text: string): Record<Pass, Map<number, string>> {
   const result: Record<Pass, Map<number, string>> = {
     verb1: empty(), kvant1: empty(), verb2: empty(), kvant2: empty(),
   };
-  const passByCol: Pass[] = ["verb1", "kvant1", "verb2", "kvant2"];
 
-  for (const line of text.split(/\r?\n/)) {
-    // Hitta alla (nummer, bokstav)-par på raden
-    const pairs = [...line.matchAll(/\b(\d{1,2})\s+([A-E])\b/g)];
-    if (pairs.length === 0) continue;
-    // Endast rader där alla par har samma frågenummer (eller minst 2 par)
-    if (pairs.length < 2) continue;
-    const firstNum = Number(pairs[0][1]);
-    const allSame = pairs.every((p) => Number(p[1]) === firstNum);
-    if (!allSame) continue;
-    if (firstNum < 1 || firstNum > 40) continue;
-    pairs.forEach((p, i) => {
-      if (i < 4) result[passByCol[i]].set(firstNum, p[2]);
+  // Detektera format: gammalt = ≥10 rader med 4 (num, letter)-par på samma rad
+  const fourCol = (text.match(/(\b\d{1,2}\s+[A-E]\b\s+){3,}\b\d{1,2}\s+[A-E]\b/g) || []).length;
+
+  if (fourCol >= 10) {
+    // Gammalt format (vt-2024 och äldre): 4 kolumner pp1, pp2, pp4, pp5
+    const passByCol: Pass[] = ["verb1", "kvant1", "verb2", "kvant2"];
+    for (const line of text.split(/\r?\n/)) {
+      const pairs = [...line.matchAll(/\b(\d{1,2})\s+([A-E])\b/g)];
+      if (pairs.length < 2) continue;
+      const firstNum = Number(pairs[0][1]);
+      if (!pairs.every((p) => Number(p[1]) === firstNum)) continue;
+      if (firstNum < 1 || firstNum > 40) continue;
+      pairs.forEach((p, i) => {
+        if (i < 4) result[passByCol[i]].set(firstNum, p[2]);
+      });
+    }
+    return result;
+  }
+
+  // Nytt format (host-2018 → host-2022): sektioner per provpass.
+  // Sektionsstart: "Provpass N" eller "Verbal del" / "Kvantitativ del".
+  // Inom varje sektion finns 40 frågor (1-40) följda av 40 svar (A-E),
+  // antingen som par på samma rad eller som två kolumner (siffrorna stackade
+  // sen bokstäverna stackade).
+  const sectionRe = /(Verbal del|Kvantitativ del)/gi;
+  const indices: { kind: "verbal" | "kvant"; start: number }[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = sectionRe.exec(text)) !== null) {
+    indices.push({
+      kind: /verbal/i.test(m[1]) ? "verbal" : "kvant",
+      start: m.index,
     });
   }
+  // Bygg sektionsblock
+  const sections = indices.map((s, i) => ({
+    kind: s.kind,
+    body: text.slice(s.start, indices[i + 1]?.start ?? text.length),
+  }));
+
+  // Plocka pairs ur varje sektion
+  const verbalSections: Map<number, string>[] = [];
+  const kvantSections: Map<number, string>[] = [];
+  for (const sec of sections) {
+    const map = new Map<number, string>();
+    // 1) Same-line pairs
+    for (const p of sec.body.matchAll(/\b(\d{1,2})\s+([A-E])\b/g)) {
+      const n = Number(p[1]);
+      if (n >= 1 && n <= 40 && !map.has(n)) map.set(n, p[2]);
+    }
+    // 2) Om vi saknar nummer, försök column-stil (alla siffror, sen alla bokstäver)
+    if (map.size < 40) {
+      const numbers = [...sec.body.matchAll(/(?<![A-Za-z0-9])(\d{1,2})(?![A-Za-z0-9])/g)]
+        .map((x) => Number(x[1])).filter((n) => n >= 1 && n <= 40);
+      const letters = [...sec.body.matchAll(/(?<![A-Za-z])([A-E])(?![A-Za-z])/g)]
+        .map((x) => x[1]);
+      // Plocka första 40 unika nummer i ordning
+      const seen = new Set<number>();
+      const uniqNums: number[] = [];
+      for (const n of numbers) {
+        if (!seen.has(n)) { seen.add(n); uniqNums.push(n); }
+        if (uniqNums.length === 40) break;
+      }
+      // Zip
+      for (let i = 0; i < Math.min(uniqNums.length, letters.length); i++) {
+        if (!map.has(uniqNums[i])) map.set(uniqNums[i], letters[i]);
+      }
+    }
+    if (map.size > 0) {
+      (sec.kind === "verbal" ? verbalSections : kvantSections).push(map);
+    }
+  }
+  if (verbalSections[0]) result.verb1 = verbalSections[0];
+  if (verbalSections[1]) result.verb2 = verbalSections[1];
+  if (kvantSections[0]) result.kvant1 = kvantSections[0];
+  if (kvantSections[1]) result.kvant2 = kvantSections[1];
   return result;
 }
 
