@@ -54,6 +54,7 @@ interface MatchRow {
   is_bot_match: boolean;
   bot_elo: number | null;
   status: string;
+  created_at: string;
 }
 
 function MatchPage() {
@@ -73,6 +74,7 @@ function MatchPage() {
   const [waitingForOpp, setWaitingForOpp] = useState(false);
   const [oppSecondsLeft, setOppSecondsLeft] = useState(30);
   const [oppProgress, setOppProgress] = useState(0);
+  const [reconnecting, setReconnecting] = useState(false);
   const submittedRef = useRef(false);
 
   // Load match + questions
@@ -152,15 +154,10 @@ function MatchPage() {
     };
   }, [matchId, user, authLoading, navigate]);
 
-  // Timer + fake opponent progress
+  // Timer + fake opponent progress (timer is server-truth: created_at + 480s)
   useEffect(() => {
     if (!match) return;
-    const key = `match-start-${matchId}`;
-    let start = Number(sessionStorage.getItem(key) ?? 0);
-    if (!start) {
-      start = Date.now();
-      sessionStorage.setItem(key, String(start));
-    }
+    const start = new Date(match.created_at).getTime();
     // Deterministic fake opponent: 8 question-jumps with varied delays
     let h = 0;
     for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
@@ -168,7 +165,6 @@ function MatchPage() {
       const x = Math.sin(h + i * 9301) * 10000;
       return x - Math.floor(x);
     };
-    // Per-question think time (seconds) – varied so it feels human
     const perQ = Array.from({ length: 8 }, (_, i) => 18 + Math.floor(rand(i) * 55));
     const cumulative = perQ.reduce<number[]>((acc, t) => {
       acc.push((acc[acc.length - 1] ?? 0) + t);
@@ -178,7 +174,6 @@ function MatchPage() {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
       setSecondsLeft(left);
-      // Count how many fake-answers the opponent has "submitted"
       let answered = 0;
       for (const t of cumulative) if (elapsed >= t) answered++;
       setOppProgress(answered / 8);
@@ -254,7 +249,6 @@ function MatchPage() {
         }
       }
       const res = await submitFn({ data: { matchId } });
-      sessionStorage.removeItem(`match-start-${matchId}`);
       // If processed (bot match), go straight to result
       const r = res as { result?: { ok?: boolean; waiting?: boolean } };
       if (r.result?.ok) {
@@ -272,25 +266,54 @@ function MatchPage() {
     }
   };
 
-  // Wait for opponent (private)
+  // Wait for opponent (private) — with exponential-backoff reconnect
   useEffect(() => {
     if (!waitingForOpp) return;
     let opp = 30;
     setOppSecondsLeft(opp);
-    const channel = supabase
-      .channel(`match-${matchId}`)
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
-        (payload) => {
+
+    let attempts = 0;
+    let currentChannel: ReturnType<typeof supabase.channel> | null = null;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    let cancelled = false;
+
+    const handleUpdate = (payload: { new: { status?: string } }) => {
+      if (payload.new?.status === "finished") {
+        navigate({ to: "/result/$matchId", params: { matchId } });
+      }
+    };
+
+    const connect = () => {
+      if (cancelled) return;
+      const ch = supabase
+        .channel(`match-${matchId}-${attempts}`)
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const row = payload.new as any;
-          if (row.status === "finished") {
-            navigate({ to: "/result/$matchId", params: { matchId } });
+          (p) => handleUpdate(p as any),
+        )
+        .subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            attempts = 0;
+            setReconnecting(false);
+          } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+            if (cancelled) return;
+            setReconnecting(true);
+            if (attempts < 5) {
+              const delay = Math.min(16000, 1000 * Math.pow(2, attempts));
+              attempts += 1;
+              retryTimer = setTimeout(() => {
+                void supabase.removeChannel(ch);
+                connect();
+              }, delay);
+            }
           }
-        },
-      )
-      .subscribe();
+        });
+      currentChannel = ch;
+    };
+    connect();
+
     const id = setInterval(() => {
       opp -= 1;
       setOppSecondsLeft(opp);
@@ -299,9 +322,12 @@ function MatchPage() {
         navigate({ to: "/result/$matchId", params: { matchId } });
       }
     }, 1000);
+
     return () => {
+      cancelled = true;
       clearInterval(id);
-      void supabase.removeChannel(channel);
+      if (retryTimer) clearTimeout(retryTimer);
+      if (currentChannel) void supabase.removeChannel(currentChannel);
     };
   }, [waitingForOpp, matchId, navigate]);
 
@@ -327,6 +353,15 @@ function MatchPage() {
   if (waitingForOpp) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
+        {reconnecting && (
+          <div
+            className="w-full rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            role="status"
+            aria-live="polite"
+          >
+            Anslutningen bröts – försöker återansluta…
+          </div>
+        )}
         <h1 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
           Du har lämnat in.
         </h1>
@@ -411,7 +446,7 @@ function MatchPage() {
           <h2 className="mb-5 whitespace-pre-wrap text-lg font-medium leading-snug">
             {currentQ.question_text}
           </h2>
-          <div className="grid gap-2">
+          <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
             {currentQ.options.map((opt, i) => {
               const letter = optionLetters[i] ?? String(i + 1);
               const isSelected = choice === letter || choice === opt;
@@ -419,8 +454,11 @@ function MatchPage() {
                 <button
                   key={i}
                   type="button"
+                  role="radio"
+                  aria-checked={isSelected}
+                  aria-label={`Alternativ ${letter}: ${opt}`}
                   onClick={() => selectAnswer(currentQ.id, letter)}
-                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition ${
+                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                     isSelected
                       ? "border-primary bg-primary/10 text-foreground"
                       : "border-border bg-background hover:border-primary/40"

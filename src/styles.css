@@ -102,3 +102,14 @@
     letter-spacing: -0.01em;
   }
 }
+
+@layer base {
+  :where(button, a, [role="button"], [role="radio"], input, select, textarea):focus-visible {
+    outline: 2px solid #1a5c3a;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  [aria-busy="true"] {
+    cursor: progress;
+  }
+}
