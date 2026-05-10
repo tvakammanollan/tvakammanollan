@@ -24,6 +24,18 @@ export const Route = createFileRoute("/match/$matchId")({
 
 const TOTAL_SECONDS = 8 * 60;
 
+const FAKE_NAMES = [
+  "linnea_92", "oskarH", "mattevurm", "noa.k", "elsa_w", "viktorL",
+  "alicia.s", "hugo_b", "saga.m", "ebba.n", "leo_99", "moa_r",
+  "wilmaP", "edvin.t", "felicia_k", "axel.j",
+];
+
+function pickFakeName(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
+}
+
 interface QuestionRow {
   id: string;
   question_text: string;
@@ -60,6 +72,7 @@ function MatchPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [waitingForOpp, setWaitingForOpp] = useState(false);
   const [oppSecondsLeft, setOppSecondsLeft] = useState(30);
+  const [oppProgress, setOppProgress] = useState(0);
   const submittedRef = useRef(false);
 
   // Load match + questions
@@ -84,9 +97,9 @@ function MatchPage() {
       }
       setMatch(m as MatchRow);
 
-      // Opponent name
+      // Opponent name (hide bot identity)
       if ((m as MatchRow).is_bot_match) {
-        setOpponentName(`Bot (ELO ${(m as MatchRow).bot_elo ?? "?"})`);
+        setOpponentName(pickFakeName((m as MatchRow).id));
       } else {
         const oppId =
           (m as MatchRow).player1_id === user.id
@@ -139,7 +152,7 @@ function MatchPage() {
     };
   }, [matchId, user, authLoading, navigate]);
 
-  // Timer
+  // Timer + fake opponent progress
   useEffect(() => {
     if (!match) return;
     const key = `match-start-${matchId}`;
@@ -148,10 +161,18 @@ function MatchPage() {
       start = Date.now();
       sessionStorage.setItem(key, String(start));
     }
+    // Deterministic fake opponent total time (3.5–7 min)
+    let h = 0;
+    for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
+    const oppTotal = 210 + (Math.abs(h) % 210); // seconds
     const tick = () => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
       setSecondsLeft(left);
+      // Smoother fake progress with mild jitter
+      const base = Math.min(0.98, elapsed / oppTotal);
+      const jitter = (Math.sin(elapsed / 7 + (h % 10)) + 1) * 0.01;
+      setOppProgress(Math.min(1, base + jitter));
       if (left === 0 && !submittedRef.current) {
         submittedRef.current = true;
         void doSubmit(true);
@@ -336,6 +357,18 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
+        <div className="mx-auto max-w-3xl px-4 pb-2">
+          <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+            <span className="truncate">{opponentName || "Motståndare"}</span>
+            <span className="tabular-nums">{Math.round(oppProgress * 100)}%</span>
+          </div>
+          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full bg-primary/70 transition-all duration-700"
+              style={{ width: `${oppProgress * 100}%` }}
+            />
+          </div>
+        </div>
       </header>
 
       {/* Main */}
@@ -399,8 +432,14 @@ function MatchPage() {
                 Nästa fråga
               </Button>
             ) : (
-              <Button disabled={!choice} onClick={() => persistAnswer(currentQ.id, choice!)}>
-                Spara svar
+              <Button
+                disabled={!choice || submitting}
+                onClick={async () => {
+                  if (choice) await persistAnswer(currentQ.id, choice);
+                  setConfirmOpen(true);
+                }}
+              >
+                Lämna in svar
               </Button>
             )}
           </div>
@@ -432,7 +471,7 @@ function MatchPage() {
             <AlertDialogTitle>Lämna in nu?</AlertDialogTitle>
             <AlertDialogDescription>
               {match.is_bot_match
-                ? "Boten räknar omedelbart fram sitt resultat."
+                ? "Resultatet räknas ut direkt."
                 : "Motståndaren får 30 sekunder på sig att avsluta."}
             </AlertDialogDescription>
           </AlertDialogHeader>
