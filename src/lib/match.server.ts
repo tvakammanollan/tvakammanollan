@@ -98,8 +98,10 @@ export async function selectQuestionsFor(
     out.push(...(await pickRandom("MEK", 3, exclude)));
   } else {
     out.push(...(await pickRandom("XYZ", 3, exclude)));
-    out.push(...(await pickRandom("KVA", 3, exclude)));
+    out.push(...(await pickRandom("KVA", 2, exclude)));
     out.push(...(await pickRandom("NOG", 2, exclude)));
+    // 1 DTK question (with diagram passage_text)
+    out.push(...(await pickPassage("DTK", exclude, 1)));
   }
 
   // Trim/pad to 8 if possible

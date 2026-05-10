@@ -383,14 +383,25 @@ function MatchPage() {
       {/* Main */}
       <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
         {showPassage && currentQ.passage_text && (
-          <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
-            <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Textpassage
-            </div>
-            <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
-              {currentQ.passage_text}
-            </div>
-          </section>
+          currentQ.category === "DTK" ? (
+            <section className="mb-6 rounded-xl border-2 border-secondary/40 bg-secondary/5 p-5 shadow-card">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">
+                Diagramdata:
+              </div>
+              <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-foreground">
+{currentQ.passage_text}
+              </pre>
+            </section>
+          ) : (
+            <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                Textpassage
+              </div>
+              <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+                {currentQ.passage_text}
+              </div>
+            </section>
+          )
         )}
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-card">

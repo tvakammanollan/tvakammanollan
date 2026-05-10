@@ -33,6 +33,13 @@ export function Navbar() {
           {loading ? null : user && profile ? (
             <>
               <Link
+                to="/leaderboard"
+                className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:inline-block"
+                activeProps={{ className: "hidden text-sm font-semibold text-foreground sm:inline-block" }}
+              >
+                Topplista
+              </Link>
+              <Link
                 to="/stats"
                 className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:inline-block"
                 activeProps={{ className: "hidden text-sm font-semibold text-foreground sm:inline-block" }}
