@@ -93,15 +93,13 @@ export async function selectQuestionsFor(
   const out: SelectedQuestion[] = [];
 
   if (matchType === "verbal") {
-    out.push(...(await pickRandom("ORD", 3, exclude)));
-    out.push(...(await pickRandom("MEK", 2, exclude)));
-    out.push(...(await pickPassage("LAS", exclude, 2)));
-    out.push(...(await pickPassage("ELF", exclude, 2)));
+    // Reading comprehension (LAS/ELF) temporarily disabled
+    out.push(...(await pickRandom("ORD", 5, exclude)));
+    out.push(...(await pickRandom("MEK", 3, exclude)));
   } else {
     out.push(...(await pickRandom("XYZ", 3, exclude)));
-    out.push(...(await pickRandom("KVA", 2, exclude)));
+    out.push(...(await pickRandom("KVA", 3, exclude)));
     out.push(...(await pickRandom("NOG", 2, exclude)));
-    out.push(...(await pickPassage("DTK", exclude, 1)));
   }
 
   // Trim/pad to 8 if possible
