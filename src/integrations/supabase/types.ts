@@ -14,13 +14,308 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      elo_history: {
+        Row: {
+          created_at: string
+          elo_after: number
+          elo_before: number
+          elo_change: number
+          id: string
+          match_id: string
+          match_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          elo_after: number
+          elo_before: number
+          elo_change: number
+          id?: string
+          match_id: string
+          match_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          elo_after?: number
+          elo_before?: number
+          elo_change?: number
+          id?: string
+          match_id?: string
+          match_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "elo_history_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "elo_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      match_answers: {
+        Row: {
+          answered_at: string
+          id: string
+          is_correct: boolean
+          match_id: string
+          question_id: string
+          selected_answer: string | null
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          id?: string
+          is_correct: boolean
+          match_id: string
+          question_id: string
+          selected_answer?: string | null
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          id?: string
+          is_correct?: boolean
+          match_id?: string
+          question_id?: string
+          selected_answer?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_answers_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_answers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      match_questions: {
+        Row: {
+          id: string
+          match_id: string
+          question_id: string
+          question_order: number
+        }
+        Insert: {
+          id?: string
+          match_id: string
+          question_id: string
+          question_order: number
+        }
+        Update: {
+          id?: string
+          match_id?: string
+          question_id?: string
+          question_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_questions_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_questions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          bot_elo: number | null
+          created_at: string
+          id: string
+          is_bot_match: boolean
+          match_type: string
+          player1_id: string
+          player1_score: number | null
+          player1_submitted_at: string | null
+          player2_id: string | null
+          player2_score: number | null
+          player2_submitted_at: string | null
+          room_code: string | null
+          status: string
+          winner_id: string | null
+        }
+        Insert: {
+          bot_elo?: number | null
+          created_at?: string
+          id?: string
+          is_bot_match?: boolean
+          match_type: string
+          player1_id: string
+          player1_score?: number | null
+          player1_submitted_at?: string | null
+          player2_id?: string | null
+          player2_score?: number | null
+          player2_submitted_at?: string | null
+          room_code?: string | null
+          status?: string
+          winner_id?: string | null
+        }
+        Update: {
+          bot_elo?: number | null
+          created_at?: string
+          id?: string
+          is_bot_match?: boolean
+          match_type?: string
+          player1_id?: string
+          player1_score?: number | null
+          player1_submitted_at?: string | null
+          player2_id?: string | null
+          player2_score?: number | null
+          player2_submitted_at?: string | null
+          room_code?: string | null
+          status?: string
+          winner_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_player1_id_fkey"
+            columns: ["player1_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_player2_id_fkey"
+            columns: ["player2_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_winner_id_fkey"
+            columns: ["winner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      questions: {
+        Row: {
+          category: string
+          correct_answer: string
+          created_at: string
+          difficulty: number | null
+          id: string
+          options: Json
+          passage_id: string | null
+          passage_text: string | null
+          question_text: string
+          source: string | null
+          subject_type: string
+        }
+        Insert: {
+          category: string
+          correct_answer: string
+          created_at?: string
+          difficulty?: number | null
+          id?: string
+          options: Json
+          passage_id?: string | null
+          passage_text?: string | null
+          question_text: string
+          source?: string | null
+          subject_type: string
+        }
+        Update: {
+          category?: string
+          correct_answer?: string
+          created_at?: string
+          difficulty?: number | null
+          id?: string
+          options?: Json
+          passage_id?: string | null
+          passage_text?: string | null
+          question_text?: string
+          source?: string | null
+          subject_type?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string
+          elo_math: number
+          elo_math_peak: number
+          elo_verbal: number
+          elo_verbal_peak: number
+          email: string | null
+          games_played: number
+          id: string
+          losses: number
+          username: string
+          wins: number
+        }
+        Insert: {
+          created_at?: string
+          elo_math?: number
+          elo_math_peak?: number
+          elo_verbal?: number
+          elo_verbal_peak?: number
+          email?: string | null
+          games_played?: number
+          id: string
+          losses?: number
+          username: string
+          wins?: number
+        }
+        Update: {
+          created_at?: string
+          elo_math?: number
+          elo_math_peak?: number
+          elo_verbal?: number
+          elo_verbal_peak?: number
+          email?: string | null
+          games_played?: number
+          id?: string
+          losses?: number
+          username?: string
+          wins?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      match_visible_to_user: {
+        Args: { _match_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
