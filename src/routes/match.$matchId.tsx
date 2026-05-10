@@ -248,7 +248,6 @@ function MatchPage() {
         }
       }
       const res = await submitFn({ data: { matchId } });
-      sessionStorage.removeItem(`match-start-${matchId}`);
       // If processed (bot match), go straight to result
       const r = res as { result?: { ok?: boolean; waiting?: boolean } };
       if (r.result?.ok) {
