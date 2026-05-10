@@ -454,11 +454,18 @@ function MatchPage() {
           )
         )}
 
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-          <div className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+        <div
+          key={currentQ.id}
+          className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
+          style={{ boxShadow: "var(--shadow-md)" }}
+        >
+          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
             {currentQ.category} · Fråga {current + 1}
           </div>
-          <h2 className="mb-5 whitespace-pre-wrap text-lg font-medium leading-snug">
+          <h2
+            className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
+            style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+          >
             {currentQ.question_text}
           </h2>
           <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
