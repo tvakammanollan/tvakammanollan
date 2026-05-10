@@ -113,10 +113,18 @@ function MatchPage() {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const q = (row as any).questions;
           if (!q) return null;
+          const rawOpts = Array.isArray(q.options) ? q.options : [];
+          const options: string[] = rawOpts.map((o: unknown) =>
+            typeof o === "string"
+              ? o
+              : o && typeof o === "object" && "text" in (o as Record<string, unknown>)
+              ? String((o as { text: unknown }).text)
+              : String(o),
+          );
           return {
             id: q.id,
             question_text: q.question_text,
-            options: Array.isArray(q.options) ? q.options : [],
+            options,
             correct_answer: q.correct_answer,
             category: q.category,
             passage_id: q.passage_id,
