@@ -13,6 +13,9 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
+import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
+import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -34,18 +37,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResultMatchIdRoute = ResultMatchIdRouteImport.update({
+  id: '/result/$matchId',
+  path: '/result/$matchId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchMatchIdRoute = MatchMatchIdRouteImport.update({
+  id: '/match/$matchId',
+  path: '/match/$matchId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoomCodeRoute = JoinRoomCodeRouteImport.update({
+  id: '/join/$roomCode',
+  path: '/join/$roomCode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/join/$roomCode': typeof JoinRoomCodeRoute
+  '/match/$matchId': typeof MatchMatchIdRoute
+  '/result/$matchId': typeof ResultMatchIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/join/$roomCode': typeof JoinRoomCodeRoute
+  '/match/$matchId': typeof MatchMatchIdRoute
+  '/result/$matchId': typeof ResultMatchIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +77,38 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/join/$roomCode': typeof JoinRoomCodeRoute
+  '/match/$matchId': typeof MatchMatchIdRoute
+  '/result/$matchId': typeof ResultMatchIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/onboarding' | '/signup'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/join/$roomCode'
+    | '/match/$matchId'
+    | '/result/$matchId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/onboarding' | '/signup'
-  id: '__root__' | '/' | '/login' | '/onboarding' | '/signup'
+  to:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/join/$roomCode'
+    | '/match/$matchId'
+    | '/result/$matchId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/join/$roomCode'
+    | '/match/$matchId'
+    | '/result/$matchId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +116,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
+  JoinRoomCodeRoute: typeof JoinRoomCodeRoute
+  MatchMatchIdRoute: typeof MatchMatchIdRoute
+  ResultMatchIdRoute: typeof ResultMatchIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +151,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/result/$matchId': {
+      id: '/result/$matchId'
+      path: '/result/$matchId'
+      fullPath: '/result/$matchId'
+      preLoaderRoute: typeof ResultMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/match/$matchId': {
+      id: '/match/$matchId'
+      path: '/match/$matchId'
+      fullPath: '/match/$matchId'
+      preLoaderRoute: typeof MatchMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join/$roomCode': {
+      id: '/join/$roomCode'
+      path: '/join/$roomCode'
+      fullPath: '/join/$roomCode'
+      preLoaderRoute: typeof JoinRoomCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
+  JoinRoomCodeRoute: JoinRoomCodeRoute,
+  MatchMatchIdRoute: MatchMatchIdRoute,
+  ResultMatchIdRoute: ResultMatchIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
