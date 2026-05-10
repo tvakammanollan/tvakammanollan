@@ -210,7 +210,6 @@ function StatsPage() {
   if (loading || !profile) {
     return (
       <>
-        <Navbar />
         <div className="flex min-h-[60vh] items-center justify-center text-sm text-muted-foreground">
           Laddar statistik…
         </div>
