@@ -128,13 +128,27 @@ export const submitMatch = createServerFn({ method: "POST" })
     const isP2 = match.player2_id === userId;
     if (!isP1 && !isP2) throw new Error("Inte din match");
 
-    // Count score for this user
+    // Recompute correctness server-side; never trust client-supplied is_correct
     const { data: answers } = await supabaseAdmin
       .from("match_answers")
-      .select("is_correct")
+      .select("id, question_id, selected_answer, questions:question_id(correct_answer)")
       .eq("match_id", data.matchId)
       .eq("user_id", userId);
-    const score = (answers ?? []).filter((a) => a.is_correct).length;
+
+    let score = 0;
+    for (const a of answers ?? []) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const correct = (a as any).questions?.correct_answer ?? null;
+      const isCorrect = a.selected_answer != null && a.selected_answer === correct;
+      if (isCorrect) score += 1;
+      // Persist authoritative is_correct value
+      if (a.selected_answer != null || a.id) {
+        await supabaseAdmin
+          .from("match_answers")
+          .update({ is_correct: isCorrect })
+          .eq("id", a.id);
+      }
+    }
 
     const update: Record<string, unknown> = {};
     if (isP1) {
