@@ -230,7 +230,7 @@ function StatsPage() {
 
   return (
     <>
-      <Navbar />
+      
       <main className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
