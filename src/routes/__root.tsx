@@ -11,6 +11,9 @@ import {
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
+
+installSupabaseFetchAuth();
 
 function NotFoundComponent() {
   return (
