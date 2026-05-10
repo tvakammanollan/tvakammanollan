@@ -145,7 +145,8 @@ export const submitMatch = createServerFn({ method: "POST" })
       update.player2_submitted_at = new Date().toISOString();
     }
 
-    await supabaseAdmin.from("matches").update(update).eq("id", data.matchId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await supabaseAdmin.from("matches").update(update as any).eq("id", data.matchId);
 
     // If bot match, simulate bot now
     if (match.is_bot_match) {
