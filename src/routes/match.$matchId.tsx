@@ -348,6 +348,18 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
+        <div className="mx-auto max-w-3xl px-4 pb-2">
+          <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+            <span className="truncate">{opponentName || "Motståndare"}</span>
+            <span className="tabular-nums">{Math.round(oppProgress * 100)}%</span>
+          </div>
+          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full bg-primary/70 transition-all duration-700"
+              style={{ width: `${oppProgress * 100}%` }}
+            />
+          </div>
+        </div>
       </header>
 
       {/* Main */}
