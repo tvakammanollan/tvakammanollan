@@ -161,18 +161,27 @@ function MatchPage() {
       start = Date.now();
       sessionStorage.setItem(key, String(start));
     }
-    // Deterministic fake opponent total time (3.5–7 min)
+    // Deterministic fake opponent: 8 question-jumps with varied delays
     let h = 0;
     for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
-    const oppTotal = 210 + (Math.abs(h) % 210); // seconds
+    const rand = (i: number) => {
+      const x = Math.sin(h + i * 9301) * 10000;
+      return x - Math.floor(x);
+    };
+    // Per-question think time (seconds) – varied so it feels human
+    const perQ = Array.from({ length: 8 }, (_, i) => 18 + Math.floor(rand(i) * 55));
+    const cumulative = perQ.reduce<number[]>((acc, t) => {
+      acc.push((acc[acc.length - 1] ?? 0) + t);
+      return acc;
+    }, []);
     const tick = () => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
       setSecondsLeft(left);
-      // Smoother fake progress with mild jitter
-      const base = Math.min(0.98, elapsed / oppTotal);
-      const jitter = (Math.sin(elapsed / 7 + (h % 10)) + 1) * 0.01;
-      setOppProgress(Math.min(1, base + jitter));
+      // Count how many fake-answers the opponent has "submitted"
+      let answered = 0;
+      for (const t of cumulative) if (elapsed >= t) answered++;
+      setOppProgress(answered / 8);
       if (left === 0 && !submittedRef.current) {
         submittedRef.current = true;
         void doSubmit(true);
