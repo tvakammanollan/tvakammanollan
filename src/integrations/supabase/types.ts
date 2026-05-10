@@ -324,6 +324,21 @@ export type Database = {
           wins: number
         }[]
       }
+      get_match_review: {
+        Args: { _match_id: string }
+        Returns: {
+          category: string
+          correct_answer: string
+          difficulty: number
+          options: Json
+          passage_id: string
+          passage_text: string
+          question_id: string
+          question_order: number
+          question_text: string
+          subject_type: string
+        }[]
+      }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
         Returns: boolean
