@@ -480,15 +480,15 @@ function MatchPage() {
                   aria-checked={isSelected}
                   aria-label={`Alternativ ${letter}: ${opt}`}
                   onClick={() => selectAnswer(currentQ.id, letter)}
-                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                  className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 ${
                     isSelected
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-background hover:border-primary/40"
+                      ? "border-2 border-[#1a5c3a] bg-[#e8f2ec] text-foreground"
+                      : "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50"
                   }`}
                 >
                   <span
-                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
-                      isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
+                      isSelected ? "bg-[#1a5c3a] text-white" : "bg-[#f0ede8] text-foreground"
                     }`}
                   >
                     {letter}
