@@ -387,9 +387,16 @@ async function processTermin(t: Termin): Promise<HpQuestion[]> {
 async function main() {
   if (existsSync(ERR_PATH)) unlinkSync(ERR_PATH);
 
+  const limitArg = process.argv.find((a) => a.startsWith("--limit="));
+  const limit = limitArg ? Number(limitArg.split("=")[1]) : Infinity;
+
   console.log("Hämtar terminslista ...");
-  const terminer = await listTerminer();
+  let terminer = await listTerminer();
   console.log(`  hittade ${terminer.length} terminer (post-2011)`);
+  if (Number.isFinite(limit)) {
+    terminer = terminer.slice(0, limit);
+    console.log(`  begränsar till ${terminer.length} (--limit)`);
+  }
 
   const all: HpQuestion[] = [];
   for (const t of terminer) {
