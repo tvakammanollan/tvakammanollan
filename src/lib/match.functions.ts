@@ -188,6 +188,15 @@ export const processMatchResult = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z.object({ matchId: z.string().uuid() }).parse(input),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    const { data: m } = await supabaseAdmin
+      .from("matches")
+      .select("player1_id, player2_id")
+      .eq("id", data.matchId)
+      .single();
+    if (!m || (m.player1_id !== userId && m.player2_id !== userId)) {
+      throw new Response("Forbidden", { status: 403 });
+    }
     return processMatchResultServer(data.matchId);
   });
