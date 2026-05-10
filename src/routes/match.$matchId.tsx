@@ -54,6 +54,7 @@ interface MatchRow {
   is_bot_match: boolean;
   bot_elo: number | null;
   status: string;
+  created_at: string;
 }
 
 function MatchPage() {
