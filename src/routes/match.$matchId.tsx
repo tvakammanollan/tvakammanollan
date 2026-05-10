@@ -384,15 +384,23 @@ function MatchPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+      <header
+        className="sticky top-0 z-20 border-b border-border"
+        style={{
+          background: "rgba(249,247,244,0.92)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+        }}
+      >
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 pt-3 pb-2">
           <div className="text-sm font-semibold tabular-nums">
-            Fråga {current + 1}/{questions.length}
+            Fråga {current + 1} av {questions.length}
           </div>
           <div
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold tabular-nums ${
-              timerLow ? "bg-destructive/15 text-destructive" : "bg-muted text-foreground"
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold tabular-nums ${
+              timerLow ? "animate-pulse-soft bg-[#c0392b]/15 text-[#c0392b]" : "bg-muted text-foreground"
             }`}
+            style={{ fontFamily: "ui-monospace, 'DM Mono', monospace" }}
           >
             <Clock className="h-3.5 w-3.5" />
             {mm}:{ss}
@@ -401,7 +409,14 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
-        <div className="mx-auto max-w-3xl px-4 pb-2">
+        {/* Question progress bar */}
+        <div className="h-[3px] w-full bg-[#f0ede8]">
+          <div
+            className="h-full bg-[#1a5c3a] transition-all duration-300 ease-out"
+            style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+          />
+        </div>
+        <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
           <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
             <span className="truncate">{opponentName || "Motståndare"}</span>
             <span className="tabular-nums">{Math.round(oppProgress * 8)}/8</span>
