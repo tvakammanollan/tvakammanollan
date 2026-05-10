@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Navbar } from "@/components/Navbar";
+
 import { Button } from "@/components/ui/button";
 import {
   LineChart,
@@ -75,6 +75,17 @@ interface AnswerStat {
 
 const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
 const MATH_CATS = ["XYZ", "KVA", "NOG", "DTK"];
+
+const FAKE_NAMES = [
+  "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
+  "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
+  "wilmaP","edvin.t","felicia_k","axel.j",
+];
+function pickFakeName(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
+}
 
 function StatsPage() {
   const { user, loading } = useAuth();
@@ -210,7 +221,6 @@ function StatsPage() {
   if (loading || !profile) {
     return (
       <>
-        <Navbar />
         <div className="flex min-h-[60vh] items-center justify-center text-sm text-muted-foreground">
           Laddar statistik…
         </div>
@@ -231,7 +241,7 @@ function StatsPage() {
 
   return (
     <>
-      <Navbar />
+      
       <main className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -423,7 +433,7 @@ function StatsPage() {
                       const draw = m.winner_id === null;
                       const oppId = isP1 ? m.player2_id : m.player1_id;
                       const oppLabel = m.is_bot_match
-                        ? `Bot (ELO ${m.bot_elo ?? "?"})`
+                        ? pickFakeName(m.id)
                         : (oppId && opponentNames.get(oppId)) || "Motståndare";
                       const delta = eloByMatch.get(m.id);
                       const rowBg = draw
