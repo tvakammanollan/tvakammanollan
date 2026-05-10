@@ -96,9 +96,9 @@ function MatchPage() {
       }
       setMatch(m as MatchRow);
 
-      // Opponent name
+      // Opponent name (hide bot identity)
       if ((m as MatchRow).is_bot_match) {
-        setOpponentName(`Bot (ELO ${(m as MatchRow).bot_elo ?? "?"})`);
+        setOpponentName(pickFakeName((m as MatchRow).id));
       } else {
         const oppId =
           (m as MatchRow).player1_id === user.id
