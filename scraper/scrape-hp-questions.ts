@@ -1,18 +1,22 @@
 /**
  * scrape-hp-questions.ts
  *
- * Hämtar gamla högskoleprov-PDF:er från hogskoleprovet.nu och parsar
- * frågor per delprov (MEK, LÄS, ELF, XYZ, KVA, NOG, DTK).
+ * Hämtar gamla HP-PDF:er från hogskoleprovet.nu och parsar frågor från
+ * alla 8 delprov (ORD, LÄS, MEK, ELF, XYZ, KVA, NOG, DTK).
  *
- * Kör:  bun run scraper/scrape-hp-questions.ts
+ * Struktur per termin (var-YYYY / host-YYYY):
+ *   verb1.pdf  → Provpass 1  (ORD 1-10, LÄS 11-20, MEK 21-30, ELF 31-40)
+ *   verb2.pdf  → Provpass 4  (samma uppdelning)
+ *   kvant1.pdf → Provpass 2  (XYZ 1-12, KVA 13-22, NOG 23-28, DTK 29-40)
+ *   kvant2.pdf → Provpass 5  (samma uppdelning)
+ *   facit.pdf  → 4 kolumner med svar (pp1, pp2, pp4, pp5)
  *
- * Skriver scraper/hp-questions.json + scraper/fel.log för PDF:er som inte
- * gick att parsa.
+ * Skriver scraper/hp-questions.json + scraper/fel.log
  */
 
 import { writeFileSync, appendFileSync, existsSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
-import pdfParse from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 
 const UA = "HPKampen-Bot/1.0 (educational project)";
 const DELAY_MS = 1000;
@@ -20,11 +24,11 @@ const OUT_PATH = join(process.cwd(), "scraper", "hp-questions.json");
 const ERR_PATH = join(process.cwd(), "scraper", "fel.log");
 const LIST_URL = "https://www.hogskoleprovet.nu/gamla-hogskoleprov/";
 
-type Category = "MEK" | "LAS" | "ELF" | "XYZ" | "KVA" | "NOG" | "DTK";
+type Category = "ORD" | "MEK" | "LAS" | "ELF" | "XYZ" | "KVA" | "NOG" | "DTK";
 type SubjectType = "verbal" | "math";
+type Pass = "verb1" | "kvant1" | "verb2" | "kvant2";
 
 type Option = { id: string; text: string };
-
 type HpQuestion = {
   category: Category;
   subject_type: SubjectType;
@@ -39,142 +43,340 @@ type HpQuestion = {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+function logError(file: string, err: unknown) {
+  appendFileSync(ERR_PATH, `[${new Date().toISOString()}] ${file}: ${(err as Error).message}\n`);
+}
+
 async function fetchText(url: string): Promise<string> {
   const res = await fetch(url, { headers: { "User-Agent": UA } });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return await res.text();
 }
 
-async function fetchPdf(url: string): Promise<Buffer> {
+async function fetchPdfText(url: string): Promise<string> {
   const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-  const ab = await res.arrayBuffer();
-  return Buffer.from(ab);
-}
-
-function logError(file: string, err: unknown) {
-  appendFileSync(ERR_PATH, `[${new Date().toISOString()}] ${file}: ${(err as Error).message}\n`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  const parsed = await new PDFParse({ data: buf }).getText();
+  return parsed.text;
 }
 
 /* ------------------------------------------------------------------ */
-/* PDF-länkar                                                          */
+/* Lista terminer från hogskoleprovet.nu                               */
 /* ------------------------------------------------------------------ */
-async function listPdfLinks(): Promise<{ url: string; label: string; year: number; term: "vt" | "ht" }[]> {
+type Termin = { slug: string; label: string; year: number; term: "vt" | "ht" };
+
+async function listTerminer(): Promise<Termin[]> {
   const html = await fetchText(LIST_URL);
-  const links = [...html.matchAll(/href="([^"]+\.pdf)"[^>]*>([^<]+)</gi)];
-  const out: { url: string; label: string; year: number; term: "vt" | "ht" }[] = [];
-  for (const m of links) {
-    const url = m[1].startsWith("http") ? m[1] : new URL(m[1], LIST_URL).toString();
-    const label = m[2].trim();
-    const yMatch = label.match(/(20\d{2})/);
-    if (!yMatch) continue;
-    const year = Number(yMatch[1]);
-    if (year < 2011) continue; // bara post-2011-format
-    const term: "vt" | "ht" = /ht|höst/i.test(label) ? "ht" : "vt";
-    out.push({ url, label, year, term });
+  const matches = [...html.matchAll(
+    /\/uploads\/hogskoleprovet\/hogskoleprov\/(var|host)-(20\d{2})\//g,
+  )];
+  const seen = new Set<string>();
+  const out: Termin[] = [];
+  for (const m of matches) {
+    const slug = `${m[1]}-${m[2]}`;
+    if (seen.has(slug)) continue;
+    seen.add(slug);
+    const year = Number(m[2]);
+    if (year < 2011) continue;
+    out.push({ slug, label: slug, year, term: m[1] === "var" ? "vt" : "ht" });
   }
   return out;
 }
 
 /* ------------------------------------------------------------------ */
-/* Parsning per delprov – heuristisk, kan behöva justeras efter test   */
+/* Facit-parser: 4 kolumner (pp1, pp2, pp4, pp5)                        */
 /* ------------------------------------------------------------------ */
-function parseFacit(text: string): Map<string, string> {
-  // Hitta facit-block: t.ex. "Facit" följt av "1. A 2. C 3. B ..."
-  const facit = new Map<string, string>();
-  const facitMatch = text.match(/Facit[\s\S]+/i);
-  if (!facitMatch) return facit;
-  const block = facitMatch[0];
-  const pairs = [...block.matchAll(/(\d{1,3})\s*[\.\):]\s*([A-E])/g)];
-  for (const p of pairs) facit.set(p[1], p[2]);
-  return pairs.length > 0 ? facit : facit;
+function parseFacit(text: string): Record<Pass, Map<number, string>> {
+  const empty = (): Map<number, string> => new Map();
+  const result: Record<Pass, Map<number, string>> = {
+    verb1: empty(), kvant1: empty(), verb2: empty(), kvant2: empty(),
+  };
+  const passByCol: Pass[] = ["verb1", "kvant1", "verb2", "kvant2"];
+
+  for (const line of text.split(/\r?\n/)) {
+    // Hitta alla (nummer, bokstav)-par på raden
+    const pairs = [...line.matchAll(/\b(\d{1,2})\s+([A-E])\b/g)];
+    if (pairs.length === 0) continue;
+    // Endast rader där alla par har samma frågenummer (eller minst 2 par)
+    if (pairs.length < 2) continue;
+    const firstNum = Number(pairs[0][1]);
+    const allSame = pairs.every((p) => Number(p[1]) === firstNum);
+    if (!allSame) continue;
+    if (firstNum < 1 || firstNum > 40) continue;
+    pairs.forEach((p, i) => {
+      if (i < 4) result[passByCol[i]].set(firstNum, p[2]);
+    });
+  }
+  return result;
 }
 
-function detectSection(line: string): Category | null {
-  if (/MEK\b|meningskomplettering/i.test(line)) return "MEK";
-  if (/LÄS\b|läsförståelse/i.test(line)) return "LAS";
-  if (/\bELF\b|engelsk läsförståelse/i.test(line)) return "ELF";
-  if (/\bXYZ\b/i.test(line)) return "XYZ";
-  if (/\bKVA\b|kvantitativa jämförelser/i.test(line)) return "KVA";
-  if (/\bNOG\b|kvantitativa resonemang/i.test(line)) return "NOG";
-  if (/\bDTK\b|diagram[, ]?tabeller/i.test(line)) return "DTK";
+/* ------------------------------------------------------------------ */
+/* Frågeparser: hittar numrerade frågor + A–E-alternativ              */
+/* ------------------------------------------------------------------ */
+function categoryForVerbal(n: number): Category | null {
+  if (n >= 1 && n <= 10) return "ORD";
+  if (n >= 11 && n <= 20) return "LAS";
+  if (n >= 21 && n <= 30) return "MEK";
+  if (n >= 31 && n <= 40) return "ELF";
+  return null;
+}
+function categoryForKvant(n: number): Category | null {
+  if (n >= 1 && n <= 12) return "XYZ";
+  if (n >= 13 && n <= 22) return "KVA";
+  if (n >= 23 && n <= 28) return "NOG";
+  if (n >= 29 && n <= 40) return "DTK";
   return null;
 }
 
-function categoryToSubject(cat: Category): SubjectType {
-  return ["MEK", "LAS", "ELF", "ORD" as Category].includes(cat) ? "verbal" : "math";
+function cleanText(s: string): string {
+  return s
+    .replace(/\s+/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .trim();
 }
 
 /**
- * Generisk parser: går igenom textraderna och försöker hitta numrerade
- * frågor + svarsalternativ A–D (eller A–E). Mycket av detta är heuristik
- * och måste finjusteras när vi ser hur PDF-texten faktiskt ser ut.
+ * Plocka ut frågor och deras alternativ ur PDF-texten.
+ * Returnerar { qNum: { body, options } } – outparsad rå text för senare bearbetning.
  */
-function parseQuestions(text: string, source: string, label: string): HpQuestion[] {
-  const out: HpQuestion[] = [];
-  const facit = parseFacit(text);
+type RawBlock = { num: number; body: string; options: Option[] };
 
-  // splitta på radbrytningar och städa
-  const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+function extractQuestionBlocks(text: string): RawBlock[] {
+  // Ta bort sidnummer och dekoration
+  const cleaned = text
+    .replace(/-- \d+ of \d+ --/g, "\n")
+    .replace(/^– \d+ –$/gm, "")
+    .replace(/Svarshäfte nummer/g, "")
+    .replace(/Tillstånd har inhämtats[^\n]*\n?/g, "");
 
-  let currentCat: Category | null = null;
-  let currentPassage = "";
-  let currentPassageId = "";
-  let passageCounter = 0;
+  // Hitta alla position där en numrerad fråga börjar: "\nN.\s" eller "^N.\s"
+  // Frågenummer 1–40
+  const lines = cleaned.split(/\r?\n/);
+  type Marker =
+    | { kind: "q"; num: number; lineIdx: number; rest: string }
+    | { kind: "opt"; letter: string; lineIdx: number; rest: string }
+    | { kind: "text"; lineIdx: number; text: string };
 
+  const markers: Marker[] = [];
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const sec = detectSection(line);
-    if (sec) {
-      currentCat = sec;
-      currentPassage = "";
-      currentPassageId = "";
+    const ln = lines[i].trim();
+    if (!ln) continue;
+    const qm = ln.match(/^(\d{1,2})\.\s*(.*)$/);
+    if (qm && Number(qm[1]) >= 1 && Number(qm[1]) <= 40) {
+      markers.push({ kind: "q", num: Number(qm[1]), lineIdx: i, rest: qm[2] });
       continue;
     }
-    if (!currentCat) continue;
-
-    // hantera passager för LÄS/ELF/DTK
-    if (["LAS", "ELF", "DTK"].includes(currentCat) && line.length > 100 && !/^\d+\./.test(line)) {
-      passageCounter++;
-      currentPassage = line;
-      currentPassageId = `${currentCat.toLowerCase()}-${
-        /ht/i.test(label) ? "ht" : "vt"
-      }${(label.match(/20\d{2}/) || ["unknown"])[0]}-p${passageCounter}`;
+    const om = ln.match(/^([A-E])\s+(.*)$/);
+    if (om && om[2].length > 0) {
+      markers.push({ kind: "opt", letter: om[1], lineIdx: i, rest: om[2] });
       continue;
     }
+    markers.push({ kind: "text", lineIdx: i, text: ln });
+  }
 
-    // numrerad fråga: "12. ..."
-    const qm = line.match(/^(\d{1,3})\.\s*(.+)/);
-    if (!qm) continue;
-    const qNum = qm[1];
-    let qText = qm[2];
+  // Bygg block: ett block startar vid en q-marker och slutar vid nästa q-marker
+  const blocks: RawBlock[] = [];
+  for (let i = 0; i < markers.length; i++) {
+    const m = markers[i];
+    if (m.kind !== "q") continue;
+    const num = m.num;
+    let bodyParts: string[] = [m.rest];
+    const options: Option[] = [];
+    let optionStarted = false;
 
-    // läs in svarsalternativ från följande rader: "A) ...", "B) ..." osv.
-    const opts: Option[] = [];
     let j = i + 1;
-    while (j < lines.length) {
-      const om = lines[j].match(/^([A-E])[\)\.]\s*(.+)/);
-      if (!om) break;
-      opts.push({ id: om[1], text: om[2] });
+    while (j < markers.length && markers[j].kind !== "q") {
+      const mm = markers[j];
+      if (mm.kind === "opt") {
+        optionStarted = true;
+        // Om alternativet redan finns – append (multi-line option)
+        const existing = options.find((o) => o.id === mm.letter);
+        if (existing) {
+          existing.text += " " + mm.rest;
+        } else {
+          options.push({ id: mm.letter, text: mm.rest });
+        }
+      } else if (mm.kind === "text") {
+        if (!optionStarted) {
+          bodyParts.push(mm.text);
+        } else {
+          // Texten tillhör senast tillagt alternativ (multi-line)
+          if (options.length > 0) {
+            options[options.length - 1].text += " " + mm.text;
+          }
+        }
+      }
       j++;
     }
-    if (opts.length < 4) continue;
 
-    const correct = facit.get(qNum);
-    if (!correct) continue;
-
-    out.push({
-      category: currentCat,
-      subject_type: categoryToSubject(currentCat),
-      question_text: qText.trim(),
-      passage_text: currentPassage || undefined,
-      passage_id: currentPassageId || undefined,
-      options: opts,
-      correct_answer: correct,
-      source,
+    blocks.push({
+      num,
+      body: cleanText(bodyParts.join(" ")),
+      options: options.map((o) => ({ id: o.id, text: cleanText(o.text) })),
     });
+    // Hoppa inte – nästa loop hittar nästa q naturligt
+  }
 
-    i = j - 1;
+  // Sortera och deduplicera på num (behåll det med flest options)
+  const byNum = new Map<number, RawBlock>();
+  for (const b of blocks) {
+    const cur = byNum.get(b.num);
+    if (!cur || b.options.length > cur.options.length) byNum.set(b.num, b);
+  }
+  return [...byNum.values()].sort((a, b) => a.num - b.num);
+}
+
+/**
+ * För LÄS/ELF: hitta passager. En passage = textrad utan frågenummer som är
+ * lång (>200 tecken sammanlagt) och inte är ett alternativ.
+ *
+ * Eftersom passager i texten ligger efter sina frågor (2-kolumners layout)
+ * letar vi i intervallet mellan fråga N och fråga N+1, och kopplar passagen
+ * till föregående frågegrupp.
+ */
+function extractPassagesByGroup(
+  text: string,
+  groupSize = 2,
+): Map<number, string> {
+  // Map: första-frågenummer-i-grupp → passage
+  // Passage-grupper: typiskt 2-4 frågor delar samma passage. Vi kollar enkelt.
+  // För enkelhets skull associerar vi passage med varje frågenummer i intervallet.
+  const passages = new Map<number, string>();
+
+  const cleaned = text
+    .replace(/-- \d+ of \d+ --/g, "\n")
+    .replace(/^– \d+ –$/gm, "");
+
+  // Hitta alla q-markörer med deras textposition
+  const lines = cleaned.split(/\r?\n/);
+  const qPositions: { num: number; idx: number }[] = [];
+  lines.forEach((ln, i) => {
+    const m = ln.trim().match(/^(\d{1,2})\.\s/);
+    if (m) {
+      const n = Number(m[1]);
+      if (n >= 1 && n <= 40) qPositions.push({ num: n, idx: i });
+    }
+  });
+
+  // Mellan varje q-position, leta efter långa textstycken som inte är options
+  for (let i = 0; i < qPositions.length; i++) {
+    const start = qPositions[i].idx + 1;
+    const end = i + 1 < qPositions.length ? qPositions[i + 1].idx : lines.length;
+    const chunk: string[] = [];
+    for (let k = start; k < end; k++) {
+      const ln = lines[k].trim();
+      if (!ln) continue;
+      if (/^[A-E]\s/.test(ln)) continue;       // option
+      if (/^\d{1,2}\.\s/.test(ln)) continue;   // fråga
+      chunk.push(ln);
+    }
+    const joined = chunk.join(" ").trim();
+    if (joined.length > 200) {
+      // Koppla passagen till föregående frågegrupp (grovt: gruppera per groupSize)
+      const passageNum = qPositions[i].num;
+      passages.set(passageNum, cleanText(joined));
+    }
+  }
+  return passages;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bygg HpQuestion från ett block                                      */
+/* ------------------------------------------------------------------ */
+function buildQuestion(
+  block: RawBlock,
+  category: Category,
+  facitMap: Map<number, string>,
+  passageText: string | undefined,
+  passageId: string | undefined,
+  source: string,
+  expectedOpts: number,
+): HpQuestion | null {
+  if (block.options.length < expectedOpts) return null;
+  if (block.body.length < 1) return null;
+
+  const correct = facitMap.get(block.num);
+  if (!correct) return null;
+  if (!block.options.some((o) => o.id === correct)) return null;
+
+  const subject_type: SubjectType =
+    ["ORD", "LAS", "MEK", "ELF"].includes(category) ? "verbal" : "math";
+
+  const q_text = category === "ORD" ? block.body.toUpperCase() : block.body;
+
+  return {
+    category,
+    subject_type,
+    question_text: q_text,
+    passage_text: passageText,
+    passage_id: passageId,
+    options: block.options.slice(0, 5), // max 5
+    correct_answer: correct,
+    source,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Bearbeta en termin: ladda 5 PDF:er, parsa, returnera frågor          */
+/* ------------------------------------------------------------------ */
+async function processTermin(t: Termin): Promise<HpQuestion[]> {
+  const base = `https://www.hogskoleprovet.nu/public/uploads/hogskoleprovet/hogskoleprov/${t.slug}`;
+  const out: HpQuestion[] = [];
+
+  let facitText = "";
+  try {
+    facitText = await fetchPdfText(`${base}/facit.pdf`);
+  } catch (err) {
+    logError(`${t.slug}/facit.pdf`, err);
+    return out;
+  }
+  await sleep(DELAY_MS);
+  const facit = parseFacit(facitText);
+
+  const passes: { file: Pass; cat: (n: number) => Category | null; opts: number }[] = [
+    { file: "verb1", cat: categoryForVerbal, opts: 4 },
+    { file: "verb2", cat: categoryForVerbal, opts: 4 },
+    { file: "kvant1", cat: categoryForKvant, opts: 4 },
+    { file: "kvant2", cat: categoryForKvant, opts: 4 },
+  ];
+
+  for (const pass of passes) {
+    let text = "";
+    try {
+      text = await fetchPdfText(`${base}/${pass.file}.pdf`);
+    } catch (err) {
+      logError(`${t.slug}/${pass.file}.pdf`, err);
+      await sleep(DELAY_MS);
+      continue;
+    }
+    await sleep(DELAY_MS);
+
+    const blocks = extractQuestionBlocks(text);
+    const passages = extractPassagesByGroup(text);
+    const facitMap = facit[pass.file];
+
+    for (const b of blocks) {
+      const cat = pass.cat(b.num);
+      if (!cat) continue;
+      // ORD har 5 alternativ, övriga 4
+      const expectedOpts = cat === "ORD" ? 5 : 4;
+      let pText: string | undefined;
+      let pId: string | undefined;
+      if (cat === "LAS" || cat === "ELF" || cat === "DTK") {
+        const p = passages.get(b.num);
+        if (p) {
+          pText = p;
+          pId = `${cat.toLowerCase()}-${t.term}${t.year}-${pass.file}-q${b.num}`;
+        }
+      }
+      const q = buildQuestion(
+        b, cat, facitMap, pText, pId,
+        `${base}/${pass.file}.pdf`,
+        expectedOpts,
+      );
+      if (q) out.push(q);
+    }
   }
   return out;
 }
@@ -185,32 +387,30 @@ function parseQuestions(text: string, source: string, label: string): HpQuestion
 async function main() {
   if (existsSync(ERR_PATH)) unlinkSync(ERR_PATH);
 
-  console.log("Hämtar PDF-länkar ...");
-  const pdfs = await listPdfLinks();
-  console.log(`  hittade ${pdfs.length} PDF:er (post-2011)`);
+  console.log("Hämtar terminslista ...");
+  const terminer = await listTerminer();
+  console.log(`  hittade ${terminer.length} terminer (post-2011)`);
 
   const all: HpQuestion[] = [];
-  for (const pdf of pdfs) {
-    console.log(`→ ${pdf.label}`);
+  for (const t of terminer) {
+    console.log(`→ ${t.slug}`);
     try {
-      const buf = await fetchPdf(pdf.url);
-      const parsed = await pdfParse(buf);
-      const qs = parseQuestions(parsed.text, pdf.url, pdf.label);
+      const qs = await processTermin(t);
       console.log(`   ${qs.length} frågor`);
       all.push(...qs);
     } catch (err) {
       console.warn(`   FEL: ${(err as Error).message}`);
-      logError(pdf.url, err);
+      logError(t.slug, err);
     }
-    await sleep(DELAY_MS);
   }
 
   writeFileSync(OUT_PATH, JSON.stringify(all, null, 2), "utf8");
 
   const byCat: Record<string, number> = {};
   for (const q of all) byCat[q.category] = (byCat[q.category] || 0) + 1;
-  console.log(`Wrote ${all.length} HP-frågor → ${OUT_PATH}`);
-  console.log("Fördelning per kategori:", byCat);
+  console.log(`\nWrote ${all.length} HP-frågor → ${OUT_PATH}`);
+  console.log("Fördelning per kategori:");
+  for (const [k, v] of Object.entries(byCat)) console.log(`  ${k}: ${v}`);
 }
 
 main().catch((err) => {
