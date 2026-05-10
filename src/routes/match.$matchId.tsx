@@ -40,7 +40,6 @@ interface QuestionRow {
   id: string;
   question_text: string;
   options: string[];
-  correct_answer: string;
   category: string;
   passage_id: string | null;
   passage_text: string | null;
@@ -119,7 +118,9 @@ function MatchPage() {
 
       const { data: mq } = await supabase
         .from("match_questions")
-        .select("question_order, question_id, questions(*)")
+        .select(
+          "question_order, question_id, questions(id, category, question_text, options, passage_id, passage_text, difficulty)",
+        )
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
 
@@ -140,7 +141,6 @@ function MatchPage() {
             id: q.id,
             question_text: q.question_text,
             options,
-            correct_answer: q.correct_answer,
             category: q.category,
             passage_id: q.passage_id,
             passage_text: q.passage_text,
@@ -201,9 +201,6 @@ function MatchPage() {
 
   const persistAnswer = async (qId: string, choice: string | null) => {
     if (!user) return;
-    const q = questions.find((x) => x.id === qId);
-    if (!q) return;
-    const isCorrect = choice !== null && choice === q.correct_answer;
     await supabase
       .from("match_answers")
       .upsert(
@@ -212,7 +209,7 @@ function MatchPage() {
           user_id: user.id,
           question_id: qId,
           selected_answer: choice,
-          is_correct: isCorrect,
+          is_correct: false, // server recomputes on submit; never trust client
         },
         { onConflict: "match_id,user_id,question_id" },
       )

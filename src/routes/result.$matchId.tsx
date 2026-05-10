@@ -138,17 +138,13 @@ function ResultPage() {
         setEloChange(hist.elo_change);
       }
 
-      const { data: mq } = await supabase
-        .from("match_questions")
-        .select("question_id, questions(*)")
-        .eq("match_id", matchId)
-        .order("question_order", { ascending: true });
+      const { data: mq } = await supabase.rpc("get_match_review", {
+        _match_id: matchId,
+      });
       const qs: QuestionRow[] = (mq ?? [])
-        .map((row) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const q = (row as any).questions;
+        .map((q: Record<string, unknown>) => {
           if (!q) return null;
-          const rawOpts = Array.isArray(q.options) ? q.options : [];
+          const rawOpts = Array.isArray(q.options) ? (q.options as unknown[]) : [];
           const options: QuestionOpt[] = rawOpts.map((o: unknown, i: number) => {
             if (o && typeof o === "object" && "text" in (o as Record<string, unknown>)) {
               const obj = o as { id?: string; text: unknown };
@@ -157,13 +153,13 @@ function ResultPage() {
             return { id: String.fromCharCode(65 + i), text: String(o) };
           });
           return {
-            id: q.id,
-            question_text: q.question_text,
-            category: q.category,
+            id: q.question_id as string,
+            question_text: q.question_text as string,
+            category: q.category as string,
             options,
-            correct_answer: q.correct_answer,
-            passage_id: q.passage_id,
-            passage_text: q.passage_text,
+            correct_answer: q.correct_answer as string,
+            passage_id: (q.passage_id as string) ?? null,
+            passage_text: (q.passage_text as string) ?? null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
