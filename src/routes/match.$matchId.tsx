@@ -446,7 +446,7 @@ function MatchPage() {
           <h2 className="mb-5 whitespace-pre-wrap text-lg font-medium leading-snug">
             {currentQ.question_text}
           </h2>
-          <div className="grid gap-2">
+          <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
             {currentQ.options.map((opt, i) => {
               const letter = optionLetters[i] ?? String(i + 1);
               const isSelected = choice === letter || choice === opt;
@@ -454,8 +454,11 @@ function MatchPage() {
                 <button
                   key={i}
                   type="button"
+                  role="radio"
+                  aria-checked={isSelected}
+                  aria-label={`Alternativ ${letter}: ${opt}`}
                   onClick={() => selectAnswer(currentQ.id, letter)}
-                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition ${
+                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                     isSelected
                       ? "border-primary bg-primary/10 text-foreground"
                       : "border-border bg-background hover:border-primary/40"
