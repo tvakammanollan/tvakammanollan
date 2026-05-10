@@ -118,7 +118,9 @@ function MatchPage() {
 
       const { data: mq } = await supabase
         .from("match_questions")
-        .select("question_order, question_id, questions(*)")
+        .select(
+          "question_order, question_id, questions(id, category, question_text, options, passage_id, passage_text, difficulty)",
+        )
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
 
@@ -139,7 +141,6 @@ function MatchPage() {
             id: q.id,
             question_text: q.question_text,
             options,
-            correct_answer: q.correct_answer,
             category: q.category,
             passage_id: q.passage_id,
             passage_text: q.passage_text,
