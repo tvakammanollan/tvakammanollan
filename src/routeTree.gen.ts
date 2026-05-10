@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
@@ -17,6 +18,11 @@ import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
+  '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/signup'
+    | '/stats'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/signup'
+    | '/stats'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/signup'
+    | '/stats'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
+  StatsRoute: typeof StatsRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
@@ -123,6 +136,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
+  StatsRoute: StatsRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,

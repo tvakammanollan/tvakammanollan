@@ -32,6 +32,13 @@ export function Navbar() {
         <nav className="flex items-center gap-2">
           {loading ? null : user && profile ? (
             <>
+              <Link
+                to="/stats"
+                className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:inline-block"
+                activeProps={{ className: "hidden text-sm font-semibold text-foreground sm:inline-block" }}
+              >
+                Statistik
+              </Link>
               <div className="hidden items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-3 shadow-sm sm:inline-flex">
                 <UserAvatar name={profile.username} size={28} />
                 <span className="text-sm font-medium">{profile.username}</span>
