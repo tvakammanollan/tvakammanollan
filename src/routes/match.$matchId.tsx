@@ -40,7 +40,6 @@ interface QuestionRow {
   id: string;
   question_text: string;
   options: string[];
-  correct_answer: string;
   category: string;
   passage_id: string | null;
   passage_text: string | null;
