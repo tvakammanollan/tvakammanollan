@@ -97,7 +97,13 @@ function ResultPage() {
             id: q.id,
             question_text: q.question_text,
             category: q.category,
-            options: Array.isArray(q.options) ? q.options : [],
+            options: (Array.isArray(q.options) ? q.options : []).map((o: unknown) =>
+              typeof o === "string"
+                ? o
+                : o && typeof o === "object" && "text" in (o as Record<string, unknown>)
+                ? String((o as { text: unknown }).text)
+                : String(o),
+            ),
             correct_answer: q.correct_answer,
           } as QuestionRow;
         })
