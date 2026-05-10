@@ -353,6 +353,15 @@ function MatchPage() {
   if (waitingForOpp) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
+        {reconnecting && (
+          <div
+            className="w-full rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            role="status"
+            aria-live="polite"
+          >
+            Anslutningen bröts – försöker återansluta…
+          </div>
+        )}
         <h1 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
           Du har lämnat in.
         </h1>
