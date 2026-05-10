@@ -1,9 +1,19 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import confetti from "canvas-confetti";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { createMatch } from "@/lib/match.functions";
 import { Button } from "@/components/ui/button";
-import { Trophy, Frown, Minus } from "lucide-react";
+import { UserAvatar } from "@/components/UserAvatar";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home } from "lucide-react";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -16,35 +26,75 @@ interface MatchRow {
   player2_id: string | null;
   player1_score: number | null;
   player2_score: number | null;
+  player1_submitted_at: string | null;
+  player2_submitted_at: string | null;
   winner_id: string | null;
   is_bot_match: boolean;
   bot_elo: number | null;
   status: string;
+  created_at: string;
 }
 
 interface AnswerRow {
+  user_id: string;
   question_id: string;
   selected_answer: string | null;
   is_correct: boolean;
+}
+
+interface QuestionOpt {
+  id: string;
+  text: string;
 }
 
 interface QuestionRow {
   id: string;
   question_text: string;
   category: string;
-  options: string[];
+  options: QuestionOpt[];
   correct_answer: string;
+  passage_id: string | null;
+  passage_text: string | null;
+}
+
+const FAKE_NAMES = [
+  "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
+  "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
+  "wilmaP","edvin.t","felicia_k","axel.j",
+];
+function pickFakeName(seed: string): string {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
+}
+
+function formatDuration(startIso: string, endIso: string | null): string {
+  if (!endIso) return "—";
+  const ms = Math.max(0, new Date(endIso).getTime() - new Date(startIso).getTime());
+  const s = Math.floor(ms / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  return `${mm}:${ss}`;
 }
 
 function ResultPage() {
   const { matchId } = Route.useParams();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const createMatchFn = useServerFn(createMatch);
+
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [opponentName, setOpponentName] = useState("");
+  const [opponentSeed, setOpponentSeed] = useState("");
+  const [eloBefore, setEloBefore] = useState<number | null>(null);
+  const [eloAfter, setEloAfter] = useState<number | null>(null);
   const [eloChange, setEloChange] = useState<number | null>(null);
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
-  const [answers, setAnswers] = useState<AnswerRow[]>([]);
+  const [myAnswers, setMyAnswers] = useState<AnswerRow[]>([]);
+  const [oppAnswers, setOppAnswers] = useState<AnswerRow[]>([]);
+  const [showPassageMap, setShowPassageMap] = useState<Record<string, boolean>>({});
+  const [creatingRematch, setCreatingRematch] = useState(false);
+  const confettiFiredRef = useRef(false);
 
   useEffect(() => {
     if (loading) return;
@@ -60,25 +110,17 @@ function ResultPage() {
         .eq("id", matchId)
         .maybeSingle();
       if (cancelled || !m) return;
-      setMatch(m as MatchRow);
+      const mr = m as MatchRow;
+      setMatch(mr);
 
-      if ((m as MatchRow).is_bot_match) {
-        // Match the fake username used in the match page
-        let h = 0;
-        const id = (m as MatchRow).id;
-        for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
-        const names = [
-          "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
-          "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
-          "wilmaP","edvin.t","felicia_k","axel.j",
-        ];
-        setOpponentName(names[Math.abs(h) % names.length]);
+      // Opponent display
+      if (mr.is_bot_match) {
+        setOpponentSeed(mr.id);
+        setOpponentName(pickFakeName(mr.id));
       } else {
-        const oppId =
-          (m as MatchRow).player1_id === user.id
-            ? (m as MatchRow).player2_id
-            : (m as MatchRow).player1_id;
+        const oppId = mr.player1_id === user.id ? mr.player2_id : mr.player1_id;
         if (oppId) {
+          setOpponentSeed(oppId);
           const { data: u } = await supabase.from("users").select("username").eq("id", oppId).maybeSingle();
           setOpponentName(u?.username ?? "Motståndare");
         }
@@ -86,11 +128,15 @@ function ResultPage() {
 
       const { data: hist } = await supabase
         .from("elo_history")
-        .select("elo_change")
+        .select("elo_before, elo_after, elo_change")
         .eq("match_id", matchId)
         .eq("user_id", user.id)
         .maybeSingle();
-      setEloChange(hist?.elo_change ?? null);
+      if (hist) {
+        setEloBefore(hist.elo_before);
+        setEloAfter(hist.elo_after);
+        setEloChange(hist.elo_change);
+      }
 
       const { data: mq } = await supabase
         .from("match_questions")
@@ -102,36 +148,76 @@ function ResultPage() {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const q = (row as any).questions;
           if (!q) return null;
+          const rawOpts = Array.isArray(q.options) ? q.options : [];
+          const options: QuestionOpt[] = rawOpts.map((o: unknown, i: number) => {
+            if (o && typeof o === "object" && "text" in (o as Record<string, unknown>)) {
+              const obj = o as { id?: string; text: unknown };
+              return { id: obj.id ?? String.fromCharCode(65 + i), text: String(obj.text) };
+            }
+            return { id: String.fromCharCode(65 + i), text: String(o) };
+          });
           return {
             id: q.id,
             question_text: q.question_text,
             category: q.category,
-            options: (Array.isArray(q.options) ? q.options : []).map((o: unknown) =>
-              typeof o === "string"
-                ? o
-                : o && typeof o === "object" && "text" in (o as Record<string, unknown>)
-                ? String((o as { text: unknown }).text)
-                : String(o),
-            ),
+            options,
             correct_answer: q.correct_answer,
+            passage_id: q.passage_id,
+            passage_text: q.passage_text,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
       setQuestions(qs);
 
-      const { data: ans } = await supabase
+      const { data: mine } = await supabase
         .from("match_answers")
-        .select("question_id, selected_answer, is_correct")
+        .select("user_id, question_id, selected_answer, is_correct")
         .eq("match_id", matchId)
         .eq("user_id", user.id);
-      setAnswers((ans ?? []) as AnswerRow[]);
+      setMyAnswers((mine ?? []) as AnswerRow[]);
+
+      if (!mr.is_bot_match) {
+        const oppId = mr.player1_id === user.id ? mr.player2_id : mr.player1_id;
+        if (oppId) {
+          const { data: opp } = await supabase
+            .from("match_answers")
+            .select("user_id, question_id, selected_answer, is_correct")
+            .eq("match_id", matchId)
+            .eq("user_id", oppId);
+          setOppAnswers((opp ?? []) as AnswerRow[]);
+        }
+      }
     })();
     return () => {
       cancelled = true;
     };
   }, [matchId, user, loading, navigate]);
 
-  if (!match) {
+  // Confetti for winner
+  useEffect(() => {
+    if (!match || !user || confettiFiredRef.current) return;
+    if (match.winner_id !== user.id) return;
+    confettiFiredRef.current = true;
+    const fire = (origin: { x: number; y: number }) =>
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        startVelocity: 45,
+        origin,
+        colors: ["#d4a017", "#e8c468", "#1a5c3a", "#ffffff"],
+      });
+    fire({ x: 0.2, y: 0.3 });
+    fire({ x: 0.8, y: 0.3 });
+    setTimeout(() => fire({ x: 0.5, y: 0.25 }), 280);
+  }, [match, user]);
+
+  const myCorrectByQ = useMemo(() => {
+    const m = new Map<string, AnswerRow>();
+    for (const a of myAnswers) m.set(a.question_id, a);
+    return m;
+  }, [myAnswers]);
+
+  if (!match || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center text-muted-foreground">
         Laddar resultat…
@@ -142,77 +228,278 @@ function ResultPage() {
   const isP1 = match.player1_id === user!.id;
   const myScore = isP1 ? match.player1_score ?? 0 : match.player2_score ?? 0;
   const oppScore = isP1 ? match.player2_score ?? 0 : match.player1_score ?? 0;
+  const mySubmittedAt = isP1 ? match.player1_submitted_at : match.player2_submitted_at;
+  const oppSubmittedAt = isP1 ? match.player2_submitted_at : match.player1_submitted_at;
+  const myDuration = formatDuration(match.created_at, mySubmittedAt);
+  const oppDuration = formatDuration(match.created_at, oppSubmittedAt);
+
   const won = match.winner_id === user!.id;
   const draw = match.winner_id === null;
 
-  const verdict = draw ? "Oavgjort" : won ? "Du vann!" : "Du förlorade";
-  const Icon = draw ? Minus : won ? Trophy : Frown;
-  const verdictColor = draw
-    ? "text-muted-foreground"
+  // Banner styles
+  const bannerClass = draw
+    ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? "text-primary"
-    : "text-destructive";
+    ? "bg-gradient-to-br from-amber-300 via-amber-200 to-yellow-50 text-amber-900 border-amber-300 shadow-[0_20px_60px_-15px_rgba(212,160,23,0.55)]"
+    : "bg-gradient-to-br from-zinc-900 to-zinc-700 text-zinc-100 border-zinc-700";
+  const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
+  const Icon = draw ? Minus : won ? Trophy : Frown;
+  const subtext = draw
+    ? "Tätt och jämnt."
+    : won
+    ? "Snyggt jobbat. Spela igen och fortsätt klättra."
+    : "Bra kämpa! Varje match gör dig bättre.";
 
-  const answerMap = new Map(answers.map((a) => [a.question_id, a]));
+  const playAgain = async () => {
+    if (creatingRematch) return;
+    setCreatingRematch(true);
+    try {
+      const r = await createMatchFn({ data: { match_type: match.match_type, mode: "bot" } });
+      const nextId = (r as { match_id: string }).match_id;
+      navigate({ to: "/match/$matchId", params: { matchId: nextId } });
+    } catch (e) {
+      console.error(e);
+      setCreatingRematch(false);
+    }
+  };
+
+  // Group consecutive questions sharing passage_id
+  const passageGroups: Array<{ passage_id: string; passage_text: string; question_ids: string[] }> = [];
+  for (const q of questions) {
+    if (!q.passage_id || !q.passage_text) continue;
+    const last = passageGroups[passageGroups.length - 1];
+    if (last && last.passage_id === q.passage_id) last.question_ids.push(q.id);
+    else passageGroups.push({ passage_id: q.passage_id, passage_text: q.passage_text, question_ids: [q.id] });
+  }
+  const passageByQ = new Map<string, { passage_id: string; passage_text: string }>();
+  for (const g of passageGroups) for (const id of g.question_ids) passageByQ.set(id, g);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
-      <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-card sm:p-10">
-        <Icon className={`mx-auto h-12 w-12 ${verdictColor}`} />
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
+      {/* Banner */}
+      <div className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}>
+        <Icon className="mx-auto h-14 w-14" />
         <h1
-          className={`mt-3 text-3xl font-semibold ${verdictColor}`}
+          className="mt-3 text-3xl font-bold sm:text-4xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {verdict}
         </h1>
-        <div className="mt-6 flex items-center justify-center gap-6 text-2xl font-semibold tabular-nums">
-          <div>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Du</div>
-            <div>{myScore}</div>
-          </div>
-          <div className="text-muted-foreground">–</div>
-          <div>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">{opponentName}</div>
-            <div>{oppScore}</div>
-          </div>
-        </div>
-        {eloChange !== null && (
-          <div className="mt-5 inline-block rounded-full bg-muted px-4 py-1.5 text-sm font-semibold">
-            ELO {eloChange >= 0 ? "+" : ""}
-            {eloChange}
-          </div>
-        )}
-        <div className="mt-7 flex justify-center gap-2">
-          <Button asChild>
-            <Link to="/">Tillbaka hem</Link>
-          </Button>
-        </div>
+        <p className="mt-2 text-sm opacity-80 sm:text-base">{subtext}</p>
       </div>
 
-      <h2 className="mt-10 text-lg font-semibold">Genomgång</h2>
-      <div className="mt-3 grid gap-3">
-        {questions.map((q, i) => {
-          const a = answerMap.get(q.id);
-          const correct = a?.is_correct ?? false;
-          return (
-            <div
-              key={q.id}
-              className={`rounded-xl border p-4 ${
-                correct ? "border-primary/30 bg-primary/5" : "border-destructive/30 bg-destructive/5"
+      {/* Scorecard */}
+      <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
+        <div className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          {match.match_type === "verbal" ? "Verbal" : "Matte"} · Slutresultat
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <PlayerColumn
+            name={(user && (user.user_metadata?.username ?? user.email)) ?? "Du"}
+            seed={user!.id}
+            score={myScore}
+            duration={myDuration}
+            highlight={won}
+          />
+          <PlayerColumn
+            name={opponentName}
+            seed={opponentSeed}
+            score={oppScore}
+            duration={oppDuration}
+            highlight={!won && !draw}
+          />
+        </div>
+
+        {eloBefore !== null && eloAfter !== null && eloChange !== null && (
+          <div className="mt-5 flex items-center justify-center gap-2 text-sm">
+            <span className="text-muted-foreground">ELO {match.match_type}:</span>
+            <span className="font-semibold tabular-nums">{eloBefore}</span>
+            <span className="text-muted-foreground">→</span>
+            <span className="font-semibold tabular-nums">{eloAfter}</span>
+            <span
+              className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${
+                eloChange > 0
+                  ? "bg-emerald-100 text-emerald-700"
+                  : eloChange < 0
+                  ? "bg-rose-100 text-rose-700"
+                  : "bg-muted text-foreground"
               }`}
             >
-              <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                {i + 1}. {q.category} · {correct ? "Rätt" : "Fel"}
-              </div>
-              <div className="whitespace-pre-wrap text-sm">{q.question_text}</div>
-              <div className="mt-2 text-xs text-muted-foreground">
-                Ditt svar: <span className="font-medium text-foreground">{a?.selected_answer ?? "—"}</span>
-                {" · "}
-                Rätt svar: <span className="font-medium text-foreground">{q.correct_answer}</span>
-              </div>
-            </div>
-          );
-        })}
+              {eloChange >= 0 ? "+" : ""}
+              {eloChange}
+            </span>
+          </div>
+        )}
+      </section>
+
+      {/* Actions */}
+      <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <Button onClick={playAgain} disabled={creatingRematch} className="gap-1.5">
+          <RotateCcw className="h-4 w-4" />
+          Spela igen
+        </Button>
+        <Button asChild variant="secondary" className="gap-1.5">
+          <Link to="/stats">
+            <BarChart3 className="h-4 w-4" />
+            Gå till statistik
+          </Link>
+        </Button>
+        <Button asChild variant="ghost" className="gap-1.5">
+          <Link to="/">
+            <Home className="h-4 w-4" />
+            Hem
+          </Link>
+        </Button>
+      </div>
+
+      {/* Question review */}
+      <section className="mt-8">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="review" className="rounded-xl border border-border bg-card px-4">
+            <AccordionTrigger className="text-base font-semibold">
+              <span className="flex items-center gap-2">
+                <ChevronDown className="h-4 w-4 opacity-60" />
+                Genomgång av alla {questions.length} frågor
+              </span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <ol className="grid gap-3 pb-2">
+                {questions.map((q, i) => {
+                  const a = myCorrectByQ.get(q.id);
+                  const correct = a?.is_correct ?? false;
+                  const noAnswer = !a || a.selected_answer === null;
+                  const passage = passageByQ.get(q.id);
+                  const showP = passage ? !!showPassageMap[passage.passage_id] : false;
+                  return (
+                    <li
+                      key={q.id}
+                      className={`rounded-xl border p-4 ${
+                        noAnswer
+                          ? "border-zinc-300 bg-zinc-50"
+                          : correct
+                          ? "border-emerald-300/60 bg-emerald-50/60"
+                          : "border-rose-300/60 bg-rose-50/60"
+                      }`}
+                    >
+                      <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                        <span>{i + 1}.</span>
+                        <span>{q.category}</span>
+                        <span className="ml-auto inline-flex items-center gap-1">
+                          {noAnswer ? (
+                            <span className="text-zinc-600">— Ej besvarad</span>
+                          ) : correct ? (
+                            <>
+                              <Check className="h-3.5 w-3.5 text-emerald-700" /> Rätt
+                            </>
+                          ) : (
+                            <>
+                              <X className="h-3.5 w-3.5 text-rose-700" /> Fel
+                            </>
+                          )}
+                        </span>
+                      </div>
+
+                      {passage && (
+                        <div className="mb-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setShowPassageMap((m) => ({
+                                ...m,
+                                [passage.passage_id]: !m[passage.passage_id],
+                              }))
+                            }
+                            className="text-xs font-medium text-primary underline-offset-2 hover:underline"
+                          >
+                            {showP ? "Dölj textpassage" : "Visa textpassage"}
+                          </button>
+                          {showP && (
+                            <div className="mt-2 rounded-lg border border-border bg-background p-3 text-sm leading-relaxed whitespace-pre-wrap">
+                              {passage.passage_text}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                        {q.question_text}
+                      </div>
+                      <ul className="mt-2 grid gap-1">
+                        {q.options.map((opt) => {
+                          const isCorrect = opt.id === q.correct_answer;
+                          const isPicked = a?.selected_answer === opt.id;
+                          return (
+                            <li
+                              key={opt.id}
+                              className={`flex items-start gap-2 rounded-md border px-2.5 py-1.5 text-sm ${
+                                isCorrect
+                                  ? "border-emerald-300 bg-emerald-100/60 text-emerald-900"
+                                  : isPicked
+                                  ? "border-rose-300 bg-rose-100/60 text-rose-900"
+                                  : "border-transparent text-foreground/80"
+                              }`}
+                            >
+                              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
+                                {opt.id}
+                              </span>
+                              <span className="leading-relaxed">{opt.text}</span>
+                              {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-700" />}
+                              {isPicked && !isCorrect && <X className="ml-auto h-4 w-4 text-rose-700" />}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
+                  );
+                })}
+              </ol>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
+
+      {/* Hidden but available for future: opponent answers */}
+      {oppAnswers.length > 0 && (
+        <p className="mt-4 text-center text-xs text-muted-foreground">
+          Motståndaren svarade på {oppAnswers.length} frågor.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function PlayerColumn({
+  name,
+  seed,
+  score,
+  duration,
+  highlight,
+}: {
+  name: string;
+  seed: string;
+  score: number;
+  duration: string;
+  highlight: boolean;
+}) {
+  return (
+    <div
+      className={`flex flex-col items-center rounded-xl border p-4 text-center ${
+        highlight ? "border-primary/40 bg-primary/5" : "border-border bg-background"
+      }`}
+    >
+      <UserAvatar name={seed || name} size={48} />
+      <div className="mt-2 truncate text-sm font-semibold" title={name}>
+        {name}
+      </div>
+      <div
+        className="mt-2 text-3xl font-bold tabular-nums"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {score}
+        <span className="text-base font-normal text-muted-foreground">/8</span>
+      </div>
+      <div className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+        Tid: <span className="font-medium text-foreground">{duration}</span>
       </div>
     </div>
   );
