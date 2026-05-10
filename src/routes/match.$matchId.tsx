@@ -266,25 +266,54 @@ function MatchPage() {
     }
   };
 
-  // Wait for opponent (private)
+  // Wait for opponent (private) — with exponential-backoff reconnect
   useEffect(() => {
     if (!waitingForOpp) return;
     let opp = 30;
     setOppSecondsLeft(opp);
-    const channel = supabase
-      .channel(`match-${matchId}`)
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
-        (payload) => {
+
+    let attempts = 0;
+    let currentChannel: ReturnType<typeof supabase.channel> | null = null;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    let cancelled = false;
+
+    const handleUpdate = (payload: { new: { status?: string } }) => {
+      if (payload.new?.status === "finished") {
+        navigate({ to: "/result/$matchId", params: { matchId } });
+      }
+    };
+
+    const connect = () => {
+      if (cancelled) return;
+      const ch = supabase
+        .channel(`match-${matchId}-${attempts}`)
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const row = payload.new as any;
-          if (row.status === "finished") {
-            navigate({ to: "/result/$matchId", params: { matchId } });
+          (p) => handleUpdate(p as any),
+        )
+        .subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            attempts = 0;
+            setReconnecting(false);
+          } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+            if (cancelled) return;
+            setReconnecting(true);
+            if (attempts < 5) {
+              const delay = Math.min(16000, 1000 * Math.pow(2, attempts));
+              attempts += 1;
+              retryTimer = setTimeout(() => {
+                void supabase.removeChannel(ch);
+                connect();
+              }, delay);
+            }
           }
-        },
-      )
-      .subscribe();
+        });
+      currentChannel = ch;
+    };
+    connect();
+
     const id = setInterval(() => {
       opp -= 1;
       setOppSecondsLeft(opp);
@@ -293,9 +322,12 @@ function MatchPage() {
         navigate({ to: "/result/$matchId", params: { matchId } });
       }
     }, 1000);
+
     return () => {
+      cancelled = true;
       clearInterval(id);
-      void supabase.removeChannel(channel);
+      if (retryTimer) clearTimeout(retryTimer);
+      if (currentChannel) void supabase.removeChannel(currentChannel);
     };
   }, [waitingForOpp, matchId, navigate]);
 
