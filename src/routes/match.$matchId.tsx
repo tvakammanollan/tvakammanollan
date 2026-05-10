@@ -152,7 +152,7 @@ function MatchPage() {
     };
   }, [matchId, user, authLoading, navigate]);
 
-  // Timer
+  // Timer + fake opponent progress
   useEffect(() => {
     if (!match) return;
     const key = `match-start-${matchId}`;
@@ -161,10 +161,18 @@ function MatchPage() {
       start = Date.now();
       sessionStorage.setItem(key, String(start));
     }
+    // Deterministic fake opponent total time (3.5–7 min)
+    let h = 0;
+    for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
+    const oppTotal = 210 + (Math.abs(h) % 210); // seconds
     const tick = () => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
       setSecondsLeft(left);
+      // Smoother fake progress with mild jitter
+      const base = Math.min(0.98, elapsed / oppTotal);
+      const jitter = (Math.sin(elapsed / 7 + (h % 10)) + 1) * 0.01;
+      setOppProgress(Math.min(1, base + jitter));
       if (left === 0 && !submittedRef.current) {
         submittedRef.current = true;
         void doSubmit(true);
