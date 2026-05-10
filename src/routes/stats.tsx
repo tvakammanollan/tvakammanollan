@@ -390,8 +390,15 @@ function StatsPage() {
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (
-            <div className="flex h-32 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-sm text-muted-foreground">
-              Inga matcher spelade ännu
+            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-[#f0ede8]/40 px-4 py-10 text-center">
+              <Trophy className="h-10 w-10 text-[#c49a0e]/60" />
+              <div>
+                <p className="text-sm font-medium">Inga matcher ännu</p>
+                <p className="mt-1 text-xs text-muted-foreground">Starta din första battle för att se historik här.</p>
+              </div>
+              <Button asChild size="sm" className="bg-[#1a5c3a] text-white hover:bg-[#154d31]">
+                <Link to="/">Till hemskärmen</Link>
+              </Button>
             </div>
           ) : (
             <>
