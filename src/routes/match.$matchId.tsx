@@ -471,7 +471,7 @@ function MatchPage() {
             <AlertDialogTitle>Lämna in nu?</AlertDialogTitle>
             <AlertDialogDescription>
               {match.is_bot_match
-                ? "Boten räknar omedelbart fram sitt resultat."
+                ? "Resultatet räknas ut direkt."
                 : "Motståndaren får 30 sekunder på sig att avsluta."}
             </AlertDialogDescription>
           </AlertDialogHeader>
