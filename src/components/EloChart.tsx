@@ -80,13 +80,23 @@ export function EloChart({ userId }: { userId: string }) {
     <div className="h-56 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
-          <CartesianGrid stroke="oklch(0.92 0.01 85)" strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="date" stroke="oklch(0.55 0 0)" fontSize={11} tickLine={false} />
-          <YAxis stroke="oklch(0.55 0 0)" fontSize={11} tickLine={false} domain={["dataMin - 30", "dataMax + 30"]} />
+          <defs>
+            <linearGradient id="eloVerbalFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#1a5c3a" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#1a5c3a" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="eloMathFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#d4a017" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#d4a017" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid stroke="#e2ddd6" strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="date" stroke="#9c948c" fontSize={11} tickLine={false} />
+          <YAxis stroke="#9c948c" fontSize={11} tickLine={false} domain={["dataMin - 30", "dataMax + 30"]} />
           <Tooltip
             contentStyle={{
               borderRadius: 10,
-              border: "1px solid oklch(0.90 0.01 85)",
+              border: "1px solid #e2ddd6",
               fontSize: 12,
               boxShadow: "0 8px 24px -8px rgb(0 0 0 / 0.12)",
             }}
@@ -97,18 +107,20 @@ export function EloChart({ userId }: { userId: string }) {
             type="monotone"
             dataKey="verbal"
             name="Verbal"
-            stroke="oklch(0.42 0.10 155)"
+            stroke="#1a5c3a"
             strokeWidth={2.5}
-            dot={{ r: 3 }}
+            dot={{ r: 3, fill: "#1a5c3a" }}
+            fill="url(#eloVerbalFill)"
             connectNulls
           />
           <Line
             type="monotone"
             dataKey="math"
             name="Matte"
-            stroke="oklch(0.74 0.14 85)"
+            stroke="#d4a017"
             strokeWidth={2.5}
-            dot={{ r: 3 }}
+            dot={{ r: 3, fill: "#d4a017" }}
+            fill="url(#eloMathFill)"
             connectNulls
           />
         </LineChart>
