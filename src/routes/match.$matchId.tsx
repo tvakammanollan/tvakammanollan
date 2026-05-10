@@ -411,8 +411,14 @@ function MatchPage() {
                 Nästa fråga
               </Button>
             ) : (
-              <Button disabled={!choice} onClick={() => persistAnswer(currentQ.id, choice!)}>
-                Spara svar
+              <Button
+                disabled={!choice || submitting}
+                onClick={async () => {
+                  if (choice) await persistAnswer(currentQ.id, choice);
+                  setConfirmOpen(true);
+                }}
+              >
+                Lämna in svar
               </Button>
             )}
           </div>
