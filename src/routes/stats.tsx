@@ -280,7 +280,7 @@ function StatsPage() {
         {/* ELO chart */}
         <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="text-lg font-semibold">ELO över tid</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
             <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
           </div>
           {eloPoints.length < 2 ? (
@@ -340,7 +340,7 @@ function StatsPage() {
         {/* Delprov breakdown */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="text-lg font-semibold">Delprov-prestation</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
             <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
           </div>
           {breakdownData.every((b) => !b.enough) ? (
@@ -386,12 +386,19 @@ function StatsPage() {
         {/* Match history */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="text-lg font-semibold">Matchhistorik</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (
-            <div className="flex h-32 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-sm text-muted-foreground">
-              Inga matcher spelade ännu
+            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-[#f0ede8]/40 px-4 py-10 text-center">
+              <Trophy className="h-10 w-10 text-[#c49a0e]/60" />
+              <div>
+                <p className="text-sm font-medium">Inga matcher ännu</p>
+                <p className="mt-1 text-xs text-muted-foreground">Starta din första battle för att se historik här.</p>
+              </div>
+              <Button asChild size="sm" className="bg-[#1a5c3a] text-white hover:bg-[#154d31]">
+                <Link to="/">Till hemskärmen</Link>
+              </Button>
             </div>
           ) : (
             <>

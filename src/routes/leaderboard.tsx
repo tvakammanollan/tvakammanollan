@@ -172,19 +172,37 @@ function Board({
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
   const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
+  const tintBg = isMe
+    ? "bg-[#e8f2ec]"
+    : r.rank === 1
+    ? "bg-[#fdf3d0]"
+    : r.rank === 2
+    ? "bg-[#f0f2f5]"
+    : r.rank === 3
+    ? "bg-[#faf0e8]"
+    : "";
   return (
     <tr
-      className={`border-t border-border ${
-        isMe ? "bg-primary/10 font-semibold" : "hover:bg-muted/30"
+      className={`border-t border-border transition-colors ${tintBg} ${
+        isMe ? "font-semibold" : "hover:bg-[#f0ede8]"
       }`}
     >
-      <td className="px-3 py-2 tabular-nums">
-        {medal ?? `#${r.rank}`}
+      <td className="px-3 py-2.5 tabular-nums">
+        {medal ?? <span className="text-muted-foreground">#{r.rank}</span>}
       </td>
-      <td className="px-3 py-2">{r.username}{isMe ? " (du)" : ""}</td>
-      <td className="px-3 py-2 text-right tabular-nums">{r.elo}</td>
-      <td className="hidden px-3 py-2 text-right tabular-nums sm:table-cell">{r.games_played}</td>
-      <td className="px-3 py-2 text-right tabular-nums">{wr}%</td>
+      <td className="px-3 py-2.5">
+        <span className="inline-flex items-center gap-2">
+          {r.username}
+          {isMe && (
+            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+              Du
+            </span>
+          )}
+        </span>
+      </td>
+      <td className="px-3 py-2.5 text-right tabular-nums font-semibold">{r.elo}</td>
+      <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">{r.games_played}</td>
+      <td className="px-3 py-2.5 text-right tabular-nums">{wr}%</td>
     </tr>
   );
 }

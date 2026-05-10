@@ -240,8 +240,8 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? "bg-gradient-to-br from-amber-300 via-amber-200 to-yellow-50 text-amber-900 border-amber-300 shadow-[0_20px_60px_-15px_rgba(212,160,23,0.55)]"
-    : "bg-gradient-to-br from-zinc-900 to-zinc-700 text-zinc-100 border-zinc-700";
+    ? "bg-gradient-to-br from-[#1a5c3a] via-[#236d44] to-[#2d7a52] text-white border-[#1a5c3a] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
+    : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
@@ -277,10 +277,13 @@ function ResultPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       {/* Banner */}
-      <div className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}>
-        <Icon className="mx-auto h-14 w-14" />
+      <div
+        className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
+        style={{ animationDelay: "60ms" }}
+      >
+        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#1a5c3a]" : ""}`} />
         <h1
-          className="mt-3 text-3xl font-bold sm:text-4xl"
+          className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
           {verdict}

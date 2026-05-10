@@ -384,15 +384,23 @@ function MatchPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+      <header
+        className="sticky top-0 z-20 border-b border-border"
+        style={{
+          background: "rgba(249,247,244,0.92)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+        }}
+      >
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 pt-3 pb-2">
           <div className="text-sm font-semibold tabular-nums">
-            Fråga {current + 1}/{questions.length}
+            Fråga {current + 1} av {questions.length}
           </div>
           <div
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold tabular-nums ${
-              timerLow ? "bg-destructive/15 text-destructive" : "bg-muted text-foreground"
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold tabular-nums ${
+              timerLow ? "animate-pulse-soft bg-[#c0392b]/15 text-[#c0392b]" : "bg-muted text-foreground"
             }`}
+            style={{ fontFamily: "ui-monospace, 'DM Mono', monospace" }}
           >
             <Clock className="h-3.5 w-3.5" />
             {mm}:{ss}
@@ -401,7 +409,14 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
-        <div className="mx-auto max-w-3xl px-4 pb-2">
+        {/* Question progress bar */}
+        <div className="h-[3px] w-full bg-[#f0ede8]">
+          <div
+            className="h-full bg-[#1a5c3a] transition-all duration-300 ease-out"
+            style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+          />
+        </div>
+        <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
           <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
             <span className="truncate">{opponentName || "Motståndare"}</span>
             <span className="tabular-nums">{Math.round(oppProgress * 8)}/8</span>
@@ -439,11 +454,18 @@ function MatchPage() {
           )
         )}
 
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-          <div className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+        <div
+          key={currentQ.id}
+          className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
+          style={{ boxShadow: "var(--shadow-md)" }}
+        >
+          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
             {currentQ.category} · Fråga {current + 1}
           </div>
-          <h2 className="mb-5 whitespace-pre-wrap text-lg font-medium leading-snug">
+          <h2
+            className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
+            style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+          >
             {currentQ.question_text}
           </h2>
           <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
@@ -458,15 +480,15 @@ function MatchPage() {
                   aria-checked={isSelected}
                   aria-label={`Alternativ ${letter}: ${opt}`}
                   onClick={() => selectAnswer(currentQ.id, letter)}
-                  className={`flex min-h-[48px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                  className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 ${
                     isSelected
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-background hover:border-primary/40"
+                      ? "border-2 border-[#1a5c3a] bg-[#e8f2ec] text-foreground"
+                      : "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50"
                   }`}
                 >
                   <span
-                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
-                      isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
+                      isSelected ? "bg-[#1a5c3a] text-white" : "bg-[#f0ede8] text-foreground"
                     }`}
                   >
                     {letter}
