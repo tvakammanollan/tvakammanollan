@@ -63,7 +63,16 @@ function ResultPage() {
       setMatch(m as MatchRow);
 
       if ((m as MatchRow).is_bot_match) {
-        setOpponentName(`Bot (ELO ${(m as MatchRow).bot_elo ?? "?"})`);
+        // Match the fake username used in the match page
+        let h = 0;
+        const id = (m as MatchRow).id;
+        for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
+        const names = [
+          "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
+          "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
+          "wilmaP","edvin.t","felicia_k","axel.j",
+        ];
+        setOpponentName(names[Math.abs(h) % names.length]);
       } else {
         const oppId =
           (m as MatchRow).player1_id === user.id
