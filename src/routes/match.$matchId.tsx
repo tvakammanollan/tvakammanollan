@@ -77,6 +77,13 @@ function MatchPage() {
   const [oppProgress, setOppProgress] = useState(0);
   const [reconnecting, setReconnecting] = useState(false);
   const submittedRef = useRef(false);
+  const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
+  const answerTimesRef = useRef<Record<string, number>>({});
+
+  // Reset question timer when current changes
+  useEffect(() => {
+    setQuestionStartTime(new Date());
+  }, [current]);
 
   // Load match + questions
   useEffect(() => {
