@@ -238,8 +238,9 @@ function ResultPage() {
   const myDuration = formatDuration(match.created_at, mySubmittedAt);
   const oppDuration = formatDuration(match.created_at, oppSubmittedAt);
 
-  const won = match.winner_id === user!.id;
-  const draw = match.winner_id === null;
+  const scoreDelta = myScore - oppScore;
+  const won = scoreDelta > 0;
+  const draw = scoreDelta === 0;
 
   // Banner styles
   const bannerClass = draw
