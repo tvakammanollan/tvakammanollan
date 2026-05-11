@@ -62,6 +62,33 @@ export type Database = {
           },
         ]
       }
+      friendships: {
+        Row: {
+          addressee_id: string
+          created_at: string
+          id: string
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          addressee_id: string
+          created_at?: string
+          id?: string
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          addressee_id?: string
+          created_at?: string
+          id?: string
+          requester_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       match_answers: {
         Row: {
           answered_at: string
@@ -113,6 +140,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      match_invites: {
+        Row: {
+          created_at: string
+          expires_at: string
+          from_user: string
+          id: string
+          match_id: string
+          match_type: string
+          status: string
+          to_user: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          from_user: string
+          id?: string
+          match_id: string
+          match_type: string
+          status?: string
+          to_user: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          from_user?: string
+          id?: string
+          match_id?: string
+          match_type?: string
+          status?: string
+          to_user?: string
+        }
+        Relationships: []
       }
       match_questions: {
         Row: {
@@ -312,6 +372,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      find_user_by_username: {
+        Args: { _username: string }
+        Returns: {
+          id: string
+          username: string
+        }[]
+      }
       get_leaderboard: {
         Args: { _match_type: string }
         Returns: {
