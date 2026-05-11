@@ -55,11 +55,25 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
 // Record one practice answer for the signed-in user.
 export const recordOrdAnswer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: { correct: boolean }) =>
-    z.object({ correct: z.boolean() }).parse(data),
+  .inputValidator((data: { correct: boolean; questionId?: string }) =>
+    z
+      .object({
+        correct: z.boolean(),
+        questionId: z.string().uuid().optional(),
+      })
+      .parse(data),
   )
   .handler(async ({ data, context }) => {
     const { userId } = context;
+    // Mark this question as "correctly answered" for this user (idempotent).
+    if (data.correct && data.questionId) {
+      await supabaseAdmin
+        .from("user_word_correct")
+        .upsert(
+          { user_id: userId, question_id: data.questionId },
+          { onConflict: "user_id,question_id", ignoreDuplicates: true },
+        );
+    }
     const { data: existing } = await supabaseAdmin
       .from("ord_practice_stats")
       .select("correct_count, total_count")

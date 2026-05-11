@@ -113,7 +113,9 @@ function OrdPracticePage() {
     if (isCorrect) sounds.correct();
     else sounds.wrong();
     // Persist to leaderboard (fire-and-forget; ignore failures e.g. for guests)
-    void recordAnswer({ data: { correct: isCorrect } }).catch(() => {});
+    void recordAnswer({
+      data: { correct: isCorrect, questionId: current.id },
+    }).catch(() => {});
   };
 
   const next = () => {
