@@ -478,9 +478,7 @@ function MatchPage() {
     );
   }
 
-  const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
-  const ss = String(secondsLeft % 60).padStart(2, "0");
-  const timerLow = secondsLeft < 60;
+  // mm/ss + low styling are handled inside <CircularTimer />.
 
   if (waitingForOpp) {
     return (
@@ -528,14 +526,9 @@ function MatchPage() {
           <div className="text-sm font-semibold tabular-nums">
             Fråga {current + 1} av {questions.length}
           </div>
-          <div
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-bold tabular-nums ${
-              timerLow ? "animate-pulse-soft bg-[#c0392b]/15 text-[#c0392b]" : "bg-muted text-foreground"
-            }`}
-            style={{ fontFamily: "ui-monospace, 'DM Mono', monospace" }}
-          >
-            <Clock className="h-3.5 w-3.5" />
-            {mm}:{ss}
+          <div className="flex items-center gap-2">
+            <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
+            <TimerSoundToggle />
           </div>
           <div className="hidden text-xs text-muted-foreground sm:block">
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
