@@ -20,6 +20,11 @@ export function isAutoUsername(username: string | null | undefined): boolean {
   return !!username && /^user_[0-9a-f]{8}$/.test(username);
 }
 
+export function isGuestUser(user: User | null | undefined): boolean {
+  if (!user) return false;
+  return user.is_anonymous === true || user.app_metadata?.provider === "anonymous" || !user.email;
+}
+
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -47,11 +52,7 @@ export function useAuth() {
     if (!user) return;
     let cancelled = false;
     (async () => {
-      const { data } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle();
+      const { data } = await supabase.from("users").select("*").eq("id", user.id).maybeSingle();
       if (!cancelled) setProfile((data as Profile) ?? null);
     })();
     return () => {
