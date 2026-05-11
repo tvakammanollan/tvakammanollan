@@ -7,7 +7,7 @@ export type HpScoreEstimate = {
 const ELO_TO_HP_MAP = [
   { minElo: 0,    maxElo: 749,  score: "0.6", range: "0.5–0.7", description: "Under godkänt" },
   { minElo: 750,  maxElo: 899,  score: "0.8", range: "0.7–0.9", description: "Under godkänt" },
-  { minElo: 900,  maxElo: 1049, score: "1.0", range: "0.9–1.1", description: "Precis godkänt" },
+  { minElo: 900,  maxElo: 1049, score: "1.0", range: "0.9–1.1", description: "Godkänt" },
   { minElo: 1050, maxElo: 1199, score: "1.2", range: "1.1–1.3", description: "Godkänt" },
   { minElo: 1200, maxElo: 1349, score: "1.4", range: "1.3–1.5", description: "Bra resultat" },
   { minElo: 1350, maxElo: 1499, score: "1.6", range: "1.5–1.7", description: "Mycket bra" },
