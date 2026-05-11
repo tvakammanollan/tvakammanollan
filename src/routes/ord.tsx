@@ -197,6 +197,14 @@ function OrdPracticePage() {
                 Förbereder pass…
               </p>
             )}
+            <div className="mt-5 border-t border-border pt-4 text-center">
+              <Link
+                to="/leaderboard"
+                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                🏆 Se ord-topplistan →
+              </Link>
+            </div>
           </section>
         )}
 
