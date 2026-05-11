@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
+import { StreakWidget } from "@/components/ui/StreakWidget";
+import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
