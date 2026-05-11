@@ -16,6 +16,7 @@ import {
   fetchWordBatch,
   countOrdQuestions,
   recordOrdAnswer,
+  getWordProgress,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
@@ -65,6 +66,7 @@ interface AnsweredItem {
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
+  const fetchProgress = useServerFn(getWordProgress);
   const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
@@ -75,19 +77,39 @@ function OrdPracticePage() {
   const [answered, setAnswered] = useState<AnsweredItem[]>([]);
   const [poolSize, setPoolSize] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState<{
+    correctCount: number;
+    totalCount: number;
+    userId: string;
+  } | null>(null);
+  const [excludeCorrect, setExcludeCorrect] = useState(false);
+
+  const loadProgress = useCallback(() => {
+    void fetchProgress({})
+      .then((p) => setProgress(p))
+      .catch(() => setProgress(null));
+  }, [fetchProgress]);
 
   useEffect(() => {
     void fetchCount({})
       .then((c) => setPoolSize(c.count))
       .catch(() => setPoolSize(0));
-  }, [fetchCount]);
+    loadProgress();
+  }, [fetchCount, loadProgress]);
 
   const startSession = useCallback(
     async (n: SessionLength) => {
       setTarget(n);
       setLoading(true);
       try {
-        const res = await fetchBatch({ data: { count: n, exclude: [] } });
+        const res = await fetchBatch({
+          data: {
+            count: n,
+            exclude: [],
+            excludeCorrectForUserId:
+              excludeCorrect && progress ? progress.userId : undefined,
+          },
+        });
         setBatch(res.questions);
         setIdx(0);
         setPicked(null);
@@ -100,7 +122,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch],
+    [fetchBatch, excludeCorrect, progress],
   );
 
   const current = batch[idx];
@@ -122,6 +144,7 @@ function OrdPracticePage() {
     sounds.click();
     if (idx + 1 >= batch.length) {
       setPhase("summary");
+      loadProgress();
     } else {
       setIdx((i) => i + 1);
       setPicked(null);
@@ -135,6 +158,7 @@ function OrdPracticePage() {
     setAnswered([]);
     setIdx(0);
     setPicked(null);
+    loadProgress();
   };
 
   const correctCount = answered.filter((a) => a.isCorrect).length;
@@ -206,6 +230,55 @@ function OrdPracticePage() {
                 Förbereder pass…
               </p>
             )}
+
+            {progress && progress.totalCount > 0 && (
+              <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Dina rätt besvarade ord
+                  </span>
+                  <span className="text-sm font-semibold tabular-nums text-[#1a5c3a]">
+                    {progress.correctCount.toLocaleString("sv-SE")} /{" "}
+                    {progress.totalCount.toLocaleString("sv-SE")}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full bg-[#1a5c3a] transition-all duration-500"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        (progress.correctCount / progress.totalCount) * 100,
+                      )}%`,
+                    }}
+                  />
+                </div>
+                <label className="mt-4 flex cursor-pointer items-center justify-between gap-3">
+                  <span className="text-sm">
+                    Filtrera bort ord jag redan svarat rätt på
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={excludeCorrect}
+                    onChange={(e) => setExcludeCorrect(e.target.checked)}
+                    disabled={
+                      progress.correctCount >= progress.totalCount ||
+                      progress.correctCount === 0
+                    }
+                    className="h-5 w-5 rounded border-border accent-[#1a5c3a] disabled:opacity-40"
+                  />
+                </label>
+                {excludeCorrect &&
+                  progress.totalCount - progress.correctCount < 10 && (
+                    <p className="mt-2 text-xs text-amber-700">
+                      Endast{" "}
+                      {progress.totalCount - progress.correctCount} ord kvar
+                      med detta filter.
+                    </p>
+                  )}
+              </div>
+            )}
+
             <div className="mt-5 border-t border-border pt-4 text-center">
               <Link
                 to="/leaderboard"
@@ -293,10 +366,7 @@ function OrdPracticePage() {
                 </div>
 
                 {picked && (
-                  <div className="mt-6 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {current.source ? `Källa: ${current.source.split(":")[0]}` : ""}
-                    </span>
+                  <div className="mt-6 flex items-center justify-end">
                     <Button onClick={next} className="gap-2">
                       {idx + 1 >= target ? "Visa resultat" : "Nästa"}{" "}
                       <ArrowRight className="h-4 w-4" />

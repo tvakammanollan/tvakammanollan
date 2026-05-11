@@ -12,24 +12,38 @@ export type WordQuestion = {
 };
 
 export const fetchWordBatch = createServerFn({ method: "GET" })
-  .inputValidator((data: { count?: number; exclude?: string[] }) =>
-    z
-      .object({
-        count: z.number().int().min(1).max(50).optional().default(20),
-        exclude: z.array(z.string().uuid()).optional().default([]),
-      })
-      .parse(data ?? {}),
+  .inputValidator(
+    (data: {
+      count?: number;
+      exclude?: string[];
+      excludeCorrectForUserId?: string;
+    }) =>
+      z
+        .object({
+          count: z.number().int().min(1).max(50).optional().default(20),
+          exclude: z.array(z.string().uuid()).optional().default([]),
+          excludeCorrectForUserId: z.string().uuid().optional(),
+        })
+        .parse(data ?? {}),
   )
   .handler(async ({ data }) => {
     const supabase = supabaseAdmin;
+    let excludeIds = new Set(data.exclude);
+    if (data.excludeCorrectForUserId) {
+      const { data: correctRows } = await supabase
+        .from("user_word_correct")
+        .select("question_id")
+        .eq("user_id", data.excludeCorrectForUserId);
+      for (const r of correctRows ?? []) excludeIds.add(r.question_id as string);
+    }
     const { data: rows, error } = await supabase
       .from("questions")
       .select("id,question_text,options,correct_answer,source")
       .eq("category", "ORD")
-      .limit(500);
+      .limit(10000);
     if (error) throw new Error(error.message);
     const filtered = (rows ?? []).filter(
-      (r: { id: string }) => !data.exclude.includes(r.id as string),
+      (r: { id: string }) => !excludeIds.has(r.id as string),
     );
     for (let i = filtered.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -38,6 +52,23 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     return {
       questions: filtered.slice(0, data.count) as WordQuestion[],
     };
+  });
+
+export const getWordProgress = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { userId } = context;
+    const [{ count: total }, { count: correct }] = await Promise.all([
+      supabaseAdmin
+        .from("questions")
+        .select("id", { count: "exact", head: true })
+        .eq("category", "ORD"),
+      supabaseAdmin
+        .from("user_word_correct")
+        .select("question_id", { count: "exact", head: true })
+        .eq("user_id", userId),
+    ]);
+    return { correctCount: correct ?? 0, totalCount: total ?? 0, userId };
   });
 
 export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
