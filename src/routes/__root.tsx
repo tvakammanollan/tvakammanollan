@@ -12,6 +12,9 @@ import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
+import { useEffect } from "react";
+import { installGlobalClickSound } from "@/lib/sounds";
+import { FriendInviteListener } from "@/components/FriendInviteListener";
 
 installSupabaseFetchAuth();
 
@@ -125,6 +128,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    installGlobalClickSound();
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
@@ -132,6 +138,7 @@ function RootComponent() {
         <main className="animate-fade-up">
           <Outlet />
         </main>
+        <FriendInviteListener />
         <Toaster richColors position="top-center" />
       </div>
     </QueryClientProvider>

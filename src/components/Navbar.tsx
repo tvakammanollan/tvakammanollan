@@ -38,6 +38,7 @@ export function Navbar() {
           {loading ? null : user && profile ? (
             <>
               <NavLink to="/leaderboard">Topplista</NavLink>
+              <NavLink to="/friends">Vänner</NavLink>
               <NavLink to="/stats">Statistik</NavLink>
               <div className="hidden items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-3 sm:inline-flex"
                 style={{ boxShadow: "var(--shadow-sm)" }}

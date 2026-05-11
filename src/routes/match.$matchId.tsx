@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 import { Clock, LogOut } from "lucide-react";
 import { MathText } from "@/components/MathText";
+import { sounds } from "@/lib/sounds";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -155,11 +156,34 @@ function MatchPage() {
     };
   }, [matchId, user, authLoading, navigate]);
 
-  // Timer + fake opponent progress (timer is server-truth: created_at + 480s)
+  // Timer + opponent progress
+  // - Bot match: deterministic fake progress
+  // - Real match: Supabase Realtime broadcast for live opponent progress
+  //               + postgres_changes to detect when opponent submitted -> 30s countdown
+  const [oppForceCountdown, setOppForceCountdown] = useState<number | null>(null);
+
   useEffect(() => {
     if (!match) return;
     const start = new Date(match.created_at).getTime();
-    // Deterministic fake opponent: 8 question-jumps with varied delays
+    const tick = () => {
+      const elapsed = Math.floor((Date.now() - start) / 1000);
+      const left = Math.max(0, TOTAL_SECONDS - elapsed);
+      setSecondsLeft(left);
+      if (left === 0 && !submittedRef.current) {
+        submittedRef.current = true;
+        void doSubmit(true);
+      }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match]);
+
+  // Bot match: deterministic fake opponent progress
+  useEffect(() => {
+    if (!match || !match.is_bot_match) return;
+    const start = new Date(match.created_at).getTime();
     let h = 0;
     for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
     const rand = (i: number) => {
@@ -171,28 +195,91 @@ function MatchPage() {
       acc.push((acc[acc.length - 1] ?? 0) + t);
       return acc;
     }, []);
-    const tick = () => {
+    const id = setInterval(() => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
-      const left = Math.max(0, TOTAL_SECONDS - elapsed);
-      setSecondsLeft(left);
       let answered = 0;
       for (const t of cumulative) if (elapsed >= t) answered++;
       setOppProgress(answered / 8);
-      if (left === 0 && !submittedRef.current) {
+    }, 1000);
+    return () => clearInterval(id);
+  }, [match, matchId]);
+
+  // Real match: realtime broadcast opp progress + detect submission
+  useEffect(() => {
+    if (!match || match.is_bot_match || !user) return;
+    const oppId = match.player1_id === user.id ? match.player2_id : match.player1_id;
+    const channel = supabase
+      .channel(`match-progress-${matchId}`, {
+        config: { broadcast: { self: false } },
+      })
+      .on("broadcast", { event: "progress" }, (payload) => {
+        const p = payload.payload as { user_id: string; index: number; total: number };
+        if (p.user_id === oppId) {
+          setOppProgress(Math.min(1, (p.index + 1) / Math.max(1, p.total)));
+        }
+      })
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
+        (payload) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const row = payload.new as any;
+          const oppSubmitted =
+            match.player1_id === user.id ? row.player2_submitted_at : row.player1_submitted_at;
+          if (oppSubmitted && !submittedRef.current && oppForceCountdown === null) {
+            setOppForceCountdown(30);
+            sounds.invite();
+            toast.info("Motståndaren är klar – du har 30 sekunder kvar!");
+          }
+        },
+      )
+      .subscribe();
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [match, matchId, user, oppForceCountdown]);
+
+  // Broadcast my own progress whenever current changes
+  useEffect(() => {
+    if (!match || match.is_bot_match || !user || questions.length === 0) return;
+    const channel = supabase.channel(`match-progress-${matchId}`);
+    channel.subscribe((status) => {
+      if (status === "SUBSCRIBED") {
+        void channel.send({
+          type: "broadcast",
+          event: "progress",
+          payload: { user_id: user.id, index: current, total: questions.length },
+        });
+      }
+    });
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [match, matchId, user, current, questions.length]);
+
+  // 30s forced countdown when opponent submitted
+  useEffect(() => {
+    if (oppForceCountdown === null) return;
+    if (oppForceCountdown <= 0) {
+      if (!submittedRef.current) {
         submittedRef.current = true;
         void doSubmit(true);
       }
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
+      return;
+    }
+    const id = setTimeout(() => {
+      setOppForceCountdown((s) => (s === null ? null : s - 1));
+      if (oppForceCountdown <= 5) sounds.tick();
+    }, 1000);
+    return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match, matchId]);
+  }, [oppForceCountdown]);
 
   const currentQ = questions[current];
 
   const selectAnswer = async (qId: string, choice: string) => {
     if (!user || !currentQ) return;
+    sounds.ping();
     setAnswers((m) => {
       const next = new Map(m);
       next.set(qId, choice);
@@ -407,25 +494,40 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
-        {/* Question progress bar */}
-        <div className="h-[3px] w-full bg-[#f0ede8]">
-          <div
-            className="h-full bg-[#1a5c3a] transition-all duration-300 ease-out"
-            style={{ width: `${((current + 1) / questions.length) * 100}%` }}
-          />
-        </div>
+        {/* Dual progress bars: own + opponent (proportional, jumps per question) */}
         <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
-          <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
-            <span className="truncate">{opponentName || "Motståndare"}</span>
-            <span className="tabular-nums">{Math.round(oppProgress * 8)}/8</span>
-          </div>
-          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full bg-primary/70 transition-all duration-700"
-              style={{ width: `${oppProgress * 100}%` }}
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="font-medium text-foreground">Du</span>
+                <span className="tabular-nums text-muted-foreground">{current + 1}/{questions.length}</span>
+              </div>
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full bg-[#1a5c3a] transition-all duration-500 ease-out"
+                  style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="truncate font-medium text-foreground">{opponentName || "Motståndare"}</span>
+                <span className="tabular-nums text-muted-foreground">{Math.round(oppProgress * questions.length)}/{questions.length}</span>
+              </div>
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full bg-[#d4a017] transition-all duration-700 ease-out"
+                  style={{ width: `${oppProgress * 100}%` }}
+                />
+              </div>
+            </div>
           </div>
         </div>
+        {oppForceCountdown !== null && (
+          <div className="border-t border-[#c0392b]/30 bg-[#c0392b]/10 px-4 py-2 text-center text-xs font-semibold text-[#c0392b]">
+            ⏱ Motståndaren är klar! Auto-inlämning om {oppForceCountdown}s
+          </div>
+        )}
       </header>
 
       {/* Main */}
