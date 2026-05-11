@@ -104,6 +104,27 @@ export function HomeDashboard() {
         />
       </section>
 
+      {/* Solo word practice */}
+      <section className="mt-4">
+        <a
+          href="/ord"
+          className="group flex items-center justify-between rounded-2xl border border-border bg-white px-5 py-4 shadow-card transition-all hover:-translate-y-0.5"
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e8f2ec] text-[#1a5c3a]">
+              <GraduationCap className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-base font-semibold">Öva ord (solo)</div>
+              <div className="text-xs text-muted-foreground">
+                950+ riktiga ORD-frågor från tidigare HP · helt själv, ingen motståndare
+              </div>
+            </div>
+          </div>
+          <span className="text-sm text-primary group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </section>
+
       <MatchmakerModal
         open={matchOpen}
         onOpenChange={setMatchOpen}
