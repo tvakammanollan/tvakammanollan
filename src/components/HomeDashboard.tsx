@@ -116,6 +116,19 @@ export function HomeDashboard() {
         />
       </section>
 
+      {/* Train mode (no time pressure) */}
+      <section className="mt-4">
+        <a
+          href="/train"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#1a5c3a] bg-transparent px-5 py-3 text-base font-semibold text-[#1a5c3a] transition hover:bg-[#e8f2ec]"
+        >
+          📖 Träna utan tidsbegränsning
+        </a>
+        <p className="mt-1.5 text-center text-xs text-muted-foreground">
+          Välj delprov, svårighetsgrad och antal frågor
+        </p>
+      </section>
+
       {/* Solo word practice */}
       <section className="mt-4">
         <a
