@@ -669,3 +669,106 @@ function MatchPage() {
     </div>
   );
 }
+
+interface QuestionCardProps {
+  currentQ: QuestionRow;
+  current: number;
+  total: number;
+  choice: string | undefined;
+  selectAnswer: (qId: string, choice: string) => void | Promise<void>;
+  setCurrent: React.Dispatch<React.SetStateAction<number>>;
+  goNext: () => void | Promise<void>;
+  persistAnswer: (qId: string, choice: string | null) => Promise<void>;
+  setConfirmOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  submitting: boolean;
+}
+
+function QuestionCard({
+  currentQ,
+  current,
+  total,
+  choice,
+  selectAnswer,
+  setCurrent,
+  goNext,
+  persistAnswer,
+  setConfirmOpen,
+  submitting,
+}: QuestionCardProps) {
+  const optionLetters = ["A", "B", "C", "D", "E"];
+  const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
+  return (
+    <div
+      key={currentQ.id}
+      className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
+      style={{ boxShadow: "var(--shadow-md)" }}
+    >
+      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
+        {currentQ.category} · Fråga {current + 1}
+      </div>
+      <h2
+        className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
+        style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+      >
+        {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
+      </h2>
+      <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
+        {currentQ.options.map((opt, i) => {
+          const letter = optionLetters[i] ?? String(i + 1);
+          const isSelected = choice === letter || choice === opt;
+          return (
+            <button
+              key={i}
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              aria-label={`Alternativ ${letter}: ${opt}`}
+              onClick={() => selectAnswer(currentQ.id, letter)}
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 ${
+                isSelected
+                  ? "border-2 border-[#1a5c3a] bg-[#e8f2ec] text-foreground"
+                  : "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50"
+              }`}
+            >
+              <span
+                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
+                  isSelected ? "bg-[#1a5c3a] text-white" : "bg-[#f0ede8] text-foreground"
+                }`}
+              >
+                {letter}
+              </span>
+              <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                {isMath ? <MathText>{opt}</MathText> : opt}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-5 flex items-center justify-between">
+        <Button
+          variant="ghost"
+          disabled={current === 0}
+          onClick={() => setCurrent((i) => Math.max(0, i - 1))}
+        >
+          Föregående
+        </Button>
+        {current < total - 1 ? (
+          <Button disabled={!choice} onClick={() => void goNext()}>
+            Nästa fråga
+          </Button>
+        ) : (
+          <Button
+            disabled={!choice || submitting}
+            onClick={async () => {
+              if (choice) await persistAnswer(currentQ.id, choice);
+              setConfirmOpen(true);
+            }}
+          >
+            Lämna in svar
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
