@@ -19,7 +19,7 @@ export const Route = createFileRoute("/ord")({
       {
         name: "description",
         content:
-          "Träna högskoleprovets ordförståelse solo. Över 950 riktiga ORD-frågor från tidigare högskoleprov.",
+          "Träna högskoleprovets ordförståelse solo. Över 1000 riktiga ORD-frågor från tidigare högskoleprov.",
       },
     ],
   }),
