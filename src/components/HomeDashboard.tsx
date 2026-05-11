@@ -272,3 +272,21 @@ function BattleCard({
     </div>
   );
 }
+
+function RankPanel({ label, elo }: { label: string; elo: number }) {
+  const next = getNextRank(elo);
+  const eloToNext = next ? next.minElo - elo : 0;
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] uppercase tracking-wider text-muted-foreground w-14">
+          {label}
+        </span>
+        <RankBadge elo={elo} size="md" showName={true} showProgress={true} />
+      </div>
+      <span className="text-[11px] text-muted-foreground pl-16">
+        {next ? `Nästa rank om ${eloToNext} ELO` : "Max rank uppnådd ✦"}
+      </span>
+    </div>
+  );
+}
