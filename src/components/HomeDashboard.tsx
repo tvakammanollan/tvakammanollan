@@ -34,8 +34,22 @@ export function HomeDashboard() {
     setMatchOpen(true);
   };
 
+  const isGuest = !!user.is_anonymous;
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      {isGuest && (
+        <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-primary/30 bg-primary-soft px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <span className="text-foreground">
+            Du spelar som <strong>gäst</strong>. Skapa ett konto för att spara
+            din ELO och dyka upp på topplistan.
+          </span>
+          <Button asChild size="sm" variant="default">
+            <a href="/signup">Skapa konto</a>
+          </Button>
+        </div>
+      )}
+
       {/* Stat panel */}
       <section className="rounded-2xl border border-border bg-card p-5 shadow-card sm:p-7">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -43,7 +57,7 @@ export function HomeDashboard() {
             <UserAvatar name={profile.username} size={64} />
             <div>
               <h1 className="text-2xl font-semibold leading-tight sm:text-3xl">
-                {profile.username}
+                {isGuest ? "Gäst" : profile.username}
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 <EloBadge label="Verbal" elo={profile.elo_verbal} />
@@ -74,7 +88,7 @@ export function HomeDashboard() {
       <section className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
         <BattleCard
           title="Verbala Battles"
-          subtitle="ORD · MEK · LÄS · ELF"
+          subtitle="ORD · MEK"
           elo={profile.elo_verbal}
           icon={<GraduationCap className="h-6 w-6" />}
           onStart={() => openMatch("verbal")}
@@ -82,7 +96,7 @@ export function HomeDashboard() {
         />
         <BattleCard
           title="Matte Battles"
-          subtitle="XYZ · KVA · NOG · DTK"
+          subtitle="XYZ · KVA · NOG"
           elo={profile.elo_math}
           icon={<Sigma className="h-6 w-6" />}
           onStart={() => openMatch("math")}
