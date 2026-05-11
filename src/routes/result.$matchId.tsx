@@ -13,8 +13,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home } from "lucide-react";
+import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle } from "lucide-react";
 import { MathText } from "@/components/MathText";
+import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 
@@ -43,6 +44,7 @@ interface AnswerRow {
   question_id: string;
   selected_answer: string | null;
   is_correct: boolean;
+  time_spent_seconds: number | null;
 }
 
 interface QuestionOpt {
@@ -58,6 +60,7 @@ interface QuestionRow {
   correct_answer: string;
   passage_id: string | null;
   passage_text: string | null;
+  explanation: string | null;
 }
 
 const FAKE_NAMES = [
@@ -169,6 +172,7 @@ function ResultPage() {
             correct_answer: q.correct_answer as string,
             passage_id: (q.passage_id as string) ?? null,
             passage_text: (q.passage_text as string) ?? null,
+            explanation: (q.explanation as string) ?? null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -176,7 +180,7 @@ function ResultPage() {
 
       const { data: mine } = await supabase
         .from("match_answers")
-        .select("user_id, question_id, selected_answer, is_correct")
+        .select("user_id, question_id, selected_answer, is_correct, time_spent_seconds")
         .eq("match_id", matchId)
         .eq("user_id", user.id);
       setMyAnswers((mine ?? []) as AnswerRow[]);
@@ -186,7 +190,7 @@ function ResultPage() {
         if (oppId) {
           const { data: opp } = await supabase
             .from("match_answers")
-            .select("user_id, question_id, selected_answer, is_correct")
+            .select("user_id, question_id, selected_answer, is_correct, time_spent_seconds")
             .eq("match_id", matchId)
             .eq("user_id", oppId);
           setOppAnswers((opp ?? []) as AnswerRow[]);
