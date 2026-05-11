@@ -168,8 +168,12 @@ export function HomeDashboard() {
       />
 
       <OnboardingModal
-        open={!isGuest && profile.onboarding_completed === false}
-        onClose={() => { /* state-driven via profile refresh */ }}
+        open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
+        onClose={() => setOnboardingDismissed(true)}
+        onStartFirstMatch={(t) => {
+          setOnboardingDismissed(true);
+          openMatch(t);
+        }}
       />
     </div>
   );
