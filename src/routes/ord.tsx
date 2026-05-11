@@ -17,6 +17,7 @@ import {
   countOrdQuestions,
   recordOrdAnswer,
   getWordProgress,
+  getOrdFilterCounts,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
