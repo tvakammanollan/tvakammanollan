@@ -224,6 +224,7 @@ function TrainPage() {
     if (current >= questions.length - 1) {
       setEndedAt(Date.now());
       setPhase("result");
+      if (user) void updateStreak(user.id);
       return;
     }
     setCurrent((i) => i + 1);
