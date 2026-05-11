@@ -15,6 +15,7 @@ import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
   countOrdQuestions,
+  recordOrdAnswer,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
