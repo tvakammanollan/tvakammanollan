@@ -48,6 +48,7 @@ export function Navbar() {
                 <span className="text-sm font-medium">{profile.username}</span>
                 <EloBadge elo={topElo} size="sm" />
               </div>
+              <BugReportButton />
               <Button
                 variant="ghost"
                 size="sm"
