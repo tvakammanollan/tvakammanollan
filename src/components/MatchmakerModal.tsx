@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2 } from "lucide-react";
+import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2, Target } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
