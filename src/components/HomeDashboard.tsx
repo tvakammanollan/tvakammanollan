@@ -117,7 +117,7 @@ export function HomeDashboard() {
             <div>
               <div className="text-base font-semibold">Öva ord (solo)</div>
               <div className="text-xs text-muted-foreground">
-                950+ riktiga ORD-frågor från tidigare HP · helt själv, ingen motståndare
+                1000+ riktiga ORD-frågor från tidigare HP · helt själv, ingen motståndare
               </div>
             </div>
           </div>
