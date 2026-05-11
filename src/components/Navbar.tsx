@@ -94,6 +94,11 @@ export function Navbar() {
               <NavLink to="/stats" hideOnMobile>
                 Statistik
               </NavLink>
+              {profile?.is_admin && (
+                <NavLink to="/admin" hideOnMobile>
+                  Admin
+                </NavLink>
+              )}
               {profile && (
                 <div
                   className="hidden items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-3 md:inline-flex"
