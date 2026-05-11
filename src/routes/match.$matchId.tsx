@@ -494,25 +494,40 @@ function MatchPage() {
             Mot: <span className="font-medium text-foreground">{opponentName}</span>
           </div>
         </div>
-        {/* Question progress bar */}
-        <div className="h-[3px] w-full bg-[#f0ede8]">
-          <div
-            className="h-full bg-[#1a5c3a] transition-all duration-300 ease-out"
-            style={{ width: `${((current + 1) / questions.length) * 100}%` }}
-          />
-        </div>
+        {/* Dual progress bars: own + opponent (proportional, jumps per question) */}
         <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
-          <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
-            <span className="truncate">{opponentName || "Motståndare"}</span>
-            <span className="tabular-nums">{Math.round(oppProgress * 8)}/8</span>
-          </div>
-          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full bg-primary/70 transition-all duration-700"
-              style={{ width: `${oppProgress * 100}%` }}
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="font-medium text-foreground">Du</span>
+                <span className="tabular-nums text-muted-foreground">{current + 1}/{questions.length}</span>
+              </div>
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full bg-[#1a5c3a] transition-all duration-500 ease-out"
+                  style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="truncate font-medium text-foreground">{opponentName || "Motståndare"}</span>
+                <span className="tabular-nums text-muted-foreground">{Math.round(oppProgress * questions.length)}/{questions.length}</span>
+              </div>
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full bg-[#d4a017] transition-all duration-700 ease-out"
+                  style={{ width: `${oppProgress * 100}%` }}
+                />
+              </div>
+            </div>
           </div>
         </div>
+        {oppForceCountdown !== null && (
+          <div className="border-t border-[#c0392b]/30 bg-[#c0392b]/10 px-4 py-2 text-center text-xs font-semibold text-[#c0392b]">
+            ⏱ Motståndaren är klar! Auto-inlämning om {oppForceCountdown}s
+          </div>
+        )}
       </header>
 
       {/* Main */}
