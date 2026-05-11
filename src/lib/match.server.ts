@@ -205,11 +205,12 @@ export async function processMatchResultServer(matchId: string) {
   }
 
   // Determine result (from p1 perspective)
+  // Equal scores = real draw. Time is NOT used as a tiebreaker
+  // (avoids the "showed as draw but I lost ELO" bug).
+  void p1Sub; void p2Sub;
   let r1: 0 | 0.5 | 1;
   if (p1Score > p2Score) r1 = 1;
   else if (p1Score < p2Score) r1 = 0;
-  else if (p1Sub < p2Sub) r1 = 1;
-  else if (p1Sub > p2Sub) r1 = 0;
   else r1 = 0.5;
 
   const r2: 0 | 0.5 | 1 = r1 === 1 ? 0 : r1 === 0 ? 1 : 0.5;
