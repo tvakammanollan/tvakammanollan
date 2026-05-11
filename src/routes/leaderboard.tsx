@@ -9,6 +9,7 @@ import {
   fetchOrdLeaderboard,
   type OrdLeaderboardRow,
 } from "@/lib/word-practice.functions";
+import { EmptyState } from "@/components/EmptyState";
 
 type MatchType = "verbal" | "math";
 
