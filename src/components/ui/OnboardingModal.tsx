@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { RankBadge } from "@/components/ui/RankBadge";
+import { completeOnboarding } from "@/lib/onboarding.functions";
 import { toast } from "sonner";
 
 const GOALS = [
@@ -29,6 +30,7 @@ interface Props {
 export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
+  const completeOnboardingFn = useServerFn(completeOnboarding);
   const [step, setStep] = useState(0);
   const [target, setTarget] = useState<number | null>(null);
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
@@ -37,18 +39,12 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   if (!open || !user || !profile) return null;
 
   const persist = async () => {
-    const { error } = await supabase
-      .from("users")
-      .update({
-        onboarding_completed: true,
-        target_score: target,
-        preferred_type: focus,
-      })
-      .eq("id", user.id);
-    if (error) {
-      toast.error("Kunde inte spara", { description: error.message });
-      throw error;
-    }
+    await completeOnboardingFn({
+      data: {
+        targetScore: target,
+        preferredType: focus,
+      },
+    });
   };
 
   const finish = async (startMatch: boolean) => {
@@ -77,16 +73,24 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
   const skip = async () => {
     if (!user) return;
-    const { error } = await supabase
-      .from("users")
-      .update({ onboarding_completed: true })
-      .eq("id", user.id);
-    if (error) {
-      toast.error("Kunde inte spara", { description: error.message });
+    setSaving(true);
+    try {
+      await completeOnboardingFn({
+        data: {
+          targetScore: null,
+          preferredType: null,
+        },
+      });
+    } catch (error) {
+      toast.error("Kunde inte spara", {
+        description: error instanceof Error ? error.message : "Försök igen.",
+      });
+      setSaving(false);
       return;
     }
     refreshProfile();
     onClose();
+    setSaving(false);
   };
 
   return (
