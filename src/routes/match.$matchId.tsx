@@ -121,7 +121,7 @@ function MatchPage() {
       const { data: mq } = await supabase
         .from("match_questions")
         .select(
-          "question_order, question_id, questions(id, category, question_text, options, passage_id, passage_text, difficulty)",
+          "question_order, question_id, questions(id, category, question_text, options, passage_id, passage_text, difficulty, cleaned_question_text, cleaned_options, clean_status)",
         )
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
@@ -131,7 +131,11 @@ function MatchPage() {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const q = (row as any).questions;
           if (!q) return null;
-          const rawOpts = Array.isArray(q.options) ? q.options : [];
+          const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(q.category);
+          const useCleaned = isMath && q.clean_status === "ok" && q.cleaned_question_text;
+          const rawOpts = useCleaned
+            ? (Array.isArray(q.cleaned_options) ? q.cleaned_options : [])
+            : (Array.isArray(q.options) ? q.options : []);
           const options: string[] = rawOpts.map((o: unknown) =>
             typeof o === "string"
               ? o
@@ -141,7 +145,7 @@ function MatchPage() {
           );
           return {
             id: q.id,
-            question_text: q.question_text,
+            question_text: useCleaned ? q.cleaned_question_text : q.question_text,
             options,
             category: q.category,
             passage_id: q.passage_id,
