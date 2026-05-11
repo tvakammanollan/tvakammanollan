@@ -13,8 +13,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home } from "lucide-react";
+import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle } from "lucide-react";
 import { MathText } from "@/components/MathText";
+import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 
@@ -43,6 +44,7 @@ interface AnswerRow {
   question_id: string;
   selected_answer: string | null;
   is_correct: boolean;
+  time_spent_seconds: number | null;
 }
 
 interface QuestionOpt {
@@ -58,6 +60,7 @@ interface QuestionRow {
   correct_answer: string;
   passage_id: string | null;
   passage_text: string | null;
+  explanation: string | null;
 }
 
 const FAKE_NAMES = [
@@ -169,6 +172,7 @@ function ResultPage() {
             correct_answer: q.correct_answer as string,
             passage_id: (q.passage_id as string) ?? null,
             passage_text: (q.passage_text as string) ?? null,
+            explanation: (q.explanation as string) ?? null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -176,7 +180,7 @@ function ResultPage() {
 
       const { data: mine } = await supabase
         .from("match_answers")
-        .select("user_id, question_id, selected_answer, is_correct")
+        .select("user_id, question_id, selected_answer, is_correct, time_spent_seconds")
         .eq("match_id", matchId)
         .eq("user_id", user.id);
       setMyAnswers((mine ?? []) as AnswerRow[]);
@@ -186,7 +190,7 @@ function ResultPage() {
         if (oppId) {
           const { data: opp } = await supabase
             .from("match_answers")
-            .select("user_id, question_id, selected_answer, is_correct")
+            .select("user_id, question_id, selected_answer, is_correct, time_spent_seconds")
             .eq("match_id", matchId)
             .eq("user_id", oppId);
           setOppAnswers((opp ?? []) as AnswerRow[]);
@@ -370,6 +374,18 @@ function ResultPage() {
               <span className="flex items-center gap-2">
                 <ChevronDown className="h-4 w-4 opacity-60" />
                 Genomgång av alla {questions.length} frågor
+                {(() => {
+                  const times = myAnswers.map((a) => a.time_spent_seconds).filter((t): t is number => typeof t === "number" && t > 0);
+                  if (times.length === 0) return null;
+                  const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
+                  const m = Math.floor(avg / 60);
+                  const s = avg % 60;
+                  return (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-normal text-muted-foreground">
+                      <Clock className="h-3 w-3" /> {m > 0 ? `${m} min ` : ""}{s} sek snitt
+                    </span>
+                  );
+                })()}
               </span>
             </AccordionTrigger>
             <AccordionContent>
@@ -394,6 +410,28 @@ function ResultPage() {
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                         <span>{i + 1}.</span>
                         <span>{q.category}</span>
+                        {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
+                              a.time_spent_seconds > 180
+                                ? "bg-amber-100 text-amber-800"
+                                : "bg-muted text-muted-foreground"
+                            }`}
+                          >
+                            {a.time_spent_seconds > 180 ? (
+                              <AlertTriangle className="h-3 w-3" />
+                            ) : (
+                              <Clock className="h-3 w-3" />
+                            )}
+                            {(() => {
+                              const t = a.time_spent_seconds!;
+                              const m = Math.floor(t / 60);
+                              const s = t % 60;
+                              return m > 0 ? `${m} min ${s} sek` : `${s} sek`;
+                            })()}
+                            {a.time_spent_seconds > 180 ? " · Lång tid" : ""}
+                          </span>
+                        )}
                         <span className="ml-auto inline-flex items-center gap-1">
                           {noAnswer ? (
                             <span className="text-zinc-600">— Ej besvarad</span>
@@ -464,6 +502,7 @@ function ResultPage() {
                           );
                         })}
                       </ul>
+                      <ExplanationBlock explanation={q.explanation} />
                     </li>
                   );
                 })}

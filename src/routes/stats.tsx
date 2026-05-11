@@ -72,6 +72,7 @@ interface AnswerStat {
   category: string;
   correct: number;
   total: number;
+  avgTime: number | null;
 }
 
 const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
@@ -186,26 +187,37 @@ function StatsPage() {
       setVerbalAvg(cntV ? sumV / cntV : null);
       setMathAvg(cntM ? sumM / cntM : null);
 
-      // Delprov breakdown
+      // Delprov breakdown + average time per category
       const { data: ans } = await supabase
         .from("match_answers")
-        .select("is_correct, questions(category)")
+        .select("is_correct, time_spent_seconds, questions(category)")
         .eq("user_id", user.id)
         .limit(2000);
-      const tally = new Map<string, { correct: number; total: number }>();
+      const tally = new Map<string, { correct: number; total: number; timeSum: number; timeCount: number }>();
       for (const row of ans ?? []) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cat = (row as any).questions?.category as string | undefined;
         if (!cat) continue;
-        const t = tally.get(cat) ?? { correct: 0, total: 0 };
+        const t = tally.get(cat) ?? { correct: 0, total: 0, timeSum: 0, timeCount: 0 };
         t.total += 1;
         if (row.is_correct) t.correct += 1;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const ts = (row as any).time_spent_seconds as number | null;
+        if (typeof ts === "number" && ts > 0) {
+          t.timeSum += ts;
+          t.timeCount += 1;
+        }
         tally.set(cat, t);
       }
       const stats: AnswerStat[] = [];
       for (const c of [...VERBAL_CATS, ...MATH_CATS]) {
         const t = tally.get(c);
-        stats.push({ category: c, correct: t?.correct ?? 0, total: t?.total ?? 0 });
+        stats.push({
+          category: c,
+          correct: t?.correct ?? 0,
+          total: t?.total ?? 0,
+          avgTime: t && t.timeCount > 0 ? t.timeSum / t.timeCount : null,
+        });
       }
       setBreakdown(stats);
     })();
@@ -297,6 +309,39 @@ function StatsPage() {
           />
         </section>
 
+        {/* Fastest categories */}
+        {(() => {
+          const withTimes = breakdown
+            .filter((b) => b.avgTime !== null && b.total >= 3)
+            .sort((a, b) => (a.avgTime! - b.avgTime!));
+          if (withTimes.length === 0) return null;
+          const fmt = (s: number) => {
+            const m = Math.floor(s / 60);
+            const sec = Math.round(s % 60);
+            return m > 0 ? `${m} min ${sec} sek` : `${sec} sek`;
+          };
+          return (
+            <section className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {withTimes.slice(0, 4).map((b) => (
+                <div
+                  key={b.category}
+                  className="rounded-xl border border-border bg-card p-4 shadow-sm"
+                >
+                  <div className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    ⏱ Snabbaste {b.category === "LAS" ? "LÄS" : b.category}
+                  </div>
+                  <div
+                    className="text-xl font-bold tabular-nums"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {fmt(b.avgTime!)}
+                  </div>
+                  <div className="text-xs text-muted-foreground">i snitt per fråga</div>
+                </div>
+              ))}
+            </section>
+          );
+        })()}
         {/* ELO chart */}
         <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">

@@ -77,6 +77,13 @@ function MatchPage() {
   const [oppProgress, setOppProgress] = useState(0);
   const [reconnecting, setReconnecting] = useState(false);
   const submittedRef = useRef(false);
+  const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
+  const answerTimesRef = useRef<Record<string, number>>({});
+
+  // Reset question timer when current changes
+  useEffect(() => {
+    setQuestionStartTime(new Date());
+  }, [current]);
 
   // Load match + questions
   useEffect(() => {
@@ -305,6 +312,14 @@ function MatchPage() {
   const selectAnswer = async (qId: string, choice: string) => {
     if (!user || !currentQ) return;
     sounds.ping();
+    // Record time spent on first selection if not already recorded
+    if (answerTimesRef.current[qId] == null) {
+      const spent = Math.max(
+        1,
+        Math.round((Date.now() - questionStartTime.getTime()) / 1000),
+      );
+      answerTimesRef.current[qId] = spent;
+    }
     setAnswers((m) => {
       const next = new Map(m);
       next.set(qId, choice);
@@ -314,6 +329,7 @@ function MatchPage() {
 
   const persistAnswer = async (qId: string, choice: string | null) => {
     if (!user) return;
+    const time_spent_seconds = answerTimesRef.current[qId] ?? null;
     await supabase
       .from("match_answers")
       .upsert(
@@ -323,6 +339,7 @@ function MatchPage() {
           question_id: qId,
           selected_answer: choice,
           is_correct: false, // server recomputes on submit; never trust client
+          time_spent_seconds,
         },
         { onConflict: "match_id,user_id,question_id" },
       )

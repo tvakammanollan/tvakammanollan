@@ -17,6 +17,7 @@ import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
 import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
+import { ExplanationBlock } from "@/components/ExplanationBlock";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
@@ -492,20 +493,7 @@ function TrainPage() {
 
             {/* Explanation */}
             {revealed && (
-              <div
-                className="mt-5 rounded-lg border-l-4 border-[#1a5c3a] bg-[#f0ede8] p-3"
-                role="status"
-                aria-live="polite"
-              >
-                <div className="text-xs font-bold uppercase tracking-wider text-[#1a5c3a]">
-                  Förklaring
-                </div>
-                <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
-                  {currentQ.explanation?.trim()
-                    ? currentQ.explanation
-                    : "Förklaring saknas för denna fråga."}
-                </p>
-              </div>
+              <ExplanationBlock explanation={currentQ.explanation} defaultOpen />
             )}
 
             {/* Action */}

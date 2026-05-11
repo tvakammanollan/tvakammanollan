@@ -648,6 +648,7 @@ export type Database = {
           category: string
           correct_answer: string
           difficulty: number
+          explanation: string
           options: Json
           passage_id: string
           passage_text: string
