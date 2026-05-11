@@ -118,18 +118,29 @@ function MatchPage() {
         }
       }
 
-      const { data: mq } = await supabase
+      const { data: mq, error: mqErr } = await supabase
         .from("match_questions")
-        .select(
-          "question_order, question_id, questions(id, category, question_text, options, passage_id, passage_text, difficulty, cleaned_question_text, cleaned_options, clean_status)",
-        )
+        .select("question_order, question_id")
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
+      if (mqErr) console.error("match_questions load failed", mqErr);
+
+      const qIds = (mq ?? []).map((r) => r.question_id);
+      const { data: qRows, error: qErr } = qIds.length
+        ? await supabase
+            .from("questions")
+            .select(
+              "id, category, question_text, options, passage_id, passage_text, difficulty, cleaned_question_text, cleaned_options, clean_status",
+            )
+            .in("id", qIds)
+        : { data: [], error: null };
+      if (qErr) console.error("questions load failed", qErr);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const qById = new Map<string, any>((qRows ?? []).map((q: any) => [q.id, q]));
 
       const qs: QuestionRow[] = (mq ?? [])
         .map((row) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const q = (row as any).questions;
+          const q = qById.get(row.question_id);
           if (!q) return null;
           const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(q.category);
           const useCleaned = isMath && q.clean_status === "ok" && q.cleaned_question_text;
