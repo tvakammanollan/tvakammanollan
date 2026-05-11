@@ -228,6 +228,55 @@ function OrdPracticePage() {
                 Förbereder pass…
               </p>
             )}
+
+            {progress && progress.totalCount > 0 && (
+              <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Dina rätt besvarade ord
+                  </span>
+                  <span className="text-sm font-semibold tabular-nums text-[#1a5c3a]">
+                    {progress.correctCount.toLocaleString("sv-SE")} /{" "}
+                    {progress.totalCount.toLocaleString("sv-SE")}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full bg-[#1a5c3a] transition-all duration-500"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        (progress.correctCount / progress.totalCount) * 100,
+                      )}%`,
+                    }}
+                  />
+                </div>
+                <label className="mt-4 flex cursor-pointer items-center justify-between gap-3">
+                  <span className="text-sm">
+                    Filtrera bort ord jag redan svarat rätt på
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={excludeCorrect}
+                    onChange={(e) => setExcludeCorrect(e.target.checked)}
+                    disabled={
+                      progress.correctCount >= progress.totalCount ||
+                      progress.correctCount === 0
+                    }
+                    className="h-5 w-5 rounded border-border accent-[#1a5c3a] disabled:opacity-40"
+                  />
+                </label>
+                {excludeCorrect &&
+                  progress.totalCount - progress.correctCount < 10 && (
+                    <p className="mt-2 text-xs text-amber-700">
+                      Endast{" "}
+                      {progress.totalCount - progress.correctCount} ord kvar
+                      med detta filter.
+                    </p>
+                  )}
+              </div>
+            )}
+
             <div className="mt-5 border-t border-border pt-4 text-center">
               <Link
                 to="/leaderboard"
