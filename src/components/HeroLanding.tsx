@@ -67,10 +67,32 @@ export function HeroLanding() {
           </button>
         </div>
 
-        <ul className="mt-10 flex flex-wrap items-center justify-center gap-2 text-xs">
+        {/* Unique selling point: free word practice */}
+        <Link
+          to="/ord"
+          className="group mx-auto mt-10 flex max-w-2xl items-center gap-4 rounded-2xl border border-primary/30 bg-primary-soft px-5 py-4 text-left shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-[#1a5c3a] shadow-sm">
+            <BookOpen className="h-6 w-6" />
+          </div>
+          <div className="flex-1">
+            <div className="text-sm font-semibold text-foreground">
+              Helt gratis ordlista — öva 1000+ riktiga HP-ord
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Unikt för HP Kampen: en av Sveriges största samlingar av riktiga
+              ORD-frågor från tidigare högskoleprov, fritt att öva på solo.
+            </div>
+          </div>
+          <span className="text-primary transition-transform group-hover:translate-x-0.5">
+            →
+          </span>
+        </Link>
+
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-2 text-xs">
           <FeatureChip icon={<Trophy className="h-3.5 w-3.5" />} label="ELO-ranking" />
           <FeatureChip icon={<Zap className="h-3.5 w-3.5" />} label="Realtidsmatcher" />
-          <FeatureChip icon={<BookOpen className="h-3.5 w-3.5" />} label="Alla HP-delmoment" />
+          <FeatureChip icon={<BookOpen className="h-3.5 w-3.5" />} label="1000+ ORD-frågor gratis" />
         </ul>
       </div>
     </div>
