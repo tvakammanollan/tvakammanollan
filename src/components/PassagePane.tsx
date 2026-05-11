@@ -171,7 +171,7 @@ export function PassagePane({
 
   if (mobileAccordion) {
     return (
-      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-[#fafaf8]">
+      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-[#fafaf8] md:hidden">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
