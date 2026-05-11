@@ -87,17 +87,21 @@ function MatchPage() {
     }
     let cancelled = false;
     (async () => {
-      const { data: m } = await supabase
+      console.log("[match] loading", matchId, "user", user.id);
+      const { data: m, error: mErr } = await supabase
         .from("matches")
         .select("*")
         .eq("id", matchId)
         .maybeSingle();
       if (cancelled) return;
+      if (mErr) console.error("[match] match load error", mErr);
       if (!m) {
+        console.warn("[match] match not found", matchId);
         toast.error("Matchen kunde inte hittas");
         navigate({ to: "/" });
         return;
       }
+      console.log("[match] match loaded", m);
       setMatch(m as MatchRow);
 
       // Opponent name (hide bot identity)
