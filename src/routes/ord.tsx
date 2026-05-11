@@ -232,19 +232,35 @@ function OrdPracticePage() {
             )}
 
             {progress && progress.totalCount > 0 && (
-              <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Dina rätt besvarade ord
+              <div className="mt-6 rounded-2xl border-2 border-[#1a5c3a]/20 bg-gradient-to-br from-[#e8f2ec] to-white p-5 sm:p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
+                    Din ord-bank
                   </span>
-                  <span className="text-sm font-semibold tabular-nums text-[#1a5c3a]">
-                    {progress.correctCount.toLocaleString("sv-SE")} /{" "}
-                    {progress.totalCount.toLocaleString("sv-SE")}
+                  <span className="text-xs font-medium tabular-nums text-muted-foreground">
+                    {Math.round(
+                      (progress.correctCount / progress.totalCount) * 100,
+                    )}
+                    %
                   </span>
                 </div>
-                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span
+                    className="text-4xl font-bold tabular-nums text-[#1a5c3a] sm:text-5xl"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {progress.correctCount.toLocaleString("sv-SE")}
+                  </span>
+                  <span className="text-xl font-medium tabular-nums text-muted-foreground sm:text-2xl">
+                    / {progress.totalCount.toLocaleString("sv-SE")}
+                  </span>
+                  <span className="ml-1 text-xs text-muted-foreground">
+                    ord rätt besvarade
+                  </span>
+                </div>
+                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#1a5c3a]/10">
                   <div
-                    className="h-full bg-[#1a5c3a] transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-[#1a5c3a] to-[#2d7a52] transition-all duration-700"
                     style={{
                       width: `${Math.min(
                         100,
@@ -253,9 +269,9 @@ function OrdPracticePage() {
                     }}
                   />
                 </div>
-                <label className="mt-4 flex cursor-pointer items-center justify-between gap-3">
-                  <span className="text-sm">
-                    Filtrera bort ord jag redan svarat rätt på
+                <label className="mt-4 flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/60 px-3 py-2.5">
+                  <span className="text-sm font-medium">
+                    Filtrera bort ord jag redan kan
                   </span>
                   <input
                     type="checkbox"
