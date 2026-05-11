@@ -17,12 +17,16 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       count?: number;
       exclude?: string[];
       excludeCorrectForUserId?: string;
+      sourceFilter?: "all" | "hp" | "list";
+      difficulties?: number[];
     }) =>
       z
         .object({
           count: z.number().int().min(1).max(50).optional().default(20),
           exclude: z.array(z.string().uuid()).optional().default([]),
           excludeCorrectForUserId: z.string().uuid().optional(),
+          sourceFilter: z.enum(["all", "hp", "list"]).optional().default("all"),
+          difficulties: z.array(z.number().int().min(1).max(3)).optional().default([]),
         })
         .parse(data ?? {}),
   )
@@ -36,11 +40,15 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         .eq("user_id", data.excludeCorrectForUserId);
       for (const r of correctRows ?? []) excludeIds.add(r.question_id as string);
     }
-    const { data: rows, error } = await supabase
+    let query = supabase
       .from("questions")
-      .select("id,question_text,options,correct_answer,source")
+      .select("id,question_text,options,correct_answer,source,difficulty")
       .eq("category", "ORD")
       .limit(10000);
+    if (data.sourceFilter === "hp") query = query.not("source", "is", null);
+    else if (data.sourceFilter === "list") query = query.is("source", null);
+    if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
+    const { data: rows, error } = await query;
     if (error) throw new Error(error.message);
     const filtered = (rows ?? []).filter(
       (r: { id: string }) => !excludeIds.has(r.id as string),
@@ -50,7 +58,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
     }
     return {
-      questions: filtered.slice(0, data.count) as WordQuestion[],
+      questions: filtered.slice(0, data.count) as unknown as WordQuestion[],
     };
   });
 
@@ -80,6 +88,33 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
       .eq("category", "ORD");
     if (error) throw new Error(error.message);
     return { count: count ?? 0 };
+  },
+);
+
+export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const supabase = supabaseAdmin;
+    const base = () =>
+      supabase
+        .from("questions")
+        .select("id", { count: "exact", head: true })
+        .eq("category", "ORD");
+    const [all, hp, list, easy, mid, hard] = await Promise.all([
+      base(),
+      base().not("source", "is", null),
+      base().is("source", null),
+      base().eq("difficulty", 1),
+      base().eq("difficulty", 2),
+      base().eq("difficulty", 3),
+    ]);
+    return {
+      all: all.count ?? 0,
+      hp: hp.count ?? 0,
+      list: list.count ?? 0,
+      easy: easy.count ?? 0,
+      medium: mid.count ?? 0,
+      hard: hard.count ?? 0,
+    };
   },
 );
 
