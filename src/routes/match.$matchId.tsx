@@ -408,6 +408,7 @@ function MatchPage() {
 
     const handleUpdate = (payload: { new: { status?: string } }) => {
       if (payload.new?.status === "finished") {
+        if (user) void updateStreak(user.id);
         navigate({ to: "/result/$matchId", params: { matchId } });
       }
     };
