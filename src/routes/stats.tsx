@@ -36,6 +36,8 @@ interface UserRow {
   games_played: number;
   wins: number;
   losses: number;
+  current_streak?: number;
+  longest_streak?: number;
 }
 
 interface EloPoint {
