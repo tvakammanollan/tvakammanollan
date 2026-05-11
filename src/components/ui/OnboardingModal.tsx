@@ -23,9 +23,10 @@ const FOCUS = [
 interface Props {
   open: boolean;
   onClose: () => void;
+  onStartFirstMatch?: (type: "verbal" | "math") => void;
 }
 
-export function OnboardingModal({ open, onClose }: Props) {
+export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
@@ -35,10 +36,8 @@ export function OnboardingModal({ open, onClose }: Props) {
 
   if (!open || !user || !profile) return null;
 
-  const finish = async (startMatch: boolean) => {
-    if (!user) return;
-    setSaving(true);
-    await supabase
+  const persist = async () => {
+    const { error } = await supabase
       .from("users")
       .update({
         onboarding_completed: true,
@@ -46,19 +45,46 @@ export function OnboardingModal({ open, onClose }: Props) {
         preferred_type: focus,
       })
       .eq("id", user.id);
+    if (error) {
+      toast.error("Kunde inte spara", { description: error.message });
+      throw error;
+    }
+  };
+
+  const finish = async (startMatch: boolean) => {
+    if (!user) return;
+    setSaving(true);
+    try {
+      await persist();
+    } catch {
+      setSaving(false);
+      return;
+    }
     refreshProfile();
-    setSaving(false);
     onClose();
+    setSaving(false);
     if (startMatch) {
-      toast.success("Kör igång – lycka till!");
-      // Defer to home so matchmaker can open via prompt; simplest: route home
+      const t: "verbal" | "math" = focus === "math" ? "math" : "verbal";
+      if (onStartFirstMatch) {
+        onStartFirstMatch(t);
+      } else {
+        navigate({ to: "/" });
+      }
+    } else {
       navigate({ to: "/" });
     }
   };
 
   const skip = async () => {
     if (!user) return;
-    await supabase.from("users").update({ onboarding_completed: true }).eq("id", user.id);
+    const { error } = await supabase
+      .from("users")
+      .update({ onboarding_completed: true })
+      .eq("id", user.id);
+    if (error) {
+      toast.error("Kunde inte spara", { description: error.message });
+      return;
+    }
     refreshProfile();
     onClose();
   };
