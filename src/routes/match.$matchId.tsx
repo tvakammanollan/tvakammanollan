@@ -16,7 +16,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { Clock, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
