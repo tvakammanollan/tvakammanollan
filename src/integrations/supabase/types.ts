@@ -326,6 +326,7 @@ export type Database = {
         Row: {
           id: string
           joined_at: string
+          match_id: string | null
           match_type: string
           player_elo: number
           player_id: string
@@ -334,6 +335,7 @@ export type Database = {
         Insert: {
           id?: string
           joined_at?: string
+          match_id?: string | null
           match_type: string
           player_elo: number
           player_id: string
@@ -342,12 +344,20 @@ export type Database = {
         Update: {
           id?: string
           joined_at?: string
+          match_id?: string | null
           match_type?: string
           player_elo?: number
           player_id?: string
           status?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "matchmaking_queue_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "matchmaking_queue_player_id_fkey"
             columns: ["player_id"]
@@ -681,6 +691,10 @@ export type Database = {
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
+        Returns: boolean
+      }
+      pair_ranked_match: {
+        Args: { p_creator: string; p_match_id: string; p_opponent: string }
         Returns: boolean
       }
     }

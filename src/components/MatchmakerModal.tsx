@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2 } from "lucide-react";
+import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2, Target } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -155,10 +155,22 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
           <div className="grid gap-2.5">
             <ChoiceCard
               icon={busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />}
-              title="Snabbmatch"
-              subtitle="Hoppa in direkt, matchas mot en bot baserat på din ELO"
+              title="Snabbmatch – möt en bot"
+              subtitle="Möt en bot direkt – ingen väntetid"
               accent="primary"
               onClick={handleQuickMatch}
+              disabled={busy}
+            />
+            <ChoiceCard
+              icon={<Target className="h-5 w-5" />}
+              title="Ranked – möt en random spelare"
+              subtitle="Matchas mot spelare med liknande ELO"
+              accent="primary"
+              badge="NY"
+              onClick={() => {
+                navigate({ to: "/matchmaking", search: { type: matchType } });
+                close();
+              }}
               disabled={busy}
             />
             <ChoiceCard
@@ -238,6 +250,7 @@ function ChoiceCard({
   accent,
   onClick,
   disabled,
+  badge,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -245,6 +258,7 @@ function ChoiceCard({
   accent: "primary" | "secondary" | "muted";
   onClick: () => void;
   disabled?: boolean;
+  badge?: string;
 }) {
   const iconBg =
     accent === "primary"
@@ -264,7 +278,14 @@ function ChoiceCard({
         {icon}
       </span>
       <span className="flex-1">
-        <span className="block text-sm font-semibold">{title}</span>
+        <span className="flex items-center gap-2 text-sm font-semibold">
+          {title}
+          {badge && (
+            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+              {badge}
+            </span>
+          )}
+        </span>
         <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
           {subtitle}
         </span>
