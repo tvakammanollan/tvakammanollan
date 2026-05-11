@@ -124,6 +124,7 @@ export type Database = {
           match_id: string
           question_id: string
           selected_answer: string | null
+          time_spent_seconds: number | null
           user_id: string
         }
         Insert: {
@@ -133,6 +134,7 @@ export type Database = {
           match_id: string
           question_id: string
           selected_answer?: string | null
+          time_spent_seconds?: number | null
           user_id: string
         }
         Update: {
@@ -142,6 +144,7 @@ export type Database = {
           match_id?: string
           question_id?: string
           selected_answer?: string | null
+          time_spent_seconds?: number | null
           user_id?: string
         }
         Relationships: [
@@ -243,6 +246,7 @@ export type Database = {
           created_at: string
           id: string
           is_bot_match: boolean
+          is_ranked: boolean
           match_type: string
           player1_id: string
           player1_score: number | null
@@ -259,6 +263,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_bot_match?: boolean
+          is_ranked?: boolean
           match_type: string
           player1_id: string
           player1_score?: number | null
@@ -275,6 +280,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_bot_match?: boolean
+          is_ranked?: boolean
           match_type?: string
           player1_id?: string
           player1_score?: number | null
@@ -310,6 +316,41 @@ export type Database = {
           },
         ]
       }
+      matchmaking_queue: {
+        Row: {
+          id: string
+          joined_at: string
+          match_type: string
+          player_elo: number
+          player_id: string
+          status: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          match_type: string
+          player_elo: number
+          player_id: string
+          status?: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          match_type?: string
+          player_elo?: number
+          player_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matchmaking_queue_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ord_practice_stats: {
         Row: {
           correct_count: number
@@ -331,6 +372,51 @@ export type Database = {
         }
         Relationships: []
       }
+      question_reports: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          question_id: string
+          reason: string
+          reporter_id: string
+          status: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          question_id: string
+          reason: string
+          reporter_id: string
+          status?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          question_id?: string
+          reason?: string
+          reporter_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_reports_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "question_reports_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       questions: {
         Row: {
           category: string
@@ -341,6 +427,7 @@ export type Database = {
           correct_answer: string
           created_at: string
           difficulty: number | null
+          explanation: string | null
           id: string
           options: Json
           passage_id: string | null
@@ -348,6 +435,7 @@ export type Database = {
           question_text: string
           source: string | null
           subject_type: string
+          tags: string[]
         }
         Insert: {
           category: string
@@ -358,6 +446,7 @@ export type Database = {
           correct_answer: string
           created_at?: string
           difficulty?: number | null
+          explanation?: string | null
           id?: string
           options: Json
           passage_id?: string | null
@@ -365,6 +454,7 @@ export type Database = {
           question_text: string
           source?: string | null
           subject_type: string
+          tags?: string[]
         }
         Update: {
           category?: string
@@ -375,6 +465,7 @@ export type Database = {
           correct_answer?: string
           created_at?: string
           difficulty?: number | null
+          explanation?: string | null
           id?: string
           options?: Json
           passage_id?: string | null
@@ -382,12 +473,15 @@ export type Database = {
           question_text?: string
           source?: string | null
           subject_type?: string
+          tags?: string[]
         }
         Relationships: []
       }
       users: {
         Row: {
+          bot_matches_today: number
           created_at: string
+          current_streak: number
           elo_math: number
           elo_math_peak: number
           elo_verbal: number
@@ -395,12 +489,22 @@ export type Database = {
           email: string | null
           games_played: number
           id: string
+          is_admin: boolean
+          last_active_date: string | null
+          last_bot_match_date: string | null
+          longest_streak: number
           losses: number
+          onboarding_completed: boolean
+          preferred_type: string | null
+          profile_public: boolean
+          target_score: number | null
           username: string
           wins: number
         }
         Insert: {
+          bot_matches_today?: number
           created_at?: string
+          current_streak?: number
           elo_math?: number
           elo_math_peak?: number
           elo_verbal?: number
@@ -408,12 +512,22 @@ export type Database = {
           email?: string | null
           games_played?: number
           id: string
+          is_admin?: boolean
+          last_active_date?: string | null
+          last_bot_match_date?: string | null
+          longest_streak?: number
           losses?: number
+          onboarding_completed?: boolean
+          preferred_type?: string | null
+          profile_public?: boolean
+          target_score?: number | null
           username: string
           wins?: number
         }
         Update: {
+          bot_matches_today?: number
           created_at?: string
+          current_streak?: number
           elo_math?: number
           elo_math_peak?: number
           elo_verbal?: number
@@ -421,9 +535,80 @@ export type Database = {
           email?: string | null
           games_played?: number
           id?: string
+          is_admin?: boolean
+          last_active_date?: string | null
+          last_bot_match_date?: string | null
+          longest_streak?: number
           losses?: number
+          onboarding_completed?: boolean
+          preferred_type?: string | null
+          profile_public?: boolean
+          target_score?: number | null
           username?: string
           wins?: number
+        }
+        Relationships: []
+      }
+      weekly_challenge_entries: {
+        Row: {
+          challenge_id: string
+          completed_at: string
+          id: string
+          player_id: string
+          score: number
+        }
+        Insert: {
+          challenge_id: string
+          completed_at?: string
+          id?: string
+          player_id: string
+          score?: number
+        }
+        Update: {
+          challenge_id?: string
+          completed_at?: string
+          id?: string
+          player_id?: string
+          score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weekly_challenge_entries_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "weekly_challenges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "weekly_challenge_entries_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      weekly_challenges: {
+        Row: {
+          created_at: string
+          id: string
+          match_type: string
+          question_ids: Json
+          week_start: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          match_type: string
+          question_ids?: Json
+          week_start: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          match_type?: string
+          question_ids?: Json
+          week_start?: string
         }
         Relationships: []
       }
@@ -486,6 +671,7 @@ export type Database = {
           username: string
         }[]
       }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
         Returns: boolean
