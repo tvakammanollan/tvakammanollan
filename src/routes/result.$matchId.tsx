@@ -281,6 +281,7 @@ function ResultPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
+      <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
       {/* Banner */}
       <div
         className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
