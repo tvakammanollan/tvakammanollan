@@ -563,7 +563,7 @@ function MatchPage() {
             style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
           >
             {isMath ? (
-              <MathText autoDetect>{currentQ.question_text}</MathText>
+              <MathText>{currentQ.question_text}</MathText>
             ) : (
               currentQ.question_text
             )}
