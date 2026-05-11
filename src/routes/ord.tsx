@@ -77,20 +77,28 @@ function OrdPracticePage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    void fetchCount({}).then((c) => setPoolSize(c.count));
+    void fetchCount({})
+      .then((c) => setPoolSize(c.count))
+      .catch(() => setPoolSize(0));
   }, [fetchCount]);
 
   const startSession = useCallback(
     async (n: SessionLength) => {
       setTarget(n);
       setLoading(true);
-      const res = await fetchBatch({ data: { count: n, exclude: [] } });
-      setBatch(res.questions);
-      setIdx(0);
-      setPicked(null);
-      setAnswered([]);
-      setPhase("playing");
-      setLoading(false);
+      try {
+        const res = await fetchBatch({ data: { count: n, exclude: [] } });
+        setBatch(res.questions);
+        setIdx(0);
+        setPicked(null);
+        setAnswered([]);
+        setPhase("playing");
+      } catch (err) {
+        console.error("startSession failed", err);
+        alert("Kunde inte ladda frågor – försök igen om en stund.");
+      } finally {
+        setLoading(false);
+      }
     },
     [fetchBatch],
   );
