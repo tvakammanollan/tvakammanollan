@@ -250,6 +250,7 @@ function ChoiceCard({
   accent,
   onClick,
   disabled,
+  badge,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -257,6 +258,7 @@ function ChoiceCard({
   accent: "primary" | "secondary" | "muted";
   onClick: () => void;
   disabled?: boolean;
+  badge?: string;
 }) {
   const iconBg =
     accent === "primary"
@@ -276,7 +278,14 @@ function ChoiceCard({
         {icon}
       </span>
       <span className="flex-1">
-        <span className="block text-sm font-semibold">{title}</span>
+        <span className="flex items-center gap-2 text-sm font-semibold">
+          {title}
+          {badge && (
+            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+              {badge}
+            </span>
+          )}
+        </span>
         <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
           {subtitle}
         </span>
