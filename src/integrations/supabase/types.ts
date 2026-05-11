@@ -119,9 +119,11 @@ export type Database = {
       match_answers: {
         Row: {
           answered_at: string
+          difficulty: number | null
           id: string
           is_correct: boolean
-          match_id: string
+          is_training: boolean
+          match_id: string | null
           question_id: string
           selected_answer: string | null
           time_spent_seconds: number | null
@@ -129,9 +131,11 @@ export type Database = {
         }
         Insert: {
           answered_at?: string
+          difficulty?: number | null
           id?: string
           is_correct: boolean
-          match_id: string
+          is_training?: boolean
+          match_id?: string | null
           question_id: string
           selected_answer?: string | null
           time_spent_seconds?: number | null
@@ -139,9 +143,11 @@ export type Database = {
         }
         Update: {
           answered_at?: string
+          difficulty?: number | null
           id?: string
           is_correct?: boolean
-          match_id?: string
+          is_training?: boolean
+          match_id?: string | null
           question_id?: string
           selected_answer?: string | null
           time_spent_seconds?: number | null
