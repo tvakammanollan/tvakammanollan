@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
-import { EloBadge } from "@/components/EloBadge";
 import { EloChart } from "@/components/EloChart";
 import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
+import { RankBadge } from "@/components/ui/RankBadge";
+import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
 export function HomeDashboard() {
@@ -59,9 +60,9 @@ export function HomeDashboard() {
               <h1 className="text-2xl font-semibold leading-tight sm:text-3xl">
                 {isGuest ? "Gäst" : profile.username}
               </h1>
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <EloBadge label="Verbal" elo={profile.elo_verbal} />
-                <EloBadge label="Matte" elo={profile.elo_math} />
+              <div className="mt-2 flex flex-col gap-2">
+                <RankPanel label="Verbal" elo={profile.elo_verbal} />
+                <RankPanel label="Matte" elo={profile.elo_math} />
               </div>
             </div>
           </div>
@@ -268,6 +269,24 @@ function BattleCard({
           Starta Battle
         </Button>
       </div>
+    </div>
+  );
+}
+
+function RankPanel({ label, elo }: { label: string; elo: number }) {
+  const next = getNextRank(elo);
+  const eloToNext = next ? next.minElo - elo : 0;
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] uppercase tracking-wider text-muted-foreground w-14">
+          {label}
+        </span>
+        <RankBadge elo={elo} size="md" showName={true} showProgress={true} />
+      </div>
+      <span className="text-[11px] text-muted-foreground pl-16">
+        {next ? `Nästa rank om ${eloToNext} ELO` : "Max rank uppnådd ✦"}
+      </span>
     </div>
   );
 }

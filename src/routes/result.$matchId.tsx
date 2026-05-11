@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/accordion";
 import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home } from "lucide-react";
 import { MathText } from "@/components/MathText";
+import { RankUpModal } from "@/components/ui/RankUpModal";
+import { getRankForElo, type RankTier } from "@/types";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -95,6 +97,7 @@ function ResultPage() {
   const [oppAnswers, setOppAnswers] = useState<AnswerRow[]>([]);
   const [showPassageMap, setShowPassageMap] = useState<Record<string, boolean>>({});
   const [creatingRematch, setCreatingRematch] = useState(false);
+  const [rankUp, setRankUp] = useState<RankTier | null>(null);
   const confettiFiredRef = useRef(false);
 
   useEffect(() => {
@@ -137,6 +140,11 @@ function ResultPage() {
         setEloBefore(hist.elo_before);
         setEloAfter(hist.elo_after);
         setEloChange(hist.elo_change);
+        const oldRank = getRankForElo(hist.elo_before);
+        const newRank = getRankForElo(hist.elo_after);
+        if (oldRank.tier !== newRank.tier && hist.elo_after > hist.elo_before) {
+          setRankUp(newRank);
+        }
       }
 
       const { data: mq } = await supabase.rpc("get_match_review", {
@@ -273,6 +281,7 @@ function ResultPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
+      <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
       {/* Banner */}
       <div
         className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
