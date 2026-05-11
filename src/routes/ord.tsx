@@ -144,6 +144,7 @@ function OrdPracticePage() {
     sounds.click();
     if (idx + 1 >= batch.length) {
       setPhase("summary");
+      loadProgress();
     } else {
       setIdx((i) => i + 1);
       setPicked(null);
@@ -157,6 +158,7 @@ function OrdPracticePage() {
     setAnswered([]);
     setIdx(0);
     setPicked(null);
+    loadProgress();
   };
 
   const correctCount = answered.filter((a) => a.isCorrect).length;
