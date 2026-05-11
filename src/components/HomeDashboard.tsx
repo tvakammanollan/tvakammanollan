@@ -15,6 +15,7 @@ export function HomeDashboard() {
   const { user, profile } = useAuth();
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
+  const [onboardingDismissed, setOnboardingDismissed] = useState(false);
 
   if (!user || !profile) {
     return (
@@ -167,8 +168,12 @@ export function HomeDashboard() {
       />
 
       <OnboardingModal
-        open={!isGuest && profile.onboarding_completed === false}
-        onClose={() => { /* state-driven via profile refresh */ }}
+        open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
+        onClose={() => setOnboardingDismissed(true)}
+        onStartFirstMatch={(t) => {
+          setOnboardingDismissed(true);
+          openMatch(t);
+        }}
       />
     </div>
   );
