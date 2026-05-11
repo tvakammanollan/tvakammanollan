@@ -86,6 +86,7 @@ export function Navbar() {
         <nav className="flex items-center gap-0.5 sm:gap-2">
           {loading ? null : user ? (
             <>
+              <NavLink to="/train">Träna</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
               <NavLink to="/friends" badge={pendingCount}>
                 Vänner
