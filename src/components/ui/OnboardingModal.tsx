@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { completeOnboarding } from "@/lib/onboarding.functions";
+import { createMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
 
 const GOALS = [
@@ -31,6 +32,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const completeOnboardingFn = useServerFn(completeOnboarding);
+  const createMatchFn = useServerFn(createMatch);
   const [step, setStep] = useState(0);
   const [target, setTarget] = useState<number | null>(null);
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
@@ -52,23 +54,28 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
     setSaving(true);
     try {
       await persist();
-    } catch {
+    } catch (error) {
+      toast.error("Kunde inte spara", {
+        description: error instanceof Error ? error.message : "Försök igen.",
+      });
       setSaving(false);
       return;
     }
     refreshProfile();
     onClose();
-    setSaving(false);
     if (startMatch) {
       const t: "verbal" | "math" = focus === "math" ? "math" : "verbal";
-      if (onStartFirstMatch) {
-        onStartFirstMatch(t);
-      } else {
-        navigate({ to: "/" });
+      try {
+        const match = await createMatchFn({ data: { match_type: t, mode: "bot" } });
+        navigate({ to: "/match/$matchId", params: { matchId: match.match_id } });
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Kunde inte starta matchen");
+        onStartFirstMatch?.(t);
       }
     } else {
       navigate({ to: "/" });
     }
+    setSaving(false);
   };
 
   const skip = async () => {
