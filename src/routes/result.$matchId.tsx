@@ -16,6 +16,7 @@ import {
 import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle } from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 
@@ -445,6 +446,13 @@ function ResultPage() {
                             </>
                           )}
                         </span>
+                        {user && (
+                          <ReportQuestionButton
+                            questionId={q.id}
+                            userId={user.id}
+                            questionText={q.question_text}
+                          />
+                        )}
                       </div>
 
                       {passage && (

@@ -8,6 +8,7 @@ import { RankBadge } from "@/components/ui/RankBadge";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { StreakWidget } from "@/components/ui/StreakWidget";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
+import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
@@ -43,6 +44,7 @@ export function HomeDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      <ResumeMatchBanner />
       {isGuest && (
         <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-primary/30 bg-primary-soft px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
           <span className="text-foreground">
