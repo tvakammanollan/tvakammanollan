@@ -15,6 +15,7 @@ export function HomeDashboard() {
   const { user, profile } = useAuth();
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
+  const [onboardingDismissed, setOnboardingDismissed] = useState(false);
 
   if (!user || !profile) {
     return (
