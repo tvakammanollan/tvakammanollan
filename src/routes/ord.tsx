@@ -16,6 +16,7 @@ import {
   fetchWordBatch,
   countOrdQuestions,
   recordOrdAnswer,
+  getWordProgress,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
