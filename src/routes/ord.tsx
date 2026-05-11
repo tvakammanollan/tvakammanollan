@@ -65,6 +65,7 @@ interface AnsweredItem {
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
+  const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
   const [target, setTarget] = useState<SessionLength>(10);
@@ -103,6 +104,8 @@ function OrdPracticePage() {
     setAnswered((a) => [...a, { question: current, picked: letter, isCorrect }]);
     if (isCorrect) sounds.correct();
     else sounds.wrong();
+    // Persist to leaderboard (fire-and-forget; ignore failures e.g. for guests)
+    void recordAnswer({ data: { correct: isCorrect } }).catch(() => {});
   };
 
   const next = () => {
