@@ -520,6 +520,8 @@ function MatchPage() {
             )}
           </div>
         </div>
+        );
+        })()}
       </main>
 
       {/* Bottom bar */}
