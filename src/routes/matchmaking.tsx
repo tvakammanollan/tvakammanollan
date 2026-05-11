@@ -61,7 +61,7 @@ function MatchmakingPage() {
       cancelled = true;
       if (!navigatedRef.current && !cancelledRef.current) {
         cancelledRef.current = true;
-        cancelFn({}).catch(() => {});
+        cancelFn().catch(() => {});
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,7 +143,7 @@ function MatchmakingPage() {
   const cancel = async () => {
     cancelledRef.current = true;
     try {
-      await cancelFn({});
+      await cancelFn();
     } catch {/* ignore */}
     navigate({ to: "/" });
   };
@@ -151,7 +151,7 @@ function MatchmakingPage() {
   const playBot = async () => {
     cancelledRef.current = true;
     try {
-      await cancelFn({});
+      await cancelFn();
       const res = await createFn({ data: { match_type: type, mode: "bot" } });
       navigatedRef.current = true;
       navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
