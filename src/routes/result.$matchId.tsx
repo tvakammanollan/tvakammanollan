@@ -345,6 +345,45 @@ function ResultPage() {
             </span>
           </div>
         )}
+
+        {questions.length > 0 && (() => {
+          const correctCount = myAnswers.filter((a) => a.is_correct).length;
+          const total = questions.length;
+          const pct = (correctCount / total) * 100;
+          // Approximate HP normering for one delprov (verbal/quant), based on accuracy
+          const norm =
+            pct >= 95 ? 2.0
+            : pct >= 90 ? 1.9
+            : pct >= 82 ? 1.7
+            : pct >= 75 ? 1.5
+            : pct >= 67 ? 1.3
+            : pct >= 58 ? 1.1
+            : pct >= 50 ? 0.9
+            : pct >= 40 ? 0.7
+            : pct >= 30 ? 0.5
+            : 0.3;
+          return (
+            <div className="mt-5 rounded-xl border-2 border-[#d4a017]/30 bg-gradient-to-br from-[#fdf6e3] to-white p-4 text-center">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a10]">
+                Trolig normering
+              </div>
+              <div className="mt-1 flex items-baseline justify-center gap-2">
+                <span
+                  className="text-4xl font-bold tabular-nums text-[#8a6a10] sm:text-5xl"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {norm.toFixed(1)}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  ({correctCount}/{total} rätt)
+                </span>
+              </div>
+              <p className="mt-1 text-[11px] text-muted-foreground">
+                Uppskattning baserat på din andel rätt — riktiga HP-normeringen varierar med provets svårighet.
+              </p>
+            </div>
+          );
+        })()}
       </section>
 
       {/* Actions */}
