@@ -80,7 +80,6 @@ function HpRow({
         >
           ~ {est.score}
         </span>
-        <span className="text-xs text-muted-foreground">({est.description})</span>
       </div>
       <div className="mt-1 text-xs text-muted-foreground">
         ELO {elo} → rang {est.range}
