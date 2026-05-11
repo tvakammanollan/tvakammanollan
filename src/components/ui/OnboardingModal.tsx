@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { RankBadge } from "@/components/ui/RankBadge";
+import { completeOnboarding } from "@/lib/onboarding.functions";
+import { createMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
 
 const GOALS = [
@@ -29,6 +31,8 @@ interface Props {
 export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
+  const completeOnboardingFn = useServerFn(completeOnboarding);
+  const createMatchFn = useServerFn(createMatch);
   const [step, setStep] = useState(0);
   const [target, setTarget] = useState<number | null>(null);
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
@@ -37,18 +41,12 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   if (!open || !user || !profile) return null;
 
   const persist = async () => {
-    const { error } = await supabase
-      .from("users")
-      .update({
-        onboarding_completed: true,
-        target_score: target,
-        preferred_type: focus,
-      })
-      .eq("id", user.id);
-    if (error) {
-      toast.error("Kunde inte spara", { description: error.message });
-      throw error;
-    }
+    await completeOnboardingFn({
+      data: {
+        targetScore: target,
+        preferredType: focus,
+      },
+    });
   };
 
   const finish = async (startMatch: boolean) => {
@@ -56,37 +54,50 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
     setSaving(true);
     try {
       await persist();
-    } catch {
+    } catch (error) {
+      toast.error("Kunde inte spara", {
+        description: error instanceof Error ? error.message : "Försök igen.",
+      });
+      setSaving(false);
+      return;
+    }
+    refreshProfile();
+    onClose();
+    if (startMatch) {
+      const t: "verbal" | "math" = focus === "math" ? "math" : "verbal";
+      try {
+        const match = await createMatchFn({ data: { match_type: t, mode: "bot" } });
+        navigate({ to: "/match/$matchId", params: { matchId: match.match_id } });
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Kunde inte starta matchen");
+        onStartFirstMatch?.(t);
+      }
+    } else {
+      navigate({ to: "/" });
+    }
+    setSaving(false);
+  };
+
+  const skip = async () => {
+    if (!user) return;
+    setSaving(true);
+    try {
+      await completeOnboardingFn({
+        data: {
+          targetScore: null,
+          preferredType: null,
+        },
+      });
+    } catch (error) {
+      toast.error("Kunde inte spara", {
+        description: error instanceof Error ? error.message : "Försök igen.",
+      });
       setSaving(false);
       return;
     }
     refreshProfile();
     onClose();
     setSaving(false);
-    if (startMatch) {
-      const t: "verbal" | "math" = focus === "math" ? "math" : "verbal";
-      if (onStartFirstMatch) {
-        onStartFirstMatch(t);
-      } else {
-        navigate({ to: "/" });
-      }
-    } else {
-      navigate({ to: "/" });
-    }
-  };
-
-  const skip = async () => {
-    if (!user) return;
-    const { error } = await supabase
-      .from("users")
-      .update({ onboarding_completed: true })
-      .eq("id", user.id);
-    if (error) {
-      toast.error("Kunde inte spara", { description: error.message });
-      return;
-    }
-    refreshProfile();
-    onClose();
   };
 
   return (
