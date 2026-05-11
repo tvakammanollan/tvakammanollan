@@ -279,6 +279,7 @@ function MatchPage() {
 
   const selectAnswer = async (qId: string, choice: string) => {
     if (!user || !currentQ) return;
+    sounds.ping();
     setAnswers((m) => {
       const next = new Map(m);
       next.set(qId, choice);
