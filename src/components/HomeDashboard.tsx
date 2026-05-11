@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
-import { EloBadge } from "@/components/EloBadge";
 import { EloChart } from "@/components/EloChart";
 import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
+import { RankBadge } from "@/components/ui/RankBadge";
+import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
 export function HomeDashboard() {
