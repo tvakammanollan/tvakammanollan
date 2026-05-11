@@ -15,6 +15,12 @@ export interface Profile {
   losses: number;
   created_at: string;
   is_admin?: boolean;
+  onboarding_completed?: boolean;
+  target_score?: number | null;
+  preferred_type?: "verbal" | "math" | "both" | null;
+  current_streak?: number;
+  longest_streak?: number;
+  last_active_date?: string | null;
 }
 
 export function isAutoUsername(username: string | null | undefined): boolean {
