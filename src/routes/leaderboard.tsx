@@ -9,6 +9,7 @@ import {
   fetchOrdLeaderboard,
   type OrdLeaderboardRow,
 } from "@/lib/word-practice.functions";
+import { EmptyState } from "@/components/EmptyState";
 
 type MatchType = "verbal" | "math";
 
@@ -115,6 +116,7 @@ function Board({
   const top = rows.slice(0, 100);
   const me = currentUserId ? rows.find((r) => r.user_id === currentUserId) : undefined;
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
+  const notRanked = !!currentUserId && (!me || me.games_played < 3);
 
   return (
     <div className="mt-4 rounded-2xl border border-border bg-card shadow-card">
@@ -172,6 +174,17 @@ function Board({
               )}
             </tbody>
           </table>
+        </div>
+      )}
+      {notRanked && (
+        <div className="border-t border-border">
+          <EmptyState
+            icon="🏅"
+            title="Du är inte rankad ännu"
+            subtitle="Spela 3 matcher för att komma med i rankingen."
+            ctaLabel="Spela nu"
+            ctaHref="/"
+          />
         </div>
       )}
     </div>
