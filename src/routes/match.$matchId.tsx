@@ -577,100 +577,52 @@ function MatchPage() {
       </header>
 
       {/* Main */}
-      <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
-        {showPassage && currentQ.passage_text && (
-          <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
-            <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Textpassage
-            </div>
-            <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
-              {currentQ.passage_text}
-            </div>
-          </section>
-        )}
-
-        {(() => {
-          const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
-          return (
-        <div
-          key={currentQ.id}
-          className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
-          style={{ boxShadow: "var(--shadow-md)" }}
-        >
-          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
-            {currentQ.category} · Fråga {current + 1}
+      {currentQ.passage_text ? (
+        <main className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 gap-0 md:grid-cols-2">
+          <PassagePane
+            matchId={matchId}
+            passageId={currentQ.passage_id}
+            passageText={currentQ.passage_text}
+            category={currentQ.category}
+          />
+          <div className="px-4 py-6 md:px-6">
+            <PassagePane
+              matchId={matchId}
+              passageId={currentQ.passage_id}
+              passageText={currentQ.passage_text}
+              category={currentQ.category}
+              mobileAccordion
+            />
+            <QuestionCard
+              currentQ={currentQ}
+              current={current}
+              total={questions.length}
+              choice={answers.get(currentQ.id)}
+              selectAnswer={selectAnswer}
+              setCurrent={setCurrent}
+              goNext={goNext}
+              persistAnswer={persistAnswer}
+              setConfirmOpen={setConfirmOpen}
+              submitting={submitting}
+            />
           </div>
-          <h2
-            className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
-            style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
-          >
-            {isMath ? (
-              <MathText>{currentQ.question_text}</MathText>
-            ) : (
-              currentQ.question_text
-            )}
-          </h2>
-          <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
-            {currentQ.options.map((opt, i) => {
-              const letter = optionLetters[i] ?? String(i + 1);
-              const isSelected = choice === letter || choice === opt;
-              return (
-                <button
-                  key={i}
-                  type="button"
-                  role="radio"
-                  aria-checked={isSelected}
-                  aria-label={`Alternativ ${letter}: ${opt}`}
-                  onClick={() => selectAnswer(currentQ.id, letter)}
-                  className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 ${
-                    isSelected
-                      ? "border-2 border-[#1a5c3a] bg-[#e8f2ec] text-foreground"
-                      : "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50"
-                  }`}
-                >
-                  <span
-                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                      isSelected ? "bg-[#1a5c3a] text-white" : "bg-[#f0ede8] text-foreground"
-                    }`}
-                  >
-                    {letter}
-                  </span>
-                  <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                    {isMath ? <MathText>{opt}</MathText> : opt}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 flex items-center justify-between">
-            <Button
-              variant="ghost"
-              disabled={current === 0}
-              onClick={() => setCurrent((i) => Math.max(0, i - 1))}
-            >
-              Föregående
-            </Button>
-            {current < questions.length - 1 ? (
-              <Button disabled={!choice} onClick={goNext}>
-                Nästa fråga
-              </Button>
-            ) : (
-              <Button
-                disabled={!choice || submitting}
-                onClick={async () => {
-                  if (choice) await persistAnswer(currentQ.id, choice);
-                  setConfirmOpen(true);
-                }}
-              >
-                Lämna in svar
-              </Button>
-            )}
-          </div>
-        </div>
-        );
-        })()}
-      </main>
+        </main>
+      ) : (
+        <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
+          <QuestionCard
+            currentQ={currentQ}
+            current={current}
+            total={questions.length}
+            choice={answers.get(currentQ.id)}
+            selectAnswer={selectAnswer}
+            setCurrent={setCurrent}
+            goNext={goNext}
+            persistAnswer={persistAnswer}
+            setConfirmOpen={setConfirmOpen}
+            submitting={submitting}
+          />
+        </main>
+      )}
 
       {/* Bottom bar */}
       <footer className="sticky bottom-0 z-20 border-t border-border bg-background/95 px-4 py-3 backdrop-blur">
