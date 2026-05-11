@@ -19,6 +19,7 @@ import {
 } from "recharts";
 import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
+import { EmptyState } from "@/components/EmptyState";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -361,9 +362,13 @@ function StatsPage() {
             <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
           </div>
           {eloPoints.length < 2 ? (
-            <div className="flex h-48 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-sm text-muted-foreground">
-              Spela fler matcher för att se din progression
-            </div>
+            <EmptyState
+              icon="📈"
+              title="Inte tillräckligt med data ännu"
+              subtitle="Spela minst 2 matcher för att se din ELO-kurva börja forma sig."
+              ctaLabel="Spela en match"
+              ctaHref="/"
+            />
           ) : (
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -421,9 +426,11 @@ function StatsPage() {
             <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
           </div>
           {breakdownData.every((b) => !b.enough) ? (
-            <div className="flex h-40 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 text-sm text-muted-foreground">
-              Ej tillräckligt med data – spela fler matcher
-            </div>
+            <EmptyState
+              icon="🎯"
+              title="Spela fler matcher"
+              subtitle="Vi behöver mer data för att visa din träffsäkerhet per delprov."
+            />
           ) : (
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -467,16 +474,13 @@ function StatsPage() {
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-[#f0ede8]/40 px-4 py-10 text-center">
-              <Trophy className="h-10 w-10 text-[#c49a0e]/60" />
-              <div>
-                <p className="text-sm font-medium">Inga matcher ännu</p>
-                <p className="mt-1 text-xs text-muted-foreground">Starta din första battle för att se historik här.</p>
-              </div>
-              <Button asChild size="sm" className="bg-[#1a5c3a] text-white hover:bg-[#154d31]">
-                <Link to="/">Till hemskärmen</Link>
-              </Button>
-            </div>
+            <EmptyState
+              icon="⚔️"
+              title="Inga matcher ännu"
+              subtitle="Du har inte spelat någon match ännu. Starta din första battle!"
+              ctaLabel="Starta en battle"
+              ctaHref="/"
+            />
           ) : (
             <>
               <div className="overflow-x-auto">
