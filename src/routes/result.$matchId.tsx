@@ -374,6 +374,18 @@ function ResultPage() {
               <span className="flex items-center gap-2">
                 <ChevronDown className="h-4 w-4 opacity-60" />
                 Genomgång av alla {questions.length} frågor
+                {(() => {
+                  const times = myAnswers.map((a) => a.time_spent_seconds).filter((t): t is number => typeof t === "number" && t > 0);
+                  if (times.length === 0) return null;
+                  const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
+                  const m = Math.floor(avg / 60);
+                  const s = avg % 60;
+                  return (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-normal text-muted-foreground">
+                      <Clock className="h-3 w-3" /> {m > 0 ? `${m} min ` : ""}{s} sek snitt
+                    </span>
+                  );
+                })()}
               </span>
             </AccordionTrigger>
             <AccordionContent>
@@ -398,6 +410,28 @@ function ResultPage() {
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                         <span>{i + 1}.</span>
                         <span>{q.category}</span>
+                        {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
+                              a.time_spent_seconds > 180
+                                ? "bg-amber-100 text-amber-800"
+                                : "bg-muted text-muted-foreground"
+                            }`}
+                          >
+                            {a.time_spent_seconds > 180 ? (
+                              <AlertTriangle className="h-3 w-3" />
+                            ) : (
+                              <Clock className="h-3 w-3" />
+                            )}
+                            {(() => {
+                              const t = a.time_spent_seconds!;
+                              const m = Math.floor(t / 60);
+                              const s = t % 60;
+                              return m > 0 ? `${m} min ${s} sek` : `${s} sek`;
+                            })()}
+                            {a.time_spent_seconds > 180 ? " · Lång tid" : ""}
+                          </span>
+                        )}
                         <span className="ml-auto inline-flex items-center gap-1">
                           {noAnswer ? (
                             <span className="text-zinc-600">— Ej besvarad</span>
@@ -468,6 +502,7 @@ function ResultPage() {
                           );
                         })}
                       </ul>
+                      <ExplanationBlock explanation={q.explanation} />
                     </li>
                   );
                 })}
