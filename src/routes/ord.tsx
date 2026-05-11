@@ -315,10 +315,7 @@ function OrdPracticePage() {
                 </div>
 
                 {picked && (
-                  <div className="mt-6 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {current.source ? `Källa: ${current.source.split(":")[0]}` : ""}
-                    </span>
+                  <div className="mt-6 flex items-center justify-end">
                     <Button onClick={next} className="gap-2">
                       {idx + 1 >= target ? "Visa resultat" : "Nästa"}{" "}
                       <ArrowRight className="h-4 w-4" />
