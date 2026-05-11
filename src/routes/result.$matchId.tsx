@@ -86,7 +86,7 @@ function formatDuration(startIso: string, endIso: string | null): string {
 
 function ResultPage() {
   const { matchId } = Route.useParams();
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const createMatchFn = useServerFn(createMatch);
 
