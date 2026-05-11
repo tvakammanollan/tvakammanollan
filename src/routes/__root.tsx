@@ -79,12 +79,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HP Kampen — Tävla i Högskoleprovet" },
+      { name: "theme-color", content: "#1a5c3a" },
+      { title: "HP Kampen — Tävla i Högskoleprovet med ELO-ranking" },
       {
         name: "description",
         content:
-          "HP Kampen är arenan där du tränar inför Högskoleprovet i realtidsbattles med ELO-ranking. Tävla mot vänner eller en bot.",
+          "HP Kampen är arenan där du tränar inför Högskoleprovet i realtidsmatcher med ELO-ranking. Tävla mot vänner eller en bot — ORD, MEK, XYZ, KVA, NOG.",
       },
+      { name: "keywords", content: "Högskoleprovet, HP, ELO, ord, matte, träning, plugga, högskoleprov övningar" },
+      { name: "author", content: "HP Kampen" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
       { property: "og:title", content: "HP Kampen — Tävla i Högskoleprovet" },
       {
         property: "og:description",
@@ -92,17 +96,39 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla i HP-frågor mot andra studenter. ELO-ranking, realtidsmatcher, alla delprov.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "HP Kampen" },
+      { property: "og:url", content: "https://hpkampen.lovable.app/" },
+      { property: "og:locale", content: "sv_SE" },
       { name: "twitter:title", content: "HP Kampen — Tävla i Högskoleprovet" },
+      { name: "twitter:description", content: "Tävla i HP-frågor mot andra studenter med ELO-ranking." },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "canonical", href: "https://hpkampen.lovable.app/" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "HP Kampen",
+          url: "https://hpkampen.lovable.app/",
+          description:
+            "Träna inför Högskoleprovet i realtidsmatcher med ELO-ranking. Tävla mot vänner eller bot.",
+          applicationCategory: "EducationalApplication",
+          inLanguage: "sv-SE",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
+          operatingSystem: "Web",
+        }),
       },
     ],
   }),

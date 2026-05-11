@@ -13,6 +13,8 @@ export interface SelectedQuestion {
   difficulty: number | null;
 }
 
+const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
+
 // ---------- Question selection ----------
 
 async function pickRandom(
@@ -20,17 +22,47 @@ async function pickRandom(
   count: number,
   excludeIds: Set<string>,
 ): Promise<SelectedQuestion[]> {
+  const isMath = MATH_CATEGORIES.has(category);
   // Fetch a pool then shuffle in JS (avoids heavy ORDER BY random on large tables).
-  const { data, error } = await supabaseAdmin
+  let q = supabaseAdmin
     .from("questions")
-    .select("id, category, question_text, passage_text, passage_id, options, difficulty")
+    .select(
+      "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status",
+    )
     .eq("category", category)
     .is("passage_id", null)
     .limit(200);
+  if (isMath) q = q.eq("clean_status", "ok");
+  const { data, error } = await q;
   if (error) throw error;
-  const pool = (data ?? []).filter((q) => !excludeIds.has(q.id));
+  const pool = (data ?? [])
+    .filter((row) => !excludeIds.has(row.id))
+    .map((row) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = row as any;
+      if (isMath && r.cleaned_question_text) {
+        return {
+          id: r.id,
+          category: r.category,
+          question_text: r.cleaned_question_text,
+          passage_text: r.passage_text,
+          passage_id: r.passage_id,
+          options: r.cleaned_options ?? r.options,
+          difficulty: r.difficulty,
+        } as SelectedQuestion;
+      }
+      return {
+        id: r.id,
+        category: r.category,
+        question_text: r.question_text,
+        passage_text: r.passage_text,
+        passage_id: r.passage_id,
+        options: r.options,
+        difficulty: r.difficulty,
+      } as SelectedQuestion;
+    });
   shuffle(pool);
-  return pool.slice(0, count) as SelectedQuestion[];
+  return pool.slice(0, count);
 }
 
 async function pickPassage(
