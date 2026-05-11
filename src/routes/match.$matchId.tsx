@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { Clock, LogOut } from "lucide-react";
+import { MathText } from "@/components/MathText";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -430,27 +431,19 @@ function MatchPage() {
       {/* Main */}
       <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
         {showPassage && currentQ.passage_text && (
-          currentQ.category === "DTK" ? (
-            <section className="mb-6 rounded-xl border-2 border-secondary/40 bg-secondary/5 p-5 shadow-card">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">
-                Diagramdata:
-              </div>
-              <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-foreground">
-{currentQ.passage_text}
-              </pre>
-            </section>
-          ) : (
-            <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                Textpassage
-              </div>
-              <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
-                {currentQ.passage_text}
-              </div>
-            </section>
-          )
+          <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Textpassage
+            </div>
+            <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+              {currentQ.passage_text}
+            </div>
+          </section>
         )}
 
+        {(() => {
+          const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
+          return (
         <div
           key={currentQ.id}
           className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
@@ -463,7 +456,11 @@ function MatchPage() {
             className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
             style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
           >
-            {currentQ.question_text}
+            {isMath ? (
+              <MathText autoDetect>{currentQ.question_text}</MathText>
+            ) : (
+              currentQ.question_text
+            )}
           </h2>
           <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
             {currentQ.options.map((opt, i) => {
@@ -490,7 +487,9 @@ function MatchPage() {
                   >
                     {letter}
                   </span>
-                  <span className="text-sm leading-relaxed">{opt}</span>
+                  <span className={`text-sm leading-relaxed ${isMath ? "font-mono" : ""}`}>
+                    {isMath ? <MathText autoDetect>{opt}</MathText> : opt}
+                  </span>
                 </button>
               );
             })}
