@@ -593,8 +593,8 @@ function MatchPage() {
                   >
                     {letter}
                   </span>
-                  <span className={`text-sm leading-relaxed ${isMath ? "font-mono" : ""}`}>
-                    {isMath ? <MathText autoDetect>{opt}</MathText> : opt}
+                  <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                    {isMath ? <MathText>{opt}</MathText> : opt}
                   </span>
                 </button>
               );
