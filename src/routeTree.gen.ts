@@ -14,6 +14,7 @@ import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as FriendsRouteImport } from './routes/friends'
@@ -46,6 +47,11 @@ const OrdRoute = OrdRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchmakingRoute = MatchmakingRouteImport.update({
+  id: '/matchmaking',
+  path: '/matchmaking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/friends': typeof FriendsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/matchmaking': typeof MatchmakingRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/friends': typeof FriendsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/matchmaking': typeof MatchmakingRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/friends': typeof FriendsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/matchmaking': typeof MatchmakingRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/leaderboard'
     | '/login'
+    | '/matchmaking'
     | '/onboarding'
     | '/ord'
     | '/signup'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/leaderboard'
     | '/login'
+    | '/matchmaking'
     | '/onboarding'
     | '/ord'
     | '/signup'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/leaderboard'
     | '/login'
+    | '/matchmaking'
     | '/onboarding'
     | '/ord'
     | '/signup'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   FriendsRoute: typeof FriendsRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
+  MatchmakingRoute: typeof MatchmakingRoute
   OnboardingRoute: typeof OnboardingRoute
   OrdRoute: typeof OrdRoute
   SignupRoute: typeof SignupRoute
@@ -234,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/matchmaking': {
+      id: '/matchmaking'
+      path: '/matchmaking'
+      fullPath: '/matchmaking'
+      preLoaderRoute: typeof MatchmakingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -301,6 +321,7 @@ const rootRouteChildren: RootRouteChildren = {
   FriendsRoute: FriendsRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
+  MatchmakingRoute: MatchmakingRoute,
   OnboardingRoute: OnboardingRoute,
   OrdRoute: OrdRoute,
   SignupRoute: SignupRoute,
