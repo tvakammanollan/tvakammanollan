@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { EloBadge } from "@/components/EloBadge";
 import { UserAvatar } from "@/components/UserAvatar";
+import { BugReportButton } from "@/components/BugReportButton";
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
