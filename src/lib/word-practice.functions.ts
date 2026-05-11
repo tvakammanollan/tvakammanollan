@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export type WordQuestion = {
   id: string;
@@ -21,7 +22,6 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }) => {
     const supabase = supabaseAdmin;
-    // Fetch a random batch using order by random()
     const { data: rows, error } = await supabase
       .from("questions")
       .select("id,question_text,options,correct_answer,source")
@@ -31,7 +31,6 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     const filtered = (rows ?? []).filter(
       (r: { id: string }) => !data.exclude.includes(r.id as string),
     );
-    // Shuffle in JS (Fisher-Yates) and slice
     for (let i = filtered.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
@@ -52,3 +51,57 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
     return { count: count ?? 0 };
   },
 );
+
+// Record one practice answer for the signed-in user.
+export const recordOrdAnswer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { correct: boolean }) =>
+    z.object({ correct: z.boolean() }).parse(data),
+  )
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    const { data: existing } = await supabaseAdmin
+      .from("ord_practice_stats")
+      .select("correct_count, total_count")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    const newTotal = (existing?.total_count ?? 0) + 1;
+    const newCorrect = (existing?.correct_count ?? 0) + (data.correct ? 1 : 0);
+
+    const { error } = await supabaseAdmin
+      .from("ord_practice_stats")
+      .upsert(
+        {
+          user_id: userId,
+          correct_count: newCorrect,
+          total_count: newTotal,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" },
+      );
+    if (error) throw new Error(error.message);
+    return { correct_count: newCorrect, total_count: newTotal };
+  });
+
+export type OrdLeaderboardRow = {
+  rank: number;
+  user_id: string;
+  username: string;
+  correct_count: number;
+  total_count: number;
+  accuracy: number;
+};
+
+// Returns top 100 + the signed-in user's row (whether or not they're in top).
+export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { userId } = context;
+    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard");
+    if (error) throw new Error(error.message);
+    const rows = (data ?? []) as OrdLeaderboardRow[];
+    const top = rows.slice(0, 100);
+    const me = rows.find((r) => r.user_id === userId) ?? null;
+    return { top, me };
+  });
