@@ -52,11 +52,7 @@ export function useAuth() {
     if (!user) return;
     let cancelled = false;
     (async () => {
-      const { data } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle();
+      const { data } = await supabase.from("users").select("*").eq("id", user.id).maybeSingle();
       if (!cancelled) setProfile((data as Profile) ?? null);
     })();
     return () => {
