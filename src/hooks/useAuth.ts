@@ -14,6 +14,7 @@ export interface Profile {
   wins: number;
   losses: number;
   created_at: string;
+  is_admin?: boolean;
 }
 
 export function isAutoUsername(username: string | null | undefined): boolean {
