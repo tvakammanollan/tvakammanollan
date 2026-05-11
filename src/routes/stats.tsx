@@ -307,6 +307,16 @@ function StatsPage() {
             value={Math.max(profile.elo_verbal_peak, profile.elo_math_peak)}
             sub={`V ${profile.elo_verbal_peak} · M ${profile.elo_math_peak}`}
           />
+          <StatCard
+            icon={<span className="text-base">🔥</span>}
+            label="Nuvarande streak"
+            value={`${profile.current_streak ?? 0} dagar`}
+          />
+          <StatCard
+            icon={<span className="text-base">🏅</span>}
+            label="Längsta streak"
+            value={`${profile.longest_streak ?? 0} dagar`}
+          />
         </section>
 
         {/* Fastest categories */}
