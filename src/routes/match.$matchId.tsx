@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { Clock, LogOut } from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
+import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -379,6 +380,7 @@ function MatchPage() {
       // If processed (bot match), go straight to result
       const r = res as { result?: { ok?: boolean; waiting?: boolean } };
       if (r.result?.ok) {
+        if (user) void updateStreak(user.id);
         navigate({ to: "/result/$matchId", params: { matchId } });
       } else {
         // Wait for opponent (private match)
@@ -406,6 +408,7 @@ function MatchPage() {
 
     const handleUpdate = (payload: { new: { status?: string } }) => {
       if (payload.new?.status === "finished") {
+        if (user) void updateStreak(user.id);
         navigate({ to: "/result/$matchId", params: { matchId } });
       }
     };

@@ -18,6 +18,7 @@ import { sounds } from "@/lib/sounds";
 import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
@@ -223,6 +224,7 @@ function TrainPage() {
     if (current >= questions.length - 1) {
       setEndedAt(Date.now());
       setPhase("result");
+      if (user) void updateStreak(user.id);
       return;
     }
     setCurrent((i) => i + 1);

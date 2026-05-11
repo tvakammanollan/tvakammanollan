@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
+import { StreakWidget } from "@/components/ui/StreakWidget";
+import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
@@ -61,6 +63,14 @@ export function HomeDashboard() {
               <h1 className="text-2xl font-semibold leading-tight sm:text-3xl">
                 {isGuest ? "Gäst" : profile.username}
               </h1>
+              {!isGuest && (
+                <StreakWidget
+                  currentStreak={profile.current_streak ?? 0}
+                  longestStreak={profile.longest_streak ?? 0}
+                  onStartClick={() => openMatch("verbal")}
+                  className="mt-1"
+                />
+              )}
               <div className="mt-2 flex flex-col gap-2">
                 <RankPanel label="Verbal" elo={profile.elo_verbal} />
                 <RankPanel label="Matte" elo={profile.elo_math} />
@@ -154,6 +164,11 @@ export function HomeDashboard() {
         open={matchOpen}
         onOpenChange={setMatchOpen}
         matchType={matchType}
+      />
+
+      <OnboardingModal
+        open={!isGuest && profile.onboarding_completed === false}
+        onClose={() => { /* state-driven via profile refresh */ }}
       />
     </div>
   );

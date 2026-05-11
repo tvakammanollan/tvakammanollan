@@ -36,6 +36,8 @@ interface UserRow {
   games_played: number;
   wins: number;
   losses: number;
+  current_streak?: number;
+  longest_streak?: number;
 }
 
 interface EloPoint {
@@ -306,6 +308,16 @@ function StatsPage() {
             label="Bästa ELO"
             value={Math.max(profile.elo_verbal_peak, profile.elo_math_peak)}
             sub={`V ${profile.elo_verbal_peak} · M ${profile.elo_math_peak}`}
+          />
+          <StatCard
+            icon={<span className="text-base">🔥</span>}
+            label="Nuvarande streak"
+            value={`${profile.current_streak ?? 0} dagar`}
+          />
+          <StatCard
+            icon={<span className="text-base">🏅</span>}
+            label="Längsta streak"
+            value={`${profile.longest_streak ?? 0} dagar`}
           />
         </section>
 
