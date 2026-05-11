@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home } from "lucide-react";
+import { MathText } from "@/components/MathText";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -421,12 +422,15 @@ function ResultPage() {
                       )}
 
                       <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                        {q.question_text}
+                        {["XYZ","KVA","NOG","DTK"].includes(q.category)
+                          ? <MathText autoDetect>{q.question_text}</MathText>
+                          : q.question_text}
                       </div>
                       <ul className="mt-2 grid gap-1">
                         {q.options.map((opt) => {
                           const isCorrect = opt.id === q.correct_answer;
                           const isPicked = a?.selected_answer === opt.id;
+                          const isMath = ["XYZ","KVA","NOG","DTK"].includes(q.category);
                           return (
                             <li
                               key={opt.id}
@@ -441,7 +445,9 @@ function ResultPage() {
                               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
                                 {opt.id}
                               </span>
-                              <span className="leading-relaxed">{opt.text}</span>
+                              <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
+                                {isMath ? <MathText autoDetect>{opt.text}</MathText> : opt.text}
+                              </span>
                               {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-700" />}
                               {isPicked && !isCorrect && <X className="ml-auto h-4 w-4 text-rose-700" />}
                             </li>
