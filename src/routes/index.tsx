@@ -29,8 +29,9 @@ function Index() {
     );
   }
 
-  // Force onboarding if username is still the auto-generated default
-  if (isAutoUsername(profile.username)) {
+  // Force onboarding if username is still the auto-generated default — but
+  // skip for anonymous guest users (they get a CTA to sign up after a match).
+  if (isAutoUsername(profile.username) && !user.is_anonymous) {
     return <Navigate to="/onboarding" />;
   }
 

@@ -1,14 +1,32 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Trophy, Zap, BookOpen } from "lucide-react";
+import { Trophy, Zap, BookOpen, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export function HeroLanding() {
+  const navigate = useNavigate();
+  const [guestLoading, setGuestLoading] = useState(false);
+
+  const playAsGuest = async () => {
+    setGuestLoading(true);
+    const { error } = await supabase.auth.signInAnonymously();
+    if (error) {
+      setGuestLoading(false);
+      toast.error("Kunde inte starta gästläge", { description: error.message });
+      return;
+    }
+    // useAuth listener picks up the session; HomeDashboard will render
+    navigate({ to: "/" });
+  };
+
   return (
     <div className="mx-auto max-w-5xl px-4 pb-16 pt-12 sm:pt-20">
       <div className="text-center">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary-soft px-3 py-1 text-xs font-medium text-primary">
           <Trophy className="h-3.5 w-3.5" />
-          Ranked tävlingar i HP-frågor
+          Rankade tävlingar i HP-frågor
         </span>
 
         <h1
@@ -35,6 +53,18 @@ export function HeroLanding() {
           <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
             <Link to="/login">Logga in</Link>
           </Button>
+        </div>
+
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={playAsGuest}
+            disabled={guestLoading}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline disabled:opacity-60"
+          >
+            {guestLoading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+            {guestLoading ? "Startar gästläge…" : "Spela som gäst (utan konto)"}
+          </button>
         </div>
 
         <ul className="mt-10 flex flex-wrap items-center justify-center gap-2 text-xs">

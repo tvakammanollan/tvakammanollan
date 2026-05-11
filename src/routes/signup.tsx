@@ -24,8 +24,9 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [sentTo, setSentTo] = useState<string | null>(null);
 
-  if (!loading && user) return <Navigate to="/" />;
+  if (!loading && user && !user.is_anonymous) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,11 +53,35 @@ function SignupPage() {
       toast.success("Konto skapat — välj ditt användarnamn");
       navigate({ to: "/onboarding" });
     } else {
-      toast.success("Bekräfta din e-post för att fortsätta", {
-        description: "Vi har skickat en bekräftelselänk till din inkorg.",
-      });
+      setSentTo(parsed.data.email);
     }
   };
+
+  if (sentTo) {
+    return (
+      <AuthShell title="Kolla din e-post" subtitle="Sista steget innan du kan börja spela.">
+        <div className="grid gap-4 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-2xl">
+            ✉️
+          </div>
+          <p className="text-sm leading-relaxed text-foreground">
+            Vi har skickat en bekräftelselänk till
+          </p>
+          <p className="break-all rounded-lg bg-muted px-3 py-2 text-sm font-semibold">
+            {sentTo}
+          </p>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Öppna mejlet på den här enheten och klicka på länken — då loggas du in
+            automatiskt och kan välja användarnamn. Hittar du inte mejlet? Kolla
+            skräpposten.
+          </p>
+          <Button variant="outline" onClick={() => setSentTo(null)} className="mt-2">
+            Använd en annan e-postadress
+          </Button>
+        </div>
+      </AuthShell>
+    );
+  }
 
   return (
     <AuthShell title="Skapa konto" subtitle="Gratis. Inga kort, bara battles.">
@@ -89,7 +114,7 @@ function SignupPage() {
           {submitting ? "Skapar konto…" : "Skapa konto"}
         </Button>
         <p className="mt-1 text-center text-sm text-muted-foreground">
-          Har redan ett konto?{" "}
+          Har du redan ett konto?{" "}
           <Link to="/login" className="font-medium text-primary hover:underline">
             Logga in
           </Link>
