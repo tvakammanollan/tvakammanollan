@@ -91,6 +91,31 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
   },
 );
 
+export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const supabase = supabaseAdmin;
+    const head = (q: ReturnType<typeof supabase.from>) =>
+      q.select("id", { count: "exact", head: true });
+    const base = () => supabase.from("questions").eq("category", "ORD");
+    const [all, hp, list, easy, mid, hard] = await Promise.all([
+      head(base()),
+      head(base().not("source", "is", null)),
+      head(base().is("source", null)),
+      head(base().eq("difficulty", 1)),
+      head(base().eq("difficulty", 2)),
+      head(base().eq("difficulty", 3)),
+    ]);
+    return {
+      all: all.count ?? 0,
+      hp: hp.count ?? 0,
+      list: list.count ?? 0,
+      easy: easy.count ?? 0,
+      medium: mid.count ?? 0,
+      hard: hard.count ?? 0,
+    };
+  },
+);
+
 // Record one practice answer for the signed-in user.
 export const recordOrdAnswer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
