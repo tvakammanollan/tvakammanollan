@@ -334,6 +334,10 @@ export type Database = {
       questions: {
         Row: {
           category: string
+          clean_status: string
+          cleaned_at: string | null
+          cleaned_options: Json | null
+          cleaned_question_text: string | null
           correct_answer: string
           created_at: string
           difficulty: number | null
@@ -347,6 +351,10 @@ export type Database = {
         }
         Insert: {
           category: string
+          clean_status?: string
+          cleaned_at?: string | null
+          cleaned_options?: Json | null
+          cleaned_question_text?: string | null
           correct_answer: string
           created_at?: string
           difficulty?: number | null
@@ -360,6 +368,10 @@ export type Database = {
         }
         Update: {
           category?: string
+          clean_status?: string
+          cleaned_at?: string | null
+          cleaned_options?: Json | null
+          cleaned_question_text?: string | null
           correct_answer?: string
           created_at?: string
           difficulty?: number | null
