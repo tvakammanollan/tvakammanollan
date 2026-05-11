@@ -42,6 +42,11 @@ export function HeroLanding() {
           Det enda HP-verktyget med realtidsmatcher
         </span>
 
+        <div className="mx-auto mt-4 inline-flex items-center gap-2 rounded-full border-2 border-[#1a5c3a] bg-[#e8f5ee] px-4 py-2 text-sm font-bold text-[#1a5c3a] sm:text-base">
+          <span aria-hidden>📚</span>
+          Ordlista med 8000+ ord som är troliga att komma på nästa HP
+        </div>
+
         <h1
           className="mt-6 text-[36px] leading-[1.1] tracking-tight text-foreground sm:text-[52px]"
           style={{ fontFamily: "var(--font-display)" }}
