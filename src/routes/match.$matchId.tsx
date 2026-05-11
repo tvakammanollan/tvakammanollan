@@ -87,17 +87,21 @@ function MatchPage() {
     }
     let cancelled = false;
     (async () => {
-      const { data: m } = await supabase
+      console.log("[match] loading", matchId, "user", user.id);
+      const { data: m, error: mErr } = await supabase
         .from("matches")
         .select("*")
         .eq("id", matchId)
         .maybeSingle();
       if (cancelled) return;
+      if (mErr) console.error("[match] match load error", mErr);
       if (!m) {
+        console.warn("[match] match not found", matchId);
         toast.error("Matchen kunde inte hittas");
         navigate({ to: "/" });
         return;
       }
+      console.log("[match] match loaded", m);
       setMatch(m as MatchRow);
 
       // Opponent name (hide bot identity)
@@ -123,9 +127,13 @@ function MatchPage() {
         .select("question_order, question_id")
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
-      if (mqErr) console.error("match_questions load failed", mqErr);
+      if (mqErr) console.error("[match] match_questions load failed", mqErr);
+      console.log("[match] match_questions rows:", mq?.length ?? 0);
 
       const qIds = (mq ?? []).map((r) => r.question_id);
+      if (qIds.length === 0) {
+        console.warn("[match] no question ids — RLS or empty mapping");
+      }
       const { data: qRows, error: qErr } = qIds.length
         ? await supabase
             .from("questions")
@@ -134,7 +142,8 @@ function MatchPage() {
             )
             .in("id", qIds)
         : { data: [], error: null };
-      if (qErr) console.error("questions load failed", qErr);
+      if (qErr) console.error("[match] questions load failed", qErr);
+      console.log("[match] questions rows:", qRows?.length ?? 0);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const qById = new Map<string, any>((qRows ?? []).map((q: any) => [q.id, q]));
 
@@ -164,6 +173,7 @@ function MatchPage() {
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
+      console.log("[match] final questions:", qs.length);
       setQuestions(qs);
     })();
     return () => {
