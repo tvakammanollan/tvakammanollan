@@ -318,6 +318,66 @@ function OrdPracticePage() {
               </div>
             )}
 
+            {/* Source filter */}
+            <div className="mt-5 rounded-xl border border-border bg-white p-4">
+              <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
+              <div className="grid grid-cols-3 gap-2">
+                {([
+                  { v: "all", label: "Alla", c: filterCounts?.all },
+                  { v: "list", label: "Ordlistan", c: filterCounts?.list },
+                  { v: "hp", label: "Gamla HP", c: filterCounts?.hp },
+                ] as const).map((o) => (
+                  <button
+                    key={o.v}
+                    type="button"
+                    onClick={() => setSourceFilter(o.v)}
+                    className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
+                      sourceFilter === o.v
+                        ? "border-[#1a5c3a] bg-[#1a5c3a] text-white"
+                        : "border-border bg-white hover:bg-muted"
+                    }`}
+                  >
+                    <div>{o.label}</div>
+                    {o.c != null && (
+                      <div className="text-xs opacity-70">{o.c.toLocaleString("sv-SE")} ord</div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-4 mb-2 text-sm font-semibold">Svårighetsgrad</div>
+              <div className="grid grid-cols-3 gap-2">
+                {([
+                  { d: 1, label: "Lätt", c: filterCounts?.easy, color: "#2d7a52" },
+                  { d: 2, label: "Medel", c: filterCounts?.medium, color: "#b88500" },
+                  { d: 3, label: "Svår", c: filterCounts?.hard, color: "#a02020" },
+                ] as const).map((o) => {
+                  const active = difficulties.includes(o.d);
+                  const disabled = !o.c;
+                  return (
+                    <button
+                      key={o.d}
+                      type="button"
+                      disabled={disabled}
+                      onClick={() => toggleDifficulty(o.d)}
+                      className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                        active ? "text-white" : "border-border bg-white hover:bg-muted"
+                      }`}
+                      style={active ? { background: o.color, borderColor: o.color } : undefined}
+                    >
+                      <div>{o.label}</div>
+                      <div className="text-xs opacity-70">{(o.c ?? 0).toLocaleString("sv-SE")} ord</div>
+                    </button>
+                  );
+                })}
+              </div>
+              {difficulties.length === 0 && (filterCounts?.easy ?? 0) + (filterCounts?.medium ?? 0) + (filterCounts?.hard ?? 0) > 0 && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Inget valt = alla svårighetsgrader
+                </p>
+              )}
+            </div>
+
             <div className="mt-5 border-t border-border pt-4 text-center">
               <Link
                 to="/leaderboard"
