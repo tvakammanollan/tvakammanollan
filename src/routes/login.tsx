@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-ro
 import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  if (!loading && user && !user.is_anonymous) return <Navigate to="/" />;
+  if (!loading && user && !isGuestUser(user)) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +34,9 @@ function LoginPage() {
       return;
     }
     setSubmitting(true);
+    if (isGuestUser(user)) {
+      await supabase.auth.signOut();
+    }
     const { error } = await supabase.auth.signInWithPassword(parsed.data);
     setSubmitting(false);
     if (error) {
