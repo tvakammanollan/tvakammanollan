@@ -68,6 +68,7 @@ function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
   const fetchProgress = useServerFn(getWordProgress);
+  const fetchFilterCounts = useServerFn(getOrdFilterCounts);
   const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
@@ -84,6 +85,16 @@ function OrdPracticePage() {
     userId: string;
   } | null>(null);
   const [excludeCorrect, setExcludeCorrect] = useState(false);
+  const [sourceFilter, setSourceFilter] = useState<"all" | "hp" | "list">("all");
+  const [difficulties, setDifficulties] = useState<number[]>([]);
+  const [filterCounts, setFilterCounts] = useState<{
+    all: number;
+    hp: number;
+    list: number;
+    easy: number;
+    medium: number;
+    hard: number;
+  } | null>(null);
 
   const loadProgress = useCallback(() => {
     void fetchProgress({})
@@ -95,8 +106,17 @@ function OrdPracticePage() {
     void fetchCount({})
       .then((c) => setPoolSize(c.count))
       .catch(() => setPoolSize(0));
+    void fetchFilterCounts({})
+      .then((c) => setFilterCounts(c))
+      .catch(() => setFilterCounts(null));
     loadProgress();
-  }, [fetchCount, loadProgress]);
+  }, [fetchCount, fetchFilterCounts, loadProgress]);
+
+  const toggleDifficulty = (d: number) => {
+    setDifficulties((prev) =>
+      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
+    );
+  };
 
   const startSession = useCallback(
     async (n: SessionLength) => {
@@ -109,6 +129,8 @@ function OrdPracticePage() {
             exclude: [],
             excludeCorrectForUserId:
               excludeCorrect && progress ? progress.userId : undefined,
+            sourceFilter,
+            difficulties,
           },
         });
         setBatch(res.questions);
@@ -123,7 +145,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch, excludeCorrect, progress],
+    [fetchBatch, excludeCorrect, progress, sourceFilter, difficulties],
   );
 
   const current = batch[idx];
