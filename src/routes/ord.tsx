@@ -127,7 +127,7 @@ function OrdPracticePage() {
               </h1>
               <p className="text-xs text-muted-foreground">
                 {poolSize !== null
-                  ? `${poolSize} riktiga ORD-frågor från tidigare HP`
+                  ? "1000+ riktiga ORD-frågor från tidigare HP"
                   : "Laddar bank…"}
               </p>
             </div>
