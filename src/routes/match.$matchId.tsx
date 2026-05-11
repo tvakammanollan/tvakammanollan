@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { Clock, LogOut } from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
+import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
