@@ -18,6 +18,7 @@ import {
   Cell,
 } from "recharts";
 import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
+import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -259,6 +260,15 @@ function StatsPage() {
             <Link to="/">Tillbaka hem</Link>
           </Button>
         </div>
+
+        {/* HP score estimate – first section */}
+        <section className="mb-6">
+          <HpScoreWidget
+            eloVerbal={profile.elo_verbal}
+            eloMath={profile.elo_math}
+            size="full"
+          />
+        </section>
 
         {/* Stat cards */}
         <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
