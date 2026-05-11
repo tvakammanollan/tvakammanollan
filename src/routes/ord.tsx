@@ -28,7 +28,7 @@ export const Route = createFileRoute("/ord")({
       {
         name: "description",
         content:
-          "Träna högskoleprovets ordförståelse solo. Över 1000 riktiga ORD-frågor från tidigare högskoleprov.",
+          "Träna högskoleprovets ordförståelse solo. Över 8000 riktiga ORD-frågor från tidigare högskoleprov.",
       },
     ],
   }),
@@ -182,7 +182,7 @@ function OrdPracticePage() {
               </h1>
               <p className="text-xs text-muted-foreground">
                 {poolSize !== null
-                  ? "1000+ riktiga ORD-frågor från tidigare HP"
+                  ? "8000+ riktiga ORD-frågor från tidigare HP"
                   : "Laddar bank…"}
               </p>
             </div>
