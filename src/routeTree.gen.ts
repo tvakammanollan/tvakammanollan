@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
@@ -28,6 +29,11 @@ const StatsRoute = StatsRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdRoute = OrdRouteImport.update({
+  id: '/ord',
+  path: '/ord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/onboarding'
+    | '/ord'
     | '/signup'
     | '/stats'
     | '/join/$roomCode'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/onboarding'
+    | '/ord'
     | '/signup'
     | '/stats'
     | '/join/$roomCode'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/onboarding'
+    | '/ord'
     | '/signup'
     | '/stats'
     | '/join/$roomCode'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
+  OrdRoute: typeof OrdRoute
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ord': {
+      id: '/ord'
+      path: '/ord'
+      fullPath: '/ord'
+      preLoaderRoute: typeof OrdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
+  OrdRoute: OrdRoute,
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
