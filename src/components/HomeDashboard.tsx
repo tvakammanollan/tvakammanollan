@@ -60,9 +60,9 @@ export function HomeDashboard() {
               <h1 className="text-2xl font-semibold leading-tight sm:text-3xl">
                 {isGuest ? "Gäst" : profile.username}
               </h1>
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <EloBadge label="Verbal" elo={profile.elo_verbal} />
-                <EloBadge label="Matte" elo={profile.elo_math} />
+              <div className="mt-2 flex flex-col gap-2">
+                <RankPanel label="Verbal" elo={profile.elo_verbal} />
+                <RankPanel label="Matte" elo={profile.elo_math} />
               </div>
             </div>
           </div>
