@@ -69,10 +69,9 @@ function FriendsPage() {
       );
       let otherMap: Record<string, FriendshipRow["other"]> = {};
       if (otherIds.length > 0) {
-        const { data: us } = await supabase
-          .from("users")
-          .select("id, username, elo_verbal, elo_math")
-          .in("id", otherIds);
+        const { data: us } = await supabase.rpc("get_users_basic", {
+          _ids: otherIds,
+        });
         otherMap = Object.fromEntries(
           (us ?? []).map((u) => [u.id, u as NonNullable<FriendshipRow["other"]>]),
         );

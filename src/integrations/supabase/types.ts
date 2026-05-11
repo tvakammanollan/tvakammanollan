@@ -465,6 +465,15 @@ export type Database = {
           username: string
         }[]
       }
+      get_users_basic: {
+        Args: { _ids: string[] }
+        Returns: {
+          elo_math: number
+          elo_verbal: number
+          id: string
+          username: string
+        }[]
+      }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
         Returns: boolean
