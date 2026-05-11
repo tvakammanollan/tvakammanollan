@@ -310,6 +310,27 @@ export type Database = {
           },
         ]
       }
+      ord_practice_stats: {
+        Row: {
+          correct_count: number
+          total_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          correct_count?: number
+          total_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          correct_count?: number
+          total_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       questions: {
         Row: {
           category: string
@@ -431,6 +452,17 @@ export type Database = {
           question_order: number
           question_text: string
           subject_type: string
+        }[]
+      }
+      get_ord_leaderboard: {
+        Args: never
+        Returns: {
+          accuracy: number
+          correct_count: number
+          rank: number
+          total_count: number
+          user_id: string
+          username: string
         }[]
       }
       match_visible_to_user: {

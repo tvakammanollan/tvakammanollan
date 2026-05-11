@@ -15,6 +15,7 @@ import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
   countOrdQuestions,
+  recordOrdAnswer,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
@@ -64,6 +65,7 @@ interface AnsweredItem {
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
+  const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
   const [target, setTarget] = useState<SessionLength>(10);
@@ -102,6 +104,8 @@ function OrdPracticePage() {
     setAnswered((a) => [...a, { question: current, picked: letter, isCorrect }]);
     if (isCorrect) sounds.correct();
     else sounds.wrong();
+    // Persist to leaderboard (fire-and-forget; ignore failures e.g. for guests)
+    void recordAnswer({ data: { correct: isCorrect } }).catch(() => {});
   };
 
   const next = () => {
@@ -193,6 +197,14 @@ function OrdPracticePage() {
                 Förbereder pass…
               </p>
             )}
+            <div className="mt-5 border-t border-border pt-4 text-center">
+              <Link
+                to="/leaderboard"
+                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                🏆 Se ord-topplistan →
+              </Link>
+            </div>
           </section>
         )}
 
