@@ -5,6 +5,7 @@ import { EloChart } from "@/components/EloChart";
 import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
+import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { getNextRank } from "@/types";
 import { GraduationCap, Sigma, Trophy } from "lucide-react";
 
@@ -63,6 +64,16 @@ export function HomeDashboard() {
               <div className="mt-2 flex flex-col gap-2">
                 <RankPanel label="Verbal" elo={profile.elo_verbal} />
                 <RankPanel label="Matte" elo={profile.elo_math} />
+                <div className="mt-1 flex items-center gap-2 pl-16">
+                  <HpScoreWidget
+                    eloVerbal={profile.elo_verbal}
+                    eloMath={profile.elo_math}
+                    size="compact"
+                  />
+                  <span className="text-[11px] text-muted-foreground">
+                    Uppskattning baserad på ELO
+                  </span>
+                </div>
               </div>
             </div>
           </div>
