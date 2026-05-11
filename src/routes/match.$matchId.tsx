@@ -88,6 +88,26 @@ function MatchPage() {
     setQuestionStartTime(new Date());
   }, [current]);
 
+  // Persist active match progress to sessionStorage so we can resume after reload.
+  useEffect(() => {
+    if (!match || questions.length === 0) return;
+    try {
+      sessionStorage.setItem(
+        "active_match",
+        JSON.stringify({
+          matchId,
+          currentQuestionIndex: current,
+          answers: Object.fromEntries(answers),
+          matchType: match.match_type,
+          createdAt: match.created_at,
+          savedAt: new Date().toISOString(),
+        }),
+      );
+    } catch {
+      /* ignore quota errors */
+    }
+  }, [matchId, current, answers, match, questions.length]);
+
   // Load match + questions
   useEffect(() => {
     if (authLoading) return;
