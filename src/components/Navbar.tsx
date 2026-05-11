@@ -57,9 +57,16 @@ export function Navbar() {
               </Button>
             </>
           ) : user && !profile ? (
-            <Button variant="ghost" size="sm" onClick={handleSignOut}>
-              Logga ut
-            </Button>
+            <>
+              <NavLink to="/leaderboard">Topplista</NavLink>
+              <NavLink to="/friends">Vänner</NavLink>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/login">Logga in</Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link to="/signup">Skapa konto</Link>
+              </Button>
+            </>
           ) : (
             <>
               <Button variant="ghost" size="sm" asChild>
@@ -81,8 +88,8 @@ function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
     <Link
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       to={to as any}
-      className="group relative hidden px-1 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
-      activeProps={{ className: "relative hidden px-1 py-1 text-sm font-semibold text-foreground sm:inline-block" }}
+      className="group relative inline-block px-1 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      activeProps={{ className: "relative inline-block px-1 py-1 text-sm font-semibold text-foreground" }}
     >
       <span>{children}</span>
       <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-[#1a5c3a] transition-transform duration-200 group-hover:scale-x-100" />

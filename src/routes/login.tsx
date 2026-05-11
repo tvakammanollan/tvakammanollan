@@ -24,7 +24,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  if (!loading && user) return <Navigate to="/" />;
+  if (!loading && user && !user.is_anonymous) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
