@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /match/
+Disallow: /result/
+Disallow: /join/
+Disallow: /onboarding
+
+Sitemap: https://hpkampen.lovable.app/sitemap.xml
