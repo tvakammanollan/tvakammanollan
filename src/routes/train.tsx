@@ -18,6 +18,7 @@ import { sounds } from "@/lib/sounds";
 import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/train")({
@@ -495,7 +496,19 @@ function TrainPage() {
 
             {/* Explanation */}
             {revealed && (
-              <ExplanationBlock explanation={currentQ.explanation} defaultOpen />
+              <>
+                <ExplanationBlock explanation={currentQ.explanation} defaultOpen />
+                {user && (
+                  <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                    <span>Felaktig fråga?</span>
+                    <ReportQuestionButton
+                      questionId={currentQ.id}
+                      userId={user.id}
+                      questionText={currentQ.question_text}
+                    />
+                  </div>
+                )}
+              </>
             )}
 
             {/* Action */}
