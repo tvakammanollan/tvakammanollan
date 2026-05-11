@@ -165,6 +165,11 @@ export function HomeDashboard() {
         onOpenChange={setMatchOpen}
         matchType={matchType}
       />
+
+      <OnboardingModal
+        open={!isGuest && profile.onboarding_completed === false}
+        onClose={() => { /* state-driven via profile refresh */ }}
+      />
     </div>
   );
 }
