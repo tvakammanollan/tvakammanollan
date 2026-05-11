@@ -155,10 +155,22 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
           <div className="grid gap-2.5">
             <ChoiceCard
               icon={busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />}
-              title="Snabbmatch"
-              subtitle="Hoppa in direkt, matchas mot en bot baserat på din ELO"
+              title="Snabbmatch – möt en bot"
+              subtitle="Möt en bot direkt – ingen väntetid"
               accent="primary"
               onClick={handleQuickMatch}
+              disabled={busy}
+            />
+            <ChoiceCard
+              icon={<Target className="h-5 w-5" />}
+              title="Ranked – möt en random spelare"
+              subtitle="Matchas mot spelare med liknande ELO"
+              accent="primary"
+              badge="NY"
+              onClick={() => {
+                navigate({ to: "/matchmaking", search: { type: matchType } });
+                close();
+              }}
               disabled={busy}
             />
             <ChoiceCard
