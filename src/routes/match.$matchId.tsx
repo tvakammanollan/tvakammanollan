@@ -385,6 +385,7 @@ function MatchPage() {
     if (!user) return;
     setSubmitting(true);
     try {
+      try { sessionStorage.removeItem("active_match"); } catch { /* ignore */ }
       // Persist current answer if any
       if (currentQ) {
         const c = answers.get(currentQ.id);
