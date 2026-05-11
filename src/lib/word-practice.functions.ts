@@ -40,7 +40,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       .from("questions")
       .select("id,question_text,options,correct_answer,source")
       .eq("category", "ORD")
-      .limit(2000);
+      .limit(10000);
     if (error) throw new Error(error.message);
     const filtered = (rows ?? []).filter(
       (r: { id: string }) => !excludeIds.has(r.id as string),
