@@ -66,6 +66,7 @@ interface AnsweredItem {
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
+  const fetchProgress = useServerFn(getWordProgress);
   const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
@@ -76,19 +77,39 @@ function OrdPracticePage() {
   const [answered, setAnswered] = useState<AnsweredItem[]>([]);
   const [poolSize, setPoolSize] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState<{
+    correctCount: number;
+    totalCount: number;
+    userId: string;
+  } | null>(null);
+  const [excludeCorrect, setExcludeCorrect] = useState(false);
+
+  const loadProgress = useCallback(() => {
+    void fetchProgress({})
+      .then((p) => setProgress(p))
+      .catch(() => setProgress(null));
+  }, [fetchProgress]);
 
   useEffect(() => {
     void fetchCount({})
       .then((c) => setPoolSize(c.count))
       .catch(() => setPoolSize(0));
-  }, [fetchCount]);
+    loadProgress();
+  }, [fetchCount, loadProgress]);
 
   const startSession = useCallback(
     async (n: SessionLength) => {
       setTarget(n);
       setLoading(true);
       try {
-        const res = await fetchBatch({ data: { count: n, exclude: [] } });
+        const res = await fetchBatch({
+          data: {
+            count: n,
+            exclude: [],
+            excludeCorrectForUserId:
+              excludeCorrect && progress ? progress.userId : undefined,
+          },
+        });
         setBatch(res.questions);
         setIdx(0);
         setPicked(null);
@@ -101,7 +122,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch],
+    [fetchBatch, excludeCorrect, progress],
   );
 
   const current = batch[idx];
