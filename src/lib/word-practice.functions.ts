@@ -58,7 +58,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
     }
     return {
-      questions: filtered.slice(0, data.count) as WordQuestion[],
+      questions: filtered.slice(0, data.count) as unknown as WordQuestion[],
     };
   });
 
