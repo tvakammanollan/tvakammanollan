@@ -493,6 +493,24 @@ export type Database = {
         }
         Relationships: []
       }
+      user_word_correct: {
+        Row: {
+          first_correct_at: string
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          first_correct_at?: string
+          question_id: string
+          user_id: string
+        }
+        Update: {
+          first_correct_at?: string
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           bot_matches_today: number
