@@ -20,7 +20,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       .parse(data ?? {}),
   )
   .handler(async ({ data }) => {
-    const supabase = createServerSupabaseClient();
+    const supabase = supabaseAdmin;
     // Fetch a random batch using order by random()
     const { data: rows, error } = await supabase
       .from("questions")
@@ -29,7 +29,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       .limit(500);
     if (error) throw new Error(error.message);
     const filtered = (rows ?? []).filter(
-      (r) => !data.exclude.includes(r.id as string),
+      (r: { id: string }) => !data.exclude.includes(r.id as string),
     );
     // Shuffle in JS (Fisher-Yates) and slice
     for (let i = filtered.length - 1; i > 0; i--) {
@@ -43,7 +43,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
 
 export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
   async () => {
-    const supabase = createServerSupabaseClient();
+    const supabase = supabaseAdmin;
     const { count, error } = await supabase
       .from("questions")
       .select("id", { count: "exact", head: true })
