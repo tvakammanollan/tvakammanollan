@@ -17,6 +17,7 @@ import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
 import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
+import { ExplanationBlock } from "@/components/ExplanationBlock";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
