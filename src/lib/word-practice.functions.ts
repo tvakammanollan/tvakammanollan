@@ -94,16 +94,18 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
 export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(
   async () => {
     const supabase = supabaseAdmin;
-    const head = (q: ReturnType<typeof supabase.from>) =>
-      q.select("id", { count: "exact", head: true });
-    const base = () => supabase.from("questions").eq("category", "ORD");
+    const base = () =>
+      supabase
+        .from("questions")
+        .select("id", { count: "exact", head: true })
+        .eq("category", "ORD");
     const [all, hp, list, easy, mid, hard] = await Promise.all([
-      head(base()),
-      head(base().not("source", "is", null)),
-      head(base().is("source", null)),
-      head(base().eq("difficulty", 1)),
-      head(base().eq("difficulty", 2)),
-      head(base().eq("difficulty", 3)),
+      base(),
+      base().not("source", "is", null),
+      base().is("source", null),
+      base().eq("difficulty", 1),
+      base().eq("difficulty", 2),
+      base().eq("difficulty", 3),
     ]);
     return {
       all: all.count ?? 0,
