@@ -6,8 +6,7 @@ import {
   generateRoomCode,
   calcBotElo,
   insertMatchQuestions,
-  simulateBotScore,
-  simulateBotSubmitDelaySec,
+  simulateBotMatch,
   processMatchResultServer,
 } from "./match.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
@@ -178,17 +177,31 @@ export const submitMatch = createServerFn({ method: "POST" })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await supabaseAdmin.from("matches").update(update as any).eq("id", data.matchId);
 
-    // If bot match, simulate bot now
+    // If bot match, simulate bot now using per-question category accuracy.
     if (match.is_bot_match) {
-      const botScore = simulateBotScore(match.bot_elo ?? 1000);
-      const delay = simulateBotSubmitDelaySec(match.bot_elo ?? 1000);
+      const { data: mqRows } = await supabaseAdmin
+        .from("match_questions")
+        .select("question_id, questions:question_id(category)")
+        .eq("match_id", data.matchId);
+      const botQs = (mqRows ?? []).map((row) => ({
+        id: row.question_id as string,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        category: ((row as any).questions?.category ?? "ORD") as string,
+      }));
+      const sim = simulateBotMatch(match.bot_elo ?? 1000, botQs);
+      console.log("[bot] sim", {
+        botElo: match.bot_elo,
+        score: sim.score,
+        submitTimeSeconds: sim.submitTimeSeconds,
+        correctIds: sim.correctQuestionIds,
+      });
       const submittedAt = new Date(
-        new Date(match.created_at).getTime() + delay * 1000,
+        new Date(match.created_at).getTime() + sim.submitTimeSeconds * 1000,
       ).toISOString();
       await supabaseAdmin
         .from("matches")
         .update({
-          player2_score: botScore,
+          player2_score: sim.score,
           player2_submitted_at: submittedAt,
         })
         .eq("id", data.matchId);
