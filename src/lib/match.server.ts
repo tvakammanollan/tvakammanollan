@@ -220,6 +220,53 @@ export async function insertMatchQuestions(matchId: string, questions: SelectedQ
 
 // ---------- Bot simulation ----------
 
+type AccuracyMap = Record<string, number>;
+const BOT_ACCURACY: { eloMax: number; map: AccuracyMap; fallback: number }[] = [
+  { eloMax: 800,  map: { ORD: 0.35, MEK: 0.30, LAS: 0.25, ELF: 0.25, XYZ: 0.30, KVA: 0.25, NOG: 0.20, DTK: 0.25 }, fallback: 0.30 },
+  { eloMax: 1000, map: { ORD: 0.50, MEK: 0.50, LAS: 0.45, ELF: 0.40, XYZ: 0.50, KVA: 0.45, NOG: 0.40, DTK: 0.45 }, fallback: 0.45 },
+  { eloMax: 1200, map: { ORD: 0.70, MEK: 0.65, LAS: 0.65, ELF: 0.60, XYZ: 0.65, KVA: 0.60, NOG: 0.55, DTK: 0.60 }, fallback: 0.62 },
+  { eloMax: 1400, map: { ORD: 0.82, MEK: 0.80, LAS: 0.78, ELF: 0.75, XYZ: 0.80, KVA: 0.75, NOG: 0.70, DTK: 0.75 }, fallback: 0.77 },
+  { eloMax: Infinity, map: { ORD: 0.93, MEK: 0.92, LAS: 0.90, ELF: 0.88, XYZ: 0.92, KVA: 0.88, NOG: 0.85, DTK: 0.88 }, fallback: 0.90 },
+];
+
+function botBaseAccuracy(botElo: number, category: string): number {
+  const tier = BOT_ACCURACY.find((t) => botElo < t.eloMax) ?? BOT_ACCURACY[BOT_ACCURACY.length - 1];
+  return tier.map[category] ?? tier.fallback;
+}
+
+export interface BotSimResult {
+  score: number;
+  correctQuestionIds: string[];
+  submitTimeSeconds: number;
+}
+
+export function simulateBotMatch(
+  botElo: number,
+  questions: { id: string; category: string }[],
+): BotSimResult {
+  const correctIds: string[] = [];
+  for (const q of questions) {
+    const base = botBaseAccuracy(botElo, q.category);
+    // ±10% per-question variation.
+    const acc = clamp(base + (Math.random() * 0.20 - 0.10), 0, 1);
+    if (Math.random() < acc) correctIds.push(q.id);
+  }
+
+  const secondsPerQuestion =
+    botElo >= 1400 ? 25 :
+    botElo >= 1200 ? 35 :
+    botElo >= 1000 ? 50 :
+    botElo >= 800  ? 65 : 80;
+  const total = Math.max(1, questions.length) * secondsPerQuestion;
+  const variation = total * 0.20;
+  const submitTimeSeconds = Math.round(
+    Math.min(470, Math.max(60, total + (Math.random() * variation * 2 - variation))),
+  );
+
+  return { score: correctIds.length, correctQuestionIds: correctIds, submitTimeSeconds };
+}
+
+// Legacy helpers kept for backward compat — prefer simulateBotMatch.
 export function simulateBotScore(botElo: number): number {
   let base: number;
   if (botElo >= 1400) base = 7;
@@ -227,7 +274,7 @@ export function simulateBotScore(botElo: number): number {
   else if (botElo >= 1000) base = 5;
   else if (botElo >= 800) base = 3;
   else base = 2;
-  const variation = Math.floor(Math.random() * 3) - 1; // -1..1
+  const variation = Math.floor(Math.random() * 3) - 1;
   return clamp(base + variation, 0, 8);
 }
 
@@ -235,6 +282,15 @@ export function simulateBotSubmitDelaySec(botElo: number): number {
   if (botElo >= 1300) return Math.floor(120 + Math.random() * 160);
   if (botElo >= 900) return Math.floor(280 + Math.random() * 120);
   return Math.floor(380 + Math.random() * 95);
+}
+
+export function getBotName(botElo: number): string {
+  if (botElo >= 1600) return "HP-Bot Elite";
+  if (botElo >= 1400) return "HP-Bot Mästare";
+  if (botElo >= 1200) return "HP-Bot Aspirant";
+  if (botElo >= 1000) return "HP-Bot Utmanare";
+  if (botElo >= 800)  return "HP-Bot Nybörjare";
+  return "HP-Bot Junior";
 }
 
 // ---------- ELO ----------
