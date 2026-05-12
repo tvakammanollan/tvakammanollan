@@ -509,7 +509,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <motion.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -537,27 +537,27 @@ function MatchPage() {
           </motion.div>
         )}
         <motion.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
         <div>
-          <p className="eyebrow text-[#1a5c3a]">Klart</p>
+          <p className="eyebrow text-[#10b981]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#0d1f17]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[#022c22]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
           </h1>
         </div>
         <p className="text-[#5a5a5a]">
-          Motståndaren har <span className="font-semibold text-[#0d1f17] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
+          Motståndaren har <span className="font-semibold text-[#022c22] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#1a5c3a] to-[#34a06a]"
+            className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.5, ease: "linear" }}
           />
@@ -602,7 +602,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#1a5c3a] transition-all duration-500 ease-out"
+                  className="h-full bg-[#10b981] transition-all duration-500 ease-out"
                   style={{ width: `${((current + 1) / questions.length) * 100}%` }}
                 />
               </div>
@@ -614,7 +614,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#d4a017] transition-all duration-700 ease-out"
+                  className="h-full bg-[#eab308] transition-all duration-700 ease-out"
                   style={{ width: `${oppProgress * 100}%` }}
                 />
               </div>
@@ -755,7 +755,7 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#1a5c3a]">
+      <div className="mb-2 text-xs font-semibold tracking-wide text-[#10b981]">
         {currentQ.category} · Fråga {current + 1}
       </div>
       <h2
@@ -776,15 +776,15 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 ${
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-[#1a5c3a] bg-[#e8f2ec] text-foreground"
-                  : "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50"
+                  ? "border-2 border-[#10b981] bg-[#d1fae5] text-foreground"
+                  : "border border-border bg-white hover:border-[#10b981] hover:bg-[#d1fae5]/50"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#1a5c3a] text-white" : "bg-[#f0ede8] text-foreground"
+                  isSelected ? "bg-[#10b981] text-white" : "bg-[#f0ede8] text-foreground"
                 }`}
               >
                 {letter}

@@ -17,7 +17,7 @@ export function StreakWidget({ currentStreak, longestStreak, onStartClick, class
         {onStartClick ? (
           <button
             onClick={onStartClick}
-            className="text-left text-xs text-[#1a5c3a] underline-offset-2 hover:underline"
+            className="text-left text-xs text-[#10b981] underline-offset-2 hover:underline"
           >
             Spela idag för att börja!
           </button>

@@ -250,13 +250,13 @@ function TrainPage() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 text-center"
         >
-          <p className="eyebrow text-[#1a5c3a]">Lugn takt</p>
+          <p className="eyebrow text-[#10b981]">Lugn takt</p>
           <h1
-            className="mt-2 text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[48px]"
+            className="mt-2 text-[36px] font-bold leading-tight text-[#022c22] sm:text-[48px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Träna på{" "}
-            <span className="display-italic font-medium text-[#1a5c3a]">
+            <span className="display-italic font-medium text-[#10b981]">
               egna villkor
             </span>
           </h1>
@@ -297,8 +297,8 @@ function TrainPage() {
                   onClick={() => toggleSub(sub)}
                   className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
                     active
-                      ? "border-[#1a5c3a] bg-[#1a5c3a] text-white"
-                      : "border-border bg-white text-foreground hover:border-[#1a5c3a]"
+                      ? "border-[#10b981] bg-[#10b981] text-white"
+                      : "border-border bg-white text-foreground hover:border-[#10b981]"
                   }`}
                 >
                   {sub}
@@ -349,8 +349,8 @@ function TrainPage() {
                 onClick={() => setConfig((c) => ({ ...c, count: n }))}
                 className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
                   config.count === n
-                    ? "border-2 border-[#1a5c3a] bg-[#e8f2ec]"
-                    : "border-border bg-white hover:border-[#1a5c3a]"
+                    ? "border-2 border-[#10b981] bg-[#d1fae5]"
+                    : "border-border bg-white hover:border-[#10b981]"
                 }`}
               >
                 {n} frågor
@@ -363,7 +363,7 @@ function TrainPage() {
           <Button
             onClick={startTraining}
             disabled={config.subs.length === 0}
-            className="w-full bg-[#1a5c3a] py-6 text-base font-semibold text-white hover:bg-[#154d31]"
+            className="w-full bg-[#10b981] py-6 text-base font-semibold text-white hover:bg-[#059669]"
           >
             Starta träning →
           </Button>
@@ -423,7 +423,7 @@ function TrainPage() {
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#1a5c3a] transition-all duration-500 ease-out"
+                className="h-full bg-[#10b981] transition-all duration-500 ease-out"
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -447,7 +447,7 @@ function TrainPage() {
             className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
-            <div className="mb-2 text-xs font-semibold tracking-wide text-[#1a5c3a]">
+            <div className="mb-2 text-xs font-semibold tracking-wide text-[#10b981]">
               {currentQ.category} · Fråga {current + 1}
             </div>
             <h2
@@ -463,13 +463,13 @@ function TrainPage() {
                 const isCorrectOpt = revealed && letter === currentQ.correct_answer;
                 const isWrongPick = revealed && isSelected && letter !== currentQ.correct_answer;
                 let cls =
-                  "border border-border bg-white hover:border-[#1a5c3a] hover:bg-[#e8f2ec]/50";
+                  "border border-border bg-white hover:border-[#10b981] hover:bg-[#d1fae5]/50";
                 if (isCorrectOpt) {
-                  cls = "border-2 border-[#1a5c3a] bg-[#1a5c3a] text-white";
+                  cls = "border-2 border-[#10b981] bg-[#10b981] text-white";
                 } else if (isWrongPick) {
                   cls = "border-2 border-[#c0392b] bg-[#c0392b] text-white";
                 } else if (isSelected) {
-                  cls = "border-2 border-[#1a5c3a] bg-[#e8f2ec]";
+                  cls = "border-2 border-[#10b981] bg-[#d1fae5]";
                 }
                 return (
                   <button
@@ -477,14 +477,14 @@ function TrainPage() {
                     type="button"
                     disabled={revealed}
                     onClick={() => handleSelect(letter)}
-                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c3a] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
+                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
                   >
                     <span
                       className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
                         isCorrectOpt || isWrongPick
                           ? "bg-white/20 text-white"
                           : isSelected
-                            ? "bg-[#1a5c3a] text-white"
+                            ? "bg-[#10b981] text-white"
                             : "bg-[#f0ede8] text-foreground"
                       }`}
                     >
@@ -526,7 +526,7 @@ function TrainPage() {
               {revealed ? (
                 <Button
                   onClick={() => goNext(false)}
-                  className="w-full bg-[#1a5c3a] py-5 text-base text-white hover:bg-[#154d31]"
+                  className="w-full bg-[#10b981] py-5 text-base text-white hover:bg-[#059669]"
                 >
                   {current >= questions.length - 1 ? "Visa resultat →" : "Nästa fråga →"}
                 </Button>
@@ -599,7 +599,7 @@ function TrainPage() {
         <section className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-card">
           <div className="text-center">
             <div
-              className="text-6xl font-semibold tabular-nums text-[#1a5c3a]"
+              className="text-6xl font-semibold tabular-nums text-[#10b981]"
               style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
             >
               {correct}
@@ -626,11 +626,11 @@ function TrainPage() {
                     <span className="tabular-nums text-foreground">
                       {v.c}/{v.t}{" "}
                       {v.c === v.t ? (
-                        <Check className="ml-1 inline h-4 w-4 text-[#1a5c3a]" />
+                        <Check className="ml-1 inline h-4 w-4 text-[#10b981]" />
                       ) : v.c === 0 ? (
                         <XIcon className="ml-1 inline h-4 w-4 text-[#c0392b]" />
                       ) : (
-                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#d4a017]" />
+                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#eab308]" />
                       )}
                     </span>
                   </div>
@@ -643,7 +643,7 @@ function TrainPage() {
         <div className="mt-6 grid gap-2">
           <Button
             onClick={restartSame}
-            className="w-full bg-[#1a5c3a] py-5 text-white hover:bg-[#154d31]"
+            className="w-full bg-[#10b981] py-5 text-white hover:bg-[#059669]"
           >
             🔄 Träna igen med samma inställningar
           </Button>
@@ -654,7 +654,7 @@ function TrainPage() {
               setResults([]);
             }}
             variant="outline"
-            className="w-full border-[#1a5c3a] py-5 text-[#1a5c3a] hover:bg-[#e8f2ec]"
+            className="w-full border-[#10b981] py-5 text-[#10b981] hover:bg-[#d1fae5]"
           >
             ⚙️ Ändra inställningar
           </Button>
@@ -703,8 +703,8 @@ function TrackCard({
       onClick={onClick}
       className={`rounded-2xl border p-4 text-left transition ${
         active
-          ? "border-2 border-[#1a5c3a] bg-[#e8f2ec]"
-          : "border-border bg-white hover:border-[#1a5c3a]"
+          ? "border-2 border-[#10b981] bg-[#d1fae5]"
+          : "border-border bg-white hover:border-[#10b981]"
       }`}
     >
       <div className="text-3xl">{icon}</div>
@@ -729,8 +729,8 @@ function DifficultyBtn({
       onClick={onClick}
       className={`min-w-[48px] rounded-lg border px-3 py-2 text-sm font-medium transition ${
         active
-          ? "border-2 border-[#1a5c3a] bg-[#1a5c3a] text-white"
-          : "border-border bg-white text-foreground hover:border-[#1a5c3a]"
+          ? "border-2 border-[#10b981] bg-[#10b981] text-white"
+          : "border-border bg-white text-foreground hover:border-[#10b981]"
       }`}
     >
       {label}

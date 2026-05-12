@@ -146,7 +146,7 @@ export function ReportQuestionButton({
             {REASONS.map((r) => (
               <label
                 key={r.value}
-                className="flex cursor-pointer items-start gap-2 rounded-md border border-border bg-background p-2 text-sm hover:border-[#1a5c3a]"
+                className="flex cursor-pointer items-start gap-2 rounded-md border border-border bg-background p-2 text-sm hover:border-[#10b981]"
               >
                 <input
                   type="radio"
@@ -154,7 +154,7 @@ export function ReportQuestionButton({
                   value={r.value}
                   checked={reason === r.value}
                   onChange={() => setReason(r.value)}
-                  className="mt-1 accent-[#1a5c3a]"
+                  className="mt-1 accent-[#10b981]"
                 />
                 <span>{r.label}</span>
               </label>
@@ -183,7 +183,7 @@ export function ReportQuestionButton({
             <Button
               onClick={() => void submit()}
               disabled={!reason || submitting}
-              className="bg-[#1a5c3a] hover:bg-[#154d31]"
+              className="bg-[#10b981] hover:bg-[#059669]"
             >
               Skicka rapport
             </Button>

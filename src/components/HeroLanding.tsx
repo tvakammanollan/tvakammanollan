@@ -47,15 +47,65 @@ export function HeroLanding() {
     <div className="overflow-hidden">
       {/* ============== HERO ============== */}
       <section className="relative px-6 pt-12 pb-24 sm:pt-20 sm:pb-32">
+        {/* Animated aurora orbs — Apple/Cluely-style */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <motion.div
+            className="orb orb-emerald"
+            style={{
+              top: "-10%",
+              left: "10%",
+              width: 420,
+              height: 420,
+              y: reduce ? 0 : glowY,
+            }}
+            animate={reduce ? undefined : { x: [0, 60, -40, 0], y: [0, -40, 30, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="orb orb-purple"
+            style={{
+              top: "5%",
+              right: "5%",
+              width: 380,
+              height: 380,
+            }}
+            animate={reduce ? undefined : { x: [0, -50, 40, 0], y: [0, 30, -50, 0] }}
+            transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="orb orb-cyan"
+            style={{
+              top: "35%",
+              left: "50%",
+              width: 320,
+              height: 320,
+            }}
+            animate={reduce ? undefined : { x: [0, -80, 60, 0], y: [0, 40, -30, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="orb orb-pink"
+            style={{
+              top: "20%",
+              left: "70%",
+              width: 280,
+              height: 280,
+              opacity: 0.35,
+            }}
+            animate={reduce ? undefined : { x: [0, 30, -50, 0], y: [0, -50, 20, 0] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
         {/* Decorative parallax glow */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px]"
           style={{
             y: reduce ? 0 : glowY,
-            opacity: reduce ? 0.6 : glowOpacity,
+            opacity: reduce ? 0.5 : glowOpacity,
             backgroundImage:
-              "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(26, 92, 58, 0.16), transparent 70%), radial-gradient(ellipse 30% 25% at 80% 10%, rgba(212, 160, 23, 0.14), transparent 70%)",
+              "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(16, 185, 129, 0.18), transparent 70%), radial-gradient(ellipse 35% 25% at 80% 10%, rgba(139, 92, 246, 0.16), transparent 70%)",
           }}
         />
 
@@ -64,74 +114,121 @@ export function HeroLanding() {
           style={{ y: reduce ? 0 : heroY }}
         >
           {/* Live pill */}
-          <div className="animate-fade-in mx-auto mb-8 flex w-fit items-center gap-2.5 rounded-full border border-[#d4cdb8] bg-white/70 px-4 py-1.5 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="glass mx-auto mb-8 flex w-fit items-center gap-2.5 rounded-full px-4 py-1.5"
+          >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1a5c3a] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#1a5c3a]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10b981] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
             </span>
-            <span className="eyebrow text-[#0f4029]">
+            <span className="eyebrow text-[#047857]">
               Det enda HP-verktyget med realtidsmatcher
             </span>
-          </div>
+          </motion.div>
 
-          {/* Editorial headline */}
-          <h1 className="animate-fade-up display text-[44px] leading-[0.98] text-[#0d1f17] sm:text-[80px] md:text-[96px]">
-            <span className="block font-black">Tävla.</span>
-            <span className="block font-light italic text-[#1a5c3a]">
+          {/* Editorial headline — word-by-word reveal */}
+          <h1 className="display text-[44px] leading-[0.98] text-[#022c22] sm:text-[80px] md:text-[96px]">
+            <motion.span
+              className="block font-black"
+              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Tävla.
+            </motion.span>
+            <motion.span
+              className="block font-light italic text-aurora-gradient"
+              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
               Klättra.
-            </span>
-            <span className="block font-black">
+            </motion.span>
+            <motion.span
+              className="block font-black"
+              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
               Klara{" "}
               <span className="relative inline-block">
                 <span className="text-gold-gradient">HP</span>
-                <svg
+                <motion.svg
                   aria-hidden
                   viewBox="0 0 120 12"
-                  className="absolute -bottom-2 left-0 w-full text-[#d4a017]"
+                  className="absolute -bottom-2 left-0 w-full text-[#eab308]"
                   preserveAspectRatio="none"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.1, delay: 1.1, ease: "easeInOut" }}
                 >
-                  <path
+                  <motion.path
                     d="M2 8 Q 30 1, 60 6 T 118 4"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2.5"
                     strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.1, delay: 1.1, ease: "easeInOut" }}
                   />
-                </svg>
+                </motion.svg>
               </span>
               .
-            </span>
+            </motion.span>
           </h1>
 
           {/* Subhead */}
           <p className="animate-fade-up delay-100 mx-auto mt-10 max-w-[540px] text-balance text-[17px] leading-relaxed text-[#3f463f] sm:text-[19px]">
             Den enda plattformen för Högskoleprovet med{" "}
-            <span className="font-semibold text-[#0d1f17]">live-matcher</span>,{" "}
-            <span className="font-semibold text-[#0d1f17]">ELO-ranking</span> och{" "}
-            <span className="font-semibold text-[#0d1f17]">bot-träning</span>.
+            <span className="font-semibold text-[#022c22]">live-matcher</span>,{" "}
+            <span className="font-semibold text-[#022c22]">ELO-ranking</span> och{" "}
+            <span className="font-semibold text-[#022c22]">bot-träning</span>.
             Helt gratis.
           </p>
 
           {/* CTAs */}
-          <div className="animate-fade-up delay-200 mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="btn-shine group h-[52px] w-full overflow-hidden bg-[#1a5c3a] px-8 text-base font-semibold text-white shadow-[var(--shadow-glow-green)] transition-all hover:-translate-y-0.5 hover:bg-[#0f4029] sm:w-auto"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          >
+            <motion.div
+              whileHover={reduce ? undefined : { scale: 1.04, y: -3 }}
+              whileTap={reduce ? undefined : { scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="w-full sm:w-auto"
             >
-              <Link to="/signup" className="inline-flex items-center gap-2">
-                Skapa gratis konto
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={scrollHow}
-              className="h-[52px] w-full px-8 text-base font-medium text-[#0d1f17] hover:bg-[#1a5c3a]/5 sm:w-auto"
+              <Button
+                asChild
+                className="btn-shine group relative h-[56px] w-full overflow-hidden bg-gradient-to-r from-[#10b981] to-[#047857] px-8 text-base font-semibold text-white shadow-[var(--shadow-glow-green)] sm:w-auto"
+              >
+                <Link to="/signup" className="inline-flex items-center gap-2">
+                  Skapa gratis konto
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={reduce ? undefined : { scale: 1.03 }}
+              whileTap={reduce ? undefined : { scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="w-full sm:w-auto"
             >
-              Se hur det funkar
-            </Button>
-          </div>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={scrollHow}
+                className="h-[56px] w-full px-8 text-base font-medium text-[#022c22] hover:bg-[#10b981]/8 sm:w-auto"
+              >
+                Se hur det funkar
+              </Button>
+            </motion.div>
+          </motion.div>
 
           <div className="animate-fade-up delay-300 mt-8 flex flex-col items-center gap-1.5">
             <p className="text-xs text-[#6b6b6b]">
@@ -143,7 +240,7 @@ export function HeroLanding() {
               type="button"
               onClick={playAsGuest}
               disabled={guestLoading}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3f463f] underline decoration-[#1a5c3a]/30 decoration-2 underline-offset-4 transition hover:text-[#1a5c3a] hover:decoration-[#1a5c3a] disabled:opacity-60"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3f463f] underline decoration-[#10b981]/30 decoration-2 underline-offset-4 transition hover:text-[#10b981] hover:decoration-[#10b981] disabled:opacity-60"
             >
               {guestLoading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               {guestLoading
@@ -154,10 +251,10 @@ export function HeroLanding() {
 
           {/* Ord-databas crest */}
           <div className="animate-fade-up delay-400 mt-16 inline-flex items-center gap-3 rounded-2xl border border-[#d4cdb8] bg-white/70 px-5 py-3 backdrop-blur-sm">
-            <Sparkles className="h-4 w-4 text-[#d4a017]" />
-            <span className="text-sm font-medium text-[#0d1f17]">
+            <Sparkles className="h-4 w-4 text-[#eab308]" />
+            <span className="text-sm font-medium text-[#022c22]">
               Ordlista med{" "}
-              <span className="font-bold text-[#1a5c3a]">8 000+</span> ord
+              <span className="font-bold text-[#10b981]">8 000+</span> ord
               troliga att komma på nästa HP
             </span>
           </div>
@@ -191,12 +288,12 @@ export function HeroLanding() {
         <Reveal className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-[640px] text-center">
             <Reveal.Item>
-              <p className="eyebrow text-[#1a5c3a]">Funktionerna</p>
+              <p className="eyebrow text-[#10b981]">Funktionerna</p>
             </Reveal.Item>
             <Reveal.Item>
-              <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
+              <h2 className="display mt-3 text-[36px] leading-tight text-[#022c22] sm:text-[48px]">
                 Allt du behöver för{" "}
-                <span className="display-italic font-medium text-[#1a5c3a]">
+                <span className="display-italic font-medium text-[#10b981]">
                   att klara HP
                 </span>
               </h2>
@@ -252,12 +349,12 @@ export function HeroLanding() {
         <Reveal className="mx-auto max-w-5xl">
           <div className="mx-auto max-w-[640px] text-center">
             <Reveal.Item>
-              <p className="eyebrow text-[#1a5c3a]">Så här funkar det</p>
+              <p className="eyebrow text-[#10b981]">Så här funkar det</p>
             </Reveal.Item>
             <Reveal.Item>
-              <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
+              <h2 className="display mt-3 text-[36px] leading-tight text-[#022c22] sm:text-[48px]">
                 Tre steg till{" "}
-                <span className="display-italic font-medium text-[#1a5c3a]">
+                <span className="display-italic font-medium text-[#10b981]">
                   bättre HP-resultat
                 </span>
               </h2>
@@ -303,10 +400,10 @@ export function HeroLanding() {
       <section className="bg-paper px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <div className="text-center">
-            <p className="eyebrow text-[#1a5c3a]">Senaste arenan</p>
-            <h2 className="display mt-3 text-[28px] font-semibold text-[#0d1f17] sm:text-[32px]">
+            <p className="eyebrow text-[#10b981]">Senaste arenan</p>
+            <h2 className="display mt-3 text-[28px] font-semibold text-[#022c22] sm:text-[32px]">
               Live på{" "}
-              <span className="display-italic font-medium text-[#1a5c3a]">
+              <span className="display-italic font-medium text-[#10b981]">
                 arenan
               </span>{" "}
               just nu
@@ -319,27 +416,27 @@ export function HeroLanding() {
       </section>
 
       {/* ============== FOUNDER TESTIMONIAL ============== */}
-      <section className="bg-[#f5f1e8] px-6 py-24">
+      <section className="bg-[#fafaf8] px-6 py-24">
         <div className="mx-auto max-w-2xl">
           <figure className="surface-elevated relative rounded-3xl p-10 sm:p-14">
             <div
               aria-hidden
-              className="absolute -left-2 -top-6 text-[120px] leading-none text-[#1a5c3a]/15"
+              className="absolute -left-2 -top-6 text-[120px] leading-none text-[#10b981]/15"
               style={{ fontFamily: "var(--font-display)" }}
             >
               "
             </div>
-            <blockquote className="display relative text-[22px] leading-[1.35] text-[#0d1f17] sm:text-[26px]">
+            <blockquote className="display relative text-[22px] leading-[1.35] text-[#022c22] sm:text-[26px]">
               HP Kampen innehåller verktyg jag hade haft{" "}
-              <span className="display-italic font-medium text-[#1a5c3a]">
+              <span className="display-italic font-medium text-[#10b981]">
                 stor nytta av
               </span>{" "}
               när jag pluggade till högskoleprovet — helt gratis.
             </blockquote>
             <figcaption className="mt-8 flex items-center gap-4 border-t border-[#e6e0d2] pt-6">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-lg font-bold text-white shadow-md">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-lg font-bold text-white shadow-md">
                 N
-                <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#d4a017]">
+                <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#eab308]">
                   <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
                     <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
                   </svg>
@@ -347,7 +444,7 @@ export function HeroLanding() {
               </div>
               <div>
                 <div
-                  className="text-base font-semibold text-[#0d1f17]"
+                  className="text-base font-semibold text-[#022c22]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   Niklas
@@ -372,7 +469,7 @@ export function HeroLanding() {
           }}
         />
         <div className="relative mx-auto max-w-2xl">
-          <p className="eyebrow text-[#d4a017]">Sista anhalten</p>
+          <p className="eyebrow text-[#eab308]">Sista anhalten</p>
           <h2 className="display mt-4 text-[44px] leading-[1.05] text-white sm:text-[64px]">
             Redo att{" "}
             <span className="display-italic text-gold-gradient font-medium">
@@ -387,7 +484,7 @@ export function HeroLanding() {
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
               asChild
-              className="btn-shine group h-[56px] overflow-hidden bg-white px-8 text-base font-semibold text-[#0d1f17] hover:bg-white/95"
+              className="btn-shine group h-[56px] overflow-hidden bg-white px-8 text-base font-semibold text-[#022c22] hover:bg-white/95"
             >
               <Link to="/signup" className="inline-flex items-center gap-2">
                 Skapa konto nu
@@ -427,13 +524,13 @@ function FeatureCard({
     <div
       className={`group relative overflow-hidden rounded-2xl border bg-white p-7 transition-all duration-300 hover:-translate-y-1 ${
         featured
-          ? "border-[#d4a017]/40 shadow-[var(--shadow-glow-gold)]"
+          ? "border-[#eab308]/40 shadow-[var(--shadow-glow-gold)]"
           : "border-[#e6e0d2] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-md)]"
       }`}
     >
       {featured && (
         <div className="absolute right-4 top-4">
-          <span className="rounded-full bg-[#d4a017]/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#8a6c0e]">
+          <span className="rounded-full bg-[#eab308]/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#a16207]">
             Populärast
           </span>
         </div>
@@ -441,14 +538,14 @@ function FeatureCard({
       <div
         className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl ${
           accent === "gold"
-            ? "bg-gradient-to-br from-[#fdf3d0] to-[#fae6a0] text-[#8a6c0e]"
-            : "bg-gradient-to-br from-[#e8f2ec] to-[#d4e8db] text-[#1a5c3a]"
+            ? "bg-gradient-to-br from-[#fef3c7] to-[#fde68a] text-[#a16207]"
+            : "bg-gradient-to-br from-[#d1fae5] to-[#d4e8db] text-[#10b981]"
         }`}
       >
         {icon}
       </div>
       <h3
-        className="text-[20px] font-semibold leading-tight text-[#0d1f17]"
+        className="text-[20px] font-semibold leading-tight text-[#022c22]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
@@ -475,7 +572,7 @@ function Step({ n, title, text }: { n: string; title: string; text: string }) {
         </span>
       </div>
       <h3
-        className="mt-5 text-[20px] font-semibold text-[#0d1f17]"
+        className="mt-5 text-[20px] font-semibold text-[#022c22]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
@@ -519,11 +616,11 @@ function FloatingCards() {
         className="animate-float absolute left-[8%] top-[35%] -rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
         style={{ animationDelay: "0.5s" }}
       >
-        <div className="text-[10px] font-bold tracking-wide text-[#8a6c0e]">
+        <div className="text-[10px] font-bold tracking-wide text-[#a16207]">
           ⚡ Live match
         </div>
         <div
-          className="mt-1 text-sm font-semibold text-[#0d1f17]"
+          className="mt-1 text-sm font-semibold text-[#022c22]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Emma vs Oscar
@@ -534,11 +631,11 @@ function FloatingCards() {
         className="animate-float absolute right-[6%] top-[42%] rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
         style={{ animationDelay: "1.2s" }}
       >
-        <div className="text-[10px] font-bold tracking-wide text-[#1a5c3a]">
+        <div className="text-[10px] font-bold tracking-wide text-[#10b981]">
           🏆 Ny rank
         </div>
         <div
-          className="mt-1 text-sm font-semibold text-[#0d1f17]"
+          className="mt-1 text-sm font-semibold text-[#022c22]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Diamant 1850
@@ -613,16 +710,16 @@ function ActivityTicker({
             className="flex items-center justify-between gap-3 px-5 py-3.5 text-sm transition hover:bg-[#fbfaf6]"
           >
             <span className="flex items-center gap-2.5 truncate">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#fdf3d0] text-[#d4a017]">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#fef3c7] text-[#eab308]">
                 <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
                   <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
                 </svg>
               </span>
               <span className="truncate">
-                <span className="font-semibold text-[#0d1f17]">{winnerName}</span>{" "}
+                <span className="font-semibold text-[#022c22]">{winnerName}</span>{" "}
                 <span className="text-[#6b6b6b]">besegrade</span>{" "}
-                <span className="font-medium text-[#0d1f17]">{loserName}</span>
-                <span className="ml-1.5 font-medium text-[#1a5c3a] tabular-nums">
+                <span className="font-medium text-[#022c22]">{loserName}</span>
+                <span className="ml-1.5 font-medium text-[#10b981] tabular-nums">
                   {winnerScore ?? 0}/8
                 </span>
               </span>

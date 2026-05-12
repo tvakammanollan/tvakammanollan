@@ -78,7 +78,7 @@ export function Navbar() {
           {/* Monogram crest */}
           <span
             aria-hidden
-            className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-sm)] transition-transform group-hover:rotate-3 group-hover:scale-105"
+            className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-sm)] transition-transform group-hover:rotate-3 group-hover:scale-105"
           >
             <span
               className="text-[13px] font-black tracking-tighter"
@@ -86,10 +86,10 @@ export function Navbar() {
             >
               HP
             </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#f6f2e8] bg-[#d4a017]" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#f6f2e8] bg-[#eab308]" />
           </span>
           <span
-            className="text-lg font-semibold text-[#0d1f17] sm:text-xl"
+            className="text-lg font-semibold text-[#022c22] sm:text-xl"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
           >
             Kampen
@@ -118,7 +118,7 @@ export function Navbar() {
                   style={{ boxShadow: "var(--shadow-sm)" }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium text-[#0d1f17]">
+                  <span className="text-sm font-medium text-[#022c22]">
                     {profile.username}
                   </span>
                   <EloBadge elo={topElo} size="sm" />
@@ -180,7 +180,7 @@ function NavLink({
           {badge > 9 ? "9+" : badge}
         </span>
       ) : null}
-      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-[#1a5c3a] transition-transform duration-200 group-hover:scale-x-100" />
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-[#10b981] transition-transform duration-200 group-hover:scale-x-100" />
     </Link>
   );
 }

@@ -111,14 +111,14 @@ export function AuthShell({
         <aside className="hidden flex-col justify-between rounded-3xl bg-ink bg-grid-ink p-10 text-white lg:flex">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] shadow-lg">
+              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#10b981] to-[#047857] shadow-lg">
                 <span
                   className="text-[14px] font-black tracking-tighter text-white"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   HP
                 </span>
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#0d1f17] bg-[#d4a017]" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#022c22] bg-[#eab308]" />
               </span>
               <span
                 className="text-lg font-semibold text-white"
@@ -129,7 +129,7 @@ export function AuthShell({
             </div>
 
             <div className="mt-16">
-              <p className="eyebrow text-[#d4a017]">Välkommen till arenan</p>
+              <p className="eyebrow text-[#eab308]">Välkommen till arenan</p>
               <h2
                 className="mt-4 text-[40px] leading-[1.05] text-white"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -162,11 +162,11 @@ export function AuthShell({
               style={{ boxShadow: "var(--shadow-lg)" }}
             >
               <div className="text-center lg:text-left">
-                <p className="eyebrow text-[#1a5c3a]">
+                <p className="eyebrow text-[#10b981]">
                   {title.toLowerCase().includes("skapa") ? "Steg 1 av 2" : "Logga in"}
                 </p>
                 <h1
-                  className="mt-3 text-[34px] leading-tight text-[#0d1f17]"
+                  className="mt-3 text-[34px] leading-tight text-[#022c22]"
                   style={{
                     fontFamily: "var(--font-display)",
                     letterSpacing: "-0.02em",

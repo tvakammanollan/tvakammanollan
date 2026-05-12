@@ -20,7 +20,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="mx-auto flex max-w-sm flex-col items-center px-4 py-12 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#e8f5ee] text-4xl">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#d1fae5] text-4xl">
         <span aria-hidden>{icon}</span>
       </div>
       <h3
@@ -41,7 +41,7 @@ export function EmptyState({
             <Button
               asChild
               variant="outline"
-              className="border-[#1a5c3a] text-[#1a5c3a] hover:bg-[#e8f5ee]"
+              className="border-[#10b981] text-[#10b981] hover:bg-[#d1fae5]"
             >
               <Link to={ctaHref}>{ctaLabel}</Link>
             </Button>
@@ -49,7 +49,7 @@ export function EmptyState({
             <Button
               variant="outline"
               onClick={ctaOnClick}
-              className="border-[#1a5c3a] text-[#1a5c3a] hover:bg-[#e8f5ee]"
+              className="border-[#10b981] text-[#10b981] hover:bg-[#d1fae5]"
             >
               {ctaLabel}
             </Button>

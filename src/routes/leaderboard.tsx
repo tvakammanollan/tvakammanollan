@@ -63,13 +63,13 @@ function LeaderboardPage() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="mb-8 text-center sm:text-left"
       >
-        <p className="eyebrow text-[#1a5c3a]">Hall of fame</p>
+        <p className="eyebrow text-[#10b981]">Hall of fame</p>
         <div className="mt-2 flex items-center justify-center gap-3 sm:justify-start">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a017] to-[#8a6c0e] text-white shadow-md">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
             <Trophy className="h-6 w-6" />
           </span>
           <h1
-            className="text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[44px]"
+            className="text-[36px] font-bold leading-tight text-[#022c22] sm:text-[44px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Topplista
@@ -227,9 +227,9 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
   const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
   const tintBg = isMe
-    ? "bg-[#e8f2ec]"
+    ? "bg-[#d1fae5]"
     : r.rank === 1
-    ? "bg-[#fdf3d0]"
+    ? "bg-[#fef3c7]"
     : r.rank === 2
     ? "bg-[#f0f2f5]"
     : r.rank === 3
@@ -248,7 +248,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+            <span className="rounded-full bg-[#10b981] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
@@ -362,9 +362,9 @@ function OrdBoard() {
 function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
   const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
   const tintBg = isMe
-    ? "bg-[#e8f2ec]"
+    ? "bg-[#d1fae5]"
     : r.rank === 1
-    ? "bg-[#fdf3d0]"
+    ? "bg-[#fef3c7]"
     : r.rank === 2
     ? "bg-[#f0f2f5]"
     : r.rank === 3
@@ -383,13 +383,13 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+            <span className="rounded-full bg-[#10b981] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#1a5c3a]">
+      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#10b981]">
         {r.correct_count}
       </td>
       <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">

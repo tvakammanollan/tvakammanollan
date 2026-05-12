@@ -27,8 +27,8 @@ export const Route = createFileRoute("/stats")({
   component: StatsPage,
 });
 
-const VERBAL_COLOR = "#1a5c3a";
-const MATH_COLOR = "#d4a017";
+const VERBAL_COLOR = "#10b981";
+const MATH_COLOR = "#eab308";
 
 interface UserRow {
   username: string;
@@ -268,9 +268,9 @@ function StatsPage() {
           className="mb-8 flex flex-wrap items-end justify-between gap-3"
         >
           <div>
-            <p className="eyebrow text-[#1a5c3a]">Din resa</p>
+            <p className="eyebrow text-[#10b981]">Din resa</p>
             <h1
-              className="mt-1 text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[44px]"
+              className="mt-1 text-[36px] font-bold leading-tight text-[#022c22] sm:text-[44px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Statistik
@@ -366,7 +366,7 @@ function StatsPage() {
         {/* ELO chart */}
         <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#10b981]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
             <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
           </div>
           {eloPoints.length < 2 ? (
@@ -430,7 +430,7 @@ function StatsPage() {
         {/* Delprov breakdown */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#10b981]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
             <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
           </div>
           {breakdownData.every((b) => !b.enough) ? (
@@ -478,7 +478,7 @@ function StatsPage() {
         {/* Match history */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#10b981]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (

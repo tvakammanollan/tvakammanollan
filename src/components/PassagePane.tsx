@@ -190,7 +190,7 @@ export function PassagePane({
                 <button
                   type="button"
                   onClick={clearHighlights}
-                  className="ml-auto text-[11px] font-medium text-[#1a5c3a] underline-offset-2 hover:underline"
+                  className="ml-auto text-[11px] font-medium text-[#10b981] underline-offset-2 hover:underline"
                 >
                   🗑 Rensa markeringar
                 </button>
@@ -220,7 +220,7 @@ export function PassagePane({
             <button
               type="button"
               onClick={clearHighlights}
-              className="text-[11px] font-medium text-[#1a5c3a] underline-offset-2 hover:underline"
+              className="text-[11px] font-medium text-[#10b981] underline-offset-2 hover:underline"
             >
               🗑 Rensa
             </button>

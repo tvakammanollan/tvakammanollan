@@ -199,13 +199,13 @@ function OrdPracticePage() {
           className="mb-8 flex items-center justify-between"
         >
           <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-md">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-md">
               <GraduationCap className="h-6 w-6" />
             </span>
             <div>
-              <p className="eyebrow text-[#1a5c3a]">8 000+ ord</p>
+              <p className="eyebrow text-[#10b981]">8 000+ ord</p>
               <h1
-                className="text-[28px] font-bold leading-tight text-[#0d1f17] sm:text-[34px]"
+                className="text-[28px] font-bold leading-tight text-[#022c22] sm:text-[34px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Öva ord
@@ -214,7 +214,7 @@ function OrdPracticePage() {
           </div>
           <Link
             to="/"
-            className="text-sm text-[#5a5a5a] underline-offset-4 hover:text-[#1a5c3a] hover:underline"
+            className="text-sm text-[#5a5a5a] underline-offset-4 hover:text-[#10b981] hover:underline"
           >
             ← Hem
           </Link>
@@ -241,7 +241,7 @@ function OrdPracticePage() {
                   disabled={loading}
                   className="group flex flex-col items-center justify-center rounded-xl border border-border bg-white py-6 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary-soft disabled:opacity-60"
                 >
-                  <span className="text-3xl font-semibold tabular-nums text-[#1a5c3a]">
+                  <span className="text-3xl font-semibold tabular-nums text-[#10b981]">
                     {n}
                   </span>
                   <span className="mt-1 text-xs tracking-wide text-muted-foreground">
@@ -257,9 +257,9 @@ function OrdPracticePage() {
             )}
 
             {progress && progress.totalCount > 0 && (
-              <div className="mt-6 rounded-2xl border-2 border-[#1a5c3a]/20 bg-gradient-to-br from-[#e8f2ec] to-white p-5 sm:p-6">
+              <div className="mt-6 rounded-2xl border-2 border-[#10b981]/20 bg-gradient-to-br from-[#d1fae5] to-white p-5 sm:p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold tracking-wide text-[#1a5c3a]">
+                  <span className="text-[11px] font-semibold tracking-wide text-[#10b981]">
                     Din ord-bank
                   </span>
                   <span className="text-xs font-medium tabular-nums text-muted-foreground">
@@ -271,7 +271,7 @@ function OrdPracticePage() {
                 </div>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span
-                    className="text-4xl font-bold tabular-nums text-[#1a5c3a] sm:text-5xl"
+                    className="text-4xl font-bold tabular-nums text-[#10b981] sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {progress.correctCount.toLocaleString("sv-SE")}
@@ -283,9 +283,9 @@ function OrdPracticePage() {
                     ord rätt besvarade
                   </span>
                 </div>
-                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#1a5c3a]/10">
+                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#10b981]/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#1a5c3a] to-[#2d7a52] transition-all duration-700"
+                    className="h-full rounded-full bg-gradient-to-r from-[#10b981] to-[#2d7a52] transition-all duration-700"
                     style={{
                       width: `${Math.min(
                         100,
@@ -306,7 +306,7 @@ function OrdPracticePage() {
                       progress.correctCount >= progress.totalCount ||
                       progress.correctCount === 0
                     }
-                    className="h-5 w-5 rounded border-border accent-[#1a5c3a] disabled:opacity-40"
+                    className="h-5 w-5 rounded border-border accent-[#10b981] disabled:opacity-40"
                   />
                 </label>
                 {excludeCorrect &&
@@ -335,7 +335,7 @@ function OrdPracticePage() {
                     onClick={() => setSourceFilter(o.v)}
                     className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
                       sourceFilter === o.v
-                        ? "border-[#1a5c3a] bg-[#1a5c3a] text-white"
+                        ? "border-[#10b981] bg-[#10b981] text-white"
                         : "border-border bg-white hover:bg-muted"
                     }`}
                   >
@@ -405,7 +405,7 @@ function OrdPracticePage() {
             </div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#1a5c3a] transition-all duration-300"
+                className="h-full bg-[#10b981] transition-all duration-300"
                 style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
               />
             </div>
@@ -493,7 +493,7 @@ function OrdPracticePage() {
         {phase === "summary" && (
           <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e8f2ec] text-[#1a5c3a]">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#d1fae5] text-[#10b981]">
                 <Trophy className="h-8 w-8" />
               </div>
               <h2

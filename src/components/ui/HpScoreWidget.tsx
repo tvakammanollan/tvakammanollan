@@ -33,7 +33,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
       <h2
-        className="relative pb-2 text-xl font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#1a5c3a]"
+        className="relative pb-2 text-xl font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#10b981]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         📊 Uppskattad HP-poäng
@@ -47,7 +47,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
         <span className="text-sm text-muted-foreground">Kombinerat</span>
         <span
-          className="text-2xl font-semibold tabular-nums text-[#1a5c3a]"
+          className="text-2xl font-semibold tabular-nums text-[#10b981]"
           style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
         >
           ~ {combined}

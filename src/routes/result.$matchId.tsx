@@ -215,7 +215,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#d4a017", "#e8c468", "#1a5c3a", "#ffffff"],
+        colors: ["#eab308", "#e8c468", "#10b981", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });
@@ -252,7 +252,7 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? "bg-gradient-to-br from-[#1a5c3a] via-[#236d44] to-[#2d7a52] text-white border-[#1a5c3a] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
+    ? "bg-gradient-to-br from-[#10b981] via-[#236d44] to-[#2d7a52] text-white border-[#10b981] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
     : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
@@ -294,7 +294,7 @@ function ResultPage() {
         className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
         style={{ animationDelay: "60ms" }}
       >
-        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#1a5c3a]" : ""}`} />
+        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#10b981]" : ""}`} />
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
@@ -364,7 +364,7 @@ function ResultPage() {
             : pct >= 30 ? 0.5
             : 0.3;
           return (
-            <div className="mt-5 rounded-xl border-2 border-[#d4a017]/30 bg-gradient-to-br from-[#fdf6e3] to-white p-4 text-center">
+            <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
               <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
                 Trolig normering
               </div>
@@ -389,26 +389,26 @@ function ResultPage() {
 
       {/* Guest signup CTA — only shows for anonymous users */}
       {user?.is_anonymous && (
-        <section className="mt-5 overflow-hidden rounded-3xl border border-[#d4a017]/40 bg-gradient-to-br from-[#fdf3d0] via-[#fae6a0] to-[#fdf3d0] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
+        <section className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a017] to-[#8a6c0e] text-white shadow-md">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#0d1f17]"
+                className="text-[22px] font-bold leading-tight text-[#022c22]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#5b4a17]">
+              <p className="mt-1.5 text-sm leading-relaxed text-[#713f12]">
                 Skapa ett gratis konto för att <strong>spara din ELO</strong>,
                 klättra i rankingen och utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
               asChild
-              className="btn-shine shrink-0 overflow-hidden bg-[#1a5c3a] px-6 text-base font-semibold text-white shadow-md hover:bg-[#0f4029]"
+              className="btn-shine shrink-0 overflow-hidden bg-[#10b981] px-6 text-base font-semibold text-white shadow-md hover:bg-[#047857]"
             >
               <Link to="/signup">Skapa konto →</Link>
             </Button>
