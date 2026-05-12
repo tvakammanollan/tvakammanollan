@@ -148,11 +148,11 @@ export function HomeDashboard() {
                   Gratis coachning
                 </span>
                 <span className="rounded-full bg-[#1a5c3a] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                  1 timme
+                  30 min
                 </span>
               </div>
               <div className="text-xs text-[#5b4a17]">
-                Boka 1h med en av våra experter som fått 1.9+ på HP
+                Boka 30 min med en av våra experter som fått 1.9+ på HP
               </div>
             </div>
           </div>
