@@ -136,31 +136,53 @@ export async function selectQuestionsFor(
   matchType: MatchType,
   userId: string,
 ): Promise<SelectedQuestion[]> {
-  const exclude = await recentQuestionIds(userId);
+  // Increasingly larger lookback windows: 14 → 30 → 60 → no exclusion.
+  let seen = await recentSeen(userId, 14);
   const out: SelectedQuestion[] = [];
+  const target = 8;
 
-  if (matchType === "verbal") {
-    // Reading comprehension (LAS/ELF) temporarily disabled
-    out.push(...(await pickRandom("ORD", 5, exclude)));
-    out.push(...(await pickRandom("MEK", 3, exclude)));
-  } else {
-    // DTK removed (requires diagrams we don't have); replaced with extra XYZ
-    out.push(...(await pickRandom("XYZ", 4, exclude)));
-    out.push(...(await pickRandom("KVA", 2, exclude)));
-    out.push(...(await pickRandom("NOG", 2, exclude)));
+  const tryFill = async (excludeQ: Set<string>) => {
+    out.length = 0;
+    if (matchType === "verbal") {
+      out.push(...(await pickRandom("ORD", 5, excludeQ)));
+      out.push(...(await pickRandom("MEK", 3, excludeQ)));
+    } else {
+      out.push(...(await pickRandom("XYZ", 4, excludeQ)));
+      out.push(...(await pickRandom("KVA", 2, excludeQ)));
+      out.push(...(await pickRandom("NOG", 2, excludeQ)));
+    }
+  };
+
+  await tryFill(seen.questionIds);
+  if (out.length < target) {
+    seen = await recentSeen(userId, 30);
+    await tryFill(seen.questionIds);
   }
+  if (out.length < target) {
+    seen = await recentSeen(userId, 60);
+    await tryFill(seen.questionIds);
+  }
+  if (out.length < target) await tryFill(new Set());
 
-  // Trim/pad to 8 if possible
-  while (out.length > 8) out.pop();
-  if (out.length < 8) {
-    // Top up with the dominant single-question category
+  while (out.length > target) out.pop();
+  if (out.length < target) {
     const fallback = matchType === "verbal" ? "ORD" : "XYZ";
-    const extra = await pickRandom(fallback, 8 - out.length, new Set([...exclude, ...out.map((o) => o.id)]));
+    const extra = await pickRandom(
+      fallback,
+      target - out.length,
+      new Set(out.map((o) => o.id)),
+    );
     out.push(...extra);
   }
-
-  return out.slice(0, 8);
+  return out.slice(0, target);
 }
+
+// Exported for future LAS/ELF/DTK enablement (passage-level dedup).
+export async function recentPassageIds(userId: string, days = 14): Promise<Set<string>> {
+  const { passageIds } = await recentSeen(userId, days);
+  return passageIds;
+}
+export { pickPassage };
 
 // ---------- Match creation ----------
 
