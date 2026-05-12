@@ -10,21 +10,23 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { user, profile, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center text-sm text-muted-foreground">
-        Laddar…
-      </div>
-    );
-  }
+  // SEO / AI-crawlers / first-paint: serve the marketing landing by default.
+  // During SSR `loading` is true and there is no user yet — without this fall-
+  // through bots would only see a "Laddar…" placeholder.
+  if (loading && !user) return <HeroLanding />;
 
   if (!user) return <HeroLanding />;
 
-  // Got user but profile still loading
+  // Got user but profile still loading — show a soft skeleton instead of plain
+  // text so the dashboard frame is visible immediately.
   if (!profile) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center text-sm text-muted-foreground">
-        Förbereder din arena…
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12" aria-busy="true">
+        <div className="skeleton-shimmer h-48 rounded-2xl" />
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="skeleton-shimmer h-72 rounded-2xl" />
+          <div className="skeleton-shimmer h-72 rounded-2xl" />
+        </div>
       </div>
     );
   }
