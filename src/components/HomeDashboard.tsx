@@ -9,14 +9,16 @@ import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { StreakWidget } from "@/components/ui/StreakWidget";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
+import { CoachingModal } from "@/components/CoachingModal";
 import { getNextRank } from "@/types";
-import { GraduationCap, Sigma, Trophy } from "lucide-react";
+import { GraduationCap, Sigma, Trophy, Sparkles } from "lucide-react";
 
 export function HomeDashboard() {
   const { user, profile } = useAuth();
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
+  const [coachingOpen, setCoachingOpen] = useState(false);
 
   if (!user || !profile) {
     return (
