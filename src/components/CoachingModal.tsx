@@ -70,7 +70,7 @@ export function CoachingModal({
             <h2 className="mt-3 text-xl font-semibold">Tack {name}!</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att
-              boka in din gratis timme med en av våra 1.9+-coacher.
+              boka in dina gratis 30 minuter med en av våra 1.9+-coacher.
             </p>
             <Button
               className="mt-6 bg-[#1a5c3a] text-white hover:bg-[#154d31]"
@@ -86,7 +86,7 @@ export function CoachingModal({
                 <GraduationCap className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">
-                Boka 1 timmes gratis coachning
+                Boka 30 mins gratis coachning
               </DialogTitle>
               <DialogDescription className="text-center">
                 Få personlig vägledning från en av våra experter som själva
@@ -147,7 +147,7 @@ export function CoachingModal({
                 className="w-full bg-[#1a5c3a] text-white hover:bg-[#154d31]"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Boka min gratis timme
+                Boka mina gratis 30 min
               </Button>
             </form>
           </>
