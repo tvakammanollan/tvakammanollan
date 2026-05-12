@@ -226,6 +226,21 @@ export async function processMatchResultServer(matchId: string) {
   if (error || !match) throw error ?? new Error("Match not found");
   if (match.status === "finished") return { alreadyFinished: true };
 
+  // Idempotency: om elo_history redan har rader för matchen så har den
+  // redan processats; markera bara som finished och returnera.
+  const { data: existingHistory } = await supabaseAdmin
+    .from("elo_history")
+    .select("id")
+    .eq("match_id", matchId)
+    .limit(1);
+  if (existingHistory && existingHistory.length > 0) {
+    await supabaseAdmin
+      .from("matches")
+      .update({ status: "finished" })
+      .eq("id", matchId);
+    return { alreadyFinished: true };
+  }
+
   const p1Score = match.player1_score ?? 0;
   const p2Score = match.player2_score ?? 0;
   const p1Sub = match.player1_submitted_at ? new Date(match.player1_submitted_at).getTime() : Infinity;
