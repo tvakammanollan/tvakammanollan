@@ -31,13 +31,19 @@ async function pickRandom(
     )
     .eq("category", category)
     .is("passage_id", null)
-    .limit(200);
+    .limit(500);
   if (isMath) q = q.eq("clean_status", "ok");
   const { data, error } = await q;
   if (error) throw error;
-  const pool = (data ?? [])
-    .filter((row) => !excludeIds.has(row.id))
-    .map((row) => {
+  const all = data ?? [];
+  // Try with full exclusion first; if not enough, allow recently-seen as fallback.
+  let filtered = all.filter((row) => !excludeIds.has(row.id));
+  if (filtered.length < count) {
+    // Fallback: include all (sorted so least-recently-seen would appear first).
+    // We don't have per-question last-seen sorting cheaply here, so just shuffle all.
+    filtered = all;
+  }
+  const pool = filtered.map((row) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const r = row as any;
       if (isMath && r.cleaned_question_text) {
@@ -68,6 +74,7 @@ async function pickRandom(
 async function pickPassage(
   category: string,
   excludeIds: Set<string>,
+  excludePassageIds: Set<string>,
   maxQuestions = 2,
 ): Promise<SelectedQuestion[]> {
   const { data, error } = await supabaseAdmin
@@ -86,9 +93,10 @@ async function pickPassage(
     arr.push(r);
     byPassage.set(r.passage_id, arr);
   }
-  const passageIds = [...byPassage.keys()];
-  if (passageIds.length === 0) return [];
-  const chosenId = passageIds[Math.floor(Math.random() * passageIds.length)];
+  let candidateIds = [...byPassage.keys()].filter((p) => !excludePassageIds.has(p));
+  if (candidateIds.length === 0) candidateIds = [...byPassage.keys()];
+  if (candidateIds.length === 0) return [];
+  const chosenId = candidateIds[Math.floor(Math.random() * candidateIds.length)];
   const qs = byPassage.get(chosenId) ?? [];
   shuffle(qs);
   return qs.slice(0, maxQuestions);
@@ -101,20 +109,27 @@ function shuffle<T>(arr: T[]) {
   }
 }
 
-async function recentQuestionIds(userId: string): Promise<Set<string>> {
-  const { data: matches } = await supabaseAdmin
-    .from("matches")
-    .select("id")
-    .or(`player1_id.eq.${userId},player2_id.eq.${userId}`)
-    .order("created_at", { ascending: false })
-    .limit(5);
-  const ids = (matches ?? []).map((m) => m.id);
-  if (ids.length === 0) return new Set();
+async function recentSeen(
+  userId: string,
+  days: number,
+): Promise<{ questionIds: Set<string>; passageIds: Set<string> }> {
+  const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
   const { data: ans } = await supabaseAdmin
     .from("match_answers")
-    .select("question_id")
-    .in("match_id", ids);
-  return new Set((ans ?? []).map((a) => a.question_id));
+    .select("question_id, questions:question_id(passage_id)")
+    .eq("user_id", userId)
+    .eq("is_training", false)
+    .gte("answered_at", since)
+    .limit(2000);
+  const qIds = new Set<string>();
+  const pIds = new Set<string>();
+  for (const a of ans ?? []) {
+    if (a.question_id) qIds.add(a.question_id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const pid = (a as any).questions?.passage_id ?? null;
+    if (pid) pIds.add(pid);
+  }
+  return { questionIds: qIds, passageIds: pIds };
 }
 
 export async function selectQuestionsFor(
