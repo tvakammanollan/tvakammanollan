@@ -289,9 +289,10 @@ export { getBotName } from "./bot";
 // ---------- ELO ----------
 
 export function kFactor(elo: number) {
-  if (elo < 1500) return 32;
-  if (elo <= 1800) return 20;
-  return 10;
+  // 3x boost for more entertaining ELO swings
+  if (elo < 1500) return 96;
+  if (elo <= 1800) return 60;
+  return 30;
 }
 
 export function calcNewElo(oldElo: number, oppElo: number, result: 0 | 0.5 | 1): number {
