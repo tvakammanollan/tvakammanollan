@@ -194,7 +194,7 @@ export function HeroLanding() {
               </div>
               <div>
                 <div className="text-sm font-semibold text-foreground">
-                  Niklas, 18
+                  Niklas
                 </div>
                 <div className="text-xs text-[#6b6b6b]">
                   Founder · 1.9 på Högskoleprovet
