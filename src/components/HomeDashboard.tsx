@@ -131,6 +131,37 @@ export function HomeDashboard() {
         />
       </section>
 
+      {/* Free coaching CTA */}
+      <section className="mt-4">
+        <button
+          type="button"
+          onClick={() => setCoachingOpen(true)}
+          className="group flex w-full items-center justify-between gap-3 rounded-2xl border-2 border-[#d4a017] bg-gradient-to-r from-[#fff8e6] to-[#fdf3d3] px-5 py-4 text-left shadow-card transition-all hover:-translate-y-0.5"
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#d4a017] text-white">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-base font-bold text-[#1a1a1a]">
+                  Gratis coachning
+                </span>
+                <span className="rounded-full bg-[#1a5c3a] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                  1 timme
+                </span>
+              </div>
+              <div className="text-xs text-[#5b4a17]">
+                Boka 1h med en av våra experter som fått 1.9+ på HP
+              </div>
+            </div>
+          </div>
+          <span className="text-lg font-semibold text-[#1a5c3a] group-hover:translate-x-0.5 transition-transform">
+            →
+          </span>
+        </button>
+      </section>
+
       {/* Train mode (no time pressure) */}
       <section className="mt-4">
         <a
