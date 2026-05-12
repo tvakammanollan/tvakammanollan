@@ -20,6 +20,7 @@ import {
 import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { EmptyState } from "@/components/EmptyState";
+import { getBotName } from "@/lib/bot";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
