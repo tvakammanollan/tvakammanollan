@@ -1,9 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { joinMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
+import { Users } from "lucide-react";
 
 export const Route = createFileRoute("/join/$roomCode")({
   component: JoinPage,
@@ -37,8 +39,26 @@ function JoinPage() {
   }, [user, loading, roomCode, joinFn, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-      Ansluter till rum {roomCode}…
+    <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
+      <motion.span
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+        animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Users className="h-7 w-7" />
+      </motion.span>
+      <div>
+        <p className="eyebrow text-[#1a5c3a]">Privat rum</p>
+        <h1
+          className="mt-1 text-[28px] font-bold leading-tight text-[#0d1f17]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Ansluter…
+        </h1>
+        <p className="mt-1.5 text-sm text-[#5a5a5a]">
+          Rum-kod: <span className="font-mono font-semibold text-[#0d1f17]">{roomCode}</span>
+        </p>
+      </div>
     </div>
   );
 }

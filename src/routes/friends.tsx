@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -184,16 +185,23 @@ function FriendsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 sm:py-10">
-      <h1
-        className="text-2xl font-semibold sm:text-3xl"
-        style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+    <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        Vänner
-      </h1>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
-      </p>
+        <p className="eyebrow text-[#1a5c3a]">Din krets</p>
+        <h1
+          className="mt-1 text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[44px]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Vänner
+        </h1>
+        <p className="mt-2 text-sm text-[#5a5a5a]">
+          Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
+        </p>
+      </motion.div>
 
       {/* Add friend */}
       <form onSubmit={handleAdd} className="mt-6 flex flex-col gap-2 sm:flex-row">

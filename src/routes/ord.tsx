@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 
@@ -190,33 +191,34 @@ function OrdPracticePage() {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-10">
-        <header className="mb-6 flex items-center justify-between">
+      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-12">
+        <motion.header
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 flex items-center justify-between"
+        >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#e8f2ec] text-[#1a5c3a]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-md">
               <GraduationCap className="h-6 w-6" />
-            </div>
+            </span>
             <div>
+              <p className="eyebrow text-[#1a5c3a]">8 000+ ord</p>
               <h1
-                className="text-2xl font-semibold"
+                className="text-[28px] font-bold leading-tight text-[#0d1f17] sm:text-[34px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Öva ord
               </h1>
-              <p className="text-xs text-muted-foreground">
-                {poolSize !== null
-                  ? "8000+ riktiga ORD-frågor från tidigare HP"
-                  : "Laddar bank…"}
-              </p>
             </div>
           </div>
           <Link
             to="/"
-            className="text-sm text-muted-foreground hover:text-foreground"
+            className="text-sm text-[#5a5a5a] underline-offset-4 hover:text-[#1a5c3a] hover:underline"
           >
-            Hem
+            ← Hem
           </Link>
-        </header>
+        </motion.header>
 
         {/* SETUP */}
         {phase === "setup" && (

@@ -16,7 +16,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { LogOut } from "lucide-react";
+import { motion } from "framer-motion";
+import { LogOut, Trophy } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
@@ -506,8 +507,15 @@ function MatchPage() {
 
   if (!match || questions.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-        Laddar matchen…
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+        <motion.span
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-7 w-7" />
+        </motion.span>
+        <p className="text-sm text-[#5a5a5a]">Förbereder arenan…</p>
       </div>
     );
   }
@@ -518,24 +526,40 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         {reconnecting && (
-          <div
-            className="w-full rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
             role="status"
             aria-live="polite"
           >
             Anslutningen bröts – försöker återansluta…
-          </div>
+          </motion.div>
         )}
-        <h1 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-          Du har lämnat in.
-        </h1>
-        <p className="text-muted-foreground">
-          Motståndaren har {oppSecondsLeft} sekunder kvar att avsluta…
+        <motion.span
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-7 w-7" />
+        </motion.span>
+        <div>
+          <p className="eyebrow text-[#1a5c3a]">Klart</p>
+          <h1
+            className="mt-1 text-[34px] font-bold leading-tight text-[#0d1f17]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Du har lämnat in.
+          </h1>
+        </div>
+        <p className="text-[#5a5a5a]">
+          Motståndaren har <span className="font-semibold text-[#0d1f17] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
         </p>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-          <div
-            className="h-full bg-primary transition-all"
-            style={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
+        <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
+          <motion.div
+            className="h-full bg-gradient-to-r from-[#1a5c3a] to-[#34a06a]"
+            animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
+            transition={{ duration: 0.5, ease: "linear" }}
           />
         </div>
       </div>

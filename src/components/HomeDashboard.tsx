@@ -50,15 +50,25 @@ export function HomeDashboard() {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <ResumeMatchBanner />
       {isGuest && (
-        <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-primary/30 bg-primary-soft px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-foreground">
-            Du spelar som <strong>gäst</strong>. Skapa ett konto för att spara
-            din ELO och dyka upp på topplistan.
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-5 flex flex-col items-start gap-3 rounded-2xl border border-[#d4a017]/40 bg-gradient-to-r from-[#fdf3d0] to-[#fae6a0] px-5 py-4 text-sm shadow-[var(--shadow-glow-gold)] sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span className="flex items-center gap-2.5 text-[#0d1f17]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#d4a017] to-[#8a6c0e] text-white">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <span>
+              Du spelar som <strong className="font-bold">gäst</strong>. Skapa
+              konto för att spara din ELO och dyka upp på topplistan.
+            </span>
           </span>
-          <Button asChild size="sm" variant="default">
-            <a href="/signup">Skapa konto</a>
+          <Button asChild size="sm" className="shrink-0 bg-[#1a5c3a] hover:bg-[#0f4029]">
+            <a href="/signup">Skapa konto →</a>
           </Button>
-        </div>
+        </motion.div>
       )}
 
       {/* Stat panel */}

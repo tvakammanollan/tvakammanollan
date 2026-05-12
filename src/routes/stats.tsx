@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -259,23 +260,29 @@ function StatsPage() {
   return (
     <>
       
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 flex flex-wrap items-end justify-between gap-3"
+        >
           <div>
+            <p className="eyebrow text-[#1a5c3a]">Din resa</p>
             <h1
-              className="text-3xl font-bold tracking-tight"
+              className="mt-1 text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[44px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Statistik
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-[#5a5a5a]">
               Din progression och prestation över tid.
             </p>
           </div>
           <Button asChild variant="ghost" size="sm">
-            <Link to="/">Tillbaka hem</Link>
+            <Link to="/">← Tillbaka hem</Link>
           </Button>
-        </div>
+        </motion.div>
 
         {/* HP score estimate – first section */}
         <section className="mb-6">

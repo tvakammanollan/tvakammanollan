@@ -1,11 +1,12 @@
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trophy } from "lucide-react";
 import {
   joinRankedQueue,
   pollRankedMatch,
@@ -167,41 +168,92 @@ function MatchmakingPage() {
 
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center">
-      <h1 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-        {navigating ? "Motståndare hittad!" : "Söker motståndare…"}
-      </h1>
-
-      <div className="flex items-center gap-3">
-        <span className="h-3 w-3 animate-pulse rounded-full bg-primary [animation-delay:-0.3s]" />
-        <span className="h-3 w-3 animate-pulse rounded-full bg-primary [animation-delay:-0.15s]" />
-        <span className="h-3 w-3 animate-pulse rounded-full bg-primary" />
+      {/* Animated radar / pulse rings */}
+      <div className="relative flex h-32 w-32 items-center justify-center">
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 rounded-full border-2 border-[#1a5c3a]/40"
+          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+        />
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 rounded-full border-2 border-[#1a5c3a]/30"
+          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
+          transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
+        />
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 rounded-full border-2 border-[#1a5c3a]/20"
+          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
+          transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
+        />
+        <motion.span
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-glow-green)]"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-9 w-9" />
+        </motion.span>
       </div>
 
-      <div className="w-full rounded-xl border border-border bg-card p-5 text-sm">
-        <div className="text-muted-foreground">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <p className="eyebrow text-[#1a5c3a]">Realtid</p>
+        <h1
+          className="mt-2 text-[34px] font-bold leading-tight text-[#0d1f17] sm:text-[40px]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {navigating ? "Motståndare hittad!" : (
+            <>
+              Söker{" "}
+              <span className="display-italic font-medium text-[#1a5c3a]">
+                motståndare…
+              </span>
+            </>
+          )}
+        </h1>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="surface-paper w-full rounded-2xl p-5 text-sm"
+      >
+        <div className="text-[#5a5a5a]">
           {minElo !== null && maxElo !== null
-            ? `Söker spelare med ELO ${minElo}–${maxElo}`
+            ? <>Söker spelare med ELO <span className="font-semibold text-[#0d1f17] tabular-nums">{minElo}–{maxElo}</span></>
             : "Joinar kön…"}
         </div>
         {myElo !== null && (
-          <div className="mt-1 text-muted-foreground">
-            Din ELO: <span className="font-semibold text-foreground">{myElo}</span>
+          <div className="mt-1 text-[#5a5a5a]">
+            Din ELO: <span className="font-semibold text-[#0d1f17] tabular-nums">{myElo}</span>
           </div>
         )}
         <div
-          className="mt-3 text-xl tabular-nums"
-          style={{ fontFamily: "var(--font-mono, ui-monospace)" }}
+          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#1a5c3a]"
+          style={{ fontFamily: "var(--font-display)" }}
         >
-          Sökt i: {mm}:{ss}
+          {mm}:{ss}
         </div>
-      </div>
+      </motion.div>
 
       {showFallback && !navigating && (
-        <div className="w-full rounded-xl border border-border bg-background p-4 text-sm">
-          <div className="font-medium">Ingen spelare hittades ännu ({elapsed} sek)</div>
-          <div className="mt-1 text-muted-foreground">Vill du möta en bot istället?</div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full rounded-2xl border border-[#d4a017]/30 bg-gradient-to-br from-[#fdf3d0] to-[#fae6a0] p-4 text-sm"
+        >
+          <div className="font-semibold text-[#0d1f17]">
+            Ingen spelare ännu ({elapsed} sek)
+          </div>
+          <div className="mt-1 text-[#5b4a17]">Vill du möta en bot istället?</div>
           <div className="mt-3 flex gap-2">
-            <Button size="sm" onClick={playBot} className="flex-1">
+            <Button size="sm" onClick={playBot} className="flex-1 bg-[#1a5c3a] hover:bg-[#0f4029]">
               ⚡ Ja, möt en bot
             </Button>
             <Button
@@ -213,7 +265,7 @@ function MatchmakingPage() {
               ⏳ Vänta mer
             </Button>
           </div>
-        </div>
+        </motion.div>
       )}
 
       <Button variant="outline" onClick={cancel} disabled={navigating}>

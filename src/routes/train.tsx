@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -243,17 +244,26 @@ function TrainPage() {
   if (phase === "setup") {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-        <header className="mb-8 text-center">
+        <motion.header
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10 text-center"
+        >
+          <p className="eyebrow text-[#1a5c3a]">Lugn takt</p>
           <h1
-            className="text-3xl font-semibold sm:text-4xl"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+            className="mt-2 text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[48px]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            Träna på egna villkor
+            Träna på{" "}
+            <span className="display-italic font-medium text-[#1a5c3a]">
+              egna villkor
+            </span>
           </h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-3 text-[15px] text-[#5a5a5a]">
             Ingen timer, inga motståndare. Bara du och frågorna.
           </p>
-        </header>
+        </motion.header>
 
         {/* Step 1: track */}
         <Section title="1. Välj match-typ">
@@ -263,14 +273,14 @@ function TrainPage() {
               onClick={() => setTrack("verbal")}
               icon="📖"
               label="Svenska"
-              hint="ORD · MEK · LÄS · ELF"
+              hint="Ord · Mek · Läs · Elf"
             />
             <TrackCard
               active={config.track === "math"}
               onClick={() => setTrack("math")}
               icon="🔢"
               label="Matte"
-              hint="XYZ · KVA · NOG · DTK"
+              hint="Xyz · Kva · Nog · Dtk"
             />
           </div>
         </Section>
