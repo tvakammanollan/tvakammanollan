@@ -41,6 +41,42 @@ export type Database = {
         }
         Relationships: []
       }
+      coaching_requests: {
+        Row: {
+          created_at: string
+          email: string
+          goal: string | null
+          id: string
+          name: string
+          phone: string | null
+          preferred_time: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          goal?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          preferred_time: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          goal?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          preferred_time?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       elo_history: {
         Row: {
           created_at: string

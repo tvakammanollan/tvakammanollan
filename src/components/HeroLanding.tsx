@@ -176,6 +176,35 @@ export function HeroLanding() {
         </div>
       </section>
 
+      {/* FOUNDER TESTIMONIAL */}
+      <section className="border-t border-[#e8e6e0] bg-[#f8f7f4] px-6 py-16">
+        <div className="mx-auto max-w-2xl">
+          <figure className="rounded-2xl border border-[#e8e6e0] bg-white p-8 shadow-sm sm:p-10">
+            <div className="text-4xl leading-none text-[#1a5c3a]">“</div>
+            <blockquote
+              className="mt-2 text-[20px] leading-snug text-foreground sm:text-[22px]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              HP Kampen innehåller verktyg jag hade haft stor nytta av när jag
+              pluggade till högskoleprovet, helt gratis.
+            </blockquote>
+            <figcaption className="mt-6 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a5c3a] text-base font-bold text-white">
+                N
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-foreground">
+                  Niklas, 18
+                </div>
+                <div className="text-xs text-[#6b6b6b]">
+                  Founder · 1.9 på Högskoleprovet
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* FINAL CTA */}
       <section className="bg-[#1a5c3a] px-6 py-20 text-center text-white">
         <h2
