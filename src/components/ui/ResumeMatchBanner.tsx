@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SavedMatch {
   matchId: string;
@@ -13,25 +14,43 @@ const MATCH_DURATION = 8 * 60; // 480s
 
 export function ResumeMatchBanner() {
   const [saved, setSaved] = useState<SavedMatch | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
-    try {
-      const raw = sessionStorage.getItem("active_match");
-      if (!raw) return;
-      const data = JSON.parse(raw) as SavedMatch;
-      const refTime = data.createdAt ?? data.savedAt;
-      const elapsed = (Date.now() - new Date(refTime).getTime()) / 1000;
-      if (elapsed >= MATCH_DURATION) {
-        sessionStorage.removeItem("active_match");
-        return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const raw = sessionStorage.getItem("active_match");
+        if (!raw) return;
+        const data = JSON.parse(raw) as SavedMatch;
+        const refTime = data.createdAt ?? data.savedAt;
+        const elapsed = (Date.now() - new Date(refTime).getTime()) / 1000;
+        if (elapsed >= MATCH_DURATION) {
+          sessionStorage.removeItem("active_match");
+          return;
+        }
+        // Verify match still active in DB
+        const { data: m } = await supabase
+          .from("matches")
+          .select("status")
+          .eq("id", data.matchId)
+          .maybeSingle();
+        if (cancelled) return;
+        if (!m || m.status === "finished") {
+          sessionStorage.removeItem("active_match");
+          return;
+        }
+        setSaved(data);
+      } catch {
+        try { sessionStorage.removeItem("active_match"); } catch { /* ignore */ }
       }
-      setSaved(data);
-    } catch {
-      sessionStorage.removeItem("active_match");
-    }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
+  // Hide while user is on the match itself
   if (!saved) return null;
+  if (location.pathname.startsWith(`/match/${saved.matchId}`)) return null;
 
   const cancel = () => {
     try {

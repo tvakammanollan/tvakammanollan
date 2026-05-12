@@ -108,6 +108,18 @@ function MatchPage() {
     }
   }, [matchId, current, answers, match, questions.length]);
 
+  // Warn before unload during an active, unsubmitted match
+  useEffect(() => {
+    if (!match || submittedRef.current || waitingForOpp) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+      return "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [match, waitingForOpp]);
+
   // Load match + questions
   useEffect(() => {
     if (authLoading) return;
