@@ -19,6 +19,7 @@ import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
+import { getBotName } from "@/lib/bot";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -124,7 +125,7 @@ function ResultPage() {
       // Opponent display
       if (mr.is_bot_match) {
         setOpponentSeed(mr.id);
-        setOpponentName(pickFakeName(mr.id));
+        setOpponentName(getBotName(mr.bot_elo ?? 1000));
       } else {
         const oppId = mr.player1_id === user.id ? mr.player2_id : mr.player1_id;
         if (oppId) {

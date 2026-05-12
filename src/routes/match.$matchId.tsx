@@ -22,6 +22,7 @@ import { MathText } from "@/components/MathText";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
+import { getBotName } from "@/lib/bot";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -148,7 +149,7 @@ function MatchPage() {
 
       // Opponent name (hide bot identity)
       if ((m as MatchRow).is_bot_match) {
-        setOpponentName(pickFakeName((m as MatchRow).id));
+        setOpponentName(getBotName((m as MatchRow).bot_elo ?? 1000));
       } else {
         const oppId =
           (m as MatchRow).player1_id === user.id

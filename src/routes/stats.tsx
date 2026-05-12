@@ -20,6 +20,7 @@ import {
 import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { EmptyState } from "@/components/EmptyState";
+import { getBotName } from "@/lib/bot";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -504,7 +505,7 @@ function StatsPage() {
                       const draw = m.winner_id === null;
                       const oppId = isP1 ? m.player2_id : m.player1_id;
                       const oppLabel = m.is_bot_match
-                        ? pickFakeName(m.id)
+                        ? getBotName(m.bot_elo ?? 1000)
                         : (oppId && opponentNames.get(oppId)) || "Motståndare";
                       const delta = eloByMatch.get(m.id);
                       const rowBg = draw

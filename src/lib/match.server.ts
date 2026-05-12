@@ -31,13 +31,19 @@ async function pickRandom(
     )
     .eq("category", category)
     .is("passage_id", null)
-    .limit(200);
+    .limit(500);
   if (isMath) q = q.eq("clean_status", "ok");
   const { data, error } = await q;
   if (error) throw error;
-  const pool = (data ?? [])
-    .filter((row) => !excludeIds.has(row.id))
-    .map((row) => {
+  const all = data ?? [];
+  // Try with full exclusion first; if not enough, allow recently-seen as fallback.
+  let filtered = all.filter((row) => !excludeIds.has(row.id));
+  if (filtered.length < count) {
+    // Fallback: include all (sorted so least-recently-seen would appear first).
+    // We don't have per-question last-seen sorting cheaply here, so just shuffle all.
+    filtered = all;
+  }
+  const pool = filtered.map((row) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const r = row as any;
       if (isMath && r.cleaned_question_text) {
@@ -68,6 +74,7 @@ async function pickRandom(
 async function pickPassage(
   category: string,
   excludeIds: Set<string>,
+  excludePassageIds: Set<string>,
   maxQuestions = 2,
 ): Promise<SelectedQuestion[]> {
   const { data, error } = await supabaseAdmin
@@ -86,9 +93,10 @@ async function pickPassage(
     arr.push(r);
     byPassage.set(r.passage_id, arr);
   }
-  const passageIds = [...byPassage.keys()];
-  if (passageIds.length === 0) return [];
-  const chosenId = passageIds[Math.floor(Math.random() * passageIds.length)];
+  let candidateIds = [...byPassage.keys()].filter((p) => !excludePassageIds.has(p));
+  if (candidateIds.length === 0) candidateIds = [...byPassage.keys()];
+  if (candidateIds.length === 0) return [];
+  const chosenId = candidateIds[Math.floor(Math.random() * candidateIds.length)];
   const qs = byPassage.get(chosenId) ?? [];
   shuffle(qs);
   return qs.slice(0, maxQuestions);
@@ -101,51 +109,80 @@ function shuffle<T>(arr: T[]) {
   }
 }
 
-async function recentQuestionIds(userId: string): Promise<Set<string>> {
-  const { data: matches } = await supabaseAdmin
-    .from("matches")
-    .select("id")
-    .or(`player1_id.eq.${userId},player2_id.eq.${userId}`)
-    .order("created_at", { ascending: false })
-    .limit(5);
-  const ids = (matches ?? []).map((m) => m.id);
-  if (ids.length === 0) return new Set();
+async function recentSeen(
+  userId: string,
+  days: number,
+): Promise<{ questionIds: Set<string>; passageIds: Set<string> }> {
+  const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
   const { data: ans } = await supabaseAdmin
     .from("match_answers")
-    .select("question_id")
-    .in("match_id", ids);
-  return new Set((ans ?? []).map((a) => a.question_id));
+    .select("question_id, questions:question_id(passage_id)")
+    .eq("user_id", userId)
+    .eq("is_training", false)
+    .gte("answered_at", since)
+    .limit(2000);
+  const qIds = new Set<string>();
+  const pIds = new Set<string>();
+  for (const a of ans ?? []) {
+    if (a.question_id) qIds.add(a.question_id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const pid = (a as any).questions?.passage_id ?? null;
+    if (pid) pIds.add(pid);
+  }
+  return { questionIds: qIds, passageIds: pIds };
 }
 
 export async function selectQuestionsFor(
   matchType: MatchType,
   userId: string,
 ): Promise<SelectedQuestion[]> {
-  const exclude = await recentQuestionIds(userId);
+  // Increasingly larger lookback windows: 14 → 30 → 60 → no exclusion.
+  let seen = await recentSeen(userId, 14);
   const out: SelectedQuestion[] = [];
+  const target = 8;
 
-  if (matchType === "verbal") {
-    // Reading comprehension (LAS/ELF) temporarily disabled
-    out.push(...(await pickRandom("ORD", 5, exclude)));
-    out.push(...(await pickRandom("MEK", 3, exclude)));
-  } else {
-    // DTK removed (requires diagrams we don't have); replaced with extra XYZ
-    out.push(...(await pickRandom("XYZ", 4, exclude)));
-    out.push(...(await pickRandom("KVA", 2, exclude)));
-    out.push(...(await pickRandom("NOG", 2, exclude)));
+  const tryFill = async (excludeQ: Set<string>) => {
+    out.length = 0;
+    if (matchType === "verbal") {
+      out.push(...(await pickRandom("ORD", 5, excludeQ)));
+      out.push(...(await pickRandom("MEK", 3, excludeQ)));
+    } else {
+      out.push(...(await pickRandom("XYZ", 4, excludeQ)));
+      out.push(...(await pickRandom("KVA", 2, excludeQ)));
+      out.push(...(await pickRandom("NOG", 2, excludeQ)));
+    }
+  };
+
+  await tryFill(seen.questionIds);
+  if (out.length < target) {
+    seen = await recentSeen(userId, 30);
+    await tryFill(seen.questionIds);
   }
+  if (out.length < target) {
+    seen = await recentSeen(userId, 60);
+    await tryFill(seen.questionIds);
+  }
+  if (out.length < target) await tryFill(new Set());
 
-  // Trim/pad to 8 if possible
-  while (out.length > 8) out.pop();
-  if (out.length < 8) {
-    // Top up with the dominant single-question category
+  while (out.length > target) out.pop();
+  if (out.length < target) {
     const fallback = matchType === "verbal" ? "ORD" : "XYZ";
-    const extra = await pickRandom(fallback, 8 - out.length, new Set([...exclude, ...out.map((o) => o.id)]));
+    const extra = await pickRandom(
+      fallback,
+      target - out.length,
+      new Set(out.map((o) => o.id)),
+    );
     out.push(...extra);
   }
-
-  return out.slice(0, 8);
+  return out.slice(0, target);
 }
+
+// Exported for future LAS/ELF/DTK enablement (passage-level dedup).
+export async function recentPassageIds(userId: string, days = 14): Promise<Set<string>> {
+  const { passageIds } = await recentSeen(userId, days);
+  return passageIds;
+}
+export { pickPassage };
 
 // ---------- Match creation ----------
 
@@ -183,6 +220,53 @@ export async function insertMatchQuestions(matchId: string, questions: SelectedQ
 
 // ---------- Bot simulation ----------
 
+type AccuracyMap = Record<string, number>;
+const BOT_ACCURACY: { eloMax: number; map: AccuracyMap; fallback: number }[] = [
+  { eloMax: 800,  map: { ORD: 0.35, MEK: 0.30, LAS: 0.25, ELF: 0.25, XYZ: 0.30, KVA: 0.25, NOG: 0.20, DTK: 0.25 }, fallback: 0.30 },
+  { eloMax: 1000, map: { ORD: 0.50, MEK: 0.50, LAS: 0.45, ELF: 0.40, XYZ: 0.50, KVA: 0.45, NOG: 0.40, DTK: 0.45 }, fallback: 0.45 },
+  { eloMax: 1200, map: { ORD: 0.70, MEK: 0.65, LAS: 0.65, ELF: 0.60, XYZ: 0.65, KVA: 0.60, NOG: 0.55, DTK: 0.60 }, fallback: 0.62 },
+  { eloMax: 1400, map: { ORD: 0.82, MEK: 0.80, LAS: 0.78, ELF: 0.75, XYZ: 0.80, KVA: 0.75, NOG: 0.70, DTK: 0.75 }, fallback: 0.77 },
+  { eloMax: Infinity, map: { ORD: 0.93, MEK: 0.92, LAS: 0.90, ELF: 0.88, XYZ: 0.92, KVA: 0.88, NOG: 0.85, DTK: 0.88 }, fallback: 0.90 },
+];
+
+function botBaseAccuracy(botElo: number, category: string): number {
+  const tier = BOT_ACCURACY.find((t) => botElo < t.eloMax) ?? BOT_ACCURACY[BOT_ACCURACY.length - 1];
+  return tier.map[category] ?? tier.fallback;
+}
+
+export interface BotSimResult {
+  score: number;
+  correctQuestionIds: string[];
+  submitTimeSeconds: number;
+}
+
+export function simulateBotMatch(
+  botElo: number,
+  questions: { id: string; category: string }[],
+): BotSimResult {
+  const correctIds: string[] = [];
+  for (const q of questions) {
+    const base = botBaseAccuracy(botElo, q.category);
+    // ±10% per-question variation.
+    const acc = clamp(base + (Math.random() * 0.20 - 0.10), 0, 1);
+    if (Math.random() < acc) correctIds.push(q.id);
+  }
+
+  const secondsPerQuestion =
+    botElo >= 1400 ? 25 :
+    botElo >= 1200 ? 35 :
+    botElo >= 1000 ? 50 :
+    botElo >= 800  ? 65 : 80;
+  const total = Math.max(1, questions.length) * secondsPerQuestion;
+  const variation = total * 0.20;
+  const submitTimeSeconds = Math.round(
+    Math.min(470, Math.max(60, total + (Math.random() * variation * 2 - variation))),
+  );
+
+  return { score: correctIds.length, correctQuestionIds: correctIds, submitTimeSeconds };
+}
+
+// Legacy helpers kept for backward compat — prefer simulateBotMatch.
 export function simulateBotScore(botElo: number): number {
   let base: number;
   if (botElo >= 1400) base = 7;
@@ -190,7 +274,7 @@ export function simulateBotScore(botElo: number): number {
   else if (botElo >= 1000) base = 5;
   else if (botElo >= 800) base = 3;
   else base = 2;
-  const variation = Math.floor(Math.random() * 3) - 1; // -1..1
+  const variation = Math.floor(Math.random() * 3) - 1;
   return clamp(base + variation, 0, 8);
 }
 
@@ -199,6 +283,8 @@ export function simulateBotSubmitDelaySec(botElo: number): number {
   if (botElo >= 900) return Math.floor(280 + Math.random() * 120);
   return Math.floor(380 + Math.random() * 95);
 }
+
+export { getBotName } from "./bot";
 
 // ---------- ELO ----------
 
