@@ -202,6 +202,8 @@ export function HomeDashboard() {
         matchType={matchType}
       />
 
+      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} />
+
       <OnboardingModal
         open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
         onClose={() => setOnboardingDismissed(true)}
