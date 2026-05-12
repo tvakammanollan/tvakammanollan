@@ -18,7 +18,7 @@ async function callAI(words: any[], apiKey: string): Promise<any[]> {
     body: JSON.stringify({
       model: "google/gemini-2.5-flash",
       messages: [{ role: "system", content: SYSTEM }, { role: "user", content: userMsg }],
-      temperature: 0,
+      response_format: { type: "json_object" },
     }),
   });
   if (!res.ok) {
@@ -30,7 +30,10 @@ async function callAI(words: any[], apiKey: string): Promise<any[]> {
   if (content.startsWith("```")) {
     content = content.replace(/^```(?:json)?\s*/, "").replace(/```\s*$/, "");
   }
-  try { return JSON.parse(content); } catch { return []; }
+  try {
+    const obj = JSON.parse(content);
+    return Array.isArray(obj?.results) ? obj.results : [];
+  } catch { return []; }
 }
 
 Deno.serve(async (req) => {
