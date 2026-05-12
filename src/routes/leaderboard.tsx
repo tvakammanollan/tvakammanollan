@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
@@ -23,6 +24,23 @@ interface LbRow {
   losses: number;
 }
 
+/** Hide test/guest accounts and re-number ranks. */
+function filterLeaderboard<T extends { username: string; rank: number }>(rows: T[]): T[] {
+  const BLOCKED = new Set(["niklastest", "niklastest2"]);
+  return rows
+    .filter((r) => {
+      const name = (r.username ?? "").toLowerCase().trim();
+      if (!name) return false;
+      if (BLOCKED.has(name)) return false;
+      // Auto-generated guest username patterns:
+      if (/^spelare_[a-z0-9]{3,}$/i.test(name)) return false;
+      if (/^(gast|gäst|guest)[_-]?/i.test(name)) return false;
+      if (/^anon[_-]?/i.test(name)) return false;
+      return true;
+    })
+    .map((r, i) => ({ ...r, rank: i + 1 }));
+}
+
 const CACHE_MS = 5 * 60 * 1000;
 const cache: Record<MatchType, { rows: LbRow[]; ts: number } | undefined> = {
   verbal: undefined,
@@ -38,16 +56,29 @@ function LeaderboardPage() {
   const [tab, setTab] = useState<"verbal" | "math" | "ord">("verbal");
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <div className="mb-6 flex items-center gap-3">
-        <Trophy className="h-7 w-7 text-gold" />
-        <h1
-          className="text-3xl font-semibold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Topplista
-        </h1>
-      </div>
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-8 text-center sm:text-left"
+      >
+        <p className="eyebrow text-[#1a5c3a]">Hall of fame</p>
+        <div className="mt-2 flex items-center justify-center gap-3 sm:justify-start">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a017] to-[#8a6c0e] text-white shadow-md">
+            <Trophy className="h-6 w-6" />
+          </span>
+          <h1
+            className="text-[36px] font-bold leading-tight text-[#0d1f17] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Topplista
+          </h1>
+        </div>
+        <p className="mt-2 text-sm text-[#5a5a5a]">
+          De vassaste HP-spelarna just nu — uppdateras live.
+        </p>
+      </motion.div>
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
         <TabsList className="grid w-full max-w-md grid-cols-3">
@@ -101,8 +132,9 @@ function Board({
         return;
       }
       const all = (data ?? []) as LbRow[];
-      cache[matchType] = { rows: all, ts: Date.now() };
-      setRows(all);
+      const filtered = filterLeaderboard(all);
+      cache[matchType] = { rows: filtered, ts: Date.now() };
+      setRows(filtered);
       setUpdatedAt(Date.now());
       setLoading(false);
     },
@@ -145,7 +177,7 @@ function Board({
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+            <thead className="bg-muted/40 text-xs tracking-wide text-muted-foreground">
               <tr>
                 <th className="px-3 py-2 text-left">#</th>
                 <th className="px-3 py-2 text-left">Spelare</th>
@@ -216,7 +248,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
@@ -245,7 +277,7 @@ function OrdBoard() {
     setError(null);
     try {
       const res = await fetchLb();
-      setTop(res.top);
+      setTop(filterLeaderboard(res.top));
       setMe(res.me);
       setUpdatedAt(Date.now());
     } catch (e) {
@@ -292,7 +324,7 @@ function OrdBoard() {
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+            <thead className="bg-muted/40 text-xs tracking-wide text-muted-foreground">
               <tr>
                 <th className="px-3 py-2 text-left">#</th>
                 <th className="px-3 py-2 text-left">Spelare</th>
@@ -351,7 +383,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+            <span className="rounded-full bg-[#1a5c3a] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}

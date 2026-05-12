@@ -31,7 +31,7 @@ export function ExplanationBlock({ explanation, defaultOpen = false }: Props) {
             className="mt-2 rounded-lg border-l-4 border-[#1a5c3a] bg-[#f0ede8] p-3"
             style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
           >
-            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1a5c3a]">
+            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#1a5c3a]">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring
             </div>
             <p

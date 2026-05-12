@@ -209,7 +209,7 @@ export function PassagePane({
       style={{ maxHeight: "calc(100vh - 140px)" }}
     >
       <div className="mb-3 flex items-center justify-between gap-2">
-        <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">
           {headerLabel}
         </h3>
         <div className="flex items-center gap-2">

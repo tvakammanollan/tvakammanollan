@@ -731,7 +731,7 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
+      <div className="mb-2 text-xs font-semibold tracking-wide text-[#1a5c3a]">
         {currentQ.category} · Fråga {current + 1}
       </div>
       <h2

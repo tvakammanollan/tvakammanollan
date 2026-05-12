@@ -167,7 +167,7 @@ function ManageTab() {
 
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-left text-xs uppercase tracking-wider text-muted-foreground">
+          <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
             <tr>
               <th className="px-3 py-2">Kategori</th>
               <th className="px-3 py-2">Svårighet</th>
@@ -267,7 +267,7 @@ function StatsTab() {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-card">
       <table className="w-full text-sm">
-        <thead className="bg-muted/40 text-left text-xs uppercase tracking-wider text-muted-foreground">
+        <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
           <tr>
             <th className="px-3 py-2">Kategori</th>
             <th className="px-3 py-2 text-right">Totalt</th>
@@ -334,7 +334,7 @@ function ReportsTab() {
     <div>
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-left text-xs uppercase tracking-wider text-muted-foreground">
+          <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
             <tr>
               <th className="px-3 py-2">Fråga</th>
               <th className="px-3 py-2">Kategori</th>

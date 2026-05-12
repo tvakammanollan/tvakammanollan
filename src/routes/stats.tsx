@@ -341,7 +341,7 @@ function StatsPage() {
                   key={b.category}
                   className="rounded-xl border border-border bg-card p-4 shadow-sm"
                 >
-                  <div className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  <div className="mb-1 text-xs font-medium tracking-wide text-muted-foreground">
                     ⏱ Snabbaste {b.category === "LAS" ? "LÄS" : b.category}
                   </div>
                   <div
@@ -487,7 +487,7 @@ function StatsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <tr className="border-b border-border text-left text-xs tracking-wide text-muted-foreground">
                       <th className="px-2 py-2">Datum</th>
                       <th className="px-2 py-2">Typ</th>
                       <th className="px-2 py-2">Motståndare</th>
@@ -598,7 +598,7 @@ function StatCard({
 }) {
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground">
         {icon}
         {label}
       </div>

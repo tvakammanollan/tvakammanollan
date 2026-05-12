@@ -423,7 +423,7 @@ function TrainPage() {
         <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
           {showPassage && currentQ.passage_text && (
             <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <div className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground">
                 Textpassage
               </div>
               <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
@@ -437,7 +437,7 @@ function TrainPage() {
             className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
-            <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
+            <div className="mb-2 text-xs font-semibold tracking-wide text-[#1a5c3a]">
               {currentQ.category} · Fråga {current + 1}
             </div>
             <h2
@@ -603,7 +603,7 @@ function TrainPage() {
 
           {Object.keys(byCat).length > 1 && (
             <div className="mt-6 border-t border-border pt-4">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <div className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground">
                 Per delprov
               </div>
               <div className="grid gap-2">
@@ -666,7 +666,7 @@ function TrainPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">
         {title}
       </h2>
       {children}

@@ -306,7 +306,7 @@ function ResultPage() {
 
       {/* Scorecard */}
       <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
-        <div className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        <div className="mb-4 text-center text-xs font-semibold tracking-wide text-muted-foreground">
           {match.match_type === "verbal" ? "Verbal" : "Matte"} · Slutresultat
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -365,7 +365,7 @@ function ResultPage() {
             : 0.3;
           return (
             <div className="mt-5 rounded-xl border-2 border-[#d4a017]/30 bg-gradient-to-br from-[#fdf6e3] to-white p-4 text-center">
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6a10]">
+              <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
                 Trolig normering
               </div>
               <div className="mt-1 flex items-baseline justify-center gap-2">
@@ -386,6 +386,35 @@ function ResultPage() {
           );
         })()}
       </section>
+
+      {/* Guest signup CTA — only shows for anonymous users */}
+      {user?.is_anonymous && (
+        <section className="mt-5 overflow-hidden rounded-3xl border border-[#d4a017]/40 bg-gradient-to-br from-[#fdf3d0] via-[#fae6a0] to-[#fdf3d0] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
+          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d4a017] to-[#8a6c0e] text-white shadow-md">
+              <Trophy className="h-7 w-7" />
+            </span>
+            <div className="flex-1">
+              <h3
+                className="text-[22px] font-bold leading-tight text-[#0d1f17]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Bra spelat! Vill du komma in på topplistan?
+              </h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-[#5b4a17]">
+                Skapa ett gratis konto för att <strong>spara din ELO</strong>,
+                klättra i rankingen och utmana dina vänner. Tar 30 sekunder.
+              </p>
+            </div>
+            <Button
+              asChild
+              className="btn-shine shrink-0 overflow-hidden bg-[#1a5c3a] px-6 text-base font-semibold text-white shadow-md hover:bg-[#0f4029]"
+            >
+              <Link to="/signup">Skapa konto →</Link>
+            </Button>
+          </div>
+        </section>
+      )}
 
       {/* Actions */}
       <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
@@ -448,7 +477,7 @@ function ResultPage() {
                           : "border-rose-300/60 bg-rose-50/60"
                       }`}
                     >
-                      <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                      <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
                         <span>{i + 1}.</span>
                         <span>{q.category}</span>
                         {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
@@ -600,7 +629,7 @@ function PlayerColumn({
         {score}
         <span className="text-base font-normal text-muted-foreground">/8</span>
       </div>
-      <div className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+      <div className="mt-1 text-[11px] tracking-wide text-muted-foreground">
         Tid: <span className="font-medium text-foreground">{duration}</span>
       </div>
     </div>

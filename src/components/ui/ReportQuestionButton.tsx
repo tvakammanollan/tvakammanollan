@@ -140,7 +140,7 @@ export function ReportQuestionButton({
             <p className="text-xs italic text-muted-foreground">{truncated}</p>
           )}
           <fieldset className="space-y-2">
-            <legend className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <legend className="mb-1 text-xs font-semibold tracking-wide text-muted-foreground">
               Anledning
             </legend>
             {REASONS.map((r) => (

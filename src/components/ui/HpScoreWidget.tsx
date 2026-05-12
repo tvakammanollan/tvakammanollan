@@ -72,7 +72,7 @@ function HpRow({
 }) {
   return (
     <div className="rounded-xl border border-border bg-background p-3">
-      <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</div>
+      <div className="text-[11px] tracking-wide text-muted-foreground">{label}</div>
       <div className="mt-1 flex items-baseline gap-2">
         <span
           className="text-2xl font-semibold tabular-nums text-foreground"

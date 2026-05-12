@@ -242,7 +242,7 @@ function OrdPracticePage() {
                   <span className="text-3xl font-semibold tabular-nums text-[#1a5c3a]">
                     {n}
                   </span>
-                  <span className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+                  <span className="mt-1 text-xs tracking-wide text-muted-foreground">
                     ord
                   </span>
                 </button>
@@ -257,7 +257,7 @@ function OrdPracticePage() {
             {progress && progress.totalCount > 0 && (
               <div className="mt-6 rounded-2xl border-2 border-[#1a5c3a]/20 bg-gradient-to-br from-[#e8f2ec] to-white p-5 sm:p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1a5c3a]">
+                  <span className="text-[11px] font-semibold tracking-wide text-[#1a5c3a]">
                     Din ord-bank
                   </span>
                   <span className="text-xs font-medium tabular-nums text-muted-foreground">
@@ -412,7 +412,7 @@ function OrdPracticePage() {
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
               <article className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                <div className="text-[11px] tracking-wide text-muted-foreground">
                   Synonym till
                 </div>
                 <h2
@@ -506,7 +506,7 @@ function OrdPracticePage() {
             </div>
 
             <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
-              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <h3 className="mb-3 text-xs font-semibold tracking-wide text-muted-foreground">
                 Genomgång
               </h3>
               <ol className="grid gap-2">

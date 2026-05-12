@@ -96,13 +96,112 @@ export function AuthShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto flex min-h-[80vh] max-w-md items-center px-4 py-10">
-      <div className="w-full rounded-2xl border border-border bg-card p-7 shadow-card">
-        <h1 className="text-3xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-          {title}
-        </h1>
-        {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
-        <div className="mt-6">{children}</div>
+    <div className="relative min-h-[calc(100vh-60px)] overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse 60% 60% at 20% 30%, rgba(26, 92, 58, 0.10), transparent 70%), radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212, 160, 23, 0.08), transparent 70%)",
+        }}
+      />
+
+      <div className="mx-auto grid min-h-[calc(100vh-60px)] max-w-6xl gap-0 px-4 py-8 lg:grid-cols-2 lg:gap-12 lg:py-16">
+        {/* LEFT — brand panel */}
+        <aside className="hidden flex-col justify-between rounded-3xl bg-ink bg-grid-ink p-10 text-white lg:flex">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] shadow-lg">
+                <span
+                  className="text-[14px] font-black tracking-tighter text-white"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  HP
+                </span>
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#0d1f17] bg-[#d4a017]" />
+              </span>
+              <span
+                className="text-lg font-semibold text-white"
+                style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+              >
+                Kampen
+              </span>
+            </div>
+
+            <div className="mt-16">
+              <p className="eyebrow text-[#d4a017]">Välkommen till arenan</p>
+              <h2
+                className="mt-4 text-[40px] leading-[1.05] text-white"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Tävla mot vänner.{" "}
+                <span className="font-light italic text-white/85">
+                  Klättra i rankingen.
+                </span>{" "}
+                <span className="text-gold-gradient font-medium">Klara HP.</span>
+              </h2>
+              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/65">
+                Live-matcher, ELO-ranking och bot-träning för Högskoleprovet.
+                Helt gratis.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+            <Stat number="8 000+" label="HP-ord" />
+            <Stat number="Brons → Diamant" label="ranks" />
+            <Stat number="0 kr" label="alltid" />
+          </div>
+        </aside>
+
+        {/* RIGHT — form panel */}
+        <div className="flex items-center">
+          <div className="w-full max-w-md">
+            <div
+              className="rounded-3xl border border-[#e6e0d2] bg-white/90 p-8 backdrop-blur-sm sm:p-10"
+              style={{ boxShadow: "var(--shadow-lg)" }}
+            >
+              <div className="text-center lg:text-left">
+                <p className="eyebrow text-[#1a5c3a]">
+                  {title.toLowerCase().includes("skapa") ? "Steg 1 av 2" : "Logga in"}
+                </p>
+                <h1
+                  className="mt-3 text-[34px] leading-tight text-[#0d1f17]"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {title}
+                </h1>
+                {subtitle && (
+                  <p className="mt-2 text-[15px] text-[#5a5a5a]">{subtitle}</p>
+                )}
+              </div>
+              <div className="mt-7">{children}</div>
+            </div>
+
+            <p className="mt-6 text-center text-xs text-[#6b6b6b]">
+              Genom att fortsätta godkänner du våra villkor.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Stat({ number, label }: { number: string; label: string }) {
+  return (
+    <div>
+      <div
+        className="text-[20px] font-bold leading-tight text-white"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {number}
+      </div>
+      <div className="mt-1 text-[10px] tracking-wide text-white/50">
+        {label}
       </div>
     </div>
   );

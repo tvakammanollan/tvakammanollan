@@ -216,7 +216,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
         {mode === "waiting" && (
           <div className="grid gap-4">
             <div className="rounded-xl border border-border bg-background p-5 text-center">
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">Rumkod</div>
+              <div className="text-xs tracking-wide text-muted-foreground">Rumkod</div>
               <div className="mt-1 text-3xl font-bold tracking-[0.3em]">{waitingCode}</div>
             </div>
             <div className="flex items-center gap-2">
@@ -281,7 +281,7 @@ function ChoiceCard({
         <span className="flex items-center gap-2 text-sm font-semibold">
           {title}
           {badge && (
-            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-primary">
               {badge}
             </span>
           )}

@@ -2,7 +2,6 @@
 @source "../src";
 @import "tw-animate-css";
 @import "katex/dist/katex.min.css";
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -287,14 +286,14 @@
   letter-spacing: -0.01em;
 }
 .eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-style: italic;
+  font-family: var(--font-display);
 }
 .smallcaps {
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
 }
 
 /* ===== Ornamental dividers ===== */

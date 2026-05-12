@@ -212,7 +212,7 @@ function FriendsPage() {
       {/* Incoming requests */}
       {incoming.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
             Förfrågningar ({incoming.length})
           </h2>
           <ul className="grid gap-2">
@@ -241,7 +241,7 @@ function FriendsPage() {
 
       {/* Friends list */}
       <section className="mt-8">
-        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
           Mina vänner ({accepted.length})
         </h2>
         {accepted.length === 0 ? (
@@ -299,7 +299,7 @@ function FriendsPage() {
       {/* Outgoing */}
       {outgoing.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
             Skickade förfrågningar
           </h2>
           <ul className="grid gap-2">

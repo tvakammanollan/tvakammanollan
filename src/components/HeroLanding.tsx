@@ -1,17 +1,26 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowRight, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
+import { Reveal, FadeUp } from "@/components/motion/Reveal";
 
 export function HeroLanding() {
   const navigate = useNavigate();
   const fetchStats = useServerFn(getLandingStats);
   const [guestLoading, setGuestLoading] = useState(false);
   const [stats, setStats] = useState<LandingStats | null>(null);
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  // Parallax: glow drifts up as you scroll
+  const glowY = useTransform(scrollY, [0, 600], [0, -100]);
+  const glowOpacity = useTransform(scrollY, [0, 400], [0.6, 0.15]);
+  // Hero headline scrolls slower (parallax)
+  const heroY = useTransform(scrollY, [0, 600], [0, -80]);
 
   useEffect(() => {
     fetchStats()
@@ -38,17 +47,22 @@ export function HeroLanding() {
     <div className="overflow-hidden">
       {/* ============== HERO ============== */}
       <section className="relative px-6 pt-12 pb-24 sm:pt-20 sm:pb-32">
-        {/* Decorative glow */}
-        <div
+        {/* Decorative parallax glow */}
+        <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px] opacity-60"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px]"
           style={{
+            y: reduce ? 0 : glowY,
+            opacity: reduce ? 0.6 : glowOpacity,
             backgroundImage:
-              "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(26, 92, 58, 0.12), transparent 70%), radial-gradient(ellipse 30% 25% at 80% 10%, rgba(212, 160, 23, 0.10), transparent 70%)",
+              "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(26, 92, 58, 0.16), transparent 70%), radial-gradient(ellipse 30% 25% at 80% 10%, rgba(212, 160, 23, 0.14), transparent 70%)",
           }}
         />
 
-        <div className="mx-auto max-w-[820px] text-center">
+        <motion.div
+          className="mx-auto max-w-[820px] text-center"
+          style={{ y: reduce ? 0 : heroY }}
+        >
           {/* Live pill */}
           <div className="animate-fade-in mx-auto mb-8 flex w-fit items-center gap-2.5 rounded-full border border-[#d4cdb8] bg-white/70 px-4 py-1.5 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
@@ -147,7 +161,7 @@ export function HeroLanding() {
               troliga att komma på nästa HP
             </span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Floating decorative cards */}
         <FloatingCards />
@@ -174,48 +188,60 @@ export function HeroLanding() {
 
       {/* ============== FEATURE GRID ============== */}
       <section className="bg-paper px-6 py-24">
-        <div className="mx-auto max-w-6xl">
+        <Reveal className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-[640px] text-center">
-            <p className="eyebrow text-[#1a5c3a]">Funktionerna</p>
-            <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
-              Allt du behöver för{" "}
-              <span className="display-italic font-medium text-[#1a5c3a]">
-                att klara HP
-              </span>
-            </h2>
-            <div className="rule-ornate mt-6 px-12">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-3.5 w-3.5"
-                fill="currentColor"
-              >
-                <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-              </svg>
-            </div>
+            <Reveal.Item>
+              <p className="eyebrow text-[#1a5c3a]">Funktionerna</p>
+            </Reveal.Item>
+            <Reveal.Item>
+              <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
+                Allt du behöver för{" "}
+                <span className="display-italic font-medium text-[#1a5c3a]">
+                  att klara HP
+                </span>
+              </h2>
+            </Reveal.Item>
+            <Reveal.Item>
+              <div className="rule-ornate mt-6 px-12">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="currentColor"
+                >
+                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
+                </svg>
+              </div>
+            </Reveal.Item>
           </div>
 
           <div className="mt-14 grid gap-6 sm:grid-cols-3">
-            <FeatureCard
-              icon={<LightningIcon />}
-              title="Live-matcher mot vänner"
-              text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö för matchmaking."
-              accent="green"
-            />
-            <FeatureCard
-              icon={<TrophyIcon />}
-              title="Chess.com-känsla för HP"
-              text="Klättra från Brons till Diamant med ett schackinspirerat ELO-system. Se din progression över tid."
-              accent="gold"
-              featured
-            />
-            <FeatureCard
-              icon={<BookIcon />}
-              title="Alla 8 delmoment"
-              text="ORD · MEK · LÄS · ELF · XYZ · KVA · NOG · DTK — träna i lugn takt eller testa dig under tidspress."
-              accent="green"
-            />
+            <Reveal.Item>
+              <FeatureCard
+                icon={<LightningIcon />}
+                title="Live-matcher mot vänner"
+                text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö för matchmaking."
+                accent="green"
+              />
+            </Reveal.Item>
+            <Reveal.Item delay={0.1}>
+              <FeatureCard
+                icon={<TrophyIcon />}
+                title="Chess.com-känsla för HP"
+                text="Klättra från Brons till Diamant med ett schackinspirerat ELO-system. Se din progression över tid."
+                accent="gold"
+                featured
+              />
+            </Reveal.Item>
+            <Reveal.Item delay={0.2}>
+              <FeatureCard
+                icon={<BookIcon />}
+                title="Alla 8 delmoment"
+                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
+                accent="green"
+              />
+            </Reveal.Item>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ============== HOW IT WORKS ============== */}
@@ -223,15 +249,19 @@ export function HeroLanding() {
         id="how-it-works"
         className="relative overflow-hidden bg-[#f5f1e8] px-6 py-24"
       >
-        <div className="mx-auto max-w-5xl">
+        <Reveal className="mx-auto max-w-5xl">
           <div className="mx-auto max-w-[640px] text-center">
-            <p className="eyebrow text-[#1a5c3a]">Så här funkar det</p>
-            <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
-              Tre steg till{" "}
-              <span className="display-italic font-medium text-[#1a5c3a]">
-                bättre HP-resultat
-              </span>
-            </h2>
+            <Reveal.Item>
+              <p className="eyebrow text-[#1a5c3a]">Så här funkar det</p>
+            </Reveal.Item>
+            <Reveal.Item>
+              <h2 className="display mt-3 text-[36px] leading-tight text-[#0d1f17] sm:text-[48px]">
+                Tre steg till{" "}
+                <span className="display-italic font-medium text-[#1a5c3a]">
+                  bättre HP-resultat
+                </span>
+              </h2>
+            </Reveal.Item>
           </div>
 
           <div className="relative mt-16 grid gap-8 sm:grid-cols-3">
@@ -244,23 +274,29 @@ export function HeroLanding() {
                   "repeating-linear-gradient(90deg, #c8c0b4 0 6px, transparent 6px 14px)",
               }}
             />
-            <Step
-              n="1"
-              title="Skapa konto"
-              text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
-            />
-            <Step
-              n="2"
-              title="Välj verbal eller matte"
-              text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
-            />
-            <Step
-              n="3"
-              title="Kämpa och klättra"
-              text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
-            />
+            <Reveal.Item>
+              <Step
+                n="1"
+                title="Skapa konto"
+                text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
+              />
+            </Reveal.Item>
+            <Reveal.Item delay={0.12}>
+              <Step
+                n="2"
+                title="Välj verbal eller matte"
+                text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
+              />
+            </Reveal.Item>
+            <Reveal.Item delay={0.24}>
+              <Step
+                n="3"
+                title="Kämpa och klättra"
+                text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
+              />
+            </Reveal.Item>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ============== LIVE ACTIVITY ============== */}
@@ -397,7 +433,7 @@ function FeatureCard({
     >
       {featured && (
         <div className="absolute right-4 top-4">
-          <span className="rounded-full bg-[#d4a017]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#8a6c0e]">
+          <span className="rounded-full bg-[#d4a017]/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#8a6c0e]">
             Populärast
           </span>
         </div>
@@ -460,7 +496,7 @@ function RibbonStat({ number, label }: { number: string; label: string }) {
       >
         {number}
       </div>
-      <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-white/55">
+      <div className="mt-1 text-[11px] tracking-wide text-white/55">
         {label}
       </div>
     </div>
@@ -483,7 +519,7 @@ function FloatingCards() {
         className="animate-float absolute left-[8%] top-[35%] -rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
         style={{ animationDelay: "0.5s" }}
       >
-        <div className="text-[10px] font-bold uppercase tracking-wider text-[#8a6c0e]">
+        <div className="text-[10px] font-bold tracking-wide text-[#8a6c0e]">
           ⚡ Live match
         </div>
         <div
@@ -498,7 +534,7 @@ function FloatingCards() {
         className="animate-float absolute right-[6%] top-[42%] rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
         style={{ animationDelay: "1.2s" }}
       >
-        <div className="text-[10px] font-bold uppercase tracking-wider text-[#1a5c3a]">
+        <div className="text-[10px] font-bold tracking-wide text-[#1a5c3a]">
           🏆 Ny rank
         </div>
         <div
@@ -591,7 +627,7 @@ function ActivityTicker({
                 </span>
               </span>
             </span>
-            <span className="shrink-0 rounded-full border border-[#e6e0d2] bg-white px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#6b6b6b]">
+            <span className="shrink-0 rounded-full border border-[#e6e0d2] bg-white px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#6b6b6b]">
               {m.match_type}
             </span>
           </li>
