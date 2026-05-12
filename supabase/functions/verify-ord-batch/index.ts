@@ -5,8 +5,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 const SYSTEM = `Du är expert på svensk ordkunskap (HP-ORD).
 För varje ord, välj det alternativ (A-E) som är närmast SYNONYM eller bästa motsvarighet.
 Var noggrann. Tveksamma fall ska ha confidence "low".
-Svara ENDAST med JSON-array (ingen markdown):
-[{"word":"X","answer":"A","confidence":"high"}]`;
+Svara med JSON: {"results":[{"word":"X","answer":"A","confidence":"high"}]}`;
 
 async function callAI(words: any[], apiKey: string): Promise<any[]> {
   const userMsg = "Ord:\n" + words.map(w => {
