@@ -66,20 +66,33 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-border"
+      className="sticky top-0 z-50 border-b border-[#e6e0d2]"
       style={{
-        background: "rgba(249,247,244,0.92)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        background: "rgba(246, 242, 232, 0.85)",
+        backdropFilter: "blur(16px) saturate(180%)",
+        WebkitBackdropFilter: "blur(16px) saturate(180%)",
       }}
     >
-      <div className="mx-auto flex h-[52px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-14 sm:px-4">
-        <Link to="/" className="group inline-flex items-baseline shrink-0">
+      <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
+        <Link to="/" className="group inline-flex items-center gap-2.5 shrink-0">
+          {/* Monogram crest */}
           <span
-            className="text-lg font-semibold text-[#1a5c3a] sm:text-xl"
-            style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.02em" }}
+            aria-hidden
+            className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#1a5c3a] to-[#0f4029] text-white shadow-[var(--shadow-sm)] transition-transform group-hover:rotate-3 group-hover:scale-105"
           >
-            HP Kampen
+            <span
+              className="text-[13px] font-black tracking-tighter"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              HP
+            </span>
+            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#f6f2e8] bg-[#d4a017]" />
+          </span>
+          <span
+            className="text-lg font-semibold text-[#0d1f17] sm:text-xl"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+          >
+            Kampen
           </span>
         </Link>
 
@@ -101,11 +114,13 @@ export function Navbar() {
               )}
               {profile && (
                 <div
-                  className="hidden items-center gap-2 rounded-full border border-border bg-card px-2 py-1 pr-3 md:inline-flex"
+                  className="hidden items-center gap-2 rounded-full border border-[#e6e0d2] bg-white/80 px-2 py-1 pr-3 backdrop-blur-sm md:inline-flex"
                   style={{ boxShadow: "var(--shadow-sm)" }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium">{profile.username}</span>
+                  <span className="text-sm font-medium text-[#0d1f17]">
+                    {profile.username}
+                  </span>
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}
