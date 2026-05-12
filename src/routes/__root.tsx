@@ -79,35 +79,65 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HP Kampen — Tävla i Högskoleprovet" },
+      { title: "HP Kampen – Tävla mot vänner i Högskoleprovet" },
       {
         name: "description",
         content:
-          "HP Kampen är arenan där du tränar inför Högskoleprovet i realtidsbattles med ELO-ranking. Tävla mot vänner eller en bot.",
+          "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK – gratis.",
       },
-      { property: "og:title", content: "HP Kampen — Tävla i Högskoleprovet" },
+      {
+        name: "keywords",
+        content:
+          "högskoleprovet, HP-träning, högskoleprov övningar, HP-app, ORD MEK LÄS ELF XYZ KVA NOG DTK",
+      },
+      { property: "og:title", content: "HP Kampen – Tävla i Högskoleprovet" },
       {
         property: "og:description",
-        content:
-          "Tävla i HP-frågor mot andra studenter. ELO-ranking, realtidsmatcher, alla delprov.",
+        content: "Realtidsmatcher och ELO-ranking för HP-pluggare. Gratis.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "HP Kampen — Tävla i Högskoleprovet" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
-      { property: "og:description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
-      { name: "twitter:description", content: "Elo Quest Arena is an online platform for competitive practice tests with an Elo rating system." },
+      { property: "og:url", content: "https://hpkampen.lovable.app/" },
+      { property: "og:locale", content: "sv_SE" },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "HP Kampen – Tävla i Högskoleprovet" },
+      {
+        name: "twitter:description",
+        content: "Realtidsmatcher och ELO-ranking för HP-pluggare. Gratis.",
+      },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png" },
+      { name: "theme-color", content: "#1a5c3a" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "HP Kampen" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "canonical", href: "https://hpkampen.lovable.app/" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "HP Kampen",
+          url: "https://hpkampen.lovable.app",
+          description:
+            "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment.",
+          applicationCategory: "EducationApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
+          inLanguage: "sv-SE",
+        }),
       },
     ],
   }),
