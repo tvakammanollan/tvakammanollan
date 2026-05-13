@@ -132,20 +132,33 @@ function Board({
         return;
       }
       setLoading(true);
-      // Always pass all 3 args explicitly. Båda RPC-versionerna finns
-      // på Supabase nu (efter migration) — utan _limit/_offset blir
-      // anropet tvetydigt och Postgres returnerar PGRST203.
-      const { data, error } = await supabase.rpc("get_leaderboard", {
-        _match_type: matchType,
-        _limit: 200,
-        _offset: 0,
-      });
+      // Query users-tabellen direkt istället för RPC — så vi slipper RPC-filtrets
+      // games_played >= 3 (som krävde Lovable-credits att uppdatera).
+      // Inga filter alls: alla som spelat minst 1 match syns, inkl gäster.
+      const eloCol = matchType === "verbal" ? "elo_verbal" : "elo_math";
+      const { data, error } = await supabase
+        .from("users")
+        .select(`id, username, ${eloCol}, games_played, wins, losses`)
+        .gte("games_played", 1)
+        .order(eloCol, { ascending: false })
+        .order("id", { ascending: true })
+        .limit(200);
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
-      const all = (data ?? []) as LbRow[];
+      const all: LbRow[] = ((data ?? []) as Array<Record<string, unknown>>).map(
+        (r, i) => ({
+          rank: i + 1,
+          user_id: r.id as string,
+          username: (r.username as string) ?? "",
+          elo: (r[eloCol] as number) ?? 1000,
+          games_played: (r.games_played as number) ?? 0,
+          wins: (r.wins as number) ?? 0,
+          losses: (r.losses as number) ?? 0,
+        }),
+      );
       const filtered = filterLeaderboard(all);
       cache[matchType] = { rows: filtered, ts: Date.now() };
       setRows(filtered);
@@ -162,7 +175,7 @@ function Board({
   const top = rows.slice(0, 100);
   const me = currentUserId ? rows.find((r) => r.user_id === currentUserId) : undefined;
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  const notRanked = !!currentUserId && (!me || me.games_played < 3);
+  const notRanked = !!currentUserId && (!me || me.games_played < 1);
 
   return (
     <div className="mt-4 overflow-hidden rounded-3xl border border-black/8 bg-white shadow-[var(--shadow-card)]">

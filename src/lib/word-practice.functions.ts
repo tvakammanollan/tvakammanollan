@@ -179,13 +179,46 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    // Always call with _limit. If we call without args, Postgres can't pick
-    // between overloaded function signatures and returns PGRST203.
-    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard", {
-      _limit: 100,
-    });
+    // Bypass RPC — aggregera direkt så vi slipper RPC-filtret (>= 5/10 svar
+    // som krävde Lovable-credits att uppdatera). Inga filter alls: alla som
+    // svarat minst 1 fråga visas.
+    const { data: rows, error } = await supabaseAdmin
+      .from("word_practice_answers")
+      .select("user_id, is_correct")
+      .limit(50000);
     if (error) throw new Error(error.message);
-    const top = (data ?? []).slice(0, 100) as OrdLeaderboardRow[];
+
+    const tallies = new Map<string, { correct: number; total: number }>();
+    for (const r of (rows ?? []) as Array<{ user_id: string; is_correct: boolean }>) {
+      const t = tallies.get(r.user_id) ?? { correct: 0, total: 0 };
+      t.total += 1;
+      if (r.is_correct) t.correct += 1;
+      tallies.set(r.user_id, t);
+    }
+
+    const userIds = [...tallies.keys()];
+    const nameMap = new Map<string, string>();
+    if (userIds.length) {
+      const { data: us } = await supabaseAdmin
+        .from("users")
+        .select("id, username")
+        .in("id", userIds);
+      for (const u of us ?? [])
+        nameMap.set(u.id as string, (u.username as string) ?? "");
+    }
+
+    const top: OrdLeaderboardRow[] = [...tallies.entries()]
+      .map(([uid, t]) => ({
+        rank: 0,
+        user_id: uid,
+        username: nameMap.get(uid) ?? "",
+        correct_count: t.correct,
+        total_count: t.total,
+        accuracy: t.total > 0 ? Math.round((t.correct * 100) / t.total) : 0,
+      }))
+      .sort((a, b) => b.correct_count - a.correct_count || b.total_count - a.total_count)
+      .slice(0, 100)
+      .map((r, i) => ({ ...r, rank: i + 1 }));
 
     // Fetch "me" row separately if not in top — much smaller payload.
     let me: OrdLeaderboardRow | null =
