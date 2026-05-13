@@ -125,18 +125,32 @@ function Board({
         return;
       }
       setLoading(true);
-      // Server already filters out test/guest accounts and limits results.
-      const { data, error } = await supabase.rpc("get_leaderboard", {
+      // Try new RPC signature (with _limit/_offset). Fall back to old
+      // single-arg signature if the migration hasn't been applied yet.
+      let data: LbRow[] | null = null;
+      let error: { message: string } | null = null;
+      const r1 = await supabase.rpc("get_leaderboard", {
         _match_type: matchType,
         _limit: 200,
         _offset: 0,
       });
+      if (r1.error) {
+        const r2 = await supabase.rpc("get_leaderboard", {
+          _match_type: matchType,
+        });
+        data = (r2.data ?? null) as LbRow[] | null;
+        error = r2.error ? { message: r2.error.message } : null;
+      } else {
+        data = (r1.data ?? null) as LbRow[] | null;
+      }
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
-      const filtered = (data ?? []) as LbRow[];
+      // Apply client-side filter as a safety net in case server hasn't been
+      // upgraded yet (older RPC returns all users).
+      const filtered = filterLeaderboard((data ?? []) as LbRow[]);
       cache[matchType] = { rows: filtered, ts: Date.now() };
       setRows(filtered);
       setUpdatedAt(Date.now());

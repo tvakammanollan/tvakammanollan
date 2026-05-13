@@ -44,17 +44,30 @@ export function BugReportButton({
       return;
     }
     setSending(true);
-    const { error } = await supabase.rpc("submit_bug_report", {
+    // Try the new RPC (with throttle + rate limit). Fall back to direct
+    // insert into bug_reports if the migration isn't applied yet.
+    const meta = {
+      page: typeof window !== "undefined" ? window.location.pathname : null,
+      user_agent:
+        typeof navigator !== "undefined" ? navigator.userAgent : null,
+    };
+    const r1 = await supabase.rpc("submit_bug_report", {
       _message: msg.trim(),
-      _meta: {
-        page: typeof window !== "undefined" ? window.location.pathname : null,
-        user_agent:
-          typeof navigator !== "undefined" ? navigator.userAgent : null,
-      },
+      _meta: meta,
     });
+    let error = r1.error;
+    if (error && /function .* does not exist|could not find/i.test(error.message)) {
+      // Legacy path
+      const r2 = await supabase.from("bug_reports").insert({
+        user_id: user.id,
+        message: msg.trim(),
+        page: meta.page,
+        user_agent: meta.user_agent,
+      });
+      error = r2.error;
+    }
     setSending(false);
     if (error) {
-      // RPC throws "Vänta minst 15 minuter…" — show as-is
       toast.error(error.message ?? "Kunde inte skicka. Försök igen.");
       return;
     }

@@ -29,33 +29,58 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
     const fifteenMinAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
     const oneMinAgo = new Date(Date.now() - 60 * 1000).toISOString();
 
+    // Wrap each query so a single failure (RLS, network, missing col) doesn't
+    // bring down the whole landing page.
+    const safe = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
+      p.then(
+        (v) => v,
+        () => fallback,
+      );
+
     const [matchesCount, usersCount, activeAgg, perMinAgg, recent] =
       await Promise.all([
-        supabaseAdmin
-          .from("matches")
-          .select("*", { count: "exact", head: true })
-          .eq("status", "finished"),
-        supabaseAdmin
-          .from("users")
-          .select("*", { count: "exact", head: true }),
-        supabaseAdmin
-          .from("matches")
-          .select("player1_id,player2_id", { head: false })
-          .gte("created_at", fifteenMinAgo)
-          .eq("status", "finished"),
-        supabaseAdmin
-          .from("matches")
-          .select("*", { count: "exact", head: true })
-          .gte("created_at", oneMinAgo)
-          .eq("status", "finished"),
-        supabaseAdmin
-          .from("matches")
-          .select(
-            "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
-          )
-          .eq("status", "finished")
-          .order("created_at", { ascending: false })
-          .limit(10),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("*", { count: "exact", head: true })
+            .eq("status", "finished"),
+          { count: 0 } as { count: number | null },
+        ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("*", { count: "exact", head: true }),
+          { count: 0 } as { count: number | null },
+        ),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("player1_id,player2_id", { head: false })
+            .gte("created_at", fifteenMinAgo)
+            .eq("status", "finished"),
+          { data: [] } as {
+            data: Array<{ player1_id: string | null; player2_id: string | null }>;
+          },
+        ),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("*", { count: "exact", head: true })
+            .gte("created_at", oneMinAgo)
+            .eq("status", "finished"),
+          { count: 0 } as { count: number | null },
+        ),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select(
+              "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
+            )
+            .eq("status", "finished")
+            .order("created_at", { ascending: false })
+            .limit(10),
+          { data: [] } as { data: never[] },
+        ),
       ]);
 
     const activeIds = new Set<string>();

@@ -174,16 +174,21 @@ export type OrdLeaderboardRow = {
 };
 
 // Returns top N + the signed-in user's row (whether or not they're in top).
-// RPC already filters out test/guest accounts and applies a server-side LIMIT.
+// Tries new RPC (with _limit). Falls back to legacy RPC if migration not applied.
 export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard", {
-      _limit: 100,
-    });
-    if (error) throw new Error(error.message);
-    const top = (data ?? []) as OrdLeaderboardRow[];
+    let data: OrdLeaderboardRow[] | null = null;
+    const r1 = await supabaseAdmin.rpc("get_ord_leaderboard", { _limit: 100 });
+    if (r1.error) {
+      const r2 = await supabaseAdmin.rpc("get_ord_leaderboard");
+      if (r2.error) throw new Error(r2.error.message);
+      data = (r2.data ?? null) as OrdLeaderboardRow[] | null;
+    } else {
+      data = (r1.data ?? null) as OrdLeaderboardRow[] | null;
+    }
+    const top = (data ?? []).slice(0, 100) as OrdLeaderboardRow[];
 
     // Fetch "me" row separately if not in top — much smaller payload.
     let me: OrdLeaderboardRow | null =

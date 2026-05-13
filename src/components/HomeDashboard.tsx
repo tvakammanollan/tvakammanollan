@@ -52,24 +52,40 @@ export function HomeDashboard() {
       const startOfDay = new Date();
       startOfDay.setHours(0, 0, 0, 0);
 
+      const wrongWordsPromise = supabase
+        .from("word_practice_answers")
+        .select("question_id, questions(question_text)")
+        .eq("user_id", user.id)
+        .eq("is_correct", false)
+        .order("created_at", { ascending: false })
+        .limit(40)
+        // Table might not exist in some envs — swallow gracefully.
+        .then(
+          (r) => r,
+          () => ({ data: [], error: null }),
+        );
+      const friendsPromise = supabase
+        .from("friendships")
+        .select("requester_id, addressee_id")
+        .eq("status", "accepted")
+        .or(`requester_id.eq.${user.id},addressee_id.eq.${user.id}`)
+        .then(
+          (r) => r,
+          () => ({ data: [], error: null }),
+        );
+      const todayMatchesPromise = supabase
+        .from("matches")
+        .select("id", { count: "exact", head: true })
+        .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`)
+        .gte("created_at", startOfDay.toISOString())
+        .then(
+          (r) => r,
+          () => ({ count: 0, error: null }),
+        );
       const [wrongWords, friends, todayMatches] = await Promise.all([
-        supabase
-          .from("word_practice_answers")
-          .select("question_id, questions(question_text)")
-          .eq("user_id", user.id)
-          .eq("is_correct", false)
-          .order("created_at", { ascending: false })
-          .limit(40),
-        supabase
-          .from("friendships")
-          .select("requester_id, addressee_id")
-          .eq("status", "accepted")
-          .or(`requester_id.eq.${user.id},addressee_id.eq.${user.id}`),
-        supabase
-          .from("matches")
-          .select("id", { count: "exact", head: true })
-          .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`)
-          .gte("created_at", startOfDay.toISOString()),
+        wrongWordsPromise,
+        friendsPromise,
+        todayMatchesPromise,
       ]);
       if (cancelled) return;
 
