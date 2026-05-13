@@ -576,61 +576,53 @@ function MatchPage() {
   const choice = answers.get(currentQ.id);
   const optionLetters = ["A", "B", "C", "D", "E"];
 
+  // Thin top progress bar (critique §06 #1: collapse heavy widgets)
+  const elapsedPct = ((TOTAL_SECONDS - secondsLeft) / TOTAL_SECONDS) * 100;
+
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      {/* Top bar */}
-      <header
-        className="sticky top-0 z-20 border-b border-border"
-        style={{
-          background: "rgba(249,247,244,0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-        }}
-      >
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 pt-3 pb-2">
-          <div className="text-sm font-semibold tabular-nums">
-            Fråga {current + 1} av {questions.length}
-          </div>
-          <div className="flex items-center gap-2">
+    <div className="flex min-h-screen flex-col bg-paper text-navy">
+      {/* THIN timer progress bar — replaces heavy top widget */}
+      <div className="match-progress">
+        <i style={{ width: `${elapsedPct}%` }} />
+      </div>
+
+      {/* One-row header: timer left, opponent center, exit right */}
+      <header className="glass-cream sticky top-[3px] z-20 border-b border-[var(--line-cream)]">
+        <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 px-5 py-3 sm:px-8">
+          <div className="flex items-center gap-3">
             <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
-            <TimerSoundToggle />
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy/55">
+              Fråga{" "}
+              <span className="numeric-display text-navy">
+                {current + 1}
+              </span>{" "}
+              / {questions.length}
+            </span>
           </div>
-          <div className="hidden text-xs text-muted-foreground sm:block">
-            Mot: <span className="font-medium text-foreground">{opponentName}</span>
+
+          {/* Opponent presence — "Anna är på fråga 4" (critique §06 #4) */}
+          <div className="hidden text-center sm:block">
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy/55">
+              Mot{" "}
+              <span className="text-navy">{opponentName || "Motståndare"}</span>
+              {oppProgress > 0 && (
+                <>
+                  {" "}· på fråga{" "}
+                  <span className="numeric-display text-amber-deep">
+                    {Math.max(1, Math.round(oppProgress * questions.length))}
+                  </span>
+                </>
+              )}
+            </span>
           </div>
+
+          <TimerSoundToggle />
         </div>
-        {/* Dual progress bars: own + opponent (proportional, jumps per question) */}
-        <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="font-medium text-foreground">Du</span>
-                <span className="tabular-nums text-muted-foreground">{current + 1}/{questions.length}</span>
-              </div>
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full bg-[#6366f1] transition-all duration-500 ease-out"
-                  style={{ width: `${((current + 1) / questions.length) * 100}%` }}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="truncate font-medium text-foreground">{opponentName || "Motståndare"}</span>
-                <span className="tabular-nums text-muted-foreground">{Math.round(oppProgress * questions.length)}/{questions.length}</span>
-              </div>
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full bg-[#eab308] transition-all duration-700 ease-out"
-                  style={{ width: `${oppProgress * 100}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+
         {oppForceCountdown !== null && (
-          <div className="border-t border-[#c0392b]/30 bg-[#c0392b]/10 px-4 py-2 text-center text-xs font-semibold text-[#c0392b]">
-            ⏱ Motståndaren är klar! Auto-inlämning om {oppForceCountdown}s
+          <div className="border-t border-[var(--line-cream)] bg-[var(--amber)]/15 px-4 py-2 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-amber-deep">
+            ✦ {opponentName || "Motståndaren"} är klar. Auto-inlämning om{" "}
+            <span className="numeric-display">{oppForceCountdown}s</span>
           </div>
         )}
       </header>
@@ -759,19 +751,31 @@ function QuestionCard({
   return (
     <div
       key={currentQ.id}
-      className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
-      style={{ boxShadow: "var(--shadow-md)" }}
+      className="surface-card p-7 sm:p-9"
+      style={{ animation: "rise 800ms cubic-bezier(.2,.7,.2,1) both" }}
     >
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
+      <p className="eyebrow">
         {currentQ.category} · Fråga {current + 1}
-      </div>
+      </p>
+
+      {/* Question — serif, 19-22px, max 60ch (critique §06 #2) */}
       <h2
-        className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
-        style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+        className="display mt-5 mb-8 max-w-[60ch] whitespace-pre-wrap text-[20px] leading-[1.5] text-navy sm:text-[22px]"
+        style={{ fontWeight: 400 }}
       >
-        {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
+        {isMath ? (
+          <MathText>{currentQ.question_text}</MathText>
+        ) : (
+          currentQ.question_text
+        )}
       </h2>
-      <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
+
+      {/* Answer cards with letter marks */}
+      <div
+        className="grid gap-3"
+        role="radiogroup"
+        aria-label="Svarsalternativ"
+      >
         {currentQ.options.map((opt, i) => {
           const letter = optionLetters[i] ?? String(i + 1);
           const isSelected = choice === letter || choice === opt;
@@ -783,20 +787,12 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1] focus-visible:ring-offset-2 ${
-                isSelected
-                  ? "border-2 border-[#6366f1] bg-[#e0e7ff] text-foreground"
-                  : "border border-border bg-white hover:border-[#6366f1] hover:bg-[#e0e7ff]/50"
-              }`}
+              className={`answer-card ${isSelected ? "selected" : ""}`}
             >
+              <span className="letter">{letter}</span>
               <span
-                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#6366f1] text-white" : "bg-[#f0ede8] text-foreground"
-                }`}
+                className={`leading-[1.5] ${isMath ? "text-[17px]" : "text-[16px]"}`}
               >
-                {letter}
-              </span>
-              <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
                 {isMath ? <MathText>{opt}</MathText> : opt}
               </span>
             </button>
@@ -804,28 +800,36 @@ function QuestionCard({
         })}
       </div>
 
-      <div className="mt-5 flex items-center justify-between">
-        <Button
-          variant="ghost"
+      <div className="mt-8 flex items-center justify-between border-t border-[var(--line-cream)] pt-6">
+        <button
+          type="button"
           disabled={current === 0}
           onClick={() => setCurrent((i) => Math.max(0, i - 1))}
+          className="btn-link text-navy/55 disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          Föregående
-        </Button>
+          ← Föregående
+        </button>
         {current < total - 1 ? (
-          <Button disabled={!choice} onClick={() => void goNext()}>
-            Nästa fråga
-          </Button>
+          <button
+            type="button"
+            disabled={!choice}
+            onClick={() => void goNext()}
+            className="btn-amber disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Nästa →
+          </button>
         ) : (
-          <Button
+          <button
+            type="button"
             disabled={!choice || submitting}
             onClick={async () => {
               if (choice) await persistAnswer(currentQ.id, choice);
               setConfirmOpen(true);
             }}
+            className="btn-amber disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Lämna in svar
-          </Button>
+            Lämna in
+          </button>
         )}
       </div>
     </div>

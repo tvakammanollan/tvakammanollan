@@ -76,39 +76,19 @@ export function Navbar() {
   const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-black/5"
-      style={{
-        background: "rgba(255, 255, 255, 0.72)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
-      }}
-    >
-      <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
-        <Link to="/" className="group inline-flex items-center gap-2.5 shrink-0">
-          {/* Aurora monogram crest */}
+    <header className="glass-cream sticky top-0 z-50 border-b border-[var(--line-cream)]">
+      <div className="mx-auto flex h-[60px] max-w-[1240px] items-center justify-between gap-3 px-5 sm:h-[68px] sm:px-8">
+        <Link to="/" className="group inline-flex items-baseline gap-1.5 shrink-0">
+          <span aria-hidden className="text-amber text-[18px] leading-none">✦</span>
           <span
-            aria-hidden
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-amber-400 text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110"
+            className="text-[20px] font-normal text-navy sm:text-[22px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
           >
-            <span className="absolute inset-0.5 rounded-[10px] bg-[#050507]" />
-            <span
-              className="relative text-[13px] font-black tracking-tighter text-white"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              HP
-            </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-          </span>
-          <span
-            className="text-[19px] font-bold text-[#050507] sm:text-[21px]"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
-          >
-            Kampen
+            HP Kampen
           </span>
         </Link>
 
-        <nav className="flex items-center gap-0.5 sm:gap-2">
+        <nav className="flex items-center gap-1 sm:gap-4">
           {loading ? null : user ? (
             <>
               <NavLink to="/train">Träna</NavLink>
@@ -125,35 +105,32 @@ export function Navbar() {
                 </NavLink>
               )}
               {profile && (
-                <div
-                  className="hidden items-center gap-2 rounded-full border border-black/8 bg-white px-2 py-1 pr-3 backdrop-blur-sm md:inline-flex"
-                  style={{ boxShadow: "var(--shadow-sm)" }}
-                >
+                <div className="hidden items-center gap-2.5 rounded-full border border-[var(--line-cream)] bg-paper-2 px-2 py-1 pr-3.5 md:inline-flex">
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium text-[#050507]">
+                  <span className="font-mono text-[12px] text-navy">
                     {profile.username}
                   </span>
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}
               <BugReportButton />
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
+                type="button"
                 onClick={handleSignOut}
-                className="px-2 text-muted-foreground hover:text-foreground"
+                className="btn-link ml-1 text-navy/55"
               >
                 Logga ut
-              </Button>
+              </button>
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/login">Logga in</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link to="/signup">Skapa konto</Link>
-              </Button>
+              {/* CTA-discipline: only ONE button. Logga in is a text link. */}
+              <Link to="/login" className="btn-link text-navy/55 mr-3">
+                Logga in
+              </Link>
+              <Link to="/signup" className="btn-amber" style={{ padding: "10px 20px", fontSize: 14 }}>
+                Skapa konto
+              </Link>
             </>
           )}
         </nav>
