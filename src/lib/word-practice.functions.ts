@@ -179,15 +179,12 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    let data: OrdLeaderboardRow[] | null = null;
-    const r1 = await supabaseAdmin.rpc("get_ord_leaderboard", { _limit: 100 });
-    if (r1.error) {
-      const r2 = await supabaseAdmin.rpc("get_ord_leaderboard");
-      if (r2.error) throw new Error(r2.error.message);
-      data = (r2.data ?? null) as OrdLeaderboardRow[] | null;
-    } else {
-      data = (r1.data ?? null) as OrdLeaderboardRow[] | null;
-    }
+    // Always call with _limit. If we call without args, Postgres can't pick
+    // between overloaded function signatures and returns PGRST203.
+    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard", {
+      _limit: 100,
+    });
+    if (error) throw new Error(error.message);
     const top = (data ?? []).slice(0, 100) as OrdLeaderboardRow[];
 
     // Fetch "me" row separately if not in top — much smaller payload.

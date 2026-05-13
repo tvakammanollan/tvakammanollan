@@ -141,8 +141,13 @@ function Board({
         return;
       }
       setLoading(true);
+      // Always pass all 3 args explicitly. Båda RPC-versionerna finns
+      // på Supabase nu (efter migration) — utan _limit/_offset blir
+      // anropet tvetydigt och Postgres returnerar PGRST203.
       const { data, error } = await supabase.rpc("get_leaderboard", {
         _match_type: matchType,
+        _limit: 200,
+        _offset: 0,
       });
       if (error) {
         setError(error.message);
