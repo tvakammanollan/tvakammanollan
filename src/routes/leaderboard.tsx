@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -10,6 +9,7 @@ import {
   fetchOrdLeaderboard,
   type OrdLeaderboardRow,
 } from "@/lib/word-practice.functions";
+import { fetchLeaderboard } from "@/lib/leaderboard.functions";
 import { EmptyState } from "@/components/EmptyState";
 
 type MatchType = "verbal" | "math";
@@ -117,6 +117,7 @@ function Board({
   matchType: MatchType;
   currentUserId: string | undefined;
 }) {
+  const fetchLb = useServerFn(fetchLeaderboard);
   const [rows, setRows] = useState<LbRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatedAt, setUpdatedAt] = useState<number | null>(null);
@@ -132,40 +133,23 @@ function Board({
         return;
       }
       setLoading(true);
-      // Query users-tabellen direkt istället för RPC — så vi slipper RPC-filtrets
-      // games_played >= 3 (som krävde Lovable-credits att uppdatera).
-      // Inga filter alls: alla som spelat minst 1 match syns, inkl gäster.
-      const eloCol = matchType === "verbal" ? "elo_verbal" : "elo_math";
-      const { data, error } = await supabase
-        .from("users")
-        .select(`id, username, ${eloCol}, games_played, wins, losses`)
-        .gte("games_played", 1)
-        .order(eloCol, { ascending: false })
-        .order("id", { ascending: true })
-        .limit(200);
-      if (error) {
-        setError(error.message);
+      // Server function (admin/service-role) bypasser RLS och returnerar
+      // ALLA users med games_played >= 1. Inga filter på namn alls.
+      try {
+        const rowsData = await fetchLb({
+          data: { match_type: matchType, limit: 200 },
+        });
+        const filtered = filterLeaderboard(rowsData as LbRow[]);
+        cache[matchType] = { rows: filtered, ts: Date.now() };
+        setRows(filtered);
+        setUpdatedAt(Date.now());
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Kunde inte ladda");
+      } finally {
         setLoading(false);
-        return;
       }
-      const all: LbRow[] = ((data ?? []) as Array<Record<string, unknown>>).map(
-        (r, i) => ({
-          rank: i + 1,
-          user_id: r.id as string,
-          username: (r.username as string) ?? "",
-          elo: (r[eloCol] as number) ?? 1000,
-          games_played: (r.games_played as number) ?? 0,
-          wins: (r.wins as number) ?? 0,
-          losses: (r.losses as number) ?? 0,
-        }),
-      );
-      const filtered = filterLeaderboard(all);
-      cache[matchType] = { rows: filtered, ts: Date.now() };
-      setRows(filtered);
-      setUpdatedAt(Date.now());
-      setLoading(false);
     },
-    [matchType],
+    [matchType, fetchLb],
   );
 
   useEffect(() => {
@@ -244,7 +228,7 @@ function Board({
           <EmptyState
             icon="🏅"
             title="Du är inte rankad ännu"
-            subtitle="Spela 3 matcher för att komma med i rankingen."
+            subtitle="Spela en match så hamnar du på listan."
             ctaLabel="Spela nu"
             ctaHref="/"
           />
