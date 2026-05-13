@@ -173,15 +173,40 @@ export type OrdLeaderboardRow = {
   accuracy: number;
 };
 
-// Returns top 100 + the signed-in user's row (whether or not they're in top).
+// Returns top N + the signed-in user's row (whether or not they're in top).
+// RPC already filters out test/guest accounts and applies a server-side LIMIT.
 export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard");
+    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard", {
+      _limit: 100,
+    });
     if (error) throw new Error(error.message);
-    const rows = (data ?? []) as OrdLeaderboardRow[];
-    const top = rows.slice(0, 100);
-    const me = rows.find((r) => r.user_id === userId) ?? null;
+    const top = (data ?? []) as OrdLeaderboardRow[];
+
+    // Fetch "me" row separately if not in top — much smaller payload.
+    let me: OrdLeaderboardRow | null =
+      top.find((r) => r.user_id === userId) ?? null;
+    if (!me) {
+      // Lightweight per-user query
+      const { data: meRow } = await supabaseAdmin
+        .from("word_practice_answers")
+        .select("is_correct")
+        .eq("user_id", userId);
+      if (meRow && meRow.length > 0) {
+        const correct = meRow.filter((r) => r.is_correct).length;
+        const total = meRow.length;
+        me = {
+          rank: 0,
+          user_id: userId,
+          username: "",
+          correct_count: correct,
+          total_count: total,
+          accuracy:
+            total > 0 ? Math.round((correct * 100) / total) : 0,
+        };
+      }
+    }
     return { top, me };
   });

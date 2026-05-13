@@ -41,17 +41,28 @@ export function Navbar() {
     };
     void refresh();
 
-    // Realtime — listen for new invites
+    // Realtime — listen ONLY for rows addressed to me. Avoids fan-out
+    // from every friendship/invite change in the system.
     const ch = supabase
       .channel(`nav-pending-${user.id}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "friendships" },
+        {
+          event: "*",
+          schema: "public",
+          table: "friendships",
+          filter: `addressee_id=eq.${user.id}`,
+        },
         () => void refresh(),
       )
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "match_invites" },
+        {
+          event: "*",
+          schema: "public",
+          table: "match_invites",
+          filter: `to_user=eq.${user.id}`,
+        },
         () => void refresh(),
       )
       .subscribe();

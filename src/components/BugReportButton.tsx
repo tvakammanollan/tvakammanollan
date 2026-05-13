@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { rateLimit, limits } from "@/lib/rate-limit";
 
 export function BugReportButton({
   variant = "icon",
@@ -34,17 +35,27 @@ export function BugReportButton({
       toast.error("Skriv lite mer så vi förstår problemet.");
       return;
     }
+    // Client-side throttle (server enforces too via submit_bug_report RPC).
+    const r = rateLimit(`bug:${user.id}`, limits.bugReport);
+    if (!r.ok) {
+      toast.error(
+        `Vänta ${Math.ceil(r.resetIn / 60000)} min innan nästa rapport.`,
+      );
+      return;
+    }
     setSending(true);
-    const { error } = await supabase.from("bug_reports").insert({
-      user_id: user.id,
-      message: msg.trim(),
-      page: typeof window !== "undefined" ? window.location.pathname : null,
-      user_agent:
-        typeof navigator !== "undefined" ? navigator.userAgent : null,
+    const { error } = await supabase.rpc("submit_bug_report", {
+      _message: msg.trim(),
+      _meta: {
+        page: typeof window !== "undefined" ? window.location.pathname : null,
+        user_agent:
+          typeof navigator !== "undefined" ? navigator.userAgent : null,
+      },
     });
     setSending(false);
     if (error) {
-      toast.error("Kunde inte skicka. Försök igen.");
+      // RPC throws "Vänta minst 15 minuter…" — show as-is
+      toast.error(error.message ?? "Kunde inte skicka. Försök igen.");
       return;
     }
     toast.success("Tack! Buggen är rapporterad.");

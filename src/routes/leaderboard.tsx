@@ -123,16 +123,18 @@ function Board({
         return;
       }
       setLoading(true);
+      // Server already filters out test/guest accounts and limits results.
       const { data, error } = await supabase.rpc("get_leaderboard", {
         _match_type: matchType,
+        _limit: 200,
+        _offset: 0,
       });
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
-      const all = (data ?? []) as LbRow[];
-      const filtered = filterLeaderboard(all);
+      const filtered = (data ?? []) as LbRow[];
       cache[matchType] = { rows: filtered, ts: Date.now() };
       setRows(filtered);
       setUpdatedAt(Date.now());

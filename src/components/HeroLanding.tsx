@@ -23,6 +23,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
+import { rateLimit, limits } from "@/lib/rate-limit";
 
 /* ====================================================================
    HERO LANDING — "Northern Light"
@@ -47,6 +48,14 @@ export function HeroLanding() {
   }, [fetchStats]);
 
   const playAsGuest = async () => {
+    // Throttle guest sign-ups (per device) to stop spam.
+    const r = rateLimit("guest-signin", limits.guestSignup);
+    if (!r.ok) {
+      toast.error(
+        `Vänta ${Math.ceil(r.resetIn / 60000)} min innan nästa gäst-session.`,
+      );
+      return;
+    }
     setGuestLoading(true);
     const { error } = await supabase.auth.signInAnonymously();
     if (error) {

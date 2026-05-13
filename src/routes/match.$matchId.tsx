@@ -366,7 +366,14 @@ function MatchPage() {
 
   const persistAnswer = async (qId: string, choice: string | null) => {
     if (!user) return;
-    const time_spent_seconds = answerTimesRef.current[qId] ?? null;
+    // Clamp claimed answer time defensively before sending — protects against
+    // client-side tampering. Server also validates via validate_answer_timing.
+    const MATCH_SECONDS = 8 * 60;
+    const rawTime = answerTimesRef.current[qId];
+    const time_spent_seconds =
+      typeof rawTime === "number" && rawTime >= 0 && rawTime <= MATCH_SECONDS
+        ? Math.round(rawTime)
+        : null;
     await supabase
       .from("match_answers")
       .upsert(

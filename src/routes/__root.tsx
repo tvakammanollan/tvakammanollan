@@ -177,6 +177,8 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useEffect(() => {
     installGlobalClickSound();
+    // Install client-side error telemetry (#16)
+    void import("@/lib/telemetry").then((m) => m.installBrowserTelemetry());
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
