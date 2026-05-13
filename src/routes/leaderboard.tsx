@@ -34,7 +34,8 @@ function filterLeaderboard<T extends { username: string; rank: number }>(rows: T
     .map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
-const CACHE_MS = 5 * 60 * 1000;
+// Cache disabled — was serving stale data from earlier broken RPC.
+const CACHE_MS = 0;
 const cache: Record<MatchType, { rows: LbRow[]; ts: number } | undefined> = {
   verbal: undefined,
   math: undefined,

@@ -179,24 +179,23 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    // Bypass RPC — aggregera direkt så vi slipper RPC-filtret (>= 5/10 svar
-    // som krävde Lovable-credits att uppdatera). Inga filter alls: alla som
-    // svarat minst 1 fråga visas.
-    const { data: rows, error } = await supabaseAdmin
-      .from("word_practice_answers")
-      .select("user_id, is_correct")
-      .limit(50000);
+    // Hämta från ord_practice_stats (redan aggregerad per användare).
+    // Bypass RPC + filter — alla som har minst 1 svar syns.
+    const { data: stats, error } = await supabaseAdmin
+      .from("ord_practice_stats")
+      .select("user_id, correct_count, total_count")
+      .gte("total_count", 1)
+      .order("correct_count", { ascending: false })
+      .limit(200);
     if (error) throw new Error(error.message);
 
-    const tallies = new Map<string, { correct: number; total: number }>();
-    for (const r of (rows ?? []) as Array<{ user_id: string; is_correct: boolean }>) {
-      const t = tallies.get(r.user_id) ?? { correct: 0, total: 0 };
-      t.total += 1;
-      if (r.is_correct) t.correct += 1;
-      tallies.set(r.user_id, t);
-    }
+    const statsRows = (stats ?? []) as Array<{
+      user_id: string;
+      correct_count: number;
+      total_count: number;
+    }>;
 
-    const userIds = [...tallies.keys()];
+    const userIds = statsRows.map((s) => s.user_id);
     const nameMap = new Map<string, string>();
     if (userIds.length) {
       const { data: us } = await supabaseAdmin
@@ -207,39 +206,40 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
         nameMap.set(u.id as string, (u.username as string) ?? "");
     }
 
-    const top: OrdLeaderboardRow[] = [...tallies.entries()]
-      .map(([uid, t]) => ({
+    const top: OrdLeaderboardRow[] = statsRows
+      .map((s) => ({
         rank: 0,
-        user_id: uid,
-        username: nameMap.get(uid) ?? "",
-        correct_count: t.correct,
-        total_count: t.total,
-        accuracy: t.total > 0 ? Math.round((t.correct * 100) / t.total) : 0,
+        user_id: s.user_id,
+        username: nameMap.get(s.user_id) ?? "",
+        correct_count: s.correct_count,
+        total_count: s.total_count,
+        accuracy:
+          s.total_count > 0
+            ? Math.round((s.correct_count * 100) / s.total_count)
+            : 0,
       }))
-      .sort((a, b) => b.correct_count - a.correct_count || b.total_count - a.total_count)
       .slice(0, 100)
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
-    // Fetch "me" row separately if not in top — much smaller payload.
+    // Fetch "me" row separately if not in top — from samma stats-tabell.
     let me: OrdLeaderboardRow | null =
       top.find((r) => r.user_id === userId) ?? null;
     if (!me) {
-      // Lightweight per-user query
       const { data: meRow } = await supabaseAdmin
-        .from("word_practice_answers")
-        .select("is_correct")
-        .eq("user_id", userId);
-      if (meRow && meRow.length > 0) {
-        const correct = meRow.filter((r) => r.is_correct).length;
-        const total = meRow.length;
+        .from("ord_practice_stats")
+        .select("correct_count, total_count")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (meRow) {
+        const correct = (meRow.correct_count as number) ?? 0;
+        const total = (meRow.total_count as number) ?? 0;
         me = {
           rank: 0,
           user_id: userId,
           username: "",
           correct_count: correct,
           total_count: total,
-          accuracy:
-            total > 0 ? Math.round((correct * 100) / total) : 0,
+          accuracy: total > 0 ? Math.round((correct * 100) / total) : 0,
         };
       }
     }
