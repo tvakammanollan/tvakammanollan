@@ -222,34 +222,58 @@ function OrdPracticePage() {
 
         {/* SETUP */}
         {phase === "setup" && (
-          <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
-            <h2
-              className="text-xl font-semibold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Hur många ord vill du öva?
-            </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Välj längd på passet — du får en sammanställning efteråt.
-            </p>
-            <div className="mt-5 grid grid-cols-3 gap-2.5">
-              {COUNT_OPTIONS.map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => void startSession(n)}
-                  disabled={loading}
-                  className="group flex flex-col items-center justify-center rounded-xl border border-border bg-white py-6 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary-soft disabled:opacity-60"
-                >
-                  <span className="text-3xl font-semibold tabular-nums text-[#6366f1]">
-                    {n}
-                  </span>
-                  <span className="mt-1 text-xs tracking-wide text-muted-foreground">
-                    ord
-                  </span>
-                </button>
-              ))}
-            </div>
+          <motion.section
+            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[var(--shadow-md)] sm:p-8"
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-30 blur-3xl"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
+              }}
+            />
+
+            <div className="relative">
+              <p className="eyebrow">Steg 1</p>
+              <h2
+                className="display mt-1 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Hur många ord vill du öva?
+              </h2>
+              <p className="mt-1.5 text-sm text-neutral-500">
+                Välj längd på passet — du får en sammanställning efteråt.
+              </p>
+              <div className="mt-6 grid grid-cols-3 gap-3">
+                {COUNT_OPTIONS.map((n, i) => (
+                  <motion.button
+                    key={n}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 + i * 0.05 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    type="button"
+                    onClick={() => void startSession(n)}
+                    disabled={loading}
+                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-black/8 bg-gradient-to-br from-white to-neutral-50 py-7 transition-all hover:border-indigo-300 hover:shadow-[var(--shadow-glow-indigo)] disabled:opacity-60"
+                  >
+                    <span
+                      className="text-[36px] font-bold leading-none text-aurora-gradient tabular-nums"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {n}
+                    </span>
+                    <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                      ord
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
             {loading && (
               <p className="mt-4 text-center text-sm text-muted-foreground">
                 Förbereder pass…
@@ -388,7 +412,8 @@ function OrdPracticePage() {
                 🏆 Se ord-topplistan →
               </Link>
             </div>
-          </section>
+            </div>
+          </motion.section>
         )}
 
         {/* PLAYING */}

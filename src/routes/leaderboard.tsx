@@ -151,19 +151,23 @@ function Board({
   const notRanked = !!currentUserId && (!me || me.games_played < 3);
 
   return (
-    <div className="mt-4 rounded-2xl border border-border bg-card shadow-card">
-      <div className="flex items-center justify-between border-b border-border px-4 py-2 text-xs text-muted-foreground">
-        <span>
+    <div className="mt-4 overflow-hidden rounded-3xl border border-black/8 bg-white shadow-[var(--shadow-card)]">
+      <div className="flex items-center justify-between border-b border-black/5 bg-neutral-50/50 px-5 py-3 text-xs text-neutral-500">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          </span>
           {updatedAt
-            ? `Uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
+            ? `Live · uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}`
-            : "—"}
+            : "Live"}
         </span>
         <button
           onClick={() => void load(true)}
-          className="inline-flex items-center gap-1 rounded-md px-2 py-1 hover:bg-muted"
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-neutral-500 transition hover:bg-white hover:text-[#050507]"
         >
           <RefreshCw className="h-3 w-3" />
           Uppdatera
@@ -171,19 +175,19 @@ function Board({
       </div>
 
       {loading && rows.length === 0 ? (
-        <div className="p-8 text-center text-sm text-muted-foreground">Laddar…</div>
+        <div className="p-8 text-center text-sm text-neutral-500">Laddar…</div>
       ) : error ? (
         <div className="p-8 text-center text-sm text-destructive">{error}</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs tracking-wide text-muted-foreground">
+            <thead className="bg-neutral-50/30 text-xs text-neutral-500">
               <tr>
-                <th className="px-3 py-2 text-left">#</th>
-                <th className="px-3 py-2 text-left">Spelare</th>
-                <th className="px-3 py-2 text-right">ELO</th>
-                <th className="hidden px-3 py-2 text-right sm:table-cell">Matcher</th>
-                <th className="px-3 py-2 text-right">Win %</th>
+                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
+                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">Spelare</th>
+                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
+                <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">Matcher</th>
+                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">Win %</th>
               </tr>
             </thead>
             <tbody>
@@ -225,39 +229,77 @@ function Board({
 
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
-  const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
-  const tintBg = isMe
-    ? "bg-[#e0e7ff]"
+  const isPodium = r.rank <= 3;
+  const podiumGradient =
+    r.rank === 1
+      ? "from-amber-400 via-yellow-500 to-amber-600"
+      : r.rank === 2
+      ? "from-slate-300 via-slate-400 to-slate-500"
+      : "from-orange-400 via-orange-500 to-orange-700";
+  const podiumIcon = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉";
+  const rowBg = isMe
+    ? "bg-gradient-to-r from-indigo-50 to-violet-50 ring-2 ring-indigo-300"
     : r.rank === 1
-    ? "bg-[#fef3c7]"
-    : r.rank === 2
-    ? "bg-[#f0f2f5]"
-    : r.rank === 3
-    ? "bg-[#faf0e8]"
+    ? "bg-gradient-to-r from-amber-50/80 to-yellow-50/40"
     : "";
   return (
-    <tr
-      className={`border-t border-border transition-colors ${tintBg} ${
-        isMe ? "font-semibold" : "hover:bg-[#f0ede8]"
+    <motion.tr
+      initial={{ opacity: 0, x: -16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.4, delay: Math.min(r.rank * 0.02, 0.4), ease: [0.22, 1, 0.36, 1] }}
+      className={`group border-t border-black/5 transition-all ${rowBg} ${
+        isMe ? "font-semibold" : "hover:bg-neutral-50"
       }`}
     >
-      <td className="px-3 py-2.5 tabular-nums">
-        {medal ?? <span className="text-muted-foreground">#{r.rank}</span>}
+      <td className="px-4 py-4 tabular-nums">
+        {isPodium ? (
+          <span
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${podiumGradient} text-lg shadow-md`}
+          >
+            {podiumIcon}
+          </span>
+        ) : (
+          <span className="text-sm font-bold text-neutral-400 tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+            #{r.rank}
+          </span>
+        )}
       </td>
-      <td className="px-3 py-2.5">
+      <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
-          {r.username}
+          <span className="text-[15px] font-medium text-[#050507]">{r.username}</span>
           {isMe && (
-            <span className="rounded-full bg-[#6366f1] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+            <span className="rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-3 py-2.5 text-right tabular-nums font-semibold">{r.elo}</td>
-      <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">{r.games_played}</td>
-      <td className="px-3 py-2.5 text-right tabular-nums">{wr}%</td>
-    </tr>
+      <td className="px-4 py-4 text-right">
+        <span
+          className={`text-[18px] font-bold tabular-nums ${
+            isPodium ? "text-aurora-gradient" : "text-[#050507]"
+          }`}
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {r.elo}
+        </span>
+      </td>
+      <td className="hidden px-4 py-4 text-right tabular-nums text-sm text-neutral-500 sm:table-cell">
+        {r.games_played}
+      </td>
+      <td className="px-4 py-4 text-right">
+        <span className="inline-flex items-center justify-end gap-1.5">
+          <span className="text-sm font-semibold tabular-nums text-[#050507]">{wr}%</span>
+          {wr >= 50 && (
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
+              aria-label="Vinnande win rate"
+            />
+          )}
+        </span>
+      </td>
+    </motion.tr>
   );
 }
 

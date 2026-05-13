@@ -1,19 +1,38 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
 import { EloChart } from "@/components/EloChart";
-import { Button } from "@/components/ui/button";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { StreakWidget } from "@/components/ui/StreakWidget";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
-import { getNextRank } from "@/types";
-import { GraduationCap, Sigma, Trophy, Sparkles } from "lucide-react";
-import { FadeUp } from "@/components/motion/Reveal";
+import {
+  GraduationCap,
+  Sigma,
+  Trophy,
+  Sparkles,
+  Zap,
+  BookOpen,
+  Users,
+  BarChart3,
+  Flame,
+  ArrowRight,
+} from "lucide-react";
+
+/* =====================================================================
+   HOME DASHBOARD — "Northern Light Console"
+   Scroll-driven, alive, premium. Sidebar nav + animated action grid.
+   ===================================================================== */
 
 export function HomeDashboard() {
   const { user, profile } = useAuth();
@@ -24,11 +43,16 @@ export function HomeDashboard() {
 
   if (!user || !profile) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12" aria-busy="true">
-        <div className="skeleton-shimmer h-48 rounded-2xl" />
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="skeleton-shimmer h-72 rounded-2xl" />
-          <div className="skeleton-shimmer h-72 rounded-2xl" />
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12" aria-busy="true">
+        <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
+          <div className="skeleton-shimmer hidden h-[400px] rounded-3xl lg:block" />
+          <div className="space-y-6">
+            <div className="skeleton-shimmer h-48 rounded-3xl" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="skeleton-shimmer h-56 rounded-3xl" />
+              <div className="skeleton-shimmer h-56 rounded-3xl" />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -47,271 +71,44 @@ export function HomeDashboard() {
   const isGuest = !!user.is_anonymous;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+    <div className="relative">
       <ResumeMatchBanner />
-      {isGuest && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-5 flex flex-col items-start gap-3 rounded-2xl border border-[#eab308]/40 bg-gradient-to-r from-[#fef3c7] to-[#fde68a] px-5 py-4 text-sm shadow-[var(--shadow-glow-gold)] sm:flex-row sm:items-center sm:justify-between"
-        >
-          <span className="flex items-center gap-2.5 text-[#050507]">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white">
-              <Sparkles className="h-4 w-4" />
-            </span>
-            <span>
-              Du spelar som <strong className="font-bold">gäst</strong>. Skapa
-              konto för att spara din ELO och dyka upp på topplistan.
-            </span>
-          </span>
-          <Button asChild size="sm" className="shrink-0 bg-[#6366f1] hover:bg-[#4338ca]">
-            <a href="/signup">Skapa konto →</a>
-          </Button>
-        </motion.div>
-      )}
 
-      {/* Stat panel */}
-      <motion.section
-        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-3xl border border-black/5 bg-gradient-to-br from-white to-[#fbfaf6] p-5 shadow-[var(--shadow-md)] sm:p-7">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-50"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse 40% 30% at 100% 0%, rgba(26,92,58,0.06), transparent 70%), radial-gradient(ellipse 30% 25% at 0% 100%, rgba(212,160,23,0.05), transparent 70%)",
-          }}
-        />
-        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <UserAvatar name={profile.username} size={68} />
-              <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-[#eab308] to-[#a16207] shadow-md">
-                <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
-                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-                </svg>
-              </span>
-            </div>
-            <div>
-              <p className="eyebrow text-[#6366f1]">Din profil</p>
-              <h1
-                className="mt-1 text-[28px] font-semibold leading-tight text-[#050507] sm:text-[34px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                {isGuest ? "Gäst" : profile.username}
-              </h1>
-              {!isGuest && (
-                <StreakWidget
-                  currentStreak={profile.current_streak ?? 0}
-                  longestStreak={profile.longest_streak ?? 0}
-                  onStartClick={() => openMatch("verbal")}
-                  className="mt-1"
-                />
-              )}
-              <div className="mt-2 flex flex-col gap-2">
-                <RankPanel label="Verbal" elo={profile.elo_verbal} />
-                <RankPanel label="Matte" elo={profile.elo_math} />
-                <div className="mt-1 flex items-center gap-2 pl-16">
-                  <HpScoreWidget
-                    eloVerbal={profile.elo_verbal}
-                    eloMath={profile.elo_math}
-                    size="compact"
-                  />
-                  <span className="text-[11px] text-muted-foreground">
-                    Uppskattning baserad på ELO
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+      {isGuest && <GuestBanner />}
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <StatChip label="Matcher" value={profile.games_played} />
-            <StatChip label="Vinster" value={profile.wins} accent="primary" />
-            <StatChip label="Förluster" value={profile.losses} />
-            <StatChip label="Win rate" value={`${winRate}%`} accent="gold" />
-          </div>
-        </div>
-
-        <div className="mt-7">
-          <div className="mb-2 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-foreground/80">
-              ELO-progression · senaste 20 matcherna
-            </h2>
-          </div>
-          <EloChart userId={user.id} />
-        </div>
-      </motion.section>
-
-      {/* === USPs först: coaching + öva ord — högsta värdet === */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], staggerChildren: 0.1 }}
-        className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2">
-        {/* Gratis coachning — featured */}
-        <button
-          type="button"
-          onClick={() => setCoachingOpen(true)}
-          className="group relative flex w-full items-stretch justify-between gap-3 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 text-left shadow-[var(--shadow-glow-gold)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-xl)] sm:p-7"
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-40"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 50% 40% at 100% 0%, rgba(212,160,23,0.30), transparent 70%)",
-            }}
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 lg:px-6">
+        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+          {/* Sidebar */}
+          <Sidebar
+            profile={profile}
+            isGuest={isGuest}
+            winRate={winRate}
+            onMatch={openMatch}
+            onCoaching={() => setCoachingOpen(true)}
           />
-          <div className="relative flex flex-1 flex-col">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110">
-                <Sparkles className="h-5 w-5" />
-              </span>
-              <span className="rounded-full bg-[#6366f1] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
-                Helt gratis
-              </span>
-            </div>
-            <h3
-              className="mt-4 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Gratis coachning
-            </h3>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-[#713f12]">
-              Boka 30 min med en expert som fått{" "}
-              <span className="font-bold">1.9+ på HP</span>
-            </p>
-            <div className="mt-auto pt-5">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#6366f1]">
-                Boka tid
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </span>
-            </div>
-          </div>
-        </button>
 
-        {/* Öva ord solo — featured */}
-        <a
-          href="/ord"
-          className="group relative flex w-full items-stretch justify-between gap-3 overflow-hidden rounded-3xl border border-[#6366f1]/30 bg-gradient-to-br from-[#e0e7ff] via-[#d4e8db] to-[#e0e7ff] p-6 text-left shadow-[var(--shadow-glow-green)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-xl)] sm:p-7"
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-40"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 50% 40% at 100% 0%, rgba(26,92,58,0.20), transparent 70%)",
-            }}
-          />
-          <div className="relative flex flex-1 flex-col">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110">
-                <GraduationCap className="h-5 w-5" />
-              </span>
-              <span className="rounded-full bg-[#eab308] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
-                8 000+ ord
-              </span>
-            </div>
-            <h3
-              className="mt-4 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Öva ord — solo
-            </h3>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-[#525252]">
-              Riktiga ORD-frågor från tidigare HP, helt själv i lugn takt
-            </p>
-            <div className="mt-auto pt-5">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#6366f1]">
-                Starta övning
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </span>
-            </div>
-          </div>
-        </a>
-      </motion.section>
-
-      {/* Ornamental divider */}
-      <div className="my-8 flex items-center gap-4">
-        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c8c0b4] to-transparent" />
-        <span className="eyebrow text-neutral-500">Eller utmana någon</span>
-        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c8c0b4] to-transparent" />
+          {/* Main content */}
+          <main className="space-y-6">
+            <HeroPanel profile={profile} isGuest={isGuest} />
+            <ActionGrid
+              onMatch={openMatch}
+              onCoaching={() => setCoachingOpen(true)}
+            />
+            <BattleSection
+              profile={profile}
+              onMatch={openMatch}
+            />
+            <ChartPanel userId={user.id} />
+          </main>
+        </div>
       </div>
-
-      {/* === Battle cards (live PvP) === */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="grid gap-4 sm:grid-cols-2"
-      >
-        <BattleCard
-          title="Verbala Battles"
-          subtitle="Ord · Mek"
-          elo={profile.elo_verbal}
-          icon={<GraduationCap className="h-6 w-6" />}
-          onStart={() => openMatch("verbal")}
-          variant="primary"
-        />
-        <BattleCard
-          title="Matte Battles"
-          subtitle="Xyz · Kva · Nog"
-          elo={profile.elo_math}
-          icon={<Sigma className="h-6 w-6" />}
-          onStart={() => openMatch("math")}
-          variant="dark"
-        />
-      </motion.section>
-
-      {/* Train mode (no time pressure) */}
-      <section className="mt-6">
-        <a
-          href="/train"
-          className="group flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#6366f1] bg-transparent px-5 py-3 text-base font-semibold text-[#6366f1] transition hover:bg-[#e0e7ff]"
-        >
-          <span>📖 Träna utan tidsbegränsning</span>
-          <span className="transition-transform group-hover:translate-x-1">→</span>
-        </a>
-        <p className="mt-1.5 text-center text-xs text-muted-foreground">
-          Välj delprov, svårighetsgrad och antal frågor
-        </p>
-      </section>
-
-      {/* Old solo word practice — kept for backward compat but hidden since featured above */}
-      <section className="mt-4 hidden">
-        <a
-          href="/ord"
-          className="group flex items-center justify-between rounded-2xl border border-border bg-white px-5 py-4 shadow-card transition-all hover:-translate-y-0.5"
-        >
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e0e7ff] text-[#6366f1]">
-              <GraduationCap className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="text-base font-semibold">Öva ord (solo)</div>
-              <div className="text-xs text-muted-foreground">
-                8000+ riktiga ORD-frågor från tidigare HP · helt själv, ingen motståndare
-              </div>
-            </div>
-          </div>
-          <span className="text-sm text-primary group-hover:translate-x-0.5 transition-transform">→</span>
-        </a>
-      </section>
 
       <MatchmakerModal
         open={matchOpen}
         onOpenChange={setMatchOpen}
         matchType={matchType}
       />
-
       <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} />
-
       <OnboardingModal
         open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
         onClose={() => setOnboardingDismissed(true)}
@@ -324,46 +121,550 @@ export function HomeDashboard() {
   );
 }
 
-function StatChip({
+/* =================== GUEST BANNER =================== */
+function GuestBanner() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative overflow-hidden border-b border-amber-200/40 bg-gradient-to-r from-amber-50 via-orange-50 to-fuchsia-50 px-4 py-3"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5 text-sm">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-fuchsia-500 text-white shadow-sm">
+            <Sparkles className="h-3.5 w-3.5" />
+          </span>
+          <span className="text-[#050507]">
+            Du spelar som <strong>gäst</strong>. Skapa konto för att spara ELO.
+          </span>
+        </div>
+        <Link
+          to="/signup"
+          className="btn-shine group inline-flex items-center gap-1.5 rounded-full bg-[#050507] px-4 py-1.5 text-xs font-semibold text-white shadow-md hover:shadow-lg"
+        >
+          Skapa konto
+          <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </div>
+    </motion.div>
+  );
+}
+
+/* =================== SIDEBAR =================== */
+function Sidebar({
+  profile,
+  isGuest,
+  winRate,
+  onMatch,
+  onCoaching,
+}: {
+  profile: ReturnType<typeof useAuth>["profile"] & {};
+  isGuest: boolean;
+  winRate: number;
+  onMatch: (t: MatchType) => void;
+  onCoaching: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const stickyY = useTransform(scrollY, [0, 200], [0, -10]);
+
+  if (!profile) return null;
+
+  return (
+    <motion.aside
+      ref={ref}
+      className="lg:sticky lg:top-[80px] lg:self-start"
+      style={{ y: reduce ? 0 : stickyY }}
+    >
+      {/* Profile card */}
+      <motion.div
+        initial={{ opacity: 0, x: -20, filter: "blur(8px)" }}
+        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative overflow-hidden rounded-3xl border border-black/8 bg-gradient-to-br from-white to-neutral-50 p-6 shadow-[var(--shadow-md)]"
+      >
+        {/* Decorative aurora */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-20 -right-20 h-40 w-40 rounded-full opacity-50 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
+          }}
+        />
+
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <UserAvatar name={profile.username} size={56} />
+              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-amber-400 to-orange-500 shadow-md">
+                <Trophy className="h-2.5 w-2.5 text-white" />
+              </span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="eyebrow">Spelare</p>
+              <div
+                className="truncate text-[19px] font-bold leading-tight text-[#050507]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {isGuest ? "Gäst" : profile.username}
+              </div>
+            </div>
+          </div>
+
+          {/* Streak */}
+          {!isGuest && (profile.current_streak ?? 0) > 0 && (
+            <div className="mt-4 flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-50 to-amber-50 px-3 py-2">
+              <Flame className="h-4 w-4 text-orange-500" />
+              <span className="text-sm font-semibold text-orange-700 tabular-nums">
+                {profile.current_streak} dagar streak
+              </span>
+            </div>
+          )}
+
+          {/* Mini stats */}
+          <div className="mt-5 grid grid-cols-2 gap-2.5">
+            <MiniStat label="Matcher" value={profile.games_played} />
+            <MiniStat label="Vinster" value={profile.wins} accent="indigo" />
+            <MiniStat label="Förluster" value={profile.losses} />
+            <MiniStat label="Win %" value={`${winRate}%`} accent="amber" />
+          </div>
+
+          {/* HP score */}
+          <div className="mt-5 border-t border-black/5 pt-5">
+            <p className="eyebrow mb-2">Trolig HP-poäng</p>
+            <HpScoreWidget
+              eloVerbal={profile.elo_verbal}
+              eloMath={profile.elo_math}
+              size="full"
+            />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Quick nav */}
+      <motion.nav
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-4 space-y-1 rounded-3xl border border-black/8 bg-white p-3 shadow-[var(--shadow-card)]"
+      >
+        <SideAction
+          icon={<Zap className="h-4 w-4" />}
+          label="Snabbmatch"
+          accent="indigo"
+          onClick={() => onMatch("verbal")}
+        />
+        <SideAction
+          icon={<BookOpen className="h-4 w-4" />}
+          label="Öva ord"
+          to="/ord"
+          accent="cyan"
+        />
+        <SideAction
+          icon={<GraduationCap className="h-4 w-4" />}
+          label="Träna utan tid"
+          to="/train"
+          accent="emerald"
+        />
+        <SideAction
+          icon={<Trophy className="h-4 w-4" />}
+          label="Topplista"
+          to="/leaderboard"
+          accent="amber"
+        />
+        <SideAction
+          icon={<Users className="h-4 w-4" />}
+          label="Vänner"
+          to="/friends"
+          accent="fuchsia"
+        />
+        <SideAction
+          icon={<BarChart3 className="h-4 w-4" />}
+          label="Statistik"
+          to="/stats"
+          accent="violet"
+        />
+        <div className="border-t border-black/5 pt-1 mt-1">
+          <SideAction
+            icon={<Sparkles className="h-4 w-4" />}
+            label="Gratis coachning"
+            accent="aurora"
+            onClick={onCoaching}
+            highlight
+          />
+        </div>
+      </motion.nav>
+    </motion.aside>
+  );
+}
+
+function MiniStat({
   label,
   value,
   accent,
 }: {
   label: string;
   value: number | string;
-  accent?: "primary" | "gold";
+  accent?: "indigo" | "amber";
 }) {
-  const valueColor =
-    accent === "primary"
-      ? "text-[#6366f1]"
-      : accent === "gold"
-      ? "text-[#a16207]"
+  const color =
+    accent === "indigo"
+      ? "text-indigo-600"
+      : accent === "amber"
+      ? "text-amber-600"
       : "text-[#050507]";
-  const accentBar =
-    accent === "primary"
-      ? "from-[#6366f1] to-[#818cf8]"
-      : accent === "gold"
-      ? "from-[#eab308] to-[#fde68a]"
-      : "from-[#c8c0b4] to-[#e6e0d2]";
   return (
-    <div
-      className="relative overflow-hidden rounded-xl border border-black/5 bg-white px-3.5 py-3"
-      style={{ boxShadow: "var(--shadow-sm)" }}
-    >
-      <span
-        aria-hidden
-        className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${accentBar}`}
-      />
-      <div className="text-[10px] font-bold tracking-wide text-neutral-500">
+    <div className="rounded-xl border border-black/5 bg-neutral-50/50 px-3 py-2">
+      <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
         {label}
       </div>
       <div
-        className={`mt-0.5 text-[22px] font-bold leading-tight tabular-nums ${valueColor}`}
+        className={`mt-0.5 text-[18px] font-bold leading-none tabular-nums ${color}`}
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>
     </div>
+  );
+}
+
+function SideAction({
+  icon,
+  label,
+  to,
+  onClick,
+  accent,
+  highlight,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  to?: string;
+  onClick?: () => void;
+  accent: "indigo" | "cyan" | "emerald" | "amber" | "fuchsia" | "violet" | "aurora";
+  highlight?: boolean;
+}) {
+  const accents: Record<string, string> = {
+    indigo: "from-indigo-100 to-indigo-50 text-indigo-700",
+    cyan: "from-cyan-100 to-cyan-50 text-cyan-700",
+    emerald: "from-emerald-100 to-emerald-50 text-emerald-700",
+    amber: "from-amber-100 to-amber-50 text-amber-700",
+    fuchsia: "from-fuchsia-100 to-fuchsia-50 text-fuchsia-700",
+    violet: "from-violet-100 to-violet-50 text-violet-700",
+    aurora: "from-fuchsia-100 via-amber-50 to-cyan-50 text-fuchsia-700",
+  };
+
+  const inner = (
+    <span className="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium text-[#050507] transition-all duration-200 group-hover:bg-neutral-50 group-hover:translate-x-0.5">
+      <span
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accents[accent]} ${
+          highlight ? "shadow-[var(--shadow-glow-aurora)]" : ""
+        }`}
+      >
+        {icon}
+      </span>
+      <span className="flex-1">{label}</span>
+      <ArrowRight className="h-3.5 w-3.5 text-neutral-300 transition-all group-hover:text-[#050507] group-hover:translate-x-0.5" />
+    </span>
+  );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params={{} as any}
+        className="group block"
+      >
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} className="group block w-full text-left">
+      {inner}
+    </button>
+  );
+}
+
+/* =================== HERO PANEL =================== */
+function HeroPanel({
+  profile,
+  isGuest,
+}: {
+  profile: ReturnType<typeof useAuth>["profile"];
+  isGuest: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
+  if (!profile) return null;
+
+  const greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 6) return "God natt";
+    if (h < 10) return "God morgon";
+    if (h < 18) return "Hej";
+    return "God kväll";
+  })();
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="relative overflow-hidden rounded-3xl border border-black/8 bg-mesh text-white shadow-[var(--shadow-lg)]"
+      style={{ minHeight: 220 }}
+    >
+      {/* Animated mesh background */}
+      <div aria-hidden className="absolute inset-0 animate-mesh bg-mesh" />
+
+      {/* Floating orb */}
+      <motion.div
+        aria-hidden
+        className="orb orb-fuchsia"
+        style={{
+          top: "-20%",
+          right: "-10%",
+          width: 320,
+          height: 320,
+          y: reduce ? 0 : y,
+        }}
+      />
+
+      <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
+
+      {/* Content */}
+      <div className="relative p-7 sm:p-9">
+        <p className="eyebrow text-fuchsia-300">{greeting}</p>
+        <h1
+          className="display mt-2 text-[36px] leading-[0.98] sm:text-[52px]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Välkommen,{" "}
+          <span className="text-aurora-gradient italic">
+            {isGuest ? "gäst" : profile.username}
+          </span>
+          .
+        </h1>
+        <p className="mt-3 max-w-md text-[15px] text-white/65">
+          Vad vill du erövra idag? Tävla mot någon, träna i lugn takt eller
+          öva ord — välj från sidopanelen eller korten nedan.
+        </p>
+
+        {/* ELO mini-display */}
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <RankPill label="Verbal" elo={profile.elo_verbal} />
+          <RankPill label="Matte" elo={profile.elo_math} />
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+function RankPill({ label, elo }: { label: string; elo: number }) {
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 backdrop-blur-sm">
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-white/60">
+        {label}
+      </span>
+      <RankBadge elo={elo} size="sm" showName />
+    </div>
+  );
+}
+
+/* =================== ACTION GRID =================== */
+function ActionGrid({
+  onMatch,
+  onCoaching,
+}: {
+  onMatch: (t: MatchType) => void;
+  onCoaching: () => void;
+}) {
+  return (
+    <motion.section
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.08 } },
+      }}
+      className="grid gap-4 sm:grid-cols-2"
+    >
+      <ActionCard
+        icon={<Sparkles className="h-6 w-6" />}
+        title="Gratis coachning"
+        subtitle="30 min med en 1.9+-spelare"
+        gradient="from-fuchsia-500 via-amber-500 to-orange-500"
+        onClick={onCoaching}
+        badge="Helt gratis"
+      />
+      <ActionCard
+        icon={<BookOpen className="h-6 w-6" />}
+        title="Öva ord — solo"
+        subtitle="8 000+ riktiga HP-frågor"
+        gradient="from-cyan-500 via-indigo-500 to-violet-600"
+        to="/ord"
+        badge="8 000+ ord"
+      />
+    </motion.section>
+  );
+}
+
+function ActionCard({
+  icon,
+  title,
+  subtitle,
+  gradient,
+  to,
+  onClick,
+  badge,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  gradient: string;
+  to?: string;
+  onClick?: () => void;
+  badge?: string;
+}) {
+  const inner = (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+        show: {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
+      whileHover={{ y: -6, transition: { duration: 0.3 } }}
+      className="group relative h-full overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)]"
+    >
+      {/* Gradient halo */}
+      <div
+        aria-hidden
+        className={`absolute -right-12 -top-12 h-48 w-48 bg-gradient-to-br ${gradient} opacity-20 blur-3xl transition-opacity duration-500 group-hover:opacity-40`}
+      />
+
+      <div className="relative flex items-start gap-4">
+        <div
+          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform group-hover:rotate-3 group-hover:scale-110`}
+        >
+          {icon}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <h3
+              className="text-[22px] font-bold leading-tight text-[#050507]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {title}
+            </h3>
+            {badge && (
+              <span
+                className={`shrink-0 rounded-full bg-gradient-to-r ${gradient} px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm`}
+              >
+                {badge}
+              </span>
+            )}
+          </div>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-neutral-500">
+            {subtitle}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative mt-5 flex items-center gap-1.5 text-sm font-semibold text-indigo-600">
+        Starta
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </div>
+    </motion.div>
+  );
+  if (to) {
+    return (
+      <Link
+        to={to}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params={{} as any}
+        className="block"
+      >
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} className="block w-full text-left">
+      {inner}
+    </button>
+  );
+}
+
+/* =================== BATTLE SECTION =================== */
+function BattleSection({
+  profile,
+  onMatch,
+}: {
+  profile: ReturnType<typeof useAuth>["profile"];
+  onMatch: (t: MatchType) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
+  if (!profile) return null;
+
+  return (
+    <section ref={ref}>
+      {/* Section title */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={inView ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-4 flex items-end justify-between"
+      >
+        <div>
+          <p className="eyebrow">Live PvP</p>
+          <h2
+            className="display text-[28px] font-bold leading-tight text-[#050507] sm:text-[32px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Hoppa in i en{" "}
+            <span className="text-aurora-gradient italic">battle</span>
+          </h2>
+        </div>
+      </motion.div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <BattleCard
+          title="Verbala Battles"
+          subtitle="Ord · Mek"
+          elo={profile.elo_verbal}
+          icon={<GraduationCap className="h-7 w-7" />}
+          onStart={() => onMatch("verbal")}
+          variant="indigo"
+          delay={0}
+        />
+        <BattleCard
+          title="Matte Battles"
+          subtitle="Xyz · Kva · Nog"
+          elo={profile.elo_math}
+          icon={<Sigma className="h-7 w-7" />}
+          onStart={() => onMatch("math")}
+          variant="dark"
+          delay={0.1}
+        />
+      </div>
+    </section>
   );
 }
 
@@ -374,17 +675,24 @@ function BattleCard({
   icon,
   onStart,
   variant,
+  delay,
 }: {
   title: string;
   subtitle: string;
   elo: number;
   icon: React.ReactNode;
   onStart: () => void;
-  variant: "primary" | "dark";
+  variant: "indigo" | "dark";
+  delay: number;
 }) {
   const isDark = variant === "dark";
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -6 }}
       onClick={onStart}
       role="button"
       tabIndex={0}
@@ -394,41 +702,40 @@ function BattleCard({
           onStart();
         }
       }}
-      className={`group relative flex min-h-[280px] cursor-pointer flex-col overflow-hidden rounded-3xl border p-6 transition-all duration-300 ease-out hover:-translate-y-1.5 sm:min-h-[300px] sm:p-7 ${
+      className={`group relative flex min-h-[300px] cursor-pointer flex-col overflow-hidden rounded-3xl border p-7 transition-all duration-500 hover:shadow-[var(--shadow-xl)] ${
         isDark
-          ? "border-[#050507] text-white"
-          : "border-black/5 bg-gradient-to-br from-white to-[#fbfaf6]"
+          ? "border-black/40 text-white shadow-[var(--shadow-lg)]"
+          : "border-black/8 bg-gradient-to-br from-white to-indigo-50/30 shadow-[var(--shadow-md)]"
       }`}
       style={{
-        boxShadow: "var(--shadow-md)",
         backgroundImage: isDark
-          ? "radial-gradient(ellipse 60% 40% at 20% 10%, rgba(52, 160, 106, 0.18), transparent 60%), radial-gradient(ellipse 50% 35% at 90% 90%, rgba(212, 160, 23, 0.14), transparent 60%), linear-gradient(135deg, #050507 0%, #0a1810 100%)"
+          ? "radial-gradient(ellipse 60% 40% at 20% 10%, rgba(99, 102, 241, 0.40), transparent 60%), radial-gradient(ellipse 50% 35% at 90% 90%, rgba(217, 70, 239, 0.30), transparent 60%), linear-gradient(135deg, #050507 0%, #0a0a14 100%)"
           : undefined,
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-xl)")}
-      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
     >
       {/* Pattern overlay */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-0 opacity-60 ${isDark ? "bg-grid-ink" : "bg-dots"}`}
+        className={`pointer-events-none absolute inset-0 opacity-30 ${
+          isDark ? "bg-grid-ink" : "bg-dots"
+        }`}
       />
 
       <div className="relative flex items-start justify-between">
         <div
           className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-transform group-hover:scale-110 group-hover:rotate-3 ${
             isDark
-              ? "bg-gradient-to-br from-[#eab308]/25 to-[#eab308]/10 text-[#eab308]"
-              : "bg-gradient-to-br from-[#e0e7ff] to-[#d4e8db] text-[#6366f1]"
+              ? "bg-gradient-to-br from-fuchsia-500/30 to-indigo-500/20 text-fuchsia-200"
+              : "bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-md"
           }`}
         >
           {icon}
         </div>
         <span
-          className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide ${
+          className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
             isDark
-              ? "bg-white/10 text-[#eab308]"
-              : "bg-[#6366f1]/8 text-[#6366f1]"
+              ? "bg-fuchsia-400/10 text-fuchsia-300"
+              : "bg-indigo-100 text-indigo-700"
           }`}
         >
           {isDark ? "Avancerad" : "Klassiker"}
@@ -436,13 +743,13 @@ function BattleCard({
       </div>
 
       <h3
-        className="relative mt-5 text-[28px] font-bold leading-tight"
-        style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+        className="relative mt-6 text-[28px] font-bold leading-tight"
+        style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
       >
         {title}
       </h3>
       <p
-        className={`relative mt-1.5 text-[10px] font-semibold tracking-wide ${
+        className={`relative mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] ${
           isDark ? "text-white/55" : "text-neutral-500"
         }`}
       >
@@ -455,57 +762,62 @@ function BattleCard({
             isDark ? "border-white/10" : "border-black/5"
           }`}
         >
-          <div
-            className={`text-[10px] font-bold tracking-wide ${
+          <span
+            className={`text-[10px] font-bold uppercase tracking-[0.18em] ${
               isDark ? "text-white/55" : "text-neutral-500"
             }`}
           >
             Din ELO
-          </div>
-          <div
+          </span>
+          <span
             className={`text-[28px] font-bold leading-none tabular-nums ${
-              isDark ? "text-gold-gradient" : "text-[#a16207]"
+              isDark ? "text-aurora-gradient" : "text-indigo-600"
             }`}
-            style={{
-              fontFamily: "var(--font-display)",
-              backgroundSize: "200% 200%",
-            }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {elo}
-          </div>
+          </span>
         </div>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            onStart();
-          }}
-          className={`btn-shine w-full overflow-hidden font-semibold ${
+        <div
+          className={`btn-shine inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 font-semibold transition-all ${
             isDark
-              ? "bg-gradient-to-r from-[#eab308] to-[#a16207] text-[#050507] hover:from-[#a16207] hover:to-[#a8830a]"
-              : "bg-[#6366f1] text-white hover:bg-[#4338ca]"
+              ? "bg-white text-[#050507] hover:bg-white/95"
+              : "bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-md hover:shadow-[var(--shadow-glow-indigo)]"
           }`}
         >
-          Starta Battle →
-        </Button>
+          Starta battle
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-function RankPanel({ label, elo }: { label: string; elo: number }) {
-  const next = getNextRank(elo);
-  const eloToNext = next ? next.minElo - elo : 0;
+/* =================== CHART PANEL =================== */
+function ChartPanel({ userId }: { userId: string }) {
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-center gap-2">
-        <span className="text-[11px] tracking-wide text-muted-foreground w-14">
-          {label}
-        </span>
-        <RankBadge elo={elo} size="md" showName={true} showProgress={true} />
+    <motion.section
+      initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="overflow-hidden rounded-3xl border border-black/8 bg-white p-7 shadow-[var(--shadow-card)]"
+    >
+      <div className="mb-4 flex items-end justify-between">
+        <div>
+          <p className="eyebrow">Din kurva</p>
+          <h2
+            className="display text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            ELO-progression
+          </h2>
+          <p className="mt-1 text-[13px] text-neutral-500">
+            Senaste 20 matcherna · uppdateras live
+          </p>
+        </div>
       </div>
-      <span className="text-[11px] text-muted-foreground pl-16">
-        {next ? `Nästa rank om ${eloToNext} ELO` : "Max rank uppnådd ✦"}
-      </span>
-    </div>
+      <EloChart userId={userId} />
+    </motion.section>
   );
 }
