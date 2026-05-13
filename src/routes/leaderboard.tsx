@@ -25,21 +25,12 @@ interface LbRow {
 }
 
 /**
- * Hide only explicit test/garbage accounts.
- * Earlier this also stripped `spelare_*` as "auto-generated guest", but
- * the original onboarding flow gave REAL users that pattern — so we were
- * filtering out 97+ legitimate players. Anonymous guest filtering happens
- * server-side in the get_leaderboard RPC.
+ * No client-side filter — all players (including guests) should show.
+ * Just drop rows with empty username (data corruption only).
  */
 function filterLeaderboard<T extends { username: string; rank: number }>(rows: T[]): T[] {
-  const BLOCKED = new Set(["niklastest", "niklastest2", "test", "testuser"]);
   return rows
-    .filter((r) => {
-      const name = (r.username ?? "").toLowerCase().trim();
-      if (!name) return false;
-      if (BLOCKED.has(name)) return false;
-      return true;
-    })
+    .filter((r) => (r.username ?? "").trim().length > 0)
     .map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
