@@ -61,12 +61,14 @@ function OnboardingPage() {
 
   return (
     <AuthShell
-      title="Välj användarnamn"
-      subtitle="Det här är namnet andra ser i matcher och toppliston."
+      title="Välj ett namn"
+      subtitle="Det här är vad motståndare och topplistan kommer kalla dig."
     >
-      <form onSubmit={handleSubmit} className="grid gap-4">
-        <div className="grid gap-1.5">
-          <Label htmlFor="username">Användarnamn</Label>
+      <form onSubmit={handleSubmit} className="grid gap-5">
+        <div className="grid gap-2">
+          <Label htmlFor="username" className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy/65">
+            Användarnamn
+          </Label>
           <Input
             id="username"
             autoFocus
@@ -76,14 +78,19 @@ function OnboardingPage() {
             placeholder="t.ex. lina_p"
             maxLength={20}
             required
+            className="h-12 rounded-lg border-[var(--line-cream)] bg-paper-2 text-[15px]"
           />
-          <p className="text-xs text-muted-foreground">
-            3–20 tecken. Endast små bokstäver, siffror, <code>_</code> och <code>-</code>.
+          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-navy/45">
+            3–20 tecken · små bokstäver · siffror · _ -
           </p>
         </div>
-        <Button type="submit" disabled={submitting}>
-          {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
-        </Button>
+        <button
+          type="submit"
+          disabled={submitting}
+          className="btn-shine btn-amber mt-3 justify-center disabled:opacity-60"
+        >
+          {submitting ? "Sparar…" : "Ta mig till arenan"}
+        </button>
       </form>
     </AuthShell>
   );

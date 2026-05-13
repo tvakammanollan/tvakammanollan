@@ -82,12 +82,12 @@ export function EloChartImpl({ userId }: { userId: string }) {
         <LineChart data={data} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
           <defs>
             <linearGradient id="eloVerbalFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6366f1" stopOpacity={0.18} />
-              <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
+              <stop offset="0%" stopColor="#0E1B2C" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#0E1B2C" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="eloMathFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#eab308" stopOpacity={0.18} />
-              <stop offset="100%" stopColor="#eab308" stopOpacity={0} />
+              <stop offset="0%" stopColor="#F2A65A" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#F2A65A" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid stroke="#e2ddd6" strokeDasharray="3 3" vertical={false} />
@@ -107,9 +107,9 @@ export function EloChartImpl({ userId }: { userId: string }) {
             type="monotone"
             dataKey="verbal"
             name="Verbal"
-            stroke="#6366f1"
+            stroke="#0E1B2C"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: "#6366f1" }}
+            dot={{ r: 3, fill: "#0E1B2C" }}
             fill="url(#eloVerbalFill)"
             connectNulls
           />
@@ -117,9 +117,9 @@ export function EloChartImpl({ userId }: { userId: string }) {
             type="monotone"
             dataKey="math"
             name="Matte"
-            stroke="#eab308"
+            stroke="#F2A65A"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: "#eab308" }}
+            dot={{ r: 3, fill: "#F2A65A" }}
             fill="url(#eloMathFill)"
             connectNulls
           />

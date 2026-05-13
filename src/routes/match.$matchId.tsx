@@ -516,7 +516,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <motion.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#0E1B2C] to-[#15273E] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -544,27 +544,27 @@ function MatchPage() {
           </motion.div>
         )}
         <motion.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#0E1B2C] to-[#15273E] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
         <div>
-          <p className="eyebrow text-[#6366f1]">Klart</p>
+          <p className="eyebrow text-[#0E1B2C]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#050507]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[#0E1B2C]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
           </h1>
         </div>
         <p className="text-[#737373]">
-          Motståndaren har <span className="font-semibold text-[#050507] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
+          Motståndaren har <span className="font-semibold text-[#0E1B2C] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#6366f1] to-[#818cf8]"
+            className="h-full bg-gradient-to-r from-[#0E1B2C] to-[#1E3552]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.5, ease: "linear" }}
           />

@@ -27,8 +27,8 @@ export const Route = createFileRoute("/stats")({
   component: StatsPage,
 });
 
-const VERBAL_COLOR = "#6366f1";
-const MATH_COLOR = "#eab308";
+const VERBAL_COLOR = "#0E1B2C";
+const MATH_COLOR = "#F2A65A";
 
 interface UserRow {
   username: string;
@@ -258,30 +258,28 @@ function StatsPage() {
   }));
 
   return (
-    <>
-      
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
+    <div className="bg-paper text-navy min-h-screen">
+      <main className="mx-auto max-w-[920px] px-6 pb-32 pt-10 sm:pt-16">
         <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 flex flex-wrap items-end justify-between gap-3"
+          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
+          className="mb-12 flex flex-wrap items-end justify-between gap-3"
         >
           <div>
-            <p className="eyebrow text-[#6366f1]">Din resa</p>
-            <h1
-              className="mt-1 text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Statistik
+            <p className="eyebrow">Din resa</p>
+            <h1 className="display mt-4 text-[40px] leading-[1.05] text-navy sm:text-[60px]">
+              Vad du{" "}
+              <em className="text-amber-italic">faktiskt</em> blivit bättre på.
             </h1>
-            <p className="mt-1 text-sm text-[#737373]">
-              Din progression och prestation över tid.
+            <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
+              Siffror som betyder något: ELO över tid, delprov där du är vass
+              eller halkar, och din prognos på riktiga HP-skalan.
             </p>
           </div>
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/">← Tillbaka hem</Link>
-          </Button>
+          <Link to="/" className="btn-link text-navy/55">
+            ← Hem
+          </Link>
         </motion.div>
 
         {/* HP score estimate – first section */}
@@ -366,7 +364,7 @@ function StatsPage() {
         {/* ELO chart */}
         <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#0E1B2C]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
             <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
           </div>
           {eloPoints.length < 2 ? (
@@ -430,7 +428,7 @@ function StatsPage() {
         {/* Delprov breakdown */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#0E1B2C]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
             <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
           </div>
           {breakdownData.every((b) => !b.enough) ? (
@@ -478,7 +476,7 @@ function StatsPage() {
         {/* Match history */}
         <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
+            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#0E1B2C]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (
@@ -588,7 +586,7 @@ function StatsPage() {
           )}
         </section>
       </main>
-    </>
+    </div>
   );
 }
 

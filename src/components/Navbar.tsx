@@ -169,7 +169,7 @@ function NavLink({
           {badge > 9 ? "9+" : badge}
         </span>
       ) : null}
-      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100" />
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-amber-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100" />
     </Link>
   );
 }

@@ -12,7 +12,7 @@ export function EloBadge({ elo, label, size = "md", className }: Props) {
   const tier = eloTier(elo);
   const styles =
     tier === "gold"
-      ? "bg-gradient-to-br from-[#fef3c7] to-[#fde68a] text-[#a16207] ring-[#eab308]/30 shadow-[0_1px_3px_rgba(212,160,23,0.20)]"
+      ? "bg-gradient-to-br from-[#E8E4DA] to-[#DAD4C5] text-[#C97B41] ring-[#F2A65A]/30 shadow-[0_1px_3px_rgba(212,160,23,0.20)]"
       : tier === "silver"
       ? "bg-gradient-to-br from-[#f3f4f6] to-[#e5e7eb] text-[#475569] ring-[#94a3b8]/35 shadow-[0_1px_3px_rgba(71,85,105,0.10)]"
       : "bg-gradient-to-br from-[#fce7d3] to-[#f5d4ad] text-[#8b4513] ring-[#c08552]/30 shadow-[0_1px_3px_rgba(139,69,19,0.15)]";
@@ -26,7 +26,7 @@ export function EloBadge({ elo, label, size = "md", className }: Props) {
 
   const dot =
     tier === "gold"
-      ? "bg-[#eab308]"
+      ? "bg-[#F2A65A]"
       : tier === "silver"
       ? "bg-[#94a3b8]"
       : "bg-[#c08552]";

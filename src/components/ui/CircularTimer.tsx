@@ -66,9 +66,9 @@ export function CircularTimer({
   );
   const offset = CIRCUMFERENCE * (1 - progress);
 
-  let color = "#6366f1";
+  let color = "#0E1B2C";
   if (remainingSeconds < 60) color = "#c0392b";
-  else if (remainingSeconds <= 120) color = "#eab308";
+  else if (remainingSeconds <= 120) color = "#F2A65A";
 
   const mm = String(Math.floor(Math.max(0, remainingSeconds) / 60)).padStart(2, "0");
   const ss = String(Math.max(0, remainingSeconds) % 60).padStart(2, "0");

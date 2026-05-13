@@ -215,7 +215,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#eab308", "#e8c468", "#6366f1", "#ffffff"],
+        colors: ["#F2A65A", "#e8c468", "#0E1B2C", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });
@@ -396,7 +396,7 @@ function ResultPage() {
             : pct >= 30 ? 0.5
             : 0.3;
           return (
-            <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
+            <div className="mt-5 rounded-xl border-2 border-[#F2A65A]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
               <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
                 Trolig normering
               </div>
@@ -421,14 +421,14 @@ function ResultPage() {
 
       {/* Guest signup CTA — only shows for anonymous users */}
       {user?.is_anonymous && (
-        <section className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
+        <section className="mt-5 overflow-hidden rounded-3xl border border-[#F2A65A]/40 bg-gradient-to-br from-[#E8E4DA] via-[#DAD4C5] to-[#E8E4DA] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#F2A65A] to-[#C97B41] text-white shadow-md">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#050507]"
+                className="text-[22px] font-bold leading-tight text-[#0E1B2C]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
@@ -440,7 +440,7 @@ function ResultPage() {
             </div>
             <Button
               asChild
-              className="btn-shine shrink-0 overflow-hidden bg-[#6366f1] px-6 text-base font-semibold text-white shadow-md hover:bg-[#4338ca]"
+              className="btn-shine shrink-0 overflow-hidden bg-[#0E1B2C] px-6 text-base font-semibold text-white shadow-md hover:bg-[#15273E]"
             >
               <Link to="/signup">Skapa konto →</Link>
             </Button>

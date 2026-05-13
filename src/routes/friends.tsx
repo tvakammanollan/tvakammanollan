@@ -185,23 +185,33 @@ function FriendsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="eyebrow text-[#6366f1]">Din krets</p>
-        <h1
-          className="mt-1 text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
-          style={{ fontFamily: "var(--font-display)" }}
+    <div className="bg-paper text-navy min-h-screen">
+      <div className="mx-auto max-w-[720px] px-6 pb-32 pt-10 sm:pt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
         >
-          Vänner
-        </h1>
-        <p className="mt-2 text-sm text-[#737373]">
-          Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
-        </p>
-      </motion.div>
+          <p className="eyebrow">Vänner</p>
+          <h1 className="display mt-4 text-[36px] leading-[1.05] text-navy sm:text-[52px]">
+            {accepted.length === 0 ? (
+              <>
+                Det här är ett tråkigt ställe{" "}
+                <em className="text-amber-italic">utan dem.</em>
+              </>
+            ) : (
+              <>
+                Din krets,{" "}
+                <em className="text-amber-italic">redo att förlora.</em>
+              </>
+            )}
+          </h1>
+          <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
+            {accepted.length === 0
+              ? "Skicka länken till någon som behöver lite konkurrens."
+              : "Lägg till fler via användarnamn eller bjud in dem till en snabbmatch."}
+          </p>
+        </motion.div>
 
       {/* Add friend */}
       <form onSubmit={handleAdd} className="mt-6 flex flex-col gap-2 sm:flex-row">
@@ -329,6 +339,7 @@ function FriendsPage() {
           </ul>
         </section>
       )}
+      </div>
     </div>
   );
 }

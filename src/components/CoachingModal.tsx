@@ -66,14 +66,14 @@ export function CoachingModal({
       <DialogContent className="sm:max-w-md">
         {done ? (
           <div className="py-6 text-center">
-            <CheckCircle2 className="mx-auto h-12 w-12 text-[#6366f1]" />
+            <CheckCircle2 className="mx-auto h-12 w-12 text-[#0E1B2C]" />
             <h2 className="mt-3 text-xl font-semibold">Tack {name}!</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att
               boka in dina gratis 30 minuter med en av våra 1.9+-coacher.
             </p>
             <Button
-              className="mt-6 bg-[#6366f1] text-white hover:bg-[#5048e5]"
+              className="mt-6 bg-[#0E1B2C] text-white hover:bg-[#5048e5]"
               onClick={() => handleClose(false)}
             >
               Stäng
@@ -82,7 +82,7 @@ export function CoachingModal({
         ) : (
           <>
             <DialogHeader>
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#e0e7ff] text-[#6366f1]">
+              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#DAD4C5] text-[#0E1B2C]">
                 <GraduationCap className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">
@@ -144,7 +144,7 @@ export function CoachingModal({
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#6366f1] text-white hover:bg-[#5048e5]"
+                className="w-full bg-[#0E1B2C] text-white hover:bg-[#5048e5]"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Boka mina gratis 30 min

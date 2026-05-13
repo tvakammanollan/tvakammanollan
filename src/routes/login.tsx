@@ -48,10 +48,12 @@ function LoginPage() {
   };
 
   return (
-    <AuthShell title="Logga in" subtitle="Fortsätt där du slutade.">
-      <form onSubmit={handleSubmit} className="grid gap-4">
-        <div className="grid gap-1.5">
-          <Label htmlFor="email">E-post</Label>
+    <AuthShell title="Logga in" subtitle="Vi laddar din streak och ELO direkt.">
+      <form onSubmit={handleSubmit} className="grid gap-5">
+        <div className="grid gap-2">
+          <Label htmlFor="email" className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy/65">
+            E-post
+          </Label>
           <Input
             id="email"
             type="email"
@@ -59,10 +61,13 @@ function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="h-12 rounded-lg border-[var(--line-cream)] bg-paper-2 text-[15px]"
           />
         </div>
-        <div className="grid gap-1.5">
-          <Label htmlFor="password">Lösenord</Label>
+        <div className="grid gap-2">
+          <Label htmlFor="password" className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy/65">
+            Lösenord
+          </Label>
           <Input
             id="password"
             type="password"
@@ -70,14 +75,19 @@ function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="h-12 rounded-lg border-[var(--line-cream)] bg-paper-2 text-[15px]"
           />
         </div>
-        <Button type="submit" disabled={submitting} className="mt-2">
+        <button
+          type="submit"
+          disabled={submitting}
+          className="btn-shine btn-amber mt-3 justify-center disabled:opacity-60"
+        >
           {submitting ? "Loggar in…" : "Logga in"}
-        </Button>
-        <p className="mt-1 text-center text-sm text-muted-foreground">
+        </button>
+        <p className="mt-2 text-center text-[14px] text-navy/65">
           Inget konto?{" "}
-          <Link to="/signup" className="font-medium text-primary hover:underline">
+          <Link to="/signup" className="btn-link text-navy">
             Skapa ett här
           </Link>
         </p>
@@ -95,94 +105,73 @@ export function AuthShell({
   subtitle?: string;
   children: React.ReactNode;
 }) {
+  const isSignup = title.toLowerCase().includes("skapa");
   return (
-    <div className="relative min-h-[calc(100vh-60px)] overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 60% 60% at 20% 30%, rgba(26, 92, 58, 0.10), transparent 70%), radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212, 160, 23, 0.08), transparent 70%)",
-        }}
-      />
-
-      <div className="mx-auto grid min-h-[calc(100vh-60px)] max-w-6xl gap-0 px-4 py-8 lg:grid-cols-2 lg:gap-12 lg:py-16">
-        {/* LEFT — brand panel */}
-        <aside className="hidden flex-col justify-between rounded-3xl bg-ink bg-grid-ink p-10 text-white lg:flex">
+    <div className="min-h-[calc(100vh-60px)] bg-paper text-navy">
+      <div className="mx-auto grid min-h-[calc(100vh-60px)] max-w-[1240px] gap-0 px-6 py-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-20">
+        {/* LEFT — editorial brand panel */}
+        <aside className="hidden flex-col justify-between border-r border-[var(--line-cream)] pr-12 lg:flex">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366f1] to-[#4338ca] shadow-lg">
-                <span
-                  className="text-[14px] font-black tracking-tighter text-white"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  HP
-                </span>
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#050507] bg-[#eab308]" />
-              </span>
-              <span
-                className="text-lg font-semibold text-white"
-                style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
-              >
-                Kampen
-              </span>
-            </div>
-
-            <div className="mt-16">
-              <p className="eyebrow text-[#eab308]">Välkommen till arenan</p>
-              <h2
-                className="mt-4 text-[40px] leading-[1.05] text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Tävla mot vänner.{" "}
-                <span className="font-light italic text-white/85">
-                  Klättra i rankingen.
-                </span>{" "}
-                <span className="text-gold-gradient font-medium">Klara HP.</span>
-              </h2>
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/65">
-                Live-matcher, ELO-ranking och bot-träning för Högskoleprovet.
-                Helt gratis.
-              </p>
-            </div>
+            <p className="eyebrow">
+              {isSignup ? "Steg 1 av 2 · Skapa konto" : "Logga in"}
+            </p>
+            <h2 className="display mt-6 text-[44px] leading-[1.02] text-navy">
+              {isSignup ? (
+                <>
+                  Lägg din ELO i potten.{" "}
+                  <em className="text-amber-italic">
+                    Vi hittar någon som är lika rädd.
+                  </em>
+                </>
+              ) : (
+                <>
+                  Välkommen <em className="text-amber-italic">tillbaka.</em>
+                </>
+              )}
+            </h2>
+            <p className="prose-read mt-6 text-[17px]">
+              {isSignup
+                ? "Inget kreditkort. Ingen onödig fråga. Trettio sekunder från idé till första match."
+                : "Du loggar in, vi laddar din senaste streak och ELO. Sen kör vi vidare."}
+            </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+          <div className="mt-16 grid grid-cols-3 gap-8 border-t border-[var(--line-cream)] pt-8">
             <Stat number="8 000+" label="HP-ord" />
             <Stat number="Brons → Diamant" label="ranks" />
             <Stat number="0 kr" label="alltid" />
           </div>
         </aside>
 
-        {/* RIGHT — form panel */}
+        {/* RIGHT — form */}
         <div className="flex items-center">
           <div className="w-full max-w-md">
-            <div
-              className="rounded-3xl border border-black/5 bg-white/90 p-8 backdrop-blur-sm sm:p-10"
-              style={{ boxShadow: "var(--shadow-lg)" }}
-            >
-              <div className="text-center lg:text-left">
-                <p className="eyebrow text-[#6366f1]">
-                  {title.toLowerCase().includes("skapa") ? "Steg 1 av 2" : "Logga in"}
-                </p>
+            <div className="lg:hidden mb-8">
+              <p className="eyebrow">{isSignup ? "Steg 1 av 2" : "Logga in"}</p>
+              <h1 className="display mt-4 text-[34px] leading-tight text-navy">
+                {title}
+              </h1>
+              {subtitle && (
+                <p className="mt-2 text-[15px] text-navy/65">{subtitle}</p>
+              )}
+            </div>
+
+            <div className="surface-card p-8 sm:p-10">
+              <div className="hidden lg:block mb-6">
                 <h1
-                  className="mt-3 text-[34px] leading-tight text-[#050507]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    letterSpacing: "-0.02em",
-                  }}
+                  className="display text-[28px] leading-tight text-navy"
                 >
                   {title}
                 </h1>
                 {subtitle && (
-                  <p className="mt-2 text-[15px] text-[#737373]">{subtitle}</p>
+                  <p className="mt-2 text-[15px] text-navy/65">{subtitle}</p>
                 )}
               </div>
-              <div className="mt-7">{children}</div>
+              <div>{children}</div>
             </div>
 
-            <p className="mt-6 text-center text-xs text-neutral-500">
-              Genom att fortsätta godkänner du våra villkor.
+            <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-navy/45">
+              Genom att fortsätta godkänner du våra villkor
             </p>
           </div>
         </div>
@@ -194,13 +183,10 @@ export function AuthShell({
 function Stat({ number, label }: { number: string; label: string }) {
   return (
     <div>
-      <div
-        className="text-[20px] font-bold leading-tight text-white"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <div className="numeric-display text-[22px] leading-none text-navy">
         {number}
       </div>
-      <div className="mt-1 text-[10px] tracking-wide text-white/50">
+      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-navy/55">
         {label}
       </div>
     </div>

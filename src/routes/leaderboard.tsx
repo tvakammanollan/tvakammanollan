@@ -56,47 +56,49 @@ function LeaderboardPage() {
   const [tab, setTab] = useState<"verbal" | "math" | "ord">("verbal");
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-8 text-center sm:text-left"
-      >
-        <p className="eyebrow text-[#6366f1]">Hall of fame</p>
-        <div className="mt-2 flex items-center justify-center gap-3 sm:justify-start">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
-            <Trophy className="h-6 w-6" />
-          </span>
-          <h1
-            className="text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Topplista
+    <div className="bg-paper text-navy min-h-screen">
+      <div className="mx-auto max-w-[920px] px-6 pb-32 pt-10 sm:pt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
+          className="mb-10"
+        >
+          <p className="eyebrow">Topplista · uppdateras live</p>
+          <h1 className="display mt-4 text-[40px] leading-[1.05] text-navy sm:text-[64px]">
+            De vassaste{" "}
+            <em className="text-amber-italic">just nu.</em>
           </h1>
-        </div>
-        <p className="mt-2 text-sm text-[#737373]">
-          De vassaste HP-spelarna just nu — uppdateras live.
-        </p>
-      </motion.div>
+          <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
+            Krävs minst tre matcher för att synas. Testkonton och gäster
+            filtreras bort automatiskt.
+          </p>
+        </motion.div>
 
-      <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-        <TabsList className="grid w-full max-w-md grid-cols-3">
-          <TabsTrigger value="verbal">Verbal</TabsTrigger>
-          <TabsTrigger value="math">Matte</TabsTrigger>
-          <TabsTrigger value="ord">Ord</TabsTrigger>
-        </TabsList>
+        <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
+          <TabsList className="grid w-full max-w-md grid-cols-3 rounded-full border border-[var(--line-cream)] bg-paper-2 p-1">
+            <TabsTrigger value="verbal" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
+              Verbal
+            </TabsTrigger>
+            <TabsTrigger value="math" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
+              Matte
+            </TabsTrigger>
+            <TabsTrigger value="ord" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
+              Ord
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="verbal">
-          <Board matchType="verbal" currentUserId={user?.id} />
-        </TabsContent>
-        <TabsContent value="math">
-          <Board matchType="math" currentUserId={user?.id} />
-        </TabsContent>
-        <TabsContent value="ord">
-          <OrdBoard />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="verbal">
+            <Board matchType="verbal" currentUserId={user?.id} />
+          </TabsContent>
+          <TabsContent value="math">
+            <Board matchType="math" currentUserId={user?.id} />
+          </TabsContent>
+          <TabsContent value="ord">
+            <OrdBoard />
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
@@ -169,7 +171,7 @@ function Board({
         </span>
         <button
           onClick={() => void load(true)}
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-neutral-500 transition hover:bg-white hover:text-[#050507]"
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-neutral-500 transition hover:bg-white hover:text-[#0E1B2C]"
         >
           <RefreshCw className="h-3 w-3" />
           Uppdatera
@@ -240,7 +242,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       : "from-orange-400 via-orange-500 to-orange-700";
   const podiumIcon = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉";
   const rowBg = isMe
-    ? "bg-gradient-to-r from-indigo-50 to-violet-50 ring-2 ring-indigo-300"
+    ? "bg-gradient-to-r from-amber-50 to-orange-50 ring-2 ring-indigo-300"
     : r.rank === 1
     ? "bg-gradient-to-r from-amber-50/80 to-yellow-50/40"
     : "";
@@ -269,9 +271,9 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       </td>
       <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
-          <span className="text-[15px] font-medium text-[#050507]">{r.username}</span>
+          <span className="text-[15px] font-medium text-[#0E1B2C]">{r.username}</span>
           {isMe && (
-            <span className="rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
+            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
               Du
             </span>
           )}
@@ -280,7 +282,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       <td className="px-4 py-4 text-right">
         <span
           className={`text-[18px] font-bold tabular-nums ${
-            isPodium ? "text-aurora-gradient" : "text-[#050507]"
+            isPodium ? "text-aurora-gradient" : "text-[#0E1B2C]"
           }`}
           style={{ fontFamily: "var(--font-display)" }}
         >
@@ -292,7 +294,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       </td>
       <td className="px-4 py-4 text-right">
         <span className="inline-flex items-center justify-end gap-1.5">
-          <span className="text-sm font-semibold tabular-nums text-[#050507]">{wr}%</span>
+          <span className="text-sm font-semibold tabular-nums text-[#0E1B2C]">{wr}%</span>
           {wr >= 50 && (
             <span
               className="h-1.5 w-1.5 rounded-full bg-emerald-500"
@@ -406,9 +408,9 @@ function OrdBoard() {
 function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
   const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
   const tintBg = isMe
-    ? "bg-[#e0e7ff]"
+    ? "bg-[#DAD4C5]"
     : r.rank === 1
-    ? "bg-[#fef3c7]"
+    ? "bg-[#E8E4DA]"
     : r.rank === 2
     ? "bg-[#f0f2f5]"
     : r.rank === 3
@@ -427,13 +429,13 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#6366f1] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+            <span className="rounded-full bg-[#0E1B2C] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#6366f1]">
+      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#0E1B2C]">
         {r.correct_count}
       </td>
       <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">
