@@ -56,49 +56,47 @@ function LeaderboardPage() {
   const [tab, setTab] = useState<"verbal" | "math" | "ord">("verbal");
 
   return (
-    <div className="bg-paper text-navy min-h-screen">
-      <div className="mx-auto max-w-[920px] px-6 pb-32 pt-10 sm:pt-16">
-        <motion.div
-          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
-          className="mb-10"
-        >
-          <p className="eyebrow">Topplista · uppdateras live</p>
-          <h1 className="display mt-4 text-[40px] leading-[1.05] text-navy sm:text-[64px]">
-            De vassaste{" "}
-            <em className="text-amber-italic">just nu.</em>
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-8 text-center sm:text-left"
+      >
+        <p className="eyebrow text-[#6366f1]">Hall of fame</p>
+        <div className="mt-2 flex items-center justify-center gap-3 sm:justify-start">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
+            <Trophy className="h-6 w-6" />
+          </span>
+          <h1
+            className="text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Topplista
           </h1>
-          <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
-            Krävs minst tre matcher för att synas. Testkonton och gäster
-            filtreras bort automatiskt.
-          </p>
-        </motion.div>
+        </div>
+        <p className="mt-2 text-sm text-[#737373]">
+          De vassaste HP-spelarna just nu — uppdateras live.
+        </p>
+      </motion.div>
 
-        <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-          <TabsList className="grid w-full max-w-md grid-cols-3 rounded-full border border-[var(--line-cream)] bg-paper-2 p-1">
-            <TabsTrigger value="verbal" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
-              Verbal
-            </TabsTrigger>
-            <TabsTrigger value="math" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
-              Matte
-            </TabsTrigger>
-            <TabsTrigger value="ord" className="rounded-full font-mono text-[11px] uppercase tracking-[0.14em]">
-              Ord
-            </TabsTrigger>
-          </TabsList>
+      <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
+        <TabsList className="grid w-full max-w-md grid-cols-3">
+          <TabsTrigger value="verbal">Verbal</TabsTrigger>
+          <TabsTrigger value="math">Matte</TabsTrigger>
+          <TabsTrigger value="ord">Ord</TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="verbal">
-            <Board matchType="verbal" currentUserId={user?.id} />
-          </TabsContent>
-          <TabsContent value="math">
-            <Board matchType="math" currentUserId={user?.id} />
-          </TabsContent>
-          <TabsContent value="ord">
-            <OrdBoard />
-          </TabsContent>
-        </Tabs>
-      </div>
+        <TabsContent value="verbal">
+          <Board matchType="verbal" currentUserId={user?.id} />
+        </TabsContent>
+        <TabsContent value="math">
+          <Board matchType="math" currentUserId={user?.id} />
+        </TabsContent>
+        <TabsContent value="ord">
+          <OrdBoard />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
@@ -125,32 +123,16 @@ function Board({
         return;
       }
       setLoading(true);
-      // Try new RPC signature (with _limit/_offset). Fall back to old
-      // single-arg signature if the migration hasn't been applied yet.
-      let data: LbRow[] | null = null;
-      let error: { message: string } | null = null;
-      const r1 = await supabase.rpc("get_leaderboard", {
+      const { data, error } = await supabase.rpc("get_leaderboard", {
         _match_type: matchType,
-        _limit: 200,
-        _offset: 0,
       });
-      if (r1.error) {
-        const r2 = await supabase.rpc("get_leaderboard", {
-          _match_type: matchType,
-        });
-        data = (r2.data ?? null) as LbRow[] | null;
-        error = r2.error ? { message: r2.error.message } : null;
-      } else {
-        data = (r1.data ?? null) as LbRow[] | null;
-      }
       if (error) {
         setError(error.message);
         setLoading(false);
         return;
       }
-      // Apply client-side filter as a safety net in case server hasn't been
-      // upgraded yet (older RPC returns all users).
-      const filtered = filterLeaderboard((data ?? []) as LbRow[]);
+      const all = (data ?? []) as LbRow[];
+      const filtered = filterLeaderboard(all);
       cache[matchType] = { rows: filtered, ts: Date.now() };
       setRows(filtered);
       setUpdatedAt(Date.now());
@@ -169,23 +151,19 @@ function Board({
   const notRanked = !!currentUserId && (!me || me.games_played < 3);
 
   return (
-    <div className="mt-4 overflow-hidden rounded-3xl border border-black/8 bg-white shadow-[var(--shadow-card)]">
-      <div className="flex items-center justify-between border-b border-black/5 bg-neutral-50/50 px-5 py-3 text-xs text-neutral-500">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          </span>
+    <div className="mt-4 rounded-2xl border border-border bg-card shadow-card">
+      <div className="flex items-center justify-between border-b border-border px-4 py-2 text-xs text-muted-foreground">
+        <span>
           {updatedAt
-            ? `Live · uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
+            ? `Uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}`
-            : "Live"}
+            : "—"}
         </span>
         <button
           onClick={() => void load(true)}
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-neutral-500 transition hover:bg-white hover:text-[#0E1B2C]"
+          className="inline-flex items-center gap-1 rounded-md px-2 py-1 hover:bg-muted"
         >
           <RefreshCw className="h-3 w-3" />
           Uppdatera
@@ -193,19 +171,19 @@ function Board({
       </div>
 
       {loading && rows.length === 0 ? (
-        <div className="p-8 text-center text-sm text-neutral-500">Laddar…</div>
+        <div className="p-8 text-center text-sm text-muted-foreground">Laddar…</div>
       ) : error ? (
         <div className="p-8 text-center text-sm text-destructive">{error}</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-neutral-50/30 text-xs text-neutral-500">
+            <thead className="bg-muted/40 text-xs tracking-wide text-muted-foreground">
               <tr>
-                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
-                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">Spelare</th>
-                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
-                <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">Matcher</th>
-                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">Win %</th>
+                <th className="px-3 py-2 text-left">#</th>
+                <th className="px-3 py-2 text-left">Spelare</th>
+                <th className="px-3 py-2 text-right">ELO</th>
+                <th className="hidden px-3 py-2 text-right sm:table-cell">Matcher</th>
+                <th className="px-3 py-2 text-right">Win %</th>
               </tr>
             </thead>
             <tbody>
@@ -247,77 +225,39 @@ function Board({
 
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
-  const isPodium = r.rank <= 3;
-  const podiumGradient =
-    r.rank === 1
-      ? "from-amber-400 via-yellow-500 to-amber-600"
-      : r.rank === 2
-      ? "from-slate-300 via-slate-400 to-slate-500"
-      : "from-orange-400 via-orange-500 to-orange-700";
-  const podiumIcon = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉";
-  const rowBg = isMe
-    ? "bg-gradient-to-r from-amber-50 to-orange-50 ring-2 ring-indigo-300"
+  const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
+  const tintBg = isMe
+    ? "bg-[#e0e7ff]"
     : r.rank === 1
-    ? "bg-gradient-to-r from-amber-50/80 to-yellow-50/40"
+    ? "bg-[#fef3c7]"
+    : r.rank === 2
+    ? "bg-[#f0f2f5]"
+    : r.rank === 3
+    ? "bg-[#faf0e8]"
     : "";
   return (
-    <motion.tr
-      initial={{ opacity: 0, x: -16 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.4, delay: Math.min(r.rank * 0.02, 0.4), ease: [0.22, 1, 0.36, 1] }}
-      className={`group border-t border-black/5 transition-all ${rowBg} ${
-        isMe ? "font-semibold" : "hover:bg-neutral-50"
+    <tr
+      className={`border-t border-border transition-colors ${tintBg} ${
+        isMe ? "font-semibold" : "hover:bg-[#f0ede8]"
       }`}
     >
-      <td className="px-4 py-4 tabular-nums">
-        {isPodium ? (
-          <span
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${podiumGradient} text-lg shadow-md`}
-          >
-            {podiumIcon}
-          </span>
-        ) : (
-          <span className="text-sm font-bold text-neutral-400 tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
-            #{r.rank}
-          </span>
-        )}
+      <td className="px-3 py-2.5 tabular-nums">
+        {medal ?? <span className="text-muted-foreground">#{r.rank}</span>}
       </td>
-      <td className="px-4 py-4">
+      <td className="px-3 py-2.5">
         <span className="inline-flex items-center gap-2">
-          <span className="text-[15px] font-medium text-[#0E1B2C]">{r.username}</span>
+          {r.username}
           {isMe && (
-            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
+            <span className="rounded-full bg-[#6366f1] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-4 py-4 text-right">
-        <span
-          className={`text-[18px] font-bold tabular-nums ${
-            isPodium ? "text-aurora-gradient" : "text-[#0E1B2C]"
-          }`}
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {r.elo}
-        </span>
-      </td>
-      <td className="hidden px-4 py-4 text-right tabular-nums text-sm text-neutral-500 sm:table-cell">
-        {r.games_played}
-      </td>
-      <td className="px-4 py-4 text-right">
-        <span className="inline-flex items-center justify-end gap-1.5">
-          <span className="text-sm font-semibold tabular-nums text-[#0E1B2C]">{wr}%</span>
-          {wr >= 50 && (
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
-              aria-label="Vinnande win rate"
-            />
-          )}
-        </span>
-      </td>
-    </motion.tr>
+      <td className="px-3 py-2.5 text-right tabular-nums font-semibold">{r.elo}</td>
+      <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">{r.games_played}</td>
+      <td className="px-3 py-2.5 text-right tabular-nums">{wr}%</td>
+    </tr>
   );
 }
 
@@ -422,9 +362,9 @@ function OrdBoard() {
 function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
   const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
   const tintBg = isMe
-    ? "bg-[#DAD4C5]"
+    ? "bg-[#e0e7ff]"
     : r.rank === 1
-    ? "bg-[#E8E4DA]"
+    ? "bg-[#fef3c7]"
     : r.rank === 2
     ? "bg-[#f0f2f5]"
     : r.rank === 3
@@ -443,13 +383,13 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {r.username}
           {isMe && (
-            <span className="rounded-full bg-[#0E1B2C] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+            <span className="rounded-full bg-[#6366f1] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#0E1B2C]">
+      <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#6366f1]">
         {r.correct_count}
       </td>
       <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">

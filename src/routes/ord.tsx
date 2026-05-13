@@ -190,85 +190,66 @@ function OrdPracticePage() {
     answered.length > 0 ? Math.round((correctCount / answered.length) * 100) : 0;
 
   return (
-    <div className="bg-paper min-h-screen text-navy">
-      <main className="mx-auto max-w-[720px] px-6 pb-32 pt-10 sm:pt-16">
+    <>
+      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-12">
         <motion.header
-          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
-          className="mb-10"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 flex items-center justify-between"
         >
-          <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-md">
+              <GraduationCap className="h-6 w-6" />
+            </span>
             <div>
-              <p className="eyebrow">Ordträning · 8 000+ ord</p>
-              <h1 className="display mt-4 text-[36px] leading-[1.05] text-navy sm:text-[52px]">
-                Ord du{" "}
-                <em className="text-amber-italic">borde kunna</em>.
+              <p className="eyebrow text-[#6366f1]">8 000+ ord</p>
+              <h1
+                className="text-[28px] font-bold leading-tight text-[#050507] sm:text-[34px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Öva ord
               </h1>
-              <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
-                Riktiga ORD-frågor från tidigare HP. Tio minuter räcker.
-              </p>
             </div>
-            <Link to="/" className="btn-link text-navy/55">
-              ← Hem
-            </Link>
           </div>
+          <Link
+            to="/"
+            className="text-sm text-[#737373] underline-offset-4 hover:text-[#6366f1] hover:underline"
+          >
+            ← Hem
+          </Link>
         </motion.header>
 
         {/* SETUP */}
         {phase === "setup" && (
-          <motion.section
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[var(--shadow-md)] sm:p-8"
-          >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-30 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
-              }}
-            />
-
-            <div className="relative">
-              <p className="eyebrow">Steg 1</p>
-              <h2
-                className="display mt-1 text-[24px] font-bold leading-tight text-[#0E1B2C] sm:text-[28px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Hur många ord vill du öva?
-              </h2>
-              <p className="mt-1.5 text-sm text-neutral-500">
-                Välj längd på passet — du får en sammanställning efteråt.
-              </p>
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                {COUNT_OPTIONS.map((n, i) => (
-                  <motion.button
-                    key={n}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + i * 0.05 }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
-                    type="button"
-                    onClick={() => void startSession(n)}
-                    disabled={loading}
-                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-black/8 bg-gradient-to-br from-white to-neutral-50 py-7 transition-all hover:border-amber-300 hover:shadow-[var(--shadow-glow-indigo)] disabled:opacity-60"
-                  >
-                    <span
-                      className="text-[36px] font-bold leading-none text-aurora-gradient tabular-nums"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {n}
-                    </span>
-                    <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-                      ord
-                    </span>
-                  </motion.button>
-                ))}
-              </div>
+          <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
+            <h2
+              className="text-xl font-semibold"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Hur många ord vill du öva?
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Välj längd på passet — du får en sammanställning efteråt.
+            </p>
+            <div className="mt-5 grid grid-cols-3 gap-2.5">
+              {COUNT_OPTIONS.map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => void startSession(n)}
+                  disabled={loading}
+                  className="group flex flex-col items-center justify-center rounded-xl border border-border bg-white py-6 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary-soft disabled:opacity-60"
+                >
+                  <span className="text-3xl font-semibold tabular-nums text-[#6366f1]">
+                    {n}
+                  </span>
+                  <span className="mt-1 text-xs tracking-wide text-muted-foreground">
+                    ord
+                  </span>
+                </button>
+              ))}
+            </div>
             {loading && (
               <p className="mt-4 text-center text-sm text-muted-foreground">
                 Förbereder pass…
@@ -276,9 +257,9 @@ function OrdPracticePage() {
             )}
 
             {progress && progress.totalCount > 0 && (
-              <div className="mt-6 rounded-2xl border-2 border-[#0E1B2C]/20 bg-gradient-to-br from-[#DAD4C5] to-white p-5 sm:p-6">
+              <div className="mt-6 rounded-2xl border-2 border-[#6366f1]/20 bg-gradient-to-br from-[#e0e7ff] to-white p-5 sm:p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold tracking-wide text-[#0E1B2C]">
+                  <span className="text-[11px] font-semibold tracking-wide text-[#6366f1]">
                     Din ord-bank
                   </span>
                   <span className="text-xs font-medium tabular-nums text-muted-foreground">
@@ -290,7 +271,7 @@ function OrdPracticePage() {
                 </div>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span
-                    className="text-4xl font-bold tabular-nums text-[#0E1B2C] sm:text-5xl"
+                    className="text-4xl font-bold tabular-nums text-[#6366f1] sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {progress.correctCount.toLocaleString("sv-SE")}
@@ -302,9 +283,9 @@ function OrdPracticePage() {
                     ord rätt besvarade
                   </span>
                 </div>
-                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#0E1B2C]/10">
+                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#6366f1]/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#0E1B2C] to-[#2d7a52] transition-all duration-700"
+                    className="h-full rounded-full bg-gradient-to-r from-[#6366f1] to-[#2d7a52] transition-all duration-700"
                     style={{
                       width: `${Math.min(
                         100,
@@ -325,7 +306,7 @@ function OrdPracticePage() {
                       progress.correctCount >= progress.totalCount ||
                       progress.correctCount === 0
                     }
-                    className="h-5 w-5 rounded border-border accent-[#0E1B2C] disabled:opacity-40"
+                    className="h-5 w-5 rounded border-border accent-[#6366f1] disabled:opacity-40"
                   />
                 </label>
                 {excludeCorrect &&
@@ -354,7 +335,7 @@ function OrdPracticePage() {
                     onClick={() => setSourceFilter(o.v)}
                     className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
                       sourceFilter === o.v
-                        ? "border-[#0E1B2C] bg-[#0E1B2C] text-white"
+                        ? "border-[#6366f1] bg-[#6366f1] text-white"
                         : "border-border bg-white hover:bg-muted"
                     }`}
                   >
@@ -407,8 +388,7 @@ function OrdPracticePage() {
                 🏆 Se ord-topplistan →
               </Link>
             </div>
-            </div>
-          </motion.section>
+          </section>
         )}
 
         {/* PLAYING */}
@@ -425,7 +405,7 @@ function OrdPracticePage() {
             </div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#0E1B2C] transition-all duration-300"
+                className="h-full bg-[#6366f1] transition-all duration-300"
                 style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
               />
             </div>
@@ -513,7 +493,7 @@ function OrdPracticePage() {
         {phase === "summary" && (
           <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DAD4C5] text-[#0E1B2C]">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e0e7ff] text-[#6366f1]">
                 <Trophy className="h-8 w-8" />
               </div>
               <h2
@@ -578,6 +558,6 @@ function OrdPracticePage() {
           </section>
         )}
       </main>
-    </div>
+    </>
   );
 }

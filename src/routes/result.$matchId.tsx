@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle, ArrowRight } from "lucide-react";
+import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle } from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
@@ -215,7 +215,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#F2A65A", "#e8c468", "#0E1B2C", "#ffffff"],
+        colors: ["#eab308", "#e8c468", "#6366f1", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });
@@ -248,17 +248,19 @@ function ResultPage() {
   const won = scoreDelta > 0;
   const draw = scoreDelta === 0;
 
-  // Sentence-lead (critique §06 #6) — one line that tells the story.
-  const verdictSentence = draw
-    ? `Det blev ${myScore}–${oppScore}. Tätt.`
+  // Banner styles
+  const bannerClass = draw
+    ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? `Du slog ${opponentName || "din motståndare"} med ${myScore}–${oppScore}.`
-    : `${opponentName || "Motståndaren"} vann med ${oppScore}–${myScore}. Det är okej.`;
-  const verdictDetail = draw
-    ? "Inget drama. Boka revansch när du vill."
+    ? "bg-gradient-to-br from-[#6366f1] via-[#236d44] to-[#2d7a52] text-white border-[#6366f1] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
+    : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
+  const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
+  const Icon = draw ? Minus : won ? Trophy : Frown;
+  const subtext = draw
+    ? "Tätt och jämnt."
     : won
-    ? "Snyggt. Spela igen mot samma motståndare innan hen rymmer."
-    : "Du lärde dig något. Träna det och kom tillbaka.";
+    ? "Snyggt jobbat. Spela igen och fortsätt klättra."
+    : "Bra kämpa! Varje match gör dig bättre.";
 
   const playAgain = async () => {
     if (creatingRematch) return;
@@ -285,56 +287,22 @@ function ResultPage() {
   for (const g of passageGroups) for (const id of g.question_ids) passageByQ.set(id, g);
 
   return (
-    <div className="mx-auto max-w-[920px] bg-paper px-6 py-12 text-navy sm:px-12 sm:py-16">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
-
-      {/* Sentence-lead — the story told in one line */}
-      <section className="animate-fade-up" style={{ animationDelay: "60ms" }}>
-        <p className="eyebrow">
-          {match.match_type === "verbal" ? "Verbal" : "Matte"} ·{" "}
-          {won ? "Vinst" : draw ? "Oavgjort" : "Förlust"}
-        </p>
-        <h1 className="display mt-4 text-[36px] leading-[1.05] text-navy sm:text-[56px]">
-          {won ? (
-            <>
-              {verdictSentence.split(opponentName || "")[0]}
-              <em className="text-amber-italic">
-                {opponentName || "din motståndare"}
-              </em>{" "}
-              {verdictSentence.split(opponentName || "")[1]}
-            </>
-          ) : (
-            verdictSentence
-          )}
+      {/* Banner */}
+      <div
+        className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
+        style={{ animationDelay: "60ms" }}
+      >
+        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#6366f1]" : ""}`} />
+        <h1
+          className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {verdict}
         </h1>
-        <p className="mt-4 max-w-[58ch] text-[17px] leading-[1.6] text-navy/70">
-          {verdictDetail}
-        </p>
-
-        {/* ELO change — large serif */}
-        {eloBefore !== null && eloAfter !== null && eloChange !== null && (
-          <div className="mt-6 inline-flex items-baseline gap-3 border-t border-[var(--line-cream)] pt-6">
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy/55">
-              ELO
-            </span>
-            <span className="numeric-display text-[36px] leading-none text-navy">
-              {eloAfter}
-            </span>
-            <span
-              className={`font-mono text-[14px] font-semibold ${
-                eloChange > 0
-                  ? "text-teal-deep"
-                  : eloChange < 0
-                  ? "text-amber-deep"
-                  : "text-navy/55"
-              }`}
-            >
-              {eloChange >= 0 ? "+" : ""}
-              {eloChange}
-            </span>
-          </div>
-        )}
-      </section>
+        <p className="mt-2 text-sm opacity-80 sm:text-base">{subtext}</p>
+      </div>
 
       {/* Scorecard */}
       <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
@@ -396,7 +364,7 @@ function ResultPage() {
             : pct >= 30 ? 0.5
             : 0.3;
           return (
-            <div className="mt-5 rounded-xl border-2 border-[#F2A65A]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
+            <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
               <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
                 Trolig normering
               </div>
@@ -421,14 +389,14 @@ function ResultPage() {
 
       {/* Guest signup CTA — only shows for anonymous users */}
       {user?.is_anonymous && (
-        <section className="mt-5 overflow-hidden rounded-3xl border border-[#F2A65A]/40 bg-gradient-to-br from-[#E8E4DA] via-[#DAD4C5] to-[#E8E4DA] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
+        <section className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#F2A65A] to-[#C97B41] text-white shadow-md">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#0E1B2C]"
+                className="text-[22px] font-bold leading-tight text-[#050507]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
@@ -440,7 +408,7 @@ function ResultPage() {
             </div>
             <Button
               asChild
-              className="btn-shine shrink-0 overflow-hidden bg-[#0E1B2C] px-6 text-base font-semibold text-white shadow-md hover:bg-[#15273E]"
+              className="btn-shine shrink-0 overflow-hidden bg-[#6366f1] px-6 text-base font-semibold text-white shadow-md hover:bg-[#4338ca]"
             >
               <Link to="/signup">Skapa konto →</Link>
             </Button>
@@ -448,40 +416,24 @@ function ResultPage() {
         </section>
       )}
 
-      {/* Actions — ONE primary, rest text links (critique §06 #6) */}
-      <div className="mt-10 flex flex-wrap items-center gap-6 border-t border-[var(--line-cream)] pt-8">
-        <button
-          type="button"
-          onClick={playAgain}
-          disabled={creatingRematch}
-          className="btn-shine btn-amber disabled:opacity-60"
-        >
-          {creatingRematch ? (
-            <>
-              <RotateCcw className="h-4 w-4 animate-spin" />
-              Hittar match…
-            </>
-          ) : (
-            <>
-              Spela igen{opponentName ? ` mot ${opponentName}` : ""}
-              <ArrowRight className="h-4 w-4" />
-            </>
-          )}
-        </button>
-        {(() => {
-          const wrongCount = myAnswers.filter((a) => !a.is_correct).length;
-          return wrongCount > 0 ? (
-            <Link to="/train" className="btn-link text-navy/65">
-              eller träna det du fick fel ({wrongCount})
-            </Link>
-          ) : null;
-        })()}
-        <Link to="/stats" className="btn-link text-navy/55">
-          Se statistik
-        </Link>
-        <Link to="/" className="btn-link text-navy/45">
-          Tillbaka hem
-        </Link>
+      {/* Actions */}
+      <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <Button onClick={playAgain} disabled={creatingRematch} className="gap-1.5">
+          <RotateCcw className="h-4 w-4" />
+          Spela igen
+        </Button>
+        <Button asChild variant="secondary" className="gap-1.5">
+          <Link to="/stats">
+            <BarChart3 className="h-4 w-4" />
+            Gå till statistik
+          </Link>
+        </Button>
+        <Button asChild variant="ghost" className="gap-1.5">
+          <Link to="/">
+            <Home className="h-4 w-4" />
+            Hem
+          </Link>
+        </Button>
       </div>
 
       {/* Question review */}

@@ -59,37 +59,35 @@ function SignupPage() {
 
   if (sentTo) {
     return (
-      <AuthShell title="Kolla din inkorg" subtitle="Vi skickade en länk. Klicka på den så är du inne.">
-        <div className="grid gap-5 text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-amber-deep">
-            ✉ Mejl skickat till
+      <AuthShell title="Kolla din e-post" subtitle="Sista steget innan du kan börja spela.">
+        <div className="grid gap-4 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-2xl">
+            ✉️
+          </div>
+          <p className="text-sm leading-relaxed text-foreground">
+            Vi har skickat en bekräftelselänk till
           </p>
-          <p className="break-all rounded-lg bg-pergament px-4 py-3 font-mono text-[13px] text-navy">
+          <p className="break-all rounded-lg bg-muted px-3 py-2 text-sm font-semibold">
             {sentTo}
           </p>
-          <p className="text-[14px] leading-[1.5] text-navy/65">
+          <p className="text-xs leading-relaxed text-muted-foreground">
             Öppna mejlet på den här enheten och klicka på länken — då loggas du in
-            automatiskt. Hittar du inget? Kolla skräpposten.
+            automatiskt och kan välja användarnamn. Hittar du inte mejlet? Kolla
+            skräpposten.
           </p>
-          <button
-            type="button"
-            onClick={() => setSentTo(null)}
-            className="btn-link mx-auto text-navy/55"
-          >
+          <Button variant="outline" onClick={() => setSentTo(null)} className="mt-2">
             Använd en annan e-postadress
-          </button>
+          </Button>
         </div>
       </AuthShell>
     );
   }
 
   return (
-    <AuthShell title="Skapa konto" subtitle="Gratis. Inga kort. Inga annonser.">
-      <form onSubmit={handleSubmit} className="grid gap-5">
-        <div className="grid gap-2">
-          <Label htmlFor="email" className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy/65">
-            E-post
-          </Label>
+    <AuthShell title="Skapa konto" subtitle="Gratis. Inga kort, bara battles.">
+      <form onSubmit={handleSubmit} className="grid gap-4">
+        <div className="grid gap-1.5">
+          <Label htmlFor="email">E-post</Label>
           <Input
             id="email"
             type="email"
@@ -97,13 +95,10 @@ function SignupPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="h-12 rounded-lg border-[var(--line-cream)] bg-paper-2 text-[15px]"
           />
         </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password" className="font-mono text-[11px] uppercase tracking-[0.14em] text-navy/65">
-            Lösenord
-          </Label>
+        <div className="grid gap-1.5">
+          <Label htmlFor="password">Lösenord</Label>
           <Input
             id="password"
             type="password"
@@ -112,22 +107,15 @@ function SignupPage() {
             onChange={(e) => setPassword(e.target.value)}
             minLength={6}
             required
-            className="h-12 rounded-lg border-[var(--line-cream)] bg-paper-2 text-[15px]"
           />
-          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-navy/45">
-            Minst 6 tecken
-          </p>
+          <p className="text-xs text-muted-foreground">Minst 6 tecken.</p>
         </div>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="btn-shine btn-amber mt-3 justify-center disabled:opacity-60"
-        >
+        <Button type="submit" disabled={submitting} className="mt-2">
           {submitting ? "Skapar konto…" : "Skapa konto"}
-        </button>
-        <p className="mt-2 text-center text-[14px] text-navy/65">
+        </Button>
+        <p className="mt-1 text-center text-sm text-muted-foreground">
           Har du redan ett konto?{" "}
-          <Link to="/login" className="btn-link text-navy">
+          <Link to="/login" className="font-medium text-primary hover:underline">
             Logga in
           </Link>
         </p>
