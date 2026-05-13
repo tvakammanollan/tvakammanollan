@@ -11,6 +11,23 @@ import { AuthShell } from "@/routes/login";
 
 export const Route = createFileRoute("/signup")({
   component: SignupPage,
+  head: () => ({
+    meta: [
+      { title: "Skapa konto — gratis HP-träning · HP Kampen" },
+      {
+        name: "description",
+        content:
+          "Skapa ett gratis konto på HP Kampen på 30 sekunder. Tävla mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt gratis, inga annonser.",
+      },
+      { property: "og:title", content: "Skapa konto gratis — HP Kampen" },
+      {
+        property: "og:description",
+        content:
+          "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/signup" }],
+  }),
 });
 
 const schema = z.object({

@@ -24,6 +24,18 @@ import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
+  head: () => ({
+    meta: [
+      { title: "Träna HP — alla 8 delprov utan tidspress · HP Kampen" },
+      {
+        name: "description",
+        content:
+          "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
+      },
+      { property: "og:title", content: "Träna HP utan tidspress — HP Kampen" },
+    ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/train" }],
+  }),
 });
 
 type Track = "verbal" | "math";

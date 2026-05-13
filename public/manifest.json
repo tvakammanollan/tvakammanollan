@@ -1,12 +1,52 @@
 {
-  "name": "HP Kampen",
+  "name": "HP Kampen — Tävla mot vänner i Högskoleprovet",
   "short_name": "HP Kampen",
-  "description": "Tävla mot vänner i Högskoleprovet",
+  "description": "Realtidsmatcher, ELO-ranking och bot-träning för Högskoleprovet. Alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Gratis.",
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
-  "background_color": "#f8f7f4",
-  "theme_color": "#1a5c3a",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "portrait-primary",
+  "background_color": "#0E1B2C",
+  "theme_color": "#0E1B2C",
+  "lang": "sv-SE",
+  "dir": "ltr",
+  "categories": ["education", "games", "productivity"],
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
-  ]
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "HP Kampen — startsidan"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Hitta en match",
+      "short_name": "Match",
+      "description": "Starta en realtidsmatch mot någon på din nivå",
+      "url": "/matchmaking?type=verbal",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Öva ord",
+      "short_name": "Ord",
+      "description": "8 000+ riktiga HP-ord i solo-läge",
+      "url": "/ord",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Topplista",
+      "short_name": "Topp",
+      "description": "Sveriges vassaste HP-spelare just nu",
+      "url": "/leaderboard",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ],
+  "prefer_related_applications": false
 }
