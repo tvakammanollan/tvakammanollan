@@ -215,7 +215,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#eab308", "#e8c468", "#10b981", "#ffffff"],
+        colors: ["#eab308", "#e8c468", "#6366f1", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });
@@ -252,7 +252,7 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? "bg-gradient-to-br from-[#10b981] via-[#236d44] to-[#2d7a52] text-white border-[#10b981] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
+    ? "bg-gradient-to-br from-[#6366f1] via-[#236d44] to-[#2d7a52] text-white border-[#6366f1] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
     : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
@@ -294,7 +294,7 @@ function ResultPage() {
         className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
         style={{ animationDelay: "60ms" }}
       >
-        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#10b981]" : ""}`} />
+        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#6366f1]" : ""}`} />
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
@@ -396,7 +396,7 @@ function ResultPage() {
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#022c22]"
+                className="text-[22px] font-bold leading-tight text-[#050507]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
@@ -408,7 +408,7 @@ function ResultPage() {
             </div>
             <Button
               asChild
-              className="btn-shine shrink-0 overflow-hidden bg-[#10b981] px-6 text-base font-semibold text-white shadow-md hover:bg-[#047857]"
+              className="btn-shine shrink-0 overflow-hidden bg-[#6366f1] px-6 text-base font-semibold text-white shadow-md hover:bg-[#4338ca]"
             >
               <Link to="/signup">Skapa konto →</Link>
             </Button>

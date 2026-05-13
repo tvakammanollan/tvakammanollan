@@ -66,31 +66,32 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-[#e6e0d2]"
+      className="sticky top-0 z-50 border-b border-black/5"
       style={{
-        background: "rgba(246, 242, 232, 0.85)",
-        backdropFilter: "blur(16px) saturate(180%)",
-        WebkitBackdropFilter: "blur(16px) saturate(180%)",
+        background: "rgba(255, 255, 255, 0.72)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
         <Link to="/" className="group inline-flex items-center gap-2.5 shrink-0">
-          {/* Monogram crest */}
+          {/* Aurora monogram crest */}
           <span
             aria-hidden
-            className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-sm)] transition-transform group-hover:rotate-3 group-hover:scale-105"
+            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-amber-400 text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110"
           >
+            <span className="absolute inset-0.5 rounded-[10px] bg-[#050507]" />
             <span
-              className="text-[13px] font-black tracking-tighter"
+              className="relative text-[13px] font-black tracking-tighter text-white"
               style={{ fontFamily: "var(--font-display)" }}
             >
               HP
             </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#f6f2e8] bg-[#eab308]" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
           </span>
           <span
-            className="text-lg font-semibold text-[#022c22] sm:text-xl"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+            className="text-[19px] font-bold text-[#050507] sm:text-[21px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
           >
             Kampen
           </span>
@@ -114,11 +115,11 @@ export function Navbar() {
               )}
               {profile && (
                 <div
-                  className="hidden items-center gap-2 rounded-full border border-[#e6e0d2] bg-white/80 px-2 py-1 pr-3 backdrop-blur-sm md:inline-flex"
+                  className="hidden items-center gap-2 rounded-full border border-black/8 bg-white px-2 py-1 pr-3 backdrop-blur-sm md:inline-flex"
                   style={{ boxShadow: "var(--shadow-sm)" }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium text-[#022c22]">
+                  <span className="text-sm font-medium text-[#050507]">
                     {profile.username}
                   </span>
                   <EloBadge elo={topElo} size="sm" />
@@ -180,7 +181,7 @@ function NavLink({
           {badge > 9 ? "9+" : badge}
         </span>
       ) : null}
-      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-[#10b981] transition-transform duration-200 group-hover:scale-x-100" />
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100" />
     </Link>
   );
 }

@@ -171,7 +171,7 @@ export function PassagePane({
 
   if (mobileAccordion) {
     return (
-      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-[#fafaf8] md:hidden">
+      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-paper md:hidden">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -190,7 +190,7 @@ export function PassagePane({
                 <button
                   type="button"
                   onClick={clearHighlights}
-                  className="ml-auto text-[11px] font-medium text-[#10b981] underline-offset-2 hover:underline"
+                  className="ml-auto text-[11px] font-medium text-[#6366f1] underline-offset-2 hover:underline"
                 >
                   🗑 Rensa markeringar
                 </button>
@@ -205,7 +205,7 @@ export function PassagePane({
 
   return (
     <aside
-      className="hidden md:block sticky top-[120px] self-start overflow-y-auto border-r border-[#e2e0db] bg-[#fafaf8] px-6 py-5"
+      className="hidden md:block sticky top-[120px] self-start overflow-y-auto border-r border-[#e2e0db] bg-paper px-6 py-5"
       style={{ maxHeight: "calc(100vh - 140px)" }}
     >
       <div className="mb-3 flex items-center justify-between gap-2">
@@ -220,7 +220,7 @@ export function PassagePane({
             <button
               type="button"
               onClick={clearHighlights}
-              className="text-[11px] font-medium text-[#10b981] underline-offset-2 hover:underline"
+              className="text-[11px] font-medium text-[#6366f1] underline-offset-2 hover:underline"
             >
               🗑 Rensa
             </button>

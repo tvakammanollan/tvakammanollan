@@ -509,13 +509,13 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <motion.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
-        <p className="text-sm text-[#5a5a5a]">Förbereder arenan…</p>
+        <p className="text-sm text-[#737373]">Förbereder arenan…</p>
       </div>
     );
   }
@@ -537,27 +537,27 @@ function MatchPage() {
           </motion.div>
         )}
         <motion.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
         <div>
-          <p className="eyebrow text-[#10b981]">Klart</p>
+          <p className="eyebrow text-[#6366f1]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#022c22]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[#050507]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
           </h1>
         </div>
-        <p className="text-[#5a5a5a]">
-          Motståndaren har <span className="font-semibold text-[#022c22] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
+        <p className="text-[#737373]">
+          Motståndaren har <span className="font-semibold text-[#050507] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#10b981] to-[#34d399]"
+            className="h-full bg-gradient-to-r from-[#6366f1] to-[#818cf8]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.5, ease: "linear" }}
           />
@@ -602,7 +602,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#10b981] transition-all duration-500 ease-out"
+                  className="h-full bg-[#6366f1] transition-all duration-500 ease-out"
                   style={{ width: `${((current + 1) / questions.length) * 100}%` }}
                 />
               </div>
@@ -755,7 +755,7 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#10b981]">
+      <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
         {currentQ.category} · Fråga {current + 1}
       </div>
       <h2
@@ -776,15 +776,15 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] focus-visible:ring-offset-2 ${
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1] focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-[#10b981] bg-[#d1fae5] text-foreground"
-                  : "border border-border bg-white hover:border-[#10b981] hover:bg-[#d1fae5]/50"
+                  ? "border-2 border-[#6366f1] bg-[#e0e7ff] text-foreground"
+                  : "border border-border bg-white hover:border-[#6366f1] hover:bg-[#e0e7ff]/50"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#10b981] text-white" : "bg-[#f0ede8] text-foreground"
+                  isSelected ? "bg-[#6366f1] text-white" : "bg-[#f0ede8] text-foreground"
                 }`}
               >
                 {letter}

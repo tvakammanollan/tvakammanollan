@@ -1,13 +1,33 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+  useSpring,
+  useMotionValue,
+  useInView,
+} from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Loader2, ArrowRight, Sparkles } from "lucide-react";
+import {
+  Loader2,
+  ArrowRight,
+  Zap,
+  Trophy,
+  BookOpen,
+  Sparkles,
+  CheckCircle2,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
-import { Reveal, FadeUp } from "@/components/motion/Reveal";
+
+/* ====================================================================
+   HERO LANDING — "Northern Light"
+   Apple precision + Cluely energy. Scroll-driven, alive, premium.
+   ==================================================================== */
 
 export function HeroLanding() {
   const navigate = useNavigate();
@@ -15,12 +35,10 @@ export function HeroLanding() {
   const [guestLoading, setGuestLoading] = useState(false);
   const [stats, setStats] = useState<LandingStats | null>(null);
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-  // Parallax: glow drifts up as you scroll
-  const glowY = useTransform(scrollY, [0, 600], [0, -100]);
-  const glowOpacity = useTransform(scrollY, [0, 400], [0.6, 0.15]);
-  // Hero headline scrolls slower (parallax)
-  const heroY = useTransform(scrollY, [0, 600], [0, -80]);
+
+  // Global scroll progress
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   useEffect(() => {
     fetchStats()
@@ -39,697 +57,771 @@ export function HeroLanding() {
     navigate({ to: "/" });
   };
 
-  const scrollHow = () => {
-    document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <div className="overflow-hidden">
-      {/* ============== HERO ============== */}
-      <section className="relative px-6 pt-12 pb-24 sm:pt-20 sm:pb-32">
-        {/* Animated aurora orbs — Apple/Cluely-style */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-          <motion.div
-            className="orb orb-emerald"
-            style={{
-              top: "-10%",
-              left: "10%",
-              width: 420,
-              height: 420,
-              y: reduce ? 0 : glowY,
-            }}
-            animate={reduce ? undefined : { x: [0, 60, -40, 0], y: [0, -40, 30, 0] }}
-            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="orb orb-purple"
-            style={{
-              top: "5%",
-              right: "5%",
-              width: 380,
-              height: 380,
-            }}
-            animate={reduce ? undefined : { x: [0, -50, 40, 0], y: [0, 30, -50, 0] }}
-            transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="orb orb-cyan"
-            style={{
-              top: "35%",
-              left: "50%",
-              width: 320,
-              height: 320,
-            }}
-            animate={reduce ? undefined : { x: [0, -80, 60, 0], y: [0, 40, -30, 0] }}
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="orb orb-pink"
-            style={{
-              top: "20%",
-              left: "70%",
-              width: 280,
-              height: 280,
-              opacity: 0.35,
-            }}
-            animate={reduce ? undefined : { x: [0, 30, -50, 0], y: [0, -50, 20, 0] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
+    <div className="relative overflow-hidden">
+      {/* Scroll progress bar */}
+      <motion.div className="scroll-progress" style={{ scaleX }} />
 
-        {/* Decorative parallax glow */}
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[640px]"
-          style={{
-            y: reduce ? 0 : glowY,
-            opacity: reduce ? 0.5 : glowOpacity,
-            backgroundImage:
-              "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(16, 185, 129, 0.18), transparent 70%), radial-gradient(ellipse 35% 25% at 80% 10%, rgba(139, 92, 246, 0.16), transparent 70%)",
-          }}
-        />
+      {/* CursorGlow follows mouse on desktop */}
+      {!reduce && <CursorGlow />}
 
-        <motion.div
-          className="mx-auto max-w-[820px] text-center"
-          style={{ y: reduce ? 0 : heroY }}
-        >
-          {/* Live pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="glass mx-auto mb-8 flex w-fit items-center gap-2.5 rounded-full px-4 py-1.5"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10b981] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-            </span>
-            <span className="eyebrow text-[#047857]">
-              Det enda HP-verktyget med realtidsmatcher
-            </span>
-          </motion.div>
+      <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
-          {/* Editorial headline — word-by-word reveal */}
-          <h1 className="display text-[44px] leading-[0.98] text-[#022c22] sm:text-[80px] md:text-[96px]">
-            <motion.span
-              className="block font-black"
-              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Tävla.
-            </motion.span>
-            <motion.span
-              className="block font-light italic text-aurora-gradient"
-              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Klättra.
-            </motion.span>
-            <motion.span
-              className="block font-black"
-              initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Klara{" "}
-              <span className="relative inline-block">
-                <span className="text-gold-gradient">HP</span>
-                <motion.svg
-                  aria-hidden
-                  viewBox="0 0 120 12"
-                  className="absolute -bottom-2 left-0 w-full text-[#eab308]"
-                  preserveAspectRatio="none"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 1.1, delay: 1.1, ease: "easeInOut" }}
-                >
-                  <motion.path
-                    d="M2 8 Q 30 1, 60 6 T 118 4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.1, delay: 1.1, ease: "easeInOut" }}
-                  />
-                </motion.svg>
-              </span>
-              .
-            </motion.span>
-          </h1>
+      <MarqueeBand />
 
-          {/* Subhead */}
-          <p className="animate-fade-up delay-100 mx-auto mt-10 max-w-[540px] text-balance text-[17px] leading-relaxed text-[#3f463f] sm:text-[19px]">
-            Den enda plattformen för Högskoleprovet med{" "}
-            <span className="font-semibold text-[#022c22]">live-matcher</span>,{" "}
-            <span className="font-semibold text-[#022c22]">ELO-ranking</span> och{" "}
-            <span className="font-semibold text-[#022c22]">bot-träning</span>.
-            Helt gratis.
-          </p>
+      <FeaturesSticky />
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-          >
-            <motion.div
-              whileHover={reduce ? undefined : { scale: 1.04, y: -3 }}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-full sm:w-auto"
-            >
-              <Button
-                asChild
-                className="btn-shine group relative h-[56px] w-full overflow-hidden bg-gradient-to-r from-[#10b981] to-[#047857] px-8 text-base font-semibold text-white shadow-[var(--shadow-glow-green)] sm:w-auto"
-              >
-                <Link to="/signup" className="inline-flex items-center gap-2">
-                  Skapa gratis konto
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-            </motion.div>
-            <motion.div
-              whileHover={reduce ? undefined : { scale: 1.03 }}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="w-full sm:w-auto"
-            >
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={scrollHow}
-                className="h-[56px] w-full px-8 text-base font-medium text-[#022c22] hover:bg-[#10b981]/8 sm:w-auto"
-              >
-                Se hur det funkar
-              </Button>
-            </motion.div>
-          </motion.div>
+      <HowItWorks />
 
-          <div className="animate-fade-up delay-300 mt-8 flex flex-col items-center gap-1.5">
-            <p className="text-xs text-[#6b6b6b]">
-              {stats
-                ? `${stats.totalMatches.toLocaleString("sv-SE")} matcher spelade av ${stats.totalPlayers.toLocaleString("sv-SE")} registrerade spelare`
-                : "Bli en av de första HP-spelarna"}
-            </p>
-            <button
-              type="button"
-              onClick={playAsGuest}
-              disabled={guestLoading}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3f463f] underline decoration-[#10b981]/30 decoration-2 underline-offset-4 transition hover:text-[#10b981] hover:decoration-[#10b981] disabled:opacity-60"
-            >
-              {guestLoading && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-              {guestLoading
-                ? "Startar gästläge…"
-                : "eller spela som gäst (utan konto)"}
-            </button>
-          </div>
+      <ProofSection stats={stats} />
 
-          {/* Ord-databas crest */}
-          <div className="animate-fade-up delay-400 mt-16 inline-flex items-center gap-3 rounded-2xl border border-[#d4cdb8] bg-white/70 px-5 py-3 backdrop-blur-sm">
-            <Sparkles className="h-4 w-4 text-[#eab308]" />
-            <span className="text-sm font-medium text-[#022c22]">
-              Ordlista med{" "}
-              <span className="font-bold text-[#10b981]">8 000+</span> ord
-              troliga att komma på nästa HP
-            </span>
-          </div>
-        </motion.div>
+      <FounderQuote />
 
-        {/* Floating decorative cards */}
-        <FloatingCards />
-      </section>
-
-      {/* ============== TRUST RIBBON ============== */}
-      <section className="border-y border-[#d4cdb8] bg-ink bg-grid-ink py-7">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-12 gap-y-3 px-6 text-center">
-          <RibbonStat
-            number={stats ? stats.totalMatches.toLocaleString("sv-SE") : "—"}
-            label="matcher spelade"
-          />
-          <Bullet />
-          <RibbonStat
-            number={stats ? stats.totalPlayers.toLocaleString("sv-SE") : "—"}
-            label="aktiva spelare"
-          />
-          <Bullet />
-          <RibbonStat number="8 000+" label="HP-ord i databasen" />
-          <Bullet />
-          <RibbonStat number="0 kr" label="alltid gratis" />
-        </div>
-      </section>
-
-      {/* ============== FEATURE GRID ============== */}
-      <section className="bg-paper px-6 py-24">
-        <Reveal className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-[640px] text-center">
-            <Reveal.Item>
-              <p className="eyebrow text-[#10b981]">Funktionerna</p>
-            </Reveal.Item>
-            <Reveal.Item>
-              <h2 className="display mt-3 text-[36px] leading-tight text-[#022c22] sm:text-[48px]">
-                Allt du behöver för{" "}
-                <span className="display-italic font-medium text-[#10b981]">
-                  att klara HP
-                </span>
-              </h2>
-            </Reveal.Item>
-            <Reveal.Item>
-              <div className="rule-ornate mt-6 px-12">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-3.5 w-3.5"
-                  fill="currentColor"
-                >
-                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-                </svg>
-              </div>
-            </Reveal.Item>
-          </div>
-
-          <div className="mt-14 grid gap-6 sm:grid-cols-3">
-            <Reveal.Item>
-              <FeatureCard
-                icon={<LightningIcon />}
-                title="Live-matcher mot vänner"
-                text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö för matchmaking."
-                accent="green"
-              />
-            </Reveal.Item>
-            <Reveal.Item delay={0.1}>
-              <FeatureCard
-                icon={<TrophyIcon />}
-                title="Chess.com-känsla för HP"
-                text="Klättra från Brons till Diamant med ett schackinspirerat ELO-system. Se din progression över tid."
-                accent="gold"
-                featured
-              />
-            </Reveal.Item>
-            <Reveal.Item delay={0.2}>
-              <FeatureCard
-                icon={<BookIcon />}
-                title="Alla 8 delmoment"
-                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
-                accent="green"
-              />
-            </Reveal.Item>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============== HOW IT WORKS ============== */}
-      <section
-        id="how-it-works"
-        className="relative overflow-hidden bg-[#f5f1e8] px-6 py-24"
-      >
-        <Reveal className="mx-auto max-w-5xl">
-          <div className="mx-auto max-w-[640px] text-center">
-            <Reveal.Item>
-              <p className="eyebrow text-[#10b981]">Så här funkar det</p>
-            </Reveal.Item>
-            <Reveal.Item>
-              <h2 className="display mt-3 text-[36px] leading-tight text-[#022c22] sm:text-[48px]">
-                Tre steg till{" "}
-                <span className="display-italic font-medium text-[#10b981]">
-                  bättre HP-resultat
-                </span>
-              </h2>
-            </Reveal.Item>
-          </div>
-
-          <div className="relative mt-16 grid gap-8 sm:grid-cols-3">
-            {/* Dotted connector line */}
-            <div
-              aria-hidden
-              className="absolute left-[10%] right-[10%] top-[34px] hidden h-px sm:block"
-              style={{
-                background:
-                  "repeating-linear-gradient(90deg, #c8c0b4 0 6px, transparent 6px 14px)",
-              }}
-            />
-            <Reveal.Item>
-              <Step
-                n="1"
-                title="Skapa konto"
-                text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
-              />
-            </Reveal.Item>
-            <Reveal.Item delay={0.12}>
-              <Step
-                n="2"
-                title="Välj verbal eller matte"
-                text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
-              />
-            </Reveal.Item>
-            <Reveal.Item delay={0.24}>
-              <Step
-                n="3"
-                title="Kämpa och klättra"
-                text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
-              />
-            </Reveal.Item>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============== LIVE ACTIVITY ============== */}
-      <section className="bg-paper px-6 py-20">
-        <div className="mx-auto max-w-3xl">
-          <div className="text-center">
-            <p className="eyebrow text-[#10b981]">Senaste arenan</p>
-            <h2 className="display mt-3 text-[28px] font-semibold text-[#022c22] sm:text-[32px]">
-              Live på{" "}
-              <span className="display-italic font-medium text-[#10b981]">
-                arenan
-              </span>{" "}
-              just nu
-            </h2>
-          </div>
-          <div className="surface-paper mt-8 overflow-hidden rounded-2xl">
-            <ActivityTicker recent={stats?.recent ?? []} />
-          </div>
-        </div>
-      </section>
-
-      {/* ============== FOUNDER TESTIMONIAL ============== */}
-      <section className="bg-[#fafaf8] px-6 py-24">
-        <div className="mx-auto max-w-2xl">
-          <figure className="surface-elevated relative rounded-3xl p-10 sm:p-14">
-            <div
-              aria-hidden
-              className="absolute -left-2 -top-6 text-[120px] leading-none text-[#10b981]/15"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              "
-            </div>
-            <blockquote className="display relative text-[22px] leading-[1.35] text-[#022c22] sm:text-[26px]">
-              HP Kampen innehåller verktyg jag hade haft{" "}
-              <span className="display-italic font-medium text-[#10b981]">
-                stor nytta av
-              </span>{" "}
-              när jag pluggade till högskoleprovet — helt gratis.
-            </blockquote>
-            <figcaption className="mt-8 flex items-center gap-4 border-t border-[#e6e0d2] pt-6">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-lg font-bold text-white shadow-md">
-                N
-                <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#eab308]">
-                  <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
-                    <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-                  </svg>
-                </span>
-              </div>
-              <div>
-                <div
-                  className="text-base font-semibold text-[#022c22]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Niklas
-                </div>
-                <div className="text-xs text-[#6b6b6b]">
-                  Grundare · 1.9 på Högskoleprovet
-                </div>
-              </div>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      {/* ============== FINAL CTA — DRAMATIC INK ============== */}
-      <section className="relative overflow-hidden bg-ink bg-grid-ink px-6 py-28 text-center text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse 50% 50% at 50% 0%, rgba(212, 160, 23, 0.15), transparent 70%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-2xl">
-          <p className="eyebrow text-[#eab308]">Sista anhalten</p>
-          <h2 className="display mt-4 text-[44px] leading-[1.05] text-white sm:text-[64px]">
-            Redo att{" "}
-            <span className="display-italic text-gold-gradient font-medium">
-              testa dig
-            </span>
-            ?
-          </h2>
-          <p className="mx-auto mt-6 max-w-md text-base text-white/70">
-            Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som
-            klättrar.
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="btn-shine group h-[56px] overflow-hidden bg-white px-8 text-base font-semibold text-[#022c22] hover:bg-white/95"
-            >
-              <Link to="/signup" className="inline-flex items-center gap-2">
-                Skapa konto nu
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="ghost"
-              className="h-[56px] px-8 text-base font-medium text-white hover:bg-white/10"
-            >
-              <Link to="/login">Jag har redan konto</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <FinalCTA />
     </div>
   );
 }
 
-/* ---------------- Subcomponents ---------------- */
+/* ============== HERO ============== */
+function Hero({
+  stats,
+  guestLoading,
+  onGuest,
+}: {
+  stats: LandingStats | null;
+  guestLoading: boolean;
+  onGuest: () => void;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -160]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+
+  return (
+    <section
+      ref={ref}
+      className="relative min-h-screen overflow-hidden bg-mesh text-white"
+    >
+      {/* Mesh-flow animated bg */}
+      <div aria-hidden className="absolute inset-0 animate-mesh bg-mesh opacity-90" />
+
+      {/* Floating orbs */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <motion.div
+          className="orb orb-indigo"
+          style={{ top: "10%", left: "10%", width: 500, height: 500 }}
+          animate={reduce ? undefined : { x: [0, 80, -50, 0], y: [0, -50, 40, 0] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb orb-fuchsia"
+          style={{ top: "5%", right: "5%", width: 460, height: 460 }}
+          animate={reduce ? undefined : { x: [0, -70, 50, 0], y: [0, 40, -60, 0] }}
+          transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb orb-cyan"
+          style={{ top: "50%", left: "45%", width: 380, height: 380 }}
+          animate={reduce ? undefined : { x: [0, -90, 70, 0], y: [0, 60, -40, 0] }}
+          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      {/* Subtle grid overlay */}
+      <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
+
+      {/* Content */}
+      <motion.div
+        className="relative z-10 mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center px-6 py-24 text-center"
+        style={{ y: reduce ? 0 : heroY, opacity: reduce ? 1 : heroOpacity, scale: reduce ? 1 : heroScale }}
+      >
+        {/* Status pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-sm"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
+          </span>
+          <span className="text-[12px] font-medium tracking-wide text-white/80">
+            Realtidsmatcher · Live
+          </span>
+        </motion.div>
+
+        {/* Massive Apple-style headline */}
+        <h1 className="display text-balance text-[56px] font-bold leading-[0.96] text-white sm:text-[96px] md:text-[120px] lg:text-[144px]">
+          <WordReveal text="Tävla." delay={0.1} />
+          <br />
+          <span className="text-aurora-gradient">
+            <WordReveal text="Klättra." delay={0.3} italic />
+          </span>
+          <br />
+          <WordReveal text="Klara HP." delay={0.5} />
+        </h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10 max-w-2xl text-balance text-[18px] leading-relaxed text-white/70 sm:text-[22px]"
+        >
+          Den enda plattformen för Högskoleprovet med
+          <span className="font-semibold text-white"> live-matcher</span>,
+          <span className="font-semibold text-white"> ELO-ranking</span> och
+          <span className="font-semibold text-white"> bot-träning</span>.
+          Helt gratis.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-12 flex flex-col items-center gap-3 sm:flex-row"
+        >
+          <MagneticButton primary>
+            <Link
+              to="/signup"
+              className="relative inline-flex h-[58px] items-center gap-2 rounded-full bg-white px-8 text-[16px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)] transition-all hover:shadow-[0_0_80px_-8px_rgba(217,70,239,0.55)]"
+            >
+              Skapa gratis konto
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </MagneticButton>
+          <MagneticButton>
+            <button
+              type="button"
+              onClick={onGuest}
+              disabled={guestLoading}
+              className="inline-flex h-[58px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-8 text-[16px] font-medium text-white backdrop-blur-sm transition hover:bg-white/10 disabled:opacity-60"
+            >
+              {guestLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+              {guestLoading ? "Startar gästläge…" : "Spela som gäst"}
+            </button>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Live counter */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.4 }}
+          className="mt-12 flex items-center gap-6 text-[13px] text-white/55"
+        >
+          <span className="inline-flex items-center gap-2">
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+            Inget kreditkort
+          </span>
+          <span className="hidden sm:inline-flex items-center gap-2">
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+            30 sekunder att börja
+          </span>
+          <span className="hidden md:inline-flex items-center gap-2">
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+            Helt anonymt
+          </span>
+        </motion.div>
+
+        {/* Stats teaser */}
+        {stats && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.7 }}
+            className="mt-20 flex items-center gap-12 text-center"
+          >
+            <StatTeaser
+              value={stats.totalMatches}
+              label="matcher spelade"
+            />
+            <span className="h-12 w-px bg-white/15" />
+            <StatTeaser
+              value={stats.totalPlayers}
+              label="spelare"
+            />
+            <span className="hidden h-12 w-px bg-white/15 sm:inline-block" />
+            <StatTeaser value={8000} label="HP-ord" hidden suffix="+" />
+          </motion.div>
+        )}
+      </motion.div>
+
+      {/* Scroll hint */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 2 }}
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+      >
+        <motion.div
+          animate={reduce ? undefined : { y: [0, 8, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2 text-white/40"
+        >
+          <span className="text-[10px] font-medium tracking-[0.18em]">SCROLLA</span>
+          <span className="h-8 w-px bg-gradient-to-b from-white/40 to-transparent" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ============== MARQUEE — endless scrolling band ============== */
+function MarqueeBand() {
+  const items = [
+    "ORD",
+    "MEK",
+    "LÄS",
+    "ELF",
+    "XYZ",
+    "KVA",
+    "NOG",
+    "DTK",
+    "ELO-RANKING",
+    "REALTIDSMATCHER",
+    "8 000+ ORD",
+    "GRATIS",
+    "BOT-TRÄNING",
+    "BRONS → DIAMANT",
+  ];
+  return (
+    <section className="relative overflow-hidden border-y border-black/10 bg-white py-8">
+      <div className="flex animate-marquee gap-12 whitespace-nowrap will-change-transform">
+        {[...items, ...items].map((it, i) => (
+          <span
+            key={i}
+            className="display flex items-center gap-12 text-[28px] font-semibold tracking-tight text-[#050507] sm:text-[40px]"
+          >
+            {it}
+            <span className="text-aurora-gradient">✦</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============== FEATURES — sticky scroll-storytelling ============== */
+function FeaturesSticky() {
+  return (
+    <section className="relative bg-white px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          eyebrow="Funktioner"
+          title="Tre superkrafter."
+          highlight="En arena."
+        />
+
+        <div className="mt-20 grid gap-6 md:grid-cols-3">
+          <FeatureCard
+            icon={<Zap className="h-7 w-7" />}
+            title="Live-matcher"
+            text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö."
+            gradient="from-cyan-400 via-indigo-500 to-violet-600"
+            delay={0}
+          />
+          <FeatureCard
+            icon={<Trophy className="h-7 w-7" />}
+            title="ELO-ranking"
+            text="Klättra från Brons till Diamant med ett schackinspirerat system. Se din progression i realtid."
+            gradient="from-amber-400 via-orange-500 to-pink-500"
+            featured
+            delay={0.1}
+          />
+          <FeatureCard
+            icon={<BookOpen className="h-7 w-7" />}
+            title="Alla 8 delprov"
+            text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
+            gradient="from-emerald-400 via-teal-500 to-cyan-600"
+            delay={0.2}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============== HOW IT WORKS ============== */
+function HowItWorks() {
+  return (
+    <section
+      id="how-it-works"
+      className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32"
+    >
+      <div aria-hidden className="absolute inset-0 bg-mesh-light opacity-60" />
+      <div className="relative mx-auto max-w-6xl">
+        <SectionHeader
+          eyebrow="Så funkar det"
+          title="Tre steg."
+          highlight="Bättre HP-resultat."
+        />
+
+        <div className="mt-20 grid gap-10 md:grid-cols-3">
+          <Step
+            n="01"
+            title="Skapa konto"
+            text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
+            delay={0}
+          />
+          <Step
+            n="02"
+            title="Välj verbal eller matte"
+            text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
+            delay={0.15}
+          />
+          <Step
+            n="03"
+            title="Kämpa & klättra"
+            text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
+            delay={0.3}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============== PROOF — live counter w/ count-up ============== */
+function ProofSection({ stats }: { stats: LandingStats | null }) {
+  return (
+    <section className="bg-white px-6 py-20">
+      <div className="mx-auto max-w-5xl">
+        <div className="grid gap-6 sm:grid-cols-3">
+          <ProofCard
+            value={stats?.totalMatches ?? 0}
+            label="Matcher spelade"
+          />
+          <ProofCard value={stats?.totalPlayers ?? 0} label="Aktiva spelare" />
+          <ProofCard value={8000} suffix="+" label="HP-ord i databasen" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============== FOUNDER QUOTE ============== */
+function FounderQuote() {
+  return (
+    <section className="bg-paper px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-3xl">
+        <motion.figure
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="surface-elevated relative rounded-[32px] p-12 sm:p-16"
+        >
+          <div
+            aria-hidden
+            className="absolute -left-2 -top-8 text-[160px] leading-none text-indigo-500/15"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            "
+          </div>
+          <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
+            HP Kampen innehåller verktyg jag hade haft{" "}
+            <span className="text-aurora-gradient italic">stor nytta av</span>{" "}
+            när jag pluggade till högskoleprovet — helt gratis.
+          </blockquote>
+          <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">
+              N
+              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400">
+                <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
+                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
+                </svg>
+              </span>
+            </div>
+            <div>
+              <div
+                className="text-base font-semibold text-[#0a0a0f]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Niklas
+              </div>
+              <div className="text-xs text-neutral-500">
+                Grundare · 1.9 på Högskoleprovet
+              </div>
+            </div>
+          </figcaption>
+        </motion.figure>
+      </div>
+    </section>
+  );
+}
+
+/* ============== FINAL CTA — dramatic dark with mesh ============== */
+function FinalCTA() {
+  return (
+    <section className="relative overflow-hidden bg-mesh px-6 py-32 text-center text-white">
+      <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
+
+      {/* Floating orbs */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="orb orb-indigo animate-orb-drift"
+          style={{ top: "20%", left: "20%", width: 400, height: 400 }}
+        />
+        <div
+          className="orb orb-fuchsia animate-orb-drift"
+          style={{
+            top: "30%",
+            right: "15%",
+            width: 360,
+            height: 360,
+            animationDelay: "5s",
+          }}
+        />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto max-w-3xl"
+      >
+        <p className="eyebrow text-fuchsia-300">Sista anhalten</p>
+        <h2 className="display mt-4 text-[56px] leading-[1.05] text-white sm:text-[88px]">
+          Redo att{" "}
+          <span className="text-aurora-gradient italic">testa dig</span>?
+        </h2>
+        <p className="mx-auto mt-6 max-w-md text-[18px] text-white/65">
+          Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som
+          klättrar.
+        </p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <MagneticButton primary>
+            <Link
+              to="/signup"
+              className="btn-shine group inline-flex h-[64px] items-center gap-2 rounded-full bg-white px-10 text-[17px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)]"
+            >
+              Skapa konto nu
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </MagneticButton>
+          <MagneticButton>
+            <Link
+              to="/login"
+              className="inline-flex h-[64px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-10 text-[17px] font-medium text-white hover:bg-white/10"
+            >
+              Jag har redan konto
+            </Link>
+          </MagneticButton>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ===========================================================
+   SUB-COMPONENTS
+   =========================================================== */
+
+function SectionHeader({
+  eyebrow,
+  title,
+  highlight,
+}: {
+  eyebrow: string;
+  title: string;
+  highlight: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  return (
+    <div ref={ref} className="text-center">
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        animate={inView ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="eyebrow"
+      >
+        {eyebrow}
+      </motion.p>
+      <motion.h2
+        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+        animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
+        transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="display mt-3 text-[44px] leading-[0.98] text-[#050507] sm:text-[64px] md:text-[80px]"
+      >
+        {title}{" "}
+        <span className="text-aurora-gradient italic">{highlight}</span>
+      </motion.h2>
+    </div>
+  );
+}
 
 function FeatureCard({
   icon,
   title,
   text,
-  accent,
+  gradient,
   featured,
+  delay,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
-  accent: "green" | "gold";
+  gradient: string;
   featured?: boolean;
+  delay: number;
 }) {
   return (
-    <div
-      className={`group relative overflow-hidden rounded-2xl border bg-white p-7 transition-all duration-300 hover:-translate-y-1 ${
-        featured
-          ? "border-[#eab308]/40 shadow-[var(--shadow-glow-gold)]"
-          : "border-[#e6e0d2] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-md)]"
+    <motion.div
+      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      className={`group relative overflow-hidden rounded-[28px] border border-black/5 bg-white p-8 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)] ${
+        featured ? "md:-translate-y-3" : ""
       }`}
     >
-      {featured && (
-        <div className="absolute right-4 top-4">
-          <span className="rounded-full bg-[#eab308]/15 px-2.5 py-1 text-[10px] font-bold tracking-wide text-[#a16207]">
-            Populärast
-          </span>
-        </div>
-      )}
+      {/* Gradient halo on hover */}
       <div
-        className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl ${
-          accent === "gold"
-            ? "bg-gradient-to-br from-[#fef3c7] to-[#fde68a] text-[#a16207]"
-            : "bg-gradient-to-br from-[#d1fae5] to-[#d4e8db] text-[#10b981]"
-        }`}
+        aria-hidden
+        className={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-30`}
+      />
+
+      {/* Icon */}
+      <div
+        className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform group-hover:scale-110 group-hover:rotate-3`}
       >
         {icon}
       </div>
+
       <h3
-        className="text-[20px] font-semibold leading-tight text-[#022c22]"
+        className="text-[26px] font-bold leading-tight text-[#0a0a0f]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h3>
-      <p className="mt-2.5 text-[14px] leading-relaxed text-[#5a5a5a]">
+      <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">
         {text}
       </p>
-    </div>
+
+      {featured && (
+        <div className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-amber-700">
+          <Sparkles className="h-3.5 w-3.5" />
+          Mest älskad funktion
+        </div>
+      )}
+    </motion.div>
   );
 }
 
-function Step({ n, title, text }: { n: string; title: string; text: string }) {
+function Step({
+  n,
+  title,
+  text,
+  delay,
+}: {
+  n: string;
+  title: string;
+  text: string;
+  delay: number;
+}) {
   return (
-    <div className="relative text-center">
-      <div className="relative z-10 mx-auto flex h-[68px] w-[68px] items-center justify-center rounded-full border border-[#d4cdb8] bg-white shadow-[var(--shadow-md)]">
-        <span
-          className="text-gold-gradient text-[30px] font-bold"
-          style={{
-            fontFamily: "var(--font-display)",
-            backgroundSize: "200% 200%",
-          }}
-        >
-          {n}
-        </span>
+    <motion.div
+      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="relative"
+    >
+      <div className="text-aurora-gradient text-[80px] font-bold leading-none" style={{ fontFamily: "var(--font-display)" }}>
+        {n}
       </div>
       <h3
-        className="mt-5 text-[20px] font-semibold text-[#022c22]"
+        className="mt-3 text-[28px] font-bold leading-tight text-[#0a0a0f]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h3>
-      <p className="mx-auto mt-2 max-w-[260px] text-sm leading-relaxed text-[#5a5a5a]">
+      <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-neutral-600">
         {text}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
-function RibbonStat({ number, label }: { number: string; label: string }) {
+function ProofCard({
+  value,
+  label,
+  suffix,
+}: {
+  value: number;
+  label: string;
+  suffix?: string;
+}) {
   return (
-    <div className="text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="rounded-[24px] border border-black/5 bg-gradient-to-br from-white to-neutral-50 p-8 text-center shadow-[var(--shadow-card)]"
+    >
+      <div className="text-[60px] font-bold leading-none text-aurora-gradient tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+        <CountUp end={value} />
+        {suffix}
+      </div>
+      <div className="mt-3 text-[13px] font-medium uppercase tracking-wider text-neutral-500">
+        {label}
+      </div>
+    </motion.div>
+  );
+}
+
+function StatTeaser({
+  value,
+  label,
+  suffix,
+  hidden,
+}: {
+  value: number;
+  label: string;
+  suffix?: string;
+  hidden?: boolean;
+}) {
+  return (
+    <div className={hidden ? "hidden md:block" : ""}>
       <div
         className="text-[28px] font-bold leading-none text-white tabular-nums"
         style={{ fontFamily: "var(--font-display)" }}
       >
-        {number}
+        <CountUp end={value} />
+        {suffix}
       </div>
-      <div className="mt-1 text-[11px] tracking-wide text-white/55">
+      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/45">
         {label}
       </div>
     </div>
   );
 }
 
-function Bullet() {
-  return (
-    <span className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
-  );
+function CountUp({ end }: { end: number }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+
+  useEffect(() => {
+    if (!inView) return;
+    let raf = 0;
+    const start = performance.now();
+    const dur = 1500;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(end * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, end]);
+
+  return <span ref={ref}>{display.toLocaleString("sv-SE")}</span>;
 }
 
-function FloatingCards() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
-    >
-      <div
-        className="animate-float absolute left-[8%] top-[35%] -rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
-        style={{ animationDelay: "0.5s" }}
-      >
-        <div className="text-[10px] font-bold tracking-wide text-[#a16207]">
-          ⚡ Live match
-        </div>
-        <div
-          className="mt-1 text-sm font-semibold text-[#022c22]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Emma vs Oscar
-        </div>
-        <div className="mt-0.5 text-xs text-[#5a5a5a]">7–5 · ORD</div>
-      </div>
-      <div
-        className="animate-float absolute right-[6%] top-[42%] rotate-6 rounded-2xl border border-[#d4cdb8] bg-white/80 px-4 py-3 shadow-[var(--shadow-lg)] backdrop-blur-sm"
-        style={{ animationDelay: "1.2s" }}
-      >
-        <div className="text-[10px] font-bold tracking-wide text-[#10b981]">
-          🏆 Ny rank
-        </div>
-        <div
-          className="mt-1 text-sm font-semibold text-[#022c22]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Diamant 1850
-        </div>
-        <div className="mt-0.5 text-xs text-[#5a5a5a]">+24 ELO</div>
-      </div>
-    </div>
-  );
-}
-
-function LightningIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
-    </svg>
-  );
-}
-
-function TrophyIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-      <path d="M5 4h14v3a5 5 0 01-5 5h-.5l.5 4h2v2H8v-2h2l.5-4H10A5 5 0 015 7V4zm-2 1h2v2a3 3 0 003 3v2a5 5 0 01-5-5V5zm16 0h2v2a5 5 0 01-5 5v-2a3 3 0 003-3V5z" />
-    </svg>
-  );
-}
-
-function BookIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-      <path d="M4 4a2 2 0 012-2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v14h12V4H6zm2 3h8v2H8V7zm0 4h8v2H8v-2zm0 4h5v2H8v-2z" />
-    </svg>
-  );
-}
-
-function ActivityTicker({
-  recent,
+function WordReveal({
+  text,
+  delay,
+  italic,
 }: {
-  recent: Array<{
-    id: string;
-    match_type: string;
-    is_bot_match: boolean;
-    player1_score: number | null;
-    player2_score: number | null;
-    winner_id: string | null;
-    player1_id: string;
-    player2_id: string | null;
-    p1_name: string | null;
-    p2_name: string | null;
-  }>;
+  text: string;
+  delay: number;
+  italic?: boolean;
 }) {
-  if (recent.length === 0) {
-    return (
-      <div className="px-6 py-10 text-center text-sm text-[#6b6b6b]">
-        Var bland de första att spela en match!
-      </div>
-    );
-  }
   return (
-    <ul className="divide-y divide-[#e6e0d2]">
-      {recent.map((m) => {
-        const winnerIsP1 = m.winner_id === m.player1_id;
-        const winnerName = winnerIsP1
-          ? m.p1_name ?? "Spelare"
-          : m.p2_name ?? (m.is_bot_match ? "HP-Bot" : "Spelare");
-        const loserName = winnerIsP1
-          ? m.p2_name ?? (m.is_bot_match ? "HP-Bot" : "Spelare")
-          : m.p1_name ?? "Spelare";
-        const winnerScore = winnerIsP1 ? m.player1_score : m.player2_score;
-        return (
-          <li
-            key={m.id}
-            className="flex items-center justify-between gap-3 px-5 py-3.5 text-sm transition hover:bg-[#fbfaf6]"
-          >
-            <span className="flex items-center gap-2.5 truncate">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#fef3c7] text-[#eab308]">
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
-                  <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
-                </svg>
-              </span>
-              <span className="truncate">
-                <span className="font-semibold text-[#022c22]">{winnerName}</span>{" "}
-                <span className="text-[#6b6b6b]">besegrade</span>{" "}
-                <span className="font-medium text-[#022c22]">{loserName}</span>
-                <span className="ml-1.5 font-medium text-[#10b981] tabular-nums">
-                  {winnerScore ?? 0}/8
-                </span>
-              </span>
-            </span>
-            <span className="shrink-0 rounded-full border border-[#e6e0d2] bg-white px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#6b6b6b]">
-              {m.match_type}
-            </span>
-          </li>
-        );
-      })}
-    </ul>
+    <motion.span
+      initial={{ opacity: 0, y: 60, rotateX: -45, filter: "blur(16px)" }}
+      animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+      transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={`inline-block ${italic ? "italic font-light" : "font-bold"}`}
+      style={{ transformPerspective: 1000 }}
+    >
+      {text}
+    </motion.span>
+  );
+}
+
+function MagneticButton({
+  children,
+  primary,
+}: {
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 300, damping: 20 });
+  const sy = useSpring(y, { stiffness: 300, damping: 20 });
+
+  if (reduce) {
+    return <div className={primary ? "group" : ""}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ x: sx, y: sy }}
+      onMouseMove={(e) => {
+        const rect = ref.current!.getBoundingClientRect();
+        const cx = e.clientX - rect.left - rect.width / 2;
+        const cy = e.clientY - rect.top - rect.height / 2;
+        x.set(cx * 0.25);
+        y.set(cy * 0.25);
+      }}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+      className={primary ? "group" : ""}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ===== Cursor glow that follows mouse ===== */
+function CursorGlow() {
+  const x = useMotionValue(-1000);
+  const y = useMotionValue(-1000);
+  const sx = useSpring(x, { stiffness: 80, damping: 20 });
+  const sy = useSpring(y, { stiffness: 80, damping: 20 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [x, y]);
+
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none fixed top-0 left-0 z-[60] hidden h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
+      style={{
+        x: sx,
+        y: sy,
+        background:
+          "radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 60%)",
+        mixBlendMode: "screen",
+      }}
+    />
   );
 }

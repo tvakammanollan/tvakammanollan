@@ -172,24 +172,24 @@ function MatchmakingPage() {
       <div className="relative flex h-32 w-32 items-center justify-center">
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#10b981]/40"
+          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/40"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#10b981]/30"
+          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/30"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#10b981]/20"
+          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/20"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-[var(--shadow-glow-green)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -202,15 +202,15 @@ function MatchmakingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="eyebrow text-[#10b981]">Realtid</p>
+        <p className="eyebrow text-[#6366f1]">Realtid</p>
         <h1
-          className="mt-2 text-[34px] font-bold leading-tight text-[#022c22] sm:text-[40px]"
+          className="mt-2 text-[34px] font-bold leading-tight text-[#050507] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {navigating ? "Motståndare hittad!" : (
             <>
               Söker{" "}
-              <span className="display-italic font-medium text-[#10b981]">
+              <span className="display-italic font-medium text-[#6366f1]">
                 motståndare…
               </span>
             </>
@@ -224,18 +224,18 @@ function MatchmakingPage() {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="surface-paper w-full rounded-2xl p-5 text-sm"
       >
-        <div className="text-[#5a5a5a]">
+        <div className="text-[#737373]">
           {minElo !== null && maxElo !== null
-            ? <>Söker spelare med ELO <span className="font-semibold text-[#022c22] tabular-nums">{minElo}–{maxElo}</span></>
+            ? <>Söker spelare med ELO <span className="font-semibold text-[#050507] tabular-nums">{minElo}–{maxElo}</span></>
             : "Joinar kön…"}
         </div>
         {myElo !== null && (
-          <div className="mt-1 text-[#5a5a5a]">
-            Din ELO: <span className="font-semibold text-[#022c22] tabular-nums">{myElo}</span>
+          <div className="mt-1 text-[#737373]">
+            Din ELO: <span className="font-semibold text-[#050507] tabular-nums">{myElo}</span>
           </div>
         )}
         <div
-          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#10b981]"
+          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#6366f1]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {mm}:{ss}
@@ -248,12 +248,12 @@ function MatchmakingPage() {
           animate={{ opacity: 1, y: 0 }}
           className="w-full rounded-2xl border border-[#eab308]/30 bg-gradient-to-br from-[#fef3c7] to-[#fde68a] p-4 text-sm"
         >
-          <div className="font-semibold text-[#022c22]">
+          <div className="font-semibold text-[#050507]">
             Ingen spelare ännu ({elapsed} sek)
           </div>
           <div className="mt-1 text-[#713f12]">Vill du möta en bot istället?</div>
           <div className="mt-3 flex gap-2">
-            <Button size="sm" onClick={playBot} className="flex-1 bg-[#10b981] hover:bg-[#047857]">
+            <Button size="sm" onClick={playBot} className="flex-1 bg-[#6366f1] hover:bg-[#4338ca]">
               ⚡ Ja, möt en bot
             </Button>
             <Button

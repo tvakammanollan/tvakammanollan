@@ -191,14 +191,14 @@ function FriendsPage() {
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <p className="eyebrow text-[#10b981]">Din krets</p>
+        <p className="eyebrow text-[#6366f1]">Din krets</p>
         <h1
-          className="mt-1 text-[36px] font-bold leading-tight text-[#022c22] sm:text-[44px]"
+          className="mt-1 text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Vänner
         </h1>
-        <p className="mt-2 text-sm text-[#5a5a5a]">
+        <p className="mt-2 text-sm text-[#737373]">
           Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
         </p>
       </motion.div>

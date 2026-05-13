@@ -15,7 +15,7 @@ export function ExplanationBlock({ explanation, defaultOpen = false }: Props) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 text-xs font-medium text-[#10b981] hover:underline"
+        className="inline-flex items-center gap-1 text-xs font-medium text-[#6366f1] hover:underline"
       >
         <ChevronDown
           className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
@@ -28,10 +28,10 @@ export function ExplanationBlock({ explanation, defaultOpen = false }: Props) {
       >
         <div className="overflow-hidden">
           <div
-            className="mt-2 rounded-lg border-l-4 border-[#10b981] bg-[#f0ede8] p-3"
+            className="mt-2 rounded-lg border-l-4 border-[#6366f1] bg-[#f0ede8] p-3"
             style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
           >
-            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#10b981]">
+            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#6366f1]">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring
             </div>
             <p

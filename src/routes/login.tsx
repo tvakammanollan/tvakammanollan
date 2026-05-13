@@ -111,14 +111,14 @@ export function AuthShell({
         <aside className="hidden flex-col justify-between rounded-3xl bg-ink bg-grid-ink p-10 text-white lg:flex">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#10b981] to-[#047857] shadow-lg">
+              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366f1] to-[#4338ca] shadow-lg">
                 <span
                   className="text-[14px] font-black tracking-tighter text-white"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   HP
                 </span>
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#022c22] bg-[#eab308]" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[#050507] bg-[#eab308]" />
               </span>
               <span
                 className="text-lg font-semibold text-white"
@@ -158,15 +158,15 @@ export function AuthShell({
         <div className="flex items-center">
           <div className="w-full max-w-md">
             <div
-              className="rounded-3xl border border-[#e6e0d2] bg-white/90 p-8 backdrop-blur-sm sm:p-10"
+              className="rounded-3xl border border-black/5 bg-white/90 p-8 backdrop-blur-sm sm:p-10"
               style={{ boxShadow: "var(--shadow-lg)" }}
             >
               <div className="text-center lg:text-left">
-                <p className="eyebrow text-[#10b981]">
+                <p className="eyebrow text-[#6366f1]">
                   {title.toLowerCase().includes("skapa") ? "Steg 1 av 2" : "Logga in"}
                 </p>
                 <h1
-                  className="mt-3 text-[34px] leading-tight text-[#022c22]"
+                  className="mt-3 text-[34px] leading-tight text-[#050507]"
                   style={{
                     fontFamily: "var(--font-display)",
                     letterSpacing: "-0.02em",
@@ -175,13 +175,13 @@ export function AuthShell({
                   {title}
                 </h1>
                 {subtitle && (
-                  <p className="mt-2 text-[15px] text-[#5a5a5a]">{subtitle}</p>
+                  <p className="mt-2 text-[15px] text-[#737373]">{subtitle}</p>
                 )}
               </div>
               <div className="mt-7">{children}</div>
             </div>
 
-            <p className="mt-6 text-center text-xs text-[#6b6b6b]">
+            <p className="mt-6 text-center text-xs text-neutral-500">
               Genom att fortsätta godkänner du våra villkor.
             </p>
           </div>

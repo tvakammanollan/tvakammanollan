@@ -82,8 +82,8 @@ export function EloChart({ userId }: { userId: string }) {
         <LineChart data={data} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
           <defs>
             <linearGradient id="eloVerbalFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#10b981" stopOpacity={0.18} />
-              <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+              <stop offset="0%" stopColor="#6366f1" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="eloMathFill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#eab308" stopOpacity={0.18} />
@@ -107,9 +107,9 @@ export function EloChart({ userId }: { userId: string }) {
             type="monotone"
             dataKey="verbal"
             name="Verbal"
-            stroke="#10b981"
+            stroke="#6366f1"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: "#10b981" }}
+            dot={{ r: 3, fill: "#6366f1" }}
             fill="url(#eloVerbalFill)"
             connectNulls
           />

@@ -56,7 +56,7 @@ export function HomeDashboard() {
           transition={{ duration: 0.5 }}
           className="mb-5 flex flex-col items-start gap-3 rounded-2xl border border-[#eab308]/40 bg-gradient-to-r from-[#fef3c7] to-[#fde68a] px-5 py-4 text-sm shadow-[var(--shadow-glow-gold)] sm:flex-row sm:items-center sm:justify-between"
         >
-          <span className="flex items-center gap-2.5 text-[#022c22]">
+          <span className="flex items-center gap-2.5 text-[#050507]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white">
               <Sparkles className="h-4 w-4" />
             </span>
@@ -65,7 +65,7 @@ export function HomeDashboard() {
               konto för att spara din ELO och dyka upp på topplistan.
             </span>
           </span>
-          <Button asChild size="sm" className="shrink-0 bg-[#10b981] hover:bg-[#047857]">
+          <Button asChild size="sm" className="shrink-0 bg-[#6366f1] hover:bg-[#4338ca]">
             <a href="/signup">Skapa konto →</a>
           </Button>
         </motion.div>
@@ -76,7 +76,7 @@ export function HomeDashboard() {
         initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-3xl border border-[#e6e0d2] bg-gradient-to-br from-white to-[#fbfaf6] p-5 shadow-[var(--shadow-md)] sm:p-7">
+        className="relative overflow-hidden rounded-3xl border border-black/5 bg-gradient-to-br from-white to-[#fbfaf6] p-5 shadow-[var(--shadow-md)] sm:p-7">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-50"
@@ -96,9 +96,9 @@ export function HomeDashboard() {
               </span>
             </div>
             <div>
-              <p className="eyebrow text-[#10b981]">Din profil</p>
+              <p className="eyebrow text-[#6366f1]">Din profil</p>
               <h1
-                className="mt-1 text-[28px] font-semibold leading-tight text-[#022c22] sm:text-[34px]"
+                className="mt-1 text-[28px] font-semibold leading-tight text-[#050507] sm:text-[34px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {isGuest ? "Gäst" : profile.username}
@@ -172,12 +172,12 @@ export function HomeDashboard() {
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110">
                 <Sparkles className="h-5 w-5" />
               </span>
-              <span className="rounded-full bg-[#10b981] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
+              <span className="rounded-full bg-[#6366f1] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
                 Helt gratis
               </span>
             </div>
             <h3
-              className="mt-4 text-[24px] font-bold leading-tight text-[#022c22] sm:text-[28px]"
+              className="mt-4 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Gratis coachning
@@ -187,7 +187,7 @@ export function HomeDashboard() {
               <span className="font-bold">1.9+ på HP</span>
             </p>
             <div className="mt-auto pt-5">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#10b981]">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#6366f1]">
                 Boka tid
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </span>
@@ -198,7 +198,7 @@ export function HomeDashboard() {
         {/* Öva ord solo — featured */}
         <a
           href="/ord"
-          className="group relative flex w-full items-stretch justify-between gap-3 overflow-hidden rounded-3xl border border-[#10b981]/30 bg-gradient-to-br from-[#d1fae5] via-[#d4e8db] to-[#d1fae5] p-6 text-left shadow-[var(--shadow-glow-green)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-xl)] sm:p-7"
+          className="group relative flex w-full items-stretch justify-between gap-3 overflow-hidden rounded-3xl border border-[#6366f1]/30 bg-gradient-to-br from-[#e0e7ff] via-[#d4e8db] to-[#e0e7ff] p-6 text-left shadow-[var(--shadow-glow-green)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-xl)] sm:p-7"
         >
           <div
             aria-hidden
@@ -210,7 +210,7 @@ export function HomeDashboard() {
           />
           <div className="relative flex flex-1 flex-col">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#10b981] to-[#047857] text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110">
                 <GraduationCap className="h-5 w-5" />
               </span>
               <span className="rounded-full bg-[#eab308] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white">
@@ -218,16 +218,16 @@ export function HomeDashboard() {
               </span>
             </div>
             <h3
-              className="mt-4 text-[24px] font-bold leading-tight text-[#022c22] sm:text-[28px]"
+              className="mt-4 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Öva ord — solo
             </h3>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-[#3f5547]">
+            <p className="mt-1.5 text-[14px] leading-relaxed text-[#525252]">
               Riktiga ORD-frågor från tidigare HP, helt själv i lugn takt
             </p>
             <div className="mt-auto pt-5">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#10b981]">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#6366f1]">
                 Starta övning
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </span>
@@ -239,7 +239,7 @@ export function HomeDashboard() {
       {/* Ornamental divider */}
       <div className="my-8 flex items-center gap-4">
         <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c8c0b4] to-transparent" />
-        <span className="eyebrow text-[#8a8275]">Eller utmana någon</span>
+        <span className="eyebrow text-neutral-500">Eller utmana någon</span>
         <span className="h-px flex-1 bg-gradient-to-r from-transparent via-[#c8c0b4] to-transparent" />
       </div>
 
@@ -273,7 +273,7 @@ export function HomeDashboard() {
       <section className="mt-6">
         <a
           href="/train"
-          className="group flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#10b981] bg-transparent px-5 py-3 text-base font-semibold text-[#10b981] transition hover:bg-[#d1fae5]"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#6366f1] bg-transparent px-5 py-3 text-base font-semibold text-[#6366f1] transition hover:bg-[#e0e7ff]"
         >
           <span>📖 Träna utan tidsbegränsning</span>
           <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -290,7 +290,7 @@ export function HomeDashboard() {
           className="group flex items-center justify-between rounded-2xl border border-border bg-white px-5 py-4 shadow-card transition-all hover:-translate-y-0.5"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d1fae5] text-[#10b981]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e0e7ff] text-[#6366f1]">
               <GraduationCap className="h-5 w-5" />
             </div>
             <div>
@@ -335,26 +335,26 @@ function StatChip({
 }) {
   const valueColor =
     accent === "primary"
-      ? "text-[#10b981]"
+      ? "text-[#6366f1]"
       : accent === "gold"
       ? "text-[#a16207]"
-      : "text-[#022c22]";
+      : "text-[#050507]";
   const accentBar =
     accent === "primary"
-      ? "from-[#10b981] to-[#34d399]"
+      ? "from-[#6366f1] to-[#818cf8]"
       : accent === "gold"
       ? "from-[#eab308] to-[#fde68a]"
       : "from-[#c8c0b4] to-[#e6e0d2]";
   return (
     <div
-      className="relative overflow-hidden rounded-xl border border-[#e6e0d2] bg-white px-3.5 py-3"
+      className="relative overflow-hidden rounded-xl border border-black/5 bg-white px-3.5 py-3"
       style={{ boxShadow: "var(--shadow-sm)" }}
     >
       <span
         aria-hidden
         className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${accentBar}`}
       />
-      <div className="text-[10px] font-bold tracking-wide text-[#8a8275]">
+      <div className="text-[10px] font-bold tracking-wide text-neutral-500">
         {label}
       </div>
       <div
@@ -396,13 +396,13 @@ function BattleCard({
       }}
       className={`group relative flex min-h-[280px] cursor-pointer flex-col overflow-hidden rounded-3xl border p-6 transition-all duration-300 ease-out hover:-translate-y-1.5 sm:min-h-[300px] sm:p-7 ${
         isDark
-          ? "border-[#022c22] text-white"
-          : "border-[#e6e0d2] bg-gradient-to-br from-white to-[#fbfaf6]"
+          ? "border-[#050507] text-white"
+          : "border-black/5 bg-gradient-to-br from-white to-[#fbfaf6]"
       }`}
       style={{
         boxShadow: "var(--shadow-md)",
         backgroundImage: isDark
-          ? "radial-gradient(ellipse 60% 40% at 20% 10%, rgba(52, 160, 106, 0.18), transparent 60%), radial-gradient(ellipse 50% 35% at 90% 90%, rgba(212, 160, 23, 0.14), transparent 60%), linear-gradient(135deg, #022c22 0%, #0a1810 100%)"
+          ? "radial-gradient(ellipse 60% 40% at 20% 10%, rgba(52, 160, 106, 0.18), transparent 60%), radial-gradient(ellipse 50% 35% at 90% 90%, rgba(212, 160, 23, 0.14), transparent 60%), linear-gradient(135deg, #050507 0%, #0a1810 100%)"
           : undefined,
       }}
       onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-xl)")}
@@ -419,7 +419,7 @@ function BattleCard({
           className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-transform group-hover:scale-110 group-hover:rotate-3 ${
             isDark
               ? "bg-gradient-to-br from-[#eab308]/25 to-[#eab308]/10 text-[#eab308]"
-              : "bg-gradient-to-br from-[#d1fae5] to-[#d4e8db] text-[#10b981]"
+              : "bg-gradient-to-br from-[#e0e7ff] to-[#d4e8db] text-[#6366f1]"
           }`}
         >
           {icon}
@@ -428,7 +428,7 @@ function BattleCard({
           className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide ${
             isDark
               ? "bg-white/10 text-[#eab308]"
-              : "bg-[#10b981]/8 text-[#10b981]"
+              : "bg-[#6366f1]/8 text-[#6366f1]"
           }`}
         >
           {isDark ? "Avancerad" : "Klassiker"}
@@ -443,7 +443,7 @@ function BattleCard({
       </h3>
       <p
         className={`relative mt-1.5 text-[10px] font-semibold tracking-wide ${
-          isDark ? "text-white/55" : "text-[#8a8275]"
+          isDark ? "text-white/55" : "text-neutral-500"
         }`}
       >
         {subtitle}
@@ -452,12 +452,12 @@ function BattleCard({
       <div className="relative mt-auto pt-6">
         <div
           className={`mb-4 flex items-baseline justify-between gap-3 border-t pt-4 ${
-            isDark ? "border-white/10" : "border-[#e6e0d2]"
+            isDark ? "border-white/10" : "border-black/5"
           }`}
         >
           <div
             className={`text-[10px] font-bold tracking-wide ${
-              isDark ? "text-white/55" : "text-[#8a8275]"
+              isDark ? "text-white/55" : "text-neutral-500"
             }`}
           >
             Din ELO
@@ -481,8 +481,8 @@ function BattleCard({
           }}
           className={`btn-shine w-full overflow-hidden font-semibold ${
             isDark
-              ? "bg-gradient-to-r from-[#eab308] to-[#a16207] text-[#022c22] hover:from-[#a16207] hover:to-[#a8830a]"
-              : "bg-[#10b981] text-white hover:bg-[#047857]"
+              ? "bg-gradient-to-r from-[#eab308] to-[#a16207] text-[#050507] hover:from-[#a16207] hover:to-[#a8830a]"
+              : "bg-[#6366f1] text-white hover:bg-[#4338ca]"
           }`}
         >
           Starta Battle →

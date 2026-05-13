@@ -15,7 +15,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.6 },
-        colors: ["#10b981", "#eab308"],
+        colors: ["#6366f1", "#eab308"],
         particleCount: Math.floor(200 * particleRatio),
         ...opts,
       });
