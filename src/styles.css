@@ -1326,4 +1326,139 @@ body {
     background-color: var(--cream-2) !important;
     color: var(--ink) !important;
   }
+
+  /* ============================================================
+     LIGHT-SHADE COVERAGE
+     Tailwind's *-50 / *-100 / *-200 / *-300 shades produces
+     near-white backgrounds. När cream text läggs ovanpå
+     blir det vitt-på-vitt. Mappar dem alla till alpha-amber/teal.
+     ============================================================ */
+
+  /* Backgrounds — light shades that previously bled through */
+  .bg-indigo-50, .bg-indigo-100, .bg-indigo-200,
+  .bg-violet-50, .bg-violet-100, .bg-violet-200,
+  .bg-fuchsia-50, .bg-fuchsia-200,
+  .bg-purple-50, .bg-purple-100, .bg-purple-200,
+  .bg-pink-50, .bg-pink-100, .bg-pink-200,
+  .bg-rose-50, .bg-rose-200 {
+    background-color: rgba(242, 166, 90, 0.10);
+  }
+  .bg-amber-200, .bg-amber-300,
+  .bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300,
+  .bg-orange-50, .bg-orange-200, .bg-orange-300 {
+    background-color: rgba(242, 166, 90, 0.16);
+  }
+  .bg-emerald-50, .bg-emerald-200, .bg-emerald-300,
+  .bg-cyan-50, .bg-cyan-200, .bg-cyan-300,
+  .bg-teal-50, .bg-teal-100, .bg-teal-200, .bg-teal-300 {
+    background-color: rgba(111, 179, 184, 0.12);
+  }
+  .bg-slate-50, .bg-slate-100, .bg-slate-200 {
+    background-color: rgba(232, 228, 218, 0.06);
+  }
+  .bg-slate-300, .bg-slate-400 {
+    background-color: rgba(232, 228, 218, 0.12);
+  }
+  .bg-red-50, .bg-red-100 {
+    background-color: rgba(226, 90, 106, 0.10);
+  }
+  .bg-red-500, .bg-red-600 {
+    background-color: #e25a6a;
+    color: var(--cream);
+  }
+
+  /* Opacity-suffix variants (e.g. bg-amber-50/80) */
+  .bg-amber-50\/80, .bg-amber-50\/40,
+  .bg-yellow-50\/80, .bg-yellow-50\/40, .bg-yellow-50\/30 {
+    background-color: rgba(242, 166, 90, 0.16);
+  }
+  .bg-fuchsia-50, .bg-fuchsia-50\/40 {
+    background-color: rgba(242, 166, 90, 0.10);
+  }
+
+  /* Gradient stops — light shades */
+  .from-indigo-50, .from-indigo-100,
+  .from-violet-50, .from-violet-100,
+  .from-fuchsia-50, .from-fuchsia-100,
+  .from-pink-50, .from-pink-100,
+  .from-rose-50, .from-rose-100 {
+    --tw-gradient-from: rgba(242, 166, 90, 0.10);
+  }
+  .from-amber-50, .from-amber-100, .from-amber-200, .from-amber-300,
+  .from-yellow-50, .from-yellow-100, .from-yellow-200,
+  .from-orange-50, .from-orange-100, .from-orange-200, .from-orange-300 {
+    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+  }
+  .from-amber-50\/80,
+  .from-yellow-50\/80,
+  .from-orange-50\/80 {
+    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+  }
+  .from-emerald-50, .from-cyan-50, .from-teal-50, .from-teal-100 {
+    --tw-gradient-from: rgba(111, 179, 184, 0.14);
+  }
+  .from-slate-50, .from-slate-100, .from-slate-200, .from-slate-300 {
+    --tw-gradient-from: rgba(232, 228, 218, 0.10);
+  }
+
+  .to-indigo-50, .to-indigo-100,
+  .to-violet-50, .to-violet-100,
+  .to-fuchsia-50, .to-fuchsia-100,
+  .to-pink-50, .to-pink-100,
+  .to-rose-50, .to-rose-100 {
+    --tw-gradient-to: rgba(242, 166, 90, 0.10);
+  }
+  .to-amber-50, .to-amber-100, .to-amber-200, .to-amber-300,
+  .to-yellow-50, .to-yellow-100, .to-yellow-200,
+  .to-orange-50, .to-orange-100, .to-orange-200, .to-orange-300 {
+    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+  }
+  .to-yellow-50\/40,
+  .to-yellow-50\/30 {
+    --tw-gradient-to: rgba(242, 166, 90, 0.12);
+  }
+  .to-emerald-50, .to-cyan-50, .to-teal-50 {
+    --tw-gradient-to: rgba(111, 179, 184, 0.14);
+  }
+  .to-slate-50, .to-slate-100, .to-slate-200, .to-slate-300 {
+    --tw-gradient-to: rgba(232, 228, 218, 0.10);
+  }
+
+  /* Medals (rank 1-3) — keep distinct gold/silver/bronze look but
+     in palette-compatible tones */
+  .from-amber-400 { --tw-gradient-from: #f2a65a; }
+  .via-yellow-500 { --tw-gradient-via: #e8c773; }
+  .to-amber-600 { --tw-gradient-to: #c97b41; }
+  .from-slate-300 { --tw-gradient-from: #cfd5dc; }
+  .via-slate-400 { --tw-gradient-via: #9aa3ad; }
+  .to-slate-500 { --tw-gradient-to: #6c7480; }
+  .from-orange-400 { --tw-gradient-from: #f2a65a; }
+  .via-orange-500 { --tw-gradient-via: #d4894b; }
+  .to-orange-700 { --tw-gradient-to: #8a5028; }
+
+  /* Borders for light shades */
+  .ring-indigo-300,
+  .ring-violet-300,
+  .ring-amber-300 {
+    --tw-ring-color: var(--amber);
+  }
+  .border-indigo-300,
+  .border-violet-300 {
+    border-color: var(--amber);
+  }
+  .border-amber-200,
+  .border-amber-300,
+  .border-orange-200,
+  .border-yellow-200 {
+    border-color: rgba(242, 166, 90, 0.35);
+  }
+  .border-emerald-200,
+  .border-teal-200,
+  .border-cyan-200 {
+    border-color: rgba(111, 179, 184, 0.35);
+  }
+  .border-red-200,
+  .border-rose-200 {
+    border-color: rgba(226, 90, 106, 0.35);
+  }
 }
