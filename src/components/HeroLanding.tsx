@@ -94,9 +94,9 @@ export function HeroLanding() {
 
       <ProofSection stats={stats} />
 
-      <FounderQuote />
-
       <FinalCTA />
+
+      <FounderQuote />
     </div>
   );
 }
@@ -704,43 +704,47 @@ function ProofSection({ stats }: { stats: LandingStats | null }) {
 
 function FounderQuote() {
   return (
-    <section className="relative bg-paper px-6 py-24 sm:py-32">
+    <section className="relative bg-paper px-6 pb-24 pt-20 sm:pb-28">
       <div className="relative mx-auto max-w-3xl">
-        <ClipReveal>
-          <figure className="surface-elevated relative rounded-[32px] p-12 sm:p-16">
-            <div
-              aria-hidden
-              className="absolute -left-2 -top-8 text-[160px] leading-none text-indigo-500/15"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              "
+        <motion.figure
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="surface-elevated relative rounded-[32px] p-10 sm:p-14"
+        >
+          <div
+            aria-hidden
+            className="absolute -left-2 -top-8 text-[160px] leading-none text-indigo-500/15"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            &ldquo;
+          </div>
+          <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
+            HP Kampen innehåller verktyg jag hade haft{" "}
+            <span className="text-aurora-gradient italic">stor nytta av</span> när jag pluggade till
+            högskoleprovet — helt gratis.
+          </blockquote>
+          <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">
+              N
+              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400">
+                <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
+                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
+                </svg>
+              </span>
             </div>
-            <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
-              HP Kampen innehåller verktyg jag hade haft{" "}
-              <span className="text-aurora-gradient italic">stor nytta av</span> när jag pluggade
-              till högskoleprovet — helt gratis.
-            </blockquote>
-            <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">
-                N
-                <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400">
-                  <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
-                    <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-                  </svg>
-                </span>
+            <div>
+              <div
+                className="text-base font-semibold text-[#0a0a0f]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Niklas
               </div>
-              <div>
-                <div
-                  className="text-base font-semibold text-[#0a0a0f]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Niklas
-                </div>
-                <div className="text-xs text-neutral-500">Grundare · 1.9 på Högskoleprovet</div>
-              </div>
-            </figcaption>
-          </figure>
-        </ClipReveal>
+              <div className="text-xs text-neutral-500">Grundare · 1.9 på Högskoleprovet</div>
+            </div>
+          </figcaption>
+        </motion.figure>
       </div>
     </section>
   );
@@ -752,26 +756,24 @@ function FounderQuote() {
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-mesh px-6 py-32 text-center text-white">
+    <section className="relative overflow-hidden bg-mesh px-6 py-24 text-center text-white">
       <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
 
-      <Parallax speed={-0.2}>
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div
-            className="orb orb-indigo animate-orb-drift"
-            style={{ top: "20%", left: "20%", width: 400, height: 400 }}
-          />
-          <div
-            className="orb orb-fuchsia animate-orb-drift"
-            style={{
-              top: "30%",
-              right: "15%",
-              width: 360,
-              height: 360,
-              animationDelay: "5s",
-            }}
-          />
-        </div>
+      <Parallax speed={-0.2} className="pointer-events-none absolute inset-0">
+        <div
+          className="orb orb-indigo animate-orb-drift"
+          style={{ top: "20%", left: "20%", width: 400, height: 400 }}
+        />
+        <div
+          className="orb orb-fuchsia animate-orb-drift"
+          style={{
+            top: "30%",
+            right: "15%",
+            width: 360,
+            height: 360,
+            animationDelay: "5s",
+          }}
+        />
       </Parallax>
 
       <ClipReveal>
