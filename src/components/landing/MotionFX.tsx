@@ -29,7 +29,7 @@ import {
   useInView,
   type MotionValue,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSmoothScroll, useVelocitySkew } from "@/hooks/useSmoothScroll";
 
 /* ============================================================ */
@@ -162,9 +162,12 @@ export function SplitText({
   const reduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount });
-  const words = children.split(/(\s+)/);
+  const words = useMemo(() => children.split(/(\s+)/), [children]);
 
-  const MotionTag = motion(Tag as React.ElementType);
+  // Memoise the motion-wrapped tag — otherwise every parent re-render
+  // recreates this component type and React remounts the whole SplitText,
+  // re-running the entrance animation on each keystroke in a form upstream.
+  const MotionTag = useMemo(() => motion(Tag as React.ElementType), [Tag]);
 
   if (reduce) {
     return <MotionTag className={className}>{children}</MotionTag>;

@@ -32,9 +32,22 @@ export const Route = createFileRoute("/match/$matchId")({
 const TOTAL_SECONDS = 8 * 60;
 
 const FAKE_NAMES = [
-  "linnea_92", "oskarH", "mattevurm", "noa.k", "elsa_w", "viktorL",
-  "alicia.s", "hugo_b", "saga.m", "ebba.n", "leo_99", "moa_r",
-  "wilmaP", "edvin.t", "felicia_k", "axel.j",
+  "linnea_92",
+  "oskarH",
+  "mattevurm",
+  "noa.k",
+  "elsa_w",
+  "viktorL",
+  "alicia.s",
+  "hugo_b",
+  "saga.m",
+  "ebba.n",
+  "leo_99",
+  "moa_r",
+  "wilmaP",
+  "edvin.t",
+  "felicia_k",
+  "axel.j",
 ];
 
 function pickFakeName(seed: string): string {
@@ -198,14 +211,18 @@ function MatchPage() {
           const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(q.category);
           const useCleaned = isMath && q.clean_status === "ok" && q.cleaned_question_text;
           const rawOpts = useCleaned
-            ? (Array.isArray(q.cleaned_options) ? q.cleaned_options : [])
-            : (Array.isArray(q.options) ? q.options : []);
+            ? Array.isArray(q.cleaned_options)
+              ? q.cleaned_options
+              : []
+            : Array.isArray(q.options)
+              ? q.options
+              : [];
           const options: string[] = rawOpts.map((o: unknown) =>
             typeof o === "string"
               ? o
               : o && typeof o === "object" && "text" in (o as Record<string, unknown>)
-              ? String((o as { text: unknown }).text)
-              : String(o),
+                ? String((o as { text: unknown }).text)
+                : String(o),
           );
           return {
             id: q.id,
@@ -351,10 +368,7 @@ function MatchPage() {
     sounds.ping();
     // Record time spent on first selection if not already recorded
     if (answerTimesRef.current[qId] == null) {
-      const spent = Math.max(
-        1,
-        Math.round((Date.now() - questionStartTime.getTime()) / 1000),
-      );
+      const spent = Math.max(1, Math.round((Date.now() - questionStartTime.getTime()) / 1000));
       answerTimesRef.current[qId] = spent;
     }
     setAnswers((m) => {
@@ -399,7 +413,11 @@ function MatchPage() {
     if (!user) return;
     setSubmitting(true);
     try {
-      try { sessionStorage.removeItem("active_match"); } catch { /* ignore */ }
+      try {
+        sessionStorage.removeItem("active_match");
+      } catch {
+        /* ignore */
+      }
       // Persist current answer if any
       if (currentQ) {
         const c = answers.get(currentQ.id);
@@ -553,7 +571,9 @@ function MatchPage() {
           </h1>
         </div>
         <p className="text-[#737373]">
-          Motståndaren har <span className="font-semibold text-[#050507] tabular-nums">{oppSecondsLeft}s</span> kvar att avsluta…
+          Motståndaren har{" "}
+          <span className="font-semibold text-[#050507] tabular-nums">{oppSecondsLeft}s</span> kvar
+          att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
           <motion.div
@@ -573,9 +593,10 @@ function MatchPage() {
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
       <header
-        className="sticky top-0 z-20 border-b border-border"
+        className="sticky top-0 z-20"
         style={{
-          background: "rgba(249,247,244,0.92)",
+          background: "rgba(7,17,30,0.85)",
+          borderBottom: "1px solid var(--line)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
         }}
@@ -598,7 +619,9 @@ function MatchPage() {
             <div>
               <div className="flex items-center justify-between text-[11px]">
                 <span className="font-medium text-foreground">Du</span>
-                <span className="tabular-nums text-muted-foreground">{current + 1}/{questions.length}</span>
+                <span className="tabular-nums text-muted-foreground">
+                  {current + 1}/{questions.length}
+                </span>
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
@@ -609,8 +632,12 @@ function MatchPage() {
             </div>
             <div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="truncate font-medium text-foreground">{opponentName || "Motståndare"}</span>
-                <span className="tabular-nums text-muted-foreground">{Math.round(oppProgress * questions.length)}/{questions.length}</span>
+                <span className="truncate font-medium text-foreground">
+                  {opponentName || "Motståndare"}
+                </span>
+                <span className="tabular-nums text-muted-foreground">
+                  {Math.round(oppProgress * questions.length)}/{questions.length}
+                </span>
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div

@@ -7,56 +7,69 @@ interface HpScoreWidgetProps {
   size?: "compact" | "full";
 }
 
+/**
+ * HP Score widget — exact estimate from current ELO. No intervals,
+ * no "ungefär"/"~"-prefixes. Two columns (verbal, matte) over a
+ * combined total.
+ */
 export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreWidgetProps) {
   const navigate = useNavigate();
+  const combined = combinedHpScore(eloVerbal, eloMath);
 
   if (size === "compact") {
-    const combined = combinedHpScore(eloVerbal, eloMath);
     return (
       <button
         type="button"
         onClick={() => navigate({ to: "/stats" })}
-        title="Uppskattad normerad HP-poäng baserad på din ELO. Ej officiell normering."
-        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/80 hover:bg-muted transition-colors"
-        style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+        title="Uppskattad normerad HP-poäng baserad på din ELO."
+        className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+        style={{
+          borderColor: "var(--line)",
+          background: "rgba(21,39,62,0.6)",
+          color: "var(--cream)",
+          fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+        }}
       >
         <span aria-hidden>📊</span>
-        <span>~ HP {combined}</span>
+        <span>HP {combined.toFixed(1)}</span>
       </button>
     );
   }
 
   const v = estimateHpScore(eloVerbal);
   const m = estimateHpScore(eloMath);
-  const combined = combinedHpScore(eloVerbal, eloMath);
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2
-        className="relative pb-2 text-xl font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#0E1B2C]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        📊 Uppskattad HP-poäng
-      </h2>
-
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <HpRow label="Verbal" elo={eloVerbal} est={v} />
-        <HpRow label="Matte" elo={eloMath} est={m} />
-      </div>
-
-      <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
-        <span className="text-sm text-muted-foreground">Kombinerat</span>
-        <span
-          className="text-2xl font-semibold tabular-nums text-[#0E1B2C]"
-          style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+    <div
+      className="rounded-2xl border p-6"
+      style={{
+        borderColor: "var(--line)",
+        background: "var(--navy-2)",
+        boxShadow: "var(--shadow-md)",
+      }}
+    >
+      <div className="flex items-baseline justify-between">
+        <h2
+          className="text-[15px] font-semibold uppercase tracking-[0.18em]"
+          style={{ color: "var(--hp-muted)", fontFamily: "var(--font-display)" }}
         >
-          ~ {combined}
+          Trolig HP-poäng
+        </h2>
+        <span
+          className="tabular-nums text-[44px] font-bold leading-none"
+          style={{
+            color: "var(--amber)",
+            fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+          }}
+        >
+          {combined.toFixed(1)}
         </span>
       </div>
 
-      <p className="mt-4 rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-        ⚠️ Baserat på ELO-progression, ej officiell normering från Universitetens antagning.
-      </p>
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <HpRow label="Verbal" elo={eloVerbal} score={v.score} accent="var(--teal)" />
+        <HpRow label="Matte" elo={eloMath} score={m.score} accent="var(--amber)" />
+      </div>
     </div>
   );
 }
@@ -64,25 +77,41 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
 function HpRow({
   label,
   elo,
-  est,
+  score,
+  accent,
 }: {
   label: string;
   elo: number;
-  est: ReturnType<typeof estimateHpScore>;
+  score: number;
+  accent: string;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-3">
-      <div className="text-[11px] tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-1 flex items-baseline gap-2">
+    <div
+      className="rounded-xl border p-4"
+      style={{
+        borderColor: "var(--line)",
+        background: "rgba(7,17,30,0.55)",
+      }}
+    >
+      <div className="flex items-baseline justify-between">
         <span
-          className="text-2xl font-semibold tabular-nums text-foreground"
-          style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+          className="text-[10px] font-semibold uppercase tracking-[0.18em]"
+          style={{ color: "var(--hp-muted)" }}
         >
-          ~ {est.score}
+          {label}
+        </span>
+        <span className="text-[11px] tabular-nums" style={{ color: "var(--text-tertiary)" }}>
+          ELO {elo}
         </span>
       </div>
-      <div className="mt-1 text-xs text-muted-foreground">
-        ELO {elo} → rang {est.range}
+      <div
+        className="mt-2 text-[36px] font-bold leading-none tabular-nums"
+        style={{
+          color: accent,
+          fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+        }}
+      >
+        {score.toFixed(1)}
       </div>
     </div>
   );

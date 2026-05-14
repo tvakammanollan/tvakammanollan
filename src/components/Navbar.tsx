@@ -66,9 +66,10 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-black/5"
+      className="sticky top-0 z-50"
       style={{
-        background: "rgba(255, 255, 255, 0.72)",
+        background: "rgba(7, 17, 30, 0.72)",
+        borderBottom: "1px solid var(--line)",
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
       }}
@@ -115,11 +116,18 @@ export function Navbar() {
               )}
               {profile && (
                 <div
-                  className="hidden items-center gap-2 rounded-full border border-black/8 bg-white px-2 py-1 pr-3 backdrop-blur-sm md:inline-flex"
-                  style={{ boxShadow: "var(--shadow-sm)" }}
+                  className="hidden items-center gap-2 rounded-full border md:inline-flex"
+                  style={{
+                    borderColor: "var(--line)",
+                    background: "rgba(21, 39, 62, 0.6)",
+                    padding: "4px 12px 4px 4px",
+                    boxShadow: "var(--shadow-sm)",
+                  }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium text-[#050507]">{profile.username}</span>
+                  <span className="text-sm font-medium" style={{ color: "var(--cream)" }}>
+                    {profile.username}
+                  </span>
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}

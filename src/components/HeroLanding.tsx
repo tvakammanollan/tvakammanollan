@@ -463,50 +463,64 @@ function StageRow({
 
 function StagePhone({ stage }: { stage: (typeof STAGES)[number] }) {
   return (
-    <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[36px] shadow-[var(--shadow-xl)]">
-      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent}`}>
-        <div className="absolute inset-6 rounded-[24px] bg-white/95 p-6 shadow-inner">
+    <div
+      className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[36px] shadow-[var(--shadow-xl)]"
+      style={{ background: "var(--navy-2)" }}
+    >
+      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent} opacity-90`}>
+        <div
+          className="absolute inset-6 flex flex-col justify-between rounded-[24px] p-7 shadow-inner"
+          style={{
+            background: "rgba(7,17,30,0.92)",
+            border: "1px solid var(--line)",
+          }}
+        >
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${stage.accent} text-white`}
-              >
-                {stage.icon}
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                  {stage.eyebrow}
-                </div>
-                <div className="display text-[16px] font-bold text-[#0a0a0f]">HP Kampen</div>
-              </div>
+            <div
+              className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${stage.accent} text-white shadow-md`}
+            >
+              {stage.icon}
             </div>
-            <div className="flex h-6 items-center justify-center rounded-full bg-emerald-100 px-2 text-[10px] font-bold text-emerald-700">
+            <span
+              className="flex h-7 items-center justify-center rounded-full px-3 text-[10px] font-bold uppercase tracking-[0.18em]"
+              style={{ background: "rgba(111,179,184,0.18)", color: "var(--teal)" }}
+            >
               LIVE
+            </span>
+          </div>
+
+          <div>
+            <div
+              className="text-[10px] uppercase tracking-[0.22em]"
+              style={{ color: "var(--hp-muted)" }}
+            >
+              {stage.eyebrow}
+            </div>
+            <div
+              className="display mt-2 text-[28px] font-bold leading-tight"
+              style={{ color: "var(--cream)" }}
+            >
+              {stage.title}
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className="h-20 rounded-2xl bg-gradient-to-br from-neutral-50 to-neutral-100 p-3"
-              >
-                <div className="h-2 w-1/2 rounded-full bg-neutral-300" />
-                <div className="mt-2 h-2 w-3/4 rounded-full bg-neutral-200" />
-                <div className={`mt-4 h-2 w-1/3 rounded-full bg-gradient-to-r ${stage.accent}`} />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex items-end justify-between">
+          <div className="flex items-end justify-between">
             <div>
-              <div className="text-[10px] uppercase tracking-[0.16em] text-neutral-500">ELO</div>
-              <div className="display text-[40px] font-bold leading-none text-[#0a0a0f]">
+              <div
+                className="text-[10px] uppercase tracking-[0.18em]"
+                style={{ color: "var(--hp-muted)" }}
+              >
+                ELO
+              </div>
+              <div
+                className="display text-[44px] font-bold leading-none tabular-nums"
+                style={{ color: "var(--cream)" }}
+              >
                 {stage.elo}
               </div>
             </div>
             <div
-              className={`h-12 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[3rem] text-white shadow-md`}
+              className={`h-11 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[2.75rem] text-white shadow-md`}
             >
               SPELA
             </div>

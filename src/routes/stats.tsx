@@ -388,40 +388,6 @@ function StatsPage() {
             value={`${profile.longest_streak ?? 0} dagar`}
           />
         </StaggerList>
-
-        {/* Fastest categories */}
-        {(() => {
-          const withTimes = breakdown
-            .filter((b) => b.avgTime !== null && b.total >= 3)
-            .sort((a, b) => a.avgTime! - b.avgTime!);
-          if (withTimes.length === 0) return null;
-          const fmt = (s: number) => {
-            const m = Math.floor(s / 60);
-            const sec = Math.round(s % 60);
-            return m > 0 ? `${m} min ${sec} sek` : `${sec} sek`;
-          };
-          return (
-            <section className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {withTimes.slice(0, 4).map((b) => (
-                <div
-                  key={b.category}
-                  className="rounded-xl border border-border bg-card p-4 shadow-sm"
-                >
-                  <div className="mb-1 text-xs font-medium tracking-wide text-muted-foreground">
-                    ⏱ Snabbaste {b.category === "LAS" ? "LÄS" : b.category}
-                  </div>
-                  <div
-                    className="text-xl font-bold tabular-nums"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {fmt(b.avgTime!)}
-                  </div>
-                  <div className="text-xs text-muted-foreground">i snitt per fråga</div>
-                </div>
-              ))}
-            </section>
-          );
-        })()}
         {/* ELO chart */}
         <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">

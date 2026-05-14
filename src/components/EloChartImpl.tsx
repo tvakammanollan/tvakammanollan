@@ -82,34 +82,42 @@ export function EloChartImpl({ userId }: { userId: string }) {
         <LineChart data={data} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
           <defs>
             <linearGradient id="eloVerbalFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#0E1B2C" stopOpacity={0.18} />
-              <stop offset="100%" stopColor="#0E1B2C" stopOpacity={0} />
+              <stop offset="0%" stopColor="#6FB3B8" stopOpacity={0.28} />
+              <stop offset="100%" stopColor="#6FB3B8" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="eloMathFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#F2A65A" stopOpacity={0.18} />
+              <stop offset="0%" stopColor="#F2A65A" stopOpacity={0.28} />
               <stop offset="100%" stopColor="#F2A65A" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="#e2ddd6" strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="date" stroke="#9c948c" fontSize={11} tickLine={false} />
-          <YAxis stroke="#9c948c" fontSize={11} tickLine={false} domain={["dataMin - 30", "dataMax + 30"]} />
+          <CartesianGrid stroke="rgba(232,228,218,0.12)" strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="date" stroke="rgba(232,228,218,0.55)" fontSize={11} tickLine={false} />
+          <YAxis
+            stroke="rgba(232,228,218,0.55)"
+            fontSize={11}
+            tickLine={false}
+            domain={["dataMin - 30", "dataMax + 30"]}
+          />
           <Tooltip
             contentStyle={{
               borderRadius: 10,
-              border: "1px solid #e2ddd6",
+              border: "1px solid rgba(232,228,218,0.14)",
+              background: "#15273E",
+              color: "#E8E4DA",
               fontSize: 12,
-              boxShadow: "0 8px 24px -8px rgb(0 0 0 / 0.12)",
+              boxShadow: "0 8px 24px -8px rgb(0 0 0 / 0.32)",
             }}
-            labelStyle={{ fontWeight: 600 }}
+            labelStyle={{ fontWeight: 600, color: "#E8E4DA" }}
+            itemStyle={{ color: "#E8E4DA" }}
           />
-          <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
+          <Legend wrapperStyle={{ fontSize: 12, color: "#E8E4DA" }} iconType="circle" />
           <Line
             type="monotone"
             dataKey="verbal"
             name="Verbal"
-            stroke="#0E1B2C"
+            stroke="#6FB3B8"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: "#0E1B2C" }}
+            dot={{ r: 3, fill: "#6FB3B8" }}
             fill="url(#eloVerbalFill)"
             connectNulls
           />
