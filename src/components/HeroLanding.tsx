@@ -209,9 +209,8 @@ function Hero({
           className="mt-10 max-w-2xl text-balance text-[18px] leading-relaxed text-white/70 sm:text-[22px]"
         >
           Den enda plattformen för Högskoleprovet med
-          <span className="font-semibold text-white"> live-matcher</span>,
-          <span className="font-semibold text-white"> ELO-ranking</span> och
-          <span className="font-semibold text-white"> bot-träning</span>. Helt gratis.
+          <span className="font-semibold text-white"> live-matcher</span> och
+          <span className="font-semibold text-white"> ELO-ranking</span>. Helt gratis.
         </motion.p>
 
         {/* CTAs */}
@@ -318,7 +317,6 @@ function Ribbon() {
     "REALTIDSMATCHER",
     "8 000+ ORD",
     "GRATIS",
-    "BOT-TRÄNING",
     "BRONS → DIAMANT",
   ];
   const rendered = items.map((it, i) => (
@@ -390,7 +388,7 @@ const STAGES = [
     icon: <Swords className="h-5 w-5" />,
     eyebrow: "Stage 01",
     title: "Hitta motståndare.",
-    text: "Hoppa in i en match på 5 sekunder mot en bot eller en vän. Inga väntrum, ingen latency.",
+    text: "Hoppa in i en match på 5 sekunder mot en vän eller okänd spelare. Inga väntrum, ingen latency.",
     accent: "from-cyan-400 to-indigo-500",
   },
   {
@@ -583,7 +581,7 @@ function HowItWorks() {
               <Step
                 n="02"
                 title="Välj verbal eller matte"
-                text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
+                text="Starta en match direkt eller bjud in en vän med en delbar länk."
               />
             </FlipCard>
             <FlipCard delay={0.36} axis="x">
