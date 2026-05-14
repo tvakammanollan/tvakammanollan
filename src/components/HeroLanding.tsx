@@ -9,7 +9,18 @@ import {
   useSpring,
   useInView,
 } from "framer-motion";
-import { Loader2, ArrowRight, Zap, Trophy, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
+import {
+  Loader2,
+  ArrowRight,
+  Zap,
+  Trophy,
+  BookOpen,
+  Sparkles,
+  CheckCircle2,
+  Brain,
+  Swords,
+  Target,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
@@ -75,7 +86,11 @@ export function HeroLanding() {
 
       <Features />
 
+      <Stages />
+
       <HowItWorks />
+
+      <RecentMatches stats={stats} />
 
       <ProofSection stats={stats} />
 
@@ -363,6 +378,165 @@ function Features() {
 }
 
 /* ============================================================ */
+/* ===  STAGES — three alternating "play loop" rows          === */
+/* ============================================================ */
+
+const STAGES = [
+  {
+    icon: <Swords className="h-5 w-5" />,
+    eyebrow: "Stage 01",
+    title: "Hitta motståndare.",
+    text: "Hoppa in i en match på 5 sekunder mot en vän eller okänd spelare. Inga väntrum, ingen latency.",
+    accent: "from-cyan-400 to-indigo-500",
+    elo: 1420,
+  },
+  {
+    icon: <Brain className="h-5 w-5" />,
+    eyebrow: "Stage 02",
+    title: "Tänk snabbare.",
+    text: "Riktig HP-tidspress. Varje sekund räknas. Resultatet syns direkt i din profil.",
+    accent: "from-fuchsia-400 to-pink-500",
+    elo: 1640,
+  },
+  {
+    icon: <Target className="h-5 w-5" />,
+    eyebrow: "Stage 03",
+    title: "Klättra rankingen.",
+    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Inte en topplista — en resa.",
+    accent: "from-amber-400 to-orange-500",
+    elo: 1880,
+  },
+];
+
+function Stages() {
+  return (
+    <section className="relative overflow-hidden bg-paper">
+      <div className="mx-auto max-w-6xl px-6 pb-8 pt-24 sm:pt-32">
+        <SectionHeader eyebrow="Spelets gång" title="Tre faser." highlight="En upplevelse." />
+      </div>
+      <div className="space-y-12 pb-24 sm:space-y-20 sm:pb-32">
+        {STAGES.map((stage, i) => (
+          <StageRow key={i} stage={stage} index={i} reversed={i % 2 === 1} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StageRow({
+  stage,
+  index,
+  reversed,
+}: {
+  stage: (typeof STAGES)[number];
+  index: number;
+  reversed: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const reduce = useReducedMotion();
+  const dirX = reversed ? 60 : -60;
+
+  return (
+    <div ref={ref} className="mx-auto max-w-6xl px-6">
+      <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        {/* Text side */}
+        <motion.div
+          initial={reduce ? { opacity: 0 } : { opacity: 0, x: dirX }}
+          animate={inView ? { opacity: 1, x: 0 } : undefined}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className={reversed ? "md:order-2" : ""}
+        >
+          <div
+            className={`mb-5 inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r ${stage.accent} px-3 text-xs font-semibold text-white shadow-md`}
+          >
+            {stage.icon}
+            {stage.eyebrow}
+          </div>
+          <h3 className="display text-[40px] font-bold leading-[1.04] text-[#0a0a0f] sm:text-[56px]">
+            {stage.title}
+          </h3>
+          <p className="mt-4 max-w-md text-[17px] leading-relaxed text-neutral-600">{stage.text}</p>
+          <div className="mt-6 inline-flex items-center gap-2 text-[13px] font-medium text-neutral-500">
+            <span
+              className={`inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r ${stage.accent}`}
+            />
+            Stage {String(index + 1).padStart(2, "0")} av {STAGES.length}
+          </div>
+        </motion.div>
+
+        {/* Phone mockup */}
+        <motion.div
+          initial={reduce ? { opacity: 0 } : { opacity: 0, x: -dirX, rotate: reversed ? -3 : 3 }}
+          animate={inView ? { opacity: 1, x: 0, rotate: 0 } : undefined}
+          transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          className={reversed ? "md:order-1" : ""}
+          style={{ transformPerspective: 1200 }}
+        >
+          <StagePhone stage={stage} />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function StagePhone({ stage }: { stage: (typeof STAGES)[number] }) {
+  return (
+    <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[36px] shadow-[var(--shadow-xl)]">
+      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent}`}>
+        <div className="absolute inset-6 rounded-[24px] bg-white/95 p-6 shadow-inner">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div
+                className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${stage.accent} text-white`}
+              >
+                {stage.icon}
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                  {stage.eyebrow}
+                </div>
+                <div className="display text-[16px] font-bold text-[#0a0a0f]">HP Kampen</div>
+              </div>
+            </div>
+            <div className="flex h-6 items-center justify-center rounded-full bg-emerald-100 px-2 text-[10px] font-bold text-emerald-700">
+              LIVE
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="h-20 rounded-2xl bg-gradient-to-br from-neutral-50 to-neutral-100 p-3"
+              >
+                <div className="h-2 w-1/2 rounded-full bg-neutral-300" />
+                <div className="mt-2 h-2 w-3/4 rounded-full bg-neutral-200" />
+                <div className={`mt-4 h-2 w-1/3 rounded-full bg-gradient-to-r ${stage.accent}`} />
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-end justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.16em] text-neutral-500">ELO</div>
+              <div className="display text-[40px] font-bold leading-none text-[#0a0a0f]">
+                {stage.elo}
+              </div>
+            </div>
+            <div
+              className={`h-12 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[3rem] text-white shadow-md`}
+            >
+              SPELA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================ */
 /* ===  HOW IT WORKS                                         === */
 /* ============================================================ */
 
@@ -401,6 +575,100 @@ function HowItWorks() {
         </VelocitySkew>
       </div>
     </section>
+  );
+}
+
+/* ============================================================ */
+/* ===  RECENT MATCHES — live feed from getLandingStats      === */
+/* ============================================================ */
+
+function RecentMatches({ stats }: { stats: LandingStats | null }) {
+  const matches = stats?.recent?.slice(0, 6) ?? [];
+  if (matches.length === 0) return null;
+
+  return (
+    <section className="relative bg-white px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-3xl">
+        <SectionHeader eyebrow="Live" title="Senaste matcherna." highlight="Just nu." />
+
+        <ul className="mt-12 space-y-3">
+          {matches.map((m, i) => (
+            <MatchRow key={m.id} match={m} delay={i * 0.07} />
+          ))}
+        </ul>
+
+        <div className="mt-8 text-center text-[12px] uppercase tracking-[0.18em] text-neutral-500">
+          uppdateras varje gång en match avslutas
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MatchRow({
+  match,
+  delay,
+}: {
+  match: NonNullable<LandingStats["recent"]>[number];
+  delay: number;
+}) {
+  const ref = useRef<HTMLLIElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+
+  const p1Name = match.p1_name || "Gäst";
+  const p2Name = match.is_bot_match ? "HP-bot" : match.p2_name || "Gäst";
+  const p1Score = match.player1_score ?? 0;
+  const p2Score = match.player2_score ?? 0;
+
+  const isDraw = !match.winner_id;
+  const p1Won = match.winner_id === match.player1_id;
+
+  const winnerName = isDraw ? null : p1Won ? p1Name : p2Name;
+  const loserName = isDraw ? null : p1Won ? p2Name : p1Name;
+  const winnerScore = isDraw ? p1Score : p1Won ? p1Score : p2Score;
+  const loserScore = isDraw ? p2Score : p1Won ? p2Score : p1Score;
+
+  const matchTypeLabel = match.match_type === "verbal" ? "Verbal" : "Matte";
+  const accentByType =
+    match.match_type === "verbal" ? "from-cyan-400 to-indigo-500" : "from-amber-400 to-orange-500";
+
+  return (
+    <motion.li
+      ref={ref}
+      initial={{ opacity: 0, x: -16 }}
+      animate={inView ? { opacity: 1, x: 0 } : undefined}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="group flex items-center justify-between gap-4 rounded-2xl border border-black/5 bg-white p-4 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lg)]"
+    >
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <span
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accentByType} text-[10px] font-bold uppercase tracking-wide text-white`}
+        >
+          {matchTypeLabel.slice(0, 3)}
+        </span>
+        <p className="truncate text-[15px] leading-snug text-[#0a0a0f]">
+          {isDraw ? (
+            <>
+              <span className="font-semibold">{p1Name}</span>
+              <span className="text-neutral-500"> och </span>
+              <span className="font-semibold">{p2Name}</span>
+              <span className="text-neutral-500"> – oavgjort</span>
+            </>
+          ) : (
+            <>
+              <span className="font-semibold">{winnerName}</span>
+              <span className="text-neutral-500"> slog </span>
+              <span className="font-semibold">{loserName}</span>
+            </>
+          )}
+        </p>
+      </div>
+      <div className="shrink-0 font-mono text-[15px] font-bold tabular-nums">
+        <span className="text-[#0a0a0f]">{winnerScore}</span>
+        <span className="mx-1 text-neutral-400">–</span>
+        <span className="text-neutral-500">{loserScore}</span>
+      </div>
+    </motion.li>
   );
 }
 
