@@ -131,43 +131,33 @@ function Hero({
       {/* Mesh-flow animated bg */}
       <div aria-hidden className="absolute inset-0 animate-mesh bg-mesh opacity-90" />
 
-      {/* Mouse-driven amber radial — the "warm light" the hero promised */}
-      <AmberMouseShadow size={800} />
+      {/* Mouse-driven amber radial */}
+      <AmberMouseShadow size={700} />
 
-      {/* Parallax layer 1 — slowest orbs */}
-      <Parallax speed={-0.15}>
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <motion.div
-            className="orb orb-indigo"
-            style={{ top: "10%", left: "10%", width: 500, height: 500 }}
-            animate={reduce ? undefined : { x: [0, 80, -50, 0], y: [0, -50, 40, 0] }}
-            transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="orb orb-fuchsia"
-            style={{ top: "5%", right: "5%", width: 460, height: 460 }}
-            animate={reduce ? undefined : { x: [0, -70, 50, 0], y: [0, 40, -60, 0] }}
-            transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
+      {/* Floating orbs (parallax handled via the absolute layer below) */}
+      <Parallax speed={-0.12} className="pointer-events-none absolute inset-0">
+        <motion.div
+          className="orb orb-indigo"
+          style={{ top: "10%", left: "10%", width: 500, height: 500 }}
+          animate={reduce ? undefined : { x: [0, 80, -50, 0], y: [0, -50, 40, 0] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb orb-fuchsia"
+          style={{ top: "5%", right: "5%", width: 460, height: 460 }}
+          animate={reduce ? undefined : { x: [0, -70, 50, 0], y: [0, 40, -60, 0] }}
+          transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="orb orb-cyan"
+          style={{ top: "50%", left: "45%", width: 380, height: 380 }}
+          animate={reduce ? undefined : { x: [0, -90, 70, 0], y: [0, 60, -40, 0] }}
+          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        />
       </Parallax>
 
-      {/* Parallax layer 2 — mid orb */}
-      <Parallax speed={-0.3}>
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <motion.div
-            className="orb orb-cyan"
-            style={{ top: "50%", left: "45%", width: 380, height: 380 }}
-            animate={reduce ? undefined : { x: [0, -90, 70, 0], y: [0, 60, -40, 0] }}
-            transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-      </Parallax>
-
-      {/* Parallax layer 3 — grid (fastest, opposite direction) */}
-      <Parallax speed={0.08}>
-        <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
-      </Parallax>
+      {/* Subtle grid overlay */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-ink opacity-30" />
 
       {/* Content */}
       <motion.div
@@ -354,7 +344,6 @@ function Ribbon() {
 function Features() {
   return (
     <section className="relative bg-white px-6 py-24 sm:py-32">
-      <StickyNumber n="01" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeader eyebrow="Funktioner" title="Tre superkrafter." highlight="En arena." />
 
@@ -432,30 +421,25 @@ function Scrollytelling() {
   });
 
   return (
-    <section ref={ref} className="relative bg-paper" style={{ height: `${STAGES.length * 100}vh` }}>
-      <StickyNumber n="02" />
+    <section ref={ref} className="relative bg-paper" style={{ height: "220vh" }}>
+      <StickyNumber n="01" />
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-12">
-          {/* Left rail: section dots */}
+        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-12 items-center gap-8 px-6">
+          {/* Left rail: section dots (desktop only) */}
           <div className="hidden md:col-span-1 md:flex md:items-center md:justify-center">
             <MotionStageDots progress={smoothProgress} count={STAGES.length} />
           </div>
 
-          {/* Stage stack */}
-          <div className="relative md:col-span-5">
+          {/* Stage stack — height-locked so absolute children render reliably */}
+          <div className="relative col-span-12 min-h-[260px] md:col-span-5">
             {STAGES.map((s, i) => (
               <Stage key={i} stage={s} index={i} progress={smoothProgress} />
             ))}
-            <div className="invisible" aria-hidden>
-              {/* Spacer to size the container */}
-              <div className="display text-[64px]">{STAGES[0].title}</div>
-              <div className="mt-4 text-[18px]">{STAGES[0].text}</div>
-            </div>
           </div>
 
-          {/* Right side: phone frames with clip-reveal */}
-          <div className="md:col-span-6">
-            <div className="relative aspect-[4/5] w-full">
+          {/* Right side: phone frame (aspect-locked so it always has height) */}
+          <div className="col-span-12 md:col-span-6">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
               {STAGES.map((s, i) => (
                 <StageFrame key={i} stage={s} index={i} progress={smoothProgress} />
               ))}
@@ -581,7 +565,7 @@ function StageFrame({
 function HowItWorks() {
   return (
     <section id="how-it-works" className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32">
-      <StickyNumber n="03" />
+      <StickyNumber n="02" />
       <div aria-hidden className="absolute inset-0 bg-mesh-light opacity-60" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeader eyebrow="Så funkar det" title="Tre steg." highlight="Bättre HP-resultat." />
@@ -623,7 +607,6 @@ function HowItWorks() {
 function ProofSection({ stats }: { stats: LandingStats | null }) {
   return (
     <section className="relative bg-white px-6 py-20">
-      <StickyNumber n="04" />
       <div className="relative mx-auto max-w-5xl">
         <VelocitySkew maxDeg={2.5}>
           <div className="grid gap-6 sm:grid-cols-3">
@@ -650,7 +633,6 @@ function ProofSection({ stats }: { stats: LandingStats | null }) {
 function FounderQuote() {
   return (
     <section className="relative bg-paper px-6 py-24 sm:py-32">
-      <StickyNumber n="05" />
       <div className="relative mx-auto max-w-3xl">
         <ClipReveal>
           <figure className="surface-elevated relative rounded-[32px] p-12 sm:p-16">
@@ -699,7 +681,6 @@ function FounderQuote() {
 function FinalCTA() {
   return (
     <section className="relative overflow-hidden bg-mesh px-6 py-32 text-center text-white">
-      <StickyNumber n="06" />
       <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
 
       <Parallax speed={-0.2}>

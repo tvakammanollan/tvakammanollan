@@ -72,8 +72,8 @@ export function CustomCursor() {
   const sHover = useSpring(hovered, { stiffness: 200, damping: 22 });
 
   // Hook calls must be unconditional — derive these BEFORE any early return.
-  const haloScale = useTransform(sHover, [0, 1], [0.4, 1.6]);
-  const haloOpacity = useTransform(sHover, [0, 1], [0, 0.85]);
+  const haloScale = useTransform(sHover, [0, 1], [0.5, 1.1]);
+  const haloOpacity = useTransform(sHover, [0, 1], [0, 0.35]);
 
   useEffect(() => {
     if (reduce || touch) return;
@@ -121,13 +121,13 @@ export function CustomCursor() {
       {/* Amber halo — expands when hovering interactive elements */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[99] hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[99] hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
         style={{
           x: sx,
           y: sy,
           scale: haloScale,
           opacity: haloOpacity,
-          background: "radial-gradient(circle, rgba(245,158,11,0.55) 0%, rgba(245,158,11,0) 70%)",
+          background: "radial-gradient(circle, rgba(245,158,11,0.45) 0%, rgba(245,158,11,0) 75%)",
         }}
       />
     </>
@@ -322,7 +322,7 @@ export function StickyNumber({ n }: { n: string }) {
   return (
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-0">
       <motion.div
-        className="pointer-events-none fixed bottom-6 right-6 z-20 select-none text-[160px] leading-none text-black/[0.06] mix-blend-multiply sm:text-[220px]"
+        className="pointer-events-none fixed bottom-6 right-8 z-20 select-none text-[120px] leading-none text-black/[0.04] mix-blend-multiply sm:text-[170px]"
         style={{
           opacity,
           y,
