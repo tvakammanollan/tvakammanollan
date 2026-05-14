@@ -93,16 +93,11 @@ function HpRow({
         background: "rgba(7,17,30,0.55)",
       }}
     >
-      <div className="flex items-baseline justify-between">
-        <span
-          className="text-[10px] font-semibold uppercase tracking-[0.18em]"
-          style={{ color: "var(--hp-muted)" }}
-        >
-          {label}
-        </span>
-        <span className="text-[11px] tabular-nums" style={{ color: "var(--text-tertiary)" }}>
-          ELO {elo}
-        </span>
+      <div
+        className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+        style={{ color: "var(--hp-muted)" }}
+      >
+        {label}
       </div>
       <div
         className="mt-2 text-[36px] font-bold leading-none tabular-nums"
@@ -112,6 +107,12 @@ function HpRow({
         }}
       >
         {score}
+      </div>
+      <div
+        className="mt-2 text-[11px] tabular-nums"
+        style={{ color: "var(--text-tertiary)" }}
+      >
+        ELO {elo}
       </div>
     </div>
   );
