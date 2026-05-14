@@ -7,6 +7,7 @@ import { EloChart } from "@/components/EloChart";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
+import { HpCountdown } from "@/components/ui/HpCountdown";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
@@ -83,6 +84,7 @@ export function HomeDashboard() {
           {/* Main content */}
           <main className="space-y-6">
             <HeroPanel profile={profile} isGuest={isGuest} />
+            <HpCountdown size="card" />
             <ActionGrid onMatch={openMatch} onCoaching={() => setCoachingOpen(true)} />
             <BattleSection profile={profile} onMatch={openMatch} />
             <ChartPanel userId={user.id} />

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { motion, useScroll, useTransform, useReducedMotion, useInView } from "framer-motion";
 import {
@@ -13,7 +13,9 @@ import {
   Brain,
   Swords,
   Target,
+  CalendarDays,
 } from "lucide-react";
+import { getNextHpDate } from "@/lib/hp-dates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
@@ -62,6 +64,8 @@ export function HeroLanding() {
   return (
     <div className="relative overflow-hidden">
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
+
+      <CountdownBanner />
 
       <Ribbon />
 
@@ -281,6 +285,76 @@ function Hero({
 /* ============================================================ */
 /* ===  RIBBON — velocity-driven marquee                     === */
 /* ============================================================ */
+
+function CountdownBanner() {
+  const [now, setNow] = useState(() => new Date());
+  const next = useMemo(() => getNextHpDate(now), [now]);
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+  if (!next) return null;
+  const diffDays = Math.max(
+    0,
+    Math.ceil((next.date.getTime() - now.getTime()) / 86400000),
+  );
+  const formatted = next.date.toLocaleDateString("sv-SE", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return (
+    <section
+      className="relative overflow-hidden border-y"
+      style={{
+        background: "var(--navy-2)",
+        borderColor: "var(--line)",
+      }}
+    >
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-7 sm:flex-row sm:py-8">
+        <div className="flex items-center gap-3">
+          <CalendarDays
+            className="h-5 w-5 shrink-0"
+            style={{ color: "var(--amber)" }}
+          />
+          <div className="text-center sm:text-left">
+            <div
+              className="text-[10px] font-semibold uppercase tracking-[0.22em]"
+              style={{ color: "var(--hp-muted)" }}
+            >
+              Nästa Högskoleprov
+            </div>
+            <div
+              className="display mt-1 text-[20px] font-bold leading-tight sm:text-[24px]"
+              style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
+            >
+              {next.label}{" "}
+              <span style={{ color: "var(--text-tertiary)" }}>· {formatted}</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span
+            className="display text-[44px] font-bold leading-none tabular-nums sm:text-[56px]"
+            style={{
+              color: "var(--amber)",
+              fontFamily: "var(--font-display)",
+              letterSpacing: "-0.04em",
+            }}
+          >
+            {diffDays}
+          </span>
+          <span
+            className="text-[13px] font-medium sm:text-[15px]"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            {diffDays === 1 ? "dag kvar" : "dagar kvar"}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Ribbon() {
   const items = [
