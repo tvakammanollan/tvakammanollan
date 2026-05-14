@@ -15,6 +15,7 @@ import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
+import { AppMotion } from "@/components/AppMotion";
 
 installSupabaseFetchAuth();
 
@@ -22,7 +23,10 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-semibold text-primary" style={{ fontFamily: "var(--font-display)" }}>
+        <h1
+          className="text-7xl font-semibold text-primary"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
           404
         </h1>
         <h2 className="mt-3 text-xl font-semibold">Sidan hittades inte</h2>
@@ -98,7 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://hpkampen.se/" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png" },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png",
+      },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "HP Kampen — Tävla mot vänner i Högskoleprovet" },
@@ -109,7 +117,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "twitter:description",
         content: "Realtidsmatcher och ELO-ranking för HP-pluggare. Gratis.",
       },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png" },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png",
+      },
       { name: "theme-color", content: "#0E1B2C" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -128,7 +140,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // Preconnect / DNS-prefetch för snabbare Core Web Vitals
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "preconnect", href: "https://dqhgnioniarhiugxdgla.supabase.co", crossOrigin: "anonymous" },
+      {
+        rel: "preconnect",
+        href: "https://dqhgnioniarhiugxdgla.supabase.co",
+        crossOrigin: "anonymous",
+      },
       { rel: "dns-prefetch", href: "https://dqhgnioniarhiugxdgla.supabase.co" },
       {
         rel: "stylesheet",
@@ -283,8 +299,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://hpkampen.se/#website",
           url: "https://hpkampen.se",
           name: "HP Kampen",
-          description:
-            "Realtidsmatcher och ELO-ranking för Högskoleprovet. Gratis.",
+          description: "Realtidsmatcher och ELO-ranking för Högskoleprovet. Gratis.",
           inLanguage: "sv-SE",
           publisher: { "@id": "https://hpkampen.se/#org" },
         }),
@@ -321,6 +336,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
+        <AppMotion />
         <Navbar />
         <main className="animate-fade-up">
           <Outlet />

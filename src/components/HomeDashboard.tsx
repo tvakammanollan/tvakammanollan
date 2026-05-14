@@ -1,11 +1,5 @@
 import { useState, useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
@@ -28,6 +22,7 @@ import {
   Flame,
   ArrowRight,
 } from "lucide-react";
+import { AmberMouseShadow, SplitText, TiltLayer } from "@/components/landing/MotionFX";
 
 /* =====================================================================
    HOME DASHBOARD — "Northern Light Console"
@@ -59,9 +54,7 @@ export function HomeDashboard() {
   }
 
   const winRate =
-    profile.games_played > 0
-      ? Math.round((profile.wins / profile.games_played) * 100)
-      : 0;
+    profile.games_played > 0 ? Math.round((profile.wins / profile.games_played) * 100) : 0;
 
   const openMatch = (t: MatchType) => {
     setMatchType(t);
@@ -90,24 +83,14 @@ export function HomeDashboard() {
           {/* Main content */}
           <main className="space-y-6">
             <HeroPanel profile={profile} isGuest={isGuest} />
-            <ActionGrid
-              onMatch={openMatch}
-              onCoaching={() => setCoachingOpen(true)}
-            />
-            <BattleSection
-              profile={profile}
-              onMatch={openMatch}
-            />
+            <ActionGrid onMatch={openMatch} onCoaching={() => setCoachingOpen(true)} />
+            <BattleSection profile={profile} onMatch={openMatch} />
             <ChartPanel userId={user.id} />
           </main>
         </div>
       </div>
 
-      <MatchmakerModal
-        open={matchOpen}
-        onOpenChange={setMatchOpen}
-        matchType={matchType}
-      />
+      <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
       <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} />
       <OnboardingModal
         open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
@@ -190,8 +173,7 @@ function Sidebar({
           aria-hidden
           className="pointer-events-none absolute -top-20 -right-20 h-40 w-40 rounded-full opacity-50 blur-3xl"
           style={{
-            background:
-              "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
           }}
         />
 
@@ -235,11 +217,7 @@ function Sidebar({
           {/* HP score */}
           <div className="mt-5 border-t border-black/5 pt-5">
             <p className="eyebrow mb-2">Trolig HP-poäng</p>
-            <HpScoreWidget
-              eloVerbal={profile.elo_verbal}
-              eloMath={profile.elo_math}
-              size="full"
-            />
+            <HpScoreWidget eloVerbal={profile.elo_verbal} eloMath={profile.elo_math} size="full" />
           </div>
         </div>
       </motion.div>
@@ -314,8 +292,8 @@ function MiniStat({
     accent === "indigo"
       ? "text-indigo-600"
       : accent === "amber"
-      ? "text-amber-600"
-      : "text-[#050507]";
+        ? "text-amber-600"
+        : "text-[#050507]";
   return (
     <div className="rounded-xl border border-black/5 bg-neutral-50/50 px-3 py-2">
       <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
@@ -427,6 +405,9 @@ function HeroPanel({
       {/* Animated mesh background */}
       <div aria-hidden className="absolute inset-0 animate-mesh bg-mesh" />
 
+      {/* Mouse-driven amber glow */}
+      <AmberMouseShadow size={520} />
+
       {/* Floating orb */}
       <motion.div
         aria-hidden
@@ -449,22 +430,36 @@ function HeroPanel({
           className="display mt-2 text-[36px] leading-[0.98] sm:text-[52px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Välkommen,{" "}
+          <SplitText as="span">Välkommen,</SplitText>{" "}
           <span className="text-aurora-gradient italic">
-            {isGuest ? "gäst" : profile.username}
+            <SplitText as="span" delay={0.2} italic>
+              {isGuest ? "gäst" : profile.username}
+            </SplitText>
           </span>
-          .
+          <SplitText as="span" delay={0.35}>
+            .
+          </SplitText>
         </h1>
-        <p className="mt-3 max-w-md text-[15px] text-white/65">
-          Vad vill du erövra idag? Tävla mot någon, träna i lugn takt eller
-          öva ord — välj från sidopanelen eller korten nedan.
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-3 max-w-md text-[15px] text-white/65"
+        >
+          Vad vill du erövra idag? Tävla mot någon, träna i lugn takt eller öva ord — välj från
+          sidopanelen eller korten nedan.
+        </motion.p>
 
         {/* ELO mini-display */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 flex flex-wrap items-center gap-3"
+        >
           <RankPill label="Verbal" elo={profile.elo_verbal} />
           <RankPill label="Matte" elo={profile.elo_math} />
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );
@@ -579,9 +574,7 @@ function ActionCard({
               </span>
             )}
           </div>
-          <p className="mt-1.5 text-[14px] leading-relaxed text-neutral-500">
-            {subtitle}
-          </p>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-neutral-500">{subtitle}</p>
         </div>
       </div>
 
@@ -638,31 +631,39 @@ function BattleSection({
             className="display text-[28px] font-bold leading-tight text-[#050507] sm:text-[32px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Hoppa in i en{" "}
-            <span className="text-aurora-gradient italic">battle</span>
+            <SplitText as="span">Hoppa in i en</SplitText>{" "}
+            <span className="text-aurora-gradient italic">
+              <SplitText as="span" delay={0.18} italic>
+                battle
+              </SplitText>
+            </span>
           </h2>
         </div>
       </motion.div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <BattleCard
-          title="Verbala Battles"
-          subtitle="Ord · Mek"
-          elo={profile.elo_verbal}
-          icon={<GraduationCap className="h-7 w-7" />}
-          onStart={() => onMatch("verbal")}
-          variant="indigo"
-          delay={0}
-        />
-        <BattleCard
-          title="Matte Battles"
-          subtitle="Xyz · Kva · Nog"
-          elo={profile.elo_math}
-          icon={<Sigma className="h-7 w-7" />}
-          onStart={() => onMatch("math")}
-          variant="dark"
-          delay={0.1}
-        />
+        <TiltLayer max={6}>
+          <BattleCard
+            title="Verbala Battles"
+            subtitle="Ord · Mek"
+            elo={profile.elo_verbal}
+            icon={<GraduationCap className="h-7 w-7" />}
+            onStart={() => onMatch("verbal")}
+            variant="indigo"
+            delay={0}
+          />
+        </TiltLayer>
+        <TiltLayer max={6}>
+          <BattleCard
+            title="Matte Battles"
+            subtitle="Xyz · Kva · Nog"
+            elo={profile.elo_math}
+            icon={<Sigma className="h-7 w-7" />}
+            onStart={() => onMatch("math")}
+            variant="dark"
+            delay={0.1}
+          />
+        </TiltLayer>
       </div>
     </section>
   );
@@ -733,9 +734,7 @@ function BattleCard({
         </div>
         <span
           className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
-            isDark
-              ? "bg-fuchsia-400/10 text-fuchsia-300"
-              : "bg-indigo-100 text-indigo-700"
+            isDark ? "bg-fuchsia-400/10 text-fuchsia-300" : "bg-indigo-100 text-indigo-700"
           }`}
         >
           {isDark ? "Avancerad" : "Klassiker"}

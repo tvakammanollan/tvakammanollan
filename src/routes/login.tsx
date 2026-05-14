@@ -1,12 +1,14 @@
 import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { SplitText } from "@/components/landing/MotionFX";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -148,14 +150,11 @@ export function AuthShell({
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Tävla mot vänner.{" "}
-                <span className="font-light italic text-white/85">
-                  Klättra i rankingen.
-                </span>{" "}
+                <span className="font-light italic text-white/85">Klättra i rankingen.</span>{" "}
                 <span className="text-gold-gradient font-medium">Klara HP.</span>
               </h2>
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/65">
-                Live-matcher, ELO-ranking och bot-träning för Högskoleprovet.
-                Helt gratis.
+                Live-matcher, ELO-ranking och bot-träning för Högskoleprovet. Helt gratis.
               </p>
             </div>
           </div>
@@ -175,20 +174,36 @@ export function AuthShell({
               style={{ boxShadow: "var(--shadow-lg)" }}
             >
               <div className="text-center lg:text-left">
-                <p className="eyebrow text-[#6366f1]">
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="eyebrow text-[#6366f1]"
+                >
                   {title.toLowerCase().includes("skapa") ? "Steg 1 av 2" : "Logga in"}
-                </p>
+                </motion.p>
                 <h1
-                  className="mt-3 text-[34px] leading-tight text-[#050507]"
+                  className="display mt-3 text-[34px] leading-tight text-[#050507]"
                   style={{
                     fontFamily: "var(--font-display)",
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  {title}
+                  <SplitText as="span">{title}</SplitText>
                 </h1>
                 {subtitle && (
-                  <p className="mt-2 text-[15px] text-[#737373]">{subtitle}</p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.35,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="mt-2 text-[15px] text-[#737373]"
+                  >
+                    {subtitle}
+                  </motion.p>
                 )}
               </div>
               <div className="mt-7">{children}</div>
@@ -213,9 +228,7 @@ function Stat({ number, label }: { number: string; label: string }) {
       >
         {number}
       </div>
-      <div className="mt-1 text-[10px] tracking-wide text-white/50">
-        {label}
-      </div>
+      <div className="mt-1 text-[10px] tracking-wide text-white/50">{label}</div>
     </div>
   );
 }

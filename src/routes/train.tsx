@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -78,7 +79,13 @@ function TrainPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [results, setResults] = useState<
-    { qId: string; category: string; selected: string | null; correct: string; isCorrect: boolean }[]
+    {
+      qId: string;
+      category: string;
+      selected: string | null;
+      correct: string;
+      isCorrect: boolean;
+    }[]
   >([]);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [endedAt, setEndedAt] = useState<number>(0);
@@ -256,26 +263,39 @@ function TrainPage() {
   if (phase === "setup") {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-        <motion.header
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 text-center"
-        >
-          <p className="eyebrow text-[#6366f1]">Lugn takt</p>
+        <header className="mb-10 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="eyebrow text-[#6366f1]"
+          >
+            Lugn takt
+          </motion.p>
           <h1
-            className="mt-2 text-[36px] font-bold leading-tight text-[#050507] sm:text-[48px]"
+            className="display mt-3 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Träna på{" "}
+            <SplitText as="span">Träna på</SplitText>{" "}
             <span className="display-italic font-medium text-[#6366f1]">
-              egna villkor
+              <SplitText as="span" delay={0.18} italic>
+                egna villkor.
+              </SplitText>
             </span>
           </h1>
-          <p className="mt-3 text-[15px] text-[#737373]">
+          <motion.p
+            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.7,
+              delay: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-4 text-[15px] text-[#737373]"
+          >
             Ingen timer, inga motståndare. Bara du och frågorna.
-          </p>
-        </motion.header>
+          </motion.p>
+        </header>
 
         {/* Step 1: track */}
         <Section title="1. Välj match-typ">
@@ -688,9 +708,7 @@ function TrainPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">
-        {title}
-      </h2>
+      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">{title}</h2>
       {children}
     </section>
   );

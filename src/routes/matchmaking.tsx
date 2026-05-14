@@ -3,15 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
+import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Trophy } from "lucide-react";
-import {
-  joinRankedQueue,
-  pollRankedMatch,
-  cancelRankedQueue,
-} from "@/lib/ranked.functions";
+import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranked.functions";
 import { createMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -145,7 +142,9 @@ function MatchmakingPage() {
     cancelledRef.current = true;
     try {
       await cancelFn();
-    } catch {/* ignore */}
+    } catch {
+      /* ignore */
+    }
     navigate({ to: "/" });
   };
 
@@ -204,14 +203,18 @@ function MatchmakingPage() {
       >
         <p className="eyebrow text-[#6366f1]">Realtid</p>
         <h1
-          className="mt-2 text-[34px] font-bold leading-tight text-[#050507] sm:text-[40px]"
+          className="display mt-2 text-[36px] font-bold leading-tight text-[#050507] sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          {navigating ? "Motståndare hittad!" : (
+          {navigating ? (
+            <SplitText as="span">Motståndare hittad!</SplitText>
+          ) : (
             <>
-              Söker{" "}
+              <SplitText as="span">Söker</SplitText>{" "}
               <span className="display-italic font-medium text-[#6366f1]">
-                motståndare…
+                <SplitText as="span" delay={0.2} italic>
+                  motståndare…
+                </SplitText>
               </span>
             </>
           )}
@@ -225,9 +228,16 @@ function MatchmakingPage() {
         className="surface-paper w-full rounded-2xl p-5 text-sm"
       >
         <div className="text-[#737373]">
-          {minElo !== null && maxElo !== null
-            ? <>Söker spelare med ELO <span className="font-semibold text-[#050507] tabular-nums">{minElo}–{maxElo}</span></>
-            : "Joinar kön…"}
+          {minElo !== null && maxElo !== null ? (
+            <>
+              Söker spelare med ELO{" "}
+              <span className="font-semibold text-[#050507] tabular-nums">
+                {minElo}–{maxElo}
+              </span>
+            </>
+          ) : (
+            "Joinar kön…"
+          )}
         </div>
         {myElo !== null && (
           <div className="mt-1 text-[#737373]">
@@ -248,9 +258,7 @@ function MatchmakingPage() {
           animate={{ opacity: 1, y: 0 }}
           className="w-full rounded-2xl border border-[#eab308]/30 bg-gradient-to-br from-[#fef3c7] to-[#fde68a] p-4 text-sm"
         >
-          <div className="font-semibold text-[#050507]">
-            Ingen spelare ännu ({elapsed} sek)
-          </div>
+          <div className="font-semibold text-[#050507]">Ingen spelare ännu ({elapsed} sek)</div>
           <div className="mt-1 text-[#713f12]">Vill du möta en bot istället?</div>
           <div className="mt-3 flex gap-2">
             <Button size="sm" onClick={playBot} className="flex-1 bg-[#6366f1] hover:bg-[#4338ca]">

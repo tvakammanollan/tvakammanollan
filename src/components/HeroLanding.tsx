@@ -1,14 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  useSpring,
-  useInView,
-} from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion, useInView } from "framer-motion";
 import {
   Loader2,
   ArrowRight,
@@ -25,7 +18,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import {
-  CustomCursor,
   SplitText,
   VelocitySkew,
   VelocityMarquee,
@@ -36,7 +28,6 @@ import {
   TiltLayer,
   AmberMouseShadow,
 } from "@/components/landing/MotionFX";
-import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 /* ====================================================================
    HERO LANDING — "Aurora Dream"
@@ -50,12 +41,6 @@ export function HeroLanding() {
   const [guestLoading, setGuestLoading] = useState(false);
   const [stats, setStats] = useState<LandingStats | null>(null);
   const reduce = useReducedMotion();
-
-  // Boot the shared smooth-scroll loop. Every primitive below consumes it.
-  useSmoothScroll();
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   useEffect(() => {
     fetchStats()
@@ -76,10 +61,6 @@ export function HeroLanding() {
 
   return (
     <div className="relative overflow-hidden">
-      <motion.div className="scroll-progress" style={{ scaleX }} />
-
-      {!reduce && <CustomCursor />}
-
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
       <Ribbon />

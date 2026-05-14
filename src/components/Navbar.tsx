@@ -119,9 +119,7 @@ export function Navbar() {
                   style={{ boxShadow: "var(--shadow-sm)" }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium text-[#050507]">
-                    {profile.username}
-                  </span>
+                  <span className="text-sm font-medium text-[#050507]">{profile.username}</span>
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}
@@ -166,11 +164,12 @@ function NavLink({
     <Link
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       to={to as any}
-      className={`group relative inline-block px-2 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+      data-cursor="link"
+      className={`nav-link group relative inline-block px-2 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
         hideOnMobile ? "hidden sm:inline-block" : ""
       }`}
       activeProps={{
-        className: `relative inline-block px-2 py-1 text-sm font-semibold text-foreground ${
+        className: `nav-link is-active relative inline-block px-2 py-1 text-sm font-semibold text-foreground ${
           hideOnMobile ? "hidden sm:inline-block" : ""
         }`,
       }}
@@ -181,7 +180,8 @@ function NavLink({
           {badge > 9 ? "9+" : badge}
         </span>
       ) : null}
-      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100" />
+      {/* Underline — animates in on hover, persists on active */}
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100" />
     </Link>
   );
 }

@@ -588,3 +588,177 @@ export function AmberMouseShadow({ size = 600 }: { size?: number }) {
     />
   );
 }
+
+/* ============================================================ */
+/* ===  PageHeader — consistent hero for non-landing pages   === */
+/* ============================================================ */
+
+/**
+ * Drop-in page hero. Renders an eyebrow + an h1 with SplitText animation
+ * + optional description, plus an optional right-side action slot.
+ *
+ *   <PageHeader
+ *     eyebrow="Topplista"
+ *     title="De bästa just nu."
+ *     highlight="Verbal."
+ *     description="..."
+ *     actions={<Button>Foo</Button>}
+ *   />
+ */
+export function PageHeader({
+  eyebrow,
+  title,
+  highlight,
+  description,
+  actions,
+  className,
+}: {
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  description?: string;
+  actions?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${className ?? ""}`}
+    >
+      <div className="min-w-0">
+        {eyebrow ? (
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="eyebrow"
+          >
+            {eyebrow}
+          </motion.p>
+        ) : null}
+        <h1 className="display mt-3 text-balance text-[40px] leading-[1.02] text-[#050507] sm:text-[56px] md:text-[68px]">
+          <SplitText as="span" className="block">
+            {title}
+          </SplitText>
+          {highlight ? (
+            <span className="text-aurora-gradient">
+              <SplitText as="span" delay={0.18} italic>
+                {highlight}
+              </SplitText>
+            </span>
+          ) : null}
+        </h1>
+        {description ? (
+          <motion.p
+            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.7,
+              delay: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-5 max-w-xl text-[17px] leading-relaxed text-neutral-600"
+          >
+            {description}
+          </motion.p>
+        ) : null}
+      </div>
+      {actions ? (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex shrink-0 items-center gap-2"
+        >
+          {actions}
+        </motion.div>
+      ) : null}
+    </div>
+  );
+}
+
+/* ============================================================ */
+/* ===  Reveal — generic on-scroll fade-up wrapper           === */
+/* ============================================================ */
+
+/**
+ * Lightweight in-view fade-up. Use anywhere you want a card / panel /
+ * paragraph to animate in once. More forgiving than ClipReveal.
+ */
+export function Reveal({
+  children,
+  delay = 0,
+  y = 24,
+  amount = 0.2,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  y?: number;
+  amount?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y, filter: "blur(8px)" }}
+      animate={
+        inView ? (reduce ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }) : undefined
+      }
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  StaggerList — auto-stagger children on enter         === */
+/* ============================================================ */
+
+/**
+ * Wraps a list/grid and staggers each direct child as it enters view.
+ * Each child becomes a `motion.div` automatically — pass plain JSX.
+ */
+export function StaggerList({
+  children,
+  delayStep = 0.06,
+  startDelay = 0,
+  y = 20,
+  amount = 0.15,
+  className,
+}: {
+  children: React.ReactNode;
+  delayStep?: number;
+  startDelay?: number;
+  y?: number;
+  amount?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount });
+  const items = Array.isArray(children) ? children : [children];
+
+  return (
+    <div ref={ref} className={className}>
+      {items.map((child, i) => (
+        <motion.div
+          key={i}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
+          animate={inView ? (reduce ? { opacity: 1 } : { opacity: 1, y: 0 }) : undefined}
+          transition={{
+            duration: 0.6,
+            delay: startDelay + i * delayStep,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          {child}
+        </motion.div>
+      ))}
+    </div>
+  );
+}

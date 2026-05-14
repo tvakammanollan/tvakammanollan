@@ -5,12 +5,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Trophy, RefreshCw } from "lucide-react";
-import {
-  fetchOrdLeaderboard,
-  type OrdLeaderboardRow,
-} from "@/lib/word-practice.functions";
+import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
 import { fetchLeaderboard } from "@/lib/leaderboard.functions";
 import { EmptyState } from "@/components/EmptyState";
+import { SplitText, Reveal } from "@/components/landing/MotionFX";
 
 type MatchType = "verbal" | "math";
 
@@ -67,46 +65,64 @@ function LeaderboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-8 text-center sm:text-left"
-      >
-        <p className="eyebrow text-[#6366f1]">Hall of fame</p>
-        <div className="mt-2 flex items-center justify-center gap-3 sm:justify-start">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
-            <Trophy className="h-6 w-6" />
-          </span>
+      <div className="mb-10 text-center sm:text-left">
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="eyebrow text-[#6366f1]"
+        >
+          Hall of fame
+        </motion.p>
+        <div className="mt-3 flex items-center justify-center gap-3 sm:justify-start">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.6, rotate: -12 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.05,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 text-white shadow-[var(--shadow-glow-gold)]"
+          >
+            <Trophy className="h-7 w-7" />
+          </motion.span>
           <h1
-            className="text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
+            className="display text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Topplista
+            <SplitText as="span">Topplista.</SplitText>
           </h1>
         </div>
-        <p className="mt-2 text-sm text-[#737373]">
+        <motion.p
+          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-4 text-[15px] text-neutral-500"
+        >
           De vassaste HP-spelarna just nu — uppdateras live.
-        </p>
-      </motion.div>
+        </motion.p>
+      </div>
 
-      <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-        <TabsList className="grid w-full max-w-md grid-cols-3">
-          <TabsTrigger value="verbal">Verbal</TabsTrigger>
-          <TabsTrigger value="math">Matte</TabsTrigger>
-          <TabsTrigger value="ord">Ord</TabsTrigger>
-        </TabsList>
+      <Reveal delay={0.4}>
+        <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
+          <TabsList className="grid w-full max-w-md grid-cols-3">
+            <TabsTrigger value="verbal">Verbal</TabsTrigger>
+            <TabsTrigger value="math">Matte</TabsTrigger>
+            <TabsTrigger value="ord">Ord</TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="verbal">
-          <Board matchType="verbal" currentUserId={user?.id} />
-        </TabsContent>
-        <TabsContent value="math">
-          <Board matchType="math" currentUserId={user?.id} />
-        </TabsContent>
-        <TabsContent value="ord">
-          <OrdBoard />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="verbal">
+            <Board matchType="verbal" currentUserId={user?.id} />
+          </TabsContent>
+          <TabsContent value="math">
+            <Board matchType="math" currentUserId={user?.id} />
+          </TabsContent>
+          <TabsContent value="ord">
+            <OrdBoard />
+          </TabsContent>
+        </Tabs>
+      </Reveal>
     </div>
   );
 }
@@ -196,19 +212,21 @@ function Board({
             <thead className="bg-neutral-50/30 text-xs text-neutral-500">
               <tr>
                 <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
-                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">Spelare</th>
+                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">
+                  Spelare
+                </th>
                 <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
-                <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">Matcher</th>
-                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">Win %</th>
+                <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
+                  Matcher
+                </th>
+                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">
+                  Win %
+                </th>
               </tr>
             </thead>
             <tbody>
               {top.map((r) => (
-                <Row
-                  key={r.user_id}
-                  r={r}
-                  isMe={!!currentUserId && r.user_id === currentUserId}
-                />
+                <Row key={r.user_id} r={r} isMe={!!currentUserId && r.user_id === currentUserId} />
               ))}
               {!meInTop && me && (
                 <>
@@ -246,14 +264,14 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
     r.rank === 1
       ? "from-amber-400 via-yellow-500 to-amber-600"
       : r.rank === 2
-      ? "from-slate-300 via-slate-400 to-slate-500"
-      : "from-orange-400 via-orange-500 to-orange-700";
+        ? "from-slate-300 via-slate-400 to-slate-500"
+        : "from-orange-400 via-orange-500 to-orange-700";
   const podiumIcon = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉";
   const rowBg = isMe
     ? "bg-gradient-to-r from-indigo-50 to-violet-50 ring-2 ring-indigo-300"
     : r.rank === 1
-    ? "bg-gradient-to-r from-amber-50/80 to-yellow-50/40"
-    : "";
+      ? "bg-gradient-to-r from-amber-50/80 to-yellow-50/40"
+      : "";
   return (
     <motion.tr
       initial={{ opacity: 0, x: -16 }}
@@ -272,7 +290,10 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
             {podiumIcon}
           </span>
         ) : (
-          <span className="text-sm font-bold text-neutral-400 tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+          <span
+            className="text-sm font-bold text-neutral-400 tabular-nums"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             #{r.rank}
           </span>
         )}
@@ -389,11 +410,7 @@ function OrdBoard() {
             </thead>
             <tbody>
               {top.map((r) => (
-                <OrdRow
-                  key={r.user_id}
-                  r={r}
-                  isMe={!!user && r.user_id === user.id}
-                />
+                <OrdRow key={r.user_id} r={r} isMe={!!user && r.user_id === user.id} />
               ))}
               {!meInTop && me && (
                 <>
@@ -418,12 +435,12 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
   const tintBg = isMe
     ? "bg-[#e0e7ff]"
     : r.rank === 1
-    ? "bg-[#fef3c7]"
-    : r.rank === 2
-    ? "bg-[#f0f2f5]"
-    : r.rank === 3
-    ? "bg-[#faf0e8]"
-    : "";
+      ? "bg-[#fef3c7]"
+      : r.rank === 2
+        ? "bg-[#f0f2f5]"
+        : r.rank === 3
+          ? "bg-[#faf0e8]"
+          : "";
   return (
     <tr
       className={`border-t border-border transition-colors ${tintBg} ${
@@ -446,9 +463,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-[#6366f1]">
         {r.correct_count}
       </td>
-      <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">
-        {r.total_count}
-      </td>
+      <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">{r.total_count}</td>
       <td className="px-3 py-2.5 text-right tabular-nums">{r.accuracy}%</td>
     </tr>
   );

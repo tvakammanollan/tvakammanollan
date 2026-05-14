@@ -22,6 +22,7 @@ import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucid
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
+import { SplitText, Reveal, StaggerList } from "@/components/landing/MotionFX";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -96,9 +97,22 @@ const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
 const MATH_CATS = ["XYZ", "KVA", "NOG", "DTK"];
 
 const FAKE_NAMES = [
-  "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
-  "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
-  "wilmaP","edvin.t","felicia_k","axel.j",
+  "linnea_92",
+  "oskarH",
+  "mattevurm",
+  "noa.k",
+  "elsa_w",
+  "viktorL",
+  "alicia.s",
+  "hugo_b",
+  "saga.m",
+  "ebba.n",
+  "leo_99",
+  "moa_r",
+  "wilmaP",
+  "edvin.t",
+  "felicia_k",
+  "axel.j",
 ];
 function pickFakeName(seed: string): string {
   let h = 0;
@@ -129,7 +143,9 @@ function StatsPage() {
     (async () => {
       const { data: prof } = await supabase
         .from("users")
-        .select("username, elo_verbal, elo_math, elo_verbal_peak, elo_math_peak, games_played, wins, losses")
+        .select(
+          "username, elo_verbal, elo_math, elo_verbal_peak, elo_math_peak, games_played, wins, losses",
+        )
         .eq("id", user.id)
         .maybeSingle();
       if (cancelled) return;
@@ -146,7 +162,10 @@ function StatsPage() {
       setEloPoints(
         ordered.map((r) => ({
           ts: new Date(r.created_at).getTime(),
-          date: new Date(r.created_at).toLocaleDateString("sv-SE", { month: "short", day: "numeric" }),
+          date: new Date(r.created_at).toLocaleDateString("sv-SE", {
+            month: "short",
+            day: "numeric",
+          }),
           verbal: r.match_type === "verbal" ? r.elo_after : undefined,
           math: r.match_type === "math" ? r.elo_after : undefined,
           delta: r.elo_change,
@@ -171,7 +190,10 @@ function StatsPage() {
           .from("elo_history")
           .select("match_id, elo_change")
           .eq("user_id", user.id)
-          .in("match_id", history.map((h) => h.id));
+          .in(
+            "match_id",
+            history.map((h) => h.id),
+          );
         const m = new Map<string, number>();
         for (const row of hh ?? []) m.set(row.match_id, row.elo_change as number);
         setEloByMatch(m);
@@ -194,12 +216,20 @@ function StatsPage() {
       }
 
       // Average score per match_type (player's score from finished matches)
-      let sumV = 0, cntV = 0, sumM = 0, cntM = 0;
+      let sumV = 0,
+        cntV = 0,
+        sumM = 0,
+        cntM = 0;
       for (const h of history) {
         const myScore = h.player1_id === user.id ? h.player1_score : h.player2_score;
         if (myScore == null) continue;
-        if (h.match_type === "verbal") { sumV += myScore; cntV++; }
-        else { sumM += myScore; cntM++; }
+        if (h.match_type === "verbal") {
+          sumV += myScore;
+          cntV++;
+        } else {
+          sumM += myScore;
+          cntM++;
+        }
       }
       setVerbalAvg(cntV ? sumV / cntV : null);
       setMathAvg(cntM ? sumM / cntM : null);
@@ -210,7 +240,10 @@ function StatsPage() {
         .select("is_correct, time_spent_seconds, questions(category)")
         .eq("user_id", user.id)
         .limit(2000);
-      const tally = new Map<string, { correct: number; total: number; timeSum: number; timeCount: number }>();
+      const tally = new Map<
+        string,
+        { correct: number; total: number; timeSum: number; timeCount: number }
+      >();
       for (const row of ans ?? []) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cat = (row as any).questions?.category as string | undefined;
@@ -271,43 +304,57 @@ function StatsPage() {
 
   return (
     <>
-      
       <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 flex flex-wrap items-end justify-between gap-3"
-        >
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="eyebrow text-[#6366f1]">Din resa</p>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="eyebrow text-[#6366f1]"
+            >
+              Din resa
+            </motion.p>
             <h1
-              className="mt-1 text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
+              className="display mt-2 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Statistik
+              <SplitText as="span">Statistik.</SplitText>
             </h1>
-            <p className="mt-1 text-sm text-[#737373]">
+            <motion.p
+              initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{
+                duration: 0.7,
+                delay: 0.35,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="mt-3 text-sm text-[#737373]"
+            >
               Din progression och prestation över tid.
-            </p>
+            </motion.p>
           </div>
           <Button asChild variant="ghost" size="sm">
             <Link to="/">← Tillbaka hem</Link>
           </Button>
-        </motion.div>
+        </div>
 
         {/* HP score estimate – first section */}
-        <section className="mb-6">
-          <HpScoreWidget
-            eloVerbal={profile.elo_verbal}
-            eloMath={profile.elo_math}
-            size="full"
-          />
-        </section>
+        <Reveal delay={0.45} className="mb-6">
+          <HpScoreWidget eloVerbal={profile.elo_verbal} eloMath={profile.elo_math} size="full" />
+        </Reveal>
 
         {/* Stat cards */}
-        <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <StatCard icon={<Target className="h-4 w-4" />} label="Matcher" value={profile.games_played} />
+        <StaggerList
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
+          delayStep={0.05}
+          y={16}
+        >
+          <StatCard
+            icon={<Target className="h-4 w-4" />}
+            label="Matcher"
+            value={profile.games_played}
+          />
           <StatCard
             icon={<Trophy className="h-4 w-4" />}
             label="Vinster"
@@ -340,13 +387,13 @@ function StatsPage() {
             label="Längsta streak"
             value={`${profile.longest_streak ?? 0} dagar`}
           />
-        </section>
+        </StaggerList>
 
         {/* Fastest categories */}
         {(() => {
           const withTimes = breakdown
             .filter((b) => b.avgTime !== null && b.total >= 3)
-            .sort((a, b) => (a.avgTime! - b.avgTime!));
+            .sort((a, b) => a.avgTime! - b.avgTime!);
           if (withTimes.length === 0) return null;
           const fmt = (s: number) => {
             const m = Math.floor(s / 60);
@@ -376,9 +423,14 @@ function StatsPage() {
           );
         })()}
         {/* ELO chart */}
-        <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>ELO över tid</h2>
+            <h2
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              ELO över tid
+            </h2>
             <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
           </div>
           {eloPoints.length < 2 ? (
@@ -393,13 +445,20 @@ function StatsPage() {
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={eloPoints} margin={{ top: 8, right: 12, left: -10, bottom: 0 }}>
-                  <CartesianGrid stroke="oklch(0.92 0.01 85)" strokeDasharray="3 3" vertical={false} />
+                  <CartesianGrid
+                    stroke="oklch(0.92 0.01 85)"
+                    strokeDasharray="3 3"
+                    vertical={false}
+                  />
                   <XAxis dataKey="date" stroke="oklch(0.55 0 0)" fontSize={11} tickLine={false} />
                   <YAxis
                     stroke="oklch(0.55 0 0)"
                     fontSize={11}
                     tickLine={false}
-                    domain={[(min: number) => Math.max(600, Math.floor(min - 30)), (max: number) => Math.ceil(max + 30)]}
+                    domain={[
+                      (min: number) => Math.max(600, Math.floor(min - 30)),
+                      (max: number) => Math.ceil(max + 30),
+                    ]}
                   />
                   <Tooltip
                     contentStyle={{
@@ -437,12 +496,17 @@ function StatsPage() {
               </ResponsiveContainer>
             </div>
           )}
-        </section>
+        </Reveal>
 
         {/* Delprov breakdown */}
-        <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>Delprov-prestation</h2>
+            <h2
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Delprov-prestation
+            </h2>
             <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
           </div>
           {breakdownData.every((b) => !b.enough) ? (
@@ -455,8 +519,17 @@ function StatsPage() {
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={breakdownData} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
-                  <CartesianGrid stroke="oklch(0.92 0.01 85)" strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="category" stroke="oklch(0.55 0 0)" fontSize={11} tickLine={false} />
+                  <CartesianGrid
+                    stroke="oklch(0.92 0.01 85)"
+                    strokeDasharray="3 3"
+                    vertical={false}
+                  />
+                  <XAxis
+                    dataKey="category"
+                    stroke="oklch(0.55 0 0)"
+                    fontSize={11}
+                    tickLine={false}
+                  />
                   <YAxis
                     stroke="oklch(0.55 0 0)"
                     fontSize={11}
@@ -485,12 +558,17 @@ function StatsPage() {
               </ResponsiveContainer>
             </div>
           )}
-        </section>
+        </Reveal>
 
         {/* Match history */}
-        <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]" style={{ fontFamily: "var(--font-display)" }}>Matchhistorik</h2>
+            <h2
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Matchhistorik
+            </h2>
             <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
           </div>
           {matchHistory.length === 0 ? (
@@ -518,8 +596,8 @@ function StatsPage() {
                   <tbody>
                     {pageRows.map((m) => {
                       const isP1 = m.player1_id === user!.id;
-                      const myScore = isP1 ? m.player1_score ?? 0 : m.player2_score ?? 0;
-                      const oppScore = isP1 ? m.player2_score ?? 0 : m.player1_score ?? 0;
+                      const myScore = isP1 ? (m.player1_score ?? 0) : (m.player2_score ?? 0);
+                      const oppScore = isP1 ? (m.player2_score ?? 0) : (m.player1_score ?? 0);
                       const won = m.winner_id === user!.id;
                       const draw = m.winner_id === null;
                       const oppId = isP1 ? m.player2_id : m.player1_id;
@@ -530,8 +608,8 @@ function StatsPage() {
                       const rowBg = draw
                         ? "bg-background"
                         : won
-                        ? "bg-emerald-50/60"
-                        : "bg-rose-50/60";
+                          ? "bg-emerald-50/60"
+                          : "bg-rose-50/60";
                       return (
                         <tr key={m.id} className={`border-b border-border/60 ${rowBg}`}>
                           <td className="px-2 py-2 text-muted-foreground">
@@ -558,8 +636,8 @@ function StatsPage() {
                                   delta > 0
                                     ? "text-emerald-700"
                                     : delta < 0
-                                    ? "text-rose-700"
-                                    : "text-muted-foreground"
+                                      ? "text-rose-700"
+                                      : "text-muted-foreground"
                                 }
                               >
                                 {delta >= 0 ? "+" : ""}
@@ -598,7 +676,7 @@ function StatsPage() {
               )}
             </>
           )}
-        </section>
+        </Reveal>
       </main>
     </>
   );
@@ -621,7 +699,10 @@ function StatCard({
         {icon}
         {label}
       </div>
-      <div className="text-2xl font-bold tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+      <div
+        className="text-2xl font-bold tabular-nums"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
         {value}
       </div>
       {sub && <div className="mt-0.5 text-xs text-muted-foreground">{sub}</div>}
