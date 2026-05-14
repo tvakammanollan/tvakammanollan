@@ -23,6 +23,8 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
@@ -89,6 +91,7 @@ function AdminPage() {
           <TabsTrigger value="new">➕ Ny fråga</TabsTrigger>
           <TabsTrigger value="stats">📊 Frågestatistik</TabsTrigger>
           <TabsTrigger value="reports">⚑ Rapporter</TabsTrigger>
+          <TabsTrigger value="ord-audit">🔍 ORD-audit</TabsTrigger>
         </TabsList>
 
         <TabsContent value="manage">
@@ -102,6 +105,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="reports">
           <ReportsTab />
+        </TabsContent>
+        <TabsContent value="ord-audit">
+          <OrdAuditTab />
         </TabsContent>
       </Tabs>
     </main>
@@ -550,4 +556,176 @@ function normalizeOptions(raw: unknown, category: string): { id: string; text: s
     }
     return { id, text: typeof o === "string" ? o : "" };
   });
+}
+
+// ============== ORD-AUDIT TAB ==============
+function OrdAuditTab() {
+  const runFn = useServerFn(applyOrdAudit);
+  const [running, setRunning] = useState(false);
+  const [result, setResult] = useState<OrdAuditResult | null>(null);
+  const [includeMedium, setIncludeMedium] = useState(true);
+  const [includeLow, setIncludeLow] = useState(false);
+  const [dryRun, setDryRun] = useState(true);
+
+  const run = async () => {
+    setRunning(true);
+    setResult(null);
+    try {
+      const r = await runFn({ data: { includeMedium, includeLow, dryRun } });
+      setResult(r);
+      if (dryRun) {
+        toast.success(`DRY RUN: ${r.fixed} skulle uppdateras, ${r.already_correct} redan korrekta`);
+      } else {
+        toast.success(`Klart: ${r.fixed} uppdaterade, ${r.already_correct} redan korrekta`);
+      }
+    } catch (e) {
+      toast.error("Fel: " + (e instanceof Error ? e.message : String(e)));
+    } finally {
+      setRunning(false);
+    }
+  };
+
+  const statusColor = (s: string) => {
+    if (s === "fixed") return "text-emerald-600";
+    if (s === "already_correct") return "text-neutral-500";
+    if (s === "not_found") return "text-amber-600";
+    if (s === "mismatched") return "text-amber-600";
+    if (s === "failed") return "text-red-600";
+    return "";
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-2xl border border-border bg-card p-6">
+        <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
+          🔍 ORD-audit — applicera manuella fixar
+        </h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Kör de 134 manuellt granskade fixarna från{" "}
+          <code className="rounded bg-muted px-1 py-0.5 text-xs">.ord-audit/manual-fixes.json</code>.
+          Idempotent — en redan rättad rad skrivs aldrig över.
+        </p>
+
+        <div className="space-y-3 mb-5">
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox
+              checked={dryRun}
+              onCheckedChange={(c) => setDryRun(c === true)}
+            />
+            <span>
+              <strong>Dry run</strong> — kör ingenting, visa bara vad som skulle hända
+            </span>
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox
+              checked={includeMedium}
+              onCheckedChange={(c) => setIncludeMedium(c === true)}
+            />
+            <span>Inkludera medium-confidence fixar (1 st: FÖRSITTA)</span>
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox
+              checked={includeLow}
+              onCheckedChange={(c) => setIncludeLow(c === true)}
+            />
+            <span>Inkludera low-confidence fixar (1 st: KURANT — rekommenderas ej)</span>
+          </label>
+        </div>
+
+        <Button
+          onClick={run}
+          disabled={running}
+          className={dryRun ? "" : "bg-amber-600 hover:bg-amber-700"}
+        >
+          {running ? "Kör…" : dryRun ? "Kör DRY RUN" : "🚀 Applicera fixar"}
+        </Button>
+      </div>
+
+      {result && (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+            <SummaryStat label="Försökta" value={result.total_attempted} />
+            <SummaryStat
+              label={dryRun ? "Skulle fixas" : "Fixade"}
+              value={result.fixed}
+              accent="emerald"
+            />
+            <SummaryStat label="Redan korrekta" value={result.already_correct} />
+            <SummaryStat label="Ej hittade" value={result.not_found} accent="amber" />
+            <SummaryStat
+              label="Mismatched"
+              value={result.mismatched + result.failed}
+              accent={result.failed > 0 ? "red" : "amber"}
+            />
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card">
+            <div className="border-b border-border px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Detaljerad lista
+            </div>
+            <div className="max-h-[600px] overflow-y-auto">
+              <table className="w-full text-sm">
+                <thead className="sticky top-0 bg-muted/50 text-xs">
+                  <tr>
+                    <th className="px-3 py-2 text-left">Ord</th>
+                    <th className="px-3 py-2 text-left">Ändring</th>
+                    <th className="px-3 py-2 text-left">Status</th>
+                    <th className="px-3 py-2 text-left">Not</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.results.map((r, i) => (
+                    <tr key={i} className="border-t border-border">
+                      <td className="px-3 py-1.5 font-medium">{r.word}</td>
+                      <td className="px-3 py-1.5 tabular-nums">
+                        {r.from && r.to ? `${r.from} → ${r.to}` : "—"}
+                      </td>
+                      <td className={`px-3 py-1.5 font-semibold ${statusColor(r.status)}`}>
+                        {r.status}
+                      </td>
+                      <td className="px-3 py-1.5 text-xs text-muted-foreground">
+                        {r.note ?? ""}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SummaryStat({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number;
+  accent?: "emerald" | "amber" | "red";
+}) {
+  const color =
+    accent === "emerald"
+      ? "text-emerald-600"
+      : accent === "amber"
+        ? "text-amber-600"
+        : accent === "red"
+          ? "text-red-600"
+          : "text-foreground";
+  return (
+    <div className="rounded-xl border border-border bg-card p-3 text-center">
+      <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={`mt-1 text-2xl font-bold tabular-nums ${color}`}
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {value}
+      </div>
+    </div>
+  );
 }
