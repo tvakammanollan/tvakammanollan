@@ -65,8 +65,6 @@ export function HeroLanding() {
     <div className="relative overflow-hidden">
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
-      <CountdownBanner />
-
       <Ribbon />
 
       <Features />
@@ -151,20 +149,23 @@ function Hero({
           scale: reduce ? 1 : heroScale,
         }}
       >
-        {/* Status pill */}
+        {/* Status pills — live + diskret countdown */}
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-sm"
+          className="mb-8 inline-flex flex-wrap items-center justify-center gap-2"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
+          <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
+            </span>
+            <span className="text-[12px] font-medium tracking-wide text-white/80">
+              Realtidsmatcher · Live
+            </span>
           </span>
-          <span className="text-[12px] font-medium tracking-wide text-white/80">
-            Realtidsmatcher · Live
-          </span>
+          <HeroCountdownChip />
         </motion.div>
 
         {/* Title — tilts on mouse, every word splits */}
@@ -286,7 +287,7 @@ function Hero({
 /* ===  RIBBON — velocity-driven marquee                     === */
 /* ============================================================ */
 
-function CountdownBanner() {
+function HeroCountdownChip() {
   const [now, setNow] = useState(() => new Date());
   const next = useMemo(() => getNextHpDate(now), [now]);
   useEffect(() => {
@@ -298,61 +299,25 @@ function CountdownBanner() {
     0,
     Math.ceil((next.date.getTime() - now.getTime()) / 86400000),
   );
-  const formatted = next.date.toLocaleDateString("sv-SE", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
   return (
-    <section
-      className="relative overflow-hidden border-y"
+    <span
+      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm"
       style={{
-        background: "var(--navy-2)",
-        borderColor: "var(--line)",
+        borderColor: "rgba(242, 166, 90, 0.30)",
+        background: "rgba(242, 166, 90, 0.10)",
       }}
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-7 sm:flex-row sm:py-8">
-        <div className="flex items-center gap-3">
-          <CalendarDays
-            className="h-5 w-5 shrink-0"
-            style={{ color: "var(--amber)" }}
-          />
-          <div className="text-center sm:text-left">
-            <div
-              className="text-[10px] font-semibold uppercase tracking-[0.22em]"
-              style={{ color: "var(--hp-muted)" }}
-            >
-              Nästa Högskoleprov
-            </div>
-            <div
-              className="display mt-1 text-[20px] font-bold leading-tight sm:text-[24px]"
-              style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
-            >
-              {next.label}{" "}
-              <span style={{ color: "var(--text-tertiary)" }}>· {formatted}</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span
-            className="display text-[44px] font-bold leading-none tabular-nums sm:text-[56px]"
-            style={{
-              color: "var(--amber)",
-              fontFamily: "var(--font-display)",
-              letterSpacing: "-0.04em",
-            }}
-          >
-            {diffDays}
-          </span>
-          <span
-            className="text-[13px] font-medium sm:text-[15px]"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            {diffDays === 1 ? "dag kvar" : "dagar kvar"}
-          </span>
-        </div>
-      </div>
-    </section>
+      <CalendarDays
+        className="h-3 w-3 shrink-0"
+        style={{ color: "var(--amber)" }}
+      />
+      <span className="text-[12px] font-medium tracking-wide text-white/80">
+        {next.label} ·{" "}
+        <span className="font-bold tabular-nums" style={{ color: "var(--amber)" }}>
+          {diffDays} dagar
+        </span>
+      </span>
+    </span>
   );
 }
 

@@ -84,7 +84,6 @@ export function HomeDashboard() {
           {/* Main content */}
           <main className="space-y-6">
             <HeroPanel profile={profile} isGuest={isGuest} />
-            <HpCountdown size="card" />
             <ActionGrid onMatch={openMatch} onCoaching={() => setCoachingOpen(true)} />
             <BattleSection profile={profile} onMatch={openMatch} />
             <ChartPanel userId={user.id} />
@@ -220,6 +219,11 @@ function Sidebar({
           <div className="mt-5 border-t border-black/5 pt-5">
             <p className="eyebrow mb-2">Trolig HP-poäng</p>
             <HpScoreWidget eloVerbal={profile.elo_verbal} eloMath={profile.elo_math} size="full" />
+          </div>
+
+          {/* Countdown — diskret rad längst ner */}
+          <div className="mt-4 border-t border-black/5 pt-4">
+            <HpCountdown size="inline" />
           </div>
         </div>
       </motion.div>
