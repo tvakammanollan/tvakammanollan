@@ -1461,4 +1461,121 @@ body {
   .border-rose-200 {
     border-color: rgba(226, 90, 106, 0.35);
   }
+
+  /* ============================================================
+     HARD-CODED HEX-färger som inte fångats av Tailwind-pattern.
+     Främst leaderboard-row-bg där cream-text annars blir osynlig.
+     ============================================================ */
+
+  /* Light "cream/amber" bakgrunder → amber-alpha (för kontrast) */
+  .bg-\[\#fef3c7\],
+  .bg-\[\#fefce8\],
+  .bg-\[\#fde68a\],
+  .bg-\[\#fde047\] {
+    background-color: rgba(242, 166, 90, 0.18);
+    color: var(--cream);
+  }
+
+  /* Light "peach/beige" backgrounds */
+  .bg-\[\#fce7d3\],
+  .bg-\[\#faf0e8\] {
+    background-color: rgba(242, 166, 90, 0.14);
+    color: var(--cream);
+  }
+
+  /* Light "grey/silver" backgrounds (rank 2 etc) */
+  .bg-\[\#f0f2f5\],
+  .bg-\[\#f3f4f6\],
+  .bg-\[\#f9fafb\] {
+    background-color: rgba(232, 228, 218, 0.06);
+    color: var(--cream);
+  }
+
+  /* Medium slate */
+  .bg-\[\#94a3b8\] {
+    background-color: rgba(232, 228, 218, 0.20);
+  }
+  .ring-\[\#94a3b8\] {
+    --tw-ring-color: rgba(232, 228, 218, 0.40);
+  }
+
+  /* Amber/gold mid-shade */
+  .bg-\[\#eab308\],
+  .bg-\[\#facc15\] {
+    background-color: var(--amber);
+    color: var(--navy);
+  }
+  .border-\[\#eab308\] {
+    border-color: var(--amber);
+  }
+
+  /* Tan/bronze */
+  .bg-\[\#c08552\],
+  .bg-\[\#a16207\] {
+    background-color: var(--amber-deep);
+    color: var(--cream);
+  }
+  .ring-\[\#c08552\] {
+    --tw-ring-color: var(--amber-deep);
+  }
+
+  /* Dark green / success — kept dark but ensure cream text */
+  .bg-\[\#154a2f\],
+  .bg-\[\#236d44\],
+  .bg-\[\#2d7a52\] {
+    color: var(--cream);
+  }
+
+  /* Indigo deep — map to amber */
+  .bg-\[\#4338ca\],
+  .bg-\[\#5048e5\],
+  .bg-\[\#1e1b4b\] {
+    background-color: var(--amber-deep);
+    color: var(--navy);
+  }
+
+  /* Burgundy / destructive */
+  .bg-\[\#c0392b\] {
+    background-color: var(--destructive);
+    color: var(--cream);
+  }
+  .border-\[\#c0392b\] {
+    border-color: var(--destructive);
+  }
+  .text-\[\#c0392b\] {
+    color: var(--destructive);
+  }
+
+  /* Tan/cream borders */
+  .border-\[\#e2e0db\] {
+    border-color: var(--line);
+  }
+
+  /* Cream-3 — keep as is (already palette) */
+  .bg-\[\#DAD4C5\] {
+    background-color: var(--cream-3);
+    color: var(--ink);
+  }
+
+  /* Gradient stops för light hex */
+  .from-\[\#fef3c7\],
+  .from-\[\#fefce8\],
+  .from-\[\#fce7d3\] {
+    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+  }
+  .from-\[\#f3f4f6\] {
+    --tw-gradient-from: rgba(232, 228, 218, 0.06);
+  }
+  .from-\[\#E8E4DA\] {
+    --tw-gradient-from: var(--cream);
+  }
+  .to-\[\#fef3c7\],
+  .to-\[\#fefce8\] {
+    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+  }
+  .from-\[\#eab308\],
+  .to-\[\#eab308\] {
+    --tw-gradient-from: var(--amber);
+    --tw-gradient-to: var(--amber);
+  }
 }
