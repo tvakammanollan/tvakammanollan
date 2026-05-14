@@ -31,10 +31,10 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
 
     // Wrap each query so a single failure (RLS, network, missing col) doesn't
     // bring down the whole landing page.
-    const safe = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
-      p.then(
+    const safe = <T,>(p: PromiseLike<T>, fallback: unknown): Promise<T> =>
+      Promise.resolve(p).then(
         (v) => v,
-        () => fallback,
+        () => fallback as T,
       );
 
     const [matchesCount, usersCount, activeAgg, perMinAgg, recent] =
