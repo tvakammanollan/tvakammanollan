@@ -1,0 +1,20 @@
+# HP Kampen
+
+> Sveriges gratis plattform för Högskoleprovet. Tävla mot vänner i realtid, klättra i ELO-rankingen och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor.
+
+HP Kampen är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom Brons, Silver, Guld, Platina och Diamant genom att vinna 8-frågors-matcher mot andra spelare eller bottar. Inget kostar något, inga annonser, inget kreditkort.
+
+## Pages
+
+- [Hem](/): Startsida – starta en match, se din ELO och kom igång på 30 sekunder.
+- [Skapa konto](/signup): Gratis registrering med e-post – tar under en minut.
+- [Logga in](/login): Logga in på ditt befintliga konto.
+- [Topplista](/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live.
+- [Träna HP](/train): Solo-träning utan tidspress på alla 8 delprov.
+- [Öva ord](/ord): 8 000+ riktiga ORD-frågor från tidigare högskoleprov.
+- [Matchmaking](/matchmaking): Hitta en motståndare på din ELO-nivå inom 10 sekunder.
+
+## Optional
+
+- [Statistik](/stats): Privat – din ELO-utveckling, win rate och prestanda per delprov.
+- [Vänner](/friends): Privat – lägg till vänner och bjud in till privata matcher.

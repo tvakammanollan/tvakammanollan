@@ -34,6 +34,11 @@ export const Route = createFileRoute("/train")({
           "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
       },
       { property: "og:title", content: "Träna HP utan tidspress — HP Kampen" },
+      {
+        property: "og:description",
+        content:
+          "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor – ingen klocka, gratis.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://hpkampen.se/train" }],
   }),

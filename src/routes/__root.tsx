@@ -97,7 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "HP Kampen – Tävla i Högskoleprovet" },
       {
         property: "og:description",
-        content: "Realtidsmatcher och ELO-ranking för HP-pluggare. Gratis.",
+        content:
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking, alla 8 delprov och bot-träning – helt gratis.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://hpkampen.se/" },
@@ -115,7 +116,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "HP Kampen – Tävla i Högskoleprovet" },
       {
         name: "twitter:description",
-        content: "Realtidsmatcher och ELO-ranking för HP-pluggare. Gratis.",
+        content:
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking, alla 8 delprov och bot-träning – helt gratis.",
       },
       {
         name: "twitter:image",
@@ -132,7 +134,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "apple-touch-icon", href: "/favicon.svg" },
       { rel: "manifest", href: "/manifest.json" },
-      { rel: "canonical", href: "https://hpkampen.se/" },
+      // canonical sätts per route (annars duplicerar TanStack länken på alla sidor)
       // hreflang för Sverige-svenska
       { rel: "alternate", hrefLang: "sv-SE", href: "https://hpkampen.se/" },
       { rel: "alternate", hrefLang: "x-default", href: "https://hpkampen.se/" },
