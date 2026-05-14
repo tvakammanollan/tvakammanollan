@@ -6,6 +6,15 @@ import { Button } from "@/components/ui/button";
 import { EloBadge } from "@/components/EloBadge";
 import { UserAvatar } from "@/components/UserAvatar";
 import { BugReportButton } from "@/components/BugReportButton";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Menu, LogOut } from "lucide-react";
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
@@ -98,7 +107,8 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-0.5 sm:gap-2">
+        {/* ===== DESKTOP NAV (≥ md) ===== */}
+        <nav className="hidden items-center gap-2 md:flex">
           {loading ? null : user ? (
             <>
               <NavLink to="/train">Träna</NavLink>
@@ -106,17 +116,11 @@ export function Navbar() {
               <NavLink to="/friends" badge={pendingCount}>
                 Vänner
               </NavLink>
-              <NavLink to="/stats" hideOnMobile>
-                Statistik
-              </NavLink>
-              {profile?.is_admin && (
-                <NavLink to="/admin" hideOnMobile>
-                  Admin
-                </NavLink>
-              )}
+              <NavLink to="/stats">Statistik</NavLink>
+              {profile?.is_admin && <NavLink to="/admin">Admin</NavLink>}
               {profile && (
                 <div
-                  className="hidden items-center gap-2 rounded-full border md:inline-flex"
+                  className="inline-flex items-center gap-2 rounded-full border"
                   style={{
                     borderColor: "var(--line)",
                     background: "rgba(21, 39, 62, 0.6)",
@@ -152,6 +156,40 @@ export function Navbar() {
             </>
           )}
         </nav>
+
+        {/* ===== MOBILE NAV (< md) ===== */}
+        <div className="flex items-center gap-1 md:hidden">
+          {loading ? null : user ? (
+            <>
+              {/* Pending-badge syns alltid om något väntar */}
+              {pendingCount > 0 && (
+                <Link
+                  to="/friends"
+                  className="relative inline-flex h-9 w-9 items-center justify-center rounded-full"
+                  style={{ background: "rgba(242,166,90,0.16)" }}
+                  aria-label={`${pendingCount} väntande`}
+                >
+                  <span
+                    className="text-xs font-bold tabular-nums"
+                    style={{ color: "var(--amber)" }}
+                  >
+                    {pendingCount > 9 ? "9+" : pendingCount}
+                  </span>
+                </Link>
+              )}
+              <MobileMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
+                <Link to="/login">Logga in</Link>
+              </Button>
+              <Button size="sm" asChild className="px-3 text-xs">
+                <Link to="/signup">Skapa konto</Link>
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );
@@ -190,6 +228,146 @@ function NavLink({
       ) : null}
       {/* Underline — animates in on hover, persists on active */}
       <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100" />
+    </Link>
+  );
+}
+
+/* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
+function MobileMenu({
+  profile,
+  topElo,
+  onSignOut,
+}: {
+  profile: ReturnType<typeof useAuth>["profile"];
+  topElo: number;
+  onSignOut: () => Promise<void>;
+}) {
+  const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <button
+          type="button"
+          aria-label="Öppna meny"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors"
+          style={{
+            borderColor: "var(--line)",
+            background: "rgba(21, 39, 62, 0.6)",
+            color: "var(--cream)",
+          }}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </SheetTrigger>
+      <SheetContent
+        side="right"
+        className="w-[80vw] max-w-[320px] border-l p-0"
+        style={{
+          background: "var(--navy)",
+          borderColor: "var(--line)",
+          color: "var(--cream)",
+        }}
+      >
+        <SheetHeader
+          className="border-b px-6 pb-4 pt-6 text-left"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <SheetTitle style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}>
+            Meny
+          </SheetTitle>
+          {profile && (
+            <div className="mt-3 flex items-center gap-3">
+              <UserAvatar name={profile.username} size={36} />
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-semibold" style={{ color: "var(--cream)" }}>
+                  {profile.username}
+                </div>
+                <div className="mt-0.5">
+                  <EloBadge elo={topElo} size="sm" />
+                </div>
+              </div>
+            </div>
+          )}
+        </SheetHeader>
+
+        <nav className="flex flex-col px-2 py-3">
+          <MobileNavLink to="/" onClick={close} emoji="🏠">
+            Hem
+          </MobileNavLink>
+          <MobileNavLink to="/train" onClick={close} emoji="🎯">
+            Träna
+          </MobileNavLink>
+          <MobileNavLink to="/leaderboard" onClick={close} emoji="🏆">
+            Topplista
+          </MobileNavLink>
+          <MobileNavLink to="/friends" onClick={close} emoji="👥">
+            Vänner
+          </MobileNavLink>
+          <MobileNavLink to="/stats" onClick={close} emoji="📊">
+            Statistik
+          </MobileNavLink>
+          {profile?.is_admin && (
+            <MobileNavLink to="/admin" onClick={close} emoji="⚙️">
+              Admin
+            </MobileNavLink>
+          )}
+        </nav>
+
+        <div className="mt-auto border-t px-4 py-4" style={{ borderColor: "var(--line)" }}>
+          <SheetClose asChild>
+            <button
+              type="button"
+              onClick={async () => {
+                close();
+                await onSignOut();
+              }}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors"
+              style={{
+                borderColor: "var(--line)",
+                color: "var(--text-secondary)",
+              }}
+            >
+              <LogOut className="h-4 w-4" />
+              Logga ut
+            </button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function MobileNavLink({
+  to,
+  emoji,
+  children,
+  onClick,
+}: {
+  to: string;
+  emoji: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  return (
+    <Link
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      to={to as any}
+      onClick={onClick}
+      className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-colors"
+      style={{ color: "var(--cream)" }}
+      activeProps={{
+        style: {
+          background: "rgba(242, 166, 90, 0.12)",
+          color: "var(--amber)",
+        },
+      }}
+    >
+      <span className="text-lg" aria-hidden>
+        {emoji}
+      </span>
+      <span className="flex-1">{children}</span>
     </Link>
   );
 }
