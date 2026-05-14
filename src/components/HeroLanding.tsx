@@ -9,19 +9,7 @@ import {
   useSpring,
   useInView,
 } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import {
-  Loader2,
-  ArrowRight,
-  Zap,
-  Trophy,
-  BookOpen,
-  Sparkles,
-  CheckCircle2,
-  Brain,
-  Swords,
-  Target,
-} from "lucide-react";
+import { Loader2, ArrowRight, Zap, Trophy, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
@@ -34,7 +22,6 @@ import {
   FlipCard,
   ClipReveal,
   Parallax,
-  MotionStageDots,
   TiltLayer,
   AmberMouseShadow,
 } from "@/components/landing/MotionFX";
@@ -84,13 +71,9 @@ export function HeroLanding() {
 
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
-      <VelocitySkew>
-        <Ribbon />
-      </VelocitySkew>
+      <Ribbon />
 
       <Features />
-
-      <Scrollytelling />
 
       <HowItWorks />
 
@@ -380,190 +363,13 @@ function Features() {
 }
 
 /* ============================================================ */
-/* ===  SCROLLYTELLING — pinned, with motion-stage dots      === */
-/* ============================================================ */
-
-const STAGES = [
-  {
-    icon: <Swords className="h-5 w-5" />,
-    eyebrow: "Stage 01",
-    title: "Hitta motståndare.",
-    text: "Hoppa in i en match på 5 sekunder mot en vän eller okänd spelare. Inga väntrum, ingen latency.",
-    accent: "from-cyan-400 to-indigo-500",
-  },
-  {
-    icon: <Brain className="h-5 w-5" />,
-    eyebrow: "Stage 02",
-    title: "Tänk snabbare.",
-    text: "Riktig HP-tidspress. Varje sekund räknas. Resultatet syns direkt i din profil.",
-    accent: "from-fuchsia-400 to-pink-500",
-  },
-  {
-    icon: <Target className="h-5 w-5" />,
-    eyebrow: "Stage 03",
-    title: "Klättra rankingen.",
-    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Det är inte en topplista — det är ett resa.",
-    accent: "from-amber-400 to-orange-500",
-  },
-];
-
-function Scrollytelling() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 20,
-  });
-
-  return (
-    <section ref={ref} className="relative bg-paper" style={{ height: "220vh" }}>
-      <StickyNumber n="01" />
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-12 items-center gap-8 px-6">
-          {/* Left rail: section dots (desktop only) */}
-          <div className="hidden md:col-span-1 md:flex md:items-center md:justify-center">
-            <MotionStageDots progress={smoothProgress} count={STAGES.length} />
-          </div>
-
-          {/* Stage stack — height-locked so absolute children render reliably */}
-          <div className="relative col-span-12 min-h-[260px] md:col-span-5">
-            {STAGES.map((s, i) => (
-              <Stage key={i} stage={s} index={i} progress={smoothProgress} />
-            ))}
-          </div>
-
-          {/* Right side: phone frame (aspect-locked so it always has height) */}
-          <div className="col-span-12 md:col-span-6">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
-              {STAGES.map((s, i) => (
-                <StageFrame key={i} stage={s} index={i} progress={smoothProgress} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Stage({
-  stage,
-  index,
-  progress,
-}: {
-  stage: (typeof STAGES)[number];
-  index: number;
-  progress: ReturnType<typeof useSpring>;
-}) {
-  const start = (index - 0.05) / STAGES.length;
-  const peak = (index + 0.5) / STAGES.length;
-  const end = (index + 1) / STAGES.length;
-  const opacity = useTransform(progress, [start, peak, end - 0.02], [0, 1, 0]);
-  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
-
-  return (
-    <motion.div style={{ opacity, y }} className="absolute inset-0">
-      <div
-        className={`mb-5 inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r ${stage.accent} px-3 text-xs font-semibold text-white shadow-md`}
-      >
-        {stage.icon}
-        {stage.eyebrow}
-      </div>
-      <h3 className="display text-[44px] font-bold leading-[1.04] text-[#0a0a0f] sm:text-[64px]">
-        {stage.title}
-      </h3>
-      <p className="mt-4 max-w-md text-[17px] leading-relaxed text-neutral-600">{stage.text}</p>
-    </motion.div>
-  );
-}
-
-function StageFrame({
-  stage,
-  index,
-  progress,
-}: {
-  stage: (typeof STAGES)[number];
-  index: number;
-  progress: ReturnType<typeof useSpring>;
-}) {
-  const start = (index - 0.05) / STAGES.length;
-  const peak = (index + 0.5) / STAGES.length;
-  const end = (index + 1) / STAGES.length;
-  const opacity = useTransform(progress, [start, peak, end - 0.02], [0, 1, 0]);
-  const clip = useTransform(progress, [start, peak], [100, 0]);
-  const clipPath = useTransform(clip, (v) => `inset(${v}% 0 0 0)`);
-  const rotate = useTransform(progress, [start, end], [3, -3]);
-
-  return (
-    <motion.div
-      style={{ opacity, clipPath, rotate }}
-      className="absolute inset-0 overflow-hidden rounded-[40px] shadow-[var(--shadow-xl)]"
-    >
-      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent}`}>
-        {/* Faux phone-frame UI mock */}
-        <div className="absolute inset-6 rounded-[28px] bg-white/95 p-6 shadow-inner">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${stage.accent} text-white`}
-              >
-                {stage.icon}
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                  {stage.eyebrow}
-                </div>
-                <div className="display text-[16px] font-bold text-[#0a0a0f]">HP Kampen</div>
-              </div>
-            </div>
-            <div className="flex h-6 w-12 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-bold text-emerald-700">
-              LIVE
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className="h-20 rounded-2xl bg-gradient-to-br from-neutral-50 to-neutral-100 p-3"
-              >
-                <div className="h-2 w-1/2 rounded-full bg-neutral-300" />
-                <div className="mt-2 h-2 w-3/4 rounded-full bg-neutral-200" />
-                <div className={`mt-4 h-2 w-1/3 rounded-full bg-gradient-to-r ${stage.accent}`} />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex items-end justify-between">
-            <div>
-              <div className="text-[10px] uppercase tracking-[0.16em] text-neutral-500">ELO</div>
-              <div className="display text-[40px] font-bold leading-none text-[#0a0a0f]">
-                1{420 + index * 30}
-              </div>
-            </div>
-            <div
-              className={`h-12 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[3rem] text-white shadow-md`}
-            >
-              SPELA
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ============================================================ */
 /* ===  HOW IT WORKS                                         === */
 /* ============================================================ */
 
 function HowItWorks() {
   return (
     <section id="how-it-works" className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32">
-      <StickyNumber n="02" />
+      <StickyNumber n="01" />
       <div aria-hidden className="absolute inset-0 bg-mesh-light opacity-60" />
       <div className="relative mx-auto max-w-6xl">
         <SectionHeader eyebrow="Så funkar det" title="Tre steg." highlight="Bättre HP-resultat." />
