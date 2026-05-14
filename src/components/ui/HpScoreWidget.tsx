@@ -31,7 +31,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         }}
       >
         <span aria-hidden>📊</span>
-        <span>HP {combined.toFixed(1)}</span>
+        <span>HP {combined}</span>
       </button>
     );
   }
@@ -62,7 +62,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
             fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
           }}
         >
-          {combined.toFixed(1)}
+          {combined}
         </span>
       </div>
 
@@ -82,7 +82,7 @@ function HpRow({
 }: {
   label: string;
   elo: number;
-  score: number;
+  score: string;
   accent: string;
 }) {
   return (
@@ -111,7 +111,7 @@ function HpRow({
           fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
         }}
       >
-        {score.toFixed(1)}
+        {score}
       </div>
     </div>
   );
