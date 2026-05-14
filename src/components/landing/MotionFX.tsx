@@ -1,0 +1,590 @@
+/**
+ * MotionFX — reusable motion primitives for the dream-like landing.
+ * ------------------------------------------------------------------
+ * Every primitive in this file is built on top of the shared smooth-scroll
+ * signals from `useSmoothScroll`. They all gracefully degrade when the user
+ * has `prefers-reduced-motion: reduce` set.
+ *
+ * Exports:
+ *  • CustomCursor       — diff-blend dot, swells to amber over clickables
+ *  • SplitText          — auto word-by-word slide-up (drop-in for h2/h3)
+ *  • VelocitySkew       — wraps children, skews based on scroll velocity
+ *  • VelocityMarquee    — endless ribbon whose speed/direction follow scroll
+ *  • StickyNumber       — big serif number pinned bottom-right per section
+ *  • FlipCard           — 3D rotateY/X entrance for cards
+ *  • ClipReveal         — image with clip-path swipe from top
+ *  • Parallax           — translateY layer driven by smooth scroll
+ *  • MotionStageDots    — vertical progress dots for pinned scrollytelling
+ *  • TiltLayer          — mouse-driven X/Y tilt for hero hero-titles
+ *  • AmberMouseShadow   — soft amber radial that follows the cursor
+ * ------------------------------------------------------------------
+ */
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useInView,
+  type MotionValue,
+} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useSmoothScroll, useVelocitySkew } from "@/hooks/useSmoothScroll";
+
+/* ============================================================ */
+/* ===  Helpers                                              === */
+/* ============================================================ */
+
+/** Detects coarse pointer / touch — used to hide the custom cursor. */
+function useIsTouch() {
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => setTouch(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return touch;
+}
+
+/* ============================================================ */
+/* ===  CustomCursor                                         === */
+/* ============================================================ */
+
+/**
+ * Diff-blend dot follows the cursor; swells into a soft amber circle when
+ * hovering anything that announces itself as "clickable" (`a`, `button`,
+ * `[role=button]`, `[data-cursor=link]`).
+ */
+export function CustomCursor() {
+  const reduce = useReducedMotion();
+  const touch = useIsTouch();
+  const x = useMotionValue(-200);
+  const y = useMotionValue(-200);
+  const sx = useSpring(x, { stiffness: 380, damping: 30, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 380, damping: 30, mass: 0.4 });
+
+  const scale = useMotionValue(1);
+  const sScale = useSpring(scale, { stiffness: 240, damping: 22 });
+  const hovered = useMotionValue(0); // 0 = idle, 1 = over link
+  const sHover = useSpring(hovered, { stiffness: 200, damping: 22 });
+
+  // Hook calls must be unconditional — derive these BEFORE any early return.
+  const haloScale = useTransform(sHover, [0, 1], [0.4, 1.6]);
+  const haloOpacity = useTransform(sHover, [0, 1], [0, 0.85]);
+
+  useEffect(() => {
+    if (reduce || touch) return;
+
+    const onMove = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    };
+    const onDown = () => scale.set(0.7);
+    const onUp = () => scale.set(1);
+
+    const isInteractive = (el: EventTarget | null): boolean => {
+      if (!(el instanceof Element)) return false;
+      return !!el.closest(
+        "a, button, [role='button'], [data-cursor='link'], input, textarea, select, label",
+      );
+    };
+
+    const onOver = (e: MouseEvent) => {
+      hovered.set(isInteractive(e.target) ? 1 : 0);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mousedown", onDown);
+    window.addEventListener("mouseup", onUp);
+    window.addEventListener("mouseover", onOver, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("mouseover", onOver);
+    };
+  }, [x, y, scale, hovered, reduce, touch]);
+
+  if (reduce || touch) return null;
+
+  return (
+    <>
+      {/* Dot — small, white, diff-blend so it inverts on any background */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[100] hidden h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white md:block"
+        style={{ x: sx, y: sy, scale: sScale, mixBlendMode: "difference" }}
+      />
+      {/* Amber halo — expands when hovering interactive elements */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[99] hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
+        style={{
+          x: sx,
+          y: sy,
+          scale: haloScale,
+          opacity: haloOpacity,
+          background: "radial-gradient(circle, rgba(245,158,11,0.55) 0%, rgba(245,158,11,0) 70%)",
+        }}
+      />
+    </>
+  );
+}
+
+/* ============================================================ */
+/* ===  SplitText                                            === */
+/* ============================================================ */
+
+/**
+ * Splits a text string by words and slides each one up on first in-view.
+ * Drop-in for `<h2>` / `<h3>` headlines.
+ */
+export function SplitText({
+  children,
+  as: Tag = "span",
+  className,
+  delay = 0,
+  stagger = 0.06,
+  amount = 0.4,
+  italic,
+}: {
+  children: string;
+  as?: keyof React.JSX.IntrinsicElements;
+  className?: string;
+  delay?: number;
+  stagger?: number;
+  amount?: number;
+  italic?: boolean;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount });
+  const words = children.split(/(\s+)/);
+
+  const MotionTag = motion(Tag as React.ElementType);
+
+  if (reduce) {
+    return <MotionTag className={className}>{children}</MotionTag>;
+  }
+
+  return (
+    <MotionTag ref={ref} className={className}>
+      {words.map((w, i) => {
+        if (/^\s+$/.test(w)) return <span key={i}>{w}</span>;
+        return (
+          <span
+            key={i}
+            className="inline-block overflow-hidden align-baseline"
+            style={{ verticalAlign: "baseline" }}
+          >
+            <motion.span
+              className={`inline-block ${italic ? "italic font-light" : ""}`}
+              initial={{ y: "110%", opacity: 0, rotate: 3 }}
+              animate={inView ? { y: "0%", opacity: 1, rotate: 0 } : undefined}
+              transition={{
+                duration: 0.9,
+                delay: delay + i * stagger,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {w}
+            </motion.span>
+          </span>
+        );
+      })}
+    </MotionTag>
+  );
+}
+
+/* ============================================================ */
+/* ===  VelocitySkew                                         === */
+/* ============================================================ */
+
+/**
+ * Wraps its children in a layer that skews horizontally based on the user's
+ * current scroll velocity. Subtle by default — use for grids/frames/etc.
+ */
+export function VelocitySkew({
+  children,
+  maxDeg = 3,
+  className,
+}: {
+  children: React.ReactNode;
+  maxDeg?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const skew = useVelocitySkew(maxDeg);
+  const sSkew = useSpring(skew, { stiffness: 200, damping: 25 });
+
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+  return (
+    <motion.div className={className} style={{ skewY: sSkew, transformOrigin: "center center" }}>
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  VelocityMarquee                                      === */
+/* ============================================================ */
+
+/**
+ * Endless horizontal ribbon. Auto-scrolls at `baseSpeed` px/frame, then
+ * adds/subtracts scroll velocity so the bar physically reacts to the page.
+ */
+export function VelocityMarquee({
+  items,
+  baseSpeed = 0.6,
+  className,
+}: {
+  items: React.ReactNode[];
+  baseSpeed?: number;
+  className?: string;
+}) {
+  const { scrollVelocity } = useSmoothScroll();
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const halfWidth = useRef<number>(0);
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+    const measure = () => {
+      halfWidth.current = trackRef.current!.scrollWidth / 2;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(trackRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (reduce) return;
+    let raf = 0;
+    const tick = () => {
+      const v = scrollVelocity.get();
+      // Direction-aware: marquee speeds up when scrolling down, reverses on up.
+      const next = x.get() - (baseSpeed + v * 0.6);
+      const w = halfWidth.current || 0;
+      // Wrap so the ribbon is endless without visible jumps.
+      let wrapped = next;
+      if (w > 0) {
+        if (wrapped <= -w) wrapped += w;
+        if (wrapped > 0) wrapped -= w;
+      }
+      x.set(wrapped);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [scrollVelocity, x, baseSpeed, reduce]);
+
+  return (
+    <div className={`overflow-hidden ${className ?? ""}`}>
+      <motion.div
+        ref={trackRef}
+        className="flex gap-12 whitespace-nowrap will-change-transform"
+        style={{ x }}
+      >
+        {[...items, ...items].map((it, i) => (
+          <span key={i} className="flex items-center gap-12">
+            {it}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ============================================================ */
+/* ===  StickyNumber                                         === */
+/* ============================================================ */
+
+/**
+ * Pins a giant serif section-index to the bottom-right of the viewport while
+ * its parent <section> is in view. Slides up/down when the section changes.
+ */
+export function StickyNumber({ n }: { n: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-0">
+      <motion.div
+        className="pointer-events-none fixed bottom-6 right-6 z-20 select-none text-[160px] leading-none text-black/[0.06] mix-blend-multiply sm:text-[220px]"
+        style={{
+          opacity,
+          y,
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
+          fontStyle: "italic",
+        }}
+      >
+        {n}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ============================================================ */
+/* ===  FlipCard                                             === */
+/* ============================================================ */
+
+/**
+ * 3D rotateY/X entrance card. Settles into place when scrolled into view.
+ */
+export function FlipCard({
+  children,
+  delay = 0,
+  axis = "y",
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  axis?: "y" | "x";
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.25 });
+
+  const initial = reduce
+    ? { opacity: 0 }
+    : axis === "y"
+      ? { opacity: 0, rotateY: -60, y: 30 }
+      : { opacity: 0, rotateX: -60, y: 30 };
+  const animate = inView ? { opacity: 1, rotateX: 0, rotateY: 0, y: 0 } : undefined;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={initial}
+      animate={animate}
+      transition={{ duration: 1.05, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{ transformPerspective: 1200 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  ClipReveal                                           === */
+/* ============================================================ */
+
+/**
+ * Reveals its children via a clip-path swipe from the top, like a curtain
+ * lifting. Designed for image-slot / frame components.
+ */
+export function ClipReveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={reduce ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", opacity: 0 }}
+      animate={
+        inView ? (reduce ? { opacity: 1 } : { clipPath: "inset(0% 0 0 0)", opacity: 1 }) : undefined
+      }
+      transition={{ duration: 1.2, delay, ease: [0.77, 0, 0.175, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  Parallax                                             === */
+/* ============================================================ */
+
+/**
+ * Translates its children on Y based on smooth scroll. Higher `speed`
+ * = more displacement. Negative speed = moves opposite to scroll.
+ */
+export function Parallax({
+  children,
+  speed = 0.2,
+  className,
+}: {
+  children: React.ReactNode;
+  speed?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const { smoothScrollY } = useSmoothScroll();
+  const y = useTransform(smoothScrollY, (v) => v * speed);
+
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div className={className} style={{ y }}>
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  MotionStageDots                                      === */
+/* ============================================================ */
+
+/**
+ * Vertical progress dots used inside a pinned scrollytelling section.
+ * Pass `progress` (a MotionValue 0..1) and `count` of stages.
+ */
+function StageDot({
+  progress,
+  index,
+  count,
+}: {
+  progress: MotionValue<number>;
+  index: number;
+  count: number;
+}) {
+  const start = index / count;
+  const end = (index + 1) / count;
+  const scale = useTransform(progress, [start, (start + end) / 2, end], [0.6, 1.4, 0.6]);
+  const opacity = useTransform(progress, [start, (start + end) / 2, end], [0.25, 1, 0.25]);
+  return (
+    <motion.div
+      style={{ scale, opacity }}
+      className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(245,158,11,0.7)]"
+    />
+  );
+}
+
+export function MotionStageDots({
+  progress,
+  count,
+  className,
+}: {
+  progress: MotionValue<number>;
+  count: number;
+  className?: string;
+}) {
+  return (
+    <div className={`flex flex-col items-center gap-3 ${className ?? ""}`} aria-hidden>
+      {Array.from({ length: count }).map((_, i) => (
+        <StageDot key={i} progress={progress} index={i} count={count} />
+      ))}
+    </div>
+  );
+}
+
+/* ============================================================ */
+/* ===  TiltLayer                                            === */
+/* ============================================================ */
+
+/**
+ * Wraps children in a layer that tilts on mouse position within itself.
+ */
+export function TiltLayer({
+  children,
+  max = 6,
+  className,
+}: {
+  children: React.ReactNode;
+  max?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const srx = useSpring(rx, { stiffness: 80, damping: 18 });
+  const sry = useSpring(ry, { stiffness: 80, damping: 18 });
+
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ rotateX: srx, rotateY: sry, transformPerspective: 1400 }}
+      onMouseMove={(e) => {
+        const el = ref.current!;
+        const rect = el.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        ry.set(px * max);
+        rx.set(-py * max);
+      }}
+      onMouseLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  AmberMouseShadow                                     === */
+/* ============================================================ */
+
+/**
+ * Soft amber radial that follows the cursor inside a section.
+ * Placed inside a relatively-positioned parent.
+ */
+export function AmberMouseShadow({ size = 600 }: { size?: number }) {
+  const reduce = useReducedMotion();
+  const touch = useIsTouch();
+  const x = useMotionValue(-1000);
+  const y = useMotionValue(-1000);
+  const sx = useSpring(x, { stiffness: 50, damping: 18 });
+  const sy = useSpring(y, { stiffness: 50, damping: 18 });
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (reduce || touch) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = ref.current?.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      x.set(e.clientX - rect.left);
+      y.set(e.clientY - rect.top);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [x, y, reduce, touch]);
+
+  if (reduce || touch) return null;
+  return (
+    <motion.div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute z-0 rounded-full"
+      style={{
+        x: sx,
+        y: sy,
+        width: size,
+        height: size,
+        marginLeft: -size / 2,
+        marginTop: -size / 2,
+        background:
+          "radial-gradient(circle, rgba(245,158,11,0.30) 0%, rgba(245,158,11,0.08) 35%, transparent 70%)",
+        mixBlendMode: "screen",
+      }}
+    />
+  );
+}

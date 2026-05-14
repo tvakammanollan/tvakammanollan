@@ -7,7 +7,6 @@ import {
   useTransform,
   useReducedMotion,
   useSpring,
-  useMotionValue,
   useInView,
 } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -19,14 +18,32 @@ import {
   BookOpen,
   Sparkles,
   CheckCircle2,
+  Brain,
+  Swords,
+  Target,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
+import {
+  CustomCursor,
+  SplitText,
+  VelocitySkew,
+  VelocityMarquee,
+  StickyNumber,
+  FlipCard,
+  ClipReveal,
+  Parallax,
+  MotionStageDots,
+  TiltLayer,
+  AmberMouseShadow,
+} from "@/components/landing/MotionFX";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 /* ====================================================================
-   HERO LANDING — "Northern Light"
-   Apple precision + Cluely energy. Scroll-driven, alive, premium.
+   HERO LANDING — "Aurora Dream"
+   Lerp-smooth scroll. Velocity-driven motion. Cluely energy meets Apple
+   precision meets a film camera you can feel.
    ==================================================================== */
 
 export function HeroLanding() {
@@ -36,7 +53,9 @@ export function HeroLanding() {
   const [stats, setStats] = useState<LandingStats | null>(null);
   const reduce = useReducedMotion();
 
-  // Global scroll progress
+  // Boot the shared smooth-scroll loop. Every primitive below consumes it.
+  useSmoothScroll();
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
@@ -59,17 +78,19 @@ export function HeroLanding() {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Scroll progress bar */}
       <motion.div className="scroll-progress" style={{ scaleX }} />
 
-      {/* CursorGlow follows mouse on desktop */}
-      {!reduce && <CursorGlow />}
+      {!reduce && <CustomCursor />}
 
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
-      <MarqueeBand />
+      <VelocitySkew>
+        <Ribbon />
+      </VelocitySkew>
 
-      <FeaturesSticky />
+      <Features />
+
+      <Scrollytelling />
 
       <HowItWorks />
 
@@ -82,7 +103,10 @@ export function HeroLanding() {
   );
 }
 
-/* ============== HERO ============== */
+/* ============================================================ */
+/* ===  HERO                                                 === */
+/* ============================================================ */
+
 function Hero({
   stats,
   guestLoading,
@@ -103,42 +127,56 @@ function Hero({
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
 
   return (
-    <section
-      ref={ref}
-      className="relative min-h-screen overflow-hidden bg-mesh text-white"
-    >
+    <section ref={ref} className="relative min-h-screen overflow-hidden bg-mesh text-white">
       {/* Mesh-flow animated bg */}
       <div aria-hidden className="absolute inset-0 animate-mesh bg-mesh opacity-90" />
 
-      {/* Floating orbs */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <motion.div
-          className="orb orb-indigo"
-          style={{ top: "10%", left: "10%", width: 500, height: 500 }}
-          animate={reduce ? undefined : { x: [0, 80, -50, 0], y: [0, -50, 40, 0] }}
-          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="orb orb-fuchsia"
-          style={{ top: "5%", right: "5%", width: 460, height: 460 }}
-          animate={reduce ? undefined : { x: [0, -70, 50, 0], y: [0, 40, -60, 0] }}
-          transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="orb orb-cyan"
-          style={{ top: "50%", left: "45%", width: 380, height: 380 }}
-          animate={reduce ? undefined : { x: [0, -90, 70, 0], y: [0, 60, -40, 0] }}
-          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Mouse-driven amber radial — the "warm light" the hero promised */}
+      <AmberMouseShadow size={800} />
 
-      {/* Subtle grid overlay */}
-      <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
+      {/* Parallax layer 1 — slowest orbs */}
+      <Parallax speed={-0.15}>
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="orb orb-indigo"
+            style={{ top: "10%", left: "10%", width: 500, height: 500 }}
+            animate={reduce ? undefined : { x: [0, 80, -50, 0], y: [0, -50, 40, 0] }}
+            transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="orb orb-fuchsia"
+            style={{ top: "5%", right: "5%", width: 460, height: 460 }}
+            animate={reduce ? undefined : { x: [0, -70, 50, 0], y: [0, 40, -60, 0] }}
+            transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      </Parallax>
+
+      {/* Parallax layer 2 — mid orb */}
+      <Parallax speed={-0.3}>
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="orb orb-cyan"
+            style={{ top: "50%", left: "45%", width: 380, height: 380 }}
+            animate={reduce ? undefined : { x: [0, -90, 70, 0], y: [0, 60, -40, 0] }}
+            transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      </Parallax>
+
+      {/* Parallax layer 3 — grid (fastest, opposite direction) */}
+      <Parallax speed={0.08}>
+        <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
+      </Parallax>
 
       {/* Content */}
       <motion.div
         className="relative z-10 mx-auto flex min-h-screen max-w-[1100px] flex-col items-center justify-center px-6 py-24 text-center"
-        style={{ y: reduce ? 0 : heroY, opacity: reduce ? 1 : heroOpacity, scale: reduce ? 1 : heroScale }}
+        style={{
+          y: reduce ? 0 : heroY,
+          opacity: reduce ? 1 : heroOpacity,
+          scale: reduce ? 1 : heroScale,
+        }}
       >
         {/* Status pill */}
         <motion.div
@@ -156,58 +194,61 @@ function Hero({
           </span>
         </motion.div>
 
-        {/* Massive Apple-style headline */}
-        <h1 className="display text-balance text-[56px] font-bold leading-[0.96] text-white sm:text-[96px] md:text-[120px] lg:text-[144px]">
-          <WordReveal text="Tävla." delay={0.1} />
-          <br />
-          <span className="text-aurora-gradient">
-            <WordReveal text="Klättra." delay={0.3} italic />
-          </span>
-          <br />
-          <WordReveal text="Klara HP." delay={0.5} />
-        </h1>
+        {/* Title — tilts on mouse, every word splits */}
+        <TiltLayer max={8} className="will-change-transform">
+          <h1 className="display text-balance text-[56px] font-bold leading-[0.96] text-white sm:text-[96px] md:text-[120px] lg:text-[144px]">
+            <SplitText as="span" className="block" delay={0.1}>
+              Tävla.
+            </SplitText>
+            <span className="text-aurora-gradient block">
+              <SplitText as="span" delay={0.35} italic>
+                Klättra.
+              </SplitText>
+            </span>
+            <SplitText as="span" className="block" delay={0.6}>
+              Klara HP.
+            </SplitText>
+          </h1>
+        </TiltLayer>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 max-w-2xl text-balance text-[18px] leading-relaxed text-white/70 sm:text-[22px]"
         >
           Den enda plattformen för Högskoleprovet med
           <span className="font-semibold text-white"> live-matcher</span>,
           <span className="font-semibold text-white"> ELO-ranking</span> och
-          <span className="font-semibold text-white"> bot-träning</span>.
-          Helt gratis.
+          <span className="font-semibold text-white"> bot-träning</span>. Helt gratis.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="mt-12 flex flex-col items-center gap-3 sm:flex-row"
         >
-          <MagneticButton primary>
-            <Link
-              to="/signup"
-              className="relative inline-flex h-[58px] items-center gap-2 rounded-full bg-white px-8 text-[16px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)] transition-all hover:shadow-[0_0_80px_-8px_rgba(217,70,239,0.55)]"
-            >
-              Skapa gratis konto
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </MagneticButton>
-          <MagneticButton>
-            <button
-              type="button"
-              onClick={onGuest}
-              disabled={guestLoading}
-              className="inline-flex h-[58px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-8 text-[16px] font-medium text-white backdrop-blur-sm transition hover:bg-white/10 disabled:opacity-60"
-            >
-              {guestLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-              {guestLoading ? "Startar gästläge…" : "Spela som gäst"}
-            </button>
-          </MagneticButton>
+          <Link
+            to="/signup"
+            data-cursor="link"
+            className="group relative inline-flex h-[58px] items-center gap-2 rounded-full bg-white px-8 text-[16px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)] transition-all hover:shadow-[0_0_80px_-8px_rgba(217,70,239,0.55)]"
+          >
+            Skapa gratis konto
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+          <button
+            type="button"
+            onClick={onGuest}
+            disabled={guestLoading}
+            data-cursor="link"
+            className="inline-flex h-[58px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-8 text-[16px] font-medium text-white backdrop-blur-sm transition hover:bg-white/10 disabled:opacity-60"
+          >
+            {guestLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+            {guestLoading ? "Startar gästläge…" : "Spela som gäst"}
+          </button>
         </motion.div>
 
         {/* Live counter */}
@@ -239,15 +280,9 @@ function Hero({
             transition={{ duration: 0.8, delay: 1.7 }}
             className="mt-20 flex items-center gap-12 text-center"
           >
-            <StatTeaser
-              value={stats.totalMatches}
-              label="matcher spelade"
-            />
+            <StatTeaser value={stats.totalMatches} label="matcher spelade" />
             <span className="h-12 w-px bg-white/15" />
-            <StatTeaser
-              value={stats.totalPlayers}
-              label="spelare"
-            />
+            <StatTeaser value={stats.totalPlayers} label="spelare" />
             <span className="hidden h-12 w-px bg-white/15 sm:inline-block" />
             <StatTeaser value={8000} label="HP-ord" hidden suffix="+" />
           </motion.div>
@@ -275,8 +310,11 @@ function Hero({
   );
 }
 
-/* ============== MARQUEE — endless scrolling band ============== */
-function MarqueeBand() {
+/* ============================================================ */
+/* ===  RIBBON — velocity-driven marquee                     === */
+/* ============================================================ */
+
+function Ribbon() {
   const items = [
     "ORD",
     "MEK",
@@ -293,239 +331,431 @@ function MarqueeBand() {
     "BOT-TRÄNING",
     "BRONS → DIAMANT",
   ];
+  const rendered = items.map((it, i) => (
+    <span
+      key={i}
+      className="display flex items-center gap-12 text-[28px] font-semibold tracking-tight text-[#050507] sm:text-[40px]"
+    >
+      {it}
+      <span className="text-aurora-gradient">✦</span>
+    </span>
+  ));
   return (
     <section className="relative overflow-hidden border-y border-black/10 bg-white py-8">
-      <div className="flex animate-marquee gap-12 whitespace-nowrap will-change-transform">
-        {[...items, ...items].map((it, i) => (
-          <span
-            key={i}
-            className="display flex items-center gap-12 text-[28px] font-semibold tracking-tight text-[#050507] sm:text-[40px]"
-          >
-            {it}
-            <span className="text-aurora-gradient">✦</span>
-          </span>
-        ))}
-      </div>
+      <VelocityMarquee items={rendered} baseSpeed={0.7} />
     </section>
   );
 }
 
-/* ============== FEATURES — sticky scroll-storytelling ============== */
-function FeaturesSticky() {
+/* ============================================================ */
+/* ===  FEATURES                                             === */
+/* ============================================================ */
+
+function Features() {
   return (
     <section className="relative bg-white px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeader
-          eyebrow="Funktioner"
-          title="Tre superkrafter."
-          highlight="En arena."
-        />
+      <StickyNumber n="01" />
+      <div className="relative mx-auto max-w-6xl">
+        <SectionHeader eyebrow="Funktioner" title="Tre superkrafter." highlight="En arena." />
 
-        <div className="mt-20 grid gap-6 md:grid-cols-3">
-          <FeatureCard
-            icon={<Zap className="h-7 w-7" />}
-            title="Live-matcher"
-            text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö."
-            gradient="from-cyan-400 via-indigo-500 to-violet-600"
-            delay={0}
-          />
-          <FeatureCard
-            icon={<Trophy className="h-7 w-7" />}
-            title="ELO-ranking"
-            text="Klättra från Brons till Diamant med ett schackinspirerat system. Se din progression i realtid."
-            gradient="from-amber-400 via-orange-500 to-pink-500"
-            featured
-            delay={0.1}
-          />
-          <FeatureCard
-            icon={<BookOpen className="h-7 w-7" />}
-            title="Alla 8 delprov"
-            text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
-            gradient="from-emerald-400 via-teal-500 to-cyan-600"
-            delay={0.2}
-          />
+        <VelocitySkew>
+          <div className="mt-20 grid gap-6 md:grid-cols-3">
+            <FlipCard delay={0} axis="y">
+              <FeatureCard
+                icon={<Zap className="h-7 w-7" />}
+                title="Live-matcher"
+                text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö."
+                gradient="from-cyan-400 via-indigo-500 to-violet-600"
+              />
+            </FlipCard>
+            <FlipCard delay={0.12} axis="x">
+              <FeatureCard
+                icon={<Trophy className="h-7 w-7" />}
+                title="ELO-ranking"
+                text="Klättra från Brons till Diamant med ett schackinspirerat system. Se din progression i realtid."
+                gradient="from-amber-400 via-orange-500 to-pink-500"
+                featured
+              />
+            </FlipCard>
+            <FlipCard delay={0.24} axis="y">
+              <FeatureCard
+                icon={<BookOpen className="h-7 w-7" />}
+                title="Alla 8 delprov"
+                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
+                gradient="from-emerald-400 via-teal-500 to-cyan-600"
+              />
+            </FlipCard>
+          </div>
+        </VelocitySkew>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================ */
+/* ===  SCROLLYTELLING — pinned, with motion-stage dots      === */
+/* ============================================================ */
+
+const STAGES = [
+  {
+    icon: <Swords className="h-5 w-5" />,
+    eyebrow: "Stage 01",
+    title: "Hitta motståndare.",
+    text: "Hoppa in i en match på 5 sekunder mot en bot eller en vän. Inga väntrum, ingen latency.",
+    accent: "from-cyan-400 to-indigo-500",
+  },
+  {
+    icon: <Brain className="h-5 w-5" />,
+    eyebrow: "Stage 02",
+    title: "Tänk snabbare.",
+    text: "Riktig HP-tidspress. Varje sekund räknas. Resultatet syns direkt i din profil.",
+    accent: "from-fuchsia-400 to-pink-500",
+  },
+  {
+    icon: <Target className="h-5 w-5" />,
+    eyebrow: "Stage 03",
+    title: "Klättra rankingen.",
+    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Det är inte en topplista — det är ett resa.",
+    accent: "from-amber-400 to-orange-500",
+  },
+];
+
+function Scrollytelling() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 80,
+    damping: 20,
+  });
+
+  return (
+    <section ref={ref} className="relative bg-paper" style={{ height: `${STAGES.length * 100}vh` }}>
+      <StickyNumber n="02" />
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-12">
+          {/* Left rail: section dots */}
+          <div className="hidden md:col-span-1 md:flex md:items-center md:justify-center">
+            <MotionStageDots progress={smoothProgress} count={STAGES.length} />
+          </div>
+
+          {/* Stage stack */}
+          <div className="relative md:col-span-5">
+            {STAGES.map((s, i) => (
+              <Stage key={i} stage={s} index={i} progress={smoothProgress} />
+            ))}
+            <div className="invisible" aria-hidden>
+              {/* Spacer to size the container */}
+              <div className="display text-[64px]">{STAGES[0].title}</div>
+              <div className="mt-4 text-[18px]">{STAGES[0].text}</div>
+            </div>
+          </div>
+
+          {/* Right side: phone frames with clip-reveal */}
+          <div className="md:col-span-6">
+            <div className="relative aspect-[4/5] w-full">
+              {STAGES.map((s, i) => (
+                <StageFrame key={i} stage={s} index={i} progress={smoothProgress} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ============== HOW IT WORKS ============== */
+function Stage({
+  stage,
+  index,
+  progress,
+}: {
+  stage: (typeof STAGES)[number];
+  index: number;
+  progress: ReturnType<typeof useSpring>;
+}) {
+  const start = (index - 0.05) / STAGES.length;
+  const peak = (index + 0.5) / STAGES.length;
+  const end = (index + 1) / STAGES.length;
+  const opacity = useTransform(progress, [start, peak, end - 0.02], [0, 1, 0]);
+  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
+
+  return (
+    <motion.div style={{ opacity, y }} className="absolute inset-0">
+      <div
+        className={`mb-5 inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r ${stage.accent} px-3 text-xs font-semibold text-white shadow-md`}
+      >
+        {stage.icon}
+        {stage.eyebrow}
+      </div>
+      <h3 className="display text-[44px] font-bold leading-[1.04] text-[#0a0a0f] sm:text-[64px]">
+        {stage.title}
+      </h3>
+      <p className="mt-4 max-w-md text-[17px] leading-relaxed text-neutral-600">{stage.text}</p>
+    </motion.div>
+  );
+}
+
+function StageFrame({
+  stage,
+  index,
+  progress,
+}: {
+  stage: (typeof STAGES)[number];
+  index: number;
+  progress: ReturnType<typeof useSpring>;
+}) {
+  const start = (index - 0.05) / STAGES.length;
+  const peak = (index + 0.5) / STAGES.length;
+  const end = (index + 1) / STAGES.length;
+  const opacity = useTransform(progress, [start, peak, end - 0.02], [0, 1, 0]);
+  const clip = useTransform(progress, [start, peak], [100, 0]);
+  const clipPath = useTransform(clip, (v) => `inset(${v}% 0 0 0)`);
+  const rotate = useTransform(progress, [start, end], [3, -3]);
+
+  return (
+    <motion.div
+      style={{ opacity, clipPath, rotate }}
+      className="absolute inset-0 overflow-hidden rounded-[40px] shadow-[var(--shadow-xl)]"
+    >
+      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent}`}>
+        {/* Faux phone-frame UI mock */}
+        <div className="absolute inset-6 rounded-[28px] bg-white/95 p-6 shadow-inner">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div
+                className={`flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${stage.accent} text-white`}
+              >
+                {stage.icon}
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                  {stage.eyebrow}
+                </div>
+                <div className="display text-[16px] font-bold text-[#0a0a0f]">HP Kampen</div>
+              </div>
+            </div>
+            <div className="flex h-6 w-12 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-bold text-emerald-700">
+              LIVE
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="h-20 rounded-2xl bg-gradient-to-br from-neutral-50 to-neutral-100 p-3"
+              >
+                <div className="h-2 w-1/2 rounded-full bg-neutral-300" />
+                <div className="mt-2 h-2 w-3/4 rounded-full bg-neutral-200" />
+                <div className={`mt-4 h-2 w-1/3 rounded-full bg-gradient-to-r ${stage.accent}`} />
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-end justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.16em] text-neutral-500">ELO</div>
+              <div className="display text-[40px] font-bold leading-none text-[#0a0a0f]">
+                1{420 + index * 30}
+              </div>
+            </div>
+            <div
+              className={`h-12 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[3rem] text-white shadow-md`}
+            >
+              SPELA
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ============================================================ */
+/* ===  HOW IT WORKS                                         === */
+/* ============================================================ */
+
 function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32"
-    >
+    <section id="how-it-works" className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32">
+      <StickyNumber n="03" />
       <div aria-hidden className="absolute inset-0 bg-mesh-light opacity-60" />
       <div className="relative mx-auto max-w-6xl">
-        <SectionHeader
-          eyebrow="Så funkar det"
-          title="Tre steg."
-          highlight="Bättre HP-resultat."
-        />
+        <SectionHeader eyebrow="Så funkar det" title="Tre steg." highlight="Bättre HP-resultat." />
 
-        <div className="mt-20 grid gap-10 md:grid-cols-3">
-          <Step
-            n="01"
-            title="Skapa konto"
-            text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
-            delay={0}
-          />
-          <Step
-            n="02"
-            title="Välj verbal eller matte"
-            text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
-            delay={0.15}
-          />
-          <Step
-            n="03"
-            title="Kämpa & klättra"
-            text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
-            delay={0.3}
-          />
-        </div>
+        <VelocitySkew maxDeg={2}>
+          <div className="mt-20 grid gap-10 md:grid-cols-3">
+            <FlipCard delay={0} axis="x">
+              <Step
+                n="01"
+                title="Skapa konto"
+                text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
+              />
+            </FlipCard>
+            <FlipCard delay={0.18} axis="y">
+              <Step
+                n="02"
+                title="Välj verbal eller matte"
+                text="Starta en match direkt mot en bot eller bjud in en vän med en länk."
+              />
+            </FlipCard>
+            <FlipCard delay={0.36} axis="x">
+              <Step
+                n="03"
+                title="Kämpa & klättra"
+                text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
+              />
+            </FlipCard>
+          </div>
+        </VelocitySkew>
       </div>
     </section>
   );
 }
 
-/* ============== PROOF — live counter w/ count-up ============== */
+/* ============================================================ */
+/* ===  PROOF                                                === */
+/* ============================================================ */
+
 function ProofSection({ stats }: { stats: LandingStats | null }) {
   return (
-    <section className="bg-white px-6 py-20">
-      <div className="mx-auto max-w-5xl">
-        <div className="grid gap-6 sm:grid-cols-3">
-          <ProofCard
-            value={stats?.totalMatches ?? 0}
-            label="Matcher spelade"
-          />
-          <ProofCard value={stats?.totalPlayers ?? 0} label="Aktiva spelare" />
-          <ProofCard value={8000} suffix="+" label="HP-ord i databasen" />
-        </div>
+    <section className="relative bg-white px-6 py-20">
+      <StickyNumber n="04" />
+      <div className="relative mx-auto max-w-5xl">
+        <VelocitySkew maxDeg={2.5}>
+          <div className="grid gap-6 sm:grid-cols-3">
+            <FlipCard delay={0} axis="y">
+              <ProofCard value={stats?.totalMatches ?? 0} label="Matcher spelade" />
+            </FlipCard>
+            <FlipCard delay={0.1} axis="x">
+              <ProofCard value={stats?.totalPlayers ?? 0} label="Aktiva spelare" />
+            </FlipCard>
+            <FlipCard delay={0.2} axis="y">
+              <ProofCard value={8000} suffix="+" label="HP-ord i databasen" />
+            </FlipCard>
+          </div>
+        </VelocitySkew>
       </div>
     </section>
   );
 }
 
-/* ============== FOUNDER QUOTE ============== */
+/* ============================================================ */
+/* ===  FOUNDER QUOTE                                        === */
+/* ============================================================ */
+
 function FounderQuote() {
   return (
-    <section className="bg-paper px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-3xl">
-        <motion.figure
-          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="surface-elevated relative rounded-[32px] p-12 sm:p-16"
-        >
-          <div
-            aria-hidden
-            className="absolute -left-2 -top-8 text-[160px] leading-none text-indigo-500/15"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            "
-          </div>
-          <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
-            HP Kampen innehåller verktyg jag hade haft{" "}
-            <span className="text-aurora-gradient italic">stor nytta av</span>{" "}
-            när jag pluggade till högskoleprovet — helt gratis.
-          </blockquote>
-          <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">
-              N
-              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400">
-                <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
-                  <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
-                </svg>
-              </span>
+    <section className="relative bg-paper px-6 py-24 sm:py-32">
+      <StickyNumber n="05" />
+      <div className="relative mx-auto max-w-3xl">
+        <ClipReveal>
+          <figure className="surface-elevated relative rounded-[32px] p-12 sm:p-16">
+            <div
+              aria-hidden
+              className="absolute -left-2 -top-8 text-[160px] leading-none text-indigo-500/15"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              "
             </div>
-            <div>
-              <div
-                className="text-base font-semibold text-[#0a0a0f]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Niklas
+            <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
+              HP Kampen innehåller verktyg jag hade haft{" "}
+              <span className="text-aurora-gradient italic">stor nytta av</span> när jag pluggade
+              till högskoleprovet — helt gratis.
+            </blockquote>
+            <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">
+                N
+                <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400">
+                  <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white">
+                    <path d="M12 2l1.8 5.5H19l-4.6 3.4 1.8 5.6L12 13l-4.2 3.5 1.8-5.6L5 7.5h5.2z" />
+                  </svg>
+                </span>
               </div>
-              <div className="text-xs text-neutral-500">
-                Grundare · 1.9 på Högskoleprovet
+              <div>
+                <div
+                  className="text-base font-semibold text-[#0a0a0f]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Niklas
+                </div>
+                <div className="text-xs text-neutral-500">Grundare · 1.9 på Högskoleprovet</div>
               </div>
-            </div>
-          </figcaption>
-        </motion.figure>
+            </figcaption>
+          </figure>
+        </ClipReveal>
       </div>
     </section>
   );
 }
 
-/* ============== FINAL CTA — dramatic dark with mesh ============== */
+/* ============================================================ */
+/* ===  FINAL CTA                                            === */
+/* ============================================================ */
+
 function FinalCTA() {
   return (
     <section className="relative overflow-hidden bg-mesh px-6 py-32 text-center text-white">
+      <StickyNumber n="06" />
       <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
 
-      {/* Floating orbs */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="orb orb-indigo animate-orb-drift"
-          style={{ top: "20%", left: "20%", width: 400, height: 400 }}
-        />
-        <div
-          className="orb orb-fuchsia animate-orb-drift"
-          style={{
-            top: "30%",
-            right: "15%",
-            width: 360,
-            height: 360,
-            animationDelay: "5s",
-          }}
-        />
-      </div>
+      <Parallax speed={-0.2}>
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div
+            className="orb orb-indigo animate-orb-drift"
+            style={{ top: "20%", left: "20%", width: 400, height: 400 }}
+          />
+          <div
+            className="orb orb-fuchsia animate-orb-drift"
+            style={{
+              top: "30%",
+              right: "15%",
+              width: 360,
+              height: 360,
+              animationDelay: "5s",
+            }}
+          />
+        </div>
+      </Parallax>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto max-w-3xl"
-      >
-        <p className="eyebrow text-fuchsia-300">Sista anhalten</p>
-        <h2 className="display mt-4 text-[56px] leading-[1.05] text-white sm:text-[88px]">
-          Redo att{" "}
-          <span className="text-aurora-gradient italic">testa dig</span>?
-        </h2>
-        <p className="mx-auto mt-6 max-w-md text-[18px] text-white/65">
-          Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som
-          klättrar.
-        </p>
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <MagneticButton primary>
+      <ClipReveal>
+        <div className="relative mx-auto max-w-3xl">
+          <p className="eyebrow text-fuchsia-300">Sista anhalten</p>
+          <h2 className="display mt-4 text-[56px] leading-[1.05] text-white sm:text-[88px]">
+            <SplitText as="span">Redo att testa dig?</SplitText>
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-[18px] text-white/65">
+            Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som klättrar.
+          </p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/signup"
+              data-cursor="link"
               className="btn-shine group inline-flex h-[64px] items-center gap-2 rounded-full bg-white px-10 text-[17px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)]"
             >
               Skapa konto nu
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
-          </MagneticButton>
-          <MagneticButton>
             <Link
               to="/login"
+              data-cursor="link"
               className="inline-flex h-[64px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-10 text-[17px] font-medium text-white hover:bg-white/10"
             >
               Jag har redan konto
             </Link>
-          </MagneticButton>
+          </div>
         </div>
-      </motion.div>
+      </ClipReveal>
     </section>
   );
 }
 
-/* ===========================================================
-   SUB-COMPONENTS
-   =========================================================== */
+/* ============================================================ */
+/* ===  SUB-COMPONENTS                                       === */
+/* ============================================================ */
 
 function SectionHeader({
   eyebrow,
@@ -548,15 +778,16 @@ function SectionHeader({
       >
         {eyebrow}
       </motion.p>
-      <motion.h2
-        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-        animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
-        transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="display mt-3 text-[44px] leading-[0.98] text-[#050507] sm:text-[64px] md:text-[80px]"
-      >
-        {title}{" "}
-        <span className="text-aurora-gradient italic">{highlight}</span>
-      </motion.h2>
+      <h2 className="display mt-3 text-[44px] leading-[0.98] text-[#050507] sm:text-[64px] md:text-[80px]">
+        <SplitText as="span" className="block">
+          {title}
+        </SplitText>
+        <span className="text-aurora-gradient">
+          <SplitText as="span" delay={0.15} italic>
+            {highlight}
+          </SplitText>
+        </span>
+      </h2>
     </div>
   );
 }
@@ -567,49 +798,36 @@ function FeatureCard({
   text,
   gradient,
   featured,
-  delay,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
   gradient: string;
   featured?: boolean;
-  delay: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
       className={`group relative overflow-hidden rounded-[28px] border border-black/5 bg-white p-8 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)] ${
         featured ? "md:-translate-y-3" : ""
       }`}
     >
-      {/* Gradient halo on hover */}
       <div
         aria-hidden
         className={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-30`}
       />
-
-      {/* Icon */}
       <div
         className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform group-hover:scale-110 group-hover:rotate-3`}
       >
         {icon}
       </div>
-
       <h3
         className="text-[26px] font-bold leading-tight text-[#0a0a0f]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h3>
-      <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">
-        {text}
-      </p>
-
+      <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{text}</p>
       {featured && (
         <div className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-amber-700">
           <Sparkles className="h-3.5 w-3.5" />
@@ -620,26 +838,13 @@ function FeatureCard({
   );
 }
 
-function Step({
-  n,
-  title,
-  text,
-  delay,
-}: {
-  n: string;
-  title: string;
-  text: string;
-  delay: number;
-}) {
+function Step({ n, title, text }: { n: string; title: string; text: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="relative"
-    >
-      <div className="text-aurora-gradient text-[80px] font-bold leading-none" style={{ fontFamily: "var(--font-display)" }}>
+    <div className="relative">
+      <div
+        className="text-aurora-gradient text-[80px] font-bold leading-none"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
         {n}
       </div>
       <h3
@@ -648,38 +853,25 @@ function Step({
       >
         {title}
       </h3>
-      <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-neutral-600">
-        {text}
-      </p>
-    </motion.div>
+      <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-neutral-600">{text}</p>
+    </div>
   );
 }
 
-function ProofCard({
-  value,
-  label,
-  suffix,
-}: {
-  value: number;
-  label: string;
-  suffix?: string;
-}) {
+function ProofCard({ value, label, suffix }: { value: number; label: string; suffix?: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-[24px] border border-black/5 bg-gradient-to-br from-white to-neutral-50 p-8 text-center shadow-[var(--shadow-card)]"
-    >
-      <div className="text-[60px] font-bold leading-none text-aurora-gradient tabular-nums" style={{ fontFamily: "var(--font-display)" }}>
+    <div className="rounded-[24px] border border-black/5 bg-gradient-to-br from-white to-neutral-50 p-8 text-center shadow-[var(--shadow-card)]">
+      <div
+        className="text-[60px] font-bold leading-none text-aurora-gradient tabular-nums"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
         <CountUp end={value} />
         {suffix}
       </div>
       <div className="mt-3 text-[13px] font-medium uppercase tracking-wider text-neutral-500">
         {label}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -703,9 +895,7 @@ function StatTeaser({
         <CountUp end={value} />
         {suffix}
       </div>
-      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/45">
-        {label}
-      </div>
+      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/45">{label}</div>
     </div>
   );
 }
@@ -731,97 +921,4 @@ function CountUp({ end }: { end: number }) {
   }, [inView, end]);
 
   return <span ref={ref}>{display.toLocaleString("sv-SE")}</span>;
-}
-
-function WordReveal({
-  text,
-  delay,
-  italic,
-}: {
-  text: string;
-  delay: number;
-  italic?: boolean;
-}) {
-  return (
-    <motion.span
-      initial={{ opacity: 0, y: 60, rotateX: -45, filter: "blur(16px)" }}
-      animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-      transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`inline-block ${italic ? "italic font-light" : "font-bold"}`}
-      style={{ transformPerspective: 1000 }}
-    >
-      {text}
-    </motion.span>
-  );
-}
-
-function MagneticButton({
-  children,
-  primary,
-}: {
-  children: React.ReactNode;
-  primary?: boolean;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 300, damping: 20 });
-  const sy = useSpring(y, { stiffness: 300, damping: 20 });
-
-  if (reduce) {
-    return <div className={primary ? "group" : ""}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      style={{ x: sx, y: sy }}
-      onMouseMove={(e) => {
-        const rect = ref.current!.getBoundingClientRect();
-        const cx = e.clientX - rect.left - rect.width / 2;
-        const cy = e.clientY - rect.top - rect.height / 2;
-        x.set(cx * 0.25);
-        y.set(cy * 0.25);
-      }}
-      onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      className={primary ? "group" : ""}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/* ===== Cursor glow that follows mouse ===== */
-function CursorGlow() {
-  const x = useMotionValue(-1000);
-  const y = useMotionValue(-1000);
-  const sx = useSpring(x, { stiffness: 80, damping: 20 });
-  const sy = useSpring(y, { stiffness: 80, damping: 20 });
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      x.set(e.clientX);
-      y.set(e.clientY);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [x, y]);
-
-  return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-[60] hidden h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
-      style={{
-        x: sx,
-        y: sy,
-        background:
-          "radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 60%)",
-        mixBlendMode: "screen",
-      }}
-    />
-  );
 }
