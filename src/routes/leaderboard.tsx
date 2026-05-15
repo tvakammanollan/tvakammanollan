@@ -275,8 +275,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   return (
     <motion.tr
       initial={{ opacity: 0, x: -16 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: Math.min(r.rank * 0.02, 0.4), ease: [0.22, 1, 0.36, 1] }}
       className={`group border-t border-black/5 transition-all ${rowBg} ${
         isMe ? "font-semibold" : "hover:bg-neutral-50"

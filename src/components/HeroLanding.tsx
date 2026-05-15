@@ -453,7 +453,7 @@ function StageRow({
   reversed: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: true, amount: 0.25, margin: "200px 0px 200px 0px" });
   const reduce = useReducedMotion();
   const dirX = reversed ? 60 : -60;
 
@@ -647,7 +647,7 @@ function MatchRow({
   delay: number;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const inView = useInView(ref, { once: true, amount: 0.5, margin: "200px 0px 200px 0px" });
 
   const p1Name = match.p1_name || "Gäst";
   const p2Name = match.is_bot_match ? "HP-bot" : match.p2_name || "Gäst";
@@ -743,7 +743,7 @@ function FounderQuote() {
         <motion.figure
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2, margin: "200px 0px 200px 0px" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="surface-elevated relative rounded-[32px] p-10 sm:p-14"
         >
@@ -856,7 +856,7 @@ function SectionHeader({
   highlight: string;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: true, amount: 0.3, margin: "200px 0px 200px 0px" });
   return (
     <div ref={ref} className="text-center">
       <motion.p
@@ -992,7 +992,7 @@ function StatTeaser({
 function CountUp({ end }: { end: number }) {
   const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const inView = useInView(ref, { once: true, amount: 0.5, margin: "200px 0px 200px 0px" });
 
   useEffect(() => {
     if (!inView) return;

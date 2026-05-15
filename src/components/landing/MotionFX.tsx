@@ -161,7 +161,7 @@ export function SplitText({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount });
+  const inView = useInView(ref, { once: true, amount, margin: "200px 0px 200px 0px" });
   const words = useMemo(() => children.split(/(\s+)/), [children]);
 
   // Memoise the motion-wrapped tag — otherwise every parent re-render
@@ -363,7 +363,7 @@ export function FlipCard({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: true, amount: 0.25, margin: "200px 0px 200px 0px" });
 
   const initial = reduce
     ? { opacity: 0 }
@@ -405,7 +405,7 @@ export function ClipReveal({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { once: true, amount: 0.3, margin: "200px 0px 200px 0px" });
   return (
     <motion.div
       ref={ref}
@@ -705,7 +705,7 @@ export function Reveal({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount });
+  const inView = useInView(ref, { once: true, amount, margin: "200px 0px 200px 0px" });
   return (
     <motion.div
       ref={ref}
@@ -746,7 +746,7 @@ export function StaggerList({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount });
+  const inView = useInView(ref, { once: true, amount, margin: "200px 0px 200px 0px" });
   const items = Array.isArray(children) ? children : [children];
 
   return (
