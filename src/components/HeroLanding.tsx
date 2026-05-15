@@ -101,8 +101,6 @@ export function HeroLanding() {
       <ProofSection stats={stats} />
 
       <FinalCTA />
-
-      <FounderQuote />
     </div>
   );
 }
@@ -409,8 +407,15 @@ function TestimonialsSection() {
               key={t.name}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              whileHover={
+                t.founder
+                  ? { boxShadow: "0 0 0 1px rgba(99,102,241,0.25), 0 0 40px -6px rgba(99,102,241,0.45), 0 0 60px -12px rgba(139,92,246,0.3)" }
+                  : i === 0
+                    ? { boxShadow: "0 0 0 1px rgba(242,166,90,0.3), 0 0 40px -6px rgba(242,166,90,0.55), 0 0 60px -12px rgba(249,115,22,0.3)" }
+                    : { boxShadow: "0 0 0 1px rgba(99,102,241,0.25), 0 0 40px -6px rgba(99,102,241,0.45), 0 0 60px -12px rgba(139,92,246,0.3)" }
+              }
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] ${
+              className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] transition-colors ${
                 t.founder ? "border-indigo-100 bg-indigo-50/60" : "border-black/5 bg-white"
               }`}
             >
