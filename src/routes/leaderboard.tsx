@@ -22,10 +22,11 @@ interface LbRow {
   losses: number;
 }
 
-/**
- * No client-side filter — all players (including guests) should show.
- * Just drop rows with empty username (data corruption only).
- */
+function displayName(username: string): string {
+  if (!username || /^user_[0-9a-f]{6,}/i.test(username.trim())) return "Anonym";
+  return username;
+}
+
 function filterLeaderboard<T extends { username: string; rank: number }>(rows: T[]): T[] {
   return rows
     .filter((r) => (r.username ?? "").trim().length > 0)
@@ -299,7 +300,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       </td>
       <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
-          <span className="text-[15px] font-medium text-[#050507]">{r.username}</span>
+          <span className="text-[15px] font-medium text-[#050507]">{displayName(r.username)}</span>
           {isMe && (
             <span className="rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
               Du
@@ -451,7 +452,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       </td>
       <td className="px-3 py-2.5">
         <span className="inline-flex items-center gap-2">
-          {r.username}
+          {displayName(r.username)}
           {isMe && (
             <span className="rounded-full bg-[#6366f1] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
               Du

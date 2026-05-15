@@ -338,6 +338,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <nav aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
           <a href="/">Hem</a>
           <a href="/leaderboard">Topplista</a>
+          <a href="/gamla-prov">Gamla prov</a>
           <a href="/train">Träna HP</a>
           <a href="/ord">Öva ord</a>
           <a href="/matchmaking">Hitta match</a>
