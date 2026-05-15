@@ -38,3 +38,5 @@ dist-ssr
 !.ord-audit/manual-fixes.json
 !.ord-audit/fix-ord.sql
 !.ord-audit/preview-fixes.sql
+!.ord-audit/mek-fixes.json
+!.ord-audit/math-fixes.json
