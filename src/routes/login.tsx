@@ -111,7 +111,7 @@ export function AuthShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative min-h-[calc(100vh-60px)] overflow-hidden">
+    <div className="relative overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
@@ -121,7 +121,7 @@ export function AuthShell({
         }}
       />
 
-      <div className="mx-auto grid min-h-[calc(100vh-60px)] max-w-6xl gap-0 px-4 py-8 lg:grid-cols-2 lg:gap-12 lg:py-16">
+      <div className="mx-auto grid max-w-6xl gap-0 px-4 py-8 sm:py-12 lg:min-h-[calc(100vh-60px)] lg:grid-cols-2 lg:gap-12 lg:py-16">
         {/* LEFT — brand panel */}
         <aside className="hidden flex-col justify-between rounded-3xl bg-ink bg-grid-ink p-10 text-white lg:flex">
           <div>
@@ -167,7 +167,7 @@ export function AuthShell({
         </aside>
 
         {/* RIGHT — form panel */}
-        <div className="flex items-center">
+        <div className="flex lg:items-center">
           <div className="w-full max-w-md">
             <div
               className="rounded-3xl border border-black/5 bg-white/90 p-8 backdrop-blur-sm sm:p-10"

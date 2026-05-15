@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { motion, useScroll, useTransform, useReducedMotion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion, useInView, AnimatePresence } from "framer-motion";
 import {
   Loader2,
   ArrowRight,
@@ -30,6 +30,27 @@ import {
   TiltLayer,
   AmberMouseShadow,
 } from "@/components/landing/MotionFX";
+
+const TESTIMONIALS = [
+  {
+    quote: "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet — det är en ny känsla.",
+    name: "Aron",
+    score: "2.0",
+    founder: false,
+  },
+  {
+    quote: "HP Kampen har allt som behövs för att lyckas på högskoleprovet.",
+    name: "Gustav",
+    score: "1.9",
+    founder: false,
+  },
+  {
+    quote: "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet — helt gratis.",
+    name: "Niklas",
+    score: "1.9",
+    founder: true,
+  },
+];
 
 /* ====================================================================
    HERO LANDING — "Aurora Dream"
@@ -66,6 +87,8 @@ export function HeroLanding() {
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
 
       <Ribbon />
+
+      <TestimonialsSection />
 
       <Features />
 
@@ -349,6 +372,110 @@ function Ribbon() {
   return (
     <section className="relative overflow-hidden border-y border-black/10 bg-white py-8">
       <VelocityMarquee items={rendered} baseSpeed={0.7} />
+    </section>
+  );
+}
+
+/* ============================================================ */
+/* ===  TESTIMONIALS                                         === */
+/* ============================================================ */
+
+function TestimonialsSection() {
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setDir(1);
+      setActive((p) => (p + 1) % TESTIMONIALS.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, []);
+
+  const goTo = (i: number) => {
+    setDir(i > active ? 1 : -1);
+    setActive(i);
+  };
+
+  return (
+    <section className="bg-white px-6 py-14">
+      <div className="mx-auto max-w-5xl">
+        <p className="eyebrow mb-8 text-center">Vad säger användarna?</p>
+
+        {/* Desktop: all 3 side by side */}
+        <div className="hidden gap-5 md:grid md:grid-cols-3">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] ${
+                t.founder ? "border-indigo-100 bg-indigo-50/60" : "border-black/5 bg-white"
+              }`}
+            >
+              <p className="text-[15px] italic leading-relaxed text-neutral-700">&ldquo;{t.quote}&rdquo;</p>
+              <div className="mt-5 flex items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">
+                  {t.name[0]}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-[#050507]">{t.name}</p>
+                  {t.founder && <p className="text-xs text-neutral-400">Grundare</p>}
+                </div>
+                <span className="ml-auto shrink-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
+                  {t.score}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile: carousel */}
+        <div className="md:hidden">
+          <div className="overflow-hidden rounded-2xl">
+            <AnimatePresence initial={false} custom={dir} mode="wait">
+              <motion.div
+                key={active}
+                custom={dir}
+                initial={{ opacity: 0, x: dir * 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: dir * -60 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] ${
+                  TESTIMONIALS[active].founder ? "border-indigo-100 bg-indigo-50/60" : "border-black/5 bg-white"
+                }`}
+              >
+                <p className="text-[15px] italic leading-relaxed text-neutral-700">
+                  &ldquo;{TESTIMONIALS[active].quote}&rdquo;
+                </p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">
+                    {TESTIMONIALS[active].name[0]}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-[#050507]">{TESTIMONIALS[active].name}</p>
+                    {TESTIMONIALS[active].founder && <p className="text-xs text-neutral-400">Grundare</p>}
+                  </div>
+                  <span className="ml-auto shrink-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
+                    {TESTIMONIALS[active].score}
+                  </span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="mt-4 flex justify-center gap-2">
+            {TESTIMONIALS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Testimonial ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${i === active ? "w-5 bg-indigo-500" : "w-2 bg-neutral-300"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
