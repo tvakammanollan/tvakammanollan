@@ -401,40 +401,45 @@ function TestimonialsSection() {
         <p className="eyebrow mb-8 text-center">Vad säger användarna?</p>
 
         {/* Desktop: all 3 side by side */}
-        <div className="hidden gap-5 md:grid md:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={
-                t.founder
-                  ? { boxShadow: "0 0 0 1px rgba(99,102,241,0.25), 0 0 40px -6px rgba(99,102,241,0.45), 0 0 60px -12px rgba(139,92,246,0.3)" }
-                  : i === 0
-                    ? { boxShadow: "0 0 0 1px rgba(242,166,90,0.3), 0 0 40px -6px rgba(242,166,90,0.55), 0 0 60px -12px rgba(249,115,22,0.3)" }
-                    : { boxShadow: "0 0 0 1px rgba(99,102,241,0.25), 0 0 40px -6px rgba(99,102,241,0.45), 0 0 60px -12px rgba(139,92,246,0.3)" }
-              }
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] transition-colors ${
-                t.founder ? "border-indigo-100 bg-indigo-50/60" : "border-black/5 bg-white"
-              }`}
-            >
-              <p className="text-[15px] italic leading-relaxed text-neutral-700">&ldquo;{t.quote}&rdquo;</p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">
-                  {t.name[0]}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[#050507]">{t.name}</p>
-                  {t.founder && <p className="text-xs text-neutral-400">Grundare</p>}
-                </div>
-                <span className="ml-auto shrink-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
-                  {t.score}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {(() => {
+          const gradients = [
+            "from-amber-400 via-orange-500 to-red-400",
+            "from-cyan-400 via-indigo-500 to-violet-600",
+            "from-indigo-400 via-violet-500 to-purple-600",
+          ];
+          return (
+            <div className="hidden gap-5 md:grid md:grid-cols-3">
+              {TESTIMONIALS.map((t, i) => (
+                <motion.div
+                  key={t.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-black/5 bg-white p-7 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)]"
+                >
+                  <div
+                    aria-hidden
+                    className={`absolute inset-0 -z-10 bg-gradient-to-br ${gradients[i]} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-25`}
+                  />
+                  <p className="text-[16px] leading-relaxed text-[#0a0a0f]">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradients[i]} text-sm font-bold text-white shadow-md`}>
+                      {t.name[0]}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-[#050507]">{t.name}</p>
+                      {t.founder && <p className="text-xs text-neutral-400">Grundare</p>}
+                    </div>
+                    <span className={`ml-auto shrink-0 rounded-full bg-gradient-to-r ${gradients[i]} px-2.5 py-0.5 text-xs font-bold text-white shadow-sm`}>
+                      {t.score}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          );
+        })()}
 
         {/* Mobile: carousel */}
         <div className="md:hidden">
@@ -447,15 +452,13 @@ function TestimonialsSection() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: dir * -60 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className={`flex flex-col justify-between rounded-2xl border p-6 shadow-[var(--shadow-card)] ${
-                  TESTIMONIALS[active].founder ? "border-indigo-100 bg-indigo-50/60" : "border-black/5 bg-white"
-                }`}
+                className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-7 shadow-[var(--shadow-card)]"
               >
-                <p className="text-[15px] italic leading-relaxed text-neutral-700">
+                <p className="text-[16px] leading-relaxed text-[#0a0a0f]">
                   &ldquo;{TESTIMONIALS[active].quote}&rdquo;
                 </p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">
+                <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white shadow-md">
                     {TESTIMONIALS[active].name[0]}
                   </div>
                   <div className="min-w-0">
