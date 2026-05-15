@@ -261,7 +261,7 @@ export function simulateBotMatch(
     botElo >= 1400 ? 15 :
     botElo >= 1200 ? 21 :
     botElo >= 1000 ? 30 :
-    botElo >= 800  ? 39 : 48;
+    botElo >= 800  ? 39 : 33;
   const total = Math.max(1, questions.length) * secondsPerQuestion;
   const variation = total * 0.20;
   const submitTimeSeconds = Math.round(
