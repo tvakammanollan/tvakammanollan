@@ -180,7 +180,7 @@ export default function GamlaProvPage() {
             </button>
             {showPassage && (
               <div
-                className="max-h-72 overflow-y-auto rounded-b-2xl px-4 pb-4 text-sm leading-relaxed"
+                className="rounded-b-2xl px-4 pb-4 text-sm leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
                 {passage}
