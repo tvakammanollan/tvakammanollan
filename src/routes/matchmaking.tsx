@@ -10,6 +10,7 @@ import { Loader2, Trophy } from "lucide-react";
 import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranked.functions";
 import { createMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const search = z.object({ type: z.enum(["verbal", "math"]).default("verbal") });
 

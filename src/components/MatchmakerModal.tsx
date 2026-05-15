@@ -79,18 +79,9 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
 
   const typeLabel = matchType === "verbal" ? "Verbal" : "Matte";
 
-  const handleQuickMatch = async () => {
-    setBusy(true);
-    try {
-      const res = await createFn({ data: { match_type: matchType, mode: "bot" } });
-      navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
-      close();
-    } catch (e) {
-      console.error(e);
-      toast.error(e instanceof Error ? e.message : "Kunde inte starta matchen");
-    } finally {
-      setBusy(false);
-    }
+  const handleQuickMatch = () => {
+    navigate({ to: "/matchmaking", search: { type: matchType } });
+    close();
   };
 
   const handleCreateRoom = async () => {
@@ -155,8 +146,8 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
           <div className="grid gap-2.5">
             <ChoiceCard
               icon={busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />}
-              title="Snabbmatch – möt en bot"
-              subtitle="Möt en bot direkt – ingen väntetid"
+              title="Snabbmatch"
+              subtitle="Matchas mot en motståndare direkt"
               accent="primary"
               onClick={handleQuickMatch}
               disabled={busy}

@@ -12,6 +12,7 @@ export interface RecentMatch {
   player2_id: string | null;
   p1_name: string | null;
   p2_name: string | null;
+  bot_elo?: number | null;
 }
 
 export interface LandingStats {

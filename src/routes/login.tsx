@@ -154,7 +154,7 @@ export function AuthShell({
                 <span className="text-gold-gradient font-medium">Klara HP.</span>
               </h2>
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/65">
-                Live-matcher, ELO-ranking och bot-träning för Högskoleprovet. Helt gratis.
+                Live-matcher, ELO-ranking och träning för Högskoleprovet. Helt gratis.
               </p>
             </div>
           </div>

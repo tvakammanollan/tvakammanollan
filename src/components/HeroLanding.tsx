@@ -16,6 +16,7 @@ import {
   CalendarDays,
 } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
+import { getBotName } from "@/lib/bot";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
@@ -785,7 +786,7 @@ function MatchRow({
   const inView = useInView(ref, { once: true, amount: 0.5, margin: "200px 0px 200px 0px" });
 
   const p1Name = match.p1_name || "Gäst";
-  const p2Name = match.is_bot_match ? "HP-bot" : match.p2_name || "Gäst";
+  const p2Name = match.is_bot_match ? getBotName(match.bot_elo ?? 1000, match.id) : match.p2_name || "Gäst";
   const p1Score = match.player1_score ?? 0;
   const p2Score = match.player2_score ?? 0;
 

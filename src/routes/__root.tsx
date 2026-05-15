@@ -98,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking, alla 8 delprov och bot-träning – helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://hpkampen.se/" },
@@ -113,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking, alla 8 delprov och bot-träning – helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
       {
         name: "twitter:image",
@@ -176,7 +176,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           featureList: [
             "Realtidsmatcher mot vänner",
             "ELO-ranking med tiers från Brons till Diamant",
-            "Bot-träning utan tidsbegränsning",
+            "Övningsmatcher utan tidsbegränsning",
             "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
             "8 000+ HP-ord i databasen",
             "Gratis coachning av 1.9+-spelare",
@@ -197,7 +197,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           logo: "https://hpkampen.se/favicon.svg",
           areaServed: "SE",
           description:
-            "Sveriges enda gratis plattform för Högskoleprovet med realtidsmatcher, ELO-ranking och bot-träning. Träna alla 8 delprov med riktiga HP-frågor.",
+            "Sveriges enda gratis plattform för Högskoleprovet med realtidsmatcher och ELO-ranking. Träna alla 8 delprov med riktiga HP-frågor.",
           founder: { "@id": "https://hpkampen.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",
@@ -258,7 +258,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Hur funkar matcherna?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Du väljer verbal eller matte, sen matchar vi dig mot en spelare på din ELO-nivå inom 10 sekunder. Hittas ingen så får du en bot-motståndare. En match är 8 frågor på 8 minuter. Vinnaren får ELO, förloraren tappar.",
+                text: "Du väljer verbal eller matte, sen matchar vi dig mot en spelare på din ELO-nivå inom sekunder. En match är 8 frågor på 8 minuter. Vinnaren får ELO, förloraren tappar.",
               },
             },
             {
