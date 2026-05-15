@@ -24,6 +24,9 @@ async function pickRandom(
 ): Promise<SelectedQuestion[]> {
   const isMath = MATH_CATEGORIES.has(category);
   // Fetch a pool then shuffle in JS (avoids heavy ORDER BY random on large tables).
+  // Verbal ORD pool is large (8000+ words) so we use a higher limit to ensure
+  // word-list questions (source=null) are reachable, not just the first 500.
+  const poolLimit = isMath ? 600 : 9000;
   let q = supabaseAdmin
     .from("questions")
     .select(
@@ -31,7 +34,7 @@ async function pickRandom(
     )
     .eq("category", category)
     .is("passage_id", null)
-    .limit(500);
+    .limit(poolLimit);
   if (isMath) q = q.eq("clean_status", "ok");
   const { data, error } = await q;
   if (error) throw error;
