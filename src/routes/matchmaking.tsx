@@ -6,7 +6,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { Loader2, Trophy } from "lucide-react";
 import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranked.functions";
 import { createMatch } from "@/lib/match.functions";
@@ -34,10 +33,10 @@ function MatchmakingPage() {
   const [minElo, setMinElo] = useState<number | null>(null);
   const [maxElo, setMaxElo] = useState<number | null>(null);
   const [myElo, setMyElo] = useState<number | null>(null);
-  const [showFallback, setShowFallback] = useState(false);
   const [navigating, setNavigating] = useState(false);
   const cancelledRef = useRef(false);
   const navigatedRef = useRef(false);
+  const botFiredRef = useRef(false);
 
   // Join queue on mount
   useEffect(() => {
@@ -71,11 +70,28 @@ function MatchmakingPage() {
     return () => clearInterval(id);
   }, []);
 
-  // Show bot fallback after 10s
+  // Auto-match with bot after 6s if no human found — seamless, no indication it's a bot
   useEffect(() => {
-    if (elapsed >= 10) setShowFallback(true);
+    if (elapsed >= 6 && !navigatedRef.current && !botFiredRef.current && !navigating) {
+      botFiredRef.current = true;
+      void (async () => {
+        try {
+          cancelledRef.current = true;
+          await cancelFn().catch(() => {});
+          const res = await createFn({ data: { match_type: type, mode: "bot" } });
+          if (!navigatedRef.current) {
+            navigatedRef.current = true;
+            setNavigating(true);
+            navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
+          }
+        } catch (e) {
+          botFiredRef.current = false;
+          console.error("bot fallback failed", e);
+        }
+      })();
+    }
     if (elapsed === 30 && range === 200) setRange(400);
-  }, [elapsed, range]);
+  }, [elapsed, range, navigating, cancelFn, createFn, type, navigate]);
 
   // Polling for match
   useEffect(() => {
@@ -146,18 +162,6 @@ function MatchmakingPage() {
       /* ignore */
     }
     navigate({ to: "/" });
-  };
-
-  const playBot = async () => {
-    cancelledRef.current = true;
-    try {
-      await cancelFn();
-      const res = await createFn({ data: { match_type: type, mode: "bot" } });
-      navigatedRef.current = true;
-      navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Kunde inte starta bot-match");
-    }
   };
 
   if (!loading && !user) return <Navigate to="/login" />;
@@ -251,30 +255,6 @@ function MatchmakingPage() {
           {mm}:{ss}
         </div>
       </motion.div>
-
-      {showFallback && !navigating && (
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full rounded-2xl border border-[#eab308]/30 bg-gradient-to-br from-[#fef3c7] to-[#fde68a] p-4 text-sm"
-        >
-          <div className="font-semibold text-[#050507]">Ingen spelare ännu ({elapsed} sek)</div>
-          <div className="mt-1 text-[#713f12]">Vill du möta en bot istället?</div>
-          <div className="mt-3 flex gap-2">
-            <Button size="sm" onClick={playBot} className="flex-1 bg-[#6366f1] hover:bg-[#4338ca]">
-              ⚡ Ja, möt en bot
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setShowFallback(false)}
-              className="flex-1"
-            >
-              ⏳ Vänta mer
-            </Button>
-          </div>
-        </motion.div>
-      )}
 
       <Button variant="outline" onClick={cancel} disabled={navigating}>
         {navigating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

@@ -112,6 +112,7 @@ export function Navbar() {
           {loading ? null : user ? (
             <>
               <NavLink to="/train">Träna</NavLink>
+              <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
               <NavLink to="/friends" badge={pendingCount}>
                 Vänner
@@ -298,6 +299,9 @@ function MobileMenu({
           </MobileNavLink>
           <MobileNavLink to="/train" onClick={close} emoji="🎯">
             Träna
+          </MobileNavLink>
+          <MobileNavLink to="/gamla-prov" onClick={close} emoji="📄">
+            Gamla prov
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} emoji="🏆">
             Topplista

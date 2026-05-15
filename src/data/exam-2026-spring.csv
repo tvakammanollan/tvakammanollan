@@ -1,0 +1,161 @@
+provpass,uppgift_nr,delProv,fraga,alternativ_a,alternativ_b,alternativ_c,alternativ_d,alternativ_e,ratt_svar
+2,1,ORD,prognos,besked,utvärdering,sammanfattning,förutsägelse,redovisning,D
+2,2,ORD,slug,ivrig,otäck,girig,envis,listig,E
+2,3,ORD,eftertrakta,ta reda på,följa efter,härma,vilja ha,fundera på,D
+2,4,ORD,potential,stor skicklighet,inneboende möjligheter,sannolikt resultat,betydande framgångar,starka förhoppningar,B
+2,5,ORD,utomordentlig,märklig,förhastad,oavsiktlig,förträfflig,noggrann,D
+2,6,ORD,plombering,avskärmning,omledning,försegling,urgröpning,återställning,C
+2,7,ORD,miserabel,eländig,vilsen,bitter,plågsam,otrevlig,A
+2,8,ORD,fadäs,elakt skämt,kort vistelse,påminnelse,oförutsedd utgift,pinsamt misstag,E
+2,9,ORD,ingalunda,inte alls,i onödan,undantagsvis,otillräckligt,ingenstans,A
+2,10,ORD,erinra sig,undersöka,minnas,lugna sig,avvakta,invänta,B
+2,11,LÄS,Vilket är det huvudsakliga målet med den studie som presenteras i texten?,Att ta reda på vilken betydelse undervisnings-,Att ta reda på hur väl ämnet samhällskunskap,Att ta reda på hur mycket elevers engagemang,Att ta reda på om förändringen av gymnasie skolan,,D
+2,12,LÄS,Vad tycks ha stått i fokus vid utformningen av den skolreform som texten tar upp?,Elevernas framtida arbetsliv.,En stärkt demokrati.,Kunskaperna i teoretiska ämnen.,Skolans fostrande uppdrag.,,A
+2,13,LÄS,Vilket påstående sammanfattar bäst vad Ola Nilsson signalerar med sin text?,Ljudboksmarknaden behöver regleras.,Ljudboksförlagen satsar inte på kvalitets-,Det är bättre att läsa böcker än att lyssna,Det är meningslöst att debattera ljudboken.,,C
+2,14,LÄS,Ola Nilsson menar att den tryckta boken saknar ”gravitation”. Hur kan man bäst sammanfatta Daniel Åbergs svar på detta?,Ljudboken aktiverar andra sinnen vilket under-,Att lyssna på en bok kräver också en arbets-,"Det viktiga är litteraturens innehåll, inte hur det",Att lyssna och att läsa är helt olika aktiviteter,,B
+2,15,LÄS,Vad vill Daniel Åberg få sagt angående resulta- tet i den empiriska jämförelsestudie som han refererar till?,Att resultatet kan vara en följd av läsningens höga,Att resultatet visar på studenters skilda förutsätt-,Att resultatet tyder på att läsning och lyssning är,Att resultatet bevisar att läsning är den bästa in-,,A
+2,16,LÄS,Vilken funktion fyller den sista meningen i Daniel Åbergs text?,Den sammanfattar hans resonemang.,Den nyanserar hans i övrigt ensidiga argumenta-,Den synliggör att han och Ola Nilsson egentligen,Den skapar en viss distans till diskussionen som,,D
+2,17,LÄS,Vad anges i texten som en orsak till att närings- halterna i Vindelälven och andra norrländska inlandsvatten har förändrats?,En ökad mängd näring har tagits upp av skogens,Anlagda kraftverksdammar har ökat mängden,Fiskodlingar har krävt allt större mängder näring.,Ett varmare klimat har ökat strandvegetationens,,A
+2,18,LÄS,Vad är enligt texten orsaken till att mycket av fosforn i Ströms Vattudal inte är tillgänglig för biologisk produktion?,Avsaknaden av vegetation i litoralen.,Den ökande halten aluminium i pelagialen.,Att fosforn är bunden i organiskt material.,Att fosforn har koncentrerats till bottenmiljön,,A
+2,19,LÄS,"Hur beskriver man bäst, utifrån texten, rela­ tionen mellan vattenreglering och fiskodling om man ser till näringsinnehållet i en kraft- verksdamm?",Vattenregleringen kan förvärra fiskodlingens,Vattenregleringen kan påskynda fiskodlingens,Fiskodlingen kan motverka vattenregleringens,Fiskodlingen kan kompensera för vattenregle-,,D
+2,20,LÄS,Vilken frågeställning står i centrum för texten?,Hur minskar vi Östersjöns näringsöverskott?,Hur kan svenska inlandsvatten bli mer närings-,Hur utvecklas vilda fiskbestånd i näringsfattigt,Hur kan näringen i svenska inlandsvatten ut-,,B
+2,21,MEK,"Precis som vanligt te är örtte en så kallad _____ , vilket innebär att man låter blad eller andra växtdelar dra i varmt vatten för att få ut smakämnena.",inkarnation,infusion,induktion,inversion,,B
+2,22,MEK,"Första gången landsnamnet Sverige förekommer i _____ , stavat Swerighe, är i en _____ från Kalmar, daterad 1384.",original – bikt,klartext – kopia,skrift – urkund,citat – post,,C
+2,23,MEK,"Sven Lindqvist bygger ett författarskap där varje ny bok tycks ta vid där den _____ slutade. Så upplever sig läsaren vara inbjuden till en resa, vars _____ tills vidare är oviss men med tiden kommer att framstå som självklar mot bakgrund av hur resan startade. Då uppstår den känsla av _____ som kanske utgör den verkliga nerven i Lindqvists författarskap, när man tar del av det i dess helhet.",andra – färdriktning – framtidstro,tidigare – utgångspunkt – tvetydighet,dessförinnan – grundbetydelse – desperation,föregående – slutdestination – kontinuitet,,D
+2,24,MEK,"Ett klassiskt debattknep i politiken, som dock är ett brott mot vetenskaplig metod, är att ”_____ ”. Med uttrycket menas att man bara refererar utvalda delar av den samlade forskningen, i form av _____ citat som stöder den egna uppfattningen, medan övrigt förbises.",låta udda vara jämnt – obetydliga,koka soppa på en spik – påhittade,blanda äpplen och päron – motsägelsefulla,plocka russinen ur kakan – lösryckta,,D
+2,25,MEK,"Namnförkortningar på företag, organisationer och _____ som uttalas som ord skrivs med versal begynnelsebokstav: Ikea, Jas, Nato, Sida.",egenheter,koncept,dylikt,dito,,C
+2,26,MEK,"I Japan rekryteras ofta ny personal redan när de går i skolan, och de anställda stannar i regel i samma företag till pensionen. I tyst _____ mellan anställda och ledning har företagen _____ sig att behålla sin personal även under kärvare tider.",förbindelse – ålagt,medgivande – utfäst,samförstånd – åtagit,uppgörelse – utlyst,,C
+2,27,MEK,"Det är _____ att många av pidginspråken har liknande grammatiska konstruktioner, trots att deras vokabulärer kan härröra från helt olika språk. Det finns ingen enig uppfattning om orsakerna till dessa likheter.",påfallande,oberäkneligt,underförstått,slumpmässigt,,A
+2,28,MEK,"Den professionella lobbyismens expansion har skapat _____ för en ny typ av politisk _____ med mycket svaga band till vanliga medborgare. När politiskt förtroendekapital förvandlas till en vara på en marknad undergrävs _____ politikerna, partierna och demokratin.",en grogrund – elit – tilliten till,en hållhake – medelklass – föraktet för,ett andrum – agenda – synen på,en hävstång – ledning – avståndet till,,A
+2,29,MEK,Markförberedelserna inför omplantering inkluderar traditionellt att marken läggs i _____ eller används för andra _____ i flera år.,odling – sysslor,träda – grödor,skifte – åkrar,drift – bruk,,B
+2,30,MEK,"Majoriteten av de nyinsjuknade psykospatienterna förbättras, men vissa får kvarstående restsymtom och sänkt funktionsnivå. För andra får sjukdomen ett episodiskt förlopp med restsymtom mellan _____ .",skoven,avbrotten,ingreppen,tillstånden,,A
+2,31,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,B
+2,32,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+2,33,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+2,34,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+2,35,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,A
+2,36,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+2,37,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,B
+2,38,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+2,39,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,A
+2,40,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+3,1,XYZ,Vilket svarsalternativ motsvarar uttrycket (x + 3)(x - 5)?,x2 - 15,x2 - 2,x2 - 2x - 15,x2 - 2x - 8,,C
+3,2,XYZ,[Se provhäfte],,,,,,C
+3,3,XYZ,Hur många trubbiga vinklar kan en triangel som mest ha?,0,1,2,3,,B
+3,4,XYZ,Varje månad sparar Nils 1/5 av sin lön. Resten av lönen spenderar han. Vad är kvoten mellan det Nils sparar och det han spenderar under en månad?,1 /6,1 /5,1 /4,1 /3,,C
+3,5,XYZ,[Se provhäfte],,,,,,B
+3,6,XYZ,[Se provhäfte],,,,,,A
+3,7,XYZ,Vad är tiotalssiffran i $44 62 5?,0,2,4,8,,A
+3,8,XYZ,$28 2x32 = Vilket värde har x?,6,9,1 5,18,,B
+3,9,XYZ,Den räta linjen L ges av ekvationen 2y + x = 2. Vilket svarsalternativ visar linjen L? A,4 5,6 0,,Vad är 150 % av 50 % av 60?,,B
+3,10,XYZ,[Se provhäfte],,,,,,A
+3,11,XYZ,En cylinder har volymen 16 cm3 och höjden 1 cm. Vilket svarsalternativ ligger närmast cylinderns radie?,2 c m,4 c m,5 c m,5  cm,,D
+3,12,XYZ,[Se provhäfte],,,,,,C
+3,13,KVA,x > 4 Kvantitet I: x 1 Kvantitet II: 4 1,Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,e j genom de båda påståendena,B
+3,14,KVA,13. x > 4 Kvantitet I: x 1 Kvantitet II: 4 1,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,B
+3,15,KVA,Kvantitet I: E tt femsiffrigt tal som skrivs med endast sexor och sjuor Kvantitet II: E tt femsiffrigt tal som skrivs med endast sexor och åttor,Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,e j genom de båda påståendena,D
+3,16,KVA,15. Kvantitet I: E tt femsiffrigt tal som skrivs med endast sexor och sjuor Kvantitet II: E tt femsiffrigt tal som skrivs med endast sexor och åttor,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,A
+3,17,KVA,Kvantitet I: S umman av fyra olika ensiffriga jämna positiva heltal Kvantitet II: S umman av tre olika ensiffriga udda positiva heltal,Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,e j genom de båda påståendena,D
+3,18,KVA,17. Kvantitet I: S umman av fyra olika ensiffriga jämna positiva heltal Kvantitet II: S umman av tre olika ensiffriga udda positiva heltal,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,D
+3,19,KVA,Kvantitet I: 3 1 2 1- Kvantitet II: $ -2 1 3 1bl,Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,e j genom de båda påståendena,C
+3,20,KVA,19. Kvantitet I: 3 1 2 1- Kvantitet II: $ -2 1 3 1bl,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,A
+3,21,KVA,-1 < x < 0 < y < 1 Kvantitet I: y x Kvantitet II: x y,Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,e j genom de båda påståendena,D
+3,22,KVA,21. -1 < x < 0 < y < 1 Kvantitet I: y x Kvantitet II: x y,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,B
+3,23,NOG,[Se provhäfte],,,,,,C
+3,24,NOG,[Se provhäfte],,,,,,E
+3,25,NOG,[Se provhäfte],,,,,,B
+3,26,NOG,[Se provhäfte],,,,,,C
+3,27,NOG,[Se provhäfte],,,,,,D
+3,28,NOG,[Se provhäfte],,,,,,B
+3,29,DTK,"Hur mycket mer tid per vecka lade kvinnor på Diskning, avduk- ning 1990 jämfört med 2010?",45 minut er,60 minut er,90 minut er,105 minut er,,B
+3,30,DTK,Vilket av svarsförslagen motsvarar 3 timmar och 30 minuter i veckan?,Den tid kvinnor lade på Unde rhållsarbete år 1990,Den tid män lade  på Omsorg om egna barn år 1990,Den tid kvinnor lade på Ink öp av varor och tjänster år 2000,Den tid män lade  på Resor i samband med hemarbete år 2000,,C
+3,31,DTK,"Jämför den tid kvinnor lade på respektive hemarbetsaktivitet de olika åren. För vilken aktivitet hade tiden minskat mest 2010 jämfört med 1990, procentuellt sett?",Matlagning,St ädning av bostaden,"T vätt, strykning",Omsor g om egna barn,,C
+3,32,DTK,Hur lång var medelvårdtiden vid S:t Eriks sjukhus jämfört med medelvårdtiden vid Skånes universitetssjukhus?,En tr edjedel så lång,Hälft en så lång,Dubbe lt så lång,T re gånger så lång,,A
+3,33,DTK,Identifiera det sjukhus där patienterna hade den högsta medelåldern och det sjukhus där de hade den lägsta medelåldern. Hur stor var skillnaden i medelålder mellan dessa två sjukhus?,37 år,40 år,43 år,45 år,,C
+3,34,DTK,Hur många var vårddagarna sammanlagt vid Kiruna sjukhus?,7 200,8 500,9 900,10 500,,C
+3,35,DTK,"Vilka väderstreck beskriver bäst riktningen mellan de två undersökta, ej utbyggda uttagsplatserna vid Kåseberga och Ö. Vemmerlöv?",N NO – SSV,N NO – VSV,ON O – SSV,ON O – VSV,,A
+3,36,DTK,"Hur lång är den tilltänkta huvudvattenledningen från Hörupsåsen som startar vid det befintliga vattenverket i Löderup, går vidare till det befintliga vattenverket i Borrby, och sedan fortsätter via Skillinge till Ingelstorp?",22 km,33 km,44 km,55 km,,B
+3,37,DTK,"De befintliga vattenverken vid Nybro, Borrby och Bollerup utgör hörnen i ett triangel - format område. Hur stor area har detta område?",20 km2,40 km2,60 km2,80 km2,,B
+3,38,DTK,Vilket svarsförslag redovisar den procentuella fördelningen av medlemmar och icke medlemmar i Svenska kyrkan bland 63-åringar?,B  C  D,,,,,A
+3,39,DTK,I vilken av följande åldrar var antalet individer 110 000–120 000 och antalet medlemmar i Svenska kyrkan större än 80 000?,9 år,24 år,42 år,69 år,,D
+3,40,DTK,Jäm för 39-åringar med 18-åringar med avseende på antalet individer som inte var medlemmar i Svenska kyrkan. Hur stor var skillnaden?,5 000,15 000,25 000,35 000,,B
+4,1,ORD,kontentan,slutfasen,höjdpunkten,första intrycket,motsvarigheten,huvudinnehållet,E
+4,2,ORD,diffus,underlig,avskild,oklar,tudelad,skiftande,C
+4,3,ORD,upprätthålla,ge styrka åt,ta upp någons tid,ligga till grund för,bevara på en viss nivå,visa upp en snygg fasad,D
+4,4,ORD,välvillig,fast besluten,pålitlig,optimistisk,följsam,sympatiskt inställd,E
+4,5,ORD,unikum,något som är evigt,något som är ensamt i sitt slag,något som är dyrbart,något som är i ständig förändring,något som är väl känt,B
+4,6,ORD,för egen maskin,med kraft,frivilligt,utan hjälp,själviskt,på rutin,C
+4,7,ORD,utsikter,möjligheter,upplevelser,önskemål,föreställningar,synpunkter,A
+4,8,ORD,kröna,besegra,omforma,inhägna,fullända,överskrida,D
+4,9,ORD,banal,nördig,typisk,alldaglig,obildad,klumpig,C
+4,10,ORD,hjärtefråga,känslig fråga,angelägen fråga,evig fråga,närgången fråga,spontan fråga,B
+4,11,LÄS,"Vilken roll spelar tidens ”nitiska budbärare och handgångna män” i våra liv, enligt texten?",De påminner oss ständigt om döden och de döda.,De kommer och hämtar oss när det är dags att dö.,De vill få oss att glömma döden och de döda.,De försöker lura oss att döden är ett lyckligt slut.,,C
+4,12,LÄS,Vilket svarsförslag beskriver två poler som tycks stå mot varandra i texten?,Människors känslor för varandra – tidens kalla,Vardagens små glädjeämnen – sorgen efter,Ungdomlig hoppfullhet – insikten om döden.,Människans överlevnadsinstinkt – det hårda,,A
+4,13,LÄS,Vad framstår som syftet med de nationella rikt- linjer som nämns i texten?,Att förbättra utbildningen av ny vårdpersonal.,Att säkerställa kvaliteten i den dagliga vården.,Att underlätta utvärderingen av vården.,Att stärka den pågående omvårdnadsforskningen.,,B
+4,14,LÄS,Av texten att döma befinner sig omvårdnads- forskningen i en sorts övergångsfas. Hur kan den fasen bäst beskrivas?,Från experiment till teori.,Från exempel till kartläggning.,Från beskrivning till analys.,Från utforskning till tillämpning.,,D
+4,15,LÄS,"Vad utmärkte 1970- och 1980-talets ”industri - ella” omvårdnad, enligt texten?",Att den personliga relationen mellan vårdare och,Att patientens personliga behov inte ansågs vik-,Att vårdarens arbete med patienten begränsades,Att vårdarens uppgift var att övervaka snarare än,,C
+4,16,LÄS,"Vad är det som gör ledarskapet inom omvårdnad extra viktigt i dag, enligt Per-Olof Sandman?",En ökad personalomsättning.,Den rådande bemanningssituationen.,Övergången till uppgiftsfokuserad vård.,Förväntningar från vårdtagarnas sida.,,B
+4,17,LÄS,"Vad talar emot en afrikansk vår, enligt texten?",Etniskt splittrade samhällen.,En växande ungdomsarbetslöshet.,Stora ekonomiska skillnader.,Korrupta makthavare.,,A
+4,18,LÄS,Vad lyfts i texten fram som ett viktigt led i fattig- domsbekämpningen i Afrika söder om Sahara?,Att förändra afrikanska ungdomars syn på jord-,Att nyansera den mediala bilden av Afrikas pro-,Att minska de stora inkomstskillnaderna.,Att påverka samhället i demokratisk riktning.,,A
+4,19,LÄS,Vilket påstående överensstämmer bäst med tex- tens resonemang om det förändrade klimatet?,Fattiga människors brist på kunskap och resurser,Afrika är den kontinent som drabbas hårdast av,Klimatförändringarna kan bromsas med ett mo-,De som är minst skyldiga till klimatförändringarna,,D
+4,20,LÄS,Vilken av följande frågor kretsar texten som helhet kring?,Vem bär ansvaret för Afrikas problem?,Vem ska leda det nya Afrika?,Vad avgör Afrikas framtid?,Vad kan ena Afrikas befolkningar?,,C
+4,21,MEK,"De ekorrar som vi har i Sverige lever inte i flock utan är i det närmaste _____ , det vill säga ensamlevande.",solitära,separata,isolerade,individuella,,A
+4,22,MEK,"En betydelsefull _____ av svälten, fattigdomen och eländet i Sverige på 1860-talet var den mycket _____ emigrationen till framför allt Nordamerika.",biverkan – övergripande,konsekvens – omfattande,slutsats – förekommande,insikt – utmanande,,B
+4,23,MEK,"Reklamen för en av de mest använda dejtingapparna lyder: ”Swipe life!” Den är _____ , för den _____ heta drömmar på något så _____ som ett svep med fingret. Livet, en kraft man bara stundtals känner sig nära, är bara ett svep bort.",beklaglig – inspirerar – snitsigt,missvisande – baserar – sansat,förförisk – projicerar – simpelt,tänkvärd – attraherar – självklart,,C
+4,24,MEK,"Ökande bostadspriser _____ i allmänhet de rikaste, eftersom fastighetstillgångar och vinsten från försäljning av dessa är _____ till de övre skikten av inkomstfördelningen.",gynnar – koncentrerade,drabbar – fördelade,främjar – privilegierade,hämmar – begränsade,,A
+4,25,MEK,En vanlig förklaring till morgontrötthet är att vissa personers inre klocka har en _____ som är längre än 24 timmar och därför tenderar att förskjuta dygnsrytmen.,kapacitet,cirkulation,periodicitet,disposition,,C
+4,26,MEK,Under flytten är det viktigt för fåglar att hela tiden ha med sig rätt mängd flygbränsle i form av fett. För mycket fett _____ färden och ökar risken att bli uppäten av rovfåglar. För lite kan leda till svältdöden om födan är _____ .,dröjer – klen,sackar – vag,dämpar – låg,sinkar – knapp,,D
+4,27,MEK,Även om komedins ursprung är _____ anser de flesta forskare i dag att den föddes ur karnevalsliknande fester i samband med Dionysosfestivalerna på 400-talet f.Kr.,omstritt,omvittnat,outgrundligt,otvivelaktigt,,A
+4,28,MEK,"Brott mot ordningslagen kan straffas med böter eller fängelse i högst sex månader. Den som _____ eller _____ bryter mot förbud mot förtäring eller förvaring av alkoholdrycker döms till penningböter, om inte gärningen är _____ med straff i någon annan författning.",uppsåtligen – av oaktsamhet – belagd,tillfälligt – upprepat – relaterad,direkt – indirekt – försedd,uttryckligen – underförstått – förenlig,,A
+4,29,MEK,"Jag kunde inte se på henne när jag pratade om detta, men jag visste att hon satt och tittade intensivt på mig för att liksom _____ om det var allvar, om jag verkligen menade och stod för vad jag sa.",uppdaga,betrakta,utröna,intyga,,C
+4,30,MEK,För att mildra krisen ville facket och arbetsgivarorganisationen tillsammans genomföra ett omfattande kompetensutvecklingsprogram för de anställda. Men satsningen _____ när regeringen i sin vårbudget inte _____ mer pengar till den fond som skulle finansiera projektet.,föll till föga – värvade,stötte på patrull – anslog,gick omlott – äskade,fick vind i seglen – tillsatte,,B
+4,31,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,A
+4,32,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+4,33,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+4,34,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,B
+4,35,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+4,36,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,B
+4,37,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+4,38,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,C
+4,39,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,A
+4,40,ELF,[ELF ej tillgänglig – se provhäfte],,,,,,D
+5,1,XYZ,3(x - 4) = 5(x + 2) Vad är x?,-11,-3,1,3,,A
+5,2,XYZ,"Melvin löste ekvationen ()xx62 44- =+- felaktigt. Han genomförde uträkningen i följande fyra steg: ()xx62 44- =+- xx61 24 4- =+- xx64 16=+- x10 16=- ,x 16= - I vilket steg uppstod felet?",S teg 1,S teg 2,S teg 3,S teg 4,,A
+5,3,XYZ,[Se provhäfte],,,,,,C
+5,4,XYZ,[Se provhäfte],,,,,,A
+5,5,XYZ,Vad är 6 1 4 1 5 1+ ? A 27 1 B 3 2 C 2 3 D 10 27 Linjerna L 1 och L2 är parallella. Hur stor är vinkeln v?,53°,56°,66°,71°,,D
+5,6,XYZ,[Se provhäfte],,,,,,B
+5,7,XYZ,"Vad är $,,00 80 03?","0,00024","0,0024","0,024","0,24",,B
+5,8,XYZ,Vilket svarsalternativ motsvarar uttrycket -28xyz + 20xy?,-8z,-2xy(14z + 10),4xy(5 - 7z),20xy(1 - 8z),,C
+5,9,XYZ,"En funktion f ges av f(x) = kx + m, där m = 7 och f(10) = 3. Vad är f(20)?",-43,-1,6,1 5,,B
+5,10,XYZ,Fyrhörningen ABDF är en kvadrat. Hur stor är arean av triangeln ACE?,"3 ,5 cm 2",4 c m 2,"4 ,5 cm 2",5 c m 2,,B
+5,11,XYZ,Vilket svarsalternativ är lika med 43 3$ -3 44^h ?,12,35,$43 5,36,,D
+5,12,XYZ,För vilket svarsalternativ gäller med säkerhet att a2b - ab2 > 0?,"a < 0, b > 0","a > 0, b < 0","a < 0, b < 0","a > 0, b > 0",,A
+5,13,KVA,"Två vanliga sexsidiga tärningar kastas slumpmässigt en gång. Kvantitet I: S annolikheten att summan av det tärningarna visar är 3, om den ena tärningen visar en tvåa Kvantitet II: S annolikheten att summan av det tärningarna visar är 7, om den ena tärningen visar en tvåa",i (1) men ej i (2),i (2) men ej i (1),i (1) tillsammans med (2),i (1) och (2) var för sig,e j genom de båda påståendena,C
+5,14,KVA,"13. Två vanliga sexsidiga tärningar kastas slumpmässigt en gång. Kvantitet I: S annolikheten att summan av det tärningarna visar är 3, om den ena tärningen visar en tvåa Kvantitet II: S annolikheten att summan av det tärningarna visar är 7, om den ena tärningen visar en tvåa",I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,B
+5,15,KVA,Per kör vägen A–B–C–D utan paus. Mellan A och B är hans m edel h astighet 70 km/h. Mellan B och C är den 90 km/h och mellan C och D är den 70 km/h. Kvantitet I: T iden det tar för Per att köra från A till D Kvantitet II: 2 ti mmar,i (1) men ej i (2),i (2) men ej i (1),i (1) tillsammans med (2),i (1) och (2) var för sig,e j genom de båda påståendena,B
+5,16,KVA,15. Per kör vägen A–B–C–D utan paus. Mellan A och B är hans m edel h astighet 70 km/h. Mellan B och C är den 90 km/h och mellan C och D är den 70 km/h. Kvantitet I: T iden det tar för Per att köra från A till D Kvantitet II: 2 ti mmar,I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,C
+5,17,KVA,y < 0 Kvantitet I: -2y Kvantitet II: -(2y),i (1) men ej i (2),i (2) men ej i (1),i (1) tillsammans med (2),i (1) och (2) var för sig,e j genom de båda påståendena,C
+5,18,KVA,17. y < 0 Kvantitet I: -2y Kvantitet II: -(2y),I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,D
+5,19,KVA,"L1, L2 och L3 är räta linjer. L1: y = 2x + 1 L2: y = -x + 4 L3: y = x Kvantitet I: x-koordinaten för skärningspunkten mellan L1 och L3 Kvantitet II: x-koordinaten för skärningspunkten mellan L2 och L3",i (1) men ej i (2),i (2) men ej i (1),i (1) tillsammans med (2),i (1) och (2) var för sig,e j genom de båda påståendena,B
+5,20,KVA,"19. L1, L2 och L3 är räta linjer. L1: y = 2x + 1 L2: y = -x + 4 L3: y = x Kvantitet I: x-koordinaten för skärningspunkten mellan L1 och L3 Kvantitet II: x-koordinaten för skärningspunkten mellan L2 och L3",I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,A
+5,21,KVA,"Den rätvinkliga triangeln T har sidlängderna 3 cm, 4 cm och 5 cm. T har lika stor area som kvadraten K. Kvantitet I: O mkretsen av T Kvantitet II: O mkretsen av K",i (1) men ej i (2),i (2) men ej i (1),i (1) tillsammans med (2),i (1) och (2) var för sig,e j genom de båda påståendena,A
+5,22,KVA,"21. Den rätvinkliga triangeln T har sidlängderna 3 cm, 4 cm och 5 cm. T har lika stor area som kvadraten K. Kvantitet I: O mkretsen av T Kvantitet II: O mkretsen av K",I ä r större än II,I I är större än I,I ä r lika med II,i nformationen är otillräcklig,,D
+5,23,NOG,[Se provhäfte],,,,,,C
+5,24,NOG,[Se provhäfte],,,,,,D
+5,25,NOG,[Se provhäfte],,,,,,C
+5,26,NOG,[Se provhäfte],,,,,,A
+5,27,NOG,[Se provhäfte],,,,,,A
+5,28,NOG,[Se provhäfte],,,,,,C
+5,29,DTK,Hur mång a av medlemmarna i SBR besvarade enkäten 2005?,4 460,4 650,5 040,5 680,,B
+5,30,DTK,Hur s tora var de vinterförluster av bisamhällen som redovisades 2010?,10 pr ocent,15 	procent,20 pr ocent,25 	procent,,D
+5,31,DTK,Hur s tor var den beräknade skörden av honung per medlem i SBR 2016?,52 	 kg,99 kg,142 kg,191 kg,,D
+5,32,DTK,Vilk et svarsförslag beskriver bäst hur det såg ut i Sverige vad avser sysselsättningsgraden i förhållande till examenstyp?,Sysselsättningsgraden 	var	låg	oavsett	examenstyp.,Sysselsättningsgraden 	var	hög	oavsett	examenstyp.,Sysselsättningsgraden 	varierade	 stort 	 beroende	 på,Sysselsättningsgraden 	var	som	lägst	för	de	med,,B
+5,33,DTK,Vilk et var förhållandet mellan Tyskland och Italien vad gäller sysselsättningsgraden för de med examen från yrkesutbildningar?,3 : 1,5 : 2,7 : 5,9 : 5,,D
+5,34,DTK,F ör hur många av länderna redovisas att sysselsättningsgraden för de med examen från studieförberedande utbildningar var lägre än genomsnittet i EU-28?,7,8,9,10,,C
+5,35,DTK,Hur s tor andel av Folkspels nettoomsättning 2016 kom från kvartal 4?,45 	procent,55 	procent,65 	procent,75 	procent,,A
+5,36,DTK,Hur m ycket mer omsatte Svenska Postkodföreningen under kvartal 1 år 2017 än under kvartal 4 år 2016?,100 	miljoner	kronor,180 	miljoner	kronor,280 	miljoner	kronor,620 	miljoner	kronor,,C
+5,37,DTK,"Den reglerade svenska spelmarknadens nettoomsättning 2017 var 17,2 miljarder kronor. Hur stor andel av detta stod de redovisade rikslotterierna för?",5 	 procent,10 pr ocent,20 pr ocent,35 	procent,,C
+5,38,DTK,Med hur mång a procent hade antalet barn i hushåll med ekonomiskt bistånd minskat 2002 jämfört med 1997?,40 pr ocent,50 	procent,60 pr ocent,70 pr ocent,,A
+5,39,DTK,Identifiera det totala antalet hushåll med barn som fick ekonomiskt bistånd 2010. Hur många barn fanns i genomsnitt i dessa hushåll?,1 barn,2 barn,3 	barn,4 barn,,B
+5,40,DTK,Hur s tort var antalet hushåll med ekonomiskt bistånd det år detta antal var som störst?,145 000,250 000,330 000,385 000,,D

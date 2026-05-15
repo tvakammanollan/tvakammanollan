@@ -248,24 +248,31 @@ export function simulateBotMatch(
   botElo: number,
   questions: { id: string; category: string }[],
 ): BotSimResult {
+  // Bot personality: rolled once per match — affects speed and accuracy uniformly.
+  // 0 = "hastig" (fast/aggressive), 1 = "normal", 2 = "metodisk" (slow/careful)
+  const personalityRoll = Math.random();
+  const personality = personalityRoll < 0.30 ? 0 : personalityRoll < 0.70 ? 1 : 2;
+  const speedMult   = personality === 0 ? 0.70 : personality === 2 ? 1.40 : 1.00;
+  const accMult     = personality === 0 ? 0.92 : personality === 2 ? 1.06 : 1.00;
+
   const correctIds: string[] = [];
   for (const q of questions) {
     const base = botBaseAccuracy(botElo, q.category);
-    // ±10% per-question variation.
-    const acc = clamp(base + (Math.random() * 0.20 - 0.10), 0, 1);
+    // ±8% per-question variation (tighter than before — personality drives most variance).
+    const acc = clamp((base * accMult) + (Math.random() * 0.16 - 0.08), 0, 1);
     if (Math.random() < acc) correctIds.push(q.id);
   }
 
-  // 40% faster response times (×0.6), capped at 280s (just under 5-min match)
+  // 55% faster base (×0.45 from original, ×0.85 from last pass), capped at 238s
   const secondsPerQuestion =
-    botElo >= 1400 ? 15 :
-    botElo >= 1200 ? 21 :
-    botElo >= 1000 ? 30 :
-    botElo >= 800  ? 39 : 33;
-  const total = Math.max(1, questions.length) * secondsPerQuestion;
-  const variation = total * 0.20;
+    botElo >= 1400 ? 13 :
+    botElo >= 1200 ? 18 :
+    botElo >= 1000 ? 26 :
+    botElo >= 800  ? 33 : 28;
+  const base = Math.max(1, questions.length) * secondsPerQuestion * speedMult;
+  const variation = base * 0.15;
   const submitTimeSeconds = Math.round(
-    Math.min(280, Math.max(30, total + (Math.random() * variation * 2 - variation))),
+    Math.min(238, Math.max(20, base + (Math.random() * variation * 2 - variation))),
   );
 
   return { score: correctIds.length, correctQuestionIds: correctIds, submitTimeSeconds };
