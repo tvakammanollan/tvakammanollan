@@ -5,6 +5,18 @@ import { HomeDashboard } from "@/components/HomeDashboard";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
+      {
+        name: "description",
+        content:
+          "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK – gratis.",
+      },
+      { property: "og:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
+    ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/" }],
+  }),
 });
 
 function Index() {

@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HP Kampen – Tävla mot vänner i Högskoleprovet" },
+      { title: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "description",
         content:
@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "högskoleprovet, HP-träning, högskoleprov övningar, HP-app, ORD MEK LÄS ELF XYZ KVA NOG DTK",
       },
-      { property: "og:title", content: "HP Kampen – Tävla i Högskoleprovet" },
+      { property: "og:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         property: "og:description",
         content:
@@ -113,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:alt", content: "HP Kampen — Tävla mot vänner i Högskoleprovet" },
       { property: "og:site_name", content: "HP Kampen" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "HP Kampen – Tävla i Högskoleprovet" },
+      { name: "twitter:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "twitter:description",
         content:
@@ -289,6 +289,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 text: "Du kan spela som gäst utan konto, men då sparas inte din ELO och du syns inte på topplistan. Kontoregistrering tar 30 sekunder med bara e-post och lösenord.",
               },
             },
+            {
+              "@type": "Question",
+              name: "När är nästa Högskoleprovet?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Högskoleprovet ges normalt två gånger per år: en gång i mars/april och en gång i oktober. Kommande datum 2026–2027: 24 oktober 2026, 27 mars 2027, 23 oktober 2027. Anmälan öppnar ungefär tre månader innan via antagning.se.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Hur räknas HP-poäng?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
+              },
+            },
           ],
         }),
       },
@@ -322,6 +338,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        {/* Static nav links for Googlebot — hidden visually, crawlable */}
+        <nav aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+          <a href="/">Hem</a>
+          <a href="/leaderboard">Topplista</a>
+          <a href="/train">Träna HP</a>
+          <a href="/ord">Öva ord</a>
+          <a href="/matchmaking">Hitta match</a>
+          <a href="/friends">Vänner</a>
+          <a href="/signup">Skapa konto</a>
+          <a href="/login">Logga in</a>
+        </nav>
         <Scripts />
       </body>
     </html>

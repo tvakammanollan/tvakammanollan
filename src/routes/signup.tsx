@@ -25,6 +25,7 @@ export const Route = createFileRoute("/signup")({
         content:
           "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
       },
+      { name: "robots", content: "noindex, follow" },
     ],
     links: [{ rel: "canonical", href: "https://hpkampen.se/signup" }],
   }),
