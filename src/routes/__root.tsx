@@ -103,11 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://hpkampen.se/" },
       { property: "og:locale", content: "sv_SE" },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png",
-      },
+      { property: "og:image", content: "https://hpkampen.se/og-image.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "HP Kampen — Tävla mot vänner i Högskoleprovet" },
