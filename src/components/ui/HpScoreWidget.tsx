@@ -7,11 +7,6 @@ interface HpScoreWidgetProps {
   size?: "compact" | "full";
 }
 
-/**
- * HP Score widget — exact estimate from current ELO. No intervals,
- * no "ungefär"/"~"-prefixes. Two columns (verbal, matte) over a
- * combined total.
- */
 export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreWidgetProps) {
   const navigate = useNavigate();
   const combined = combinedHpScore(eloVerbal, eloMath);
@@ -45,75 +40,64 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       style={{
         borderColor: "var(--line)",
         background: "var(--navy-2)",
-        boxShadow: "var(--shadow-md)",
       }}
     >
-      <div className="flex items-baseline justify-between">
-        <h2
-          className="text-[15px] font-semibold uppercase tracking-[0.18em]"
-          style={{ color: "var(--hp-muted)", fontFamily: "var(--font-display)" }}
-        >
-          Trolig HP-poäng
-        </h2>
+      {/* Label */}
+      <p
+        className="text-[11px] font-medium uppercase tracking-[0.14em]"
+        style={{ color: "var(--hp-muted)" }}
+      >
+        Trolig HP-poäng
+      </p>
+
+      {/* Main score */}
+      <div className="mt-2 flex items-baseline gap-2">
         <span
-          className="tabular-nums text-[44px] font-bold leading-none"
-          style={{
-            color: "var(--amber)",
-            fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
-          }}
+          className="text-[56px] font-bold leading-none tabular-nums"
+          style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
         >
           {combined}
         </span>
+        <span className="text-lg" style={{ color: "var(--hp-muted)" }}>/ 2.0</span>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <HpRow label="Verbal" elo={eloVerbal} score={v.score} accent="var(--teal)" />
-        <HpRow label="Matte" elo={eloMath} score={m.score} accent="var(--amber)" />
+      {/* Divider */}
+      <div className="my-5 border-t" style={{ borderColor: "var(--line)" }} />
+
+      {/* Verbal / Matte */}
+      <div className="grid grid-cols-2 gap-4">
+        <ScoreCol label="Verbal" score={v.score} elo={eloVerbal} accent="var(--teal)" />
+        <ScoreCol label="Matte" score={m.score} elo={eloMath} accent="var(--amber)" />
       </div>
     </div>
   );
 }
 
-function HpRow({
+function ScoreCol({
   label,
-  elo,
   score,
+  elo,
   accent,
 }: {
   label: string;
-  elo: number;
   score: string;
+  elo: number;
   accent: string;
 }) {
   return (
-    <div
-      className="rounded-xl border p-4"
-      style={{
-        borderColor: "var(--line)",
-        background: "rgba(7,17,30,0.55)",
-      }}
-    >
-      <div
-        className="text-[10px] font-semibold uppercase tracking-[0.14em]"
-        style={{ color: "var(--hp-muted)" }}
-      >
+    <div>
+      <p className="text-[11px] font-medium uppercase tracking-[0.12em]" style={{ color: "var(--hp-muted)" }}>
         {label}
-      </div>
-      <div
-        className="mt-2 text-[36px] font-bold leading-none tabular-nums"
-        style={{
-          color: accent,
-          fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
-        }}
+      </p>
+      <p
+        className="mt-1.5 text-[28px] font-bold leading-none tabular-nums"
+        style={{ color: accent, fontFamily: "var(--font-display)" }}
       >
         {score}
-      </div>
-      <div
-        className="mt-2 text-[11px] tabular-nums"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      </p>
+      <p className="mt-1 text-[11px] tabular-nums" style={{ color: "var(--text-tertiary)" }}>
         ELO {elo}
-      </div>
+      </p>
     </div>
   );
 }
