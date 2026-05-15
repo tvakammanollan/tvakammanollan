@@ -257,13 +257,16 @@ export function VelocityMarquee({
   const halfWidth = useRef<number>(0);
 
   useEffect(() => {
-    if (!trackRef.current) return;
+    const el = trackRef.current;
+    if (!el) return;
     const measure = () => {
-      halfWidth.current = trackRef.current!.scrollWidth / 2;
+      const node = trackRef.current;
+      if (!node) return;
+      halfWidth.current = node.scrollWidth / 2;
     };
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(trackRef.current);
+    ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
