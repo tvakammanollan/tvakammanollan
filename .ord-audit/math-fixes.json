@@ -1,0 +1,989 @@
+[
+  {
+    "id": "5c1e772c-1cfc-4ce5-877d-47d718cb3e61",
+    "from": "A",
+    "to": "B",
+    "reason": "8/27≈0.296 < 5/2=2.5",
+    "cat": "KVA"
+  },
+  {
+    "id": "59a170a5-6cb2-40d6-bc78-f061d610aa1a",
+    "from": "C",
+    "to": "D",
+    "reason": "xyz=0,x>3: mean depends on y,z (can be > or < x)",
+    "cat": "KVA"
+  },
+  {
+    "id": "082b48d3-cc1d-4cc8-86e3-b5af725f0c47",
+    "from": "B",
+    "to": "A",
+    "reason": "x>y>0: x-y>0>y-x, I>II",
+    "cat": "KVA"
+  },
+  {
+    "id": "ec2a2ecb-03b9-488b-bf22-f99491d0f739",
+    "from": "C",
+    "to": "D",
+    "reason": "I=2-2y, II=3y; equal only if y=2/5",
+    "cat": "KVA"
+  },
+  {
+    "id": "54569dd0-9aa7-4157-9158-18899165ff48",
+    "from": "A",
+    "to": "B",
+    "reason": "y=7, z=13, median(y,z)=10 < 11",
+    "cat": "KVA"
+  },
+  {
+    "id": "07f9e72d-1537-46e0-9f4c-6b36c2f8e5f8",
+    "from": "A",
+    "to": "C",
+    "reason": "f(x)=x^4+15 even, f(a)=f(-a), diff=0",
+    "cat": "KVA"
+  },
+  {
+    "id": "f9b82b82-3e8e-42c0-8499-4d05e4c5428b",
+    "from": "B",
+    "to": "A",
+    "reason": "x>1: x^5 > x^4",
+    "cat": "KVA"
+  },
+  {
+    "id": "d4d0f63c-6d4c-4700-8c73-6708e942d6d3",
+    "from": "C",
+    "to": "A",
+    "reason": "x+y=3, x1<x2 => y1>y2",
+    "cat": "KVA"
+  },
+  {
+    "id": "017e6727-2eb0-488f-80eb-838703d3170a",
+    "from": "A",
+    "to": "C",
+    "reason": "P(sum>=10)=6/36=P(sum<=4)",
+    "cat": "KVA"
+  },
+  {
+    "id": "f0b88af5-e95f-4a5e-9115-8a884700a81a",
+    "from": "D",
+    "to": "A",
+    "reason": "x,y<0,x=2y: xy>0, x+2y<0, so I>II",
+    "cat": "KVA"
+  },
+  {
+    "id": "7859f72d-e209-4150-b9e6-bf8ff7493173",
+    "from": "A",
+    "to": "B",
+    "reason": "(x+y)^2 = x^2+y^2+2xy > x^2+y^2 for x,y>0",
+    "cat": "KVA"
+  },
+  {
+    "id": "ad9a2fc0-e2d6-4aab-a2d8-d51276881f7c",
+    "from": "C",
+    "to": "A",
+    "reason": "Sum equals 1 (=28/28); 55/56 < 1",
+    "cat": "KVA"
+  },
+  {
+    "id": "6bc44060-5b0e-4e8b-a445-ac97a0bf4eed",
+    "from": "C",
+    "to": "A",
+    "reason": "I=11+F, II=F+8, I-II=3>0",
+    "cat": "KVA"
+  },
+  {
+    "id": "736e63e5-292a-4f99-a157-c65463b62064",
+    "from": "C",
+    "to": "D",
+    "reason": "Mean of 5 pos + 5 neg integers not determined",
+    "cat": "KVA"
+  },
+  {
+    "id": "c4bf3004-361f-4be0-b26d-52a5d2048190",
+    "from": "B",
+    "to": "A",
+    "reason": "πd=π≈3.14 > 3 (triangle perimeter)",
+    "cat": "KVA"
+  },
+  {
+    "id": "ba46aaf7-27b2-4068-9374-38c8cd259c98",
+    "from": "C",
+    "to": "B",
+    "reason": "y=x+1; 2x < x+y = 2x+1",
+    "cat": "KVA"
+  },
+  {
+    "id": "bbfd0383-234e-4953-badc-e19ccf70c555",
+    "from": "B",
+    "to": "D",
+    "reason": "x can be 6 (<20) or 21 (>20) with valid positive integer y",
+    "cat": "KVA"
+  },
+  {
+    "id": "464752ce-ad12-47b2-8ef1-fc7c545ea13a",
+    "from": "D",
+    "to": "B",
+    "reason": "9/8 < 12/8",
+    "cat": "KVA"
+  },
+  {
+    "id": "9c22956b-8262-4c7c-bdcc-59a717284a1a",
+    "from": "B",
+    "to": "A",
+    "reason": "V=27π≈84.8 > 30",
+    "cat": "KVA"
+  },
+  {
+    "id": "f37eda4c-a47a-4027-a38c-e102111e8024",
+    "from": "A",
+    "to": "C",
+    "reason": "f and g are identical functions, same roots",
+    "cat": "KVA"
+  },
+  {
+    "id": "9497508b-660d-4d99-8458-f6070f80abf3",
+    "from": "B",
+    "to": "D",
+    "reason": "No constraint on x; relation varies by x",
+    "cat": "KVA"
+  },
+  {
+    "id": "dba4ba4b-2c34-4f4f-bdac-dc4c01a6a233",
+    "from": "C",
+    "to": "D",
+    "reason": "(1,10) mean 5.5 or (2,5) mean 3.5",
+    "cat": "KVA"
+  },
+  {
+    "id": "b0692e46-c2ef-4880-8696-1e17dfce5173",
+    "from": "B",
+    "to": "C",
+    "reason": "Both speeds = 2x/y",
+    "cat": "KVA"
+  },
+  {
+    "id": "f0a4278a-323b-465b-89e7-3635de1a4597",
+    "from": "C",
+    "to": "A",
+    "reason": "I=x^2+42, II=x^2+1; I-II=41",
+    "cat": "KVA"
+  },
+  {
+    "id": "38e9d2b6-afc6-403b-9a8e-0e032a80f15d",
+    "from": "D",
+    "to": "C",
+    "reason": "f(10)=-100=f(0)",
+    "cat": "KVA"
+  },
+  {
+    "id": "302fb6e8-6ea4-4fba-af14-70cf971d5674",
+    "from": "A",
+    "to": "B",
+    "reason": "h=3d, circumference=πd; πd>3d",
+    "cat": "KVA"
+  },
+  {
+    "id": "4417eea9-0263-48e1-8b36-2477240d2a1e",
+    "from": "C",
+    "to": "B",
+    "reason": "x=-1, y=-1/2; -1 < -1/2",
+    "cat": "KVA"
+  },
+  {
+    "id": "8b5c4bd3-c38d-47ab-a6f7-969ba4a2aa37",
+    "from": "A",
+    "to": "B",
+    "reason": "P(6/x)=1/5 (only x=3); P(39/x)=2/5 (x=3,13)",
+    "cat": "KVA"
+  },
+  {
+    "id": "a95f82d5-9102-4db4-8aad-6410452cb783",
+    "from": "A",
+    "to": "C",
+    "reason": "x²=4 → x⁴=16. (x+x)(x+x)=4x²=16. Equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "969e8447-29b7-4e70-87b6-f2abc6a9beb3",
+    "from": "C",
+    "to": "A",
+    "reason": "5⅕+1=6.2 > 3 1/15 + 1 ≈ 4.067.",
+    "cat": "KVA"
+  },
+  {
+    "id": "89f995bb-ba08-4e30-94a1-593f0b5c8072",
+    "from": "D",
+    "to": "B",
+    "reason": "f(x)=5-10x is decreasing; x1>x2 → f(x1)<f(x2), so II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "224aedb4-87d5-485d-8281-f4cb5549d270",
+    "from": "A",
+    "to": "D",
+    "reason": "26 ink pens, 13 non-ink, 19 broken. Broken ink ranges from 6 (if all 13 non-ink broken) to 19. Could equal 6, so not strictly >6.",
+    "cat": "KVA"
+  },
+  {
+    "id": "8ed86bf1-a22f-4415-8a9b-76baee239460",
+    "from": "D",
+    "to": "A",
+    "reason": "x>y combined with xz>yz forces z>0.",
+    "cat": "KVA"
+  },
+  {
+    "id": "c916212f-3f6e-4df3-ae61-1daf22b346ef",
+    "from": "A",
+    "to": "D",
+    "reason": "x²+x-8=0 gives x=(-1±√33)/2; one root positive (~2.37), one negative (~-3.37).",
+    "cat": "KVA"
+  },
+  {
+    "id": "95c5fa95-77e1-4844-8587-e2f1844c545a",
+    "from": "B",
+    "to": "D",
+    "reason": "x/162=y/20500 — without sign/positivity info, x vs y indeterminate (e.g., negative ratio reverses).",
+    "cat": "KVA"
+  },
+  {
+    "id": "e6ef142b-6c1f-47b8-8b30-cc8c10dc198d",
+    "from": "B",
+    "to": "D",
+    "reason": "Quantity I (x/(x+1)+1/(x+1)) simplifies to 1; for x>0, x can be <1 or >1, so 1 vs x is indeterminate.",
+    "cat": "KVA"
+  },
+  {
+    "id": "372642ad-43cf-417d-bae8-e27c93377ca3",
+    "from": "B",
+    "to": "D",
+    "reason": "(a+b)²+(a-b)²=2a²+2b² vs 4a²+b². Sign depends on whether b²>2a² or not.",
+    "cat": "KVA"
+  },
+  {
+    "id": "702e27a8-8ca2-490d-82ee-130adc6307a7",
+    "from": "A",
+    "to": "B",
+    "reason": "6.3 h = 378 min < 420 min.",
+    "cat": "KVA"
+  },
+  {
+    "id": "34b8e9f0-35b7-47d6-921e-7774e7b8ce37",
+    "from": "A",
+    "to": "B",
+    "reason": "-x+9=11 → x=-2, which is less than 0.",
+    "cat": "KVA"
+  },
+  {
+    "id": "4a943cfb-cdec-4a8d-9bce-9763033bf1be",
+    "from": "A",
+    "to": "B",
+    "reason": "7^8 < 7^16.",
+    "cat": "KVA"
+  },
+  {
+    "id": "164435e2-627c-4fef-810b-9df41bf8103f",
+    "from": "C",
+    "to": "D",
+    "reason": "No constraints given on x,y; xy³ vs (xy)²/2 indeterminate.",
+    "cat": "KVA"
+  },
+  {
+    "id": "973dbd99-2ac5-4986-a502-c14b5f863f34",
+    "from": "C",
+    "to": "D",
+    "reason": "From the system one gets x=z and y=w, but no relation between y and z.",
+    "cat": "KVA"
+  },
+  {
+    "id": "61bce3ae-d3c0-4150-8472-962627e53a13",
+    "from": "D",
+    "to": "C",
+    "reason": "Rectangle, E on AB. Area(AED)+Area(EBC) = AD·AE/2 + BC·EB/2 = AD·AB/2 = Area(ECD).",
+    "cat": "KVA"
+  },
+  {
+    "id": "6d998760-86b1-4c5a-a213-6a1790cb4b43",
+    "from": "B",
+    "to": "C",
+    "reason": "Large-not-red = 30-15 = 15; Red-not-large = 30-15 = 15.",
+    "cat": "KVA"
+  },
+  {
+    "id": "d1f5871b-7ed3-466c-be3e-4230cdf77d23",
+    "from": "D",
+    "to": "A",
+    "reason": "13% of 55 = 7.15 > 14% of 50 = 7.0.",
+    "cat": "KVA"
+  },
+  {
+    "id": "89af2a04-9aa3-4dc8-92ba-114693bc99da",
+    "from": "A",
+    "to": "C",
+    "reason": "P(same)=2·(1/2)·(1/2)=1/2; P(different)=2·(1/2)·(1/2)=1/2.",
+    "cat": "KVA"
+  },
+  {
+    "id": "c8fcde84-e1c7-4e6a-b278-469ccc0497d4",
+    "from": "A",
+    "to": "D",
+    "reason": "xy-y=x-yx → 2xy=x+y → x=y/(2y-1). For 0<y<1/2, x is negative; for other y, x can be ≥0. Indeterminate.",
+    "cat": "KVA"
+  },
+  {
+    "id": "b142b068-31e2-4999-a019-4cfcfc8961f6",
+    "from": "B",
+    "to": "D",
+    "reason": "(zw/xy)/(yw/zx) = z²/y²; positivity alone doesn't fix z vs y.",
+    "cat": "KVA"
+  },
+  {
+    "id": "ab668e46-63a1-4aa5-aba7-eca664ba8661",
+    "from": "C",
+    "to": "D",
+    "reason": "Isosceles, perimeter 40, side 12: either (12,12,16) → largest 16, or (12,14,14) → largest 14. Largest vs 15 indeterminate.",
+    "cat": "KVA"
+  },
+  {
+    "id": "6d2ac49e-b6fd-416f-b401-cf0a9d9bcf56",
+    "from": "A",
+    "to": "B",
+    "reason": "y=1/x - x/2 = 0 gives x=±√2 ≈ ±1.41, both less than 3.5. II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "616fbb74-c0cd-42c0-b454-f61d948f7f04",
+    "from": "B",
+    "to": "A",
+    "reason": "L1 slope = 1/6, L2 slope = -3. 1/6 > -3, so I>II.",
+    "cat": "KVA"
+  },
+  {
+    "id": "38fa6ec7-64cd-453d-aa4f-70736b5fd8ac",
+    "from": "D",
+    "to": "A",
+    "reason": "|22-(-4)|=26, |3-(-21)|=24. I>II regardless of y.",
+    "cat": "KVA"
+  },
+  {
+    "id": "973bf499-7299-44cc-a6bf-7397c7f37b50",
+    "from": "B",
+    "to": "D",
+    "reason": "Two circles intersecting at two points: |R-r|<d<R+r. Distance d can be less than or greater than R (e.g., R=2,r=1 → d ∈ (1,3)).",
+    "cat": "KVA"
+  },
+  {
+    "id": "cf52c170-4940-44fb-841f-c24181ef9eda",
+    "from": "C",
+    "to": "D",
+    "reason": "x=3y-3: not equal in general. y=1.5 gives x=y=1.5 (equal); y=3 gives x=6>y. Depends on y.",
+    "cat": "KVA"
+  },
+  {
+    "id": "7a5bd4bd-8888-4946-80e3-90f451c75007",
+    "from": "A",
+    "to": "C",
+    "reason": "Sorted: 1,5,5,6,8. Median=5, mean=25/5=5. Equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "c319e5ec-d446-4e94-b7d6-5b80ca90ea40",
+    "from": "D",
+    "to": "B",
+    "reason": "26/8 = 3.25 < 8. II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "87bdd4f1-e8d2-442f-b50a-171de81a9f0e",
+    "from": "D",
+    "to": "C",
+    "reason": "(x/3)/4 = x/12 and (x/4)/3 = x/12. Always equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "d7db2b2e-63cb-43f5-8a80-8b69cd64fdfd",
+    "from": "D",
+    "to": "B",
+    "reason": "4<2x-2<8 → 3<x<5, so x<6 always. II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "79b068a0-2f9a-424f-bdf7-2ef49686a182",
+    "from": "C",
+    "to": "A",
+    "reason": "3²+1 = 10 < 11. I>II.",
+    "cat": "KVA"
+  },
+  {
+    "id": "fabc2f95-cf17-4fd5-93f4-073d8494b8eb",
+    "from": "C",
+    "to": "A",
+    "reason": "Circle: r²π=9π → r=3. Square: side=√3 ≈ 1.73. I>II.",
+    "cat": "KVA"
+  },
+  {
+    "id": "ad843c7c-69f0-4e41-8d14-059a67b74a7d",
+    "from": "D",
+    "to": "C",
+    "reason": "Set square side=1. G = intersection of AF (y=x/2) and BE (y=-2x+2) at (0.8,0.4). Area(ABG)=0.2; Area(CEGF) by shoelace = 0.2. Equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "0744498a-7c3b-423c-b949-3f44d7fe2f65",
+    "from": "B",
+    "to": "D",
+    "reason": "I-II = 2 - 4/x. x=1: I<II. x=10: I>II. Depends on x.",
+    "cat": "KVA"
+  },
+  {
+    "id": "5028aa08-a74f-4d8e-808a-5ed8fda9ed4e",
+    "from": "D",
+    "to": "B",
+    "reason": "8x+4=10 → 4x+2 = (8x+4)/2 = 5. 5<8, so II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "1651c4b3-1697-4874-8ee5-5b8c5c6858c7",
+    "from": "B",
+    "to": "C",
+    "reason": "Distance from origin to (a,b) is √(a²+b²); to (b,a) is √(b²+a²). Always equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "bbba1b8a-c299-4bfe-b64f-3969247b38f7",
+    "from": "A",
+    "to": "D",
+    "reason": "I-II = 4x-4. Sign depends on x (positive if x>1, negative if x<1, zero at x=1).",
+    "cat": "KVA"
+  },
+  {
+    "id": "105a7c9a-eedf-4645-aea8-87a4f37cc8e4",
+    "from": "B",
+    "to": "A",
+    "reason": "0<k<m<n: nm vs mk → m(n-k)>0 since n>k>0. I>II.",
+    "cat": "KVA"
+  },
+  {
+    "id": "143df03f-1cb3-402e-bdcd-b50cd3292985",
+    "from": "C",
+    "to": "A",
+    "reason": "x+2y=54116. Max x (y=1): x=54114. Max y (x=2): y=27057. 54114 > 27057.",
+    "cat": "KVA"
+  },
+  {
+    "id": "a3a72afb-7f0c-4d8a-b1fe-a7285201fdb0",
+    "from": "B",
+    "to": "C",
+    "reason": "Anna_now = Bea_2yrs_ago + 4 = Bea_now + 2. Anna_2yrs_ago = Anna_now - 2 = Bea_now. Equal.",
+    "cat": "KVA"
+  },
+  {
+    "id": "9c5a16a6-bd27-4cb2-8a3d-101c92c89c32",
+    "from": "D",
+    "to": "B",
+    "reason": "Isoceles AB=BC=7, height to AC = 4. AC/2 = √(49-16) = √33, so AC = 2√33 ≈ 11.49 < 12.",
+    "cat": "KVA"
+  },
+  {
+    "id": "12adeecf-35d3-4941-90c4-b7c28d7d8712",
+    "from": "D",
+    "to": "B",
+    "reason": "a=b+c with c<0 ⇒ a<b. II>I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "c2082d3e-146d-49ee-a334-c1fd291c0229",
+    "from": "D",
+    "to": "A",
+    "reason": "x³=19 → x≈2.668. y⁶=19 → y=±19^(1/6)≈±1.638. In both cases x>y.",
+    "cat": "KVA"
+  },
+  {
+    "id": "b098fd9f-a3e8-427a-9dd1-a84a6d72558c",
+    "from": "C",
+    "to": "D",
+    "reason": "P=(-3m,0), Q=(0,3). |OP|=3|m|, |OQ|=3. Equal only when |m|=1; depends on m.",
+    "cat": "KVA"
+  },
+  {
+    "id": "00b1029b-4f19-4e30-999b-633362f088e3",
+    "from": "A",
+    "to": "B",
+    "reason": "I = (4/5)*200/15 ≈ 10.67 min; II = (2/3)*200/10 ≈ 13.33 min. II > I.",
+    "cat": "KVA"
+  },
+  {
+    "id": "1dfdaa21-6568-4f98-b402-af43705be188",
+    "from": "D",
+    "to": "B",
+    "reason": "x - y = -3 means x < y for all real x,y, so II > I (determinate).",
+    "cat": "KVA"
+  },
+  {
+    "id": "25de8b42-dd9e-43c5-820f-699e83d08569",
+    "from": "B",
+    "to": "A",
+    "reason": "Right triangle: hypotenuse^2=3721, smallest leg^2=121. Middle leg^2 = 3721-121 = 3600, side = 60 m > 59. I > II.",
+    "cat": "KVA"
+  },
+  {
+    "id": "a49b292d-6415-4b99-9b94-372259f9e580",
+    "from": "A",
+    "to": "C",
+    "reason": "#1 Each equation alone is one equation in two unknowns; together: 2(x+y)=52 and 3x+2y=39 gives x=-13. Sufficient only together.",
+    "cat": "NOG"
+  },
+  {
+    "id": "6819c583-4aca-43cc-8906-f749d594891c",
+    "from": "A",
+    "to": "C",
+    "reason": "#2 (1) median=135 (3rd-priced dish) alone does not give top-two sum. (2) top three sum 490 alone lacks 3rd price. Together: top two = 490-135 = 355.",
+    "cat": "NOG"
+  },
+  {
+    "id": "260ded74-cf7e-4056-a266-e5ddfab44e14",
+    "from": "C",
+    "to": "B",
+    "reason": "#9 (2) gives yellow=15 and brown=0.4*15=6, so difference=9. (2) alone is sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "98953281-b978-4bc7-96fc-8ddb79d21c87",
+    "from": "D",
+    "to": "C",
+    "reason": "#13 (1) gives only distance (7 km), not Carola's time. (2) gives only Carola's time (35 min), not distance. Both needed.",
+    "cat": "NOG"
+  },
+  {
+    "id": "4acc57d5-8f83-4bbd-8a76-a6c95d154b2c",
+    "from": "D",
+    "to": "B",
+    "reason": "#16 (1) C+S=36.8 only yields water=3.2, not cement individually. (2) V+S=31.2 yields cement=40-31.2=8.8. Only (2) alone is sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "3032bbbd-33ae-4f2a-b8fb-930ca04042a7",
+    "from": "D",
+    "to": "C",
+    "reason": "#23 (1) alone: ratio without counts. (2) alone: counts without ratio. Together: 6-k=2(4-k) gives k=2, so dam-without-sadelskydd=2.",
+    "cat": "NOG"
+  },
+  {
+    "id": "b486d3ed-f616-4f62-a6a2-05ee9bb6671c",
+    "from": "B",
+    "to": "D",
+    "reason": "#30 (1) genväg=gångväg-410 combined with given genväg=gångväg/2 yields gångväg=820, genväg=410. (2) gives genväg+gångväg=1230 with the same ratio yields genväg=410. Each alone sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "e6f7333b-9d98-44ac-817c-dc687776b0d0",
+    "from": "A",
+    "to": "D",
+    "reason": "#33 (1) yields girls with moped=4 (12 each, 14 without moped → 6 boys with, so 8 girls without, 4 girls with). (2) yields the same uniquely: solving the system gives girls with moped=4. Each alone sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "08b0928f-7740-470a-9f5e-44b3ea9bb178",
+    "from": "D",
+    "to": "E",
+    "reason": "#35 Together the cases (häft=blue,nålar=red→gem=white), (häft=blue,nålar=white→gem=red), (häft=red,nålar=white→gem=blue) are all consistent. Color of gem-box not determined.",
+    "cat": "NOG"
+  },
+  {
+    "id": "c86544c1-780d-452b-9545-b131cb5b6c07",
+    "from": "D",
+    "to": "E",
+    "reason": "#36 (1) x=±3. (2) one equation in x and b. Together both x=3 (b=-14/3) and x=-3 (b=14/3) satisfy. x not unique even together.",
+    "cat": "NOG"
+  },
+  {
+    "id": "a224121c-c10e-4961-b6ba-c1c1151c4dbe",
+    "from": "B",
+    "to": "E",
+    "reason": "#38 (1) 1/3 of blue large; (2) 1/2 of red large. Total share of large = b/3 + (72-b)/2 depends on the unknown number of blue balls. Not sufficient even together.",
+    "cat": "NOG"
+  },
+  {
+    "id": "4939e084-b052-4af0-86f5-abb5fc4387d5",
+    "from": "D",
+    "to": "E",
+    "reason": "#40 Both statements give the same single relation t_A - t_I = 0.5; one equation in two unknowns, so the combined time cannot be computed even when both are used.",
+    "cat": "NOG"
+  },
+  {
+    "id": "30605569-8735-45ed-9064-7a7724a759bc",
+    "from": "D",
+    "to": "A",
+    "reason": "#51: (1) likbent + rätvinklig forces 45-45-90, sufficient. (2) only 'at least one angle 45°' doesn't fix the triangle (e.g. 45-60-75). Only (1) sufficient → A.",
+    "cat": "NOG"
+  },
+  {
+    "id": "c5eef362-b728-4543-974c-0c6ed00a9087",
+    "from": "D",
+    "to": "E",
+    "reason": "#52: (1) gives {934, 394}. (2) gives {394, 934, 349}. Together {394, 934} – two options remain. Not sufficient → E.",
+    "cat": "NOG"
+  },
+  {
+    "id": "f65ac55d-ae91-4005-913b-dbfdf31dd23a",
+    "from": "B",
+    "to": "C",
+    "reason": "#54: (2) z-x=28 alone doesn't fix sum (y free). Together with ratio 3:5:7: 4k=28→k=7, sum=15·7=105. Only together → C.",
+    "cat": "NOG"
+  },
+  {
+    "id": "8a8d8a22-b5db-4217-90e2-0a10fac8b43f",
+    "from": "C",
+    "to": "D",
+    "reason": "#57: (1) all negative, n odd → product of odd # of negatives is negative. Sufficient alone. (2) striking two with positive product leaves negative product; total = (negative remainder)·(positive pair) < 0. Sufficient alone. → D.",
+    "cat": "NOG"
+  },
+  {
+    "id": "9a189d67-72e9-464c-be49-feb6860b4265",
+    "from": "A",
+    "to": "C",
+    "reason": "#64: x+y=2x iff y=x. (1) y=0 alone – truth depends on x being 0, x unknown. (2) x=6 alone – depends on y=6. Together x=6,y=0: 6≠12, definitely false. Only together → C.",
+    "cat": "NOG"
+  },
+  {
+    "id": "077ff85e-b2a6-40e9-9941-c58c3f5cba17",
+    "from": "D",
+    "to": "C",
+    "reason": "#68: (1) S/n+20=S/(n-8) is one eq in two unknowns – not sufficient alone. (2) n=20 alone gives no sum. Together: S=600. Only together → C.",
+    "cat": "NOG"
+  },
+  {
+    "id": "1a83a1d4-66ea-436e-80b8-2701beb5913a",
+    "from": "B",
+    "to": "D",
+    "reason": "#76: (1) n-(n/2+0.5)=7 → n=15. Sufficient alone. (2) rate 6 per 30s × 75s = 15. Sufficient alone. → D.",
+    "cat": "NOG"
+  },
+  {
+    "id": "0af5c892-8276-4cca-9ff1-b3b7e0d9d6ad",
+    "from": "A",
+    "to": "B",
+    "reason": "#79: (1) only 19.25 kg total – no per-tile weight known, count not determined. (2) side 30cm → 0.09 m²/tile, 0.99/0.09=11. Only (2) → B.",
+    "cat": "NOG"
+  },
+  {
+    "id": "4176f640-7231-454e-bfcb-82c694ac2ac1",
+    "from": "B",
+    "to": "A",
+    "reason": "#80: actual=1.5·normal. (1) 1.5t-t=5 → t=10. Sufficient alone. (2) 10 km gives no time. Only (1) → A.",
+    "cat": "NOG"
+  },
+  {
+    "id": "71f7f3ce-5ed2-4b6f-9155-0a2df18f63c1",
+    "from": "B",
+    "to": "D",
+    "reason": "#81: 125=20a+5b. (1) b<5: only b=1 works (a=6). (2) a>5: a=6, b=1 unique (a≥7 exceeds 125). Each alone uniquely determines → D.",
+    "cat": "NOG"
+  },
+  {
+    "id": "cd75b2c4-bfaa-40dc-a1b0-bdf3a694b0fc",
+    "from": "B",
+    "to": "E",
+    "reason": "#91: Multiples of 9 in {21,24,27,30,36,45}: {27,36,45}. Odd: {21,27,45}. Together (odd ∧ mult9): {27,45} – still two options. Not unique even together → E.",
+    "cat": "NOG"
+  },
+  {
+    "id": "90737a82-d117-4d49-b0b1-0729216fc2fd",
+    "from": "C",
+    "to": "A",
+    "reason": "#92: From a+b+c+d=20, a+c+e=23. (1) b+d=10 → a+c=10 → e=13. Sufficient alone. (2) gives a=3,b=1 but c free among many distinct-positive choices, so e=20-c not unique. Only (1) → A.",
+    "cat": "NOG"
+  },
+  {
+    "id": "76ab05ac-19e6-4f5e-a288-7bf9485b9b1f",
+    "from": "A",
+    "to": "C",
+    "reason": "#93: (1) r/(s+r)=1/4 → s=3r, v unknown – not sufficient. (2) s/(s+v)=6/10 → s/v=3/2, r unknown – not sufficient. Together: s=3r, v=2r → P(vit)=2/6=1/3. Only together → C.",
+    "cat": "NOG"
+  },
+  {
+    "id": "aacc8309-0372-43da-9405-f951e486854f",
+    "from": "D",
+    "to": "E",
+    "reason": "#94: With (1), #2 is a woman (savings opener, not Anton, not Martin) but Martin's position unfixed → #1 indeterminate. With (2), #1 cashes check and stands before a woman (#2) – #1 gender unknown. Together still allows both #1=Anton (e.g. A=1,H=2,M=3,S=4) and #1=woman (e.g. H=1,S=2,M=3,A=4). Neither determines → E.",
+    "cat": "NOG"
+  },
+  {
+    "id": "a55a2a32-32be-4dea-ba95-4f3b407d874e",
+    "from": "A",
+    "to": "B",
+    "reason": "K&F must be on the same floor (Olga differs from both). (1) leaves 2 valid configurations. (2) forces Anna lower, Katja upper, hence Fatima upper, Olga lower — unique.",
+    "cat": "NOG"
+  },
+  {
+    "id": "fcaf4fdd-1800-468f-b872-3fa9d1b1154c",
+    "from": "B",
+    "to": "A",
+    "reason": "(1) Table area = 400π, cloth area = 400 → P(outside) = 1 - 1/π, sufficient. (2) Right triangle with hypotenuse=diameter has variable legs → area not fixed, insufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "4451114e-50c3-4105-874d-371bfad995e8",
+    "from": "A",
+    "to": "D",
+    "reason": "(1) water = 8/9 of depth = 480 → depth = 540. (2) water:above = 8:1, water = 480 → depth = 540. Each alone sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "78a912ee-9e61-4fa8-88cd-4aa242d0fb7c",
+    "from": "B",
+    "to": "C",
+    "reason": "(2) gives p=2m, r=m+100 — unknown m. (1) gives r=m+p — alone insufficient. Together: 3m = m+100 → m=50, r=150.",
+    "cat": "NOG"
+  },
+  {
+    "id": "1f49120e-3b79-4c95-949e-350230a3c9ac",
+    "from": "B",
+    "to": "A",
+    "reason": "Sto is in the middle, so hingst is at an end and adjacent only to sto. (1): hingst svart, next to brown horse → sto is brown → föl is white. (2) leaves two cases for sto color, föl ambiguous.",
+    "cat": "NOG"
+  },
+  {
+    "id": "49bcceab-0d7a-44d1-8ae9-a51e7d009d80",
+    "from": "B",
+    "to": "D",
+    "reason": "30 total. (1) Need ≥12 to guarantee a kantarell → 11 champinjoner → 19 kantareller. (2) Need ≥20 to guarantee a champinjon → 19 kantareller. Each alone sufficient.",
+    "cat": "NOG"
+  },
+  {
+    "id": "45f6e9af-2fba-4b8b-9461-23e5d348a5c3",
+    "from": "B",
+    "to": "C",
+    "reason": "Sequence multiplies by 3 and subtracts 15: 55*3-15=150, 150*3-15=435, 435*3-15=1290. x=3, y=15, x+y=18 = option C",
+    "cat": "XYZ"
+  },
+  {
+    "id": "bee1bc95-116a-4fd7-89c1-fdcd8ed37f1e",
+    "from": "C",
+    "to": "D",
+    "reason": "f(x)=x^2 on [0,3] yields range [0,9], which is option D",
+    "cat": "XYZ"
+  },
+  {
+    "id": "3d141a16-a0b2-4632-99b0-121098873952",
+    "from": "D",
+    "to": "B",
+    "reason": "Volume = 2 dm * 0.5 dm * 30 dm = 30 dm^3 (or 20cm*5cm*300cm=30000 cm^3 = 30 dm^3), option B",
+    "cat": "XYZ"
+  },
+  {
+    "id": "ae7ca2fd-e5d7-4508-b86b-d56be4655fb4",
+    "from": "A",
+    "to": "B",
+    "reason": "Sum of 6 numbers = 66; 5+15+17+23=60; x+y=6; mean=3 = option B",
+    "cat": "XYZ"
+  },
+  {
+    "id": "3ae8ce35-1240-4275-a7f6-f48aa1172117",
+    "from": "C",
+    "to": "A",
+    "reason": "y1*x1*y2*x2 = 2*2*1*1 = 4; option A is y1*x1 = 2*2 = 4, matches",
+    "cat": "XYZ"
+  },
+  {
+    "id": "81a69295-627b-4933-a011-b8a3bddcf538",
+    "from": "A",
+    "to": "B",
+    "reason": "Mean=median=8, sum=24. Numbers a, 8, a+10 sum to 24, so a=3 and largest = 13 = option B",
+    "cat": "XYZ"
+  },
+  {
+    "id": "eda12794-753d-480c-bb2f-9219fe66cc1b",
+    "from": "D",
+    "to": "A",
+    "reason": "(3,3) on y=kx-3 gives k=2; at x=-3, y=2*(-3)-3=-9 = option A",
+    "cat": "XYZ"
+  },
+  {
+    "id": "749317b6-3ce0-4270-93d9-eb8fcaa87712",
+    "from": "A",
+    "to": "B",
+    "reason": "Primes between 27 and 36 are 29 and 31; mean = 30 = option B",
+    "cat": "XYZ"
+  },
+  {
+    "id": "2d8aaa11-4f66-42c7-ae52-2390884d3fb9",
+    "from": "B",
+    "to": "C",
+    "reason": "(7+13+18+20+x)/5=15 means 58+x=75, so x=17 = option C",
+    "cat": "XYZ"
+  },
+  {
+    "id": "a831b0e5-566a-43d0-b45f-9641327e108c",
+    "from": "A",
+    "to": "D",
+    "reason": "Option D states -xy > -zw, which is equivalent to zw > xy (given). Option A (w>x) can be falsified with z=-1,w=-2,x=-1,y=-1 (zw=2>1=xy but w=-2<x=-1)",
+    "cat": "XYZ"
+  },
+  {
+    "id": "799d8b1d-315d-4db8-af4e-7af2103dfd61",
+    "from": "A",
+    "to": "D",
+    "reason": "Given x<y<0; option A (y<x<0) contradicts the given. Option D (xy>0) is always true since product of two negatives is positive",
+    "cat": "XYZ"
+  },
+  {
+    "id": "f26aa1c3-edca-4e61-b8f1-1ba7f8180e76",
+    "from": "D",
+    "to": "A",
+    "reason": "Diagonal of square with side a is a*sqrt(2), not a/sqrt(2)",
+    "cat": "XYZ"
+  },
+  {
+    "id": "32884bd5-9de3-4a29-abd1-6a99007efe12",
+    "from": "D",
+    "to": "C",
+    "reason": "(x+1)(x-1) = x^2 - 1 = 121 - 1 = 120",
+    "cat": "XYZ"
+  },
+  {
+    "id": "0d3476bf-f7ef-4b0e-a3dd-2b0cd6032b9d",
+    "from": "D",
+    "to": "C",
+    "reason": "f(0)=C=4, f(3)=4a^3=500 -> a^3=125 -> a=5",
+    "cat": "XYZ"
+  },
+  {
+    "id": "afe04730-effe-4970-9bc6-64f93c7ac0d3",
+    "from": "A",
+    "to": "D",
+    "reason": "x^2-4x=0 -> x(x-4)=0 -> x=0 or x=4; only x=0 is in options (D)",
+    "cat": "XYZ"
+  },
+  {
+    "id": "2662815c-32b8-4304-937d-cdd1722a0a4b",
+    "from": "D",
+    "to": "C",
+    "reason": "Two odd integers summing to 16: max product is 7*9=63",
+    "cat": "XYZ"
+  },
+  {
+    "id": "dacc227b-ab80-4dd0-b229-158f9185b472",
+    "from": "B",
+    "to": "A",
+    "reason": "(a+y+z)/3 = x -> a = 3x - y - z",
+    "cat": "XYZ"
+  },
+  {
+    "id": "7d435c29-641a-42c2-a87c-cb7c61c7c5c6",
+    "from": "C",
+    "to": "D",
+    "reason": "y=5 gives 25<30<36; y=4 fails since 30>25",
+    "cat": "XYZ"
+  },
+  {
+    "id": "33423ab8-70e1-4069-8f03-bc3e2b2a68d7",
+    "from": "C",
+    "to": "B",
+    "reason": "897 = 128*7 + 1, remainder is 1",
+    "cat": "XYZ"
+  },
+  {
+    "id": "ea189466-c8b7-455e-8794-fef2ea7bc466",
+    "from": "D",
+    "to": "B",
+    "reason": "8 consecutive ints with median -1.5: -5,-4,-3,-2,-1,0,1,2; smallest is -5",
+    "cat": "XYZ"
+  },
+  {
+    "id": "ccb08fb3-b6e6-4142-93ca-1e945e48727f",
+    "from": "B",
+    "to": "C",
+    "reason": "0.8x = 140 -> x = 175",
+    "cat": "XYZ"
+  },
+  {
+    "id": "096b31da-b16a-483b-bd19-6f3938ae8a2c",
+    "from": "A",
+    "to": "D",
+    "reason": "x=11, y=5; mean of x and y is (11+5)/2 = 8",
+    "cat": "XYZ"
+  },
+  {
+    "id": "77ca9fd2-f5bf-4c2c-835f-9ce9a50d9a17",
+    "from": "B",
+    "to": "A",
+    "reason": "(3x-1)(2x) - x(3x-2) = 6x^2-2x-3x^2+2x = 3x^2",
+    "cat": "XYZ"
+  },
+  {
+    "id": "9dc90004-d124-4a59-a400-a4668d4c32ca",
+    "from": "A",
+    "to": "B",
+    "reason": "x=y so x^n - y^n = 0",
+    "cat": "XYZ"
+  },
+  {
+    "id": "49838493-fb31-42f5-b4e2-4483ca6ddc38",
+    "from": "C",
+    "to": "A",
+    "reason": "Midpoint of (-3,-2) and (7,4) is (2,1)",
+    "cat": "XYZ"
+  },
+  {
+    "id": "b88dd749-a40d-4eb5-a4cb-30cb3bfe1f3a",
+    "from": "A",
+    "to": "B",
+    "reason": "(x+y)^2 - x^2 = 2xy + y^2",
+    "cat": "XYZ"
+  },
+  {
+    "id": "2e63d841-7bc5-4c0d-a6a5-da1c136e8a33",
+    "from": "A",
+    "to": "B",
+    "reason": "x=2: 4+4-1 = 7",
+    "cat": "XYZ"
+  },
+  {
+    "id": "5701c582-1d49-4c94-88e8-fe4732332cf2",
+    "from": "B",
+    "to": "D",
+    "reason": "Changing m only shifts the line vertically; slope k unchanged",
+    "cat": "XYZ"
+  },
+  {
+    "id": "0e0f917c-18fb-4159-b17f-9a6eed11a6f5",
+    "from": "A",
+    "to": "C",
+    "reason": "x^2+x-6=(x+3)(x-2)=0 gives x=-3 and x=2",
+    "cat": "XYZ"
+  },
+  {
+    "id": "6902885c-32ae-4b5c-a564-51414bc85503",
+    "from": "C",
+    "to": "A",
+    "reason": "Total energy 180 kcal; fat 13.5/180 = 7.5%",
+    "cat": "XYZ"
+  },
+  {
+    "id": "a6ba4662-10c6-432a-b3ef-a36f0500c989",
+    "from": "B",
+    "to": "C",
+    "reason": "x-w=-y => w=x+y; with all distinct, only z=0 works",
+    "cat": "XYZ"
+  },
+  {
+    "id": "257c958b-900d-467a-a35b-17ab7465a258",
+    "from": "D",
+    "to": "B",
+    "reason": "x^2 y^2 z = 9*4*(-1) = -36, the smallest value",
+    "cat": "XYZ"
+  },
+  {
+    "id": "aef88ae0-956e-4da8-bd3e-ccc5ff0eef88",
+    "from": "D",
+    "to": "A",
+    "reason": "x^4-2x^3=x^3(x-2)=0 => x=0 or x=2; (2,0) is the listed x-intercept",
+    "cat": "XYZ"
+  },
+  {
+    "id": "5a88610a-1490-47ba-a9fb-159e79617b62",
+    "from": "D",
+    "to": "B",
+    "reason": "(a-2b)(a+3b) = a^2 + ab - 6b^2",
+    "cat": "XYZ"
+  }
+]
