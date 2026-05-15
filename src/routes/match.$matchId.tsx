@@ -29,7 +29,7 @@ export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
 });
 
-const TOTAL_SECONDS = 8 * 60;
+const TOTAL_SECONDS = 5 * 60;
 
 const FAKE_NAMES = [
   "linnea_92",
