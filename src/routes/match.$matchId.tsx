@@ -63,6 +63,7 @@ interface QuestionRow {
   category: string;
   passage_id: string | null;
   passage_text: string | null;
+  image_url: string | null;
 }
 
 interface MatchRow {
@@ -195,7 +196,7 @@ function MatchPage() {
         ? await supabase
             .from("questions")
             .select(
-              "id, category, question_text, options, passage_id, passage_text, difficulty, cleaned_question_text, cleaned_options, clean_status",
+              "id, category, question_text, options, passage_id, passage_text, image_url, difficulty, cleaned_question_text, cleaned_options, clean_status",
             )
             .in("id", qIds)
         : { data: [], error: null };
@@ -231,6 +232,7 @@ function MatchPage() {
             category: q.category,
             passage_id: q.passage_id,
             passage_text: q.passage_text,
+            image_url: q.image_url ?? null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -791,6 +793,15 @@ function QuestionCard({
       >
         {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
       </h2>
+      {currentQ.image_url && (
+        <div className="mb-5 overflow-hidden rounded-xl border border-border">
+          <img
+            src={currentQ.image_url}
+            alt="Figur till frågan"
+            className="w-full object-contain"
+          />
+        </div>
+      )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
         {currentQ.options.map((opt, i) => {
           const letter = optionLetters[i] ?? String(i + 1);

@@ -55,6 +55,7 @@ interface TrainQuestion {
   category: string;
   passage_id: string | null;
   passage_text: string | null;
+  image_url: string | null;
   correct_answer: string;
   explanation: string | null;
   difficulty: number | null;
@@ -127,7 +128,7 @@ function TrainPage() {
     let q = supabase
       .from("questions")
       .select(
-        "id, category, question_text, options, passage_id, passage_text, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
+        "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
       )
       .in("category", config.subs);
     if (config.difficulty !== null) {
@@ -168,6 +169,7 @@ function TrainPage() {
         category: row.category,
         passage_id: row.passage_id,
         passage_text: row.passage_text,
+        image_url: row.image_url ?? null,
         correct_answer: row.correct_answer,
         explanation: row.explanation,
         difficulty: row.difficulty,
@@ -493,6 +495,15 @@ function TrainPage() {
             >
               {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
             </h2>
+            {currentQ.image_url && (
+              <div className="mb-5 overflow-hidden rounded-xl border border-border">
+                <img
+                  src={currentQ.image_url}
+                  alt="Figur till frågan"
+                  className="w-full object-contain"
+                />
+              </div>
+            )}
             <div className="grid gap-2" role="radiogroup">
               {currentQ.options.map((opt, i) => {
                 const letter = optionLetters[i] ?? String(i + 1);
