@@ -87,6 +87,7 @@ export function HomeDashboard() {
             <HeroPanel profile={profile} isGuest={isGuest} />
             <ActionGrid onMatch={openMatch} onCoaching={() => setCoachingOpen(true)} />
             <BattleSection profile={profile} onMatch={openMatch} />
+            <GamlaProvBanner />
             <ChartPanel userId={user.id} />
           </main>
         </div>
@@ -524,14 +525,6 @@ function ActionGrid({
         to="/ord"
         badge="8 000+ ord"
       />
-      <ActionCard
-        icon={<ScrollText className="h-6 w-6" />}
-        title="Gamla prov"
-        subtitle="36 kompletta provpass"
-        gradient="from-violet-500 via-purple-500 to-indigo-600"
-        to="/gamla-prov"
-        badge="36 provpass"
-      />
     </motion.section>
   );
 }
@@ -625,6 +618,41 @@ function ActionCard({
 }
 
 /* =================== BATTLE SECTION =================== */
+/* =================== GAMLA PROV BANNER =================== */
+function GamlaProvBanner() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <Link
+        to="/gamla-prov"
+        className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-black/8 bg-white p-4 transition-all hover:border-indigo-300 hover:shadow-md"
+      >
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-700">
+          <ScrollText className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-semibold text-[#050507]">Gamla prov</p>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+              21 prov
+            </span>
+          </div>
+          <p className="mt-0.5 text-xs text-[#737373]">
+            Skriv hela provpass från 2012 till Vårprovet 2026 — med facit och normering
+          </p>
+        </div>
+        <ArrowRight className="h-4 w-4 shrink-0 text-[#737373] transition-transform group-hover:translate-x-0.5 group-hover:text-indigo-500" />
+      </Link>
+    </motion.div>
+  );
+}
+
 function BattleSection({
   profile,
   onMatch,
