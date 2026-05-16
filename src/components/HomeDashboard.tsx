@@ -27,6 +27,7 @@ import {
   BarChart3,
   Flame,
   ArrowRight,
+  ScrollText,
 } from "lucide-react";
 
 /* =====================================================================
@@ -268,6 +269,12 @@ function Sidebar({
           label="Träna utan tid"
           to="/train"
           accent="emerald"
+        />
+        <SideAction
+          icon={<ScrollText className="h-4 w-4" />}
+          label="Gamla prov"
+          to="/gamla-prov"
+          accent="violet"
         />
         <SideAction
           icon={<Trophy className="h-4 w-4" />}
@@ -515,6 +522,14 @@ function ActionGrid({
         gradient="from-cyan-500 via-indigo-500 to-violet-600"
         to="/ord"
         badge="8 000+ ord"
+      />
+      <ActionCard
+        icon={<ScrollText className="h-6 w-6" />}
+        title="Gamla prov"
+        subtitle="36 kompletta provpass"
+        gradient="from-violet-500 via-purple-500 to-indigo-600"
+        to="/gamla-prov"
+        badge="36 provpass"
       />
     </motion.section>
   );
