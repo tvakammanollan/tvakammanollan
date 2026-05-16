@@ -2,7 +2,6 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Check, X as XIcon, ChevronDown, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -18,6 +17,18 @@ export const Route = createFileRoute("/gamla-prov")({
 interface ExamEntry {
   exam_term: string;
   provpass_num: number;
+}
+
+interface RawQ {
+  exam_term: string;
+  provpass_num: number;
+  q_num: number;
+  category: string;
+  question_text: string;
+  passage_text: string | null;
+  passage_id: string | null;
+  options: string[];
+  correct_answer: string | null;
 }
 
 interface ExamQuestion {
@@ -73,7 +84,6 @@ function GamlaProvPage() {
   const [phase, setPhase] = useState<Phase>("pick");
   const [exams, setExams] = useState<Map<string, number[]>>(new Map());
   const [loadingExams, setLoadingExams] = useState(true);
-  const [importing, setImporting] = useState(false);
 
   // Selection state
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
@@ -94,77 +104,56 @@ function GamlaProvPage() {
     loadExamList();
   }, [authLoading, user]);
 
+  // All gamla-prov questions loaded once from /public/gamla-prov-data.json
+  const [allQuestions, setAllQuestions] = useState<RawQ[]>([]);
+
   async function loadExamList() {
     setLoadingExams(true);
-    const { data, error } = await supabase
-      .from("questions")
-      .select("exam_term, provpass_num")
-      .not("exam_term", "is", null)
-      .order("exam_term", { ascending: false });
-
-    if (error) { toast.error("Kunde inte ladda prov"); setLoadingExams(false); return; }
-
-    // Deduplicate
-    const seen = new Set<string>();
-    const unique: ExamEntry[] = [];
-    for (const row of data ?? []) {
-      const key = `${row.exam_term}:${row.provpass_num}`;
-      if (!seen.has(key)) { seen.add(key); unique.push(row as ExamEntry); }
-    }
-    if (unique.length === 0) {
-      // No exams in DB yet — auto-import via edge function
-      await runAutoImport();
-      return;
-    }
-    setExams(groupByTerm(unique));
-    setLoadingExams(false);
-  }
-
-  async function runAutoImport() {
-    setImporting(true);
     try {
-      const res = await fetch(
-        "https://dqhgnioniarhiugxdgla.supabase.co/functions/v1/import-gamla-prov",
-        { method: "POST", headers: { "Content-Type": "application/json" } }
-      );
-      const json = await res.json();
-      if (json.inserted > 0) {
-        // Reload exam list now that data is in
-        await loadExamList();
-        return;
+      const res = await fetch("/gamla-prov-data.json");
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data: RawQ[] = await res.json();
+      setAllQuestions(data);
+
+      // Build (term, provpass) list
+      const seen = new Set<string>();
+      const unique: ExamEntry[] = [];
+      for (const q of data) {
+        const key = `${q.exam_term}:${q.provpass_num}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push({ exam_term: q.exam_term, provpass_num: q.provpass_num });
+        }
       }
-      toast.error("Import misslyckades: " + (json.errors?.[0] ?? "okänt fel"));
+      setExams(groupByTerm(unique));
     } catch (e) {
-      toast.error("Kunde inte nå importfunktionen");
+      toast.error("Kunde inte ladda prov-data");
     }
-    setImporting(false);
     setLoadingExams(false);
   }
 
   async function startExam() {
     if (!selectedTerm || selectedPP === null) return;
     setPhase("loading");
-    const { data, error } = await supabase
-      .from("questions")
-      .select("id, q_num, category, question_text, passage_text, passage_id, options, correct_answer")
-      .eq("exam_term", selectedTerm)
-      .eq("provpass_num", selectedPP)
-      .order("q_num", { ascending: true });
 
-    if (error || !data || data.length === 0) {
+    const filtered = allQuestions
+      .filter((q) => q.exam_term === selectedTerm && q.provpass_num === selectedPP)
+      .sort((a, b) => a.q_num - b.q_num);
+
+    if (filtered.length === 0) {
       toast.error("Inga frågor hittades");
       setPhase("pick");
       return;
     }
 
-    const mapped: ExamQuestion[] = data.map((q) => ({
-      id: q.id,
+    const mapped: ExamQuestion[] = filtered.map((q, i) => ({
+      id: `${q.exam_term}-${q.provpass_num}-${q.q_num}-${i}`,
       q_num: q.q_num ?? 0,
       category: q.category,
       question_text: q.question_text,
       passage_text: q.passage_text ?? null,
       passage_id: q.passage_id ?? null,
-      options: Array.isArray(q.options) ? (q.options as string[]) : [],
+      options: Array.isArray(q.options) ? q.options : [],
       correct_answer: q.correct_answer ?? null,
     }));
 
@@ -237,12 +226,10 @@ function GamlaProvPage() {
           </p>
         </motion.header>
 
-        {loadingExams || importing ? (
+        {loadingExams ? (
           <div className="flex flex-col items-center justify-center py-16 gap-4">
             <div className="h-10 w-10 rounded-full border-4 border-[#6366f1] border-t-transparent animate-spin" />
-            <p className="text-sm text-muted-foreground">
-              {importing ? "Laddar in gamla prov… (första gången tar ~15 sek)" : "Hämtar prov…"}
-            </p>
+            <p className="text-sm text-muted-foreground">Hämtar prov…</p>
           </div>
         ) : exams.size === 0 ? (
           <div className="rounded-2xl border border-amber-200 bg-amber-50 p-8 text-center">
