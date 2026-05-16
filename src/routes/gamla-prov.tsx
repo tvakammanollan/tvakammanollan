@@ -259,7 +259,7 @@ function GamlaProvPage() {
                   {termToLabel(term)}
                 </div>
                 <div className="mt-1 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  {ppMap.size} provpass · {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 5} uppgifter
+                  {ppMap.size} provpass · {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
                 </div>
               </button>
             ))}
@@ -645,7 +645,11 @@ function GamlaProvPage() {
                 {q.delProv}
               </span>
               <p className="text-sm font-medium leading-snug" style={{ color: "var(--cream)" }}>
-                {q.fraga && !q.fraga.startsWith("[") ? q.fraga : "[Se figur eller provhäfte]"}
+                {q.fraga && !q.fraga.startsWith("[")
+                  ? q.fraga
+                  : isELF
+                    ? "Välj det ord/den fras som passar bäst i luckan markerad i texten ovan."
+                    : "[Se figur eller provhäfte]"}
               </p>
             </div>
           </div>
