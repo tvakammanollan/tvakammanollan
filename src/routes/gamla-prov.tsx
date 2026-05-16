@@ -31,6 +31,7 @@ interface RawQ {
   e: string;
   svar: string;
   passage?: string;
+  passage_title?: string;
   image?: string;
 }
 
@@ -585,21 +586,66 @@ function GamlaProvPage() {
             <button
               type="button"
               onClick={() => setShowPassage((v) => !v)}
-              className="flex w-full items-center justify-between gap-2 rounded-2xl px-4 py-3 text-left"
+              className="flex w-full items-start justify-between gap-3 rounded-2xl px-5 py-4 text-left"
             >
-              <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider" style={{ color: "#a5b4fc" }}>
-                <BookOpen className="h-3.5 w-3.5" />
-                {isELF ? "Engelska texten" : "Läspassage"}
+              <span className="flex flex-col gap-1">
+                <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: "#a5b4fc" }}>
+                  <BookOpen className="h-3.5 w-3.5" />
+                  {isELF ? "Engelska texten" : "Läspassage"}
+                </span>
+                {q.passage_title && (
+                  <span className="text-base font-semibold leading-tight" style={{ color: "var(--cream)" }}>
+                    {q.passage_title}
+                  </span>
+                )}
               </span>
-              <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
-                {showPassage ? "Dölj" : "Visa"}
+              <span className="text-xs whitespace-nowrap mt-1" style={{ color: "var(--text-tertiary)" }}>
+                {showPassage ? "Dölj ↑" : "Visa ↓"}
               </span>
             </button>
             {showPassage && passage && (
-              <div className="rounded-b-2xl px-4 pb-4 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {passage.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="mb-3 last:mb-0 whitespace-pre-wrap">{para.trim()}</p>
-                ))}
+              <div
+                className="rounded-b-2xl px-5 pb-5 overflow-y-auto"
+                style={{ color: "var(--text-secondary)", maxHeight: "60vh" }}
+              >
+                <article
+                  className="text-[15px] leading-[1.75] font-serif"
+                  style={{ color: "var(--cream)" }}
+                >
+                  {passage.split(/\n\n+/).map((para, i) => {
+                    const trimmed = para.trim();
+                    if (!trimmed) return null;
+                    // Subheading: "### Heading"
+                    if (trimmed.startsWith("### ")) {
+                      return (
+                        <h3
+                          key={i}
+                          className="mt-6 mb-3 text-sm font-bold uppercase tracking-widest font-sans"
+                          style={{ color: "#a5b4fc" }}
+                        >
+                          {trimmed.slice(4)}
+                        </h3>
+                      );
+                    }
+                    // Byline: "_Author Name_"
+                    if (trimmed.startsWith("_") && trimmed.endsWith("_")) {
+                      return (
+                        <p
+                          key={i}
+                          className="mt-5 text-sm italic font-sans"
+                          style={{ color: "var(--text-tertiary)" }}
+                        >
+                          — {trimmed.slice(1, -1)}
+                        </p>
+                      );
+                    }
+                    return (
+                      <p key={i} className="mb-4 last:mb-0">
+                        {trimmed}
+                      </p>
+                    );
+                  })}
+                </article>
               </div>
             )}
           </div>
