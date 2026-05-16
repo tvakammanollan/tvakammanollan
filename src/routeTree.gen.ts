@@ -17,6 +17,7 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -64,6 +65,11 @@ const LeaderboardRoute = LeaderboardRouteImport.update({
   path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GamlaProvRoute = GamlaProvRouteImport.update({
+  id: '/gamla-prov',
+  path: '/gamla-prov',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FriendsRoute = FriendsRouteImport.update({
   id: '/friends',
   path: '/friends',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
+  '/gamla-prov': typeof GamlaProvRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
+  '/gamla-prov': typeof GamlaProvRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
+  '/gamla-prov': typeof GamlaProvRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/friends'
+    | '/gamla-prov'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/friends'
+    | '/gamla-prov'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/friends'
+    | '/gamla-prov'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
@@ -199,6 +211,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   FriendsRoute: typeof FriendsRoute
+  GamlaProvRoute: typeof GamlaProvRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   MatchmakingRoute: typeof MatchmakingRoute
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gamla-prov': {
+      id: '/gamla-prov'
+      path: '/gamla-prov'
+      fullPath: '/gamla-prov'
+      preLoaderRoute: typeof GamlaProvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/friends': {
       id: '/friends'
       path: '/friends'
@@ -319,6 +339,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   FriendsRoute: FriendsRoute,
+  GamlaProvRoute: GamlaProvRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   MatchmakingRoute: MatchmakingRoute,
