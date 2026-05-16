@@ -30,3 +30,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Audit-output (script-genererade — commitas inte automatiskt).
+# Manuella review-filer commitas explicit.
+.ord-audit/*
+!.ord-audit/manual-review.md
+!.ord-audit/manual-fixes.json
+!.ord-audit/fix-ord.sql
+!.ord-audit/preview-fixes.sql
+!.ord-audit/mek-fixes.json
+!.ord-audit/math-fixes.json

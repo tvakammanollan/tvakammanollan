@@ -9,81 +9,95 @@ interface HpScoreWidgetProps {
 
 export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreWidgetProps) {
   const navigate = useNavigate();
+  const combined = combinedHpScore(eloVerbal, eloMath);
 
   if (size === "compact") {
-    const combined = combinedHpScore(eloVerbal, eloMath);
     return (
       <button
         type="button"
         onClick={() => navigate({ to: "/stats" })}
-        title="Uppskattad normerad HP-poäng baserad på din ELO. Ej officiell normering."
-        className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/80 hover:bg-muted transition-colors"
-        style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+        title="Uppskattad normerad HP-poäng baserad på din ELO."
+        className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+        style={{
+          borderColor: "var(--line)",
+          background: "rgba(21,39,62,0.6)",
+          color: "var(--cream)",
+          fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+        }}
       >
         <span aria-hidden>📊</span>
-        <span>~ HP {combined}</span>
+        <span>HP {combined}</span>
       </button>
     );
   }
 
   const v = estimateHpScore(eloVerbal);
   const m = estimateHpScore(eloMath);
-  const combined = combinedHpScore(eloVerbal, eloMath);
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2
-        className="relative pb-2 text-xl font-semibold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#6366f1]"
-        style={{ fontFamily: "var(--font-display)" }}
+    <div
+      className="rounded-2xl border p-6"
+      style={{
+        borderColor: "var(--line)",
+        background: "var(--navy-2)",
+      }}
+    >
+      {/* Label */}
+      <p
+        className="text-[11px] font-medium uppercase tracking-[0.14em]"
+        style={{ color: "var(--hp-muted)" }}
       >
-        📊 Uppskattad HP-poäng
-      </h2>
-
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <HpRow label="Verbal" elo={eloVerbal} est={v} />
-        <HpRow label="Matte" elo={eloMath} est={m} />
-      </div>
-
-      <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
-        <span className="text-sm text-muted-foreground">Kombinerat</span>
-        <span
-          className="text-2xl font-semibold tabular-nums text-[#6366f1]"
-          style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
-        >
-          ~ {combined}
-        </span>
-      </div>
-
-      <p className="mt-4 rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-        ⚠️ Baserat på ELO-progression, ej officiell normering från Universitetens antagning.
+        Trolig HP-poäng
       </p>
+
+      {/* Main score */}
+      <div className="mt-2 flex items-baseline gap-2">
+        <span
+          className="text-[56px] font-bold leading-none tabular-nums"
+          style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
+        >
+          {combined}
+        </span>
+        <span className="text-lg" style={{ color: "var(--hp-muted)" }}>/ 2.0</span>
+      </div>
+
+      {/* Divider */}
+      <div className="my-5 border-t" style={{ borderColor: "var(--line)" }} />
+
+      {/* Verbal / Matte */}
+      <div className="grid grid-cols-2 gap-4">
+        <ScoreCol label="Verbal" score={v.score} elo={eloVerbal} accent="var(--teal)" />
+        <ScoreCol label="Matte" score={m.score} elo={eloMath} accent="var(--amber)" />
+      </div>
     </div>
   );
 }
 
-function HpRow({
+function ScoreCol({
   label,
+  score,
   elo,
-  est,
+  accent,
 }: {
   label: string;
+  score: string;
   elo: number;
-  est: ReturnType<typeof estimateHpScore>;
+  accent: string;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-3">
-      <div className="text-[11px] tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-1 flex items-baseline gap-2">
-        <span
-          className="text-2xl font-semibold tabular-nums text-foreground"
-          style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
-        >
-          ~ {est.score}
-        </span>
-      </div>
-      <div className="mt-1 text-xs text-muted-foreground">
-        ELO {elo} → rang {est.range}
-      </div>
+    <div>
+      <p className="text-[11px] font-medium uppercase tracking-[0.12em]" style={{ color: "var(--hp-muted)" }}>
+        {label}
+      </p>
+      <p
+        className="mt-1.5 text-[28px] font-bold leading-none tabular-nums"
+        style={{ color: accent, fontFamily: "var(--font-display)" }}
+      >
+        {score}
+      </p>
+      <p className="mt-1 text-[11px] tabular-nums" style={{ color: "var(--text-tertiary)" }}>
+        ELO {elo}
+      </p>
     </div>
   );
 }

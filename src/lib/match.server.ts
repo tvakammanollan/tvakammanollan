@@ -24,6 +24,9 @@ async function pickRandom(
 ): Promise<SelectedQuestion[]> {
   const isMath = MATH_CATEGORIES.has(category);
   // Fetch a pool then shuffle in JS (avoids heavy ORDER BY random on large tables).
+  // Verbal ORD pool is large (8000+ words) so we use a higher limit to ensure
+  // word-list questions (source=null) are reachable, not just the first 500.
+  const poolLimit = isMath ? 600 : 9000;
   let q = supabaseAdmin
     .from("questions")
     .select(
@@ -31,7 +34,7 @@ async function pickRandom(
     )
     .eq("category", category)
     .is("passage_id", null)
-    .limit(500);
+    .limit(poolLimit);
   if (isMath) q = q.eq("clean_status", "ok");
   const { data, error } = await q;
   if (error) throw error;
@@ -221,12 +224,13 @@ export async function insertMatchQuestions(matchId: string, questions: SelectedQ
 // ---------- Bot simulation ----------
 
 type AccuracyMap = Record<string, number>;
+// Accuracy reduced by 15% across all tiers (×0.85)
 const BOT_ACCURACY: { eloMax: number; map: AccuracyMap; fallback: number }[] = [
-  { eloMax: 800,  map: { ORD: 0.35, MEK: 0.30, LAS: 0.25, ELF: 0.25, XYZ: 0.30, KVA: 0.25, NOG: 0.20, DTK: 0.25 }, fallback: 0.30 },
-  { eloMax: 1000, map: { ORD: 0.50, MEK: 0.50, LAS: 0.45, ELF: 0.40, XYZ: 0.50, KVA: 0.45, NOG: 0.40, DTK: 0.45 }, fallback: 0.45 },
-  { eloMax: 1200, map: { ORD: 0.70, MEK: 0.65, LAS: 0.65, ELF: 0.60, XYZ: 0.65, KVA: 0.60, NOG: 0.55, DTK: 0.60 }, fallback: 0.62 },
-  { eloMax: 1400, map: { ORD: 0.82, MEK: 0.80, LAS: 0.78, ELF: 0.75, XYZ: 0.80, KVA: 0.75, NOG: 0.70, DTK: 0.75 }, fallback: 0.77 },
-  { eloMax: Infinity, map: { ORD: 0.93, MEK: 0.92, LAS: 0.90, ELF: 0.88, XYZ: 0.92, KVA: 0.88, NOG: 0.85, DTK: 0.88 }, fallback: 0.90 },
+  { eloMax: 800,  map: { ORD: 0.30, MEK: 0.26, LAS: 0.21, ELF: 0.21, XYZ: 0.26, KVA: 0.21, NOG: 0.17, DTK: 0.21 }, fallback: 0.26 },
+  { eloMax: 1000, map: { ORD: 0.43, MEK: 0.43, LAS: 0.38, ELF: 0.34, XYZ: 0.43, KVA: 0.38, NOG: 0.34, DTK: 0.38 }, fallback: 0.38 },
+  { eloMax: 1200, map: { ORD: 0.60, MEK: 0.55, LAS: 0.55, ELF: 0.51, XYZ: 0.55, KVA: 0.51, NOG: 0.47, DTK: 0.51 }, fallback: 0.53 },
+  { eloMax: 1400, map: { ORD: 0.70, MEK: 0.68, LAS: 0.66, ELF: 0.64, XYZ: 0.68, KVA: 0.64, NOG: 0.60, DTK: 0.64 }, fallback: 0.65 },
+  { eloMax: Infinity, map: { ORD: 0.79, MEK: 0.78, LAS: 0.77, ELF: 0.75, XYZ: 0.78, KVA: 0.75, NOG: 0.72, DTK: 0.75 }, fallback: 0.77 },
 ];
 
 function botBaseAccuracy(botElo: number, category: string): number {
@@ -244,23 +248,31 @@ export function simulateBotMatch(
   botElo: number,
   questions: { id: string; category: string }[],
 ): BotSimResult {
+  // Bot personality: rolled once per match — affects speed and accuracy uniformly.
+  // 0 = "hastig" (fast/aggressive), 1 = "normal", 2 = "metodisk" (slow/careful)
+  const personalityRoll = Math.random();
+  const personality = personalityRoll < 0.30 ? 0 : personalityRoll < 0.70 ? 1 : 2;
+  const speedMult   = personality === 0 ? 0.70 : personality === 2 ? 1.40 : 1.00;
+  const accMult     = personality === 0 ? 0.92 : personality === 2 ? 1.06 : 1.00;
+
   const correctIds: string[] = [];
   for (const q of questions) {
     const base = botBaseAccuracy(botElo, q.category);
-    // ±10% per-question variation.
-    const acc = clamp(base + (Math.random() * 0.20 - 0.10), 0, 1);
+    // ±8% per-question variation (tighter than before — personality drives most variance).
+    const acc = clamp((base * accMult) + (Math.random() * 0.16 - 0.08), 0, 1);
     if (Math.random() < acc) correctIds.push(q.id);
   }
 
+  // 55% faster base (×0.45 from original, ×0.85 from last pass), capped at 238s
   const secondsPerQuestion =
-    botElo >= 1400 ? 25 :
-    botElo >= 1200 ? 35 :
-    botElo >= 1000 ? 50 :
-    botElo >= 800  ? 65 : 80;
-  const total = Math.max(1, questions.length) * secondsPerQuestion;
-  const variation = total * 0.20;
+    botElo >= 1400 ? 13 :
+    botElo >= 1200 ? 18 :
+    botElo >= 1000 ? 26 :
+    botElo >= 800  ? 33 : 28;
+  const base = Math.max(1, questions.length) * secondsPerQuestion * speedMult;
+  const variation = base * 0.15;
   const submitTimeSeconds = Math.round(
-    Math.min(470, Math.max(60, total + (Math.random() * variation * 2 - variation))),
+    Math.min(238, Math.max(20, base + (Math.random() * variation * 2 - variation))),
   );
 
   return { score: correctIds.length, correctQuestionIds: correctIds, submitTimeSeconds };

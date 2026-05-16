@@ -14,12 +14,71 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_config: {
+        Row: {
+          description: string | null
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          description?: string | null
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          description?: string | null
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: number
+          meta: Json | null
+          new_data: Json | null
+          old_data: Json | null
+          record_id: string | null
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: number
+          meta?: Json | null
+          new_data?: Json | null
+          old_data?: Json | null
+          record_id?: string | null
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: number
+          meta?: Json | null
+          new_data?: Json | null
+          old_data?: Json | null
+          record_id?: string | null
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       bug_reports: {
         Row: {
           created_at: string
           id: string
           message: string
+          meta: Json | null
           page: string | null
+          resolved: boolean | null
           user_agent: string | null
           user_id: string
         }
@@ -27,7 +86,9 @@ export type Database = {
           created_at?: string
           id?: string
           message: string
+          meta?: Json | null
           page?: string | null
+          resolved?: boolean | null
           user_agent?: string | null
           user_id: string
         }
@@ -35,7 +96,9 @@ export type Database = {
           created_at?: string
           id?: string
           message?: string
+          meta?: Json | null
           page?: string | null
+          resolved?: boolean | null
           user_agent?: string | null
           user_id?: string
         }
@@ -205,6 +268,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "match_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "match_answers_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -278,6 +348,13 @@ export type Database = {
             columns: ["question_id"]
             isOneToOne: false
             referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_questions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
             referencedColumns: ["id"]
           },
         ]
@@ -358,6 +435,60 @@ export type Database = {
           },
         ]
       }
+      matches_archive: {
+        Row: {
+          bot_elo: number | null
+          created_at: string
+          id: string
+          is_bot_match: boolean
+          is_ranked: boolean
+          match_type: string
+          player1_id: string
+          player1_score: number | null
+          player1_submitted_at: string | null
+          player2_id: string | null
+          player2_score: number | null
+          player2_submitted_at: string | null
+          room_code: string | null
+          status: string
+          winner_id: string | null
+        }
+        Insert: {
+          bot_elo?: number | null
+          created_at?: string
+          id?: string
+          is_bot_match?: boolean
+          is_ranked?: boolean
+          match_type: string
+          player1_id: string
+          player1_score?: number | null
+          player1_submitted_at?: string | null
+          player2_id?: string | null
+          player2_score?: number | null
+          player2_submitted_at?: string | null
+          room_code?: string | null
+          status?: string
+          winner_id?: string | null
+        }
+        Update: {
+          bot_elo?: number | null
+          created_at?: string
+          id?: string
+          is_bot_match?: boolean
+          is_ranked?: boolean
+          match_type?: string
+          player1_id?: string
+          player1_score?: number | null
+          player1_submitted_at?: string | null
+          player2_id?: string | null
+          player2_score?: number | null
+          player2_submitted_at?: string | null
+          room_code?: string | null
+          status?: string
+          winner_id?: string | null
+        }
+        Relationships: []
+      }
       matchmaking_queue: {
         Row: {
           id: string
@@ -402,6 +533,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: []
       }
       ord_practice_stats: {
         Row: {
@@ -461,6 +619,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "question_reports_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "question_reports_reporter_id_fkey"
             columns: ["reporter_id"]
             isOneToOne: false
@@ -481,6 +646,8 @@ export type Database = {
           difficulty: number | null
           explanation: string | null
           id: string
+          image_caption: string | null
+          image_url: string | null
           options: Json
           passage_id: string | null
           passage_text: string | null
@@ -500,6 +667,8 @@ export type Database = {
           difficulty?: number | null
           explanation?: string | null
           id?: string
+          image_caption?: string | null
+          image_url?: string | null
           options: Json
           passage_id?: string | null
           passage_text?: string | null
@@ -519,6 +688,8 @@ export type Database = {
           difficulty?: number | null
           explanation?: string | null
           id?: string
+          image_caption?: string | null
+          image_url?: string | null
           options?: Json
           passage_id?: string | null
           passage_text?: string | null
@@ -684,9 +855,55 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      health_check: {
+        Row: {
+          checked_at: string | null
+          matches_24h: number | null
+          status: string | null
+          users_count: number | null
+        }
+        Relationships: []
+      }
+      questions_needing_images: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          id: string | null
+          question_text: string | null
+          source: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          question_text?: string | null
+          source?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          question_text?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      apply_match_result: {
+        Args: {
+          _loser_elo_change: number
+          _loser_id: string
+          _loser_score: number
+          _match_id: string
+          _match_type: string
+          _winner_elo_change: number
+          _winner_id: string
+          _winner_score: number
+        }
+        Returns: undefined
+      }
+      archive_old_bot_matches: { Args: never; Returns: number }
       find_user_by_username: {
         Args: { _username: string }
         Returns: {
@@ -694,18 +911,31 @@ export type Database = {
           username: string
         }[]
       }
-      get_leaderboard: {
-        Args: { _match_type: string }
-        Returns: {
-          elo: number
-          games_played: number
-          losses: number
-          rank: number
-          user_id: string
-          username: string
-          wins: number
-        }[]
-      }
+      get_leaderboard:
+        | {
+            Args: { _match_type: string }
+            Returns: {
+              elo: number
+              games_played: number
+              losses: number
+              rank: number
+              user_id: string
+              username: string
+              wins: number
+            }[]
+          }
+        | {
+            Args: { _limit?: number; _match_type: string; _offset?: number }
+            Returns: {
+              elo: number
+              games_played: number
+              losses: number
+              rank: number
+              user_id: string
+              username: string
+              wins: number
+            }[]
+          }
       get_match_review: {
         Args: { _match_id: string }
         Returns: {
@@ -723,7 +953,7 @@ export type Database = {
         }[]
       }
       get_ord_leaderboard: {
-        Args: never
+        Args: { _limit?: number }
         Returns: {
           accuracy: number
           correct_count: number
@@ -743,12 +973,29 @@ export type Database = {
         }[]
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      mark_messages_read: { Args: { _other_user: string }; Returns: number }
       match_visible_to_user: {
         Args: { _match_id: string; _user_id: string }
         Returns: boolean
       }
       pair_ranked_match: {
         Args: { p_creator: string; p_match_id: string; p_opponent: string }
+        Returns: boolean
+      }
+      question_likely_needs_image: {
+        Args: { p_category: string; p_question_text: string }
+        Returns: boolean
+      }
+      send_message: {
+        Args: { _body: string; _recipient: string }
+        Returns: string
+      }
+      submit_bug_report: {
+        Args: { _message: string; _meta?: Json }
+        Returns: string
+      }
+      validate_answer_timing: {
+        Args: { _claimed_seconds: number; _match_id: string }
         Returns: boolean
       }
     }

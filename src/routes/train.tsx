@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,23 @@ import { updateStreak } from "@/lib/streak";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
+  head: () => ({
+    meta: [
+      { title: "Träna HP — alla 8 delprov utan tidspress · HP Kampen" },
+      {
+        name: "description",
+        content:
+          "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
+      },
+      { property: "og:title", content: "Träna HP utan tidspress — HP Kampen" },
+      {
+        property: "og:description",
+        content:
+          "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor – ingen klocka, gratis.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/train" }],
+  }),
 });
 
 type Track = "verbal" | "math";
@@ -37,6 +55,7 @@ interface TrainQuestion {
   category: string;
   passage_id: string | null;
   passage_text: string | null;
+  image_url: string | null;
   correct_answer: string;
   explanation: string | null;
   difficulty: number | null;
@@ -66,7 +85,13 @@ function TrainPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [results, setResults] = useState<
-    { qId: string; category: string; selected: string | null; correct: string; isCorrect: boolean }[]
+    {
+      qId: string;
+      category: string;
+      selected: string | null;
+      correct: string;
+      isCorrect: boolean;
+    }[]
   >([]);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [endedAt, setEndedAt] = useState<number>(0);
@@ -103,7 +128,7 @@ function TrainPage() {
     let q = supabase
       .from("questions")
       .select(
-        "id, category, question_text, options, passage_id, passage_text, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
+        "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
       )
       .in("category", config.subs);
     if (config.difficulty !== null) {
@@ -144,6 +169,7 @@ function TrainPage() {
         category: row.category,
         passage_id: row.passage_id,
         passage_text: row.passage_text,
+        image_url: row.image_url ?? null,
         correct_answer: row.correct_answer,
         explanation: row.explanation,
         difficulty: row.difficulty,
@@ -244,26 +270,39 @@ function TrainPage() {
   if (phase === "setup") {
     return (
       <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-        <motion.header
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-10 text-center"
-        >
-          <p className="eyebrow text-[#6366f1]">Lugn takt</p>
+        <header className="mb-10 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="eyebrow text-[#6366f1]"
+          >
+            Lugn takt
+          </motion.p>
           <h1
-            className="mt-2 text-[36px] font-bold leading-tight text-[#050507] sm:text-[48px]"
+            className="display mt-3 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Träna på{" "}
+            <SplitText as="span">Träna på</SplitText>{" "}
             <span className="display-italic font-medium text-[#6366f1]">
-              egna villkor
+              <SplitText as="span" delay={0.18} italic>
+                egna villkor.
+              </SplitText>
             </span>
           </h1>
-          <p className="mt-3 text-[15px] text-[#737373]">
+          <motion.p
+            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.7,
+              delay: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-4 text-[15px] text-[#737373]"
+          >
             Ingen timer, inga motståndare. Bara du och frågorna.
-          </p>
-        </motion.header>
+          </motion.p>
+        </header>
 
         {/* Step 1: track */}
         <Section title="1. Välj match-typ">
@@ -456,6 +495,15 @@ function TrainPage() {
             >
               {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
             </h2>
+            {currentQ.image_url && (
+              <div className="mb-5 overflow-hidden rounded-xl border border-border">
+                <img
+                  src={currentQ.image_url}
+                  alt="Figur till frågan"
+                  className="w-full object-contain"
+                />
+              </div>
+            )}
             <div className="grid gap-2" role="radiogroup">
               {currentQ.options.map((opt, i) => {
                 const letter = optionLetters[i] ?? String(i + 1);
@@ -676,9 +724,7 @@ function TrainPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">
-        {title}
-      </h2>
+      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">{title}</h2>
       {children}
     </section>
   );

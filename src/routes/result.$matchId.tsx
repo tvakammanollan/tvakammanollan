@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
+import { SplitText, Reveal } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
@@ -13,7 +15,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Trophy, Frown, Minus, Check, X, ChevronDown, RotateCcw, BarChart3, Home, Clock, AlertTriangle } from "lucide-react";
+import {
+  Trophy,
+  Frown,
+  Minus,
+  Check,
+  X,
+  ChevronDown,
+  RotateCcw,
+  BarChart3,
+  Home,
+  Clock,
+  AlertTriangle,
+} from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
@@ -66,9 +80,22 @@ interface QuestionRow {
 }
 
 const FAKE_NAMES = [
-  "linnea_92","oskarH","mattevurm","noa.k","elsa_w","viktorL",
-  "alicia.s","hugo_b","saga.m","ebba.n","leo_99","moa_r",
-  "wilmaP","edvin.t","felicia_k","axel.j",
+  "linnea_92",
+  "oskarH",
+  "mattevurm",
+  "noa.k",
+  "elsa_w",
+  "viktorL",
+  "alicia.s",
+  "hugo_b",
+  "saga.m",
+  "ebba.n",
+  "leo_99",
+  "moa_r",
+  "wilmaP",
+  "edvin.t",
+  "felicia_k",
+  "axel.j",
 ];
 function pickFakeName(seed: string): string {
   let h = 0;
@@ -130,7 +157,11 @@ function ResultPage() {
         const oppId = mr.player1_id === user.id ? mr.player2_id : mr.player1_id;
         if (oppId) {
           setOpponentSeed(oppId);
-          const { data: u } = await supabase.from("users").select("username").eq("id", oppId).maybeSingle();
+          const { data: u } = await supabase
+            .from("users")
+            .select("username")
+            .eq("id", oppId)
+            .maybeSingle();
           setOpponentName(u?.username ?? "Motståndare");
         }
       }
@@ -237,8 +268,8 @@ function ResultPage() {
   }
 
   const isP1 = match.player1_id === user!.id;
-  const myScore = isP1 ? match.player1_score ?? 0 : match.player2_score ?? 0;
-  const oppScore = isP1 ? match.player2_score ?? 0 : match.player1_score ?? 0;
+  const myScore = isP1 ? (match.player1_score ?? 0) : (match.player2_score ?? 0);
+  const oppScore = isP1 ? (match.player2_score ?? 0) : (match.player1_score ?? 0);
   const mySubmittedAt = isP1 ? match.player1_submitted_at : match.player2_submitted_at;
   const oppSubmittedAt = isP1 ? match.player2_submitted_at : match.player1_submitted_at;
   const myDuration = formatDuration(match.created_at, mySubmittedAt);
@@ -252,15 +283,15 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
     : won
-    ? "bg-gradient-to-br from-[#6366f1] via-[#236d44] to-[#2d7a52] text-white border-[#6366f1] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
-    : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
+      ? "bg-gradient-to-br from-[#6366f1] via-[#236d44] to-[#2d7a52] text-white border-[#6366f1] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
+      : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
     ? "Tätt och jämnt."
     : won
-    ? "Snyggt jobbat. Spela igen och fortsätt klättra."
-    : "Bra kämpa! Varje match gör dig bättre.";
+      ? "Snyggt jobbat. Spela igen och fortsätt klättra."
+      : "Bra kämpa! Varje match gör dig bättre.";
 
   const playAgain = async () => {
     if (creatingRematch) return;
@@ -276,12 +307,18 @@ function ResultPage() {
   };
 
   // Group consecutive questions sharing passage_id
-  const passageGroups: Array<{ passage_id: string; passage_text: string; question_ids: string[] }> = [];
+  const passageGroups: Array<{ passage_id: string; passage_text: string; question_ids: string[] }> =
+    [];
   for (const q of questions) {
     if (!q.passage_id || !q.passage_text) continue;
     const last = passageGroups[passageGroups.length - 1];
     if (last && last.passage_id === q.passage_id) last.question_ids.push(q.id);
-    else passageGroups.push({ passage_id: q.passage_id, passage_text: q.passage_text, question_ids: [q.id] });
+    else
+      passageGroups.push({
+        passage_id: q.passage_id,
+        passage_text: q.passage_text,
+        question_ids: [q.id],
+      });
   }
   const passageByQ = new Map<string, { passage_id: string; passage_text: string }>();
   for (const g of passageGroups) for (const id of g.question_ids) passageByQ.set(id, g);
@@ -290,28 +327,57 @@ function ResultPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
       {/* Banner */}
-      <div
-        className={`animate-fade-up relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
-        style={{ animationDelay: "60ms" }}
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.92, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+        className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
       >
-        <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#6366f1]" : ""}`} />
+        <motion.div
+          initial={{ scale: 0.4, opacity: 0, rotate: won ? -15 : 0 }}
+          animate={{ scale: 1, opacity: 1, rotate: 0 }}
+          transition={{
+            duration: 0.7,
+            delay: 0.2,
+            ease: [0.22, 1, 0.36, 1],
+            type: "spring",
+            stiffness: 220,
+            damping: 16,
+          }}
+        >
+          <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#6366f1]" : ""}`} />
+        </motion.div>
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
-          {verdict}
+          <SplitText as="span" delay={0.35}>
+            {verdict}
+          </SplitText>
         </h1>
-        <p className="mt-2 text-sm opacity-80 sm:text-base">{subtext}</p>
-      </div>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 0.8, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-2 text-sm sm:text-base"
+        >
+          {subtext}
+        </motion.p>
+      </motion.div>
 
       {/* Scorecard */}
-      <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6">
+      <Reveal
+        delay={0.25}
+        className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6"
+      >
         <div className="mb-4 text-center text-xs font-semibold tracking-wide text-muted-foreground">
           {match.match_type === "verbal" ? "Verbal" : "Matte"} · Slutresultat
         </div>
         <div className="grid grid-cols-2 gap-4">
           <PlayerColumn
-            name={profile?.username ?? (user?.user_metadata?.username as string | undefined) ?? "Du"}
+            name={
+              profile?.username ?? (user?.user_metadata?.username as string | undefined) ?? "Du"
+            }
             seed={user!.id}
             score={myScore}
             duration={myDuration}
@@ -337,8 +403,8 @@ function ResultPage() {
                 eloChange > 0
                   ? "bg-emerald-100 text-emerald-700"
                   : eloChange < 0
-                  ? "bg-rose-100 text-rose-700"
-                  : "bg-muted text-foreground"
+                    ? "bg-rose-100 text-rose-700"
+                    : "bg-muted text-foreground"
               }`}
             >
               {eloChange >= 0 ? "+" : ""}
@@ -347,49 +413,63 @@ function ResultPage() {
           </div>
         )}
 
-        {questions.length > 0 && (() => {
-          const correctCount = myAnswers.filter((a) => a.is_correct).length;
-          const total = questions.length;
-          const pct = (correctCount / total) * 100;
-          // Approximate HP normering for one delprov (verbal/quant), based on accuracy
-          const norm =
-            pct >= 95 ? 2.0
-            : pct >= 90 ? 1.9
-            : pct >= 82 ? 1.7
-            : pct >= 75 ? 1.5
-            : pct >= 67 ? 1.3
-            : pct >= 58 ? 1.1
-            : pct >= 50 ? 0.9
-            : pct >= 40 ? 0.7
-            : pct >= 30 ? 0.5
-            : 0.3;
-          return (
-            <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
-              <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
-                Trolig normering
+        {questions.length > 0 &&
+          (() => {
+            const correctCount = myAnswers.filter((a) => a.is_correct).length;
+            const total = questions.length;
+            const pct = (correctCount / total) * 100;
+            // Approximate HP normering for one delprov (verbal/quant), based on accuracy
+            const norm =
+              pct >= 95
+                ? 2.0
+                : pct >= 90
+                  ? 1.9
+                  : pct >= 82
+                    ? 1.7
+                    : pct >= 75
+                      ? 1.5
+                      : pct >= 67
+                        ? 1.3
+                        : pct >= 58
+                          ? 1.1
+                          : pct >= 50
+                            ? 0.9
+                            : pct >= 40
+                              ? 0.7
+                              : pct >= 30
+                                ? 0.5
+                                : 0.3;
+            return (
+              <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
+                <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
+                  Trolig normering
+                </div>
+                <div className="mt-1 flex items-baseline justify-center gap-2">
+                  <span
+                    className="text-4xl font-bold tabular-nums text-[#8a6a10] sm:text-5xl"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {norm.toFixed(1)}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    ({correctCount}/{total} rätt)
+                  </span>
+                </div>
+                <p className="mt-1 text-[11px] text-muted-foreground">
+                  Uppskattning baserat på din andel rätt — riktiga HP-normeringen varierar med
+                  provets svårighet.
+                </p>
               </div>
-              <div className="mt-1 flex items-baseline justify-center gap-2">
-                <span
-                  className="text-4xl font-bold tabular-nums text-[#8a6a10] sm:text-5xl"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {norm.toFixed(1)}
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  ({correctCount}/{total} rätt)
-                </span>
-              </div>
-              <p className="mt-1 text-[11px] text-muted-foreground">
-                Uppskattning baserat på din andel rätt — riktiga HP-normeringen varierar med provets svårighet.
-              </p>
-            </div>
-          );
-        })()}
-      </section>
+            );
+          })()}
+      </Reveal>
 
       {/* Guest signup CTA — only shows for anonymous users */}
       {user?.is_anonymous && (
-        <section className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8">
+        <Reveal
+          delay={0.4}
+          className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8"
+        >
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
             <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
               <Trophy className="h-7 w-7" />
@@ -402,8 +482,8 @@ function ResultPage() {
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-[#713f12]">
-                Skapa ett gratis konto för att <strong>spara din ELO</strong>,
-                klättra i rankingen och utmana dina vänner. Tar 30 sekunder.
+                Skapa ett gratis konto för att <strong>spara din ELO</strong>, klättra i rankingen
+                och utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
@@ -413,7 +493,7 @@ function ResultPage() {
               <Link to="/signup">Skapa konto →</Link>
             </Button>
           </div>
-        </section>
+        </Reveal>
       )}
 
       {/* Actions */}
@@ -445,14 +525,17 @@ function ResultPage() {
                 <ChevronDown className="h-4 w-4 opacity-60" />
                 Genomgång av alla {questions.length} frågor
                 {(() => {
-                  const times = myAnswers.map((a) => a.time_spent_seconds).filter((t): t is number => typeof t === "number" && t > 0);
+                  const times = myAnswers
+                    .map((a) => a.time_spent_seconds)
+                    .filter((t): t is number => typeof t === "number" && t > 0);
                   if (times.length === 0) return null;
                   const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
                   const m = Math.floor(avg / 60);
                   const s = avg % 60;
                   return (
                     <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-normal text-muted-foreground">
-                      <Clock className="h-3 w-3" /> {m > 0 ? `${m} min ` : ""}{s} sek snitt
+                      <Clock className="h-3 w-3" /> {m > 0 ? `${m} min ` : ""}
+                      {s} sek snitt
                     </span>
                   );
                 })()}
@@ -473,8 +556,8 @@ function ResultPage() {
                         noAnswer
                           ? "border-zinc-300 bg-zinc-50"
                           : correct
-                          ? "border-emerald-300/60 bg-emerald-50/60"
-                          : "border-rose-300/60 bg-rose-50/60"
+                            ? "border-emerald-300/60 bg-emerald-50/60"
+                            : "border-rose-300/60 bg-rose-50/60"
                       }`}
                     >
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
@@ -547,15 +630,17 @@ function ResultPage() {
                       )}
 
                       <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                        {["XYZ","KVA","NOG","DTK"].includes(q.category)
-                          ? <MathText autoDetect>{q.question_text}</MathText>
-                          : q.question_text}
+                        {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
+                          <MathText autoDetect>{q.question_text}</MathText>
+                        ) : (
+                          q.question_text
+                        )}
                       </div>
                       <ul className="mt-2 grid gap-1">
                         {q.options.map((opt) => {
                           const isCorrect = opt.id === q.correct_answer;
                           const isPicked = a?.selected_answer === opt.id;
-                          const isMath = ["XYZ","KVA","NOG","DTK"].includes(q.category);
+                          const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(q.category);
                           return (
                             <li
                               key={opt.id}
@@ -563,8 +648,8 @@ function ResultPage() {
                                 isCorrect
                                   ? "border-emerald-300 bg-emerald-100/60 text-emerald-900"
                                   : isPicked
-                                  ? "border-rose-300 bg-rose-100/60 text-rose-900"
-                                  : "border-transparent text-foreground/80"
+                                    ? "border-rose-300 bg-rose-100/60 text-rose-900"
+                                    : "border-transparent text-foreground/80"
                               }`}
                             >
                               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
@@ -574,7 +659,9 @@ function ResultPage() {
                                 {isMath ? <MathText autoDetect>{opt.text}</MathText> : opt.text}
                               </span>
                               {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-700" />}
-                              {isPicked && !isCorrect && <X className="ml-auto h-4 w-4 text-rose-700" />}
+                              {isPicked && !isCorrect && (
+                                <X className="ml-auto h-4 w-4 text-rose-700" />
+                              )}
                             </li>
                           );
                         })}

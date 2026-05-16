@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
+import { SplitText } from "@/components/landing/MotionFX";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,9 +22,20 @@ export const Route = createFileRoute("/friends")({
   component: FriendsPage,
   head: () => ({
     meta: [
-      { title: "Vänner — HP Kampen" },
-      { name: "description", content: "Lägg till vänner och bjud in dem till en battle." },
+      { title: "Vänner — utmana dina kompisar i HP · HP Kampen" },
+      {
+        name: "description",
+        content:
+          "Lägg till vänner på HP Kampen och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
+      },
+      { property: "og:title", content: "Vänner — HP Kampen" },
+      {
+        property: "og:description",
+        content: "Bjud in dina kompisar till en privat HP-battle och slåss om ELO.",
+      },
+      { name: "robots", content: "noindex, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/friends" }],
   }),
 });
 
@@ -91,10 +103,8 @@ function FriendsPage() {
     // Realtime
     const channel = supabase
       .channel(`friendships-${user.id}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "friendships" },
-        () => setTick((t) => t + 1),
+      .on("postgres_changes", { event: "*", schema: "public", table: "friendships" }, () =>
+        setTick((t) => t + 1),
       )
       .subscribe();
 
@@ -113,11 +123,7 @@ function FriendsPage() {
       const r = await sendReq({ data: { username: name } });
       const r2 = r as { autoAccepted?: boolean };
       sounds.ping();
-      toast.success(
-        r2.autoAccepted
-          ? `Ni är nu vänner!`
-          : `Förfrågan skickad till ${name}`,
-      );
+      toast.success(r2.autoAccepted ? `Ni är nu vänner!` : `Förfrågan skickad till ${name}`);
       setUsername("");
       setTick((t) => t + 1);
     } catch (err) {
@@ -163,9 +169,7 @@ function FriendsPage() {
   const outgoing = rows.filter((r) => r.status === "pending" && !r.isIncoming);
 
   if (loading || !user) {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-10 text-muted-foreground">Laddar…</div>
-    );
+    return <div className="mx-auto max-w-2xl px-4 py-10 text-muted-foreground">Laddar…</div>;
   }
 
   if (user.is_anonymous) {
@@ -186,22 +190,30 @@ function FriendsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="eyebrow text-[#6366f1]">Din krets</p>
+      <div>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="eyebrow text-[#6366f1]"
+        >
+          Din krets
+        </motion.p>
         <h1
-          className="mt-1 text-[36px] font-bold leading-tight text-[#050507] sm:text-[44px]"
+          className="display mt-2 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Vänner
+          <SplitText as="span">Vänner.</SplitText>
         </h1>
-        <p className="mt-2 text-sm text-[#737373]">
+        <motion.p
+          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-3 text-sm text-[#737373]"
+        >
           Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
-        </p>
-      </motion.div>
+        </motion.p>
+      </div>
 
       {/* Add friend */}
       <form onSubmit={handleAdd} className="mt-6 flex flex-col gap-2 sm:flex-row">
@@ -234,7 +246,12 @@ function FriendsPage() {
                   <span className="text-sm font-medium">{r.other?.username ?? "Okänd"}</span>
                 </div>
                 <div className="flex gap-1.5">
-                  <Button size="sm" variant="default" onClick={() => respond(r.id, true)} className="gap-1">
+                  <Button
+                    size="sm"
+                    variant="default"
+                    onClick={() => respond(r.id, true)}
+                    className="gap-1"
+                  >
                     <Check className="h-4 w-4" /> Acceptera
                   </Button>
                   <Button size="sm" variant="ghost" onClick={() => respond(r.id, false)}>

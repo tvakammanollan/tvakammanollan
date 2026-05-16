@@ -173,15 +173,75 @@ export type OrdLeaderboardRow = {
   accuracy: number;
 };
 
-// Returns top 100 + the signed-in user's row (whether or not they're in top).
+// Returns top N + the signed-in user's row (whether or not they're in top).
+// Tries new RPC (with _limit). Falls back to legacy RPC if migration not applied.
 export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { userId } = context;
-    const { data, error } = await supabaseAdmin.rpc("get_ord_leaderboard");
+    // Hämta från ord_practice_stats (redan aggregerad per användare).
+    // Bypass RPC + filter — alla som har minst 1 svar syns.
+    const { data: stats, error } = await supabaseAdmin
+      .from("ord_practice_stats")
+      .select("user_id, correct_count, total_count")
+      .gte("total_count", 1)
+      .order("correct_count", { ascending: false })
+      .limit(200);
     if (error) throw new Error(error.message);
-    const rows = (data ?? []) as OrdLeaderboardRow[];
-    const top = rows.slice(0, 100);
-    const me = rows.find((r) => r.user_id === userId) ?? null;
+
+    const statsRows = (stats ?? []) as Array<{
+      user_id: string;
+      correct_count: number;
+      total_count: number;
+    }>;
+
+    const userIds = statsRows.map((s) => s.user_id);
+    const nameMap = new Map<string, string>();
+    if (userIds.length) {
+      const { data: us } = await supabaseAdmin
+        .from("users")
+        .select("id, username")
+        .in("id", userIds);
+      for (const u of us ?? [])
+        nameMap.set(u.id as string, (u.username as string) ?? "");
+    }
+
+    const top: OrdLeaderboardRow[] = statsRows
+      .map((s) => ({
+        rank: 0,
+        user_id: s.user_id,
+        username: nameMap.get(s.user_id) ?? "",
+        correct_count: s.correct_count,
+        total_count: s.total_count,
+        accuracy:
+          s.total_count > 0
+            ? Math.round((s.correct_count * 100) / s.total_count)
+            : 0,
+      }))
+      .slice(0, 100)
+      .map((r, i) => ({ ...r, rank: i + 1 }));
+
+    // Fetch "me" row separately if not in top — from samma stats-tabell.
+    let me: OrdLeaderboardRow | null =
+      top.find((r) => r.user_id === userId) ?? null;
+    if (!me) {
+      const { data: meRow } = await supabaseAdmin
+        .from("ord_practice_stats")
+        .select("correct_count, total_count")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (meRow) {
+        const correct = (meRow.correct_count as number) ?? 0;
+        const total = (meRow.total_count as number) ?? 0;
+        me = {
+          rank: 0,
+          user_id: userId,
+          username: "",
+          correct_count: correct,
+          total_count: total,
+          accuracy: total > 0 ? Math.round((correct * 100) / total) : 0,
+        };
+      }
+    }
     return { top, me };
   });

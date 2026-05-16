@@ -26,13 +26,19 @@ export const Route = createFileRoute("/ord")({
   component: OrdPracticePage,
   head: () => ({
     meta: [
-      { title: "Öva ord · HP Kampen" },
+      { title: "Öva ord — 8 000+ HP-ord · HP Kampen" },
       {
         name: "description",
         content:
-          "Träna högskoleprovets ordförståelse solo. Över 8000 riktiga ORD-frågor från tidigare högskoleprov.",
+          "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
+      },
+      { property: "og:title", content: "Öva ord — 8 000+ HP-ord" },
+      {
+        property: "og:description",
+        content: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://hpkampen.se/ord" }],
   }),
   errorComponent: ({ error, reset }) => {
     const router = useRouter();

@@ -41,22 +41,22 @@ function JoinPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
       <motion.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#0E1B2C] to-[#15273E] text-white shadow-[var(--shadow-glow-green)]"
         animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         <Users className="h-7 w-7" />
       </motion.span>
       <div>
-        <p className="eyebrow text-[#6366f1]">Privat rum</p>
+        <p className="eyebrow text-[#0E1B2C]">Privat rum</p>
         <h1
-          className="mt-1 text-[28px] font-bold leading-tight text-[#050507]"
+          className="mt-1 text-[28px] font-bold leading-tight text-[#0E1B2C]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Ansluter…
         </h1>
         <p className="mt-1.5 text-sm text-[#737373]">
-          Rum-kod: <span className="font-mono font-semibold text-[#050507]">{roomCode}</span>
+          Rum-kod: <span className="font-mono font-semibold text-[#0E1B2C]">{roomCode}</span>
         </p>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { completeOnboarding } from "@/lib/onboarding.functions";
-import { createMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
 
 const GOALS = [
@@ -32,7 +31,6 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const completeOnboardingFn = useServerFn(completeOnboarding);
-  const createMatchFn = useServerFn(createMatch);
   const [step, setStep] = useState(0);
   const [target, setTarget] = useState<number | null>(null);
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
@@ -65,13 +63,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
     onClose();
     if (startMatch) {
       const t: "verbal" | "math" = focus === "math" ? "math" : "verbal";
-      try {
-        const match = await createMatchFn({ data: { match_type: t, mode: "bot" } });
-        navigate({ to: "/match/$matchId", params: { matchId: match.match_id } });
-      } catch (error) {
-        toast.error(error instanceof Error ? error.message : "Kunde inte starta matchen");
-        onStartFirstMatch?.(t);
-      }
+      navigate({ to: "/matchmaking", search: { type: t } });
     } else {
       navigate({ to: "/" });
     }
@@ -113,7 +105,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
             <span
               key={i}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                i <= step ? "bg-[#6366f1]" : "bg-border"
+                i <= step ? "bg-[#0E1B2C]" : "bg-border"
               }`}
             />
           ))}
@@ -138,7 +130,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setTarget(g.value)}
                       className={`flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#6366f1] bg-[#6366f1]/10"
+                          ? "border-[#0E1B2C] bg-[#0E1B2C]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
@@ -149,7 +141,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                           <span className="text-sm text-muted-foreground">{g.label}</span>
                         </span>
                       </span>
-                      {selected && <span className="text-[#6366f1]">✓</span>}
+                      {selected && <span className="text-[#0E1B2C]">✓</span>}
                     </button>
                   );
                 })}
@@ -180,7 +172,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setFocus(f.value)}
                       className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#6366f1] bg-[#6366f1]/10"
+                          ? "border-[#0E1B2C] bg-[#0E1B2C]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
@@ -189,7 +181,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                         <div className="font-semibold">{f.label}</div>
                         <div className="text-xs text-muted-foreground">{f.sub}</div>
                       </span>
-                      {selected && <span className="ml-auto text-[#6366f1]">✓</span>}
+                      {selected && <span className="ml-auto text-[#0E1B2C]">✓</span>}
                     </button>
                   );
                 })}
@@ -222,7 +214,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               <div className="mt-6 flex flex-col gap-2">
                 <Button
                   size="lg"
-                  className="w-full bg-[#6366f1] text-white hover:bg-[#154a2f]"
+                  className="w-full bg-[#0E1B2C] text-white hover:bg-[#154a2f]"
                   disabled={saving}
                   onClick={() => finish(true)}
                 >
