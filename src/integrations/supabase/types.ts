@@ -268,6 +268,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "match_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "match_answers_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -341,6 +348,13 @@ export type Database = {
             columns: ["question_id"]
             isOneToOne: false
             referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "match_questions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
             referencedColumns: ["id"]
           },
         ]
@@ -605,6 +619,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "question_reports_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "question_reports_reporter_id_fkey"
             columns: ["reporter_id"]
             isOneToOne: false
@@ -625,6 +646,8 @@ export type Database = {
           difficulty: number | null
           explanation: string | null
           id: string
+          image_caption: string | null
+          image_url: string | null
           options: Json
           passage_id: string | null
           passage_text: string | null
@@ -644,6 +667,8 @@ export type Database = {
           difficulty?: number | null
           explanation?: string | null
           id?: string
+          image_caption?: string | null
+          image_url?: string | null
           options: Json
           passage_id?: string | null
           passage_text?: string | null
@@ -663,6 +688,8 @@ export type Database = {
           difficulty?: number | null
           explanation?: string | null
           id?: string
+          image_caption?: string | null
+          image_url?: string | null
           options?: Json
           passage_id?: string | null
           passage_text?: string | null
@@ -837,6 +864,30 @@ export type Database = {
         }
         Relationships: []
       }
+      questions_needing_images: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          id: string | null
+          question_text: string | null
+          source: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          question_text?: string | null
+          source?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          question_text?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       apply_match_result: {
@@ -929,6 +980,10 @@ export type Database = {
       }
       pair_ranked_match: {
         Args: { p_creator: string; p_match_id: string; p_opponent: string }
+        Returns: boolean
+      }
+      question_likely_needs_image: {
+        Args: { p_category: string; p_question_text: string }
         Returns: boolean
       }
       send_message: {
