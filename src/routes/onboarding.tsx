@@ -48,7 +48,7 @@ function OnboardingPage() {
 
     if (error) {
       if (error.code === "23505") {
-        toast.error("Det användarnamnet är taget — försök ett annat");
+        toast.error("Det användarnamnet är taget. Försök ett annat");
       } else {
         toast.error("Kunde inte spara", { description: error.message });
       }

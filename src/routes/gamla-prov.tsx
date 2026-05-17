@@ -409,7 +409,7 @@ function GamlaProvPage() {
 
           {!hasFacit && (
             <div className="mb-5 rounded-2xl border p-4 text-xs" style={{ borderColor: "rgba(234,179,8,0.3)", background: "rgba(234,179,8,0.05)", color: "var(--text-secondary)" }}>
-              <strong style={{ color: "var(--amber)" }}>Facit saknas för detta provpass</strong> — vi har frågor och alternativ, men inte rätt svar. Poängen ovan är därför inte rättvisande.
+              <strong style={{ color: "var(--amber)" }}>Facit saknas för detta provpass.</strong> Vi har frågor och alternativ, men inte rätt svar. Poängen ovan är därför inte rättvisande.
             </div>
           )}
 
@@ -576,7 +576,7 @@ function GamlaProvPage() {
         {/* ELF notice */}
         {isELF && !passage && (
           <div className="mb-4 rounded-2xl border p-4 text-xs leading-relaxed" style={{ borderColor: "rgba(234,179,8,0.3)", background: "rgba(234,179,8,0.05)", color: "var(--text-secondary)" }}>
-            <strong style={{ color: "var(--amber)" }}>Engelska texten är inte tillgänglig</strong> — den tas bort en vecka efter provdagen pga upphovsrätt.
+            <strong style={{ color: "var(--amber)" }}>Engelska texten är inte tillgänglig.</strong> Den tas bort en vecka efter provdagen pga upphovsrätt.
           </div>
         )}
 
@@ -635,7 +635,7 @@ function GamlaProvPage() {
                           className="mt-5 text-sm italic font-sans"
                           style={{ color: "var(--text-tertiary)" }}
                         >
-                          — {trimmed.slice(1, -1)}
+                          {trimmed.slice(1, -1)}
                         </p>
                       );
                     }
@@ -736,7 +736,7 @@ function GamlaProvPage() {
               {submitted && q.svar
                 ? <>Rätt svar: <strong>{q.svar}</strong></>
                 : isELF
-                  ? "Texten saknas — se rätt svar efter inlämning."
+                  ? "Texten saknas. Se rätt svar efter inlämning."
                   : "Se figuren ovan eller provhäftet."}
             </p>
           )}

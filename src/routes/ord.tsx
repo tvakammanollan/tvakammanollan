@@ -26,13 +26,13 @@ export const Route = createFileRoute("/ord")({
   component: OrdPracticePage,
   head: () => ({
     meta: [
-      { title: "Öva ord — 8 000+ HP-ord · HP Kampen" },
+      { title: "Öva ord · 8 000+ HP-ord · HP Kampen" },
       {
         name: "description",
         content:
           "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
       },
-      { property: "og:title", content: "Öva ord — 8 000+ HP-ord" },
+      { property: "og:title", content: "Öva ord · 8 000+ HP-ord" },
       {
         property: "og:description",
         content: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
@@ -252,7 +252,7 @@ function OrdPracticePage() {
                 Hur många ord vill du öva?
               </h2>
               <p className="mt-1.5 text-sm text-neutral-500">
-                Välj längd på passet — du får en sammanställning efteråt.
+                Välj längd på passet. Du får en sammanställning efteråt.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
                 {COUNT_OPTIONS.map((n, i) => (

@@ -34,7 +34,7 @@ import {
 
 const TESTIMONIALS = [
   {
-    quote: "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet — det är en ny känsla.",
+    quote: "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet. Det är en ny känsla.",
     name: "Aron",
     score: "2.0",
     founder: false,
@@ -46,7 +46,7 @@ const TESTIMONIALS = [
     founder: false,
   },
   {
-    quote: "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet — helt gratis.",
+    quote: "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
     name: "Niklas",
     score: "1.9",
     founder: true,
@@ -522,7 +522,7 @@ function Features() {
               <FeatureCard
                 icon={<BookOpen className="h-7 w-7" />}
                 title="Alla 8 delprov"
-                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk — träna i lugn takt eller testa dig under tidspress."
+                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk. Träna i lugn takt eller testa dig under tidspress."
                 gradient="from-emerald-400 via-teal-500 to-cyan-600"
               />
             </FlipCard>
@@ -558,7 +558,7 @@ const STAGES = [
     icon: <Target className="h-5 w-5" />,
     eyebrow: "Stage 03",
     title: "Klättra rankingen.",
-    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Inte en topplista — en resa.",
+    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Inte en topplista, en resa.",
     accent: "from-amber-400 to-orange-500",
     elo: 1880,
   },
@@ -893,7 +893,7 @@ function FounderQuote() {
           <blockquote className="display relative text-[26px] leading-[1.3] text-[#0a0a0f] sm:text-[34px]">
             HP Kampen innehåller verktyg jag hade haft{" "}
             <span className="text-aurora-gradient italic">stor nytta av</span> när jag pluggade till
-            högskoleprovet — helt gratis.
+            högskoleprovet, helt gratis.
           </blockquote>
           <figcaption className="mt-8 flex items-center gap-4 border-t border-black/5 pt-6">
             <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-700 text-lg font-bold text-white shadow-md">

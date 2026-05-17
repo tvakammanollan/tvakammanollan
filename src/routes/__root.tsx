@@ -106,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://hpkampen.se/og-image.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "HP Kampen — Tävla mot vänner i Högskoleprovet" },
+      { property: "og:image:alt", content: "HP Kampen · Tävla mot vänner i Högskoleprovet" },
       { property: "og:site_name", content: "HP Kampen" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
@@ -161,7 +161,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           alternateName: "HP-Kampen",
           url: "https://hpkampen.se",
           description:
-            "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment — ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
+            "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
           applicationCategory: "EducationalApplication",
           applicationSubCategory: "TestPreparation",
           operatingSystem: "Web",
@@ -298,7 +298,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Hur räknas HP-poäng?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
+                text: "Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng, det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
               },
             },
           ],

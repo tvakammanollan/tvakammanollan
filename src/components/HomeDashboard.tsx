@@ -460,7 +460,7 @@ function HeroPanel({
           transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mt-3 max-w-md text-[15px] text-white/65"
         >
-          Vad vill du erövra idag? Tävla mot någon, träna i lugn takt eller öva ord — välj från
+          Vad vill du erövra idag? Tävla mot någon, träna i lugn takt eller öva ord. Välj från
           sidopanelen eller korten nedan.
         </motion.p>
 
@@ -519,7 +519,7 @@ function ActionGrid({
       />
       <ActionCard
         icon={<BookOpen className="h-6 w-6" />}
-        title="Öva ord — solo"
+        title="Öva ord · solo"
         subtitle="8 000+ riktiga HP-frågor"
         gradient="from-cyan-500 via-indigo-500 to-violet-600"
         to="/ord"
@@ -644,7 +644,7 @@ function GamlaProvBanner() {
             </span>
           </div>
           <p className="mt-0.5 text-xs text-[#737373]">
-            Skriv hela provpass från 2012 till Vårprovet 2026 — med facit och normering
+            Skriv hela provpass från 2012 till Vårprovet 2026, med facit och normering
           </p>
         </div>
         <ArrowRight className="h-4 w-4 shrink-0 text-[#737373] transition-transform group-hover:translate-x-0.5 group-hover:text-indigo-500" />

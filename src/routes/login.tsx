@@ -14,13 +14,13 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
   head: () => ({
     meta: [
-      { title: "Logga in — HP Kampen" },
+      { title: "Logga in · HP Kampen" },
       {
         name: "description",
         content:
           "Logga in på HP Kampen för att fortsätta tävla mot vänner, klättra i ELO-rankingen och spara dina HP-resultat.",
       },
-      { property: "og:title", content: "Logga in — HP Kampen" },
+      { property: "og:title", content: "Logga in · HP Kampen" },
       { name: "robots", content: "noindex, follow" },
     ],
     links: [{ rel: "canonical", href: "https://hpkampen.se/login" }],

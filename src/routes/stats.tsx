@@ -28,7 +28,7 @@ export const Route = createFileRoute("/stats")({
   component: StatsPage,
   head: () => ({
     meta: [
-      { title: "Din statistik — HP Kampen" },
+      { title: "Din statistik · HP Kampen" },
       {
         name: "description",
         content:

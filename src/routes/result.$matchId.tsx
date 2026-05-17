@@ -456,7 +456,7 @@ function ResultPage() {
                   </span>
                 </div>
                 <p className="mt-1 text-[11px] text-muted-foreground">
-                  Uppskattning baserat på din andel rätt — riktiga HP-normeringen varierar med
+                  Uppskattning baserat på din andel rätt. Riktiga HP-normeringen varierar med
                   provets svårighet.
                 </p>
               </div>
@@ -587,7 +587,7 @@ function ResultPage() {
                         )}
                         <span className="ml-auto inline-flex items-center gap-1">
                           {noAnswer ? (
-                            <span className="text-zinc-600">— Ej besvarad</span>
+                            <span className="text-zinc-600">Ej besvarad</span>
                           ) : correct ? (
                             <>
                               <Check className="h-3.5 w-3.5 text-emerald-700" /> Rätt

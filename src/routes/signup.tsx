@@ -13,13 +13,13 @@ export const Route = createFileRoute("/signup")({
   component: SignupPage,
   head: () => ({
     meta: [
-      { title: "Skapa konto — gratis HP-träning · HP Kampen" },
+      { title: "Skapa konto · gratis HP-träning · HP Kampen" },
       {
         name: "description",
         content:
           "Skapa ett gratis konto på HP Kampen på 30 sekunder. Tävla mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt gratis, inga annonser.",
       },
-      { property: "og:title", content: "Skapa konto gratis — HP Kampen" },
+      { property: "og:title", content: "Skapa konto gratis · HP Kampen" },
       {
         property: "og:description",
         content:
@@ -68,7 +68,7 @@ function SignupPage() {
       return;
     }
     if (data.session) {
-      toast.success("Konto skapat — välj ditt användarnamn");
+      toast.success("Konto skapat. Välj ditt användarnamn");
       navigate({ to: "/onboarding" });
     } else {
       setSentTo(parsed.data.email);
@@ -89,7 +89,7 @@ function SignupPage() {
             {sentTo}
           </p>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Öppna mejlet på den här enheten och klicka på länken — då loggas du in
+            Öppna mejlet på den här enheten och klicka på länken. Då loggas du in
             automatiskt och kan välja användarnamn. Hittar du inte mejlet? Kolla
             skräpposten.
           </p>

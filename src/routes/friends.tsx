@@ -22,13 +22,13 @@ export const Route = createFileRoute("/friends")({
   component: FriendsPage,
   head: () => ({
     meta: [
-      { title: "Vänner — utmana dina kompisar i HP · HP Kampen" },
+      { title: "Vänner · utmana dina kompisar i HP · HP Kampen" },
       {
         name: "description",
         content:
           "Lägg till vänner på HP Kampen och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
       },
-      { property: "og:title", content: "Vänner — HP Kampen" },
+      { property: "og:title", content: "Vänner · HP Kampen" },
       {
         property: "og:description",
         content: "Bjud in dina kompisar till en privat HP-battle och slåss om ELO.",

@@ -44,13 +44,13 @@ export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
   head: () => ({
     meta: [
-      { title: "Topplista — HP Kampen ELO-ranking" },
+      { title: "Topplista · HP Kampen ELO-ranking" },
       {
         name: "description",
         content:
           "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
       },
-      { property: "og:title", content: "Topplista — HP Kampen" },
+      { property: "og:title", content: "Topplista · HP Kampen" },
       {
         property: "og:description",
         content: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
@@ -101,7 +101,7 @@ function LeaderboardPage() {
           transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="mt-4 text-[15px] text-neutral-500"
         >
-          De vassaste HP-spelarna just nu — uppdateras live.
+          De vassaste HP-spelarna just nu, uppdateras live.
         </motion.p>
       </div>
 
@@ -394,7 +394,7 @@ function OrdBoard() {
         <div className="p-8 text-center text-sm text-destructive">{error}</div>
       ) : top.length === 0 ? (
         <div className="p-8 text-center text-sm text-muted-foreground">
-          Inga ord övade ännu — bli först!
+          Inga ord övade ännu. Bli först!
         </div>
       ) : (
         <div className="overflow-x-auto">

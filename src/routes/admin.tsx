@@ -598,12 +598,12 @@ function OrdAuditTab() {
     <div className="space-y-6">
       <div className="rounded-2xl border border-border bg-card p-6">
         <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
-          🔍 ORD-audit — applicera manuella fixar
+          🔍 ORD-audit · applicera manuella fixar
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
           Kör de 134 manuellt granskade fixarna från{" "}
           <code className="rounded bg-muted px-1 py-0.5 text-xs">.ord-audit/manual-fixes.json</code>.
-          Idempotent — en redan rättad rad skrivs aldrig över.
+          Idempotent: en redan rättad rad skrivs aldrig över.
         </p>
 
         <div className="space-y-3 mb-5">
@@ -613,7 +613,7 @@ function OrdAuditTab() {
               onCheckedChange={(c) => setDryRun(c === true)}
             />
             <span>
-              <strong>Dry run</strong> — kör ingenting, visa bara vad som skulle hända
+              <strong>Dry run</strong>: kör ingenting, visa bara vad som skulle hända
             </span>
           </label>
           <label className="flex items-center gap-2 text-sm">
@@ -628,7 +628,7 @@ function OrdAuditTab() {
               checked={includeLow}
               onCheckedChange={(c) => setIncludeLow(c === true)}
             />
-            <span>Inkludera low-confidence fixar (1 st: KURANT — rekommenderas ej)</span>
+            <span>Inkludera low-confidence fixar (1 st: KURANT, rekommenderas ej)</span>
           </label>
         </div>
 
