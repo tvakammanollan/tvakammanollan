@@ -275,9 +275,9 @@ function Hero({
             transition={{ duration: 0.8, delay: 1.7 }}
             className="mt-20 flex items-center gap-12 text-center"
           >
-            <StatTeaser value={stats.totalMatches} label="matcher spelade" />
+            <StatTeaser value={stats.topVerbalElo} label="högsta verbal-ELO" />
             <span className="h-12 w-px bg-white/15" />
-            <StatTeaser value={stats.totalPlayers} label="spelare" />
+            <StatTeaser value={stats.topMathElo} label="högsta matte-ELO" />
             <span className="hidden h-12 w-px bg-white/15 sm:inline-block" />
             <StatTeaser value={8000} label="HP-ord" hidden suffix="+" />
           </motion.div>
@@ -853,10 +853,10 @@ function ProofSection({ stats }: { stats: LandingStats | null }) {
         <VelocitySkew maxDeg={2.5}>
           <div className="grid gap-6 sm:grid-cols-3">
             <FlipCard delay={0} axis="y">
-              <ProofCard value={stats?.totalMatches ?? 0} label="Matcher spelade" />
+              <ProofCard value={stats?.topVerbalElo ?? 0} label="Högsta verbal-ELO" />
             </FlipCard>
             <FlipCard delay={0.1} axis="x">
-              <ProofCard value={stats?.totalPlayers ?? 0} label="Aktiva spelare" />
+              <ProofCard value={stats?.topMathElo ?? 0} label="Högsta matte-ELO" />
             </FlipCard>
             <FlipCard delay={0.2} axis="y">
               <ProofCard value={8000} suffix="+" label="HP-ord i databasen" />

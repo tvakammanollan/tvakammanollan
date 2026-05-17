@@ -22,6 +22,10 @@ export interface LandingStats {
   activePlayers: number;
   /** Matches finished in the last minute — for the "live" feel. */
   matchesPerMin: number;
+  /** Highest verbal ELO across all users right now. */
+  topVerbalElo: number;
+  /** Highest math ELO across all users right now. */
+  topMathElo: number;
   recent: RecentMatch[];
 }
 
@@ -38,8 +42,15 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
         () => fallback as T,
       );
 
-    const [matchesCount, usersCount, activeAgg, perMinAgg, recent] =
-      await Promise.all([
+    const [
+      matchesCount,
+      usersCount,
+      activeAgg,
+      perMinAgg,
+      recent,
+      topVerbal,
+      topMath,
+    ] = await Promise.all([
         safe(
           supabaseAdmin
             .from("matches")
@@ -81,6 +92,26 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
             .order("created_at", { ascending: false })
             .limit(10),
           { data: [] } as { data: never[] },
+        ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("elo_verbal")
+            .gte("games_played", 1)
+            .order("elo_verbal", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+          { data: null } as { data: { elo_verbal: number | null } | null },
+        ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("elo_math")
+            .gte("games_played", 1)
+            .order("elo_math", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+          { data: null } as { data: { elo_math: number | null } | null },
         ),
       ]);
 
@@ -125,6 +156,8 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       totalPlayers: usersCount.count ?? 0,
       activePlayers: activeIds.size,
       matchesPerMin: perMinAgg.count ?? 0,
+      topVerbalElo: topVerbal.data?.elo_verbal ?? 0,
+      topMathElo: topMath.data?.elo_math ?? 0,
       recent: matches.map((m) => ({
         ...m,
         p1_name: nameMap.get(m.player1_id) ?? null,
