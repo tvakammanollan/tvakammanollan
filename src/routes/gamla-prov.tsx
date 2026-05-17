@@ -639,6 +639,74 @@ function GamlaProvPage() {
                         </p>
                       );
                     }
+                    // Glossary block: "||GLOSS|| term = def term2 = def2 ..."
+                    if (trimmed.startsWith("||GLOSS|| ")) {
+                      const body = trimmed.slice("||GLOSS|| ".length);
+                      // Split entries at " = " heuristically: each entry is "<term> = <def>"
+                      // Simple split: find " = " positions, then walk back 1 word for term
+                      const eqPositions: number[] = [];
+                      const re = / = /g;
+                      let m: RegExpExecArray | null;
+                      while ((m = re.exec(body)) !== null) eqPositions.push(m.index);
+                      type Entry = { term: string; def: string };
+                      const entries: Entry[] = [];
+                      let cursor = 0;
+                      for (let k = 0; k < eqPositions.length; k++) {
+                        const eqIdx = eqPositions[k];
+                        const segment = body.slice(cursor, eqIdx);
+                        // Determine where current entry's term starts (split previous def from current term)
+                        let term: string;
+                        let prevDef: string;
+                        if (k === 0) {
+                          // first entry: everything before " = " is the term
+                          term = segment.trim();
+                          prevDef = "";
+                        } else {
+                          // Term is last word(s) of segment; greedy: 1 word unless capitalized phrase
+                          const words = segment.trim().split(/\s+/);
+                          // Look for trailing capitalized phrase
+                          let termWords = 1;
+                          for (let w = words.length - 1; w >= 0; w--) {
+                            if (/^[A-ZÅÄÖ]/.test(words[w])) {
+                              termWords = words.length - w;
+                            } else if (termWords > 1) {
+                              break;
+                            }
+                          }
+                          // Cap at 5 words to avoid runaway
+                          termWords = Math.min(termWords, 5);
+                          term = words.slice(-termWords).join(" ");
+                          prevDef = words.slice(0, words.length - termWords).join(" ");
+                        }
+                        if (k > 0) entries[k - 1].def = prevDef;
+                        entries.push({ term, def: "" });
+                        cursor = eqIdx + 3; // past " = "
+                      }
+                      // Last def: from last " = " to end
+                      if (entries.length > 0) {
+                        entries[entries.length - 1].def = body.slice(cursor).trim();
+                      }
+                      return (
+                        <dl
+                          key={i}
+                          className="mt-4 mb-2 rounded-xl border px-4 py-3 text-xs font-sans"
+                          style={{
+                            borderColor: "rgba(165,180,252,0.18)",
+                            background: "rgba(99,102,241,0.06)",
+                            color: "var(--text-secondary)",
+                          }}
+                        >
+                          {entries.map((e, j) => (
+                            <div key={j} className={j > 0 ? "mt-1.5" : ""}>
+                              <dt className="inline font-semibold" style={{ color: "#a5b4fc" }}>
+                                {e.term}
+                              </dt>
+                              <dd className="inline ml-2">= {e.def}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      );
+                    }
                     return (
                       <p key={i} className="mb-4 last:mb-0">
                         {trimmed}
