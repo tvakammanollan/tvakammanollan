@@ -60,21 +60,17 @@ const TESTIMONIALS = [
    precision meets a film camera you can feel.
    ==================================================================== */
 
-export function HeroLanding({ initialStats }: { initialStats?: LandingStats | null } = {}) {
+export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
-  // Seed with SSR-provided stats so the proof-section / trust-bar shows
-  // real numbers in initial HTML (no '0' flash).
-  const [stats, setStats] = useState<LandingStats | null>(initialStats ?? null);
+  const [stats, setStats] = useState<LandingStats | null>(null);
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    // If SSR already gave us stats, skip the client refetch (it's stale-ok).
-    if (initialStats) return;
     fetchStats()
       .then(setStats)
       .catch(() => setStats(null));
-  }, [fetchStats, initialStats]);
+  }, [fetchStats]);
 
   return (
     <div className="relative overflow-hidden">

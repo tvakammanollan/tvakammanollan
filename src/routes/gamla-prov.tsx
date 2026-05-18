@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { getGamlaProvSummary, type GamlaProvSummary } from "@/lib/gamla-prov.functions";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
@@ -16,15 +15,6 @@ import {
 
 export const Route = createFileRoute("/gamla-prov")({
   component: GamlaProvPage,
-  // Server-side loader so the prov-catalog ships in the initial SSR HTML
-  // (Google + AI engines see real content, not just "Laddar…").
-  loader: async () => {
-    try {
-      return await getGamlaProvSummary();
-    } catch {
-      return { exams: [], totalExams: 0, totalQuestions: 0 } satisfies GamlaProvSummary;
-    }
-  },
   head: () => ({
     meta: pageMeta({
       path: "/gamla-prov",
@@ -36,24 +26,6 @@ export const Route = createFileRoute("/gamla-prov")({
         "Skriv hela provpass från riktiga HP 2022–2026. Med facit och normering. Gratis.",
     }),
     links: pageLinks("/gamla-prov"),
-    scripts: [
-      breadcrumbScript([
-        { name: "Hem", path: "/" },
-        { name: "Gamla prov", path: "/gamla-prov" },
-      ]),
-      jsonLdScript({
-        "@context": "https://schema.org",
-        "@type": "LearningResource",
-        name: "Gamla högskoleprov 2022–2026 · övning med facit",
-        description:
-          "Öva på riktiga gamla högskoleprov från 2022 till 2026. Filtrera per delprov, år och provpass. Med facit och normering.",
-        url: "https://hpkampen.se/gamla-prov",
-        inLanguage: "sv-SE",
-        learningResourceType: "Övningsprov",
-        educationalLevel: "Gymnasium",
-        isAccessibleForFree: true,
-      }),
-    ],
   }),
 });
 
@@ -144,11 +116,6 @@ function approxNormering(rawOutOfTotal: number, total: number): number {
 /* ─── Page ──────────────────────────────────────────────────────── */
 
 function GamlaProvPage() {
-  // SSR-loaded catalog summary (years / passes / counts) so the picker
-  // renders server-side for SEO. Full question bodies are still fetched
-  // client-side and only required to enter quiz mode.
-  const summary = Route.useLoaderData();
-
   const [allQuestions, setAllQuestions] = useState<RawQ[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [dataError, setDataError] = useState<string | null>(null);
@@ -257,10 +224,7 @@ function GamlaProvPage() {
   }
 
   /* ── Loading / error ─────────────────────────────────────────── */
-  // Only block render when transitioning into a quiz (need full questions).
-  // The picker renders from SSR loader data above, so users (and crawlers)
-  // see real content immediately.
-  if (loadingData && selectedTerm && selectedPass) {
+  if (loadingData) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--navy)" }}>
         <div className="flex flex-col items-center gap-3">
@@ -285,43 +249,35 @@ function GamlaProvPage() {
     return (
       <div className="min-h-screen" style={{ background: "var(--navy)", color: "var(--cream)" }}>
         <div className="mx-auto max-w-3xl px-4 py-10">
-          <header className="mb-8">
+          <div className="mb-8">
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
               Högskoleprovet · gamla prov
             </p>
-            <h1 className="text-3xl font-bold sm:text-4xl" style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}>
-              Öva på gamla högskoleprov
+            <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}>
+              Välj prov
             </h1>
-            <p className="mt-3 max-w-prose text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Skriv hela provpass från riktiga HP {summary.exams.length > 0 ? `(${summary.exams.at(-1)?.label.split(" ")[1]}–${summary.exams[0]?.label.split(" ")[1]})` : ""}. Varje provpass innehåller 40 frågor från fyra delprov: ORD, MEK, LÄS och ELF (verbalt) eller XYZ, KVA, NOG och DTK (kvantitativt). Med facit och uppskattad normering. Helt gratis.
+            <p className="mt-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+              {examMap.size} provtillfällen · {allQuestions.length.toLocaleString("sv-SE")} uppgifter med facit
             </p>
-            <p className="mt-3 text-sm" style={{ color: "var(--text-tertiary)" }}>
-              {summary.totalExams} provtillfällen · {summary.totalQuestions.toLocaleString("sv-SE")} uppgifter med facit
-            </p>
-          </header>
+          </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            {summary.exams.map((exam) => (
+            {[...examMap.entries()].map(([term, ppMap]) => (
               <button
-                key={exam.exam_term}
+                key={term}
                 type="button"
-                onClick={() => setSelectedTerm(exam.exam_term)}
+                onClick={() => setSelectedTerm(term)}
                 className="group w-full rounded-2xl border p-5 text-left transition-all hover:border-indigo-500/50 hover:shadow-[0_0_16px_rgba(99,102,241,0.12)]"
                 style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
               >
                 <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                  {exam.label}
+                  {termToLabel(term)}
                 </div>
                 <div className="mt-1 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  {exam.passes.length} provpass · {exam.totalQuestions} uppgifter
+                  {ppMap.size} provpass · {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
                 </div>
               </button>
             ))}
           </div>
-          {loadingData && (
-            <p className="mt-6 text-xs" style={{ color: "var(--text-tertiary)" }}>
-              Förbereder frågorna i bakgrunden…
-            </p>
-          )}
           <div className="mt-8">
             <Link
               to="/"
@@ -338,8 +294,9 @@ function GamlaProvPage() {
 
   /* ── Provpass picker (term selected, no pp) ──────────────────── */
   if (!selectedPass) {
-    const examFromSummary = summary.exams.find((e) => e.exam_term === selectedTerm);
-    if (!examFromSummary) return null;
+    const ppMap = examMap.get(selectedTerm);
+    if (!ppMap) return null;
+    const sortedPps = [...ppMap.entries()].sort(([a], [b]) => a - b);
     return (
       <div className="min-h-screen" style={{ background: "var(--navy)", color: "var(--cream)" }}>
         <div className="mx-auto max-w-2xl px-4 py-10">
@@ -355,26 +312,26 @@ function GamlaProvPage() {
           </div>
           <div className="mb-8">
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
-              {examFromSummary.label}
+              {termToLabel(selectedTerm)}
             </p>
             <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}>
               Välj provpass
             </h1>
           </div>
           <div className="space-y-3">
-            {examFromSummary.passes.map((pass) => (
+            {sortedPps.map(([pp, dels]) => (
               <button
-                key={pass.provpass}
+                key={pp}
                 type="button"
-                onClick={() => startPass(pass.provpass)}
+                onClick={() => startPass(pp)}
                 className="group w-full rounded-2xl border p-5 text-left transition-all hover:border-indigo-500/50 hover:shadow-[0_0_16px_rgba(99,102,241,0.12)]"
                 style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
               >
                 <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                  Provpass {pass.provpass}
+                  Provpass {pp}
                 </div>
                 <div className="mt-1 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  {ppDescription(pass.provpass, new Set(pass.delProvs))} · 40 uppgifter · 55 min
+                  {ppDescription(pp, dels)} · 40 uppgifter · 55 min
                 </div>
               </button>
             ))}
