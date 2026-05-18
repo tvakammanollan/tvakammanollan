@@ -644,6 +644,7 @@ export type Database = {
           correct_answer: string
           created_at: string
           difficulty: number | null
+          exam_term: string | null
           explanation: string | null
           id: string
           image_caption: string | null
@@ -651,6 +652,8 @@ export type Database = {
           options: Json
           passage_id: string | null
           passage_text: string | null
+          provpass_num: number | null
+          q_num: number | null
           question_text: string
           source: string | null
           subject_type: string
@@ -665,6 +668,7 @@ export type Database = {
           correct_answer: string
           created_at?: string
           difficulty?: number | null
+          exam_term?: string | null
           explanation?: string | null
           id?: string
           image_caption?: string | null
@@ -672,6 +676,8 @@ export type Database = {
           options: Json
           passage_id?: string | null
           passage_text?: string | null
+          provpass_num?: number | null
+          q_num?: number | null
           question_text: string
           source?: string | null
           subject_type: string
@@ -686,6 +692,7 @@ export type Database = {
           correct_answer?: string
           created_at?: string
           difficulty?: number | null
+          exam_term?: string | null
           explanation?: string | null
           id?: string
           image_caption?: string | null
@@ -693,6 +700,8 @@ export type Database = {
           options?: Json
           passage_id?: string | null
           passage_text?: string | null
+          provpass_num?: number | null
+          q_num?: number | null
           question_text?: string
           source?: string | null
           subject_type?: string
