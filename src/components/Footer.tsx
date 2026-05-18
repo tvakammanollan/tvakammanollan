@@ -6,10 +6,12 @@ const PRODUCT = [
   { label: "Öva ord", to: "/ord" },
   { label: "Gamla prov", to: "/gamla-prov" },
   { label: "Topplista", to: "/leaderboard" },
+  { label: "Guider", to: "/guider" },
 ];
 
 const COMPANY = [
   { label: "Om oss", to: "/om" },
+  { label: "Vanliga frågor", to: "/faq" },
   { label: "Kontakt", to: "/kontakt" },
 ];
 
