@@ -9,14 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VillkorRouteImport } from './routes/villkor'
 import { Route as TrainRouteImport } from './routes/train'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as OmRouteImport } from './routes/om'
 import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -25,6 +29,11 @@ import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 
+const VillkorRoute = VillkorRouteImport.update({
+  id: '/villkor',
+  path: '/villkor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrainRoute = TrainRouteImport.update({
   id: '/train',
   path: '/train',
@@ -50,6 +59,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OmRoute = OmRouteImport.update({
+  id: '/om',
+  path: '/om',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MatchmakingRoute = MatchmakingRouteImport.update({
   id: '/matchmaking',
   path: '/matchmaking',
@@ -63,6 +77,16 @@ const LoginRoute = LoginRouteImport.update({
 const LeaderboardRoute = LeaderboardRouteImport.update({
   id: '/leaderboard',
   path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
+  id: '/integritetspolicy',
+  path: '/integritetspolicy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamlaProvRoute = GamlaProvRouteImport.update({
@@ -106,14 +130,18 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/villkor': typeof VillkorRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -123,14 +151,18 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/villkor': typeof VillkorRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -141,14 +173,18 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/villkor': typeof VillkorRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
@@ -160,14 +196,18 @@ export interface FileRouteTypes {
     | '/admin'
     | '/friends'
     | '/gamla-prov'
+    | '/integritetspolicy'
+    | '/kontakt'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/om'
     | '/onboarding'
     | '/ord'
     | '/signup'
     | '/stats'
     | '/train'
+    | '/villkor'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -177,14 +217,18 @@ export interface FileRouteTypes {
     | '/admin'
     | '/friends'
     | '/gamla-prov'
+    | '/integritetspolicy'
+    | '/kontakt'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/om'
     | '/onboarding'
     | '/ord'
     | '/signup'
     | '/stats'
     | '/train'
+    | '/villkor'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -194,14 +238,18 @@ export interface FileRouteTypes {
     | '/admin'
     | '/friends'
     | '/gamla-prov'
+    | '/integritetspolicy'
+    | '/kontakt'
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/om'
     | '/onboarding'
     | '/ord'
     | '/signup'
     | '/stats'
     | '/train'
+    | '/villkor'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
@@ -212,14 +260,18 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
+  IntegritetspolicyRoute: typeof IntegritetspolicyRoute
+  KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   MatchmakingRoute: typeof MatchmakingRoute
+  OmRoute: typeof OmRoute
   OnboardingRoute: typeof OnboardingRoute
   OrdRoute: typeof OrdRoute
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
+  VillkorRoute: typeof VillkorRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
@@ -227,6 +279,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/villkor': {
+      id: '/villkor'
+      path: '/villkor'
+      fullPath: '/villkor'
+      preLoaderRoute: typeof VillkorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/train': {
       id: '/train'
       path: '/train'
@@ -262,6 +321,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/om': {
+      id: '/om'
+      path: '/om'
+      fullPath: '/om'
+      preLoaderRoute: typeof OmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/matchmaking': {
       id: '/matchmaking'
       path: '/matchmaking'
@@ -281,6 +347,20 @@ declare module '@tanstack/react-router' {
       path: '/leaderboard'
       fullPath: '/leaderboard'
       preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integritetspolicy': {
+      id: '/integritetspolicy'
+      path: '/integritetspolicy'
+      fullPath: '/integritetspolicy'
+      preLoaderRoute: typeof IntegritetspolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gamla-prov': {
@@ -340,14 +420,18 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
+  IntegritetspolicyRoute: IntegritetspolicyRoute,
+  KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   MatchmakingRoute: MatchmakingRoute,
+  OmRoute: OmRoute,
   OnboardingRoute: OnboardingRoute,
   OrdRoute: OrdRoute,
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
+  VillkorRoute: VillkorRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,
@@ -355,13 +439,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
