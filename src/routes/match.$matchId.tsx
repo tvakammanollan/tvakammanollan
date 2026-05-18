@@ -27,7 +27,14 @@ import { getBotName } from "@/lib/bot";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
+  head: () => ({
+    meta: [
+      { title: "Match · HP Kampen" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
 });
+
 
 const TOTAL_SECONDS = 5 * 60;
 

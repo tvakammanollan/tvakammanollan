@@ -17,7 +17,19 @@ const search = z.object({ type: z.enum(["verbal", "math"]).default("verbal") });
 export const Route = createFileRoute("/matchmaking")({
   validateSearch: (s) => search.parse(s),
   component: MatchmakingPage,
+  head: () => ({
+    meta: [
+      { title: "Hitta match · HP Kampen" },
+      {
+        name: "description",
+        content:
+          "Matchas mot en HP-spelare på din ELO-nivå inom sekunder. Välj verbal eller matte.",
+      },
+      { name: "robots", content: "noindex, follow" },
+    ],
+  }),
 });
+
 
 function MatchmakingPage() {
   const { user, loading } = useAuth();

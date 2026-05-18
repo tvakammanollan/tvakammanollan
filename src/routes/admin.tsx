@@ -28,7 +28,14 @@ import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
+  head: () => ({
+    meta: [
+      { title: "Admin · HP Kampen" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
 });
+
 
 const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"];
 const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
