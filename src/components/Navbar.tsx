@@ -14,12 +14,14 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Menu, LogOut } from "lucide-react";
+import { Menu, LogOut, Zap, Loader2 } from "lucide-react";
+import { useGuestPlay } from "@/hooks/useGuestPlay";
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const [pendingCount, setPendingCount] = useState(0);
+  const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
 
   const handleSignOut = async () => {
     await signOut();
@@ -151,8 +153,21 @@ export function Navbar() {
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/login">Logga in</Link>
               </Button>
-              <Button size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild>
                 <Link to="/signup">Skapa konto</Link>
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => playAsGuest("verbal")}
+                disabled={guestLoading}
+                className="gap-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_20px_rgba(242,166,90,0.35)] hover:shadow-[0_0_30px_rgba(242,166,90,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
+              >
+                {guestLoading ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Zap className="h-3.5 w-3.5" />
+                )}
+                Testa gratis
               </Button>
             </>
           )}
@@ -185,8 +200,18 @@ export function Navbar() {
               <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
                 <Link to="/login">Logga in</Link>
               </Button>
-              <Button size="sm" asChild className="px-3 text-xs">
-                <Link to="/signup">Skapa konto</Link>
+              <Button
+                size="sm"
+                onClick={() => playAsGuest("verbal")}
+                disabled={guestLoading}
+                className="gap-1 px-3 text-xs bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_16px_rgba(242,166,90,0.35)]"
+              >
+                {guestLoading ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Zap className="h-3 w-3" />
+                )}
+                Testa
               </Button>
             </>
           )}

@@ -74,13 +74,17 @@ export function HeroLanding() {
 
   const playAsGuest = async () => {
     setGuestLoading(true);
-    const { error } = await supabase.auth.signInAnonymously();
-    if (error) {
-      setGuestLoading(false);
-      toast.error("Kunde inte starta gästläge", { description: error.message });
-      return;
+    // If already a guest (anonymous), skip re-signin
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (!sessionData.session?.user?.is_anonymous) {
+      const { error } = await supabase.auth.signInAnonymously();
+      if (error) {
+        setGuestLoading(false);
+        toast.error("Kunde inte starta gästläge", { description: error.message });
+        return;
+      }
     }
-    navigate({ to: "/" });
+    navigate({ to: "/matchmaking", search: { type: "verbal" } });
   };
 
   return (
