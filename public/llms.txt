@@ -1,21 +1,92 @@
 # HP Kampen
 
-> Sveriges gratis plattform för Högskoleprovet. Tävla mot spelare i realtid, klättra i ELO-rankingen och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor.
+> Sveriges gratis plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Helt gratis, inga annonser, inget kreditkort.
 
-HP Kampen är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom Brons, Silver, Guld, Platina och Diamant genom att vinna 8-frågors-matcher mot andra spelare. Inget kostar något, inga annonser, inget kreditkort.
+HP Kampen är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,9 på HP och vill att bra HP-träning ska vara gratis för alla.
+
+Officiell domän: https://hpkampen.se
 
 ## Pages
 
-- [Hem](/): Startsida – starta en match, se din ELO och kom igång på 30 sekunder.
-- [Skapa konto](/signup): Gratis registrering med e-post – tar under en minut.
-- [Logga in](/login): Logga in på ditt befintliga konto.
-- [Topplista](/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live.
-- [Träna HP](/train): Solo-träning utan tidspress på alla 8 delprov.
-- [Öva ord](/ord): 8 000+ riktiga ORD-frågor från tidigare högskoleprov.
-- [Matchmaking](/matchmaking): Hitta en motståndare på din ELO-nivå inom sekunder.
-- [Gamla prov](/gamla-prov): Lös hela provpass från Vårprovet 2026 med facit direkt.
+- [Hem](https://hpkampen.se/): Startsida — hitta en match, se din ELO och kom igång på 30 sekunder.
+- [Topplista](https://hpkampen.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
+- [Träna HP](https://hpkampen.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
+- [Öva ord](https://hpkampen.se/ord): 8 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
+- [Gamla prov](https://hpkampen.se/gamla-prov): Lös hela provpass från Vårprovet 2026 och bakåt. Med facit och normering direkt.
+- [Skapa konto](https://hpkampen.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
+- [Logga in](https://hpkampen.se/login): Logga in på ditt befintliga konto.
+- [Om HP Kampen](https://hpkampen.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
+- [Kontakt](https://hpkampen.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 
 ## Optional
 
-- [Statistik](/stats): Privat – din ELO-utveckling, win rate och prestanda per delprov.
-- [Vänner](/friends): Privat – lägg till vänner och bjud in till privata matcher.
+- [Matchmaking](https://hpkampen.se/matchmaking): Hitta en motståndare på din ELO-nivå inom sekunder (kräver inloggning).
+- [Statistik](https://hpkampen.se/stats): Privat — din ELO-utveckling, win rate och prestanda per delprov.
+- [Vänner](https://hpkampen.se/friends): Privat — lägg till vänner och bjud in till privata matcher.
+- [Integritetspolicy](https://hpkampen.se/integritetspolicy): GDPR och datahantering.
+- [Användarvillkor](https://hpkampen.se/villkor): Användarvillkor för plattformen.
+
+## Key facts
+
+- Helt gratis. Inga annonser, inga köp, inget kreditkort.
+- En match består av 8 frågor på 8 minuter.
+- ELO-systemet liknar schackets: börja på 1 000, vinn poäng mot starkare spelare, tappa mot svagare.
+- Tiers: Brons (<1 000), Silver (1 000–1 199), Guld (1 200–1 399), Platina (1 400–1 599), Diamant (1 600+).
+- Du kan spela som gäst utan konto, men då sparas ingen ELO.
+- Bot-träning finns när det är få spelare online.
+- Coachning från 1,9+-spelare erbjuds gratis till nya användare.
+
+## De 8 delproven på Högskoleprovet
+
+- ORD — Ordkunskap. 10 frågor, ca 3 minuter.
+- MEK — Meningskomplettering. 10 frågor, ca 8 minuter.
+- LÄS — Svensk läsförståelse. 10 frågor, ca 22 minuter.
+- ELF — Engelsk läsförståelse. 10 frågor, ca 22 minuter.
+- XYZ — Matematisk problemlösning. 12 frågor, ca 12 minuter.
+- KVA — Kvantitativa jämförelser. 10 frågor, ca 10 minuter.
+- NOG — Kvantitativa resonemang. 6 frågor, ca 10 minuter.
+- DTK — Diagram, tabeller och kartor. 12 frågor, ca 25 minuter.
+
+Verbal del = ORD + MEK + LÄS + ELF. Matte del = XYZ + KVA + NOG + DTK.
+
+## Hur HP-poängen räknas
+
+Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproven och normeras mot övriga skrivande. Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga runt 0,9–1,0. Ett resultat på 1,5 motsvarar ungefär percentil 90; 1,9–2,0 är topp ~1%.
+
+## Kommande HP-datum
+
+- 24 oktober 2026
+- 27 mars 2027
+- 23 oktober 2027
+
+Anmälan öppnar ungefär tre månader innan via antagning.se.
+
+## FAQ
+
+**Vad är HP Kampen?**
+En gratis svensk plattform där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
+
+**Kostar det något?**
+Nej. Inga annonser, inga köp, inget kreditkort. Drivs som ett ideellt projekt.
+
+**Behöver jag konto?**
+Du kan spela som gäst, men då sparas ingen ELO och du syns inte på topplistan. Konto tar 30 sekunder med e-post eller Google.
+
+**Hur funkar matcherna?**
+Välj verbal eller matte. Du matchas mot en spelare på din ELO-nivå inom sekunder. Match = 8 frågor på 8 minuter. Vinnaren får ELO, förloraren tappar.
+
+**Vad är ELO?**
+Rankingsystem från schack. Du börjar på 1 000. Vinst mot starkare ger fler poäng, förlust mot svagare kostar mer. Tiers: Brons, Silver, Guld, Platina, Diamant.
+
+**Vilka delprov kan jag träna?**
+Alla 8: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK.
+
+**Var kommer frågorna ifrån?**
+Riktiga frågor från gamla högskoleprov (offentligt material från UHR) och kvalitetskontrollerade övningsfrågor.
+
+**Finns sajten som app?**
+Det är en PWA (Progressive Web App) — lägg till på hemskärmen från Safari/Chrome för app-känsla.
+
+## Contact
+
+Skicka mail till adressen på [/kontakt](https://hpkampen.se/kontakt). Svar oftast inom en vardag.
