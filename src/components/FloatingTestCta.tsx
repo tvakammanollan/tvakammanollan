@@ -53,12 +53,6 @@ export function FloatingTestCta() {
           <Zap className="h-5 w-5 fill-current" />
         )}
         <span className="whitespace-nowrap">Testa gratis</span>
-        <span
-          aria-hidden
-          className="hidden sm:inline-flex h-5 items-center rounded-full bg-black/15 px-2 text-[10px] font-bold uppercase tracking-wider"
-        >
-          1 sek
-        </span>
       </button>
     </div>
   );
