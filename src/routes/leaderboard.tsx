@@ -54,6 +54,23 @@ export const Route = createFileRoute("/leaderboard")({
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
     links: pageLinks("/leaderboard"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Topplista", path: "/leaderboard" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Topplista — HP Kampen",
+        description:
+          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte och ord. Uppdateras live efter varje match.",
+        url: "https://hpkampen.se/leaderboard",
+        inLanguage: "sv-SE",
+        isPartOf: { "@id": "https://hpkampen.se/#website" },
+        about: { "@type": "Thing", name: "Högskoleprovet ELO-ranking" },
+      }),
+    ],
   }),
 });
 
