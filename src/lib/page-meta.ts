@@ -1,0 +1,53 @@
+/**
+ * Helper for building per-page <head> meta arrays consistent with the
+ * site-wide defaults in __root.tsx. Ensures every page gets unique
+ * canonical, og:url, og:title, og:description, twitter:title and
+ * twitter:description (overriding the root defaults), plus an optional
+ * meta description.
+ *
+ * Usage in route file:
+ *   head: () => ({
+ *     meta: pageMeta({
+ *       path: "/train",
+ *       title: "Träna HP · alla 8 delprov utan tidspress · HP Kampen",
+ *       description: "...",
+ *       ogTitle: "Träna HP utan tidspress · HP Kampen",
+ *       ogDescription: "...",
+ *     }),
+ *     links: pageLinks("/train"),
+ *   })
+ */
+
+const ORIGIN = "https://hpkampen.se";
+
+export interface PageMetaInput {
+  path: string; // e.g. "/train"
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  noindex?: boolean;
+}
+
+export function pageMeta(input: PageMetaInput) {
+  const url = ORIGIN + input.path;
+  const ogTitle = input.ogTitle ?? input.title;
+  const ogDescription = input.ogDescription ?? input.description;
+  const meta: Array<Record<string, string>> = [
+    { title: input.title },
+    { name: "description", content: input.description },
+    { property: "og:title", content: ogTitle },
+    { property: "og:description", content: ogDescription },
+    { property: "og:url", content: url },
+    { name: "twitter:title", content: ogTitle },
+    { name: "twitter:description", content: ogDescription },
+  ];
+  if (input.noindex) {
+    meta.push({ name: "robots", content: "noindex, follow" });
+  }
+  return meta;
+}
+
+export function pageLinks(path: string) {
+  return [{ rel: "canonical", href: ORIGIN + path }];
+}

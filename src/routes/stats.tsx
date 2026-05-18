@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -27,16 +28,14 @@ import { SplitText, Reveal, StaggerList } from "@/components/landing/MotionFX";
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
   head: () => ({
-    meta: [
-      { title: "Din statistik · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Följ din HP-progression: ELO-utveckling, win rate, prestanda per delprov och uppskattad normerad HP-poäng.",
-      },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/stats" }],
+    meta: pageMeta({
+      path: "/stats",
+      title: "Din statistik · HP Kampen",
+      description:
+        "Följ din HP-progression: ELO-utveckling, win rate, prestanda per delprov och uppskattad normerad HP-poäng.",
+      noindex: true,
+    }),
+    links: pageLinks("/stats"),
   }),
 });
 

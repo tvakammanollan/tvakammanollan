@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,21 +22,16 @@ import { sounds } from "@/lib/sounds";
 export const Route = createFileRoute("/friends")({
   component: FriendsPage,
   head: () => ({
-    meta: [
-      { title: "Vänner · utmana dina kompisar i HP · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Lägg till vänner på HP Kampen och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
-      },
-      { property: "og:title", content: "Vänner · HP Kampen" },
-      {
-        property: "og:description",
-        content: "Bjud in dina kompisar till en privat HP-battle och slåss om ELO.",
-      },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/friends" }],
+    meta: pageMeta({
+      path: "/friends",
+      title: "Vänner · utmana dina kompisar i HP · HP Kampen",
+      description:
+        "Lägg till vänner på HP Kampen och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
+      ogTitle: "Vänner · HP Kampen",
+      ogDescription: "Bjud in dina kompisar till en privat HP-battle och slåss om ELO.",
+      noindex: true,
+    }),
+    links: pageLinks("/friends"),
   }),
 });
 

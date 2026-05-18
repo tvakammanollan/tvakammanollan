@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -43,20 +44,15 @@ const cache: Record<MatchType, { rows: LbRow[]; ts: number } | undefined> = {
 export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
   head: () => ({
-    meta: [
-      { title: "Topplista · HP Kampen ELO-ranking" },
-      {
-        name: "description",
-        content:
-          "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
-      },
-      { property: "og:title", content: "Topplista · HP Kampen" },
-      {
-        property: "og:description",
-        content: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
-      },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/leaderboard" }],
+    meta: pageMeta({
+      path: "/leaderboard",
+      title: "Topplista · HP Kampen ELO-ranking",
+      description:
+        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
+      ogTitle: "Topplista · HP Kampen",
+      ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
+    }),
+    links: pageLinks("/leaderboard"),
   }),
 });
 

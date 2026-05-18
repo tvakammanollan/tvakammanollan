@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,22 +13,16 @@ import { AuthShell } from "@/routes/login";
 export const Route = createFileRoute("/signup")({
   component: SignupPage,
   head: () => ({
-    meta: [
-      { title: "Skapa konto · gratis HP-träning · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Skapa ett gratis konto på HP Kampen på 30 sekunder. Tävla mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt gratis, inga annonser.",
-      },
-      { property: "og:title", content: "Skapa konto gratis · HP Kampen" },
-      {
-        property: "og:description",
-        content:
-          "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
-      },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/signup" }],
+    meta: pageMeta({
+      path: "/signup",
+      title: "Skapa konto · gratis HP-träning · HP Kampen",
+      description:
+        "Skapa gratis konto på HP Kampen på 30 sekunder. Inget kreditkort. Börja tävla direkt.",
+      ogTitle: "Skapa konto gratis · HP Kampen",
+      ogDescription: "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
+      noindex: true,
+    }),
+    links: pageLinks("/signup"),
   }),
 });
 

@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { SplitText } from "@/components/landing/MotionFX";
@@ -26,21 +27,16 @@ import { updateStreak } from "@/lib/streak";
 export const Route = createFileRoute("/train")({
   component: TrainPage,
   head: () => ({
-    meta: [
-      { title: "Träna HP · alla 8 delprov utan tidspress · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
-      },
-      { property: "og:title", content: "Träna HP utan tidspress · HP Kampen" },
-      {
-        property: "og:description",
-        content:
-          "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor – ingen klocka, gratis.",
-      },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/train" }],
+    meta: pageMeta({
+      path: "/train",
+      title: "Träna HP · alla 8 delprov utan tidspress · HP Kampen",
+      description:
+        "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
+      ogTitle: "Träna HP utan tidspress · HP Kampen",
+      ogDescription:
+        "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor. Ingen klocka, gratis.",
+    }),
+    links: pageLinks("/train"),
   }),
 });
 

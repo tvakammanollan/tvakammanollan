@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
@@ -13,17 +14,16 @@ import { SplitText } from "@/components/landing/MotionFX";
 export const Route = createFileRoute("/login")({
   component: LoginPage,
   head: () => ({
-    meta: [
-      { title: "Logga in · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Logga in på HP Kampen för att fortsätta tävla mot vänner, klättra i ELO-rankingen och spara dina HP-resultat.",
-      },
-      { property: "og:title", content: "Logga in · HP Kampen" },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/login" }],
+    meta: pageMeta({
+      path: "/login",
+      title: "Logga in · HP Kampen",
+      description: "Logga in på HP Kampen och fortsätt klättra i ELO-rankingen.",
+      ogTitle: "Logga in · HP Kampen",
+      ogDescription:
+        "Logga in för att fortsätta tävla mot vänner och spara dina HP-resultat.",
+      noindex: true,
+    }),
+    links: pageLinks("/login"),
   }),
 });
 

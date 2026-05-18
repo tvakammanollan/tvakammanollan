@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
@@ -25,20 +26,15 @@ import {
 export const Route = createFileRoute("/ord")({
   component: OrdPracticePage,
   head: () => ({
-    meta: [
-      { title: "Öva ord · 8 000+ HP-ord · HP Kampen" },
-      {
-        name: "description",
-        content:
-          "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
-      },
-      { property: "og:title", content: "Öva ord · 8 000+ HP-ord" },
-      {
-        property: "og:description",
-        content: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
-      },
-    ],
-    links: [{ rel: "canonical", href: "https://hpkampen.se/ord" }],
+    meta: pageMeta({
+      path: "/ord",
+      title: "Öva ord · 8 000+ HP-ord · HP Kampen",
+      description:
+        "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
+      ogTitle: "Öva ord · 8 000+ HP-ord",
+      ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
+    }),
+    links: pageLinks("/ord"),
   }),
   errorComponent: ({ error, reset }) => {
     const router = useRouter();

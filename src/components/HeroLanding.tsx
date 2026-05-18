@@ -33,7 +33,8 @@ import {
 
 const TESTIMONIALS = [
   {
-    quote: "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet. Det är en ny känsla.",
+    quote:
+      "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet. Det är en ny känsla.",
     name: "Aron",
     score: "2.0",
     founder: false,
@@ -43,12 +44,6 @@ const TESTIMONIALS = [
     name: "Gustav",
     score: "1.9",
     founder: false,
-  },
-  {
-    quote: "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
-    name: "Niklas",
-    score: "1.9",
-    founder: true,
   },
 ];
 
@@ -238,19 +233,19 @@ function Hero({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.4 }}
-          className="mt-12 flex items-center gap-6 text-[13px] text-white/55"
+          className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-white/55"
         >
           <span className="inline-flex items-center gap-2">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-            Inget kreditkort
+            <span>Inget kreditkort</span>
           </span>
           <span className="hidden sm:inline-flex items-center gap-2">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-            30 sekunder att börja
+            <span>30 sekunder att börja</span>
           </span>
           <span className="hidden md:inline-flex items-center gap-2">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-            Helt anonymt
+            <span>Helt anonymt</span>
           </span>
         </motion.div>
 

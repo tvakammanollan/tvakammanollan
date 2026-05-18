@@ -17,6 +17,7 @@ import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AppMotion } from "@/components/AppMotion";
 import { FloatingTestCta } from "@/components/FloatingTestCta";
+import { Footer } from "@/components/Footer";
 
 installSupabaseFetchAuth();
 
@@ -90,11 +91,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK – gratis.",
       },
-      {
-        name: "keywords",
-        content:
-          "högskoleprovet, HP-träning, högskoleprov övningar, HP-app, ORD MEK LÄS ELF XYZ KVA NOG DTK",
-      },
       { property: "og:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         property: "og:description",
@@ -116,11 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
-      {
-        name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/64f6b4aa-d862-4908-8a0f-3642c9ee7f51/id-preview-013c86ed--7be77bb5-7201-4fdd-81e0-566f5bf73811.lovable.app-1778513238336.png",
-      },
+      { name: "twitter:image", content: "https://hpkampen.se/og-image.png" },
       { name: "theme-color", content: "#0E1B2C" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -368,6 +360,7 @@ function RootComponent() {
         <main className="animate-fade-up">
           <Outlet />
         </main>
+        <Footer />
         <FloatingTestCta />
         <FriendInviteListener />
         <Toaster richColors position="top-center" />
