@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
@@ -35,8 +36,28 @@ export const Route = createFileRoute("/ord")({
       ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
     }),
     links: pageLinks("/ord"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Öva ord", path: "/ord" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "Öva HP-ord · 8 000+ riktiga ORD-frågor",
+        description:
+          "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
+        url: "https://hpkampen.se/ord",
+        inLanguage: "sv-SE",
+        learningResourceType: "Övning",
+        educationalLevel: "Gymnasium",
+        isAccessibleForFree: true,
+        teaches: "Ordförståelse (ORD)",
+      }),
+    ],
   }),
   errorComponent: ({ error, reset }) => {
+
     const router = useRouter();
     return (
       <div className="mx-auto max-w-2xl p-8 text-center">

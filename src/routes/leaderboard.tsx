@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -53,6 +54,23 @@ export const Route = createFileRoute("/leaderboard")({
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
     links: pageLinks("/leaderboard"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Topplista", path: "/leaderboard" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Topplista — HP Kampen",
+        description:
+          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte och ord. Uppdateras live efter varje match.",
+        url: "https://hpkampen.se/leaderboard",
+        inLanguage: "sv-SE",
+        isPartOf: { "@id": "https://hpkampen.se/#website" },
+        about: { "@type": "Thing", name: "Högskoleprovet ELO-ranking" },
+      }),
+    ],
   }),
 });
 

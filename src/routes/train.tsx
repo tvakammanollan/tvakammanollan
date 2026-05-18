@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { SplitText } from "@/components/landing/MotionFX";
@@ -37,8 +38,43 @@ export const Route = createFileRoute("/train")({
         "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor. Ingen klocka, gratis.",
     }),
     links: pageLinks("/train"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Träna HP", path: "/train" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "Course",
+        name: "Träna Högskoleprovet · alla 8 delprov",
+        description:
+          "Gratis solo-träning inför Högskoleprovet med riktiga frågor i alla åtta delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
+        url: "https://hpkampen.se/train",
+        inLanguage: "sv-SE",
+        isAccessibleForFree: true,
+        educationalLevel: "Gymnasium / högskolesökande",
+        teaches: [
+          "Ordkunskap (ORD)",
+          "Meningskomplettering (MEK)",
+          "Läsförståelse (LÄS)",
+          "Engelsk läsförståelse (ELF)",
+          "Matematisk problemlösning (XYZ)",
+          "Kvantitativa jämförelser (KVA)",
+          "Kvantitativa resonemang (NOG)",
+          "Diagram, tabeller och kartor (DTK)",
+        ],
+        provider: { "@type": "Organization", name: "HP Kampen", url: "https://hpkampen.se" },
+        offers: { "@type": "Offer", price: "0", priceCurrency: "SEK", category: "Free" },
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "Online",
+          courseWorkload: "PT15M",
+        },
+      }),
+    ],
   }),
 });
+
 
 type Track = "verbal" | "math";
 const VERBAL_SUBS = ["ORD", "MEK", "LÄS", "ELF"] as const;

@@ -51,3 +51,43 @@ export function pageMeta(input: PageMetaInput) {
 export function pageLinks(path: string) {
   return [{ rel: "canonical", href: ORIGIN + path }];
 }
+
+/**
+ * Build a BreadcrumbList JSON-LD script entry for the route's `scripts` array.
+ * Pass the trail from root to current page, e.g.
+ *   breadcrumbScript([
+ *     { name: "Hem", path: "/" },
+ *     { name: "Träna HP", path: "/train" },
+ *   ])
+ */
+export interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
+export function breadcrumbScript(items: BreadcrumbItem[]) {
+  return {
+    type: "application/ld+json",
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: it.name,
+        item: ORIGIN + it.path,
+      })),
+    }),
+  };
+}
+
+/**
+ * Build an arbitrary JSON-LD script entry. Pass any schema.org object.
+ */
+export function jsonLdScript(data: Record<string, unknown>) {
+  return {
+    type: "application/ld+json",
+    children: JSON.stringify(data),
+  };
+}
+

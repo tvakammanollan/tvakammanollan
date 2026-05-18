@@ -11,7 +11,14 @@ import { AuthShell } from "@/routes/login";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
+  head: () => ({
+    meta: [
+      { title: "Välkommen · HP Kampen" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
 });
+
 
 const usernameSchema = z
   .string()

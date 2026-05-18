@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
@@ -26,6 +27,24 @@ export const Route = createFileRoute("/gamla-prov")({
         "Skriv hela provpass från riktiga HP 2022–2026. Med facit och normering. Gratis.",
     }),
     links: pageLinks("/gamla-prov"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Gamla prov", path: "/gamla-prov" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "Gamla högskoleprov 2022–2026 · övning med facit",
+        description:
+          "Öva på riktiga gamla högskoleprov från 2022 till 2026. Filtrera per delprov, år och provpass. Med facit och normering.",
+        url: "https://hpkampen.se/gamla-prov",
+        inLanguage: "sv-SE",
+        learningResourceType: "Övningsprov",
+        educationalLevel: "Gymnasium",
+        isAccessibleForFree: true,
+      }),
+    ],
   }),
 });
 
