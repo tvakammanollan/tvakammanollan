@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
