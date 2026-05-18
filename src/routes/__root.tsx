@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AppMotion } from "@/components/AppMotion";
+import { FloatingTestCta } from "@/components/FloatingTestCta";
 
 installSupabaseFetchAuth();
 
@@ -367,6 +368,7 @@ function RootComponent() {
         <main className="animate-fade-up">
           <Outlet />
         </main>
+        <FloatingTestCta />
         <FriendInviteListener />
         <Toaster richColors position="top-center" />
       </div>
