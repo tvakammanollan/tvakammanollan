@@ -1121,23 +1121,12 @@ function StatTeaser({
 }
 
 function CountUp({ end }: { end: number }) {
-  // Start with `end` so SSR HTML contains real numbers (no 0-flash for crawlers).
-  // After hydration, reset to 0 and animate up when element scrolls into view.
-  const [display, setDisplay] = useState(end);
+  const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5, margin: "200px 0px 200px 0px" });
-  const mounted = useRef(false);
 
   useEffect(() => {
-    // First mount: reset to 0 for the client-side animation
-    if (!mounted.current) {
-      mounted.current = true;
-      setDisplay(0);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!inView || !mounted.current) return;
+    if (!inView) return;
     let raf = 0;
     const start = performance.now();
     const dur = 1500;
