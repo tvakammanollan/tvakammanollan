@@ -1,12 +1,16 @@
 User-agent: *
 Allow: /
 Disallow: /match/
+Disallow: /matchmaking
+Disallow: /matchmaking/
+Disallow: /admin/
+Disallow: /admin
+Disallow: /api/
+Disallow: /friends
+Disallow: /stats
+Disallow: /onboarding
 Disallow: /result/
 Disallow: /join/
-Disallow: /onboarding
-Disallow: /matchmaking
-Disallow: /admin/
-Disallow: /api/
 
 # AI-crawlers (träning + svar)
 User-agent: GPTBot

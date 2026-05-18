@@ -45,6 +45,13 @@ const TESTIMONIALS = [
     score: "1.9",
     founder: false,
   },
+  {
+    quote:
+      "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
+    name: "Niklas",
+    score: "1.9",
+    founder: true,
+  },
 ];
 
 /* ====================================================================
@@ -53,17 +60,21 @@ const TESTIMONIALS = [
    precision meets a film camera you can feel.
    ==================================================================== */
 
-export function HeroLanding() {
+export function HeroLanding({ initialStats }: { initialStats?: LandingStats | null } = {}) {
   const fetchStats = useServerFn(getLandingStats);
-  const [stats, setStats] = useState<LandingStats | null>(null);
+  // Seed with SSR-provided stats so the proof-section / trust-bar shows
+  // real numbers in initial HTML (no '0' flash).
+  const [stats, setStats] = useState<LandingStats | null>(initialStats ?? null);
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
   const reduce = useReducedMotion();
 
   useEffect(() => {
+    // If SSR already gave us stats, skip the client refetch (it's stale-ok).
+    if (initialStats) return;
     fetchStats()
       .then(setStats)
       .catch(() => setStats(null));
-  }, [fetchStats]);
+  }, [fetchStats, initialStats]);
 
   return (
     <div className="relative overflow-hidden">
@@ -82,6 +93,8 @@ export function HeroLanding() {
       <RecentMatches stats={stats} />
 
       <ProofSection stats={stats} />
+
+      <FounderQuote />
 
       <FinalCTA />
     </div>
@@ -1072,8 +1085,8 @@ function ProofCard({ value, label, suffix }: { value: number; label: string; suf
         className="text-[60px] font-bold leading-none text-aurora-gradient tabular-nums"
         style={{ fontFamily: "var(--font-display)" }}
       >
-        <CountUp end={value} />
-        {suffix}
+        {value > 0 ? <CountUp end={value} /> : "—"}
+        {value > 0 ? suffix : null}
       </div>
       <div className="mt-3 text-[13px] font-medium uppercase tracking-wider text-neutral-500">
         {label}
@@ -1108,12 +1121,23 @@ function StatTeaser({
 }
 
 function CountUp({ end }: { end: number }) {
-  const [display, setDisplay] = useState(0);
+  // Start with `end` so SSR HTML contains real numbers (no 0-flash for crawlers).
+  // After hydration, reset to 0 and animate up when element scrolls into view.
+  const [display, setDisplay] = useState(end);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5, margin: "200px 0px 200px 0px" });
+  const mounted = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
+    // First mount: reset to 0 for the client-side animation
+    if (!mounted.current) {
+      mounted.current = true;
+      setDisplay(0);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!inView || !mounted.current) return;
     let raf = 0;
     const start = performance.now();
     const dur = 1500;

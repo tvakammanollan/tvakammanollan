@@ -3,9 +3,19 @@ import { useAuth, isAutoUsername } from "@/hooks/useAuth";
 import { HeroLanding } from "@/components/HeroLanding";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  // SSR initial landing stats so the trust-bar / proof-section numbers
+  // ship in initial HTML (avoids the '0' flash before client fetch).
+  loader: async (): Promise<LandingStats | null> => {
+    try {
+      return await getLandingStats();
+    } catch {
+      return null;
+    }
+  },
   head: () => ({
     meta: pageMeta({
       path: "/",
@@ -25,9 +35,9 @@ function Index() {
   // SEO / AI-crawlers / first-paint: serve the marketing landing by default.
   // During SSR `loading` is true and there is no user yet — without this fall-
   // through bots would only see a "Laddar…" placeholder.
-  if (loading && !user) return <HeroLanding />;
+  if (loading && !user) return <HeroLanding initialStats={Route.useLoaderData()} />;
 
-  if (!user) return <HeroLanding />;
+  if (!user) return <HeroLanding initialStats={Route.useLoaderData()} />;
 
   // Got user but profile still loading — show a soft skeleton instead of plain
   // text so the dashboard frame is visible immediately.

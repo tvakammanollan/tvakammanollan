@@ -26,9 +26,79 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hpkampen.se/om</loc>
+    <loc>https://hpkampen.se/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/ord</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/mek</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/las</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/elf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/xyz</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/kva</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/nog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/dtk</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/normering</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/tips-lasforstaelse</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/tidspress</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/guider/bra-resultat</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/om</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://hpkampen.se/kontakt</loc>
@@ -36,12 +106,12 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://hpkampen.se/villkor</loc>
+    <loc>https://hpkampen.se/integritetspolicy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://hpkampen.se/integritetspolicy</loc>
+    <loc>https://hpkampen.se/villkor</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
