@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { motion, useScroll, useTransform, useReducedMotion, useInView, AnimatePresence } from "framer-motion";
@@ -17,9 +17,8 @@ import {
 } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
+import { useGuestPlay } from "@/hooks/useGuestPlay";
 import {
   SplitText,
   VelocitySkew,
@@ -60,10 +59,9 @@ const TESTIMONIALS = [
    ==================================================================== */
 
 export function HeroLanding() {
-  const navigate = useNavigate();
   const fetchStats = useServerFn(getLandingStats);
-  const [guestLoading, setGuestLoading] = useState(false);
   const [stats, setStats] = useState<LandingStats | null>(null);
+  const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -71,21 +69,6 @@ export function HeroLanding() {
       .then(setStats)
       .catch(() => setStats(null));
   }, [fetchStats]);
-
-  const playAsGuest = async () => {
-    setGuestLoading(true);
-    // If already a guest (anonymous), skip re-signin
-    const { data: sessionData } = await supabase.auth.getSession();
-    if (!sessionData.session?.user?.is_anonymous) {
-      const { error } = await supabase.auth.signInAnonymously();
-      if (error) {
-        setGuestLoading(false);
-        toast.error("Kunde inte starta gästläge", { description: error.message });
-        return;
-      }
-    }
-    navigate({ to: "/matchmaking", search: { type: "verbal" } });
-  };
 
   return (
     <div className="relative overflow-hidden">
