@@ -172,13 +172,32 @@ function TrainPage() {
     }
     // Pull a wider pool then shuffle client-side
     const { data, error } = await q.limit(300);
-    if (error || !data || data.length === 0) {
-      toast.error("Inga frågor hittades med dina inställningar");
+    if (error) {
+      toast.error("Kunde inte hämta frågor", {
+        description: "Försök igen om en stund eller ladda om sidan.",
+      });
+      setPhase("setup");
+      return;
+    }
+    if (!data || data.length === 0) {
+      // Mer hjälpsam feedback — användaren har troligen filtrerat för hårt
+      toast.error("Inga frågor matchade dina filter", {
+        description:
+          config.difficulty !== null
+            ? "Prova att välja 'Alla' svårighetsgrader, eller välj fler delprov."
+            : "Prova att välja fler delprov eller en annan match-typ.",
+      });
       setPhase("setup");
       return;
     }
     // Shuffle
     const pool = [...data].sort(() => Math.random() - 0.5).slice(0, config.count);
+    // Visa varning om vi inte fick så många som användaren bad om
+    if (pool.length < config.count) {
+      toast.warning(
+        `Bara ${pool.length} frågor matchade — kör med dem istället för ${config.count}`,
+      );
+    }
     const mapped: TrainQuestion[] = pool.map((q) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const row = q as any;
