@@ -181,13 +181,19 @@ export function guideArticleJsonLd({
   url,
   datePublished = GUIDER_PUBLISH_DATE,
   dateModified = GUIDER_MODIFIED_DATE,
+  keywords,
+  articleSection = "Högskoleprovet",
 }: {
   headline: string;
   description: string;
   url: string;
   datePublished?: string;
   dateModified?: string;
+  /** Comma-separated keywords or array — improves topical relevance signals */
+  keywords?: string | string[];
+  articleSection?: string;
 }) {
+  const keywordValue = Array.isArray(keywords) ? keywords.join(", ") : keywords;
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -196,6 +202,8 @@ export function guideArticleJsonLd({
     url,
     datePublished,
     dateModified,
+    articleSection,
+    ...(keywordValue ? { keywords: keywordValue } : {}),
     author: {
       "@type": "Person",
       name: "Niklas",
