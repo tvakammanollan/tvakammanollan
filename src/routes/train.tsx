@@ -77,8 +77,15 @@ export const Route = createFileRoute("/train")({
 
 
 type Track = "verbal" | "math";
-const VERBAL_SUBS = ["ORD", "MEK", "LÄS", "ELF"] as const;
+// IMPORTANT: keep ASCII "LAS" — matches the DB CHECK constraint på questions.category
+// (CHECK (category IN ('ORD','MEK','LAS','ELF','XYZ','KVA','NOG','DTK'))).
+// Visa "LÄS" till användaren via displayCategory().
+const VERBAL_SUBS = ["ORD", "MEK", "LAS", "ELF"] as const;
 const MATH_SUBS = ["XYZ", "KVA", "NOG", "DTK"] as const;
+
+function displayCategory(c: string): string {
+  return c === "LAS" ? "LÄS" : c;
+}
 
 interface TrainQuestion {
   id: string;
@@ -372,7 +379,7 @@ function TrainPage() {
                       : "border-border bg-white text-foreground hover:border-[#6366f1]"
                   }`}
                 >
-                  {sub}
+                  {displayCategory(sub)}
                 </button>
               );
             })}
@@ -538,7 +545,7 @@ function TrainPage() {
             style={{ boxShadow: "var(--shadow-md)" }}
           >
             <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
-              {currentQ.category} · Fråga {current + 1}
+              {displayCategory(currentQ.category)} · Fråga {current + 1}
             </div>
             <h2
               className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
@@ -721,7 +728,7 @@ function TrainPage() {
                     key={cat}
                     className="flex items-center justify-between rounded-lg bg-muted/40 px-3 py-2"
                   >
-                    <span className="font-medium">{cat}</span>
+                    <span className="font-medium">{displayCategory(cat)}</span>
                     <span className="tabular-nums text-foreground">
                       {v.c}/{v.t}{" "}
                       {v.c === v.t ? (
