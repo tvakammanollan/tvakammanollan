@@ -513,8 +513,7 @@ function OrdPracticePage() {
                       </div>
                     );
                   })}
-                  </div>
-                )}
+                </div>
               </div>
             )}
 
