@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
@@ -26,6 +26,41 @@ export const Route = createFileRoute("/gamla-prov")({
         "Skriv hela provpass från riktiga HP 2022–2026. Med facit och normering. Gratis.",
     }),
     links: pageLinks("/gamla-prov"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Gamla prov", path: "/gamla-prov" },
+      ]),
+      // LearningResource schema — markerar sidan som ett pedagogiskt verktyg
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "Gamla högskoleprov 2022–2026 med facit",
+        description:
+          "Komplett samling av gamla högskoleprovsfrågor från Vårprovet 2022 till och med 2026. Skriv hela provpass under originaltidsgränser, få omedelbar rättning och uppskattad normering.",
+        url: "https://hpkampen.se/gamla-prov",
+        inLanguage: "sv-SE",
+        isAccessibleForFree: true,
+        learningResourceType: "Practice exam",
+        educationalUse: "Test preparation",
+        educationalLevel: "Gymnasieelev och högskolesökande",
+        audience: {
+          "@type": "EducationalAudience",
+          educationalRole: "student",
+        },
+        publisher: { "@id": "https://hpkampen.se/#org" },
+        teaches: [
+          "ORD · Ordkunskap",
+          "MEK · Meningskomplettering",
+          "LÄS · Svensk läsförståelse",
+          "ELF · Engelsk läsförståelse",
+          "XYZ · Matematisk problemlösning",
+          "KVA · Kvantitativa jämförelser",
+          "NOG · Kvantitativa resonemang",
+          "DTK · Diagram, tabeller och kartor",
+        ],
+      }),
+    ],
   }),
 });
 

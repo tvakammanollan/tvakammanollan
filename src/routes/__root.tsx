@@ -400,9 +400,17 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
+        {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
+            Visas bara vid keyboard-focus (sr-only:focus). */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
+          Hoppa till innehåll
+        </a>
         <AppMotion />
         <Navbar />
-        <main className="animate-fade-up">
+        <main id="main-content" className="animate-fade-up">
           <Outlet />
         </main>
         <Footer />

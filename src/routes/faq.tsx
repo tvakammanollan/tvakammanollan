@@ -45,7 +45,35 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "När är nästa Högskoleprovet?",
-    a: "Högskoleprovet ges normalt två gånger per år: en gång i mars/april och en gång i oktober. Aktuella datum hittar du på antagning.se. Anmälan öppnar ungefär tre månader innan.",
+    a: "Högskoleprovet ges normalt två gånger per år: en gång i mars/april och en gång i oktober. Nästa officiella datum: 24 oktober 2026. Anmälan öppnar ungefär tre månader innan via antagning.se.",
+  },
+  {
+    q: "Vad är ett bra resultat på Högskoleprovet?",
+    a: "Medelvärdet ligger kring 0,9. Ett resultat på 1,2 placerar dig över snittet. För att komma in på populära utbildningar (läkare, jurist, civilingenjör i storstäder) brukar man behöva 1,7 eller högre. Ett bra resultat beror på vilken utbildning du söker — kolla antagningsstatistiken för just din linje.",
+  },
+  {
+    q: "Hur länge är HP-resultatet giltigt?",
+    a: "HP-betyget är giltigt i 8 år från provdatumet. Du kan göra provet hur många gånger du vill, och det högsta resultatet bland dina giltiga prov gäller automatiskt vid antagning.",
+  },
+  {
+    q: "Vad kostar det att skriva Högskoleprovet?",
+    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). HP Kampen kostar däremot ingenting — vi finansieras av grundaren.",
+  },
+  {
+    q: "Vad är skillnaden mellan verbal och kvantitativ del?",
+    a: "Verbal del = ORD, MEK, LÄS och ELF (totalt 80 uppgifter). Kvantitativ del = XYZ, KVA, NOG och DTK (totalt 80 uppgifter). De viktas lika i normeringen, så båda halvorna är lika viktiga för slutbetyget.",
+  },
+  {
+    q: "Hjälper HP Kampen verkligen mot att höja mitt resultat?",
+    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet — det styrks av studier på testpreparation. HP Kampen ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
+  },
+  {
+    q: "Finns det ett snabbtest för att uppskatta min HP-nivå?",
+    a: "Ja — skriv ett helt provpass under Gamla prov så får du både råpoäng och en ungefärlig normerad HP-poäng direkt efter inlämning. Det är den mest exakta uppskattningen utan att faktiskt skriva provet.",
+  },
+  {
+    q: "Vad är coachning på HP Kampen?",
+    a: "Vi erbjuder gratis 30-minuters videocoachning från en spelare som själv fått 1,9 eller högre på HP. Coachen går igenom dina svagheter och ger en personlig plan. Boka via knappen 'Gratis coachning' i hemvyn.",
   },
 ];
 
