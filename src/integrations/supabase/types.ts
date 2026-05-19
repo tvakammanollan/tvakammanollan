@@ -727,6 +727,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_word_failed: {
+        Row: {
+          fail_count: number
+          interval_days: number
+          last_failed_at: string
+          next_review_at: string
+          question_id: string
+          review_streak: number
+          user_id: string
+        }
+        Insert: {
+          fail_count?: number
+          interval_days?: number
+          last_failed_at?: string
+          next_review_at?: string
+          question_id: string
+          review_streak?: number
+          user_id: string
+        }
+        Update: {
+          fail_count?: number
+          interval_days?: number
+          last_failed_at?: string
+          next_review_at?: string
+          question_id?: string
+          review_streak?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           bot_matches_today: number

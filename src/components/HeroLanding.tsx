@@ -78,8 +78,6 @@ export function HeroLanding() {
 
       <Ribbon />
 
-      <TestimonialsSection />
-
       <Features />
 
       <Stages />
@@ -90,7 +88,7 @@ export function HeroLanding() {
 
       <ProofSection stats={stats} />
 
-      <FounderQuote />
+      <TestimonialsSection />
 
       <FinalCTA />
     </div>
@@ -215,26 +213,26 @@ function Hero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 flex flex-col items-center gap-3 sm:flex-row"
+          className="mt-12 flex w-full max-w-md flex-col items-center gap-3"
         >
-          <Link
-            to="/signup"
-            data-cursor="link"
-            className="group relative inline-flex h-[58px] items-center gap-2 rounded-full bg-white px-8 text-[16px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)] transition-all hover:shadow-[0_0_80px_-8px_rgba(217,70,239,0.55)]"
-          >
-            Skapa gratis konto
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
           <button
             type="button"
             onClick={onGuest}
             disabled={guestLoading}
             data-cursor="link"
-            className="inline-flex h-[58px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-8 text-[16px] font-medium text-white backdrop-blur-sm transition hover:bg-white/10 disabled:opacity-60"
+            className="btn-shine group relative inline-flex h-[64px] w-full items-center justify-center gap-2 rounded-full bg-white px-8 text-[17px] font-bold text-[#050507] shadow-[var(--shadow-glow-aurora)] transition-all hover:shadow-[0_0_80px_-8px_rgba(217,70,239,0.55)] disabled:opacity-60"
           >
             {guestLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {guestLoading ? "Startar gästläge…" : "Spela som gäst"}
+            {guestLoading ? "Startar…" : "Testa gratis — ingen registrering"}
+            {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
           </button>
+          <Link
+            to="/signup"
+            data-cursor="link"
+            className="inline-flex h-[46px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 text-[14px] font-medium text-white backdrop-blur-sm transition hover:bg-white/10"
+          >
+            Skapa konto och spara ditt ELO
+          </Link>
         </motion.div>
 
         {/* Live counter */}

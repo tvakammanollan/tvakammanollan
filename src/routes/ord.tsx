@@ -17,10 +17,12 @@ import {
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
+  fetchFailedWordBatch,
   countOrdQuestions,
   recordOrdAnswer,
   getWordProgress,
   getOrdFilterCounts,
+  getFailedWordCount,
   type WordQuestion,
 } from "@/lib/word-practice.functions";
 
@@ -90,9 +92,11 @@ interface AnsweredItem {
 
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
+  const fetchFailedBatch = useServerFn(fetchFailedWordBatch);
   const fetchCount = useServerFn(countOrdQuestions);
   const fetchProgress = useServerFn(getWordProgress);
   const fetchFilterCounts = useServerFn(getOrdFilterCounts);
+  const fetchFailedCount = useServerFn(getFailedWordCount);
   const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
@@ -110,6 +114,8 @@ function OrdPracticePage() {
   } | null>(null);
   const [excludeCorrect, setExcludeCorrect] = useState(false);
   const [sourceFilter, setSourceFilter] = useState<"all" | "hp" | "list">("all");
+  const [failedMode, setFailedMode] = useState(false);
+  const [failedCount, setFailedCount] = useState<number | null>(null);
   const [difficulties, setDifficulties] = useState<number[]>([]);
   const [filterCounts, setFilterCounts] = useState<{
     all: number;
@@ -133,8 +139,11 @@ function OrdPracticePage() {
     void fetchFilterCounts({})
       .then((c) => setFilterCounts(c))
       .catch(() => setFilterCounts(null));
+    void fetchFailedCount({})
+      .then((r) => setFailedCount(r.count))
+      .catch(() => setFailedCount(null));
     loadProgress();
-  }, [fetchCount, fetchFilterCounts, loadProgress]);
+  }, [fetchCount, fetchFilterCounts, fetchFailedCount, loadProgress]);
 
   const toggleDifficulty = (d: number) => {
     setDifficulties((prev) =>
@@ -147,17 +156,24 @@ function OrdPracticePage() {
       setTarget(n);
       setLoading(true);
       try {
-        const res = await fetchBatch({
-          data: {
-            count: n,
-            exclude: [],
-            excludeCorrectForUserId:
-              excludeCorrect && progress ? progress.userId : undefined,
-            sourceFilter,
-            difficulties,
-          },
-        });
-        setBatch(res.questions);
+        let questions: WordQuestion[];
+        if (failedMode) {
+          const res = await fetchFailedBatch({ data: { count: n } });
+          questions = res.questions;
+        } else {
+          const res = await fetchBatch({
+            data: {
+              count: n,
+              exclude: [],
+              excludeCorrectForUserId:
+                excludeCorrect && progress ? progress.userId : undefined,
+              sourceFilter,
+              difficulties,
+            },
+          });
+          questions = res.questions;
+        }
+        setBatch(questions);
         setIdx(0);
         setPicked(null);
         setAnswered([]);
@@ -169,7 +185,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch, excludeCorrect, progress, sourceFilter, difficulties],
+    [fetchBatch, fetchFailedBatch, failedMode, excludeCorrect, progress, sourceFilter, difficulties],
   );
 
   const current = batch[idx];
@@ -367,8 +383,43 @@ function OrdPracticePage() {
               </div>
             )}
 
+            {/* Felaktiga ord — spaced repetition */}
+            {failedCount != null && failedCount > 0 && (
+              <div className="mt-5">
+                <button
+                  type="button"
+                  onClick={() => setFailedMode((v) => !v)}
+                  className={`w-full rounded-xl border p-4 text-left transition ${
+                    failedMode
+                      ? "border-red-400 bg-red-50"
+                      : "border-border bg-white hover:border-red-300 hover:bg-red-50/40"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
+                        <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
+                          {failedCount} ord
+                        </span>
+                        {failedMode && (
+                          <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
+                            Aktivt
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        Öva ord du svarat fel på — med spaced repetition
+                      </p>
+                    </div>
+                    <X className={`h-4 w-4 shrink-0 transition ${failedMode ? "text-red-600" : "hidden"}`} />
+                  </div>
+                </button>
+              </div>
+            )}
+
             {/* Source filter */}
-            <div className="mt-5 rounded-xl border border-border bg-white p-4">
+            <div className={`mt-5 rounded-xl border border-border bg-white p-4 ${failedMode ? "opacity-40 pointer-events-none" : ""}`}>
               <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
               <div className="grid grid-cols-3 gap-2">
                 {([
@@ -602,7 +653,13 @@ function OrdPracticePage() {
               </ol>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {answered.some((a) => !a.isCorrect) && (
+              <p className="mt-4 rounded-lg bg-red-50 px-4 py-2.5 text-center text-xs text-red-700">
+                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord" — öva dem igen nästa gång
+              </p>
+            )}
+
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Button onClick={() => void startSession(target)} className="gap-2">
                 <RotateCcw className="h-4 w-4" /> Kör {target} till
               </Button>

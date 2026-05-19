@@ -20,14 +20,14 @@ interface ReportQuestionButtonProps {
 
 type Reason =
   | "wrong_answer"
-  | "unclear"
-  | "technical"
+  | "unclear_question"
+  | "technical_error"
   | "other";
 
 const REASONS: Array<{ value: Reason; label: string }> = [
   { value: "wrong_answer", label: "Felaktigt svar" },
-  { value: "unclear", label: "Otydlig eller dåligt formulerad fråga" },
-  { value: "technical", label: "Tekniskt fel (t.ex. text som saknas)" },
+  { value: "unclear_question", label: "Otydlig eller dåligt formulerad fråga" },
+  { value: "technical_error", label: "Tekniskt fel (t.ex. text som saknas)" },
   { value: "other", label: "Annat" },
 ];
 

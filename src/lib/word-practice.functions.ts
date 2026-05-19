@@ -131,15 +131,59 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { userId } = context;
-    // Mark this question as "correctly answered" for this user (idempotent).
-    if (data.correct && data.questionId) {
-      await supabaseAdmin
-        .from("user_word_correct")
-        .upsert(
-          { user_id: userId, question_id: data.questionId },
-          { onConflict: "user_id,question_id", ignoreDuplicates: true },
-        );
+
+    if (data.questionId) {
+      if (data.correct) {
+        // Mark as correctly answered (idempotent)
+        await supabaseAdmin
+          .from("user_word_correct")
+          .upsert(
+            { user_id: userId, question_id: data.questionId },
+            { onConflict: "user_id,question_id", ignoreDuplicates: true },
+          );
+        // Update spaced-rep interval if this word was previously failed
+        const { data: failed } = await supabaseAdmin
+          .from("user_word_failed")
+          .select("review_streak, interval_days")
+          .eq("user_id", userId)
+          .eq("question_id", data.questionId)
+          .maybeSingle();
+        if (failed) {
+          const newStreak = (failed.review_streak as number) + 1;
+          const newInterval = Math.min((failed.interval_days as number) * 2, 180);
+          const nextReview = new Date(Date.now() + newInterval * 86400_000).toISOString();
+          await supabaseAdmin
+            .from("user_word_failed")
+            .update({ review_streak: newStreak, interval_days: newInterval, next_review_at: nextReview })
+            .eq("user_id", userId)
+            .eq("question_id", data.questionId);
+        }
+      } else {
+        // Track failure — reset spaced-rep interval
+        const { data: existing } = await supabaseAdmin
+          .from("user_word_failed")
+          .select("fail_count")
+          .eq("user_id", userId)
+          .eq("question_id", data.questionId)
+          .maybeSingle();
+        const nextReview = new Date(Date.now() + 86400_000).toISOString(); // +1 day
+        await supabaseAdmin
+          .from("user_word_failed")
+          .upsert(
+            {
+              user_id: userId,
+              question_id: data.questionId,
+              fail_count: (existing?.fail_count as number ?? 0) + 1,
+              review_streak: 0,
+              interval_days: 1,
+              last_failed_at: new Date().toISOString(),
+              next_review_at: nextReview,
+            },
+            { onConflict: "user_id,question_id" },
+          );
+      }
     }
+
     const { data: existing } = await supabaseAdmin
       .from("ord_practice_stats")
       .select("correct_count, total_count")
@@ -162,6 +206,51 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
       );
     if (error) throw new Error(error.message);
     return { correct_count: newCorrect, total_count: newTotal };
+  });
+
+// Fetch words the user has previously failed, sorted by due date (spaced repetition).
+export const fetchFailedWordBatch = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { count?: number }) =>
+    z.object({ count: z.number().int().min(1).max(50).optional().default(20) }).parse(data ?? {}),
+  )
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    const { data: failedRows } = await supabaseAdmin
+      .from("user_word_failed")
+      .select("question_id, fail_count, next_review_at, review_streak")
+      .eq("user_id", userId)
+      .order("next_review_at", { ascending: true })
+      .limit(data.count);
+
+    if (!failedRows || failedRows.length === 0) return { questions: [] };
+
+    const ids = failedRows.map((r: { question_id: string }) => r.question_id);
+    const { data: rows, error } = await supabaseAdmin
+      .from("questions")
+      .select("id,question_text,options,correct_answer,source,difficulty")
+      .in("id", ids);
+    if (error) throw new Error(error.message);
+
+    // Preserve order from failedRows (due first)
+    const byId = new Map((rows ?? []).map((r: { id: string }) => [r.id, r]));
+    const questions = failedRows
+      .map((fr: { question_id: string }) => byId.get(fr.question_id))
+      .filter(Boolean);
+
+    return { questions: questions as unknown as WordQuestion[] };
+  });
+
+// Count how many words this user has in their failed-words list.
+export const getFailedWordCount = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { userId } = context;
+    const { count } = await supabaseAdmin
+      .from("user_word_failed")
+      .select("question_id", { count: "exact", head: true })
+      .eq("user_id", userId);
+    return { count: count ?? 0 };
   });
 
 export type OrdLeaderboardRow = {
