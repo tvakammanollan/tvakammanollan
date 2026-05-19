@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/elf")({
   component: ElfGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/elf")({
     }),
     links: pageLinks("/guider/elf"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "ELF-guide: engelsk läsförståelse på Högskoleprovet",
-          description:
-            "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen.",
-          url: "https://hpkampen.se/guider/elf",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "ELF · Engelsk läsförståelse", path: "/guider/elf" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "ELF-guide: engelsk läsförståelse på Högskoleprovet",
+        description:
+          "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen.",
+        url: "https://hpkampen.se/guider/elf",
+      })),
     ],
   }),
 });
@@ -151,6 +142,11 @@ function ElfGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/elf"
+        relatedPaths={["/guider/las", "/guider/tips-lasforstaelse", "/guider/ord", "/guider/mek"]}
+      />
     </article>
   );
 }

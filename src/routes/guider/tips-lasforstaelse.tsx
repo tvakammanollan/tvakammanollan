@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/tips-lasforstaelse")({
   component: TipsLasforstaelsePage,
@@ -15,27 +16,77 @@ export const Route = createFileRoute("/guider/tips-lasforstaelse")({
     }),
     links: pageLinks("/guider/tips-lasforstaelse"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "Tips för läsförståelse på HP · LÄS och ELF",
-          description:
-            "7 konkreta tips för att förbättra din läsförståelse på Högskoleprovet.",
-          url: "https://hpkampen.se/guider/tips-lasforstaelse",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "Tips för läsförståelse", path: "/guider/tips-lasforstaelse" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "Tips för läsförståelse på HP · LÄS och ELF",
+        description:
+          "7 konkreta tips för att förbättra din läsförståelse på Högskoleprovet.",
+        url: "https://hpkampen.se/guider/tips-lasforstaelse",
+      })),
+      // HowTo schema — Google rich-result eligibility för numrerade steg
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: "Så förbättrar du läsförståelsen på Högskoleprovet",
+        description:
+          "Sju konkreta steg för att höja resultatet på LÄS och ELF på Högskoleprovet.",
+        totalTime: "PT15M",
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Läs frågan innan texten",
+            text:
+              "Vet vad du letar efter. Markera nyckelord i frågan så du kan skanna texten effektivt.",
           },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Skanna texten efter nyckelord",
+            text:
+              "Leta efter de exakta orden eller deras synonymer i texten innan du läser stycket noggrant.",
           },
-        }),
-      },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Identifiera texttypen",
+            text:
+              "Argument-text: leta efter tes och motargument. Populärvetenskap: orsak–verkan. Historisk: tidsmarkörer.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 4,
+            name: "Lita på texten, inte din förkunskap",
+            text:
+              "Svaret måste stödjas av textens ord, inte vad du redan vet om ämnet.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 5,
+            name: "Eliminationsmetoden",
+            text:
+              "Stryk alternativ som strider mot texten. Välj det som bäst stöds av citat eller paragrafer.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 6,
+            name: "Hantera svåra ord",
+            text:
+              "Fortsätt läsa — kontexten ger ofta svaret. Gissa inte ord isolerat från sin omgivning.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 7,
+            name: "Träna aktivt läsande",
+            text:
+              "Öva LÄS- och ELF-frågor från riktiga gamla prov på HP Kampen för repetition i kontext.",
+          },
+        ],
+      }),
     ],
   }),
 });
@@ -168,6 +219,11 @@ function TipsLasforstaelsePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/tips-lasforstaelse"
+        relatedPaths={["/guider/las", "/guider/elf", "/guider/ord", "/guider/mek"]}
+      />
     </article>
   );
 }

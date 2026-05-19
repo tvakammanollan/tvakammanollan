@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/tidspress")({
   component: TidspressGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/tidspress")({
     }),
     links: pageLinks("/guider/tidspress"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "Tidspress på Högskoleprovet · strategi för varje delprov",
-          description:
-            "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart.",
-          url: "https://hpkampen.se/guider/tidspress",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "Tidspress på Högskoleprovet", path: "/guider/tidspress" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "Tidspress på Högskoleprovet · strategi för varje delprov",
+        description:
+          "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart.",
+        url: "https://hpkampen.se/guider/tidspress",
+      })),
     ],
   }),
 });
@@ -169,6 +160,11 @@ function TidspressGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/tidspress"
+        relatedPaths={["/guider/bra-resultat", "/guider/normering", "/guider/tips-lasforstaelse", "/guider/xyz"]}
+      />
     </article>
   );
 }

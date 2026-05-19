@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/xyz")({
   component: XyzGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/xyz")({
     }),
     links: pageLinks("/guider/xyz"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "XYZ-guide: matematisk problemlösning på Högskoleprovet",
-          description:
-            "Lär dig lösa XYZ-uppgifter snabbare med rätt metod. Algebra, geometri, sannolikhet och kombinatorik förklaras steg för steg.",
-          url: "https://hpkampen.se/guider/xyz",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "XYZ · Matematisk problemlösning", path: "/guider/xyz" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "XYZ-guide: matematisk problemlösning på Högskoleprovet",
+        description:
+          "Lär dig lösa XYZ-uppgifter snabbare med rätt metod. Algebra, geometri, sannolikhet och kombinatorik förklaras steg för steg.",
+        url: "https://hpkampen.se/guider/xyz",
+      })),
     ],
   }),
 });
@@ -150,6 +141,11 @@ function XyzGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/xyz"
+        relatedPaths={["/guider/kva", "/guider/nog", "/guider/dtk", "/guider/tidspress"]}
+      />
     </article>
   );
 }

@@ -22,20 +22,49 @@ import { Footer } from "@/components/Footer";
 installSupabaseFetchAuth();
 
 function NotFoundComponent() {
+  const POPULAR = [
+    { to: "/gamla-prov", label: "Gamla prov", desc: "Skriv hela HP-pass 2022–2026" },
+    { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
+    { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
+    { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
+    { to: "/faq", label: "Vanliga frågor", desc: "Svar på det vanligaste" },
+  ] as const;
+
   return (
-    <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
+    <div className="flex min-h-[70vh] items-center justify-center bg-background px-4 py-12">
+      <div className="w-full max-w-2xl text-center">
         <h1
-          className="text-7xl font-semibold text-primary"
+          className="text-7xl font-semibold text-primary sm:text-8xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
           404
         </h1>
-        <h2 className="mt-3 text-xl font-semibold">Sidan hittades inte</h2>
+        <h2 className="mt-3 text-xl font-semibold sm:text-2xl">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Den här sidan finns inte – men din ELO väntar.
+          Den här sidan finns inte — men din ELO väntar. Här är några populära
+          ställen att gå till istället:
         </p>
-        <div className="mt-6">
+
+        <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2">
+          {POPULAR.map((p) => (
+            <li key={p.to}>
+              <Link
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                to={p.to as any}
+                className="group block rounded-2xl border border-border bg-card p-4 transition hover:border-primary/50 hover:shadow-md"
+              >
+                <div className="text-sm font-semibold text-foreground">
+                  {p.label} →
+                </div>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  {p.desc}
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
@@ -338,6 +367,22 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/friends">Vänner</a>
           <a href="/signup">Skapa konto</a>
           <a href="/login">Logga in</a>
+          <a href="/faq">Vanliga frågor</a>
+          <a href="/guider">Guider till HP</a>
+          <a href="/guider/ord">ORD-guide</a>
+          <a href="/guider/mek">MEK-guide</a>
+          <a href="/guider/las">LÄS-guide</a>
+          <a href="/guider/elf">ELF-guide</a>
+          <a href="/guider/xyz">XYZ-guide</a>
+          <a href="/guider/kva">KVA-guide</a>
+          <a href="/guider/nog">NOG-guide</a>
+          <a href="/guider/dtk">DTK-guide</a>
+          <a href="/guider/normering">HP-normering</a>
+          <a href="/guider/tips-lasforstaelse">Tips läsförståelse</a>
+          <a href="/guider/tidspress">Tidspress HP</a>
+          <a href="/guider/bra-resultat">Få bra HP-resultat</a>
+          <a href="/om">Om HP Kampen</a>
+          <a href="/kontakt">Kontakt</a>
         </nav>
         <Scripts />
       </body>

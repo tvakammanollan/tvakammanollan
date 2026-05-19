@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/normering")({
   component: NormeringGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/normering")({
     }),
     links: pageLinks("/guider/normering"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "Normering på Högskoleprovet · hur poängen räknas",
-          description:
-            "Förstå hur normering fungerar på HP: råpoäng, stanine och HP-betyg 0.0–2.0.",
-          url: "https://hpkampen.se/guider/normering",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "Normering på Högskoleprovet", path: "/guider/normering" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "Normering på Högskoleprovet · hur poängen räknas",
+        description:
+          "Förstå hur normering fungerar på HP: råpoäng, stanine och HP-betyg 0.0–2.0.",
+        url: "https://hpkampen.se/guider/normering",
+      })),
     ],
   }),
 });
@@ -153,6 +144,11 @@ function NormeringGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/normering"
+        relatedPaths={["/guider/bra-resultat", "/guider/tidspress", "/guider/tips-lasforstaelse", "/guider/ord"]}
+      />
     </article>
   );
 }

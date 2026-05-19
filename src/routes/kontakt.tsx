@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { Mail, MessageSquare, Bug } from "lucide-react";
 
 export const Route = createFileRoute("/kontakt")({
@@ -14,6 +14,21 @@ export const Route = createFileRoute("/kontakt")({
       ogDescription: "Hör av dig. E-post, buggrapporter och feedback.",
     }),
     links: pageLinks("/kontakt"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Kontakt", path: "/kontakt" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        name: "Kontakt · HP Kampen",
+        url: "https://hpkampen.se/kontakt",
+        description:
+          "Kontaktinformation till HP Kampen — e-post, buggrapporter och feedback.",
+        publisher: { "@id": "https://hpkampen.se/#org" },
+      }),
+    ],
   }),
 });
 

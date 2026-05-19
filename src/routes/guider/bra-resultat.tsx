@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/bra-resultat")({
   component: BraResultatGuidePage,
@@ -15,27 +16,70 @@ export const Route = createFileRoute("/guider/bra-resultat")({
     }),
     links: pageLinks("/guider/bra-resultat"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "Hur får man bra resultat på HP? · Komplett guide",
-          description:
-            "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat.",
-          url: "https://hpkampen.se/guider/bra-resultat",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "Hur får man bra HP-resultat?", path: "/guider/bra-resultat" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "Hur får man bra resultat på HP? · Komplett guide",
+        description:
+          "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat.",
+        url: "https://hpkampen.se/guider/bra-resultat",
+      })),
+      // HowTo schema — Google rich-result eligibility för studieplanen
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: "Studieplan för att lyckas på Högskoleprovet",
+        description:
+          "En komplett 6–8 veckors studieplan för att maximera HP-resultatet, från kartläggning till provdagen.",
+        totalTime: "P8W",
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Kartläggning",
+            text:
+              "Gör ett gammalt prov och räkna ut din startnivå per delprov. Identifiera dina svagaste delprov.",
           },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Vecka 1–2: fokusera på svagaste delprov",
+            text:
+              "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller matte — välj din starkare sida och gör den perfekt.",
           },
-        }),
-      },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Vecka 3–5: daglig träning",
+            text:
+              "Träna ORD, MEK, LÄS/ELF eller XYZ, KVA, NOG, DTK dagligen via HP Kampen. Kort intensiv träning är mer effektivt än långa pass.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 4,
+            name: "Vecka 6–7: gamla prov under tidspress",
+            text:
+              "Skriv hela provpass under riktiga tidsgränser för att vänja dig vid pressen.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 5,
+            name: "Vecka 8: vila och mental förberedelse",
+            text:
+              "Lätt repetition, vila och mental förberedelse inför provdagen.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 6,
+            name: "Provdagen",
+            text:
+              "Frukost och vatten. Var på plats i god tid. Börja med det lättaste delprovet i passet. Hoppa aldrig — gissa alltid när du kör fast.",
+          },
+        ],
+      }),
     ],
   }),
 });
@@ -199,6 +243,11 @@ function BraResultatGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/bra-resultat"
+        relatedPaths={["/guider/tidspress", "/guider/normering", "/guider/tips-lasforstaelse", "/guider/ord"]}
+      />
     </article>
   );
 }

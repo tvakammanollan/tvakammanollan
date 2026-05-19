@@ -41,6 +41,13 @@
       "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
+      "name": "Gamla prov",
+      "short_name": "Prov",
+      "description": "Skriv hela HP-pass från 2022–2026 med facit",
+      "url": "/gamla-prov",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
       "name": "Topplista",
       "short_name": "Topp",
       "description": "Sveriges vassaste HP-spelare just nu",

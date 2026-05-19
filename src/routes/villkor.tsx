@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 
 export const Route = createFileRoute("/villkor")({
   component: VillkorPage,
@@ -13,6 +13,12 @@ export const Route = createFileRoute("/villkor")({
       ogDescription: "Användarvillkoren för HP Kampen.",
     }),
     links: pageLinks("/villkor"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Användarvillkor", path: "/villkor" },
+      ]),
+    ],
   }),
 });
 

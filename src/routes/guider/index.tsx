@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 export const Route = createFileRoute("/guider")({
   component: GuiderPage,
@@ -14,6 +14,77 @@ export const Route = createFileRoute("/guider")({
         "Kompletta guider till alla 8 delprov på HP. Strategi, tidspress och normering förklaras.",
     }),
     links: pageLinks("/guider"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+      ]),
+      // Course schema — eligible för Course rich result och Google Discover
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "Course",
+        name: "HP Kampens guidekurs · alla 8 delprov + strategi",
+        description:
+          "12 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus normering, tidspress, läsförståelsetips och en komplett studieplan. Helt gratis.",
+        url: "https://hpkampen.se/guider",
+        provider: {
+          "@type": "Organization",
+          name: "HP Kampen",
+          url: "https://hpkampen.se",
+          "@id": "https://hpkampen.se/#org",
+        },
+        inLanguage: "sv-SE",
+        isAccessibleForFree: true,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "SEK", category: "Free" },
+        educationalLevel: "Gymnasieelev och högskolesökande",
+        audience: {
+          "@type": "EducationalAudience",
+          educationalRole: "student",
+          audienceType: "Sökande till svenska universitet och högskolor",
+        },
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "online",
+          courseWorkload: "PT3H",
+        },
+        about: [
+          "Högskoleprovet",
+          "HP",
+          "ORD",
+          "MEK",
+          "LÄS",
+          "ELF",
+          "XYZ",
+          "KVA",
+          "NOG",
+          "DTK",
+          "Normering",
+          "Tidspress",
+        ],
+      }),
+      // ItemList schema — hjälper Google förstå att detta är en samling av guider
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "HP Kampens guider",
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        numberOfItems: 12,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ORD · Ordkunskap", url: "https://hpkampen.se/guider/ord" },
+          { "@type": "ListItem", position: 2, name: "MEK · Meningskomplettering", url: "https://hpkampen.se/guider/mek" },
+          { "@type": "ListItem", position: 3, name: "LÄS · Svensk läsförståelse", url: "https://hpkampen.se/guider/las" },
+          { "@type": "ListItem", position: 4, name: "ELF · Engelsk läsförståelse", url: "https://hpkampen.se/guider/elf" },
+          { "@type": "ListItem", position: 5, name: "XYZ · Matematisk problemlösning", url: "https://hpkampen.se/guider/xyz" },
+          { "@type": "ListItem", position: 6, name: "KVA · Kvantitativa jämförelser", url: "https://hpkampen.se/guider/kva" },
+          { "@type": "ListItem", position: 7, name: "NOG · Kvantitativa resonemang", url: "https://hpkampen.se/guider/nog" },
+          { "@type": "ListItem", position: 8, name: "DTK · Diagram, tabeller, kartor", url: "https://hpkampen.se/guider/dtk" },
+          { "@type": "ListItem", position: 9, name: "Normering på HP", url: "https://hpkampen.se/guider/normering" },
+          { "@type": "ListItem", position: 10, name: "Tips för läsförståelse", url: "https://hpkampen.se/guider/tips-lasforstaelse" },
+          { "@type": "ListItem", position: 11, name: "Tidspress på HP", url: "https://hpkampen.se/guider/tidspress" },
+          { "@type": "ListItem", position: 12, name: "Få bra HP-resultat", url: "https://hpkampen.se/guider/bra-resultat" },
+        ],
+      }),
+    ],
   }),
 });
 

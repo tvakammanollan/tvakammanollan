@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 
 interface FaqItem {
   q: string;
@@ -65,6 +65,10 @@ export const Route = createFileRoute("/faq")({
     // Page-level FAQPage JSON-LD (per-page, distinct from the root one which
     // mixes site-wide and HP-info questions).
     scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Vanliga frågor", path: "/faq" },
+      ]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -114,25 +118,35 @@ function FaqPage() {
         </p>
       </header>
 
-      <dl className="space-y-6">
-        {FAQ.map(({ q, a }) => (
-          <div
+      <div className="space-y-3">
+        {FAQ.map(({ q, a }, i) => (
+          <details
             key={q}
-            className="rounded-2xl border p-5"
+            // Open de första 2 så sidan inte ser tom ut — resten kan användaren
+            // expandera vid behov.
+            open={i < 2}
+            className="group rounded-2xl border p-5 transition-colors hover:border-indigo-500/30"
             style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
           >
-            <dt
-              className="text-base font-semibold"
+            <summary
+              className="flex cursor-pointer items-start justify-between gap-4 text-base font-semibold marker:hidden [&::-webkit-details-marker]:hidden"
               style={{ color: "var(--cream)" }}
             >
-              {q}
-            </dt>
-            <dd className="mt-2 text-[15px]" style={{ color: "var(--text-secondary)" }}>
+              <span>{q}</span>
+              <span
+                aria-hidden="true"
+                className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs transition-transform group-open:rotate-45"
+                style={{ borderColor: "var(--line)", color: "var(--text-tertiary)" }}
+              >
+                +
+              </span>
+            </summary>
+            <p className="mt-3 text-[15px]" style={{ color: "var(--text-secondary)" }}>
               {a}
-            </dd>
-          </div>
+            </p>
+          </details>
         ))}
-      </dl>
+      </div>
     </article>
   );
 }

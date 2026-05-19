@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/las")({
   component: LasGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/las")({
     }),
     links: pageLinks("/guider/las"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "LÄS-guide: svensk läsförståelse på Högskoleprovet",
-          description:
-            "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering.",
-          url: "https://hpkampen.se/guider/las",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "LÄS · Svensk läsförståelse", path: "/guider/las" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "LÄS-guide: svensk läsförståelse på Högskoleprovet",
+        description:
+          "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering.",
+        url: "https://hpkampen.se/guider/las",
+      })),
     ],
   }),
 });
@@ -162,6 +153,11 @@ function LasGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/las"
+        relatedPaths={["/guider/elf", "/guider/tips-lasforstaelse", "/guider/ord", "/guider/mek"]}
+      />
     </article>
   );
 }

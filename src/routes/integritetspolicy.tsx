@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 
 export const Route = createFileRoute("/integritetspolicy")({
   component: IntegritetspolicyPage,
@@ -13,6 +13,12 @@ export const Route = createFileRoute("/integritetspolicy")({
       ogDescription: "Hur vi hanterar dina personuppgifter enligt GDPR.",
     }),
     links: pageLinks("/integritetspolicy"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Integritetspolicy", path: "/integritetspolicy" },
+      ]),
+    ],
   }),
 });
 

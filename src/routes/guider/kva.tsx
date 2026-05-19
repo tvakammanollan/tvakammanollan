@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/kva")({
   component: KvaGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/kva")({
     }),
     links: pageLinks("/guider/kva"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "KVA-guide: kvantitativa jämförelser på Högskoleprovet",
-          description:
-            "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert.",
-          url: "https://hpkampen.se/guider/kva",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "KVA · Kvantitativa jämförelser", path: "/guider/kva" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "KVA-guide: kvantitativa jämförelser på Högskoleprovet",
+        description:
+          "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert.",
+        url: "https://hpkampen.se/guider/kva",
+      })),
     ],
   }),
 });
@@ -150,6 +141,11 @@ function KvaGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/kva"
+        relatedPaths={["/guider/xyz", "/guider/nog", "/guider/dtk", "/guider/tidspress"]}
+      />
     </article>
   );
 }

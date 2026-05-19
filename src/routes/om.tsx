@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 export const Route = createFileRoute("/om")({
   component: OmPage,
@@ -8,12 +8,28 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om HP Kampen · varför sajten finns",
       description:
-        "HP Kampen är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren, varför sajten är gratis och vart vi är på väg.",
+        "HP Kampen är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,9 på HP), varför sajten är gratis och vad vi tror på.",
       ogTitle: "Om HP Kampen",
       ogDescription:
         "Sveriges enda gratis ELO-rankade högskoleprovsplattform. Varför vi finns.",
     }),
     links: pageLinks("/om"),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Om HP Kampen", path: "/om" },
+      ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        name: "Om HP Kampen",
+        url: "https://hpkampen.se/om",
+        description:
+          "Om HP Kampen — Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,9 på Högskoleprovet.",
+        publisher: { "@id": "https://hpkampen.se/#org" },
+        about: { "@id": "https://hpkampen.se/#niklas" },
+      }),
+    ],
   }),
 });
 
@@ -25,7 +41,7 @@ function OmPage() {
     >
       <header className="mb-10">
         <p
-          className="text-xs uppercase tracking-[0.25em]"
+          className="text-xs font-semibold uppercase tracking-[0.25em]"
           style={{ color: "#a5b4fc" }}
         >
           Om oss
@@ -36,6 +52,11 @@ function OmPage() {
         >
           Bättre HP-träning ska vara gratis.
         </h1>
+        <p className="mt-4 max-w-prose text-base">
+          HP Kampen är Sveriges enda plattform där du tävlar mot vänner i
+          realtid med riktiga frågor från Högskoleprovet — med ELO-ranking,
+          alla åtta delprov och 8 000+ HP-ord. Helt utan kostnad.
+        </p>
       </header>
 
       <section className="space-y-6">
@@ -46,12 +67,20 @@ function OmPage() {
           Grundaren
         </h2>
         <p>
-          {/* TODO: Niklas, fyll i din historia: bakgrund, första HP-resultat,
-              varför du byggde sajten. Lägg gärna in ett foto i public/founder.jpg. */}
-          <em>
-            [Niklas berättar i 4–6 meningar varför HP Kampen finns: vilket
-            problem den löser och vad han själv saknade när han pluggade.]
-          </em>
+          Jag heter <strong style={{ color: "var(--cream)" }}>Niklas</strong>
+          {" "}och fick 1,9 på Högskoleprovet. Innan jag tog provet använde jag
+          allt jag kunde komma över — gamla prov, ordlistor, YouTube-genomgångar
+          och dyra kursplattformar. Det fungerade, men det var spretigt, dyrt
+          och oftast tråkigt. Det fanns ingenting som gjorde att jag faktiskt
+          ville fortsätta plugga en kväll till.
+        </p>
+        <p>
+          HP Kampen är vad jag önskat fanns när jag pluggade: ett ställe där
+          du kan träna riktiga HP-frågor under riktig tidspress, mot någon på
+          din nivå, och se ditt resultat klättra över veckorna. Konkurrensen
+          gör att du orkar längre. ELO-systemet ger en ärlig bild av var du
+          står. Och allt — varje delprov, varje gammalt prov, varje funktion —
+          är gratis. Alltid.
         </p>
 
         <h2
@@ -61,10 +90,13 @@ function OmPage() {
           Varför gratis?
         </h2>
         <p>
-          Att plugga inför Högskoleprovet borde inte kosta tusenlappar.
-          Officiella material är gratis men spridda. Privata kursplattformar
-          är dyra och fokuserar mer på sina paket än på din inlärning. HP
-          Kampen är finansierad av grundaren och utan annonser.
+          Att plugga inför Högskoleprovet borde inte kosta tusenlappar. De
+          officiella materialen är gratis men spridda; privata kursplattformar
+          tar 2 000–10 000 kr för paket som i grunden bygger på samma frågor
+          som finns på <a className="underline" style={{ color: "var(--amber)" }} href="https://www.studera.nu" target="_blank" rel="noopener noreferrer">studera.nu</a>.
+          HP Kampen finansieras av grundaren — det finns inga annonser,
+          inga premium-paket, inga in-app-köp. Du betalar aldrig med pengar,
+          tid eller uppmärksamhet.
         </p>
 
         <h2
@@ -73,13 +105,73 @@ function OmPage() {
         >
           Vad vi tror på
         </h2>
-        <ul className="list-disc space-y-1 pl-6">
-          <li>Riktiga frågor från riktiga prov. Inga uppdiktade exempel.</li>
-          <li>Konkurrens gör att man tränar längre.</li>
-          <li>ELO-ranking ger en ärlig spegelbild av din nivå.</li>
+        <ul className="list-disc space-y-2 pl-6">
           <li>
-            Gratis betyder gratis. Inga premium-paket, inga in-app-köp,
-            inga annonser.
+            <strong style={{ color: "var(--cream)" }}>Riktiga frågor.</strong>{" "}
+            Hela ordbanken bygger på publicerade högskoleprov från 1990-talet
+            och framåt. Inga uppdiktade exempel.
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Konkurrens motiverar.</strong>{" "}
+            Det är roligare att plugga mot någon. Och du orkar längre.
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>ELO är ärligt.</strong>{" "}
+            Du ser exakt var du står, inte vad en kursplattform vill att du
+            ska tro att du är värd.
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Gratis betyder gratis.</strong>{" "}
+            Inga premium-paket, inga in-app-köp, inga annonser.
+          </li>
+        </ul>
+
+        <h2
+          className="mt-8 text-xl font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          Vart vi är på väg
+        </h2>
+        <p>
+          HP Kampen växer organiskt. Vi lägger till fler funktioner när de
+          efterfrågas och förbättrar det som inte funkar tillräckligt bra.
+          Närmast på listan: fler gamla prov, bättre statistik per delprov,
+          och studiegrupper för dig som vill plugga med vänner regelbundet.
+          Har du önskemål eller hittat en bugg —{" "}
+          <Link
+            to="/kontakt"
+            className="underline"
+            style={{ color: "var(--amber)" }}
+          >
+            hör av dig
+          </Link>
+          .
+        </p>
+
+        <h2
+          className="mt-8 text-xl font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          Resurser
+        </h2>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            <Link to="/guider" className="underline" style={{ color: "var(--amber)" }}>
+              Guider till alla 8 delprov
+            </Link>
+            {" "}— strategi, tidsdisposition och tips per delprov
+          </li>
+          <li>
+            <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
+              Gamla prov 2022–2026
+            </Link>
+            {" "}— skriv hela provpass med facit och normering
+          </li>
+          <li>
+            <Link to="/faq" className="underline" style={{ color: "var(--amber)" }}>
+              Vanliga frågor
+            </Link>
+            {" "}— svar på det vi får mest mejl om
           </li>
         </ul>
 
@@ -98,11 +190,8 @@ function OmPage() {
           >
             hej@hpkampen.se
           </a>
-        </p>
-
-        <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
-          {/* TODO: Lägg till pressomnämnanden, eventuellt team, sociala
-              medier-länkar och press kit när det finns. */}
+          . Bug eller önskemål? Använd gärna bug-knappen längst ner i
+          gränssnittet — då hamnar feedbacken direkt hos rätt person.
         </p>
       </section>
     </article>

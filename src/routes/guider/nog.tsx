@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/nog")({
   component: NogGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/nog")({
     }),
     links: pageLinks("/guider/nog"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "NOG-guide: kvantitativa resonemang på Högskoleprovet",
-          description:
-            "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information.",
-          url: "https://hpkampen.se/guider/nog",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "NOG · Kvantitativa resonemang", path: "/guider/nog" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "NOG-guide: kvantitativa resonemang på Högskoleprovet",
+        description:
+          "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information.",
+        url: "https://hpkampen.se/guider/nog",
+      })),
     ],
   }),
 });
@@ -144,6 +135,11 @@ function NogGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/nog"
+        relatedPaths={["/guider/xyz", "/guider/kva", "/guider/dtk", "/guider/tidspress"]}
+      />
     </article>
   );
 }

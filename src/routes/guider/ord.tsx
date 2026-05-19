@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/ord")({
   component: OrdGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/ord")({
     }),
     links: pageLinks("/guider/ord"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "ORD-guide: ordkunskap på Högskoleprovet",
-          description:
-            "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 8 000+ riktiga HP-ord.",
-          url: "https://hpkampen.se/guider/ord",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "ORD · Ordkunskap", path: "/guider/ord" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "ORD-guide: ordkunskap på Högskoleprovet",
+        description:
+          "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 8 000+ riktiga HP-ord.",
+        url: "https://hpkampen.se/guider/ord",
+      })),
     ],
   }),
 });
@@ -167,6 +158,11 @@ function OrdGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/ord"
+        relatedPaths={["/guider/mek", "/guider/las", "/guider/tips-lasforstaelse", "/guider/tidspress"]}
+      />
     </article>
   );
 }

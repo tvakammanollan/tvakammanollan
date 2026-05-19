@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/mek")({
   component: MekGuidePage,
@@ -15,27 +16,17 @@ export const Route = createFileRoute("/guider/mek")({
     }),
     links: pageLinks("/guider/mek"),
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: "MEK-guide: meningskomplettering på Högskoleprovet",
-          description:
-            "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition.",
-          url: "https://hpkampen.se/guider/mek",
-          author: {
-            "@type": "Person",
-            name: "Niklas",
-            url: "https://hpkampen.se/om",
-          },
-          publisher: {
-            "@type": "Organization",
-            name: "HP Kampen",
-            url: "https://hpkampen.se",
-          },
-        }),
-      },
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Guider", path: "/guider" },
+        { name: "MEK · Meningskomplettering", path: "/guider/mek" },
+      ]),
+      jsonLdScript(guideArticleJsonLd({
+        headline: "MEK-guide: meningskomplettering på Högskoleprovet",
+        description:
+          "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition.",
+        url: "https://hpkampen.se/guider/mek",
+      })),
     ],
   }),
 });
@@ -163,6 +154,11 @@ function MekGuidePage() {
           </Link>
         </p>
       </section>
+
+      <RelatedGuides
+        currentPath="/guider/mek"
+        relatedPaths={["/guider/ord", "/guider/las", "/guider/tips-lasforstaelse", "/guider/elf"]}
+      />
     </article>
   );
 }
