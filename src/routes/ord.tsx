@@ -23,7 +23,9 @@ import {
   getWordProgress,
   getOrdFilterCounts,
   getFailedWordCount,
+  getFailedWordsList,
   type WordQuestion,
+  type FailedWordEntry,
 } from "@/lib/word-practice.functions";
 
 export const Route = createFileRoute("/ord")({
@@ -97,6 +99,7 @@ function OrdPracticePage() {
   const fetchProgress = useServerFn(getWordProgress);
   const fetchFilterCounts = useServerFn(getOrdFilterCounts);
   const fetchFailedCount = useServerFn(getFailedWordCount);
+  const fetchFailedList = useServerFn(getFailedWordsList);
   const recordAnswer = useServerFn(recordOrdAnswer);
 
   const [phase, setPhase] = useState<Phase>("setup");
@@ -116,6 +119,8 @@ function OrdPracticePage() {
   const [sourceFilter, setSourceFilter] = useState<"all" | "hp" | "list">("all");
   const [failedMode, setFailedMode] = useState(false);
   const [failedCount, setFailedCount] = useState<number | null>(null);
+  const [failedWords, setFailedWords] = useState<FailedWordEntry[]>([]);
+  const [failedListOpen, setFailedListOpen] = useState(false);
   const [difficulties, setDifficulties] = useState<number[]>([]);
   const [filterCounts, setFilterCounts] = useState<{
     all: number;
@@ -142,8 +147,11 @@ function OrdPracticePage() {
     void fetchFailedCount({})
       .then((r) => setFailedCount(r.count))
       .catch(() => setFailedCount(null));
+    void fetchFailedList({})
+      .then((r) => setFailedWords(r.words))
+      .catch(() => setFailedWords([]));
     loadProgress();
-  }, [fetchCount, fetchFilterCounts, fetchFailedCount, loadProgress]);
+  }, [fetchCount, fetchFilterCounts, fetchFailedCount, fetchFailedList, loadProgress]);
 
   const toggleDifficulty = (d: number) => {
     setDifficulties((prev) =>
@@ -383,41 +391,6 @@ function OrdPracticePage() {
               </div>
             )}
 
-            {/* Felaktiga ord — spaced repetition */}
-            {failedCount != null && failedCount > 0 && (
-              <div className="mt-5">
-                <button
-                  type="button"
-                  onClick={() => setFailedMode((v) => !v)}
-                  className={`w-full rounded-xl border p-4 text-left transition ${
-                    failedMode
-                      ? "border-red-400 bg-red-50"
-                      : "border-border bg-white hover:border-red-300 hover:bg-red-50/40"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
-                        <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
-                          {failedCount} ord
-                        </span>
-                        {failedMode && (
-                          <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-bold text-white">
-                            Aktivt
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
-                        Öva ord du svarat fel på — med spaced repetition
-                      </p>
-                    </div>
-                    <X className={`h-4 w-4 shrink-0 transition ${failedMode ? "text-red-600" : "hidden"}`} />
-                  </div>
-                </button>
-              </div>
-            )}
-
             {/* Source filter */}
             <div className={`mt-5 rounded-xl border border-border bg-white p-4 ${failedMode ? "opacity-40 pointer-events-none" : ""}`}>
               <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
@@ -477,6 +450,81 @@ function OrdPracticePage() {
                 </p>
               )}
             </div>
+
+            {/* Felaktiga ord — spaced repetition */}
+            {failedCount != null && failedCount > 0 && (
+              <div className="mt-5 overflow-hidden rounded-xl border border-red-200 bg-red-50/60">
+                <div className="flex items-center justify-between px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
+                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
+                      {failedCount}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setFailedMode((v) => !v)}
+                      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                        failedMode
+                          ? "bg-red-600 text-white"
+                          : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
+                      }`}
+                    >
+                      {failedMode ? "✓ Aktivt" : "Öva dessa"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFailedListOpen((v) => !v)}
+                      className="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-medium text-red-600 transition hover:bg-red-100"
+                    >
+                      {failedListOpen ? "Dölj ▲" : "Visa lista ▼"}
+                    </button>
+                  </div>
+                </div>
+
+                {failedListOpen && (
+                  <div className="max-h-72 overflow-y-auto border-t border-red-200">
+                    {failedWords.map((w) => {
+                      const isDue = new Date(w.next_review_at) <= new Date();
+                      return (
+                        <div
+                          key={w.question_id}
+                          className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <span className="text-sm font-medium text-[#050507]">{w.question_text}</span>
+                            <div className="mt-1 flex items-center gap-2">
+                              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
+                                <div
+                                  className="h-full rounded-full bg-red-500 transition-all"
+                                  style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
+                                />
+                              </div>
+                              <span className="text-[10px] text-muted-foreground tabular-nums">
+                                {w.review_streak}/5 rätt i rad
+                              </span>
+                            </div>
+                          </div>
+                          <div className="ml-3 shrink-0 text-right">
+                            {isDue ? (
+                              <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                                Klar nu
+                              </span>
+                            ) : (
+                              <span className="text-[10px] text-muted-foreground">
+                                {new Date(w.next_review_at).toLocaleDateString("sv-SE", { month: "short", day: "numeric" })}
+                              </span>
+                            )}
+                            <div className="mt-0.5 text-[10px] text-red-400">{w.fail_count}× fel</div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="mt-5 border-t border-border pt-4 text-center">
               <Link

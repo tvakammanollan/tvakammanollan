@@ -132,49 +132,62 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { userId } = context;
 
+    const MASTERY_STREAK = 5; // consecutive correct reviews to graduate a word
+
     if (data.questionId) {
       if (data.correct) {
-        // Mark as correctly answered (idempotent)
         await supabaseAdmin
           .from("user_word_correct")
           .upsert(
             { user_id: userId, question_id: data.questionId },
             { onConflict: "user_id,question_id", ignoreDuplicates: true },
           );
-        // Update spaced-rep interval if this word was previously failed
+        // SM-2 update for previously-failed words
         const { data: failed } = await supabaseAdmin
           .from("user_word_failed")
-          .select("review_streak, interval_days")
+          .select("review_streak, interval_days, ease_factor")
           .eq("user_id", userId)
           .eq("question_id", data.questionId)
           .maybeSingle();
         if (failed) {
           const newStreak = (failed.review_streak as number) + 1;
-          const newInterval = Math.min((failed.interval_days as number) * 2, 180);
-          const nextReview = new Date(Date.now() + newInterval * 86400_000).toISOString();
-          await supabaseAdmin
-            .from("user_word_failed")
-            .update({ review_streak: newStreak, interval_days: newInterval, next_review_at: nextReview })
-            .eq("user_id", userId)
-            .eq("question_id", data.questionId);
+          if (newStreak >= MASTERY_STREAK) {
+            // Word mastered — remove from failed list
+            await supabaseAdmin
+              .from("user_word_failed")
+              .delete()
+              .eq("user_id", userId)
+              .eq("question_id", data.questionId);
+          } else {
+            const ef = Math.min(2.5, (failed.ease_factor as number) + 0.1);
+            const newInterval = Math.min(Math.round((failed.interval_days as number) * ef), 180);
+            const nextReview = new Date(Date.now() + newInterval * 86400_000).toISOString();
+            await supabaseAdmin
+              .from("user_word_failed")
+              .update({ review_streak: newStreak, interval_days: newInterval, ease_factor: ef, next_review_at: nextReview })
+              .eq("user_id", userId)
+              .eq("question_id", data.questionId);
+          }
         }
       } else {
-        // Track failure — reset spaced-rep interval
+        // Wrong answer — fetch existing row for fail_count and reset SR
         const { data: existing } = await supabaseAdmin
           .from("user_word_failed")
-          .select("fail_count")
+          .select("fail_count, ease_factor")
           .eq("user_id", userId)
           .eq("question_id", data.questionId)
           .maybeSingle();
-        const nextReview = new Date(Date.now() + 86400_000).toISOString(); // +1 day
+        const ef = Math.max(1.3, ((existing?.ease_factor as number) ?? 2.5) - 0.3);
+        const nextReview = new Date(Date.now() + 86400_000).toISOString();
         await supabaseAdmin
           .from("user_word_failed")
           .upsert(
             {
               user_id: userId,
               question_id: data.questionId,
-              fail_count: (existing?.fail_count as number ?? 0) + 1,
+              fail_count: ((existing?.fail_count as number) ?? 0) + 1,
               review_streak: 0,
+              ease_factor: ef,
               interval_days: 1,
               last_failed_at: new Date().toISOString(),
               next_review_at: nextReview,
@@ -251,6 +264,52 @@ export const getFailedWordCount = createServerFn({ method: "GET" })
       .select("question_id", { count: "exact", head: true })
       .eq("user_id", userId);
     return { count: count ?? 0 };
+  });
+
+export type FailedWordEntry = {
+  question_id: string;
+  question_text: string;
+  fail_count: number;
+  review_streak: number;
+  interval_days: number;
+  next_review_at: string;
+  last_failed_at: string;
+};
+
+// Full list of failed words with question text and SR progress.
+export const getFailedWordsList = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { userId } = context;
+    const { data: rows } = await supabaseAdmin
+      .from("user_word_failed")
+      .select("question_id, fail_count, review_streak, interval_days, next_review_at, last_failed_at")
+      .eq("user_id", userId)
+      .order("next_review_at", { ascending: true });
+    if (!rows || rows.length === 0) return { words: [] as FailedWordEntry[] };
+
+    const ids = rows.map((r: { question_id: string }) => r.question_id);
+    const { data: questions } = await supabaseAdmin
+      .from("questions")
+      .select("id, question_text")
+      .in("id", ids);
+
+    const textById = new Map((questions ?? []).map((q: { id: string; question_text: string }) => [q.id, q.question_text]));
+    const MASTERY_STREAK = 5;
+    const words: FailedWordEntry[] = rows.map((r: {
+      question_id: string; fail_count: number; review_streak: number;
+      interval_days: number; next_review_at: string; last_failed_at: string;
+    }) => ({
+      question_id: r.question_id,
+      question_text: (textById.get(r.question_id) ?? "").toLowerCase(),
+      fail_count: r.fail_count,
+      review_streak: r.review_streak,
+      interval_days: r.interval_days,
+      next_review_at: r.next_review_at,
+      last_failed_at: r.last_failed_at,
+      mastery_streak: MASTERY_STREAK,
+    }));
+    return { words };
   });
 
 export type OrdLeaderboardRow = {

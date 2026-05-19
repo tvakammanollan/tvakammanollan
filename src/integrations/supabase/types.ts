@@ -729,6 +729,7 @@ export type Database = {
       }
       user_word_failed: {
         Row: {
+          ease_factor: number
           fail_count: number
           interval_days: number
           last_failed_at: string
@@ -738,6 +739,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          ease_factor?: number
           fail_count?: number
           interval_days?: number
           last_failed_at?: string
@@ -747,6 +749,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          ease_factor?: number
           fail_count?: number
           interval_days?: number
           last_failed_at?: string
