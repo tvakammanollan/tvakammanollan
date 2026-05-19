@@ -461,66 +461,58 @@ function OrdPracticePage() {
                       {failedCount}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setFailedMode((v) => !v)}
-                      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                        failedMode
-                          ? "bg-red-600 text-white"
-                          : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
-                      }`}
-                    >
-                      {failedMode ? "✓ Aktivt" : "Öva dessa"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFailedListOpen((v) => !v)}
-                      className="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-medium text-red-600 transition hover:bg-red-100"
-                    >
-                      {failedListOpen ? "Dölj ▲" : "Visa lista ▼"}
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFailedMode((v) => !v)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                      failedMode
+                        ? "bg-red-600 text-white"
+                        : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
+                    }`}
+                  >
+                    {failedMode ? "✓ Aktivt" : "Öva dessa"}
+                  </button>
                 </div>
 
-                {failedListOpen && (
-                  <div className="max-h-72 overflow-y-auto border-t border-red-200">
-                    {failedWords.map((w) => {
-                      const isDue = new Date(w.next_review_at) <= new Date();
-                      return (
-                        <div
-                          key={w.question_id}
-                          className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
-                        >
-                          <div className="min-w-0 flex-1">
-                            <span className="text-sm font-medium text-[#050507]">{w.question_text}</span>
-                            <div className="mt-1 flex items-center gap-2">
-                              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
-                                <div
-                                  className="h-full rounded-full bg-red-500 transition-all"
-                                  style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
-                                />
-                              </div>
-                              <span className="text-[10px] text-muted-foreground tabular-nums">
-                                {w.review_streak}/5 rätt i rad
-                              </span>
+                <div className="max-h-72 overflow-y-auto border-t border-red-200">
+                  {failedWords.map((w) => {
+                    const isDue = new Date(w.next_review_at) <= new Date();
+                    return (
+                      <div
+                        key={w.question_id}
+                        className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <span className="text-sm font-medium tracking-tight text-[#050507]">
+                            {w.question_text}
+                          </span>
+                          <div className="mt-1 flex items-center gap-2">
+                            <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
+                              <div
+                                className="h-full rounded-full bg-red-500 transition-all"
+                                style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
+                              />
                             </div>
-                          </div>
-                          <div className="ml-3 shrink-0 text-right">
-                            {isDue ? (
-                              <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
-                                Klar nu
-                              </span>
-                            ) : (
-                              <span className="text-[10px] text-muted-foreground">
-                                {new Date(w.next_review_at).toLocaleDateString("sv-SE", { month: "short", day: "numeric" })}
-                              </span>
-                            )}
-                            <div className="mt-0.5 text-[10px] text-red-400">{w.fail_count}× fel</div>
+                            <span className="text-[10px] text-muted-foreground tabular-nums">
+                              {w.review_streak}/5
+                            </span>
                           </div>
                         </div>
-                      );
-                    })}
+                        <div className="ml-3 shrink-0 text-right">
+                          {isDue ? (
+                            <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                              Klar nu
+                            </span>
+                          ) : (
+                            <span className="text-[10px] text-muted-foreground">
+                              {new Date(w.next_review_at).toLocaleDateString("sv-SE", { month: "short", day: "numeric" })}
+                            </span>
+                          )}
+                          <div className="mt-0.5 text-[10px] text-red-400">{w.fail_count}× fel</div>
+                        </div>
+                      </div>
+                    );
+                  })}
                   </div>
                 )}
               </div>
