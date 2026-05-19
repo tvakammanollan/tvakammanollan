@@ -1,7 +1,20 @@
 import { useEffect, useState } from "react";
+import { useRouterState } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { Zap, Loader2 } from "lucide-react";
+
+// Hide the CTA on pages where it would be distracting or redundant —
+// login/signup (user already converting) och legal/kontakt-sidor
+// (information snarare än aktivering).
+const HIDDEN_PREFIXES = [
+  "/login",
+  "/signup",
+  "/onboarding",
+  "/villkor",
+  "/integritetspolicy",
+  "/kontakt",
+];
 
 /**
  * Always-visible floating CTA: a glowing round "Testa gratis" button
@@ -13,6 +26,7 @@ export function FloatingTestCta() {
   const { user, loading } = useAuth();
   const { play, loading: guestLoading } = useGuestPlay();
   const [mounted, setMounted] = useState(false);
+  const path = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     // Avoid SSR hydration mismatch by waiting one frame on the client
@@ -23,6 +37,7 @@ export function FloatingTestCta() {
   // Hide for logged-in users (incl. anon guests — once they're in, no need)
   if (loading || user) return null;
   if (!mounted) return null;
+  if (HIDDEN_PREFIXES.some((p) => path.startsWith(p))) return null;
 
   return (
     <div
