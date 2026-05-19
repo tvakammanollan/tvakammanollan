@@ -438,12 +438,21 @@ function TrainPage() {
           >
             Starta träning →
           </Button>
-          <Link
-            to="/"
-            className="mt-3 block text-center text-sm text-muted-foreground hover:text-foreground"
-          >
-            ← Tillbaka till hem
-          </Link>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+            <Link
+              to="/"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              ← Tillbaka till hem
+            </Link>
+            <span className="text-muted-foreground/40">·</span>
+            <Link
+              to="/guider"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              📚 Strategiguider för delprov
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -452,8 +461,18 @@ function TrainPage() {
   // ============ LOADING ============
   if (phase === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-        Laddar frågor…
+      <div className="mx-auto max-w-3xl px-4 py-12" aria-busy="true">
+        <div className="rounded-3xl border border-border bg-white p-8 shadow-card sm:p-10">
+          <div className="flex flex-col items-center text-center">
+            <div className="h-10 w-10 rounded-full border-4 border-indigo-300 border-t-indigo-600 animate-spin" />
+            <p className="mt-4 text-base font-medium text-foreground">
+              Laddar frågor…
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Plockar fram en uppsättning som matchar dina inställningar.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

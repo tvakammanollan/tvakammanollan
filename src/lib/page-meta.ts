@@ -26,6 +26,14 @@ export interface PageMetaInput {
   description: string;
   ogTitle?: string;
   ogDescription?: string;
+  /**
+   * Optional per-page OG/Twitter image override. Defaults to /og-image.png
+   * set in __root.tsx. Pass a relative path like "/og-faq.png" or an
+   * absolute URL. Always include width/height for proper rich preview
+   * rendering on Slack, Twitter, LinkedIn, Discord.
+   */
+  ogImage?: string;
+  ogImageAlt?: string;
   noindex?: boolean;
 }
 
@@ -42,6 +50,17 @@ export function pageMeta(input: PageMetaInput) {
     { name: "twitter:title", content: ogTitle },
     { name: "twitter:description", content: ogDescription },
   ];
+  if (input.ogImage) {
+    // Normalisera till absolut URL eftersom OG kräver det
+    const imageUrl = input.ogImage.startsWith("http")
+      ? input.ogImage
+      : ORIGIN + input.ogImage;
+    meta.push({ property: "og:image", content: imageUrl });
+    meta.push({ name: "twitter:image", content: imageUrl });
+    if (input.ogImageAlt) {
+      meta.push({ property: "og:image:alt", content: input.ogImageAlt });
+    }
+  }
   if (input.noindex) {
     meta.push({ name: "robots", content: "noindex, follow" });
   }

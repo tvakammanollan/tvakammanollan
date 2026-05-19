@@ -434,6 +434,13 @@ function OrdPracticePage() {
               >
                 🏆 Se ord-topplistan →
               </Link>
+              <span className="mx-3 text-muted-foreground">·</span>
+              <Link
+                to="/guider/ord"
+                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                📚 Läs ORD-strategiguiden →
+              </Link>
             </div>
             </div>
           </motion.section>
