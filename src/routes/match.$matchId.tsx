@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import { displayCategory } from "@/lib/sv-format";
 import { LogOut, Trophy } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
-import { MathText } from "@/components/MathText";
+import { MathText } from "@/components/MathTextLazy";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";

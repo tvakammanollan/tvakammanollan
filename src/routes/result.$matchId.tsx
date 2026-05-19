@@ -29,7 +29,7 @@ import {
   Clock,
   AlertTriangle,
 } from "lucide-react";
-import { MathText } from "@/components/MathText";
+import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";

@@ -17,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { MathText } from "@/components/MathText";
+import { MathText } from "@/components/MathTextLazy";
 import { sounds } from "@/lib/sounds";
 import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
