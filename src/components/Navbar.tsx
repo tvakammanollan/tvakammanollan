@@ -337,6 +337,12 @@ function MobileMenu({
           <MobileNavLink to="/stats" onClick={close} emoji="📊">
             Statistik
           </MobileNavLink>
+          <MobileNavLink to="/guider" onClick={close} emoji="📚">
+            Guider
+          </MobileNavLink>
+          <MobileNavLink to="/faq" onClick={close} emoji="❓">
+            Vanliga frågor
+          </MobileNavLink>
           {profile?.is_admin && (
             <MobileNavLink to="/admin" onClick={close} emoji="⚙️">
               Admin
