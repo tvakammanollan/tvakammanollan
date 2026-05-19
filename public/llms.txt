@@ -109,4 +109,8 @@ Det är en PWA (Progressive Web App) — lägg till på hemskärmen från Safari
 
 ## Contact
 
-Skicka mail till adressen på [/kontakt](https://hpkampen.se/kontakt). Svar oftast inom en vardag.
+E-post: info@hpkampen.se. Svar oftast inom en vardag. Mer info på [/kontakt](https://hpkampen.se/kontakt).
+
+## Ägare
+
+HP Kampen drivs av Niklas Pellkvist som privatperson (ingen kommersiell verksamhet). Niklas fick 1,9 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten finansieras av grundaren och har inga annonser, ingen analytics-spårning från tredje part och inga in-app-köp.
