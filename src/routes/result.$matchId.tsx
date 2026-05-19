@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { createMatch } from "@/lib/match.functions";
 import { Button } from "@/components/ui/button";
+import { displayCategory } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   Accordion,
@@ -569,7 +570,7 @@ function ResultPage() {
                     >
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
                         <span>{i + 1}.</span>
-                        <span>{q.category}</span>
+                        <span>{displayCategory(q.category)}</span>
                         {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${

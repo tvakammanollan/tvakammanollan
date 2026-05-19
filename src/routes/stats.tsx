@@ -21,6 +21,7 @@ import {
 } from "recharts";
 import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
+import { displayCategory } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { SplitText, Reveal, StaggerList } from "@/components/landing/MotionFX";
@@ -294,7 +295,7 @@ function StatsPage() {
   const pageRows = matchHistory.slice(page * 10, page * 10 + 10);
 
   const breakdownData = breakdown.map((b) => ({
-    category: b.category === "LAS" ? "LÄS" : b.category,
+    category: displayCategory(b.category),
     pct: b.total >= 5 ? Math.round((b.correct / b.total) * 100) : null,
     enough: b.total >= 5,
     color: VERBAL_CATS.includes(b.category) ? VERBAL_COLOR : MATH_COLOR,

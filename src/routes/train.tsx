@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
+import { displayCategory } from "@/lib/sv-format";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
@@ -79,13 +80,9 @@ export const Route = createFileRoute("/train")({
 type Track = "verbal" | "math";
 // IMPORTANT: keep ASCII "LAS" — matches the DB CHECK constraint på questions.category
 // (CHECK (category IN ('ORD','MEK','LAS','ELF','XYZ','KVA','NOG','DTK'))).
-// Visa "LÄS" till användaren via displayCategory().
+// Visa "LÄS" till användaren via displayCategory() (shared helper i sv-format).
 const VERBAL_SUBS = ["ORD", "MEK", "LAS", "ELF"] as const;
 const MATH_SUBS = ["XYZ", "KVA", "NOG", "DTK"] as const;
-
-function displayCategory(c: string): string {
-  return c === "LAS" ? "LÄS" : c;
-}
 
 interface TrainQuestion {
   id: string;

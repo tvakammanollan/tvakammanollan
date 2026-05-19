@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { displayCategory } from "@/lib/sv-format";
 import { LogOut, Trophy } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathText";
@@ -792,7 +793,7 @@ function QuestionCard({
       style={{ boxShadow: "var(--shadow-md)" }}
     >
       <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
-        {currentQ.category} · Fråga {current + 1}
+        {displayCategory(currentQ.category)} · Fråga {current + 1}
       </div>
       <h2
         className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"

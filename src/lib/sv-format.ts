@@ -60,3 +60,18 @@ export function formatTime(date: Date | string | number): string {
   const d = date instanceof Date ? date : new Date(date);
   return d.toLocaleTimeString(SV, { hour: "2-digit", minute: "2-digit" });
 }
+
+/**
+ * Översätter delprov-kategori från DB-format till visningsformat.
+ *
+ * DBs questions.category-constraint tillåter endast ASCII-värden
+ * ('ORD','MEK','LAS','ELF','XYZ','KVA','NOG','DTK') eftersom Postgres
+ * CHECK-constraints med Unicode-tecken är bräckliga. Frontend visar
+ * dock alltid svensk stavning "LÄS" till användaren.
+ *
+ *   displayCategory("LAS") → "LÄS"
+ *   displayCategory("ORD") → "ORD" (oförändrat)
+ */
+export function displayCategory(category: string): string {
+  return category === "LAS" ? "LÄS" : category;
+}
