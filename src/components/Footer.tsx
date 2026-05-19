@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Instagram, Music2, Youtube } from "lucide-react";
+import { Instagram, Music2, Youtube, Mail } from "lucide-react";
 
 const PRODUCT = [
   { label: "Träna", to: "/train" },
@@ -20,13 +20,13 @@ const LEGAL = [
   { label: "Användarvillkor", to: "/villkor" },
 ];
 
-// TODO: Be ägaren bekräfta sociala URLer. Lämnar # som platshållare så
-// länkarna inte är synligt brutna i UI:t.
+// Filter out social platforms without real URLs — visa bara dem som
+// faktiskt går någonstans. När ägaren har riktiga konton, fyll i href.
 const SOCIAL = [
-  { label: "Instagram", href: "#", Icon: Instagram },
-  { label: "TikTok", href: "#", Icon: Music2 },
-  { label: "YouTube", href: "#", Icon: Youtube },
-];
+  { label: "Instagram", href: "", Icon: Instagram },
+  { label: "TikTok", href: "", Icon: Music2 },
+  { label: "YouTube", href: "", Icon: Youtube },
+].filter((s) => s.href.length > 0);
 
 // Hide footer in immersive contexts (in a match, the matchmaking queue, etc)
 const HIDDEN_PREFIXES = ["/match/", "/matchmaking", "/result/", "/join/"];
@@ -50,24 +50,38 @@ export function Footer() {
               className="text-xs font-bold uppercase tracking-[0.18em]"
               style={{ color: "var(--text-tertiary)" }}
             >
-              Följ oss
+              Hör av dig
             </h4>
-            <ul className="mt-4 flex gap-3">
-              {SOCIAL.map(({ label, href, Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    aria-label={label}
-                    rel="noopener noreferrer"
-                    target={href === "#" ? undefined : "_blank"}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition hover:bg-white/5"
-                    style={{ borderColor: "var(--line)", color: "var(--cream)" }}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                </li>
-              ))}
+            <ul className="mt-4 space-y-2">
+              <li>
+                <a
+                  href="mailto:info@hpkampen.se"
+                  className="inline-flex items-center gap-2 text-sm transition hover:underline"
+                  style={{ color: "var(--cream)" }}
+                >
+                  <Mail className="h-3.5 w-3.5" style={{ color: "var(--amber)" }} />
+                  info@hpkampen.se
+                </a>
+              </li>
             </ul>
+            {SOCIAL.length > 0 && (
+              <ul className="mt-4 flex gap-3">
+                {SOCIAL.map(({ label, href, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      aria-label={label}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition hover:bg-white/5"
+                      style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

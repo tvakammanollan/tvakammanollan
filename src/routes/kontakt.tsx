@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { Mail, MessageSquare, Bug } from "lucide-react";
 
@@ -54,57 +54,74 @@ function KontaktPage() {
       <ul className="space-y-4">
         <li>
           <a
-            href="mailto:hej@hpkampen.se"
+            href="mailto:info@hpkampen.se"
             className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
             style={{ borderColor: "var(--line)", color: "var(--cream)" }}
           >
             <Mail className="h-5 w-5" style={{ color: "var(--amber)" }} />
             <span>
-              <span className="font-semibold">hej@hpkampen.se</span>
+              <span className="font-semibold">info@hpkampen.se</span>
               <span
                 className="ml-2 text-xs"
                 style={{ color: "var(--text-tertiary)" }}
               >
-                Allmänna frågor och feedback
+                Allmänt, feedback, press, samarbeten
               </span>
             </span>
           </a>
         </li>
         <li>
-          <a
-            href="mailto:bugs@hpkampen.se?subject=Bugg-rapport"
-            className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
+          <div
+            className="flex items-start gap-3 rounded-2xl border p-4"
             style={{ borderColor: "var(--line)", color: "var(--cream)" }}
           >
-            <Bug className="h-5 w-5" style={{ color: "var(--amber)" }} />
+            <Bug className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--amber)" }} />
             <span>
-              <span className="font-semibold">bugs@hpkampen.se</span>
+              <span className="block font-semibold">Buggrapport</span>
               <span
-                className="ml-2 text-xs"
+                className="mt-1 block text-xs"
                 style={{ color: "var(--text-tertiary)" }}
               >
-                Felrapporter (eller använd bug-knappen i appen)
+                Använd bug-knappen i appen (kräver inloggning) — då får vi
+                med rätt context automatiskt. Annars mejla{" "}
+                <a
+                  href="mailto:info@hpkampen.se?subject=Bugg-rapport"
+                  className="underline"
+                  style={{ color: "var(--amber)" }}
+                >
+                  info@hpkampen.se
+                </a>
+                .
               </span>
             </span>
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            href="mailto:press@hpkampen.se?subject=Press"
-            className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
+          <div
+            className="flex items-start gap-3 rounded-2xl border p-4"
             style={{ borderColor: "var(--line)", color: "var(--cream)" }}
           >
-            <MessageSquare className="h-5 w-5" style={{ color: "var(--amber)" }} />
+            <MessageSquare className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--amber)" }} />
             <span>
-              <span className="font-semibold">press@hpkampen.se</span>
+              <span className="block font-semibold">Vem driver HP Kampen?</span>
               <span
-                className="ml-2 text-xs"
+                className="mt-1 block text-xs"
                 style={{ color: "var(--text-tertiary)" }}
               >
-                Press och samarbeten
+                Sajten drivs av Niklas Pellkvist som privatperson. Den är
+                gratis, utan annonser och utan kommersiell verksamhet kopplad
+                till sig. Mer om varför sajten finns:{" "}
+                <Link
+                  to="/om"
+                  className="underline"
+                  style={{ color: "var(--amber)" }}
+                >
+                  /om
+                </Link>
+                .
               </span>
             </span>
-          </a>
+          </div>
         </li>
       </ul>
 
@@ -112,9 +129,8 @@ function KontaktPage() {
         className="mt-10 text-sm"
         style={{ color: "var(--text-tertiary)" }}
       >
-        {/* TODO: Be ägaren bekräfta vilka mejladresser som är aktiva och om
-            något bör bytas ut. Lägg till postadress + organisationsuppgifter
-            när bolagsinfo är fastställd. */}
+        Vi svarar normalt inom en vardag på mejl. Bug-rapporter via knappen
+        i appen hanteras oftast snabbare eftersom de innehåller felkontext.
       </p>
     </article>
   );

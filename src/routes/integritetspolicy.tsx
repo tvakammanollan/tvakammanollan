@@ -53,15 +53,15 @@ function IntegritetspolicyPage() {
           Personuppgiftsansvarig
         </h2>
         <p>
-          {/* TODO: Fyll i bolagsnamn, org.nr, adress och kontakt-mail. */}
-          <em>[Bolagsnamn]</em>, org.nr <em>[XXXXXX-XXXX]</em>,{" "}
-          <em>[Adress]</em>. Kontakt:{" "}
+          HP Kampen drivs av <strong style={{ color: "var(--cream)" }}>Niklas
+          Pellkvist</strong> som privatperson. Sajten är gratis och har ingen
+          kommersiell verksamhet kopplad till sig. Kontakt:{" "}
           <a
-            href="mailto:hej@hpkampen.se"
+            href="mailto:info@hpkampen.se"
             className="underline"
             style={{ color: "var(--amber)" }}
           >
-            hej@hpkampen.se
+            info@hpkampen.se
           </a>
           .
         </p>
@@ -72,24 +72,82 @@ function IntegritetspolicyPage() {
         >
           Vilka uppgifter samlar vi in?
         </h2>
-        <ul className="list-disc space-y-1 pl-6">
-          <li>E-postadress (vid kontoregistrering)</li>
-          <li>Användarnamn (självvalt)</li>
-          <li>Matchresultat och ELO-historik</li>
-          <li>Teknisk information (IP-adress, webbläsare) för säkerhet</li>
+        <ul className="list-disc space-y-2 pl-6">
+          <li>
+            <strong style={{ color: "var(--cream)" }}>E-postadress</strong> —
+            vid kontoregistrering (för inloggning och eventuell återställning
+            av lösenord)
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Användarnamn</strong> —
+            självvalt, visas på topplistan och i matcher
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Spelhistorik</strong> —
+            matchresultat, ELO-utveckling, statistik per delprov
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Teknisk information</strong> —
+            IP-adress och webbläsarversion, enbart för säkerhet och felsökning
+            (anonymiseras efter 30 dagar)
+          </li>
         </ul>
 
         <h2
           className="mt-8 text-xl font-semibold"
           style={{ color: "var(--cream)" }}
         >
-          Varför samlar vi in uppgifterna?
+          Rättslig grund och syften
         </h2>
         <p>
-          Vi använder uppgifterna för att leverera tjänsten (inloggning, ELO,
-          topplistor), förbättra plattformen och förhindra missbruk. Vi säljer
-          aldrig dina uppgifter.
+          Vi behandlar uppgifterna med stöd av{" "}
+          <strong style={{ color: "var(--cream)" }}>avtal</strong> (för att
+          leverera tjänsten du har skapat konto för) och{" "}
+          <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong>{" "}
+          (för säkerhet, missbrukshantering och produktförbättring). Vi säljer
+          aldrig dina uppgifter och delar dem inte med tredje part för
+          marknadsföring.
         </p>
+
+        <h2
+          className="mt-8 text-xl font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          Tredjepartstjänster vi använder
+        </h2>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Supabase</strong> —
+            databas och autentisering (data hostas inom EU)
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Cloudflare</strong> —
+            CDN, hosting och DDoS-skydd
+          </li>
+        </ul>
+
+        <h2
+          className="mt-8 text-xl font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          Hur länge sparar vi uppgifterna?
+        </h2>
+        <ul className="list-disc space-y-1 pl-6">
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Kontodata</strong> —
+            så länge du har ett aktivt konto, plus 30 dagar efter radering
+            (för backup-rotation)
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>Spelhistorik</strong> —
+            anonymiseras när kontot raderas (statistik behålls i aggregerad
+            form för leaderboard)
+          </li>
+          <li>
+            <strong style={{ color: "var(--cream)" }}>IP-loggar</strong> —
+            max 30 dagar
+          </li>
+        </ul>
 
         <h2
           className="mt-8 text-xl font-semibold"
@@ -98,16 +156,29 @@ function IntegritetspolicyPage() {
           Dina rättigheter
         </h2>
         <p>
-          Enligt GDPR har du rätt att begära ut, rätta eller radera dina
-          uppgifter. Kontakta oss på{" "}
+          Enligt GDPR har du rätt att begära ut, rätta, radera eller
+          begränsa behandlingen av dina personuppgifter. Du har även rätt
+          till dataportabilitet och att invända mot behandlingen. Kontakta
+          oss på{" "}
           <a
-            href="mailto:hej@hpkampen.se"
+            href="mailto:info@hpkampen.se"
             className="underline"
             style={{ color: "var(--amber)" }}
           >
-            hej@hpkampen.se
+            info@hpkampen.se
           </a>{" "}
-          så hjälper vi dig.
+          så hjälper vi dig — vi svarar inom 30 dagar. Är du missnöjd med
+          vår hantering kan du klaga hos{" "}
+          <a
+            href="https://www.imy.se"
+            className="underline"
+            style={{ color: "var(--amber)" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Integritetsskyddsmyndigheten (IMY)
+          </a>
+          .
         </p>
 
         <h2
@@ -118,13 +189,20 @@ function IntegritetspolicyPage() {
         </h2>
         <p>
           Vi använder enbart funktionella cookies som behövs för inloggning
-          och sessionshantering. Inga spårningscookies från tredje part.
+          och sessionshantering. Inga spårningscookies, inga annonsidentifierare
+          och ingen tredje part-analys.
         </p>
 
-        <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
-          {/* TODO: Be ägaren komplettera med data retention-perioder,
-              specifik tredjepartstjänst (Supabase, Cloudflare) och rättslig
-              grund för respektive behandling. */}
+        <h2
+          className="mt-8 text-xl font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          Ändringar av denna policy
+        </h2>
+        <p>
+          Om vi gör väsentliga ändringar i hur vi hanterar dina uppgifter
+          meddelar vi dig via mejl eller en notis vid inloggning. Mindre
+          ändringar visas genom uppdaterat datum längst upp på denna sida.
         </p>
       </section>
     </article>

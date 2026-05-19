@@ -184,11 +184,11 @@ function OmPage() {
         <p>
           E-post:{" "}
           <a
-            href="mailto:hej@hpkampen.se"
+            href="mailto:info@hpkampen.se"
             className="underline"
             style={{ color: "var(--amber)" }}
           >
-            hej@hpkampen.se
+            info@hpkampen.se
           </a>
           . Bug eller önskemål? Använd gärna bug-knappen längst ner i
           gränssnittet — då hamnar feedbacken direkt hos rätt person.
