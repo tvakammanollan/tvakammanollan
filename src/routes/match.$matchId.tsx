@@ -95,6 +95,14 @@ function MatchPage() {
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
   const [opponentName, setOpponentName] = useState<string>("");
   const [current, setCurrent] = useState(0);
+  // Tracks the real game-start time. For invite matches this is when player2
+  // accepts (not when the match was created), so the 5-min clock is fair.
+  const [matchStartedAt, setMatchStartedAt] = useState<Date | null>(null);
+  // Incremented when a waiting match becomes active (invite accepted) to trigger
+  // a full re-fetch of match + questions without requiring a page refresh.
+  const [reloadTick, setReloadTick] = useState(0);
+  // Ref so the channel listener doesn't need oppForceCountdown in its deps.
+  const oppForceStartedRef = useRef(false);
   const [answers, setAnswers] = useState<Map<string, string>>(new Map());
   const [secondsLeft, setSecondsLeft] = useState(TOTAL_SECONDS);
   const [submitting, setSubmitting] = useState(false);
@@ -246,11 +254,16 @@ function MatchPage() {
         .filter(Boolean) as QuestionRow[];
       console.log("[match] final questions:", qs.length);
       setQuestions(qs);
+      // For invite matches that were "waiting" and just became active, record
+      // game start as now (not match.created_at which includes the waiting period).
+      if (reloadTick > 0) {
+        setMatchStartedAt(new Date());
+      }
     })();
     return () => {
       cancelled = true;
     };
-  }, [matchId, user, authLoading, navigate]);
+  }, [matchId, user, authLoading, navigate, reloadTick]);
 
   // Timer + opponent progress
   // - Bot match: deterministic fake progress
@@ -259,8 +272,10 @@ function MatchPage() {
   const [oppForceCountdown, setOppForceCountdown] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!match) return;
-    const start = new Date(match.created_at).getTime();
+    if (!match || questions.length === 0) return;
+    // Use matchStartedAt (set when questions first load) so that invite matches
+    // don't eat into the 5-minute clock while waiting for the opponent to accept.
+    const start = (matchStartedAt ?? new Date(match.created_at)).getTime();
     const tick = () => {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
@@ -274,7 +289,31 @@ function MatchPage() {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match]);
+  }, [match, matchStartedAt, questions.length]);
+
+  // When match is "waiting" (invite sent, no player2 yet), listen for it to become active.
+  // This lets the invite sender start playing without having to refresh.
+  useEffect(() => {
+    if (!match || match.status !== "waiting") return;
+    const channel = supabase
+      .channel(`match-waiting-${matchId}`)
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
+        (payload) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const row = payload.new as any;
+          if (row.status === "active" && row.player2_id) {
+            // Trigger a full reload of match + questions
+            setReloadTick((t) => t + 1);
+          }
+        },
+      )
+      .subscribe();
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [match, matchId]);
 
   // Bot match: deterministic fake opponent progress
   useEffect(() => {
@@ -322,7 +361,10 @@ function MatchPage() {
           const row = payload.new as any;
           const oppSubmitted =
             match.player1_id === user.id ? row.player2_submitted_at : row.player1_submitted_at;
-          if (oppSubmitted && !submittedRef.current && oppForceCountdown === null) {
+          // Use a ref so this effect doesn't need oppForceCountdown in its deps
+          // (avoids tearing down the channel every second during the countdown).
+          if (oppSubmitted && !submittedRef.current && !oppForceStartedRef.current) {
+            oppForceStartedRef.current = true;
             setOppForceCountdown(30);
             sounds.invite();
             toast.info("Motståndaren är klar – du har 30 sekunder kvar!");
@@ -333,7 +375,7 @@ function MatchPage() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [match, matchId, user, oppForceCountdown]);
+  }, [match, matchId, user]);
 
   // Broadcast my own progress whenever current changes
   useEffect(() => {
@@ -532,6 +574,42 @@ function MatchPage() {
     const prev = questions[current - 1];
     return !prev || prev.passage_id !== currentQ.passage_id;
   }, [currentQ, current, questions]);
+
+  // Invite sender waits here while the invited player hasn't accepted yet
+  if (match && match.status === "waiting" && !match.player2_id) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
+        <motion.span
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-7 w-7" />
+        </motion.span>
+        <div>
+          <p className="eyebrow text-[#6366f1]">Väntar</p>
+          <h1
+            className="mt-1 text-[30px] font-bold leading-tight text-[#050507]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Inbjudan skickad.
+          </h1>
+        </div>
+        <p className="text-[#737373]">
+          Matchen startar automatiskt när din vän accepterar inbjudan.
+        </p>
+        <motion.div
+          className="flex gap-1.5"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {[0, 1, 2].map((i) => (
+            <span key={i} className="h-2 w-2 rounded-full bg-[#6366f1]" />
+          ))}
+        </motion.div>
+      </div>
+    );
+  }
 
   if (!match || questions.length === 0) {
     return (
