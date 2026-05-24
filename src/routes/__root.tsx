@@ -172,6 +172,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     scripts: [
+      // Google AdSense
+      {
+        src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1685910213641675",
+        async: true,
+        crossOrigin: "anonymous",
+      },
       // Schema.org WebApplication
       {
         type: "application/ld+json",
