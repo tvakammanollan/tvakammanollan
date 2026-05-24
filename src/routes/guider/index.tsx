@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
-export const Route = createFileRoute("/guider")({
+export const Route = createFileRoute("/guider/")({
   component: GuiderPage,
   head: () => ({
     meta: pageMeta({

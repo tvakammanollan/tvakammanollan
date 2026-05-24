@@ -27,6 +27,9 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuiderIndexRouteImport } from './routes/guider/index'
+import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
+import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
+import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
 import { Route as GuiderTipsLasforstaelseRouteImport } from './routes/guider/tips-lasforstaelse'
 import { Route as GuiderTidspressRouteImport } from './routes/guider/tidspress'
@@ -39,9 +42,6 @@ import { Route as GuiderKvaRouteImport } from './routes/guider/kva'
 import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
-import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
-import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
-import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 
 const VillkorRoute = VillkorRouteImport.update({
   id: '/villkor',
@@ -129,8 +129,23 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiderIndexRoute = GuiderIndexRouteImport.update({
-  id: '/guider',
-  path: '/guider',
+  id: '/guider/',
+  path: '/guider/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultMatchIdRoute = ResultMatchIdRouteImport.update({
+  id: '/result/$matchId',
+  path: '/result/$matchId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchMatchIdRoute = MatchMatchIdRouteImport.update({
+  id: '/match/$matchId',
+  path: '/match/$matchId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoomCodeRoute = JoinRoomCodeRouteImport.update({
+  id: '/join/$roomCode',
+  path: '/join/$roomCode',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiderXyzRoute = GuiderXyzRouteImport.update({
@@ -193,21 +208,6 @@ const GuiderBraResultatRoute = GuiderBraResultatRouteImport.update({
   path: '/guider/bra-resultat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResultMatchIdRoute = ResultMatchIdRouteImport.update({
-  id: '/result/$matchId',
-  path: '/result/$matchId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MatchMatchIdRoute = MatchMatchIdRouteImport.update({
-  id: '/match/$matchId',
-  path: '/match/$matchId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinRoomCodeRoute = JoinRoomCodeRouteImport.update({
-  id: '/join/$roomCode',
-  path: '/join/$roomCode',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -215,19 +215,6 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
-  '/guider': typeof GuiderIndexRoute
-  '/guider/bra-resultat': typeof GuiderBraResultatRoute
-  '/guider/dtk': typeof GuiderDtkRoute
-  '/guider/elf': typeof GuiderElfRoute
-  '/guider/kva': typeof GuiderKvaRoute
-  '/guider/las': typeof GuiderLasRoute
-  '/guider/mek': typeof GuiderMekRoute
-  '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
-  '/guider/ord': typeof GuiderOrdRoute
-  '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
-  '/guider/xyz': typeof GuiderXyzRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -240,9 +227,22 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/guider/bra-resultat': typeof GuiderBraResultatRoute
+  '/guider/dtk': typeof GuiderDtkRoute
+  '/guider/elf': typeof GuiderElfRoute
+  '/guider/kva': typeof GuiderKvaRoute
+  '/guider/las': typeof GuiderLasRoute
+  '/guider/mek': typeof GuiderMekRoute
+  '/guider/nog': typeof GuiderNogRoute
+  '/guider/normering': typeof GuiderNormeringRoute
+  '/guider/ord': typeof GuiderOrdRoute
+  '/guider/tidspress': typeof GuiderTidspressRoute
+  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
+  '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
+  '/guider/': typeof GuiderIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -250,19 +250,6 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
-  '/guider': typeof GuiderIndexRoute
-  '/guider/bra-resultat': typeof GuiderBraResultatRoute
-  '/guider/dtk': typeof GuiderDtkRoute
-  '/guider/elf': typeof GuiderElfRoute
-  '/guider/kva': typeof GuiderKvaRoute
-  '/guider/las': typeof GuiderLasRoute
-  '/guider/mek': typeof GuiderMekRoute
-  '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
-  '/guider/ord': typeof GuiderOrdRoute
-  '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
-  '/guider/xyz': typeof GuiderXyzRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -275,9 +262,22 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/guider/bra-resultat': typeof GuiderBraResultatRoute
+  '/guider/dtk': typeof GuiderDtkRoute
+  '/guider/elf': typeof GuiderElfRoute
+  '/guider/kva': typeof GuiderKvaRoute
+  '/guider/las': typeof GuiderLasRoute
+  '/guider/mek': typeof GuiderMekRoute
+  '/guider/nog': typeof GuiderNogRoute
+  '/guider/normering': typeof GuiderNormeringRoute
+  '/guider/ord': typeof GuiderOrdRoute
+  '/guider/tidspress': typeof GuiderTidspressRoute
+  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
+  '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
+  '/guider': typeof GuiderIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -286,19 +286,6 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
-  '/guider': typeof GuiderIndexRoute
-  '/guider/bra-resultat': typeof GuiderBraResultatRoute
-  '/guider/dtk': typeof GuiderDtkRoute
-  '/guider/elf': typeof GuiderElfRoute
-  '/guider/kva': typeof GuiderKvaRoute
-  '/guider/las': typeof GuiderLasRoute
-  '/guider/mek': typeof GuiderMekRoute
-  '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
-  '/guider/ord': typeof GuiderOrdRoute
-  '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
-  '/guider/xyz': typeof GuiderXyzRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -311,9 +298,22 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/guider/bra-resultat': typeof GuiderBraResultatRoute
+  '/guider/dtk': typeof GuiderDtkRoute
+  '/guider/elf': typeof GuiderElfRoute
+  '/guider/kva': typeof GuiderKvaRoute
+  '/guider/las': typeof GuiderLasRoute
+  '/guider/mek': typeof GuiderMekRoute
+  '/guider/nog': typeof GuiderNogRoute
+  '/guider/normering': typeof GuiderNormeringRoute
+  '/guider/ord': typeof GuiderOrdRoute
+  '/guider/tidspress': typeof GuiderTidspressRoute
+  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
+  '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/result/$matchId': typeof ResultMatchIdRoute
+  '/guider/': typeof GuiderIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -323,19 +323,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
-    | '/guider'
-    | '/guider/bra-resultat'
-    | '/guider/dtk'
-    | '/guider/elf'
-    | '/guider/kva'
-    | '/guider/las'
-    | '/guider/mek'
-    | '/guider/nog'
-    | '/guider/normering'
-    | '/guider/ord'
-    | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
-    | '/guider/xyz'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -348,9 +335,22 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/guider/bra-resultat'
+    | '/guider/dtk'
+    | '/guider/elf'
+    | '/guider/kva'
+    | '/guider/las'
+    | '/guider/mek'
+    | '/guider/nog'
+    | '/guider/normering'
+    | '/guider/ord'
+    | '/guider/tidspress'
+    | '/guider/tips-lasforstaelse'
+    | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
+    | '/guider/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -358,19 +358,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
-    | '/guider'
-    | '/guider/bra-resultat'
-    | '/guider/dtk'
-    | '/guider/elf'
-    | '/guider/kva'
-    | '/guider/las'
-    | '/guider/mek'
-    | '/guider/nog'
-    | '/guider/normering'
-    | '/guider/ord'
-    | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
-    | '/guider/xyz'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -383,9 +370,22 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/guider/bra-resultat'
+    | '/guider/dtk'
+    | '/guider/elf'
+    | '/guider/kva'
+    | '/guider/las'
+    | '/guider/mek'
+    | '/guider/nog'
+    | '/guider/normering'
+    | '/guider/ord'
+    | '/guider/tidspress'
+    | '/guider/tips-lasforstaelse'
+    | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
+    | '/guider'
   id:
     | '__root__'
     | '/'
@@ -393,19 +393,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
-    | '/guider'
-    | '/guider/bra-resultat'
-    | '/guider/dtk'
-    | '/guider/elf'
-    | '/guider/kva'
-    | '/guider/las'
-    | '/guider/mek'
-    | '/guider/nog'
-    | '/guider/normering'
-    | '/guider/ord'
-    | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
-    | '/guider/xyz'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -418,9 +405,22 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/guider/bra-resultat'
+    | '/guider/dtk'
+    | '/guider/elf'
+    | '/guider/kva'
+    | '/guider/las'
+    | '/guider/mek'
+    | '/guider/nog'
+    | '/guider/normering'
+    | '/guider/ord'
+    | '/guider/tidspress'
+    | '/guider/tips-lasforstaelse'
+    | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/result/$matchId'
+    | '/guider/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -429,19 +429,6 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
-  GuiderIndexRoute: typeof GuiderIndexRoute
-  GuiderBraResultatRoute: typeof GuiderBraResultatRoute
-  GuiderDtkRoute: typeof GuiderDtkRoute
-  GuiderElfRoute: typeof GuiderElfRoute
-  GuiderKvaRoute: typeof GuiderKvaRoute
-  GuiderLasRoute: typeof GuiderLasRoute
-  GuiderMekRoute: typeof GuiderMekRoute
-  GuiderNogRoute: typeof GuiderNogRoute
-  GuiderNormeringRoute: typeof GuiderNormeringRoute
-  GuiderOrdRoute: typeof GuiderOrdRoute
-  GuiderTidspressRoute: typeof GuiderTidspressRoute
-  GuiderTipsLasforstaelseRoute: typeof GuiderTipsLasforstaelseRoute
-  GuiderXyzRoute: typeof GuiderXyzRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
@@ -454,9 +441,22 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
   VillkorRoute: typeof VillkorRoute
+  GuiderBraResultatRoute: typeof GuiderBraResultatRoute
+  GuiderDtkRoute: typeof GuiderDtkRoute
+  GuiderElfRoute: typeof GuiderElfRoute
+  GuiderKvaRoute: typeof GuiderKvaRoute
+  GuiderLasRoute: typeof GuiderLasRoute
+  GuiderMekRoute: typeof GuiderMekRoute
+  GuiderNogRoute: typeof GuiderNogRoute
+  GuiderNormeringRoute: typeof GuiderNormeringRoute
+  GuiderOrdRoute: typeof GuiderOrdRoute
+  GuiderTidspressRoute: typeof GuiderTidspressRoute
+  GuiderTipsLasforstaelseRoute: typeof GuiderTipsLasforstaelseRoute
+  GuiderXyzRoute: typeof GuiderXyzRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
+  GuiderIndexRoute: typeof GuiderIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -580,11 +580,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guider': {
-      id: '/guider'
+    '/guider/': {
+      id: '/guider/'
       path: '/guider'
-      fullPath: '/guider'
+      fullPath: '/guider/'
       preLoaderRoute: typeof GuiderIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/result/$matchId': {
+      id: '/result/$matchId'
+      path: '/result/$matchId'
+      fullPath: '/result/$matchId'
+      preLoaderRoute: typeof ResultMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/match/$matchId': {
+      id: '/match/$matchId'
+      path: '/match/$matchId'
+      fullPath: '/match/$matchId'
+      preLoaderRoute: typeof MatchMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join/$roomCode': {
+      id: '/join/$roomCode'
+      path: '/join/$roomCode'
+      fullPath: '/join/$roomCode'
+      preLoaderRoute: typeof JoinRoomCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guider/xyz': {
@@ -671,27 +692,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiderBraResultatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/result/$matchId': {
-      id: '/result/$matchId'
-      path: '/result/$matchId'
-      fullPath: '/result/$matchId'
-      preLoaderRoute: typeof ResultMatchIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/match/$matchId': {
-      id: '/match/$matchId'
-      path: '/match/$matchId'
-      fullPath: '/match/$matchId'
-      preLoaderRoute: typeof MatchMatchIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/join/$roomCode': {
-      id: '/join/$roomCode'
-      path: '/join/$roomCode'
-      fullPath: '/join/$roomCode'
-      preLoaderRoute: typeof JoinRoomCodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -701,19 +701,6 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
-  GuiderIndexRoute: GuiderIndexRoute,
-  GuiderBraResultatRoute: GuiderBraResultatRoute,
-  GuiderDtkRoute: GuiderDtkRoute,
-  GuiderElfRoute: GuiderElfRoute,
-  GuiderKvaRoute: GuiderKvaRoute,
-  GuiderLasRoute: GuiderLasRoute,
-  GuiderMekRoute: GuiderMekRoute,
-  GuiderNogRoute: GuiderNogRoute,
-  GuiderNormeringRoute: GuiderNormeringRoute,
-  GuiderOrdRoute: GuiderOrdRoute,
-  GuiderTidspressRoute: GuiderTidspressRoute,
-  GuiderTipsLasforstaelseRoute: GuiderTipsLasforstaelseRoute,
-  GuiderXyzRoute: GuiderXyzRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,
@@ -726,20 +713,23 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
   VillkorRoute: VillkorRoute,
+  GuiderBraResultatRoute: GuiderBraResultatRoute,
+  GuiderDtkRoute: GuiderDtkRoute,
+  GuiderElfRoute: GuiderElfRoute,
+  GuiderKvaRoute: GuiderKvaRoute,
+  GuiderLasRoute: GuiderLasRoute,
+  GuiderMekRoute: GuiderMekRoute,
+  GuiderNogRoute: GuiderNogRoute,
+  GuiderNormeringRoute: GuiderNormeringRoute,
+  GuiderOrdRoute: GuiderOrdRoute,
+  GuiderTidspressRoute: GuiderTidspressRoute,
+  GuiderTipsLasforstaelseRoute: GuiderTipsLasforstaelseRoute,
+  GuiderXyzRoute: GuiderXyzRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,
+  GuiderIndexRoute: GuiderIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
