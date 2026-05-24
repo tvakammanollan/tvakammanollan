@@ -643,6 +643,8 @@ export type Database = {
           cleaned_question_text: string | null
           correct_answer: string
           created_at: string
+          definition: string | null
+          definition_source: string | null
           difficulty: number | null
           exam_term: string | null
           explanation: string | null
@@ -667,6 +669,8 @@ export type Database = {
           cleaned_question_text?: string | null
           correct_answer: string
           created_at?: string
+          definition?: string | null
+          definition_source?: string | null
           difficulty?: number | null
           exam_term?: string | null
           explanation?: string | null
@@ -691,6 +695,8 @@ export type Database = {
           cleaned_question_text?: string | null
           correct_answer?: string
           created_at?: string
+          definition?: string | null
+          definition_source?: string | null
           difficulty?: number | null
           exam_term?: string | null
           explanation?: string | null
@@ -729,7 +735,6 @@ export type Database = {
       }
       user_word_failed: {
         Row: {
-          ease_factor: number
           fail_count: number
           interval_days: number
           last_failed_at: string
@@ -739,7 +744,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          ease_factor?: number
           fail_count?: number
           interval_days?: number
           last_failed_at?: string
@@ -749,7 +753,6 @@ export type Database = {
           user_id: string
         }
         Update: {
-          ease_factor?: number
           fail_count?: number
           interval_days?: number
           last_failed_at?: string
@@ -758,7 +761,22 @@ export type Database = {
           review_streak?: number
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_word_failed_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_word_failed_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions_needing_images"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {
