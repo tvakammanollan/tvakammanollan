@@ -1,0 +1,1 @@
+ALTER TABLE public.user_word_failed ADD COLUMN IF NOT EXISTS ease_factor double precision NOT NULL DEFAULT 2.5;
