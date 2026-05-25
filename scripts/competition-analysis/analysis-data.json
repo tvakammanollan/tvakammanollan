@@ -1,0 +1,391 @@
+{
+  "generatedAt": "2026-05-24T00:00:00.000Z",
+  "summary": "Marknaden för HP-förberedelse i Sverige är mogen och fragmenterad, med HPGuiden som en 21-årig dominant aktör och HP-spelet som en ny stark utmanare med 25 000+ frågor och gratis-modell. hpkampen.se har ett unikt erbjudande i form av ELO-baserat matchläge och ranksystem — något ingen annan aktör replikerar fullt ut — men saknar videoinnehåll och organisk SEO-tyngd som de etablerade spelarna byggt under decennier.",
+  "competitors": [
+    {
+      "name": "HP-spelet",
+      "url": "https://www.hpspelet.se",
+      "description": "Ny stark aktör som kallar sig 'Sveriges största plattform' med 25 000+ autentiska frågor, AI-genererade förklaringar och gamification inkl. multiplayer-funktionalitet.",
+      "seo": {
+        "score": 4,
+        "notes": "Stark title-tag med nyckelord och årsangivelse. 'Sveriges största' som brand-claim bygger auktoritet. God meta-struktur.",
+        "strengths": [
+          "Title-tag riktar in sig på '2026' och kvantifierar innehållet ('25 000+ frågor')",
+          "Brand-position som 'Sveriges största' ger trovärdighet och klickbenägenhet i SERP",
+          "Tydlig strukturerad data och semantisk koppling till alla 8 delmoment"
+        ],
+        "weaknesses": [
+          "Relativt ny sajt — saknar den länkprofil och domänålder som HPGuiden har",
+          "Ingen synlig blogg- eller contentstrategi för long-tail-sökord",
+          "Begränsat externt länkbygge jämfört med de äldre aktörerna"
+        ]
+      },
+      "features": {
+        "score": 5,
+        "notes": "Branschens bredaste utbud: 25 000+ frågor, AI-förklaringar, adaptiv inlärning, multiplayer och dagliga utmaningar. Direktkonkurrent till hpkampen.se på gamification-axeln.",
+        "strengths": [
+          "25 000+ autentiska frågor från alla 8 kategorier — branschens störst utbud",
+          "AI-genererade förklaringar per fråga (rätta OCH felaktiga svar förklaras)",
+          "Multiplayer och tävlingselement — direkt konkurrens mot hpkampen.ses matchläge",
+          "Adaptiv algoritm som anpassar svårighetsgrad baserat på prestanda",
+          "Streaks, dagliga utmaningar och diagnostiska bedömningar"
+        ],
+        "weaknesses": [
+          "Ingen tydlig ELO-rankingmekanism — multiplayer saknar rangsystem",
+          "Oklart om multiplayer är realtid eller asynkront",
+          "Inga videoförklaringar — endast text-AI"
+        ]
+      },
+      "ux": {
+        "score": 4,
+        "notes": "Modern, gamifierad design med bra mobilanpassning. Tydlig CTA-hierarki och progressionsvisualisering.",
+        "strengths": [
+          "Ren, modern UI med tydlig onboarding",
+          "Mobiloptimerad genomgående",
+          "Spelifierade element ger hög retention"
+        ],
+        "weaknesses": [
+          "Ingen dedikerad mobilapp (enbart webbapp)",
+          "Premium-gränssnittet (Snabblärd) är otydligt kommunicerat på startsidan"
+        ]
+      },
+      "pricing": {
+        "score": 5,
+        "notes": "Gratis-first-modell med premium-tier ('Snabblärd'). Prismässigt det starkaste erbjudandet på marknaden — gratis baslager med mer innehåll än många betalda konkurrenter.",
+        "strengths": [
+          "Gratis grundnivå med imponerande innehållsbredd (25 000+ frågor)",
+          "Freemium-modellen minimerar konverteringströskel",
+          "Konkurrensanalys på sajten positionerar dem som bättre värde vs betald konkurrens"
+        ],
+        "weaknesses": [
+          "Premium-priset oklart kommunicerat — kan skapa osäkerhet",
+          "Inga liveprov eller personlig coaching i premiumtjänsten"
+        ]
+      },
+      "overallScore": 4.5
+    },
+    {
+      "name": "HPGuiden",
+      "url": "https://hpguiden.se",
+      "description": "Den dominerande aktören med 21+ år och 323 000+ studenter. Erbjuder gratis grundmedlemskap och VIP (2 990 kr) med personlig coach, 23 735 uppgifter och Sveriges största HP-forum.",
+      "seo": {
+        "score": 5,
+        "notes": "Överlägsen domänauktoritet och länkprofil från 21 år. Enormt innehållsbibliotek indexerat av Google. Forum genererar ständig ny UGC som driver long-tail-trafik.",
+        "strengths": [
+          "21+ år av domänhistorik = hög DA och Google-förtroende",
+          "Forum genererar massiv UGC och long-tail-sökordstäckning automatiskt",
+          "323 000+ användare ger starka socialt-bevis-signaler och varumärkessökning",
+          "Rikligt med stödsidor: blogg, FAQ, guider, gamla prov — bredaste innehållstäckning"
+        ],
+        "weaknesses": [
+          "Utdatad sajt-arkitektur från tidigt 2000-tal begränsar Core Web Vitals",
+          "Foruminnehåll kan vara thin content ur Googles perspektiv",
+          "Lång laddningstid på tunga forumtrådar"
+        ]
+      },
+      "features": {
+        "score": 5,
+        "notes": "Mest fullständigt erbjudande på marknaden: 23 735 uppgifter, 2 600+ videor, personlig coach med 2.00, Sveriges största forum.",
+        "strengths": [
+          "23 735 specialkonstruerade uppgifter med lösningar steg-för-steg",
+          "2 600+ videogenomgångar — branschledande videoinnehåll",
+          "Personliga coacher som alla har 2.00 i betyg",
+          "Sveriges största HP-forum — ovärderligt community",
+          "32 detaljerade kunskapsanalyser"
+        ],
+        "weaknesses": [
+          "VIP-innehållet är låst bakom ett högt engångsbelopp (2 990 kr)",
+          "Inga gamification-element — inga streaks, ranksystem eller matchläge",
+          "Ingen mobilapp"
+        ]
+      },
+      "ux": {
+        "score": 3,
+        "notes": "Sajten bär tydliga spår av sin 21-åriga historia. Funktionell men inte modern. Mobilanpassningen är bristfällig jämfört med nyare aktörer.",
+        "strengths": [
+          "Välkänd layout för återkommande användare",
+          "Forumet fungerar stabilt och är välorganiserat",
+          "Tydlig navigering mot VIP-konvertering"
+        ],
+        "weaknesses": [
+          "Visuellt daterat gränssnitt byggt för desktop",
+          "Mobilupplevelsen klart undermålig vs moderna konkurrenter",
+          "Onboarding-flödet är komplext och överväldigande för nybörjare"
+        ]
+      },
+      "pricing": {
+        "score": 3,
+        "notes": "Gratis-tier är generöst (12 200+ uppgifter, forum). VIP-engångsbelopp på 2 990 kr är det högsta på marknaden, men inkluderar personlig coach vilket motiverar priset.",
+        "strengths": [
+          "Generöst gratislager med 12 200+ uppgifter och 100+ videor",
+          "VIP ger unik personlig coachning — unikt på marknaden",
+          "Engångsbetalning upplevs mer rättvist än löpande prenumeration för studenter"
+        ],
+        "weaknesses": [
+          "2 990 kr är marknadens högsta pris",
+          "Ingen möjlighet till månadsvis betalning",
+          "Priset kommuniceras inte transparent på startsidan"
+        ]
+      },
+      "overallScore": 4.0
+    },
+    {
+      "name": "HP-appen",
+      "url": "https://www.hpappen.se",
+      "description": "Mobilfokuserad app med 13 000+ övningar, AI-support dygnet runt, 81+ videolektioner och resultatgaranti. Prenumeration: 299 kr/mån.",
+      "seo": {
+        "score": 3,
+        "notes": "Bra title-tag med årsangivelse och konkret siffra. Saknar djupt innehållsbibliotek som de äldre aktörerna. God on-page men svag domänhistorik.",
+        "strengths": [
+          "Optimerad title-tag: '13,000 övningar med förklaring' + '2026'",
+          "Tydlig value proposition kring AI och resultatgaranti — högt CTR-potential",
+          "Socialbevis med 20 000+ användare synligt early"
+        ],
+        "weaknesses": [
+          "Begränsad organisk räckvidd för informationsinnehåll",
+          "Inga blogginlägg eller guider indexerade",
+          "Svag backlinkprofil jämfört med HPGuiden"
+        ]
+      },
+      "features": {
+        "score": 4,
+        "notes": "Starkt helhetserbjudande med AI, video och mobilapp. Resultatgarantin är ett unikt USP. Saknar community och ELO/rankingfunktionalitet.",
+        "strengths": [
+          "13 000+ övningar med pedagogiska lösningar",
+          "AI-support dygnet runt — unikt bland konkurrenterna",
+          "81+ videolektioner med full kursprogression",
+          "Resultatgaranti: 'nå ditt mål eller pengarna tillbaka'",
+          "Dedikerad mobilapp för iOS och Android"
+        ],
+        "weaknesses": [
+          "Inga social/competitive features — ingen matchning mot andra användare",
+          "Inget ranksystem eller gamification utöver grundläggande progress",
+          "Inget community- eller foruminslag"
+        ]
+      },
+      "ux": {
+        "score": 4,
+        "notes": "Modern, mobilfokuserad design. Tydlig CTA, bra onboarding. Resultatgarantin sänker konverteringströskel psykologiskt.",
+        "strengths": [
+          "Ren mobilfokuserad design med tydlig CTA",
+          "Dedikerad app ger offline-träning",
+          "Progress-tracking synligt och motiverande"
+        ],
+        "weaknesses": [
+          "Webbversionen känns sekundär vs app-upplevelsen",
+          "Prisvägg upplevs tidigt i flödet"
+        ]
+      },
+      "pricing": {
+        "score": 2,
+        "notes": "299 kr/mån är marknadens dyraste löpande prenumeration. 6-månadspaketet ger 40% rabatt men helårskostnaden överstiger HPGuidens engångspris.",
+        "strengths": [
+          "Resultatgarantin motiverar prisnivån psykologiskt",
+          "Rabatterat 6-månadspaket för dedikerade studenter"
+        ],
+        "weaknesses": [
+          "299 kr/mån är marknadens dyraste månadspris",
+          "Ingen genuin gratisnivå — endast locked demo",
+          "Hög churn-risk: studenter avslutar direkt efter provet"
+        ]
+      },
+      "overallScore": 3.25
+    },
+    {
+      "name": "HPKursen",
+      "url": "https://www.hpkursen.se",
+      "description": "Modern SaaS-plattform med 14 000+ uppgifter, AI-driven personalisering, spel för ordkunskap och 92% förbättringssiffra. Pris: 199 kr/mån eller 599 kr för 6 månader.",
+      "seo": {
+        "score": 3,
+        "notes": "Tydlig title-tag, men begränsat innehållsbibliotek. Saknar blogg, forum och djupt informationsinnehåll för att konkurrera på long-tail-sökord.",
+        "strengths": [
+          "Tydlig och informativ title-tag",
+          "Specifika resultatmätningar (92%, +0,55) skapar trovärdighet och klickbenägenhet",
+          "Rimlig on-page SEO-struktur"
+        ],
+        "weaknesses": [
+          "Ingen blogg eller informationsinnehåll för SEO",
+          "Ung domän med begränsad länkprofil",
+          "Ingen community-aspekt som genererar UGC"
+        ]
+      },
+      "features": {
+        "score": 4,
+        "notes": "Stark feature-uppsättning med AI-personalisering, spel för ordkunskap och 50+ videolektioner. Realtidsanalys och 24/7 support. Saknar community och ELO-system.",
+        "strengths": [
+          "14 000+ uppgifter med förklaringar",
+          "AI-driven personalisering anpassar träningen",
+          "Spel för ordkunskap och läshastighet — unikt gamification-element",
+          "Diagnostiktester och realtidsanalys",
+          "24/7 support"
+        ],
+        "weaknesses": [
+          "Inga sociala/competitive features",
+          "Inget ranksystem eller matchläge",
+          "Begränsat antal videolektioner (50+) vs HPGuiden (2 600+)"
+        ]
+      },
+      "ux": {
+        "score": 4,
+        "notes": "Modern SaaS-design med tydliga paketval och socialbevis. Bra konverteringsflöde med gratis diagnostiktest som inträdeserbjudande.",
+        "strengths": [
+          "Modern, ren SaaS-design",
+          "Tydlig paketpresentation med prisrankning",
+          "Gratis diagnostiktest som low-friction inträde"
+        ],
+        "weaknesses": [
+          "Ingen mobilapp — enbart webbapp",
+          "Relativt okänt varumärke vs HPGuiden"
+        ]
+      },
+      "pricing": {
+        "score": 3,
+        "notes": "Konkurrenskraftig prissättning: 199 kr/mån eller 599 kr för 6 månader. Klart billigare än HP-appen. Bra värde givet funktionsbredden.",
+        "strengths": [
+          "199 kr/mån är rimligt vs marknadssnittet",
+          "599 kr för 6 månader ger studentrabatt på ~50%",
+          "Gratis diagnostiktest sänker inträdeströskel"
+        ],
+        "weaknesses": [
+          "Inget genuint gratisskikt — gratis = diagnostiktest",
+          "Löpande prenumeration vs HPGuidens engångskostnad"
+        ]
+      },
+      "overallScore": 3.5
+    },
+    {
+      "name": "Pluggahp.se",
+      "url": "https://pluggahp.se",
+      "description": "Webbplats med gratis gamla HP-prov i PDF-format samt en betald app 'Högskoleprovet 2.0' för iOS/Android med simulerade prov, topplista och 50+ videor för matematik.",
+      "seo": {
+        "score": 2,
+        "notes": "Svag SEO — title-taggen är 'Hem - 2.0 på HP' utan nyckelord. Webbsidan fungerar mer som en landingpage för appen än som ett SEO-optimerat innehållsnav.",
+        "strengths": [
+          "Sidan rankar för 'gamla högskoleprov' via direktinnehåll (PDF-lista)",
+          "Inbound-länktrafik från gratisinnehållet"
+        ],
+        "weaknesses": [
+          "Title-tag 'Hem - 2.0 på HP' är helt ounoptimerad",
+          "Ingen meta description",
+          "Minimal heading-hierarki och strukturerat innehåll",
+          "Webbsidan är primärt en app-landningspage — saknar SEO-djup"
+        ]
+      },
+      "features": {
+        "score": 2,
+        "notes": "Appen har OK features (simulerade prov, topplista, video) men webbsidan är begränsad. Inga AI-funktioner. Ingen spaced repetition. Ingen ELO-ranking.",
+        "strengths": [
+          "Gratis gamla HP-prov i PDF-format direkt nedladdningsbara",
+          "Topplista i appen skapar konkurrensmoment",
+          "50+ videor för matematik"
+        ],
+        "weaknesses": [
+          "Ingen AI, inget adaptivt lärsystem",
+          "Ingen spaced repetition eller personlig studieplan",
+          "Appen är inte gratis (pris okommunicerat)",
+          "Webbsidan erbjuder enbart statiska PDF-resurser"
+        ]
+      },
+      "ux": {
+        "score": 2,
+        "notes": "Webbsidan är funktionell men avskalad och designmässigt svag. Tydlig 'App Store/Google Play'-fokus skapar friktionsfylld conversion för desktop-besökare.",
+        "strengths": [
+          "Enkel navigation, lätt att hitta gamla prov",
+          "Direkta nedladdningslänkar utan inloggning"
+        ],
+        "weaknesses": [
+          "Visuellt daterat och ointressant gränssnitt",
+          "Konverteringsflödet leder till extern app-store — hög friktionsnivå",
+          "Inga onboarding-element, ingen personalisering"
+        ]
+      },
+      "pricing": {
+        "score": 4,
+        "notes": "Webbsidans gratisinnehåll (PDF-prov) är starkt. Appens prissättning är otydlig men troligtvis engångskostnad eller freemium. Stark värdepropositon för budgetmedvetna.",
+        "strengths": [
+          "Helt gratis gamla prov på webben — stark traffik-driver",
+          "Inga prenumerationskrav för basinnehållet"
+        ],
+        "weaknesses": [
+          "Appens prissättning är inte kommunicerad på sajten",
+          "Oklart värde i betald app vs gratiskonkurrenterna"
+        ]
+      },
+      "overallScore": 2.5
+    },
+    {
+      "name": "HProvet.se",
+      "url": "https://hprovet.se",
+      "description": "Äldre plattform med 3 466 frågor från gamla högskoleprov, besvarade över 15 miljoner gånger. Lider av allvarliga tekniska problem inklusive ogiltigt SSL-certifikat.",
+      "seo": {
+        "score": 1,
+        "notes": "SSL-certifikatsfel (ERR_TLS_CERT_ALTNAME_INVALID) gör att sajten inte kan nås via HTTPS. Chrome och moderna webbläsare visar varning för alla besökare. Katastrofalt för söktrafik.",
+        "strengths": [
+          "Historisk länkprofil och gammalt domännamn kan fortfarande ha viss SEO-restkraft",
+          "15 miljoner besvarade frågor tyder på att sajten rankat väl historiskt"
+        ],
+        "weaknesses": [
+          "SSL-certifikatsfel — sajten ej tillgänglig i HTTPS",
+          "Google rankar ned sajter med säkerhetsvarningar kraftigt",
+          "Troligtvis dåliga Core Web Vitals pga tekniska problem",
+          "Sannolikt övergivet av ägaren"
+        ]
+      },
+      "features": {
+        "score": 2,
+        "notes": "Begränsade features: 3 466 frågor, grundläggande progress-tracking. Inga AI, videor, gamification eller social features. Troligtvis ej aktivt underhållen.",
+        "strengths": [
+          "3 466 autentiska frågor från gamla HP-prov",
+          "Interaktivt gränssnitt för att besvara frågor"
+        ],
+        "weaknesses": [
+          "Inga moderna features (AI, adaptivt lärande, gamification)",
+          "Troligtvis ej uppdaterat med nyare prov",
+          "Inget community, inga videor, ingen personlig coachning"
+        ]
+      },
+      "ux": {
+        "score": 1,
+        "notes": "Sajten är praktiskt taget otillgänglig för vanliga användare pga SSL-problem. De som tar sig förbi säkerhetsvarningen möter ett daterat gränssnitt.",
+        "strengths": [
+          "Enkel layout som var funktionell i sin tid"
+        ],
+        "weaknesses": [
+          "SSL-säkerhetsvarning i webbläsare avskräcker alla besökare",
+          "Daterat och oinspirerat gränssnitt",
+          "Inga mobila anpassningar"
+        ]
+      },
+      "pricing": {
+        "score": 3,
+        "notes": "Troligtvis gratis — men sajten är otillgänglig vilket gör priset irrelevant.",
+        "strengths": [
+          "Historiskt gratis service — inget inträdesprisproblem"
+        ],
+        "weaknesses": [
+          "Irrelevant att diskutera pris när sajten ej är tillgänglig"
+        ]
+      },
+      "overallScore": 1.75
+    }
+  ],
+  "opportunities": [
+    "Stärk ELO-rankingsystemet som unikt USP — ingen annan aktör på marknaden erbjuder äkta ELO-baserad rankning. Kommunicera detta tydligare på startsidan med en konkret ranking-visualisering.",
+    "SEO-gap: Skapa innehållssidor kring 'träna HP mot vänner', 'HP rankingsystem' och 'HP ELO' — dessa sökord är helt outnyttjade av konkurrenterna och matchar hpkampen.ses unika position.",
+    "Lägg till videoförklaringar för de svåraste frågorna — samtliga starka konkurrenter (HPGuiden: 2 600+, HPKursen: 50+, HP-appen: 81+) erbjuder video. Avsaknaden är ett tydligt gap.",
+    "Community-funktion: HPGuiden äger 'Sveriges största forum'. En enkel fråge-/diskussionstråd kopplad till specifika uppgifter skulle differentiera utan att kräva ett fullt forum.",
+    "Transparent priskommunikation: HPGuiden och HP-spelet är otydliga med priser på startsidan — hpkampen.ses gratismodell (annonsfinansierad) är ett starkt värdeerbjudande som bör lyftas tydligare.",
+    "HP-spelet är närmaste konkurrenten på gamification — bevaka deras multiplayer-implementering noga. hpkampen.ses realtids-matchläge är ett tydligare real-time-erbjudande och bör betonas.",
+    "Mobilapp: Tre av de starkaste konkurrenterna (HP-appen, HPGuiden, Pluggahp) erbjuder mobilappar. En PWA eller native-app för hpkampen.se skulle minska friktionen för mobilanvändare.",
+    "Spaced repetition för fler kategorier: Funktion finns för ORD — expandera till MEK och ELF som har högt repetitionsvärde och liknande formel-/formelbaserat innehåll."
+  ],
+  "hpkampenStrengths": [
+    "Unikt realtids-matchläge (1v1) mot riktiga motspelare eller bot — ingen annan aktör erbjuder detta fullt ut",
+    "ELO-baserat ranksystem (Brons → Diamant) skapar djup progression och återkomstmotivation",
+    "Helt gratis för användaren (annonsfinansierat) — den enda gratis-first-aktören med genuint competitive gameplay",
+    "Täcker alla 8 kategorier (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med autentiska frågor från riktiga HP-prov",
+    "Spaced repetition för ORD-träning (SM-2-algoritm) — evidensbaserat och unikt bland spelifierade HP-plattformar",
+    "Modern tech-stack (TanStack, React 19, Cloudflare Workers) ger snabb laddningstid och skalbarhet",
+    "Dagliga streaks och social jämförelse via leaderboard skapar vanespelsbeteende"
+  ]
+}

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a2e; background: #fff; }
+
+  /* Cover */
+  .cover {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: white; text-align: center; padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-logo { font-size: 48px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+  .cover-logo span { color: #e94560; }
+  .cover-title { font-size: 28px; font-weight: 300; margin-bottom: 40px; opacity: 0.9; }
+  .cover-meta { font-size: 14px; opacity: 0.6; }
+  .cover-badge {
+    display: inline-block; background: rgba(233,69,96,0.2); border: 1px solid rgba(233,69,96,0.4);
+    color: #e94560; padding: 6px 16px; border-radius: 20px; font-size: 13px; margin-bottom: 32px;
+  }
+
+  /* Content */
+  .page { padding: 48px 52px; max-width: 860px; margin: 0 auto; }
+  .section { margin-bottom: 48px; }
+  h2 { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 20px;
+       padding-bottom: 10px; border-bottom: 2px solid #e94560; }
+  h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; color: #1a1a2e; }
+
+  /* Summary box */
+  .summary-box {
+    background: #f8f9ff; border-left: 4px solid #e94560;
+    padding: 20px 24px; border-radius: 0 8px 8px 0; font-size: 15px; line-height: 1.7;
+  }
+
+  /* Matrix */
+  .matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .matrix thead tr { background: #1a1a2e; color: white; }
+  .matrix th { padding: 10px 12px; text-align: left; font-weight: 600; }
+  .matrix td { padding: 10px 12px; border-bottom: 1px solid #eef0f4; }
+  .matrix tbody tr:hover { background: #f8f9ff; }
+  .mat-name a { color: #1a1a2e; text-decoration: none; font-weight: 500; }
+  .mat-total { font-weight: 700; font-size: 14px; }
+
+  /* Competitor cards */
+  .competitor-card {
+    border: 1px solid #e8eaf0; border-radius: 12px; padding: 24px;
+    margin-bottom: 24px; page-break-inside: avoid;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .card-name { font-size: 18px; font-weight: 700; }
+  .card-url { font-size: 12px; color: #6b7280; text-decoration: none; }
+  .overall-score {
+    width: 44px; height: 44px; border-radius: 50%; color: white; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .card-desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+
+  .dimensions { border-top: 1px solid #eef0f4; padding-top: 14px; margin-bottom: 16px; }
+  .dim-row { display: grid; grid-template-columns: 130px 90px 1fr; gap: 8px; align-items: baseline; margin-bottom: 8px; font-size: 13px; }
+  .dim-label { font-weight: 500; color: #374151; }
+  .dim-score { font-size: 11px; letter-spacing: 1px; }
+  .dim-notes { color: #6b7280; font-size: 12px; }
+
+  .card-sw { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12px; }
+  .strengths strong { color: #16a34a; }
+  .weaknesses strong { color: #dc2626; }
+  .card-sw ul { margin-top: 6px; padding-left: 16px; }
+  .card-sw li { margin-bottom: 4px; color: #374151; line-height: 1.5; }
+
+  /* Opportunities */
+  .opp-list { list-style: none; }
+  .opp-list li {
+    padding: 12px 16px; margin-bottom: 10px; background: #f0fdf4;
+    border-left: 3px solid #16a34a; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.6;
+  }
+  .strength-list { list-style: none; }
+  .strength-list li {
+    padding: 10px 14px; margin-bottom: 8px; background: #eff6ff;
+    border-left: 3px solid #3b82f6; border-radius: 0 8px 8px 0; font-size: 14px;
+  }
+
+  .footer { text-align: center; font-size: 11px; color: #9ca3af; padding: 32px 0 20px; border-top: 1px solid #eef0f4; }
+
+  @media print {
+    .cover { page-break-after: always; }
+    .competitor-card { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-badge">Konkurrentanalys</div>
+  <div class="cover-logo">HP<span>Kampen</span></div>
+  <div class="cover-title">Marknadsanalys — Högskoleprovet</div>
+  <div class="cover-meta">Genererad 24 maj 2026 &nbsp;·&nbsp; 6 konkurrenter analyserade</div>
+</div>
+
+<!-- Content -->
+<div class="page">
+
+  <div class="section">
+    <h2>Sammanfattning</h2>
+    <div class="summary-box">Marknaden för HP-förberedelse i Sverige är mogen och fragmenterad, med HPGuiden som en 21-årig dominant aktör och HP-spelet som en ny stark utmanare med 25 000+ frågor och gratis-modell. hpkampen.se har ett unikt erbjudande i form av ELO-baserat matchläge och ranksystem — något ingen annan aktör replikerar fullt ut — men saknar videoinnehåll och organisk SEO-tyngd som de etablerade spelarna byggt under decennier.</div>
+  </div>
+
+  <div class="section">
+    <h2>Konkurrentmatris</h2>
+    
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Konkurrent</th>
+          <th>SEO</th>
+          <th>Features</th>
+          <th>UX</th>
+          <th>Pris</th>
+          <th>Totalt</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="mat-name"><a href="https://www.hpspelet.se">HP-spelet</a></td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#16a34a">●●●●●</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#16a34a">●●●●●</td>
+        <td class="mat-total" style="color:#16a34a">4.5</td>
+      </tr>
+      <tr>
+        <td class="mat-name"><a href="https://hpguiden.se">HPGuiden</a></td>
+        <td style="color:#16a34a">●●●●●</td>
+        <td style="color:#16a34a">●●●●●</td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td class="mat-total" style="color:#16a34a">4.0</td>
+      </tr>
+      <tr>
+        <td class="mat-name"><a href="https://www.hpkursen.se">HPKursen</a></td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td class="mat-total" style="color:#ca8a04">3.5</td>
+      </tr>
+      <tr>
+        <td class="mat-name"><a href="https://www.hpappen.se">HP-appen</a></td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td style="color:#dc2626">●●○○○</td>
+        <td class="mat-total" style="color:#ca8a04">3.3</td>
+      </tr>
+      <tr>
+        <td class="mat-name"><a href="https://pluggahp.se">Pluggahp.se</a></td>
+        <td style="color:#dc2626">●●○○○</td>
+        <td style="color:#dc2626">●●○○○</td>
+        <td style="color:#dc2626">●●○○○</td>
+        <td style="color:#16a34a">●●●●○</td>
+        <td class="mat-total" style="color:#dc2626">2.5</td>
+      </tr>
+      <tr>
+        <td class="mat-name"><a href="https://hprovet.se">HProvet.se</a></td>
+        <td style="color:#dc2626">●○○○○</td>
+        <td style="color:#dc2626">●●○○○</td>
+        <td style="color:#dc2626">●○○○○</td>
+        <td style="color:#ca8a04">●●●○○</td>
+        <td class="mat-total" style="color:#dc2626">1.8</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Detaljanalys per konkurrent</h2>
+    
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">HP-spelet</h3>
+          <a class="card-url" href="https://www.hpspelet.se">https://www.hpspelet.se</a>
+        </div>
+        <div class="overall-score" style="background:#16a34a">
+          4.5
+        </div>
+      </div>
+      <p class="card-desc">Ny stark aktör som kallar sig 'Sveriges största plattform' med 25 000+ autentiska frågor, AI-genererade förklaringar och gamification inkl. multiplayer-funktionalitet.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Stark title-tag med nyckelord och årsangivelse. 'Sveriges största' som brand-claim bygger auktoritet. God meta-struktur.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#16a34a">●●●●●</div>
+      <div class="dim-notes">Branschens bredaste utbud: 25 000+ frågor, AI-förklaringar, adaptiv inlärning, multiplayer och dagliga utmaningar. Direktkonkurrent till hpkampen.se på gamification-axeln.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Modern, gamifierad design med bra mobilanpassning. Tydlig CTA-hierarki och progressionsvisualisering.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#16a34a">●●●●●</div>
+      <div class="dim-notes">Gratis-first-modell med premium-tier ('Snabblärd'). Prismässigt det starkaste erbjudandet på marknaden — gratis baslager med mer innehåll än många betalda konkurrenter.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>Title-tag riktar in sig på '2026' och kvantifierar innehållet ('25 000+ frågor')</li><li>Brand-position som 'Sveriges största' ger trovärdighet och klickbenägenhet i SERP</li><li>Tydlig strukturerad data och semantisk koppling till alla 8 delmoment</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>Relativt ny sajt — saknar den länkprofil och domänålder som HPGuiden har</li><li>Ingen synlig blogg- eller contentstrategi för long-tail-sökord</li><li>Begränsat externt länkbygge jämfört med de äldre aktörerna</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">HPGuiden</h3>
+          <a class="card-url" href="https://hpguiden.se">https://hpguiden.se</a>
+        </div>
+        <div class="overall-score" style="background:#16a34a">
+          4.0
+        </div>
+      </div>
+      <p class="card-desc">Den dominerande aktören med 21+ år och 323 000+ studenter. Erbjuder gratis grundmedlemskap och VIP (2 990 kr) med personlig coach, 23 735 uppgifter och Sveriges största HP-forum.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#16a34a">●●●●●</div>
+      <div class="dim-notes">Överlägsen domänauktoritet och länkprofil från 21 år. Enormt innehållsbibliotek indexerat av Google. Forum genererar ständig ny UGC som driver long-tail-trafik.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#16a34a">●●●●●</div>
+      <div class="dim-notes">Mest fullständigt erbjudande på marknaden: 23 735 uppgifter, 2 600+ videor, personlig coach med 2.00, Sveriges största forum.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Sajten bär tydliga spår av sin 21-åriga historia. Funktionell men inte modern. Mobilanpassningen är bristfällig jämfört med nyare aktörer.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Gratis-tier är generöst (12 200+ uppgifter, forum). VIP-engångsbelopp på 2 990 kr är det högsta på marknaden, men inkluderar personlig coach vilket motiverar priset.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>21+ år av domänhistorik = hög DA och Google-förtroende</li><li>Forum genererar massiv UGC och long-tail-sökordstäckning automatiskt</li><li>323 000+ användare ger starka socialt-bevis-signaler och varumärkessökning</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>Utdatad sajt-arkitektur från tidigt 2000-tal begränsar Core Web Vitals</li><li>Foruminnehåll kan vara thin content ur Googles perspektiv</li><li>Lång laddningstid på tunga forumtrådar</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">HPKursen</h3>
+          <a class="card-url" href="https://www.hpkursen.se">https://www.hpkursen.se</a>
+        </div>
+        <div class="overall-score" style="background:#ca8a04">
+          3.5
+        </div>
+      </div>
+      <p class="card-desc">Modern SaaS-plattform med 14 000+ uppgifter, AI-driven personalisering, spel för ordkunskap och 92% förbättringssiffra. Pris: 199 kr/mån eller 599 kr för 6 månader.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Tydlig title-tag, men begränsat innehållsbibliotek. Saknar blogg, forum och djupt informationsinnehåll för att konkurrera på long-tail-sökord.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Stark feature-uppsättning med AI-personalisering, spel för ordkunskap och 50+ videolektioner. Realtidsanalys och 24/7 support. Saknar community och ELO-system.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Modern SaaS-design med tydliga paketval och socialbevis. Bra konverteringsflöde med gratis diagnostiktest som inträdeserbjudande.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Konkurrenskraftig prissättning: 199 kr/mån eller 599 kr för 6 månader. Klart billigare än HP-appen. Bra värde givet funktionsbredden.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>Tydlig och informativ title-tag</li><li>Specifika resultatmätningar (92%, +0,55) skapar trovärdighet och klickbenägenhet</li><li>Rimlig on-page SEO-struktur</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>Ingen blogg eller informationsinnehåll för SEO</li><li>Ung domän med begränsad länkprofil</li><li>Ingen community-aspekt som genererar UGC</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">HP-appen</h3>
+          <a class="card-url" href="https://www.hpappen.se">https://www.hpappen.se</a>
+        </div>
+        <div class="overall-score" style="background:#ca8a04">
+          3.3
+        </div>
+      </div>
+      <p class="card-desc">Mobilfokuserad app med 13 000+ övningar, AI-support dygnet runt, 81+ videolektioner och resultatgaranti. Prenumeration: 299 kr/mån.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Bra title-tag med årsangivelse och konkret siffra. Saknar djupt innehållsbibliotek som de äldre aktörerna. God on-page men svag domänhistorik.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Starkt helhetserbjudande med AI, video och mobilapp. Resultatgarantin är ett unikt USP. Saknar community och ELO/rankingfunktionalitet.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Modern, mobilfokuserad design. Tydlig CTA, bra onboarding. Resultatgarantin sänker konverteringströskel psykologiskt.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#dc2626">●●○○○</div>
+      <div class="dim-notes">299 kr/mån är marknadens dyraste löpande prenumeration. 6-månadspaketet ger 40% rabatt men helårskostnaden överstiger HPGuidens engångspris.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>Optimerad title-tag: '13,000 övningar med förklaring' + '2026'</li><li>Tydlig value proposition kring AI och resultatgaranti — högt CTR-potential</li><li>Socialbevis med 20 000+ användare synligt early</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>Begränsad organisk räckvidd för informationsinnehåll</li><li>Inga blogginlägg eller guider indexerade</li><li>Svag backlinkprofil jämfört med HPGuiden</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">Pluggahp.se</h3>
+          <a class="card-url" href="https://pluggahp.se">https://pluggahp.se</a>
+        </div>
+        <div class="overall-score" style="background:#dc2626">
+          2.5
+        </div>
+      </div>
+      <p class="card-desc">Webbplats med gratis gamla HP-prov i PDF-format samt en betald app 'Högskoleprovet 2.0' för iOS/Android med simulerade prov, topplista och 50+ videor för matematik.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#dc2626">●●○○○</div>
+      <div class="dim-notes">Svag SEO — title-taggen är 'Hem - 2.0 på HP' utan nyckelord. Webbsidan fungerar mer som en landingpage för appen än som ett SEO-optimerat innehållsnav.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#dc2626">●●○○○</div>
+      <div class="dim-notes">Appen har OK features (simulerade prov, topplista, video) men webbsidan är begränsad. Inga AI-funktioner. Ingen spaced repetition. Ingen ELO-ranking.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#dc2626">●●○○○</div>
+      <div class="dim-notes">Webbsidan är funktionell men avskalad och designmässigt svag. Tydlig 'App Store/Google Play'-fokus skapar friktionsfylld conversion för desktop-besökare.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#16a34a">●●●●○</div>
+      <div class="dim-notes">Webbsidans gratisinnehåll (PDF-prov) är starkt. Appens prissättning är otydlig men troligtvis engångskostnad eller freemium. Stark värdepropositon för budgetmedvetna.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>Sidan rankar för 'gamla högskoleprov' via direktinnehåll (PDF-lista)</li><li>Inbound-länktrafik från gratisinnehållet</li><li>Gratis gamla HP-prov i PDF-format direkt nedladdningsbara</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>Title-tag 'Hem - 2.0 på HP' är helt ounoptimerad</li><li>Ingen meta description</li><li>Minimal heading-hierarki och strukturerat innehåll</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="competitor-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-name">HProvet.se</h3>
+          <a class="card-url" href="https://hprovet.se">https://hprovet.se</a>
+        </div>
+        <div class="overall-score" style="background:#dc2626">
+          1.8
+        </div>
+      </div>
+      <p class="card-desc">Äldre plattform med 3 466 frågor från gamla högskoleprov, besvarade över 15 miljoner gånger. Lider av allvarliga tekniska problem inklusive ogiltigt SSL-certifikat.</p>
+      <div class="dimensions">
+        
+    <div class="dim-row">
+      <div class="dim-label">SEO & Synlighet</div>
+      <div class="dim-score" style="color:#dc2626">●○○○○</div>
+      <div class="dim-notes">SSL-certifikatsfel (ERR_TLS_CERT_ALTNAME_INVALID) gör att sajten inte kan nås via HTTPS. Chrome och moderna webbläsare visar varning för alla besökare. Katastrofalt för söktrafik.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Features & Innehåll</div>
+      <div class="dim-score" style="color:#dc2626">●●○○○</div>
+      <div class="dim-notes">Begränsade features: 3 466 frågor, grundläggande progress-tracking. Inga AI, videor, gamification eller social features. Troligtvis ej aktivt underhållen.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">UX & Design</div>
+      <div class="dim-score" style="color:#dc2626">●○○○○</div>
+      <div class="dim-notes">Sajten är praktiskt taget otillgänglig för vanliga användare pga SSL-problem. De som tar sig förbi säkerhetsvarningen möter ett daterat gränssnitt.</div>
+    </div>
+        
+    <div class="dim-row">
+      <div class="dim-label">Prissättning</div>
+      <div class="dim-score" style="color:#ca8a04">●●●○○</div>
+      <div class="dim-notes">Troligtvis gratis — men sajten är otillgänglig vilket gör priset irrelevant.</div>
+    </div>
+      </div>
+      <div class="card-sw">
+        <div class="strengths">
+          <strong>Styrkor</strong>
+          <ul><li>Historisk länkprofil och gammalt domännamn kan fortfarande ha viss SEO-restkraft</li><li>15 miljoner besvarade frågor tyder på att sajten rankat väl historiskt</li><li>3 466 autentiska frågor från gamla HP-prov</li></ul>
+        </div>
+        <div class="weaknesses">
+          <strong>Svagheter</strong>
+          <ul><li>SSL-certifikatsfel — sajten ej tillgänglig i HTTPS</li><li>Google rankar ned sajter med säkerhetsvarningar kraftigt</li><li>Troligtvis dåliga Core Web Vitals pga tekniska problem</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Möjligheter för hpkampen.se</h2>
+    <ul class="opp-list">
+      <li>Stärk ELO-rankingsystemet som unikt USP — ingen annan aktör på marknaden erbjuder äkta ELO-baserad rankning. Kommunicera detta tydligare på startsidan med en konkret ranking-visualisering.</li><li>SEO-gap: Skapa innehållssidor kring 'träna HP mot vänner', 'HP rankingsystem' och 'HP ELO' — dessa sökord är helt outnyttjade av konkurrenterna och matchar hpkampen.ses unika position.</li><li>Lägg till videoförklaringar för de svåraste frågorna — samtliga starka konkurrenter (HPGuiden: 2 600+, HPKursen: 50+, HP-appen: 81+) erbjuder video. Avsaknaden är ett tydligt gap.</li><li>Community-funktion: HPGuiden äger 'Sveriges största forum'. En enkel fråge-/diskussionstråd kopplad till specifika uppgifter skulle differentiera utan att kräva ett fullt forum.</li><li>Transparent priskommunikation: HPGuiden och HP-spelet är otydliga med priser på startsidan — hpkampen.ses gratismodell (annonsfinansierad) är ett starkt värdeerbjudande som bör lyftas tydligare.</li><li>HP-spelet är närmaste konkurrenten på gamification — bevaka deras multiplayer-implementering noga. hpkampen.ses realtids-matchläge är ett tydligare real-time-erbjudande och bör betonas.</li><li>Mobilapp: Tre av de starkaste konkurrenterna (HP-appen, HPGuiden, Pluggahp) erbjuder mobilappar. En PWA eller native-app för hpkampen.se skulle minska friktionen för mobilanvändare.</li><li>Spaced repetition för fler kategorier: Funktion finns för ORD — expandera till MEK och ELF som har högt repetitionsvärde och liknande formel-/formelbaserat innehåll.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>hpkampen.se styrkor</h2>
+    <ul class="strength-list">
+      <li>Unikt realtids-matchläge (1v1) mot riktiga motspelare eller bot — ingen annan aktör erbjuder detta fullt ut</li><li>ELO-baserat ranksystem (Brons → Diamant) skapar djup progression och återkomstmotivation</li><li>Helt gratis för användaren (annonsfinansierat) — den enda gratis-first-aktören med genuint competitive gameplay</li><li>Täcker alla 8 kategorier (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med autentiska frågor från riktiga HP-prov</li><li>Spaced repetition för ORD-träning (SM-2-algoritm) — evidensbaserat och unikt bland spelifierade HP-plattformar</li><li>Modern tech-stack (TanStack, React 19, Cloudflare Workers) ger snabb laddningstid och skalbarhet</li><li>Dagliga streaks och social jämförelse via leaderboard skapar vanespelsbeteende</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    hpkampen.se · Konkurrentanalys 24 maj 2026 · Genererad av Claude Code
+  </div>
+
+</div>
+</body>
+</html>

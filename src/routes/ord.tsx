@@ -92,6 +92,48 @@ interface AnsweredItem {
   isCorrect: boolean;
 }
 
+function DefinitionBlock({ word, definition }: { word: string; definition: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-4">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:underline underline-offset-4"
+      >
+        <svg
+          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+        {open ? "Dölj definition" : `Vad betyder "${word.toLowerCase()}"?`}
+      </button>
+      <div
+        className="grid transition-all duration-300 ease-out"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+      >
+        <div className="overflow-hidden">
+          <div className="mt-2 rounded-lg border-l-4 border-blue-300 bg-blue-50 p-3">
+            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-blue-800">
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              </svg>
+              SAOL — Svenska Akademiens ordlista
+            </div>
+            <p className="whitespace-pre-wrap text-blue-900" style={{ fontSize: 14, lineHeight: 1.7 }}>
+              {definition}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchFailedBatch = useServerFn(fetchFailedWordBatch);
@@ -610,6 +652,10 @@ function OrdPracticePage() {
                     );
                   })}
                 </div>
+
+                {picked && current.definition && (
+                  <DefinitionBlock word={current.question_text} definition={current.definition} />
+                )}
 
                 {picked && (
                   <div className="mt-6 flex items-center justify-end">

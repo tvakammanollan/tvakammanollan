@@ -1,0 +1,2 @@
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS definition TEXT;
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS definition_source TEXT;

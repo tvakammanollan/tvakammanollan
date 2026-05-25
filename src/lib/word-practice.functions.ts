@@ -9,6 +9,7 @@ export type WordQuestion = {
   options: { id: string; text: string }[];
   correct_answer: string;
   source: string | null;
+  definition: string | null;
 };
 
 export const fetchWordBatch = createServerFn({ method: "GET" })
@@ -42,7 +43,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     }
     let query = supabase
       .from("questions")
-      .select("id,question_text,options,correct_answer,source,difficulty")
+      .select("id,question_text,options,correct_answer,source,difficulty,definition")
       .eq("category", "ORD")
       .limit(10000);
     if (data.sourceFilter === "hp") query = query.not("source", "is", null);
@@ -241,7 +242,7 @@ export const fetchFailedWordBatch = createServerFn({ method: "GET" })
     const ids = failedRows.map((r: { question_id: string }) => r.question_id);
     const { data: rows, error } = await supabaseAdmin
       .from("questions")
-      .select("id,question_text,options,correct_answer,source,difficulty")
+      .select("id,question_text,options,correct_answer,source,difficulty,definition")
       .in("id", ids);
     if (error) throw new Error(error.message);
 

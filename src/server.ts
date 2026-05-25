@@ -142,6 +142,124 @@ async function healthCheck(env: unknown): Promise<Response> {
 }
 
 /**
+ * Fetches a definition from Swedish Wiktionary for a single word.
+ * Uses the MediaWiki API (JSON, no JS rendering needed).
+ */
+async function fetchWiktionaryDefinition(word: string): Promise<string | null> {
+  const url = `https://sv.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(word)}&prop=revisions&rvprop=content&format=json&formatversion=2`;
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "HPKampen-Bot/1.0 (educational project; hpkampen.se)" },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      query?: { pages?: Array<{ missing?: boolean; revisions?: Array<{ content: string }> }> };
+    };
+    const page = data?.query?.pages?.[0];
+    if (!page || page.missing) return null;
+    const content = page.revisions?.[0]?.content ?? "";
+
+    // Find the first definition line (starts with # but not #: or ##)
+    const defMatch = content.match(/^#[^#:*].*$/m);
+    if (!defMatch) return null;
+
+    const raw = defMatch[0].replace(/^#\s*/, "");
+    const clean = raw
+      .replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g, "$1") // [[länk|text]] → text
+      .replace(/\{\{[^}]*\}\}/g, "")                      // ta bort {{mallar}}
+      .replace(/'''?([^']+)'''?/g, "$1")                   // ta bort fet/kursiv
+      .replace(/;$/, "")
+      .trim();
+
+    return clean.length > 5 ? clean : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Admin endpoint — hämtar Wiktionary-definitioner för ORD-frågor och sparar i DB.
+ * Skyddas av ADMIN_SECRET-miljövariabeln.
+ * Anrop: GET /api/admin/fill-definitions?secret=TOKEN&batch=0&size=30
+ */
+async function fillDefinitions(request: Request, env: unknown): Promise<Response> {
+  const e = env as Record<string, string | undefined>;
+  const secret = e.ADMIN_SECRET;
+  const params = new URL(request.url).searchParams;
+
+  if (!secret || params.get("secret") !== secret) {
+    return new Response(JSON.stringify({ error: "unauthorized" }), {
+      status: 401,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const supabaseUrl = (e.VITE_SUPABASE_URL ?? "").replace(/\/$/, "");
+  const serviceKey = e.SUPABASE_SERVICE_ROLE_KEY ?? "";
+  if (!supabaseUrl || !serviceKey) {
+    return new Response(JSON.stringify({ error: "missing supabase credentials" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const batch = parseInt(params.get("batch") ?? "0", 10);
+  const size = Math.min(parseInt(params.get("size") ?? "30", 10), 50);
+  const offset = batch * size;
+
+  // Hämta nästa batch ORD-frågor utan definition
+  const listRes = await fetch(
+    `${supabaseUrl}/rest/v1/questions?select=id,question_text&category=eq.ORD&definition=is.null&order=question_text&limit=${size}&offset=${offset}`,
+    { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } },
+  );
+  const questions = (await listRes.json()) as Array<{ id: string; question_text: string }>;
+
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return new Response(JSON.stringify({ done: true, message: "Alla ord har definitioner!" }), {
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const results: Array<{ word: string; found: boolean }> = [];
+
+  for (const q of questions) {
+    const word = q.question_text.trim().toLowerCase();
+    const definition = await fetchWiktionaryDefinition(word);
+
+    if (definition) {
+      await fetch(`${supabaseUrl}/rest/v1/questions?id=eq.${q.id}`, {
+        method: "PATCH",
+        headers: {
+          apikey: serviceKey,
+          Authorization: `Bearer ${serviceKey}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify({ definition, definition_source: "sv.wiktionary.org" }),
+      });
+    }
+
+    results.push({ word, found: !!definition });
+    // Kort paus för att inte hamra Wiktionary
+    await new Promise((r) => setTimeout(r, 300));
+  }
+
+  const found = results.filter((r) => r.found).length;
+  return new Response(
+    JSON.stringify({
+      batch,
+      processed: questions.length,
+      found,
+      missed: questions.length - found,
+      next: `?secret=${params.get("secret")}&batch=${batch + 1}&size=${size}`,
+      results,
+    }),
+    { headers: { "content-type": "application/json" } },
+  );
+}
+
+/**
  * Telemetry sink (#16) — accepts batched events from the browser and emits
  * them as structured Worker logs. Cloudflare Logpush picks them up.
  */
@@ -173,6 +291,10 @@ export default {
     // Telemetry batch sink
     if (url.pathname === "/api/telemetry") {
       return telemetrySink(request);
+    }
+    // Admin: fyll ORD-definitioner från Wiktionary
+    if (url.pathname === "/api/admin/fill-definitions") {
+      return fillDefinitions(request, env);
     }
 
     try {
