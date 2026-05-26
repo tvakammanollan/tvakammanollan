@@ -185,7 +185,7 @@ async function fetchWiktionaryDefinition(word: string): Promise<string | null> {
  */
 async function fillDefinitions(request: Request, env: unknown): Promise<Response> {
   const e = env as Record<string, string | undefined>;
-  const secret = e.ADMIN_SECRET;
+  const secret = e.hpadmin2026;
   const params = new URL(request.url).searchParams;
 
   if (!secret || params.get("secret") !== secret) {
