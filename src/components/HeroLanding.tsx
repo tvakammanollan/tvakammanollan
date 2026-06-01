@@ -187,14 +187,6 @@ function Hero({
   onGuest: () => void;
 }) {
   const canvasRef = useShaderCanvas("amber");
-  const [now, setNow] = useState(() => new Date());
-  const next = useMemo(() => getNextHpDate(now), [now]);
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 60_000);
-    return () => clearInterval(id);
-  }, []);
-  const diffDays = next ? Math.max(0, Math.ceil((next.date.getTime() - now.getTime()) / 86400000)) : null;
-  const activePlayers = stats?.activePlayers ?? 0;
   const recentSix = stats?.recent?.slice(0, 6) ?? [];
 
   return (
@@ -207,23 +199,11 @@ function Hero({
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-16">
         <div className="grid items-end gap-8 md:grid-cols-[2fr_1fr]">
           <div>
-            <div className="flex items-center gap-2 font-mono text-[11px] tracking-wide text-white/55">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              </span>
-              <span>
-                {activePlayers > 0
-                  ? `${activePlayers} spelare online`
-                  : "Live arena"}
-                {next && diffDays !== null ? ` · ${diffDays} dagar till HP` : null}
-              </span>
-            </div>
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 text-[56px] font-black leading-[0.95] sm:text-[88px] md:text-[108px]"
+              className="text-[56px] font-black leading-[0.95] sm:text-[88px] md:text-[108px]"
               style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
             >
               Spela. <span style={{ color: AMBER }}>Klättra.</span>
