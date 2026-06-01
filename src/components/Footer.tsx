@@ -37,7 +37,7 @@ export function Footer() {
 
   return (
     <footer
-      className="mt-24 border-t"
+      className="border-t"
       style={{ borderColor: "rgba(255,255,255,0.08)", background: "#0f0803" }}
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
