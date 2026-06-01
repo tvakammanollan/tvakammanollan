@@ -18,6 +18,11 @@ const TESTIMONIALS = [
 
 const AMBER = "#f2a65a";
 
+// Ord som cyklar i mittersta raden av hero-rubriken. Behåller "Klättra"
+// som första ord så hemsidan ser bekant ut första sekunden, sedan rotation
+// genom relaterade verbs som passar 3-stegs-rubriken "Spela. X. Vinn."
+const HERO_CYCLE_WORDS = ["Klättra.", "Tävla.", "Träna.", "Utmana.", "Bevisa.", "Mästra.", "Slå."];
+
 export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
   const [stats, setStats] = useState<LandingStats | null>(null);
@@ -70,6 +75,49 @@ function formatMatchString(m: NonNullable<LandingStats["recent"]>[number]): stri
   const ws = p1Won ? s1 : s2;
   const ls = p1Won ? s2 : s1;
   return `${winner} slog ${loser} ${ws}–${ls}`;
+}
+
+/**
+ * Cyklar mellan ord med långsam spring-animation (4s mellan byten).
+ * Använder en osynlig spacer för längsta ordet så layouten inte hoppar.
+ */
+function CyclingWord({ words, color }: { words: string[]; color: string }) {
+  const [idx, setIdx] = useState(0);
+  const spacer = useMemo(
+    () => words.reduce((a, b) => (a.length >= b.length ? a : b), ""),
+    [words],
+  );
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIdx((i) => (i + 1) % words.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [words.length]);
+
+  return (
+    <span
+      className="relative inline-block overflow-hidden align-baseline"
+      style={{ color }}
+    >
+      <span className="invisible" aria-hidden>{spacer}</span>
+      {words.map((w, i) => (
+        <motion.span
+          key={w}
+          className="absolute inset-0 flex items-center justify-center whitespace-nowrap"
+          initial={false}
+          animate={
+            idx === i
+              ? { y: "0%", opacity: 1 }
+              : { y: idx > i ? "-110%" : "110%", opacity: 0 }
+          }
+          transition={{ type: "spring", stiffness: 38, damping: 14, mass: 1 }}
+        >
+          {w}
+        </motion.span>
+      ))}
+    </span>
+  );
 }
 
 function LiveTicker({ stats }: { stats: LandingStats | null }) {
@@ -206,7 +254,7 @@ function Hero({
               className="text-[56px] font-black leading-[0.95] sm:text-[88px] md:text-[108px]"
               style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
             >
-              Spela. <span style={{ color: AMBER }}>Klättra.</span>
+              Spela. <CyclingWord words={HERO_CYCLE_WORDS} color={AMBER} />
               <br />
               Vinn.
             </motion.h1>
