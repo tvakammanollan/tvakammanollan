@@ -1,35 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { motion, useScroll, useTransform, useReducedMotion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion, useInView, AnimatePresence } from "framer-motion";
 import {
   Loader2,
   ArrowRight,
-  Zap,
-  Trophy,
-  BookOpen,
-  Sparkles,
   CheckCircle2,
-  Brain,
-  Swords,
-  Target,
   CalendarDays,
 } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
-import {
-  SplitText,
-  VelocitySkew,
-  VelocityMarquee,
-  StickyNumber,
-  FlipCard,
-  ClipReveal,
-  Parallax,
-  TiltLayer,
-  AmberMouseShadow,
-} from "@/components/landing/MotionFX";
+import { SplitText, VelocityMarquee, TiltLayer } from "@/components/landing/MotionFX";
+import { RANK_TIERS } from "@/types";
 
 const TESTIMONIALS = [
   {
@@ -49,7 +33,7 @@ const TESTIMONIALS = [
     quote:
       "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
     name: "Niklas",
-    score: "1.9",
+    score: "1.95",
     founder: true,
   },
 ];
@@ -202,21 +186,12 @@ export function HeroLanding() {
   return (
     <div className="relative overflow-hidden">
       <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
-
       <Ribbon />
-
-      <Features />
-
-      <Stages />
-
-      <HowItWorks />
-
+      <ProductShowcase />
       <RecentMatches stats={stats} />
-
+      <EloTiers />
       <ProofSection stats={stats} />
-
       <TestimonialsSection />
-
       <FinalCTA />
     </div>
   );
@@ -246,7 +221,6 @@ function Hero({
         style={{ background: "#050507" }}
       />
 
-      {/* Edge vignette */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -256,9 +230,7 @@ function Hero({
         }}
       />
 
-      {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
-        {/* Status pills — live + HP countdown */}
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -277,7 +249,6 @@ function Hero({
           <HeroCountdownChip />
         </motion.div>
 
-        {/* Title — tilts on mouse, every word splits */}
         <TiltLayer max={8} className="will-change-transform">
           <h1 className="display text-balance text-[56px] font-bold leading-[0.96] text-white sm:text-[96px] md:text-[120px] lg:text-[144px]">
             <SplitText as="span" className="block" delay={0.1}>
@@ -294,19 +265,15 @@ function Hero({
           </h1>
         </TiltLayer>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 max-w-2xl text-balance text-[18px] leading-relaxed text-white/70 sm:text-[22px]"
+          className="mt-10 max-w-xl text-balance text-[18px] leading-relaxed text-white/70 sm:text-[22px]"
         >
-          Den enda plattformen för Högskoleprovet med
-          <span className="font-semibold text-white"> live-matcher</span> och
-          <span className="font-semibold text-white"> ELO-ranking</span>. Helt gratis.
+          Sveriges enda plattform för live HP-matcher med ELO-ranking.
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -333,7 +300,6 @@ function Hero({
           </Link>
         </motion.div>
 
-        {/* Trust badges */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -354,7 +320,6 @@ function Hero({
           </span>
         </motion.div>
 
-        {/* Stats teaser */}
         {stats && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -371,7 +336,6 @@ function Hero({
         )}
       </div>
 
-      {/* Scroll hint */}
       <motion.div
         aria-hidden
         initial={{ opacity: 0 }}
@@ -392,10 +356,6 @@ function Hero({
   );
 }
 
-/* ============================================================ */
-/* ===  RIBBON — velocity-driven marquee                     === */
-/* ============================================================ */
-
 function HeroCountdownChip() {
   const [now, setNow] = useState(() => new Date());
   const next = useMemo(() => getNextHpDate(now), [now]);
@@ -410,25 +370,20 @@ function HeroCountdownChip() {
   );
   return (
     <span
-      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm"
-      style={{
-        borderColor: "rgba(242, 166, 90, 0.30)",
-        background: "rgba(242, 166, 90, 0.10)",
-      }}
+      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 backdrop-blur-sm"
     >
-      <CalendarDays
-        className="h-3 w-3 shrink-0"
-        style={{ color: "var(--amber)" }}
-      />
+      <CalendarDays className="h-3 w-3 shrink-0 text-white/70" />
       <span className="text-[12px] font-medium tracking-wide text-white/80">
         {next.label} ·{" "}
-        <span className="font-bold tabular-nums" style={{ color: "var(--amber)" }}>
-          {diffDays} dagar
-        </span>
+        <span className="font-bold tabular-nums text-white">{diffDays} dagar</span>
       </span>
     </span>
   );
 }
+
+/* ============================================================ */
+/* ===  RIBBON                                              === */
+/* ============================================================ */
 
 function Ribbon() {
   const items = [
@@ -452,7 +407,7 @@ function Ribbon() {
       className="display flex items-center gap-12 text-[28px] font-semibold tracking-tight text-[#050507] sm:text-[40px]"
     >
       {it}
-      <span className="text-aurora-gradient">✦</span>
+      <span className="text-neutral-300" aria-hidden>·</span>
     </span>
   ));
   return (
@@ -463,380 +418,140 @@ function Ribbon() {
 }
 
 /* ============================================================ */
-/* ===  TESTIMONIALS                                         === */
+/* ===  PRODUCT SHOWCASE — in-code match-vy                 === */
 /* ============================================================ */
 
-function TestimonialsSection() {
-  const [active, setActive] = useState(0);
-  const [dir, setDir] = useState(1);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setDir(1);
-      setActive((p) => (p + 1) % TESTIMONIALS.length);
-    }, 4000);
-    return () => clearInterval(id);
-  }, []);
-
-  const goTo = (i: number) => {
-    setDir(i > active ? 1 : -1);
-    setActive(i);
-  };
-
+function ProductShowcase() {
   return (
-    <section className="bg-white px-6 py-14">
+    <section className="bg-white px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
-        <p className="eyebrow mb-8 text-center">Vad säger användarna?</p>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="display mx-auto max-w-2xl text-center text-[32px] font-bold leading-[1.1] text-[#050507] sm:text-[44px]"
+        >
+          Två spelare. Fem minuter. Samma frågor.
+          <br />
+          <span className="text-neutral-400">Bäst ELO vinner.</span>
+        </motion.h2>
 
-        {/* Desktop: all 3 side by side */}
-        {(() => {
-          const gradients = [
-            "from-amber-400 via-orange-500 to-red-400",
-            "from-cyan-400 via-indigo-500 to-violet-600",
-            "from-indigo-400 via-violet-500 to-purple-600",
-          ];
-          return (
-            <div className="hidden gap-5 md:grid md:grid-cols-3">
-              {TESTIMONIALS.map((t, i) => (
-                <motion.div
-                  key={t.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-black/5 bg-white p-7 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)]"
-                >
-                  <div
-                    aria-hidden
-                    className={`absolute inset-0 -z-10 bg-gradient-to-br ${gradients[i]} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-25`}
-                  />
-                  <p className="text-[16px] leading-relaxed text-[#0a0a0f]">&ldquo;{t.quote}&rdquo;</p>
-                  <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
-                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradients[i]} text-sm font-bold text-white shadow-md`}>
-                      {t.name[0]}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-[#050507]">{t.name}</p>
-                      {t.founder && <p className="text-xs text-neutral-400">Grundare</p>}
-                    </div>
-                    <span className={`ml-auto shrink-0 rounded-full bg-gradient-to-r ${gradients[i]} px-2.5 py-0.5 text-xs font-bold text-white shadow-sm`}>
-                      {t.score}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          );
-        })()}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-14"
+        >
+          <MatchPreview />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
-        {/* Mobile: carousel */}
-        <div className="md:hidden">
-          <div className="overflow-hidden rounded-2xl">
-            <AnimatePresence initial={false} custom={dir} mode="wait">
-              <motion.div
-                key={active}
-                custom={dir}
-                initial={{ opacity: 0, x: dir * 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: dir * -60 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-7 shadow-[var(--shadow-card)]"
-              >
-                <p className="text-[16px] leading-relaxed text-[#0a0a0f]">
-                  &ldquo;{TESTIMONIALS[active].quote}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white shadow-md">
-                    {TESTIMONIALS[active].name[0]}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-[#050507]">{TESTIMONIALS[active].name}</p>
-                    {TESTIMONIALS[active].founder && <p className="text-xs text-neutral-400">Grundare</p>}
-                  </div>
-                  <span className="ml-auto shrink-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2.5 py-0.5 text-xs font-bold text-white shadow-sm">
-                    {TESTIMONIALS[active].score}
-                  </span>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-          <div className="mt-4 flex justify-center gap-2">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                aria-label={`Testimonial ${i + 1}`}
-                className={`h-2 rounded-full transition-all ${i === active ? "w-5 bg-indigo-500" : "w-2 bg-neutral-300"}`}
-              />
-            ))}
-          </div>
+function MatchPreview() {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-black/8 bg-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.18),0_8px_20px_-8px_rgba(0,0,0,0.10)]">
+      {/* Top bar */}
+      <div className="flex items-center justify-between border-b border-black/5 bg-neutral-50 px-5 py-3">
+        <div className="flex items-center gap-2">
+          <span className="rounded-md bg-[#6366f1] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+            ORD
+          </span>
+          <span className="text-[12px] font-medium text-neutral-500">Verbal · Match 4 av 8</span>
+        </div>
+        <div className="flex items-center gap-1.5 rounded-full border border-black/8 bg-white px-3 py-1 font-mono text-[12px] font-semibold tabular-nums text-[#050507]">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          02:47
         </div>
       </div>
-    </section>
+
+      {/* Players */}
+      <div className="grid grid-cols-2 divide-x divide-black/5 border-b border-black/5">
+        <PlayerStrip name="Du" elo={1542} score={3} side="left" you />
+        <PlayerStrip name="Aron" elo={1518} score={2} side="right" />
+      </div>
+
+      {/* Question */}
+      <div className="px-6 py-10 sm:px-12 sm:py-14">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
+          Synonymer
+        </div>
+        <p className="mt-4 text-[26px] font-bold leading-snug text-[#050507] sm:text-[32px]">
+          Vad betyder ordet <span className="text-[#6366f1]">prekär</span>?
+        </p>
+        <div className="mt-8 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+          {[
+            { label: "A", text: "Trivial", state: "idle" },
+            { label: "B", text: "Bekymmersam", state: "correct" },
+            { label: "C", text: "Förutsägbar", state: "idle" },
+            { label: "D", text: "Lockande", state: "idle" },
+          ].map((opt) => (
+            <div
+              key={opt.label}
+              className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 text-[15px] transition ${
+                opt.state === "correct"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+                  : "border-black/8 bg-white text-[#050507]"
+              }`}
+            >
+              <span
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[12px] font-bold ${
+                  opt.state === "correct"
+                    ? "bg-emerald-500 text-white"
+                    : "bg-neutral-100 text-neutral-500"
+                }`}
+              >
+                {opt.label}
+              </span>
+              <span className="font-medium">{opt.text}</span>
+              {opt.state === "correct" && (
+                <CheckCircle2 className="ml-auto h-4 w-4 text-emerald-600" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
-/* ============================================================ */
-/* ===  FEATURES                                             === */
-/* ============================================================ */
-
-function Features() {
-  return (
-    <section className="relative bg-white px-6 py-24 sm:py-32">
-      <div className="relative mx-auto max-w-6xl">
-        <SectionHeader eyebrow="Funktioner" title="Tre superkrafter." highlight="En arena." />
-
-        <VelocitySkew>
-          <div className="mt-20 grid gap-6 md:grid-cols-3">
-            <FlipCard delay={0} axis="y">
-              <FeatureCard
-                icon={<Zap className="h-7 w-7" />}
-                title="Live-matcher"
-                text="Utmana vänner eller okända spelare i realtid. Privata rum med delbar länk eller öppen kö."
-                gradient="from-cyan-400 via-indigo-500 to-violet-600"
-              />
-            </FlipCard>
-            <FlipCard delay={0.12} axis="x">
-              <FeatureCard
-                icon={<Trophy className="h-7 w-7" />}
-                title="ELO-ranking"
-                text="Klättra från Brons till Diamant med ett schackinspirerat system. Se din progression i realtid."
-                gradient="from-amber-400 via-orange-500 to-pink-500"
-                featured
-              />
-            </FlipCard>
-            <FlipCard delay={0.24} axis="y">
-              <FeatureCard
-                icon={<BookOpen className="h-7 w-7" />}
-                title="Alla 8 delprov"
-                text="Ord · Mek · Läs · Elf · Xyz · Kva · Nog · Dtk. Träna i lugn takt eller testa dig under tidspress."
-                gradient="from-emerald-400 via-teal-500 to-cyan-600"
-              />
-            </FlipCard>
-          </div>
-        </VelocitySkew>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================ */
-/* ===  STAGES — three alternating "play loop" rows          === */
-/* ============================================================ */
-
-const STAGES = [
-  {
-    icon: <Swords className="h-5 w-5" />,
-    eyebrow: "Stage 01",
-    title: "Hitta motståndare.",
-    text: "Hoppa in i en match på 5 sekunder mot en vän eller okänd spelare. Inga väntrum, ingen latency.",
-    accent: "from-cyan-400 to-indigo-500",
-    elo: 1420,
-  },
-  {
-    icon: <Brain className="h-5 w-5" />,
-    eyebrow: "Stage 02",
-    title: "Tänk snabbare.",
-    text: "Riktig HP-tidspress. Varje sekund räknas. Resultatet syns direkt i din profil.",
-    accent: "from-fuchsia-400 to-pink-500",
-    elo: 1640,
-  },
-  {
-    icon: <Target className="h-5 w-5" />,
-    eyebrow: "Stage 03",
-    title: "Klättra rankingen.",
-    text: "ELO-poäng efter varje match. Brons, silver, guld, diamant. Inte en topplista, en resa.",
-    accent: "from-amber-400 to-orange-500",
-    elo: 1880,
-  },
-];
-
-function Stages() {
-  return (
-    <section className="relative overflow-hidden bg-paper">
-      <div className="mx-auto max-w-6xl px-6 pb-8 pt-24 sm:pt-32">
-        <SectionHeader eyebrow="Spelets gång" title="Tre faser." highlight="En upplevelse." />
-      </div>
-      <div className="space-y-12 pb-24 sm:space-y-20 sm:pb-32">
-        {STAGES.map((stage, i) => (
-          <StageRow key={i} stage={stage} index={i} reversed={i % 2 === 1} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function StageRow({
-  stage,
-  index,
-  reversed,
+function PlayerStrip({
+  name,
+  elo,
+  score,
+  you,
 }: {
-  stage: (typeof STAGES)[number];
-  index: number;
-  reversed: boolean;
+  name: string;
+  elo: number;
+  score: number;
+  side: "left" | "right";
+  you?: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25, margin: "200px 0px 200px 0px" });
-  const reduce = useReducedMotion();
-  const dirX = reversed ? 60 : -60;
-
   return (
-    <div ref={ref} className="mx-auto max-w-6xl px-6">
-      <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-        {/* Text side */}
-        <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, x: dirX }}
-          animate={inView ? { opacity: 1, x: 0 } : undefined}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className={reversed ? "md:order-2" : ""}
-        >
-          <div
-            className={`mb-5 inline-flex h-9 items-center gap-2 rounded-full bg-gradient-to-r ${stage.accent} px-3 text-xs font-semibold text-white shadow-md`}
-          >
-            {stage.icon}
-            {stage.eyebrow}
-          </div>
-          <h3 className="display text-[40px] font-bold leading-[1.04] text-[#0a0a0f] sm:text-[56px]">
-            {stage.title}
-          </h3>
-          <p className="mt-4 max-w-md text-[17px] leading-relaxed text-neutral-600">{stage.text}</p>
-          <div className="mt-6 inline-flex items-center gap-2 text-[13px] font-medium text-neutral-500">
-            <span
-              className={`inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r ${stage.accent}`}
-            />
-            Stage {String(index + 1).padStart(2, "0")} av {STAGES.length}
-          </div>
-        </motion.div>
-
-        {/* Phone mockup */}
-        <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, x: -dirX, rotate: reversed ? -3 : 3 }}
-          animate={inView ? { opacity: 1, x: 0, rotate: 0 } : undefined}
-          transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          className={reversed ? "md:order-1" : ""}
-          style={{ transformPerspective: 1200 }}
-        >
-          <StagePhone stage={stage} />
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-function StagePhone({ stage }: { stage: (typeof STAGES)[number] }) {
-  return (
-    <div
-      className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[36px] shadow-[var(--shadow-xl)]"
-      style={{ background: "var(--navy-2)" }}
-    >
-      <div className={`relative h-full w-full bg-gradient-to-br ${stage.accent} opacity-90`}>
+    <div className="flex items-center justify-between gap-3 px-5 py-4">
+      <div className="flex items-center gap-3">
         <div
-          className="absolute inset-6 flex flex-col justify-between rounded-[24px] p-7 shadow-inner"
-          style={{
-            background: "rgba(7,17,30,0.92)",
-            border: "1px solid var(--line)",
-          }}
+          className={`flex h-10 w-10 items-center justify-center rounded-full text-[14px] font-bold ${
+            you ? "bg-[#6366f1] text-white" : "bg-neutral-200 text-neutral-700"
+          }`}
         >
-          <div className="flex items-center justify-between">
-            <div
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${stage.accent} text-white shadow-md`}
-            >
-              {stage.icon}
-            </div>
-            <span
-              className="flex h-7 items-center justify-center rounded-full px-3 text-[10px] font-bold uppercase tracking-[0.18em]"
-              style={{ background: "rgba(111,179,184,0.18)", color: "var(--teal)" }}
-            >
-              LIVE
-            </span>
-          </div>
-
-          <div>
-            <div
-              className="text-[10px] uppercase tracking-[0.22em]"
-              style={{ color: "var(--hp-muted)" }}
-            >
-              {stage.eyebrow}
-            </div>
-            <div
-              className="display mt-2 text-[28px] font-bold leading-tight"
-              style={{ color: "var(--cream)" }}
-            >
-              {stage.title}
-            </div>
-          </div>
-
-          <div className="flex items-end justify-between">
-            <div>
-              <div
-                className="text-[10px] uppercase tracking-[0.18em]"
-                style={{ color: "var(--hp-muted)" }}
-              >
-                ELO
-              </div>
-              <div
-                className="display text-[44px] font-bold leading-none tabular-nums"
-                style={{ color: "var(--cream)" }}
-              >
-                {stage.elo}
-              </div>
-            </div>
-            <div
-              className={`h-11 rounded-full bg-gradient-to-r ${stage.accent} px-6 text-xs font-semibold leading-[2.75rem] text-white shadow-md`}
-            >
-              SPELA
-            </div>
-          </div>
+          {name[0]}
+        </div>
+        <div>
+          <div className="text-[14px] font-semibold text-[#050507]">{name}</div>
+          <div className="font-mono text-[11px] tabular-nums text-neutral-500">{elo} ELO</div>
         </div>
       </div>
+      <div className="font-mono text-[28px] font-bold tabular-nums text-[#050507]">{score}</div>
     </div>
   );
 }
 
 /* ============================================================ */
-/* ===  HOW IT WORKS                                         === */
-/* ============================================================ */
-
-function HowItWorks() {
-  return (
-    <section id="how-it-works" className="relative overflow-hidden bg-paper px-6 py-24 sm:py-32">
-      <StickyNumber n="01" />
-      <div aria-hidden className="absolute inset-0 bg-mesh-light opacity-60" />
-      <div className="relative mx-auto max-w-6xl">
-        <SectionHeader eyebrow="Så funkar det" title="Tre steg." highlight="Bättre HP-resultat." />
-
-        <VelocitySkew maxDeg={2}>
-          <div className="mt-20 grid gap-10 md:grid-cols-3">
-            <FlipCard delay={0} axis="x">
-              <Step
-                n="01"
-                title="Skapa konto"
-                text="Registrera dig på 30 sekunder. Inget kreditkort, ingen krångel."
-              />
-            </FlipCard>
-            <FlipCard delay={0.18} axis="y">
-              <Step
-                n="02"
-                title="Välj verbal eller matte"
-                text="Starta en match direkt eller bjud in en vän med en delbar länk."
-              />
-            </FlipCard>
-            <FlipCard delay={0.36} axis="x">
-              <Step
-                n="03"
-                title="Kämpa & klättra"
-                text="Varje vinst ger ELO. Se din normerade HP-poäng stiga vecka för vecka."
-              />
-            </FlipCard>
-          </div>
-        </VelocitySkew>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================ */
-/* ===  RECENT MATCHES — live feed from getLandingStats      === */
+/* ===  RECENT MATCHES                                      === */
 /* ============================================================ */
 
 function RecentMatches({ stats }: { stats: LandingStats | null }) {
@@ -846,16 +561,33 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
   return (
     <section className="relative bg-white px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-3xl">
-        <SectionHeader eyebrow="Live" title="Senaste matcherna." highlight="Just nu." />
+        <div className="flex items-center justify-center gap-2">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
+            Live just nu
+          </span>
+        </div>
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="display mt-3 text-center text-[32px] font-bold leading-[1.05] text-[#050507] sm:text-[44px]"
+        >
+          Senaste matcherna
+        </motion.h2>
 
         <ul className="mt-12 space-y-3">
           {matches.map((m, i) => (
-            <MatchRow key={m.id} match={m} delay={i * 0.07} />
+            <MatchRow key={m.id} match={m} delay={i * 0.05} />
           ))}
         </ul>
 
-        <div className="mt-8 text-center text-[12px] uppercase tracking-[0.18em] text-neutral-500">
-          uppdateras varje gång en match avslutas
+        <div className="mt-8 text-center text-[12px] text-neutral-500">
+          Uppdateras varje gång en match avslutas.
         </div>
       </div>
     </section>
@@ -885,21 +617,24 @@ function MatchRow({
   const winnerScore = isDraw ? p1Score : p1Won ? p1Score : p2Score;
   const loserScore = isDraw ? p2Score : p1Won ? p2Score : p1Score;
 
-  const matchTypeLabel = match.match_type === "verbal" ? "Verbal" : "Matte";
-  const accentByType =
-    match.match_type === "verbal" ? "from-cyan-400 to-indigo-500" : "from-amber-400 to-orange-500";
+  const isVerbal = match.match_type === "verbal";
+  const matchTypeLabel = isVerbal ? "Verbal" : "Matte";
 
   return (
     <motion.li
       ref={ref}
       initial={{ opacity: 0, x: -16 }}
       animate={inView ? { opacity: 1, x: 0 } : undefined}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex items-center justify-between gap-4 rounded-2xl border border-black/5 bg-white p-4 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-lg)]"
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="flex items-center justify-between gap-4 rounded-2xl border border-black/8 bg-white p-4"
     >
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <span
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accentByType} text-[10px] font-bold uppercase tracking-wide text-white`}
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-[10px] font-bold uppercase tracking-wide ${
+            isVerbal
+              ? "bg-[#6366f1] text-white"
+              : "bg-neutral-900 text-white"
+          }`}
         >
           {matchTypeLabel.slice(0, 3)}
         </span>
@@ -930,210 +665,259 @@ function MatchRow({
 }
 
 /* ============================================================ */
-/* ===  PROOF                                                === */
+/* ===  ELO TIERS                                           === */
 /* ============================================================ */
 
-function ProofSection({ stats }: { stats: LandingStats | null }) {
+function EloTiers() {
   return (
-    <section className="relative bg-white px-6 py-20">
-      <div className="relative mx-auto max-w-5xl">
-        <VelocitySkew maxDeg={2.5}>
-          <div className="grid gap-6 sm:grid-cols-3">
-            <FlipCard delay={0} axis="y">
-              <ProofCard value={stats?.topVerbalElo ?? 0} label="Högsta verbal-ELO" />
-            </FlipCard>
-            <FlipCard delay={0.1} axis="x">
-              <ProofCard value={stats?.topMathElo ?? 0} label="Högsta matte-ELO" />
-            </FlipCard>
-            <FlipCard delay={0.2} axis="y">
-              <ProofCard value={8000} suffix="+" label="HP-ord i databasen" />
-            </FlipCard>
-          </div>
-        </VelocitySkew>
+    <section className="bg-white px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-5xl">
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="display text-center text-[32px] font-bold leading-[1.05] text-[#050507] sm:text-[44px]"
+        >
+          Från Brons till Diamant.
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mx-auto mt-4 max-w-xl text-center text-[15px] text-neutral-500"
+        >
+          Schackinspirerat ranking-system. Vinst ger ELO, förlust kostar.
+          Varje match räknas.
+        </motion.p>
+
+        <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+          {RANK_TIERS.map((tier, i) => (
+            <motion.div
+              key={tier.tier}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              className={`rounded-2xl border p-5 text-center ${
+                tier.tier === "diamant"
+                  ? "border-[#6366f1]/30 bg-gradient-to-br from-white to-indigo-50/40 shadow-[0_0_40px_-12px_rgba(99,102,241,0.35)]"
+                  : "border-black/8 bg-white"
+              }`}
+            >
+              <div
+                className="mx-auto flex h-12 w-12 items-center justify-center rounded-full text-[20px]"
+                style={{
+                  background: tier.bgColor,
+                  color: tier.textColor,
+                  border: `2px solid ${tier.borderColor}`,
+                }}
+              >
+                {tier.icon}
+              </div>
+              <div className="mt-4 text-[15px] font-bold capitalize text-[#050507]">
+                {tier.tier}
+              </div>
+              <div className="mt-1 font-mono text-[11px] tabular-nums text-neutral-500">
+                {tier.minElo}
+                {tier.tier === "diamant" ? "+" : ` – ${tier.maxElo}`}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
 /* ============================================================ */
-/* ===  FINAL CTA                                            === */
+/* ===  PROOF                                               === */
+/* ============================================================ */
+
+function ProofSection({ stats }: { stats: LandingStats | null }) {
+  const items = [
+    { value: stats?.topVerbalElo ?? 0, label: "Högsta verbal-ELO" },
+    { value: stats?.topMathElo ?? 0, label: "Högsta matte-ELO" },
+    { value: 8000, suffix: "+", label: "HP-ord i databasen" },
+  ];
+  return (
+    <section className="bg-neutral-50 px-6 py-20 sm:py-24">
+      <div className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3">
+        {items.map((item, i) => (
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
+          >
+            <div className="display text-[56px] font-bold leading-none tabular-nums text-[#050507] sm:text-[64px]">
+              {item.value > 0 ? <CountUp end={item.value} /> : "—"}
+              {item.value > 0 ? item.suffix : null}
+            </div>
+            <div className="mt-3 text-[12px] font-medium uppercase tracking-[0.16em] text-neutral-500">
+              {item.label}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================ */
+/* ===  TESTIMONIALS                                        === */
+/* ============================================================ */
+
+function TestimonialsSection() {
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const goTo = (i: number) => {
+    setDir(i > active ? 1 : -1);
+    setActive(i);
+  };
+
+  return (
+    <section className="bg-white px-6 py-20 sm:py-24">
+      <div className="mx-auto max-w-5xl">
+        <p className="mb-10 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
+          Vad säger användarna?
+        </p>
+
+        <div className="hidden gap-5 md:grid md:grid-cols-3">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-7"
+            >
+              <p className="text-[16px] leading-relaxed text-[#0a0a0f]">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-sm font-bold text-[#050507]">
+                  {t.name[0]}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-[#050507]">{t.name}</p>
+                  {t.founder && <p className="text-xs text-neutral-500">Grundare</p>}
+                </div>
+                <span className="ml-auto shrink-0 rounded-full bg-[#050507] px-2.5 py-0.5 font-mono text-xs font-bold tabular-nums text-white">
+                  {t.score}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile carousel */}
+        <div className="md:hidden">
+          <div className="overflow-hidden rounded-2xl">
+            <AnimatePresence initial={false} custom={dir} mode="wait">
+              <motion.div
+                key={active}
+                custom={dir}
+                initial={{ opacity: 0, x: dir * 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: dir * -60 }}
+                transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-7"
+              >
+                <p className="text-[16px] leading-relaxed text-[#0a0a0f]">
+                  &ldquo;{TESTIMONIALS[active].quote}&rdquo;
+                </p>
+                <div className="mt-6 flex items-center gap-3 border-t border-black/5 pt-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-sm font-bold text-[#050507]">
+                    {TESTIMONIALS[active].name[0]}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-[#050507]">{TESTIMONIALS[active].name}</p>
+                    {TESTIMONIALS[active].founder && <p className="text-xs text-neutral-500">Grundare</p>}
+                  </div>
+                  <span className="ml-auto shrink-0 rounded-full bg-[#050507] px-2.5 py-0.5 font-mono text-xs font-bold tabular-nums text-white">
+                    {TESTIMONIALS[active].score}
+                  </span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="mt-4 flex justify-center gap-2">
+            {TESTIMONIALS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Testimonial ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${i === active ? "w-5 bg-[#6366f1]" : "w-2 bg-neutral-300"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================ */
+/* ===  FINAL CTA                                           === */
 /* ============================================================ */
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-mesh px-6 py-24 text-center text-white">
-      <div aria-hidden className="absolute inset-0 bg-grid-ink opacity-30" />
-
-      <Parallax speed={-0.2} className="pointer-events-none absolute inset-0">
-        <div
-          className="orb orb-indigo animate-orb-drift"
-          style={{ top: "20%", left: "20%", width: 400, height: 400 }}
-        />
-        <div
-          className="orb orb-fuchsia animate-orb-drift"
-          style={{
-            top: "30%",
-            right: "15%",
-            width: 360,
-            height: 360,
-            animationDelay: "5s",
-          }}
-        />
-      </Parallax>
-
-      <ClipReveal>
-        <div className="relative mx-auto max-w-3xl">
-          <p className="eyebrow text-fuchsia-300">Sista anhalten</p>
-          <h2 className="display mt-4 text-[56px] leading-[1.05] text-white sm:text-[88px]">
-            <SplitText as="span">Redo att testa dig?</SplitText>
-          </h2>
-          <p className="mx-auto mt-6 max-w-md text-[18px] text-white/65">
-            Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som klättrar.
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to="/signup"
-              data-cursor="link"
-              className="btn-shine group inline-flex h-[64px] items-center gap-2 rounded-full bg-white px-10 text-[17px] font-semibold text-[#050507] shadow-[var(--shadow-glow-aurora)]"
-            >
-              Skapa konto nu
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              to="/login"
-              data-cursor="link"
-              className="inline-flex h-[64px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-10 text-[17px] font-medium text-white hover:bg-white/10"
-            >
-              Jag har redan konto
-            </Link>
-          </div>
-        </div>
-      </ClipReveal>
+    <section className="relative px-6 py-28 text-center text-white sm:py-32" style={{ background: "#050507" }}>
+      <div className="relative mx-auto max-w-2xl">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="display text-[44px] font-bold leading-[1.05] text-white sm:text-[64px]"
+        >
+          Redo att testa dig?
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mx-auto mt-5 max-w-md text-[17px] text-white/60"
+        >
+          Helt gratis. Inget kreditkort. Bara du, motståndarna och poängen som klättrar.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        >
+          <Link
+            to="/signup"
+            className="group inline-flex h-[60px] items-center gap-2 rounded-full bg-white px-10 text-[16px] font-semibold text-[#050507] transition-all hover:scale-[1.02]"
+          >
+            Skapa konto nu
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+          <Link
+            to="/login"
+            className="inline-flex h-[60px] items-center gap-2 rounded-full border border-white/15 bg-white/5 px-10 text-[16px] font-medium text-white hover:bg-white/10"
+          >
+            Jag har redan konto
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 }
 
 /* ============================================================ */
-/* ===  SUB-COMPONENTS                                       === */
+/* ===  SUB-COMPONENTS                                      === */
 /* ============================================================ */
-
-function SectionHeader({
-  eyebrow,
-  title,
-  highlight,
-}: {
-  eyebrow: string;
-  title: string;
-  highlight: string;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.3, margin: "200px 0px 200px 0px" });
-  return (
-    <div ref={ref} className="text-center">
-      <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={inView ? { opacity: 1, y: 0 } : undefined}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="eyebrow"
-      >
-        {eyebrow}
-      </motion.p>
-      <h2 className="display mt-3 text-[44px] leading-[0.98] text-[#050507] sm:text-[64px] md:text-[80px]">
-        <SplitText as="span" className="block">
-          {title}
-        </SplitText>
-        <span className="text-aurora-gradient">
-          <SplitText as="span" delay={0.15} italic>
-            {highlight}
-          </SplitText>
-        </span>
-      </h2>
-    </div>
-  );
-}
-
-function FeatureCard({
-  icon,
-  title,
-  text,
-  gradient,
-  featured,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-  gradient: string;
-  featured?: boolean;
-}) {
-  return (
-    <motion.div
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-      className={`group relative overflow-hidden rounded-[28px] border border-black/5 bg-white p-8 shadow-[var(--shadow-card)] transition-shadow duration-500 hover:shadow-[var(--shadow-xl)] ${
-        featured ? "md:-translate-y-3" : ""
-      }`}
-    >
-      <div
-        aria-hidden
-        className={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-30`}
-      />
-      <div
-        className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform group-hover:scale-110 group-hover:rotate-3`}
-      >
-        {icon}
-      </div>
-      <h3
-        className="text-[26px] font-bold leading-tight text-[#0a0a0f]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
-      </h3>
-      <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{text}</p>
-      {featured && (
-        <div className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-amber-700">
-          <Sparkles className="h-3.5 w-3.5" />
-          Mest älskad funktion
-        </div>
-      )}
-    </motion.div>
-  );
-}
-
-function Step({ n, title, text }: { n: string; title: string; text: string }) {
-  return (
-    <div className="relative">
-      <div
-        className="text-aurora-gradient text-[80px] font-bold leading-none"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {n}
-      </div>
-      <h3
-        className="mt-3 text-[28px] font-bold leading-tight text-[#0a0a0f]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
-      </h3>
-      <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-neutral-600">{text}</p>
-    </div>
-  );
-}
-
-function ProofCard({ value, label, suffix }: { value: number; label: string; suffix?: string }) {
-  return (
-    <div className="rounded-[24px] border border-black/5 bg-gradient-to-br from-white to-neutral-50 p-8 text-center shadow-[var(--shadow-card)]">
-      <div
-        className="text-[60px] font-bold leading-none text-aurora-gradient tabular-nums"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {value > 0 ? <CountUp end={value} /> : "—"}
-        {value > 0 ? suffix : null}
-      </div>
-      <div className="mt-3 text-[13px] font-medium uppercase tracking-wider text-neutral-500">
-        {label}
-      </div>
-    </div>
-  );
-}
 
 function StatTeaser({
   value,
@@ -1148,10 +932,7 @@ function StatTeaser({
 }) {
   return (
     <div className={hidden ? "hidden md:block" : ""}>
-      <div
-        className="text-[28px] font-bold leading-none text-white tabular-nums"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <div className="font-mono text-[26px] font-bold leading-none tabular-nums text-white">
         <CountUp end={value} />
         {suffix}
       </div>
