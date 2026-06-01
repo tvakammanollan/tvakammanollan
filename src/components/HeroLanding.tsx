@@ -238,13 +238,14 @@ function Hero({
   const recentSix = stats?.recent?.slice(0, 6) ?? [];
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden">
+    <section className="relative min-h-[92svh] overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full touch-none" style={{ background: "#170d05" }} />
       <div aria-hidden className="pointer-events-none absolute inset-0" style={{
-        background: "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.5) 65%, rgba(23,13,5,1) 100%)",
+        background:
+          "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.15) 40%, rgba(23,13,5,0.7) 85%, rgba(23,13,5,1) 100%)",
       }} />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
+      <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -449,59 +450,38 @@ function VerbalPodium({ players }: { players: TopPlayer[] }) {
   );
 }
 
-const MEDAL_STYLES: Record<
-  1 | 2 | 3,
-  { icon: string; ring: string; bg: string; text: string; height: string; label: string }
-> = {
-  1: {
-    icon: "🥇",
-    ring: "ring-2",
-    bg: "linear-gradient(180deg, rgba(242,166,90,0.16) 0%, rgba(242,166,90,0.04) 100%)",
-    text: "#f2a65a",
-    height: "sm:pt-2",
-    label: "Guld",
-  },
-  2: {
-    icon: "🥈",
-    ring: "ring-1",
-    bg: "linear-gradient(180deg, rgba(203,213,225,0.10) 0%, rgba(203,213,225,0.02) 100%)",
-    text: "rgba(226,232,240,0.85)",
-    height: "sm:pt-8",
-    label: "Silver",
-  },
-  3: {
-    icon: "🥉",
-    ring: "ring-1",
-    bg: "linear-gradient(180deg, rgba(180,90,40,0.10) 0%, rgba(180,90,40,0.02) 100%)",
-    text: "rgba(217,119,87,0.9)",
-    height: "sm:pt-10",
-    label: "Brons",
-  },
+const MEDAL_STYLES: Record<1 | 2 | 3, { icon: string; height: string; label: string; accent: string }> = {
+  1: { icon: "🥇", height: "sm:pt-0", label: "Guld",   accent: "#f2a65a" },
+  2: { icon: "🥈", height: "sm:pt-6", label: "Silver", accent: "rgba(226,232,240,0.85)" },
+  3: { icon: "🥉", height: "sm:pt-8", label: "Brons",  accent: "rgba(217,119,87,0.9)" },
 };
 
 function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 3 }) {
   const m = MEDAL_STYLES[rank];
-  const ringColor =
-    rank === 1 ? `${AMBER}80` : rank === 2 ? "rgba(203,213,225,0.5)" : "rgba(180,90,40,0.5)";
+  const isGold = rank === 1;
 
   return (
     <div className={`${m.height} flex flex-col items-stretch`}>
       <div
-        className={`relative flex flex-1 flex-col items-center rounded-lg border border-white/10 p-5 ${m.ring}`}
-        style={{ background: m.bg, ["--tw-ring-color" as string]: ringColor } as React.CSSProperties}
+        className="relative flex flex-1 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md"
+        style={{
+          boxShadow: isGold
+            ? `0 0 50px -15px ${AMBER}55, 0 20px 40px -20px rgba(0,0,0,0.5)`
+            : "0 20px 40px -25px rgba(0,0,0,0.45)",
+        }}
       >
         <div className="text-[40px] leading-none sm:text-[48px]" aria-hidden>
           {m.icon}
         </div>
         <div
           className="mt-3 font-mono text-[9px] uppercase tracking-[0.22em]"
-          style={{ color: m.text }}
+          style={{ color: m.accent }}
         >
           {m.label}
         </div>
         {player ? (
           <>
-            <div className="mt-3 truncate text-center text-[15px] font-bold text-white">
+            <div className="mt-3 max-w-full truncate text-center text-[14px] font-bold text-white sm:text-[15px]">
               {player.username}
             </div>
             <div className="mt-1 font-mono text-[18px] font-black tabular-nums text-white sm:text-[22px]">
@@ -563,7 +543,7 @@ function LiveMatch() {
           </h2>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl" style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.5)" }}>
           <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3">
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
               <span className="rounded px-2 py-0.5 font-bold text-[#1a0d04]" style={{ background: AMBER }}>ORD</span>
@@ -649,11 +629,16 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
           </h2>
         </div>
 
-        <ul className="space-y-2">
-          {matches.map((m, i) => (
-            <MatchRow key={m.id} match={m} delay={i * 0.06} />
-          ))}
-        </ul>
+        <div
+          className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl"
+          style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.5)" }}
+        >
+          <ul className="divide-y divide-white/8">
+            {matches.map((m, i) => (
+              <MatchRow key={m.id} match={m} delay={i * 0.06} />
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
@@ -677,10 +662,10 @@ function MatchRow({ match, delay }: { match: NonNullable<LandingStats["recent"]>
   return (
     <motion.li
       ref={ref}
-      initial={{ opacity: 0, x: -16 }}
+      initial={{ opacity: 0, x: -12 }}
       animate={inView ? { opacity: 1, x: 0 } : undefined}
       transition={{ duration: 0.4, delay }}
-      className="flex items-center justify-between gap-4 rounded-md border border-white/8 bg-white/[0.02] px-4 py-3"
+      className="flex items-center justify-between gap-4 px-4 py-3.5 transition hover:bg-white/[0.02]"
     >
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <span className={`flex h-7 items-center rounded px-2 font-mono text-[10px] font-bold uppercase tracking-wider ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white"}`} style={isVerbal ? { background: AMBER } : undefined}>
