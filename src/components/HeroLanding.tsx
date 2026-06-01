@@ -238,118 +238,123 @@ function Hero({
   const recentSix = stats?.recent?.slice(0, 6) ?? [];
 
   return (
-    <section className="relative h-[80vh] min-h-[620px] overflow-hidden">
+    <section className="relative min-h-[100svh] overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full touch-none" style={{ background: "#170d05" }} />
       <div aria-hidden className="pointer-events-none absolute inset-0" style={{
-        background: "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.45) 60%, rgba(23,13,5,0.95) 100%)",
+        background: "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.5) 65%, rgba(23,13,5,1) 100%)",
       }} />
 
-      <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-16">
-        <div className="grid items-end gap-8 md:grid-cols-[2fr_1fr]">
-          <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[56px] font-black leading-[0.95] sm:text-[88px] md:text-[108px]"
-              style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
-            >
-              Spela. <CyclingWord words={HERO_CYCLE_WORDS} color={AMBER} />
-              <br />
-              Vinn.
-            </motion.h1>
-            <p className="mt-6 max-w-xl text-[16px] leading-[1.6] text-white/65 sm:text-[18px]">
-              Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match.
-              Inga övningsprov. Bara duell.
-            </p>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
-            >
-              <button
-                type="button"
-                onClick={onGuest}
-                disabled={guestLoading}
-                className="group relative inline-flex h-[52px] items-center gap-2 rounded-md px-7 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60"
-                style={{ background: AMBER }}
-              >
-                {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {guestLoading ? "Startar…" : "Hitta match"}
-                {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
-              </button>
-              <Link
-                to="/signup"
-                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
-              >
-                Spara min ELO
-              </Link>
-            </motion.div>
-          </div>
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-[44px] font-black leading-[0.98] sm:text-[68px] md:text-[92px] lg:text-[108px]"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
+        >
+          Spela. <CyclingWord words={HERO_CYCLE_WORDS} color={AMBER} />
+          <br />
+          Vinn.
+        </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="rounded-lg border border-white/10 bg-black/40 p-4 backdrop-blur-sm"
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mt-7 max-w-xl text-[15px] leading-[1.6] text-white/65 sm:text-[18px]"
+        >
+          Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match.
+          Inga övningsprov. Bara duell.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-center"
+        >
+          <button
+            type="button"
+            onClick={onGuest}
+            disabled={guestLoading}
+            className="group relative inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60 sm:w-auto"
+            style={{ background: AMBER }}
           >
-            <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-white/45">
-              <span className="flex items-center gap-1.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                </span>
-                SENASTE 6
+            {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {guestLoading ? "Startar…" : "Hitta match"}
+            {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
+          </button>
+          <Link
+            to="/signup"
+            className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white sm:w-auto"
+          >
+            Spara min ELO
+          </Link>
+        </motion.div>
+
+        {/* Glas-kort: senaste 6 matcher — flyter mjukt över shadern */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.55 }}
+          className="mt-14 w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left backdrop-blur-xl"
+          style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.6)" }}
+        >
+          <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-white/45">
+            <span className="flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
-              <span>RESULTAT</span>
+              Senaste 6
+            </span>
+            <span>Resultat</span>
+          </div>
+          {recentSix.length === 0 ? (
+            <div className="py-5 text-center font-mono text-[11px] uppercase tracking-wider text-white/35">
+              <p>Inga matcher ännu</p>
+              <Link to="/signup" className="mt-2 inline-block underline-offset-4 hover:text-white hover:underline" style={{ color: AMBER }}>
+                Spela första matchen →
+              </Link>
             </div>
-            {recentSix.length === 0 ? (
-              <div className="py-5 text-center font-mono text-[11px] uppercase tracking-wider text-white/35">
-                <p>Inga matcher ännu</p>
-                <Link to="/signup" className="mt-2 inline-block underline-offset-4 hover:text-white hover:underline" style={{ color: AMBER }}>
-                  Spela första matchen →
-                </Link>
-              </div>
-            ) : (
-              <ol className="space-y-1.5">
-                {recentSix.map((m) => {
-                  const p1 = m.p1_name || "Gäst";
-                  const p2 = m.is_bot_match
-                    ? getBotName(m.bot_elo ?? 1000, m.id)
-                    : m.p2_name || "Gäst";
-                  const s1 = m.player1_score ?? 0;
-                  const s2 = m.player2_score ?? 0;
-                  const { isDraw, p1Won } = getMatchOutcome(m);
-                  const winner = isDraw ? p1 : p1Won ? p1 : p2;
-                  const loser = isDraw ? p2 : p1Won ? p2 : p1;
-                  const ws = isDraw ? s1 : p1Won ? s1 : s2;
-                  const ls = isDraw ? s2 : p1Won ? s2 : s1;
-                  const isVerbal = m.match_type === "verbal";
-                  return (
-                    <li key={m.id} className="flex items-center justify-between gap-2 font-mono text-[11px]">
-                      <span className="flex min-w-0 items-center gap-2">
-                        <span
-                          className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold uppercase ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white/85"}`}
-                          style={isVerbal ? { background: AMBER } : undefined}
-                        >
-                          {isVerbal ? "V" : "M"}
-                        </span>
-                        <span className="truncate text-white">
-                          <span className="font-semibold">{winner}</span>
-                          <span className="text-white/40"> / {loser}</span>
-                        </span>
+          ) : (
+            <ol className="space-y-1.5">
+              {recentSix.map((m) => {
+                const p1 = m.p1_name || "Gäst";
+                const p2 = m.is_bot_match
+                  ? getBotName(m.bot_elo ?? 1000, m.id)
+                  : m.p2_name || "Gäst";
+                const s1 = m.player1_score ?? 0;
+                const s2 = m.player2_score ?? 0;
+                const { isDraw, p1Won } = getMatchOutcome(m);
+                const winner = isDraw ? p1 : p1Won ? p1 : p2;
+                const loser = isDraw ? p2 : p1Won ? p2 : p1;
+                const ws = isDraw ? s1 : p1Won ? s1 : s2;
+                const ls = isDraw ? s2 : p1Won ? s2 : s1;
+                const isVerbal = m.match_type === "verbal";
+                return (
+                  <li key={m.id} className="flex items-center justify-between gap-2 font-mono text-[11px]">
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span
+                        className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold uppercase ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white/85"}`}
+                        style={isVerbal ? { background: AMBER } : undefined}
+                      >
+                        {isVerbal ? "V" : "M"}
                       </span>
-                      <span className="shrink-0 tabular-nums text-white/75">
-                        {ws}<span className="text-white/30">–</span>{ls}
+                      <span className="truncate text-white">
+                        <span className="font-semibold">{winner}</span>
+                        <span className="text-white/40"> / {loser}</span>
                       </span>
-                    </li>
-                  );
-                })}
-              </ol>
-            )}
-          </motion.div>
-        </div>
+                    </span>
+                    <span className="shrink-0 tabular-nums text-white/75">
+                      {ws}<span className="text-white/30">–</span>{ls}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+          )}
+        </motion.div>
       </div>
     </section>
   );
@@ -366,10 +371,10 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
   const topVerbal = displayPlayers.filter((p) => p.type === "verbal").slice(0, 3);
 
   return (
-    <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
+    <section className="relative px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 flex items-end justify-between">
-          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
             Toppspelarna just nu
           </h2>
           <Link to="/leaderboard" className="hidden text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline sm:block">
@@ -381,7 +386,7 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
           <VerbalPodium players={topVerbal} />
         )}
 
-        <div className="overflow-hidden rounded-lg border border-white/10">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl" style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.5)" }}>
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.04] text-left text-[11px] uppercase tracking-wider text-white/45">
@@ -636,10 +641,10 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
   if (matches.length === 0) return null;
 
   return (
-    <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
+    <section className="relative px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-3xl">
         <div className="mb-10 text-center">
-          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
             Senaste matcherna
           </h2>
         </div>
@@ -715,14 +720,14 @@ function TierBar() {
           {RANK_TIERS.map((t) => (
             <div
               key={t.tier}
-              className="rounded-md border p-5 text-center"
+              className="rounded-2xl border p-5 text-center backdrop-blur-md"
               style={t.tier === "diamant" ? {
                 borderColor: `${AMBER}66`,
-                background: `linear-gradient(180deg, ${AMBER}1a 0%, transparent 100%)`,
-                boxShadow: `0 0 40px -10px ${AMBER}66`,
+                background: `linear-gradient(180deg, ${AMBER}22 0%, rgba(255,255,255,0.03) 100%)`,
+                boxShadow: `0 0 40px -10px ${AMBER}55`,
               } : {
-                borderColor: "rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.02)",
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.04)",
               }}
             >
               <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full text-[18px]" style={{ background: t.bgColor, color: t.textColor, border: `2px solid ${t.borderColor}` }}>
@@ -766,10 +771,10 @@ function Quotes() {
   }, [positions, handleShuffle]);
 
   return (
-    <section className="border-y border-white/8 bg-black/30 px-6 py-24 sm:py-28">
+    <section className="relative px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <h2
-          className="mb-14 text-center text-[24px] font-bold text-white/85 sm:text-[32px]"
+          className="mb-14 text-center text-[28px] font-bold text-white/85 sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
         >
           Vad spelarna säger
@@ -868,17 +873,17 @@ function Closer() {
   return (
     <section className="px-6 py-24 text-center sm:py-32">
       <div className="mx-auto max-w-2xl">
-        <h2 className="text-[44px] font-black leading-[1.02] text-white sm:text-[64px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}>
+        <h2 className="text-[36px] font-black leading-[1.02] text-white sm:text-[56px] md:text-[64px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}>
           Hitta en match.<br />
           <span style={{ color: AMBER }}>Nu.</span>
         </h2>
-        <p className="mx-auto mt-5 max-w-md text-[16px] text-white/55">
+        <p className="mx-auto mt-5 max-w-md text-[15px] text-white/55 sm:text-[16px]">
           Inget kreditkort. Inga annonser. Bara duell.
         </p>
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-10 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <a
             href="/matchmaking"
-            className="group inline-flex h-[52px] items-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
+            className="group inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 sm:w-auto"
             style={{ background: AMBER }}
           >
             Hitta match
@@ -886,7 +891,7 @@ function Closer() {
           </a>
           <Link
             to="/login"
-            className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/12 px-10 text-[15px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
+            className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md border border-white/12 px-10 text-[15px] font-medium text-white/75 transition hover:border-white/25 hover:text-white sm:w-auto"
           >
             Logga in
           </Link>
