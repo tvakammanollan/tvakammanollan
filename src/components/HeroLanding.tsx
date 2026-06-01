@@ -45,13 +45,26 @@ export function HeroLanding() {
 /* ===  LIVE TICKER — real recent matches                   === */
 /* ============================================================ */
 
+/**
+ * Härleder vinnaren från scores när winner_id är null (vilket händer
+ * när en bot vinner — boten har ingen user-id att lagra). Lika scores
+ * = riktig oavgjort.
+ */
+function getMatchOutcome(m: { winner_id: string | null; player1_id: string; player1_score: number | null; player2_score: number | null }) {
+  const s1 = m.player1_score ?? 0;
+  const s2 = m.player2_score ?? 0;
+  if (s1 === s2) return { isDraw: true as const, p1Won: false };
+  const p1Won = m.winner_id ? m.winner_id === m.player1_id : s1 > s2;
+  return { isDraw: false as const, p1Won };
+}
+
 function formatMatchString(m: NonNullable<LandingStats["recent"]>[number]): string {
   const p1 = m.p1_name || "Gäst";
   const p2 = m.is_bot_match ? getBotName(m.bot_elo ?? 1000, m.id) : m.p2_name || "Gäst";
   const s1 = m.player1_score ?? 0;
   const s2 = m.player2_score ?? 0;
-  if (!m.winner_id) return `${p1} och ${p2} oavgjort ${s1}–${s2}`;
-  const p1Won = m.winner_id === m.player1_id;
+  const { isDraw, p1Won } = getMatchOutcome(m);
+  if (isDraw) return `${p1} och ${p2} oavgjort ${s1}–${s2}`;
   const winner = p1Won ? p1 : p2;
   const loser = p1Won ? p2 : p1;
   const ws = p1Won ? s1 : s2;
@@ -279,8 +292,7 @@ function Hero({
                     : m.p2_name || "Gäst";
                   const s1 = m.player1_score ?? 0;
                   const s2 = m.player2_score ?? 0;
-                  const isDraw = !m.winner_id;
-                  const p1Won = m.winner_id === m.player1_id;
+                  const { isDraw, p1Won } = getMatchOutcome(m);
                   const winner = isDraw ? p1 : p1Won ? p1 : p2;
                   const loser = isDraw ? p2 : p1Won ? p2 : p1;
                   const ws = isDraw ? s1 : p1Won ? s1 : s2;
@@ -622,8 +634,7 @@ function MatchRow({ match, delay }: { match: NonNullable<LandingStats["recent"]>
   const p2 = match.is_bot_match ? getBotName(match.bot_elo ?? 1000, match.id) : match.p2_name || "Gäst";
   const s1 = match.player1_score ?? 0;
   const s2 = match.player2_score ?? 0;
-  const isDraw = !match.winner_id;
-  const p1Won = match.winner_id === match.player1_id;
+  const { isDraw, p1Won } = getMatchOutcome(match);
   const winner = isDraw ? null : p1Won ? p1 : p2;
   const loser = isDraw ? null : p1Won ? p2 : p1;
   const ws = isDraw ? s1 : p1Won ? s1 : s2;

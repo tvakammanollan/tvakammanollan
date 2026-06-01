@@ -38,7 +38,7 @@ export function Footer() {
   return (
     <footer
       className="mt-24 border-t"
-      style={{ borderColor: "var(--line)", background: "var(--navy)" }}
+      style={{ borderColor: "rgba(255,255,255,0.08)", background: "#0f0803" }}
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
@@ -46,20 +46,16 @@ export function Footer() {
           <FooterCol title="Företag" items={COMPANY} />
           <FooterCol title="Juridik" items={LEGAL} />
           <div>
-            <h4
-              className="text-xs font-bold uppercase tracking-[0.18em]"
-              style={{ color: "var(--text-tertiary)" }}
-            >
+            <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
               Hör av dig
             </h4>
             <ul className="mt-4 space-y-2">
               <li>
                 <a
                   href="mailto:info@hpkampen.se"
-                  className="inline-flex items-center gap-2 text-sm transition hover:underline"
-                  style={{ color: "var(--cream)" }}
+                  className="inline-flex items-center gap-2 text-sm text-white/80 transition hover:text-white hover:underline"
                 >
-                  <Mail className="h-3.5 w-3.5" style={{ color: "var(--amber)" }} />
+                  <Mail className="h-3.5 w-3.5" style={{ color: "#f2a65a" }} />
                   info@hpkampen.se
                 </a>
               </li>
@@ -73,8 +69,7 @@ export function Footer() {
                       aria-label={label}
                       rel="noopener noreferrer"
                       target="_blank"
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition hover:bg-white/5"
-                      style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 text-white/75 transition hover:border-white/25 hover:bg-white/5 hover:text-white"
                     >
                       <Icon className="h-4 w-4" />
                     </a>
@@ -85,14 +80,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div
-          className="mt-12 flex flex-col items-start justify-between gap-4 border-t pt-6 sm:flex-row sm:items-center"
-          style={{ borderColor: "var(--line)" }}
-        >
-          <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row sm:items-center">
+          <p className="text-xs text-white/45">
             © {new Date().getFullYear()} HP Kampen. Gratis. Alltid.
           </p>
-          <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+          <p className="text-xs text-white/45">
             Byggt i Sverige för svenska HP-pluggare.
           </p>
         </div>
@@ -110,10 +102,7 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4
-        className="text-xs font-bold uppercase tracking-[0.18em]"
-        style={{ color: "var(--text-tertiary)" }}
-      >
+      <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
         {title}
       </h4>
       <ul className="mt-4 space-y-2">
@@ -121,8 +110,7 @@ function FooterCol({
           <li key={it.to}>
             <Link
               to={it.to}
-              className="text-sm transition hover:underline"
-              style={{ color: "var(--cream)" }}
+              className="text-sm text-white/80 transition hover:text-white hover:underline"
             >
               {it.label}
             </Link>
