@@ -15,6 +15,12 @@ export interface RecentMatch {
   bot_elo?: number | null;
 }
 
+export interface TopPlayer {
+  username: string;
+  elo: number;
+  type: "verbal" | "math";
+}
+
 export interface LandingStats {
   totalMatches: number;
   totalPlayers: number;
@@ -27,6 +33,8 @@ export interface LandingStats {
   /** Highest math ELO across all users right now. */
   topMathElo: number;
   recent: RecentMatch[];
+  /** Top players by ELO (verbal + math interleaved by score, max 8). */
+  topPlayers: TopPlayer[];
 }
 
 export const getLandingStats = createServerFn({ method: "GET" }).handler(
@@ -50,6 +58,8 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       recent,
       topVerbal,
       topMath,
+      topVerbalList,
+      topMathList,
     ] = await Promise.all([
         safe(
           supabaseAdmin
@@ -113,6 +123,28 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
             .maybeSingle(),
           { data: null } as { data: { elo_math: number | null } | null },
         ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("username, elo_verbal")
+            .gte("games_played", 1)
+            .order("elo_verbal", { ascending: false })
+            .limit(5),
+          { data: [] } as {
+            data: Array<{ username: string | null; elo_verbal: number | null }>;
+          },
+        ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("username, elo_math")
+            .gte("games_played", 1)
+            .order("elo_math", { ascending: false })
+            .limit(5),
+          { data: [] } as {
+            data: Array<{ username: string | null; elo_math: number | null }>;
+          },
+        ),
       ]);
 
     const activeIds = new Set<string>();
@@ -151,6 +183,31 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
         nameMap.set(u.id as string, u.username as string);
     }
 
+    const topPlayers: TopPlayer[] = [
+      ...((topVerbalList.data ?? []) as Array<{
+        username: string | null;
+        elo_verbal: number | null;
+      }>)
+        .filter((u) => u.username && (u.elo_verbal ?? 0) > 0)
+        .map((u) => ({
+          username: u.username as string,
+          elo: u.elo_verbal as number,
+          type: "verbal" as const,
+        })),
+      ...((topMathList.data ?? []) as Array<{
+        username: string | null;
+        elo_math: number | null;
+      }>)
+        .filter((u) => u.username && (u.elo_math ?? 0) > 0)
+        .map((u) => ({
+          username: u.username as string,
+          elo: u.elo_math as number,
+          type: "math" as const,
+        })),
+    ]
+      .sort((a, b) => b.elo - a.elo)
+      .slice(0, 8);
+
     return {
       totalMatches: matchesCount.count ?? 0,
       totalPlayers: usersCount.count ?? 0,
@@ -163,6 +220,7 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
         p1_name: nameMap.get(m.player1_id) ?? null,
         p2_name: m.player2_id ? nameMap.get(m.player2_id) ?? null : null,
       })),
+      topPlayers,
     };
   },
 );

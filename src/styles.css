@@ -298,6 +298,14 @@
     transform: rotate(360deg);
   }
 }
+@keyframes ticker-loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 @keyframes marquee-x {
   from {
     transform: translateX(0);
