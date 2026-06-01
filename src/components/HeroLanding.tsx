@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Loader2 } from "lucide-react";
@@ -744,41 +744,119 @@ function TierBar() {
 /* ===  QUOTES                                              === */
 /* ============================================================ */
 
+type StackPosition = "front" | "middle" | "back";
+
 function Quotes() {
+  const [positions, setPositions] = useState<StackPosition[]>(["front", "middle", "back"]);
+
+  const handleShuffle = useCallback(() => {
+    setPositions((prev) => {
+      const next = [...prev];
+      next.unshift(next.pop()!);
+      return next;
+    });
+  }, []);
+
+  // Auto-advance var 7:e sekund. Timer:n återställs varje gång positions
+  // ändras (även vid manuell shuffle) — då hinner användaren läsa det nya
+  // kortet innan nästa byte.
+  useEffect(() => {
+    const id = setTimeout(handleShuffle, 7000);
+    return () => clearTimeout(id);
+  }, [positions, handleShuffle]);
+
   return (
-    <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
+    <section className="border-y border-white/8 bg-black/30 px-6 py-24 sm:py-28">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-10 text-center text-[24px] font-bold text-white/85 sm:text-[32px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+        <h2
+          className="mb-14 text-center text-[24px] font-bold text-white/85 sm:text-[32px]"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+        >
           Vad spelarna säger
         </h2>
-        <div className="grid gap-4 md:grid-cols-3">
+
+        {/* Stacken — overflow är synlig så fanade kort hänger ut till höger */}
+        <div className="relative mx-auto h-[360px] w-[300px] sm:h-[380px] sm:w-[360px]">
           {TESTIMONIALS.map((t, i) => (
-            <motion.div
+            <TestimonialStackCard
               key={t.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="flex flex-col justify-between rounded-md border border-white/10 bg-white/[0.02] p-6"
-            >
-              <p className="text-[15px] leading-relaxed text-white/85">&ldquo;{t.quote}&rdquo;</p>
-              <div className="mt-5 flex items-center gap-3 border-t border-white/5 pt-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[12px] font-bold text-white">
-                  {t.name[0]}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[13px] font-semibold text-white">{t.name}</p>
-                  {t.founder && <p className="font-mono text-[10px] uppercase tracking-wider text-white/45">Grundare</p>}
-                </div>
-                <span className="ml-auto rounded px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[#1a0d04]" style={{ background: AMBER }}>
-                  HP {t.score}
-                </span>
-              </div>
-            </motion.div>
+              t={t}
+              position={positions[i]}
+              handleShuffle={handleShuffle}
+            />
           ))}
         </div>
+
+        <p className="mt-10 text-center text-[11px] uppercase tracking-[0.18em] text-white/40">
+          Dra åt vänster för nästa
+        </p>
       </div>
     </section>
+  );
+}
+
+function TestimonialStackCard({
+  t,
+  position,
+  handleShuffle,
+}: {
+  t: (typeof TESTIMONIALS)[number];
+  position: StackPosition;
+  handleShuffle: () => void;
+}) {
+  const dragStartX = useRef(0);
+  const isFront = position === "front";
+
+  return (
+    <motion.div
+      style={{
+        zIndex: position === "front" ? 3 : position === "middle" ? 2 : 1,
+      }}
+      animate={{
+        rotate: position === "front" ? "-3deg" : position === "middle" ? "1deg" : "5deg",
+        x: position === "front" ? "0%" : position === "middle" ? "10%" : "20%",
+        y: position === "front" ? "0%" : position === "middle" ? "2%" : "5%",
+        scale: position === "front" ? 1 : 0.96,
+      }}
+      drag={isFront ? "x" : false}
+      dragElastic={0.4}
+      dragListener={isFront}
+      dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      onDragStart={(_, info) => {
+        dragStartX.current = info.point.x;
+      }}
+      onDragEnd={(_, info) => {
+        if (dragStartX.current - info.point.x > 100) handleShuffle();
+        dragStartX.current = 0;
+      }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className={`absolute inset-0 flex flex-col justify-between rounded-2xl border border-white/12 bg-[#1a0d04]/85 p-7 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.55)] backdrop-blur-md ${
+        isFront ? "cursor-grab active:cursor-grabbing" : ""
+      }`}
+    >
+      <p className="text-[15px] leading-[1.55] text-white/85 sm:text-[16px]">
+        &ldquo;{t.quote}&rdquo;
+      </p>
+      <div className="mt-6 flex items-center gap-3 border-t border-white/8 pt-5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white">
+          {t.name[0]}
+        </div>
+        <div className="min-w-0">
+          <p className="text-[14px] font-semibold text-white">{t.name}</p>
+          {t.founder && (
+            <p className="font-mono text-[10px] uppercase tracking-wider text-white/45">
+              Grundare
+            </p>
+          )}
+        </div>
+        <span
+          className="ml-auto shrink-0 rounded px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[#1a0d04]"
+          style={{ background: AMBER }}
+        >
+          HP {t.score}
+        </span>
+      </div>
+    </motion.div>
   );
 }
 
