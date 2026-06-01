@@ -16,7 +16,6 @@ import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AppMotion } from "@/components/AppMotion";
-import { FloatingTestCta } from "@/components/FloatingTestCta";
 import { Footer } from "@/components/Footer";
 
 installSupabaseFetchAuth();
@@ -420,7 +419,6 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
-        <FloatingTestCta />
         <FriendInviteListener />
         <Toaster richColors position="top-center" />
       </div>

@@ -79,30 +79,31 @@ export function Navbar() {
     <header
       className="sticky top-0 z-50"
       style={{
-        background: "rgba(7, 17, 30, 0.72)",
-        borderBottom: "1px solid var(--line)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        background: "rgba(15, 8, 3, 0.78)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        backdropFilter: "blur(14px) saturate(160%)",
+        WebkitBackdropFilter: "blur(14px) saturate(160%)",
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
         <Link to="/" className="group inline-flex items-center gap-2.5 shrink-0">
-          {/* Aurora monogram crest */}
+          {/* Monogram crest — amber */}
           <span
             aria-hidden
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-amber-400 text-white shadow-md transition-transform group-hover:rotate-6 group-hover:scale-110"
+            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
+            style={{ background: "#f2a65a" }}
           >
-            <span className="absolute inset-0.5 rounded-[10px] bg-[#050507]" />
+            <span className="absolute inset-0.5 rounded-[10px] bg-[#170d05]" />
             <span
-              className="relative text-[13px] font-black tracking-tighter text-white"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="relative text-[13px] font-black tracking-tighter"
+              style={{ fontFamily: "var(--font-display)", color: "#f2a65a" }}
             >
               HP
             </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#170d05] bg-emerald-400" />
           </span>
           <span
-            className="text-[19px] font-bold text-[#050507] sm:text-[21px]"
+            className="text-[19px] font-bold text-white sm:text-[21px]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
           >
             Kampen
@@ -253,7 +254,7 @@ function NavLink({
         </span>
       ) : null}
       {/* Underline — animates in on hover, persists on active */}
-      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100" />
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100" style={{ background: "#f2a65a" }} />
     </Link>
   );
 }

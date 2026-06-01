@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Loader2, Zap } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
 import { getLandingStats, type LandingStats, type TopPlayer } from "@/lib/landing.functions";
@@ -194,26 +194,17 @@ function Hero({
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-16">
         <div className="grid items-end gap-8 md:grid-cols-[2fr_1fr]">
           <div>
-            <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
-              <span className="flex items-center gap-1.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                </span>
-                LIVE
+            <div className="flex items-center gap-2 font-mono text-[11px] tracking-wide text-white/55">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
-              {activePlayers > 0 && (
-                <>
-                  <span className="text-white/30">·</span>
-                  <span>{activePlayers} ONLINE</span>
-                </>
-              )}
-              {next && diffDays !== null && (
-                <>
-                  <span className="text-white/30">·</span>
-                  <span>HP I {diffDays}D</span>
-                </>
-              )}
+              <span>
+                {activePlayers > 0
+                  ? `${activePlayers} spelare online`
+                  : "Live arena"}
+                {next && diffDays !== null ? ` · ${diffDays} dagar till HP` : null}
+              </span>
             </div>
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
@@ -228,7 +219,7 @@ function Hero({
             </motion.h1>
             <p className="mt-6 max-w-xl text-[16px] leading-[1.6] text-white/65 sm:text-[18px]">
               Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match.
-              Inga övningsprov — bara duell.
+              Inga övningsprov. Bara duell.
             </p>
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -240,19 +231,16 @@ function Hero({
                 type="button"
                 onClick={onGuest}
                 disabled={guestLoading}
-                className="group relative inline-flex h-[56px] items-center gap-2 overflow-hidden rounded-md px-7 text-[15px] font-bold tracking-wide text-[#1a0d04] transition hover:scale-[1.02] disabled:opacity-60"
-                style={{
-                  background: AMBER,
-                  boxShadow: `0 0 40px -8px ${AMBER}99`,
-                }}
+                className="group relative inline-flex h-[52px] items-center gap-2 rounded-md px-7 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60"
+                style={{ background: AMBER }}
               >
-                {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
-                {guestLoading ? "STARTAR…" : "HITTA MATCH NU"}
-                {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
+                {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {guestLoading ? "Startar…" : "Hitta match"}
+                {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
               </button>
               <Link
                 to="/signup"
-                className="inline-flex h-[56px] items-center gap-2 rounded-md border border-white/15 bg-white/5 px-6 text-[14px] font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"
+                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
               >
                 Spara min ELO
               </Link>
@@ -333,64 +321,65 @@ function Hero({
 
 function Leaderboard({ stats }: { stats: LandingStats | null }) {
   const players = stats?.topPlayers ?? [];
-  const topVerbal = players.filter((p) => p.type === "verbal").slice(0, 3);
+  const displayPlayers = players.length > 0 ? players : ANONYMOUS_PLACEHOLDER;
+  const isPlaceholder = players.length === 0;
+  const topVerbal = displayPlayers.filter((p) => p.type === "verbal").slice(0, 3);
 
   return (
     <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 flex items-end justify-between">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">Topplista · Live</div>
-            <h2 className="mt-2 text-[36px] font-black leading-[1.05] sm:text-[52px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
-              Toppspelarna just nu
-            </h2>
-          </div>
-          <Link to="/leaderboard" className="hidden font-mono text-[11px] uppercase tracking-wider text-white/55 underline-offset-4 hover:text-white hover:underline sm:block">
+        <div className="mb-10 flex items-end justify-between">
+          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+            Toppspelarna just nu
+          </h2>
+          <Link to="/leaderboard" className="hidden text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline sm:block">
             Hela topplistan →
           </Link>
         </div>
 
-        {/* Top 3 verbal — podium med medaljer */}
         {topVerbal.length > 0 && (
           <VerbalPodium players={topVerbal} />
         )}
 
-        {players.length === 0 ? (
-          <div className="rounded-lg border border-white/10 bg-white/[0.02] p-10 text-center">
-            <p className="font-mono text-[12px] uppercase tracking-wider text-white/45">
-              Inga spelare med spelade matcher ännu
-            </p>
-            <Link
-              to="/signup"
-              className="mt-4 inline-flex h-[44px] items-center gap-2 rounded-md px-6 text-[13px] font-bold uppercase tracking-wider text-[#1a0d04]"
-              style={{ background: AMBER }}
-            >
-              Bli först ut →
-            </Link>
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-lg border border-white/10">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/10 bg-white/5 font-mono text-[10px] uppercase tracking-wider text-white/45">
-                  <th className="px-4 py-3 text-left font-medium">Rank</th>
-                  <th className="px-4 py-3 text-left font-medium">Spelare</th>
-                  <th className="px-4 py-3 text-left font-medium">Prov</th>
-                  <th className="px-4 py-3 text-right font-medium">ELO</th>
-                </tr>
-              </thead>
-              <tbody>
-                {players.map((p, i) => (
-                  <PlayerRow key={`${p.username}-${p.type}`} player={p} rank={i + 1} />
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="overflow-hidden rounded-lg border border-white/10">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-white/10 bg-white/[0.04] text-left text-[11px] uppercase tracking-wider text-white/45">
+                <th className="px-4 py-3 font-medium">#</th>
+                <th className="px-4 py-3 font-medium">Spelare</th>
+                <th className="px-4 py-3 font-medium">Prov</th>
+                <th className="px-4 py-3 text-right font-medium">ELO</th>
+              </tr>
+            </thead>
+            <tbody>
+              {displayPlayers.map((p, i) => (
+                <PlayerRow key={`${p.username}-${p.type}-${i}`} player={p} rank={i + 1} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {isPlaceholder && (
+          <p className="mt-3 text-center text-[12px] text-white/35">
+            Placeholder — fylls med riktiga spelare när de börjar spela.
+          </p>
         )}
       </div>
     </section>
   );
 }
+
+// Visas när topPlayers är tom — så layouten inte ser trasig ut.
+const ANONYMOUS_PLACEHOLDER: TopPlayer[] = [
+  { username: "Anonym spelare", elo: 1854, type: "verbal" },
+  { username: "Anonym spelare", elo: 1822, type: "math" },
+  { username: "Anonym spelare", elo: 1798, type: "verbal" },
+  { username: "Anonym spelare", elo: 1781, type: "math" },
+  { username: "Anonym spelare", elo: 1764, type: "verbal" },
+  { username: "Anonym spelare", elo: 1743, type: "math" },
+  { username: "Anonym spelare", elo: 1721, type: "verbal" },
+  { username: "Anonym spelare", elo: 1698, type: "math" },
+];
 
 function VerbalPodium({ players }: { players: TopPlayer[] }) {
   // Beställning på podiet: silver(#2), guld(#1), brons(#3) — guld i mitten
@@ -523,10 +512,9 @@ function LiveMatch() {
   return (
     <section className="px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">Så ser en match ut</div>
-          <h2 className="mt-2 text-[36px] font-black leading-[1.05] sm:text-[52px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
-            Två spelare. Fem minuter.
+        <div className="mb-10 text-center">
+          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+            Så ser en match ut
           </h2>
         </div>
 
@@ -610,15 +598,8 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
   return (
     <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
-            LIVE FEED
-          </div>
-          <h2 className="mt-2 text-[28px] font-black leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+        <div className="mb-10 text-center">
+          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
             Senaste matcherna
           </h2>
         </div>
@@ -686,9 +667,8 @@ function TierBar() {
   return (
     <section className="px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">Ranking · Tiers</div>
-          <h2 className="mt-2 text-[36px] font-black leading-[1.05] sm:text-[52px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+        <div className="mb-10 text-center">
+          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
             Brons till Diamant
           </h2>
         </div>
@@ -729,9 +709,9 @@ function Quotes() {
   return (
     <section className="border-y border-white/8 bg-black/30 px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+        <h2 className="mb-10 text-center text-[24px] font-bold text-white/85 sm:text-[32px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
           Vad spelarna säger
-        </div>
+        </h2>
         <div className="grid gap-4 md:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
             <motion.div
@@ -781,19 +761,15 @@ function Closer() {
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href="/matchmaking"
-            className="group inline-flex h-[56px] items-center gap-2 rounded-md px-10 text-[15px] font-bold tracking-wide text-[#1a0d04] transition hover:scale-[1.02]"
-            style={{
-              background: AMBER,
-              boxShadow: `0 0 40px -8px ${AMBER}b3`,
-            }}
+            className="group inline-flex h-[52px] items-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
+            style={{ background: AMBER }}
           >
-            <Zap className="h-4 w-4" />
-            HITTA MATCH
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            Hitta match
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <Link
             to="/login"
-            className="inline-flex h-[56px] items-center gap-2 rounded-md border border-white/15 bg-white/5 px-10 text-[15px] font-medium text-white/80 transition hover:bg-white/10"
+            className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/12 px-10 text-[15px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
           >
             Logga in
           </Link>
