@@ -26,18 +26,22 @@ export const createMatch = createServerFn({ method: "POST" })
     const eloField = data.match_type === "verbal" ? "elo_verbal" : "elo_math";
 
     // 30s cooldown mellan matchskapande för att förhindra automatiserad spam.
-    const { data: lastMatch } = await supabaseAdmin
-      .from("matches")
-      .select("created_at")
-      .eq("player1_id", userId)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    if (lastMatch?.created_at) {
-      const ageMs = Date.now() - new Date(lastMatch.created_at).getTime();
-      if (ageMs < 30_000) {
-        const wait = Math.ceil((30_000 - ageMs) / 1000);
-        throw new Error(`Vänta ${wait} sek innan du startar nästa match.`);
+    // Gäller bara private rooms — bot-matcher tillåts utan cooldown eftersom
+    // gäst-flödet (Hitta match → bot) annars stuprör direkt vid retry.
+    if (data.mode === "private") {
+      const { data: lastMatch } = await supabaseAdmin
+        .from("matches")
+        .select("created_at")
+        .eq("player1_id", userId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (lastMatch?.created_at) {
+        const ageMs = Date.now() - new Date(lastMatch.created_at).getTime();
+        if (ageMs < 30_000) {
+          const wait = Math.ceil((30_000 - ageMs) / 1000);
+          throw new Error(`Vänta ${wait} sek innan du startar nästa match.`);
+        }
       }
     }
 
