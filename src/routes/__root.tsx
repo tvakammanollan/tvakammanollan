@@ -78,11 +78,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
+      <div className="max-w-lg text-center">
         <h1 className="text-xl font-semibold tracking-tight">Något gick snett</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Försök igen eller gå tillbaka till hem.
         </p>
+        <details className="mt-4 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-left text-xs">
+          <summary className="cursor-pointer text-white/60">
+            Teknisk info (för debugging)
+          </summary>
+          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-words text-[11px] text-[#e25a6a]">
+            {error?.name ? `${error.name}: ` : ""}
+            {error?.message ?? String(error)}
+            {error?.stack ? `\n\n${error.stack.split("\n").slice(0, 5).join("\n")}` : ""}
+          </pre>
+        </details>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
