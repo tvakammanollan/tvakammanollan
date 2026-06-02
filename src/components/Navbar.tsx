@@ -79,10 +79,9 @@ export function Navbar() {
     <header
       className="sticky top-0 z-50"
       style={{
-        background: "rgba(15, 8, 3, 0.78)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
-        backdropFilter: "blur(14px) saturate(160%)",
-        WebkitBackdropFilter: "blur(14px) saturate(160%)",
+        background: "rgba(15, 8, 3, 0.65)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">

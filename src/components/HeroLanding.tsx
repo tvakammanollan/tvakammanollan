@@ -18,6 +18,15 @@ const TESTIMONIALS = [
 
 const AMBER = "#f2a65a";
 
+// Återanvändbar glassmorphism: gradient-fyllning + inset-highlight + soft
+// shadow. Synligt även när det inte finns något dynamiskt att blur:a
+// bakom, eftersom gradienten + inset-kanten gör jobbet visuellt.
+const GLASS_STYLE: React.CSSProperties = {
+  background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.10)",
+};
+const GLASS_CLASS = "rounded-2xl border border-white/15 backdrop-blur-xl";
+
 // Ord som cyklar i mittersta raden av hero-rubriken. Behåller "Klättra"
 // som första ord så hemsidan ser bekant ut första sekunden, sedan rotation
 // genom relaterade verbs som passar 3-stegs-rubriken "Spela. X. Vinn."
@@ -248,7 +257,7 @@ function Hero({
           "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.15) 40%, rgba(23,13,5,0.7) 85%, rgba(23,13,5,1) 100%)",
       }} />
 
-      <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
+      <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-3xl flex-col items-start justify-center px-6 py-24 text-left">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -275,7 +284,7 @@ function Hero({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="mt-9 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
+          className="mx-auto mt-10 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
         >
           <button
             type="button"
@@ -301,8 +310,8 @@ function Hero({
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.55 }}
-          className="mt-14 w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left backdrop-blur-xl"
-          style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.6)" }}
+          className={`mx-auto mt-14 w-full max-w-md p-5 text-left ${GLASS_CLASS}`}
+          style={GLASS_STYLE}
         >
           <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-white/45">
             <span className="flex items-center gap-1.5">
@@ -390,7 +399,7 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
           <VerbalPodium players={topVerbal} />
         )}
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl" style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.5)" }}>
+        <div className={`overflow-hidden ${GLASS_CLASS}`} style={GLASS_STYLE}>
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10 bg-white/[0.04] text-left text-[11px] uppercase tracking-wider text-white/45">
@@ -473,11 +482,12 @@ function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 
   return (
     <div className={`${m.height} flex flex-col items-stretch`}>
       <div
-        className="relative flex flex-1 flex-col items-center rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md"
+        className={`relative flex flex-1 flex-col items-center p-5 ${GLASS_CLASS}`}
         style={{
+          ...GLASS_STYLE,
           boxShadow: isGold
-            ? `0 0 50px -15px ${AMBER}55, 0 20px 40px -20px rgba(0,0,0,0.5)`
-            : "0 20px 40px -25px rgba(0,0,0,0.45)",
+            ? `0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.10), 0 0 60px -15px ${AMBER}55`
+            : (GLASS_STYLE.boxShadow as string),
         }}
       >
         <div className="text-[40px] leading-none sm:text-[48px]" aria-hidden>
@@ -553,7 +563,7 @@ function LiveMatch() {
           </h2>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl" style={{ boxShadow: "0 20px 60px -25px rgba(0,0,0,0.5)" }}>
+        <div className={`overflow-hidden ${GLASS_CLASS}`} style={GLASS_STYLE}>
           <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3">
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
               <span className="rounded px-2 py-0.5 font-bold text-[#1a0d04]" style={{ background: AMBER }}>ORD</span>
