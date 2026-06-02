@@ -194,7 +194,10 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
   const looped = [...items, ...items];
 
   return (
-    <div className="sticky top-0 z-30 overflow-hidden border-b border-white/10 bg-black/55 py-2 backdrop-blur-sm">
+    <div
+      className="sticky top-0 z-30 overflow-hidden border-b border-white/8 py-2 backdrop-blur-md"
+      style={{ background: "rgba(15, 8, 3, 0.78)" }}
+    >
       <div
         className="flex whitespace-nowrap will-change-transform"
         style={{ animation: "ticker-loop 28s linear infinite" }}
@@ -272,13 +275,13 @@ function Hero({
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-center"
+          className="mt-9 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
         >
           <button
             type="button"
             onClick={onGuest}
             disabled={guestLoading}
-            className="group relative inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60 sm:w-auto"
+            className="group relative inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60"
             style={{ background: AMBER }}
           >
             {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
@@ -287,7 +290,7 @@ function Hero({
           </button>
           <Link
             to="/signup"
-            className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white sm:w-auto"
+            className="inline-flex h-[52px] items-center justify-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
           >
             Spara min ELO
           </Link>
@@ -410,6 +413,13 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
             Placeholder — fylls med riktiga spelare när de börjar spela.
           </p>
         )}
+
+        {/* Mobil-fallback för länken till hela topplistan */}
+        <div className="mt-6 text-center sm:hidden">
+          <Link to="/leaderboard" className="text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline">
+            Hela topplistan →
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -535,7 +545,7 @@ function PlayerRow({ player, rank }: { player: TopPlayer; rank: number }) {
 
 function LiveMatch() {
   return (
-    <section className="px-6 py-20 sm:py-24">
+    <section className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
@@ -694,14 +704,15 @@ function MatchRow({ match, delay }: { match: NonNullable<LandingStats["recent"]>
 
 function TierBar() {
   return (
-    <section className="px-6 py-20 sm:py-24">
+    <section className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
             Brons till Diamant
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+        {/* Mobile: 2-col-rad + diamant full-bredd så det inte ser stympat ut. md+: 5 i rad. */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
           {RANK_TIERS.map((t) => (
             <div
               key={t.tier}
@@ -756,10 +767,10 @@ function Quotes() {
   }, [positions, handleShuffle]);
 
   return (
-    <section className="relative px-6 py-24 sm:py-28">
+    <section className="relative px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <h2
-          className="mb-14 text-center text-[28px] font-bold text-white/85 sm:text-[40px]"
+          className="mb-14 text-center text-[28px] font-bold leading-[1.05] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
         >
           Vad spelarna säger
@@ -865,10 +876,10 @@ function Closer() {
         <p className="mx-auto mt-5 max-w-md text-[15px] text-white/55 sm:text-[16px]">
           Inget kreditkort. Inga annonser. Bara duell.
         </p>
-        <div className="mt-10 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+        <div className="mx-auto mt-10 flex w-full max-w-sm flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row">
           <a
             href="/matchmaking"
-            className="group inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 sm:w-auto"
+            className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
             style={{ background: AMBER }}
           >
             Hitta match
@@ -876,7 +887,7 @@ function Closer() {
           </a>
           <Link
             to="/login"
-            className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md border border-white/12 px-10 text-[15px] font-medium text-white/75 transition hover:border-white/25 hover:text-white sm:w-auto"
+            className="inline-flex h-[52px] items-center justify-center gap-2 rounded-md border border-white/12 px-10 text-[15px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
           >
             Logga in
           </Link>
