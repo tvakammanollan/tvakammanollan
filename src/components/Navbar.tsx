@@ -75,13 +75,23 @@ export function Navbar() {
 
   const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
 
+  // Scroll-aware: helt transparent vid top, glas-bg först när användaren
+  // scrollar — så hero-shadern bleeds fritt under navbaren utan strip.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header
-      className="sticky top-0 z-50"
+      className="sticky top-0 z-50 transition-[background,backdrop-filter] duration-300"
       style={{
-        background: "rgba(15, 8, 3, 0.65)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        background: scrolled ? "rgba(15, 8, 3, 0.65)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : undefined,
+        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : undefined,
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">

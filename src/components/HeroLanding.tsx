@@ -204,8 +204,8 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
 
   return (
     <div
-      className="sticky top-0 z-30 overflow-hidden border-b border-white/8 py-2 backdrop-blur-md"
-      style={{ background: "rgba(15, 8, 3, 0.78)" }}
+      className="relative z-30 overflow-hidden py-2 backdrop-blur-sm"
+      style={{ background: "rgba(15, 8, 3, 0.45)" }}
     >
       <div
         className="flex whitespace-nowrap will-change-transform"
@@ -249,15 +249,18 @@ function Hero({
   const canvasRef = useShaderCanvas("amber");
   const recentSix = stats?.recent?.slice(0, 6) ?? [];
 
+  // Hero pulls upp under navbar (60px) + ticker (~36px) = ~96px så
+  // shadern fyller hela viewporten från topp. Navbar (z-50) och ticker
+  // (z-30) flyter över shadern (z-10) som glas.
   return (
-    <section className="relative min-h-[92svh] overflow-hidden">
+    <section className="relative -mt-[96px] overflow-hidden" style={{ minHeight: "calc(92svh + 96px)" }}>
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full touch-none" style={{ background: "#170d05" }} />
       <div aria-hidden className="pointer-events-none absolute inset-0" style={{
         background:
-          "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.15) 40%, rgba(23,13,5,0.7) 85%, rgba(23,13,5,1) 100%)",
+          "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.12) 45%, rgba(23,13,5,0.7) 88%, rgba(23,13,5,1) 100%)",
       }} />
 
-      <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-3xl flex-col items-start justify-center px-6 py-24 text-left">
+      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-[160px] text-center" style={{ minHeight: "calc(92svh + 96px)" }}>
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
