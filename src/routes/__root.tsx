@@ -138,7 +138,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
       { name: "twitter:image", content: "https://hpkampen.se/og-image.png" },
-      { name: "theme-color", content: "#0E1B2C" },
+      { name: "theme-color", content: "#170d05" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "HP Kampen" },

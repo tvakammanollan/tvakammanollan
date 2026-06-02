@@ -188,24 +188,24 @@ function MatchmakingPage() {
       <div className="relative flex h-32 w-32 items-center justify-center">
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/40"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/40"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/30"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/30"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#6366f1]/20"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/20"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <motion.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -218,9 +218,9 @@ function MatchmakingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="eyebrow text-[#6366f1]">Realtid</p>
+        <p className="eyebrow text-[#f2a65a]">Realtid</p>
         <h1
-          className="display mt-2 text-[36px] font-bold leading-tight text-[#050507] sm:text-[48px]"
+          className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {navigating ? (
@@ -228,7 +228,7 @@ function MatchmakingPage() {
           ) : (
             <>
               <SplitText as="span">Söker</SplitText>{" "}
-              <span className="display-italic font-medium text-[#6366f1]">
+              <span className="display-italic font-medium text-[#f2a65a]">
                 <SplitText as="span" delay={0.2} italic>
                   motståndare…
                 </SplitText>
@@ -244,11 +244,11 @@ function MatchmakingPage() {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="surface-paper w-full rounded-2xl p-5 text-sm"
       >
-        <div className="text-[#737373]">
+        <div className="text-white/65">
           {minElo !== null && maxElo !== null ? (
             <>
               Söker spelare med ELO{" "}
-              <span className="font-semibold text-[#050507] tabular-nums">
+              <span className="font-semibold text-white tabular-nums">
                 {minElo}–{maxElo}
               </span>
             </>
@@ -257,12 +257,12 @@ function MatchmakingPage() {
           )}
         </div>
         {myElo !== null && (
-          <div className="mt-1 text-[#737373]">
-            Din ELO: <span className="font-semibold text-[#050507] tabular-nums">{myElo}</span>
+          <div className="mt-1 text-white/65">
+            Din ELO: <span className="font-semibold text-white tabular-nums">{myElo}</span>
           </div>
         )}
         <div
-          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#6366f1]"
+          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#f2a65a]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {mm}:{ss}
