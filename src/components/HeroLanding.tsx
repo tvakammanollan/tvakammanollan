@@ -113,7 +113,7 @@ function CyclingWord({ words, color }: { words: string[]; color: string }) {
       {words.map((w, i) => (
         <motion.span
           key={w}
-          className="absolute inset-0 flex items-center justify-center whitespace-nowrap"
+          className="absolute inset-x-0 top-0 whitespace-nowrap text-center"
           initial={false}
           animate={
             idx === i
