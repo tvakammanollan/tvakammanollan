@@ -1,7 +1,6 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -24,7 +23,8 @@ import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { displayCategory } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
-import { SplitText, Reveal, StaggerList } from "@/components/landing/MotionFX";
+import { Reveal, StaggerList } from "@/components/landing/MotionFX";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -40,8 +40,8 @@ export const Route = createFileRoute("/stats")({
   }),
 });
 
-const VERBAL_COLOR = "#6366f1";
-const MATH_COLOR = "#eab308";
+const VERBAL_COLOR = "#f2a65a";
+const MATH_COLOR = "#6fb3b8";
 
 interface UserRow {
   username: string;
@@ -304,41 +304,13 @@ function StatsPage() {
 
   return (
     <>
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="eyebrow text-[#6366f1]"
-            >
-              Din resa
-            </motion.p>
-            <h1
-              className="display mt-2 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              <SplitText as="span">Statistik.</SplitText>
-            </h1>
-            <motion.p
-              initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{
-                duration: 0.7,
-                delay: 0.35,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="mt-3 text-sm text-[#737373]"
-            >
-              Din progression och prestation över tid.
-            </motion.p>
-          </div>
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/">← Tillbaka hem</Link>
-          </Button>
-        </div>
-
+      <PageHero
+        eyebrow="Din resa"
+        title="Din utveckling"
+        subtitle="Progression och prestation över tid."
+        variant="compact"
+      />
+      <main className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
         {/* HP score estimate – first section */}
         <Reveal delay={0.45} className="mb-6">
           <HpScoreWidget eloVerbal={profile.elo_verbal} eloMath={profile.elo_math} size="full" />

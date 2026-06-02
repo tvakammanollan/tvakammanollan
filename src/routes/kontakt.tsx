@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { Mail, MessageSquare, Bug } from "lucide-react";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const Route = createFileRoute("/kontakt")({
   component: KontaktPage,
@@ -24,8 +25,7 @@ export const Route = createFileRoute("/kontakt")({
         "@type": "ContactPage",
         name: "Kontakt · HP Kampen",
         url: "https://hpkampen.se/kontakt",
-        description:
-          "Kontaktinformation till HP Kampen — e-post, buggrapporter och feedback.",
+        description: "Kontaktinformation till HP Kampen — e-post, buggrapporter och feedback.",
         publisher: { "@id": "https://hpkampen.se/#org" },
       }),
     ],
@@ -34,104 +34,86 @@ export const Route = createFileRoute("/kontakt")({
 
 function KontaktPage() {
   return (
-    <article
-      className="mx-auto max-w-2xl px-4 py-12 text-[15px] leading-[1.75]"
-      style={{ color: "var(--text-secondary)" }}
-    >
-      <header className="mb-10">
-        <h1
-          className="text-3xl font-bold sm:text-4xl"
-          style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
-        >
-          Kontakt
-        </h1>
-        <p className="mt-3" style={{ color: "var(--text-secondary)" }}>
-          Hör av dig om allt — fel i en fråga, feature-önskemål, samarbeten
-          eller bara hejhej. Vi svarar oftast inom en vardag.
-        </p>
-      </header>
-
-      <ul className="space-y-4">
-        <li>
-          <a
-            href="mailto:info@hpkampen.se"
-            className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
-            style={{ borderColor: "var(--line)", color: "var(--cream)" }}
-          >
-            <Mail className="h-5 w-5" style={{ color: "var(--amber)" }} />
-            <span>
-              <span className="font-semibold">info@hpkampen.se</span>
-              <span
-                className="ml-2 text-xs"
-                style={{ color: "var(--text-tertiary)" }}
-              >
-                Allmänt, feedback, press, samarbeten
-              </span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <div
-            className="flex items-start gap-3 rounded-2xl border p-4"
-            style={{ borderColor: "var(--line)", color: "var(--cream)" }}
-          >
-            <Bug className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--amber)" }} />
-            <span>
-              <span className="block font-semibold">Buggrapport</span>
-              <span
-                className="mt-1 block text-xs"
-                style={{ color: "var(--text-tertiary)" }}
-              >
-                Använd bug-knappen i appen (kräver inloggning) — då får vi
-                med rätt context automatiskt. Annars mejla{" "}
-                <a
-                  href="mailto:info@hpkampen.se?subject=Bugg-rapport"
-                  className="underline"
-                  style={{ color: "var(--amber)" }}
-                >
-                  info@hpkampen.se
-                </a>
-                .
-              </span>
-            </span>
-          </div>
-        </li>
-        <li>
-          <div
-            className="flex items-start gap-3 rounded-2xl border p-4"
-            style={{ borderColor: "var(--line)", color: "var(--cream)" }}
-          >
-            <MessageSquare className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--amber)" }} />
-            <span>
-              <span className="block font-semibold">Vem driver HP Kampen?</span>
-              <span
-                className="mt-1 block text-xs"
-                style={{ color: "var(--text-tertiary)" }}
-              >
-                Sajten drivs av Niklas Pellkvist som privatperson. Den är
-                gratis, utan annonser och utan kommersiell verksamhet kopplad
-                till sig. Mer om varför sajten finns:{" "}
-                <Link
-                  to="/om"
-                  className="underline"
-                  style={{ color: "var(--amber)" }}
-                >
-                  /om
-                </Link>
-                .
-              </span>
-            </span>
-          </div>
-        </li>
-      </ul>
-
-      <p
-        className="mt-10 text-sm"
-        style={{ color: "var(--text-tertiary)" }}
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Hör av dig"
+        title="Kontakt"
+        subtitle="Fel i en fråga, feature-önskemål, samarbeten eller bara hejhej. Vi svarar oftast inom en vardag."
+        align="center"
+        variant="content"
+      />
+      <article
+        className="mx-auto max-w-2xl px-4 pb-24 text-[15px] leading-[1.75] sm:px-6"
+        style={{ color: "var(--text-secondary)" }}
       >
-        Vi svarar normalt inom en vardag på mejl. Bug-rapporter via knappen
-        i appen hanteras oftast snabbare eftersom de innehåller felkontext.
-      </p>
-    </article>
+        <ul className="space-y-4">
+          <li>
+            <a
+              href="mailto:info@hpkampen.se"
+              className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
+              style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+            >
+              <Mail className="h-5 w-5" style={{ color: "var(--amber)" }} />
+              <span>
+                <span className="font-semibold">info@hpkampen.se</span>
+                <span className="ml-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
+                  Allmänt, feedback, press, samarbeten
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <div
+              className="flex items-start gap-3 rounded-2xl border p-4"
+              style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+            >
+              <Bug className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "var(--amber)" }} />
+              <span>
+                <span className="block font-semibold">Buggrapport</span>
+                <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
+                  Använd bug-knappen i appen (kräver inloggning) — då får vi med rätt context
+                  automatiskt. Annars mejla{" "}
+                  <a
+                    href="mailto:info@hpkampen.se?subject=Bugg-rapport"
+                    className="underline"
+                    style={{ color: "var(--amber)" }}
+                  >
+                    info@hpkampen.se
+                  </a>
+                  .
+                </span>
+              </span>
+            </div>
+          </li>
+          <li>
+            <div
+              className="flex items-start gap-3 rounded-2xl border p-4"
+              style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+            >
+              <MessageSquare
+                className="h-5 w-5 shrink-0 mt-0.5"
+                style={{ color: "var(--amber)" }}
+              />
+              <span>
+                <span className="block font-semibold">Vem driver HP Kampen?</span>
+                <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
+                  Sajten drivs av Niklas Pellkvist som privatperson. Den är gratis, utan annonser
+                  och utan kommersiell verksamhet kopplad till sig. Mer om varför sajten finns:{" "}
+                  <Link to="/om" className="underline" style={{ color: "var(--amber)" }}>
+                    /om
+                  </Link>
+                  .
+                </span>
+              </span>
+            </div>
+          </li>
+        </ul>
+
+        <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
+          Vi svarar normalt inom en vardag på mejl. Bug-rapporter via knappen i appen hanteras
+          oftast snabbare eftersom de innehåller felkontext.
+        </p>
+      </article>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
+import { PageHero } from "@/components/layout/PageHero";
 
 interface FaqItem {
   q: string;
@@ -115,66 +116,58 @@ export const Route = createFileRoute("/faq")({
 
 function FaqPage() {
   return (
-    <article
-      className="mx-auto max-w-3xl px-4 py-12 text-[15px] leading-[1.75]"
-      style={{ color: "var(--text-secondary)" }}
-    >
-      <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "#a5b4fc" }}
-        >
-          FAQ
-        </p>
-        <h1
-          className="mt-2 text-3xl font-bold sm:text-4xl"
-          style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
-        >
-          Vanliga frågor
-        </h1>
-        <p className="mt-3 max-w-prose">
-          Korta svar på de vanligaste frågorna om HP Kampen. Hittar du inte
-          det du söker?{" "}
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="FAQ"
+        title="Vanliga frågor"
+        subtitle="Korta svar på det vi oftast får. Hittar du inte det du söker?"
+        align="center"
+        variant="content"
+      />
+      <article
+        className="mx-auto max-w-3xl px-4 pb-24 text-[15px] leading-[1.75] sm:px-6"
+        style={{ color: "var(--text-secondary)" }}
+      >
+        <div className="mb-8 text-center">
           <Link
             to="/kontakt"
-            className="underline"
+            className="text-sm font-medium underline-offset-4 hover:underline"
             style={{ color: "var(--amber)" }}
           >
-            Hör av dig
+            Hör av dig →
           </Link>
-          .
-        </p>
-      </header>
+        </div>
 
-      <div className="space-y-3">
-        {FAQ.map(({ q, a }, i) => (
-          <details
-            key={q}
-            // Open de första 2 så sidan inte ser tom ut — resten kan användaren
-            // expandera vid behov.
-            open={i < 2}
-            className="group rounded-2xl border p-5 transition-colors hover:border-indigo-500/30"
-            style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
-          >
-            <summary
-              className="flex cursor-pointer items-start justify-between gap-4 text-base font-semibold marker:hidden [&::-webkit-details-marker]:hidden"
-              style={{ color: "var(--cream)" }}
+        <div className="space-y-3">
+          {FAQ.map(({ q, a }, i) => (
+            <details
+              key={q}
+              // Open de första 2 så sidan inte ser tom ut — resten kan användaren
+              // expandera vid behov.
+              open={i < 2}
+              className="group rounded-2xl border p-5 transition-colors hover:border-indigo-500/30"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
-              <span>{q}</span>
-              <span
-                aria-hidden="true"
-                className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs transition-transform group-open:rotate-45"
-                style={{ borderColor: "var(--line)", color: "var(--text-tertiary)" }}
+              <summary
+                className="flex cursor-pointer items-start justify-between gap-4 text-base font-semibold marker:hidden [&::-webkit-details-marker]:hidden"
+                style={{ color: "var(--cream)" }}
               >
-                +
-              </span>
-            </summary>
-            <p className="mt-3 text-[15px]" style={{ color: "var(--text-secondary)" }}>
-              {a}
-            </p>
-          </details>
-        ))}
-      </div>
-    </article>
+                <span>{q}</span>
+                <span
+                  aria-hidden="true"
+                  className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs transition-transform group-open:rotate-45"
+                  style={{ borderColor: "var(--line)", color: "var(--text-tertiary)" }}
+                >
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 text-[15px]" style={{ color: "var(--text-secondary)" }}>
+                {a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </article>
+    </div>
   );
 }

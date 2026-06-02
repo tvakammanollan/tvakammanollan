@@ -1,12 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
-import { SplitText } from "@/components/landing/MotionFX";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageHero } from "@/components/layout/PageHero";
 import { useServerFn } from "@tanstack/react-start";
 import {
   sendFriendRequest,
@@ -185,163 +184,146 @@ function FriendsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-      <div>
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="eyebrow text-[#6366f1]"
-        >
-          Din krets
-        </motion.p>
-        <h1
-          className="display mt-2 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          <SplitText as="span">Vänner.</SplitText>
-        </h1>
-        <motion.p
-          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-3 text-sm text-[#737373]"
-        >
-          Lägg till vänner via användarnamn och bjud in dem till en snabbmatch.
-        </motion.p>
-      </div>
+    <div className="min-h-screen">
+      <PageHero
+        eyebrow="Din krets"
+        title="Vänner och utmaningar"
+        subtitle="Lägg till vänner via användarnamn och bjud in dem till en snabbmatch."
+        variant="compact"
+      />
+      <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
+        {/* Add friend */}
+        <form onSubmit={handleAdd} className="mt-2 flex flex-col gap-2 sm:flex-row">
+          <Input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Användarnamn"
+            className="flex-1"
+          />
+          <Button type="submit" disabled={busy || !username.trim()} className="gap-1.5">
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+            Lägg till
+          </Button>
+        </form>
 
-      {/* Add friend */}
-      <form onSubmit={handleAdd} className="mt-6 flex flex-col gap-2 sm:flex-row">
-        <Input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Användarnamn"
-          className="flex-1"
-        />
-        <Button type="submit" disabled={busy || !username.trim()} className="gap-1.5">
-          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
-          Lägg till
-        </Button>
-      </form>
+        {/* Incoming requests */}
+        {incoming.length > 0 && (
+          <section className="mt-8">
+            <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
+              Förfrågningar ({incoming.length})
+            </h2>
+            <ul className="grid gap-2">
+              {incoming.map((r) => (
+                <li
+                  key={r.id}
+                  className="flex items-center justify-between rounded-xl border border-border bg-card p-3 shadow-card"
+                >
+                  <div className="flex items-center gap-3">
+                    <UserAvatar name={r.other?.username ?? "?"} size={36} />
+                    <span className="text-sm font-medium">{r.other?.username ?? "Okänd"}</span>
+                  </div>
+                  <div className="flex gap-1.5">
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => respond(r.id, true)}
+                      className="gap-1"
+                    >
+                      <Check className="h-4 w-4" /> Acceptera
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => respond(r.id, false)}>
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-      {/* Incoming requests */}
-      {incoming.length > 0 && (
+        {/* Friends list */}
         <section className="mt-8">
           <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
-            Förfrågningar ({incoming.length})
+            Mina vänner ({accepted.length})
           </h2>
-          <ul className="grid gap-2">
-            {incoming.map((r) => (
-              <li
-                key={r.id}
-                className="flex items-center justify-between rounded-xl border border-border bg-card p-3 shadow-card"
-              >
-                <div className="flex items-center gap-3">
-                  <UserAvatar name={r.other?.username ?? "?"} size={36} />
-                  <span className="text-sm font-medium">{r.other?.username ?? "Okänd"}</span>
-                </div>
-                <div className="flex gap-1.5">
-                  <Button
-                    size="sm"
-                    variant="default"
-                    onClick={() => respond(r.id, true)}
-                    className="gap-1"
-                  >
-                    <Check className="h-4 w-4" /> Acceptera
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => respond(r.id, false)}>
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* Friends list */}
-      <section className="mt-8">
-        <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
-          Mina vänner ({accepted.length})
-        </h2>
-        {accepted.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-border bg-card/50 p-6 text-center text-sm text-muted-foreground">
-            Du har inga vänner än. Lägg till någon ovan!
-          </p>
-        ) : (
-          <ul className="grid gap-2">
-            {accepted.map((r) => (
-              <li
-                key={r.id}
-                className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-card sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex items-center gap-3">
-                  <UserAvatar name={r.other?.username ?? "?"} size={40} />
-                  <div>
-                    <div className="text-sm font-semibold">{r.other?.username}</div>
-                    <div className="text-xs text-muted-foreground tabular-nums">
-                      Verbal {r.other?.elo_verbal ?? 1000} · Matte {r.other?.elo_math ?? 1000}
+          {accepted.length === 0 ? (
+            <p className="rounded-xl border border-dashed border-border bg-card/50 p-6 text-center text-sm text-muted-foreground">
+              Du har inga vänner än. Lägg till någon ovan!
+            </p>
+          ) : (
+            <ul className="grid gap-2">
+              {accepted.map((r) => (
+                <li
+                  key={r.id}
+                  className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-card sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div className="flex items-center gap-3">
+                    <UserAvatar name={r.other?.username ?? "?"} size={40} />
+                    <div>
+                      <div className="text-sm font-semibold">{r.other?.username}</div>
+                      <div className="text-xs text-muted-foreground tabular-nums">
+                        Verbal {r.other?.elo_verbal ?? 1000} · Matte {r.other?.elo_math ?? 1000}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  <Button
-                    size="sm"
-                    variant="default"
-                    className="gap-1"
-                    onClick={() => r.other && invite(r.other.id, "verbal")}
-                  >
-                    <Swords className="h-4 w-4" /> Verbal
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="gap-1"
-                    onClick={() => r.other && invite(r.other.id, "math")}
-                  >
-                    <Swords className="h-4 w-4" /> Matte
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => remove(r.id)}
-                    aria-label="Ta bort vän"
-                  >
-                    <Trash2 className="h-4 w-4 text-muted-foreground" />
-                  </Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      {/* Outgoing */}
-      {outgoing.length > 0 && (
-        <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
-            Skickade förfrågningar
-          </h2>
-          <ul className="grid gap-2">
-            {outgoing.map((r) => (
-              <li
-                key={r.id}
-                className="flex items-center justify-between rounded-xl border border-border bg-card/60 p-3"
-              >
-                <div className="flex items-center gap-3">
-                  <UserAvatar name={r.other?.username ?? "?"} size={32} />
-                  <span className="text-sm">{r.other?.username}</span>
-                  <span className="text-xs text-muted-foreground">Väntar…</span>
-                </div>
-                <Button size="sm" variant="ghost" onClick={() => remove(r.id)}>
-                  Avbryt
-                </Button>
-              </li>
-            ))}
-          </ul>
+                  <div className="flex flex-wrap gap-1.5">
+                    <Button
+                      size="sm"
+                      variant="default"
+                      className="gap-1"
+                      onClick={() => r.other && invite(r.other.id, "verbal")}
+                    >
+                      <Swords className="h-4 w-4" /> Verbal
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="gap-1"
+                      onClick={() => r.other && invite(r.other.id, "math")}
+                    >
+                      <Swords className="h-4 w-4" /> Matte
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => remove(r.id)}
+                      aria-label="Ta bort vän"
+                    >
+                      <Trash2 className="h-4 w-4 text-muted-foreground" />
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
-      )}
+
+        {/* Outgoing */}
+        {outgoing.length > 0 && (
+          <section className="mt-8">
+            <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
+              Skickade förfrågningar
+            </h2>
+            <ul className="grid gap-2">
+              {outgoing.map((r) => (
+                <li
+                  key={r.id}
+                  className="flex items-center justify-between rounded-xl border border-border bg-card/60 p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <UserAvatar name={r.other?.username ?? "?"} size={32} />
+                    <span className="text-sm">{r.other?.username}</span>
+                    <span className="text-xs text-muted-foreground">Väntar…</span>
+                  </div>
+                  <Button size="sm" variant="ghost" onClick={() => remove(r.id)}>
+                    Avbryt
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { PageHero } from "@/components/layout/PageHero";
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
@@ -130,12 +131,34 @@ function delProvLabel(code: string): string {
 function approxNormering(rawOutOfTotal: number, total: number): number {
   const fullRaw = Math.round((rawOutOfTotal / total) * 160);
   const table: [number, number][] = [
-    [0, 0.0], [10, 0.05], [20, 0.1], [30, 0.15], [40, 0.2],
-    [50, 0.35], [55, 0.45], [60, 0.55], [65, 0.65], [70, 0.75],
-    [75, 0.85], [80, 0.95], [85, 1.05], [90, 1.15], [95, 1.2],
-    [100, 1.25], [105, 1.3], [110, 1.35], [115, 1.4], [120, 1.5],
-    [125, 1.55], [130, 1.65], [135, 1.75], [140, 1.85], [145, 1.9],
-    [150, 1.95], [155, 2.0], [160, 2.0],
+    [0, 0.0],
+    [10, 0.05],
+    [20, 0.1],
+    [30, 0.15],
+    [40, 0.2],
+    [50, 0.35],
+    [55, 0.45],
+    [60, 0.55],
+    [65, 0.65],
+    [70, 0.75],
+    [75, 0.85],
+    [80, 0.95],
+    [85, 1.05],
+    [90, 1.15],
+    [95, 1.2],
+    [100, 1.25],
+    [105, 1.3],
+    [110, 1.35],
+    [115, 1.4],
+    [120, 1.5],
+    [125, 1.55],
+    [130, 1.65],
+    [135, 1.75],
+    [140, 1.85],
+    [145, 1.9],
+    [150, 1.95],
+    [155, 2.0],
+    [160, 2.0],
   ];
   for (let i = 0; i < table.length - 1; i++) {
     const [a, va] = table[i];
@@ -175,9 +198,21 @@ function GamlaProvPage() {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
       })
-      .then((d: RawQ[]) => { if (!abort) { setAllQuestions(d); setLoadingData(false); } })
-      .catch((e) => { if (!abort) { setDataError(String(e)); setLoadingData(false); } });
-    return () => { abort = true; };
+      .then((d: RawQ[]) => {
+        if (!abort) {
+          setAllQuestions(d);
+          setLoadingData(false);
+        }
+      })
+      .catch((e) => {
+        if (!abort) {
+          setDataError(String(e));
+          setLoadingData(false);
+        }
+      });
+    return () => {
+      abort = true;
+    };
   }, []);
 
   // Group by exam → provpass
@@ -190,7 +225,7 @@ function GamlaProvPage() {
       ppMap.get(q.provpass)!.add(q.delProv);
     }
     return new Map(
-      [...m.entries()].sort((a, b) => termSortKey(b[0]).localeCompare(termSortKey(a[0])))
+      [...m.entries()].sort((a, b) => termSortKey(b[0]).localeCompare(termSortKey(a[0]))),
     );
   }, [allQuestions]);
 
@@ -205,14 +240,9 @@ function GamlaProvPage() {
   const total = questions.length;
   const q = questions[currentIdx];
   const answered = Object.keys(answers).length;
-  const score = submitted
-    ? questions.filter((qq) => answers[qq.nr] === qq.svar).length
-    : 0;
+  const score = submitted ? questions.filter((qq) => answers[qq.nr] === qq.svar).length : 0;
 
-  const hasFacit = useMemo(
-    () => questions.some((qq) => qq.svar && qq.svar !== ""),
-    [questions]
-  );
+  const hasFacit = useMemo(() => questions.some((qq) => qq.svar && qq.svar !== ""), [questions]);
 
   function pickAnswer(letter: string) {
     if (submitted || !q) return;
@@ -261,17 +291,25 @@ function GamlaProvPage() {
   /* ── Loading / error ─────────────────────────────────────────── */
   if (loadingData) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--navy)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "var(--navy)" }}
+      >
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 rounded-full border-4 border-indigo-400 border-t-transparent animate-spin" />
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>Laddar prov…</p>
+          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+            Laddar prov…
+          </p>
         </div>
       </div>
     );
   }
   if (dataError) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--navy)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "var(--navy)" }}
+      >
         <div className="rounded-2xl border border-red-400/40 bg-red-400/5 p-6 text-center max-w-md">
           <p className="text-red-300">Kunde inte ladda data: {dataError}</p>
         </div>
@@ -282,45 +320,30 @@ function GamlaProvPage() {
   /* ── Exam picker (no term selected) ──────────────────────────── */
   if (!selectedTerm) {
     return (
-      <div className="min-h-screen" style={{ background: "var(--navy)", color: "var(--cream)" }}>
-        <div className="mx-auto max-w-3xl px-4 py-10">
-          <div className="mb-8">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
-              Högskoleprovet · gamla prov
-            </p>
-            <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}>
-              Välj prov
-            </h1>
-            <p className="mt-2 text-sm" style={{ color: "var(--text-secondary)" }}>
-              {examMap.size} provtillfällen · {allQuestions.length.toLocaleString("sv-SE")} uppgifter med facit
-            </p>
-          </div>
+      <div className="min-h-screen">
+        <PageHero
+          eyebrow="Högskoleprovet · gamla prov"
+          title="Välj prov"
+          subtitle={`${examMap.size} provtillfällen · ${allQuestions.length.toLocaleString("sv-SE")} uppgifter med facit.`}
+          align="center"
+          variant="compact"
+        />
+        <div className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
           <div className="grid gap-3 sm:grid-cols-2">
             {[...examMap.entries()].map(([term, ppMap]) => (
               <button
                 key={term}
                 type="button"
                 onClick={() => setSelectedTerm(term)}
-                className="group w-full rounded-2xl border p-5 text-left transition-all hover:border-indigo-500/50 hover:shadow-[0_0_16px_rgba(99,102,241,0.12)]"
-                style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+                className="group w-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-all hover:border-[#f2a65a]/50 hover:bg-white/[0.04]"
               >
-                <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                  {termToLabel(term)}
-                </div>
-                <div className="mt-1 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  {ppMap.size} provpass · {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
+                <div className="text-base font-semibold text-white">{termToLabel(term)}</div>
+                <div className="mt-1 text-xs text-white/55">
+                  {ppMap.size} provpass ·{" "}
+                  {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
                 </div>
               </button>
             ))}
-          </div>
-          <div className="mt-8">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1 text-sm"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              <ArrowLeft className="h-3.5 w-3.5" /> Tillbaka till hem
-            </Link>
           </div>
         </div>
       </div>
@@ -346,10 +369,16 @@ function GamlaProvPage() {
             </button>
           </div>
           <div className="mb-8">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <p
+              className="mb-1 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               {termToLabel(selectedTerm)}
             </p>
-            <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}>
+            <h1
+              className="text-3xl font-bold"
+              style={{ fontFamily: "var(--font-display)", color: "var(--cream)" }}
+            >
               Välj provpass
             </h1>
           </div>
@@ -378,13 +407,16 @@ function GamlaProvPage() {
 
   /* ── Results screen ──────────────────────────────────────────── */
   if (showResults && submitted) {
-    const byDelProv = questions.reduce<Record<string, { correct: number; total: number }>>((acc, qq) => {
-      const k = qq.delProv;
-      if (!acc[k]) acc[k] = { correct: 0, total: 0 };
-      acc[k].total++;
-      if (answers[qq.nr] === qq.svar) acc[k].correct++;
-      return acc;
-    }, {});
+    const byDelProv = questions.reduce<Record<string, { correct: number; total: number }>>(
+      (acc, qq) => {
+        const k = qq.delProv;
+        if (!acc[k]) acc[k] = { correct: 0, total: 0 };
+        acc[k].total++;
+        if (answers[qq.nr] === qq.svar) acc[k].correct++;
+        return acc;
+      },
+      {},
+    );
 
     const norm = approxNormering(score, total);
     const pct = total > 0 ? Math.round((score / total) * 100) : 0;
@@ -404,7 +436,10 @@ function GamlaProvPage() {
             >
               <ChevronLeft className="h-4 w-4" /> Provpass
             </button>
-            <span className="text-xs uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <span
+              className="text-xs uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               {termToLabel(selectedTerm)} · Pass {selectedPass}
             </span>
             <span className="w-20" />
@@ -418,13 +453,22 @@ function GamlaProvPage() {
               background: "linear-gradient(135deg, var(--navy-2) 0%, rgba(99,102,241,0.08) 100%)",
             }}
           >
-            <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full" style={{ background: "rgba(234,179,8,0.18)" }}>
+            <div
+              className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full"
+              style={{ background: "rgba(234,179,8,0.18)" }}
+            >
               <Trophy className="h-6 w-6" style={{ color: "var(--amber)" }} />
             </div>
-            <p className="mt-3 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <p
+              className="mt-3 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               Slutresultat
             </p>
-            <p className="mt-3 text-6xl font-bold tabular-nums" style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}>
+            <p
+              className="mt-3 text-6xl font-bold tabular-nums"
+              style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
+            >
               {score}
               <span className="text-2xl font-normal" style={{ color: "var(--text-secondary)" }}>
                 /{total}
@@ -438,14 +482,23 @@ function GamlaProvPage() {
 
           {/* Normering — only meaningful when facit exists for most questions */}
           {hasFacit && (
-            <div className="mb-5 rounded-2xl border p-5" style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}>
+            <div
+              className="mb-5 rounded-2xl border p-5"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
               <div className="flex items-center gap-2">
                 <Target className="h-4 w-4" style={{ color: "#a5b4fc" }} />
-                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#a5b4fc" }}>
+                <span
+                  className="text-xs font-semibold uppercase tracking-wider"
+                  style={{ color: "#a5b4fc" }}
+                >
                   Ungefärlig normering
                 </span>
               </div>
-              <p className="mt-2 text-4xl font-bold tabular-nums" style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}>
+              <p
+                className="mt-2 text-4xl font-bold tabular-nums"
+                style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
+              >
                 {norm.toFixed(2)}
               </p>
               <p className="mt-1 text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
@@ -456,14 +509,29 @@ function GamlaProvPage() {
           )}
 
           {!hasFacit && (
-            <div className="mb-5 rounded-2xl border p-4 text-xs" style={{ borderColor: "rgba(234,179,8,0.3)", background: "rgba(234,179,8,0.05)", color: "var(--text-secondary)" }}>
-              <strong style={{ color: "var(--amber)" }}>Facit saknas för detta provpass.</strong> Vi har frågor och alternativ, men inte rätt svar. Poängen ovan är därför inte rättvisande.
+            <div
+              className="mb-5 rounded-2xl border p-4 text-xs"
+              style={{
+                borderColor: "rgba(234,179,8,0.3)",
+                background: "rgba(234,179,8,0.05)",
+                color: "var(--text-secondary)",
+              }}
+            >
+              <strong style={{ color: "var(--amber)" }}>Facit saknas för detta provpass.</strong> Vi
+              har frågor och alternativ, men inte rätt svar. Poängen ovan är därför inte
+              rättvisande.
             </div>
           )}
 
           {/* Per delprov */}
-          <div className="mb-5 rounded-2xl border p-5" style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+          <div
+            className="mb-5 rounded-2xl border p-5"
+            style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+          >
+            <p
+              className="mb-3 text-xs font-semibold uppercase tracking-wider"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               Per delprov
             </p>
             <div className="space-y-2.5">
@@ -473,20 +541,29 @@ function GamlaProvPage() {
                   <div key={code}>
                     <div className="mb-1 flex items-center justify-between text-xs">
                       <span style={{ color: "var(--cream)" }}>
-                        <strong className="mr-1.5" style={{ color: "#a5b4fc" }}>{code}</strong>
+                        <strong className="mr-1.5" style={{ color: "#a5b4fc" }}>
+                          {code}
+                        </strong>
                         {delProvLabel(code)}
                       </span>
                       <span className="tabular-nums" style={{ color: "var(--text-secondary)" }}>
                         {s.correct}/{s.total} · {p}%
                       </span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
+                    <div
+                      className="h-1.5 overflow-hidden rounded-full"
+                      style={{ background: "rgba(255,255,255,0.06)" }}
+                    >
                       <div
                         className="h-full rounded-full transition-all"
                         style={{
                           width: `${p}%`,
                           background:
-                            p >= 80 ? "rgb(52,211,153)" : p >= 50 ? "rgb(234,179,8)" : "rgb(239,68,68)",
+                            p >= 80
+                              ? "rgb(52,211,153)"
+                              : p >= 50
+                                ? "rgb(234,179,8)"
+                                : "rgb(239,68,68)",
                         }}
                       />
                     </div>
@@ -498,8 +575,14 @@ function GamlaProvPage() {
 
           {/* Wrong answers */}
           {wrongQs.length > 0 && (
-            <div className="mb-5 rounded-2xl border p-5" style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+            <div
+              className="mb-5 rounded-2xl border p-5"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <p
+                className="mb-3 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 Felaktiga svar ({wrongQs.length})
               </p>
               <div className="space-y-2">
@@ -521,11 +604,17 @@ function GamlaProvPage() {
                         >
                           {qq.nr}
                         </span>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#a5b4fc" }}>
+                        <span
+                          className="text-[10px] font-semibold uppercase tracking-wider"
+                          style={{ color: "#a5b4fc" }}
+                        >
                           {qq.delProv}
                         </span>
                       </span>
-                      <span className="text-xs tabular-nums" style={{ color: "var(--text-tertiary)" }}>
+                      <span
+                        className="text-xs tabular-nums"
+                        style={{ color: "var(--text-tertiary)" }}
+                      >
                         Du: <strong style={{ color: "rgb(239,68,68)" }}>{ans || "—"}</strong>
                         {" · "}
                         Rätt: <strong style={{ color: "rgb(52,211,153)" }}>{qq.svar}</strong>
@@ -541,7 +630,10 @@ function GamlaProvPage() {
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={() => { setShowResults(false); setCurrentIdx(0); }}
+              onClick={() => {
+                setShowResults(false);
+                setCurrentIdx(0);
+              }}
               className="flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all hover:border-indigo-400"
               style={{ borderColor: "var(--line)", color: "var(--cream)" }}
             >
@@ -569,9 +661,10 @@ function GamlaProvPage() {
   if (!q) return null;
 
   const userAns = answers[q.nr];
-  const alts = ALT_KEYS
-    .map((k, i) => ({ letter: ALT_LABELS[i], text: (q as unknown as Record<string, string>)[k] }))
-    .filter(({ text }) => text && !text.startsWith("["));
+  const alts = ALT_KEYS.map((k, i) => ({
+    letter: ALT_LABELS[i],
+    text: (q as unknown as Record<string, string>)[k],
+  })).filter(({ text }) => text && !text.startsWith("["));
   const passage = q.passage;
   const hasPassage = !!passage;
   const hasImage = !!q.image;
@@ -592,7 +685,10 @@ function GamlaProvPage() {
             <ChevronLeft className="h-4 w-4" /> Provpass
           </button>
           <div className="flex-1 text-center">
-            <div className="text-[11px] uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <div
+              className="text-[11px] uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               {termToLabel(selectedTerm)} · Pass {selectedPass}
             </div>
             <div className="text-xs tabular-nums mt-0.5" style={{ color: "var(--cream)" }}>
@@ -614,40 +710,66 @@ function GamlaProvPage() {
         </div>
 
         {/* Progress */}
-        <div className="mb-6 h-1 w-full overflow-hidden rounded-full" style={{ background: "rgba(255,255,255,0.08)" }}>
+        <div
+          className="mb-6 h-1 w-full overflow-hidden rounded-full"
+          style={{ background: "rgba(255,255,255,0.08)" }}
+        >
           <div
             className="h-full rounded-full transition-all duration-300"
-            style={{ width: `${progressPct}%`, background: "linear-gradient(90deg,#6366f1,#8b5cf6)" }}
+            style={{
+              width: `${progressPct}%`,
+              background: "linear-gradient(90deg,#6366f1,#8b5cf6)",
+            }}
           />
         </div>
 
         {/* ELF notice */}
         {isELF && !passage && (
-          <div className="mb-4 rounded-2xl border p-4 text-xs leading-relaxed" style={{ borderColor: "rgba(234,179,8,0.3)", background: "rgba(234,179,8,0.05)", color: "var(--text-secondary)" }}>
-            <strong style={{ color: "var(--amber)" }}>Engelska texten är inte tillgänglig.</strong> Den tas bort en vecka efter provdagen pga upphovsrätt.
+          <div
+            className="mb-4 rounded-2xl border p-4 text-xs leading-relaxed"
+            style={{
+              borderColor: "rgba(234,179,8,0.3)",
+              background: "rgba(234,179,8,0.05)",
+              color: "var(--text-secondary)",
+            }}
+          >
+            <strong style={{ color: "var(--amber)" }}>Engelska texten är inte tillgänglig.</strong>{" "}
+            Den tas bort en vecka efter provdagen pga upphovsrätt.
           </div>
         )}
 
         {/* Passage */}
         {hasPassage && (
-          <div className="mb-4 rounded-2xl border" style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}>
+          <div
+            className="mb-4 rounded-2xl border"
+            style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+          >
             <button
               type="button"
               onClick={() => setShowPassage((v) => !v)}
               className="flex w-full items-start justify-between gap-3 rounded-2xl px-5 py-4 text-left"
             >
               <span className="flex flex-col gap-1">
-                <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: "#a5b4fc" }}>
+                <span
+                  className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest"
+                  style={{ color: "#a5b4fc" }}
+                >
                   <BookOpen className="h-3.5 w-3.5" />
                   {isELF ? "Engelska texten" : "Läspassage"}
                 </span>
                 {q.passage_title && (
-                  <span className="text-base font-semibold leading-tight" style={{ color: "var(--cream)" }}>
+                  <span
+                    className="text-base font-semibold leading-tight"
+                    style={{ color: "var(--cream)" }}
+                  >
                     {q.passage_title}
                   </span>
                 )}
               </span>
-              <span className="text-xs whitespace-nowrap mt-1" style={{ color: "var(--text-tertiary)" }}>
+              <span
+                className="text-xs whitespace-nowrap mt-1"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 {showPassage ? "Dölj ↑" : "Visa ↓"}
               </span>
             </button>
@@ -769,17 +891,33 @@ function GamlaProvPage() {
 
         {/* Image */}
         {hasImage && (
-          <div className="mb-4 overflow-hidden rounded-2xl border" style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}>
+          <div
+            className="mb-4 overflow-hidden rounded-2xl border"
+            style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+          >
             <div className="flex items-center justify-between px-4 py-2.5">
-              <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider" style={{ color: "#a5b4fc" }}>
+              <span
+                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "#a5b4fc" }}
+              >
                 <ImageIcon className="h-3.5 w-3.5" /> Figur ur provhäftet
               </span>
-              <button type="button" onClick={() => setShowImageModal(true)} className="text-xs underline-offset-2 hover:underline" style={{ color: "var(--text-tertiary)" }}>
+              <button
+                type="button"
+                onClick={() => setShowImageModal(true)}
+                className="text-xs underline-offset-2 hover:underline"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 Förstora
               </button>
             </div>
             <button type="button" onClick={() => setShowImageModal(true)} className="block w-full">
-              <img src={q.image} alt={`Figur till uppgift ${q.nr}`} className="w-full bg-white" style={{ maxHeight: "60vh", objectFit: "contain" }} />
+              <img
+                src={q.image}
+                alt={`Figur till uppgift ${q.nr}`}
+                className="w-full bg-white"
+                style={{ maxHeight: "60vh", objectFit: "contain" }}
+              />
             </button>
           </div>
         )}
@@ -799,11 +937,17 @@ function GamlaProvPage() {
           }}
         >
           <div className="mb-4 flex items-start gap-3">
-            <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums" style={{ background: "rgba(99,102,241,0.18)", color: "#a5b4fc" }}>
+            <span
+              className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums"
+              style={{ background: "rgba(99,102,241,0.18)", color: "#a5b4fc" }}
+            >
               {q.nr}
             </span>
             <div className="flex-1 min-w-0">
-              <span className="mb-1.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc" }}>
+              <span
+                className="mb-1.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+                style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc" }}
+              >
                 {q.delProv}
               </span>
               <p className="text-sm font-medium leading-snug" style={{ color: "var(--cream)" }}>
@@ -825,10 +969,19 @@ function GamlaProvPage() {
                 let border = "var(--line)";
                 let color = "var(--text-secondary)";
                 if (submitted && q.svar) {
-                  if (corr) { bg = "rgba(52,211,153,0.12)"; border = "rgba(52,211,153,0.5)"; color = "rgb(52,211,153)"; }
-                  else if (sel) { bg = "rgba(239,68,68,0.12)"; border = "rgba(239,68,68,0.5)"; color = "rgb(239,68,68)"; }
+                  if (corr) {
+                    bg = "rgba(52,211,153,0.12)";
+                    border = "rgba(52,211,153,0.5)";
+                    color = "rgb(52,211,153)";
+                  } else if (sel) {
+                    bg = "rgba(239,68,68,0.12)";
+                    border = "rgba(239,68,68,0.5)";
+                    color = "rgb(239,68,68)";
+                  }
                 } else if (sel) {
-                  bg = "rgba(99,102,241,0.18)"; border = "rgba(99,102,241,0.6)"; color = "var(--cream)";
+                  bg = "rgba(99,102,241,0.18)";
+                  border = "rgba(99,102,241,0.6)";
+                  color = "var(--cream)";
                 }
                 return (
                   <button
@@ -848,12 +1001,19 @@ function GamlaProvPage() {
           )}
 
           {alts.length === 0 && (
-            <p className="ml-9 text-sm" style={{ color: submitted ? "rgb(52,211,153)" : "var(--text-tertiary)" }}>
-              {submitted && q.svar
-                ? <>Rätt svar: <strong>{q.svar}</strong></>
-                : isELF
-                  ? "Texten saknas. Se rätt svar efter inlämning."
-                  : "Se figuren ovan eller provhäftet."}
+            <p
+              className="ml-9 text-sm"
+              style={{ color: submitted ? "rgb(52,211,153)" : "var(--text-tertiary)" }}
+            >
+              {submitted && q.svar ? (
+                <>
+                  Rätt svar: <strong>{q.svar}</strong>
+                </>
+              ) : isELF ? (
+                "Texten saknas. Se rätt svar efter inlämning."
+              ) : (
+                "Se figuren ovan eller provhäftet."
+              )}
             </p>
           )}
         </div>
@@ -911,7 +1071,12 @@ function GamlaProvPage() {
               const ans = answers[qq.nr];
               let dotColor = "rgba(255,255,255,0.12)";
               if (submitted && qq.svar) {
-                dotColor = ans === qq.svar ? "rgba(52,211,153,0.7)" : ans ? "rgba(239,68,68,0.7)" : "rgba(255,255,255,0.12)";
+                dotColor =
+                  ans === qq.svar
+                    ? "rgba(52,211,153,0.7)"
+                    : ans
+                      ? "rgba(239,68,68,0.7)"
+                      : "rgba(255,255,255,0.12)";
               } else if (ans) {
                 dotColor = "rgba(99,102,241,0.7)";
               }
@@ -938,11 +1103,23 @@ function GamlaProvPage() {
 
       {/* Image modal */}
       {showImageModal && q.image && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4" onClick={() => setShowImageModal(false)}>
-          <button type="button" onClick={() => setShowImageModal(false)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur transition-all hover:bg-white/20">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setShowImageModal(false)}
+        >
+          <button
+            type="button"
+            onClick={() => setShowImageModal(false)}
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur transition-all hover:bg-white/20"
+          >
             <X className="h-5 w-5" />
           </button>
-          <img src={q.image} alt={`Figur till uppgift ${q.nr}`} className="max-h-full max-w-full bg-white" style={{ objectFit: "contain" }} />
+          <img
+            src={q.image}
+            alt={`Figur till uppgift ${q.nr}`}
+            className="max-h-full max-w-full bg-white"
+            style={{ objectFit: "contain" }}
+          />
         </div>
       )}
     </div>

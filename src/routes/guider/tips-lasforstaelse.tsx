@@ -21,69 +21,62 @@ export const Route = createFileRoute("/guider/tips-lasforstaelse")({
         { name: "Guider", path: "/guider" },
         { name: "Tips för läsförståelse", path: "/guider/tips-lasforstaelse" },
       ]),
-      jsonLdScript(guideArticleJsonLd({
-        headline: "Tips för läsförståelse på HP · LÄS och ELF",
-        description:
-          "7 konkreta tips för att förbättra din läsförståelse på Högskoleprovet.",
-        url: "https://hpkampen.se/guider/tips-lasforstaelse",
-      })),
+      jsonLdScript(
+        guideArticleJsonLd({
+          headline: "Tips för läsförståelse på HP · LÄS och ELF",
+          description: "7 konkreta tips för att förbättra din läsförståelse på Högskoleprovet.",
+          url: "https://hpkampen.se/guider/tips-lasforstaelse",
+        }),
+      ),
       // HowTo schema — Google rich-result eligibility för numrerade steg
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "HowTo",
         name: "Så förbättrar du läsförståelsen på Högskoleprovet",
-        description:
-          "Sju konkreta steg för att höja resultatet på LÄS och ELF på Högskoleprovet.",
+        description: "Sju konkreta steg för att höja resultatet på LÄS och ELF på Högskoleprovet.",
         totalTime: "PT15M",
         step: [
           {
             "@type": "HowToStep",
             position: 1,
             name: "Läs frågan innan texten",
-            text:
-              "Vet vad du letar efter. Markera nyckelord i frågan så du kan skanna texten effektivt.",
+            text: "Vet vad du letar efter. Markera nyckelord i frågan så du kan skanna texten effektivt.",
           },
           {
             "@type": "HowToStep",
             position: 2,
             name: "Skanna texten efter nyckelord",
-            text:
-              "Leta efter de exakta orden eller deras synonymer i texten innan du läser stycket noggrant.",
+            text: "Leta efter de exakta orden eller deras synonymer i texten innan du läser stycket noggrant.",
           },
           {
             "@type": "HowToStep",
             position: 3,
             name: "Identifiera texttypen",
-            text:
-              "Argument-text: leta efter tes och motargument. Populärvetenskap: orsak–verkan. Historisk: tidsmarkörer.",
+            text: "Argument-text: leta efter tes och motargument. Populärvetenskap: orsak–verkan. Historisk: tidsmarkörer.",
           },
           {
             "@type": "HowToStep",
             position: 4,
             name: "Lita på texten, inte din förkunskap",
-            text:
-              "Svaret måste stödjas av textens ord, inte vad du redan vet om ämnet.",
+            text: "Svaret måste stödjas av textens ord, inte vad du redan vet om ämnet.",
           },
           {
             "@type": "HowToStep",
             position: 5,
             name: "Eliminationsmetoden",
-            text:
-              "Stryk alternativ som strider mot texten. Välj det som bäst stöds av citat eller paragrafer.",
+            text: "Stryk alternativ som strider mot texten. Välj det som bäst stöds av citat eller paragrafer.",
           },
           {
             "@type": "HowToStep",
             position: 6,
             name: "Hantera svåra ord",
-            text:
-              "Fortsätt läsa — kontexten ger ofta svaret. Gissa inte ord isolerat från sin omgivning.",
+            text: "Fortsätt läsa — kontexten ger ofta svaret. Gissa inte ord isolerat från sin omgivning.",
           },
           {
             "@type": "HowToStep",
             position: 7,
             name: "Träna aktivt läsande",
-            text:
-              "Öva LÄS- och ELF-frågor från riktiga gamla prov på HP Kampen för repetition i kontext.",
+            text: "Öva LÄS- och ELF-frågor från riktiga gamla prov på HP Kampen för repetition i kontext.",
           },
         ],
       }),
@@ -100,7 +93,7 @@ function TipsLasforstaelsePage() {
       <header className="mb-10">
         <p
           className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "#a5b4fc" }}
+          style={{ color: "var(--teal)" }}
         >
           Strategi
         </p>
@@ -113,10 +106,9 @@ function TipsLasforstaelsePage() {
       </header>
 
       <p className="mb-8">
-        Läsförståelse — LÄS på svenska och ELF på engelska — utgör sammanlagt
-        40 av provets 160 uppgifter. Det är det enskilt största delprovet.
-        Följande sju tips fungerar för båda delproven och bygger på vad som
-        konsekvent ger fler rätta svar.
+        Läsförståelse — LÄS på svenska och ELF på engelska — utgör sammanlagt 40 av provets 160
+        uppgifter. Det är det enskilt största delprovet. Följande sju tips fungerar för båda
+        delproven och bygger på vad som konsekvent ger fler rätta svar.
       </p>
 
       <section className="space-y-6">
@@ -124,45 +116,42 @@ function TipsLasforstaelsePage() {
           1. Läs frågan innan texten
         </h2>
         <p>
-          Det absolut effektivaste sättet att spara tid är att läsa frågorna
-          till en text <em>innan</em> du läser texten. Du vet då exakt vad du
-          letar efter och kan markera relevanta passager direkt i läsningen.
-          Utan denna förberedelse läser du texten blint och måste sedan gå
-          tillbaka och leta — dubbelt arbete.
+          Det absolut effektivaste sättet att spara tid är att läsa frågorna till en text{" "}
+          <em>innan</em> du läser texten. Du vet då exakt vad du letar efter och kan markera
+          relevanta passager direkt i läsningen. Utan denna förberedelse läser du texten blint och
+          måste sedan gå tillbaka och leta — dubbelt arbete.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           2. Skanna texten efter nyckelord
         </h2>
         <p>
-          Identifiera nyckelord i varje fråga (egennamn, siffror, datum,
-          begrepp) och skanna texten snabbt efter just dem. Ditt öga är
-          förvånansvärt bra på att hitta specifika ord i en textmassa — använd
-          det. När du hittat rätt stycke läser du det ordentligt.
+          Identifiera nyckelord i varje fråga (egennamn, siffror, datum, begrepp) och skanna texten
+          snabbt efter just dem. Ditt öga är förvånansvärt bra på att hitta specifika ord i en
+          textmassa — använd det. När du hittat rätt stycke läser du det ordentligt.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           3. Identifiera texttypen
         </h2>
         <p>
-          Olika texttyper har olika struktur och ger upphov till olika typer
-          av frågor. Identifiera texttypen redan i de första meningarna:
+          Olika texttyper har olika struktur och ger upphov till olika typer av frågor. Identifiera
+          texttypen redan i de första meningarna:
         </p>
         <ul className="list-disc space-y-1 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Argument/debatt</strong> —
-            leta efter tes och motargument. Frågorna handlar ofta om vad
-            författaren anser eller hur hen bemöter kritik.
+            <strong style={{ color: "var(--cream)" }}>Argument/debatt</strong> — leta efter tes och
+            motargument. Frågorna handlar ofta om vad författaren anser eller hur hen bemöter
+            kritik.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Populärvetenskap</strong> —
-            leta efter orsak–verkan-samband och slutsatser. Frågorna testar
-            om du förstår mekanismerna, inte bara fakta.
+            <strong style={{ color: "var(--cream)" }}>Populärvetenskap</strong> — leta efter
+            orsak–verkan-samband och slutsatser. Frågorna testar om du förstår mekanismerna, inte
+            bara fakta.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Historisk/kronologisk</strong> —
-            lägg märke till tidsmarkörer. Frågorna handlar ofta om sekvenser
-            och samband mellan händelser.
+            <strong style={{ color: "var(--cream)" }}>Historisk/kronologisk</strong> — lägg märke
+            till tidsmarkörer. Frågorna handlar ofta om sekvenser och samband mellan händelser.
           </li>
         </ul>
 
@@ -170,10 +159,9 @@ function TipsLasforstaelsePage() {
           4. Lita på texten, inte din förkunskap
         </h2>
         <p>
-          Det här är en av de vanligaste orsakerna till fel: du väljer ett
-          alternativ för att det <em>stämmer i verkligheten</em>, men det
-          stöds inte av just den här texten. Svaret MÅSTE förankras i textens
-          ord. Din allmänbildning kan hjälpa dig orientera dig, men den
+          Det här är en av de vanligaste orsakerna till fel: du väljer ett alternativ för att det{" "}
+          <em>stämmer i verkligheten</em>, men det stöds inte av just den här texten. Svaret MÅSTE
+          förankras i textens ord. Din allmänbildning kan hjälpa dig orientera dig, men den
           bestämmer aldrig svaret.
         </p>
 
@@ -181,40 +169,33 @@ function TipsLasforstaelsePage() {
           5. Elimineringsmetoden
         </h2>
         <p>
-          Om du är osäker: arbeta bakifrån. Stryk de alternativ som direkt
-          strider mot texten. Av de kvarvarande väljer du det som <em>bäst</em>{" "}
-          stöds av texten. Det rätta svaret behöver inte vara perfekt —
-          det behöver bara vara bättre än de andra tre.
+          Om du är osäker: arbeta bakifrån. Stryk de alternativ som direkt strider mot texten. Av de
+          kvarvarande väljer du det som <em>bäst</em> stöds av texten. Det rätta svaret behöver inte
+          vara perfekt — det behöver bara vara bättre än de andra tre.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           6. Hantera svåra ord
         </h2>
         <p>
-          Stöter du på ett ord du inte känner igen: fortsätt läsa. Kontexten
-          runt ordet ger ofta tillräcklig information för att förstå vad meningen
-          säger. Gissa inte ett ords betydelse isolerat — läs hela meningen
-          och stycket runt om det. På ELF hjälper det att snabbt analysera
-          ordets morfologi (prefix, rot, suffix).
+          Stöter du på ett ord du inte känner igen: fortsätt läsa. Kontexten runt ordet ger ofta
+          tillräcklig information för att förstå vad meningen säger. Gissa inte ett ords betydelse
+          isolerat — läs hela meningen och stycket runt om det. På ELF hjälper det att snabbt
+          analysera ordets morfologi (prefix, rot, suffix).
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           7. Träna aktivt läsande
         </h2>
         <p>
-          Passivt läsande — att låta orden flöda förbi — förbättrar inte din
-          HP-läsförståelse. Aktivt läsande gör det: ställ frågor till texten
-          medan du läser, markera nyckelpassager och ifrågasätt påståenden.
-          HP Kampen låter dig öva LÄS- och ELF-frågor från riktiga prov med
-          direkt feedback — det är den snabbaste vägen till förbättring.
+          Passivt läsande — att låta orden flöda förbi — förbättrar inte din HP-läsförståelse.
+          Aktivt läsande gör det: ställ frågor till texten medan du läser, markera nyckelpassager
+          och ifrågasätt påståenden. HP Kampen låter dig öva LÄS- och ELF-frågor från riktiga prov
+          med direkt feedback — det är den snabbaste vägen till förbättring.
         </p>
 
         <p className="mt-8">
-          <Link
-            to="/train"
-            className="underline"
-            style={{ color: "var(--amber)" }}
-          >
+          <Link to="/train" className="underline" style={{ color: "var(--amber)" }}>
             Öva läsförståelse gratis på HP Kampen →
           </Link>
         </p>

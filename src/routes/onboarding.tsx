@@ -1,24 +1,21 @@
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, isAutoUsername } from "@/hooks/useAuth";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { AuthShell } from "@/routes/login";
+import { ArrowRight } from "lucide-react";
+import { SplitText } from "@/components/landing/MotionFX";
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
   head: () => ({
-    meta: [
-      { title: "Välkommen · HP Kampen" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: "Välkommen · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
-
 
 const usernameSchema = z
   .string()
@@ -34,7 +31,6 @@ function OnboardingPage() {
   const [submitting, setSubmitting] = useState(false);
 
   if (!loading && !user) return <Navigate to="/login" />;
-  // Already has a real username — skip
   if (profile && !isAutoUsername(profile.username)) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,15 +63,29 @@ function OnboardingPage() {
   };
 
   return (
-    <AuthShell
-      title="Välj användarnamn"
-      subtitle="Det här är namnet andra ser i matcher och toppliston."
-    >
-      <form onSubmit={handleSubmit} className="grid gap-4">
-        <div className="grid gap-1.5">
-          <Label htmlFor="username">Användarnamn</Label>
-          <Input
-            id="username"
+    <AuthLayout>
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="space-y-7 text-center"
+      >
+        <div className="space-y-2">
+          <EyebrowLabel tone="teal">Steg 2 av 2</EyebrowLabel>
+          <h1
+            className="text-[36px] font-bold leading-[1.05] tracking-tight text-white sm:text-[40px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+          >
+            <SplitText as="span">Välj användarnamn</SplitText>
+          </h1>
+          <p className="text-[15px] text-white/65">
+            Det här är namnet andra ser i matcher och toppliston.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
             autoFocus
             autoComplete="off"
             value={username}
@@ -83,15 +93,20 @@ function OnboardingPage() {
             placeholder="t.ex. lina_p"
             maxLength={20}
             required
+            className="h-12 w-full rounded-full border border-white/12 bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/35 backdrop-blur-sm transition-colors focus:border-white/30 focus:bg-white/[0.06] focus:outline-none"
           />
-          <p className="text-xs text-muted-foreground">
-            3–20 tecken. Endast små bokstäver, siffror, <code>_</code> och <code>-</code>.
-          </p>
-        </div>
-        <Button type="submit" disabled={submitting}>
-          {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
-        </Button>
-      </form>
-    </AuthShell>
+          <p className="text-xs text-white/40">3–20 tecken. Endast a–z, 0–9, _ och -.</p>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f2a65a] px-6 text-[15px] font-semibold text-[#1a0d04] shadow-[0_0_24px_rgba(242,166,90,0.35)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_32px_rgba(242,166,90,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
+            {!submitting && <ArrowRight className="h-4 w-4" />}
+          </button>
+        </form>
+      </motion.div>
+    </AuthLayout>
   );
 }

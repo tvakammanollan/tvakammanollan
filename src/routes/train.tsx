@@ -1,12 +1,14 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/layout/PageHero";
+import { GlassCard } from "@/components/layout/GlassCard";
+import { PrimaryCTA, SecondaryCTA } from "@/components/layout/CTAButtons";
+import { ArrowRight } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -75,7 +77,6 @@ export const Route = createFileRoute("/train")({
     ],
   }),
 });
-
 
 type Track = "verbal" | "math";
 // IMPORTANT: keep ASCII "LAS" — matches the DB CHECK constraint på questions.category
@@ -324,157 +325,118 @@ function TrainPage() {
   // ============ SETUP ============
   if (phase === "setup") {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
-        <header className="mb-10 text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="eyebrow text-[#6366f1]"
-          >
-            Lugn takt
-          </motion.p>
-          <h1
-            className="display mt-3 text-[40px] font-bold leading-tight text-[#050507] sm:text-[56px]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            <SplitText as="span">Träna på</SplitText>{" "}
-            <span className="display-italic font-medium text-[#6366f1]">
-              <SplitText as="span" delay={0.18} italic>
-                egna villkor.
-              </SplitText>
-            </span>
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{
-              duration: 0.7,
-              delay: 0.45,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="mt-4 text-[15px] text-[#737373]"
-          >
-            Ingen timer, inga motståndare. Bara du och frågorna.
-          </motion.p>
-        </header>
+      <div className="min-h-screen">
+        <PageHero
+          eyebrow="Lugn takt"
+          title="Träna"
+          cycleWords={["ORD.", "MEK.", "LÄS.", "ELF.", "XYZ.", "KVA.", "NOG.", "DTK."]}
+          subtitle="Ingen timer, inga motståndare. Bara du och frågorna."
+          align="center"
+          variant="compact"
+        />
 
-        {/* Step 1: track */}
-        <Section title="1. Välj match-typ">
-          <div className="grid grid-cols-2 gap-3">
-            <TrackCard
-              active={config.track === "verbal"}
-              onClick={() => setTrack("verbal")}
-              icon="📖"
-              label="Svenska"
-              hint="Ord · Mek · Läs · Elf"
-            />
-            <TrackCard
-              active={config.track === "math"}
-              onClick={() => setTrack("math")}
-              icon="🔢"
-              label="Matte"
-              hint="Xyz · Kva · Nog · Dtk"
-            />
+        <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
+          <div className="space-y-5">
+            <SetupCard step="1" title="Välj match-typ">
+              <div className="grid grid-cols-2 gap-3">
+                <TrackCard
+                  active={config.track === "verbal"}
+                  onClick={() => setTrack("verbal")}
+                  icon="📖"
+                  label="Svenska"
+                  hint="Ord · Mek · Läs · Elf"
+                />
+                <TrackCard
+                  active={config.track === "math"}
+                  onClick={() => setTrack("math")}
+                  icon="🔢"
+                  label="Matte"
+                  hint="Xyz · Kva · Nog · Dtk"
+                />
+              </div>
+            </SetupCard>
+
+            <SetupCard step="2" title="Välj delprov">
+              <div className="flex flex-wrap gap-2">
+                {(config.track === "verbal" ? VERBAL_SUBS : MATH_SUBS).map((sub) => {
+                  const active = config.subs.includes(sub);
+                  return (
+                    <button
+                      key={sub}
+                      type="button"
+                      onClick={() => toggleSub(sub)}
+                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
+                        active
+                          ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
+                          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60 hover:text-white"
+                      }`}
+                    >
+                      {displayCategory(sub)}
+                    </button>
+                  );
+                })}
+              </div>
+              {config.subs.length === 0 && (
+                <p className="mt-2 text-xs text-[#e25a6a]">Välj minst ett delprov</p>
+              )}
+            </SetupCard>
+
+            <SetupCard step="3" title="Välj svårighetsgrad">
+              <div className="flex flex-wrap gap-2">
+                <DifficultyBtn
+                  active={config.difficulty === null}
+                  label="Alla"
+                  onClick={() => setConfig((c) => ({ ...c, difficulty: null }))}
+                />
+                {[1, 2, 3, 4, 5].map((d) => (
+                  <DifficultyBtn
+                    key={d}
+                    active={config.difficulty === d}
+                    label={String(d)}
+                    onClick={() => setConfig((c) => ({ ...c, difficulty: d }))}
+                  />
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-white/50">
+                {config.difficulty === null
+                  ? "Alla nivåer"
+                  : config.difficulty === 1
+                    ? "Lätt"
+                    : config.difficulty === 5
+                      ? "Avancerat"
+                      : `Nivå ${config.difficulty}`}
+              </p>
+            </SetupCard>
+
+            <SetupCard step="4" title="Antal frågor">
+              <div className="grid grid-cols-3 gap-2">
+                {[5, 10, 20].map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => setConfig((c) => ({ ...c, count: n }))}
+                    className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
+                      config.count === n
+                        ? "border-[#f2a65a] bg-[#f2a65a]/10 text-[#f2a65a]"
+                        : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60"
+                    }`}
+                  >
+                    {n} frågor
+                  </button>
+                ))}
+              </div>
+            </SetupCard>
           </div>
-        </Section>
 
-        {/* Step 2: subs */}
-        <Section title="2. Välj delprov">
-          <div className="flex flex-wrap gap-2">
-            {(config.track === "verbal" ? VERBAL_SUBS : MATH_SUBS).map((sub) => {
-              const active = config.subs.includes(sub);
-              return (
-                <button
-                  key={sub}
-                  type="button"
-                  onClick={() => toggleSub(sub)}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
-                    active
-                      ? "border-[#6366f1] bg-[#6366f1] text-white"
-                      : "border-border bg-white text-foreground hover:border-[#6366f1]"
-                  }`}
-                >
-                  {displayCategory(sub)}
-                </button>
-              );
-            })}
-          </div>
-          {config.subs.length === 0 && (
-            <p className="mt-2 text-xs text-[#c0392b]">Välj minst ett delprov</p>
-          )}
-        </Section>
-
-        {/* Step 3: difficulty */}
-        <Section title="3. Välj svårighetsgrad">
-          <div className="flex flex-wrap gap-2">
-            <DifficultyBtn
-              active={config.difficulty === null}
-              label="Alla"
-              onClick={() => setConfig((c) => ({ ...c, difficulty: null }))}
-            />
-            {[1, 2, 3, 4, 5].map((d) => (
-              <DifficultyBtn
-                key={d}
-                active={config.difficulty === d}
-                label={String(d)}
-                onClick={() => setConfig((c) => ({ ...c, difficulty: d }))}
-              />
-            ))}
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">
-            {config.difficulty === null
-              ? "Alla nivåer (ingen filtrering)"
-              : config.difficulty === 1
-                ? "Lätt"
-                : config.difficulty === 5
-                  ? "Avancerat"
-                  : `Nivå ${config.difficulty}`}
-          </p>
-        </Section>
-
-        {/* Step 4: count */}
-        <Section title="4. Antal frågor">
-          <div className="grid grid-cols-3 gap-2">
-            {[5, 10, 20].map((n) => (
-              <button
-                key={n}
-                type="button"
-                onClick={() => setConfig((c) => ({ ...c, count: n }))}
-                className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
-                  config.count === n
-                    ? "border-2 border-[#6366f1] bg-[#e0e7ff]"
-                    : "border-border bg-white hover:border-[#6366f1]"
-                }`}
-              >
-                {n} frågor
-              </button>
-            ))}
-          </div>
-        </Section>
-
-        <div className="mt-8">
-          <Button
-            onClick={startTraining}
-            disabled={config.subs.length === 0}
-            className="w-full bg-[#6366f1] py-6 text-base font-semibold text-white hover:bg-[#5048e5]"
-          >
-            Starta träning →
-          </Button>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
-            <Link
-              to="/"
-              className="text-muted-foreground hover:text-foreground"
+          <div className="mt-8">
+            <PrimaryCTA
+              onClick={startTraining}
+              disabled={config.subs.length === 0}
+              className="w-full"
+              icon={<ArrowRight className="h-4 w-4" />}
             >
-              ← Tillbaka till hem
-            </Link>
-            <span className="text-muted-foreground/40">·</span>
-            <Link
-              to="/guider"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              📚 Strategiguider för delprov
-            </Link>
+              Starta träning
+            </PrimaryCTA>
           </div>
         </div>
       </div>
@@ -488,9 +450,7 @@ function TrainPage() {
         <div className="rounded-3xl border border-border bg-white p-8 shadow-card sm:p-10">
           <div className="flex flex-col items-center text-center">
             <div className="h-10 w-10 rounded-full border-4 border-indigo-300 border-t-indigo-600 animate-spin" />
-            <p className="mt-4 text-base font-medium text-foreground">
-              Laddar frågor…
-            </p>
+            <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Plockar fram en uppsättning som matchar dina inställningar.
             </p>
@@ -708,51 +668,51 @@ function TrainPage() {
     }, {});
 
     return (
-      <div className="mx-auto max-w-2xl px-4 py-10">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:py-20">
         <header className="text-center">
           <h1
-            className="text-3xl font-semibold sm:text-4xl"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="text-[36px] font-bold leading-tight text-white sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
           >
-            Träningspass klart! 💪
+            Träningspass klart
           </h1>
         </header>
 
-        <section className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-card">
+        <GlassCard className="mt-8 p-8">
           <div className="text-center">
             <div
-              className="text-6xl font-semibold tabular-nums text-[#6366f1]"
-              style={{ fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+              className="text-6xl font-bold tabular-nums text-[#f2a65a]"
+              style={{ fontFamily: "var(--font-mono, 'DM Mono', monospace)" }}
             >
               {correct}
-              <span className="text-3xl text-muted-foreground">/{total}</span>
+              <span className="text-3xl text-white/45">/{total}</span>
             </div>
-            <div className="mt-2 text-lg font-medium text-foreground">{pct}% rätt</div>
-            <div className="mt-1 text-sm text-muted-foreground">
+            <div className="mt-2 text-lg font-medium text-white">{pct}% rätt</div>
+            <div className="mt-1 text-sm text-white/55">
               Tid: {mm} min {ss} sek
             </div>
           </div>
 
           {Object.keys(byCat).length > 1 && (
-            <div className="mt-6 border-t border-border pt-4">
-              <div className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground">
+            <div className="mt-6 border-t border-white/10 pt-4">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/45">
                 Per delprov
               </div>
               <div className="grid gap-2">
                 {Object.entries(byCat).map(([cat, v]) => (
                   <div
                     key={cat}
-                    className="flex items-center justify-between rounded-lg bg-muted/40 px-3 py-2"
+                    className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-2"
                   >
-                    <span className="font-medium">{displayCategory(cat)}</span>
-                    <span className="tabular-nums text-foreground">
+                    <span className="font-medium text-white">{displayCategory(cat)}</span>
+                    <span className="tabular-nums text-white/85">
                       {v.c}/{v.t}{" "}
                       {v.c === v.t ? (
-                        <Check className="ml-1 inline h-4 w-4 text-[#6366f1]" />
+                        <Check className="ml-1 inline h-4 w-4 text-[#f2a65a]" />
                       ) : v.c === 0 ? (
-                        <XIcon className="ml-1 inline h-4 w-4 text-[#c0392b]" />
+                        <XIcon className="ml-1 inline h-4 w-4 text-[#e25a6a]" />
                       ) : (
-                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#eab308]" />
+                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#f2a65a]/70" />
                       )}
                     </span>
                   </div>
@@ -760,33 +720,22 @@ function TrainPage() {
               </div>
             </div>
           )}
-        </section>
+        </GlassCard>
 
-        <div className="mt-6 grid gap-2">
-          <Button
-            onClick={restartSame}
-            className="w-full bg-[#6366f1] py-5 text-white hover:bg-[#5048e5]"
-          >
-            🔄 Träna igen med samma inställningar
-          </Button>
-          <Button
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <PrimaryCTA onClick={restartSame} className="flex-1">
+            Träna igen
+          </PrimaryCTA>
+          <SecondaryCTA
             onClick={() => {
               setPhase("setup");
               setQuestions([]);
               setResults([]);
             }}
-            variant="outline"
-            className="w-full border-[#6366f1] py-5 text-[#6366f1] hover:bg-[#e0e7ff]"
+            className="flex-1"
           >
-            ⚙️ Ändra inställningar
-          </Button>
-          <Button
-            onClick={() => navigate({ to: "/" })}
-            variant="ghost"
-            className="w-full py-5 text-muted-foreground"
-          >
-            🏠 Hem
-          </Button>
+            Ändra inställningar
+          </SecondaryCTA>
         </div>
       </div>
     );
@@ -795,12 +744,25 @@ function TrainPage() {
   return null;
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function SetupCard({
+  step,
+  title,
+  children,
+}: {
+  step: string;
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
-      <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground">{title}</h2>
+    <GlassCard className="p-5">
+      <div className="mb-3 flex items-center gap-3">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[12px] font-bold text-[#f2a65a]">
+          {step}
+        </span>
+        <h2 className="text-[15px] font-semibold text-white">{title}</h2>
+      </div>
       {children}
-    </section>
+    </GlassCard>
   );
 }
 
@@ -823,13 +785,13 @@ function TrackCard({
       onClick={onClick}
       className={`rounded-2xl border p-4 text-left transition ${
         active
-          ? "border-2 border-[#6366f1] bg-[#e0e7ff]"
-          : "border-border bg-white hover:border-[#6366f1]"
+          ? "border-[#f2a65a] bg-[#f2a65a]/10"
+          : "border-white/12 bg-white/[0.02] hover:border-[#f2a65a]/50"
       }`}
     >
       <div className="text-3xl">{icon}</div>
-      <div className="mt-2 text-lg font-semibold">{label}</div>
-      <div className="text-xs text-muted-foreground">{hint}</div>
+      <div className="mt-2 text-lg font-semibold text-white">{label}</div>
+      <div className="text-xs text-white/55">{hint}</div>
     </button>
   );
 }
@@ -849,8 +811,8 @@ function DifficultyBtn({
       onClick={onClick}
       className={`min-w-[48px] rounded-lg border px-3 py-2 text-sm font-medium transition ${
         active
-          ? "border-2 border-[#6366f1] bg-[#6366f1] text-white"
-          : "border-border bg-white text-foreground hover:border-[#6366f1]"
+          ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
+          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60"
       }`}
     >
       {label}

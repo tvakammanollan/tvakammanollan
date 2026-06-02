@@ -5,15 +5,10 @@ import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/layout/PageHero";
+import { GlassCard } from "@/components/layout/GlassCard";
 
-import {
-  ArrowRight,
-  Check,
-  X,
-  RotateCcw,
-  GraduationCap,
-  Trophy,
-} from "lucide-react";
+import { ArrowRight, Check, X, RotateCcw, GraduationCap, Trophy } from "lucide-react";
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
@@ -60,27 +55,28 @@ export const Route = createFileRoute("/ord")({
       }),
     ],
   }),
-  errorComponent: ({ error, reset }) => {
-
-    const router = useRouter();
-    return (
-      <div className="mx-auto max-w-2xl p-8 text-center">
-        <h1 className="text-xl font-semibold">Något gick fel</h1>
-        <p className="mt-2 text-muted-foreground">{error.message}</p>
-        <Button
-          className="mt-4"
-          onClick={() => {
-            router.invalidate();
-            reset();
-          }}
-        >
-          Försök igen
-        </Button>
-      </div>
-    );
-  },
+  errorComponent: OrdErrorComponent,
   notFoundComponent: () => <div>404</div>,
 });
+
+function OrdErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  const router = useRouter();
+  return (
+    <div className="mx-auto max-w-2xl p-8 text-center">
+      <h1 className="text-xl font-semibold">Något gick fel</h1>
+      <p className="mt-2 text-muted-foreground">{error.message}</p>
+      <Button
+        className="mt-4"
+        onClick={() => {
+          router.invalidate();
+          reset();
+        }}
+      >
+        Försök igen
+      </Button>
+    </div>
+  );
+}
 
 const COUNT_OPTIONS = [5, 10, 20] as const;
 type SessionLength = (typeof COUNT_OPTIONS)[number];
@@ -119,12 +115,25 @@ function DefinitionBlock({ word, definition }: { word: string; definition: strin
         <div className="overflow-hidden">
           <div className="mt-2 rounded-lg border-l-4 border-blue-300 bg-blue-50 p-3">
             <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-blue-800">
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                />
               </svg>
               SAOL — Svenska Akademiens ordlista
             </div>
-            <p className="whitespace-pre-wrap text-blue-900" style={{ fontSize: 14, lineHeight: 1.7 }}>
+            <p
+              className="whitespace-pre-wrap text-blue-900"
+              style={{ fontSize: 14, lineHeight: 1.7 }}
+            >
               {definition}
             </p>
           </div>
@@ -196,9 +205,7 @@ function OrdPracticePage() {
   }, [fetchCount, fetchFilterCounts, fetchFailedCount, fetchFailedList, loadProgress]);
 
   const toggleDifficulty = (d: number) => {
-    setDifficulties((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
-    );
+    setDifficulties((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
   };
 
   const startSession = useCallback(
@@ -215,8 +222,7 @@ function OrdPracticePage() {
             data: {
               count: n,
               exclude: [],
-              excludeCorrectForUserId:
-                excludeCorrect && progress ? progress.userId : undefined,
+              excludeCorrectForUserId: excludeCorrect && progress ? progress.userId : undefined,
               sourceFilter,
               difficulties,
             },
@@ -235,7 +241,15 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch, fetchFailedBatch, failedMode, excludeCorrect, progress, sourceFilter, difficulties],
+    [
+      fetchBatch,
+      fetchFailedBatch,
+      failedMode,
+      excludeCorrect,
+      progress,
+      sourceFilter,
+      difficulties,
+    ],
   );
 
   const current = batch[idx];
@@ -275,66 +289,44 @@ function OrdPracticePage() {
   };
 
   const correctCount = answered.filter((a) => a.isCorrect).length;
-  const pct =
-    answered.length > 0 ? Math.round((correctCount / answered.length) * 100) : 0;
+  const pct = answered.length > 0 ? Math.round((correctCount / answered.length) * 100) : 0;
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 py-6 sm:py-12">
-        <motion.header
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 flex items-center justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-md">
-              <GraduationCap className="h-6 w-6" />
-            </span>
-            <div>
-              <p className="eyebrow text-[#6366f1]">8 000+ ord</p>
-              <h1
-                className="text-[28px] font-bold leading-tight text-[#050507] sm:text-[34px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Öva ord
-              </h1>
-            </div>
-          </div>
-          <Link
-            to="/"
-            className="text-sm text-[#737373] underline-offset-4 hover:text-[#6366f1] hover:underline"
-          >
-            ← Hem
-          </Link>
-        </motion.header>
-
+      <PageHero
+        eyebrow="8 000+ ord"
+        title="Öva"
+        cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
+        subtitle="Spaced repetition. Ingen tidspress. Helt gratis."
+        align="center"
+        variant="compact"
+      />
+      <main className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
         {/* SETUP */}
         {phase === "setup" && (
-          <motion.section
+          <motion.div
             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-[var(--shadow-md)] sm:p-8"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-30 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
-              }}
-            />
-
-            <div className="relative">
-              <p className="eyebrow">Steg 1</p>
-              <h2
-                className="display mt-1 text-[24px] font-bold leading-tight text-[#050507] sm:text-[28px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Hur många ord vill du öva?
-              </h2>
-              <p className="mt-1.5 text-sm text-neutral-500">
+            <GlassCard className="p-6 sm:p-8">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2a65a]/15 text-[#f2a65a]">
+                  <GraduationCap className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-[12px] font-semibold uppercase italic tracking-[0.14em] text-[#6fb3b8]">
+                    Steg 1
+                  </p>
+                  <h2
+                    className="text-[22px] font-bold leading-tight text-white sm:text-[26px]"
+                    style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+                  >
+                    Hur många ord vill du öva?
+                  </h2>
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-white/55">
                 Välj längd på passet. Du får en sammanställning efteråt.
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
@@ -349,233 +341,238 @@ function OrdPracticePage() {
                     type="button"
                     onClick={() => void startSession(n)}
                     disabled={loading}
-                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-black/8 bg-gradient-to-br from-white to-neutral-50 py-7 transition-all hover:border-indigo-300 hover:shadow-[var(--shadow-glow-indigo)] disabled:opacity-60"
+                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] py-7 transition-all hover:border-[#f2a65a]/50 hover:bg-white/[0.04] disabled:opacity-60"
                   >
                     <span
-                      className="text-[36px] font-bold leading-none text-aurora-gradient tabular-nums"
+                      className="text-[36px] font-bold leading-none tabular-nums text-[#f2a65a]"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {n}
                     </span>
-                    <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                    <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/45">
                       ord
                     </span>
                   </motion.button>
                 ))}
               </div>
-            {loading && (
-              <p className="mt-4 text-center text-sm text-muted-foreground">
-                Förbereder pass…
-              </p>
-            )}
-
-            {progress && progress.totalCount > 0 && (
-              <div className="mt-6 rounded-2xl border-2 border-[#6366f1]/20 bg-gradient-to-br from-[#e0e7ff] to-white p-5 sm:p-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold tracking-wide text-[#6366f1]">
-                    Din ord-bank
-                  </span>
-                  <span className="text-xs font-medium tabular-nums text-muted-foreground">
-                    {Math.round(
-                      (progress.correctCount / progress.totalCount) * 100,
-                    )}
-                    %
-                  </span>
-                </div>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span
-                    className="text-4xl font-bold tabular-nums text-[#6366f1] sm:text-5xl"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {progress.correctCount.toLocaleString("sv-SE")}
-                  </span>
-                  <span className="text-xl font-medium tabular-nums text-muted-foreground sm:text-2xl">
-                    / {progress.totalCount.toLocaleString("sv-SE")}
-                  </span>
-                  <span className="ml-1 text-xs text-muted-foreground">
-                    ord rätt besvarade
-                  </span>
-                </div>
-                <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#6366f1]/10">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#6366f1] to-[#2d7a52] transition-all duration-700"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        (progress.correctCount / progress.totalCount) * 100,
-                      )}%`,
-                    }}
-                  />
-                </div>
-                <label className="mt-4 flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/60 px-3 py-2.5">
-                  <span className="text-sm font-medium">
-                    Filtrera bort ord jag redan kan
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={excludeCorrect}
-                    onChange={(e) => setExcludeCorrect(e.target.checked)}
-                    disabled={
-                      progress.correctCount >= progress.totalCount ||
-                      progress.correctCount === 0
-                    }
-                    className="h-5 w-5 rounded border-border accent-[#6366f1] disabled:opacity-40"
-                  />
-                </label>
-                {excludeCorrect &&
-                  progress.totalCount - progress.correctCount < 10 && (
-                    <p className="mt-2 text-xs text-amber-700">
-                      Endast{" "}
-                      {progress.totalCount - progress.correctCount} ord kvar
-                      med detta filter.
-                    </p>
-                  )}
-              </div>
-            )}
-
-            {/* Source filter */}
-            <div className={`mt-5 rounded-xl border border-border bg-white p-4 ${failedMode ? "opacity-40 pointer-events-none" : ""}`}>
-              <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
-              <div className="grid grid-cols-3 gap-2">
-                {([
-                  { v: "all", label: "Alla", c: filterCounts?.all },
-                  { v: "list", label: "Ordlistan", c: filterCounts?.list },
-                  { v: "hp", label: "Gamla HP", c: filterCounts?.hp },
-                ] as const).map((o) => (
-                  <button
-                    key={o.v}
-                    type="button"
-                    onClick={() => setSourceFilter(o.v)}
-                    className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
-                      sourceFilter === o.v
-                        ? "border-[#6366f1] bg-[#6366f1] text-white"
-                        : "border-border bg-white hover:bg-muted"
-                    }`}
-                  >
-                    <div>{o.label}</div>
-                    {o.c != null && (
-                      <div className="text-xs opacity-70">{o.c.toLocaleString("sv-SE")} ord</div>
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-4 mb-2 text-sm font-semibold">Svårighetsgrad</div>
-              <div className="grid grid-cols-3 gap-2">
-                {([
-                  { d: 1, label: "Lätt", c: filterCounts?.easy, color: "#2d7a52" },
-                  { d: 2, label: "Medel", c: filterCounts?.medium, color: "#b88500" },
-                  { d: 3, label: "Svår", c: filterCounts?.hard, color: "#a02020" },
-                ] as const).map((o) => {
-                  const active = difficulties.includes(o.d);
-                  const disabled = !o.c;
-                  return (
-                    <button
-                      key={o.d}
-                      type="button"
-                      disabled={disabled}
-                      onClick={() => toggleDifficulty(o.d)}
-                      className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
-                        active ? "text-white" : "border-border bg-white hover:bg-muted"
-                      }`}
-                      style={active ? { background: o.color, borderColor: o.color } : undefined}
-                    >
-                      <div>{o.label}</div>
-                      <div className="text-xs opacity-70">{(o.c ?? 0).toLocaleString("sv-SE")} ord</div>
-                    </button>
-                  );
-                })}
-              </div>
-              {difficulties.length === 0 && (filterCounts?.easy ?? 0) + (filterCounts?.medium ?? 0) + (filterCounts?.hard ?? 0) > 0 && (
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Inget valt = alla svårighetsgrader
-                </p>
+              {loading && (
+                <p className="mt-4 text-center text-sm text-muted-foreground">Förbereder pass…</p>
               )}
-            </div>
 
-            {/* Felaktiga ord — spaced repetition */}
-            {failedCount != null && failedCount > 0 && (
-              <div className="mt-5 overflow-hidden rounded-xl border border-red-200 bg-red-50/60">
-                <div className="flex items-center justify-between px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
-                      {failedCount}
+              {progress && progress.totalCount > 0 && (
+                <div className="mt-6 rounded-2xl border-2 border-[#6366f1]/20 bg-gradient-to-br from-[#e0e7ff] to-white p-5 sm:p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-semibold tracking-wide text-[#6366f1]">
+                      Din ord-bank
+                    </span>
+                    <span className="text-xs font-medium tabular-nums text-muted-foreground">
+                      {Math.round((progress.correctCount / progress.totalCount) * 100)}%
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setFailedMode((v) => !v)}
-                    className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                      failedMode
-                        ? "bg-red-600 text-white"
-                        : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
-                    }`}
-                  >
-                    {failedMode ? "✓ Aktivt" : "Öva dessa"}
-                  </button>
+                  <div className="mt-2 flex items-baseline gap-2">
+                    <span
+                      className="text-4xl font-bold tabular-nums text-[#6366f1] sm:text-5xl"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {progress.correctCount.toLocaleString("sv-SE")}
+                    </span>
+                    <span className="text-xl font-medium tabular-nums text-muted-foreground sm:text-2xl">
+                      / {progress.totalCount.toLocaleString("sv-SE")}
+                    </span>
+                    <span className="ml-1 text-xs text-muted-foreground">ord rätt besvarade</span>
+                  </div>
+                  <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70 ring-1 ring-[#6366f1]/10">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[#6366f1] to-[#2d7a52] transition-all duration-700"
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          (progress.correctCount / progress.totalCount) * 100,
+                        )}%`,
+                      }}
+                    />
+                  </div>
+                  <label className="mt-4 flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/60 px-3 py-2.5">
+                    <span className="text-sm font-medium">Filtrera bort ord jag redan kan</span>
+                    <input
+                      type="checkbox"
+                      checked={excludeCorrect}
+                      onChange={(e) => setExcludeCorrect(e.target.checked)}
+                      disabled={
+                        progress.correctCount >= progress.totalCount || progress.correctCount === 0
+                      }
+                      className="h-5 w-5 rounded border-border accent-[#6366f1] disabled:opacity-40"
+                    />
+                  </label>
+                  {excludeCorrect && progress.totalCount - progress.correctCount < 10 && (
+                    <p className="mt-2 text-xs text-amber-700">
+                      Endast {progress.totalCount - progress.correctCount} ord kvar med detta
+                      filter.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Source filter */}
+              <div
+                className={`mt-5 rounded-xl border border-border bg-white p-4 ${failedMode ? "opacity-40 pointer-events-none" : ""}`}
+              >
+                <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
+                <div className="grid grid-cols-3 gap-2">
+                  {(
+                    [
+                      { v: "all", label: "Alla", c: filterCounts?.all },
+                      { v: "list", label: "Ordlistan", c: filterCounts?.list },
+                      { v: "hp", label: "Gamla HP", c: filterCounts?.hp },
+                    ] as const
+                  ).map((o) => (
+                    <button
+                      key={o.v}
+                      type="button"
+                      onClick={() => setSourceFilter(o.v)}
+                      className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
+                        sourceFilter === o.v
+                          ? "border-[#6366f1] bg-[#6366f1] text-white"
+                          : "border-border bg-white hover:bg-muted"
+                      }`}
+                    >
+                      <div>{o.label}</div>
+                      {o.c != null && (
+                        <div className="text-xs opacity-70">{o.c.toLocaleString("sv-SE")} ord</div>
+                      )}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="max-h-72 overflow-y-auto border-t border-red-200">
-                  {failedWords.map((w) => {
-                    const isDue = new Date(w.next_review_at) <= new Date();
+                <div className="mt-4 mb-2 text-sm font-semibold">Svårighetsgrad</div>
+                <div className="grid grid-cols-3 gap-2">
+                  {(
+                    [
+                      { d: 1, label: "Lätt", c: filterCounts?.easy, color: "#2d7a52" },
+                      { d: 2, label: "Medel", c: filterCounts?.medium, color: "#b88500" },
+                      { d: 3, label: "Svår", c: filterCounts?.hard, color: "#a02020" },
+                    ] as const
+                  ).map((o) => {
+                    const active = difficulties.includes(o.d);
+                    const disabled = !o.c;
                     return (
-                      <div
-                        key={w.question_id}
-                        className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
+                      <button
+                        key={o.d}
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => toggleDifficulty(o.d)}
+                        className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                          active ? "text-white" : "border-border bg-white hover:bg-muted"
+                        }`}
+                        style={active ? { background: o.color, borderColor: o.color } : undefined}
                       >
-                        <div className="min-w-0 flex-1">
-                          <span className="text-sm font-medium tracking-tight text-[#050507]">
-                            {w.question_text}
-                          </span>
-                          <div className="mt-1 flex items-center gap-2">
-                            <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
-                              <div
-                                className="h-full rounded-full bg-red-500 transition-all"
-                                style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
-                              />
-                            </div>
-                            <span className="text-[10px] text-muted-foreground tabular-nums">
-                              {w.review_streak}/5
-                            </span>
-                          </div>
+                        <div>{o.label}</div>
+                        <div className="text-xs opacity-70">
+                          {(o.c ?? 0).toLocaleString("sv-SE")} ord
                         </div>
-                        <div className="ml-3 shrink-0 text-right">
-                          {isDue ? (
-                            <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
-                              Klar nu
-                            </span>
-                          ) : (
-                            <span className="text-[10px] text-muted-foreground">
-                              {new Date(w.next_review_at).toLocaleDateString("sv-SE", { month: "short", day: "numeric" })}
-                            </span>
-                          )}
-                          <div className="mt-0.5 text-[10px] text-red-400">{w.fail_count}× fel</div>
-                        </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
+                {difficulties.length === 0 &&
+                  (filterCounts?.easy ?? 0) +
+                    (filterCounts?.medium ?? 0) +
+                    (filterCounts?.hard ?? 0) >
+                    0 && (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Inget valt = alla svårighetsgrader
+                    </p>
+                  )}
               </div>
-            )}
 
-            <div className="mt-5 border-t border-border pt-4 text-center">
-              <Link
-                to="/leaderboard"
-                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-              >
-                🏆 Se ord-topplistan →
-              </Link>
-              <span className="mx-3 text-muted-foreground">·</span>
-              <Link
-                to="/guider/ord"
-                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-              >
-                📚 Läs ORD-strategiguiden →
-              </Link>
-            </div>
-            </div>
-          </motion.section>
+              {/* Felaktiga ord — spaced repetition */}
+              {failedCount != null && failedCount > 0 && (
+                <div className="mt-5 overflow-hidden rounded-xl border border-red-200 bg-red-50/60">
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
+                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
+                        {failedCount}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFailedMode((v) => !v)}
+                      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                        failedMode
+                          ? "bg-red-600 text-white"
+                          : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
+                      }`}
+                    >
+                      {failedMode ? "✓ Aktivt" : "Öva dessa"}
+                    </button>
+                  </div>
+
+                  <div className="max-h-72 overflow-y-auto border-t border-red-200">
+                    {failedWords.map((w) => {
+                      const isDue = new Date(w.next_review_at) <= new Date();
+                      return (
+                        <div
+                          key={w.question_id}
+                          className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <span className="text-sm font-medium tracking-tight text-[#050507]">
+                              {w.question_text}
+                            </span>
+                            <div className="mt-1 flex items-center gap-2">
+                              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
+                                <div
+                                  className="h-full rounded-full bg-red-500 transition-all"
+                                  style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
+                                />
+                              </div>
+                              <span className="text-[10px] text-muted-foreground tabular-nums">
+                                {w.review_streak}/5
+                              </span>
+                            </div>
+                          </div>
+                          <div className="ml-3 shrink-0 text-right">
+                            {isDue ? (
+                              <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                                Klar nu
+                              </span>
+                            ) : (
+                              <span className="text-[10px] text-muted-foreground">
+                                {new Date(w.next_review_at).toLocaleDateString("sv-SE", {
+                                  month: "short",
+                                  day: "numeric",
+                                })}
+                              </span>
+                            )}
+                            <div className="mt-0.5 text-[10px] text-red-400">
+                              {w.fail_count}× fel
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-5 border-t border-border pt-4 text-center">
+                <Link
+                  to="/leaderboard"
+                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  🏆 Se ord-topplistan →
+                </Link>
+                <span className="mx-3 text-muted-foreground">·</span>
+                <Link
+                  to="/guider/ord"
+                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  📚 Läs ORD-strategiguiden →
+                </Link>
+              </div>
+            </GlassCard>
+          </motion.div>
         )}
 
         {/* PLAYING */}
@@ -601,9 +598,7 @@ function OrdPracticePage() {
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
               <article className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
-                <div className="text-[11px] tracking-wide text-muted-foreground">
-                  Synonym till
-                </div>
+                <div className="text-[11px] tracking-wide text-muted-foreground">Synonym till</div>
                 <h2
                   className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"
                   style={{ fontFamily: "var(--font-display)" }}
@@ -642,9 +637,7 @@ function OrdPracticePage() {
                           </span>
                           <span>{opt.text}</span>
                         </span>
-                        {showState && isCorrect && (
-                          <Check className="h-5 w-5 text-green-600" />
-                        )}
+                        {showState && isCorrect && <Check className="h-5 w-5 text-green-600" />}
                         {showState && isPicked && !isCorrect && (
                           <X className="h-5 w-5 text-red-600" />
                         )}
@@ -693,9 +686,7 @@ function OrdPracticePage() {
               >
                 {correctCount} av {answered.length} rätt
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {pct}% rätt på passet
-              </p>
+              <p className="mt-1 text-sm text-muted-foreground">{pct}% rätt på passet</p>
             </div>
 
             <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
@@ -740,7 +731,8 @@ function OrdPracticePage() {
 
             {answered.some((a) => !a.isCorrect) && (
               <p className="mt-4 rounded-lg bg-red-50 px-4 py-2.5 text-center text-xs text-red-700">
-                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord" — öva dem igen nästa gång
+                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord" — öva
+                dem igen nästa gång
               </p>
             )}
 

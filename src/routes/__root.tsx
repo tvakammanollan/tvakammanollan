@@ -17,6 +17,7 @@ import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
+import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGate";
 
 installSupabaseFetchAuth();
 
@@ -40,8 +41,8 @@ function NotFoundComponent() {
         </h1>
         <h2 className="mt-3 text-xl font-semibold sm:text-2xl">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Den här sidan finns inte — men din ELO väntar. Här är några populära
-          ställen att gå till istället:
+          Den här sidan finns inte — men din ELO väntar. Här är några populära ställen att gå till
+          istället:
         </p>
 
         <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2">
@@ -52,12 +53,8 @@ function NotFoundComponent() {
                 to={p.to as any}
                 className="group block rounded-2xl border border-border bg-card p-4 transition hover:border-primary/50 hover:shadow-md"
               >
-                <div className="text-sm font-semibold text-foreground">
-                  {p.label} →
-                </div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  {p.desc}
-                </div>
+                <div className="text-sm font-semibold text-foreground">{p.label} →</div>
+                <div className="mt-1 text-xs text-muted-foreground">{p.desc}</div>
               </Link>
             </li>
           ))}
@@ -362,7 +359,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         {/* Static nav links for Googlebot — hidden visually, crawlable */}
-        <nav aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+        <nav
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            overflow: "hidden",
+            clip: "rect(0,0,0,0)",
+            whiteSpace: "nowrap",
+          }}
+        >
           <a href="/">Hem</a>
           <a href="/leaderboard">Topplista</a>
           <a href="/gamla-prov">Gamla prov</a>
@@ -419,6 +426,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <FloatingActionMenuGate />
         <FriendInviteListener />
         <Toaster richColors position="top-center" />
       </div>
