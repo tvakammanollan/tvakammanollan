@@ -322,12 +322,17 @@ export type OrdLeaderboardRow = {
   accuracy: number;
 };
 
-// Returns top N + the signed-in user's row (whether or not they're in top).
-// Tries new RPC (with _limit). Falls back to legacy RPC if migration not applied.
+// Returns top N + (optionally) a given user's row, whether or not they're in top.
+// PUBLIC — no auth required, exactly like the verbal/math `fetchLeaderboard`.
+// The leaderboard page is viewable by logged-out visitors, so requiring auth here
+// caused a 401 that crashed the client with a "reading 'filter'" TypeError.
+// The signed-in user's id is passed as an optional arg purely to highlight their row.
 export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { userId } = context;
+  .inputValidator((data: { user_id?: string } | undefined) =>
+    z.object({ user_id: z.string().uuid().optional() }).parse(data ?? {}),
+  )
+  .handler(async ({ data }) => {
+    const userId = data.user_id ?? null;
     // Hämta från ord_practice_stats (redan aggregerad per användare).
     // Bypass RPC + filter — alla som har minst 1 svar syns.
     const { data: stats, error } = await supabaseAdmin
@@ -371,9 +376,10 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
     // Fetch "me" row separately if not in top — from samma stats-tabell.
-    let me: OrdLeaderboardRow | null =
-      top.find((r) => r.user_id === userId) ?? null;
-    if (!me) {
+    let me: OrdLeaderboardRow | null = userId
+      ? (top.find((r) => r.user_id === userId) ?? null)
+      : null;
+    if (!me && userId) {
       const { data: meRow } = await supabaseAdmin
         .from("ord_practice_stats")
         .select("correct_count, total_count")

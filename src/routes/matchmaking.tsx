@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
@@ -30,7 +30,6 @@ export const Route = createFileRoute("/matchmaking")({
   }),
 });
 
-
 function MatchmakingPage() {
   const { user, loading } = useAuth();
   const { type } = Route.useSearch();
@@ -50,6 +49,25 @@ function MatchmakingPage() {
   const cancelledRef = useRef(false);
   const navigatedRef = useRef(false);
   const botFiredRef = useRef(false);
+  const guestSignInRef = useRef(false);
+
+  // No session yet? Sign in as an anonymous guest instead of bouncing to /login.
+  // The hero "Hitta match" button already does guest play; the header/closer CTAs
+  // link straight to /matchmaking, so without this a logged-out visitor dead-ended
+  // at the login page. Guests can play immediately and save their ELO later.
+  useEffect(() => {
+    if (loading || user || guestSignInRef.current) return;
+    guestSignInRef.current = true;
+    void (async () => {
+      const { error } = await supabase.auth.signInAnonymously();
+      if (error) {
+        guestSignInRef.current = false;
+        console.error("guest sign-in failed", error);
+        toast.error("Kunde inte starta gästläge");
+        navigate({ to: "/login" });
+      }
+    })();
+  }, [loading, user, navigate]);
 
   // Join queue on mount
   useEffect(() => {
@@ -176,8 +194,6 @@ function MatchmakingPage() {
     }
     navigate({ to: "/" });
   };
-
-  if (!loading && !user) return <Navigate to="/login" />;
 
   const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
   const ss = String(elapsed % 60).padStart(2, "0");

@@ -30,8 +30,10 @@ function displayName(username: string): string {
   return username;
 }
 
-function filterLeaderboard<T extends { username: string; rank: number }>(rows: T[]): T[] {
-  return rows
+function filterLeaderboard<T extends { username: string; rank: number }>(
+  rows: T[] | undefined | null,
+): T[] {
+  return (Array.isArray(rows) ? rows : [])
     .filter((r) => (r.username ?? "").trim().length > 0)
     .map((r, i) => ({ ...r, rank: i + 1 }));
 }
@@ -330,7 +332,7 @@ function OrdBoard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetchLb();
+      const res = await fetchLb({ data: user ? { user_id: user.id } : {} });
       setTop(filterLeaderboard(res.top));
       setMe(res.me);
       setUpdatedAt(Date.now());
@@ -339,7 +341,7 @@ function OrdBoard() {
     } finally {
       setLoading(false);
     }
-  }, [fetchLb]);
+  }, [fetchLb, user]);
 
   useEffect(() => {
     void load();
