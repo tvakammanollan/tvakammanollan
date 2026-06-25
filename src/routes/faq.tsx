@@ -145,7 +145,7 @@ function FaqPage() {
               // Open de första 2 så sidan inte ser tom ut — resten kan användaren
               // expandera vid behov.
               open={i < 2}
-              className="group rounded-2xl border p-5 transition-colors hover:border-indigo-500/30"
+              className="group rounded-2xl border p-5 transition-colors hover:border-[#f2a65a]/30"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <summary

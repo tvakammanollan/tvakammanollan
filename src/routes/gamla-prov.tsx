@@ -296,7 +296,7 @@ function GamlaProvPage() {
         style={{ background: "var(--navy)" }}
       >
         <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 rounded-full border-4 border-indigo-400 border-t-transparent animate-spin" />
+          <div className="h-10 w-10 rounded-full border-4 border-[#f2a65a] border-t-transparent animate-spin" />
           <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
             Laddar prov…
           </p>
@@ -388,7 +388,7 @@ function GamlaProvPage() {
                 key={pp}
                 type="button"
                 onClick={() => startPass(pp)}
-                className="group w-full rounded-2xl border p-5 text-left transition-all hover:border-indigo-500/50 hover:shadow-[0_0_16px_rgba(99,102,241,0.12)]"
+                className="group w-full rounded-2xl border p-5 text-left transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
                 style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
               >
                 <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -450,7 +450,7 @@ function GamlaProvPage() {
             className="mb-5 overflow-hidden rounded-3xl border p-6 text-center"
             style={{
               borderColor: "var(--line)",
-              background: "linear-gradient(135deg, var(--navy-2) 0%, rgba(99,102,241,0.08) 100%)",
+              background: "linear-gradient(135deg, var(--navy-2) 0%, rgba(242,166,90,0.08) 100%)",
             }}
           >
             <div
@@ -487,10 +487,10 @@ function GamlaProvPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="flex items-center gap-2">
-                <Target className="h-4 w-4" style={{ color: "#a5b4fc" }} />
+                <Target className="h-4 w-4" style={{ color: "#f2a65a" }} />
                 <span
                   className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "#a5b4fc" }}
+                  style={{ color: "#f2a65a" }}
                 >
                   Ungefärlig normering
                 </span>
@@ -541,7 +541,7 @@ function GamlaProvPage() {
                   <div key={code}>
                     <div className="mb-1 flex items-center justify-between text-xs">
                       <span style={{ color: "var(--cream)" }}>
-                        <strong className="mr-1.5" style={{ color: "#a5b4fc" }}>
+                        <strong className="mr-1.5" style={{ color: "#f2a65a" }}>
                           {code}
                         </strong>
                         {delProvLabel(code)}
@@ -594,7 +594,7 @@ function GamlaProvPage() {
                       key={qq.nr}
                       type="button"
                       onClick={() => goTo(idx)}
-                      className="flex w-full items-center justify-between gap-3 rounded-xl border px-3 py-2 text-left text-xs transition-all hover:border-indigo-400"
+                      className="flex w-full items-center justify-between gap-3 rounded-xl border px-3 py-2 text-left text-xs transition-all hover:border-[#f2a65a]"
                       style={{ borderColor: "var(--line)" }}
                     >
                       <span className="flex items-center gap-2 min-w-0">
@@ -606,7 +606,7 @@ function GamlaProvPage() {
                         </span>
                         <span
                           className="text-[10px] font-semibold uppercase tracking-wider"
-                          style={{ color: "#a5b4fc" }}
+                          style={{ color: "#f2a65a" }}
                         >
                           {qq.delProv}
                         </span>
@@ -634,7 +634,7 @@ function GamlaProvPage() {
                 setShowResults(false);
                 setCurrentIdx(0);
               }}
-              className="flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all hover:border-indigo-400"
+              className="flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium transition-all hover:border-[#f2a65a]"
               style={{ borderColor: "var(--line)", color: "var(--cream)" }}
             >
               <BookOpen className="h-4 w-4" /> Granska alla
@@ -644,9 +644,9 @@ function GamlaProvPage() {
               onClick={backToPasses}
               className="flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg,#6366f1,#8b5cf6)",
+                background: "linear-gradient(135deg,#f2a65a,#c97b41)",
                 color: "white",
-                boxShadow: "0 0 20px rgba(99,102,241,0.35)",
+                boxShadow: "0 0 20px rgba(242,166,90,0.35)",
               }}
             >
               <RotateCcw className="h-4 w-4" /> Nytt provpass
@@ -718,7 +718,7 @@ function GamlaProvPage() {
             className="h-full rounded-full transition-all duration-300"
             style={{
               width: `${progressPct}%`,
-              background: "linear-gradient(90deg,#6366f1,#8b5cf6)",
+              background: "linear-gradient(90deg,#f2a65a,#c97b41)",
             }}
           />
         </div>
@@ -752,7 +752,7 @@ function GamlaProvPage() {
               <span className="flex flex-col gap-1">
                 <span
                   className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest"
-                  style={{ color: "#a5b4fc" }}
+                  style={{ color: "#f2a65a" }}
                 >
                   <BookOpen className="h-3.5 w-3.5" />
                   {isELF ? "Engelska texten" : "Läspassage"}
@@ -791,7 +791,7 @@ function GamlaProvPage() {
                         <h3
                           key={i}
                           className="mt-6 mb-3 text-sm font-bold uppercase tracking-widest font-sans"
-                          style={{ color: "#a5b4fc" }}
+                          style={{ color: "#f2a65a" }}
                         >
                           {trimmed.slice(4)}
                         </h3>
@@ -862,13 +862,13 @@ function GamlaProvPage() {
                           className="mt-4 mb-2 rounded-xl border px-4 py-3 text-xs font-sans"
                           style={{
                             borderColor: "rgba(165,180,252,0.18)",
-                            background: "rgba(99,102,241,0.06)",
+                            background: "rgba(242,166,90,0.06)",
                             color: "var(--text-secondary)",
                           }}
                         >
                           {entries.map((e, j) => (
                             <div key={j} className={j > 0 ? "mt-1.5" : ""}>
-                              <dt className="inline font-semibold" style={{ color: "#a5b4fc" }}>
+                              <dt className="inline font-semibold" style={{ color: "#f2a65a" }}>
                                 {e.term}
                               </dt>
                               <dd className="inline ml-2">= {e.def}</dd>
@@ -898,7 +898,7 @@ function GamlaProvPage() {
             <div className="flex items-center justify-between px-4 py-2.5">
               <span
                 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider"
-                style={{ color: "#a5b4fc" }}
+                style={{ color: "#f2a65a" }}
               >
                 <ImageIcon className="h-3.5 w-3.5" /> Figur ur provhäftet
               </span>
@@ -939,14 +939,14 @@ function GamlaProvPage() {
           <div className="mb-4 flex items-start gap-3">
             <span
               className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums"
-              style={{ background: "rgba(99,102,241,0.18)", color: "#a5b4fc" }}
+              style={{ background: "rgba(242,166,90,0.18)", color: "#f2a65a" }}
             >
               {q.nr}
             </span>
             <div className="flex-1 min-w-0">
               <span
                 className="mb-1.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
-                style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc" }}
+                style={{ background: "rgba(242,166,90,0.1)", color: "#f2a65a" }}
               >
                 {q.delProv}
               </span>
@@ -979,8 +979,8 @@ function GamlaProvPage() {
                     color = "rgb(239,68,68)";
                   }
                 } else if (sel) {
-                  bg = "rgba(99,102,241,0.18)";
-                  border = "rgba(99,102,241,0.6)";
+                  bg = "rgba(242,166,90,0.18)";
+                  border = "rgba(242,166,90,0.6)";
                   color = "var(--cream)";
                 }
                 return (
@@ -1034,7 +1034,7 @@ function GamlaProvPage() {
             <button
               type="button"
               onClick={() => goTo(currentIdx + 1)}
-              className="flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all hover:border-indigo-400"
+              className="flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all hover:border-[#f2a65a]"
               style={{ borderColor: "var(--line)", color: "var(--cream)" }}
             >
               Nästa <ChevronRight className="h-4 w-4" />
@@ -1045,9 +1045,9 @@ function GamlaProvPage() {
               onClick={handleSubmit}
               className="rounded-full px-5 py-2 text-sm font-semibold transition-all hover:opacity-90 active:scale-95"
               style={{
-                background: "linear-gradient(135deg,#6366f1,#8b5cf6)",
+                background: "linear-gradient(135deg,#f2a65a,#c97b41)",
                 color: "white",
-                boxShadow: "0 0 20px rgba(99,102,241,0.35)",
+                boxShadow: "0 0 20px rgba(242,166,90,0.35)",
               }}
             >
               Visa facit{answered > 0 ? ` (${answered}/${total})` : ""}
@@ -1057,7 +1057,7 @@ function GamlaProvPage() {
               type="button"
               onClick={() => setShowResults(true)}
               className="rounded-full px-5 py-2 text-sm font-semibold transition-all hover:opacity-90"
-              style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white" }}
+              style={{ background: "linear-gradient(135deg,#f2a65a,#c97b41)", color: "white" }}
             >
               Tillbaka till resultat
             </button>
@@ -1078,7 +1078,7 @@ function GamlaProvPage() {
                       ? "rgba(239,68,68,0.7)"
                       : "rgba(255,255,255,0.12)";
               } else if (ans) {
-                dotColor = "rgba(99,102,241,0.7)";
+                dotColor = "rgba(242,166,90,0.7)";
               }
               const isActive = i === currentIdx;
               return (
@@ -1090,7 +1090,7 @@ function GamlaProvPage() {
                   style={{
                     background: dotColor,
                     transform: isActive ? "scale(1.6)" : "scale(1)",
-                    outline: isActive ? "2px solid rgba(99,102,241,0.6)" : "none",
+                    outline: isActive ? "2px solid rgba(242,166,90,0.6)" : "none",
                     outlineOffset: "1px",
                   }}
                   title={`Fråga ${qq.nr}`}

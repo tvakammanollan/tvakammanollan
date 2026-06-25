@@ -72,7 +72,7 @@ export function ResumeMatchBanner() {
         <Button
           asChild
           size="sm"
-          className="bg-[#0E1B2C] text-white hover:bg-[#5048e5]"
+          className="bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
         >
           <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
             Fortsätt matchen

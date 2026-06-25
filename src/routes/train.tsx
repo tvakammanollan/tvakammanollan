@@ -496,7 +496,7 @@ function TrainPage() {
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#6366f1] transition-all duration-500 ease-out"
+                className="h-full bg-[#f2a65a] transition-all duration-500 ease-out"
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -520,7 +520,7 @@ function TrainPage() {
             className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
-            <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
+            <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
               {displayCategory(currentQ.category)} · Fråga {current + 1}
             </div>
             <h2
@@ -545,13 +545,13 @@ function TrainPage() {
                 const isCorrectOpt = revealed && letter === currentQ.correct_answer;
                 const isWrongPick = revealed && isSelected && letter !== currentQ.correct_answer;
                 let cls =
-                  "border border-border bg-white hover:border-[#6366f1] hover:bg-[#e0e7ff]/50";
+                  "border border-border bg-white hover:border-[#f2a65a] hover:bg-[#f2a65a]/10";
                 if (isCorrectOpt) {
-                  cls = "border-2 border-[#6366f1] bg-[#6366f1] text-white";
+                  cls = "border-2 border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]";
                 } else if (isWrongPick) {
                   cls = "border-2 border-[#c0392b] bg-[#c0392b] text-white";
                 } else if (isSelected) {
-                  cls = "border-2 border-[#6366f1] bg-[#e0e7ff]";
+                  cls = "border-2 border-[#f2a65a] bg-[#f2a65a]/15";
                 }
                 return (
                   <button
@@ -559,14 +559,14 @@ function TrainPage() {
                     type="button"
                     disabled={revealed}
                     onClick={() => handleSelect(letter)}
-                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
+                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2a65a] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
                   >
                     <span
                       className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
                         isCorrectOpt || isWrongPick
                           ? "bg-white/20 text-white"
                           : isSelected
-                            ? "bg-[#6366f1] text-white"
+                            ? "bg-[#f2a65a] text-[#1a0d04]"
                             : "bg-[#f0ede8] text-foreground"
                       }`}
                     >
@@ -608,7 +608,7 @@ function TrainPage() {
               {revealed ? (
                 <Button
                   onClick={() => goNext(false)}
-                  className="w-full bg-[#6366f1] py-5 text-base text-white hover:bg-[#5048e5]"
+                  className="w-full bg-[#f2a65a] py-5 text-base text-[#1a0d04] hover:bg-[#c97b41]"
                 >
                   {current >= questions.length - 1 ? "Visa resultat →" : "Nästa fråga →"}
                 </Button>

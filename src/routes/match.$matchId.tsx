@@ -580,14 +580,14 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <motion.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
         <div>
-          <p className="eyebrow text-[#6366f1]">Väntar</p>
+          <p className="eyebrow text-[#f2a65a]">Väntar</p>
           <h1
             className="mt-1 text-[30px] font-bold leading-tight text-[#050507]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -604,7 +604,7 @@ function MatchPage() {
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
           {[0, 1, 2].map((i) => (
-            <span key={i} className="h-2 w-2 rounded-full bg-[#6366f1]" />
+            <span key={i} className="h-2 w-2 rounded-full bg-[#f2a65a]" />
           ))}
         </motion.div>
       </div>
@@ -615,7 +615,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <motion.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -643,14 +643,14 @@ function MatchPage() {
           </motion.div>
         )}
         <motion.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#6366f1] to-[#4338ca] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
         <div>
-          <p className="eyebrow text-[#6366f1]">Klart</p>
+          <p className="eyebrow text-[#f2a65a]">Klart</p>
           <h1
             className="mt-1 text-[34px] font-bold leading-tight text-[#050507]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -665,7 +665,7 @@ function MatchPage() {
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#6366f1] to-[#818cf8]"
+            className="h-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.5, ease: "linear" }}
           />
@@ -713,7 +713,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#6366f1] transition-all duration-500 ease-out"
+                  className="h-full bg-[#f2a65a] transition-all duration-500 ease-out"
                   style={{ width: `${((current + 1) / questions.length) * 100}%` }}
                 />
               </div>
@@ -729,7 +729,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#eab308] transition-all duration-700 ease-out"
+                  className="h-full bg-[#6fb3b8] transition-all duration-700 ease-out"
                   style={{ width: `${oppProgress * 100}%` }}
                 />
               </div>
@@ -870,7 +870,7 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#6366f1]">
+      <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
         {displayCategory(currentQ.category)} · Fråga {current + 1}
       </div>
       <h2
@@ -900,15 +900,15 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6366f1] focus-visible:ring-offset-2 ${
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2a65a] focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-[#6366f1] bg-[#e0e7ff] text-foreground"
-                  : "border border-border bg-white hover:border-[#6366f1] hover:bg-[#e0e7ff]/50"
+                  ? "border-2 border-[#f2a65a] bg-[#f2a65a]/15 text-foreground"
+                  : "border border-border bg-white hover:border-[#f2a65a] hover:bg-[#f2a65a]/10"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#6366f1] text-white" : "bg-[#f0ede8] text-foreground"
+                  isSelected ? "bg-[#f2a65a] text-[#1a0d04]" : "bg-[#f0ede8] text-foreground"
                 }`}
               >
                 {letter}

@@ -73,7 +73,7 @@ export function CoachingModal({
               boka in dina gratis 30 minuter med en av våra 1.9+-coacher.
             </p>
             <Button
-              className="mt-6 bg-[#0E1B2C] text-white hover:bg-[#5048e5]"
+              className="mt-6 bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
               onClick={() => handleClose(false)}
             >
               Stäng
@@ -144,7 +144,7 @@ export function CoachingModal({
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#0E1B2C] text-white hover:bg-[#5048e5]"
+                className="w-full bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Boka mina gratis 30 min
