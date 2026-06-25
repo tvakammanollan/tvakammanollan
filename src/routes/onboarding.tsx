@@ -6,7 +6,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth, isAutoUsername } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
-import { SplitText } from "@/components/landing/MotionFX";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 
@@ -76,7 +75,7 @@ function OnboardingPage() {
             className="text-[36px] font-bold leading-[1.05] tracking-tight text-white sm:text-[40px]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
           >
-            <SplitText as="span">Välj användarnamn</SplitText>
+            Välj användarnamn
           </h1>
           <p className="text-[15px] text-white/65">
             Det här är namnet andra ser i matcher och toppliston.

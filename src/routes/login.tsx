@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { SplitText } from "@/components/landing/MotionFX";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { ArrowRight } from "lucide-react";
@@ -82,7 +81,7 @@ function LoginPage() {
               className="text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[44px]"
               style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
             >
-              <SplitText as="span">Logga in</SplitText>
+              Logga in
             </h1>
             <p className="text-[16px] text-white/65">Fortsätt där du slutade.</p>
           </div>

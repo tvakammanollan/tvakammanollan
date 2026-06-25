@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { EyebrowLabel } from "./EyebrowLabel";
 import { CyclingTitle } from "./CyclingTitle";
@@ -9,8 +9,8 @@ type Variant = "compact" | "content";
 /**
  * Page hero used across all non-landing routes.
  *
- * `compact` = workspace pages (lower height, no orbs).
- * `content` = marketing/long-form pages (orb backdrop).
+ * `compact` = workspace pages (lower height).
+ * `content` = marketing/long-form pages (taller).
  *
  * Pass `cycleWords` to render the cycling-word animation instead of a
  * static `title`. When `cycleWords` is set, `title` becomes the static
@@ -37,7 +37,6 @@ export function PageHero({
   align?: "left" | "center";
   className?: string;
 }) {
-  const reduce = useReducedMotion();
   const isCompact = variant === "compact";
   const centered = align === "center";
 
@@ -49,8 +48,6 @@ export function PageHero({
         className,
       )}
     >
-      {variant === "content" && !reduce ? <HeroOrbs /> : null}
-
       <div className={cn("relative mx-auto max-w-6xl px-4 sm:px-6", centered && "text-center")}>
         {eyebrow ? (
           <EyebrowLabel tone="teal" className={cn(centered && "mx-auto")}>
@@ -105,28 +102,5 @@ export function PageHero({
         ) : null}
       </div>
     </section>
-  );
-}
-
-function HeroOrbs() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div
-        className="absolute -top-32 left-[15%] h-[420px] w-[420px] rounded-full opacity-50"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(242,166,90,0.28), rgba(242,166,90,0) 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute top-12 right-[10%] h-[380px] w-[380px] rounded-full opacity-40"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(111,179,184,0.22), rgba(111,179,184,0) 70%)",
-          filter: "blur(50px)",
-        }}
-      />
-    </div>
   );
 }

@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import { SplitText, Reveal } from "@/components/landing/MotionFX";
+import { Reveal } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
@@ -359,9 +359,7 @@ function ResultPage() {
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <SplitText as="span" delay={0.35}>
-            {verdict}
-          </SplitText>
+          {verdict}
         </h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}

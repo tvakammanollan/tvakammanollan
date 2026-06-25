@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
-import { SplitText } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Loader2, Trophy } from "lucide-react";
@@ -240,15 +239,11 @@ function MatchmakingPage() {
           style={{ fontFamily: "var(--font-display)" }}
         >
           {navigating ? (
-            <SplitText as="span">Motståndare hittad!</SplitText>
+            "Motståndare hittad!"
           ) : (
             <>
-              <SplitText as="span">Söker</SplitText>{" "}
-              <span className="display-italic font-medium text-[#f2a65a]">
-                <SplitText as="span" delay={0.2} italic>
-                  motståndare…
-                </SplitText>
-              </span>
+              Söker{" "}
+              <span className="display-italic font-medium text-[#f2a65a]">motståndare…</span>
             </>
           )}
         </h1>

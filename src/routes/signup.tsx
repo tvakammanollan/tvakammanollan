@@ -7,7 +7,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { ArrowRight, Mail } from "lucide-react";
-import { SplitText } from "@/components/landing/MotionFX";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { SuccessScreen } from "@/routes/login";
@@ -98,7 +97,7 @@ function SignupPage() {
                 className="text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[44px]"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
               >
-                <SplitText as="span">Skapa konto</SplitText>
+                Skapa konto
               </h1>
               <p className="text-[16px] text-white/65">Gratis. Inga kort, bara battles.</p>
             </div>
