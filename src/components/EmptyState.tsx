@@ -41,7 +41,7 @@ export function EmptyState({
             <Button
               asChild
               variant="outline"
-              className="border-[#0E1B2C] text-[#0E1B2C] hover:bg-[#DAD4C5]"
+              className="border-[#f2a65a] text-[#f2a65a] hover:bg-[#f2a65a]/10"
             >
               <Link to={ctaHref}>{ctaLabel}</Link>
             </Button>
@@ -49,7 +49,7 @@ export function EmptyState({
             <Button
               variant="outline"
               onClick={ctaOnClick}
-              className="border-[#0E1B2C] text-[#0E1B2C] hover:bg-[#DAD4C5]"
+              className="border-[#f2a65a] text-[#f2a65a] hover:bg-[#f2a65a]/10"
             >
               {ctaLabel}
             </Button>

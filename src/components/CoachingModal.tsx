@@ -66,7 +66,7 @@ export function CoachingModal({
       <DialogContent className="sm:max-w-md">
         {done ? (
           <div className="py-6 text-center">
-            <CheckCircle2 className="mx-auto h-12 w-12 text-[#0E1B2C]" />
+            <CheckCircle2 className="mx-auto h-12 w-12 text-[#f2a65a]" />
             <h2 className="mt-3 text-xl font-semibold">Tack {name}!</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att
@@ -82,7 +82,7 @@ export function CoachingModal({
         ) : (
           <>
             <DialogHeader>
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#DAD4C5] text-[#0E1B2C]">
+              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[#f2a65a]">
                 <GraduationCap className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">

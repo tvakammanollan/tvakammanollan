@@ -102,7 +102,7 @@ export function EloChartImpl({ userId }: { userId: string }) {
             contentStyle={{
               borderRadius: 10,
               border: "1px solid rgba(232,228,218,0.14)",
-              background: "#15273E",
+              background: "#1f1408",
               color: "#E8E4DA",
               fontSize: 12,
               boxShadow: "0 8px 24px -8px rgb(0 0 0 / 0.32)",

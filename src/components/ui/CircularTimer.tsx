@@ -66,7 +66,7 @@ export function CircularTimer({
   );
   const offset = CIRCUMFERENCE * (1 - progress);
 
-  let color = "#0E1B2C";
+  let color = "#6fb3b8";
   if (remainingSeconds < 60) color = "#c0392b";
   else if (remainingSeconds <= 120) color = "#F2A65A";
 

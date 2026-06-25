@@ -146,7 +146,7 @@ export function ReportQuestionButton({
             {REASONS.map((r) => (
               <label
                 key={r.value}
-                className="flex cursor-pointer items-start gap-2 rounded-md border border-border bg-background p-2 text-sm hover:border-[#0E1B2C]"
+                className="flex cursor-pointer items-start gap-2 rounded-md border border-border bg-background p-2 text-sm hover:border-[#f2a65a]"
               >
                 <input
                   type="radio"
@@ -154,7 +154,7 @@ export function ReportQuestionButton({
                   value={r.value}
                   checked={reason === r.value}
                   onChange={() => setReason(r.value)}
-                  className="mt-1 accent-[#0E1B2C]"
+                  className="mt-1 accent-[#f2a65a]"
                 />
                 <span>{r.label}</span>
               </label>

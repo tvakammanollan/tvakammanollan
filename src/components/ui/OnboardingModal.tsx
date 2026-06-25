@@ -105,7 +105,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
             <span
               key={i}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                i <= step ? "bg-[#0E1B2C]" : "bg-border"
+                i <= step ? "bg-[#f2a65a]" : "bg-border"
               }`}
             />
           ))}
@@ -130,7 +130,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setTarget(g.value)}
                       className={`flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#0E1B2C] bg-[#0E1B2C]/10"
+                          ? "border-[#f2a65a] bg-[#f2a65a]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
@@ -141,7 +141,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                           <span className="text-sm text-muted-foreground">{g.label}</span>
                         </span>
                       </span>
-                      {selected && <span className="text-[#0E1B2C]">✓</span>}
+                      {selected && <span className="text-[#f2a65a]">✓</span>}
                     </button>
                   );
                 })}
@@ -172,7 +172,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setFocus(f.value)}
                       className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#0E1B2C] bg-[#0E1B2C]/10"
+                          ? "border-[#f2a65a] bg-[#f2a65a]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
@@ -181,7 +181,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                         <div className="font-semibold">{f.label}</div>
                         <div className="text-xs text-muted-foreground">{f.sub}</div>
                       </span>
-                      {selected && <span className="ml-auto text-[#0E1B2C]">✓</span>}
+                      {selected && <span className="ml-auto text-[#f2a65a]">✓</span>}
                     </button>
                   );
                 })}
@@ -214,7 +214,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               <div className="mt-6 flex flex-col gap-2">
                 <Button
                   size="lg"
-                  className="w-full bg-[#0E1B2C] text-white hover:bg-[#154a2f]"
+                  className="w-full bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
                   disabled={saving}
                   onClick={() => finish(true)}
                 >
