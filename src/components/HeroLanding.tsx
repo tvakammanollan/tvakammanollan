@@ -2,11 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
 import { getLandingStats, type LandingStats, type TopPlayer } from "@/lib/landing.functions";
-import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { useShaderCanvas } from "@/components/landing/shaderCanvas";
 import { RANK_TIERS } from "@/types";
 
@@ -35,7 +34,6 @@ const HERO_CYCLE_WORDS = ["Klättra.", "Tävla.", "Träna.", "Utmana.", "Bevisa.
 export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
   const [stats, setStats] = useState<LandingStats | null>(null);
-  const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
 
   useEffect(() => {
     fetchStats().then(setStats).catch(() => setStats(null));
@@ -44,7 +42,7 @@ export function HeroLanding() {
   return (
     <div className="min-h-screen text-white" style={{ background: "#170d05" }}>
       <LiveTicker stats={stats} />
-      <Hero stats={stats} guestLoading={guestLoading} onGuest={playAsGuest} />
+      <Hero stats={stats} />
       <Leaderboard stats={stats} />
       <LiveMatch />
       <RecentMatches stats={stats} />
@@ -237,15 +235,7 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
 /* ===  HERO                                                === */
 /* ============================================================ */
 
-function Hero({
-  stats,
-  guestLoading,
-  onGuest,
-}: {
-  stats: LandingStats | null;
-  guestLoading: boolean;
-  onGuest: () => void;
-}) {
+function Hero({ stats }: { stats: LandingStats | null }) {
   const canvasRef = useShaderCanvas("amber");
   const recentSix = stats?.recent?.slice(0, 6) ?? [];
 
@@ -289,17 +279,14 @@ function Hero({
           transition={{ duration: 0.7, delay: 0.35 }}
           className="mx-auto mt-10 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
         >
-          <button
-            type="button"
-            onClick={onGuest}
-            disabled={guestLoading}
-            className="group relative inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 disabled:opacity-60"
+          <a
+            href="/matchmaking"
+            className="group relative inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
             style={{ background: AMBER }}
           >
-            {guestLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {guestLoading ? "Startar…" : "Hitta match"}
-            {!guestLoading && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
-          </button>
+            Hitta match
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
           <Link
             to="/signup"
             className="inline-flex h-[52px] items-center justify-center gap-2 rounded-md border border-white/12 px-6 text-[14px] font-medium text-white/75 transition hover:border-white/25 hover:text-white"
