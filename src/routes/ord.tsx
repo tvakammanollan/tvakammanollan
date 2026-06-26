@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 
-import { ArrowRight, Check, X, RotateCcw, GraduationCap, Trophy } from "lucide-react";
+import { ArrowRight, Check, X, RotateCcw, GraduationCap, Trophy, BookOpen } from "lucide-react";
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
@@ -88,14 +88,36 @@ interface AnsweredItem {
   isCorrect: boolean;
 }
 
-function DefinitionBlock({ word, definition }: { word: string; definition: string }) {
-  const [open, setOpen] = useState(false);
+function definitionSourceLabel(s?: string | null): string {
+  if (!s) return "Förklaring";
+  if (s.startsWith("SO idiom")) return "SO · idiom (svenska.se)";
+  if (s.startsWith("SO")) return "SO · Svensk ordbok (svenska.se)";
+  if (s.startsWith("SAOL")) return "SAOL (svenska.se)";
+  if (s.startsWith("SAOB")) return "SAOB (svenska.se)";
+  if (s.startsWith("Wikipedia")) return "Wikipedia";
+  if (s.startsWith("Wiktionary")) return "Wiktionary";
+  if (s.startsWith("HP-facit")) return "Synonym (HP-facit)";
+  return "Förklaring";
+}
+
+function DefinitionBlock({
+  word,
+  definition,
+  source,
+  defaultOpen = false,
+}: {
+  word: string;
+  definition: string;
+  source?: string | null;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="mt-4">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:underline underline-offset-4"
+        className="inline-flex items-center gap-1 text-xs font-medium text-[#6fb3b8] underline-offset-4 transition-colors hover:text-[#8ec9ce] hover:underline"
       >
         <svg
           className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
@@ -106,32 +128,20 @@ function DefinitionBlock({ word, definition }: { word: string; definition: strin
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
-        {open ? "Dölj definition" : `Vad betyder "${word.toLowerCase()}"?`}
+        {open ? "Dölj förklaring" : `Vad betyder "${word.toLowerCase()}"?`}
       </button>
       <div
         className="grid transition-all duration-300 ease-out"
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="mt-2 rounded-lg border-l-4 border-blue-300 bg-blue-50 p-3">
-            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-blue-800">
-              <svg
-                className="h-3.5 w-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                />
-              </svg>
-              SAOL — Svenska Akademiens ordlista
+          <div className="mt-2 rounded-lg border-l-4 border-[#f2a65a]/60 bg-[#f2a65a]/[0.07] p-3">
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#f2a65a]">
+              <BookOpen className="h-3.5 w-3.5" />
+              {definitionSourceLabel(source)}
             </div>
             <p
-              className="whitespace-pre-wrap text-blue-900"
+              className="whitespace-pre-wrap text-[#e8e4da]"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
               {definition}
@@ -487,11 +497,11 @@ function OrdPracticePage() {
 
               {/* Felaktiga ord — spaced repetition */}
               {failedCount != null && failedCount > 0 && (
-                <div className="mt-5 overflow-hidden rounded-xl border border-red-200 bg-red-50/60">
+                <div className="mt-5 overflow-hidden rounded-xl border border-red-500/30 bg-red-500/10">
                   <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-red-700">Felaktiga ord</span>
-                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold text-red-700">
+                      <span className="text-sm font-semibold text-red-300">Felaktiga ord</span>
+                      <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-xs font-bold text-red-200">
                         {failedCount}
                       </span>
                     </div>
@@ -501,20 +511,20 @@ function OrdPracticePage() {
                       className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
                         failedMode
                           ? "bg-red-600 text-white"
-                          : "border border-red-300 bg-white text-red-700 hover:bg-red-100"
+                          : "border border-red-500/40 bg-transparent text-red-300 hover:bg-red-500/10"
                       }`}
                     >
                       {failedMode ? "✓ Aktivt" : "Öva dessa"}
                     </button>
                   </div>
 
-                  <div className="max-h-72 overflow-y-auto border-t border-red-200">
+                  <div className="max-h-72 overflow-y-auto border-t border-red-500/20">
                     {failedWords.map((w) => {
                       const isDue = new Date(w.next_review_at) <= new Date();
                       return (
                         <div
                           key={w.question_id}
-                          className="flex items-center justify-between border-b border-red-100 px-4 py-2.5 last:border-0"
+                          className="flex items-center justify-between border-b border-red-500/15 px-4 py-2.5 last:border-0"
                         >
                           <div className="min-w-0 flex-1">
                             <span className="text-sm font-medium tracking-tight text-[#050507]">
@@ -617,9 +627,9 @@ function OrdPracticePage() {
                       cls +=
                         " border-border bg-white hover:border-primary/50 hover:bg-primary-soft cursor-pointer";
                     } else if (isCorrect) {
-                      cls += " border-green-600/60 bg-green-50 text-green-900";
+                      cls += " border-green-500/50 bg-green-500/10 text-green-100";
                     } else if (isPicked) {
-                      cls += " border-red-600/60 bg-red-50 text-red-900";
+                      cls += " border-red-500/50 bg-red-500/10 text-red-100";
                     } else {
                       cls += " border-border bg-white opacity-60";
                     }
@@ -637,9 +647,9 @@ function OrdPracticePage() {
                           </span>
                           <span>{opt.text}</span>
                         </span>
-                        {showState && isCorrect && <Check className="h-5 w-5 text-green-600" />}
+                        {showState && isCorrect && <Check className="h-5 w-5 text-green-400" />}
                         {showState && isPicked && !isCorrect && (
-                          <X className="h-5 w-5 text-red-600" />
+                          <X className="h-5 w-5 text-red-400" />
                         )}
                       </button>
                     );
@@ -647,7 +657,12 @@ function OrdPracticePage() {
                 </div>
 
                 {picked && current.definition && (
-                  <DefinitionBlock word={current.question_text} definition={current.definition} />
+                  <DefinitionBlock
+                    word={current.question_text}
+                    definition={current.definition}
+                    source={current.definition_source}
+                    defaultOpen={picked !== current.correct_answer}
+                  />
                 )}
 
                 {picked && (
@@ -703,8 +718,8 @@ function OrdPracticePage() {
                       key={a.question.id}
                       className={`flex items-start gap-3 rounded-lg border p-3 text-sm ${
                         a.isCorrect
-                          ? "border-green-200 bg-green-50/60"
-                          : "border-red-200 bg-red-50/60"
+                          ? "border-green-500/30 bg-green-500/10"
+                          : "border-red-500/30 bg-red-500/10"
                       }`}
                     >
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] font-semibold tabular-nums text-muted-foreground">
@@ -719,9 +734,9 @@ function OrdPracticePage() {
                         </div>
                       </div>
                       {a.isCorrect ? (
-                        <Check className="h-4 w-4 shrink-0 text-green-700" />
+                        <Check className="h-4 w-4 shrink-0 text-green-400" />
                       ) : (
-                        <X className="h-4 w-4 shrink-0 text-red-700" />
+                        <X className="h-4 w-4 shrink-0 text-red-400" />
                       )}
                     </li>
                   );
@@ -730,7 +745,7 @@ function OrdPracticePage() {
             </div>
 
             {answered.some((a) => !a.isCorrect) && (
-              <p className="mt-4 rounded-lg bg-red-50 px-4 py-2.5 text-center text-xs text-red-700">
+              <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-2.5 text-center text-xs text-red-300">
                 {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord" — öva
                 dem igen nästa gång
               </p>
