@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-26T07:26:15.854Z",
+  "generatedAt": "2026-06-26T10:32:35.570Z",
   "source": "svenska.se (SO primärt, SAOL fallback)",
   "totalWords": 8761,
-  "found": 8702,
-  "missed": 59,
+  "found": 8731,
+  "missed": 30,
   "definitions": {
     "flamsig": {
       "definition": "präglad av flams",
@@ -849,6 +849,10 @@
       "definition": "smal och böjlig stång av trä ofta med kvarsittande bark",
       "source": "SO (svenska.se)"
     },
+    "braille": {
+      "definition": "A system of writing in which letters and some combinations of letters are represented by raised dots arranged in three or four rows of two dots each and are read by the blind and partially sighted using the fingertips.",
+      "source": "Wiktionary (engelska)"
+    },
     "kandelaber": {
       "definition": "stor flerarmad ljusstake ofta antik och dyrbar",
       "source": "SO (svenska.se)"
@@ -976,6 +980,10 @@
     "fiken": {
       "definition": "som har starkt begär efter att få något",
       "source": "SO (svenska.se)"
+    },
+    "exulant": {
+      "definition": "Exile.",
+      "source": "Wiktionary (engelska)"
     },
     "konvergera": {
       "definition": "1. vara riktade mot samma punkt om ett antal icke-parallella linjer eller dylikt  2. närma sig ett bestämt gränsvärde om matematisk talföljd, serie m.m.",
@@ -2441,6 +2449,10 @@
       "definition": "1. utsökt läcker  2. som kräver finkänslig och försiktig behandling särsk. om situation, fråga eller dylikt",
       "source": "SO (svenska.se)"
     },
+    "skinntorr": {
+      "definition": "(i sht i fackspr.) till.",
+      "source": "SAOB (svenska.se)"
+    },
     "mem": {
       "definition": "1. den minsta självständiga kulturenheten som kan vidareföras mellan människor; t.ex. melodier och arkitektoniska tekniker, och som kan tänkas nedärvas via traditioner, vanor m.m.  2. socialt och kulturellt fenomen på internet som ofta utgörs av bild, film m.m. och som vanligtvis får stor och snabb spridning",
       "source": "SO (svenska.se)"
@@ -3240,6 +3252,10 @@
     "särdrag": {
       "definition": "särskiljande egenskap ofta hos person el. grupp",
       "source": "SO (svenska.se)"
+    },
+    "dehydration": {
+      "definition": "The act or process of removing water from something.",
+      "source": "Wiktionary (engelska)"
     },
     "arvodera": {
       "definition": "ge arvode åt någon",
@@ -4236,6 +4252,10 @@
     "manufaktur": {
       "definition": "1. (mängd av) smärre industriprodukter särsk. textilvaror samt mindre järnvaror  2. hantverksmässigt driven industriell produktion",
       "source": "SO (svenska.se)"
+    },
+    "profanation": {
+      "definition": "The act of profaning; desecration, blasphemous behaviour, defilement.",
+      "source": "Wiktionary (engelska)"
     },
     "hågad": {
       "definition": "som känner lust att ägna sig åt viss verksamhet eller dylikt",
@@ -5288,6 +5308,10 @@
     "alltfort": {
       "definition": "fortfarande",
       "source": "SO (svenska.se)"
+    },
+    "postponera": {
+      "definition": "(&#x2020;) i fråga om intresse för l. uppskattning av ngn l. ngt o. d.: ställa (ngn l. ngt) tillbaka, eftersätta, ge en mindre framträdande plats åt (ngn l. ngt), akta ringare; särsk. i uttr.",
+      "source": "SAOB (svenska.se)"
     },
     "antracit": {
       "definition": "typ av stenkol med hög kolhalt den äldsta fossila typen av kol",
@@ -9501,6 +9525,10 @@
       "definition": "inta föda",
       "source": "SO (svenska.se)"
     },
+    "gossamer": {
+      "definition": "A fine film made up of cobwebs, seen floating in the air or caught on bushes, etc.",
+      "source": "Wiktionary (engelska)"
+    },
     "julp": {
       "definition": "En stor högtid till minne av Jesu födelse kring den 25 december; firad bl.a. med gudstjänster, speciell mat och utdelning av presenter.",
       "source": "SO (svenska.se, närmaste ord)"
@@ -11325,6 +11353,10 @@
       "definition": "Flygplan med två par vingar det ena ovanför det andra; om äldre typer.",
       "source": "SO (svenska.se, närmaste ord)"
     },
+    "kardinalregel": {
+      "definition": "Grundregel, huvudregel.",
+      "source": "SAOB (svenska.se)"
+    },
     "albino": {
       "definition": "varelse som lider av albinism",
       "source": "SO (svenska.se)"
@@ -12585,6 +12617,10 @@
       "definition": "möjlig att utföra eller använda",
       "source": "SO (svenska.se)"
     },
+    "helioterapi": {
+      "definition": "Användande av (sol)ljuset ss. läkemedel.",
+      "source": "SAOB (svenska.se)"
+    },
     "poncho": {
       "definition": "ett enkelt (sydamerikanskt) klädesplagg i form av ett rektangulärt tygstycke (med en öppning för huvudet), som hängs över axlarna",
       "source": "SO (svenska.se)"
@@ -13336,6 +13372,10 @@
     "fals": {
       "definition": "1. bockade plåtkanter som foga(t)s in i varandra för att förbinda olika tunnplåtsdelar  2. spont eller urholkning i snickeriarbete, t.ex. för skjutfönster  3. veck i pappersark som bestämmer en sidas dimensioner",
       "source": "SO (svenska.se)"
+    },
+    "gyrometer": {
+      "definition": "Apparat för mätande av roterande kroppars rotationshastighet.",
+      "source": "SAOB (svenska.se)"
     },
     "spleen": {
       "definition": "känsla av svårmod och livsleda",
@@ -17621,6 +17661,10 @@
       "definition": "Meter är SI-enheten för längd.",
       "source": "Wikipedia"
     },
+    "robiola": {
+      "definition": "An Italian soft-ripened cheese, similar to stracchino.",
+      "source": "Wiktionary (engelska)"
+    },
     "märgfull": {
       "definition": "full av inre kraft och uttrycksfullhet",
       "source": "SO (svenska.se)"
@@ -18713,6 +18757,10 @@
       "definition": "1. hantera varsamt  2. värdera högt",
       "source": "SO (svenska.se)"
     },
+    "värdeladdning": {
+      "definition": "Förhållandet l. egenskapen att vara värdeladdad.",
+      "source": "SAOB (svenska.se)"
+    },
     "kabaré": {
       "definition": "blandat underhållningsprogram med sång-, tal- och dansnummer",
       "source": "SO (svenska.se)"
@@ -19621,6 +19669,14 @@
       "definition": "1. krav för egen räkning på materiella värden, juridiska rättigheter, allmänt erkännande eller dylikt  2. utnyttjande",
       "source": "SO (svenska.se)"
     },
+    "gingham": {
+      "definition": "A cotton fabric made from dyed and white yarn woven in checks.",
+      "source": "Wiktionary (engelska)"
+    },
+    "oto-": {
+      "definition": "Ear; ear-like; ear-shaped.",
+      "source": "Wiktionary (engelska)"
+    },
     "illitterat": {
       "definition": "som helt saknar boklig bildning",
       "source": "SO (svenska.se)"
@@ -20052,6 +20108,10 @@
     "devot": {
       "definition": "som uttrycker okritisk beundran och smicker",
       "source": "SO (svenska.se)"
+    },
+    "nitlott": {
+      "definition": "Vinst som utfaller l. utfallit på nitlott.",
+      "source": "SAOB (svenska.se)"
     },
     "kanonisera": {
       "definition": "förklara för helgon",
@@ -20712,6 +20772,10 @@
     "utgjutning": {
       "definition": "1. onormal ansamling av vätska i kroppen p.g.a. sjukdom el. skada  2. det att utgjuta något",
       "source": "SO (svenska.se)"
+    },
+    "knåpgöra": {
+      "definition": "Besvärligt o. tidsödande arbete med småsaker; detaljarbete; &#x201d;petgöra&#x201d;.",
+      "source": "SAOB (svenska.se)"
     },
     "ha gröna fingrar": {
       "definition": "Vara bra på trädgårds- och krukväxtsskötsel.",
@@ -21537,6 +21601,10 @@
       "definition": "som kräver finkänslighet av inblandade personer; om faktum, uppdrag m.m.",
       "source": "SO (svenska.se)"
     },
+    "tete-a-tete": {
+      "definition": ".",
+      "source": "Wiktionary (engelska)"
+    },
     "glupande": {
       "definition": "omöjlig att motstå om behov eller dylikt, särsk. av mat",
       "source": "SO (svenska.se)"
@@ -22185,6 +22253,10 @@
       "definition": "bestyrka riktigheten av påstående, uppgift, dokument eller dylikt",
       "source": "SO (svenska.se)"
     },
+    "grannsynt": {
+      "definition": "(företrädesvis i skriftspr., numera föga br.).",
+      "source": "SAOB (svenska.se)"
+    },
     "andakt": {
       "definition": "1. hänvändelse till gudom i kristen tradition främst genom bön (och psalmsång)  2. fridfull, högtidlig (sinnes)stämning med el. utan religiösa inslag",
       "source": "SO (svenska.se)"
@@ -22316,6 +22388,10 @@
     "ocker": {
       "definition": "inriktning på att göra oskälig vinst vid försäljning el. utlåning, genom utnyttjande av någon annans svaghet",
       "source": "SO (svenska.se)"
+    },
+    "amfi-": {
+      "definition": "Both.",
+      "source": "Wiktionary (engelska)"
     },
     "resonant": {
       "definition": "Tonalstrande svängning som uppkommer genom påverkan av en annan svängning med (nästan) samma frekvens.",
@@ -24125,6 +24201,10 @@
       "definition": "som sker enligt rådande bruk eller tradition",
       "source": "SO (svenska.se)"
     },
+    "orannsaklig": {
+      "definition": "(&#x2020;) som icke kan utforskas, outgrundlig, outrannsaklig.",
+      "source": "SAOB (svenska.se)"
+    },
     "pustel": {
       "definition": "varblåsa",
       "source": "SO (svenska.se)"
@@ -24792,6 +24872,10 @@
     "sedermera": {
       "definition": "längre fram i tiden",
       "source": "SO (svenska.se)"
+    },
+    "vasstäckt": {
+      "definition": "Täckt av vass(strån).",
+      "source": "SAOB (svenska.se)"
     },
     "arkivarie": {
       "definition": "(titel för) tjänsteman vid (eller föreståndare för) privat eller offentligt arkiv",
@@ -27181,6 +27265,10 @@
       "definition": "inskjuten som parentes",
       "source": "SO (svenska.se)"
     },
+    "fåkunnig": {
+      "definition": "(numera bl. ngn gg i högre stil) som vet litet, föga kunnig; okunnig; olärd.",
+      "source": "SAOB (svenska.se)"
+    },
     "saltomortal": {
       "definition": "hopp med helomvändning i luften särsk. i cirkus-, gymnastik- och simhoppssammanhang",
       "source": "SO (svenska.se)"
@@ -27420,6 +27508,10 @@
     "bornyr": {
       "definition": "skum från jäst eller kolsyrad dryck",
       "source": "SO (svenska.se)"
+    },
+    "blindo": {
+      "definition": "Blind person.",
+      "source": "Wiktionary (engelska)"
     },
     "passepartout": {
       "definition": "1. infattning av papp eller tjockt papper kring teckning, fotografi eller dylikt särsk. som komplettering till ram av stabilare material  2. typ av frikort eller passersedel  3. huvudnyckel",
@@ -29957,6 +30049,10 @@
       "definition": "råka få (segel) sönderrivet",
       "source": "SO (svenska.se)"
     },
+    "välfrejdad": {
+      "definition": "(numera bl. arkaiserande l. i skildring av ä. förh.) välrenommerad l. välaktad (jfr.",
+      "source": "SAOB (svenska.se)"
+    },
     "antikverad": {
       "definition": "föråldrad eller otidsenlig",
       "source": "SO (svenska.se)"
@@ -30008,6 +30104,10 @@
     "allierad": {
       "definition": "som ingår i (militär) allians",
       "source": "SO (svenska.se)"
+    },
+    "jingo": {
+      "definition": "One who supports policy favouring war.",
+      "source": "Wiktionary (engelska)"
     },
     "korint": {
       "definition": "ett litet kärnlöst russin",
@@ -30468,6 +30568,10 @@
     "jurist": {
       "definition": "person som (yrkesmässigt) ägnar sig åt juridik och som vanligen har någon juridisk examen",
       "source": "SO (svenska.se)"
+    },
+    "oförvanskad": {
+      "definition": "(&#x2020;) oförgänglig.",
+      "source": "SAOB (svenska.se)"
     },
     "venerologi": {
       "definition": "Läran om könssjukdomarna.",
@@ -32953,6 +33057,10 @@
       "definition": "vilket är beklagligt",
       "source": "SO (svenska.se)"
     },
+    "florstunn": {
+      "definition": "&#x2014;.",
+      "source": "SAOB (svenska.se)"
+    },
     "prominent": {
       "definition": "1. framstående  2. framskjutande och därför markerad",
       "source": "SO (svenska.se)"
@@ -33468,6 +33576,10 @@
     "potentiell": {
       "definition": "som kan utvecklas till något som framgår av sammanhanget",
       "source": "SO (svenska.se)"
+    },
+    "ajour": {
+      "definition": "Up-to-date.",
+      "source": "Wiktionary (engelska)"
     },
     "trunk": {
       "definition": "1. stor resväska el. koffert  2. cylindrisk kolv utan kolvstång som verkar direkt på vevstaken; den vanliga i bilmotor",
@@ -34612,6 +34724,10 @@
     "stålsätta sig": {
       "definition": "mobilisera själslig motståndskraft",
       "source": "SO (svenska.se)"
+    },
+    "lombardera": {
+      "definition": "Utlåna (pänningar) mot handfången pant; äv.: belåna (pant som lämnas ss. säkerhet).",
+      "source": "SAOB (svenska.se)"
     },
     "kinin": {
       "definition": "en av kinabarkens alkaloider anv. i läkemedel, med bl.a. febernedsättande verkan, och som bittert smakämne, t.ex. i tonic",

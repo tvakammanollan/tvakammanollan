@@ -250,6 +250,55 @@ function firstSentences(text: string, max = 260): string {
   const lastDot = cut.lastIndexOf(". ");
   return (lastDot > 80 ? cut.slice(0, lastDot + 1) : cut.trimEnd()) + "…";
 }
+async function fetchText(url: string, tries = 4): Promise<string | null> {
+  for (let attempt = 0; attempt < tries; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { "User-Agent": uaFor(url) } });
+      if (res.status === 404) return null;
+      if (res.status === 429 || res.status >= 500) {
+        await sleep(1000 * (attempt + 1) + Math.random() * 500);
+        continue;
+      }
+      if (!res.ok) return null;
+      return await res.text();
+    } catch {
+      await sleep(800 * (attempt + 1) + Math.random() * 400);
+    }
+  }
+  return null;
+}
+
+// ---- Fallback: SAOB (Svenska Akademiens ordbok) – för ålderdomliga ord ----
+// Definitionen ligger i en <span class="StorAntikva"> direkt efter uppslagsordets ankare.
+async function lookupSAOB(word: string): Promise<string | null> {
+  const d = await fetchJson(`${API}/saob?q=${encodeURIComponent(word)}&exact_match=true&size=1`);
+  const src = d?.hits?.hits?.[0]?._source;
+  if (!src?.anchor || !src?.file || !src?.directory) return null;
+  const art = await fetchText(`https://svenska.se/api/saob/${src.directory}/${src.file}`);
+  if (!art) return null;
+  const i = art.indexOf(`id="${src.anchor}"`);
+  if (i < 0) return null;
+  const region = art.slice(i, i + 4000);
+  for (const m of region.matchAll(/<span class="StorAntikva">(.*?)<\/span>/gs)) {
+    const t = stripHtml(m[1]).replace(/^[[\]\s.—–]+/, "").trim();
+    if (t.length >= 8 && !t.startsWith("[")) return polishSentence(t);
+  }
+  return null;
+}
+
+// ---- Sista fallback: engelska Wiktionary (svensk sektion om den finns; annars först) ----
+async function lookupEnWiktionary(word: string): Promise<string | null> {
+  const d = await fetchJson(
+    `https://en.wiktionary.org/w/api.php?action=parse&page=${encodeURIComponent(
+      word,
+    )}&prop=wikitext&format=json&redirects=1`,
+  );
+  const wt = d?.parse?.wikitext?.["*"];
+  if (!wt) return null;
+  const g = firstWiktGloss(String(wt));
+  return g ? polishSentence(g) : null;
+}
+
 async function lookupWikipedia(word: string): Promise<string | null> {
   const d = await fetchJson(
     `https://sv.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(word)}`,
@@ -429,13 +478,20 @@ async function lookup(word: string): Promise<CacheVal> {
     if (sug.definition) return sug;
     const fuzzy = await lookupFuzzy(word);
     if (fuzzy.definition) return fuzzy;
+    // 7. SAOB (Svenska Akademiens ordbok) – ålderdomliga/ovanliga ord.
+    const saob = await lookupSAOB(word);
+    if (saob) return { definition: saob, source: "SAOB (svenska.se)" };
   }
 
-  // 7. Fras utan egen träff → förklara via frasens huvudord.
+  // 8. Fras utan egen träff → förklara via frasens huvudord.
   if (isPhrase) {
     const head = await lookupPhraseHead(word);
     if (head.definition) return head;
   }
+
+  // 9. Sista utväg (gratis): engelska Wiktionary – engelsk förklaring av ordet.
+  const en = await lookupEnWiktionary(word);
+  if (en) return { definition: en, source: "Wiktionary (engelska)" };
 
   return { definition: null, source: null };
 }
