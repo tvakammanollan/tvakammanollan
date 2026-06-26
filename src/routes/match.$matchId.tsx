@@ -114,6 +114,12 @@ function MatchPage() {
   const submittedRef = useRef(false);
   const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
   const answerTimesRef = useRef<Record<string, number>>({});
+  // En enda delad progress-kanal (undvik dubbla prenumerationer + om-prenumeration per fråga).
+  const progressChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const questionsCountRef = useRef(0);
+  useEffect(() => {
+    questionsCountRef.current = questions.length;
+  }, [questions.length]);
 
   // Reset question timer when current changes
   useEffect(() => {
@@ -339,7 +345,8 @@ function MatchPage() {
     return () => clearInterval(id);
   }, [match, matchId]);
 
-  // Real match: realtime broadcast opp progress + detect submission
+  // Real match: EN delad realtidskanal — tar emot motståndarens progress + upptäcker
+  // inlämning. Skapas en gång per match (inte per fråga). Broadcast sker via ref nedan.
   useEffect(() => {
     if (!match || match.is_bot_match || !user) return;
     const oppId = match.player1_id === user.id ? match.player2_id : match.player1_id;
@@ -361,9 +368,14 @@ function MatchPage() {
           const row = payload.new as any;
           const oppSubmitted =
             match.player1_id === user.id ? row.player2_submitted_at : row.player1_submitted_at;
-          // Use a ref so this effect doesn't need oppForceCountdown in its deps
-          // (avoids tearing down the channel every second during the countdown).
-          if (oppSubmitted && !submittedRef.current && !oppForceStartedRef.current) {
+          // Starta INTE force-nedräkningen innan frågorna laddats (annars riskerar en
+          // inbjuden spelare en orättvis 0-inlämning). Ref för att slippa deps.
+          if (
+            oppSubmitted &&
+            !submittedRef.current &&
+            !oppForceStartedRef.current &&
+            questionsCountRef.current > 0
+          ) {
             oppForceStartedRef.current = true;
             setOppForceCountdown(30);
             sounds.invite();
@@ -372,28 +384,22 @@ function MatchPage() {
         },
       )
       .subscribe();
+    progressChannelRef.current = channel;
     return () => {
+      progressChannelRef.current = null;
       void supabase.removeChannel(channel);
     };
   }, [match, matchId, user]);
 
-  // Broadcast my own progress whenever current changes
+  // Broadcasta egen progress när frågan ändras — via den delade kanalen (ingen ny prenumeration).
   useEffect(() => {
     if (!match || match.is_bot_match || !user || questions.length === 0) return;
-    const channel = supabase.channel(`match-progress-${matchId}`);
-    channel.subscribe((status) => {
-      if (status === "SUBSCRIBED") {
-        void channel.send({
-          type: "broadcast",
-          event: "progress",
-          payload: { user_id: user.id, index: current, total: questions.length },
-        });
-      }
+    void progressChannelRef.current?.send({
+      type: "broadcast",
+      event: "progress",
+      payload: { user_id: user.id, index: current, total: questions.length },
     });
-    return () => {
-      void supabase.removeChannel(channel);
-    };
-  }, [match, matchId, user, current, questions.length]);
+  }, [match, user, current, questions.length]);
 
   // 30s forced countdown when opponent submitted
   useEffect(() => {
@@ -463,6 +469,8 @@ function MatchPage() {
 
   const doSubmit = async (auto = false) => {
     if (!user) return;
+    if (submittedRef.current && !auto) return; // redan inlämnad
+    submittedRef.current = true; // synkron guard mot dubbel-inlämning (timer/force/manuell)
     setSubmitting(true);
     try {
       try {
@@ -589,13 +597,13 @@ function MatchPage() {
         <div>
           <p className="eyebrow text-[#f2a65a]">Väntar</p>
           <h1
-            className="mt-1 text-[30px] font-bold leading-tight text-[#050507]"
+            className="mt-1 text-[30px] font-bold leading-tight text-[#e8e4da]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Inbjudan skickad.
           </h1>
         </div>
-        <p className="text-[#737373]">
+        <p className="text-white/65">
           Matchen startar automatiskt när din vän accepterar inbjudan.
         </p>
         <motion.div
@@ -621,7 +629,7 @@ function MatchPage() {
         >
           <Trophy className="h-7 w-7" />
         </motion.span>
-        <p className="text-sm text-[#737373]">Förbereder arenan…</p>
+        <p className="text-sm text-white/65">Förbereder arenan…</p>
       </div>
     );
   }
@@ -652,18 +660,18 @@ function MatchPage() {
         <div>
           <p className="eyebrow text-[#f2a65a]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#050507]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[#e8e4da]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
           </h1>
         </div>
-        <p className="text-[#737373]">
+        <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[#050507] tabular-nums">{oppSecondsLeft}s</span> kvar
+          <span className="font-semibold text-[#e8e4da] tabular-nums">{oppSecondsLeft}s</span> kvar
           att avsluta…
         </p>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-[#e6e0d2]">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <motion.div
             className="h-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
