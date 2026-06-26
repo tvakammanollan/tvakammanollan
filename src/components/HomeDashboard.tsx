@@ -13,6 +13,7 @@ import { CoachingModal } from "@/components/CoachingModal";
 import { Reveal } from "@/components/landing/MotionFX";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { GlassCard } from "@/components/layout/GlassCard";
+import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import {
   GraduationCap,
   Sigma,
@@ -103,6 +104,8 @@ export function HomeDashboard() {
                 </span>
               )}
             </div>
+
+            <NextRankBar elo={Math.max(profile.elo_verbal, profile.elo_math)} />
           </header>
         </Reveal>
 
@@ -253,6 +256,38 @@ function GuestBanner() {
 }
 
 /* =================== RANK PILL =================== */
+function NextRankBar({ elo }: { elo: number }) {
+  const rank = getRankForElo(elo);
+  const next = getNextRank(elo);
+  const pct = getEloProgressInTier(elo);
+  if (!next) {
+    return (
+      <p className="mt-3 text-xs text-white/55">
+        {rank.icon} Du är på högsta ranken — <span className="text-[#f2a65a]">{rank.name}</span>.
+      </p>
+    );
+  }
+  const toGo = next.minElo - elo;
+  return (
+    <div className="mt-3 max-w-xs">
+      <div className="flex items-center justify-between text-[11px] text-white/55">
+        <span>
+          {rank.icon} {rank.name.split(" – ")[0]}
+        </span>
+        <span className="tabular-nums">
+          {toGo} ELO till {next.icon} {next.name.split(" – ")[0]}
+        </span>
+      </div>
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089] transition-all"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function RankPill({ label, elo }: { label: string; elo: number }) {
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">

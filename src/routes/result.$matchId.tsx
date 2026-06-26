@@ -28,7 +28,10 @@ import {
   Home,
   Clock,
   AlertTriangle,
+  Share2,
 } from "lucide-react";
+import { toast } from "sonner";
+import { track } from "@/lib/telemetry";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
@@ -314,6 +317,32 @@ function ResultPage() {
     }
   };
 
+  const shareResult = async () => {
+    track({
+      type: "metric",
+      message: "result_share_clicked",
+      context: { won, draw, matchType: match.match_type },
+    });
+    const elo = eloChange != null ? ` · ELO ${eloChange >= 0 ? "+" : ""}${eloChange}` : "";
+    const verb = draw
+      ? `spelade oavgjort ${myScore}–${oppScore}`
+      : won
+        ? `vann ${myScore}–${oppScore}`
+        : `förlorade ${myScore}–${oppScore}`;
+    const text = `Jag ${verb} mot ${opponentName} på HP Kampen${elo}! 🏆`;
+    const url = "https://hpkampen.se";
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title: "HP Kampen", text, url });
+      } else {
+        await navigator.clipboard.writeText(`${text}\nSpela gratis: ${url}`);
+        toast.success("Resultatet kopierat – klistra in var du vill!");
+      }
+    } catch {
+      /* användaren avbröt delningen */
+    }
+  };
+
   // Group consecutive questions sharing passage_id
   const passageGroups: Array<{ passage_id: string; passage_text: string; question_ids: string[] }> =
     [];
@@ -502,8 +531,18 @@ function ResultPage() {
         </Reveal>
       )}
 
+      {/* Dela resultat */}
+      <Button
+        onClick={shareResult}
+        variant="outline"
+        className="mt-5 w-full gap-1.5 border-[#f2a65a]/40 text-[#f2a65a] hover:bg-[#f2a65a]/10"
+      >
+        <Share2 className="h-4 w-4" />
+        Dela resultat
+      </Button>
+
       {/* Actions */}
-      <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
         <Button onClick={playAgain} disabled={creatingRematch} className="gap-1.5">
           <RotateCcw className="h-4 w-4" />
           Spela igen

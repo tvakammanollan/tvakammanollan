@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { Plus, Swords, Users, BarChart3, BookOpen, Type } from "lucide-react";
+import { Plus, Swords, Users, BarChart3, BookOpen, Type, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Option = {
@@ -12,7 +12,8 @@ type Option = {
 
 const ALL_OPTIONS: Option[] = [
   { label: "Träna", to: "/train", Icon: <BookOpen className="h-4 w-4" /> },
-  { label: "Hitta match", to: "/leaderboard", Icon: <Swords className="h-4 w-4" /> },
+  { label: "Hitta match", to: "/matchmaking", Icon: <Swords className="h-4 w-4" /> },
+  { label: "Topplista", to: "/leaderboard", Icon: <Trophy className="h-4 w-4" /> },
   { label: "Vänner", to: "/friends", Icon: <Users className="h-4 w-4" /> },
   { label: "Statistik", to: "/stats", Icon: <BarChart3 className="h-4 w-4" /> },
   { label: "Ord", to: "/ord", Icon: <Type className="h-4 w-4" /> },
