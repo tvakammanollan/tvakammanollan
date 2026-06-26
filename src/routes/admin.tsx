@@ -292,7 +292,7 @@ function StatsTab() {
           {rows.map((r) => {
             const missing = r.total - r.with_e;
             return (
-              <tr key={r.category} className={`border-t border-border ${missing > 0 ? "bg-amber-50/60" : ""}`}>
+              <tr key={r.category} className={`border-t border-border ${missing > 0 ? "bg-[#f2a65a]/10" : ""}`}>
                 <td className="px-3 py-2 font-medium">{r.category}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{r.total}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{r.with_e}</td>

@@ -415,7 +415,7 @@ function OrdPracticePage() {
                     />
                   </label>
                   {excludeCorrect && progress.totalCount - progress.correctCount < 10 && (
-                    <p className="mt-2 text-xs text-amber-700">
+                    <p className="mt-2 text-xs text-[#f2a65a]">
                       Endast {progress.totalCount - progress.correctCount} ord kvar med detta
                       filter.
                     </p>

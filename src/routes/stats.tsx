@@ -546,8 +546,8 @@ function StatsPage() {
                       const rowBg = draw
                         ? "bg-background"
                         : won
-                          ? "bg-emerald-50/60"
-                          : "bg-rose-50/60";
+                          ? "bg-emerald-500/10"
+                          : "bg-rose-500/10";
                       return (
                         <tr key={m.id} className={`border-b border-border/60 ${rowBg}`}>
                           <td className="px-2 py-2 text-muted-foreground">
@@ -572,9 +572,9 @@ function StatsPage() {
                               <span
                                 className={
                                   delta > 0
-                                    ? "text-emerald-700"
+                                    ? "text-emerald-400"
                                     : delta < 0
-                                      ? "text-rose-700"
+                                      ? "text-rose-400"
                                       : "text-muted-foreground"
                                 }
                               >

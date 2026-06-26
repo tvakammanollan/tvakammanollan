@@ -407,9 +407,9 @@ function ResultPage() {
             <span
               className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${
                 eloChange > 0
-                  ? "bg-emerald-100 text-emerald-700"
+                  ? "bg-emerald-500/15 text-emerald-300"
                   : eloChange < 0
-                    ? "bg-rose-100 text-rose-700"
+                    ? "bg-rose-500/15 text-rose-300"
                     : "bg-muted text-foreground"
               }`}
             >
@@ -560,10 +560,10 @@ function ResultPage() {
                       key={q.id}
                       className={`rounded-xl border p-4 ${
                         noAnswer
-                          ? "border-zinc-300 bg-zinc-50"
+                          ? "border-white/15 bg-white/5"
                           : correct
-                            ? "border-emerald-300/60 bg-emerald-50/60"
-                            : "border-rose-300/60 bg-rose-50/60"
+                            ? "border-emerald-500/30 bg-emerald-500/10"
+                            : "border-rose-500/30 bg-rose-500/10"
                       }`}
                     >
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
@@ -573,7 +573,7 @@ function ResultPage() {
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
                               a.time_spent_seconds > 180
-                                ? "bg-amber-100 text-amber-800"
+                                ? "bg-[#f2a65a]/15 text-[#f2a65a]"
                                 : "bg-muted text-muted-foreground"
                             }`}
                           >
@@ -593,14 +593,14 @@ function ResultPage() {
                         )}
                         <span className="ml-auto inline-flex items-center gap-1">
                           {noAnswer ? (
-                            <span className="text-zinc-600">Ej besvarad</span>
+                            <span className="text-white/55">Ej besvarad</span>
                           ) : correct ? (
                             <>
-                              <Check className="h-3.5 w-3.5 text-emerald-700" /> Rätt
+                              <Check className="h-3.5 w-3.5 text-emerald-400" /> Rätt
                             </>
                           ) : (
                             <>
-                              <X className="h-3.5 w-3.5 text-rose-700" /> Fel
+                              <X className="h-3.5 w-3.5 text-rose-400" /> Fel
                             </>
                           )}
                         </span>
@@ -652,9 +652,9 @@ function ResultPage() {
                               key={opt.id}
                               className={`flex items-start gap-2 rounded-md border px-2.5 py-1.5 text-sm ${
                                 isCorrect
-                                  ? "border-emerald-300 bg-emerald-100/60 text-emerald-900"
+                                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-100"
                                   : isPicked
-                                    ? "border-rose-300 bg-rose-100/60 text-rose-900"
+                                    ? "border-rose-500/30 bg-rose-500/10 text-rose-100"
                                     : "border-transparent text-foreground/80"
                               }`}
                             >
@@ -664,9 +664,9 @@ function ResultPage() {
                               <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
                                 {isMath ? <MathText autoDetect>{opt.text}</MathText> : opt.text}
                               </span>
-                              {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-700" />}
+                              {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-400" />}
                               {isPicked && !isCorrect && (
-                                <X className="ml-auto h-4 w-4 text-rose-700" />
+                                <X className="ml-auto h-4 w-4 text-rose-400" />
                               )}
                             </li>
                           );
