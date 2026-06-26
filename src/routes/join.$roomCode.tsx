@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { joinMatch } from "@/lib/match.functions";
-import { toast } from "sonner";
-import { Users } from "lucide-react";
+import { Users, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/join/$roomCode")({
   component: JoinPage,
@@ -24,6 +24,7 @@ function JoinPage() {
   const navigate = useNavigate();
   const joinFn = useServerFn(joinMatch);
   const tried = useRef(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (loading) return;
@@ -38,12 +39,38 @@ function JoinPage() {
         const res = await joinFn({ data: { room_code: roomCode } });
         navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
       } catch (e) {
-        const msg = e instanceof Error ? e.message : "Kunde inte ansluta";
-        toast.error(msg);
-        navigate({ to: "/" });
+        setError(e instanceof Error ? e.message : "Kunde inte ansluta till rummet.");
       }
     })();
   }, [user, loading, roomCode, joinFn, navigate]);
+
+  if (error) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-5 px-6 text-center">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#e25a6a]/30 bg-[#e25a6a]/10 text-[#e25a6a]">
+          <AlertTriangle className="h-7 w-7" />
+        </span>
+        <div>
+          <p className="eyebrow text-[#6fb3b8]">Privat rum</p>
+          <h1
+            className="mt-1 text-[26px] font-bold leading-tight text-[#e8e4da]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Kunde inte ansluta
+          </h1>
+          <p className="mt-2 text-sm text-white/65">{error}</p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Button asChild className="bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]">
+            <Link to="/">Till start</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link to="/friends">Bjud in en vän</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
@@ -62,7 +89,7 @@ function JoinPage() {
         >
           Ansluter…
         </h1>
-        <p className="mt-1.5 text-sm text-[#737373]">
+        <p className="mt-1.5 text-sm text-white/65">
           Rum-kod: <span className="font-mono font-semibold text-[#f2a65a]">{roomCode}</span>
         </p>
       </div>

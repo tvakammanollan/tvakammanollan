@@ -409,7 +409,7 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
 
         {isPlaceholder && (
           <p className="mt-3 text-center text-[12px] text-white/35">
-            Placeholder — fylls med riktiga spelare när de börjar spela.
+            Exempel — fylls med riktiga spelare när matcherna drar igång.
           </p>
         )}
 
