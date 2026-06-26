@@ -1,89 +1,90 @@
 /**
- * scrape-ord-definitions.ts
+ * scrape-ord-definitions.ts  (FAS 1 – offline, ingen DB-skrivning)
  * ─────────────────────────────────────────────────────────────────
  * Scrapar ordförklaringar från svenska.se (Svenska Akademiens ordböcker)
- * för ALLA ORD-frågor och skriver dem till `questions.definition`
- * (+ `questions.definition_source`). Förklaringen visas sedan i
- * ord-övningen (DefinitionBlock i src/routes/ord.tsx).
+ * för ALLA ORD-frågor och skriver dem till en lokal datafil:
  *
- * Källa: svenska.se:s interna Elasticsearch-API (samma som sajten själv
- * anropar). Primärt SO (Svensk ordbok – bäst pedagogiska definitioner),
- * faller tillbaka på SAOL (kortare definitioner) när SO saknar träff.
+ *   scripts/ord-definitions.json
+ *
+ * INGEN service-role-nyckel behövs här – orden läses via den publika
+ * anon-nyckeln (anonym inloggning). Att ladda in datan i databasen är
+ * ett separat steg: scripts/apply-ord-definitions.ts (kräver service key,
+ * körs senare när nyckeln finns – t.ex. via Lovable).
+ *
+ * Källa: svenska.se:s interna API (samma som sajten anropar). Primärt SO
+ * (Svensk ordbok – bäst pedagogiska definitioner), faller tillbaka på SAOL.
  *   GET https://svenska.se/api/search/so?q=<ord>&exact_match=true&size=3
  *   GET https://svenska.se/api/search/saol?q=<ord>&exact_match=true&size=3
  *
  * Egenskaper:
- *   - Avdubblar: varje unikt ord slås upp EN gång även om det förekommer
- *     i flera frågor; alla rader med ordet uppdateras.
- *   - Återupptagbar: lokal cache (scripts/.ord-defs/cache.json) gör att
- *     omkörningar hoppar över redan hämtade ord. Och vi väljer bara rader
- *     där definition IS NULL, så avbrutna körningar fortsätter där de slutade.
- *   - Snäll mot servern: liten concurrency-pool + jitter + retry/backoff.
+ *   - Återupptagbar: lokal cache (scripts/.ord-defs/cache.json). Avbryt
+ *     när som helst och kör igen – redan hämtade ord hoppas över.
+ *   - Snäll mot servern: concurrency-pool + jitter + retry/backoff.
  *
  * Användning (kräver bun):
- *   export SUPABASE_URL=...                 (eller VITE_SUPABASE_URL)
- *   export SUPABASE_SERVICE_ROLE_KEY=...    (service role – skriver till DB)
- *   bun run scripts/scrape-ord-definitions.ts            # kör allt
- *   bun run scripts/scrape-ord-definitions.ts --limit 50 # testa 50 ord
- *   bun run scripts/scrape-ord-definitions.ts --word krusa --dry  # ett ord, skriv inget
- *   bun run scripts/scrape-ord-definitions.ts --retry-misses      # försök igen på tidigare missar
- *
- * Flaggor:
- *   --dry            hämta + parsa men skriv INGET till DB
- *   --limit N        bearbeta max N unika ord (för test)
- *   --word X         bearbeta bara ordet X (implicerar små körningar)
- *   --retry-misses   ignorera cachade missar och försök igen
- *   --concurrency N  antal parallella förfrågningar (default 4)
+ *   # läser VITE_SUPABASE_URL + VITE_SUPABASE_PUBLISHABLE_KEY från .env
+ *   bun run scrape:ord-defs                 # bygg hela ord-definitions.json
+ *   bun run scrape:ord-defs --limit 50      # testa 50 ord
+ *   bun run scrape:ord-defs --word krusa    # bara ett ord (skriver ej fil)
+ *   bun run scrape:ord-defs --retry-misses  # försök igen på tidigare missar
+ *   bun run scrape:ord-defs --concurrency 8
  * ─────────────────────────────────────────────────────────────────
  */
 import { createClient } from "@supabase/supabase-js";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!SUPABASE_URL || !SERVICE_KEY) {
+// bun läser .env automatiskt.
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+const ANON_KEY =
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
+if (!SUPABASE_URL || !ANON_KEY) {
   console.error(
-    "Saknar env: sätt SUPABASE_URL (eller VITE_SUPABASE_URL) och SUPABASE_SERVICE_ROLE_KEY.",
+    "Saknar env: VITE_SUPABASE_URL och VITE_SUPABASE_PUBLISHABLE_KEY (finns normalt i .env).",
   );
   process.exit(1);
 }
-const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
-  auth: { persistSession: false, autoRefreshToken: false },
-});
 
-// ---- CLI-flaggor ----
+// ---- CLI ----
 const args = process.argv.slice(2);
 const has = (f: string) => args.includes(f);
 const val = (f: string) => {
   const i = args.indexOf(f);
   return i >= 0 ? args[i + 1] : undefined;
 };
-const DRY = has("--dry");
 const RETRY_MISSES = has("--retry-misses");
+const REFRESH_FALLBACKS = has("--refresh-fallbacks");
+const isPrimarySource = (s: string | null) =>
+  s === "SO (svenska.se)" || s === "SAOL (svenska.se)";
 const LIMIT = val("--limit") ? parseInt(val("--limit")!, 10) : Infinity;
 const ONLY_WORD = val("--word");
-const CONCURRENCY = val("--concurrency") ? Math.max(1, parseInt(val("--concurrency")!, 10)) : 4;
+const CONCURRENCY = val("--concurrency") ? Math.max(1, parseInt(val("--concurrency")!, 10)) : 6;
 
-const UA =
+// svenska.se vill ha en webbläsarlik UA; Wikimedia kräver en beskrivande UA
+// med kontakt (annars throttlas/blockeras anrop).
+const UA_BROWSER =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
+const UA_WIKIMEDIA = "hpkampen-orddefs/1.0 (https://hpkampen.se; niklas.pellkvist@gmail.com)";
+const uaFor = (url: string) => (/wik(ipedia|tionary)\.org/.test(url) ? UA_WIKIMEDIA : UA_BROWSER);
 const API = "https://svenska.se/api/search";
 
-const STATE_DIR = join(new URL(".", import.meta.url).pathname, ".ord-defs");
+const SCRIPT_DIR = new URL(".", import.meta.url).pathname;
+const STATE_DIR = join(SCRIPT_DIR, ".ord-defs");
 const CACHE_FILE = join(STATE_DIR, "cache.json");
+const OUT_FILE = join(SCRIPT_DIR, "ord-definitions.json");
+const MISS_FILE = join(STATE_DIR, "misses.txt");
 if (!existsSync(STATE_DIR)) mkdirSync(STATE_DIR, { recursive: true });
 
 type CacheVal = { definition: string | null; source: string | null };
 const cache: Record<string, CacheVal> = existsSync(CACHE_FILE)
   ? JSON.parse(readFileSync(CACHE_FILE, "utf8"))
   : {};
-let cacheDirty = 0;
+let dirty = 0;
 const flushCache = () => {
   writeFileSync(CACHE_FILE, JSON.stringify(cache));
-  cacheDirty = 0;
+  dirty = 0;
 };
 
-// ---- Hjälpare ----
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 function stripHtml(s: string): string {
@@ -99,177 +100,440 @@ function stripHtml(s: string): string {
     .trim();
 }
 
-// Normalisera ett frågeord till uppslagsform (svenska.se vill ha gemener).
-function normalizeWord(raw: string): string {
-  return raw.trim().toLowerCase().replace(/\s+/g, " ");
+const normalizeWord = (raw: string) => raw.trim().toLowerCase().replace(/\s+/g, " ");
+
+// ---- Snygg formatering ----
+const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+function polishSentence(s: string): string {
+  let t = s.trim().replace(/\s+/g, " ");
+  if (!t) return t;
+  t = cap(t);
+  if (!/[.!?…]$/.test(t)) t += ".";
+  return t;
+}
+// Flera betydelser → numrerad, snygg lista. En betydelse → en mening.
+function formatSenses(senses: string[]): string | null {
+  const clean = senses.map((s) => s.trim()).filter(Boolean).slice(0, 4);
+  if (clean.length === 0) return null;
+  if (clean.length === 1) return polishSentence(clean[0]);
+  return clean.map((s, i) => `${i + 1}. ${polishSentence(s)}`).join("  ");
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildDefinition(hits: any[], word: string): string | null {
-  // Föredra träff vars ortografi exakt matchar ordet; annars första träffen.
+function pickHit(hits: any[], word: string): any | null {
   const norm = normalizeWord(word);
   const exact = hits.find(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (h: any) => normalizeWord(String(h?._source?.ortografi ?? "")) === norm,
   );
-  const chosen = exact ?? hits[0];
-  const src = chosen?._source;
-  if (!src) return null;
-
-  const senses: string[] = [];
-  const hbs = src.huvudbetydelser ?? src.huvudbetydelse ?? [];
-  for (const hb of Array.isArray(hbs) ? hbs : [hbs]) {
-    const raw = hb?.definition_full || hb?.definition || "";
-    const text = stripHtml(String(raw));
-    if (text) senses.push(text);
-  }
-  if (senses.length === 0) return null;
-  // Numrera om flera betydelser; håll det kompakt (max 4 betydelser).
-  const top = senses.slice(0, 4);
-  return top.length === 1 ? top[0] : top.map((s, i) => `${i + 1}. ${s}`).join("  ");
+  return exact ?? hits[0] ?? null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fetchJson(url: string, tries = 4): Promise<any | null> {
-  for (let attempt = 0; attempt < tries; attempt++) {
-    try {
-      const res = await fetch(url, {
-        headers: { "User-Agent": UA, Accept: "application/json" },
-      });
-      if (res.status === 429 || res.status >= 500) {
-        await sleep(800 * (attempt + 1) + Math.random() * 400);
-        continue;
+function buildDefinition(hits: any[], word: string): string | null {
+  const src = pickHit(hits, word)?._source;
+  if (!src) return null;
+  const senses: string[] = [];
+  const hbs = src.huvudbetydelser ?? src.huvudbetydelse ?? [];
+  for (const hb of Array.isArray(hbs) ? hbs : [hbs]) {
+    const text = stripHtml(String(hb?.definition_full || hb?.definition || ""));
+    if (text) senses.push(text);
+  }
+  return formatSenses(senses);
+}
+
+// ---- Fallback: SO-idiom (för uttryck/fraser, t.ex. "vara i svang") ----
+function idiomVariants(idiom: string): string[] {
+  // "(komma/vara) i svang" → ["i svang","komma i svang","vara i svang"]
+  const base = normalizeWord(idiom.replace(/\(([^)]*)\)/g, " ").replace(/\s+/g, " "));
+  const out = new Set<string>([base]);
+  const m = idiom.match(/\(([^)]*)\)/);
+  if (m) {
+    for (const opt of m[1].split("/")) {
+      out.add(normalizeWord(idiom.replace(/\([^)]*\)/, opt)));
+    }
+  }
+  return [...out].filter(Boolean);
+}
+async function lookupSOIdiom(phrase: string): Promise<string | null> {
+  const norm = normalizeWord(phrase);
+  const data = await fetchJson(`${API}/so?q=${encodeURIComponent(phrase)}&size=10`);
+  for (const h of data?.hits?.hits ?? []) {
+    const hbs = h?._source?.huvudbetydelser ?? [];
+    for (const hb of Array.isArray(hbs) ? hbs : [hbs]) {
+      for (const idi of hb?.idiom ?? []) {
+        const variants = idiomVariants(String(idi?.idiom ?? ""));
+        const pTok = norm.split(" ").filter(Boolean);
+        const isSubseq = (idiom: string) => {
+          const t = idiom.split(" ").filter(Boolean);
+          let j = 0;
+          for (const w of t) if (j < pTok.length && w === pTok[j]) j++;
+          return j === pTok.length; // alla frasens ord i ordning (tillåter inskjutna "någon/något")
+        };
+        const hit = variants.some(
+          (v) => v === norm || v.includes(norm) || norm.includes(v) || isSubseq(v),
+        );
+        if (!hit) continue;
+        const def = stripHtml(String(idi?.idiombetydelser?.[0]?.definition ?? ""));
+        if (def) return polishSentence(def);
       }
-      if (!res.ok) return null;
-      return await res.json();
-    } catch {
-      await sleep(600 * (attempt + 1) + Math.random() * 400);
     }
   }
   return null;
 }
 
-// Slå upp ett ord: SO först, annars SAOL.
+// ---- Fallback: svenska Wiktionary (action-API) ----
+function cleanWiki(s: string): string {
+  let t = s.replace(/^#+\s*/, "");
+  for (let i = 0; i < 4; i++) t = t.replace(/\{\{[^{}]*\}\}/g, " ");
+  t = t
+    .replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, "$1")
+    .replace(/'{2,}/g, "")
+    .replace(/<[^>]+>/g, "");
+  return t.replace(/\s+/g, " ").trim();
+}
+// Hämta första riktiga betydelsen (gloss) från wikitext; föredra Svenska-sektionen.
+function firstWiktGloss(wikitext: string): string | null {
+  const blocks: string[] = [];
+  const m = wikitext.match(/\n==\s*Svenska\s*==\s*\n/);
+  if (m) {
+    const start = m.index! + m[0].length;
+    const nxt = wikitext.slice(start).match(/\n==[^=].*?==\s*\n/);
+    blocks.push(wikitext.slice(start, nxt ? start + nxt.index! : undefined));
+  }
+  blocks.push(wikitext); // fallback: hela texten
+  for (const b of blocks) {
+    for (const line of b.split("\n")) {
+      if (/^#[^:*]/.test(line)) {
+        const g = cleanWiki(line);
+        if (g) return g;
+      }
+    }
+  }
+  return null;
+}
+async function fetchWiktGloss(word: string): Promise<string | null> {
+  const url = `https://sv.wiktionary.org/w/api.php?action=parse&page=${encodeURIComponent(
+    word,
+  )}&prop=wikitext&format=json&redirects=1`;
+  const d = await fetchJson(url);
+  const wt = d?.parse?.wikitext?.["*"];
+  return wt ? firstWiktGloss(String(wt)) : null;
+}
+async function lookupWiktionary(word: string, depth = 0): Promise<string | null> {
+  const gloss = await fetchWiktGloss(word);
+  if (!gloss) return null;
+  // Form-of / variant → följ till grundordet och slå upp det i SO/SAOL/Wiktionary.
+  const m = gloss.match(
+    /(?:variant av|böjningsform av|böjning av|äldre form av|alternativ (?:stavning|form) av|felstavning av|se)\s+([a-zåäöé][a-zåäöéA-ZÅÄÖ-]+)/i,
+  );
+  if (m && depth < 1) {
+    const target = m[1].toLowerCase();
+    const q = encodeURIComponent(target);
+    const so = buildDefinition((await fetchJson(`${API}/so?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], target);
+    if (so) return so;
+    const saol = buildDefinition((await fetchJson(`${API}/saol?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], target);
+    if (saol) return saol;
+    const wt = await lookupWiktionary(target, depth + 1);
+    if (wt) return wt;
+  }
+  // Hoppa över rena hänvisningar utan eget innehåll.
+  if (/^(se |jämför|jfr)\b/i.test(gloss)) return null;
+  return polishSentence(gloss);
+}
+
+// ---- Fallback: svenska Wikipedia (för facktermer, latinska uttryck m.m.) ----
+function firstSentences(text: string, max = 260): string {
+  const t = text.trim().replace(/\s+/g, " ");
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const lastDot = cut.lastIndexOf(". ");
+  return (lastDot > 80 ? cut.slice(0, lastDot + 1) : cut.trimEnd()) + "…";
+}
+async function lookupWikipedia(word: string): Promise<string | null> {
+  const d = await fetchJson(
+    `https://sv.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(word)}`,
+  );
+  if (!d || d.type === "disambiguation") return null;
+  const ex = String(d.extract ?? "").trim();
+  if (!ex || ex.length < 8) return null;
+  return polishSentence(firstSentences(ex));
+}
+
+// ---- Sista fallback: närmaste uppslagsord (stavningsvariant/felstavning) ----
+function levenshtein(a: string, b: string): number {
+  const m = a.length;
+  const n = b.length;
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+      );
+  return dp[m][n];
+}
+// svenska.se:s egen stavningsrättelse ("menade du?") → slå upp det rättade ordet.
+async function lookupSuggest(word: string): Promise<CacheVal> {
+  for (const dict of ["so", "saol"] as const) {
+    const d = await fetchJson(
+      `${API}/${dict}?q=${encodeURIComponent(word)}&exact_match=true&size=1&includeDidYouMean=true`,
+    );
+    const sug = d?.didYouMean?.[0];
+    if (
+      sug?.text &&
+      sug.kind === "headword" &&
+      typeof sug.distance === "number" &&
+      sug.distance <= 1 &&
+      normalizeWord(String(sug.text)) !== normalizeWord(word)
+    ) {
+      const r = await resolveSingle(String(sug.text));
+      if (r.definition) return { definition: r.definition, source: `${r.source}, rättstavat "${sug.text}"` };
+    }
+  }
+  return { definition: null, source: null };
+}
+
+// Slår upp ordet löst i SO/SAOL och accepterar närmaste lemma inom redigeringsavstånd.
+async function lookupFuzzy(word: string): Promise<CacheVal> {
+  const norm = normalizeWord(word);
+  const thresh = norm.length <= 5 ? 1 : 2;
+  const q = encodeURIComponent(word);
+  for (const dict of ["so", "saol"] as const) {
+    const data = await fetchJson(`${API}/${dict}?q=${q}&size=6`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const hits: any[] = data?.hits?.hits ?? [];
+    let best: { d: number; hit: any } | null = null; // eslint-disable-line @typescript-eslint/no-explicit-any
+    for (const h of hits) {
+      const orto = normalizeWord(String(h?._source?.ortografi ?? ""));
+      if (!orto || orto.includes(" ")) continue;
+      const d = levenshtein(norm, orto);
+      if (best === null || d < best.d) best = { d, hit: h };
+    }
+    if (best && best.d <= thresh) {
+      const def = buildDefinition([best.hit], String(best.hit._source.ortografi));
+      if (def) {
+        const label = dict === "so" ? "SO" : "SAOL";
+        return { definition: def, source: `${label} (svenska.se, närmaste ord)` };
+      }
+    }
+  }
+  return { definition: null, source: null };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchJson(url: string, tries = 6): Promise<any | null> {
+  for (let attempt = 0; attempt < tries; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { "User-Agent": uaFor(url), Accept: "application/json" },
+      });
+      if (res.status === 404) return null; // finns inte – ingen mening att försöka igen
+      if (res.status === 429 || res.status >= 500) {
+        await sleep(1200 * (attempt + 1) + Math.random() * 600);
+        continue;
+      }
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      await sleep(800 * (attempt + 1) + Math.random() * 500);
+    }
+  }
+  return null;
+}
+
+// Resolva ett ENSKILT ord (utan fras-logik) via ordböckerna.
+async function resolveSingle(w: string): Promise<CacheVal> {
+  const q = encodeURIComponent(w);
+  const so = buildDefinition((await fetchJson(`${API}/so?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], w);
+  if (so) return { definition: so, source: "SO (svenska.se)" };
+  const saol = buildDefinition((await fetchJson(`${API}/saol?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], w);
+  if (saol) return { definition: saol, source: "SAOL (svenska.se)" };
+  const wikt = await lookupWiktionary(w);
+  if (wikt) return { definition: wikt, source: "Wiktionary" };
+  return { definition: null, source: null };
+}
+
+// Fras utan egen ordboksträff → förklara via frasens huvudord (t.ex. "alludera på" → "alludera").
+const FUNCTION_WORDS = new Set(
+  "i på av med till för en ett att sig den det de som och eller ur ut om upp åt över under från vid mot ngn ngt någon något inte".split(" "),
+);
+async function lookupPhraseHead(phrase: string): Promise<CacheVal> {
+  const content = phrase
+    .split(" ")
+    .filter((t) => t && !FUNCTION_WORDS.has(t))
+    .sort((a, b) => b.length - a.length); // längsta (mest betydelsebärande) först
+  for (const w of content) {
+    const r = await resolveSingle(w);
+    if (r.definition) {
+      return { definition: r.definition, source: `${r.source} – om "${w}"` };
+    }
+  }
+  return { definition: null, source: null };
+}
+
+// Förled/efterled & kombinationsformer ("hema-", "graf,gram", "sym-,sym-").
+async function lookupAffix(word: string): Promise<CacheVal> {
+  if (!/[-,/]/.test(word)) return { definition: null, source: null };
+  const parts = [...new Set(word.split(/[,/]/).map((p) => p.trim()).filter(Boolean))];
+  const out: string[] = [];
+  for (const p of parts) {
+    let g = await fetchWiktGloss(p); // affixformen som den är, t.ex. "hema-"
+    if (!g) {
+      const base = p.replace(/-/g, "").trim();
+      if (base && base !== p) g = (await resolveSingle(base)).definition;
+    }
+    if (g) out.push(parts.length > 1 ? `${p}: ${polishSentence(g)}` : polishSentence(g));
+  }
+  if (out.length === 0) return { definition: null, source: null };
+  return { definition: out.join("  "), source: "Wiktionary (förled/efterled)" };
+}
+
 async function lookup(word: string): Promise<CacheVal> {
   const q = encodeURIComponent(word);
-  const so = await fetchJson(`${API}/so?q=${q}&exact_match=true&size=3`);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const soHits: any[] = so?.hits?.hits ?? [];
-  const soDef = buildDefinition(soHits, word);
+  const isPhrase = word.includes(" ");
+
+  // 0. Förled/efterled & kombinationsformer (innehåller bindestreck/komma).
+  if (/[-,/]/.test(word) && !isPhrase) {
+    const affix = await lookupAffix(word);
+    if (affix.definition) return affix;
+  }
+
+  // 1. SO (Svensk ordbok) – bäst pedagogiska definitioner.
+  const soDef = buildDefinition((await fetchJson(`${API}/so?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], word);
   if (soDef) return { definition: soDef, source: "SO (svenska.se)" };
 
-  await sleep(120 + Math.random() * 120);
-  const saol = await fetchJson(`${API}/saol?q=${q}&exact_match=true&size=3`);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saolHits: any[] = saol?.hits?.hits ?? [];
-  const saolDef = buildDefinition(saolHits, word);
+  // 2. SAOL – när det finns en definition.
+  const saolDef = buildDefinition((await fetchJson(`${API}/saol?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], word);
   if (saolDef) return { definition: saolDef, source: "SAOL (svenska.se)" };
+
+  // 3. Idiom/uttryck → SO:s idiomdata under huvudordet.
+  if (isPhrase) {
+    const idi = await lookupSOIdiom(word);
+    if (idi) return { definition: idi, source: "SO idiom (svenska.se)" };
+  }
+
+  // 4. Svenska Wiktionary (följer varianter/böjningsformer till grundordet).
+  const wikt = await lookupWiktionary(word);
+  if (wikt) return { definition: wikt, source: "Wiktionary" };
+
+  // 5. Svenska Wikipedia (facktermer, latinska uttryck, namngivna begrepp).
+  const wiki = await lookupWikipedia(word);
+  if (wiki) return { definition: wiki, source: "Wikipedia" };
+
+  // 6. svenska.se:s stavningsrättelse + närmaste uppslagsord (felstavningar/varianter).
+  if (!isPhrase) {
+    const sug = await lookupSuggest(word);
+    if (sug.definition) return sug;
+    const fuzzy = await lookupFuzzy(word);
+    if (fuzzy.definition) return fuzzy;
+  }
+
+  // 7. Fras utan egen träff → förklara via frasens huvudord.
+  if (isPhrase) {
+    const head = await lookupPhraseHead(word);
+    if (head.definition) return head;
+  }
 
   return { definition: null, source: null };
 }
 
-// ---- Hämta alla ORD-rader som saknar definition ----
-async function loadWords(): Promise<Map<string, string[]>> {
-  const byWord = new Map<string, string[]>();
-  if (ONLY_WORD) {
-    // Hämta alla rader vars question_text matchar ordet (case-insensitivt).
-    const { data, error } = await supabase
-      .from("questions")
-      .select("id, question_text")
-      .eq("category", "ORD")
-      .ilike("question_text", ONLY_WORD);
-    if (error) throw error;
-    for (const r of data ?? []) {
-      const w = normalizeWord(r.question_text as string);
-      if (!byWord.has(w)) byWord.set(w, []);
-      byWord.get(w)!.push(r.id as string);
-    }
-    return byWord;
-  }
+// Läs alla ORD-ord via anon-nyckeln (anonym inloggning).
+async function loadWords(): Promise<string[]> {
+  if (ONLY_WORD) return [normalizeWord(ONLY_WORD)];
+  const supabase = createClient(SUPABASE_URL!, ANON_KEY!, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { error: authErr } = await supabase.auth.signInAnonymously();
+  if (authErr) throw authErr;
 
+  const set = new Set<string>();
   let from = 0;
   const PAGE = 1000;
   for (;;) {
     const { data, error } = await supabase
       .from("questions")
-      .select("id, question_text")
+      .select("question_text")
       .eq("category", "ORD")
-      .is("definition", null)
       .order("id", { ascending: true })
       .range(from, from + PAGE - 1);
     if (error) throw error;
     const rows = data ?? [];
     for (const r of rows) {
       const w = normalizeWord(r.question_text as string);
-      if (!w) continue;
-      if (!byWord.has(w)) byWord.set(w, []);
-      byWord.get(w)!.push(r.id as string);
+      if (w) set.add(w);
     }
     if (rows.length < PAGE) break;
     from += PAGE;
   }
-  return byWord;
+  return [...set];
 }
 
-async function writeDef(ids: string[], v: CacheVal) {
-  if (DRY || !v.definition) return;
-  // Chunk:a id-listan för säkerhets skull.
-  for (let i = 0; i < ids.length; i += 200) {
-    const chunk = ids.slice(i, i + 200);
-    const { error } = await supabase
-      .from("questions")
-      .update({ definition: v.definition, definition_source: v.source })
-      .in("id", chunk);
-    if (error) throw error;
+function writeArtifact(words: string[]) {
+  const definitions: Record<string, CacheVal> = {};
+  let found = 0;
+  const misses: string[] = [];
+  for (const w of words) {
+    const v = cache[w];
+    if (v && v.definition) {
+      definitions[w] = v;
+      found++;
+    } else {
+      misses.push(w);
+    }
   }
+  const artifact = {
+    generatedAt: new Date().toISOString(),
+    source: "svenska.se (SO primärt, SAOL fallback)",
+    totalWords: words.length,
+    found,
+    missed: misses.length,
+    definitions,
+  };
+  writeFileSync(OUT_FILE, JSON.stringify(artifact, null, 2));
+  writeFileSync(MISS_FILE, misses.join("\n"));
+  return { found, missed: misses.length };
 }
 
 async function main() {
-  console.log(
-    `[scrape] startar  dry=${DRY} limit=${LIMIT} concurrency=${CONCURRENCY}` +
-      (ONLY_WORD ? ` word=${ONLY_WORD}` : ""),
-  );
-  const byWord = await loadWords();
-  let words = [...byWord.keys()];
-  console.log(`[scrape] ${words.length} unika ord saknar definition (av rader utan def)`);
+  console.log(`[bygg] startar  concurrency=${CONCURRENCY}${ONLY_WORD ? ` word=${ONLY_WORD}` : ""}`);
+  let words = await loadWords();
+  console.log(`[bygg] ${words.length} unika ord`);
   if (words.length > LIMIT) words = words.slice(0, LIMIT);
 
+  const total = words.length;
+  let done = 0;
   let found = 0;
   let missed = 0;
-  let done = 0;
-  const total = words.length;
-
-  // Enkel concurrency-pool.
   let cursor = 0;
+
   async function worker() {
     for (;;) {
       const idx = cursor++;
       if (idx >= words.length) return;
       const word = words[idx];
-      const ids = byWord.get(word)!;
-
-      let v: CacheVal;
       const cached = cache[word];
-      if (cached && !(RETRY_MISSES && cached.definition === null)) {
+      const stale =
+        cached &&
+        ((RETRY_MISSES && cached.definition === null) ||
+          (REFRESH_FALLBACKS && !isPrimarySource(cached.source)));
+      let v: CacheVal;
+      if (cached && !stale) {
         v = cached;
       } else {
         v = await lookup(word);
         cache[word] = v;
-        if (++cacheDirty >= 25) flushCache();
-        await sleep(100 + Math.random() * 150); // snällt
+        if (++dirty >= 25) flushCache();
+        await sleep(80 + Math.random() * 140);
       }
-
-      if (v.definition) {
-        await writeDef(ids, v);
-        found++;
-      } else {
-        missed++;
-      }
+      if (v.definition) found++;
+      else missed++;
       done++;
       if (done % 50 === 0 || done === total) {
         console.log(
-          `[scrape] ${done}/${total}  hittade=${found} missade=${missed}` +
-            `  (senast: "${word}" ${v.definition ? "✓" : "—"})`,
+          `[bygg] ${done}/${total}  hittade=${found} missade=${missed}  (senast: "${word}" ${v.definition ? "✓" : "—"})`,
         );
       }
     }
@@ -278,15 +542,16 @@ async function main() {
   await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
   flushCache();
 
-  console.log(
-    `\n[scrape] KLART. ord=${total} hittade=${found} missade=${missed}` +
-      (DRY ? "  (DRY – inget skrevs till DB)" : ""),
-  );
-  if (missed > 0) {
-    const missWords = words.filter((w) => cache[w] && cache[w].definition === null);
-    writeFileSync(join(STATE_DIR, "misses.txt"), missWords.join("\n"));
-    console.log(`[scrape] missar sparade i scripts/.ord-defs/misses.txt (${missWords.length})`);
+  if (ONLY_WORD) {
+    console.log("\n" + JSON.stringify(cache[words[0]], null, 2));
+    return;
   }
+  const stats = writeArtifact(words);
+  console.log(
+    `\n[bygg] KLART → scripts/ord-definitions.json` +
+      `\n        ord=${total} hittade=${stats.found} missade=${stats.missed}` +
+      `\n        missar i scripts/.ord-defs/misses.txt`,
+  );
 }
 
 main().catch((e) => {
