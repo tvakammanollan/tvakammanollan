@@ -40,3 +40,6 @@ dist-ssr
 !.ord-audit/preview-fixes.sql
 !.ord-audit/mek-fixes.json
 !.ord-audit/math-fixes.json
+
+# Definition-scraper cache/missar (script-genererade).
+scripts/.ord-defs/
