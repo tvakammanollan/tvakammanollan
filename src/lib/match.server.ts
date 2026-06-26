@@ -397,17 +397,19 @@ export async function processMatchResultServer(matchId: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await supabaseAdmin.from("users").update(p1Update as any).eq("id", match.player1_id);
 
-  await supabaseAdmin.from("elo_history").upsert(
-    {
+  // insert + ignorera dubblett (23505) – fungerar både med och utan unika indexet,
+  // så ingen deploy-ordning krävs mot migrationen.
+  {
+    const { error: ehErr } = await supabaseAdmin.from("elo_history").insert({
       user_id: match.player1_id,
       match_id: matchId,
       match_type: matchType,
       elo_before: p1Elo,
       elo_after: p1NewElo,
       elo_change: p1Change,
-    },
-    { onConflict: "match_id,user_id", ignoreDuplicates: true },
-  );
+    });
+    if (ehErr && ehErr.code !== "23505") throw ehErr;
+  }
 
   if (!match.is_bot_match && p2Any && match.player2_id) {
     const p2Old = p2Any[eloField] ?? 1000;
@@ -425,17 +427,15 @@ export async function processMatchResultServer(matchId: string) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await supabaseAdmin.from("users").update(p2Update as any).eq("id", match.player2_id);
 
-    await supabaseAdmin.from("elo_history").upsert(
-      {
-        user_id: match.player2_id,
-        match_id: matchId,
-        match_type: matchType,
-        elo_before: p2Old,
-        elo_after: p2NewElo,
-        elo_change: p2Change,
-      },
-      { onConflict: "match_id,user_id", ignoreDuplicates: true },
-    );
+    const { error: ehErr2 } = await supabaseAdmin.from("elo_history").insert({
+      user_id: match.player2_id,
+      match_id: matchId,
+      match_type: matchType,
+      elo_before: p2Old,
+      elo_after: p2NewElo,
+      elo_change: p2Change,
+    });
+    if (ehErr2 && ehErr2.code !== "23505") throw ehErr2;
   }
 
   const winnerId =
