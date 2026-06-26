@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-26T10:32:35.570Z",
+  "generatedAt": "2026-06-26T10:42:12.840Z",
   "source": "svenska.se (SO primärt, SAOL fallback)",
   "totalWords": 8761,
-  "found": 8731,
-  "missed": 30,
+  "found": 8761,
+  "missed": 0,
   "definitions": {
     "flamsig": {
       "definition": "präglad av flams",
@@ -2133,6 +2133,10 @@
       "definition": "äggviteämne",
       "source": "SO (svenska.se)"
     },
+    "oneiromanti": {
+      "definition": "Drömtydning.",
+      "source": "HP-facit (rätt svar)"
+    },
     "alienera": {
       "definition": "skapa alienation hos",
       "source": "SO (svenska.se)"
@@ -2297,6 +2301,10 @@
       "definition": "ofullständig takt som utgör inledning till musikstycke",
       "source": "SO (svenska.se)"
     },
+    "glamourisera": {
+      "definition": "Försköna.",
+      "source": "HP-facit (rätt svar)"
+    },
     "karenstid": {
       "definition": "tid som ska förflyta (tjänas in) innan man är berättigad till viss förmån",
       "source": "SO (svenska.se)"
@@ -2428,6 +2436,10 @@
     "brådmogen": {
       "definition": "tidigt utvecklad särsk. själsligt; vanligen om ung människa",
       "source": "SO (svenska.se)"
+    },
+    "ihängsen": {
+      "definition": "Envis.",
+      "source": "HP-facit (rätt svar)"
     },
     "brännande": {
       "definition": "som kräver omedelbar uppmärksamhet och behandling om (samhälls)problem",
@@ -3185,6 +3197,10 @@
       "definition": "ersättare för ordinarie ledamot i styrelse",
       "source": "SO (svenska.se)"
     },
+    "på småtimmarna": {
+      "definition": "Efter midnatt.",
+      "source": "HP-facit (rätt svar)"
+    },
     "degel": {
       "definition": "typ av eldfast och kemikaliebeständig skål avsedd för upphettning av ämnen till mycket hög temperatur",
       "source": "SO (svenska.se)"
@@ -3929,6 +3945,10 @@
       "definition": "1. Positiv, känslomässig bindning.  2. Sjuklig förändring eller störning av ett organ.",
       "source": "SO (svenska.se, närmaste ord)"
     },
+    "fribryteri": {
+      "definition": "Sjöröveri.",
+      "source": "HP-facit (rätt svar)"
+    },
     "drabbning": {
       "definition": "fysisk kraftmätning individuell, i lag el. militär",
       "source": "SO (svenska.se)"
@@ -4649,6 +4669,10 @@
       "definition": "1. som har samband med stora, idealiserade framtidsmål  2. som har samband med drömsyner och hallucinationer",
       "source": "SO (svenska.se)"
     },
+    "schablonmässigt": {
+      "definition": "Invant och mekaniskt.",
+      "source": "HP-facit (rätt svar)"
+    },
     "centrera": {
       "definition": "1. anordna (något på visst sätt) i förhållande till en mittpunkt eller mittlinje mest i tekniska sammanhang  2. inrikta intresse, uppmärksamhet eller dylikt mot viss punkt etc.",
       "source": "SO (svenska.se)"
@@ -4956,6 +4980,10 @@
     "utanordna": {
       "definition": "ge order om utbetalning av något",
       "source": "SO (svenska.se)"
+    },
+    "sym-,sym-": {
+      "definition": "Samman,med.",
+      "source": "HP-facit (rätt svar)"
     },
     "synkron": {
       "definition": "samtidig",
@@ -6384,6 +6412,10 @@
     "interaktion": {
       "definition": "socialt växelspel mellan personer i kontakt",
       "source": "SO (svenska.se)"
+    },
+    "knejkur": {
+      "definition": "Fotbad.",
+      "source": "HP-facit (rätt svar)"
     },
     "histrion": {
       "definition": "(enklare) skådespelare särsk. om komedianter, gycklare och dylikt",
@@ -8624,6 +8656,10 @@
     "intendent": {
       "definition": "(titel för) tjänsteman med uppgift att vårda och förvalta föremål, redskap och dylikt",
       "source": "SO (svenska.se)"
+    },
+    "mefitisk": {
+      "definition": "Stinkande.",
+      "source": "HP-facit (rätt svar)"
     },
     "probabilitet": {
       "definition": "sannolikhet",
@@ -11377,6 +11413,10 @@
       "definition": "liten väska för toalettsaker att ha med sig på resor",
       "source": "SO (svenska.se)"
     },
+    "falerner": {
+      "definition": "Vin under antiken.",
+      "source": "HP-facit (rätt svar)"
+    },
     "slående": {
       "definition": "som gör ett starkt intryck",
       "source": "SO (svenska.se)"
@@ -11604,6 +11644,10 @@
     "avskräde": {
       "definition": "rester eller material som man vill bli av med",
       "source": "SO (svenska.se)"
+    },
+    "ence-": {
+      "definition": "Hjärn.",
+      "source": "HP-facit (rätt svar)"
     },
     "jojk": {
       "definition": "ett improviserat samiskt sångsätt med korta enkla motiv som upprepas fortlöpande i avancerade rytmiska mönster ofta med inslag av meningslösa stavelser",
@@ -12644,6 +12688,10 @@
     "boulevard": {
       "definition": "lång, bred gata i större stad särsk. Paris",
       "source": "SO (svenska.se)"
+    },
+    "kontubernal": {
+      "definition": "Rumskamrat.",
+      "source": "HP-facit (rätt svar)"
     },
     "tillkännage": {
       "definition": "(offentligt) meddela någon viktigare händelse eller dylikt",
@@ -15053,6 +15101,10 @@
       "definition": "ordna in i klasser som redan existerar el. upprättas vid behov",
       "source": "SO (svenska.se)"
     },
+    "berått": {
+      "definition": "Avsiktligt.",
+      "source": "HP-facit (rätt svar)"
+    },
     "konfession": {
       "definition": "trosbekännelse",
       "source": "SO (svenska.se)"
@@ -15969,6 +16021,10 @@
       "definition": "1. ersättning för (arbets)prestation  2. byggnadsdel som utgör stöd",
       "source": "SO (svenska.se)"
     },
+    "putrefaktion": {
+      "definition": "Förruttnelse.",
+      "source": "HP-facit (rätt svar)"
+    },
     "advocera": {
       "definition": "Förespråka; tala för.",
       "source": "Wiktionary"
@@ -16484,6 +16540,10 @@
     "mestis": {
       "definition": "avkomling av person med ljus hy och person från (syd)amerikansk ursprungsbefolkning",
       "source": "SO (svenska.se)"
+    },
+    "numeralia": {
+      "definition": "Räkneord.",
+      "source": "HP-facit (rätt svar)"
     },
     "evinnerlig": {
       "definition": "som på ett tröttande sätt upprepas under mycket lång tid",
@@ -17092,6 +17152,10 @@
     "språng": {
       "definition": "1. långt kraftfullt hopp  2. det att 2springa 1  3. (hingsts eller tjurs) bestigning av hondjur  4. utskjutande del av byggnad",
       "source": "SO (svenska.se)"
+    },
+    "tilldraga sig": {
+      "definition": "Hända.",
+      "source": "HP-facit (rätt svar)"
     },
     "konfundera": {
       "definition": "göra (någon) förvirrad så att det märks",
@@ -18509,6 +18573,10 @@
       "definition": "åtala",
       "source": "SAOL (svenska.se)"
     },
+    "avia-": {
+      "definition": "Flyg.",
+      "source": "HP-facit (rätt svar)"
+    },
     "uppsåt": {
       "definition": "medveten strävan att uppnå visst resultat positivt el. (ofta) negativt",
       "source": "SO (svenska.se)"
@@ -18592,6 +18660,10 @@
     "ämbete": {
       "definition": "högre statlig (eller kyrklig) befattning som har särskild, (delvis) självständig funktion och som medför både befogenheter och ansvar",
       "source": "SO (svenska.se)"
+    },
+    "apparelj": {
+      "definition": "Apparat.",
+      "source": "HP-facit (rätt svar)"
     },
     "sekterism": {
       "definition": "stark inre sammanhållning och intolerans mot andras åskådningar särsk. i politiska sammanhang (sällan religiösa)",
@@ -18932,6 +19004,10 @@
     "anlöpa": {
       "definition": "lägga till i hamn eller dylikt",
       "source": "SO (svenska.se)"
+    },
+    "glutinös": {
+      "definition": "Klibbig.",
+      "source": "HP-facit (rätt svar)"
     },
     "new age": {
       "definition": "en modern rörelse som betonar intuition och mystik som kunskapskälla med konsekvenser för synen på t.ex. sjukdom och hälsa",
@@ -22041,6 +22117,10 @@
       "definition": "stort stycke av något mjukt",
       "source": "SO (svenska.se)"
     },
+    "legym": {
+      "definition": "Grönsak.",
+      "source": "HP-facit (rätt svar)"
+    },
     "kiropraktik": {
       "definition": "en metod som används för att diagnostisera, behandla och förebygga störningar i kroppens muskel-, skelett- och nervsystem",
       "source": "SO (svenska.se)"
@@ -23209,6 +23289,10 @@
       "definition": "1. ledskada som uppkommit genom att leden tvingats utföra onormal rörelse  2. förvrängning vid överföring av ljud el. bild",
       "source": "SO (svenska.se)"
     },
+    "ingäld": {
+      "definition": "Inkomster.",
+      "source": "HP-facit (rätt svar)"
+    },
     "blottställa": {
       "definition": "göra skyddslös",
       "source": "SO (svenska.se)"
@@ -23476,6 +23560,10 @@
     "marskalk": {
       "definition": "1. (titel för) officer av högsta grad i vissa länder (inte i Sverige)  2. funktionär vid offentlig festlighet",
       "source": "SO (svenska.se)"
+    },
+    "humifiera": {
+      "definition": "Förvandla till mull.",
+      "source": "HP-facit (rätt svar)"
     },
     "semafor": {
       "definition": "signalanordning vid järnväg med rörliga armar eller lampor som med sin inbördes ställning el. position anger om tåget kan köra el. måste vänta",
@@ -25588,6 +25676,10 @@
     "renhårig": {
       "definition": "rättvis och ärlig",
       "source": "SO (svenska.se)"
+    },
+    "förtaga": {
+      "definition": "Överanstränga.",
+      "source": "HP-facit (rätt svar)"
     },
     "bördig": {
       "definition": "1. som växter trivs och frodas på om jord, särsk. i odlingssammanhang  2. som härstammar från den plats eller dylikt som framgår av sammanhanget",
@@ -27833,6 +27925,10 @@
       "definition": "mödomshinna",
       "source": "SO (svenska.se)"
     },
+    "cirkumferens": {
+      "definition": "Omkrets.",
+      "source": "HP-facit (rätt svar)"
+    },
     "dimension": {
       "definition": "1. (visst) mått för viktig, kännetecknande utsträckning hos något föremål; särsk. i fråga om tjocklek, diameter etc.  2. huvudriktning för angivande av utbredning i rummet dvs. längd, bredd el. höjd",
       "source": "SO (svenska.se)"
@@ -28252,6 +28348,10 @@
     "choke": {
       "definition": "spjäll-liknande anordning i förbränningsmotor med vars hjälp lufttillförseln kan varieras så att t.ex. den relativa bensinhalten i gasblandningen kan ökas för underlättande av start",
       "source": "SO (svenska.se)"
+    },
+    "gallisera": {
+      "definition": "Surhetsgradsförminska.",
+      "source": "HP-facit (rätt svar)"
     },
     "jute": {
       "definition": "typ av bastfiber från tropiska (asiatiska) örter; anv. till bl.a. säckar och linoleummattor",
@@ -28692,6 +28792,10 @@
     "skälm": {
       "definition": "bedragare av mer oskyldigt slag",
       "source": "SO (svenska.se)"
+    },
+    "tillhands": {
+      "definition": "Inom räckhåll.",
+      "source": "HP-facit (rätt svar)"
     },
     "interjektion": {
       "definition": "typ av ord som utgör spontant uttryck för känslor särsk. affekter",
@@ -29137,6 +29241,10 @@
       "definition": "vinter med (långvarig) sträng kyla",
       "source": "SO (svenska.se)"
     },
+    "predilektion": {
+      "definition": "Förkärlek.",
+      "source": "HP-facit (rätt svar)"
+    },
     "avkastning": {
       "definition": "produktionsresultat som frambringas av (viss) ekonomisk satsning",
       "source": "SO (svenska.se)"
@@ -29288,6 +29396,10 @@
     "tillmötesgående": {
       "definition": "ivrig att uppfylla (någons) önskemål",
       "source": "SO (svenska.se)"
+    },
+    "gervais": {
+      "definition": "Ostsort.",
+      "source": "HP-facit (rätt svar)"
     },
     "multipel": {
       "definition": "ett heltal som multiplicerats med ett visst tal",
@@ -29920,6 +30032,10 @@
     "occidental": {
       "definition": "västerländsk",
       "source": "SO (svenska.se)"
+    },
+    "innästla sig": {
+      "definition": "Lyckas ta sig in.",
+      "source": "HP-facit (rätt svar)"
     },
     "hjon": {
       "definition": "1. person i beroende av samhällets hjälp el. av hjälp av enskilda personer  2. 1tjänare",
@@ -32232,6 +32348,10 @@
     "grimma": {
       "definition": "remanordning som omsluter huvudet på häst eller liknande djur och som man t.ex. kan fästa en rem (grimskaft) i när man vill leda djuret",
       "source": "SO (svenska.se)"
+    },
+    "pyrrusseger": {
+      "definition": "Kostsam seger.",
+      "source": "HP-facit (rätt svar)"
     },
     "stilton": {
       "definition": "en engelsk grönmögelost",

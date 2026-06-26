@@ -102,6 +102,24 @@ function stripHtml(s: string): string {
 
 const normalizeWord = (raw: string) => raw.trim().toLowerCase().replace(/\s+/g, " ");
 
+// Sista, garanterade källan: ORD-frågans EGET rätta svar (synonym ur HP-facit).
+// Fylls i loadWords; används bara om alla ordböcker missar → 100% täckning.
+const answerKey = new Map<string, string>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function correctOptionText(options: any, correct: any): string | null {
+  if (!Array.isArray(options)) return null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const txt = (o: any) => (typeof o === "string" ? o : o && typeof o === "object" ? String(o.text ?? "") : "");
+  for (const o of options)
+    if (o && typeof o === "object" && o.id != null && String(o.id) === String(correct))
+      return txt(o).trim() || null;
+  const idx = ["A", "B", "C", "D", "E", "F"].indexOf(String(correct).toUpperCase());
+  if (idx >= 0 && options[idx]) return txt(options[idx]).trim() || null;
+  const n = parseInt(String(correct), 10);
+  if (!Number.isNaN(n) && options[n]) return txt(options[n]).trim() || null;
+  return null;
+}
+
 // ---- Snygg formatering ----
 const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 function polishSentence(s: string): string {
@@ -489,21 +507,46 @@ async function lookup(word: string): Promise<CacheVal> {
     if (head.definition) return head;
   }
 
-  // 9. Sista utväg (gratis): engelska Wiktionary – engelsk förklaring av ordet.
+  // 9. Engelska Wiktionary – engelsk förklaring av ordet.
   const en = await lookupEnWiktionary(word);
   if (en) return { definition: en, source: "Wiktionary (engelska)" };
+
+  // 10. Garanterad fallback: ORD-frågans eget rätta svar (synonym ur HP-facit).
+  const ans = answerKey.get(word);
+  if (ans) return { definition: polishSentence(ans), source: "HP-facit (rätt svar)" };
 
   return { definition: null, source: null };
 }
 
-// Läs alla ORD-ord via anon-nyckeln (anonym inloggning).
+// Läs alla ORD-ord via anon-nyckeln + bygg HP-facit-synonymkarta (answerKey).
 async function loadWords(): Promise<string[]> {
-  if (ONLY_WORD) return [normalizeWord(ONLY_WORD)];
   const supabase = createClient(SUPABASE_URL!, ANON_KEY!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
   const { error: authErr } = await supabase.auth.signInAnonymously();
   if (authErr) throw authErr;
+
+  const fill = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rows: any[],
+  ) => {
+    for (const r of rows) {
+      const w = normalizeWord(r.question_text as string);
+      if (!w) continue;
+      const ans = correctOptionText(r.options, r.correct_answer);
+      if (ans) answerKey.set(w, ans);
+    }
+  };
+
+  if (ONLY_WORD) {
+    const { data } = await supabase
+      .from("questions")
+      .select("question_text, options, correct_answer")
+      .eq("category", "ORD")
+      .ilike("question_text", ONLY_WORD);
+    fill(data ?? []);
+    return [normalizeWord(ONLY_WORD)];
+  }
 
   const set = new Set<string>();
   let from = 0;
@@ -511,12 +554,13 @@ async function loadWords(): Promise<string[]> {
   for (;;) {
     const { data, error } = await supabase
       .from("questions")
-      .select("question_text")
+      .select("question_text, options, correct_answer")
       .eq("category", "ORD")
       .order("id", { ascending: true })
       .range(from, from + PAGE - 1);
     if (error) throw error;
     const rows = data ?? [];
+    fill(rows);
     for (const r of rows) {
       const w = normalizeWord(r.question_text as string);
       if (w) set.add(w);
