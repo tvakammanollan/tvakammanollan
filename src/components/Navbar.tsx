@@ -142,7 +142,11 @@ export function Navbar() {
                   }}
                 >
                   <UserAvatar name={profile.username} size={26} />
-                  <span className="text-sm font-medium" style={{ color: "var(--cream)" }}>
+                  <span
+                    className="max-w-[10rem] truncate text-sm font-medium"
+                    style={{ color: "var(--cream)" }}
+                    title={profile.username}
+                  >
                     {profile.username}
                   </span>
                   <EloBadge elo={topElo} size="sm" />
@@ -317,7 +321,11 @@ function MobileMenu({
             <div className="mt-3 flex items-center gap-3">
               <UserAvatar name={profile.username} size={36} />
               <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-semibold" style={{ color: "var(--cream)" }}>
+                <div
+                  className="truncate text-sm font-semibold"
+                  style={{ color: "var(--cream)" }}
+                  title={profile.username}
+                >
                   {profile.username}
                 </div>
                 <div className="mt-0.5">

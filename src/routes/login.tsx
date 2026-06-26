@@ -89,6 +89,7 @@ function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <PillInput
               type="email"
+              label="E-postadress"
               placeholder="info@gmail.com"
               autoComplete="email"
               value={email}
@@ -96,6 +97,7 @@ function LoginPage() {
             />
             <PillInput
               type="password"
+              label="Lösenord"
               placeholder="Lösenord"
               autoComplete="current-password"
               value={password}
@@ -142,17 +144,20 @@ function PillInput({
   autoComplete,
   value,
   onChange,
+  label,
 }: {
   type: string;
   placeholder: string;
   autoComplete: string;
   value: string;
   onChange: (v: string) => void;
+  label: string;
 }) {
   return (
     <input
       type={type}
       placeholder={placeholder}
+      aria-label={label}
       autoComplete={autoComplete}
       value={value}
       onChange={(e) => onChange(e.target.value)}

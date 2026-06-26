@@ -62,13 +62,11 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
 
   // Toast on streak broken
   if (broken && prevStreak >= 7) {
-    toast(`Din streak på ${prevStreak} dagar bröts – men rekordet ${prevLongest} dagar finns kvar. Kämpa på!`, {
-      style: { background: "#fef3c7", color: "#92400e", border: "1px solid #fbbf24" },
-    });
+    toast(
+      `🔥 Din streak på ${prevStreak} dagar bröts – men rekordet ${prevLongest} dagar finns kvar. Kämpa på!`,
+    );
   } else if (broken && prevStreak >= 3) {
-    toast(`Din streak på ${prevStreak} dagar bröts 😔 – börja en ny idag!`, {
-      style: { background: "#fed7aa", color: "#9a3412", border: "1px solid #fb923c" },
-    });
+    toast(`Din streak på ${prevStreak} dagar bröts 😔 – börja en ny idag!`);
   } else if (continued && newStreak >= 2) {
     toast.success(`🔥 ${newStreak} dagars streak!`);
   }

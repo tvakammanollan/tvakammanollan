@@ -85,6 +85,7 @@ export function BugReportButton({
             size="sm"
             className="gap-1.5 text-muted-foreground hover:text-foreground"
             title="Rapportera bugg"
+            aria-label="Rapportera bugg"
           >
             <Bug className="h-4 w-4" />
             <span className="hidden sm:inline">Rapportera bugg</span>

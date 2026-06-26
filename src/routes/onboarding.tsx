@@ -86,6 +86,7 @@ function OnboardingPage() {
           <input
             type="text"
             autoFocus
+            aria-label="Användarnamn"
             autoComplete="off"
             value={username}
             onChange={(e) => setUsername(e.target.value.toLowerCase())}

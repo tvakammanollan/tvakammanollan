@@ -105,6 +105,7 @@ function SignupPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <PillInput
                 type="email"
+                label="E-postadress"
                 placeholder="info@gmail.com"
                 autoComplete="email"
                 value={email}
@@ -113,6 +114,7 @@ function SignupPage() {
               <div>
                 <PillInput
                   type="password"
+                  label="Lösenord"
                   placeholder="Lösenord (minst 6 tecken)"
                   autoComplete="new-password"
                   value={password}
@@ -163,6 +165,7 @@ function PillInput({
   value,
   onChange,
   minLength,
+  label,
 }: {
   type: string;
   placeholder: string;
@@ -170,11 +173,13 @@ function PillInput({
   value: string;
   onChange: (v: string) => void;
   minLength?: number;
+  label: string;
 }) {
   return (
     <input
       type={type}
       placeholder={placeholder}
+      aria-label={label}
       autoComplete={autoComplete}
       value={value}
       onChange={(e) => onChange(e.target.value)}
