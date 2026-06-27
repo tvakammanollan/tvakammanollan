@@ -104,7 +104,7 @@ export function Navbar() {
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}
-              <NotificationsBell userId={user.id} />
+              {!user.is_anonymous && <NotificationsBell userId={user.id} />}
               <BugReportButton />
               <Button
                 variant="ghost"
@@ -144,7 +144,7 @@ export function Navbar() {
         <div className="flex items-center gap-1 md:hidden">
           {loading ? null : user ? (
             <>
-              <NotificationsBell userId={user.id} />
+              {!user.is_anonymous && <NotificationsBell userId={user.id} />}
               <MobileMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
             </>
           ) : (
@@ -176,12 +176,10 @@ export function Navbar() {
 function NavLink({
   to,
   children,
-  badge,
   hideOnMobile,
 }: {
   to: string;
   children: React.ReactNode;
-  badge?: number;
   hideOnMobile?: boolean;
 }) {
   return (
@@ -199,11 +197,6 @@ function NavLink({
       }}
     >
       <span>{children}</span>
-      {badge && badge > 0 ? (
-        <span className="absolute -right-1 -top-1 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold text-white shadow-sm">
-          {badge > 9 ? "9+" : badge}
-        </span>
-      ) : null}
       {/* Underline — animates in on hover, persists on active */}
       <span
         className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100"

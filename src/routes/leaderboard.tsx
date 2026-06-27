@@ -329,7 +329,7 @@ function AllTimeTable({
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
   const notRanked = !friendsOnly && !!currentUserId && (!me || me.games_played < 1);
 
-  if (loading && rows.length === 0)
+  if ((loading && rows.length === 0) || (friendsOnly && friendIds === null))
     return <div className="p-8 text-center text-sm text-white/55">Laddar…</div>;
   if (error) return <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>;
   if (friendsOnly && top.length === 0)

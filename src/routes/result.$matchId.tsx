@@ -292,7 +292,7 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-white/[0.04] text-[#e8e4da] border-white/12"
     : won
-      ? "bg-gradient-to-br from-[#f2a65a] via-[#c97b41] to-[#6fb3b8] text-white border-[#f2a65a] shadow-[0_20px_60px_-15px_rgba(242,166,90,0.45)]"
+      ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#170d05] text-[#e8e4da] border-[#f2a65a]/40 shadow-[0_20px_60px_-15px_rgba(242,166,90,0.4)]"
       : "bg-white/[0.03] text-[#e8e4da] border-white/12";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
@@ -520,22 +520,23 @@ function ResultPage() {
       {user?.is_anonymous && (
         <Reveal
           delay={0.4}
-          className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8"
+          className="mt-5 overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-6 sm:p-8"
         >
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#050507]"
+                className="text-[22px] font-bold leading-tight text-[#e8e4da]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#713f12]">
-                Skapa ett gratis konto för att <strong>spara din ELO</strong>, klättra i rankingen
-                och utmana dina vänner. Tar 30 sekunder.
+              <p className="mt-1.5 text-sm leading-relaxed text-white/65">
+                Skapa ett gratis konto för att{" "}
+                <strong className="text-[#e8e4da]">spara din ELO</strong>, klättra i rankingen och
+                utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
