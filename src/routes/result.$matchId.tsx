@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { createMatch } from "@/lib/match.functions";
+import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
 import { displayCategory } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
@@ -42,13 +43,9 @@ import { getBotName } from "@/lib/bot";
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
   head: () => ({
-    meta: [
-      { title: "Resultat · HP Kampen" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: "Resultat · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
-
 
 interface MatchRow {
   id: string;
@@ -128,6 +125,7 @@ function ResultPage() {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const createMatchFn = useServerFn(createMatch);
+  const rematchFn = useServerFn(requestRematch);
 
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [opponentName, setOpponentName] = useState("");
@@ -292,10 +290,10 @@ function ResultPage() {
 
   // Banner styles
   const bannerClass = draw
-    ? "bg-gradient-to-br from-zinc-200 to-zinc-50 text-zinc-800 border-zinc-300"
+    ? "bg-white/[0.04] text-[#e8e4da] border-white/12"
     : won
-      ? "bg-gradient-to-br from-[#f2a65a] via-[#236d44] to-[#2d7a52] text-white border-[#f2a65a] shadow-[0_20px_60px_-15px_rgba(26,92,58,0.55)]"
-      : "bg-gradient-to-br from-[#2a2a2a] to-[#3a3a3a] text-zinc-100 border-zinc-700";
+      ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#170d05] text-[#e8e4da] border-[#f2a65a]/40 shadow-[0_20px_60px_-15px_rgba(242,166,90,0.4)]"
+      : "bg-white/[0.03] text-[#e8e4da] border-white/12";
   const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
@@ -304,15 +302,34 @@ function ResultPage() {
       ? "Snyggt jobbat. Spela igen och fortsätt klättra."
       : "Bra kämpa! Varje match gör dig bättre.";
 
+  const isPvp = !match.is_bot_match && !!match.player2_id;
+
   const playAgain = async () => {
     if (creatingRematch) return;
     setCreatingRematch(true);
+    track({
+      type: "metric",
+      message: "rematch_clicked",
+      context: { pvp: isPvp, matchType: match.match_type },
+    });
     try {
-      const r = await createMatchFn({ data: { match_type: match.match_type, mode: "bot" } });
-      const nextId = (r as { match_id: string }).match_id;
-      navigate({ to: "/match/$matchId", params: { matchId: nextId } });
+      if (isPvp) {
+        // Revansch mot samma motståndare via inbjudan.
+        const r = await rematchFn({ data: { match_id: match.id } });
+        const r2 = r as { match_id: string; already?: boolean };
+        toast.success(
+          r2.already
+            ? "Du har redan en revansch på väg till motståndaren."
+            : `Revansch skickad – väntar på ${opponentName}.`,
+        );
+        navigate({ to: "/match/$matchId", params: { matchId: r2.match_id } });
+      } else {
+        const r = await createMatchFn({ data: { match_type: match.match_type, mode: "bot" } });
+        const nextId = (r as { match_id: string }).match_id;
+        navigate({ to: "/match/$matchId", params: { matchId: nextId } });
+      }
     } catch (e) {
-      console.error(e);
+      toast.error(e instanceof Error ? e.message : "Kunde inte starta ny match");
       setCreatingRematch(false);
     }
   };
@@ -475,13 +492,13 @@ function ResultPage() {
                                 ? 0.5
                                 : 0.3;
             return (
-              <div className="mt-5 rounded-xl border-2 border-[#eab308]/30 bg-gradient-to-br from-[#fefce8] to-white p-4 text-center">
-                <div className="text-[11px] font-semibold tracking-wide text-[#8a6a10]">
+              <div className="mt-5 rounded-xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-4 text-center">
+                <div className="text-[11px] font-semibold tracking-wide text-[#f2a65a]">
                   Trolig normering
                 </div>
                 <div className="mt-1 flex items-baseline justify-center gap-2">
                   <span
-                    className="text-4xl font-bold tabular-nums text-[#8a6a10] sm:text-5xl"
+                    className="text-4xl font-bold tabular-nums text-[#f2a65a] sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {norm.toFixed(1)}
@@ -503,22 +520,23 @@ function ResultPage() {
       {user?.is_anonymous && (
         <Reveal
           delay={0.4}
-          className="mt-5 overflow-hidden rounded-3xl border border-[#eab308]/40 bg-gradient-to-br from-[#fef3c7] via-[#fde68a] to-[#fef3c7] p-6 shadow-[var(--shadow-glow-gold)] sm:p-8"
+          className="mt-5 overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-6 sm:p-8"
         >
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#eab308] to-[#a16207] text-white shadow-md">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#050507]"
+                className="text-[22px] font-bold leading-tight text-[#e8e4da]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#713f12]">
-                Skapa ett gratis konto för att <strong>spara din ELO</strong>, klättra i rankingen
-                och utmana dina vänner. Tar 30 sekunder.
+              <p className="mt-1.5 text-sm leading-relaxed text-white/65">
+                Skapa ett gratis konto för att{" "}
+                <strong className="text-[#e8e4da]">spara din ELO</strong>, klättra i rankingen och
+                utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
@@ -545,7 +563,7 @@ function ResultPage() {
       <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
         <Button onClick={playAgain} disabled={creatingRematch} className="gap-1.5">
           <RotateCcw className="h-4 w-4" />
-          Spela igen
+          {isPvp ? "Begär revansch" : "Spela igen"}
         </Button>
         <Button asChild variant="secondary" className="gap-1.5">
           <Link to="/stats">

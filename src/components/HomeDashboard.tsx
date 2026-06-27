@@ -11,6 +11,8 @@ import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
 import { Reveal } from "@/components/landing/MotionFX";
+import { AchievementsCard } from "@/components/AchievementsCard";
+import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
@@ -212,6 +214,14 @@ export function HomeDashboard() {
                 </div>
               </GlassCard>
             </div>
+
+            {!isGuest && (
+              <div className="mt-4">
+                <SafeBoundary label="achievements-compact">
+                  <AchievementsCard variant="compact" />
+                </SafeBoundary>
+              </div>
+            )}
           </section>
         </Reveal>
       </div>
