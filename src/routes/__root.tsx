@@ -15,8 +15,6 @@ import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
-import { AchievementWatcher } from "@/components/AchievementWatcher";
-import { SafeBoundary } from "@/components/SafeBoundary";
 import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
 import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGate";
@@ -86,7 +84,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           Försök igen eller gå tillbaka till hem.
         </p>
         <details className="mt-4 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-left text-xs">
-          <summary className="cursor-pointer text-white/60">Teknisk info (för debugging)</summary>
+          <summary className="cursor-pointer text-white/60">
+            Teknisk info (för debugging)
+          </summary>
           <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-words text-[11px] text-[#e25a6a]">
             {error?.name ? `${error.name}: ` : ""}
             {error?.message ?? String(error)}
@@ -438,9 +438,6 @@ function RootComponent() {
         <Footer />
         <FloatingActionMenuGate />
         <FriendInviteListener />
-        <SafeBoundary label="achievement-watcher">
-          <AchievementWatcher />
-        </SafeBoundary>
         <Toaster richColors position="top-center" />
       </div>
     </QueryClientProvider>

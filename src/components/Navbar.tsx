@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { EloBadge } from "@/components/EloBadge";
 import { UserAvatar } from "@/components/UserAvatar";
 import { BugReportButton } from "@/components/BugReportButton";
-import { NotificationsBell } from "@/components/NotificationsBell";
-import { SafeBoundary } from "@/components/SafeBoundary";
 import {
   Sheet,
   SheetContent,
@@ -21,12 +20,58 @@ import { useGuestPlay } from "@/hooks/useGuestPlay";
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
+  const [pendingCount, setPendingCount] = useState(0);
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
 
   const handleSignOut = async () => {
     await signOut();
     navigate({ to: "/" });
   };
+
+  // Pending friend requests + match invites for the current user
+  useEffect(() => {
+    if (!user) {
+      setPendingCount(0);
+      return;
+    }
+    let cancelled = false;
+    const refresh = async () => {
+      const [{ count: friendCount }, { count: inviteCount }] = await Promise.all([
+        supabase
+          .from("friendships")
+          .select("id", { count: "exact", head: true })
+          .eq("addressee_id", user.id)
+          .eq("status", "pending"),
+        supabase
+          .from("match_invites")
+          .select("id", { count: "exact", head: true })
+          .eq("to_user", user.id)
+          .eq("status", "pending"),
+      ]);
+      if (!cancelled) setPendingCount((friendCount ?? 0) + (inviteCount ?? 0));
+    };
+    void refresh();
+
+    // Realtime — listen for new invites
+    const ch = supabase
+      .channel(`nav-pending-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "friendships" },
+        () => void refresh(),
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "match_invites" },
+        () => void refresh(),
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      void supabase.removeChannel(ch);
+    };
+  }, [user]);
 
   const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
 
@@ -81,7 +126,9 @@ export function Navbar() {
               <NavLink to="/train">Träna</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
-              <NavLink to="/friends">Vänner</NavLink>
+              <NavLink to="/friends" badge={pendingCount}>
+                Vänner
+              </NavLink>
               <NavLink to="/stats">Statistik</NavLink>
               {profile?.is_admin && <NavLink to="/admin">Admin</NavLink>}
               {profile && (
@@ -104,11 +151,6 @@ export function Navbar() {
                   </span>
                   <EloBadge elo={topElo} size="sm" />
                 </div>
-              )}
-              {!user.is_anonymous && (
-                <SafeBoundary label="notifications-bell">
-                  <NotificationsBell userId={user.id} />
-                </SafeBoundary>
               )}
               <BugReportButton />
               <Button
@@ -149,10 +191,21 @@ export function Navbar() {
         <div className="flex items-center gap-1 md:hidden">
           {loading ? null : user ? (
             <>
-              {!user.is_anonymous && (
-                <SafeBoundary label="notifications-bell">
-                  <NotificationsBell userId={user.id} />
-                </SafeBoundary>
+              {/* Pending-badge syns alltid om något väntar */}
+              {pendingCount > 0 && (
+                <Link
+                  to="/friends"
+                  className="relative inline-flex h-9 w-9 items-center justify-center rounded-full"
+                  style={{ background: "rgba(242,166,90,0.16)" }}
+                  aria-label={`${pendingCount} väntande`}
+                >
+                  <span
+                    className="text-xs font-bold tabular-nums"
+                    style={{ color: "var(--amber)" }}
+                  >
+                    {pendingCount > 9 ? "9+" : pendingCount}
+                  </span>
+                </Link>
               )}
               <MobileMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
             </>
@@ -185,10 +238,12 @@ export function Navbar() {
 function NavLink({
   to,
   children,
+  badge,
   hideOnMobile,
 }: {
   to: string;
   children: React.ReactNode;
+  badge?: number;
   hideOnMobile?: boolean;
 }) {
   return (
@@ -206,11 +261,13 @@ function NavLink({
       }}
     >
       <span>{children}</span>
+      {badge && badge > 0 ? (
+        <span className="absolute -right-1 -top-1 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold text-white shadow-sm">
+          {badge > 9 ? "9+" : badge}
+        </span>
+      ) : null}
       {/* Underline — animates in on hover, persists on active */}
-      <span
-        className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100"
-        style={{ background: "#f2a65a" }}
-      />
+      <span className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100" style={{ background: "#f2a65a" }} />
     </Link>
   );
 }

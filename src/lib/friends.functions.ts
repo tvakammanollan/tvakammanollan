@@ -2,7 +2,10 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { selectQuestionsFor, insertMatchQuestions } from "./match.server";
+import {
+  selectQuestionsFor,
+  insertMatchQuestions,
+} from "./match.server";
 
 export const sendFriendRequest = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -75,7 +78,10 @@ export const respondFriendRequest = createServerFn({ method: "POST" })
     if (row.addressee_id !== userId) throw new Error("Inte din förfrågan");
 
     if (data.accept) {
-      await supabaseAdmin.from("friendships").update({ status: "accepted" }).eq("id", row.id);
+      await supabaseAdmin
+        .from("friendships")
+        .update({ status: "accepted" })
+        .eq("id", row.id);
     } else {
       await supabaseAdmin.from("friendships").delete().eq("id", row.id);
     }
@@ -84,7 +90,9 @@ export const respondFriendRequest = createServerFn({ method: "POST" })
 
 export const removeFriend = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ friendship_id: z.string().uuid() }).parse(input))
+  .inputValidator((input: unknown) =>
+    z.object({ friendship_id: z.string().uuid() }).parse(input),
+  )
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const { data: row } = await supabaseAdmin
@@ -155,70 +163,11 @@ export const inviteFriendToMatch = createServerFn({ method: "POST" })
     return { ok: true, match_id: match.id, invite_id: invite.id };
   });
 
-/**
- * Begär revansch efter en avslutad PvP-match: skapar en ny väntande match
- * och skickar en inbjudan till samma motståndare. Motståndaren ser inbjudan
- * via notisklockan / FriendInviteListener och accepterar precis som vanligt.
- */
-export const requestRematch = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ match_id: z.string().uuid() }).parse(input))
-  .handler(async ({ data, context }) => {
-    const { userId } = context;
-
-    const { data: prev } = await supabaseAdmin
-      .from("matches")
-      .select("id, match_type, player1_id, player2_id, is_bot_match")
-      .eq("id", data.match_id)
-      .maybeSingle();
-    if (!prev) throw new Error("Matchen hittades inte");
-    if (prev.is_bot_match) throw new Error("Revansch gäller bara matcher mot en spelare");
-    if (prev.player1_id !== userId && prev.player2_id !== userId) throw new Error("Inte din match");
-
-    const opponentId = prev.player1_id === userId ? prev.player2_id : prev.player1_id;
-    if (!opponentId) throw new Error("Ingen motståndare att utmana");
-
-    // Undvik dubbla aktiva revansch-inbjudningar till samma motståndare.
-    const { data: existing } = await supabaseAdmin
-      .from("match_invites")
-      .select("id, match_id")
-      .eq("from_user", userId)
-      .eq("to_user", opponentId)
-      .eq("status", "pending")
-      .gt("expires_at", new Date().toISOString())
-      .maybeSingle();
-    if (existing) return { ok: true, match_id: existing.match_id, already: true };
-
-    const match_type = prev.match_type as "verbal" | "math";
-    const room_code = "RV" + Math.floor(1000 + Math.random() * 9000).toString();
-    const { data: match, error } = await supabaseAdmin
-      .from("matches")
-      .insert({
-        match_type,
-        player1_id: userId,
-        status: "waiting",
-        is_bot_match: false,
-        room_code,
-      })
-      .select()
-      .single();
-    if (error || !match) throw error ?? new Error("Kunde inte skapa revansch");
-
-    const { error: invErr } = await supabaseAdmin.from("match_invites").insert({
-      from_user: userId,
-      to_user: opponentId,
-      match_id: match.id,
-      match_type,
-      status: "pending",
-    });
-    if (invErr) throw invErr;
-
-    return { ok: true, match_id: match.id };
-  });
-
 export const acceptMatchInvite = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ invite_id: z.string().uuid() }).parse(input))
+  .inputValidator((input: unknown) =>
+    z.object({ invite_id: z.string().uuid() }).parse(input),
+  )
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const { data: invite } = await supabaseAdmin
@@ -230,7 +179,10 @@ export const acceptMatchInvite = createServerFn({ method: "POST" })
     if (invite.to_user !== userId) throw new Error("Inte din inbjudan");
     if (invite.status !== "pending") throw new Error("Inbjudan är inte längre giltig");
     if (new Date(invite.expires_at).getTime() < Date.now()) {
-      await supabaseAdmin.from("match_invites").update({ status: "expired" }).eq("id", invite.id);
+      await supabaseAdmin
+        .from("match_invites")
+        .update({ status: "expired" })
+        .eq("id", invite.id);
       throw new Error("Inbjudan har gått ut");
     }
 
@@ -246,7 +198,10 @@ export const acceptMatchInvite = createServerFn({ method: "POST" })
     }
 
     // Generate questions and join
-    const questions = await selectQuestionsFor(match.match_type as "verbal" | "math", userId);
+    const questions = await selectQuestionsFor(
+      match.match_type as "verbal" | "math",
+      userId,
+    );
     await insertMatchQuestions(match.id, questions);
 
     await supabaseAdmin
@@ -254,14 +209,19 @@ export const acceptMatchInvite = createServerFn({ method: "POST" })
       .update({ player2_id: userId, status: "active" })
       .eq("id", match.id);
 
-    await supabaseAdmin.from("match_invites").update({ status: "accepted" }).eq("id", invite.id);
+    await supabaseAdmin
+      .from("match_invites")
+      .update({ status: "accepted" })
+      .eq("id", invite.id);
 
     return { ok: true, match_id: match.id };
   });
 
 export const declineMatchInvite = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ invite_id: z.string().uuid() }).parse(input))
+  .inputValidator((input: unknown) =>
+    z.object({ invite_id: z.string().uuid() }).parse(input),
+  )
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const { data: invite } = await supabaseAdmin
