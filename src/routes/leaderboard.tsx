@@ -5,10 +5,15 @@ import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
+import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { RefreshCw } from "lucide-react";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
-import { fetchLeaderboard } from "@/lib/leaderboard.functions";
+import {
+  fetchLeaderboard,
+  fetchWeeklyLeaderboard,
+  type WeeklyLeaderboardRow,
+} from "@/lib/leaderboard.functions";
 import { EmptyState } from "@/components/EmptyState";
 import { Reveal } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
@@ -117,6 +122,32 @@ function LeaderboardPage() {
   );
 }
 
+type Scope = "all" | "week" | "friends";
+
+function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) => void }) {
+  const opts: { value: Scope; label: string }[] = [
+    { value: "all", label: "Alltid" },
+    { value: "week", label: "Denna vecka" },
+    { value: "friends", label: "Vänner" },
+  ];
+  return (
+    <div className="mt-4 inline-flex rounded-full border border-white/10 bg-white/[0.02] p-1">
+      {opts.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          onClick={() => onChange(o.value)}
+          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+            scope === o.value ? "bg-[#f2a65a] text-[#1a0d04]" : "text-white/55 hover:text-white"
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function Board({
   matchType,
   currentUserId,
@@ -125,8 +156,13 @@ function Board({
   currentUserId: string | undefined;
 }) {
   const fetchLb = useServerFn(fetchLeaderboard);
+  const fetchWeekly = useServerFn(fetchWeeklyLeaderboard);
   const [rows, setRows] = useState<LbRow[]>([]);
+  const [weekly, setWeekly] = useState<WeeklyLeaderboardRow[] | null>(null);
+  const [friendIds, setFriendIds] = useState<Set<string> | null>(null);
+  const [scope, setScope] = useState<Scope>("all");
   const [loading, setLoading] = useState(true);
+  const [weeklyLoading, setWeeklyLoading] = useState(false);
   const [updatedAt, setUpdatedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -163,75 +199,186 @@ function Board({
     void load();
   }, [load]);
 
-  const top = rows.slice(0, 100);
-  const me = currentUserId ? rows.find((r) => r.user_id === currentUserId) : undefined;
-  const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  const notRanked = !!currentUserId && (!me || me.games_played < 1);
+  // Hämta vän-id:n en gång (för "Vänner"-filtret).
+  useEffect(() => {
+    if (!currentUserId) {
+      setFriendIds(new Set());
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("friendships")
+        .select("requester_id, addressee_id")
+        .eq("status", "accepted")
+        .or(`requester_id.eq.${currentUserId},addressee_id.eq.${currentUserId}`);
+      if (cancelled) return;
+      const ids = new Set<string>([currentUserId]);
+      for (const f of data ?? []) {
+        ids.add(f.requester_id as string);
+        ids.add(f.addressee_id as string);
+      }
+      setFriendIds(ids);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUserId]);
+
+  // Ladda veckodata first gången "Denna vecka" väljs.
+  useEffect(() => {
+    if (scope !== "week" || weekly !== null) return;
+    let cancelled = false;
+    setWeeklyLoading(true);
+    (async () => {
+      try {
+        const w = await fetchWeekly({ data: { match_type: matchType, limit: 100 } });
+        if (!cancelled) setWeekly(filterLeaderboard(w as WeeklyLeaderboardRow[]));
+      } catch {
+        if (!cancelled) setWeekly([]);
+      } finally {
+        if (!cancelled) setWeeklyLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [scope, weekly, matchType, fetchWeekly]);
+
+  // Weekly nollställs om match_type byts (separat Board-instans per flik,
+  // men säkrare att rensa om komponenten återanvänds).
+  useEffect(() => {
+    setWeekly(null);
+  }, [matchType]);
+
+  const headerRefresh = () => {
+    if (scope === "week") {
+      setWeekly(null);
+    } else {
+      void load(true);
+    }
+  };
 
   return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
-      <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+    <div>
+      <ScopeToggle scope={scope} onChange={setScope} />
+      <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            {scope === "week"
+              ? "Senaste 7 dygnen · störst ELO-klättring"
+              : scope === "friends"
+                ? "Du och dina vänner"
+                : updatedAt
+                  ? `Live · uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}`
+                  : "Live"}
           </span>
-          {updatedAt
-            ? `Live · uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}`
-            : "Live"}
-        </span>
-        <button
-          onClick={() => void load(true)}
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-white/55 transition hover:bg-white/[0.05] hover:text-white"
-        >
-          <RefreshCw className="h-3 w-3" />
-          Uppdatera
-        </button>
-      </div>
-
-      {loading && rows.length === 0 ? (
-        <div className="p-8 text-center text-sm text-white/55">Laddar…</div>
-      ) : error ? (
-        <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-white/[0.03] text-xs text-white/55">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
-                <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">
-                  Spelare
-                </th>
-                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
-                <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
-                  Matcher
-                </th>
-                <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">
-                  Win %
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {top.map((r) => (
-                <Row key={r.user_id} r={r} isMe={!!currentUserId && r.user_id === currentUserId} />
-              ))}
-              {!meInTop && me && (
-                <>
-                  <tr>
-                    <td colSpan={5} className="px-3 py-2 text-center text-xs text-white/45">
-                      Din placering: #{me.rank}
-                    </td>
-                  </tr>
-                  <Row r={me} isMe />
-                </>
-              )}
-            </tbody>
-          </table>
+          <button
+            onClick={headerRefresh}
+            className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-white/55 transition hover:bg-white/[0.05] hover:text-white"
+          >
+            <RefreshCw className="h-3 w-3" />
+            Uppdatera
+          </button>
         </div>
-      )}
+
+        {scope === "week" ? (
+          <WeeklyTable rows={weekly} loading={weeklyLoading} currentUserId={currentUserId} />
+        ) : (
+          <AllTimeTable
+            rows={rows}
+            loading={loading}
+            error={error}
+            currentUserId={currentUserId}
+            friendsOnly={scope === "friends"}
+            friendIds={friendIds}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AllTimeTable({
+  rows,
+  loading,
+  error,
+  currentUserId,
+  friendsOnly,
+  friendIds,
+}: {
+  rows: LbRow[];
+  loading: boolean;
+  error: string | null;
+  currentUserId: string | undefined;
+  friendsOnly: boolean;
+  friendIds: Set<string> | null;
+}) {
+  const scoped = friendsOnly
+    ? filterLeaderboard(rows.filter((r) => friendIds?.has(r.user_id)))
+    : rows;
+  const top = scoped.slice(0, 100);
+  const me = currentUserId ? scoped.find((r) => r.user_id === currentUserId) : undefined;
+  const meInTop = me && top.some((r) => r.user_id === me.user_id);
+  const notRanked = !friendsOnly && !!currentUserId && (!me || me.games_played < 1);
+
+  if (loading && rows.length === 0)
+    return <div className="p-8 text-center text-sm text-white/55">Laddar…</div>;
+  if (error) return <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>;
+  if (friendsOnly && top.length === 0)
+    return (
+      <div className="border-t border-border">
+        <EmptyState
+          icon="👥"
+          title="Inga rankade vänner ännu"
+          subtitle="Lägg till vänner och spela en match så dyker de upp här."
+          ctaLabel="Hitta vänner"
+          ctaHref="/friends"
+        />
+      </div>
+    );
+
+  return (
+    <>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-white/[0.03] text-xs text-white/55">
+            <tr>
+              <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
+              <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">
+                Spelare
+              </th>
+              <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
+              <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
+                Matcher
+              </th>
+              <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">Win %</th>
+            </tr>
+          </thead>
+          <tbody>
+            {top.map((r) => (
+              <Row key={r.user_id} r={r} isMe={!!currentUserId && r.user_id === currentUserId} />
+            ))}
+            {!meInTop && me && (
+              <>
+                <tr>
+                  <td colSpan={5} className="px-3 py-2 text-center text-xs text-white/45">
+                    Din placering: #{me.rank}
+                  </td>
+                </tr>
+                <Row r={me} isMe />
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
       {notRanked && (
         <div className="border-t border-border">
           <EmptyState
@@ -243,6 +390,91 @@ function Board({
           />
         </div>
       )}
+    </>
+  );
+}
+
+function WeeklyTable({
+  rows,
+  loading,
+  currentUserId,
+}: {
+  rows: WeeklyLeaderboardRow[] | null;
+  loading: boolean;
+  currentUserId: string | undefined;
+}) {
+  if (loading || rows === null)
+    return <div className="p-8 text-center text-sm text-white/55">Laddar…</div>;
+  if (rows.length === 0)
+    return (
+      <div className="p-8 text-center text-sm text-white/55">
+        Inga matcher spelade den här veckan ännu. Bli först!
+      </div>
+    );
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="bg-white/[0.03] text-xs text-white/55">
+          <tr>
+            <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
+            <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">Spelare</th>
+            <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">
+              ELO denna vecka
+            </th>
+            <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
+              Matcher
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const isMe = !!currentUserId && r.user_id === currentUserId;
+            const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
+            return (
+              <tr
+                key={r.user_id}
+                className={`border-t border-white/8 transition-colors ${
+                  isMe
+                    ? "bg-[#f2a65a]/10 font-semibold ring-1 ring-[#f2a65a]/40"
+                    : "hover:bg-white/[0.03]"
+                }`}
+              >
+                <td className="px-4 py-3.5 tabular-nums">
+                  {medal ?? <span className="text-white/45">#{r.rank}</span>}
+                </td>
+                <td className="px-4 py-3.5">
+                  <span className="inline-flex items-center gap-2 text-white">
+                    {displayName(r.username)}
+                    {isMe && (
+                      <span className="rounded-full bg-[#f2a65a] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#1a0d04]">
+                        Du
+                      </span>
+                    )}
+                  </span>
+                </td>
+                <td className="px-4 py-3.5 text-right">
+                  <span
+                    className={`text-[16px] font-bold tabular-nums ${
+                      r.elo_gain > 0
+                        ? "text-emerald-400"
+                        : r.elo_gain < 0
+                          ? "text-rose-400"
+                          : "text-white/55"
+                    }`}
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {r.elo_gain >= 0 ? "+" : ""}
+                    {r.elo_gain}
+                  </span>
+                </td>
+                <td className="hidden px-4 py-3.5 text-right tabular-nums text-white/55 sm:table-cell">
+                  {r.games}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

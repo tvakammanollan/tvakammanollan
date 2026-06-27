@@ -25,6 +25,7 @@ import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
+import { AchievementsCard } from "@/components/AchievementsCard";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -360,6 +361,11 @@ function StatsPage() {
             value={`${profile.longest_streak ?? 0} dagar`}
           />
         </StaggerList>
+        {/* Achievements */}
+        <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
+          <AchievementsCard variant="full" />
+        </Reveal>
+
         {/* ELO chart */}
         <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="mb-4 flex items-baseline justify-between">
