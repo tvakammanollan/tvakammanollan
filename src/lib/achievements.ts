@@ -14,7 +14,14 @@ export interface AchievementDef {
   icon: string; // emoji
   tier: AchievementTier;
   /** Hur värdet mäts mot `target` (för progress-stapeln). */
-  metric: "games_played" | "wins" | "perfect_matches" | "longest_streak" | "peak_elo" | "friends";
+  metric:
+    | "games_played"
+    | "wins"
+    | "perfect_matches"
+    | "longest_streak"
+    | "peak_elo"
+    | "friends"
+    | "words_done";
   target: number;
 }
 
@@ -26,6 +33,7 @@ export interface AchievementStats {
   longest_streak: number;
   peak_elo: number;
   friends: number;
+  words_done: number;
 }
 
 export interface AchievementState extends AchievementDef {
@@ -80,6 +88,51 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     tier: "brons",
     metric: "friends",
     target: 1,
+  },
+  {
+    id: "words_100",
+    name: "Ordsamlare",
+    description: "Öva 100 ord.",
+    icon: "📖",
+    tier: "brons",
+    metric: "words_done",
+    target: 100,
+  },
+  {
+    id: "words_500",
+    name: "Ordrik",
+    description: "Öva 500 ord.",
+    icon: "📚",
+    tier: "silver",
+    metric: "words_done",
+    target: 500,
+  },
+  {
+    id: "words_1000",
+    name: "Ordmästare",
+    description: "Öva 1 000 ord.",
+    icon: "🧠",
+    tier: "silver",
+    metric: "words_done",
+    target: 1000,
+  },
+  {
+    id: "words_2500",
+    name: "Ordvirtuos",
+    description: "Öva 2 500 ord.",
+    icon: "🦉",
+    tier: "guld",
+    metric: "words_done",
+    target: 2500,
+  },
+  {
+    id: "words_10000",
+    name: "Ordlegend",
+    description: "Öva 10 000 ord.",
+    icon: "👑",
+    tier: "guld",
+    metric: "words_done",
+    target: 10000,
   },
   {
     id: "perfect_match",

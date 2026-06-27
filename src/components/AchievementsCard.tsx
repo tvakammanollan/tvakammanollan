@@ -24,7 +24,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetchFn();
+        const res = await fetchFn({});
         if (!cancelled) setItems((res as { achievements: AchievementState[] }).achievements);
       } catch {
         if (!cancelled) setError(true);
