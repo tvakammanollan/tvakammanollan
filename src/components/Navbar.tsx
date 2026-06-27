@@ -6,6 +6,7 @@ import { EloBadge } from "@/components/EloBadge";
 import { UserAvatar } from "@/components/UserAvatar";
 import { BugReportButton } from "@/components/BugReportButton";
 import { NotificationsBell } from "@/components/NotificationsBell";
+import { SafeBoundary } from "@/components/SafeBoundary";
 import {
   Sheet,
   SheetContent,
@@ -104,7 +105,11 @@ export function Navbar() {
                   <EloBadge elo={topElo} size="sm" />
                 </div>
               )}
-              {!user.is_anonymous && <NotificationsBell userId={user.id} />}
+              {!user.is_anonymous && (
+                <SafeBoundary label="notifications-bell">
+                  <NotificationsBell userId={user.id} />
+                </SafeBoundary>
+              )}
               <BugReportButton />
               <Button
                 variant="ghost"
@@ -144,7 +149,11 @@ export function Navbar() {
         <div className="flex items-center gap-1 md:hidden">
           {loading ? null : user ? (
             <>
-              {!user.is_anonymous && <NotificationsBell userId={user.id} />}
+              {!user.is_anonymous && (
+                <SafeBoundary label="notifications-bell">
+                  <NotificationsBell userId={user.id} />
+                </SafeBoundary>
+              )}
               <MobileMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
             </>
           ) : (
