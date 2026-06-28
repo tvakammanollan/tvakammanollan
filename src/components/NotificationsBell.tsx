@@ -197,8 +197,11 @@ export function NotificationsBell({ userId }: { userId: string }) {
         >
           <Bell className="h-[18px] w-[18px]" />
           {count > 0 && (
-            <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#f2a65a] px-1 text-[10px] font-bold tabular-nums text-[#1a0d04] shadow-sm">
-              {count > 9 ? "9+" : count}
+            <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f2a65a] opacity-60" />
+              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#f2a65a] px-1 text-[10px] font-bold tabular-nums text-[#1a0d04] shadow-sm">
+                {count > 9 ? "9+" : count}
+              </span>
             </span>
           )}
         </button>

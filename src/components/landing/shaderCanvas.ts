@@ -127,11 +127,7 @@ export function useShaderCanvas(palette: ShaderPalette = "indigo") {
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]),
-      gl.STATIC_DRAW,
-    );
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]), gl.STATIC_DRAW);
     const posLoc = gl.getAttribLocation(prog, "position");
     gl.enableVertexAttribArray(posLoc);
     gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
@@ -139,19 +135,49 @@ export function useShaderCanvas(palette: ShaderPalette = "indigo") {
     const uRes = gl.getUniformLocation(prog, "resolution");
     const uTime = gl.getUniformLocation(prog, "time");
 
-    const loop = (now: number) => {
+    const drawFrame = (now: number) => {
       gl.useProgram(prog);
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, now * 1e-3);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      rafRef.current = requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
+
+    const reduced =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     window.addEventListener("resize", resize);
 
+    if (reduced) {
+      // Respektera reduced-motion: rita en enda statisk bild, ingen loop.
+      drawFrame(0);
+      return () => {
+        window.removeEventListener("resize", resize);
+        gl.deleteProgram(prog);
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+      };
+    }
+
+    const loop = (now: number) => {
+      drawFrame(now);
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    // Pausa GPU-loopen när fliken inte syns — sparar batteri/CPU.
+    const onVisibility = () => {
+      if (document.hidden) cancelAnimationFrame(rafRef.current);
+      else start();
+    };
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibility);
       cancelAnimationFrame(rafRef.current);
       gl.deleteProgram(prog);
       gl.deleteShader(vs);

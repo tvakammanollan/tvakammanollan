@@ -159,7 +159,7 @@ function MatchmakingPage() {
   useEffect(() => {
     if (!user) return;
     const channel = supabase
-      .channel(`mm-${user.id}`)
+      .channel(`mm-${user.id}-${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         {
@@ -242,8 +242,7 @@ function MatchmakingPage() {
             "Motståndare hittad!"
           ) : (
             <>
-              Söker{" "}
-              <span className="display-italic font-medium text-[#f2a65a]">motståndare…</span>
+              Söker <span className="display-italic font-medium text-[#f2a65a]">motståndare…</span>
             </>
           )}
         </h1>

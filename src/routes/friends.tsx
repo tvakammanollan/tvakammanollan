@@ -95,9 +95,10 @@ function FriendsPage() {
       if (!cancelled) setRows(enriched);
     })();
 
-    // Realtime
+    // Realtime — unikt kanalnamn per körning (effekten kör om vid varje tick;
+    // återanvänt topic kan annars kasta "on after subscribe").
     const channel = supabase
-      .channel(`friendships-${user.id}`)
+      .channel(`friendships-${user.id}-${Math.random().toString(36).slice(2)}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "friendships" }, () =>
         setTick((t) => t + 1),
       )
