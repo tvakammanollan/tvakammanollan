@@ -43,6 +43,20 @@ function filterLeaderboard<T extends { username: string; rank: number }>(
     .map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
+function TableSkeleton() {
+  return (
+    <div className="space-y-2 p-4" aria-busy="true">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} className="flex items-center gap-3">
+          <div className="skeleton-shimmer h-9 w-9 shrink-0 rounded-full" />
+          <div className="skeleton-shimmer h-4 flex-1 rounded" />
+          <div className="skeleton-shimmer h-4 w-12 rounded" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // Cache disabled — was serving stale data from earlier broken RPC.
 const CACHE_MS = 0;
 const cache: Record<MatchType, { rows: LbRow[]; ts: number } | undefined> = {
@@ -330,7 +344,7 @@ function AllTimeTable({
   const notRanked = !friendsOnly && !!currentUserId && (!me || me.games_played < 1);
 
   if ((loading && rows.length === 0) || (friendsOnly && friendIds === null))
-    return <div className="p-8 text-center text-sm text-white/55">Laddar…</div>;
+    return <TableSkeleton />;
   if (error) return <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>;
   if (friendsOnly && top.length === 0)
     return (
@@ -403,8 +417,7 @@ function WeeklyTable({
   loading: boolean;
   currentUserId: string | undefined;
 }) {
-  if (loading || rows === null)
-    return <div className="p-8 text-center text-sm text-white/55">Laddar…</div>;
+  if (loading || rows === null) return <TableSkeleton />;
   if (rows.length === 0)
     return (
       <div className="p-8 text-center text-sm text-white/55">
@@ -602,7 +615,7 @@ function OrdBoard() {
       </div>
 
       {loading && top.length === 0 ? (
-        <div className="p-8 text-center text-sm text-white/55">Laddar…</div>
+        <TableSkeleton />
       ) : error ? (
         <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>
       ) : top.length === 0 ? (

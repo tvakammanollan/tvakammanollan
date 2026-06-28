@@ -284,11 +284,16 @@ function StatsPage() {
 
   if (loading || !profile) {
     return (
-      <>
-        <div className="flex min-h-[60vh] items-center justify-center text-sm text-muted-foreground">
-          Laddar statistik…
+      <main className="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6" aria-busy="true">
+        <div className="skeleton-shimmer h-28 rounded-2xl" />
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="skeleton-shimmer h-24 rounded-xl" />
+          ))}
         </div>
-      </>
+        <div className="skeleton-shimmer mt-8 h-72 rounded-2xl" />
+        <div className="skeleton-shimmer mt-6 h-72 rounded-2xl" />
+      </main>
     );
   }
 
@@ -390,13 +395,18 @@ function StatsPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={eloPoints} margin={{ top: 8, right: 12, left: -10, bottom: 0 }}>
                   <CartesianGrid
-                    stroke="oklch(0.92 0.01 85)"
+                    stroke="rgba(255,255,255,0.08)"
                     strokeDasharray="3 3"
                     vertical={false}
                   />
-                  <XAxis dataKey="date" stroke="oklch(0.55 0 0)" fontSize={11} tickLine={false} />
+                  <XAxis
+                    dataKey="date"
+                    stroke="rgba(255,255,255,0.42)"
+                    fontSize={11}
+                    tickLine={false}
+                  />
                   <YAxis
-                    stroke="oklch(0.55 0 0)"
+                    stroke="rgba(255,255,255,0.42)"
                     fontSize={11}
                     tickLine={false}
                     domain={[
@@ -407,9 +417,13 @@ function StatsPage() {
                   <Tooltip
                     contentStyle={{
                       borderRadius: 10,
-                      border: "1px solid oklch(0.90 0.01 85)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "rgba(20,12,5,0.96)",
+                      color: "#e8e4da",
                       fontSize: 12,
                     }}
+                    labelStyle={{ color: "#e8e4da" }}
+                    itemStyle={{ color: "#e8e4da" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, name: any, props: any) => {
                       const delta = props?.payload?.delta;
@@ -464,18 +478,18 @@ function StatsPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={breakdownData} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
                   <CartesianGrid
-                    stroke="oklch(0.92 0.01 85)"
+                    stroke="rgba(255,255,255,0.08)"
                     strokeDasharray="3 3"
                     vertical={false}
                   />
                   <XAxis
                     dataKey="category"
-                    stroke="oklch(0.55 0 0)"
+                    stroke="rgba(255,255,255,0.42)"
                     fontSize={11}
                     tickLine={false}
                   />
                   <YAxis
-                    stroke="oklch(0.55 0 0)"
+                    stroke="rgba(255,255,255,0.42)"
                     fontSize={11}
                     tickLine={false}
                     domain={[0, 100]}
@@ -484,9 +498,13 @@ function StatsPage() {
                   <Tooltip
                     contentStyle={{
                       borderRadius: 10,
-                      border: "1px solid oklch(0.90 0.01 85)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "rgba(20,12,5,0.96)",
+                      color: "#e8e4da",
                       fontSize: 12,
                     }}
+                    labelStyle={{ color: "#e8e4da" }}
+                    itemStyle={{ color: "#e8e4da" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, _name: any, props: any) => {
                       if (!props?.payload?.enough) return ["Ej nog data", "Andel rätt"];
@@ -495,7 +513,7 @@ function StatsPage() {
                   />
                   <Bar dataKey="pct" radius={[6, 6, 0, 0]}>
                     {breakdownData.map((entry, i) => (
-                      <Cell key={i} fill={entry.enough ? entry.color : "oklch(0.85 0.01 85)"} />
+                      <Cell key={i} fill={entry.enough ? entry.color : "rgba(255,255,255,0.12)"} />
                     ))}
                   </Bar>
                 </BarChart>
