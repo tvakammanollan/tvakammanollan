@@ -10,6 +10,7 @@ const PRODUCT = [
 ];
 
 const COMPANY = [
+  { label: "Provdatum", to: "/hogskoleprovet-datum" },
   { label: "Om oss", to: "/om" },
   { label: "Vanliga frågor", to: "/faq" },
   { label: "Kontakt", to: "/kontakt" },

@@ -21,6 +21,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -103,6 +104,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
   id: '/integritetspolicy',
   path: '/integritetspolicy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetDatumRoute = HogskoleprovetDatumRouteImport.update({
+  id: '/hogskoleprovet-datum',
+  path: '/hogskoleprovet-datum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamlaProvRoute = GamlaProvRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -264,6 +271,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -302,6 +310,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-datum'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -378,6 +388,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-datum'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -415,6 +426,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-datum'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -453,6 +465,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
+  HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
@@ -569,6 +582,13 @@ declare module '@tanstack/react-router' {
       path: '/integritetspolicy'
       fullPath: '/integritetspolicy'
       preLoaderRoute: typeof IntegritetspolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-datum': {
+      id: '/hogskoleprovet-datum'
+      path: '/hogskoleprovet-datum'
+      fullPath: '/hogskoleprovet-datum'
+      preLoaderRoute: typeof HogskoleprovetDatumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gamla-prov': {
@@ -741,6 +761,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
+  HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,
