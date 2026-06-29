@@ -1,5 +1,9 @@
 import { useNavigate } from "@tanstack/react-router";
-import { combinedHpScore, estimateHpScore } from "@/lib/hpScore";
+import { combinedHpScore, estimateHpScore, hpScoreLabel } from "@/lib/hpScore";
+
+const VERBAL = "#f2a65a";
+const MATH = "#6fb3b8";
+const sv = (s: string) => s.replace(".", ",");
 
 interface HpScoreWidgetProps {
   eloVerbal: number;
@@ -33,71 +37,109 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
 
   const v = estimateHpScore(eloVerbal);
   const m = estimateHpScore(eloMath);
+  const combinedNum = parseFloat(combined);
+  const pct = Math.max(2, Math.min(100, (combinedNum / 2) * 100));
+  const label = hpScoreLabel(combinedNum);
 
   return (
-    <div
-      className="rounded-2xl border p-6"
-      style={{
-        borderColor: "var(--line)",
-        background: "var(--navy-2)",
-      }}
+    <button
+      type="button"
+      onClick={() => navigate({ to: "/stats" })}
+      className="group block w-full rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left backdrop-blur-sm transition-colors hover:border-white/15 hover:bg-white/[0.03]"
     >
       {/* Label */}
-      <p
-        className="text-[11px] font-medium uppercase tracking-[0.14em]"
-        style={{ color: "var(--hp-muted)" }}
-      >
-        Trolig HP-poäng
-      </p>
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/45">
+          Trolig HP-poäng
+        </p>
+        <span className="rounded-full border border-[#f2a65a]/25 bg-[#f2a65a]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#f2a65a]">
+          {label}
+        </span>
+      </div>
 
       {/* Main score */}
-      <div className="mt-2 flex items-baseline gap-2">
+      <div className="mt-3 flex items-baseline gap-2">
         <span
-          className="text-[56px] font-bold leading-none tabular-nums"
-          style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
+          className="text-[60px] font-bold leading-none tabular-nums text-[#f2a65a]"
+          style={{ fontFamily: "var(--font-display)" }}
         >
-          {combined}
+          {sv(combined)}
         </span>
-        <span className="text-lg" style={{ color: "var(--hp-muted)" }}>/ 2.0</span>
+        <span className="text-lg text-white/40">/ 2,0</span>
+      </div>
+
+      {/* HP-skala (gauge) */}
+      <div className="mt-5">
+        <div className="relative h-2.5 w-full rounded-full bg-white/8">
+          <div
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#c97b41] to-[#f2a65a]"
+            style={{ width: `${pct}%` }}
+          />
+          {/* marker */}
+          <div
+            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#170d05] bg-[#f5c089] shadow"
+            style={{ left: `${pct}%` }}
+          />
+        </div>
+        <div className="mt-1.5 flex justify-between text-[10px] tabular-nums text-white/35">
+          <span>0,0</span>
+          <span>1,0</span>
+          <span>2,0</span>
+        </div>
       </div>
 
       {/* Divider */}
-      <div className="my-5 border-t" style={{ borderColor: "var(--line)" }} />
+      <div className="my-5 border-t border-white/8" />
 
       {/* Verbal / Matte */}
-      <div className="grid grid-cols-2 gap-4">
-        <ScoreCol label="Verbal" score={v.score} elo={eloVerbal} accent="var(--teal)" />
-        <ScoreCol label="Matte" score={m.score} elo={eloMath} accent="var(--amber)" />
+      <div className="grid grid-cols-2 gap-5">
+        <ScoreCol
+          label="Verbal"
+          score={v.score}
+          desc={v.description}
+          elo={eloVerbal}
+          accent={VERBAL}
+        />
+        <ScoreCol label="Matte" score={m.score} desc={m.description} elo={eloMath} accent={MATH} />
       </div>
-    </div>
+
+      <p className="mt-4 text-[11px] leading-relaxed text-white/35">
+        Uppskattat från din ELO. Riktig normering varierar med provets svårighet.
+      </p>
+    </button>
   );
 }
 
 function ScoreCol({
   label,
   score,
+  desc,
   elo,
   accent,
 }: {
   label: string;
   score: string;
+  desc: string;
   elo: number;
   accent: string;
 }) {
+  const pct = Math.max(3, Math.min(100, (parseFloat(score) / 2) * 100));
   return (
     <div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.12em]" style={{ color: "var(--hp-muted)" }}>
-        {label}
-      </p>
+      <div className="flex items-baseline justify-between">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white/45">{label}</p>
+        <p className="text-[11px] tabular-nums text-white/35">ELO {elo}</p>
+      </div>
       <p
-        className="mt-1.5 text-[28px] font-bold leading-none tabular-nums"
+        className="mt-1.5 text-[30px] font-bold leading-none tabular-nums"
         style={{ color: accent, fontFamily: "var(--font-display)" }}
       >
-        {score}
+        {sv(score)}
       </p>
-      <p className="mt-1 text-[11px] tabular-nums" style={{ color: "var(--text-tertiary)" }}>
-        ELO {elo}
-      </p>
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/8">
+        <div className="h-full rounded-full" style={{ width: `${pct}%`, background: accent }} />
+      </div>
+      <p className="mt-1.5 text-[11px] text-white/40">{desc}</p>
     </div>
   );
 }

@@ -112,52 +112,53 @@ export function HomeDashboard() {
           </header>
         </Reveal>
 
-        {/* ---------- Spela ---------- */}
+        {/* ---------- Battla ---------- */}
         <Reveal y={20} delay={0.05}>
-          <section className="mt-10">
-            <EyebrowLabel tone="teal">Spela</EyebrowLabel>
+          <section className="mt-12">
+            <EyebrowLabel tone="amber">Battla</EyebrowLabel>
             <h2
               className="display mt-1 text-[22px] font-bold leading-tight text-[#e8e4da] sm:text-[26px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Vad vill du göra idag?
+              Starta en match
             </h2>
+            <p className="mt-1.5 text-sm text-white/45">8 frågor · 5 minuter · ELO på spel</p>
 
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <ModeCard
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <BattleCard
                 icon={<GraduationCap className="h-5 w-5" />}
-                title="Verbal match"
-                subtitle="Ord · Mek"
-                meta={`ELO ${profile.elo_verbal}`}
-                accent="amber"
+                title="Verbal"
+                subtitle="Ord & meningskomplettering"
+                elo={profile.elo_verbal}
                 onClick={() => openMatch("verbal")}
               />
-              <ModeCard
+              <BattleCard
                 icon={<Sigma className="h-5 w-5" />}
-                title="Matte match"
+                title="Matte"
                 subtitle="Xyz · Kva · Nog"
-                meta={`ELO ${profile.elo_math}`}
-                accent="amber"
+                elo={profile.elo_math}
                 onClick={() => openMatch("math")}
               />
-              <ModeCard
-                icon={<BookOpen className="h-5 w-5" />}
-                title="Öva ord"
-                subtitle="8 000+ riktiga HP-frågor"
-                accent="teal"
+            </div>
+
+            {/* Öva i lugn takt */}
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <QuietCard
                 to="/ord"
+                icon={<BookOpen className="h-4 w-4" />}
+                title="Öva ord"
+                subtitle="8 000+ riktiga HP-ord"
               />
-              <ModeCard
-                icon={<Target className="h-5 w-5" />}
-                title="Träna utan tid"
-                subtitle="I lugn takt, inget ELO på spel"
-                accent="teal"
+              <QuietCard
                 to="/train"
+                icon={<Target className="h-4 w-4" />}
+                title="Träna utan tid"
+                subtitle="I lugn takt, inget ELO"
               />
             </div>
 
             {/* Sekundär rad */}
-            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
               <SecondaryLink to="/gamla-prov" icon={<ScrollText className="h-4 w-4" />}>
                 Gamla prov
               </SecondaryLink>
@@ -319,70 +320,80 @@ function RankPill({ label, elo }: { label: string; elo: number }) {
   );
 }
 
-/* =================== MODE CARD =================== */
-function ModeCard({
+/* =================== BATTLE CARD (primär) =================== */
+function BattleCard({
   icon,
   title,
   subtitle,
-  meta,
-  accent,
-  to,
+  elo,
   onClick,
 }: {
   icon: React.ReactNode;
   title: string;
   subtitle: string;
-  meta?: string;
-  accent: "amber" | "teal";
-  to?: string;
-  onClick?: () => void;
+  elo: number;
+  onClick: () => void;
 }) {
-  const iconClass =
-    accent === "amber"
-      ? "border-[#f2a65a]/20 bg-[#f2a65a]/10 text-[#f2a65a]"
-      : "border-[#6fb3b8]/20 bg-[#6fb3b8]/10 text-[#6fb3b8]";
-
-  const inner = (
-    <GlassCard variant="interactive" className="h-full">
-      <div className="flex items-start gap-4">
-        <span
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${iconClass}`}
-        >
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-all hover:border-[#f2a65a]/40 hover:bg-white/[0.04]"
+    >
+      {/* mjuk amber-glöd vid hover */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#f2a65a]/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+      />
+      <div className="flex items-start justify-between gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#f2a65a]/20 bg-[#f2a65a]/10 text-[#f2a65a]">
           {icon}
         </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center justify-between gap-2">
-            <h3
-              className="text-[18px] font-bold leading-tight text-[#e8e4da]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {title}
-            </h3>
-            {meta && <span className="shrink-0 text-xs tabular-nums text-white/45">{meta}</span>}
-          </div>
-          <p className="mt-1 text-[13px] leading-relaxed text-white/55">{subtitle}</p>
-        </div>
-        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-white/30 transition-all group-hover:translate-x-0.5 group-hover:text-[#f2a65a]" />
+        <RankBadge elo={elo} size="sm" />
       </div>
-    </GlassCard>
-  );
-
-  if (to) {
-    return (
-      <Link
-        to={to}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        params={{} as any}
-        className="group block"
+      <h3
+        className="mt-3.5 text-[20px] font-bold leading-tight text-[#e8e4da]"
+        style={{ fontFamily: "var(--font-display)" }}
       >
-        {inner}
-      </Link>
-    );
-  }
-  return (
-    <button type="button" onClick={onClick} className="group block w-full text-left">
-      {inner}
+        {title}
+      </h3>
+      <p className="mt-0.5 text-[13px] text-white/50">{subtitle}</p>
+      <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#f2a65a]">
+        Spela
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </div>
     </button>
+  );
+}
+
+/* =================== QUIET CARD (öva, sekundär) =================== */
+function QuietCard({
+  to,
+  icon,
+  title,
+  subtitle,
+}: {
+  to: string;
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <Link
+      to={to}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      params={{} as any}
+      className="group flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.015] px-4 py-3 transition-colors hover:border-white/15 hover:bg-white/[0.03]"
+    >
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#6fb3b8]/20 bg-[#6fb3b8]/10 text-[#6fb3b8]">
+        {icon}
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="text-sm font-semibold text-[#e8e4da]">{title}</div>
+        <div className="text-xs text-white/45">{subtitle}</div>
+      </div>
+      <ArrowRight className="h-4 w-4 shrink-0 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-[#6fb3b8]" />
+    </Link>
   );
 }
 
