@@ -447,9 +447,9 @@ function TrainPage() {
   if (phase === "loading") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-12" aria-busy="true">
-        <div className="rounded-3xl border border-border bg-white p-8 shadow-card sm:p-10">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm sm:p-10">
           <div className="flex flex-col items-center text-center">
-            <div className="h-10 w-10 rounded-full border-4 border-indigo-300 border-t-indigo-600 animate-spin" />
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/15 border-t-[#f2a65a]" />
             <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Plockar fram en uppsättning som matchar dina inställningar.
@@ -469,7 +469,7 @@ function TrainPage() {
         <header
           className="sticky top-0 z-20 border-b border-border"
           style={{
-            background: "rgba(249,247,244,0.92)",
+            background: "rgba(23,13,5,0.85)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
           }}
@@ -517,7 +517,7 @@ function TrainPage() {
 
           <div
             key={currentQ.id}
-            className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
+            className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
             <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
@@ -545,7 +545,7 @@ function TrainPage() {
                 const isCorrectOpt = revealed && letter === currentQ.correct_answer;
                 const isWrongPick = revealed && isSelected && letter !== currentQ.correct_answer;
                 let cls =
-                  "border border-border bg-white hover:border-[#f2a65a] hover:bg-[#f2a65a]/10";
+                  "border border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10";
                 if (isCorrectOpt) {
                   cls = "border-2 border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]";
                 } else if (isWrongPick) {
@@ -567,7 +567,7 @@ function TrainPage() {
                           ? "bg-white/20 text-white"
                           : isSelected
                             ? "bg-[#f2a65a] text-[#1a0d04]"
-                            : "bg-[#f0ede8] text-foreground"
+                            : "bg-white/10 text-foreground"
                       }`}
                     >
                       {isCorrectOpt ? (

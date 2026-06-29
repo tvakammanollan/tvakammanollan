@@ -420,7 +420,7 @@ function ResultPage() {
       {/* Scorecard */}
       <Reveal
         delay={0.25}
-        className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card sm:p-6"
+        className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6"
       >
         <div className="mb-4 text-center text-xs font-semibold tracking-wide text-muted-foreground">
           {match.match_type === "verbal" ? "Verbal" : "Matte"} · Slutresultat
@@ -582,7 +582,10 @@ function ResultPage() {
       {/* Question review */}
       <section className="mt-8">
         <Accordion type="single" collapsible>
-          <AccordionItem value="review" className="rounded-xl border border-border bg-card px-4">
+          <AccordionItem
+            value="review"
+            className="rounded-xl border border-white/10 bg-white/[0.02] px-4"
+          >
             <AccordionTrigger className="text-base font-semibold">
               <span className="flex items-center gap-2">
                 <ChevronDown className="h-4 w-4 opacity-60" />

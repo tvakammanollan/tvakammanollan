@@ -29,13 +29,9 @@ import { getBotName } from "@/lib/bot";
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
   head: () => ({
-    meta: [
-      { title: "Match · HP Kampen" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: "Match · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
-
 
 const TOTAL_SECONDS = 5 * 60;
 
@@ -875,7 +871,7 @@ function QuestionCard({
   return (
     <div
       key={currentQ.id}
-      className="animate-slide-in rounded-2xl border border-border bg-white p-5 sm:p-6"
+      className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
       <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
@@ -889,11 +885,7 @@ function QuestionCard({
       </h2>
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
-          <img
-            src={currentQ.image_url}
-            alt="Figur till frågan"
-            className="w-full object-contain"
-          />
+          <img src={currentQ.image_url} alt="Figur till frågan" className="w-full object-contain" />
         </div>
       )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
@@ -911,12 +903,12 @@ function QuestionCard({
               className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2a65a] focus-visible:ring-offset-2 ${
                 isSelected
                   ? "border-2 border-[#f2a65a] bg-[#f2a65a]/15 text-foreground"
-                  : "border border-border bg-white hover:border-[#f2a65a] hover:bg-[#f2a65a]/10"
+                  : "border border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#f2a65a] text-[#1a0d04]" : "bg-[#f0ede8] text-foreground"
+                  isSelected ? "bg-[#f2a65a] text-[#1a0d04]" : "bg-white/10 text-foreground"
                 }`}
               >
                 {letter}
