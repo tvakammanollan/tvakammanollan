@@ -28,6 +28,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuiderIndexRouteImport } from './routes/guider/index'
 import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
+import { Route as OvaDelprovRouteImport } from './routes/ova.$delprov'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
@@ -139,6 +140,11 @@ const ResultMatchIdRoute = ResultMatchIdRouteImport.update({
   path: '/result/$matchId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OvaDelprovRoute = OvaDelprovRouteImport.update({
+  id: '/ova/$delprov',
+  path: '/ova/$delprov',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MatchMatchIdRoute = MatchMatchIdRouteImport.update({
   id: '/match/$matchId',
   path: '/match/$matchId',
@@ -248,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
 }
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider': typeof GuiderIndexRoute
 }
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
 }
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
   fileRoutesByTo: FileRoutesByTo
@@ -395,6 +405,7 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider'
   id:
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
   fileRoutesById: FileRoutesById
@@ -468,6 +480,7 @@ export interface RootRouteChildren {
   GuiderXyzRoute: typeof GuiderXyzRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
+  OvaDelprovRoute: typeof OvaDelprovRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
   GuiderIndexRoute: typeof GuiderIndexRoute
 }
@@ -605,6 +618,13 @@ declare module '@tanstack/react-router' {
       path: '/result/$matchId'
       fullPath: '/result/$matchId'
       preLoaderRoute: typeof ResultMatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ova/$delprov': {
+      id: '/ova/$delprov'
+      path: '/ova/$delprov'
+      fullPath: '/ova/$delprov'
+      preLoaderRoute: typeof OvaDelprovRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/match/$matchId': {
@@ -748,6 +768,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderXyzRoute: GuiderXyzRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
+  OvaDelprovRoute: OvaDelprovRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,
   GuiderIndexRoute: GuiderIndexRoute,
 }

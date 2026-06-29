@@ -20,6 +20,18 @@ const LEGAL = [
   { label: "Användarvillkor", to: "/villkor" },
 ];
 
+// Öva-sidor per delprov (transaktionell SEO + intern länkning sitewide)
+const OVA = [
+  { slug: "ord", label: "Öva ORD" },
+  { slug: "mek", label: "Öva MEK" },
+  { slug: "las", label: "Öva LÄS" },
+  { slug: "elf", label: "Öva ELF" },
+  { slug: "xyz", label: "Öva XYZ" },
+  { slug: "kva", label: "Öva KVA" },
+  { slug: "nog", label: "Öva NOG" },
+  { slug: "dtk", label: "Öva DTK" },
+];
+
 // Filter out social platforms without real URLs — visa bara dem som
 // faktiskt går någonstans. När ägaren har riktiga konton, fyll i href.
 const SOCIAL = [
@@ -39,8 +51,7 @@ export function Footer() {
     <footer
       className="relative"
       style={{
-        background:
-          "linear-gradient(180deg, transparent 0%, rgba(15,8,3,0.6) 30%, #0d0702 100%)",
+        background: "linear-gradient(180deg, transparent 0%, rgba(15,8,3,0.6) 30%, #0d0702 100%)",
       }}
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
@@ -83,13 +94,30 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Öva per delprov — sitewide intern länkning */}
+        <div className="mt-10 border-t border-white/8 pt-8">
+          <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
+            Öva per delprov
+          </h4>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+            {OVA.map((o) => (
+              <Link
+                key={o.slug}
+                to="/ova/$delprov"
+                params={{ delprov: o.slug }}
+                className="text-sm text-white/80 transition hover:text-white hover:underline"
+              >
+                {o.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-white/45">
             © {new Date().getFullYear()} HP Kampen. Gratis. Alltid.
           </p>
-          <p className="text-xs text-white/45">
-            Byggt i Sverige för svenska HP-pluggare.
-          </p>
+          <p className="text-xs text-white/45">Byggt i Sverige för svenska HP-pluggare.</p>
         </div>
       </div>
     </footer>
@@ -105,9 +133,7 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
-        {title}
-      </h4>
+      <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">{title}</h4>
       <ul className="mt-4 space-y-2">
         {items.map((it) => (
           <li key={it.to}>
