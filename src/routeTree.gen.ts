@@ -21,6 +21,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet-poang'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
@@ -104,6 +105,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
   id: '/integritetspolicy',
   path: '/integritetspolicy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetPoangRoute = HogskoleprovetPoangRouteImport.update({
+  id: '/hogskoleprovet-poang',
+  path: '/hogskoleprovet-poang',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HogskoleprovetDatumRoute = HogskoleprovetDatumRouteImport.update({
@@ -234,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -311,6 +319,7 @@ export interface FileRoutesById {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-poang'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -389,6 +399,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-poang'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -427,6 +438,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-poang'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -466,6 +478,7 @@ export interface RootRouteChildren {
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
+  HogskoleprovetPoangRoute: typeof HogskoleprovetPoangRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
@@ -582,6 +595,13 @@ declare module '@tanstack/react-router' {
       path: '/integritetspolicy'
       fullPath: '/integritetspolicy'
       preLoaderRoute: typeof IntegritetspolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-poang': {
+      id: '/hogskoleprovet-poang'
+      path: '/hogskoleprovet-poang'
+      fullPath: '/hogskoleprovet-poang'
+      preLoaderRoute: typeof HogskoleprovetPoangRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hogskoleprovet-datum': {
@@ -762,6 +782,7 @@ const rootRouteChildren: RootRouteChildren = {
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
+  HogskoleprovetPoangRoute: HogskoleprovetPoangRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,
