@@ -331,18 +331,29 @@ function GamlaProvPage() {
         <div className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
           <div className="grid gap-3 sm:grid-cols-2">
             {[...examMap.entries()].map(([term, ppMap]) => (
-              <button
+              <div
                 key={term}
-                type="button"
-                onClick={() => setSelectedTerm(term)}
-                className="group w-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-all hover:border-[#f2a65a]/50 hover:bg-white/[0.04]"
+                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm transition-all hover:border-[#f2a65a]/50 hover:bg-white/[0.04]"
               >
-                <div className="text-base font-semibold text-white">{termToLabel(term)}</div>
-                <div className="mt-1 text-xs text-white/55">
-                  {ppMap.size} provpass ·{" "}
-                  {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
-                </div>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedTerm(term)}
+                  className="w-full p-5 text-left"
+                >
+                  <div className="text-base font-semibold text-white">{termToLabel(term)}</div>
+                  <div className="mt-1 text-xs text-white/55">
+                    {ppMap.size} provpass ·{" "}
+                    {[...ppMap.values()].reduce((s, set) => s + set.size, 0) * 10} uppgifter
+                  </div>
+                </button>
+                <Link
+                  to="/gamla-prov/$term"
+                  params={{ term }}
+                  className="block border-t border-white/8 px-5 py-2.5 text-xs font-medium text-[#f2a65a] transition-colors hover:bg-[#f2a65a]/10"
+                >
+                  Visa alla frågor &amp; facit →
+                </Link>
+              </div>
             ))}
           </div>
         </div>

@@ -42,6 +42,7 @@ import { Route as GuiderKvaRouteImport } from './routes/guider/kva'
 import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
+import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
 
 const VillkorRoute = VillkorRouteImport.update({
   id: '/villkor',
@@ -208,6 +209,11 @@ const GuiderBraResultatRoute = GuiderBraResultatRouteImport.update({
   path: '/guider/bra-resultat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GamlaProvTermRoute = GamlaProvTermRouteImport.update({
+  id: '/gamla-prov_/$term',
+  path: '/gamla-prov/$term',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
@@ -298,6 +306,7 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/gamla-prov_/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
@@ -335,6 +344,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
@@ -370,6 +380,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/gamla-prov_/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
@@ -441,6 +453,7 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
   VillkorRoute: typeof VillkorRoute
+  GamlaProvTermRoute: typeof GamlaProvTermRoute
   GuiderBraResultatRoute: typeof GuiderBraResultatRoute
   GuiderDtkRoute: typeof GuiderDtkRoute
   GuiderElfRoute: typeof GuiderElfRoute
@@ -692,6 +705,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiderBraResultatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gamla-prov_/$term': {
+      id: '/gamla-prov_/$term'
+      path: '/gamla-prov/$term'
+      fullPath: '/gamla-prov/$term'
+      preLoaderRoute: typeof GamlaProvTermRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -713,6 +733,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
   VillkorRoute: VillkorRoute,
+  GamlaProvTermRoute: GamlaProvTermRoute,
   GuiderBraResultatRoute: GuiderBraResultatRoute,
   GuiderDtkRoute: GuiderDtkRoute,
   GuiderElfRoute: GuiderElfRoute,
