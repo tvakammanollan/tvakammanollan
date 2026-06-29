@@ -18,7 +18,17 @@ import {
   Bar,
   Cell,
 } from "recharts";
-import { ArrowLeft, ArrowRight, Trophy, Target, BookA, Sigma, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Trophy,
+  Target,
+  BookA,
+  Sigma,
+  Star,
+  Flame,
+  Award,
+} from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { displayCategory } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
@@ -356,23 +366,23 @@ function StatsPage() {
             sub={`V ${profile.elo_verbal_peak} · M ${profile.elo_math_peak}`}
           />
           <StatCard
-            icon={<span className="text-base">🔥</span>}
+            icon={<Flame className="h-4 w-4" />}
             label="Nuvarande streak"
             value={`${profile.current_streak ?? 0} dagar`}
           />
           <StatCard
-            icon={<span className="text-base">🏅</span>}
+            icon={<Award className="h-4 w-4" />}
             label="Längsta streak"
             value={`${profile.longest_streak ?? 0} dagar`}
           />
         </StaggerList>
         {/* Achievements */}
-        <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <AchievementsCard variant="full" />
         </Reveal>
 
         {/* ELO chart */}
-        <Reveal className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
@@ -457,7 +467,7 @@ function StatsPage() {
         </Reveal>
 
         {/* Delprov breakdown */}
-        <Reveal className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
@@ -523,7 +533,7 @@ function StatsPage() {
         </Reveal>
 
         {/* Match history */}
-        <Reveal className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
+        <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
@@ -656,7 +666,7 @@ function StatCard({
   sub?: string;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
       <div className="mb-1 flex items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground">
         {icon}
         {label}

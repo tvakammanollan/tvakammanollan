@@ -134,6 +134,15 @@
   [aria-busy="true"] {
     cursor: progress;
   }
+  /* Tailwind v4 tar bort default cursor:pointer på knappar — återinför så
+     alla klickbara element känns klickbara (anti vibe-coded affordance). */
+  :where(button, [role="button"], summary, label[for]):not(:disabled):not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 }
 
 /* ===== Modern token palette ===== */
