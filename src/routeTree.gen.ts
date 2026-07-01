@@ -21,6 +21,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as HogskoleprovetPoangraknareRouteImport } from './routes/hogskoleprovet-poangraknare'
 import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet-poang'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
@@ -107,6 +108,12 @@ const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
   path: '/integritetspolicy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HogskoleprovetPoangraknareRoute =
+  HogskoleprovetPoangraknareRouteImport.update({
+    id: '/hogskoleprovet-poangraknare',
+    path: '/hogskoleprovet-poangraknare',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const HogskoleprovetPoangRoute = HogskoleprovetPoangRouteImport.update({
   id: '/hogskoleprovet-poang',
   path: '/hogskoleprovet-poang',
@@ -241,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
+  '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -280,6 +288,7 @@ export interface FileRoutesByTo {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
+  '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -320,6 +329,7 @@ export interface FileRoutesById {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
+  '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -361,6 +371,7 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-poang'
+    | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -400,6 +411,7 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-poang'
+    | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -439,6 +451,7 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-poang'
+    | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -479,6 +492,7 @@ export interface RootRouteChildren {
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
   HogskoleprovetPoangRoute: typeof HogskoleprovetPoangRoute
+  HogskoleprovetPoangraknareRoute: typeof HogskoleprovetPoangraknareRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
@@ -595,6 +609,13 @@ declare module '@tanstack/react-router' {
       path: '/integritetspolicy'
       fullPath: '/integritetspolicy'
       preLoaderRoute: typeof IntegritetspolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-poangraknare': {
+      id: '/hogskoleprovet-poangraknare'
+      path: '/hogskoleprovet-poangraknare'
+      fullPath: '/hogskoleprovet-poangraknare'
+      preLoaderRoute: typeof HogskoleprovetPoangraknareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hogskoleprovet-poang': {
@@ -783,6 +804,7 @@ const rootRouteChildren: RootRouteChildren = {
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
   HogskoleprovetPoangRoute: HogskoleprovetPoangRoute,
+  HogskoleprovetPoangraknareRoute: HogskoleprovetPoangraknareRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,

@@ -5,6 +5,7 @@ const PRODUCT = [
   { label: "Träna", to: "/train" },
   { label: "Öva ord", to: "/ord" },
   { label: "Gamla prov", to: "/gamla-prov" },
+  { label: "Poängräknare", to: "/hogskoleprovet-poangraknare" },
   { label: "Topplista", to: "/leaderboard" },
   { label: "Guider", to: "/guider" },
 ];

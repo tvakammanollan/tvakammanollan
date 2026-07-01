@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://hpkampen.se/hogskoleprovet-poangraknare</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hpkampen.se/gamla-prov</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
