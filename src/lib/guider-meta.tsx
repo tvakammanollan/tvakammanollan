@@ -107,10 +107,13 @@ export function RelatedGuides({
   relatedPaths?: string[];
 }) {
   const candidates = relatedPaths
-    ? relatedPaths.map((p) => GUIDES.find((g) => g.path === p)).filter(Boolean) as GuideMeta[]
+    ? (relatedPaths.map((p) => GUIDES.find((g) => g.path === p)).filter(Boolean) as GuideMeta[])
     : GUIDES.filter((g) => g.path !== currentPath).slice(0, 4);
 
   if (candidates.length === 0) return null;
+
+  // Om guiden hör till ett delprov: länka till motsvarande öva-sida (hub→spoke).
+  const ovaSlug = currentPath.match(/^\/guider\/(ord|mek|las|elf|xyz|kva|nog|dtk)$/)?.[1];
 
   return (
     <section
@@ -118,10 +121,27 @@ export function RelatedGuides({
       style={{ borderColor: "var(--line)" }}
       aria-labelledby="related-guides"
     >
+      {ovaSlug && (
+        <Link
+          to="/ova/$delprov"
+          params={{ delprov: ovaSlug }}
+          className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/[0.06] p-4 transition-colors hover:border-[#f2a65a]/50 hover:bg-[#f2a65a]/[0.1]"
+        >
+          <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
+            Redo att öva? Kör riktiga {ovaSlug.toUpperCase()}-frågor med facit →
+          </span>
+          <span
+            className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"
+            style={{ color: "var(--amber)" }}
+          >
+            Öva {ovaSlug.toUpperCase()}
+          </span>
+        </Link>
+      )}
       <h2
         id="related-guides"
         className="text-xs font-semibold uppercase tracking-[0.25em]"
-        style={{ color: "#a5b4fc" }}
+        style={{ color: "#6fb3b8" }}
       >
         Fler guider
       </h2>
@@ -131,33 +151,20 @@ export function RelatedGuides({
             key={g.path}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             to={g.path as any}
-            className="group block rounded-2xl border p-4 transition-all hover:border-indigo-500/50 hover:shadow-[0_0_16px_rgba(99,102,241,0.12)]"
+            className="group block rounded-2xl border p-4 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
             style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
           >
-            <div
-              className="text-sm font-semibold"
-              style={{ color: "var(--cream)" }}
-            >
+            <div className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
               {g.label}
             </div>
-            <div
-              className="mt-1 text-xs"
-              style={{ color: "var(--text-secondary)" }}
-            >
+            <div className="mt-1 text-xs" style={{ color: "var(--text-secondary)" }}>
               {g.description}
             </div>
           </Link>
         ))}
       </div>
-      <p
-        className="mt-6 text-xs"
-        style={{ color: "var(--text-tertiary)" }}
-      >
-        <Link
-          to="/guider"
-          className="underline"
-          style={{ color: "var(--amber)" }}
-        >
+      <p className="mt-6 text-xs" style={{ color: "var(--text-tertiary)" }}>
+        <Link to="/guider" className="underline" style={{ color: "var(--amber)" }}>
           Se alla guider →
         </Link>
       </p>
