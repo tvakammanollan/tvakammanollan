@@ -347,6 +347,80 @@ function GuiderPage() {
             </Link>
           </div>
         </section>
+
+        <section className="mt-10">
+          <h2 className="mb-4 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+            Öva &amp; resurser
+          </h2>
+          <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>
+            Läst klart? Gå från teori till handling — öva på riktiga frågor per delprov.
+          </p>
+          <div className="mb-4 flex flex-wrap gap-2">
+            {["ord", "mek", "las", "elf", "xyz", "kva", "nog", "dtk"].map((s) => (
+              <Link
+                key={s}
+                to="/ova/$delprov"
+                params={{ delprov: s }}
+                className="rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:border-[#f2a65a]/50 hover:text-[#f2a65a]"
+                style={{ borderColor: "var(--line)", color: "var(--cream)" }}
+              >
+                Öva {s.toUpperCase()}
+              </Link>
+            ))}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Link
+              to="/gamla-prov"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
+                Gamla prov med facit
+              </div>
+              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Skriv hela prov 2022–2026 med rättning och uppskattad normering.
+              </div>
+            </Link>
+            <Link
+              to="/hogskoleprovet-datum"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
+                Provdatum &amp; anmälan
+              </div>
+              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Kommande HP-datum, nedräkning och när anmälan öppnar.
+              </div>
+            </Link>
+            <Link
+              to="/hogskoleprovet-poang"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
+                Poäng &amp; antagning
+              </div>
+              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Vad poängen betyder och hur HP används vid antagning till högskolan.
+              </div>
+            </Link>
+            <Link
+              to="/ord"
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              params={{} as any}
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
+                Träna ord (8 000+ ord)
+              </div>
+              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Ordträning med spaced repetition och förklaringar till varje ord.
+              </div>
+            </Link>
+          </div>
+        </section>
       </article>
     </div>
   );
