@@ -87,30 +87,6 @@ interface QuestionRow {
   explanation: string | null;
 }
 
-const FAKE_NAMES = [
-  "linnea_92",
-  "oskarH",
-  "mattevurm",
-  "noa.k",
-  "elsa_w",
-  "viktorL",
-  "alicia.s",
-  "hugo_b",
-  "saga.m",
-  "ebba.n",
-  "leo_99",
-  "moa_r",
-  "wilmaP",
-  "edvin.t",
-  "felicia_k",
-  "axel.j",
-];
-function pickFakeName(seed: string): string {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
-  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
-}
-
 function formatDuration(startIso: string, endIso: string | null): string {
   if (!endIso) return "—";
   const ms = Math.max(0, new Date(endIso).getTime() - new Date(startIso).getTime());

@@ -35,31 +35,6 @@ export const Route = createFileRoute("/match/$matchId")({
 
 const TOTAL_SECONDS = 5 * 60;
 
-const FAKE_NAMES = [
-  "linnea_92",
-  "oskarH",
-  "mattevurm",
-  "noa.k",
-  "elsa_w",
-  "viktorL",
-  "alicia.s",
-  "hugo_b",
-  "saga.m",
-  "ebba.n",
-  "leo_99",
-  "moa_r",
-  "wilmaP",
-  "edvin.t",
-  "felicia_k",
-  "axel.j",
-];
-
-function pickFakeName(seed: string): string {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
-  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
-}
-
 interface QuestionRow {
   id: string;
   question_text: string;
@@ -163,7 +138,6 @@ function MatchPage() {
     }
     let cancelled = false;
     (async () => {
-      console.log("[match] loading", matchId, "user", user.id);
       const { data: m, error: mErr } = await supabase
         .from("matches")
         .select("*")
@@ -177,7 +151,6 @@ function MatchPage() {
         navigate({ to: "/" });
         return;
       }
-      console.log("[match] match loaded", m);
       setMatch(m as MatchRow);
 
       // Opponent name (hide bot identity)
@@ -204,7 +177,6 @@ function MatchPage() {
         .eq("match_id", matchId)
         .order("question_order", { ascending: true });
       if (mqErr) console.error("[match] match_questions load failed", mqErr);
-      console.log("[match] match_questions rows:", mq?.length ?? 0);
 
       const qIds = (mq ?? []).map((r) => r.question_id);
       if (qIds.length === 0) {
@@ -219,7 +191,6 @@ function MatchPage() {
             .in("id", qIds)
         : { data: [], error: null };
       if (qErr) console.error("[match] questions load failed", qErr);
-      console.log("[match] questions rows:", qRows?.length ?? 0);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const qById = new Map<string, any>((qRows ?? []).map((q: any) => [q.id, q]));
 
@@ -254,7 +225,6 @@ function MatchPage() {
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
-      console.log("[match] final questions:", qs.length);
       setQuestions(qs);
       // For invite matches that were "waiting" and just became active, record
       // game start as now (not match.created_at which includes the waiting period).

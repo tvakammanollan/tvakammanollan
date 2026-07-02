@@ -107,30 +107,6 @@ interface AnswerStat {
 const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
 const MATH_CATS = ["XYZ", "KVA", "NOG", "DTK"];
 
-const FAKE_NAMES = [
-  "linnea_92",
-  "oskarH",
-  "mattevurm",
-  "noa.k",
-  "elsa_w",
-  "viktorL",
-  "alicia.s",
-  "hugo_b",
-  "saga.m",
-  "ebba.n",
-  "leo_99",
-  "moa_r",
-  "wilmaP",
-  "edvin.t",
-  "felicia_k",
-  "axel.j",
-];
-function pickFakeName(seed: string): string {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
-  return FAKE_NAMES[Math.abs(h) % FAKE_NAMES.length];
-}
-
 function StatsPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
