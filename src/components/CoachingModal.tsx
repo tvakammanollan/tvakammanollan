@@ -69,8 +69,8 @@ export function CoachingModal({
             <CheckCircle2 className="mx-auto h-12 w-12 text-[#f2a65a]" />
             <h2 className="mt-3 text-xl font-semibold">Tack {name}!</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att
-              boka in dina gratis 30 minuter med en av våra 1.9+-coacher.
+              Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att boka in dina gratis
+              30 minuter med en av våra 1.9+-coacher.
             </p>
             <Button
               className="mt-6 bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
@@ -89,8 +89,8 @@ export function CoachingModal({
                 Boka 30 mins gratis coachning
               </DialogTitle>
               <DialogDescription className="text-center">
-                Få personlig vägledning från en av våra experter som själva
-                fått <strong>1.9 eller högre</strong> på HP. Helt gratis.
+                Få personlig vägledning från en av våra experter som själva fått{" "}
+                <strong>1.9 eller högre</strong> på HP. Helt gratis.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={submit} className="mt-2 space-y-3">
@@ -115,11 +115,7 @@ export function CoachingModal({
               </div>
               <div>
                 <Label htmlFor="c-phone">Telefon (valfritt)</Label>
-                <Input
-                  id="c-phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                <Input id="c-phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
               </div>
               <div>
                 <Label htmlFor="c-time">Önskad tid</Label>

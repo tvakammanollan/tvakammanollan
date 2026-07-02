@@ -23,16 +23,10 @@ export function EmptyState({
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#DAD4C5] text-4xl">
         <span aria-hidden>{icon}</span>
       </div>
-      <h3
-        className="text-lg font-bold text-foreground"
-        style={{ fontFamily: "var(--font-sans)" }}
-      >
+      <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "var(--font-sans)" }}>
         {title}
       </h3>
-      <p
-        className="mt-2 text-sm text-muted-foreground"
-        style={{ lineHeight: 1.6 }}
-      >
+      <p className="mt-2 text-sm text-muted-foreground" style={{ lineHeight: 1.6 }}>
         {subtitle}
       </p>
       {ctaLabel && (ctaHref || ctaOnClick) && (

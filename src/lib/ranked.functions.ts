@@ -12,37 +12,29 @@ function eloField(t: "verbal" | "math") {
 
 async function getMyElo(userId: string, t: "verbal" | "math"): Promise<number> {
   const field = eloField(t);
-  const { data } = await supabaseAdmin
-    .from("users")
-    .select(field)
-    .eq("id", userId)
-    .single();
-  return ((data as Record<string, number> | null)?.[field]) ?? 1000;
+  const { data } = await supabaseAdmin.from("users").select(field).eq("id", userId).single();
+  return (data as Record<string, number> | null)?.[field] ?? 1000;
 }
 
 export const joinRankedQueue = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) =>
-    z.object({ match_type: MatchTypeSchema }).parse(input),
-  )
+  .inputValidator((input: unknown) => z.object({ match_type: MatchTypeSchema }).parse(input))
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const elo = await getMyElo(userId, data.match_type);
 
     // Upsert queue entry (player_id is unique)
-    const { error } = await supabaseAdmin
-      .from("matchmaking_queue")
-      .upsert(
-        {
-          player_id: userId,
-          match_type: data.match_type,
-          player_elo: elo,
-          status: "waiting",
-          match_id: null,
-          joined_at: new Date().toISOString(),
-        },
-        { onConflict: "player_id" },
-      );
+    const { error } = await supabaseAdmin.from("matchmaking_queue").upsert(
+      {
+        player_id: userId,
+        match_type: data.match_type,
+        player_elo: elo,
+        status: "waiting",
+        match_id: null,
+        joined_at: new Date().toISOString(),
+      },
+      { onConflict: "player_id" },
+    );
     if (error) throw error;
 
     return { ok: true, elo };
@@ -137,14 +129,11 @@ export const pollRankedMatch = createServerFn({ method: "POST" })
 
     await insertMatchQuestions(match.id, questions);
 
-    const { data: paired, error: pairErr } = await supabaseAdmin.rpc(
-      "pair_ranked_match",
-      {
-        p_creator: userId,
-        p_opponent: opponent.player_id,
-        p_match_id: match.id,
-      },
-    );
+    const { data: paired, error: pairErr } = await supabaseAdmin.rpc("pair_ranked_match", {
+      p_creator: userId,
+      p_opponent: opponent.player_id,
+      p_match_id: match.id,
+    });
     if (pairErr) throw pairErr;
 
     if (!paired) {

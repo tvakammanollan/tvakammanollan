@@ -18,11 +18,7 @@ interface ReportQuestionButtonProps {
   questionText?: string;
 }
 
-type Reason =
-  | "wrong_answer"
-  | "unclear_question"
-  | "technical_error"
-  | "other";
+type Reason = "wrong_answer" | "unclear_question" | "technical_error" | "other";
 
 const REASONS: Array<{ value: Reason; label: string }> = [
   { value: "wrong_answer", label: "Felaktigt svar" },
@@ -77,10 +73,7 @@ export function ReportQuestionButton({
     });
     setSubmitting(false);
     if (error) {
-      if (
-        error.code === "23505" ||
-        /unique|duplicate/i.test(error.message)
-      ) {
+      if (error.code === "23505" || /unique|duplicate/i.test(error.message)) {
         toast.info("Du har redan rapporterat denna fråga");
         const s = loadReported();
         s.add(questionId);
@@ -136,9 +129,7 @@ export function ReportQuestionButton({
           <DialogHeader>
             <DialogTitle>Rapportera fråga</DialogTitle>
           </DialogHeader>
-          {truncated && (
-            <p className="text-xs italic text-muted-foreground">{truncated}</p>
-          )}
+          {truncated && <p className="text-xs italic text-muted-foreground">{truncated}</p>}
           <fieldset className="space-y-2">
             <legend className="mb-1 text-xs font-semibold tracking-wide text-muted-foreground">
               Anledning
@@ -173,11 +164,7 @@ export function ReportQuestionButton({
             </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-2">
-            <Button
-              variant="ghost"
-              onClick={() => setOpen(false)}
-              disabled={submitting}
-            >
+            <Button variant="ghost" onClick={() => setOpen(false)} disabled={submitting}>
               Avbryt
             </Button>
             <Button

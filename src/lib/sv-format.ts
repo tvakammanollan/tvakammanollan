@@ -16,10 +16,7 @@ export function formatInt(n: number | null | undefined): string {
   return n.toLocaleString(SV);
 }
 
-export function formatDecimal(
-  n: number | null | undefined,
-  fractionDigits = 1,
-): string {
+export function formatDecimal(n: number | null | undefined, fractionDigits = 1): string {
   if (n == null || !Number.isFinite(n)) return "—";
   return n.toLocaleString(SV, {
     minimumFractionDigits: fractionDigits,
@@ -51,7 +48,10 @@ export function formatRelativeTime(date: Date | string | number): string {
   return REL.format(Math.round((sign * abs) / 2592000), "month");
 }
 
-export function formatDate(date: Date | string | number, opts?: Intl.DateTimeFormatOptions): string {
+export function formatDate(
+  date: Date | string | number,
+  opts?: Intl.DateTimeFormatOptions,
+): string {
   const d = date instanceof Date ? date : new Date(date);
   return d.toLocaleDateString(SV, opts ?? { day: "numeric", month: "short" });
 }

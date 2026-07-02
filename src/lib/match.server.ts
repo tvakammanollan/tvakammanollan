@@ -1,5 +1,8 @@
 // Server-only helpers for match flow. Imported by *.functions.ts only.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { Database } from "@/integrations/supabase/types";
+
+type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
 
 export type MatchType = "verbal" | "math";
 
@@ -47,29 +50,29 @@ async function pickRandom(
     filtered = all;
   }
   const pool = filtered.map((row) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const r = row as any;
-      if (isMath && r.cleaned_question_text) {
-        return {
-          id: r.id,
-          category: r.category,
-          question_text: r.cleaned_question_text,
-          passage_text: r.passage_text,
-          passage_id: r.passage_id,
-          options: r.cleaned_options ?? r.options,
-          difficulty: r.difficulty,
-        } as SelectedQuestion;
-      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const r = row as any;
+    if (isMath && r.cleaned_question_text) {
       return {
         id: r.id,
         category: r.category,
-        question_text: r.question_text,
+        question_text: r.cleaned_question_text,
         passage_text: r.passage_text,
         passage_id: r.passage_id,
-        options: r.options,
+        options: r.cleaned_options ?? r.options,
         difficulty: r.difficulty,
       } as SelectedQuestion;
-    });
+    }
+    return {
+      id: r.id,
+      category: r.category,
+      question_text: r.question_text,
+      passage_text: r.passage_text,
+      passage_id: r.passage_id,
+      options: r.options,
+      difficulty: r.difficulty,
+    } as SelectedQuestion;
+  });
   shuffle(pool);
   return pool.slice(0, count);
 }
@@ -170,11 +173,7 @@ export async function selectQuestionsFor(
   while (out.length > target) out.pop();
   if (out.length < target) {
     const fallback = matchType === "verbal" ? "ORD" : "XYZ";
-    const extra = await pickRandom(
-      fallback,
-      target - out.length,
-      new Set(out.map((o) => o.id)),
-    );
+    const extra = await pickRandom(fallback, target - out.length, new Set(out.map((o) => o.id)));
     out.push(...extra);
   }
   return out.slice(0, target);
@@ -226,11 +225,31 @@ export async function insertMatchQuestions(matchId: string, questions: SelectedQ
 type AccuracyMap = Record<string, number>;
 // Accuracy reduced by 15% across all tiers (×0.85)
 const BOT_ACCURACY: { eloMax: number; map: AccuracyMap; fallback: number }[] = [
-  { eloMax: 800,  map: { ORD: 0.30, MEK: 0.26, LAS: 0.21, ELF: 0.21, XYZ: 0.26, KVA: 0.21, NOG: 0.17, DTK: 0.21 }, fallback: 0.26 },
-  { eloMax: 1000, map: { ORD: 0.43, MEK: 0.43, LAS: 0.38, ELF: 0.34, XYZ: 0.43, KVA: 0.38, NOG: 0.34, DTK: 0.38 }, fallback: 0.38 },
-  { eloMax: 1200, map: { ORD: 0.60, MEK: 0.55, LAS: 0.55, ELF: 0.51, XYZ: 0.55, KVA: 0.51, NOG: 0.47, DTK: 0.51 }, fallback: 0.53 },
-  { eloMax: 1400, map: { ORD: 0.70, MEK: 0.68, LAS: 0.66, ELF: 0.64, XYZ: 0.68, KVA: 0.64, NOG: 0.60, DTK: 0.64 }, fallback: 0.65 },
-  { eloMax: Infinity, map: { ORD: 0.79, MEK: 0.78, LAS: 0.77, ELF: 0.75, XYZ: 0.78, KVA: 0.75, NOG: 0.72, DTK: 0.75 }, fallback: 0.77 },
+  {
+    eloMax: 800,
+    map: { ORD: 0.3, MEK: 0.26, LAS: 0.21, ELF: 0.21, XYZ: 0.26, KVA: 0.21, NOG: 0.17, DTK: 0.21 },
+    fallback: 0.26,
+  },
+  {
+    eloMax: 1000,
+    map: { ORD: 0.43, MEK: 0.43, LAS: 0.38, ELF: 0.34, XYZ: 0.43, KVA: 0.38, NOG: 0.34, DTK: 0.38 },
+    fallback: 0.38,
+  },
+  {
+    eloMax: 1200,
+    map: { ORD: 0.6, MEK: 0.55, LAS: 0.55, ELF: 0.51, XYZ: 0.55, KVA: 0.51, NOG: 0.47, DTK: 0.51 },
+    fallback: 0.53,
+  },
+  {
+    eloMax: 1400,
+    map: { ORD: 0.7, MEK: 0.68, LAS: 0.66, ELF: 0.64, XYZ: 0.68, KVA: 0.64, NOG: 0.6, DTK: 0.64 },
+    fallback: 0.65,
+  },
+  {
+    eloMax: Infinity,
+    map: { ORD: 0.79, MEK: 0.78, LAS: 0.77, ELF: 0.75, XYZ: 0.78, KVA: 0.75, NOG: 0.72, DTK: 0.75 },
+    fallback: 0.77,
+  },
 ];
 
 function botBaseAccuracy(botElo: number, category: string): number {
@@ -251,24 +270,21 @@ export function simulateBotMatch(
   // Bot personality: rolled once per match — affects speed and accuracy uniformly.
   // 0 = "hastig" (fast/aggressive), 1 = "normal", 2 = "metodisk" (slow/careful)
   const personalityRoll = Math.random();
-  const personality = personalityRoll < 0.30 ? 0 : personalityRoll < 0.70 ? 1 : 2;
-  const speedMult   = personality === 0 ? 0.70 : personality === 2 ? 1.40 : 1.00;
-  const accMult     = personality === 0 ? 0.92 : personality === 2 ? 1.06 : 1.00;
+  const personality = personalityRoll < 0.3 ? 0 : personalityRoll < 0.7 ? 1 : 2;
+  const speedMult = personality === 0 ? 0.7 : personality === 2 ? 1.4 : 1.0;
+  const accMult = personality === 0 ? 0.92 : personality === 2 ? 1.06 : 1.0;
 
   const correctIds: string[] = [];
   for (const q of questions) {
     const base = botBaseAccuracy(botElo, q.category);
     // ±8% per-question variation (tighter than before — personality drives most variance).
-    const acc = clamp((base * accMult) + (Math.random() * 0.16 - 0.08), 0, 1);
+    const acc = clamp(base * accMult + (Math.random() * 0.16 - 0.08), 0, 1);
     if (Math.random() < acc) correctIds.push(q.id);
   }
 
   // 55% faster base (×0.45 from original, ×0.85 from last pass), capped at 238s
   const secondsPerQuestion =
-    botElo >= 1400 ? 13 :
-    botElo >= 1200 ? 18 :
-    botElo >= 1000 ? 26 :
-    botElo >= 800  ? 33 : 28;
+    botElo >= 1400 ? 13 : botElo >= 1200 ? 18 : botElo >= 1000 ? 26 : botElo >= 800 ? 33 : 28;
   const base = Math.max(1, questions.length) * secondsPerQuestion * speedMult;
   const variation = base * 0.15;
   const submitTimeSeconds = Math.round(
@@ -333,17 +349,18 @@ export async function processMatchResultServer(matchId: string) {
     .eq("match_id", matchId)
     .limit(1);
   if (existingHistory && existingHistory.length > 0) {
-    await supabaseAdmin
-      .from("matches")
-      .update({ status: "finished" })
-      .eq("id", matchId);
+    await supabaseAdmin.from("matches").update({ status: "finished" }).eq("id", matchId);
     return { alreadyFinished: true };
   }
 
   const p1Score = match.player1_score ?? 0;
   const p2Score = match.player2_score ?? 0;
-  const p1Sub = match.player1_submitted_at ? new Date(match.player1_submitted_at).getTime() : Infinity;
-  const p2Sub = match.player2_submitted_at ? new Date(match.player2_submitted_at).getTime() : Infinity;
+  const p1Sub = match.player1_submitted_at
+    ? new Date(match.player1_submitted_at).getTime()
+    : Infinity;
+  const p2Sub = match.player2_submitted_at
+    ? new Date(match.player2_submitted_at).getTime()
+    : Infinity;
 
   if (p1Sub === Infinity || p2Sub === Infinity) {
     // Not both submitted yet
@@ -353,7 +370,8 @@ export async function processMatchResultServer(matchId: string) {
   // Determine result (from p1 perspective)
   // Equal scores = real draw. Time is NOT used as a tiebreaker
   // (avoids the "showed as draw but I lost ELO" bug).
-  void p1Sub; void p2Sub;
+  void p1Sub;
+  void p2Sub;
   let r1: 0 | 0.5 | 1;
   if (p1Score > p2Score) r1 = 1;
   else if (p1Score < p2Score) r1 = 0;
@@ -365,7 +383,11 @@ export async function processMatchResultServer(matchId: string) {
   const peakField = matchType === "verbal" ? "elo_verbal_peak" : "elo_math_peak";
 
   // Player 1
-  const { data: p1User } = await supabaseAdmin.from("users").select("*").eq("id", match.player1_id).single();
+  const { data: p1User } = await supabaseAdmin
+    .from("users")
+    .select("*")
+    .eq("id", match.player1_id)
+    .single();
   if (!p1User) throw new Error("p1 missing");
 
   const p1Any = p1User as unknown as Record<string, number>;
@@ -378,7 +400,11 @@ export async function processMatchResultServer(matchId: string) {
     p2EloOld = match.bot_elo ?? 1000;
   } else {
     if (!match.player2_id) throw new Error("p2 id missing");
-    const { data } = await supabaseAdmin.from("users").select("*").eq("id", match.player2_id).single();
+    const { data } = await supabaseAdmin
+      .from("users")
+      .select("*")
+      .eq("id", match.player2_id)
+      .single();
     if (!data) throw new Error("p2 missing");
     p2Any = data as unknown as Record<string, number>;
     p2EloOld = p2Any[eloField] ?? 1000;
@@ -394,8 +420,11 @@ export async function processMatchResultServer(matchId: string) {
     wins: (p1Any.wins ?? 0) + (r1 === 1 ? 1 : 0),
     losses: (p1Any.losses ?? 0) + (r1 === 0 ? 1 : 0),
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await supabaseAdmin.from("users").update(p1Update as any).eq("id", match.player1_id);
+
+  await supabaseAdmin
+    .from("users")
+    .update(p1Update as UsersUpdate)
+    .eq("id", match.player1_id);
 
   // insert + ignorera dubblett (23505) – fungerar både med och utan unika indexet,
   // så ingen deploy-ordning krävs mot migrationen.
@@ -424,8 +453,11 @@ export async function processMatchResultServer(matchId: string) {
       wins: (p2Any.wins ?? 0) + (r2 === 1 ? 1 : 0),
       losses: (p2Any.losses ?? 0) + (r2 === 0 ? 1 : 0),
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await supabaseAdmin.from("users").update(p2Update as any).eq("id", match.player2_id);
+
+    await supabaseAdmin
+      .from("users")
+      .update(p2Update as UsersUpdate)
+      .eq("id", match.player2_id);
 
     const { error: ehErr2 } = await supabaseAdmin.from("elo_history").insert({
       user_id: match.player2_id,
@@ -438,8 +470,7 @@ export async function processMatchResultServer(matchId: string) {
     if (ehErr2 && ehErr2.code !== "23505") throw ehErr2;
   }
 
-  const winnerId =
-    r1 === 1 ? match.player1_id : r1 === 0 ? match.player2_id : null;
+  const winnerId = r1 === 1 ? match.player1_id : r1 === 0 ? match.player2_id : null;
 
   await supabaseAdmin
     .from("matches")

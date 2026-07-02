@@ -17,8 +17,7 @@ export function installSupabaseFetchAuth() {
     else if (input instanceof URL) url = input.toString();
     else url = input.url;
 
-    const isServerFn =
-      url.includes("/_serverFn/") || url.includes("/_server/");
+    const isServerFn = url.includes("/_serverFn/") || url.includes("/_server/");
 
     if (!isServerFn) return origFetch(input, init);
 
@@ -26,7 +25,9 @@ export function installSupabaseFetchAuth() {
     const token = data.session?.access_token;
     if (!token) return origFetch(input, init);
 
-    const headers = new Headers(init?.headers ?? (input instanceof Request ? input.headers : undefined));
+    const headers = new Headers(
+      init?.headers ?? (input instanceof Request ? input.headers : undefined),
+    );
     if (!headers.has("authorization")) {
       headers.set("authorization", `Bearer ${token}`);
     }

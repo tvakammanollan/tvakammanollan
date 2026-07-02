@@ -6,16 +6,76 @@
 // per match-id så samma match alltid visar samma motståndarnamn.
 
 const NAMES = [
-  "alva", "alma", "alice", "anton", "anna", "arvid", "axel",
-  "amanda", "david", "ebba", "elin", "elias", "ella", "elsa",
-  "emma", "erik", "felix", "filip", "frida", "hampus", "hanna",
-  "hugo", "ida", "ines", "isabella", "ivar", "joel", "julia",
-  "kevin", "klara", "leo", "levi", "lina", "linnea", "lova",
-  "lucas", "maja", "malin", "marcus", "matilda", "max", "mira",
-  "molly", "nils", "noah", "nora", "olivia", "oscar", "pontus",
-  "rebecka", "saga", "sara", "signe", "sofia", "stella", "tilde",
-  "tilda", "tobias", "vera", "viggo", "viktor", "wilma", "william",
-  "ylva", "alvin", "edvin", "elliot", "milo", "selma", "tuva",
+  "alva",
+  "alma",
+  "alice",
+  "anton",
+  "anna",
+  "arvid",
+  "axel",
+  "amanda",
+  "david",
+  "ebba",
+  "elin",
+  "elias",
+  "ella",
+  "elsa",
+  "emma",
+  "erik",
+  "felix",
+  "filip",
+  "frida",
+  "hampus",
+  "hanna",
+  "hugo",
+  "ida",
+  "ines",
+  "isabella",
+  "ivar",
+  "joel",
+  "julia",
+  "kevin",
+  "klara",
+  "leo",
+  "levi",
+  "lina",
+  "linnea",
+  "lova",
+  "lucas",
+  "maja",
+  "malin",
+  "marcus",
+  "matilda",
+  "max",
+  "mira",
+  "molly",
+  "nils",
+  "noah",
+  "nora",
+  "olivia",
+  "oscar",
+  "pontus",
+  "rebecka",
+  "saga",
+  "sara",
+  "signe",
+  "sofia",
+  "stella",
+  "tilde",
+  "tilda",
+  "tobias",
+  "vera",
+  "viggo",
+  "viktor",
+  "wilma",
+  "william",
+  "ylva",
+  "alvin",
+  "edvin",
+  "elliot",
+  "milo",
+  "selma",
+  "tuva",
 ];
 
 // Deterministisk hash från seed+salt → tal i [0, max)
@@ -49,17 +109,17 @@ export function getBotName(_botElo: number, seed?: string): string {
 
   switch (format) {
     case 0:
-      return name;                       // linnea
+      return name; // linnea
     case 1:
-      return `${name}${yy()}`;           // linnea98
+      return `${name}${yy()}`; // linnea98
     case 2:
-      return `${name}_${twoDigit}`;      // linnea_42
+      return `${name}_${twoDigit}`; // linnea_42
     case 3:
-      return `${name}${letter}`;         // linneap
+      return `${name}${letter}`; // linneap
     case 4:
-      return `${name}.${letter}`;        // linnea.k
+      return `${name}.${letter}`; // linnea.k
     case 5:
-      return `_${name}`;                 // _linnea
+      return `_${name}`; // _linnea
     default:
       return name;
   }

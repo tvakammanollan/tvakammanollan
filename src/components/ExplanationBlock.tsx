@@ -17,9 +17,7 @@ export function ExplanationBlock({ explanation, defaultOpen = false }: Props) {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1 text-xs font-medium text-[#f2a65a] hover:underline"
       >
-        <ChevronDown
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
-        />
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
         {open ? "Dölj förklaring" : "Visa förklaring"}
       </button>
       <div

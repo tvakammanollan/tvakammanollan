@@ -6,9 +6,7 @@ import { lazy, Suspense } from "react";
  *
  * Falls back to plain text while katex chunk loads.
  */
-const MathTextInner = lazy(() =>
-  import("./MathText").then((m) => ({ default: m.MathText })),
-);
+const MathTextInner = lazy(() => import("./MathText").then((m) => ({ default: m.MathText })));
 
 export function MathText({
   children,
@@ -20,9 +18,7 @@ export function MathText({
   className?: string;
 }) {
   return (
-    <Suspense
-      fallback={<span className={className}>{children}</span>}
-    >
+    <Suspense fallback={<span className={className}>{children}</span>}>
       <MathTextInner autoDetect={autoDetect} className={className}>
         {children}
       </MathTextInner>

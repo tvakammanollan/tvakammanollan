@@ -12,13 +12,13 @@ export function eloTierLabel(tier: EloTier): string {
 
 const PALETTE = [
   "oklch(0.55 0.13 155)", // green
-  "oklch(0.55 0.14 30)",  // warm red
+  "oklch(0.55 0.14 30)", // warm red
   "oklch(0.55 0.13 250)", // blue
-  "oklch(0.60 0.14 80)",  // gold
+  "oklch(0.60 0.14 80)", // gold
   "oklch(0.50 0.13 320)", // magenta
   "oklch(0.55 0.13 200)", // teal
   "oklch(0.55 0.13 110)", // olive
-  "oklch(0.50 0.13 15)",  // brick
+  "oklch(0.50 0.13 15)", // brick
 ];
 
 export function avatarColor(seed: string): string {
@@ -28,6 +28,9 @@ export function avatarColor(seed: string): string {
 }
 
 export function initials(name: string): string {
-  const clean = name.replace(/[^a-zA-Z0-9]/g, "").slice(0, 2).toUpperCase();
+  const clean = name
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .slice(0, 2)
+    .toUpperCase();
   return clean || "??";
 }

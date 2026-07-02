@@ -12,7 +12,7 @@ let serverEntryPromise: Promise<ServerEntry> | undefined;
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
     serverEntryPromise = import("@tanstack/react-start/server-entry").then(
-      (m) => ((m as { default?: ServerEntry }).default ?? (m as unknown as ServerEntry)),
+      (m) => (m as { default?: ServerEntry }).default ?? (m as unknown as ServerEntry),
     );
   }
   return serverEntryPromise;
@@ -94,10 +94,7 @@ function withSecurityHeaders(response: Response): Response {
   );
   headers.set("X-Content-Type-Options", "nosniff");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  headers.set(
-    "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), browsing-topics=()",
-  );
+  headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), browsing-topics=()");
   headers.set("X-Frame-Options", "DENY");
 
   return new Response(response.body, {
@@ -114,8 +111,7 @@ function withSecurityHeaders(response: Response): Response {
 async function healthCheck(env: unknown): Promise<Response> {
   // Minimal: report ok + timestamp + worker uptime hint.
   // Detailed DB probe requires Supabase credentials; do that server-side.
-  const url =
-    (env as Record<string, unknown>)?.VITE_SUPABASE_URL as string | undefined;
+  const url = (env as Record<string, unknown>)?.VITE_SUPABASE_URL as string | undefined;
   let supabaseStatus: "ok" | "fail" | "unknown" = "unknown";
   if (url) {
     try {
@@ -167,8 +163,8 @@ async function fetchWiktionaryDefinition(word: string): Promise<string | null> {
     const raw = defMatch[0].replace(/^#\s*/, "");
     const clean = raw
       .replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g, "$1") // [[länk|text]] → text
-      .replace(/\{\{[^}]*\}\}/g, "")                      // ta bort {{mallar}}
-      .replace(/'''?([^']+)'''?/g, "$1")                   // ta bort fet/kursiv
+      .replace(/\{\{[^}]*\}\}/g, "") // ta bort {{mallar}}
+      .replace(/'''?([^']+)'''?/g, "$1") // ta bort fet/kursiv
       .replace(/;$/, "")
       .trim();
 
@@ -271,7 +267,6 @@ async function telemetrySink(request: Request): Promise<Response> {
     const data = (await request.json()) as { events?: Array<Record<string, unknown>> };
     const events = Array.isArray(data?.events) ? data.events.slice(0, 50) : [];
     for (const e of events) {
-      // eslint-disable-next-line no-console
       console.log(JSON.stringify({ ...e, source: "browser" }));
     }
     return new Response(null, { status: 204 });

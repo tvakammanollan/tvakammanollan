@@ -49,15 +49,14 @@ export type OrdAuditResult = {
 
 export const applyOrdAudit = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(
-    (data: { includeMedium?: boolean; includeLow?: boolean; dryRun?: boolean }) =>
-      z
-        .object({
-          includeMedium: z.boolean().optional().default(true),
-          includeLow: z.boolean().optional().default(false),
-          dryRun: z.boolean().optional().default(false),
-        })
-        .parse(data ?? {}),
+  .inputValidator((data: { includeMedium?: boolean; includeLow?: boolean; dryRun?: boolean }) =>
+    z
+      .object({
+        includeMedium: z.boolean().optional().default(true),
+        includeLow: z.boolean().optional().default(false),
+        dryRun: z.boolean().optional().default(false),
+      })
+      .parse(data ?? {}),
   )
   .handler(async ({ context, data }): Promise<OrdAuditResult> => {
     const { userId } = context;

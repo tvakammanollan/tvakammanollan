@@ -34,7 +34,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }) => {
     const supabase = supabaseAdmin;
-    let excludeIds = new Set(data.exclude);
+    const excludeIds = new Set(data.exclude);
     if (data.excludeCorrectForUserId) {
       const { data: correctRows } = await supabase
         .from("user_word_correct")
@@ -44,7 +44,9 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     }
     let query = supabase
       .from("questions")
-      .select("id,question_text,options,correct_answer,source,difficulty,definition,definition_source")
+      .select(
+        "id,question_text,options,correct_answer,source,difficulty,definition,definition_source",
+      )
       .eq("category", "ORD")
       .limit(10000);
     if (data.sourceFilter === "hp") query = query.not("source", "is", null);
@@ -52,9 +54,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
     const { data: rows, error } = await query;
     if (error) throw new Error(error.message);
-    const filtered = (rows ?? []).filter(
-      (r: { id: string }) => !excludeIds.has(r.id as string),
-    );
+    const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));
     for (let i = filtered.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
@@ -81,44 +81,37 @@ export const getWordProgress = createServerFn({ method: "GET" })
     return { correctCount: correct ?? 0, totalCount: total ?? 0, userId };
   });
 
-export const countOrdQuestions = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const supabase = supabaseAdmin;
-    const { count, error } = await supabase
-      .from("questions")
-      .select("id", { count: "exact", head: true })
-      .eq("category", "ORD");
-    if (error) throw new Error(error.message);
-    return { count: count ?? 0 };
-  },
-);
+export const countOrdQuestions = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = supabaseAdmin;
+  const { count, error } = await supabase
+    .from("questions")
+    .select("id", { count: "exact", head: true })
+    .eq("category", "ORD");
+  if (error) throw new Error(error.message);
+  return { count: count ?? 0 };
+});
 
-export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const supabase = supabaseAdmin;
-    const base = () =>
-      supabase
-        .from("questions")
-        .select("id", { count: "exact", head: true })
-        .eq("category", "ORD");
-    const [all, hp, list, easy, mid, hard] = await Promise.all([
-      base(),
-      base().not("source", "is", null),
-      base().is("source", null),
-      base().eq("difficulty", 1),
-      base().eq("difficulty", 2),
-      base().eq("difficulty", 3),
-    ]);
-    return {
-      all: all.count ?? 0,
-      hp: hp.count ?? 0,
-      list: list.count ?? 0,
-      easy: easy.count ?? 0,
-      medium: mid.count ?? 0,
-      hard: hard.count ?? 0,
-    };
-  },
-);
+export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = supabaseAdmin;
+  const base = () =>
+    supabase.from("questions").select("id", { count: "exact", head: true }).eq("category", "ORD");
+  const [all, hp, list, easy, mid, hard] = await Promise.all([
+    base(),
+    base().not("source", "is", null),
+    base().is("source", null),
+    base().eq("difficulty", 1),
+    base().eq("difficulty", 2),
+    base().eq("difficulty", 3),
+  ]);
+  return {
+    all: all.count ?? 0,
+    hp: hp.count ?? 0,
+    list: list.count ?? 0,
+    easy: easy.count ?? 0,
+    medium: mid.count ?? 0,
+    hard: hard.count ?? 0,
+  };
+});
 
 // Record one practice answer for the signed-in user.
 export const recordOrdAnswer = createServerFn({ method: "POST" })
@@ -166,7 +159,12 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
             const nextReview = new Date(Date.now() + newInterval * 86400_000).toISOString();
             await supabaseAdmin
               .from("user_word_failed")
-              .update({ review_streak: newStreak, interval_days: newInterval, ease_factor: ef, next_review_at: nextReview })
+              .update({
+                review_streak: newStreak,
+                interval_days: newInterval,
+                ease_factor: ef,
+                next_review_at: nextReview,
+              })
               .eq("user_id", userId)
               .eq("question_id", data.questionId);
           }
@@ -181,21 +179,19 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
           .maybeSingle();
         const ef = Math.max(1.3, ((existing?.ease_factor as number) ?? 2.5) - 0.3);
         const nextReview = new Date(Date.now() + 86400_000).toISOString();
-        await supabaseAdmin
-          .from("user_word_failed")
-          .upsert(
-            {
-              user_id: userId,
-              question_id: data.questionId,
-              fail_count: ((existing?.fail_count as number) ?? 0) + 1,
-              review_streak: 0,
-              ease_factor: ef,
-              interval_days: 1,
-              last_failed_at: new Date().toISOString(),
-              next_review_at: nextReview,
-            },
-            { onConflict: "user_id,question_id" },
-          );
+        await supabaseAdmin.from("user_word_failed").upsert(
+          {
+            user_id: userId,
+            question_id: data.questionId,
+            fail_count: ((existing?.fail_count as number) ?? 0) + 1,
+            review_streak: 0,
+            ease_factor: ef,
+            interval_days: 1,
+            last_failed_at: new Date().toISOString(),
+            next_review_at: nextReview,
+          },
+          { onConflict: "user_id,question_id" },
+        );
       }
     }
 
@@ -208,17 +204,15 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
     const newTotal = (existing?.total_count ?? 0) + 1;
     const newCorrect = (existing?.correct_count ?? 0) + (data.correct ? 1 : 0);
 
-    const { error } = await supabaseAdmin
-      .from("ord_practice_stats")
-      .upsert(
-        {
-          user_id: userId,
-          correct_count: newCorrect,
-          total_count: newTotal,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id" },
-      );
+    const { error } = await supabaseAdmin.from("ord_practice_stats").upsert(
+      {
+        user_id: userId,
+        correct_count: newCorrect,
+        total_count: newTotal,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id" },
+    );
     if (error) throw new Error(error.message);
     return { correct_count: newCorrect, total_count: newTotal };
   });
@@ -243,7 +237,9 @@ export const fetchFailedWordBatch = createServerFn({ method: "GET" })
     const ids = failedRows.map((r: { question_id: string }) => r.question_id);
     const { data: rows, error } = await supabaseAdmin
       .from("questions")
-      .select("id,question_text,options,correct_answer,source,difficulty,definition,definition_source")
+      .select(
+        "id,question_text,options,correct_answer,source,difficulty,definition,definition_source",
+      )
       .in("id", ids);
     if (error) throw new Error(error.message);
 
@@ -285,7 +281,9 @@ export const getFailedWordsList = createServerFn({ method: "GET" })
     const { userId } = context;
     const { data: rows } = await supabaseAdmin
       .from("user_word_failed")
-      .select("question_id, fail_count, review_streak, interval_days, next_review_at, last_failed_at")
+      .select(
+        "question_id, fail_count, review_streak, interval_days, next_review_at, last_failed_at",
+      )
       .eq("user_id", userId)
       .order("next_review_at", { ascending: true });
     if (!rows || rows.length === 0) return { words: [] as FailedWordEntry[] };
@@ -296,21 +294,29 @@ export const getFailedWordsList = createServerFn({ method: "GET" })
       .select("id, question_text")
       .in("id", ids);
 
-    const textById = new Map((questions ?? []).map((q: { id: string; question_text: string }) => [q.id, q.question_text]));
+    const textById = new Map(
+      (questions ?? []).map((q: { id: string; question_text: string }) => [q.id, q.question_text]),
+    );
     const MASTERY_STREAK = 5;
-    const words: FailedWordEntry[] = rows.map((r: {
-      question_id: string; fail_count: number; review_streak: number;
-      interval_days: number; next_review_at: string; last_failed_at: string;
-    }) => ({
-      question_id: r.question_id,
-      question_text: (textById.get(r.question_id) ?? "").toLowerCase(),
-      fail_count: r.fail_count,
-      review_streak: r.review_streak,
-      interval_days: r.interval_days,
-      next_review_at: r.next_review_at,
-      last_failed_at: r.last_failed_at,
-      mastery_streak: MASTERY_STREAK,
-    }));
+    const words: FailedWordEntry[] = rows.map(
+      (r: {
+        question_id: string;
+        fail_count: number;
+        review_streak: number;
+        interval_days: number;
+        next_review_at: string;
+        last_failed_at: string;
+      }) => ({
+        question_id: r.question_id,
+        question_text: (textById.get(r.question_id) ?? "").toLowerCase(),
+        fail_count: r.fail_count,
+        review_streak: r.review_streak,
+        interval_days: r.interval_days,
+        next_review_at: r.next_review_at,
+        last_failed_at: r.last_failed_at,
+        mastery_streak: MASTERY_STREAK,
+      }),
+    );
     return { words };
   });
 
@@ -357,8 +363,7 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
         .from("users")
         .select("id, username")
         .in("id", userIds);
-      for (const u of us ?? [])
-        nameMap.set(u.id as string, (u.username as string) ?? "");
+      for (const u of us ?? []) nameMap.set(u.id as string, (u.username as string) ?? "");
     }
 
     const top: OrdLeaderboardRow[] = statsRows
@@ -368,10 +373,7 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
         username: nameMap.get(s.user_id) ?? "",
         correct_count: s.correct_count,
         total_count: s.total_count,
-        accuracy:
-          s.total_count > 0
-            ? Math.round((s.correct_count * 100) / s.total_count)
-            : 0,
+        accuracy: s.total_count > 0 ? Math.round((s.correct_count * 100) / s.total_count) : 0,
       }))
       .slice(0, 100)
       .map((r, i) => ({ ...r, rank: i + 1 }));

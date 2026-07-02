@@ -20,8 +20,8 @@ export function RankBadge({
     size === "sm"
       ? { fontSize: 11, padding: "2px 8px" }
       : size === "lg"
-      ? { fontSize: 16, padding: "6px 16px" }
-      : { fontSize: 13, padding: "4px 12px" };
+        ? { fontSize: 16, padding: "6px 16px" }
+        : { fontSize: 13, padding: "4px 12px" };
 
   return (
     <div className="inline-flex flex-col gap-1">

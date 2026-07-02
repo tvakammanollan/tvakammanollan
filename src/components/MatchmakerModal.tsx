@@ -130,22 +130,24 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
             {mode === "choose"
               ? `Starta ${typeLabel.toLowerCase()} battle`
               : mode === "join"
-              ? "Gå med i rum"
-              : "Väntar på motståndare"}
+                ? "Gå med i rum"
+                : "Väntar på motståndare"}
           </DialogTitle>
           <DialogDescription>
             {mode === "choose"
               ? "Välj hur du vill spela."
               : mode === "join"
-              ? "Ange den 6-teckens kod du fått av din motståndare."
-              : "Dela koden eller länken nedan. Matchen startar automatiskt när någon ansluter."}
+                ? "Ange den 6-teckens kod du fått av din motståndare."
+                : "Dela koden eller länken nedan. Matchen startar automatiskt när någon ansluter."}
           </DialogDescription>
         </DialogHeader>
 
         {mode === "choose" && (
           <div className="grid gap-2.5">
             <ChoiceCard
-              icon={busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />}
+              icon={
+                busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />
+              }
               title="Snabbmatch"
               subtitle="Matchas mot en motståndare direkt"
               accent="primary"
@@ -255,8 +257,8 @@ function ChoiceCard({
     accent === "primary"
       ? "bg-primary text-primary-foreground"
       : accent === "secondary"
-      ? "bg-secondary text-secondary-foreground"
-      : "bg-muted text-foreground";
+        ? "bg-secondary text-secondary-foreground"
+        : "bg-muted text-foreground";
 
   return (
     <button

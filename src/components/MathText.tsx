@@ -58,12 +58,15 @@ function renderTex(tex: string, displayMode: boolean): string {
  *   sqrt(...) → \sqrt{...}
  */
 function asciiToLatex(s: string): string {
-  return s
-    .replace(/²/g, "^2")
-    .replace(/³/g, "^3")
-    .replace(/([a-zA-Z\)])(\\d)(?!\\d)/g, "$1^{$2}")
-    .replace(/\bsqrt\(([^)]+)\)/g, "\\sqrt{$1}")
-    .replace(/\*/g, "\\cdot ");
+  return (
+    s
+      .replace(/²/g, "^2")
+      .replace(/³/g, "^3")
+      // OBS: en tidigare regel /([a-zA-Z)])(\\d)/ matchade bokstavlig "\d" (inte
+      // siffror) och kunde korrumpera t.ex. "x\div" — borttagen som död/farlig.
+      .replace(/\bsqrt\(([^)]+)\)/g, "\\sqrt{$1}")
+      .replace(/\*/g, "\\cdot ")
+  );
 }
 
 /**

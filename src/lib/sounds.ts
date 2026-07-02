@@ -6,7 +6,7 @@ let enabled =
   typeof window !== "undefined" && typeof localStorage !== "undefined"
     ? localStorage.getItem("sfx_enabled") !== "false"
     : true;
-let masterVol = 0.7;
+const masterVol = 0.7;
 
 type Win = Window & { webkitAudioContext?: typeof AudioContext };
 
@@ -79,7 +79,7 @@ export const sounds = {
   click: () => tone(1100, 0.04, "triangle", 0.03),
   // Soft ping for selection / nav
   ping: () => {
-    tone(1320, 0.10, "sine", 0.05);
+    tone(1320, 0.1, "sine", 0.05);
     tone(1980, 0.09, "sine", 0.025, 0.04);
   },
   // Right answer feedback (rising third)
@@ -102,9 +102,7 @@ export const sounds = {
   },
   // Victory fanfare
   victory: () => {
-    [523, 659, 784, 1046, 1318].forEach((f, i) =>
-      tone(f, 0.28, "triangle", 0.07, i * 0.11),
-    );
+    [523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, 0.28, "triangle", 0.07, i * 0.11));
   },
   // Defeat
   defeat: () => {
@@ -142,9 +140,7 @@ export function installGlobalClickSound() {
     (e) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-      const btn = target.closest(
-        'button, [role="button"], a[data-sfx], [data-sfx="click"]',
-      );
+      const btn = target.closest('button, [role="button"], a[data-sfx], [data-sfx="click"]');
       if (!btn) return;
       // Skip if explicitly muted
       if ((btn as HTMLElement).dataset.sfx === "off") return;

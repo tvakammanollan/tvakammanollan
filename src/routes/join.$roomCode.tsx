@@ -17,7 +17,6 @@ export const Route = createFileRoute("/join/$roomCode")({
   }),
 });
 
-
 function JoinPage() {
   const { roomCode } = Route.useParams();
   const { user, loading } = useAuth();

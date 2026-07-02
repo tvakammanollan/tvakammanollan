@@ -111,13 +111,13 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
           ))}
         </div>
 
-        <div
-          key={step}
-          className="animate-in slide-in-from-right-4 fade-in duration-300"
-        >
+        <div key={step} className="animate-in slide-in-from-right-4 fade-in duration-300">
           {step === 0 && (
             <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "Playfair Display, serif" }}>
+              <h2
+                className="text-2xl font-semibold"
+                style={{ fontFamily: "Playfair Display, serif" }}
+              >
                 Välkommen, {profile.username}! 👋
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">Vad siktar du på för HP-poäng?</p>
@@ -159,7 +159,10 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
           {step === 1 && (
             <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "Playfair Display, serif" }}>
+              <h2
+                className="text-2xl font-semibold"
+                style={{ fontFamily: "Playfair Display, serif" }}
+              >
                 Vad vill du träna på?
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">Du kan alltid byta senare.</p>
@@ -199,7 +202,10 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
           {step === 2 && (
             <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "Playfair Display, serif" }}>
+              <h2
+                className="text-2xl font-semibold"
+                style={{ fontFamily: "Playfair Display, serif" }}
+              >
                 Du är redo! 🚀
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">

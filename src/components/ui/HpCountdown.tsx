@@ -50,10 +50,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
       <div className="inline-flex items-center gap-2 text-sm">
         <CalendarDays className="h-4 w-4" style={{ color: "var(--amber)" }} />
         <span style={{ color: "var(--text-secondary)" }}>{next.label}:</span>
-        <span
-          className="font-bold tabular-nums"
-          style={{ color: "var(--amber)" }}
-        >
+        <span className="font-bold tabular-nums" style={{ color: "var(--amber)" }}>
           {t.days} dagar
         </span>
       </div>
@@ -127,10 +124,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
           <TimeBlock value={t.seconds} label="sek" />
         </div>
 
-        <p
-          className="mt-5 text-[13px]"
-          style={{ color: "var(--text-secondary)" }}
-        >
+        <p className="mt-5 text-[13px]" style={{ color: "var(--text-secondary)" }}>
           {formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)}
         </p>
       </div>

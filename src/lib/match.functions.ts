@@ -10,6 +10,7 @@ import {
   processMatchResultServer,
 } from "./match.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { Database } from "@/integrations/supabase/types";
 
 export const createMatch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -51,7 +52,7 @@ export const createMatch = createServerFn({ method: "POST" })
       .eq("id", userId)
       .single();
 
-    const playerElo = ((user as Record<string, number> | null)?.[eloField]) ?? 1000;
+    const playerElo = (user as Record<string, number> | null)?.[eloField] ?? 1000;
 
     if (data.mode === "bot") {
       const botElo = calcBotElo(playerElo);
@@ -113,10 +114,7 @@ export const joinMatch = createServerFn({ method: "POST" })
     if (match.player1_id === userId) throw new Error("Du kan inte gå med i ditt eget rum.");
     if (match.player2_id) throw new Error("Rummet är redan fullt.");
 
-    const questions = await selectQuestionsFor(
-      match.match_type as "verbal" | "math",
-      userId,
-    );
+    const questions = await selectQuestionsFor(match.match_type as "verbal" | "math", userId);
     await insertMatchQuestions(match.id, questions);
 
     const { error: updErr } = await supabaseAdmin
@@ -130,9 +128,7 @@ export const joinMatch = createServerFn({ method: "POST" })
 
 export const submitMatch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) =>
-    z.object({ matchId: z.string().uuid() }).parse(input),
-  )
+  .inputValidator((input: unknown) => z.object({ matchId: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     const { userId } = context;
 
@@ -162,10 +158,7 @@ export const submitMatch = createServerFn({ method: "POST" })
       if (isCorrect) score += 1;
       // Persist authoritative is_correct value
       if (a.selected_answer != null || a.id) {
-        await supabaseAdmin
-          .from("match_answers")
-          .update({ is_correct: isCorrect })
-          .eq("id", a.id);
+        await supabaseAdmin.from("match_answers").update({ is_correct: isCorrect }).eq("id", a.id);
       }
     }
 
@@ -178,8 +171,10 @@ export const submitMatch = createServerFn({ method: "POST" })
       update.player2_submitted_at = new Date().toISOString();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await supabaseAdmin.from("matches").update(update as any).eq("id", data.matchId);
+    await supabaseAdmin
+      .from("matches")
+      .update(update as Database["public"]["Tables"]["matches"]["Update"])
+      .eq("id", data.matchId);
 
     // If bot match, simulate bot now using per-question category accuracy.
     if (match.is_bot_match) {
@@ -218,9 +213,7 @@ export const submitMatch = createServerFn({ method: "POST" })
 
 export const processMatchResult = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) =>
-    z.object({ matchId: z.string().uuid() }).parse(input),
-  )
+  .inputValidator((input: unknown) => z.object({ matchId: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     const { userId } = context;
     const { data: m } = await supabaseAdmin

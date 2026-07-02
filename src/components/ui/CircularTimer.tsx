@@ -16,8 +16,7 @@ function playTick() {
     if (sessionStorage.getItem(SOUND_KEY) === "off") return;
     const Ctx =
       window.AudioContext ||
-      (window as unknown as { webkitAudioContext?: typeof AudioContext })
-        .webkitAudioContext;
+      (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return;
     const ctx = new Ctx();
     const osc = ctx.createOscillator();
@@ -36,11 +35,7 @@ function playTick() {
   }
 }
 
-export function CircularTimer({
-  totalSeconds,
-  remainingSeconds,
-  onExpire,
-}: CircularTimerProps) {
+export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: CircularTimerProps) {
   const expiredRef = useRef(false);
   const lastTickRef = useRef<number>(-1);
 
@@ -60,10 +55,7 @@ export function CircularTimer({
     playTick();
   }, [remainingSeconds]);
 
-  const progress = Math.max(
-    0,
-    Math.min(1, remainingSeconds / Math.max(1, totalSeconds)),
-  );
+  const progress = Math.max(0, Math.min(1, remainingSeconds / Math.max(1, totalSeconds)));
   const offset = CIRCUMFERENCE * (1 - progress);
 
   let color = "#6fb3b8";
@@ -83,14 +75,7 @@ export function CircularTimer({
       aria-label={`${mm}:${ss} kvar`}
     >
       <svg width="48" height="48" viewBox="0 0 48 48">
-        <circle
-          cx="24"
-          cy="24"
-          r={RADIUS}
-          fill="none"
-          stroke="#e2e0db"
-          strokeWidth="4"
-        />
+        <circle cx="24" cy="24" r={RADIUS} fill="none" stroke="#e2e0db" strokeWidth="4" />
         <circle
           cx="24"
           cy="24"

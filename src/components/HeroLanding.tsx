@@ -10,9 +10,24 @@ import { useShaderCanvas } from "@/components/landing/shaderCanvas";
 import { RANK_TIERS } from "@/types";
 
 const TESTIMONIALS = [
-  { quote: "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet.", name: "Aron", score: "2.0" },
-  { quote: "HP Kampen har allt som behövs för att lyckas på högskoleprovet.", name: "Gustav", score: "1.9" },
-  { quote: "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.", name: "Niklas", score: "1.95", founder: true },
+  {
+    quote:
+      "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet.",
+    name: "Aron",
+    score: "2.0",
+  },
+  {
+    quote: "HP Kampen har allt som behövs för att lyckas på högskoleprovet.",
+    name: "Gustav",
+    score: "1.9",
+  },
+  {
+    quote:
+      "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
+    name: "Niklas",
+    score: "1.95",
+    founder: true,
+  },
 ];
 
 const AMBER = "#f2a65a";
@@ -36,7 +51,9 @@ export function HeroLanding() {
   const [stats, setStats] = useState<LandingStats | null>(null);
 
   useEffect(() => {
-    fetchStats().then(setStats).catch(() => setStats(null));
+    fetchStats()
+      .then(setStats)
+      .catch(() => setStats(null));
   }, [fetchStats]);
 
   return (
@@ -62,7 +79,12 @@ export function HeroLanding() {
  * när en bot vinner — boten har ingen user-id att lagra). Lika scores
  * = riktig oavgjort.
  */
-function getMatchOutcome(m: { winner_id: string | null; player1_id: string; player1_score: number | null; player2_score: number | null }) {
+function getMatchOutcome(m: {
+  winner_id: string | null;
+  player1_id: string;
+  player1_score: number | null;
+  player2_score: number | null;
+}) {
   const s1 = m.player1_score ?? 0;
   const s2 = m.player2_score ?? 0;
   if (s1 === s2) return { isDraw: true as const, p1Won: false };
@@ -90,10 +112,7 @@ function formatMatchString(m: NonNullable<LandingStats["recent"]>[number]): stri
  */
 function CyclingWord({ words, color }: { words: string[]; color: string }) {
   const [idx, setIdx] = useState(0);
-  const spacer = useMemo(
-    () => words.reduce((a, b) => (a.length >= b.length ? a : b), ""),
-    [words],
-  );
+  const spacer = useMemo(() => words.reduce((a, b) => (a.length >= b.length ? a : b), ""), [words]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -103,20 +122,17 @@ function CyclingWord({ words, color }: { words: string[]; color: string }) {
   }, [words.length]);
 
   return (
-    <span
-      className="relative inline-block overflow-hidden align-baseline"
-      style={{ color }}
-    >
-      <span className="invisible" aria-hidden>{spacer}</span>
+    <span className="relative inline-block overflow-hidden align-baseline" style={{ color }}>
+      <span className="invisible" aria-hidden>
+        {spacer}
+      </span>
       {words.map((w, i) => (
         <motion.span
           key={w}
           className="absolute inset-x-0 top-0 whitespace-nowrap text-center"
           initial={false}
           animate={
-            idx === i
-              ? { y: "0%", opacity: 1 }
-              : { y: idx > i ? "-110%" : "110%", opacity: 0 }
+            idx === i ? { y: "0%", opacity: 1 } : { y: idx > i ? "-110%" : "110%", opacity: 0 }
           }
           transition={{ type: "spring", stiffness: 38, damping: 14, mass: 1 }}
         >
@@ -211,12 +227,18 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
       >
         {looped.map((item, i) => {
           const dotColor =
-            item.type === "live" ? "#34d399" :
-            item.type === "match" ? AMBER :
-            item.type === "stat" ? "#ffffff" :
-            "rgba(255,255,255,0.4)";
+            item.type === "live"
+              ? "#34d399"
+              : item.type === "match"
+                ? AMBER
+                : item.type === "stat"
+                  ? "#ffffff"
+                  : "rgba(255,255,255,0.4)";
           return (
-            <div key={i} className="flex shrink-0 items-center gap-2 px-6 font-mono text-[11px] uppercase tracking-wider">
+            <div
+              key={i}
+              className="flex shrink-0 items-center gap-2 px-6 font-mono text-[11px] uppercase tracking-wider"
+            >
               <span
                 className={`h-1.5 w-1.5 rounded-full ${item.type === "live" ? "animate-pulse" : ""}`}
                 style={{ background: dotColor }}
@@ -243,14 +265,28 @@ function Hero({ stats }: { stats: LandingStats | null }) {
   // shadern fyller hela viewporten från topp. Navbar (z-50) och ticker
   // (z-30) flyter över shadern (z-10) som glas.
   return (
-    <section className="relative -mt-[96px] overflow-hidden" style={{ minHeight: "calc(92svh + 96px)" }}>
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full touch-none" style={{ background: "#170d05" }} />
-      <div aria-hidden className="pointer-events-none absolute inset-0" style={{
-        background:
-          "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.12) 45%, rgba(23,13,5,0.7) 88%, rgba(23,13,5,1) 100%)",
-      }} />
+    <section
+      className="relative -mt-[96px] overflow-hidden"
+      style={{ minHeight: "calc(92svh + 96px)" }}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 h-full w-full touch-none"
+        style={{ background: "#170d05" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.12) 45%, rgba(23,13,5,0.7) 88%, rgba(23,13,5,1) 100%)",
+        }}
+      />
 
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-[160px] text-center" style={{ minHeight: "calc(92svh + 96px)" }}>
+      <div
+        className="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-[160px] text-center"
+        style={{ minHeight: "calc(92svh + 96px)" }}
+      >
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -269,8 +305,8 @@ function Hero({ stats }: { stats: LandingStats | null }) {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-7 max-w-xl text-[15px] leading-[1.6] text-white/65 sm:text-[18px]"
         >
-          Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match.
-          Inga övningsprov. Bara duell.
+          Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match. Inga övningsprov.
+          Bara duell.
         </motion.p>
 
         <motion.div
@@ -316,7 +352,11 @@ function Hero({ stats }: { stats: LandingStats | null }) {
           {recentSix.length === 0 ? (
             <div className="py-5 text-center font-mono text-[11px] uppercase tracking-wider text-white/35">
               <p>Inga matcher ännu</p>
-              <Link to="/signup" className="mt-2 inline-block underline-offset-4 hover:text-white hover:underline" style={{ color: AMBER }}>
+              <Link
+                to="/signup"
+                className="mt-2 inline-block underline-offset-4 hover:text-white hover:underline"
+                style={{ color: AMBER }}
+              >
                 Spela första matchen →
               </Link>
             </div>
@@ -336,7 +376,10 @@ function Hero({ stats }: { stats: LandingStats | null }) {
                 const ls = isDraw ? s2 : p1Won ? s2 : s1;
                 const isVerbal = m.match_type === "verbal";
                 return (
-                  <li key={m.id} className="flex items-center justify-between gap-2 font-mono text-[11px]">
+                  <li
+                    key={m.id}
+                    className="flex items-center justify-between gap-2 font-mono text-[11px]"
+                  >
                     <span className="flex min-w-0 items-center gap-2">
                       <span
                         className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold uppercase ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white/85"}`}
@@ -350,7 +393,9 @@ function Hero({ stats }: { stats: LandingStats | null }) {
                       </span>
                     </span>
                     <span className="shrink-0 tabular-nums text-white/75">
-                      {ws}<span className="text-white/30">–</span>{ls}
+                      {ws}
+                      <span className="text-white/30">–</span>
+                      {ls}
                     </span>
                   </li>
                 );
@@ -377,17 +422,21 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
     <section className="relative px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 flex items-end justify-between">
-          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2
+            className="text-[28px] font-bold leading-[1.05] sm:text-[40px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+          >
             Toppspelarna just nu
           </h2>
-          <Link to="/leaderboard" className="hidden text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline sm:block">
+          <Link
+            to="/leaderboard"
+            className="hidden text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline sm:block"
+          >
             Hela topplistan →
           </Link>
         </div>
 
-        {topVerbal.length > 0 && (
-          <VerbalPodium players={topVerbal} />
-        )}
+        {topVerbal.length > 0 && <VerbalPodium players={topVerbal} />}
 
         <div className={`overflow-hidden ${GLASS_CLASS}`} style={GLASS_STYLE}>
           <table className="w-full">
@@ -415,7 +464,10 @@ function Leaderboard({ stats }: { stats: LandingStats | null }) {
 
         {/* Mobil-fallback för länken till hela topplistan */}
         <div className="mt-6 text-center sm:hidden">
-          <Link to="/leaderboard" className="text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline">
+          <Link
+            to="/leaderboard"
+            className="text-[13px] text-white/55 underline-offset-4 hover:text-white hover:underline"
+          >
             Hela topplistan →
           </Link>
         </div>
@@ -459,10 +511,13 @@ function VerbalPodium({ players }: { players: TopPlayer[] }) {
   );
 }
 
-const MEDAL_STYLES: Record<1 | 2 | 3, { icon: string; height: string; label: string; accent: string }> = {
-  1: { icon: "🥇", height: "sm:pt-0", label: "Guld",   accent: "#f2a65a" },
+const MEDAL_STYLES: Record<
+  1 | 2 | 3,
+  { icon: string; height: string; label: string; accent: string }
+> = {
+  1: { icon: "🥇", height: "sm:pt-0", label: "Guld", accent: "#f2a65a" },
   2: { icon: "🥈", height: "sm:pt-6", label: "Silver", accent: "rgba(226,232,240,0.85)" },
-  3: { icon: "🥉", height: "sm:pt-8", label: "Brons",  accent: "rgba(217,119,87,0.9)" },
+  3: { icon: "🥉", height: "sm:pt-8", label: "Brons", accent: "rgba(217,119,87,0.9)" },
 };
 
 function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 3 }) {
@@ -514,16 +569,24 @@ function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 
 function PlayerRow({ player, rank }: { player: TopPlayer; rank: number }) {
   const isTopThree = rank <= 3;
   const medalBg =
-    rank === 1 ? "bg-amber-500/20 text-amber-300" :
-    rank === 2 ? "bg-slate-400/20 text-slate-300" :
-    rank === 3 ? "bg-orange-700/20 text-orange-300" :
-    "bg-white/10 text-white/70";
+    rank === 1
+      ? "bg-amber-500/20 text-amber-300"
+      : rank === 2
+        ? "bg-slate-400/20 text-slate-300"
+        : rank === 3
+          ? "bg-orange-700/20 text-orange-300"
+          : "bg-white/10 text-white/70";
   return (
-    <tr className={`border-b border-white/5 transition hover:bg-white/[0.03] ${isTopThree ? "bg-white/[0.02]" : ""}`} style={isTopThree ? { background: `${AMBER}0a` } : undefined}>
+    <tr
+      className={`border-b border-white/5 transition hover:bg-white/[0.03] ${isTopThree ? "bg-white/[0.02]" : ""}`}
+      style={isTopThree ? { background: `${AMBER}0a` } : undefined}
+    >
       <td className="px-4 py-3 font-mono text-[13px] text-white/55">{rank}</td>
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
-          <span className={`flex h-8 w-8 items-center justify-center rounded-full text-[11px] font-bold ${medalBg}`}>
+          <span
+            className={`flex h-8 w-8 items-center justify-center rounded-full text-[11px] font-bold ${medalBg}`}
+          >
             {player.username[0]?.toUpperCase()}
           </span>
           <span className="text-[14px] font-medium text-white">{player.username}</span>
@@ -548,7 +611,10 @@ function LiveMatch() {
     <section className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <h2 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2
+            className="text-[32px] font-bold leading-[1.05] sm:text-[44px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+          >
             Så ser en match ut
           </h2>
         </div>
@@ -556,7 +622,12 @@ function LiveMatch() {
         <div className={`overflow-hidden ${GLASS_CLASS}`} style={GLASS_STYLE}>
           <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3">
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
-              <span className="rounded px-2 py-0.5 font-bold text-[#1a0d04]" style={{ background: AMBER }}>ORD</span>
+              <span
+                className="rounded px-2 py-0.5 font-bold text-[#1a0d04]"
+                style={{ background: AMBER }}
+              >
+                ORD
+              </span>
               <span className="text-white/55">Verbal · Fråga 4/8</span>
             </div>
             {/* Frozen timer + animated dot — design behålls, ingen 1s-rerender */}
@@ -572,8 +643,13 @@ function LiveMatch() {
           </div>
 
           <div className="px-6 py-10 sm:px-12 sm:py-14">
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">Synonymer</div>
-            <p className="mt-4 text-[24px] font-bold leading-snug text-white sm:text-[30px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.015em" }}>
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+              Synonymer
+            </div>
+            <p
+              className="mt-4 text-[24px] font-bold leading-snug text-white sm:text-[30px]"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.015em" }}
+            >
               Vad betyder ordet <span style={{ color: AMBER }}>prekär</span>?
             </p>
             <div className="mt-7 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -591,7 +667,9 @@ function LiveMatch() {
                       : "border-white/10 bg-white/[0.02] text-white/80"
                   }`}
                 >
-                  <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded text-[10px] font-bold ${opt.state === "correct" ? "bg-emerald-500 text-white" : "bg-white/10 text-white/60"}`}>
+                  <span
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded text-[10px] font-bold ${opt.state === "correct" ? "bg-emerald-500 text-white" : "bg-white/10 text-white/60"}`}
+                  >
                     {opt.label}
                   </span>
                   <span className="font-medium">{opt.text}</span>
@@ -605,11 +683,24 @@ function LiveMatch() {
   );
 }
 
-function PlayerStrip({ name, elo, score, you }: { name: string; elo: number; score: number; you?: boolean }) {
+function PlayerStrip({
+  name,
+  elo,
+  score,
+  you,
+}: {
+  name: string;
+  elo: number;
+  score: number;
+  you?: boolean;
+}) {
   return (
     <div className="flex items-center justify-between gap-3 px-5 py-4">
       <div className="flex items-center gap-3">
-        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-[14px] font-bold ${you ? "text-[#1a0d04]" : "bg-white/10 text-white/80"}`} style={you ? { background: AMBER } : undefined}>
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-full text-[14px] font-bold ${you ? "text-[#1a0d04]" : "bg-white/10 text-white/80"}`}
+          style={you ? { background: AMBER } : undefined}
+        >
           {name[0]}
         </div>
         <div>
@@ -634,7 +725,10 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
     <section className="relative px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-3xl">
         <div className="mb-10 text-center">
-          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2
+            className="text-[28px] font-bold leading-[1.05] sm:text-[40px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+          >
             Senaste matcherna
           </h2>
         </div>
@@ -654,12 +748,20 @@ function RecentMatches({ stats }: { stats: LandingStats | null }) {
   );
 }
 
-function MatchRow({ match, delay }: { match: NonNullable<LandingStats["recent"]>[number]; delay: number }) {
+function MatchRow({
+  match,
+  delay,
+}: {
+  match: NonNullable<LandingStats["recent"]>[number];
+  delay: number;
+}) {
   const ref = useRef<HTMLLIElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
 
   const p1 = match.p1_name || "Gäst";
-  const p2 = match.is_bot_match ? getBotName(match.bot_elo ?? 1000, match.id) : match.p2_name || "Gäst";
+  const p2 = match.is_bot_match
+    ? getBotName(match.bot_elo ?? 1000, match.id)
+    : match.p2_name || "Gäst";
   const s1 = match.player1_score ?? 0;
   const s2 = match.player2_score ?? 0;
   const { isDraw, p1Won } = getMatchOutcome(match);
@@ -678,14 +780,25 @@ function MatchRow({ match, delay }: { match: NonNullable<LandingStats["recent"]>
       className="flex items-center justify-between gap-4 px-4 py-3.5 transition hover:bg-white/[0.02]"
     >
       <div className="flex min-w-0 flex-1 items-center gap-3">
-        <span className={`flex h-7 items-center rounded px-2 font-mono text-[10px] font-bold uppercase tracking-wider ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white"}`} style={isVerbal ? { background: AMBER } : undefined}>
+        <span
+          className={`flex h-7 items-center rounded px-2 font-mono text-[10px] font-bold uppercase tracking-wider ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white"}`}
+          style={isVerbal ? { background: AMBER } : undefined}
+        >
           {isVerbal ? "Verbal" : "Matte"}
         </span>
         <p className="truncate text-[14px] text-white/85">
           {isDraw ? (
-            <><span className="font-semibold">{p1}</span> <span className="text-white/50">och</span> <span className="font-semibold">{p2}</span> <span className="text-white/50">– oavgjort</span></>
+            <>
+              <span className="font-semibold">{p1}</span> <span className="text-white/50">och</span>{" "}
+              <span className="font-semibold">{p2}</span>{" "}
+              <span className="text-white/50">– oavgjort</span>
+            </>
           ) : (
-            <><span className="font-semibold">{winner}</span> <span className="text-white/50">slog</span> <span className="font-semibold">{loser}</span></>
+            <>
+              <span className="font-semibold">{winner}</span>{" "}
+              <span className="text-white/50">slog</span>{" "}
+              <span className="font-semibold">{loser}</span>
+            </>
           )}
         </p>
       </div>
@@ -707,7 +820,10 @@ function TierBar() {
     <section className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
-          <h2 className="text-[28px] font-bold leading-[1.05] sm:text-[40px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}>
+          <h2
+            className="text-[28px] font-bold leading-[1.05] sm:text-[40px]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
+          >
             Brons till Diamant
           </h2>
         </div>
@@ -717,21 +833,35 @@ function TierBar() {
             <div
               key={t.tier}
               className="rounded-2xl border p-5 text-center backdrop-blur-md"
-              style={t.tier === "diamant" ? {
-                borderColor: `${AMBER}66`,
-                background: `linear-gradient(180deg, ${AMBER}22 0%, rgba(255,255,255,0.03) 100%)`,
-                boxShadow: `0 0 40px -10px ${AMBER}55`,
-              } : {
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.04)",
-              }}
+              style={
+                t.tier === "diamant"
+                  ? {
+                      borderColor: `${AMBER}66`,
+                      background: `linear-gradient(180deg, ${AMBER}22 0%, rgba(255,255,255,0.03) 100%)`,
+                      boxShadow: `0 0 40px -10px ${AMBER}55`,
+                    }
+                  : {
+                      borderColor: "rgba(255,255,255,0.08)",
+                      background: "rgba(255,255,255,0.04)",
+                    }
+              }
             >
-              <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full text-[18px]" style={{ background: t.bgColor, color: t.textColor, border: `2px solid ${t.borderColor}` }}>
+              <div
+                className="mx-auto flex h-11 w-11 items-center justify-center rounded-full text-[18px]"
+                style={{
+                  background: t.bgColor,
+                  color: t.textColor,
+                  border: `2px solid ${t.borderColor}`,
+                }}
+              >
                 {t.icon}
               </div>
-              <div className="mt-3 text-[13px] font-bold uppercase tracking-wider text-white">{t.tier}</div>
+              <div className="mt-3 text-[13px] font-bold uppercase tracking-wider text-white">
+                {t.tier}
+              </div>
               <div className="mt-1 font-mono text-[10px] tabular-nums text-white/45">
-                {t.minElo}{t.tier === "diamant" ? "+" : `–${t.maxElo}`}
+                {t.minElo}
+                {t.tier === "diamant" ? "+" : `–${t.maxElo}`}
               </div>
             </div>
           ))}
@@ -845,9 +975,7 @@ function TestimonialStackCard({
         <div className="min-w-0">
           <p className="text-[14px] font-semibold text-white">{t.name}</p>
           {t.founder && (
-            <p className="font-mono text-[10px] uppercase tracking-wider text-white/45">
-              Grundare
-            </p>
+            <p className="font-mono text-[10px] uppercase tracking-wider text-white/45">Grundare</p>
           )}
         </div>
         <span
@@ -869,8 +997,12 @@ function Closer() {
   return (
     <section className="px-6 py-24 text-center sm:py-32">
       <div className="mx-auto max-w-2xl">
-        <h2 className="text-[36px] font-black leading-[1.02] text-white sm:text-[56px] md:text-[64px]" style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}>
-          Hitta en match.<br />
+        <h2
+          className="text-[36px] font-black leading-[1.02] text-white sm:text-[56px] md:text-[64px]"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+        >
+          Hitta en match.
+          <br />
           <span style={{ color: AMBER }}>Nu.</span>
         </h2>
         <p className="mx-auto mt-5 max-w-md text-[15px] text-white/55 sm:text-[16px]">

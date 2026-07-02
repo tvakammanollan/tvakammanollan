@@ -96,8 +96,8 @@ export function PassagePane({
   category,
   mobileAccordion = false,
 }: PassagePaneProps) {
-  const [allHighlights, setAllHighlights] = useState<SerializedHighlight[]>(
-    () => loadHighlights(matchId),
+  const [allHighlights, setAllHighlights] = useState<SerializedHighlight[]>(() =>
+    loadHighlights(matchId),
   );
   const [open, setOpen] = useState(true); // mobile accordion default open
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -129,10 +129,7 @@ export function PassagePane({
     // For simplicity we use the first match index — occurrence increments only
     // if user re-selects same string later.
     const existingSameText = passageHighlights.filter((h) => h.text === text).length;
-    setAllHighlights((prev) => [
-      ...prev,
-      { passage_id: pid, text, occurrence: existingSameText },
-    ]);
+    setAllHighlights((prev) => [...prev, { passage_id: pid, text, occurrence: existingSameText }]);
     sel.removeAllRanges();
   };
 
@@ -140,8 +137,7 @@ export function PassagePane({
     setAllHighlights((prev) => prev.filter((h) => h.passage_id !== pid));
   };
 
-  const headerLabel =
-    category === "ELF" ? "Text passage" : "Textpassage";
+  const headerLabel = category === "ELF" ? "Text passage" : "Textpassage";
 
   const passageNodes = renderHighlighted(passageText, passageHighlights);
 
@@ -209,13 +205,9 @@ export function PassagePane({
       style={{ maxHeight: "calc(100vh - 140px)" }}
     >
       <div className="mb-3 flex items-center justify-between gap-2">
-        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">
-          {headerLabel}
-        </h3>
+        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{headerLabel}</h3>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground">
-            🖍 Markera text genom att välja
-          </span>
+          <span className="text-[11px] text-muted-foreground">🖍 Markera text genom att välja</span>
           {passageHighlights.length > 0 && (
             <button
               type="button"

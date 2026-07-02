@@ -74,7 +74,8 @@ export function track(event: TelemetryEvent) {
 
 export function trackError(error: unknown, context: Record<string, unknown> = {}) {
   const message = error instanceof Error ? error.message : String(error);
-  const stack = error instanceof Error ? error.stack?.split("\n").slice(0, 5).join("\n") : undefined;
+  const stack =
+    error instanceof Error ? error.stack?.split("\n").slice(0, 5).join("\n") : undefined;
   track({
     type: "error",
     message,

@@ -42,10 +42,16 @@ export function ResumeMatchBanner() {
         }
         setSaved(data);
       } catch {
-        try { sessionStorage.removeItem("active_match"); } catch { /* ignore */ }
+        try {
+          sessionStorage.removeItem("active_match");
+        } catch {
+          /* ignore */
+        }
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Hide while user is on the match itself
@@ -69,21 +75,12 @@ export function ResumeMatchBanner() {
         match – vill du fortsätta?
       </span>
       <div className="flex shrink-0 items-center gap-2">
-        <Button
-          asChild
-          size="sm"
-          className="bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
-        >
+        <Button asChild size="sm" className="bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]">
           <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
             Fortsätt matchen
           </Link>
         </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={cancel}
-          className="text-muted-foreground"
-        >
+        <Button size="sm" variant="ghost" onClick={cancel} className="text-muted-foreground">
           Avbryt matchen
         </Button>
       </div>

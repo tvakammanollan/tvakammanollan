@@ -11,7 +11,10 @@ export function StreakWidget({ currentStreak, longestStreak, onStartClick, class
   if (currentStreak < 1) {
     return (
       <div className={`flex flex-col gap-0.5 ${className ?? ""}`}>
-        <span className="text-sm text-muted-foreground" style={{ fontFamily: "DM Sans, sans-serif" }}>
+        <span
+          className="text-sm text-muted-foreground"
+          style={{ fontFamily: "DM Sans, sans-serif" }}
+        >
           Ingen aktiv streak
         </span>
         {onStartClick ? (

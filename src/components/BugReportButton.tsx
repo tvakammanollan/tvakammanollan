@@ -16,11 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { rateLimit, limits } from "@/lib/rate-limit";
 
-export function BugReportButton({
-  variant = "icon",
-}: {
-  variant?: "icon" | "text";
-}) {
+export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text" }) {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
@@ -38,9 +34,7 @@ export function BugReportButton({
     // Client-side throttle (server enforces too via submit_bug_report RPC).
     const r = rateLimit(`bug:${user.id}`, limits.bugReport);
     if (!r.ok) {
-      toast.error(
-        `Vänta ${Math.ceil(r.resetIn / 60000)} min innan nästa rapport.`,
-      );
+      toast.error(`Vänta ${Math.ceil(r.resetIn / 60000)} min innan nästa rapport.`);
       return;
     }
     setSending(true);
@@ -48,8 +42,7 @@ export function BugReportButton({
     // insert into bug_reports if the migration isn't applied yet.
     const meta = {
       page: typeof window !== "undefined" ? window.location.pathname : null,
-      user_agent:
-        typeof navigator !== "undefined" ? navigator.userAgent : null,
+      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
     };
     const r1 = await supabase.rpc("submit_bug_report", {
       _message: msg.trim(),
@@ -100,8 +93,8 @@ export function BugReportButton({
         <DialogHeader>
           <DialogTitle>Rapportera bugg</DialogTitle>
           <DialogDescription>
-            HP Kampen är ett projekt under uppbyggnad så vissa buggar finns
-            tyvärr fortfarande. Beskriv vad som gick fel så fixar vi det.
+            HP Kampen är ett projekt under uppbyggnad så vissa buggar finns tyvärr fortfarande.
+            Beskriv vad som gick fel så fixar vi det.
           </DialogDescription>
         </DialogHeader>
         <Textarea

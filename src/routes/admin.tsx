@@ -29,13 +29,9 @@ import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
-    meta: [
-      { title: "Admin · HP Kampen" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: "Admin · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
-
 
 const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"];
 const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
@@ -158,20 +154,36 @@ function ManageTab() {
     <div>
       <div className="mb-4 grid gap-2 sm:grid-cols-4">
         <Select value={filterCat} onValueChange={setFilterCat}>
-          <SelectTrigger><SelectValue placeholder="Kategori" /></SelectTrigger>
+          <SelectTrigger>
+            <SelectValue placeholder="Kategori" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Alla kategorier</SelectItem>
-            {CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            {CATEGORIES.map((c) => (
+              <SelectItem key={c} value={c}>
+                {c}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <Select value={filterDiff} onValueChange={setFilterDiff}>
-          <SelectTrigger><SelectValue placeholder="Svårighet" /></SelectTrigger>
+          <SelectTrigger>
+            <SelectValue placeholder="Svårighet" />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Alla svårigheter</SelectItem>
-            {[1, 2, 3, 4, 5].map((d) => <SelectItem key={d} value={String(d)}>{d}</SelectItem>)}
+            {[1, 2, 3, 4, 5].map((d) => (
+              <SelectItem key={d} value={String(d)}>
+                {d}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-        <Input placeholder="Sök i frågetext…" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Input
+          placeholder="Sök i frågetext…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <label className="flex items-center gap-2 text-sm">
           <Checkbox checked={missingOnly} onCheckedChange={(v) => setMissingOnly(!!v)} />
           Saknar förklaring
@@ -191,20 +203,37 @@ function ManageTab() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={5} className="px-3 py-6 text-center text-muted-foreground">Laddar…</td></tr>
-            ) : rows.length === 0 ? (
-              <tr><td colSpan={5} className="px-3 py-6 text-center text-muted-foreground">Inga frågor</td></tr>
-            ) : rows.map((r) => (
-              <tr key={r.id} className="border-t border-border">
-                <td className="px-3 py-2 font-medium">{r.category}</td>
-                <td className="px-3 py-2 tabular-nums">{r.difficulty ?? "—"}</td>
-                <td className="px-3 py-2">{(r.question_text ?? "").slice(0, 60)}{(r.question_text?.length ?? 0) > 60 ? "…" : ""}</td>
-                <td className="px-3 py-2">{r.explanation?.trim() ? "✓" : <span className="text-amber-600">✗</span>}</td>
-                <td className="px-3 py-2 text-right">
-                  <Button size="sm" variant="outline" onClick={() => setEditing(r)}>Redigera</Button>
+              <tr>
+                <td colSpan={5} className="px-3 py-6 text-center text-muted-foreground">
+                  Laddar…
                 </td>
               </tr>
-            ))}
+            ) : rows.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-3 py-6 text-center text-muted-foreground">
+                  Inga frågor
+                </td>
+              </tr>
+            ) : (
+              rows.map((r) => (
+                <tr key={r.id} className="border-t border-border">
+                  <td className="px-3 py-2 font-medium">{r.category}</td>
+                  <td className="px-3 py-2 tabular-nums">{r.difficulty ?? "—"}</td>
+                  <td className="px-3 py-2">
+                    {(r.question_text ?? "").slice(0, 60)}
+                    {(r.question_text?.length ?? 0) > 60 ? "…" : ""}
+                  </td>
+                  <td className="px-3 py-2">
+                    {r.explanation?.trim() ? "✓" : <span className="text-amber-600">✗</span>}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    <Button size="sm" variant="outline" onClick={() => setEditing(r)}>
+                      Redigera
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -213,7 +242,10 @@ function ManageTab() {
         <QuestionEditor
           question={editing}
           onClose={() => setEditing(null)}
-          onSaved={() => { setEditing(null); void load(); }}
+          onSaved={() => {
+            setEditing(null);
+            void load();
+          }}
         />
       )}
     </div>
@@ -228,7 +260,12 @@ function NewTab() {
     subject_type: "verbal",
     question_text: "",
     passage_text: null,
-    options: [{ id: "A", text: "" }, { id: "B", text: "" }, { id: "C", text: "" }, { id: "D", text: "" }],
+    options: [
+      { id: "A", text: "" },
+      { id: "B", text: "" },
+      { id: "C", text: "" },
+      { id: "D", text: "" },
+    ],
     correct_answer: "A",
     difficulty: 3,
     explanation: "",
@@ -241,8 +278,13 @@ function NewTab() {
         key={key}
         question={empty}
         isNew
-        onSaved={() => { setKey((k) => k + 1); toast.success("Fråga sparad"); }}
-        onClose={() => { /* embedded */ }}
+        onSaved={() => {
+          setKey((k) => k + 1);
+          toast.success("Fråga sparad");
+        }}
+        onClose={() => {
+          /* embedded */
+        }}
         embedded
       />
     </div>
@@ -292,7 +334,10 @@ function StatsTab() {
           {rows.map((r) => {
             const missing = r.total - r.with_e;
             return (
-              <tr key={r.category} className={`border-t border-border ${missing > 0 ? "bg-[#f2a65a]/10" : ""}`}>
+              <tr
+                key={r.category}
+                className={`border-t border-border ${missing > 0 ? "bg-[#f2a65a]/10" : ""}`}
+              >
                 <td className="px-3 py-2 font-medium">{r.category}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{r.total}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{r.with_e}</td>
@@ -303,7 +348,9 @@ function StatsTab() {
           <tr className="border-t-2 border-border bg-muted/40 font-semibold">
             <td className="px-3 py-2">Totalt</td>
             <td className="px-3 py-2 text-right tabular-nums">{total}</td>
-            <td className="px-3 py-2 text-right tabular-nums">{withE} ({pct}%)</td>
+            <td className="px-3 py-2 text-right tabular-nums">
+              {withE} ({pct}%)
+            </td>
             <td className="px-3 py-2 text-right tabular-nums">{total - withE}</td>
           </tr>
         </tbody>
@@ -320,24 +367,33 @@ function ReportsTab() {
   const load = useCallback(async () => {
     const { data } = await supabase
       .from("question_reports")
-      .select("id, question_id, reason, comment, status, created_at, questions(category, question_text)")
+      .select(
+        "id, question_id, reason, comment, status, created_at, questions(category, question_text)",
+      )
       .eq("status", "pending")
       .order("created_at", { ascending: false });
     setRows((data ?? []) as ReportRow[]);
   }, []);
 
-  useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("question_reports").update({ status }).eq("id", id);
     if (error) toast.error("Kunde inte uppdatera");
-    else { toast.success("Uppdaterad"); void load(); }
+    else {
+      toast.success("Uppdaterad");
+      void load();
+    }
   };
 
   const openQuestion = async (qId: string) => {
     const { data } = await supabase
       .from("questions")
-      .select("id, category, subject_type, question_text, passage_text, options, correct_answer, difficulty, explanation, tags")
+      .select(
+        "id, category, subject_type, question_text, passage_text, options, correct_answer, difficulty, explanation, tags",
+      )
       .eq("id", qId)
       .maybeSingle();
     if (data) setEditing(data as QuestionRow);
@@ -359,23 +415,49 @@ function ReportsTab() {
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={6} className="px-3 py-6 text-center text-muted-foreground">Inga rapporter</td></tr>
-            ) : rows.map((r) => (
-              <tr key={r.id} className="border-t border-border">
-                <td className="px-3 py-2">{(r.questions?.question_text ?? "").slice(0, 50)}…</td>
-                <td className="px-3 py-2">{r.questions?.category ?? "—"}</td>
-                <td className="px-3 py-2">{r.reason}</td>
-                <td className="px-3 py-2 text-muted-foreground">{r.comment ?? "—"}</td>
-                <td className="px-3 py-2 text-muted-foreground">{new Date(r.created_at).toLocaleDateString("sv-SE")}</td>
-                <td className="px-3 py-2 text-right">
-                  <div className="flex justify-end gap-1">
-                    <Button size="sm" variant="outline" onClick={() => openQuestion(r.question_id)}>Granska</Button>
-                    <Button size="sm" variant="ghost" onClick={() => updateStatus(r.id, "resolved")}>Löst</Button>
-                    <Button size="sm" variant="ghost" onClick={() => updateStatus(r.id, "dismissed")}>Avfärda</Button>
-                  </div>
+              <tr>
+                <td colSpan={6} className="px-3 py-6 text-center text-muted-foreground">
+                  Inga rapporter
                 </td>
               </tr>
-            ))}
+            ) : (
+              rows.map((r) => (
+                <tr key={r.id} className="border-t border-border">
+                  <td className="px-3 py-2">{(r.questions?.question_text ?? "").slice(0, 50)}…</td>
+                  <td className="px-3 py-2">{r.questions?.category ?? "—"}</td>
+                  <td className="px-3 py-2">{r.reason}</td>
+                  <td className="px-3 py-2 text-muted-foreground">{r.comment ?? "—"}</td>
+                  <td className="px-3 py-2 text-muted-foreground">
+                    {new Date(r.created_at).toLocaleDateString("sv-SE")}
+                  </td>
+                  <td className="px-3 py-2 text-right">
+                    <div className="flex justify-end gap-1">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openQuestion(r.question_id)}
+                      >
+                        Granska
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => updateStatus(r.id, "resolved")}
+                      >
+                        Löst
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => updateStatus(r.id, "dismissed")}
+                      >
+                        Avfärda
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -422,7 +504,10 @@ function QuestionEditor({
   };
 
   const save = async () => {
-    if (!form.question_text.trim()) { toast.error("Frågetext krävs"); return; }
+    if (!form.question_text.trim()) {
+      toast.error("Frågetext krävs");
+      return;
+    }
     setSaving(true);
     const payload = {
       category: form.category,
@@ -454,22 +539,38 @@ function QuestionEditor({
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
             <Label>Kategori</Label>
-            <Select value={form.category} onValueChange={(v) => setForm({
-              ...form,
-              category: v,
-              subject_type: VERBAL_CATS.includes(v) ? "verbal" : "math",
-              options: normalizeOptions(form.options, v),
-            })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select
+              value={form.category}
+              onValueChange={(v) =>
+                setForm({
+                  ...form,
+                  category: v,
+                  subject_type: VERBAL_CATS.includes(v) ? "verbal" : "math",
+                  options: normalizeOptions(form.options, v),
+                })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
-                {CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                {CATEGORIES.map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
           <div>
             <Label>Typ</Label>
-            <Select value={form.subject_type} onValueChange={(v) => setForm({ ...form, subject_type: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select
+              value={form.subject_type}
+              onValueChange={(v) => setForm({ ...form, subject_type: v })}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="verbal">Verbal</SelectItem>
                 <SelectItem value="math">Math</SelectItem>
@@ -480,12 +581,20 @@ function QuestionEditor({
       )}
       <div>
         <Label>Frågetext</Label>
-        <Textarea rows={3} value={form.question_text} onChange={(e) => setForm({ ...form, question_text: e.target.value })} />
+        <Textarea
+          rows={3}
+          value={form.question_text}
+          onChange={(e) => setForm({ ...form, question_text: e.target.value })}
+        />
       </div>
       {showPassage && (
         <div>
           <Label>Passage</Label>
-          <Textarea rows={5} value={form.passage_text ?? ""} onChange={(e) => setForm({ ...form, passage_text: e.target.value })} />
+          <Textarea
+            rows={5}
+            value={form.passage_text ?? ""}
+            onChange={(e) => setForm({ ...form, passage_text: e.target.value })}
+          />
         </div>
       )}
       <div className="grid gap-2">
@@ -507,7 +616,10 @@ function QuestionEditor({
         <div>
           <Label>Svårighet ({form.difficulty ?? 3})</Label>
           <input
-            type="range" min={1} max={5} value={form.difficulty ?? 3}
+            type="range"
+            min={1}
+            max={5}
+            value={form.difficulty ?? 3}
             onChange={(e) => setForm({ ...form, difficulty: Number(e.target.value) })}
             className="w-full"
           />
@@ -516,7 +628,15 @@ function QuestionEditor({
           <Label>Taggar (komma-separerade)</Label>
           <Input
             value={(form.tags ?? []).join(", ")}
-            onChange={(e) => setForm({ ...form, tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean) })}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                tags: e.target.value
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean),
+              })
+            }
             placeholder="t.ex. geometri, area"
           />
         </div>
@@ -531,8 +651,14 @@ function QuestionEditor({
         />
       </div>
       <div className="flex justify-end gap-2 pt-2">
-        {!embedded && <Button variant="ghost" onClick={onClose} disabled={saving}>Avbryt</Button>}
-        <Button onClick={save} disabled={saving}>{saving ? "Sparar…" : "Spara"}</Button>
+        {!embedded && (
+          <Button variant="ghost" onClick={onClose} disabled={saving}>
+            Avbryt
+          </Button>
+        )}
+        <Button onClick={save} disabled={saving}>
+          {saving ? "Sparar…" : "Spara"}
+        </Button>
       </div>
     </div>
   );
@@ -540,7 +666,12 @@ function QuestionEditor({
   if (embedded) return body;
 
   return (
-    <Dialog open onOpenChange={(o) => { if (!o) onClose(); }}>
+    <Dialog
+      open
+      onOpenChange={(o) => {
+        if (!o) onClose();
+      }}
+    >
       <DialogContent className="max-w-[640px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{isNew ? "Ny fråga" : "Redigera fråga"}</DialogTitle>
@@ -609,16 +740,13 @@ function OrdAuditTab() {
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
           Kör de 134 manuellt granskade fixarna från{" "}
-          <code className="rounded bg-muted px-1 py-0.5 text-xs">.ord-audit/manual-fixes.json</code>.
-          Idempotent: en redan rättad rad skrivs aldrig över.
+          <code className="rounded bg-muted px-1 py-0.5 text-xs">.ord-audit/manual-fixes.json</code>
+          . Idempotent: en redan rättad rad skrivs aldrig över.
         </p>
 
         <div className="space-y-3 mb-5">
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox
-              checked={dryRun}
-              onCheckedChange={(c) => setDryRun(c === true)}
-            />
+            <Checkbox checked={dryRun} onCheckedChange={(c) => setDryRun(c === true)} />
             <span>
               <strong>Dry run</strong>: kör ingenting, visa bara vad som skulle hända
             </span>
@@ -631,10 +759,7 @@ function OrdAuditTab() {
             <span>Inkludera medium-confidence fixar (1 st: FÖRSITTA)</span>
           </label>
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox
-              checked={includeLow}
-              onCheckedChange={(c) => setIncludeLow(c === true)}
-            />
+            <Checkbox checked={includeLow} onCheckedChange={(c) => setIncludeLow(c === true)} />
             <span>Inkludera low-confidence fixar (1 st: KURANT, rekommenderas ej)</span>
           </label>
         </div>
@@ -690,9 +815,7 @@ function OrdAuditTab() {
                       <td className={`px-3 py-1.5 font-semibold ${statusColor(r.status)}`}>
                         {r.status}
                       </td>
-                      <td className="px-3 py-1.5 text-xs text-muted-foreground">
-                        {r.note ?? ""}
-                      </td>
+                      <td className="px-3 py-1.5 text-xs text-muted-foreground">{r.note ?? ""}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -724,9 +847,7 @@ function SummaryStat({
           : "text-foreground";
   return (
     <div className="rounded-xl border border-border bg-card p-3 text-center">
-      <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
+      <div className="text-[11px] uppercase tracking-wide text-muted-foreground">{label}</div>
       <div
         className={`mt-1 text-2xl font-bold tabular-nums ${color}`}
         style={{ fontFamily: "var(--font-display)" }}

@@ -52,9 +52,7 @@ export function pageMeta(input: PageMetaInput) {
   ];
   if (input.ogImage) {
     // Normalisera till absolut URL eftersom OG kräver det
-    const imageUrl = input.ogImage.startsWith("http")
-      ? input.ogImage
-      : ORIGIN + input.ogImage;
+    const imageUrl = input.ogImage.startsWith("http") ? input.ogImage : ORIGIN + input.ogImage;
     meta.push({ property: "og:image", content: imageUrl });
     meta.push({ name: "twitter:image", content: imageUrl });
     if (input.ogImageAlt) {
@@ -109,4 +107,3 @@ export function jsonLdScript(data: Record<string, unknown>) {
     children: JSON.stringify(data),
   };
 }
-

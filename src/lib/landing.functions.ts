@@ -44,7 +44,7 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
 
     // Wrap each query so a single failure (RLS, network, missing col) doesn't
     // bring down the whole landing page.
-    const safe = <T,>(p: PromiseLike<T>, fallback: unknown): Promise<T> =>
+    const safe = <T>(p: PromiseLike<T>, fallback: unknown): Promise<T> =>
       Promise.resolve(p).then(
         (v) => v,
         () => fallback as T,
@@ -61,91 +61,88 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       topVerbalList,
       topMathList,
     ] = await Promise.all([
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("*", { count: "exact", head: true })
-            .eq("status", "finished"),
-          { count: 0 } as { count: number | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("*", { count: "exact", head: true }),
-          { count: 0 } as { count: number | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("player1_id,player2_id", { head: false })
-            .gte("created_at", fifteenMinAgo)
-            .eq("status", "finished"),
-          { data: [] } as {
-            data: Array<{ player1_id: string | null; player2_id: string | null }>;
-          },
-        ),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("*", { count: "exact", head: true })
-            .gte("created_at", oneMinAgo)
-            .eq("status", "finished"),
-          { count: 0 } as { count: number | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select(
-              "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
-            )
-            .eq("status", "finished")
-            .order("created_at", { ascending: false })
-            .limit(10),
-          { data: [] } as { data: never[] },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("elo_verbal")
-            .gte("games_played", 1)
-            .order("elo_verbal", { ascending: false })
-            .limit(1)
-            .maybeSingle(),
-          { data: null } as { data: { elo_verbal: number | null } | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("elo_math")
-            .gte("games_played", 1)
-            .order("elo_math", { ascending: false })
-            .limit(1)
-            .maybeSingle(),
-          { data: null } as { data: { elo_math: number | null } | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("username, elo_verbal")
-            .gte("games_played", 1)
-            .order("elo_verbal", { ascending: false })
-            .limit(5),
-          { data: [] } as {
-            data: Array<{ username: string | null; elo_verbal: number | null }>;
-          },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("username, elo_math")
-            .gte("games_played", 1)
-            .order("elo_math", { ascending: false })
-            .limit(5),
-          { data: [] } as {
-            data: Array<{ username: string | null; elo_math: number | null }>;
-          },
-        ),
-      ]);
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "finished"),
+        { count: 0 } as { count: number | null },
+      ),
+      safe(supabaseAdmin.from("users").select("*", { count: "exact", head: true }), {
+        count: 0,
+      } as { count: number | null }),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("player1_id,player2_id", { head: false })
+          .gte("created_at", fifteenMinAgo)
+          .eq("status", "finished"),
+        { data: [] } as {
+          data: Array<{ player1_id: string | null; player2_id: string | null }>;
+        },
+      ),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("*", { count: "exact", head: true })
+          .gte("created_at", oneMinAgo)
+          .eq("status", "finished"),
+        { count: 0 } as { count: number | null },
+      ),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select(
+            "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
+          )
+          .eq("status", "finished")
+          .order("created_at", { ascending: false })
+          .limit(10),
+        { data: [] } as { data: never[] },
+      ),
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("elo_verbal")
+          .gte("games_played", 1)
+          .order("elo_verbal", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+        { data: null } as { data: { elo_verbal: number | null } | null },
+      ),
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("elo_math")
+          .gte("games_played", 1)
+          .order("elo_math", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+        { data: null } as { data: { elo_math: number | null } | null },
+      ),
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("username, elo_verbal")
+          .gte("games_played", 1)
+          .order("elo_verbal", { ascending: false })
+          .limit(5),
+        { data: [] } as {
+          data: Array<{ username: string | null; elo_verbal: number | null }>;
+        },
+      ),
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("username, elo_math")
+          .gte("games_played", 1)
+          .order("elo_math", { ascending: false })
+          .limit(5),
+        { data: [] } as {
+          data: Array<{ username: string | null; elo_math: number | null }>;
+        },
+      ),
+    ]);
 
     const activeIds = new Set<string>();
     for (const r of (activeAgg.data ?? []) as Array<{
@@ -167,37 +164,33 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       player2_id: string | null;
     }>;
     const ids = Array.from(
-      new Set(
-        matches.flatMap((m) =>
-          [m.player1_id, m.player2_id].filter((x): x is string => !!x),
-        ),
-      ),
+      new Set(matches.flatMap((m) => [m.player1_id, m.player2_id].filter((x): x is string => !!x))),
     );
     const nameMap = new Map<string, string>();
     if (ids.length) {
-      const { data: us } = await supabaseAdmin
-        .from("users")
-        .select("id, username")
-        .in("id", ids);
-      for (const u of us ?? [])
-        nameMap.set(u.id as string, u.username as string);
+      const { data: us } = await supabaseAdmin.from("users").select("id, username").in("id", ids);
+      for (const u of us ?? []) nameMap.set(u.id as string, u.username as string);
     }
 
     const topPlayers: TopPlayer[] = [
-      ...((topVerbalList.data ?? []) as Array<{
-        username: string | null;
-        elo_verbal: number | null;
-      }>)
+      ...(
+        (topVerbalList.data ?? []) as Array<{
+          username: string | null;
+          elo_verbal: number | null;
+        }>
+      )
         .filter((u) => u.username && (u.elo_verbal ?? 0) > 0)
         .map((u) => ({
           username: u.username as string,
           elo: u.elo_verbal as number,
           type: "verbal" as const,
         })),
-      ...((topMathList.data ?? []) as Array<{
-        username: string | null;
-        elo_math: number | null;
-      }>)
+      ...(
+        (topMathList.data ?? []) as Array<{
+          username: string | null;
+          elo_math: number | null;
+        }>
+      )
         .filter((u) => u.username && (u.elo_math ?? 0) > 0)
         .map((u) => ({
           username: u.username as string,
@@ -218,7 +211,7 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       recent: matches.map((m) => ({
         ...m,
         p1_name: nameMap.get(m.player1_id) ?? null,
-        p2_name: m.player2_id ? nameMap.get(m.player2_id) ?? null : null,
+        p2_name: m.player2_id ? (nameMap.get(m.player2_id) ?? null) : null,
       })),
       topPlayers,
     };

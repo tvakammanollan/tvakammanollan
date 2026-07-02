@@ -176,7 +176,12 @@ export function SplitText({
   return (
     <MotionTag ref={ref} className={className}>
       {words.map((w, i) => {
-        if (/^\s+$/.test(w)) return <span key={i} style={{ whiteSpace: "pre" }}>{w}</span>;
+        if (/^\s+$/.test(w))
+          return (
+            <span key={i} style={{ whiteSpace: "pre" }}>
+              {w}
+            </span>
+          );
         return (
           <span
             key={i}
