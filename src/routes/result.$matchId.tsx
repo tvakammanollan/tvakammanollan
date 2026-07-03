@@ -30,6 +30,7 @@ import {
   Clock,
   AlertTriangle,
   Share2,
+  Flame,
 } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@/lib/telemetry";
@@ -133,6 +134,10 @@ function ResultPage() {
       if (cancelled || !m) return;
       const mr = m as MatchRow;
       setMatch(mr);
+
+      // Nyss avslutad match kan ha låst upp utmärkelser — be watchern kolla
+      // direkt (förbi 20s-throttlen) så firandet sker här och inte senare.
+      window.dispatchEvent(new Event("hpk:achievements:check"));
 
       // Opponent display
       if (mr.is_bot_match) {
@@ -393,6 +398,39 @@ function ResultPage() {
         </motion.p>
       </motion.div>
 
+      {/* Guest signup CTA — direkt under bannern, i det heta ögonblicket */}
+      {user?.is_anonymous && (
+        <Reveal
+          delay={0.2}
+          className="mt-5 overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-6 sm:p-8"
+        >
+          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
+              <Trophy className="h-7 w-7" />
+            </span>
+            <div className="flex-1">
+              <h3
+                className="text-[22px] font-bold leading-tight text-[#e8e4da]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Bra spelat! Vill du komma in på topplistan?
+              </h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-white/65">
+                Skapa ett gratis konto för att{" "}
+                <strong className="text-[#e8e4da]">spara din ELO</strong>, klättra i rankingen och
+                utmana dina vänner. Tar 30 sekunder.
+              </p>
+            </div>
+            <Button
+              asChild
+              className="shrink-0 bg-[#f2a65a] px-6 text-base font-semibold text-[#1a0d04] shadow-md hover:bg-[#c97b41]"
+            >
+              <Link to="/signup">Skapa konto →</Link>
+            </Button>
+          </div>
+        </Reveal>
+      )}
+
       {/* Scorecard */}
       <Reveal
         delay={0.25}
@@ -437,6 +475,20 @@ function ResultPage() {
             >
               {eloChange >= 0 ? "+" : ""}
               {eloChange}
+            </span>
+          </div>
+        )}
+
+        {/* Streak — förstärk vanan i det heta ögonblicket */}
+        {!user?.is_anonymous && (profile?.current_streak ?? 0) > 0 && (
+          <div className="mt-3 flex justify-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#f2a65a]/25 bg-[#f2a65a]/10 px-3 py-1 text-sm font-semibold text-[#f2a65a] tabular-nums">
+              <Flame className="h-3.5 w-3.5" />
+              {profile!.current_streak} dagar i rad
+              {(profile!.current_streak ?? 0) >= 3 &&
+                profile!.current_streak === profile!.longest_streak && (
+                  <span className="font-medium text-white/70">· nytt rekord!</span>
+                )}
             </span>
           </div>
         )}
@@ -491,39 +543,6 @@ function ResultPage() {
             );
           })()}
       </Reveal>
-
-      {/* Guest signup CTA — only shows for anonymous users */}
-      {user?.is_anonymous && (
-        <Reveal
-          delay={0.4}
-          className="mt-5 overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-6 sm:p-8"
-        >
-          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
-              <Trophy className="h-7 w-7" />
-            </span>
-            <div className="flex-1">
-              <h3
-                className="text-[22px] font-bold leading-tight text-[#e8e4da]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Bra spelat! Vill du komma in på topplistan?
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-white/65">
-                Skapa ett gratis konto för att{" "}
-                <strong className="text-[#e8e4da]">spara din ELO</strong>, klättra i rankingen och
-                utmana dina vänner. Tar 30 sekunder.
-              </p>
-            </div>
-            <Button
-              asChild
-              className="shrink-0 bg-[#f2a65a] px-6 text-base font-semibold text-[#1a0d04] shadow-md hover:bg-[#c97b41]"
-            >
-              <Link to="/signup">Skapa konto →</Link>
-            </Button>
-          </div>
-        </Reveal>
-      )}
 
       {/* Dela resultat */}
       <Button

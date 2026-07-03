@@ -86,6 +86,18 @@ export function AchievementWatcher() {
     void check();
   }, [pathname, user, check]);
 
+  // Omedelbar check på begäran (förbi throttlen) — t.ex. när resultatsidan
+  // laddats, så en nyss upplåst utmärkelse firas i rätt ögonblick.
+  useEffect(() => {
+    if (!user) return;
+    const onDemand = () => {
+      lastCheckRef.current = Date.now();
+      void check();
+    };
+    window.addEventListener("hpk:achievements:check", onDemand);
+    return () => window.removeEventListener("hpk:achievements:check", onDemand);
+  }, [user, check]);
+
   if (celebrating.length === 0) return null;
   return <AchievementCelebration items={celebrating} onClose={() => setCelebrating([])} />;
 }

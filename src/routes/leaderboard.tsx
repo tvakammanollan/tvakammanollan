@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 import { useEffect, useState, useCallback } from "react";
@@ -112,6 +112,15 @@ function LeaderboardPage() {
       />
 
       <div className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
+        {user?.is_anonymous && (
+          <p className="mb-4 rounded-xl border border-[#f2a65a]/20 bg-[#f2a65a]/[0.06] px-4 py-2.5 text-sm text-white/70">
+            Du spelar som gäst — din ELO sparas inte.{" "}
+            <Link to="/signup" className="font-semibold text-[#f2a65a] hover:underline">
+              Skapa konto
+            </Link>{" "}
+            för att ta en plats på listan.
+          </p>
+        )}
         <Reveal delay={0.2}>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
             <TabsList className="grid w-full max-w-md grid-cols-3">
