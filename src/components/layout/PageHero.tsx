@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { EyebrowLabel } from "./EyebrowLabel";
 import { CyclingTitle } from "./CyclingTitle";
@@ -76,7 +76,7 @@ export function PageHero({
         </h1>
 
         {subtitle ? (
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -86,11 +86,11 @@ export function PageHero({
             )}
           >
             {subtitle}
-          </motion.p>
+          </m.p>
         ) : null}
 
         {primaryCta || secondaryCta ? (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -98,7 +98,7 @@ export function PageHero({
           >
             {primaryCta}
             {secondaryCta}
-          </motion.div>
+          </m.div>
         ) : null}
       </div>
     </section>

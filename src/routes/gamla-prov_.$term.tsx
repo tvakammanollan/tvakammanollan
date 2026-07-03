@@ -214,7 +214,9 @@ function ExamTermPage() {
                           src={q.image}
                           alt={`Figur till ${g.code}-fråga ${q.nr} i högskoleprovet ${label}`}
                           loading="lazy"
+                          decoding="async"
                           className="mt-3 w-full rounded-lg border border-white/10 bg-white object-contain"
+                          style={{ aspectRatio: "5 / 7" }}
                         />
                       )}
                       <ul className="mt-3 grid gap-1.5">

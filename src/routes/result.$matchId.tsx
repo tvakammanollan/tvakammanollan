@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Reveal } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
@@ -362,13 +362,13 @@ function ResultPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
       {/* Banner */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 30, scale: 0.92, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
       >
-        <motion.div
+        <m.div
           initial={{ scale: 0.4, opacity: 0, rotate: won ? -15 : 0 }}
           animate={{ scale: 1, opacity: 1, rotate: 0 }}
           transition={{
@@ -381,22 +381,22 @@ function ResultPage() {
           }}
         >
           <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#f2a65a]" : ""}`} />
-        </motion.div>
+        </m.div>
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
           {verdict}
         </h1>
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 0.8, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-2 text-sm sm:text-base"
         >
           {subtext}
-        </motion.p>
-      </motion.div>
+        </m.p>
+      </m.div>
 
       {/* Guest signup CTA — direkt under bannern, i det heta ögonblicket */}
       {user?.is_anonymous && (

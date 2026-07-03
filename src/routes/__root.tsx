@@ -14,6 +14,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
+import { LazyMotion } from "framer-motion";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AchievementWatcher } from "@/components/AchievementWatcher";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -22,6 +23,11 @@ import { Footer } from "@/components/Footer";
 import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGate";
 
 installSupabaseFetchAuth();
+
+// Framer-motions animations-runtime laddas asynkront (egen chunk) — se
+// src/lib/motion-features.ts. `strict` gör att en glömd motion.→m.-migrering
+// kastar direkt i dev i stället för att tyst dra in hela runtimen igen.
+const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
 function NotFoundComponent() {
   const POPULAR = [
@@ -164,18 +170,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "alternate", hrefLang: "x-default", href: "https://hpkampen.se/" },
       { rel: "stylesheet", href: appCss },
       // Preconnect / DNS-prefetch för snabbare Core Web Vitals
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "preconnect",
         href: "https://dqhgnioniarhiugxdgla.supabase.co",
         crossOrigin: "anonymous",
       },
       { rel: "dns-prefetch", href: "https://dqhgnioniarhiugxdgla.supabase.co" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap",
-      },
+      // OBS: Google Fonts-länken (Newsreader/Geist/Geist Mono) borttagen —
+      // ingen font-family i CSS:en refererade de familjerna, så typografin
+      // renderades redan med fallbackarna (Georgia/system-ui). Länken var
+      // enbart renderblockerande dödvikt.
     ],
     scripts: [
       // Google AdSense
@@ -421,28 +425,30 @@ function RootComponent() {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
-        {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
+      <LazyMotion features={loadMotionFeatures} strict>
+        <div className="min-h-screen bg-background">
+          {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
             Visas bara vid keyboard-focus (sr-only:focus). */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        >
-          Hoppa till innehåll
-        </a>
-        <AppMotion />
-        <Navbar />
-        <main id="main-content" className="animate-fade-up">
-          <Outlet />
-        </main>
-        <Footer />
-        <FloatingActionMenuGate />
-        <FriendInviteListener />
-        <SafeBoundary label="achievement-watcher">
-          <AchievementWatcher />
-        </SafeBoundary>
-        <Toaster richColors position="top-center" />
-      </div>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          >
+            Hoppa till innehåll
+          </a>
+          <AppMotion />
+          <Navbar />
+          <main id="main-content" className="animate-fade-up">
+            <Outlet />
+          </main>
+          <Footer />
+          <FloatingActionMenuGate />
+          <FriendInviteListener />
+          <SafeBoundary label="achievement-watcher">
+            <AchievementWatcher />
+          </SafeBoundary>
+          <Toaster richColors position="top-center" />
+        </div>
+      </LazyMotion>
     </QueryClientProvider>
   );
 }

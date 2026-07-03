@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { displayCategory } from "@/lib/sv-format";
 import { LogOut, Trophy } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
@@ -559,13 +559,13 @@ function MatchPage() {
   if (match && match.status === "waiting" && !match.player2_id) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-        <motion.span
+        <m.span
           className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
-        </motion.span>
+        </m.span>
         <div>
           <p className="eyebrow text-[#f2a65a]">Väntar</p>
           <h1
@@ -578,7 +578,7 @@ function MatchPage() {
         <p className="text-white/65">
           Matchen startar automatiskt när din vän accepterar inbjudan.
         </p>
-        <motion.div
+        <m.div
           className="flex gap-1.5"
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
@@ -586,7 +586,7 @@ function MatchPage() {
           {[0, 1, 2].map((i) => (
             <span key={i} className="h-2 w-2 rounded-full bg-[#f2a65a]" />
           ))}
-        </motion.div>
+        </m.div>
       </div>
     );
   }
@@ -594,13 +594,13 @@ function MatchPage() {
   if (!match || questions.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-        <motion.span
+        <m.span
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
-        </motion.span>
+        </m.span>
         <p className="text-sm text-white/65">Förbereder arenan…</p>
       </div>
     );
@@ -612,7 +612,7 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         {connectionLost ? (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-3 text-sm text-destructive"
@@ -628,9 +628,9 @@ function MatchPage() {
             >
               Visa resultat nu
             </Button>
-          </motion.div>
+          </m.div>
         ) : reconnecting ? (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
@@ -638,15 +638,15 @@ function MatchPage() {
             aria-live="polite"
           >
             Anslutningen bröts – försöker återansluta…
-          </motion.div>
+          </m.div>
         ) : null}
-        <motion.span
+        <m.span
           className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
-        </motion.span>
+        </m.span>
         <div>
           <p className="eyebrow text-[#f2a65a]">Klart</p>
           <h1
@@ -662,7 +662,7 @@ function MatchPage() {
           att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
-          <motion.div
+          <m.div
             className="h-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.95, ease: "linear" }}
@@ -879,7 +879,12 @@ function QuestionCard({
       </h2>
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
-          <img src={currentQ.image_url} alt="Figur till frågan" className="w-full object-contain" />
+          <img
+            src={currentQ.image_url}
+            alt="Figur till frågan"
+            decoding="async"
+            className="w-full object-contain"
+          />
         </div>
       )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">

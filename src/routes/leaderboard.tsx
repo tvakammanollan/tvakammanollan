@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 import { useEffect, useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
@@ -511,7 +511,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       ? "bg-[#f2a65a]/[0.04]"
       : "";
   return (
-    <motion.tr
+    <m.tr
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: Math.min(r.rank * 0.02, 0.4), ease: [0.22, 1, 0.36, 1] }}
@@ -567,7 +567,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
           )}
         </span>
       </td>
-    </motion.tr>
+    </m.tr>
   );
 }
 

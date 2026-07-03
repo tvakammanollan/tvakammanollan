@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -248,34 +248,34 @@ function MatchmakingPage() {
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center">
       {/* Animated radar / pulse rings */}
       <div className="relative flex h-32 w-32 items-center justify-center">
-        <motion.span
+        <m.span
           aria-hidden
           className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/40"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
         />
-        <motion.span
+        <m.span
           aria-hidden
           className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/30"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
         />
-        <motion.span
+        <m.span
           aria-hidden
           className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/20"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
-        <motion.span
+        <m.span
           className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-9 w-9" />
-        </motion.span>
+        </m.span>
       </div>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -293,9 +293,9 @@ function MatchmakingPage() {
             </>
           )}
         </h1>
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
@@ -324,7 +324,7 @@ function MatchmakingPage() {
         >
           {mm}:{ss}
         </div>
-      </motion.div>
+      </m.div>
 
       <Button variant="outline" onClick={cancel} disabled={navigating}>
         {navigating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

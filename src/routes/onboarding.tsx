@@ -1,7 +1,7 @@
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, isAutoUsername } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -63,7 +63,7 @@ function OnboardingPage() {
 
   return (
     <AuthLayout>
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -106,7 +106,7 @@ function OnboardingPage() {
             {!submitting && <ArrowRight className="h-4 w-4" />}
           </button>
         </form>
-      </motion.div>
+      </m.div>
     </AuthLayout>
   );
 }

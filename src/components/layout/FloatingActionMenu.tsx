@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { Plus, Swords, Users, BarChart3, BookOpen, Type, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -54,7 +54,7 @@ export function FloatingActionMenu({ className }: { className?: string }) {
     <div ref={ref} className={cn("fixed bottom-6 right-6 z-40", className)}>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 10, y: 10, filter: "blur(10px)" }}
             animate={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, x: 10, y: 10, filter: "blur(10px)" }}
@@ -68,7 +68,7 @@ export function FloatingActionMenu({ className }: { className?: string }) {
           >
             <div className="flex flex-col items-end gap-2">
               {options.map((opt, i) => (
-                <motion.button
+                <m.button
                   key={opt.to}
                   type="button"
                   onClick={() => {
@@ -84,10 +84,10 @@ export function FloatingActionMenu({ className }: { className?: string }) {
                 >
                   {opt.Icon}
                   <span>{opt.label}</span>
-                </motion.button>
+                </m.button>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -98,13 +98,13 @@ export function FloatingActionMenu({ className }: { className?: string }) {
         aria-expanded={isOpen}
         className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f2a65a] text-[#1a0d04] shadow-[0_0_28px_rgba(242,166,90,0.45)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_36px_rgba(242,166,90,0.65)]"
       >
-        <motion.span
+        <m.span
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 20 }}
           className="flex"
         >
           <Plus className="h-6 w-6" strokeWidth={2.5} />
-        </motion.span>
+        </m.span>
       </button>
     </div>
   );

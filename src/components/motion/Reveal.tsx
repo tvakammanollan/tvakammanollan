@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { m, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 /**
@@ -44,7 +44,7 @@ export function Reveal({
   const reduce = useReducedMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={containerVariants}
       initial="hidden"
@@ -52,7 +52,7 @@ export function Reveal({
       viewport={{ once, amount }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -69,7 +69,7 @@ function RevealItem({
 }) {
   const reduce = useReducedMotion();
   if (reduce) return <As className={className}>{children}</As>;
-  const Component = motion[As as "div"] as typeof motion.div;
+  const Component = m[As as "div"] as typeof m.div;
   return (
     <Component
       className={className}
@@ -100,14 +100,14 @@ export function FadeUp({
   const reduce = useReducedMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -124,7 +124,7 @@ export function Parallax({
   const reduce = useReducedMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ y: 0 }}
       whileInView={{ y: -speed }}
@@ -132,6 +132,6 @@ export function Parallax({
       transition={{ duration: 1.2, ease: "linear" }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

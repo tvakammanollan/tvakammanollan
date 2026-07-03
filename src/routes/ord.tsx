@@ -3,7 +3,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
@@ -325,7 +325,7 @@ function OrdPracticePage() {
       <main className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
         {/* SETUP */}
         {phase === "setup" && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -352,7 +352,7 @@ function OrdPracticePage() {
               </p>
               <div className="mt-6 grid grid-cols-3 gap-3">
                 {COUNT_OPTIONS.map((n, i) => (
-                  <motion.button
+                  <m.button
                     key={n}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -373,7 +373,7 @@ function OrdPracticePage() {
                     <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/45">
                       ord
                     </span>
-                  </motion.button>
+                  </m.button>
                 ))}
               </div>
               {loading && (
@@ -593,7 +593,7 @@ function OrdPracticePage() {
                 </Link>
               </div>
             </GlassCard>
-          </motion.div>
+          </m.div>
         )}
 
         {/* PLAYING */}

@@ -936,7 +936,10 @@ function GamlaProvPage() {
                 src={q.image}
                 alt={`Figur till uppgift ${q.nr}`}
                 className="w-full bg-white"
-                style={{ maxHeight: "60vh", objectFit: "contain" }}
+                decoding="async"
+                // Provbilderna är ~5:7 (1009×1400 / 784×1100) — reservera ytan
+                // så layouten inte hoppar när bilden laddats (CLS).
+                style={{ maxHeight: "60vh", objectFit: "contain", aspectRatio: "5 / 7" }}
               />
             </button>
           </div>

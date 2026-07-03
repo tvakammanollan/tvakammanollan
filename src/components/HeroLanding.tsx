@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
@@ -127,7 +127,7 @@ function CyclingWord({ words, color }: { words: string[]; color: string }) {
         {spacer}
       </span>
       {words.map((w, i) => (
-        <motion.span
+        <m.span
           key={w}
           className="absolute inset-x-0 top-0 whitespace-nowrap text-center"
           initial={false}
@@ -137,7 +137,7 @@ function CyclingWord({ words, color }: { words: string[]; color: string }) {
           transition={{ type: "spring", stiffness: 38, damping: 14, mass: 1 }}
         >
           {w}
-        </motion.span>
+        </m.span>
       ))}
     </span>
   );
@@ -287,7 +287,7 @@ function Hero({ stats }: { stats: LandingStats | null }) {
         className="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center px-6 pb-24 pt-[160px] text-center"
         style={{ minHeight: "calc(92svh + 96px)" }}
       >
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -297,9 +297,9 @@ function Hero({ stats }: { stats: LandingStats | null }) {
           Spela. <CyclingWord words={HERO_CYCLE_WORDS} color={AMBER} />
           <br />
           Vinn.
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
@@ -307,9 +307,9 @@ function Hero({ stats }: { stats: LandingStats | null }) {
         >
           Realtidsmatcher mot riktiga spelare. ELO som rör sig efter varje match. Inga övningsprov.
           Bara duell.
-        </motion.p>
+        </m.p>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
@@ -329,10 +329,10 @@ function Hero({ stats }: { stats: LandingStats | null }) {
           >
             Spara min ELO
           </Link>
-        </motion.div>
+        </m.div>
 
         {/* Glas-kort: senaste 6 matcher — flyter mjukt över shadern */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.55 }}
@@ -402,7 +402,7 @@ function Hero({ stats }: { stats: LandingStats | null }) {
               })}
             </ol>
           )}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -772,7 +772,7 @@ function MatchRow({
   const isVerbal = match.match_type === "verbal";
 
   return (
-    <motion.li
+    <m.li
       ref={ref}
       initial={{ opacity: 0, x: -12 }}
       animate={inView ? { opacity: 1, x: 0 } : undefined}
@@ -807,7 +807,7 @@ function MatchRow({
         <span className="mx-1 text-white/30">–</span>
         <span className="text-white/55">{ls}</span>
       </div>
-    </motion.li>
+    </m.li>
   );
 }
 
@@ -939,7 +939,7 @@ function TestimonialStackCard({
   const isFront = position === "front";
 
   return (
-    <motion.div
+    <m.div
       style={{
         zIndex: position === "front" ? 3 : position === "middle" ? 2 : 1,
       }}
@@ -985,7 +985,7 @@ function TestimonialStackCard({
           HP {t.score}
         </span>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 

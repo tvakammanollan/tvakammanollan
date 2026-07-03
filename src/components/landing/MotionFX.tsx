@@ -20,7 +20,7 @@
  * ------------------------------------------------------------------
  */
 import {
-  motion,
+  m,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -113,13 +113,13 @@ export function CustomCursor() {
   return (
     <>
       {/* Dot — small, white, diff-blend so it inverts on any background */}
-      <motion.div
+      <m.div
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[100] hidden h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white md:block"
         style={{ x: sx, y: sy, scale: sScale, mixBlendMode: "difference" }}
       />
       {/* Amber halo — expands when hovering interactive elements */}
-      <motion.div
+      <m.div
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[99] hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full md:block"
         style={{
@@ -167,7 +167,7 @@ export function SplitText({
   // Memoise the motion-wrapped tag — otherwise every parent re-render
   // recreates this component type and React remounts the whole SplitText,
   // re-running the entrance animation on each keystroke in a form upstream.
-  const MotionTag = useMemo(() => motion(Tag as React.ElementType), [Tag]);
+  const MotionTag = useMemo(() => m.create(Tag as React.ElementType), [Tag]);
 
   if (reduce) {
     return <MotionTag className={className}>{children}</MotionTag>;
@@ -188,7 +188,7 @@ export function SplitText({
             className="inline-block overflow-hidden align-baseline"
             style={{ verticalAlign: "baseline" }}
           >
-            <motion.span
+            <m.span
               className={`inline-block ${italic ? "italic font-light" : ""}`}
               initial={{ y: "110%", opacity: 0, rotate: 3 }}
               animate={inView ? { y: "0%", opacity: 1, rotate: 0 } : undefined}
@@ -199,7 +199,7 @@ export function SplitText({
               }}
             >
               {w}
-            </motion.span>
+            </m.span>
           </span>
         );
       })}
@@ -232,9 +232,9 @@ export function VelocitySkew({
     return <div className={className}>{children}</div>;
   }
   return (
-    <motion.div className={className} style={{ skewY: sSkew, transformOrigin: "center center" }}>
+    <m.div className={className} style={{ skewY: sSkew, transformOrigin: "center center" }}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -298,7 +298,7 @@ export function VelocityMarquee({
 
   return (
     <div className={`overflow-hidden ${className ?? ""}`}>
-      <motion.div
+      <m.div
         ref={trackRef}
         className="flex gap-12 whitespace-nowrap will-change-transform"
         style={{ x }}
@@ -308,7 +308,7 @@ export function VelocityMarquee({
             {it}
           </span>
         ))}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -332,7 +332,7 @@ export function StickyNumber({ n }: { n: string }) {
 
   return (
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-0">
-      <motion.div
+      <m.div
         className="pointer-events-none fixed bottom-6 right-8 z-20 select-none text-[120px] leading-none text-black/[0.04] mix-blend-multiply sm:text-[170px]"
         style={{
           opacity,
@@ -343,7 +343,7 @@ export function StickyNumber({ n }: { n: string }) {
         }}
       >
         {n}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -378,7 +378,7 @@ export function FlipCard({
   const animate = inView ? { opacity: 1, rotateX: 0, rotateY: 0, y: 0 } : undefined;
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={initial}
       animate={animate}
@@ -387,7 +387,7 @@ export function FlipCard({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -412,7 +412,7 @@ export function ClipReveal({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3, margin: "200px 0px 200px 0px" });
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       initial={reduce ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", opacity: 0 }}
@@ -422,7 +422,7 @@ export function ClipReveal({
       transition={{ duration: 1.2, delay, ease: [0.77, 0, 0.175, 1] }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -449,9 +449,9 @@ export function Parallax({
 
   if (reduce) return <div className={className}>{children}</div>;
   return (
-    <motion.div className={className} style={{ y }}>
+    <m.div className={className} style={{ y }}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -477,7 +477,7 @@ function StageDot({
   const scale = useTransform(progress, [start, (start + end) / 2, end], [0.6, 1.4, 0.6]);
   const opacity = useTransform(progress, [start, (start + end) / 2, end], [0.25, 1, 0.25]);
   return (
-    <motion.div
+    <m.div
       style={{ scale, opacity }}
       className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(245,158,11,0.7)]"
     />
@@ -528,7 +528,7 @@ export function TiltLayer({
   if (reduce) return <div className={className}>{children}</div>;
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       style={{ rotateX: srx, rotateY: sry, transformPerspective: 1400 }}
@@ -546,7 +546,7 @@ export function TiltLayer({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -581,7 +581,7 @@ export function AmberMouseShadow({ size = 600 }: { size?: number }) {
 
   if (reduce || touch) return null;
   return (
-    <motion.div
+    <m.div
       ref={ref}
       aria-hidden
       className="pointer-events-none absolute z-0 rounded-full"
@@ -637,14 +637,14 @@ export function PageHeader({
     >
       <div className="min-w-0">
         {eyebrow ? (
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="eyebrow"
           >
             {eyebrow}
-          </motion.p>
+          </m.p>
         ) : null}
         <h1 className="display mt-3 text-balance text-[40px] leading-[1.02] text-[#050507] sm:text-[56px] md:text-[68px]">
           <SplitText as="span" className="block">
@@ -659,7 +659,7 @@ export function PageHeader({
           ) : null}
         </h1>
         {description ? (
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
@@ -670,18 +670,18 @@ export function PageHeader({
             className="mt-5 max-w-xl text-[17px] leading-relaxed text-neutral-600"
           >
             {description}
-          </motion.p>
+          </m.p>
         ) : null}
       </div>
       {actions ? (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="flex shrink-0 items-center gap-2"
         >
           {actions}
-        </motion.div>
+        </m.div>
       ) : null}
     </div>
   );
@@ -712,7 +712,7 @@ export function Reveal({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount, margin: "200px 0px 200px 0px" });
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       initial={reduce ? { opacity: 0 } : { opacity: 0, y, filter: "blur(8px)" }}
@@ -722,7 +722,7 @@ export function Reveal({
       transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -757,7 +757,7 @@ export function StaggerList({
   return (
     <div ref={ref} className={className}>
       {items.map((child, i) => (
-        <motion.div
+        <m.div
           key={i}
           initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
           animate={inView ? (reduce ? { opacity: 1 } : { opacity: 1, y: 0 }) : undefined}
@@ -768,7 +768,7 @@ export function StaggerList({
           }}
         >
           {child}
-        </motion.div>
+        </m.div>
       ))}
     </div>
   );

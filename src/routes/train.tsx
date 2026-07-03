@@ -547,6 +547,7 @@ function TrainPage() {
                 <img
                   src={currentQ.image_url}
                   alt="Figur till frågan"
+                  decoding="async"
                   className="w-full object-contain"
                 />
               </div>

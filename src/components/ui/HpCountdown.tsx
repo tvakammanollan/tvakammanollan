@@ -11,7 +11,7 @@
  * ──────────────────────────────────────────────────────────────
  */
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { getNextHpDate, timeUntil } from "@/lib/hp-dates";
 import { CalendarDays } from "lucide-react";
 
@@ -24,14 +24,16 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
   const [next, setNext] = useState(() => getNextHpDate());
 
   useEffect(() => {
-    // Recompute "next" once a minute (cheap), and tick "now" each second.
-    const tickId = setInterval(() => setNow(new Date()), 1000);
+    // "card" visar sekunder → ticka varje sekund. "inline" visar bara dagar
+    // (dashboarden) → 60s räcker och sparar ~59 re-renders/min.
+    const tickMs = size === "card" ? 1000 : 60_000;
+    const tickId = setInterval(() => setNow(new Date()), tickMs);
     const recomputeId = setInterval(() => setNext(getNextHpDate()), 60_000);
     return () => {
       clearInterval(tickId);
       clearInterval(recomputeId);
     };
-  }, []);
+  }, [size]);
 
   if (!next) {
     return null;
@@ -58,7 +60,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
   }
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -128,7 +130,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
           {formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)}
         </p>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 

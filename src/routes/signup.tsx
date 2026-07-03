@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-ro
 import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -83,7 +83,7 @@ function SignupPage() {
         ) : sentTo ? (
           <CheckEmailScreen key="email" address={sentTo} onUseAnother={() => setSentTo(null)} />
         ) : (
-          <motion.div
+          <m.div
             key="form"
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -151,7 +151,7 @@ function SignupPage() {
               </Link>
               .
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </AuthLayout>
@@ -198,7 +198,7 @@ function CheckEmailScreen({
   onUseAnother: () => void;
 }) {
   return (
-    <motion.div
+    <m.div
       key="email"
       initial={{ opacity: 0, x: 40 }}
       animate={{ opacity: 1, x: 0 }}
@@ -241,6 +241,6 @@ function CheckEmailScreen({
       >
         Använd en annan e-postadress
       </button>
-    </motion.div>
+    </m.div>
   );
 }

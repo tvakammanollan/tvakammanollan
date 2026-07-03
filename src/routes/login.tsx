@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-ro
 import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -68,7 +68,7 @@ function LoginPage() {
       {success ? (
         <SuccessScreen />
       ) : (
-        <motion.div
+        <m.div
           key="form"
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -132,7 +132,7 @@ function LoginPage() {
             </Link>
             .
           </p>
-        </motion.div>
+        </m.div>
       )}
     </AuthLayout>
   );
@@ -169,7 +169,7 @@ function PillInput({
 
 export function SuccessScreen() {
   return (
-    <motion.div
+    <m.div
       key="success"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -185,7 +185,7 @@ export function SuccessScreen() {
           Välkommen
         </h1>
       </div>
-      <motion.div
+      <m.div
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
@@ -205,7 +205,7 @@ export function SuccessScreen() {
             />
           </svg>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
