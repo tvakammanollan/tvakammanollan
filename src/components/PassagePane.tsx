@@ -167,7 +167,7 @@ export function PassagePane({
 
   if (mobileAccordion) {
     return (
-      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-paper md:hidden">
+      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-paper lg:hidden">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -201,7 +201,7 @@ export function PassagePane({
 
   return (
     <aside
-      className="hidden md:block sticky top-[120px] self-start overflow-y-auto border-r border-[#e2e0db] bg-paper px-6 py-5"
+      className="hidden lg:block sticky top-[120px] self-start overflow-y-auto border-r border-[#e2e0db] bg-paper px-6 py-5"
       style={{ maxHeight: "calc(100vh - 140px)" }}
     >
       <div className="mb-3 flex items-center justify-between gap-2">

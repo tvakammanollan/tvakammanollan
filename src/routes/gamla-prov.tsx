@@ -476,19 +476,29 @@ function GamlaProvPage() {
             >
               Slutresultat
             </p>
-            <p
-              className="mt-3 text-6xl font-bold tabular-nums"
-              style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
-            >
-              {score}
-              <span className="text-2xl font-normal" style={{ color: "var(--text-secondary)" }}>
-                /{total}
-              </span>
-            </p>
-            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-              {pct}% rätt
-              {unanswered > 0 && <> · {unanswered} obesvarade</>}
-            </p>
+            {hasFacit ? (
+              <>
+                <p
+                  className="mt-3 text-6xl font-bold tabular-nums"
+                  style={{ color: "var(--amber)", fontFamily: "var(--font-display)" }}
+                >
+                  {score}
+                  <span className="text-2xl font-normal" style={{ color: "var(--text-secondary)" }}>
+                    /{total}
+                  </span>
+                </p>
+                <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                  {pct}% rätt
+                  {unanswered > 0 && <> · {unanswered} obesvarade</>}
+                </p>
+              </>
+            ) : (
+              // Utan facit vore en poängsiffra missvisande — visa inte 0/40.
+              <p className="mt-3 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Kan inte räkna poäng utan facit. Du svarade på {total - unanswered} av {total}{" "}
+                uppgifter.
+              </p>
+            )}
           </div>
 
           {/* Normering — only meaningful when facit exists for most questions */}
@@ -529,8 +539,7 @@ function GamlaProvPage() {
               }}
             >
               <strong style={{ color: "var(--amber)" }}>Facit saknas för detta provpass.</strong> Vi
-              har frågor och alternativ, men inte rätt svar. Poängen ovan är därför inte
-              rättvisande.
+              har frågor och alternativ, men inte rätt svar — därför kan ingen poäng räknas.
             </div>
           )}
 

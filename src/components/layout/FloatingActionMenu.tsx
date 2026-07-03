@@ -64,7 +64,7 @@ export function FloatingActionMenu({ className }: { className?: string }) {
               stiffness: 300,
               damping: 22,
             }}
-            className="absolute bottom-14 right-0 mb-1"
+            className="absolute bottom-14 right-0 mb-1 max-w-[calc(100vw-3rem)]"
           >
             <div className="flex flex-col items-end gap-2">
               {options.map((opt, i) => (

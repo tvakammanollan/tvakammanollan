@@ -135,7 +135,9 @@ function FriendsPage() {
       sounds.ping();
       setTick((t) => t + 1);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Misslyckades");
+      toast.error("Kunde inte besvara förfrågan", {
+        description: e instanceof Error ? e.message : "Försök igen om en stund.",
+      });
     }
   };
 
@@ -144,7 +146,9 @@ function FriendsPage() {
       await removeReq({ data: { friendship_id: id } });
       setTick((t) => t + 1);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Misslyckades");
+      toast.error("Kunde inte ta bort vännen", {
+        description: e instanceof Error ? e.message : "Försök igen om en stund.",
+      });
     }
   };
 

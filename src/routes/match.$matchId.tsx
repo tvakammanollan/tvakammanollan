@@ -743,7 +743,7 @@ function MatchPage() {
 
       {/* Main */}
       {currentQ.passage_text ? (
-        <main className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 gap-0 md:grid-cols-2">
+        <main className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 gap-0 lg:grid-cols-2">
           <PassagePane
             matchId={matchId}
             passageId={currentQ.passage_id}

@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
@@ -162,6 +163,8 @@ function OrdPracticePage() {
   const fetchFailedCount = useServerFn(getFailedWordCount);
   const fetchFailedList = useServerFn(getFailedWordsList);
   const recordAnswer = useServerFn(recordOrdAnswer);
+  // Varna bara en gång per session om svars-sparandet strular.
+  const recordWarnedRef = useRef(false);
 
   const [phase, setPhase] = useState<Phase>("setup");
   const [target, setTarget] = useState<SessionLength>(10);
@@ -271,10 +274,18 @@ function OrdPracticePage() {
     setAnswered((a) => [...a, { question: current, picked: letter, isCorrect }]);
     if (isCorrect) sounds.correct();
     else sounds.wrong();
-    // Persist to leaderboard (fire-and-forget; ignore failures e.g. for guests)
+    // Persist to leaderboard (fire-and-forget, men berätta EN gång per session
+    // om sparandet strular — tidigare helt tyst dataförlust).
     void recordAnswer({
       data: { correct: isCorrect, questionId: current.id },
-    }).catch(() => {});
+    }).catch(() => {
+      if (!recordWarnedRef.current) {
+        recordWarnedRef.current = true;
+        toast.warning("Kunde inte spara ditt svar till topplistan", {
+          description: "Du kan fortsätta öva som vanligt — vi försöker igen på nästa svar.",
+        });
+      }
+    });
   };
 
   const next = () => {
