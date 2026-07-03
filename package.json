@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "scrape:ord-defs": "bun run scripts/scrape-ord-definitions.ts",
-    "apply:ord-defs": "bun run scripts/apply-ord-definitions.ts"
+    "apply:ord-defs": "bun run scripts/apply-ord-definitions.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
@@ -94,6 +95,7 @@
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^4.1.9"
   }
 }

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 import { useEffect, useState, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
@@ -56,13 +57,6 @@ function TableSkeleton() {
     </div>
   );
 }
-
-// Cache disabled — was serving stale data from earlier broken RPC.
-const CACHE_MS = 0;
-const cache: Record<MatchType, { rows: LbRow[]; ts: number } | undefined> = {
-  verbal: undefined,
-  math: undefined,
-};
 
 export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
@@ -180,47 +174,30 @@ function Board({
 }) {
   const fetchLb = useServerFn(fetchLeaderboard);
   const fetchWeekly = useServerFn(fetchWeeklyLeaderboard);
-  const [rows, setRows] = useState<LbRow[]>([]);
   const [weekly, setWeekly] = useState<WeeklyLeaderboardRow[] | null>(null);
   const [friendIds, setFriendIds] = useState<Set<string> | null>(null);
   const [scope, setScope] = useState<Scope>("all");
-  const [loading, setLoading] = useState(true);
   const [weeklyLoading, setWeeklyLoading] = useState(false);
-  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(
-    async (force = false) => {
-      const c = cache[matchType];
-      if (!force && c && Date.now() - c.ts < CACHE_MS) {
-        setRows(c.rows);
-        setUpdatedAt(c.ts);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      // Server function (admin/service-role) bypasser RLS och returnerar
-      // ALLA users med games_played >= 1. Inga filter på namn alls.
-      try {
-        const rowsData = await fetchLb({
-          data: { match_type: matchType, limit: 200 },
-        });
-        const filtered = filterLeaderboard(rowsData as LbRow[]);
-        cache[matchType] = { rows: filtered, ts: Date.now() };
-        setRows(filtered);
-        setUpdatedAt(Date.now());
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Kunde inte ladda");
-      } finally {
-        setLoading(false);
-      }
+  // react-query-pilot: cache/dedup/refetch utan manuell orkestrering.
+  // Server-fn (service-role) returnerar ALLA users med games_played >= 1.
+  const {
+    data: rows = [],
+    isLoading: loading,
+    error: queryError,
+    refetch,
+    dataUpdatedAt,
+  } = useQuery({
+    queryKey: ["leaderboard", matchType],
+    queryFn: async () => {
+      const rowsData = await fetchLb({ data: { match_type: matchType, limit: 200 } });
+      return filterLeaderboard(rowsData as LbRow[]);
     },
-    [matchType, fetchLb],
-  );
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+    staleTime: 60_000,
+  });
+  const error =
+    queryError instanceof Error ? queryError.message : queryError ? "Kunde inte ladda" : null;
+  const updatedAt = dataUpdatedAt || null;
 
   // Hämta vän-id:n en gång (för "Vänner"-filtret).
   useEffect(() => {
@@ -278,7 +255,7 @@ function Board({
     if (scope === "week") {
       setWeekly(null);
     } else {
-      void load(true);
+      void refetch();
     }
   };
 

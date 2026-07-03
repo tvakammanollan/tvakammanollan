@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { type RawQ } from "@/types/gamla-prov";
 import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
 
 /* =====================================================================
@@ -12,23 +13,6 @@ import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
 const DATA_URL = "https://hpkampen.se/gamla-prov-data.json";
 const ALT_KEYS = ["a", "b", "c", "d", "e"] as const;
 const ALT_LABELS = ["A", "B", "C", "D", "E"];
-
-interface RawQ {
-  exam_term: string;
-  provpass: number;
-  nr: number;
-  delProv: string;
-  fraga: string;
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  svar: string;
-  passage?: string;
-  passage_title?: string;
-  image?: string;
-}
 
 type Delprov = {
   code: string;

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { termToLabel, type RawQ } from "@/types/gamla-prov";
 import { PageHero } from "@/components/layout/PageHero";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -67,34 +68,10 @@ export const Route = createFileRoute("/gamla-prov")({
 
 /* ─── Types ─────────────────────────────────────────────────────── */
 
-interface RawQ {
-  exam_term: string;
-  provpass: number;
-  nr: number;
-  delProv: string;
-  fraga: string;
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  svar: string;
-  passage?: string;
-  passage_title?: string;
-  image?: string;
-}
-
 /* ─── Constants & helpers ───────────────────────────────────────── */
 
 const ALT_KEYS = ["a", "b", "c", "d", "e"] as const;
 const ALT_LABELS = ["A", "B", "C", "D", "E"];
-
-function termToLabel(term: string): string {
-  const m = term.match(/^(\d{4})(ht|vt[ab]?)$/);
-  if (!m) return term;
-  const season = m[2].startsWith("ht") ? "Höstprovet" : "Vårprovet";
-  return `${season} ${m[1]}`;
-}
 
 function termSortKey(term: string): string {
   const m = term.match(/^(\d{4})(ht|vt)/);

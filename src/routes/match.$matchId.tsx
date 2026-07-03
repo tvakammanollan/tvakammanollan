@@ -85,6 +85,11 @@ function MatchPage() {
   // Alla reconnect-försök uttömda — visa explicit läge i stället för tyst väntan.
   const [connectionLost, setConnectionLost] = useState(false);
   const submittedRef = useRef(false);
+  // Färsk user-referens för realtime-callbacks (utan att vara effect-dep).
+  const userRef = useRef(user);
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
   const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
   const answerTimesRef = useRef<Record<string, number>>({});
   // En enda delad progress-kanal (undvik dubbla prenumerationer + om-prenumeration per fråga).
@@ -491,7 +496,11 @@ function MatchPage() {
 
     const handleUpdate = (payload: { new: { status?: string } }) => {
       if (payload.new?.status === "finished") {
-        if (user) void updateStreak(user.id);
+        // Läs user via ref — att lägga `user` i deps skulle re-subscriba
+        // realtime-kanalen vid varje auth-uppdatering (samma buggklass som
+        // login-kraschen). Refen synkas i en egen effekt nedan.
+        const u = userRef.current;
+        if (u) void updateStreak(u.id);
         navigate({ to: "/result/$matchId", params: { matchId } });
       }
     };

@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { termToLabel, type RawQ } from "@/types/gamla-prov";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
 /* =====================================================================
@@ -17,30 +18,6 @@ const ALT_LABELS = ["A", "B", "C", "D", "E"];
 const KNOWN_TERMS = ["2026vt", "2025ht", "2025vt", "2024ht", "2024vt", "2022ht"];
 
 const DELPROV_ORDER = ["ORD", "MEK", "LÄS", "ELF", "XYZ", "KVA", "NOG", "DTK"];
-
-interface RawQ {
-  exam_term: string;
-  provpass: number;
-  nr: number;
-  delProv: string;
-  fraga: string;
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  e: string;
-  svar: string;
-  passage?: string;
-  passage_title?: string;
-  image?: string;
-}
-
-function termToLabel(term: string): string {
-  const m = term.match(/^(\d{4})(ht|vt[ab]?)$/);
-  if (!m) return term;
-  const season = m[2].startsWith("ht") ? "Höstprovet" : "Vårprovet";
-  return `${season} ${m[1]}`;
-}
 
 function delProvFull(code: string): string {
   const m: Record<string, string> = {

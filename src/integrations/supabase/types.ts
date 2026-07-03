@@ -429,6 +429,7 @@ export type Database = {
           },
         ];
       };
+      // OBS: oanvänd i appkoden (2026-07) — behållen då tabellen finns i DB.
       matches_archive: {
         Row: {
           bot_elo: number | null;
@@ -528,6 +529,7 @@ export type Database = {
           },
         ];
       };
+      // OBS: oanvänd i appkoden (2026-07) — behållen då tabellen finns i DB.
       messages: {
         Row: {
           body: string;
@@ -847,6 +849,7 @@ export type Database = {
         };
         Relationships: [];
       };
+      // OBS: oanvänd i appkoden (2026-07) — behållen då tabellen finns i DB.
       weekly_challenge_entries: {
         Row: {
           challenge_id: string;
@@ -886,6 +889,7 @@ export type Database = {
           },
         ];
       };
+      // OBS: oanvänd i appkoden (2026-07) — behållen då tabellen finns i DB.
       weekly_challenges: {
         Row: {
           created_at: string;

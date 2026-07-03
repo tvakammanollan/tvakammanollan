@@ -24,8 +24,13 @@ When you discover a better pattern or a gotcha, update the relevant section here
 npm run dev        # Start dev server (Vite + TanStack Start SSR)
 npm run build      # Production build (Cloudflare Workers via wrangler)
 npm run lint       # ESLint
+npm run test       # Vitest — unit tests for pure libs (normering, hpScore, achievements, elo)
 npx tsc --noEmit   # Type-check without building
 ```
+
+Tests live next to their modules (`src/lib/*.test.ts`) and use a standalone
+`vitest.config.ts` (does NOT load the app vite config, so Lovable/Cloudflare
+plugins stay out of test runs).
 
 The app deploys to Cloudflare Workers via Lovable — push to `main` on GitHub, then trigger deploy from Lovable.
 
@@ -112,6 +117,7 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - `displayCategory()` in `src/lib/sv-format.ts` — always use this to render question category names (maps `"LAS"→"LÄS"`; other codes like ORD, MEK, ELF are already display-safe)
 - Number/date formatting helpers (`formatInt`, `formatDecimal`, `formatRelativeTime`, etc.) are in `src/lib/sv-format.ts` — use these everywhere instead of raw `toLocaleString`
 - `@/` path alias maps to `src/`
+- Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 
 ### Rate limiting
