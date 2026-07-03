@@ -2,6 +2,14 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { limits } from "./rate-limit";
+import { assertRateLimit, ipKey } from "./rate-limit.server";
+
+/** Logga DB-felet server-side men exponera bara generisk svensk text. */
+function throwDbError(error: { message: string }, ctx: string): never {
+  console.error(`[word-practice] ${ctx}:`, error.message);
+  throw new Error("Något gick fel — försök igen om en stund.");
+}
 
 export type WordQuestion = {
   id: string;
@@ -33,6 +41,8 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         .parse(data ?? {}),
   )
   .handler(async ({ data }) => {
+    // Publik + tung query (upp till 10k rader) — hamringsskydd per IP.
+    assertRateLimit(ipKey("wordbatch"), limits.wordBatch);
     const supabase = supabaseAdmin;
     const excludeIds = new Set(data.exclude);
     if (data.excludeCorrectForUserId) {
@@ -53,7 +63,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     else if (data.sourceFilter === "list") query = query.is("source", null);
     if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
     const { data: rows, error } = await query;
-    if (error) throw new Error(error.message);
+    if (error) throwDbError(error, "fetchWordBatch");
     const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));
     for (let i = filtered.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -87,7 +97,7 @@ export const countOrdQuestions = createServerFn({ method: "GET" }).handler(async
     .from("questions")
     .select("id", { count: "exact", head: true })
     .eq("category", "ORD");
-  if (error) throw new Error(error.message);
+  if (error) throwDbError(error, "countOrdQuestions");
   return { count: count ?? 0 };
 });
 
@@ -213,7 +223,7 @@ export const recordOrdAnswer = createServerFn({ method: "POST" })
       },
       { onConflict: "user_id" },
     );
-    if (error) throw new Error(error.message);
+    if (error) throwDbError(error, "recordOrdAnswer");
     return { correct_count: newCorrect, total_count: newTotal };
   });
 
@@ -241,7 +251,7 @@ export const fetchFailedWordBatch = createServerFn({ method: "GET" })
         "id,question_text,options,correct_answer,source,difficulty,definition,definition_source",
       )
       .in("id", ids);
-    if (error) throw new Error(error.message);
+    if (error) throwDbError(error, "fetchFailedWordBatch");
 
     // Preserve order from failedRows (due first)
     const byId = new Map((rows ?? []).map((r: { id: string }) => [r.id, r]));
@@ -348,7 +358,7 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
       .gte("total_count", 1)
       .order("correct_count", { ascending: false })
       .limit(200);
-    if (error) throw new Error(error.message);
+    if (error) throwDbError(error, "fetchOrdLeaderboard");
 
     const statsRows = (stats ?? []) as Array<{
       user_id: string;

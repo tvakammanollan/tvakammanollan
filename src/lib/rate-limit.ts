@@ -60,4 +60,8 @@ export const limits = {
   bugReport: { max: 1, windowMs: 15 * 60 * 1000 } as LimitConfig, // 1/15min
   /** Inviting a friend to a match. */
   matchInvite: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/hour
+  /** Publika läs-endpoints (topplistor m.m.) — per IP, stoppar hamring. */
+  publicRead: { max: 120, windowMs: 60 * 1000 } as LimitConfig, // 120/min
+  /** Ordbatch-hämtning (tung query) — per IP. */
+  wordBatch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
 };

@@ -45,9 +45,11 @@ function MatchmakingPage() {
   const [maxElo, setMaxElo] = useState<number | null>(null);
   const [myElo, setMyElo] = useState<number | null>(null);
   const [navigating, setNavigating] = useState(false);
+  const [failed, setFailed] = useState(false);
   const cancelledRef = useRef(false);
   const navigatedRef = useRef(false);
   const botFiredRef = useRef(false);
+  const botAttemptsRef = useRef(0);
   const guestSignInRef = useRef(false);
 
   // No session yet? Sign in as an anonymous guest instead of bouncing to /login.
@@ -102,6 +104,7 @@ function MatchmakingPage() {
 
   // Auto-match with bot after 6s if no human found — seamless, no indication it's a bot
   useEffect(() => {
+    if (failed) return;
     if (elapsed >= 6 && !navigatedRef.current && !botFiredRef.current && !navigating) {
       botFiredRef.current = true;
       void (async () => {
@@ -115,13 +118,19 @@ function MatchmakingPage() {
             navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
           }
         } catch (e) {
-          botFiredRef.current = false;
           console.error("bot fallback failed", e);
+          botAttemptsRef.current += 1;
+          if (botAttemptsRef.current >= 3) {
+            // Sluta hamra servern — visa explicit felläge i stället för evig spinner.
+            setFailed(true);
+          } else {
+            botFiredRef.current = false; // tillåt nytt försök vid nästa tick
+          }
         }
       })();
     }
     if (elapsed === 30 && range === 200) setRange(400);
-  }, [elapsed, range, navigating, cancelFn, createFn, type, navigate]);
+  }, [elapsed, range, navigating, failed, cancelFn, createFn, type, navigate]);
 
   // Polling for match
   useEffect(() => {
@@ -196,6 +205,44 @@ function MatchmakingPage() {
 
   const mm = String(Math.floor(elapsed / 60)).padStart(2, "0");
   const ss = String(elapsed % 60).padStart(2, "0");
+
+  // Explicit felläge efter 3 misslyckade match-försök — ingen evig spinner.
+  if (failed) {
+    return (
+      <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-5 px-6 py-16 text-center">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#e25a6a]/30 bg-[#e25a6a]/10 text-2xl">
+          ⚠️
+        </span>
+        <div>
+          <h1
+            className="text-xl font-bold text-[#e8e4da]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Kunde inte starta en match
+          </h1>
+          <p className="mt-2 text-sm text-white/60">
+            Något strular just nu. Försök igen om en stund.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button
+            onClick={() => {
+              botAttemptsRef.current = 0;
+              botFiredRef.current = false;
+              cancelledRef.current = false;
+              setFailed(false);
+              setElapsed(0);
+            }}
+          >
+            Försök igen
+          </Button>
+          <Button variant="ghost" onClick={() => navigate({ to: "/" })}>
+            Till start
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center">

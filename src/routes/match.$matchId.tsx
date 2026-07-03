@@ -82,6 +82,8 @@ function MatchPage() {
   const [oppSecondsLeft, setOppSecondsLeft] = useState(30);
   const [oppProgress, setOppProgress] = useState(0);
   const [reconnecting, setReconnecting] = useState(false);
+  // Alla reconnect-försök uttömda — visa explicit läge i stället för tyst väntan.
+  const [connectionLost, setConnectionLost] = useState(false);
   const submittedRef = useRef(false);
   const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
   const answerTimesRef = useRef<Record<string, number>>({});
@@ -518,6 +520,10 @@ function MatchPage() {
                 void supabase.removeChannel(ch);
                 connect();
               }, delay);
+            } else {
+              // Ge upp tyst omanslutning — berätta för användaren och erbjud
+              // manuell väg till resultatet (30s-nedräkningen tar oss dit ändå).
+              setConnectionLost(true);
             }
           }
         });
@@ -605,7 +611,25 @@ function MatchPage() {
   if (waitingForOpp) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-        {reconnecting && (
+        {connectionLost ? (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-3 text-sm text-destructive"
+            role="status"
+            aria-live="polite"
+          >
+            <p>Kunde inte återansluta — matchstatusen kan inte bekräftas live.</p>
+            <Button
+              size="sm"
+              variant="outline"
+              className="mt-2"
+              onClick={() => navigate({ to: "/result/$matchId", params: { matchId } })}
+            >
+              Visa resultat nu
+            </Button>
+          </motion.div>
+        ) : reconnecting ? (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -615,7 +639,7 @@ function MatchPage() {
           >
             Anslutningen bröts – försöker återansluta…
           </motion.div>
-        )}
+        ) : null}
         <motion.span
           className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
           animate={{ scale: [1, 1.08, 1] }}
@@ -641,7 +665,7 @@ function MatchPage() {
           <motion.div
             className="h-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
-            transition={{ duration: 0.5, ease: "linear" }}
+            transition={{ duration: 0.95, ease: "linear" }}
           />
         </div>
       </div>

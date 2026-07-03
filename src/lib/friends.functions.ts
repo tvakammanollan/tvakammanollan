@@ -3,6 +3,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { selectQuestionsFor, insertMatchQuestions } from "./match.server";
+import { limits } from "./rate-limit";
+import { assertRateLimit } from "./rate-limit.server";
 
 export const sendFriendRequest = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -11,6 +13,7 @@ export const sendFriendRequest = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { userId } = context;
+    assertRateLimit(`friendReq:${userId}`, limits.friendRequest);
 
     const { data: target } = await supabaseAdmin
       .from("users")
@@ -111,6 +114,7 @@ export const inviteFriendToMatch = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { userId } = context;
+    assertRateLimit(`matchInvite:${userId}`, limits.matchInvite);
 
     // Verify they are friends
     const { data: friendship } = await supabaseAdmin
@@ -165,6 +169,8 @@ export const requestRematch = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ match_id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     const { userId } = context;
+    // Revansch delar invite-budgeten (samma spam-yta).
+    assertRateLimit(`matchInvite:${userId}`, limits.matchInvite);
 
     const { data: prev } = await supabaseAdmin
       .from("matches")

@@ -171,8 +171,21 @@ function TrainPage() {
     if (config.difficulty !== null) {
       q = q.eq("difficulty", config.difficulty);
     }
-    // Pull a wider pool then shuffle client-side
-    const { data, error } = await q.limit(300);
+    // Pull a wider pool then shuffle client-side.
+    // try/catch: en kastad nätverksexception (inte bara {error}) får inte
+    // lämna kvar "loading"-fasen som en evig spinner.
+    let data: Awaited<ReturnType<typeof q.limit>>["data"];
+    let error: Awaited<ReturnType<typeof q.limit>>["error"];
+    try {
+      ({ data, error } = await q.limit(300));
+    } catch (e) {
+      console.error("[train] question fetch threw", e);
+      toast.error("Kunde inte hämta frågor", {
+        description: "Kontrollera din uppkoppling och försök igen.",
+      });
+      setPhase("setup");
+      return;
+    }
     if (error) {
       toast.error("Kunde inte hämta frågor", {
         description: "Försök igen om en stund eller ladda om sidan.",

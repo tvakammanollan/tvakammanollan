@@ -3,6 +3,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { selectQuestionsFor, insertMatchQuestions } from "./match.server";
+import { limits } from "./rate-limit";
+import { assertRateLimit } from "./rate-limit.server";
 
 const MatchTypeSchema = z.enum(["verbal", "math"]);
 
@@ -21,6 +23,7 @@ export const joinRankedQueue = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ match_type: MatchTypeSchema }).parse(input))
   .handler(async ({ data, context }) => {
     const { userId } = context;
+    assertRateLimit(`mm:${userId}`, limits.matchmaking);
     const elo = await getMyElo(userId, data.match_type);
 
     // Upsert queue entry (player_id is unique)

@@ -1,5 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { limits } from "./rate-limit";
+import { assertRateLimit, ipKey } from "./rate-limit.server";
 
 export interface LeaderboardRow {
   rank: number;
@@ -32,6 +34,8 @@ export interface WeeklyLeaderboardRow {
 export const fetchWeeklyLeaderboard = createServerFn({ method: "GET" })
   .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
   .handler(async ({ data }): Promise<WeeklyLeaderboardRow[]> => {
+    // Publik endpoint utan auth — hamringsskydd per IP.
+    assertRateLimit(ipKey("lb"), limits.publicRead);
     const limit = Math.min(Math.max(data.limit ?? 100, 1), 200);
     const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
@@ -72,6 +76,8 @@ export const fetchWeeklyLeaderboard = createServerFn({ method: "GET" })
 export const fetchLeaderboard = createServerFn({ method: "GET" })
   .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
   .handler(async ({ data }) => {
+    // Publik endpoint utan auth — hamringsskydd per IP.
+    assertRateLimit(ipKey("lb"), limits.publicRead);
     const eloCol = data.match_type === "verbal" ? "elo_verbal" : "elo_math";
     const limit = Math.min(Math.max(data.limit ?? 200, 1), 500);
 
