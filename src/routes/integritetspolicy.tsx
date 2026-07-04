@@ -29,7 +29,7 @@ function IntegritetspolicyPage() {
       <PageHero
         eyebrow="Juridik"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-05-18"
+        subtitle="Senast uppdaterad: 2026-07-04"
         variant="compact"
       />
       <article
@@ -130,7 +130,14 @@ function IntegritetspolicyPage() {
           <p>
             Enligt GDPR har du rätt att begära ut, rätta, radera eller begränsa behandlingen av dina
             personuppgifter. Du har även rätt till dataportabilitet och att invända mot
-            behandlingen. Kontakta oss på{" "}
+            behandlingen.
+          </p>
+          <p>
+            <strong style={{ color: "var(--cream)" }}>Radera kontot själv:</strong> gå till{" "}
+            <strong style={{ color: "var(--cream)" }}>Statistik → Radera konto</strong> när du är
+            inloggad. Det tar bort din inloggning, e-postadress och all personlig historik direkt;
+            matchresultat behålls enbart i anonymiserad form. För övriga rättigheter, kontakta oss
+            på{" "}
             <a
               href="mailto:info@hpkampen.se"
               className="underline"
@@ -156,8 +163,9 @@ function IntegritetspolicyPage() {
             Cookies
           </h2>
           <p>
-            Vi använder enbart funktionella cookies som behövs för inloggning och sessionshantering.
-            Inga spårningscookies, inga annonsidentifierare och ingen tredje part-analys.
+            Vi använder enbart funktionell lagring (cookies och localStorage) som behövs för
+            inloggning, sessionshantering och dina inställningar. Inga spårningscookies, inga
+            annonsidentifierare och ingen tredjepartsanalys.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>

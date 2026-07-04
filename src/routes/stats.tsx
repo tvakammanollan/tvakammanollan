@@ -36,6 +36,7 @@ import { getBotName } from "@/lib/bot";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
+import { DeleteAccountSection } from "@/components/DeleteAccountSection";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -625,6 +626,9 @@ function StatsPage() {
             </>
           )}
         </Reveal>
+
+        {/* GDPR: självservice-radering */}
+        <DeleteAccountSection />
       </main>
     </>
   );

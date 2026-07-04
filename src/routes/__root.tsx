@@ -182,12 +182,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // enbart renderblockerande dödvikt.
     ],
     scripts: [
-      // Google AdSense
-      {
-        src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1685910213641675",
-        async: true,
-        crossOrigin: "anonymous",
-      },
+      // OBS: AdSense-skriptet borttaget (2026-07). Det fanns inga annonsplatser
+      // i koden, CSP:n blockerade skriptet, OCH integritetspolicyn lovar "inga
+      // spårningscookies" — att ladda Googles tracker utan samtycke bryter mot
+      // GDPR/ePrivacy. Vill du visa annonser i framtiden krävs: (1) en Google-
+      // certifierad samtyckesplattform (CMP) FÖRE skriptet laddas för EU-
+      // användare, (2) CSP-uppdatering, (3) uppdaterad integritetspolicy.
+      // ads.txt ligger kvar i public/ inför den dagen.
       // Schema.org WebApplication
       {
         type: "application/ld+json",

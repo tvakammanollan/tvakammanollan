@@ -76,14 +76,15 @@ function withSecurityHeaders(response: Response): Response {
   if (!ct.includes("text/html")) return response;
 
   const headers = new Headers(response.headers);
-  // CSP — permissive enough for our font + supabase + lovable analytics, strict elsewhere.
+  // CSP — supabase + lovable analytics tillåts, strikt i övrigt.
+  // (Google Fonts-posterna borttagna 2026-07 — fonterna laddas inte längre.)
   headers.set(
     "Content-Security-Policy",
     [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app",
       "frame-ancestors 'none'",
@@ -96,6 +97,8 @@ function withSecurityHeaders(response: Response): Response {
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), browsing-topics=()");
   headers.set("X-Frame-Options", "DENY");
+  // HSTS — sajten är alltid HTTPS bakom Cloudflare; tvinga det i webbläsaren.
+  headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
 
   return new Response(response.body, {
     status: response.status,
