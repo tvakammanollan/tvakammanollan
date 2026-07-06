@@ -16,6 +16,9 @@ DB migrations, pushing to `main`, and any action that affects production require
 **4. Keep this file current**
 When you discover a better pattern or a gotcha, update the relevant section here. Do not create or overwrite other documentation files without being asked.
 
+**5. Verify before every commit — in this order**
+`npx tsc --noEmit` → `npx eslint src` (0 errors) → `npm run test` → `npm run build` → SSR smoke test (curl key routes → 200, invalid slugs → 404). For anything that renders only for logged-in users: headless Chrome with an injected Supabase session (create anon/real session via `POST {SUPABASE_URL}/auth/v1/signup` with the public anon key, put it in localStorage under `sb-<ref>-auth-token`, load the page, assert no "Något gick snett"). One logical commit per change; push only when green.
+
 ---
 
 ## Commands
@@ -32,7 +35,13 @@ Tests live next to their modules (`src/lib/*.test.ts`) and use a standalone
 `vitest.config.ts` (does NOT load the app vite config, so Lovable/Cloudflare
 plugins stay out of test runs).
 
-The app deploys to Cloudflare Workers via Lovable — push to `main` on GitHub, then trigger deploy from Lovable.
+The app deploys to Cloudflare Workers via Lovable — push to `main` on GitHub, then trigger deploy from Lovable. **Always end a work session by reminding Niklas to deploy** — pushed ≠ live.
+
+### Environment quirks (hard-won)
+
+- **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
+- **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
+- External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
 
 ---
 
@@ -119,10 +128,28 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
+- **Design (anti vibe-coded):** the app is always-dark. Card surface = `border border-white/10 bg-white/[0.02] backdrop-blur-sm`; brand accents amber `#f2a65a` / teal `#6fb3b8` on `--navy #170d05`. Never hardcode light surfaces (`bg-white`, light gradients) — inherited cream text becomes unreadable. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global amber focus ring works automatically.
+- **New indexable pages:** SSR the content (route `loader`, not client fetch), use `pageMeta`/`pageLinks` + JSON-LD, add the URL to `public/sitemap.xml`, and cross-link from related pages (guider ↔ öva ↔ gamla-prov cluster).
 
-### Rate limiting
+### Realtime (Supabase) — crash class to avoid
 
-`src/lib/rate-limit.ts` provides an in-memory rate limiter for Cloudflare Workers (single-process, per-region). Pre-configured limits are exported as `limits.*` (e.g. `limits.matchmaking`, `limits.friendRequest`).
+- `postgres_changes` channels mounted in always-present components (Navbar, `__root`) MUST have **unique names per mount** (`` `topic-${id}-${Math.random().toString(36).slice(2)}` ``) + try/catch around `.subscribe()`. Reused topic names during rapid remount (auth transitions) throw `cannot add postgres_changes callbacks after subscribe()` — this once crashed login for all real users.
+- **Broadcast** channels (match progress) are the opposite: both players must share the exact topic name — never add random suffixes there.
+- Wrap all root/Navbar-mounted widgets in `SafeBoundary` (`src/components/SafeBoundary.tsx`).
+
+### Rate limiting — mandatory on new endpoints
+
+`src/lib/rate-limit.ts` (pure limiter + `limits.*` configs) + `src/lib/rate-limit.server.ts` (`assertRateLimit`, `ipKey`). Rules:
+- Authenticated mutations: `assertRateLimit(\`thing:${userId}\`, limits.xxx)` first in the handler.
+- Public GET endpoints: `assertRateLimit(ipKey("thing"), limits.publicRead)` (keys on `cf-connecting-ip`).
+- Per-isolate on Cloudflare — it's a hammering brake, not an exact global quota.
+
+### GDPR / privacy — non-negotiable
+
+- `/integritetspolicy` must stay **factually true** — it promises no tracking cookies and no third-party analytics. Never add a third-party script (ads, analytics) without a consent platform + policy update; AdSense was removed for exactly this reason (see comment in `__root.tsx`).
+- Account deletion exists (`src/lib/account.functions.ts` + danger zone on `/stats`): deletes personal data, anonymizes the `users` row (empty username hides it from leaderboards, match FKs survive), hard-deletes the auth user with scramble+ban fallback.
+- Usage analytics go through `logUsageEvent` → `audit_log` with `usage:`-namespaced actions (no new tables needed). Admin dashboard: `/admin` → "Användning".
+- Error messages to clients must be generic Swedish — log the raw DB error server-side (`throwDbError` pattern in `word-practice.functions.ts`).
 
 ### DB migrations
 
