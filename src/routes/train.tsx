@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -121,6 +121,13 @@ function TrainPage() {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
+  // Tid per fråga → time_spent_seconds på tränings-svar (aktiv tid-statistik).
+  const questionShownAtRef = useRef(Date.now());
+  useEffect(() => {
+    questionShownAtRef.current = Date.now();
+  }, [current, questions]);
+  const questionSeconds = () =>
+    Math.min(1800, Math.max(0, Math.round((Date.now() - questionShownAtRef.current) / 1000)));
   const [results, setResults] = useState<
     {
       qId: string;
@@ -286,6 +293,7 @@ function TrainPage() {
         is_correct: isCorrect,
         is_training: true,
         difficulty: currentQ.difficulty,
+        time_spent_seconds: questionSeconds(),
       });
     }
   };
@@ -311,6 +319,7 @@ function TrainPage() {
         is_correct: false,
         is_training: true,
         difficulty: currentQ.difficulty,
+        time_spent_seconds: questionSeconds(),
       });
     }
     goNext(true);

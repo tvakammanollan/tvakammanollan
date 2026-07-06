@@ -25,6 +25,7 @@ import {
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
+import { AdminUsageTab } from "@/components/AdminUsageTab";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
@@ -95,6 +96,7 @@ function AdminPage() {
           <TabsTrigger value="stats">📊 Frågestatistik</TabsTrigger>
           <TabsTrigger value="reports">⚑ Rapporter</TabsTrigger>
           <TabsTrigger value="ord-audit">🔍 ORD-audit</TabsTrigger>
+          <TabsTrigger value="usage">📈 Användning</TabsTrigger>
         </TabsList>
 
         <TabsContent value="manage">
@@ -111,6 +113,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="ord-audit">
           <OrdAuditTab />
+        </TabsContent>
+        <TabsContent value="usage">
+          <AdminUsageTab />
         </TabsContent>
       </Tabs>
     </main>

@@ -2,7 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { termToLabel, type RawQ } from "@/types/gamla-prov";
 import { PageHero } from "@/components/layout/PageHero";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { logUsageEvent } from "@/lib/usage.functions";
 import {
   ChevronLeft,
   ChevronRight,
@@ -158,6 +160,10 @@ function GamlaProvPage() {
   // Selection
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [selectedPass, setSelectedPass] = useState<number | null>(null);
+  // När passet startades — för duration i användningsstatistiken.
+  const passStartedAtRef = useRef<number | null>(null);
+  // Kräver inloggning (gäst räcker) — utloggade besökare loggas inte alls.
+  const logUsage = useServerFn(logUsageEvent);
 
   // Quiz state
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -235,6 +241,26 @@ function GamlaProvPage() {
     setSubmitted(true);
     setShowResults(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    // Användningsstatistik (best-effort, stör aldrig flödet): hur många gör
+    // gamla prov, hur många rätt och hur länge de höll på.
+    if (selectedTerm && selectedPass) {
+      const durationS = passStartedAtRef.current
+        ? Math.min(6 * 3600, Math.round((Date.now() - passStartedAtRef.current) / 1000))
+        : 0;
+      const finalScore = questions.filter((qq) => answers[qq.nr] === qq.svar).length;
+      void logUsage({
+        data: {
+          event: "gamla_prov_submit",
+          meta: {
+            term: selectedTerm,
+            provpass: selectedPass,
+            score: hasFacit ? finalScore : null,
+            total,
+            duration_s: durationS,
+          },
+        },
+      }).catch(() => {});
+    }
   }
 
   function backToExams() {
@@ -263,6 +289,7 @@ function GamlaProvPage() {
     setSubmitted(false);
     setShowResults(false);
     setShowPassage(true);
+    passStartedAtRef.current = Date.now();
   }
 
   /* ── Loading / error ─────────────────────────────────────────── */
