@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "hpkampen-mcp",
+      "version": "0.1.0",
+      "title": "HP Kampen"
+    },
+    "tools": [
+      {
+        "name": "get_hp_dates",
+        "title": "Kommande högskoleprovsdatum",
+        "description": "Returnerar officiella datum för kommande högskoleprov (HP) samt hur många dagar det är kvar till nästa prov.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "include_past": {
+              "type": "boolean",
+              "description": "Ta även med tidigare provdatum (default false)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_leaderboard",
+        "title": "Topplista",
+        "description": "Hämtar topplistan för HP Kampen — spelare rankade efter ELO i antingen verbal (ORD/MEK/LÄS/ELF) eller matematisk (XYZ/KVA/NOG/DTK) del.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "match_type": {
+              "type": "string",
+              "enum": [
+                "verbal",
+                "math"
+              ],
+              "description": "Vilken kategori topplistan gäller."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "description": "Antal spelare att returnera (1–50, default 10)."
+            }
+          },
+          "required": [
+            "match_type"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "lookup_word",
+        "title": "Slå upp ord (ORD)",
+        "description": "Slår upp definitionen för ett svenskt ord som förekommit i ORD-delen av högskoleprovet. Returnerar definition och källa om ordet finns i databasen.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "word": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Ordet att slå upp (t.ex. 'kapabel')."
+            }
+          },
+          "required": [
+            "word"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
