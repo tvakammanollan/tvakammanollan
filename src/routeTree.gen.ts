@@ -16,6 +16,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OmRouteImport } from './routes/om'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
@@ -47,6 +48,9 @@ import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
 import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const VillkorRoute = VillkorRouteImport.update({
   id: '/villkor',
@@ -81,6 +85,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
 const OmRoute = OmRouteImport.update({
   id: '/om',
   path: '/om',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MatchmakingRoute = MatchmakingRouteImport.update({
@@ -239,6 +248,24 @@ const GamlaProvTermRoute = GamlaProvTermRouteImport.update({
   path: '/gamla-prov/$term',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -254,6 +281,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/mcp': typeof McpRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -261,6 +289,8 @@ export interface FileRoutesByFullPath {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -279,6 +309,7 @@ export interface FileRoutesByFullPath {
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -294,6 +325,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/mcp': typeof McpRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -301,6 +333,8 @@ export interface FileRoutesByTo {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -319,6 +353,7 @@ export interface FileRoutesByTo {
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider': typeof GuiderIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -335,6 +370,7 @@ export interface FileRoutesById {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
+  '/mcp': typeof McpRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -342,6 +378,8 @@ export interface FileRoutesById {
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
   '/villkor': typeof VillkorRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/gamla-prov_/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -360,6 +398,7 @@ export interface FileRoutesById {
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -377,6 +416,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/mcp'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -384,6 +424,8 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -402,6 +444,7 @@ export interface FileRouteTypes {
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -417,6 +460,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/mcp'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -424,6 +468,8 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -442,6 +488,7 @@ export interface FileRouteTypes {
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider'
+    | '/.mcp/invoke-tool/$tool'
   id:
     | '__root__'
     | '/'
@@ -457,6 +504,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/matchmaking'
+    | '/mcp'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -464,6 +512,8 @@ export interface FileRouteTypes {
     | '/stats'
     | '/train'
     | '/villkor'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/gamla-prov_/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -482,6 +532,7 @@ export interface FileRouteTypes {
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -498,6 +549,7 @@ export interface RootRouteChildren {
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   MatchmakingRoute: typeof MatchmakingRoute
+  McpRoute: typeof McpRoute
   OmRoute: typeof OmRoute
   OnboardingRoute: typeof OnboardingRoute
   OrdRoute: typeof OrdRoute
@@ -505,6 +557,8 @@ export interface RootRouteChildren {
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
   VillkorRoute: typeof VillkorRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   GamlaProvTermRoute: typeof GamlaProvTermRoute
   GuiderBraResultatRoute: typeof GuiderBraResultatRoute
   GuiderDtkRoute: typeof GuiderDtkRoute
@@ -523,6 +577,7 @@ export interface RootRouteChildren {
   OvaDelprovRoute: typeof OvaDelprovRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
   GuiderIndexRoute: typeof GuiderIndexRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -574,6 +629,13 @@ declare module '@tanstack/react-router' {
       path: '/om'
       fullPath: '/om'
       preLoaderRoute: typeof OmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/matchmaking': {
@@ -793,6 +855,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamlaProvTermRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -810,6 +893,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   MatchmakingRoute: MatchmakingRoute,
+  McpRoute: McpRoute,
   OmRoute: OmRoute,
   OnboardingRoute: OnboardingRoute,
   OrdRoute: OrdRoute,
@@ -817,6 +901,9 @@ const rootRouteChildren: RootRouteChildren = {
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
   VillkorRoute: VillkorRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   GamlaProvTermRoute: GamlaProvTermRoute,
   GuiderBraResultatRoute: GuiderBraResultatRoute,
   GuiderDtkRoute: GuiderDtkRoute,
@@ -835,6 +922,7 @@ const rootRouteChildren: RootRouteChildren = {
   OvaDelprovRoute: OvaDelprovRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,
   GuiderIndexRoute: GuiderIndexRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
