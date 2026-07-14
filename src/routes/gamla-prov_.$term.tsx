@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { ordText } from "@/lib/sv-format";
 import { termToLabel, type RawQ } from "@/types/gamla-prov";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
@@ -184,7 +185,7 @@ function ExamTermPage() {
                         Fråga {q.nr}
                       </div>
                       <p className="mt-1 whitespace-pre-wrap text-[15px] font-medium leading-relaxed text-[#e8e4da]">
-                        {q.fraga}
+                        {g.code === "ORD" ? ordText(q.fraga) : q.fraga}
                       </p>
                       {q.image && (
                         <img
@@ -219,7 +220,9 @@ function ExamTermPage() {
                               >
                                 {ALT_LABELS[ai]}
                               </span>
-                              <span className="leading-relaxed">{text}</span>
+                              <span className="leading-relaxed">
+                                {g.code === "ORD" ? ordText(text) : text}
+                              </span>
                             </li>
                           );
                         })}

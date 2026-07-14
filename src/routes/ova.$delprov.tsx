@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { ordText } from "@/lib/sv-format";
 import { type RawQ } from "@/types/gamla-prov";
 import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
 
@@ -235,7 +236,7 @@ function OvaDelprovPage() {
                   </p>
                 )}
                 <p className="mt-2 whitespace-pre-wrap text-[15px] font-medium leading-relaxed text-[#e8e4da]">
-                  {q.fraga}
+                  {cfg.code === "ORD" ? ordText(q.fraga) : q.fraga}
                 </p>
                 {q.image && (
                   <img
@@ -268,7 +269,9 @@ function OvaDelprovPage() {
                         >
                           {ALT_LABELS[ai]}
                         </span>
-                        <span className="leading-relaxed">{text}</span>
+                        <span className="leading-relaxed">
+                          {cfg.code === "ORD" ? ordText(text) : text}
+                        </span>
                       </li>
                     );
                   })}

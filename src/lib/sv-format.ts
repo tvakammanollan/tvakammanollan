@@ -75,3 +75,30 @@ export function formatTime(date: Date | string | number): string {
 export function displayCategory(category: string): string {
   return category === "LAS" ? "LÄS" : category;
 }
+
+/**
+ * Normaliserar ett HP-ord eller svarsalternativ för visning.
+ *
+ * Ord i databasen har blandad casing (vissa VERSALER, vissa gemener) och
+ * ibland ojämna mellanslag. Svenska uppslagsord skrivs med gemener, så vi
+ * normaliserar ALLTID vid rendering — använd denna överallt där ORD-ord
+ * eller deras alternativ visas (ord-träning, matcher, träning, resultat,
+ * gamla prov, dagens ord).
+ *
+ *   ordText("  PROGNOS ")   → "prognos"
+ *   ordText("Ta  reda på")  → "ta reda på"
+ */
+export function ordText(s: string | null | undefined): string {
+  return (s ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+/**
+ * Normaliserar en ordförklaring/definition för visning: trimmar och ser
+ * till att den börjar med versal (källorna blandar). Radbrytningar bevaras
+ * (definitioner renderas med whitespace-pre-wrap).
+ */
+export function ordDefinition(s: string | null | undefined): string {
+  const t = (s ?? "").trim();
+  if (!t) return t;
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}

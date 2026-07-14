@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { m } from "framer-motion";
-import { displayCategory } from "@/lib/sv-format";
+import { displayCategory, ordText } from "@/lib/sv-format";
 import { LogOut, Trophy } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
@@ -871,6 +871,9 @@ function QuestionCard({
 }: QuestionCardProps) {
   const optionLetters = ["A", "B", "C", "D", "E"];
   const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
+  // ORD-ord har blandad casing i datan — normalisera alltid vid visning.
+  const isOrd = currentQ.category === "ORD";
+  const displayQ = isOrd ? ordText(currentQ.question_text) : currentQ.question_text;
   return (
     <div
       key={currentQ.id}
@@ -884,7 +887,7 @@ function QuestionCard({
         className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
         style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
       >
-        {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
+        {isMath ? <MathText>{currentQ.question_text}</MathText> : displayQ}
       </h2>
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
@@ -922,7 +925,7 @@ function QuestionCard({
                 {letter}
               </span>
               <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                {isMath ? <MathText>{opt}</MathText> : opt}
+                {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
               </span>
             </button>
           );

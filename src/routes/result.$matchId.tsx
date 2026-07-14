@@ -9,7 +9,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { createMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
-import { displayCategory } from "@/lib/sv-format";
+import { displayCategory, ordText } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   Accordion,
@@ -693,6 +693,8 @@ function ResultPage() {
                       <div className="whitespace-pre-wrap text-sm leading-relaxed">
                         {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
                           <MathText autoDetect>{q.question_text}</MathText>
+                        ) : q.category === "ORD" ? (
+                          ordText(q.question_text)
                         ) : (
                           q.question_text
                         )}
@@ -717,7 +719,13 @@ function ResultPage() {
                                 {opt.id}
                               </span>
                               <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
-                                {isMath ? <MathText autoDetect>{opt.text}</MathText> : opt.text}
+                                {isMath ? (
+                                  <MathText autoDetect>{opt.text}</MathText>
+                                ) : q.category === "ORD" ? (
+                                  ordText(opt.text)
+                                ) : (
+                                  opt.text
+                                )}
                               </span>
                               {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-400" />}
                               {isPicked && !isCorrect && (

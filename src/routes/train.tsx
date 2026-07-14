@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
-import { displayCategory } from "@/lib/sv-format";
+import { displayCategory, ordText } from "@/lib/sv-format";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
@@ -549,7 +549,13 @@ function TrainPage() {
               className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
               style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
             >
-              {isMath ? <MathText>{currentQ.question_text}</MathText> : currentQ.question_text}
+              {isMath ? (
+                <MathText>{currentQ.question_text}</MathText>
+              ) : currentQ.category === "ORD" ? (
+                ordText(currentQ.question_text)
+              ) : (
+                currentQ.question_text
+              )}
             </h2>
             {currentQ.image_url && (
               <div className="mb-5 overflow-hidden rounded-xl border border-border">
@@ -602,7 +608,13 @@ function TrainPage() {
                       )}
                     </span>
                     <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                      {isMath ? <MathText>{opt}</MathText> : opt}
+                      {isMath ? (
+                        <MathText>{opt}</MathText>
+                      ) : currentQ.category === "ORD" ? (
+                        ordText(opt)
+                      ) : (
+                        opt
+                      )}
                     </span>
                   </button>
                 );

@@ -10,6 +10,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 
 import { ArrowRight, Check, X, RotateCcw, GraduationCap, Trophy, BookOpen } from "lucide-react";
+import { ordText, ordDefinition } from "@/lib/sv-format";
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
@@ -129,7 +130,7 @@ function DefinitionBlock({
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
-        {open ? "Dölj förklaring" : `Vad betyder "${word.toLowerCase()}"?`}
+        {open ? "Dölj förklaring" : `Vad betyder "${ordText(word)}"?`}
       </button>
       <div
         className="grid transition-all duration-300 ease-out"
@@ -145,7 +146,7 @@ function DefinitionBlock({
               className="whitespace-pre-wrap text-[#e8e4da]"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
-              {definition}
+              {ordDefinition(definition)}
             </p>
           </div>
         </div>
@@ -436,7 +437,7 @@ function OrdPracticePage() {
 
               {/* Source filter */}
               <div
-                className={`mt-5 rounded-xl border border-border bg-white p-4 ${failedMode ? "opacity-40 pointer-events-none" : ""}`}
+                className={`mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm ${failedMode ? "opacity-40 pointer-events-none" : ""}`}
               >
                 <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
                 <div className="grid grid-cols-3 gap-2">
@@ -454,7 +455,7 @@ function OrdPracticePage() {
                       className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
                         sourceFilter === o.v
                           ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
-                          : "border-border bg-white hover:bg-muted"
+                          : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
                       }`}
                     >
                       <div>{o.label}</div>
@@ -483,7 +484,9 @@ function OrdPracticePage() {
                         disabled={disabled}
                         onClick={() => toggleDifficulty(o.d)}
                         className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
-                          active ? "text-white" : "border-border bg-white hover:bg-muted"
+                          active
+                            ? "text-white"
+                            : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
                         }`}
                         style={active ? { background: o.color, borderColor: o.color } : undefined}
                       >
@@ -539,7 +542,7 @@ function OrdPracticePage() {
                         >
                           <div className="min-w-0 flex-1">
                             <span className="text-sm font-medium tracking-tight text-[#050507]">
-                              {w.question_text}
+                              {ordText(w.question_text)}
                             </span>
                             <div className="mt-1 flex items-center gap-2">
                               <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
@@ -618,13 +621,13 @@ function OrdPracticePage() {
             {!current ? (
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
-              <article className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
+              <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm sm:p-8">
                 <div className="text-[11px] tracking-wide text-muted-foreground">Synonym till</div>
                 <h2
                   className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {current.question_text.toLowerCase()}
+                  {ordText(current.question_text)}
                 </h2>
 
                 <div className="mt-6 grid gap-2.5">
@@ -636,13 +639,13 @@ function OrdPracticePage() {
                       "flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all";
                     if (!showState) {
                       cls +=
-                        " border-border bg-white hover:border-primary/50 hover:bg-primary-soft cursor-pointer";
+                        " border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10 cursor-pointer";
                     } else if (isCorrect) {
                       cls += " border-green-500/50 bg-green-500/10 text-green-100";
                     } else if (isPicked) {
                       cls += " border-red-500/50 bg-red-500/10 text-red-100";
                     } else {
-                      cls += " border-border bg-white opacity-60";
+                      cls += " border-white/10 bg-white/[0.02] opacity-60";
                     }
                     return (
                       <button
@@ -656,7 +659,7 @@ function OrdPracticePage() {
                           <span className="flex h-6 w-6 items-center justify-center rounded-md border border-border text-xs font-semibold tabular-nums text-muted-foreground">
                             {opt.id}
                           </span>
-                          <span>{opt.text}</span>
+                          <span>{ordText(opt.text)}</span>
                         </span>
                         {showState && isCorrect && <Check className="h-5 w-5 text-green-400" />}
                         {showState && isPicked && !isCorrect && (
@@ -737,11 +740,9 @@ function OrdPracticePage() {
                         {i + 1}
                       </span>
                       <div className="flex-1">
-                        <div className="font-semibold">
-                          {a.question.question_text.toLowerCase()}
-                        </div>
+                        <div className="font-semibold">{ordText(a.question.question_text)}</div>
                         <div className="mt-0.5 text-xs text-muted-foreground">
-                          Rätt svar: <strong>{correctOpt?.text ?? "—"}</strong>
+                          Rätt svar: <strong>{correctOpt ? ordText(correctOpt.text) : "—"}</strong>
                         </div>
                       </div>
                       {a.isCorrect ? (

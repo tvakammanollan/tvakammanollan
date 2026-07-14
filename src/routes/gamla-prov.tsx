@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { termToLabel, type RawQ } from "@/types/gamla-prov";
+import { ordText } from "@/lib/sv-format";
 import { PageHero } from "@/components/layout/PageHero";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -979,7 +980,9 @@ function GamlaProvPage() {
               </span>
               <p className="text-sm font-medium leading-snug" style={{ color: "var(--cream)" }}>
                 {q.fraga && !q.fraga.startsWith("[")
-                  ? q.fraga
+                  ? q.delProv === "ORD"
+                    ? ordText(q.fraga)
+                    : q.fraga
                   : isELF
                     ? "Välj det ord/den fras som passar bäst i luckan markerad i texten ovan."
                     : "[Se figur eller provhäfte]"}
@@ -1020,7 +1023,7 @@ function GamlaProvPage() {
                     style={{ background: bg, borderColor: border, color }}
                   >
                     <span className="mt-0.5 shrink-0 font-bold">{letter}</span>
-                    <span>{text}</span>
+                    <span>{q.delProv === "ORD" ? ordText(text) : text}</span>
                   </button>
                 );
               })}

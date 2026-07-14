@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { fetchWordBatch } from "@/lib/word-practice.functions";
+import { ordText, ordDefinition } from "@/lib/sv-format";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { ArrowRight, BookOpen } from "lucide-react";
 
@@ -44,7 +45,10 @@ export function WordOfTheDay() {
           (q) => q.definition && q.definition.trim().length > 0 && q.question_text,
         );
         if (!pick || cancelled) return;
-        const val: Wotd = { word: pick.question_text, definition: pick.definition as string };
+        const val: Wotd = {
+          word: ordText(pick.question_text),
+          definition: ordDefinition(pick.definition),
+        };
         try {
           localStorage.setItem(cacheKey(), JSON.stringify(val));
         } catch {
