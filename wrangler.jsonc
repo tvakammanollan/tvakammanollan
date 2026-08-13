@@ -4,4 +4,19 @@
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
+
+  // Runtime-variabler MÅSTE ligga här, inte bara i Cloudflare-dashboarden:
+  // deploy-steget kör `wrangler deploy`, och då blir den här filen sanningen
+  // för `vars` — allt som satts som vanlig variabel i dashboarden raderas vid
+  // varje deploy. Endast krypterade Secrets (SUPABASE_SERVICE_ROLE_KEY)
+  // överlever och sätts i dashboarden — den får aldrig ligga i git.
+  // Nycklarna nedan är publika (samma värden ligger redan i .env i repot).
+  "vars": {
+    "SUPABASE_URL": "https://plrvjpoicbassjtgmzpx.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscnZqcG9pY2Jhc3NqdGdtenB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDU2NzcsImV4cCI6MjEwMjEyMTY3N30.ftmYGKTjzwmO_gz6UxQqAqCtRouKJCwR03m9e2hZ_V0",
+    "VITE_SUPABASE_URL": "https://plrvjpoicbassjtgmzpx.supabase.co",
+    "VITE_SUPABASE_PUBLISHABLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscnZqcG9pY2Jhc3NqdGdtenB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDU2NzcsImV4cCI6MjEwMjEyMTY3N30.ftmYGKTjzwmO_gz6UxQqAqCtRouKJCwR03m9e2hZ_V0",
+    // /api/health läser just det här namnet för sin Supabase-probe.
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscnZqcG9pY2Jhc3NqdGdtenB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDU2NzcsImV4cCI6MjEwMjEyMTY3N30.ftmYGKTjzwmO_gz6UxQqAqCtRouKJCwR03m9e2hZ_V0"
+  }
 }
