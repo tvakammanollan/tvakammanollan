@@ -114,14 +114,17 @@ function withSecurityHeaders(response: Response): Response {
 async function healthCheck(env: unknown): Promise<Response> {
   // Minimal: report ok + timestamp + worker uptime hint.
   // Detailed DB probe requires Supabase credentials; do that server-side.
-  const url = (env as Record<string, unknown>)?.VITE_SUPABASE_URL as string | undefined;
+  const bindings = (env ?? {}) as Record<string, unknown>;
+  // Canonical name först; VITE_-varianten finns kvar som fallback.
+  const url = (bindings.SUPABASE_URL ?? bindings.VITE_SUPABASE_URL) as string | undefined;
+  const anonKey = (bindings.SUPABASE_ANON_KEY ?? bindings.SUPABASE_PUBLISHABLE_KEY) as
+    | string
+    | undefined;
   let supabaseStatus: "ok" | "fail" | "unknown" = "unknown";
   if (url) {
     try {
       const r = await fetch(`${url.replace(/\/$/, "")}/rest/v1/health_check?select=status`, {
-        headers: {
-          apikey: ((env as Record<string, unknown>)?.SUPABASE_ANON_KEY as string) ?? "",
-        },
+        headers: { apikey: anonKey ?? "" },
         signal: AbortSignal.timeout(2000),
       });
       supabaseStatus = r.ok ? "ok" : "fail";
@@ -133,6 +136,23 @@ async function healthCheck(env: unknown): Promise<Response> {
     status: supabaseStatus === "fail" ? "degraded" : "ok",
     supabase: supabaseStatus,
     checked_at: new Date().toISOString(),
+    // Diagnostik för Supabase/Cloudflare-flytten: visar VILKA bindings som
+    // faktiskt når workern (endast namn + true/false, aldrig värden) samt om
+    // process.env speglas. Plocka bort när deployen är verifierad.
+    env_present: {
+      SUPABASE_URL: Boolean(bindings.SUPABASE_URL),
+      SUPABASE_PUBLISHABLE_KEY: Boolean(bindings.SUPABASE_PUBLISHABLE_KEY),
+      SUPABASE_SERVICE_ROLE_KEY: Boolean(bindings.SUPABASE_SERVICE_ROLE_KEY),
+      VITE_SUPABASE_URL: Boolean(bindings.VITE_SUPABASE_URL),
+      procenv_SUPABASE_URL: Boolean(
+        (globalThis as { process?: { env?: Record<string, string> } }).process?.env?.SUPABASE_URL,
+      ),
+      procenv_SERVICE_ROLE: Boolean(
+        (globalThis as { process?: { env?: Record<string, string> } }).process?.env
+          ?.SUPABASE_SERVICE_ROLE_KEY,
+      ),
+    },
+    binding_names: Object.keys(bindings).sort(),
   };
   return new Response(JSON.stringify(body), {
     status: supabaseStatus === "fail" ? 503 : 200,
