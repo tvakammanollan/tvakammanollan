@@ -35,13 +35,42 @@ Tests live next to their modules (`src/lib/*.test.ts`) and use a standalone
 `vitest.config.ts` (does NOT load the app vite config, so Lovable/Cloudflare
 plugins stay out of test runs).
 
-The app deploys to Cloudflare Workers via Lovable — push to `main` on GitHub, then trigger deploy from Lovable. **Always end a work session by reminding Niklas to deploy** — pushed ≠ live.
+### Deploy (changed 2026-08-14 — no longer via Lovable)
+
+Both Supabase and Cloudflare now live in Niklas' own accounts. Cloudflare Workers
+Builds is connected straight to the GitHub repo, so **push to `main` = build +
+deploy**, no button to click anywhere. Build command `npm run build`, deploy
+command `npx wrangler deploy`. Live at `tvakammanollan.niklas-pellkvist.workers.dev`;
+`hpkampen.se` still resolves via Strato DNS and has not been cut over yet.
+
+- **Runtime env vars belong in `wrangler.jsonc`, not the dashboard.** `wrangler deploy`
+  treats the config file as the source of truth: the build writes
+  `.output/server/wrangler.json` (vars copied from `wrangler.jsonc`) and
+  `.wrangler/deploy/config.json` points wrangler at it. Anything set as a plain
+  variable in the Cloudflare dashboard is **wiped on every deploy**. Only encrypted
+  Secrets survive — that is where `SUPABASE_SERVICE_ROLE_KEY` lives.
+- **Secrets need a version deploy.** Bindings are frozen into an immutable Worker
+  version, so adding a secret does not affect the running one. `wrangler secret put`
+  refuses outright when the newest version is not deployed. Use
+  `wrangler versions secret put <NAME>` then `wrangler versions deploy "<id>@100%"`.
+- **`env` is always empty in `src/server.ts`.** nitro wraps the Worker and does not
+  forward the `env` argument — read `process.env` instead. Bindings *do* reach
+  `process.env`.
+- `/api/health` reports `supabase` and `service_role`; if the service role key ever
+  goes missing again the site still serves but every server function returns empty.
 
 ### Environment quirks (hard-won)
 
 - **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
 - **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
 - External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
+- `eslint src` reports ~900 pre-existing `prettier/prettier` errors across files nobody
+  has touched. Lint the files you changed (`npx eslint <path>`) instead of the tree, and
+  do not run `--fix` repo-wide unless that reformat is the actual task.
+- Verifying rendered pages: `--dump-dom` snapshots fire before React finishes its
+  async queries, so pages look empty at random. Drive Chrome over CDP with
+  `--remote-debugging-port` and poll `document.body.innerText` until the expected text
+  shows up (Node 24 has a global `WebSocket`, so no puppeteer needed).
 
 ---
 
@@ -154,3 +183,38 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 ### DB migrations
 
 SQL files in `supabase/migrations/` — run manually in Supabase SQL editor (production has no CLI migration runner). After adding a table, update `src/integrations/supabase/types.ts` manually.
+
+### Things a schema dump does NOT carry (found moving to the new project)
+
+A `pg_dump` of `public` restores tables, policies and functions — and silently
+leaves out everything below. All are fixed now, but check them first when a
+"restored" database behaves as if it were empty:
+
+- **Triggers on `auth.users`.** `public.handle_new_user()` came across; the trigger
+  calling it did not, because it lives in the `auth` schema. Every signup then landed
+  in `auth.users` with no `public.users` row, and nothing errored — guest play just
+  broke silently, since `useGuestPlay` relies on the trigger and never inserts the
+  profile itself. Restored in `20260814123000_restore_auth_user_trigger.sql`.
+- **Auth settings.** Anonymous sign-ins were off (they power all guest play),
+  `site_url` still said `http://localhost:3000`, and `uri_allow_list` was empty.
+  These live in the auth config, reachable via the Management API:
+  `GET/PATCH https://api.supabase.com/v1/projects/<ref>/config/auth`.
+- **Views default to bypassing RLS.** A view runs as its owner, and `postgres` owns
+  the tables — so anyone holding the public anon key could read `health_check` and
+  get `users_count: 530`. Any new view needs
+  `ALTER VIEW ... SET (security_invoker = true)`; see
+  `20260814120000_views_security_invoker.sql`.
+
+### Edge functions
+
+`verify_jwt` is **not** an authorization check — anonymous sign-in is enabled, so
+anyone can mint a valid JWT in one request. Destructive or paid functions must call
+`requireAdmin()` from `supabase/functions/_shared/require-admin.ts`, which verifies
+the caller's token and reads `is_admin` with the service role. `import-gamla-prov`
+(deletes the whole gamla-prov set before re-importing) and `clean-math-questions`
+(bills per AI call) both use it.
+
+Deploy with the standalone CLI binary and an access token:
+`SUPABASE_ACCESS_TOKEN=... supabase functions deploy <name> --project-ref <ref>`.
+`clean-math-questions` also needs `LOVABLE_API_KEY` set under Edge Functions →
+Secrets; it is **not** set in the new project, so that function cannot run yet.
