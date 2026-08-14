@@ -4,11 +4,17 @@
 //   ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS provpass_num int;
 //   ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS q_num int;
 //
-// Then call this function from browser console on hpkampen.se:
-//   fetch("https://dqhgnioniarhiugxdgla.supabase.co/functions/v1/import-gamla-prov",{method:"POST"}).then(r=>r.json()).then(console.log)
+// Kräver admin. Kör från browser-konsolen på hpkampen.se som inloggad admin
+// (sessionens access_token måste följa med):
+//   const { data } = await window.supabase.auth.getSession();
+//   fetch("https://plrvjpoicbassjtgmzpx.supabase.co/functions/v1/import-gamla-prov", {
+//     method: "POST",
+//     headers: { Authorization: `Bearer ${data.session.access_token}` },
+//   }).then(r => r.json()).then(console.log);
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { requireAdmin } from "../_shared/require-admin.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +29,11 @@ Deno.serve(async (req) => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
   const admin = createClient(supabaseUrl, serviceKey);
+
+  // Denna funktion raderar hela gamla-prov-beståndet innan den importerar om.
+  // verify_jwt ensamt skyddar inte: gästinloggning ger vem som helst en JWT.
+  const denied = await requireAdmin(req, admin, corsHeaders);
+  if (denied) return denied;
 
   // Fetch question data from the deployed app
   const jsonRes = await fetch("https://hpkampen.se/gamla-prov-data.json");
