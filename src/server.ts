@@ -114,12 +114,21 @@ function withSecurityHeaders(response: Response): Response {
 async function healthCheck(env: unknown): Promise<Response> {
   // Minimal: report ok + timestamp + worker uptime hint.
   // Detailed DB probe requires Supabase credentials; do that server-side.
+  //
+  // Läs i första hand från process.env: nitro wrappar workern och skickar inte
+  // vidare `env`-argumentet, så bindings landar bara i process.env. Att läsa
+  // enbart `env` gjorde att sonden alltid svarade "unknown".
   const bindings = (env ?? {}) as Record<string, unknown>;
-  // Canonical name först; VITE_-varianten finns kvar som fallback.
-  const url = (bindings.SUPABASE_URL ?? bindings.VITE_SUPABASE_URL) as string | undefined;
-  const anonKey = (bindings.SUPABASE_ANON_KEY ?? bindings.SUPABASE_PUBLISHABLE_KEY) as
-    | string
-    | undefined;
+  const procEnv =
+    (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+  const url = (procEnv.SUPABASE_URL ??
+    procEnv.VITE_SUPABASE_URL ??
+    bindings.SUPABASE_URL ??
+    bindings.VITE_SUPABASE_URL) as string | undefined;
+  const anonKey = (procEnv.SUPABASE_ANON_KEY ??
+    procEnv.SUPABASE_PUBLISHABLE_KEY ??
+    bindings.SUPABASE_ANON_KEY ??
+    bindings.SUPABASE_PUBLISHABLE_KEY) as string | undefined;
   let supabaseStatus: "ok" | "fail" | "unknown" = "unknown";
   if (url) {
     try {
@@ -136,23 +145,10 @@ async function healthCheck(env: unknown): Promise<Response> {
     status: supabaseStatus === "fail" ? "degraded" : "ok",
     supabase: supabaseStatus,
     checked_at: new Date().toISOString(),
-    // Diagnostik för Supabase/Cloudflare-flytten: visar VILKA bindings som
-    // faktiskt når workern (endast namn + true/false, aldrig värden) samt om
-    // process.env speglas. Plocka bort när deployen är verifierad.
-    env_present: {
-      SUPABASE_URL: Boolean(bindings.SUPABASE_URL),
-      SUPABASE_PUBLISHABLE_KEY: Boolean(bindings.SUPABASE_PUBLISHABLE_KEY),
-      SUPABASE_SERVICE_ROLE_KEY: Boolean(bindings.SUPABASE_SERVICE_ROLE_KEY),
-      VITE_SUPABASE_URL: Boolean(bindings.VITE_SUPABASE_URL),
-      procenv_SUPABASE_URL: Boolean(
-        (globalThis as { process?: { env?: Record<string, string> } }).process?.env?.SUPABASE_URL,
-      ),
-      procenv_SERVICE_ROLE: Boolean(
-        (globalThis as { process?: { env?: Record<string, string> } }).process?.env
-          ?.SUPABASE_SERVICE_ROLE_KEY,
-      ),
-    },
-    binding_names: Object.keys(bindings).sort(),
+    // Service role-nyckeln är det som gör att server functions kan läsa DB:t;
+    // saknas den svarar sajten men all inloggad data blir tom. Rapportera bara
+    // närvaro (aldrig värdet) så uptime-koll fångar felet direkt.
+    service_role: Boolean(procEnv.SUPABASE_SERVICE_ROLE_KEY),
   };
   return new Response(JSON.stringify(body), {
     status: supabaseStatus === "fail" ? 503 : 200,
