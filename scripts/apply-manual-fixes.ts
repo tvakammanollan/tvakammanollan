@@ -45,7 +45,13 @@ async function main() {
   console.log(`→ Confidence: ${includeLow ? "high+medium+low" : "high only"}`);
   console.log(`→ ${fixes.length} fixar matchar.\n`);
 
-  const url = process.env.SUPABASE_URL ?? "https://dqhgnioniarhiugxdgla.supabase.co";
+  // Ingen default-URL: en tyst fallback pekade tidigare på det gamla
+  // Supabase-projektet, och det här skriptet skriver till databasen.
+  const url = process.env.SUPABASE_URL;
+  if (!url) {
+    console.error("✖ SUPABASE_URL saknas. Lägg in den i .env och kör igen.");
+    return;
+  }
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) {
     console.error("✖ SUPABASE_SERVICE_ROLE_KEY saknas. Lägg in den i .env och kör igen.");

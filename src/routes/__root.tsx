@@ -24,6 +24,11 @@ import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGa
 
 installSupabaseFetchAuth();
 
+// Origin för preconnect/dns-prefetch. Faller tillbaka på hpkampen.se så att
+// en saknad env-variabel inte ger en trasig <link>-tagg i <head>.
+const SUPABASE_ORIGIN =
+  import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://hpkampen.se";
+
 // Framer-motions animations-runtime laddas asynkront (egen chunk) — se
 // src/lib/motion-features.ts. `strict` gör att en glömd motion.→m.-migrering
 // kastar direkt i dev i stället för att tyst dra in hela runtimen igen.
@@ -169,13 +174,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "alternate", hrefLang: "sv-SE", href: "https://hpkampen.se/" },
       { rel: "alternate", hrefLang: "x-default", href: "https://hpkampen.se/" },
       { rel: "stylesheet", href: appCss },
-      // Preconnect / DNS-prefetch för snabbare Core Web Vitals
-      {
-        rel: "preconnect",
-        href: "https://dqhgnioniarhiugxdgla.supabase.co",
-        crossOrigin: "anonymous",
-      },
-      { rel: "dns-prefetch", href: "https://dqhgnioniarhiugxdgla.supabase.co" },
+      // Preconnect / DNS-prefetch för snabbare Core Web Vitals.
+      // Härledd ur miljön, inte hårdkodad: den gamla adressen låg kvar efter
+      // flytten till nytt Supabase-projekt, så webbläsaren värmde upp en
+      // anslutning till fel server och missade vinsten helt.
+      { rel: "preconnect", href: SUPABASE_ORIGIN, crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: SUPABASE_ORIGIN },
       // OBS: Google Fonts-länken (Newsreader/Geist/Geist Mono) borttagen —
       // ingen font-family i CSS:en refererade de familjerna, så typografin
       // renderades redan med fallbackarna (Georgia/system-ui). Länken var

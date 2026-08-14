@@ -85,7 +85,10 @@ Där X är bokstaven A–E som är det korrekta svaret.
 
 /* ─────────── Supabase fetch ─────────── */
 async function fetchAllOrdQuestions(): Promise<OrdQuestion[]> {
-  const url = process.env.SUPABASE_URL ?? "https://dqhgnioniarhiugxdgla.supabase.co";
+  // Ingen default-URL: en tyst fallback pekade tidigare på det gamla
+  // Supabase-projektet, så skriptet kunde köra mot fel databas obemärkt.
+  const url = process.env.SUPABASE_URL;
+  if (!url) throw new Error("SUPABASE_URL saknas. Lägg in den i .env och kör igen.");
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) {
     throw new Error(

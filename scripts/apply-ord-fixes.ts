@@ -84,7 +84,10 @@ async function main() {
     return;
   }
 
-  const url = process.env.SUPABASE_URL ?? "https://dqhgnioniarhiugxdgla.supabase.co";
+  // Ingen default-URL: en tyst fallback pekade tidigare på det gamla
+  // Supabase-projektet, och det här skriptet skriver till databasen.
+  const url = process.env.SUPABASE_URL;
+  if (!url) throw new Error("SUPABASE_URL saknas. Lägg in den i .env och kör igen.");
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) throw new Error("SUPABASE_SERVICE_ROLE_KEY saknas.");
   const sb = createClient(url, key, { auth: { persistSession: false } });
