@@ -325,34 +325,70 @@ export function normalizePathForStats(pathname: string): string | null {
   return mapped.join("/") || "/";
 }
 
-/**
- * Räknar en sidvisning. Aggregerat per dygn och sökväg — ingen IP, ingen
- * användare, ingen cookie, ingen session. Körs via waitUntil så att svaret
- * aldrig väntar på den, och sväljer alla fel: statistik får inte kunna
- * påverka om sidan levereras.
+/*
+ * Sidvisningar buffras i isolatet och skrivs sällan.
+ *
+ * Ett skrivanrop per visning gick inte: nitro skickar inte vidare ctx, så
+ * waitUntil saknas, och utan den avbryts pågående I/O i samma stund som svaret
+ * returneras — räkningen hann aldrig iväg. Att i stället invänta skrivningen
+ * fungerade, men tog TTFB från ~0,10 s till 0,44–0,89 s. Ingen sida ska bli
+ * långsammare för att vi vill ha statistik.
+ *
+ * Nu räknas visningar i minnet (gratis) och töms samlat först när bufferten
+ * blivit tillräckligt stor eller gammal. Bara den enstaka begäran som råkar
+ * utlösa tömningen betalar väntan.
+ *
+ * Isolat är kortlivade, så en buffert kan gå förlorad vid nedstängning. För
+ * besöksstatistik är det en acceptabel avvikelse — annars hade varje sidladdning
+ * behövt betala för exakthet.
  */
-async function recordPageView(pathname: string): Promise<void> {
-  const path = normalizePathForStats(pathname);
-  if (!path) return;
+const pendingViews = new Map<string, number>();
+let lastFlush = Date.now();
+const FLUSH_AFTER_MS = 30_000;
+const FLUSH_AT_ENTRIES = 20;
+
+async function flushPageViews(): Promise<void> {
+  if (pendingViews.size === 0) return;
   const procEnv =
     (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
   const url = procEnv.SUPABASE_URL;
   const key = procEnv.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return;
+
+  const batch = Object.fromEntries(pendingViews);
+  pendingViews.clear();
+  lastFlush = Date.now();
+
   try {
-    await fetch(`${url.replace(/\/$/, "")}/rest/v1/rpc/record_page_view`, {
+    await fetch(`${url.replace(/\/$/, "")}/rest/v1/rpc/record_page_views`, {
       method: "POST",
       headers: {
         apikey: key,
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ p_path: path }),
+      body: JSON.stringify({ p: batch }),
       signal: AbortSignal.timeout(3000),
     });
   } catch {
     /* statistik är aldrig värd ett trasigt svar */
   }
+}
+
+/**
+ * Registrerar en sidvisning i bufferten. Aggregerat per dygn och sökväg —
+ * ingen IP, ingen användare, ingen cookie, ingen session.
+ *
+ * Returnerar en promise bara när bufferten ska tömmas, annars null, så att
+ * anropssidan vet om något behöver inväntas.
+ */
+function recordPageView(pathname: string): Promise<void> | null {
+  const path = normalizePathForStats(pathname);
+  if (!path) return null;
+  pendingViews.set(path, (pendingViews.get(path) ?? 0) + 1);
+
+  const due = pendingViews.size >= FLUSH_AT_ENTRIES || Date.now() - lastFlush >= FLUSH_AFTER_MS;
+  return due ? flushPageViews() : null;
 }
 
 export default {
@@ -377,11 +413,17 @@ export default {
       const response = await handler.fetch(request, env, ctx);
       const normalized = await normalizeCatastrophicSsrResponse(response);
       // Räkna först när sidan faktiskt levererades — 404 och fel ska inte
-      // synas som besök. waitUntil håller svaret ovänta.
+      // synas som besök.
       if (request.method === "GET" && normalized.status === 200) {
-        const waitUntil = (ctx as { waitUntil?: (p: Promise<unknown>) => void })?.waitUntil;
-        const counting = recordPageView(url.pathname);
-        if (typeof waitUntil === "function") waitUntil.call(ctx, counting);
+        const flushing = recordPageView(url.pathname);
+        if (flushing) {
+          const waitUntil = (ctx as { waitUntil?: (p: Promise<unknown>) => void })?.waitUntil;
+          // Finns waitUntil slipper även den här begäran vänta. Saknas den
+          // avbryts skrivningen när svaret går iväg, så då inväntas den —
+          // vilket gäller ungefär var tjugonde sidladdning.
+          if (typeof waitUntil === "function") waitUntil.call(ctx, flushing);
+          else await flushing;
+        }
       }
       return withSecurityHeaders(normalized);
     } catch (error) {
