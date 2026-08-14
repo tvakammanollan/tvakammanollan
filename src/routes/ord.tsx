@@ -9,8 +9,17 @@ import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 
-import { ArrowRight, Check, X, RotateCcw, GraduationCap, Trophy, BookOpen } from "lucide-react";
-import { ordText, ordDefinition } from "@/lib/sv-format";
+import {
+  ArrowRight,
+  Check,
+  X,
+  RotateCcw,
+  GraduationCap,
+  Trophy,
+  BookOpen,
+  ChevronDown,
+} from "lucide-react";
+import { ordText, ordDefinition, hasOrdDefinition } from "@/lib/sv-format";
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
@@ -106,11 +115,18 @@ function DefinitionBlock({
   word,
   definition,
   source,
-  defaultOpen = false,
+  defaultOpen = true,
 }: {
   word: string;
-  definition: string;
+  // Nullbar: anropssidan grindar på hasOrdDefinition(), och ordDefinition()
+  // hanterar tomt värde — så typen behöver inte snävas av på anropssidan.
+  definition: string | null | undefined;
   source?: string | null;
+  /**
+   * Öppen från start, precis som ExplanationBlock. Öppnades tidigare bara när
+   * svaret var fel, så samma ruta betedde sig olika beroende på hur det gick —
+   * och en tur-gissning är just när man bäst behöver läsa definitionen.
+   */
   defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -121,15 +137,7 @@ function DefinitionBlock({
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1 text-xs font-medium text-[#6fb3b8] underline-offset-4 transition-colors hover:text-[#8ec9ce] hover:underline"
       >
-        <svg
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
         {open ? "Dölj förklaring" : `Vad betyder "${ordText(word)}"?`}
       </button>
       <div
@@ -670,12 +678,11 @@ function OrdPracticePage() {
                   })}
                 </div>
 
-                {picked && current.definition && (
+                {picked && hasOrdDefinition(current.definition) && (
                   <DefinitionBlock
                     word={current.question_text}
                     definition={current.definition}
                     source={current.definition_source}
-                    defaultOpen={picked !== current.correct_answer}
                   />
                 )}
 

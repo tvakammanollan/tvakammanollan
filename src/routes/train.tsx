@@ -624,7 +624,7 @@ function TrainPage() {
             {/* Explanation */}
             {revealed && (
               <>
-                <ExplanationBlock explanation={currentQ.explanation} defaultOpen />
+                <ExplanationBlock explanation={currentQ.explanation} />
                 {user && (
                   <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
                     <span>Felaktig fråga?</span>

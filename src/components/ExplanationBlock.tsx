@@ -3,10 +3,16 @@ import { ChevronDown, Lightbulb } from "lucide-react";
 
 interface Props {
   explanation: string | null | undefined;
+  /**
+   * Öppen från start. Standard är öppen: blocket visas först när svaret redan
+   * är avslöjat, och då är förklaringen hela poängen — att kräva ett extra klick
+   * är bara friktion. Låg tidigare på false, medan /train skickade in true, så
+   * samma ruta betedde sig olika på olika sidor.
+   */
   defaultOpen?: boolean;
 }
 
-export function ExplanationBlock({ explanation, defaultOpen = false }: Props) {
+export function ExplanationBlock({ explanation, defaultOpen = true }: Props) {
   const [open, setOpen] = useState(defaultOpen);
   if (!explanation || !explanation.trim()) return null;
 
