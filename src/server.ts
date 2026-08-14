@@ -294,6 +294,67 @@ async function telemetrySink(request: Request): Promise<Response> {
   }
 }
 
+/**
+ * Sökvägar med rörliga segment (match-id, provtermin) skulle annars ge en ny
+ * rad per besök och spränga tabellen. Mappa dem till sin routemall i stället.
+ */
+export function normalizePathForStats(pathname: string): string | null {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  // Bara HTML-sidor är intressanta — inte assets, API eller serverfunktioner.
+  if (/\.[a-z0-9]{2,5}$/i.test(p)) return null;
+  if (
+    p.startsWith("/api/") ||
+    p.startsWith("/_serverFn") ||
+    p.startsWith("/assets/") ||
+    p.startsWith("/.mcp") ||
+    p.startsWith("/.well-known")
+  ) {
+    return null;
+  }
+  if (p.length > 200) return null;
+
+  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const seg = p.split("/");
+  const mapped = seg.map((s, i) => {
+    if (!s) return s;
+    if (uuid.test(s)) return ":id";
+    // /join/<rumskod> och /gamla-prov/<termin> har fria men uppräkneliga värden.
+    if (i === 2 && (seg[1] === "join" || seg[1] === "match" || seg[1] === "result")) return ":id";
+    return s;
+  });
+  return mapped.join("/") || "/";
+}
+
+/**
+ * Räknar en sidvisning. Aggregerat per dygn och sökväg — ingen IP, ingen
+ * användare, ingen cookie, ingen session. Körs via waitUntil så att svaret
+ * aldrig väntar på den, och sväljer alla fel: statistik får inte kunna
+ * påverka om sidan levereras.
+ */
+async function recordPageView(pathname: string): Promise<void> {
+  const path = normalizePathForStats(pathname);
+  if (!path) return;
+  const procEnv =
+    (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+  const url = procEnv.SUPABASE_URL;
+  const key = procEnv.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return;
+  try {
+    await fetch(`${url.replace(/\/$/, "")}/rest/v1/rpc/record_page_view`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ p_path: path }),
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch {
+    /* statistik är aldrig värd ett trasigt svar */
+  }
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     const url = new URL(request.url);
@@ -315,6 +376,13 @@ export default {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       const normalized = await normalizeCatastrophicSsrResponse(response);
+      // Räkna först när sidan faktiskt levererades — 404 och fel ska inte
+      // synas som besök. waitUntil håller svaret ovänta.
+      if (request.method === "GET" && normalized.status === 200) {
+        const waitUntil = (ctx as { waitUntil?: (p: Promise<unknown>) => void })?.waitUntil;
+        const counting = recordPageView(url.pathname);
+        if (typeof waitUntil === "function") waitUntil.call(ctx, counting);
+      }
       return withSecurityHeaders(normalized);
     } catch (error) {
       console.error(error);

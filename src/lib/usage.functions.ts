@@ -203,3 +203,68 @@ export const fetchUsageStats = createServerFn({ method: "GET" })
       activeUsers7d,
     };
   });
+
+export interface PageViewStats {
+  /** Sidor sorterade på visningar, senaste 30 dygnen. */
+  topPages: Array<{ path: string; views: number }>;
+  /** Visningar per dygn, äldst först — underlag för trendkurva. */
+  daily: Array<{ day: string; views: number }>;
+  total30d: number;
+  total7d: number;
+  /** Första dygnet med data; null innan räkningen hunnit igång. */
+  since: string | null;
+}
+
+/**
+ * Sidvisningar från public.page_views. Rent aggregerat underlag — tabellen
+ * innehåller varken IP, användare eller session, bara dygn + sökväg + antal.
+ */
+export const fetchPageViewStats = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<PageViewStats> => {
+    const { userId } = context;
+    const { data: me } = await supabaseAdmin
+      .from("users")
+      .select("is_admin")
+      .eq("id", userId)
+      .maybeSingle();
+    if (!me?.is_admin) throw new Response("Forbidden: kräver admin", { status: 403 });
+
+    const dayKey = (offset: number) =>
+      new Date(Date.now() - offset * 86400_000).toISOString().slice(0, 10);
+    const from30 = dayKey(30);
+    const from7 = dayKey(7);
+
+    const { data, error } = await supabaseAdmin
+      .from("page_views")
+      .select("day, path, views")
+      .gte("day", from30)
+      .order("day", { ascending: true });
+    if (error) throw new Error(error.message);
+
+    const rows = (data ?? []) as Array<{ day: string; path: string; views: number }>;
+
+    const perPath = new Map<string, number>();
+    const perDay = new Map<string, number>();
+    let total30d = 0;
+    let total7d = 0;
+    for (const r of rows) {
+      perPath.set(r.path, (perPath.get(r.path) ?? 0) + r.views);
+      perDay.set(r.day, (perDay.get(r.day) ?? 0) + r.views);
+      total30d += r.views;
+      if (r.day >= from7) total7d += r.views;
+    }
+
+    return {
+      topPages: [...perPath.entries()]
+        .map(([path, views]) => ({ path, views }))
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 25),
+      daily: [...perDay.entries()]
+        .map(([day, views]) => ({ day, views }))
+        .sort((a, b) => a.day.localeCompare(b.day)),
+      total30d,
+      total7d,
+      since: rows.length ? rows[0].day : null,
+    };
+  });

@@ -582,6 +582,24 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          day: string
+          path: string
+          views: number
+        }
+        Insert: {
+          day?: string
+          path: string
+          views?: number
+        }
+        Update: {
+          day?: string
+          path?: string
+          views?: number
+        }
+        Relationships: []
+      }
       question_reports: {
         Row: {
           comment: string | null
