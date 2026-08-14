@@ -93,12 +93,63 @@ export function ordText(s: string | null | undefined): string {
 }
 
 /**
+ * Om en definition har något att säga efter städning. Ett fåtal uppslag i
+ * källorna består bara av skiljetecken (tete-a-tete gav "." och florstunn "—."),
+ * och att bjuda in med "Vad betyder X?" för att sedan fälla ut en punkt är
+ * sämre än att inte visa något alls.
+ */
+export function hasOrdDefinition(s: string | null | undefined): boolean {
+  return ordDefinition(s).replace(/[^\p{L}\p{N}]/gu, "").length >= 2;
+}
+
+const HTML_ENTITIES: Record<string, string> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+};
+
+/**
  * Normaliserar en ordförklaring/definition för visning: trimmar och ser
  * till att den börjar med versal (källorna blandar). Radbrytningar bevaras
  * (definitioner renderas med whitespace-pre-wrap).
+ *
+ * Städar också bort tre artefakter från svenska.se-skrapningen. Görs vid
+ * rendering, inte i databasen, så att även det skrapan hämtar i framtiden
+ * blir rent utan ny migration:
+ *
+ * 1. Homografsiffror som klistrats fast i uppslagsordet ("Det att 1ticka",
+ *    "2smitta"). svenska.se numrerar likstavade ord, och siffran följde med.
+ *    Bara siffror som sitter direkt före en bokstav tas bort — "10 000 m2"
+ *    och betydelsenumreringen "1. ... 2. ..." måste överleva.
+ * 2. Odekodade HTML-entiteter, inklusive hexvarianten (`&#x2020;`).
+ * 3. Länkar som följt med in i brödtexten.
  */
 export function ordDefinition(s: string | null | undefined): string {
-  const t = (s ?? "").trim();
+  let t = (s ?? "").trim();
+  if (!t) return t;
+
+  t = t
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec: string) => String.fromCodePoint(Number(dec)))
+    .replace(/&([a-z]+);/gi, (m, name: string) => HTML_ENTITIES[name.toLowerCase()] ?? m);
+
+  // Siffra direkt före bokstav = homografmarkör. Kräver ord-gräns före siffran
+  // så att "m2" och "10 000" lämnas i fred.
+  t = t.replace(/\b(\d+)(?=\p{L})/gu, "");
+
+  // Ensam siffra kvar på slutet ("ytterligt 1sträng 1"). Endast ett ensamt
+  // ensiffrigt tal sist — årtal och mängder är flersiffriga och rörs inte.
+  t = t.replace(/\s+[1-9]$/, "");
+
+  // Ta med föregående blanksteg så att borttagningen inte lämnar dubbelt
+  // mellanslag efter sig. Ingen generell kollaps av mellanslag: källorna
+  // separerar betydelser med dubbelt mellanslag ("1. ...  2. ...").
+  t = t.replace(/[ \t]*https?:\/\/\S+/g, "");
+
+  t = t.trim();
   if (!t) return t;
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
