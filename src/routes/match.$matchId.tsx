@@ -18,7 +18,7 @@ import {
 import { toast } from "sonner";
 import { m } from "framer-motion";
 import { displayCategory, ordText } from "@/lib/sv-format";
-import { LogOut, Trophy } from "lucide-react";
+import { LogOut, Trophy, Timer as TimerIcon } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
 import { sounds } from "@/lib/sounds";
@@ -569,7 +569,7 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -604,7 +604,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <m.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -650,7 +650,7 @@ function MatchPage() {
           </m.div>
         ) : null}
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -681,16 +681,15 @@ function MatchPage() {
     );
   }
 
-  const choice = answers.get(currentQ.id);
-  const optionLetters = ["A", "B", "C", "D", "E"];
-
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
       <header
         className="sticky top-0 z-20"
         style={{
-          background: "rgba(7,17,30,0.85)",
+          // Var rgba(7,17,30) — det gamla blå-navyt. Matchskärmen är den mest
+          // besökta i appen och hade alltså en blå glasremsa mot brun bakgrund.
+          background: "rgba(15, 8, 3, 0.85)",
           borderBottom: "1px solid var(--line)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
@@ -744,8 +743,19 @@ function MatchPage() {
           </div>
         </div>
         {oppForceCountdown !== null && (
-          <div className="border-t border-[#c0392b]/30 bg-[#c0392b]/10 px-4 py-2 text-center text-xs font-semibold text-[#c0392b]">
-            ⏱ Motståndaren är klar! Auto-inlämning om {oppForceCountdown}s
+          <div
+            className="flex items-center justify-center gap-2 border-t px-4 py-2 text-center text-xs font-semibold"
+            style={{
+              borderColor: "var(--danger-line)",
+              background: "var(--danger-soft)",
+              color: "var(--danger)",
+            }}
+            role="status"
+            aria-live="polite"
+          >
+            <TimerIcon className="h-3.5 w-3.5" aria-hidden />
+            Motståndaren är klar — automatisk inlämning om{" "}
+            <span className="tabular-nums">{oppForceCountdown} s</span>
           </div>
         )}
       </header>
@@ -782,7 +792,9 @@ function MatchPage() {
           </div>
         </main>
       ) : (
-        <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
+        // max-w-3xl matchar topp- och bottenlisten. Var max-w-[720px], så
+        // frågekortet låg 24 px innanför progressbarerna rakt ovanför.
+        <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-6">
           <QuestionCard
             currentQ={currentQ}
             current={current}

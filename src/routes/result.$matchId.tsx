@@ -275,7 +275,7 @@ function ResultPage() {
     : won
       ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#170d05] text-[#e8e4da] border-[#f2a65a]/40 shadow-[0_20px_60px_-15px_rgba(242,166,90,0.4)]"
       : "bg-white/[0.03] text-[#e8e4da] border-white/12";
-  const verdict = draw ? "Oavgjort!" : won ? "🏆 Du vann!" : "Du förlorade";
+  const verdict = draw ? "Oavgjort!" : won ? "Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
     ? "Tätt och jämnt."
@@ -467,9 +467,9 @@ function ResultPage() {
             <span
               className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${
                 eloChange > 0
-                  ? "bg-emerald-500/15 text-emerald-300"
+                  ? "bg-[var(--success-soft)] text-[var(--success)]"
                   : eloChange < 0
-                    ? "bg-rose-500/15 text-rose-300"
+                    ? "bg-[var(--danger-soft)] text-[var(--danger)]"
                     : "bg-muted text-foreground"
               }`}
             >
@@ -617,8 +617,8 @@ function ResultPage() {
                         noAnswer
                           ? "border-white/15 bg-white/5"
                           : correct
-                            ? "border-emerald-500/30 bg-emerald-500/10"
-                            : "border-rose-500/30 bg-rose-500/10"
+                            ? "border-[var(--success-line)] bg-[var(--success-soft)]"
+                            : "border-[var(--danger-line)] bg-[var(--danger-soft)]"
                       }`}
                     >
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
@@ -651,11 +651,11 @@ function ResultPage() {
                             <span className="text-white/55">Ej besvarad</span>
                           ) : correct ? (
                             <>
-                              <Check className="h-3.5 w-3.5 text-emerald-400" /> Rätt
+                              <Check className="h-3.5 w-3.5 text-[var(--success)]" /> Rätt
                             </>
                           ) : (
                             <>
-                              <X className="h-3.5 w-3.5 text-rose-400" /> Fel
+                              <X className="h-3.5 w-3.5 text-[var(--danger)]" /> Fel
                             </>
                           )}
                         </span>
@@ -709,9 +709,9 @@ function ResultPage() {
                               key={opt.id}
                               className={`flex items-start gap-2 rounded-md border px-2.5 py-1.5 text-sm ${
                                 isCorrect
-                                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-100"
+                                  ? "border-[var(--success-line)] bg-[var(--success-soft)] text-foreground"
                                   : isPicked
-                                    ? "border-rose-500/30 bg-rose-500/10 text-rose-100"
+                                    ? "border-[var(--danger-line)] bg-[var(--danger-soft)] text-foreground"
                                     : "border-transparent text-foreground/80"
                               }`}
                             >
@@ -727,9 +727,11 @@ function ResultPage() {
                                   opt.text
                                 )}
                               </span>
-                              {isCorrect && <Check className="ml-auto h-4 w-4 text-emerald-400" />}
+                              {isCorrect && (
+                                <Check className="ml-auto h-4 w-4 text-[var(--success)]" />
+                              )}
                               {isPicked && !isCorrect && (
-                                <X className="ml-auto h-4 w-4 text-rose-400" />
+                                <X className="ml-auto h-4 w-4 text-[var(--danger)]" />
                               )}
                             </li>
                           );

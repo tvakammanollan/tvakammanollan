@@ -101,7 +101,7 @@ export function ReportQuestionButton({
         type="button"
         title="Rapporterad"
         aria-label="Rapporterad"
-        className="inline-flex h-7 w-7 cursor-default items-center justify-center rounded-full text-[#c0392b]"
+        className="inline-flex h-7 w-7 cursor-default items-center justify-center rounded-full text-[var(--danger)]"
       >
         <Flag className="h-3.5 w-3.5 fill-current" />
       </button>
@@ -120,7 +120,7 @@ export function ReportQuestionButton({
         onClick={() => setOpen(true)}
         title="Rapportera fråga"
         aria-label="Rapportera fråga"
-        className="inline-flex h-7 w-7 items-center justify-center rounded-full text-[#9a9a9a] transition-colors hover:bg-muted hover:text-[#e67e22]"
+        className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-[var(--amber)]"
       >
         <Flag className="h-3.5 w-3.5" />
       </button>

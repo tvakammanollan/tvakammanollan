@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
+import { useDismissible } from "@/hooks/useDismissible";
+import { RankIcon } from "@/components/ui/RankIcon";
 import type { RankTier } from "@/types";
 
 interface RankUpModalProps {
@@ -9,13 +11,18 @@ interface RankUpModalProps {
   onClose: () => void;
 }
 
+/**
+ * Firar en ny rank. Delar yta, radius, backdrop och z-index med
+ * `AchievementCelebration` — de två kunde tidigare visas samtidigt med olika
+ * kortstil (vit vs. mörk) och olika z-index (50 vs. 100).
+ */
 export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
   useEffect(() => {
     if (!open || !rank) return;
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.6 },
-        colors: ["#6fb3b8", "#F2A65A"],
+        colors: ["#6fb3b8", "#f2a65a", "#f5c089"],
         particleCount: Math.floor(200 * particleRatio),
         ...opts,
       });
@@ -27,41 +34,46 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
     fire(0.1, { spread: 120, startVelocity: 45 });
   }, [open, rank]);
 
+  // Esc + scroll-lås; annars är enda vägen ut att pricka rätt på backdropen.
+  useDismissible(open && !!rank, onClose);
+
   if (!open || !rank) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 animate-fade-in"
+      className="animate-fade-in fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
+      aria-label="Ny rank"
     >
       <div
-        className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl animate-scale-in"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.6)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-6xl leading-none" aria-hidden>
-          {rank.icon}
-        </div>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f2a65a]">
+          Ny rank
+        </p>
         <h2
-          className="mt-4 text-[28px] font-bold leading-tight"
+          className="mt-1 text-[26px] font-bold leading-tight text-[#e8e4da]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Grattis!
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">Du är nu rankad som</p>
+        <p className="mt-1 text-sm text-white/60">Du är nu rankad som</p>
+
         <div
-          className="mx-auto mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-lg font-semibold"
-          style={{
-            backgroundColor: rank.bgColor,
-            color: rank.textColor,
-            border: `2px solid ${rank.borderColor}`,
-          }}
+          className="mx-auto mt-5 inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-[15px] font-semibold"
+          style={{ backgroundColor: rank.soft, borderColor: rank.line, color: rank.accent }}
         >
-          <span aria-hidden>{rank.icon}</span>
+          <RankIcon rank={rank} className="h-5 w-5" />
           <span>{rank.name}</span>
         </div>
-        <Button onClick={onClose} className="mt-6 w-full">
+
+        <Button
+          onClick={onClose}
+          className="mt-7 w-full bg-[#f2a65a] font-semibold text-[#1a0d04] hover:bg-[#f2a65a]/90"
+        >
           Fortsätt
         </Button>
       </div>

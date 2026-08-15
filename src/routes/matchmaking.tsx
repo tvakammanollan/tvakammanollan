@@ -5,7 +5,7 @@ import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trophy } from "lucide-react";
+import { Loader2, Trophy, AlertTriangle } from "lucide-react";
 import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranked.functions";
 import { createMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
@@ -210,8 +210,8 @@ function MatchmakingPage() {
   if (failed) {
     return (
       <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-5 px-6 py-16 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#e25a6a]/30 bg-[#e25a6a]/10 text-2xl">
-          ⚠️
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--danger-line)] bg-[var(--danger-soft)]">
+          <AlertTriangle className="h-6 w-6 text-[var(--danger)]" aria-hidden />
         </span>
         <div>
           <h1
@@ -267,7 +267,7 @@ function MatchmakingPage() {
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-white shadow-[var(--shadow-glow-green)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >

@@ -774,7 +774,9 @@
   --cream: #e8e4da;
   --cream-2: #f3f0e8;
   --cream-3: #dad4c5;
-  --ink: #0a1320;
+  /* Text på ljusa ytor (läspassagen). Var #0a1320 — det gamla blå-navyt,
+     som drog åt blått mot den varma cream-bakgrunden. */
+  --ink: #1a0d04;
   --hp-muted: #7a8597;
   --amber: #f2a65a;
   --amber-deep: #c97b41;
@@ -808,6 +810,23 @@
   --border: var(--line);
   --input: var(--line);
   --ring: var(--amber);
+
+  /* ---- Semantiska svarstillstånd ----------------------------------
+     Rätt/fel måste se likadant ut i match, träning, ord, gamla prov och
+     resultat. Innan detta använde varje skärm sin egen färg (emerald,
+     teal, rose, #c0392b), och remappen nedan gjorde dessutom "fel" amber
+     — samma färg som primär-CTA. En källa, två tillstånd.
+
+     Grönt får INTE vara --teal: teal är varumärkets sekundärfärg och
+     används redan för "motståndaren" i matchens progressbarer. */
+  --success: #4fb783;
+  --success-soft: rgba(79, 183, 131, 0.12);
+  --success-line: rgba(79, 183, 131, 0.38);
+  --success-ink: #0d2c1e;
+  --danger: var(--destructive);
+  --danger-soft: rgba(226, 90, 106, 0.12);
+  --danger-line: rgba(226, 90, 106, 0.38);
+  --danger-ink: #2c0d11;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */
@@ -1138,10 +1157,6 @@ body {
   .text-pink-600 {
     color: var(--amber);
   }
-  .text-rose-500,
-  .text-rose-700 {
-    color: var(--amber);
-  }
   .bg-violet-50,
   .bg-violet-100 {
     background-color: rgba(242, 166, 90, 0.1);
@@ -1157,7 +1172,7 @@ body {
     color: var(--navy);
   }
   .bg-rose-100 {
-    background-color: rgba(242, 166, 90, 0.1);
+    background-color: var(--danger-soft);
   }
   .from-violet-600,
   .from-violet-700,
@@ -1176,18 +1191,11 @@ body {
     --tw-gradient-to: var(--amber);
   }
 
-  /* Cyan + emerald + teal = STATE → teal */
+  /* Cyan + teal = INFO/varumärkets sekundär → teal */
   .text-cyan-300,
   .text-cyan-400,
   .text-cyan-500,
   .text-cyan-600 {
-    color: var(--teal);
-  }
-  .text-emerald-300,
-  .text-emerald-400,
-  .text-emerald-500,
-  .text-emerald-600,
-  .text-emerald-700 {
     color: var(--teal);
   }
   .text-teal-500,
@@ -1203,36 +1211,157 @@ body {
     background-color: var(--teal);
     color: var(--navy);
   }
-  .bg-emerald-100 {
-    background-color: rgba(111, 179, 184, 0.14);
+
+  /* Emerald + green = RÄTT/lyckat → success. Får inte bli teal: teal
+     betyder "motståndaren" i matchens progressbarar, och då hade rätt
+     svar och motståndaren delat färg. */
+  .text-emerald-100,
+  .text-emerald-200,
+  .text-emerald-300,
+  .text-emerald-400,
+  .text-emerald-500,
+  .text-emerald-600,
+  .text-emerald-700,
+  .text-green-300,
+  .text-green-400,
+  .text-green-500,
+  .text-green-600 {
+    color: var(--success);
+  }
+  .bg-emerald-100,
+  .bg-green-100 {
+    background-color: var(--success-soft);
   }
   .bg-emerald-400,
-  .bg-emerald-500 {
-    background-color: var(--teal);
-    color: var(--navy);
+  .bg-emerald-500,
+  .bg-emerald-600,
+  .bg-green-400,
+  .bg-green-500,
+  .bg-green-600 {
+    background-color: var(--success);
+    color: var(--success-ink);
   }
   .border-emerald-200,
-  .border-emerald-300 {
-    border-color: var(--teal);
+  .border-emerald-300,
+  .border-emerald-400,
+  .border-emerald-500,
+  .border-green-400,
+  .border-green-500 {
+    border-color: var(--success-line);
   }
+
+  /* Rose + red = FEL/destruktivt → danger. Tidigare pekade rose på amber,
+     dvs. fel svar färgades i samma ton som primär-CTA. */
+  .text-rose-100,
+  .text-rose-200,
+  .text-rose-300,
+  .text-rose-400,
+  .text-rose-500,
+  .text-rose-600,
+  .text-rose-700,
+  .text-red-100,
+  .text-red-200,
+  .text-red-300,
+  .text-red-400,
+  .text-red-500,
+  .text-red-600 {
+    color: var(--danger);
+  }
+  .bg-rose-400,
+  .bg-rose-500,
+  .bg-rose-600,
+  .bg-red-400 {
+    background-color: var(--danger);
+    color: var(--cream);
+  }
+  .border-rose-300,
+  .border-rose-400,
+  .border-rose-500,
+  .border-red-300,
+  .border-red-400,
+  .border-red-500 {
+    border-color: var(--danger-line);
+  }
+
+  /* Opacitets-varianterna (`bg-emerald-500/10`) är egna selektorer i Tailwind
+     och fångades INTE av reglerna ovan — så resultatskärmen ritade rå
+     Tailwind-emerald bakom en --success-färgad ikon. Täck de suffix som
+     faktiskt används i markupen. */
+  .bg-emerald-500\/5,
+  .bg-green-500\/5 {
+    background-color: rgba(79, 183, 131, 0.05);
+  }
+  .bg-emerald-500\/10,
+  .bg-emerald-400\/10,
+  .bg-green-500\/10 {
+    background-color: rgba(79, 183, 131, 0.1);
+  }
+  .bg-emerald-500\/15,
+  .bg-green-500\/15 {
+    background-color: rgba(79, 183, 131, 0.15);
+  }
+  .bg-emerald-500\/20,
+  .bg-green-500\/20 {
+    background-color: rgba(79, 183, 131, 0.2);
+  }
+  .border-emerald-500\/30,
+  .border-emerald-500\/40,
+  .border-green-500\/30,
+  .border-green-500\/50 {
+    border-color: var(--success-line);
+  }
+
+  .bg-red-400\/5,
+  .bg-red-500\/5,
+  .bg-rose-500\/5 {
+    background-color: rgba(226, 90, 106, 0.05);
+  }
+  .bg-red-500\/10,
+  .bg-rose-500\/10 {
+    background-color: rgba(226, 90, 106, 0.1);
+  }
+  .bg-red-500\/15,
+  .bg-rose-500\/15 {
+    background-color: rgba(226, 90, 106, 0.15);
+  }
+  .bg-red-500\/20,
+  .bg-rose-500\/20 {
+    background-color: rgba(226, 90, 106, 0.2);
+  }
+  .border-red-400\/40,
+  .border-red-500\/15,
+  .border-red-500\/20,
+  .border-red-500\/30,
+  .border-red-500\/40,
+  .border-red-500\/50,
+  .border-rose-500\/30 {
+    border-color: var(--danger-line);
+  }
+
   .from-cyan-400,
   .from-cyan-500,
-  .from-emerald-400,
-  .from-emerald-500,
   .from-teal-500 {
     --tw-gradient-from: var(--teal);
   }
+  .from-emerald-400,
+  .from-emerald-500 {
+    --tw-gradient-from: var(--success);
+  }
   .via-cyan-500,
-  .via-emerald-500,
   .via-teal-500 {
     --tw-gradient-via: var(--teal);
   }
+  .via-emerald-500 {
+    --tw-gradient-via: var(--success);
+  }
   .to-cyan-500,
   .to-cyan-600,
-  .to-emerald-500,
   .to-teal-500,
   .to-teal-600 {
     --tw-gradient-to: var(--teal);
+  }
+  .to-emerald-500 {
+    --tw-gradient-to: var(--success);
   }
 
   /* Amber family → keep amber */
@@ -1319,24 +1448,118 @@ body {
     background-color: rgba(232, 228, 218, 0.15);
   }
   .bg-white\/90 {
-    background-color: rgba(21, 39, 62, 0.9);
+    background-color: rgba(31, 20, 8, 0.9);
   }
   .bg-white\/95 {
     background-color: var(--navy-2);
   }
-  .text-white\/45,
-  .text-white\/55,
-  .text-white\/65,
-  .text-white\/70,
-  .text-white\/80 {
-    color: var(--text-secondary);
-  }
+  /* ---- Text- och kanttrappan --------------------------------------
+     Dessa remappar white/N till cream/N så att texten får varm ton mot
+     den bruna bakgrunden. Det MÅSTE göras för hela trappan och monotont.
+
+     Tidigare remappades bara ett urval: /45, /55, /65, /70 och /80 sattes
+     ALLA till --text-secondary (0.78) medan /50, /60 och /75 lämnades som
+     rå vit. Resultatet var att `text-white/45` — den lilla, tänkt diskreta
+     etiketten som används på ~36 ställen — ritades ljusare än både /60 och
+     /75. Hela texthierarkin låg alltså i oordning: ju lägre siffra man
+     skrev, desto ljusare kunde texten bli.
+
+     Ankaret /70 = --text-secondary är oförändrat; steget upp och ned
+     därifrån är nu strikt stigande. */
   .text-white\/15 {
-    color: var(--text-quiet);
+    color: rgba(232, 228, 218, 0.22);
   }
-  .border-white\/10,
+  .text-white\/20 {
+    color: rgba(232, 228, 218, 0.26);
+  }
+  .text-white\/25 {
+    color: rgba(232, 228, 218, 0.32);
+  }
+  .text-white\/30 {
+    color: rgba(232, 228, 218, 0.38);
+  }
+  .text-white\/35 {
+    color: rgba(232, 228, 218, 0.44); /* 0.40 */
+  }
+  .text-white\/40 {
+    color: rgba(232, 228, 218, 0.5);
+  }
+  .text-white\/45 {
+    color: rgba(232, 228, 218, 0.56);
+  }
+  .text-white\/50 {
+    color: rgba(232, 228, 218, 0.62); /* 0.55 */
+  }
+  .text-white\/55 {
+    color: rgba(232, 228, 218, 0.66);
+  }
+  .text-white\/60 {
+    color: rgba(232, 228, 218, 0.7);
+  }
+  .text-white\/65 {
+    color: rgba(232, 228, 218, 0.74);
+  }
+  .text-white\/70 {
+    color: var(--text-secondary); /* 0.78 — ankare, oförändrat */
+  }
+  .text-white\/75 {
+    color: rgba(232, 228, 218, 0.84);
+  }
+  .text-white\/80 {
+    color: rgba(232, 228, 218, 0.89);
+  }
+  .text-white\/85 {
+    color: rgba(232, 228, 218, 0.94);
+  }
+
+  /* Samma problem på kanterna: /10 och /15 remappades båda till --line
+     (0.14 cream) medan /8 och /12 lämnades som rå vit — så `border-white/12`
+     ritades SVAGARE än `border-white/10`, och /15 var identisk med /10.
+     Ankaret /10 = --line är oförändrat. */
+  .border-white\/5 {
+    border-color: rgba(232, 228, 218, 0.07);
+  }
+  .border-white\/8 {
+    border-color: rgba(232, 228, 218, 0.11);
+  }
+  .border-white\/10 {
+    border-color: var(--line); /* 0.14 — ankare, oförändrat */
+  }
+  .border-white\/12 {
+    border-color: rgba(232, 228, 218, 0.17);
+  }
   .border-white\/15 {
-    border-color: var(--line);
+    border-color: rgba(232, 228, 218, 0.21);
+  }
+  .border-white\/25 {
+    border-color: rgba(232, 228, 218, 0.32); /* = --line-strong */
+  }
+  .border-white\/30 {
+    border-color: rgba(232, 228, 218, 0.38);
+  }
+
+  /* Bakgrundstinten var blandad på samma sätt: /5, /10, /15 remappades till
+     cream medan /8 och de godtyckliga ([0.02] osv.) förblev rå vit. */
+  .bg-white\/8 {
+    background-color: rgba(232, 228, 218, 0.08);
+  }
+  .bg-white\/\[0\.015\] {
+    background-color: rgba(232, 228, 218, 0.015);
+  }
+  .bg-white\/\[0\.02\] {
+    background-color: rgba(232, 228, 218, 0.02);
+  }
+  .bg-white\/\[0\.03\] {
+    background-color: rgba(232, 228, 218, 0.03);
+  }
+  .bg-white\/\[0\.04\] {
+    background-color: rgba(232, 228, 218, 0.04);
+  }
+  .bg-white\/\[0\.05\] {
+    background-color: rgba(232, 228, 218, 0.05);
+  }
+  .bg-white\/\[0\.06\] {
+    background-color: rgba(232, 228, 218, 0.06);
   }
 
   /* Reading passage exception — light cream background */
@@ -1344,6 +1567,23 @@ body {
   .reading-passage {
     background-color: var(--cream-2) !important;
     color: var(--ink) !important;
+  }
+
+  /* Skannade provfigurer är svart streckteckning på vitt papper och behöver
+     en riktigt vit platta. De skrevs som `bg-white`, men den klassen remappas
+     globalt till --navy-2 här nedan — så en figur med transparens hade blivit
+     svart-på-mörkbrunt. Egen klass så att avsikten inte kan remappas bort. */
+  .exam-figure {
+    background-color: #ffffff;
+  }
+
+  /* Läspassagens överstrykning. Var hårdkodad #fff59d (överstrykningsgult)
+     med ärvd cream-text ovanpå — dvs. praktiskt taget osynlig text. */
+  .hp-highlight {
+    background-color: rgba(242, 166, 90, 0.28);
+    box-shadow: 0 0 0 1px rgba(242, 166, 90, 0.35);
+    border-radius: 2px;
+    color: inherit;
   }
 
   /* ============================================================
@@ -1358,8 +1598,7 @@ body {
   .bg-violet-50, .bg-violet-100, .bg-violet-200,
   .bg-fuchsia-50, .bg-fuchsia-200,
   .bg-purple-50, .bg-purple-100, .bg-purple-200,
-  .bg-pink-50, .bg-pink-100, .bg-pink-200,
-  .bg-rose-50, .bg-rose-200 {
+  .bg-pink-50, .bg-pink-100, .bg-pink-200 {
     background-color: rgba(242, 166, 90, 0.10);
   }
   .bg-amber-200, .bg-amber-300,
@@ -1367,10 +1606,13 @@ body {
   .bg-orange-50, .bg-orange-200, .bg-orange-300 {
     background-color: rgba(242, 166, 90, 0.16);
   }
-  .bg-emerald-50, .bg-emerald-200, .bg-emerald-300,
   .bg-cyan-50, .bg-cyan-200, .bg-cyan-300,
   .bg-teal-50, .bg-teal-100, .bg-teal-200, .bg-teal-300 {
     background-color: rgba(111, 179, 184, 0.12);
+  }
+  .bg-emerald-50, .bg-emerald-200, .bg-emerald-300,
+  .bg-green-50, .bg-green-200, .bg-green-300 {
+    background-color: var(--success-soft);
   }
   .bg-slate-50, .bg-slate-100, .bg-slate-200 {
     background-color: rgba(232, 228, 218, 0.06);
@@ -1378,11 +1620,12 @@ body {
   .bg-slate-300, .bg-slate-400 {
     background-color: rgba(232, 228, 218, 0.12);
   }
-  .bg-red-50, .bg-red-100 {
-    background-color: rgba(226, 90, 106, 0.10);
+  .bg-red-50, .bg-red-100, .bg-red-200,
+  .bg-rose-50, .bg-rose-100, .bg-rose-200 {
+    background-color: var(--danger-soft);
   }
   .bg-red-500, .bg-red-600 {
-    background-color: #e25a6a;
+    background-color: var(--danger);
     color: var(--cream);
   }
 

@@ -5,6 +5,7 @@ import { UserAvatar } from "@/components/UserAvatar";
 import { EloChart } from "@/components/EloChart";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
+import { RankIcon } from "@/components/ui/RankIcon";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { HpCountdown } from "@/components/ui/HpCountdown";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
@@ -283,26 +284,33 @@ function NextRankBar({ elo }: { elo: number }) {
   const pct = getEloProgressInTier(elo);
   if (!next) {
     return (
-      <p className="mt-3 text-xs text-white/55">
-        {rank.icon} Du är på högsta ranken — <span className="text-[#f2a65a]">{rank.name}</span>.
+      <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-white/55">
+        <RankIcon rank={rank} className="h-3.5 w-3.5" style={{ color: rank.accent }} />
+        Du är på högsta ranken — <span style={{ color: rank.accent }}>{rank.name}</span>.
       </p>
     );
   }
   const toGo = next.minElo - elo;
   return (
     <div className="mt-3 max-w-xs">
-      <div className="flex items-center justify-between text-[11px] text-white/55">
-        <span>
-          {rank.icon} {rank.name.split(" – ")[0]}
+      <div className="flex items-center justify-between gap-2 text-[11px] text-white/55">
+        <span className="inline-flex items-center gap-1.5">
+          <RankIcon rank={rank} className="h-3.5 w-3.5" style={{ color: rank.accent }} />
+          {rank.shortName}
         </span>
-        <span className="tabular-nums">
-          {toGo} ELO till {next.icon} {next.name.split(" – ")[0]}
+        <span className="inline-flex items-center gap-1.5 tabular-nums">
+          {toGo} ELO till
+          <RankIcon rank={next} className="h-3.5 w-3.5" style={{ color: next.accent }} />
+          {next.shortName}
         </span>
       </div>
       <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089] transition-all"
-          style={{ width: `${pct}%` }}
+          className="h-full rounded-full transition-all"
+          style={{
+            width: `${pct}%`,
+            background: `linear-gradient(90deg, ${rank.accent}, ${next.accent})`,
+          }}
         />
       </div>
     </div>

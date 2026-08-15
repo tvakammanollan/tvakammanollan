@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { eloTier, initials } from "./elo";
+import { initials } from "./elo";
 import { calcNewElo, kFactor } from "./match.server";
+import { getRankForElo } from "@/types";
 
 describe("kFactor (gränser)", () => {
   it("<1500 → 96, 1500–1800 → 60, >1800 → 30", () => {
@@ -29,11 +30,23 @@ describe("calcNewElo", () => {
   });
 });
 
-describe("eloTier", () => {
-  it("gränser: 1199 brons, 1200 silver, 1500 guld", () => {
-    expect(eloTier(1199)).toBe("bronze");
-    expect(eloTier(1200)).toBe("silver");
-    expect(eloTier(1500)).toBe("gold");
+describe("getRankForElo (enda rang-skalan)", () => {
+  it("gränser: 999 brons, 1000 silver, 1200 guld, 1400 platina, 1600 diamant", () => {
+    expect(getRankForElo(999).tier).toBe("brons");
+    expect(getRankForElo(1000).tier).toBe("silver");
+    expect(getRankForElo(1200).tier).toBe("guld");
+    expect(getRankForElo(1400).tier).toBe("platina");
+    expect(getRankForElo(1600).tier).toBe("diamant");
+  });
+
+  it("startvärdet 1000 ger samma rang överallt (navbar och dashboard)", () => {
+    expect(getRankForElo(1000).shortName).toBe("Silver");
+  });
+
+  it("täcker hela spannet utan hål — varje ELO från golvet får en rang", () => {
+    for (let elo = 600; elo <= 2400; elo += 1) {
+      expect(getRankForElo(elo)).toBeDefined();
+    }
   });
 });
 

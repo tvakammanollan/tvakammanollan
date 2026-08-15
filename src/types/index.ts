@@ -1,64 +1,94 @@
+/**
+ * Rank-stegen. EN källa för rank i hela appen — `EloBadge` (navbar) och
+ * `RankBadge` (dashboard) hade tidigare varsin tröskeltabell, så samma ELO
+ * visades som "Brons" i navbaren och "Silver" på dashboarden på samma skärm.
+ *
+ * Färgerna är tonade för mörk yta (`accent` = ren färg för text/ikon,
+ * `soft`/`line` = fyllning och kant). Inga solida, mättade pillerknappar:
+ * de såg inklistrade ut mot resten av glas-ytorna.
+ */
 export type RankTier = {
   name: string;
+  /** Kort namn utan undertitel — "Guld" i stället för "Guld – Aspirant". */
+  shortName: string;
   tier: string;
   minElo: number;
   maxElo: number;
-  bgColor: string;
-  textColor: string;
-  borderColor: string;
-  icon: string;
+  /** Ren accentfärg: text, ikon, progressfyllning. */
+  accent: string;
+  /** Bakgrundstint. */
+  soft: string;
+  /** Kantfärg. */
+  line: string;
 };
+
+/**
+ * Accentfärg per tier-namn. Rank-stegen och utmärkelsernas tiers
+ * ("brons"/"silver"/"guld") delar de tre metallfärgerna — de var tidigare
+ * skrivna för hand på tre ställen (RANK_TIERS, utmärkelsernas ikonfärger och
+ * `TIER_RING` i AchievementsCard) och hann redan glida isär en gång.
+ *
+ * Bor här och inte i en komponentfil, så att både `lib/`- och UI-lagret kan
+ * läsa den utan att dra in React.
+ */
+export const TIER_ACCENT = {
+  brons: "#c98a5e",
+  silver: "#c3ccd6",
+  guld: "#f2a65a",
+  platina: "#9fd4d8",
+  diamant: "#6fb3b8",
+} as const;
 
 export const RANK_TIERS: RankTier[] = [
   {
     tier: "brons",
     name: "Brons – Nybörjare",
+    shortName: "Brons",
     minElo: 600,
     maxElo: 999,
-    bgColor: "#a0704a",
-    textColor: "#ffffff",
-    borderColor: "#8a5e3a",
-    icon: "🥉",
+    accent: TIER_ACCENT.brons,
+    soft: "rgba(201, 138, 94, 0.14)",
+    line: "rgba(201, 138, 94, 0.42)",
   },
   {
     tier: "silver",
     name: "Silver – Utmanare",
+    shortName: "Silver",
     minElo: 1000,
     maxElo: 1199,
-    bgColor: "#8a9ba8",
-    textColor: "#ffffff",
-    borderColor: "#6b7f8a",
-    icon: "🥈",
+    accent: TIER_ACCENT.silver,
+    soft: "rgba(195, 204, 214, 0.12)",
+    line: "rgba(195, 204, 214, 0.38)",
   },
   {
     tier: "guld",
     name: "Guld – Aspirant",
+    shortName: "Guld",
     minElo: 1200,
     maxElo: 1399,
-    bgColor: "#d4a017",
-    textColor: "#1a1a1a",
-    borderColor: "#b88c12",
-    icon: "🥇",
+    accent: TIER_ACCENT.guld,
+    soft: "rgba(242, 166, 90, 0.14)",
+    line: "rgba(242, 166, 90, 0.42)",
   },
   {
     tier: "platina",
     name: "Platina – Mästare",
+    shortName: "Platina",
     minElo: 1400,
     maxElo: 1599,
-    bgColor: "#a8c0cc",
-    textColor: "#1a1a1a",
-    borderColor: "#8aaab8",
-    icon: "💎",
+    accent: TIER_ACCENT.platina,
+    soft: "rgba(159, 212, 216, 0.12)",
+    line: "rgba(159, 212, 216, 0.38)",
   },
   {
     tier: "diamant",
-    name: "Diamant – Elite",
+    name: "Diamant – Elit",
+    shortName: "Diamant",
     minElo: 1600,
     maxElo: 9999,
-    bgColor: "#1a5c3a",
-    textColor: "#d4a017",
-    borderColor: "#154d30",
-    icon: "✦",
+    accent: TIER_ACCENT.diamant,
+    soft: "rgba(111, 179, 184, 0.16)",
+    line: "rgba(111, 179, 184, 0.48)",
   },
 ];
 

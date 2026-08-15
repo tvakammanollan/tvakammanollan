@@ -33,7 +33,7 @@ export function ExplanationBlock({ explanation, defaultOpen = true }: Props) {
         <div className="overflow-hidden">
           <div
             className="mt-2 rounded-lg border-l-4 border-[#f2a65a] bg-[#f0ede8] p-3"
-            style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#f2a65a]">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring

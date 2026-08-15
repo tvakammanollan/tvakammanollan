@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { PrimaryCTA, SecondaryCTA } from "@/components/layout/CTAButtons";
-import { ArrowRight } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,12 +20,22 @@ import {
 } from "@/components/ui/alert-dialog";
 import { MathText } from "@/components/MathTextLazy";
 import { sounds } from "@/lib/sounds";
-import { Check, X as XIcon, AlertTriangle, X } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  X as XIcon,
+  AlertTriangle,
+  X,
+  BookOpen,
+  Sigma,
+  type LucideIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
 import { displayCategory, ordText } from "@/lib/sv-format";
+import { Spinner } from "@/components/ui/Spinner";
 
 export const Route = createFileRoute("/train")({
   component: TrainPage,
@@ -364,14 +373,14 @@ function TrainPage() {
                 <TrackCard
                   active={config.track === "verbal"}
                   onClick={() => setTrack("verbal")}
-                  icon="📖"
+                  icon={BookOpen}
                   label="Svenska"
                   hint="Ord · Mek · Läs · Elf"
                 />
                 <TrackCard
                   active={config.track === "math"}
                   onClick={() => setTrack("math")}
-                  icon="🔢"
+                  icon={Sigma}
                   label="Matte"
                   hint="Xyz · Kva · Nog · Dtk"
                 />
@@ -471,7 +480,7 @@ function TrainPage() {
       <div className="mx-auto max-w-3xl px-4 py-12" aria-busy="true">
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm sm:p-10">
           <div className="flex flex-col items-center text-center">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/15 border-t-[#f2a65a]" />
+            <Spinner size="lg" />
             <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Plockar fram en uppsättning som matchar dina inställningar.
@@ -573,12 +582,17 @@ function TrainPage() {
                 const isSelected = selected === letter;
                 const isCorrectOpt = revealed && letter === currentQ.correct_answer;
                 const isWrongPick = revealed && isSelected && letter !== currentQ.correct_answer;
+                // Rätt = grönt, fel = rött, valt = amber. Tidigare färgades
+                // rätt svar solid amber — exakt samma ton som "valt", så efter
+                // rättning gick de två lägena inte att skilja åt.
                 let cls =
                   "border border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10";
                 if (isCorrectOpt) {
-                  cls = "border-2 border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]";
+                  cls =
+                    "border-2 border-[var(--success-line)] bg-[var(--success-soft)] text-foreground";
                 } else if (isWrongPick) {
-                  cls = "border-2 border-[#c0392b] bg-[#c0392b] text-white";
+                  cls =
+                    "border-2 border-[var(--danger-line)] bg-[var(--danger-soft)] text-foreground";
                 } else if (isSelected) {
                   cls = "border-2 border-[#f2a65a] bg-[#f2a65a]/15";
                 }
@@ -592,11 +606,13 @@ function TrainPage() {
                   >
                     <span
                       className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
-                        isCorrectOpt || isWrongPick
-                          ? "bg-white/20 text-white"
-                          : isSelected
-                            ? "bg-[#f2a65a] text-[#1a0d04]"
-                            : "bg-white/10 text-foreground"
+                        isCorrectOpt
+                          ? "bg-[var(--success)] text-[var(--success-ink)]"
+                          : isWrongPick
+                            ? "bg-[var(--danger)] text-[#2c0d11]"
+                            : isSelected
+                              ? "bg-[#f2a65a] text-[#1a0d04]"
+                              : "bg-white/10 text-foreground"
                       }`}
                     >
                       {isCorrectOpt ? (
@@ -804,13 +820,13 @@ function SetupCard({
 function TrackCard({
   active,
   onClick,
-  icon,
+  icon: Icon,
   label,
   hint,
 }: {
   active: boolean;
   onClick: () => void;
-  icon: string;
+  icon: LucideIcon;
   label: string;
   hint: string;
 }) {
@@ -824,7 +840,7 @@ function TrackCard({
           : "border-white/12 bg-white/[0.02] hover:border-[#f2a65a]/50"
       }`}
     >
-      <div className="text-3xl">{icon}</div>
+      <Icon className="h-7 w-7 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
       <div className="mt-2 text-lg font-semibold text-white">{label}</div>
       <div className="text-xs text-white/55">{hint}</div>
     </button>

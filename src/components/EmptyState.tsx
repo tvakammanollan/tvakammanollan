@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface EmptyStateProps {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   subtitle: string;
   ctaLabel?: string;
@@ -10,8 +11,13 @@ interface EmptyStateProps {
   ctaOnClick?: () => void;
 }
 
+/**
+ * Standardtomläge. Ikonbrickan var tidigare en solid `#DAD4C5`-cirkel med en
+ * emoji i — en ljus fläck mitt i den mörka ytan. Nu samma tonade amber-bricka
+ * som ikonerna på dashboarden.
+ */
 export function EmptyState({
-  icon,
+  icon: Icon,
   title,
   subtitle,
   ctaLabel,
@@ -20,10 +26,13 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="mx-auto flex max-w-sm flex-col items-center px-4 py-12 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#DAD4C5] text-4xl">
-        <span aria-hidden>{icon}</span>
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10">
+        <Icon className="h-6 w-6 text-[#f2a65a]" aria-hidden />
       </div>
-      <h3 className="text-lg font-bold text-foreground" style={{ fontFamily: "var(--font-sans)" }}>
+      <h3
+        className="text-lg font-bold text-foreground"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
         {title}
       </h3>
       <p className="mt-2 text-sm text-muted-foreground" style={{ lineHeight: 1.6 }}>
@@ -32,19 +41,11 @@ export function EmptyState({
       {ctaLabel && (ctaHref || ctaOnClick) && (
         <div className="mt-5">
           {ctaHref ? (
-            <Button
-              asChild
-              variant="outline"
-              className="border-[#f2a65a] text-[#f2a65a] hover:bg-[#f2a65a]/10"
-            >
+            <Button asChild variant="outline">
               <Link to={ctaHref}>{ctaLabel}</Link>
             </Button>
           ) : (
-            <Button
-              variant="outline"
-              onClick={ctaOnClick}
-              className="border-[#f2a65a] text-[#f2a65a] hover:bg-[#f2a65a]/10"
-            >
+            <Button variant="outline" onClick={ctaOnClick}>
               {ctaLabel}
             </Button>
           )}

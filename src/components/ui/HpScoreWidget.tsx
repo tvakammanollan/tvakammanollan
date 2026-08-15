@@ -1,9 +1,12 @@
 import { useNavigate } from "@tanstack/react-router";
+import { Gauge } from "lucide-react";
 import { combinedHpScore, estimateHpScore, hpScoreLabel } from "@/lib/hpScore";
+import { formatDecimal } from "@/lib/sv-format";
 
 const VERBAL = "#f2a65a";
 const MATH = "#6fb3b8";
-const sv = (s: string) => s.replace(".", ",");
+/** hpScore-modulen returnerar strängar med punkt; visa svenskt decimaltecken. */
+const sv = (s: string) => formatDecimal(parseFloat(s), 1);
 
 interface HpScoreWidgetProps {
   eloVerbal: number;
@@ -21,16 +24,16 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         type="button"
         onClick={() => navigate({ to: "/stats" })}
         title="Uppskattad normerad HP-poäng baserad på din ELO."
-        className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+        className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs transition-colors hover:bg-white/[0.06]"
         style={{
           borderColor: "var(--line)",
-          background: "rgba(21,39,62,0.6)",
+          background: "rgba(42, 28, 16, 0.6)",
           color: "var(--cream)",
-          fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+          fontFamily: "var(--font-mono)",
         }}
       >
-        <span aria-hidden>📊</span>
-        <span>HP {combined}</span>
+        <Gauge className="h-3.5 w-3.5 text-[#f2a65a]" aria-hidden />
+        <span className="tabular-nums">HP {sv(combined)}</span>
       </button>
     );
   }

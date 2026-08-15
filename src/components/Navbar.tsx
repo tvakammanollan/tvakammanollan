@@ -15,7 +15,22 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Menu, LogOut, Zap, Loader2 } from "lucide-react";
+import {
+  Menu,
+  LogOut,
+  Zap,
+  Loader2,
+  Home,
+  Target,
+  FileText,
+  Trophy,
+  Users,
+  BarChart3,
+  BookOpen,
+  HelpCircle,
+  Settings,
+  type LucideIcon,
+} from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 
 export function Navbar() {
@@ -89,7 +104,7 @@ export function Navbar() {
                   className="inline-flex items-center gap-2 rounded-full border"
                   style={{
                     borderColor: "var(--line)",
-                    background: "rgba(21, 39, 62, 0.6)",
+                    background: "rgba(42, 28, 16, 0.6)",
                     padding: "4px 12px 4px 4px",
                     boxShadow: "var(--shadow-sm)",
                   }}
@@ -237,7 +252,7 @@ function MobileMenu({
           className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors"
           style={{
             borderColor: "var(--line)",
-            background: "rgba(21, 39, 62, 0.6)",
+            background: "rgba(42, 28, 16, 0.6)",
             color: "var(--cream)",
           }}
         >
@@ -280,32 +295,32 @@ function MobileMenu({
         </SheetHeader>
 
         <nav className="flex flex-col px-2 py-3">
-          <MobileNavLink to="/" onClick={close} emoji="🏠">
+          <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
           </MobileNavLink>
-          <MobileNavLink to="/train" onClick={close} emoji="🎯">
+          <MobileNavLink to="/train" onClick={close} icon={Target}>
             Träna
           </MobileNavLink>
-          <MobileNavLink to="/gamla-prov" onClick={close} emoji="📄">
+          <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
             Gamla prov
           </MobileNavLink>
-          <MobileNavLink to="/leaderboard" onClick={close} emoji="🏆">
+          <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista
           </MobileNavLink>
-          <MobileNavLink to="/friends" onClick={close} emoji="👥">
+          <MobileNavLink to="/friends" onClick={close} icon={Users}>
             Vänner
           </MobileNavLink>
-          <MobileNavLink to="/stats" onClick={close} emoji="📊">
+          <MobileNavLink to="/stats" onClick={close} icon={BarChart3}>
             Statistik
           </MobileNavLink>
-          <MobileNavLink to="/guider" onClick={close} emoji="📚">
+          <MobileNavLink to="/guider" onClick={close} icon={BookOpen}>
             Guider
           </MobileNavLink>
-          <MobileNavLink to="/faq" onClick={close} emoji="❓">
+          <MobileNavLink to="/faq" onClick={close} icon={HelpCircle}>
             Vanliga frågor
           </MobileNavLink>
           {profile?.is_admin && (
-            <MobileNavLink to="/admin" onClick={close} emoji="⚙️">
+            <MobileNavLink to="/admin" onClick={close} icon={Settings}>
               Admin
             </MobileNavLink>
           )}
@@ -337,12 +352,12 @@ function MobileMenu({
 
 function MobileNavLink({
   to,
-  emoji,
+  icon: Icon,
   children,
   onClick,
 }: {
   to: string;
-  emoji: string;
+  icon: LucideIcon;
   children: React.ReactNode;
   onClick?: () => void;
 }) {
@@ -351,7 +366,7 @@ function MobileNavLink({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       to={to as any}
       onClick={onClick}
-      className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-colors"
+      className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-colors hover:bg-white/[0.04]"
       style={{ color: "var(--cream)" }}
       activeProps={{
         style: {
@@ -360,9 +375,7 @@ function MobileNavLink({
         },
       }}
     >
-      <span className="text-lg" aria-hidden>
-        {emoji}
-      </span>
+      <Icon className="h-[18px] w-[18px] shrink-0 opacity-70" aria-hidden />
       <span className="flex-1">{children}</span>
     </Link>
   );

@@ -56,6 +56,21 @@ export function formatDate(
   return d.toLocaleDateString(SV, opts ?? { day: "numeric", month: "short" });
 }
 
+/**
+ * Fullt utskrivet datum: "lördag 15 augusti 2026".
+ *
+ * Fanns tidigare inlagt för hand på två ställen (HP-nedräkningen och
+ * /hogskoleprovet-datum) med samma fält i olika ordning.
+ */
+export function formatDateLong(date: Date | string | number): string {
+  return formatDate(date, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export function formatTime(date: Date | string | number): string {
   const d = date instanceof Date ? date : new Date(date);
   return d.toLocaleTimeString(SV, { hour: "2-digit", minute: "2-digit" });

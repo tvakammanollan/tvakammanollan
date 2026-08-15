@@ -159,6 +159,65 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 - **Design (anti vibe-coded):** the app is always-dark. Card surface = `border border-white/10 bg-white/[0.02] backdrop-blur-sm`; brand accents amber `#f2a65a` / teal `#6fb3b8` on `--navy #170d05`. Never hardcode light surfaces (`bg-white`, light gradients) — inherited cream text becomes unreadable. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global amber focus ring works automatically.
 - **New indexable pages:** SSR the content (route `loader`, not client fetch), use `pageMeta`/`pageLinks` + JSON-LD, add the URL to `public/sitemap.xml`, and cross-link from related pages (guider ↔ öva ↔ gamla-prov cluster).
+- **Retiring or merging a page:** put a 301 in `PERMANENT_REDIRECTS` at the bottom of `src/server.ts` — it answers before SSR starts, so no React runs. Do NOT leave a route file behind that just redirects: it stays in `routeTree.gen.ts` and keeps showing up in `GUIDES`/`RelatedGuides` as if the page still existed. Then sweep all six places a URL lives: `src/lib/guider-meta.tsx`, the footer link list in `__root.tsx`, the cards **and** the ItemList JSON-LD in `guider/index.tsx`, every `relatedPaths` array, `public/sitemap.xml`, and `public/llms.txt`. A stale path in `relatedPaths` fails silently — `RelatedGuides` filters unknown paths out, so the section just renders 3 cards instead of 4 with no error.
+- **Deleting a route invalidates `routeTree.gen.ts`.** It is checked in but generated, so it still imports the deleted file and `npx tsc --noEmit` fails until the generator runs. `npm run dev` and `npm run build` regenerate it themselves — run one before type-checking, otherwise the failure looks like a real breakage.
+
+### Shared primitives — use these, don't re-roll them
+
+Each of these exists because the same thing had been hand-written 3–6 times
+with a different look in every copy.
+
+- **Rätt/fel:** `--success` / `--success-soft` / `--success-line` / `--success-ink`
+  and `--danger{,-soft,-line,-ink}` (`styles.css`). Never pick a green or red by
+  hand. Green must **not** be `--teal` — teal already means "the opponent" in
+  the match progress bars. Note the Tailwind remap layer at the bottom of
+  `styles.css` also routes `emerald/green → success` and `rose/red → danger`,
+  *including* the `/10`-style opacity variants, which are separate selectors and
+  are easy to miss when adding a new shade.
+- **Rank:** `RANK_TIERS` in `src/types` is the only rank scale (brons 600–999,
+  silver 1000–1199, guld 1200–1399, platina 1400–1599, diamant 1600+). Render it
+  with `RankBadge`, `EloBadge` or `RankIcon` — all three read that one table.
+  A second scale used to live in `lib/elo.ts` (`eloTier`), which made 1000 ELO
+  show as "Brons" in the navbar and "Silver" on the dashboard at the same time.
+  `src/lib/elo.test.ts` pins the boundaries.
+- **Icons:** `RankIcon`, `AchievementIcon` (keys = achievement `id`),
+  `PodiumRank` (top-3 medal cell). Achievement/rank data files hold no icons —
+  the mapping lives in the UI layer so `lib/` stays server-safe.
+- **Loading:** `Spinner` for full-screen/blocking, `<Loader2 className="animate-spin" />`
+  inside buttons. Skeletons use `skeleton-shimmer`.
+- **Empty lists:** `EmptyState` (takes a `LucideIcon`), not ad-hoc centred text.
+- **Numbers/dates:** always the `sv-format` helpers (`formatInt`, `formatDecimal`,
+  `formatTime`, `formatDate`, `formatDateLong`), never a raw `toLocaleString`.
+- **Fonts:** only `var(--font-display|sans|mono)`. No inline font stacks.
+- **Overlays not built on Radix `Dialog`** must call `useDismissible(open, onClose)`
+  — it gives Escape-stängning and scroll-lås. Radix does this for you; the four
+  hand-rolled overlays did not, and none of them locked the background scroll.
+- **Copy:** the unit of play is a **match**, never a "battle". App-språket är
+  svenska rakt igenom (`sv-SE`).
+
+### The Tailwind remap layer — read this before adding a shade
+
+The bottom of `styles.css` remaps Tailwind colour utilities to brand tokens.
+It is powerful and easy to break, because **an unmapped class silently renders
+as raw Tailwind**, sitting next to a mapped one that doesn't.
+
+Two bugs of exactly this kind have already been fixed; both looked like
+"someone eyeballed the numbers":
+
+- `text-white/45,55,65,70,80` all mapped to `--text-secondary` while `/50,60,75`
+  stayed raw white — so `text-white/45` rendered **brighter** than `/60`. The
+  whole ramp is now defined explicitly and is strictly monotonic (`/70` is the
+  unchanged anchor at `--text-secondary`).
+- `border-white/10` and `/15` both mapped to `--line` while `/8` and `/12`
+  stayed raw — so `/12` rendered **dimmer** than `/10`. Also monotonic now.
+
+So: **if you use a new `white/N` step, add it to the ramp**, and keep the ramp
+sorted and increasing. Same for `emerald/red` opacity variants — `bg-red-500/10`
+is a different selector from `bg-red-500` and needs its own entry.
+- **Scanned exam figures** need the `.exam-figure` class, not `bg-white` — the
+  remap layer turns `bg-white` into navy, which would hide black line art.
+- **`var()` does not work in SVG presentation attributes** (`stroke=`, `fill=`).
+  Use a literal hex there, or move the colour into `style={{ }}`.
 
 ### Realtime (Supabase) — crash class to avoid
 

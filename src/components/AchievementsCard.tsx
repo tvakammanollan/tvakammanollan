@@ -3,17 +3,18 @@ import { useServerFn } from "@tanstack/react-start";
 import { fetchAchievements } from "@/lib/achievements.functions";
 import type { AchievementState } from "@/lib/achievements";
 import { Lock } from "lucide-react";
+import { AchievementIcon } from "@/components/ui/AchievementIcon";
+import { TIER_ACCENT } from "@/types";
 
 /* =====================================================================
    ACHIEVEMENTS — badge-rutnät. `variant="full"` på /stats (alla, med
    progress), `variant="compact"` på dashboarden (bara upplåsta + räknare).
    ===================================================================== */
 
-const TIER_RING: Record<AchievementState["tier"], string> = {
-  brons: "ring-[#c97b41]/50",
-  silver: "ring-white/30",
-  guld: "ring-[#f2a65a]/60",
-};
+/** Ringen ärver tier-accenten i stället för att upprepa hex-värdena. */
+function tierRing(tier: AchievementState["tier"]): string {
+  return `${TIER_ACCENT[tier]}80`;
+}
 
 export function AchievementsCard({ variant = "full" }: { variant?: "full" | "compact" }) {
   const fetchFn = useServerFn(fetchAchievements);
@@ -54,7 +55,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
             Utmärkelser
           </p>
           <p className="mt-2 text-sm text-white/55">
-            Spela din första match för att låsa upp din första utmärkelse. ⚔️
+            Spela din första match för att låsa upp din första utmärkelse.
           </p>
         </div>
       );
@@ -74,9 +75,10 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
             <span
               key={a.id}
               title={`${a.name} — ${a.description}`}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2a65a]/10 text-lg ring-1 ${TIER_RING[a.tier]}`}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2a65a]/10 ring-1"
+              style={{ "--tw-ring-color": tierRing(a.tier) } as React.CSSProperties}
             >
-              {a.icon}
+              <AchievementIcon id={a.id} style={{ color: TIER_ACCENT[a.tier] }} />
             </span>
           ))}
         </div>
@@ -107,13 +109,20 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
           >
             <div className="flex items-start gap-3">
               <span
-                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ring-1 ${
-                  a.unlocked
-                    ? `bg-[#f2a65a]/10 ${TIER_RING[a.tier]}`
-                    : "bg-white/[0.03] ring-white/10 grayscale"
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1 ${
+                  a.unlocked ? "bg-[#f2a65a]/10" : "bg-white/[0.03] ring-white/10"
                 }`}
+                style={
+                  a.unlocked
+                    ? ({ "--tw-ring-color": tierRing(a.tier) } as React.CSSProperties)
+                    : undefined
+                }
               >
-                {a.unlocked ? a.icon : <Lock className="h-4 w-4 text-white/40" />}
+                {a.unlocked ? (
+                  <AchievementIcon id={a.id} style={{ color: TIER_ACCENT[a.tier] }} />
+                ) : (
+                  <Lock className="h-4 w-4 text-white/40" />
+                )}
               </span>
               <div className="min-w-0 flex-1">
                 <div className="truncate text-sm font-semibold text-foreground">{a.name}</div>

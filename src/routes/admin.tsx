@@ -1,5 +1,16 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import {
+  FilePenLine,
+  Plus,
+  BarChart3,
+  Flag,
+  Search,
+  TrendingUp,
+  Check,
+  X,
+  ArrowLeft,
+} from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -26,6 +37,7 @@ import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
 import { AdminUsageTab } from "@/components/AdminUsageTab";
+import { formatDate } from "@/lib/sv-format";
 
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
@@ -85,18 +97,39 @@ function AdminPage() {
           Admin
         </h1>
         <Button asChild variant="ghost" size="sm">
-          <Link to="/">← Hem</Link>
+          <Link to="/">
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            Hem
+          </Link>
         </Button>
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="mb-4 flex flex-wrap gap-1">
-          <TabsTrigger value="manage">📝 Hantera frågor</TabsTrigger>
-          <TabsTrigger value="new">➕ Ny fråga</TabsTrigger>
-          <TabsTrigger value="stats">📊 Frågestatistik</TabsTrigger>
-          <TabsTrigger value="reports">⚑ Rapporter</TabsTrigger>
-          <TabsTrigger value="ord-audit">🔍 ORD-audit</TabsTrigger>
-          <TabsTrigger value="usage">📈 Användning</TabsTrigger>
+          <TabsTrigger value="manage">
+            <FilePenLine className="h-3.5 w-3.5" aria-hidden />
+            Hantera frågor
+          </TabsTrigger>
+          <TabsTrigger value="new">
+            <Plus className="h-3.5 w-3.5" aria-hidden />
+            Ny fråga
+          </TabsTrigger>
+          <TabsTrigger value="stats">
+            <BarChart3 className="h-3.5 w-3.5" aria-hidden />
+            Frågestatistik
+          </TabsTrigger>
+          <TabsTrigger value="reports">
+            <Flag className="h-3.5 w-3.5" aria-hidden />
+            Rapporter
+          </TabsTrigger>
+          <TabsTrigger value="ord-audit">
+            <Search className="h-3.5 w-3.5" aria-hidden />
+            ORD-audit
+          </TabsTrigger>
+          <TabsTrigger value="usage">
+            <TrendingUp className="h-3.5 w-3.5" aria-hidden />
+            Användning
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="manage">
@@ -229,7 +262,14 @@ function ManageTab() {
                     {(r.question_text?.length ?? 0) > 60 ? "…" : ""}
                   </td>
                   <td className="px-3 py-2">
-                    {r.explanation?.trim() ? "✓" : <span className="text-amber-600">✗</span>}
+                    {r.explanation?.trim() ? (
+                      <Check
+                        className="h-4 w-4 text-[var(--success)]"
+                        aria-label="Har förklaring"
+                      />
+                    ) : (
+                      <X className="h-4 w-4 text-[var(--amber)]" aria-label="Saknar förklaring" />
+                    )}
                   </td>
                   <td className="px-3 py-2 text-right">
                     <Button size="sm" variant="outline" onClick={() => setEditing(r)}>
@@ -433,7 +473,11 @@ function ReportsTab() {
                   <td className="px-3 py-2">{r.reason}</td>
                   <td className="px-3 py-2 text-muted-foreground">{r.comment ?? "—"}</td>
                   <td className="px-3 py-2 text-muted-foreground">
-                    {new Date(r.created_at).toLocaleDateString("sv-SE")}
+                    {formatDate(r.created_at, {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })}
                   </td>
                   <td className="px-3 py-2 text-right">
                     <div className="flex justify-end gap-1">
@@ -741,7 +785,8 @@ function OrdAuditTab() {
     <div className="space-y-6">
       <div className="rounded-2xl border border-border bg-card p-6">
         <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
-          🔍 ORD-audit · applicera manuella fixar
+          <Search className="mr-2 inline h-5 w-5 align-[-3px]" aria-hidden />
+          ORD-audit · applicera manuella fixar
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
           Kör de 134 manuellt granskade fixarna från{" "}
@@ -774,7 +819,7 @@ function OrdAuditTab() {
           disabled={running}
           className={dryRun ? "" : "bg-amber-600 hover:bg-amber-700"}
         >
-          {running ? "Kör…" : dryRun ? "Kör DRY RUN" : "🚀 Applicera fixar"}
+          {running ? "Kör…" : dryRun ? "Kör DRY RUN" : "Applicera fixar"}
         </Button>
       </div>
 
