@@ -21,6 +21,8 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
 import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGate";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { Analytics } from "@/components/Analytics";
 
 installSupabaseFetchAuth();
 
@@ -408,8 +410,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/guider/kva">KVA-guide</a>
           <a href="/guider/nog">NOG-guide</a>
           <a href="/guider/dtk">DTK-guide</a>
-          <a href="/guider/normering">HP-normering</a>
-          <a href="/guider/tips-lasforstaelse">Tips läsförståelse</a>
+          <a href="/hogskoleprovet-poang">HP-poäng och normering</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
           <a href="/om">Om HP Kampen</a>
@@ -450,6 +451,12 @@ function RootComponent() {
           <FriendInviteListener />
           <SafeBoundary label="achievement-watcher">
             <AchievementWatcher />
+          </SafeBoundary>
+          <SafeBoundary label="analytics">
+            <Analytics />
+          </SafeBoundary>
+          <SafeBoundary label="consent-banner">
+            <ConsentBanner />
           </SafeBoundary>
           <Toaster richColors position="top-center" />
         </div>

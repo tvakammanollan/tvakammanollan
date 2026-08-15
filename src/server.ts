@@ -78,15 +78,21 @@ function withSecurityHeaders(response: Response): Response {
   const headers = new Headers(response.headers);
   // CSP — supabase + lovable analytics tillåts, strikt i övrigt.
   // (Google Fonts-posterna borttagna 2026-07 — fonterna laddas inte längre.)
+  //
+  // PostHog (EU) står med här men laddas bara efter samtycke — CSP:n öppnar
+  // dörren, consent.ts avgör om någon går igenom den. eu-assets serverar
+  // arrayen med inspelningsskriptet, eu.i tar emot händelserna, och
+  // session replay komprimerar i en worker som skapas från en blob-URL.
   headers.set(
     "Content-Security-Policy",
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev https://eu-assets.i.posthog.com",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+      "worker-src 'self' blob:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "object-src 'none'",
@@ -391,9 +397,30 @@ function recordPageView(pathname: string): Promise<void> | null {
   return due ? flushPageViews() : null;
 }
 
+/*
+ * Permanenta omdirigeringar för sidor som slagits ihop med andra.
+ *
+ * Ligger här och inte som route-stubbar därför att en 301 då kan skickas utan
+ * att SSR:en startar — och därför att en kvarlämnad route fortsätter dyka upp i
+ * routeTree, sitemap-genomgångar och RelatedGuides som om sidan fanns kvar.
+ * Nyckeln är sökvägen utan avslutande snedstreck.
+ */
+const PERMANENT_REDIRECTS: Record<string, string> = {
+  "/guider/tips-lasforstaelse": "/guider/las",
+  "/guider/normering": "/hogskoleprovet-poang",
+};
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     const url = new URL(request.url);
+
+    const redirectTarget = PERMANENT_REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
+    if (redirectTarget) {
+      return new Response(null, {
+        status: 301,
+        headers: { location: redirectTarget + url.search },
+      });
+    }
 
     // Health check
     if (url.pathname === "/api/health") {
