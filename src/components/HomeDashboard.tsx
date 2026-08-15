@@ -113,10 +113,10 @@ export function HomeDashboard() {
           </header>
         </Reveal>
 
-        {/* ---------- Battla ---------- */}
+        {/* ---------- Spela ---------- */}
         <Reveal y={20} delay={0.05}>
           <section className="mt-12">
-            <EyebrowLabel tone="amber">Battla</EyebrowLabel>
+            <EyebrowLabel tone="amber">Spela</EyebrowLabel>
             <h2
               className="display mt-1 text-[22px] font-bold leading-tight text-[#e8e4da] sm:text-[26px]"
               style={{ fontFamily: "var(--font-display)" }}
