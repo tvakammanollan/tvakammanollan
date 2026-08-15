@@ -193,18 +193,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://hpkampen.se/guider/normering</loc>
-    <lastmod>2026-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://hpkampen.se/guider/tips-lasforstaelse</loc>
-    <lastmod>2026-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://hpkampen.se/guider/tidspress</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>

@@ -1,20 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { ArrowRight, Calculator, GraduationCap, TrendingUp } from "lucide-react";
+import { ArrowRight, Calculator, GraduationCap, Scale, TrendingUp } from "lucide-react";
 
 /* =====================================================================
    SEO: "högskoleprovet poäng / antagning" — hög sökvolym ("vad krävs på
-   högskoleprovet", "högskoleprovet antagning", "urvalsgrupp HP"). Distinkt
-   från /guider/normering (som förklarar UTRÄKNINGEN). Statiskt SSR.
+   högskoleprovet", "högskoleprovet antagning", "urvalsgrupp HP"). Statiskt SSR.
+
+   Täcker även normeringen (råpoäng → betyg). Det låg tidigare på en egen sida,
+   /guider/normering, men båda sidorna förklarade 0,0–2,0-skalan, giltighetstiden
+   och urvalskvoterna — två sidor som konkurrerade om samma sökord. Den sidan
+   301:as hit i src/server.ts.
    ===================================================================== */
 
 export const Route = createFileRoute("/hogskoleprovet-poang")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poang",
-      title: "Högskoleprovet poäng & antagning – vad krävs? · HP Kampen",
+      title: "Högskoleprovet poäng, normering & antagning – vad krävs? · HP Kampen",
       description:
-        "Vad betyder högskoleprovets poäng (0,0–2,0) och hur används den vid antagning? Urvalsgrupper, hur många platser som går via HP, giltighetstid och ungefärliga antagningspoäng för populära utbildningar.",
+        "Vad betyder högskoleprovets poäng (0,0–2,0), hur fungerar normeringen från råpoäng till betyg och hur används resultatet vid antagning? Urvalsgrupper, giltighetstid och ungefärliga antagningspoäng.",
       ogTitle: "Högskoleprovet poäng & antagning – så funkar det",
       ogDescription:
         "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på HP Kampen.",
@@ -28,9 +32,9 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Article",
-        headline: "Högskoleprovet poäng och antagning – så funkar det",
+        headline: "Högskoleprovet poäng, normering och antagning – så funkar det",
         description:
-          "Vad högskoleprovets poäng betyder och hur den används vid antagning till högskola och universitet.",
+          "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,0–2,0 går till och hur resultatet används vid antagning till högskola och universitet.",
         inLanguage: "sv-SE",
         about: { "@type": "Thing", name: "Högskoleprovet antagning" },
         isPartOf: { "@id": "https://hpkampen.se/#website" },
@@ -84,13 +88,65 @@ function PoangPage() {
             andra som skrev samma prov – felaktiga svar ger inga minuspoäng, så det lönar sig alltid
             att gissa.
           </p>
-          <Link
-            to="/guider/normering"
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            params={{} as any}
-            className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-[#f2a65a] hover:underline"
+        </section>
+
+        {/* Normering — hur råpoängen blir ett betyg */}
+        <section>
+          <h2
+            className="flex items-center gap-2 text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            Så räknas normeringen ut
+            <Scale className="h-5 w-5 text-[#f2a65a]" />
+            Hur räknas poängen ut? (normering)
+          </h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-white/65">
+            Högskoleprovet ger inte ett enkelt procentresultat. Du kan maximalt få{" "}
+            <strong className="text-white/80">160 råpoäng</strong> – ett per uppgift. UHR räknar
+            sedan ut hur råpoängen fördelar sig bland alla provdeltagare och fastställer
+            normgränser, som justeras ungefär 2–5 råpoäng per tillfälle för att kompensera för att
+            proven är olika svåra. Samma antal rätt kan därför ge olika betyg beroende på vilket
+            prov du skrev.
+          </p>
+          <p className="mt-3 text-[15px] leading-relaxed text-white/65">
+            Historiska riktlinjer för vad som krävts, baserat på offentliggjorda normgränser:
+          </p>
+          <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+            {[
+              { betyg: "2,0", rapoang: "≈ 155–160 rätt av 160" },
+              { betyg: "1,9", rapoang: "≈ 145–150 rätt av 160" },
+              { betyg: "1,8", rapoang: "≈ 135–142 rätt av 160" },
+              { betyg: "1,7", rapoang: "≈ 125–133 rätt av 160" },
+              { betyg: "1,5", rapoang: "≈ 105–115 rätt av 160" },
+              { betyg: "1,0", rapoang: "≈ 65–75 rätt av 160" },
+            ].map((r) => (
+              <li
+                key={r.betyg}
+                className="flex items-center gap-4 border-b border-white/8 px-5 py-3.5 last:border-b-0"
+              >
+                <span
+                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-[#f2a65a]"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {r.betyg}
+                </span>
+                <span className="text-sm text-white/65">{r.rapoang}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-white/40">
+            Ungefärliga historiska snitt. De faktiska normgränserna för varje provrunda publiceras
+            av UHR efter provets genomförande.
+          </p>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/65">
+            Verbal och kvantitativ del väger lika tungt – 80 uppgifter var – och du får ett samlat
+            betyg, inget separat delbetyg. Fördelningen syns däremot i ditt resultatintyg, och den
+            säger vilken del som ger mest att förbättra.
+          </p>
+          <Link
+            to="/hogskoleprovet-poangraknare"
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[#f2a65a] hover:underline"
+          >
+            Räkna ut din normerade poäng
             <ArrowRight className="h-4 w-4" />
           </Link>
         </section>

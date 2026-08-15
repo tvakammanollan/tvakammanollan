@@ -36,10 +36,8 @@ import { Route as OvaDelprovRouteImport } from './routes/ova.$delprov'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
-import { Route as GuiderTipsLasforstaelseRouteImport } from './routes/guider/tips-lasforstaelse'
 import { Route as GuiderTidspressRouteImport } from './routes/guider/tidspress'
 import { Route as GuiderOrdRouteImport } from './routes/guider/ord'
-import { Route as GuiderNormeringRouteImport } from './routes/guider/normering'
 import { Route as GuiderNogRouteImport } from './routes/guider/nog'
 import { Route as GuiderMekRouteImport } from './routes/guider/mek'
 import { Route as GuiderLasRouteImport } from './routes/guider/las'
@@ -188,11 +186,6 @@ const GuiderXyzRoute = GuiderXyzRouteImport.update({
   path: '/guider/xyz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuiderTipsLasforstaelseRoute = GuiderTipsLasforstaelseRouteImport.update({
-  id: '/guider/tips-lasforstaelse',
-  path: '/guider/tips-lasforstaelse',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GuiderTidspressRoute = GuiderTidspressRouteImport.update({
   id: '/guider/tidspress',
   path: '/guider/tidspress',
@@ -201,11 +194,6 @@ const GuiderTidspressRoute = GuiderTidspressRouteImport.update({
 const GuiderOrdRoute = GuiderOrdRouteImport.update({
   id: '/guider/ord',
   path: '/guider/ord',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GuiderNormeringRoute = GuiderNormeringRouteImport.update({
-  id: '/guider/normering',
-  path: '/guider/normering',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuiderNogRoute = GuiderNogRouteImport.update({
@@ -299,10 +287,8 @@ export interface FileRoutesByFullPath {
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
   '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -343,10 +329,8 @@ export interface FileRoutesByTo {
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
   '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -388,10 +372,8 @@ export interface FileRoutesById {
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
   '/guider/nog': typeof GuiderNogRoute
-  '/guider/normering': typeof GuiderNormeringRoute
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
-  '/guider/tips-lasforstaelse': typeof GuiderTipsLasforstaelseRoute
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -434,10 +416,8 @@ export interface FileRouteTypes {
     | '/guider/las'
     | '/guider/mek'
     | '/guider/nog'
-    | '/guider/normering'
     | '/guider/ord'
     | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -478,10 +458,8 @@ export interface FileRouteTypes {
     | '/guider/las'
     | '/guider/mek'
     | '/guider/nog'
-    | '/guider/normering'
     | '/guider/ord'
     | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -522,10 +500,8 @@ export interface FileRouteTypes {
     | '/guider/las'
     | '/guider/mek'
     | '/guider/nog'
-    | '/guider/normering'
     | '/guider/ord'
     | '/guider/tidspress'
-    | '/guider/tips-lasforstaelse'
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -567,10 +543,8 @@ export interface RootRouteChildren {
   GuiderLasRoute: typeof GuiderLasRoute
   GuiderMekRoute: typeof GuiderMekRoute
   GuiderNogRoute: typeof GuiderNogRoute
-  GuiderNormeringRoute: typeof GuiderNormeringRoute
   GuiderOrdRoute: typeof GuiderOrdRoute
   GuiderTidspressRoute: typeof GuiderTidspressRoute
-  GuiderTipsLasforstaelseRoute: typeof GuiderTipsLasforstaelseRoute
   GuiderXyzRoute: typeof GuiderXyzRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
@@ -771,13 +745,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiderXyzRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guider/tips-lasforstaelse': {
-      id: '/guider/tips-lasforstaelse'
-      path: '/guider/tips-lasforstaelse'
-      fullPath: '/guider/tips-lasforstaelse'
-      preLoaderRoute: typeof GuiderTipsLasforstaelseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/guider/tidspress': {
       id: '/guider/tidspress'
       path: '/guider/tidspress'
@@ -790,13 +757,6 @@ declare module '@tanstack/react-router' {
       path: '/guider/ord'
       fullPath: '/guider/ord'
       preLoaderRoute: typeof GuiderOrdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/guider/normering': {
-      id: '/guider/normering'
-      path: '/guider/normering'
-      fullPath: '/guider/normering'
-      preLoaderRoute: typeof GuiderNormeringRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guider/nog': {
@@ -912,10 +872,8 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderLasRoute: GuiderLasRoute,
   GuiderMekRoute: GuiderMekRoute,
   GuiderNogRoute: GuiderNogRoute,
-  GuiderNormeringRoute: GuiderNormeringRoute,
   GuiderOrdRoute: GuiderOrdRoute,
   GuiderTidspressRoute: GuiderTidspressRoute,
-  GuiderTipsLasforstaelseRoute: GuiderTipsLasforstaelseRoute,
   GuiderXyzRoute: GuiderXyzRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,

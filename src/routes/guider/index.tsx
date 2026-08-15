@@ -26,7 +26,7 @@ export const Route = createFileRoute("/guider/")({
         "@type": "Course",
         name: "HP Kampens guidekurs · alla 8 delprov + strategi",
         description:
-          "12 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus normering, tidspress, läsförståelsetips och en komplett studieplan. Helt gratis.",
+          "10 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus tidspress och en komplett studieplan, samt en genomgång av normering och antagningspoäng. Helt gratis.",
         url: "https://hpkampen.se/guider",
         provider: {
           "@type": "Organization",
@@ -122,24 +122,12 @@ export const Route = createFileRoute("/guider/")({
           {
             "@type": "ListItem",
             position: 9,
-            name: "Normering på HP",
-            url: "https://hpkampen.se/guider/normering",
-          },
-          {
-            "@type": "ListItem",
-            position: 10,
-            name: "Tips för läsförståelse",
-            url: "https://hpkampen.se/guider/tips-lasforstaelse",
-          },
-          {
-            "@type": "ListItem",
-            position: 11,
             name: "Tidspress på HP",
             url: "https://hpkampen.se/guider/tidspress",
           },
           {
             "@type": "ListItem",
-            position: 12,
+            position: 10,
             name: "Få bra HP-resultat",
             url: "https://hpkampen.se/guider/bra-resultat",
           },
@@ -292,29 +280,16 @@ function GuiderPage() {
           </h2>
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
-              to="/guider/normering"
+              to="/hogskoleprovet-poang"
               className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                Normering och HP-betyg
+                Normering, poäng och antagning
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Hur råpoäng omvandlas till betyg 0.0–2.0. Historiska gränser för 1.5, 1.7 och 2.0.
-              </div>
-            </Link>
-
-            <Link
-              to="/guider/tips-lasforstaelse"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
-              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
-            >
-              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                7 tips för läsförståelse
-              </div>
-              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Konkreta knep för LÄS och ELF: läs frågan först, elimineringsmetoden och aktiv
-                läsning.
+                Hur råpoäng omvandlas till betyg 0.0–2.0, historiska gränser och vad som krävs för
+                olika utbildningar.
               </div>
             </Link>
 

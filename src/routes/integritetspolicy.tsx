@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
+import { ConsentSettings } from "@/components/ConsentSettings";
 
 export const Route = createFileRoute("/integritetspolicy")({
   component: IntegritetspolicyPage,
@@ -29,7 +30,7 @@ function IntegritetspolicyPage() {
       <PageHero
         eyebrow="Juridik"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-07-04"
+        subtitle="Senast uppdaterad: 2026-08-15"
         variant="compact"
       />
       <article
@@ -79,6 +80,12 @@ function IntegritetspolicyPage() {
               <strong style={{ color: "var(--cream)" }}>Teknisk information</strong> — IP-adress och
               webbläsarversion, enbart för säkerhet och felsökning (anonymiseras efter 30 dagar)
             </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Användningsdata</strong> —{" "}
+              <em>endast om du samtyckt till analys</em>: vilka sidor du besöker, vad du klickar på,
+              ungefärlig plats på landsnivå, enhets- och webbläsartyp samt inspelningar av hur
+              gränssnittet används. Text du skriver i fält maskeras i inspelningarna.
+            </li>
           </ul>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -89,8 +96,11 @@ function IntegritetspolicyPage() {
             <strong style={{ color: "var(--cream)" }}>avtal</strong> (för att leverera tjänsten du
             har skapat konto för) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
-            missbrukshantering och produktförbättring). Vi säljer aldrig dina uppgifter och delar
-            dem inte med tredje part för marknadsföring.
+            missbrukshantering och produktförbättring). Användningsdata för analys behandlas enbart
+            med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong> — inget
+            analysskript laddas innan du sagt ja, och du kan ta tillbaka valet när som helst längre
+            ned på den här sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part
+            för marknadsföring.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -104,6 +114,10 @@ function IntegritetspolicyPage() {
             <li>
               <strong style={{ color: "var(--cream)" }}>Cloudflare</strong> — CDN, hosting och
               DDoS-skydd
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>PostHog</strong> — analys av hur sajten
+              används (EU-instans, data lagras inom EU). Laddas endast efter ditt samtycke.
             </li>
           </ul>
 
@@ -121,6 +135,10 @@ function IntegritetspolicyPage() {
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>IP-loggar</strong> — max 30 dagar
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Analysdata</strong> — sessionsinspelningar
+              max 30 dagar, övrig användningsstatistik max 12 månader
             </li>
           </ul>
 
@@ -160,13 +178,30 @@ function IntegritetspolicyPage() {
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-            Cookies
+            Cookies och analys
           </h2>
           <p>
-            Vi använder enbart funktionell lagring (cookies och localStorage) som behövs för
-            inloggning, sessionshantering och dina inställningar. Inga spårningscookies, inga
-            annonsidentifierare och ingen tredjepartsanalys.
+            <strong style={{ color: "var(--cream)" }}>Nödvändig lagring</strong> — cookies och
+            localStorage som behövs för inloggning, sessionshantering och dina inställningar. Den
+            går inte att välja bort, eftersom tjänsten inte fungerar utan den.
           </p>
+          <p>
+            <strong style={{ color: "var(--cream)" }}>Analys (frivilligt)</strong> — säger du ja
+            laddas PostHog, som sätter en identifierare för att kunna se att flera besök hör ihop.
+            Det används för att förstå vilka delar av sajten som hjälper och var folk fastnar. Säger
+            du nej laddas skriptet inte alls, och ingen identifierare sätts.
+          </p>
+          <p>
+            Vi visar <strong style={{ color: "var(--cream)" }}>inga annonser</strong> och har inga
+            annonsidentifierare.
+          </p>
+          <p>
+            Oavsett ditt val för vi enkel besöksstatistik i vår egen databas: antal visningar per
+            sida och dygn. Den innehåller varken IP-adress, användare eller session och kan inte
+            kopplas till dig — därför kräver den inget samtycke.
+          </p>
+
+          <ConsentSettings />
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
             Ändringar av denna policy

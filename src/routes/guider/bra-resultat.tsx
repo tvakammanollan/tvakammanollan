@@ -239,8 +239,8 @@ function BraResultatGuidePage() {
         currentPath="/guider/bra-resultat"
         relatedPaths={[
           "/guider/tidspress",
-          "/guider/normering",
-          "/guider/tips-lasforstaelse",
+          "/guider/las",
+          "/guider/xyz",
           "/guider/ord",
         ]}
       />

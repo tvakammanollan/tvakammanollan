@@ -16,7 +16,7 @@ Officiell domän: https://hpkampen.se
 - [Skapa konto](https://hpkampen.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
 - [Logga in](https://hpkampen.se/login): Logga in på ditt befintliga konto.
 - [Vanliga frågor](https://hpkampen.se/faq): FAQ om HP Kampen — gratis, ELO, riktiga HP-frågor, gästläge och mer.
-- [Guider till HP](https://hpkampen.se/guider): Index över 12 kompletta guider till alla 8 delprov plus strategi.
+- [Guider till HP](https://hpkampen.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
 - [Om HP Kampen](https://hpkampen.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
 - [Kontakt](https://hpkampen.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 
@@ -33,8 +33,7 @@ Officiell domän: https://hpkampen.se
 
 ## Strategiguider
 
-- [Normering på HP](https://hpkampen.se/guider/normering): Råpoäng → betyg 0,0–2,0. Tabell över historiska normgränser.
-- [Tips för läsförståelse](https://hpkampen.se/guider/tips-lasforstaelse): 7 konkreta tips för LÄS och ELF.
+- [Poäng, normering och antagning](https://hpkampen.se/hogskoleprovet-poang): Råpoäng → betyg 0,0–2,0, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - [Tidspress på HP](https://hpkampen.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://hpkampen.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 

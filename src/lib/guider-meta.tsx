@@ -63,18 +63,6 @@ export const GUIDES: GuideMeta[] = [
     description: "Läs grafer snabbt och undvik skala-fällan.",
   },
   {
-    path: "/guider/normering",
-    label: "Normering · hur HP-poängen räknas",
-    short: "Normering",
-    description: "Råpoäng till betyg 0,0–2,0 — så funkar det.",
-  },
-  {
-    path: "/guider/tips-lasforstaelse",
-    label: "Tips för läsförståelse",
-    short: "Lästips",
-    description: "7 konkreta tips för LÄS och ELF.",
-  },
-  {
     path: "/guider/tidspress",
     label: "Tidspress på HP",
     short: "Tidspress",

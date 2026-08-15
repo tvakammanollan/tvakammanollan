@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { submitMatch } from "@/lib/match.functions";
+import { captureAnalytics } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -465,6 +466,17 @@ function MatchPage() {
         }
       }
       const res = await submitFn({ data: { matchId } });
+      // Produkthändelse för funnel/retention. No-op utan samtycke, och den
+      // ligger efter submitFn med flit — bara matcher som faktiskt gick igenom
+      // ska räknas.
+      captureAnalytics("match_submitted", {
+        match_type: match?.match_type,
+        is_bot_match: match?.is_bot_match,
+        auto_submitted: auto,
+        answered: answers.size,
+        total_questions: questions.length,
+        seconds_used: TOTAL_SECONDS - secondsLeft,
+      });
       // If processed (bot match), go straight to result
       const r = res as { result?: { ok?: boolean; waiting?: boolean } };
       if (r.result?.ok) {

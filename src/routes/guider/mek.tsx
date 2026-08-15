@@ -149,7 +149,7 @@ function MekGuidePage() {
 
       <RelatedGuides
         currentPath="/guider/mek"
-        relatedPaths={["/guider/ord", "/guider/las", "/guider/tips-lasforstaelse", "/guider/elf"]}
+        relatedPaths={["/guider/ord", "/guider/las", "/guider/elf", "/guider/tidspress"]}
       />
     </article>
   );

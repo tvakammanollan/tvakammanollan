@@ -148,7 +148,7 @@ function OrdGuidePage() {
         relatedPaths={[
           "/guider/mek",
           "/guider/las",
-          "/guider/tips-lasforstaelse",
+          "/guider/elf",
           "/guider/tidspress",
         ]}
       />
