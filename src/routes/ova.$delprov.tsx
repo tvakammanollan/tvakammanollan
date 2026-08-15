@@ -244,7 +244,7 @@ function OvaDelprovPage() {
                     alt={`Figur till ${cfg.code}-exempel ${i + 1}`}
                     loading="lazy"
                     decoding="async"
-                    className="mt-3 w-full rounded-lg border border-white/10 bg-white object-contain"
+                    className="mt-3 w-full rounded-lg border border-white/10 exam-figure object-contain"
                     style={{ aspectRatio: "5 / 7" }}
                   />
                 )}
@@ -258,13 +258,15 @@ function OvaDelprovPage() {
                         key={k}
                         className={`flex items-start gap-2.5 rounded-lg border px-3 py-1.5 text-sm ${
                           isCorrect
-                            ? "border-[#6fb3b8]/40 bg-[#6fb3b8]/10 text-[#e8e4da]"
+                            ? "border-[var(--success-line)] bg-[var(--success-soft)] text-[#e8e4da]"
                             : "border-transparent text-white/65"
                         }`}
                       >
                         <span
                           className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-[11px] font-bold ${
-                            isCorrect ? "bg-[#6fb3b8] text-[#0a1a1b]" : "bg-white/10 text-white/60"
+                            isCorrect
+                              ? "bg-[var(--success)] text-[var(--success-ink)]"
+                              : "bg-white/10 text-white/60"
                           }`}
                         >
                           {ALT_LABELS[ai]}

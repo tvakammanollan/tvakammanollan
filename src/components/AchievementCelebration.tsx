@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
+import { useDismissible } from "@/hooks/useDismissible";
+import { AchievementIcon } from "@/components/ui/AchievementIcon";
+import { TIER_ACCENT } from "@/types";
 import type { AchievementState } from "@/lib/achievements";
 
 /**
@@ -30,6 +33,9 @@ export function AchievementCelebration({
     fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
     fire(0.1, { spread: 120, startVelocity: 45 });
   }, [items]);
+
+  // Esc + scroll-lås; annars är enda vägen ut att pricka rätt på backdropen.
+  useDismissible(items.length > 0, onClose);
 
   if (items.length === 0) return null;
 
@@ -63,8 +69,12 @@ export function AchievementCelebration({
               key={a.id}
               className="flex items-center gap-3 rounded-2xl border border-[#f2a65a]/20 bg-[#f2a65a]/[0.07] p-3 text-left"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f2a65a]/12 text-2xl ring-1 ring-[#f2a65a]/40">
-                {a.icon}
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f2a65a]/12 ring-1 ring-[#f2a65a]/40">
+                <AchievementIcon
+                  id={a.id}
+                  className="h-6 w-6"
+                  style={{ color: TIER_ACCENT[a.tier] }}
+                />
               </span>
               <div className="min-w-0">
                 <div className="truncate text-[15px] font-bold text-[#e8e4da]">{a.name}</div>
@@ -78,7 +88,7 @@ export function AchievementCelebration({
           onClick={onClose}
           className="mt-6 w-full bg-[#f2a65a] font-semibold text-[#1a0d04] hover:bg-[#f2a65a]/90"
         >
-          Nice! 🎉
+          Fortsätt
         </Button>
       </div>
     </div>

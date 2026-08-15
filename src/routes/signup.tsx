@@ -99,7 +99,7 @@ function SignupPage() {
               >
                 Skapa konto
               </h1>
-              <p className="text-[16px] text-white/65">Gratis. Inga kort, bara battles.</p>
+              <p className="text-[16px] text-white/65">Gratis. Inga kort, bara matcher.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">

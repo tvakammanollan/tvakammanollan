@@ -3,6 +3,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { HpCountdown } from "@/components/ui/HpCountdown";
 import { HP_DATES } from "@/lib/hp-dates";
 import { ArrowRight, CalendarDays, ScrollText } from "lucide-react";
+import { formatDateLong } from "@/lib/sv-format";
 
 /* =====================================================================
    SEO: dedikerad sida för "högskoleprovet datum / när är nästa HP" — en av
@@ -11,12 +12,7 @@ import { ArrowRight, CalendarDays, ScrollText } from "lucide-react";
    ===================================================================== */
 
 function fmtLong(iso: string): string {
-  return new Date(iso + "T08:00:00+02:00").toLocaleDateString("sv-SE", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  return formatDateLong(new Date(iso + "T08:00:00+02:00"));
 }
 
 export const Route = createFileRoute("/hogskoleprovet-datum")({

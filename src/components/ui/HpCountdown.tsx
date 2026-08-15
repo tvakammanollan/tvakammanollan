@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { m } from "framer-motion";
 import { getNextHpDate, timeUntil } from "@/lib/hp-dates";
 import { CalendarDays } from "lucide-react";
+import { formatDateLong } from "@/lib/sv-format";
 
 interface HpCountdownProps {
   size?: "card" | "inline";
@@ -40,12 +41,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
   }
 
   const t = timeUntil(next.date, now);
-  const formattedDate = next.date.toLocaleDateString("sv-SE", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const formattedDate = formatDateLong(next.date);
 
   if (size === "inline") {
     return (

@@ -74,7 +74,7 @@ function JoinPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
       <m.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-green)]"
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
         animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >

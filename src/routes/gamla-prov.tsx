@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { termToLabel, type RawQ } from "@/types/gamla-prov";
-import { ordText } from "@/lib/sv-format";
+import { ordText, formatInt } from "@/lib/sv-format";
 import { PageHero } from "@/components/layout/PageHero";
+import { Spinner } from "@/components/ui/Spinner";
+import { useDismissible } from "@/hooks/useDismissible";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { logUsageEvent } from "@/lib/usage.functions";
@@ -15,7 +17,6 @@ import {
   Target,
   RotateCcw,
   X,
-  ArrowLeft,
 } from "lucide-react";
 
 export const Route = createFileRoute("/gamla-prov")({
@@ -174,6 +175,10 @@ function GamlaProvPage() {
   const [showPassage, setShowPassage] = useState(true);
   const [showImageModal, setShowImageModal] = useState(false);
 
+  // Escape + scroll-lås för bild-lightboxen. Utan detta gick figuren bara att
+  // stänga med musen, och sidan bakom scrollade vidare under overlayen.
+  useDismissible(showImageModal, () => setShowImageModal(false));
+
   // Load data once
   useEffect(() => {
     let abort = false;
@@ -301,7 +306,7 @@ function GamlaProvPage() {
         style={{ background: "var(--navy)" }}
       >
         <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 rounded-full border-4 border-[#f2a65a] border-t-transparent animate-spin" />
+          <Spinner size="lg" />
           <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
             Laddar prov…
           </p>
@@ -329,7 +334,7 @@ function GamlaProvPage() {
         <PageHero
           eyebrow="Högskoleprovet · gamla prov"
           title="Välj prov"
-          subtitle={`${examMap.size} provtillfällen · ${allQuestions.length.toLocaleString("sv-SE")} uppgifter med facit.`}
+          subtitle={`${examMap.size} provtillfällen · ${formatInt(allQuestions.length)} uppgifter med facit.`}
           align="center"
           variant="compact"
         />
@@ -471,7 +476,7 @@ function GamlaProvPage() {
           >
             <div
               className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full"
-              style={{ background: "rgba(234,179,8,0.18)" }}
+              style={{ background: "rgba(242,166,90,0.18)" }}
             >
               <Trophy className="h-6 w-6" style={{ color: "var(--amber)" }} />
             </div>
@@ -538,8 +543,8 @@ function GamlaProvPage() {
             <div
               className="mb-5 rounded-2xl border p-4 text-xs"
               style={{
-                borderColor: "rgba(234,179,8,0.3)",
-                background: "rgba(234,179,8,0.05)",
+                borderColor: "rgba(242,166,90,0.3)",
+                background: "rgba(242,166,90,0.05)",
                 color: "var(--text-secondary)",
               }}
             >
@@ -584,11 +589,7 @@ function GamlaProvPage() {
                         style={{
                           width: `${p}%`,
                           background:
-                            p >= 80
-                              ? "rgb(52,211,153)"
-                              : p >= 50
-                                ? "rgb(234,179,8)"
-                                : "rgb(239,68,68)",
+                            p >= 80 ? "var(--success)" : p >= 50 ? "var(--amber)" : "var(--danger)",
                         }}
                       />
                     </div>
@@ -625,7 +626,7 @@ function GamlaProvPage() {
                       <span className="flex items-center gap-2 min-w-0">
                         <span
                           className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-bold tabular-nums"
-                          style={{ background: "rgba(239,68,68,0.15)", color: "rgb(239,68,68)" }}
+                          style={{ background: "var(--danger-soft)", color: "var(--danger)" }}
                         >
                           {qq.nr}
                         </span>
@@ -640,9 +641,9 @@ function GamlaProvPage() {
                         className="text-xs tabular-nums"
                         style={{ color: "var(--text-tertiary)" }}
                       >
-                        Du: <strong style={{ color: "rgb(239,68,68)" }}>{ans || "—"}</strong>
+                        Du: <strong style={{ color: "var(--danger)" }}>{ans || "—"}</strong>
                         {" · "}
-                        Rätt: <strong style={{ color: "rgb(52,211,153)" }}>{qq.svar}</strong>
+                        Rätt: <strong style={{ color: "var(--success)" }}>{qq.svar}</strong>
                       </span>
                     </button>
                   );
@@ -753,8 +754,8 @@ function GamlaProvPage() {
           <div
             className="mb-4 rounded-2xl border p-4 text-xs leading-relaxed"
             style={{
-              borderColor: "rgba(234,179,8,0.3)",
-              background: "rgba(234,179,8,0.05)",
+              borderColor: "rgba(242,166,90,0.3)",
+              background: "rgba(242,166,90,0.05)",
               color: "var(--text-secondary)",
             }}
           >
@@ -886,7 +887,7 @@ function GamlaProvPage() {
                           key={i}
                           className="mt-4 mb-2 rounded-xl border px-4 py-3 text-xs font-sans"
                           style={{
-                            borderColor: "rgba(165,180,252,0.18)",
+                            borderColor: "rgba(242,166,90,0.18)",
                             background: "rgba(242,166,90,0.06)",
                             color: "var(--text-secondary)",
                           }}
@@ -940,7 +941,7 @@ function GamlaProvPage() {
               <img
                 src={q.image}
                 alt={`Figur till uppgift ${q.nr}`}
-                className="w-full bg-white"
+                className="w-full exam-figure"
                 decoding="async"
                 // Provbilderna är ~5:7 (1009×1400 / 784×1100) — reservera ytan
                 // så layouten inte hoppar när bilden laddats (CLS).
@@ -956,9 +957,9 @@ function GamlaProvPage() {
           style={{
             borderColor: submitted
               ? userAns === q.svar
-                ? "rgba(52,211,153,0.4)"
+                ? "var(--success-line)"
                 : userAns
-                  ? "rgba(239,68,68,0.4)"
+                  ? "var(--danger-line)"
                   : "var(--line)"
               : "var(--line)",
             background: "var(--navy-2)",
@@ -1000,13 +1001,13 @@ function GamlaProvPage() {
                 let color = "var(--text-secondary)";
                 if (submitted && q.svar) {
                   if (corr) {
-                    bg = "rgba(52,211,153,0.12)";
-                    border = "rgba(52,211,153,0.5)";
-                    color = "rgb(52,211,153)";
+                    bg = "var(--success-soft)";
+                    border = "var(--success-line)";
+                    color = "var(--success)";
                   } else if (sel) {
-                    bg = "rgba(239,68,68,0.12)";
-                    border = "rgba(239,68,68,0.5)";
-                    color = "rgb(239,68,68)";
+                    bg = "var(--danger-soft)";
+                    border = "var(--danger-line)";
+                    color = "var(--danger)";
                   }
                 } else if (sel) {
                   bg = "rgba(242,166,90,0.18)";
@@ -1033,7 +1034,7 @@ function GamlaProvPage() {
           {alts.length === 0 && (
             <p
               className="ml-9 text-sm"
-              style={{ color: submitted ? "rgb(52,211,153)" : "var(--text-tertiary)" }}
+              style={{ color: submitted ? "var(--success)" : "var(--text-tertiary)" }}
             >
               {submitted && q.svar ? (
                 <>
@@ -1103,9 +1104,9 @@ function GamlaProvPage() {
               if (submitted && qq.svar) {
                 dotColor =
                   ans === qq.svar
-                    ? "rgba(52,211,153,0.7)"
+                    ? "var(--success)"
                     : ans
-                      ? "rgba(239,68,68,0.7)"
+                      ? "var(--danger)"
                       : "rgba(255,255,255,0.12)";
               } else if (ans) {
                 dotColor = "rgba(242,166,90,0.7)";
@@ -1136,18 +1137,24 @@ function GamlaProvPage() {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
           onClick={() => setShowImageModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Figur till uppgift ${q.nr}`}
         >
           <button
             type="button"
             onClick={() => setShowImageModal(false)}
+            aria-label="Stäng figuren"
             className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white backdrop-blur transition-all hover:bg-white/20"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden />
           </button>
           <img
             src={q.image}
             alt={`Figur till uppgift ${q.nr}`}
-            className="max-h-full max-w-full bg-white"
+            // Klick på själva bilden ska inte stänga — bara backdropen.
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-full max-w-full exam-figure"
             style={{ objectFit: "contain" }}
           />
         </div>

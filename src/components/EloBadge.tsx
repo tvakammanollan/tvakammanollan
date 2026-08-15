@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { eloTier } from "@/lib/elo";
+import { getRankForElo } from "@/types";
 
 interface Props {
   elo: number;
@@ -8,35 +8,38 @@ interface Props {
   className?: string;
 }
 
+const SIZES = {
+  sm: "text-[11px] px-2 py-0.5",
+  md: "text-xs px-2.5 py-0.5",
+  lg: "text-sm px-3 py-1",
+} as const;
+
+/**
+ * Kompakt ELO-chip (navbar, listor).
+ *
+ * Härleder rang ur `RANK_TIERS` — samma tabell som `RankBadge`. Tidigare hade
+ * den en egen tre-stegs-skala (`eloTier`: brons <1200, silver <1500, guld),
+ * så en spelare på 1000 ELO fick "brons" i navbaren och "Silver – Utmanare"
+ * på dashboarden samtidigt. Nu kan de inte glida isär.
+ */
 export function EloBadge({ elo, label, size = "md", className }: Props) {
-  const tier = eloTier(elo);
-  const styles =
-    tier === "gold"
-      ? "bg-gradient-to-br from-[#E8E4DA] to-[#DAD4C5] text-[#C97B41] ring-[#F2A65A]/30 shadow-[0_1px_3px_rgba(212,160,23,0.20)]"
-      : tier === "silver"
-        ? "bg-gradient-to-br from-[#f3f4f6] to-[#e5e7eb] text-[#475569] ring-[#94a3b8]/35 shadow-[0_1px_3px_rgba(71,85,105,0.10)]"
-        : "bg-gradient-to-br from-[#fce7d3] to-[#f5d4ad] text-[#8b4513] ring-[#c08552]/30 shadow-[0_1px_3px_rgba(139,69,19,0.15)]";
-
-  const sizing =
-    size === "sm"
-      ? "text-[11px] px-2 py-0.5"
-      : size === "lg"
-        ? "text-sm px-3 py-1"
-        : "text-xs px-2.5 py-0.5";
-
-  const dot =
-    tier === "gold" ? "bg-[#F2A65A]" : tier === "silver" ? "bg-[#94a3b8]" : "bg-[#c08552]";
+  const rank = getRankForElo(elo);
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full ring-1 font-semibold tabular-nums",
-        styles,
-        sizing,
+        "inline-flex items-center gap-1.5 rounded-full border font-semibold tabular-nums",
+        SIZES[size],
         className,
       )}
+      style={{ backgroundColor: rank.soft, borderColor: rank.line, color: rank.accent }}
+      title={`${rank.name} · ${elo} ELO`}
     >
-      <span className={cn("h-1.5 w-1.5 rounded-full", dot)} />
+      <span
+        className="h-1.5 w-1.5 shrink-0 rounded-full"
+        style={{ backgroundColor: rank.accent }}
+        aria-hidden
+      />
       {label && <span className="font-medium opacity-75">{label}</span>}
       <span style={{ fontFamily: "var(--font-display)" }}>{elo}</span>
     </span>

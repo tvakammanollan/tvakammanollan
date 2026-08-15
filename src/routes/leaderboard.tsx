@@ -8,7 +8,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Users, Medal, CalendarDays, BookA } from "lucide-react";
+import { formatTime } from "@/lib/sv-format";
+import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
 import {
   fetchLeaderboard,
@@ -274,10 +276,7 @@ function Board({
               : scope === "friends"
                 ? "Du och dina vänner"
                 : updatedAt
-                  ? `Live · uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}`
+                  ? `Live · uppdaterad ${formatTime(updatedAt)}`
                   : "Live"}
           </span>
           <button
@@ -336,7 +335,7 @@ function AllTimeTable({
     return (
       <div className="border-t border-border">
         <EmptyState
-          icon="👥"
+          icon={Users}
           title="Inga rankade vänner ännu"
           subtitle="Lägg till vänner och spela en match så dyker de upp här."
           ctaLabel="Hitta vänner"
@@ -382,7 +381,7 @@ function AllTimeTable({
       {notRanked && (
         <div className="border-t border-border">
           <EmptyState
-            icon="🏅"
+            icon={Medal}
             title="Du är inte rankad ännu"
             subtitle="Spela en match så hamnar du på listan."
             ctaLabel="Spela nu"
@@ -406,9 +405,13 @@ function WeeklyTable({
   if (loading || rows === null) return <TableSkeleton />;
   if (rows.length === 0)
     return (
-      <div className="p-8 text-center text-sm text-white/55">
-        Inga matcher spelade den här veckan ännu. Bli först!
-      </div>
+      <EmptyState
+        icon={CalendarDays}
+        title="Ingen har spelat än den här veckan"
+        subtitle="Veckolistan nollställs varje måndag. Spela en match så tar du förstaplatsen."
+        ctaLabel="Spela nu"
+        ctaHref="/"
+      />
     );
   return (
     <div className="overflow-x-auto">
@@ -428,7 +431,7 @@ function WeeklyTable({
         <tbody>
           {rows.map((r) => {
             const isMe = !!currentUserId && r.user_id === currentUserId;
-            const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
+
             return (
               <tr
                 key={r.user_id}
@@ -439,7 +442,7 @@ function WeeklyTable({
                 }`}
               >
                 <td className="px-4 py-3.5 tabular-nums">
-                  {medal ?? <span className="text-white/45">#{r.rank}</span>}
+                  <PodiumRank rank={r.rank} />
                 </td>
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
@@ -481,7 +484,6 @@ function WeeklyTable({
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
   const isPodium = r.rank <= 3;
-  const podiumIcon = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉";
   const rowBg = isMe
     ? "bg-[#f2a65a]/10 ring-1 ring-[#f2a65a]/40"
     : r.rank === 1
@@ -497,18 +499,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       }`}
     >
       <td className="px-4 py-4 tabular-nums">
-        {isPodium ? (
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#f2a65a]/15 text-lg ring-1 ring-[#f2a65a]/40">
-            {podiumIcon}
-          </span>
-        ) : (
-          <span
-            className="text-sm font-bold tabular-nums text-white/45"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            #{r.rank}
-          </span>
-        )}
+        <PodiumRank rank={r.rank} size="md" />
       </td>
       <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
@@ -583,14 +574,7 @@ function OrdBoard() {
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
       <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-4 py-2 text-xs text-white/55">
-        <span>
-          {updatedAt
-            ? `Uppdaterad ${new Date(updatedAt).toLocaleTimeString("sv-SE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}`
-            : "—"}
-        </span>
+        <span>{updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "—"}</span>
         <button
           onClick={() => void load()}
           className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-white/55 hover:bg-white/[0.05] hover:text-white"
@@ -605,7 +589,13 @@ function OrdBoard() {
       ) : error ? (
         <div className="p-8 text-center text-sm text-[#e25a6a]">{error}</div>
       ) : top.length === 0 ? (
-        <div className="p-8 text-center text-sm text-white/55">Inga ord övade ännu. Bli först!</div>
+        <EmptyState
+          icon={BookA}
+          title="Inga ord övade ännu"
+          subtitle="Ord-listan rankar efter antal rätta ord. Öva en runda så hamnar du på den."
+          ctaLabel="Öva ord"
+          ctaHref="/ord"
+        />
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -641,7 +631,6 @@ function OrdBoard() {
 }
 
 function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
-  const medal = r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : null;
   const tintBg = isMe
     ? "bg-[#f2a65a]/10 ring-1 ring-[#f2a65a]/40"
     : r.rank === 1
@@ -654,7 +643,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       }`}
     >
       <td className="px-3 py-2.5 tabular-nums">
-        {medal ?? <span className="text-white/45">#{r.rank}</span>}
+        <PodiumRank rank={r.rank} />
       </td>
       <td className="px-3 py-2.5 text-white">
         <span className="inline-flex items-center gap-2">

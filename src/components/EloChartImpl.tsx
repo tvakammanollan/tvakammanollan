@@ -10,6 +10,7 @@ import {
   Legend,
 } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
+import { formatDate } from "@/lib/sv-format";
 
 interface Point {
   ts: number;
@@ -42,10 +43,7 @@ export function EloChartImpl({ userId }: { userId: string }) {
       const ordered = ((rows ?? []) as Row[]).slice().reverse();
       const points: Point[] = ordered.map((r) => ({
         ts: new Date(r.created_at).getTime(),
-        date: new Date(r.created_at).toLocaleDateString("sv-SE", {
-          month: "short",
-          day: "numeric",
-        }),
+        date: formatDate(r.created_at),
         verbal: r.match_type === "verbal" ? r.elo_after : undefined,
         math: r.match_type === "math" ? r.elo_after : undefined,
       }));
@@ -70,7 +68,7 @@ export function EloChartImpl({ userId }: { userId: string }) {
       <div className="flex h-48 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border bg-muted/30 text-center">
         <p className="text-sm font-medium">Ingen matchhistorik ännu</p>
         <p className="text-xs text-muted-foreground">
-          Spela din första battle så börjar din ELO-kurva ta form.
+          Spela din första match så börjar din ELO-kurva ta form.
         </p>
       </div>
     );

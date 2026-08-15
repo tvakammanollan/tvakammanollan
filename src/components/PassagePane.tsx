@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Highlighter, Eraser, FileText } from "lucide-react";
 
 interface PassagePaneProps {
   matchId: string;
@@ -137,7 +138,9 @@ export function PassagePane({
     setAllHighlights((prev) => prev.filter((h) => h.passage_id !== pid));
   };
 
-  const headerLabel = category === "ELF" ? "Text passage" : "Textpassage";
+  // Både ORD/LÄS och ELF visas med svensk etikett — resten av panelen
+  // ("tryck för att läsa", "Rensa markeringar") är på svenska ändå.
+  const headerLabel = "Textpassage";
 
   const passageNodes = renderHighlighted(passageText, passageHighlights);
 
@@ -153,11 +156,9 @@ export function PassagePane({
         typeof n === "string" ? (
           <span key={i}>{n}</span>
         ) : (
-          <mark
-            key={i}
-            className={HIGHLIGHT_CLASS}
-            style={{ backgroundColor: "#fff59d", borderRadius: 2 }}
-          >
+          // Amber-tint i stället för överstrykningsgult (#fff59d): på den mörka
+          // ytan ärvde texten cream-färg och blev cream-på-gult, dvs. oläsbar.
+          <mark key={i} className={HIGHLIGHT_CLASS}>
             {n.mark}
           </mark>
         ),
@@ -167,28 +168,38 @@ export function PassagePane({
 
   if (mobileAccordion) {
     return (
-      <section className="mb-4 overflow-hidden rounded-xl border border-border bg-paper lg:hidden">
+      <section className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm lg:hidden">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm font-semibold"
+          aria-expanded={open}
+          className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-white/[0.03]"
         >
-          <span>📄 {headerLabel} – tryck för att läsa</span>
-          <span aria-hidden>{open ? "▲" : "▼"}</span>
+          <span className="inline-flex items-center gap-2">
+            <FileText className="h-4 w-4 text-[#f2a65a]" aria-hidden />
+            {headerLabel}
+            <span className="font-normal text-muted-foreground">– tryck för att läsa</span>
+          </span>
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+            aria-hidden
+          />
         </button>
         {open && (
-          <div className="border-t border-border px-4 py-3">
+          <div className="border-t border-white/10 px-4 py-3">
             <div className="mb-2 flex items-center gap-2">
-              <span className="text-[11px] text-muted-foreground">
-                🖍 Markera text genom att välja den
+              <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <Highlighter className="h-3.5 w-3.5" aria-hidden />
+                Markera text genom att välja den
               </span>
               {passageHighlights.length > 0 && (
                 <button
                   type="button"
                   onClick={clearHighlights}
-                  className="ml-auto text-[11px] font-medium text-[#f2a65a] underline-offset-2 hover:underline"
+                  className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-[#f2a65a] underline-offset-2 hover:underline"
                 >
-                  🗑 Rensa markeringar
+                  <Eraser className="h-3.5 w-3.5" aria-hidden />
+                  Rensa markeringar
                 </button>
               )}
             </div>
@@ -201,20 +212,27 @@ export function PassagePane({
 
   return (
     <aside
-      className="hidden lg:block sticky top-[120px] self-start overflow-y-auto border-r border-[#e2e0db] bg-paper px-6 py-5"
+      className="sticky top-[120px] hidden self-start overflow-y-auto border-r border-white/10 bg-white/[0.02] px-6 py-5 lg:block"
       style={{ maxHeight: "calc(100vh - 140px)" }}
     >
       <div className="mb-3 flex items-center justify-between gap-2">
-        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground">{headerLabel}</h3>
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground">🖍 Markera text genom att välja</span>
+        <h3 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+          <FileText className="h-3.5 w-3.5 text-[#f2a65a]" aria-hidden />
+          {headerLabel}
+        </h3>
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+            <Highlighter className="h-3.5 w-3.5" aria-hidden />
+            Markera text genom att välja
+          </span>
           {passageHighlights.length > 0 && (
             <button
               type="button"
               onClick={clearHighlights}
-              className="text-[11px] font-medium text-[#f2a65a] underline-offset-2 hover:underline"
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#f2a65a] underline-offset-2 hover:underline"
             >
-              🗑 Rensa
+              <Eraser className="h-3.5 w-3.5" aria-hidden />
+              Rensa
             </button>
           )}
         </div>

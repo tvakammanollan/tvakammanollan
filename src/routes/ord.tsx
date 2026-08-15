@@ -19,7 +19,7 @@ import {
   BookOpen,
   ChevronDown,
 } from "lucide-react";
-import { ordText, ordDefinition, hasOrdDefinition } from "@/lib/sv-format";
+import { ordText, ordDefinition, hasOrdDefinition, formatInt, formatDate } from "@/lib/sv-format";
 import { sounds } from "@/lib/sounds";
 import {
   fetchWordBatch,
@@ -404,10 +404,10 @@ function OrdPracticePage() {
                       className="text-4xl font-bold tabular-nums text-[#f2a65a] sm:text-5xl"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
-                      {progress.correctCount.toLocaleString("sv-SE")}
+                      {formatInt(progress.correctCount)}
                     </span>
                     <span className="text-xl font-medium tabular-nums text-muted-foreground sm:text-2xl">
-                      / {progress.totalCount.toLocaleString("sv-SE")}
+                      / {formatInt(progress.totalCount)}
                     </span>
                     <span className="ml-1 text-xs text-muted-foreground">ord rätt besvarade</span>
                   </div>
@@ -468,7 +468,7 @@ function OrdPracticePage() {
                     >
                       <div>{o.label}</div>
                       {o.c != null && (
-                        <div className="text-xs opacity-70">{o.c.toLocaleString("sv-SE")} ord</div>
+                        <div className="text-xs opacity-70">{formatInt(o.c)} ord</div>
                       )}
                     </button>
                   ))}
@@ -499,9 +499,7 @@ function OrdPracticePage() {
                         style={active ? { background: o.color, borderColor: o.color } : undefined}
                       >
                         <div>{o.label}</div>
-                        <div className="text-xs opacity-70">
-                          {(o.c ?? 0).toLocaleString("sv-SE")} ord
-                        </div>
+                        <div className="text-xs opacity-70">{formatInt(o.c ?? 0)} ord</div>
                       </button>
                     );
                   })}
@@ -530,13 +528,20 @@ function OrdPracticePage() {
                     <button
                       type="button"
                       onClick={() => setFailedMode((v) => !v)}
-                      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition ${
                         failedMode
                           ? "bg-red-600 text-white"
                           : "border border-red-500/40 bg-transparent text-red-300 hover:bg-red-500/10"
                       }`}
                     >
-                      {failedMode ? "✓ Aktivt" : "Öva dessa"}
+                      {failedMode ? (
+                        <>
+                          <Check className="h-3.5 w-3.5" aria-hidden />
+                          Aktivt
+                        </>
+                      ) : (
+                        "Öva dessa"
+                      )}
                     </button>
                   </div>
 
@@ -571,10 +576,7 @@ function OrdPracticePage() {
                               </span>
                             ) : (
                               <span className="text-[10px] text-muted-foreground">
-                                {new Date(w.next_review_at).toLocaleDateString("sv-SE", {
-                                  month: "short",
-                                  day: "numeric",
-                                })}
+                                {formatDate(w.next_review_at)}
                               </span>
                             )}
                             <div className="mt-0.5 text-[10px] text-red-400">
@@ -591,16 +593,20 @@ function OrdPracticePage() {
               <div className="mt-5 border-t border-border pt-4 text-center">
                 <Link
                   to="/leaderboard"
-                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
-                  🏆 Se ord-topplistan →
+                  <Trophy className="h-4 w-4" aria-hidden />
+                  Se ord-topplistan
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </Link>
                 <span className="mx-3 text-muted-foreground">·</span>
                 <Link
                   to="/guider/ord"
-                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
-                  📚 Läs ORD-strategiguiden →
+                  <BookOpen className="h-4 w-4" aria-hidden />
+                  Läs ORD-strategiguiden
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </Link>
               </div>
             </GlassCard>

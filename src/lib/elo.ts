@@ -1,14 +1,7 @@
-export type EloTier = "gold" | "silver" | "bronze";
-
-export function eloTier(elo: number): EloTier {
-  if (elo >= 1500) return "gold";
-  if (elo >= 1200) return "silver";
-  return "bronze";
-}
-
-export function eloTierLabel(tier: EloTier): string {
-  return tier === "gold" ? "Guld" : tier === "silver" ? "Silver" : "Brons";
-}
+/* `eloTier`/`eloTierLabel` togs bort: de definierade en andra, motstridig
+   rang-skala (brons <1200 / silver <1500 / guld) parallellt med RANK_TIERS i
+   `src/types`. Samma ELO kunde därför visas som två olika rangar samtidigt.
+   RANK_TIERS är nu enda källan — se `getRankForElo`. */
 
 const PALETTE = [
   "oklch(0.55 0.13 155)", // green

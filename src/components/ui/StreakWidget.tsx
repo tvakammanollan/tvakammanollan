@@ -11,10 +11,7 @@ export function StreakWidget({ currentStreak, longestStreak, onStartClick, class
   if (currentStreak < 1) {
     return (
       <div className={`flex flex-col gap-0.5 ${className ?? ""}`}>
-        <span
-          className="text-sm text-muted-foreground"
-          style={{ fontFamily: "DM Sans, sans-serif" }}
-        >
+        <span className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-sans)" }}>
           Ingen aktiv streak
         </span>
         {onStartClick ? (
@@ -35,7 +32,7 @@ export function StreakWidget({ currentStreak, longestStreak, onStartClick, class
     <div className={`flex flex-col gap-0.5 ${className ?? ""}`}>
       <span
         className="inline-flex items-center gap-1 text-sm font-semibold"
-        style={{ fontFamily: "DM Sans, sans-serif", color: "#e67e22" }}
+        style={{ fontFamily: "var(--font-sans)", color: "var(--amber)" }}
       >
         <Flame className="h-4 w-4 fill-current" />
         {currentStreak} dagars streak

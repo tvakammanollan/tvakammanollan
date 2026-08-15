@@ -28,9 +28,11 @@ import {
   Star,
   Flame,
   Award,
+  TrendingUp,
+  Swords,
 } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { displayCategory } from "@/lib/sv-format";
+import { displayCategory, formatDate } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
@@ -150,10 +152,7 @@ function StatsPage() {
       setEloPoints(
         ordered.map((r) => ({
           ts: new Date(r.created_at).getTime(),
-          date: new Date(r.created_at).toLocaleDateString("sv-SE", {
-            month: "short",
-            day: "numeric",
-          }),
+          date: formatDate(r.created_at),
           verbal: r.match_type === "verbal" ? r.elo_after : undefined,
           math: r.match_type === "math" ? r.elo_after : undefined,
           delta: r.elo_change,
@@ -371,7 +370,7 @@ function StatsPage() {
           </div>
           {eloPoints.length < 2 ? (
             <EmptyState
-              icon="📈"
+              icon={TrendingUp}
               title="Inte tillräckligt med data ännu"
               subtitle="Spela minst 2 matcher för att se din ELO-kurva börja forma sig."
               ctaLabel="Spela en match"
@@ -456,7 +455,7 @@ function StatsPage() {
           </div>
           {breakdownData.every((b) => !b.enough) ? (
             <EmptyState
-              icon="🎯"
+              icon={Target}
               title="Spela fler matcher"
               subtitle="Vi behöver mer data för att visa din träffsäkerhet per delprov."
             />
@@ -522,10 +521,10 @@ function StatsPage() {
           </div>
           {matchHistory.length === 0 ? (
             <EmptyState
-              icon="⚔️"
+              icon={Swords}
               title="Inga matcher ännu"
-              subtitle="Du har inte spelat någon match ännu. Starta din första battle!"
-              ctaLabel="Starta en battle"
+              subtitle="Du har inte spelat någon match ännu. Spela din första så dyker den upp här."
+              ctaLabel="Spela en match"
               ctaHref="/"
             />
           ) : (
@@ -562,7 +561,7 @@ function StatsPage() {
                       return (
                         <tr key={m.id} className={`border-b border-border/60 ${rowBg}`}>
                           <td className="px-2 py-2 text-muted-foreground">
-                            {new Date(m.created_at).toLocaleDateString("sv-SE", {
+                            {formatDate(m.created_at, {
                               year: "2-digit",
                               month: "short",
                               day: "numeric",

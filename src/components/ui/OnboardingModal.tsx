@@ -4,22 +4,44 @@ import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { RankBadge } from "@/components/ui/RankBadge";
+import {
+  Sprout,
+  BookMarked,
+  Target,
+  Trophy,
+  Gem,
+  BookOpen,
+  Sigma,
+  Library,
+  Check,
+  ArrowLeft,
+  ArrowRight,
+  Zap,
+  Home,
+  type LucideIcon,
+} from "lucide-react";
 import { completeOnboarding } from "@/lib/onboarding.functions";
+import { useDismissible } from "@/hooks/useDismissible";
 import { toast } from "sonner";
 
-const GOALS = [
-  { emoji: "🌱", range: "0.5–0.9", label: "Grundläggande", value: 0.7 },
-  { emoji: "📘", range: "1.0–1.2", label: "Godkänt", value: 1.1 },
-  { emoji: "🎯", range: "1.3–1.5", label: "Bra resultat", value: 1.4 },
-  { emoji: "🏆", range: "1.6–1.8", label: "Mycket bra", value: 1.7 },
-  { emoji: "💎", range: "1.9–2.0", label: "Toppresultat", value: 1.95 },
-] as const;
+const GOALS: ReadonlyArray<{ icon: LucideIcon; range: string; label: string; value: number }> = [
+  { icon: Sprout, range: "0,5–0,9", label: "Grundläggande", value: 0.7 },
+  { icon: BookMarked, range: "1,0–1,2", label: "Godkänt", value: 1.1 },
+  { icon: Target, range: "1,3–1,5", label: "Bra resultat", value: 1.4 },
+  { icon: Trophy, range: "1,6–1,8", label: "Mycket bra", value: 1.7 },
+  { icon: Gem, range: "1,9–2,0", label: "Toppresultat", value: 1.95 },
+];
 
-const FOCUS = [
-  { value: "verbal", emoji: "📖", label: "Svenska", sub: "ORD, MEK, LÄS, ELF" },
-  { value: "math", emoji: "🔢", label: "Matte", sub: "XYZ, KVA, NOG, DTK" },
-  { value: "both", emoji: "📚", label: "Båda", sub: "Träna allt" },
-] as const;
+const FOCUS: ReadonlyArray<{
+  value: "verbal" | "math" | "both";
+  icon: LucideIcon;
+  label: string;
+  sub: string;
+}> = [
+  { value: "verbal", icon: BookOpen, label: "Svenska", sub: "ORD, MEK, LÄS, ELF" },
+  { value: "math", icon: Sigma, label: "Matte", sub: "XYZ, KVA, NOG, DTK" },
+  { value: "both", icon: Library, label: "Båda", sub: "Träna allt" },
+];
 
 interface Props {
   open: boolean;
@@ -35,6 +57,11 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const [target, setTarget] = useState<number | null>(null);
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
   const [saving, setSaving] = useState(false);
+
+  // Bara scroll-lås, ingen Escape-stängning: "Hoppa över onboarding" sparar
+  // att onboardingen är avklarad. En tyst Esc hade stängt rutan utan att
+  // spara, så den dykt upp igen vid nästa sidladdning.
+  useDismissible(open && !!user && !!profile);
 
   if (!open || !user || !profile) return null;
 
@@ -94,9 +121,10 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
+      aria-label="Kom igång"
     >
       <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl sm:p-8">
         {/* Progress indicator */}
@@ -114,11 +142,8 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
         <div key={step} className="animate-in slide-in-from-right-4 fade-in duration-300">
           {step === 0 && (
             <>
-              <h2
-                className="text-2xl font-semibold"
-                style={{ fontFamily: "Playfair Display, serif" }}
-              >
-                Välkommen, {profile.username}! 👋
+              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+                Välkommen, {profile.username}!
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">Vad siktar du på för HP-poäng?</p>
               <div className="mt-5 grid gap-2">
@@ -135,13 +160,13 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       }`}
                     >
                       <span className="flex items-center gap-3">
-                        <span className="text-xl">{g.emoji}</span>
+                        <g.icon className="h-5 w-5 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
                         <span>
-                          <span className="font-semibold">{g.range}</span>{" "}
+                          <span className="font-semibold tabular-nums">{g.range}</span>{" "}
                           <span className="text-sm text-muted-foreground">{g.label}</span>
                         </span>
                       </span>
-                      {selected && <span className="text-[#f2a65a]">✓</span>}
+                      {selected && <Check className="h-4 w-4 text-[#f2a65a]" aria-hidden />}
                     </button>
                   );
                 })}
@@ -151,7 +176,8 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                   Hoppa över onboarding
                 </button>
                 <Button onClick={() => setStep(1)} disabled={target === null}>
-                  Sätt mitt mål →
+                  Sätt mitt mål
+                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               </div>
             </>
@@ -159,10 +185,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
           {step === 1 && (
             <>
-              <h2
-                className="text-2xl font-semibold"
-                style={{ fontFamily: "Playfair Display, serif" }}
-              >
+              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
                 Vad vill du träna på?
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">Du kan alltid byta senare.</p>
@@ -179,22 +202,24 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
-                      <span className="text-xl">{f.emoji}</span>
+                      <f.icon className="h-5 w-5 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
                       <span>
                         <div className="font-semibold">{f.label}</div>
                         <div className="text-xs text-muted-foreground">{f.sub}</div>
                       </span>
-                      {selected && <span className="ml-auto text-[#f2a65a]">✓</span>}
+                      {selected && <Check className="ml-auto h-4 w-4 text-[#f2a65a]" aria-hidden />}
                     </button>
                   );
                 })}
               </div>
               <div className="mt-6 flex items-center justify-between">
                 <Button variant="ghost" onClick={() => setStep(0)}>
-                  ← Tillbaka
+                  <ArrowLeft className="h-4 w-4" aria-hidden />
+                  Tillbaka
                 </Button>
                 <Button onClick={() => setStep(2)} disabled={focus === null}>
-                  Nästa →
+                  Nästa
+                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               </div>
             </>
@@ -202,11 +227,8 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
           {step === 2 && (
             <>
-              <h2
-                className="text-2xl font-semibold"
-                style={{ fontFamily: "Playfair Display, serif" }}
-              >
-                Du är redo! 🚀
+              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+                Du är redo!
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Din ELO börjar på 1000 – Silver-rankingen.
@@ -224,10 +246,12 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                   disabled={saving}
                   onClick={() => finish(true)}
                 >
-                  ⚡ Spela första matchen nu!
+                  <Zap className="h-4 w-4" aria-hidden />
+                  Spela första matchen
                 </Button>
                 <Button variant="outline" disabled={saving} onClick={() => finish(false)}>
-                  🏠 Gå till hemskärmen
+                  <Home className="h-4 w-4" aria-hidden />
+                  Gå till hemskärmen
                 </Button>
               </div>
             </>

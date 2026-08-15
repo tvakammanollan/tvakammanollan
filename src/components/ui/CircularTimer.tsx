@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Bell, BellOff } from "lucide-react";
 
 interface CircularTimerProps {
   totalSeconds: number;
@@ -58,9 +59,15 @@ export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: Circ
   const progress = Math.max(0, Math.min(1, remainingSeconds / Math.max(1, totalSeconds)));
   const offset = CIRCUMFERENCE * (1 - progress);
 
+  // Samma tre nivåer som resten av appen: neutral (teal) → varning (amber)
+  // → kritisk (röd). Var tidigare #c0392b, en fjärde röd nyans som inte fanns
+  // någon annanstans i paletten; nu samma värde som --danger/--destructive.
+  //
+  // Literal hex, inte var(--danger): färgen sätts som SVG-presentationsattribut
+  // (`stroke`), och var() är inte pålitligt stödd där i alla webbläsare.
   let color = "#6fb3b8";
-  if (remainingSeconds < 60) color = "#c0392b";
-  else if (remainingSeconds <= 120) color = "#F2A65A";
+  if (remainingSeconds < 60) color = "#e25a6a";
+  else if (remainingSeconds <= 120) color = "#f2a65a";
 
   const mm = String(Math.floor(Math.max(0, remainingSeconds) / 60)).padStart(2, "0");
   const ss = String(Math.max(0, remainingSeconds) % 60).padStart(2, "0");
@@ -75,7 +82,16 @@ export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: Circ
       aria-label={`${mm}:${ss} kvar`}
     >
       <svg width="48" height="48" viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r={RADIUS} fill="none" stroke="#e2e0db" strokeWidth="4" />
+        {/* Spårringen var #e2e0db — nästan vit, och lyste starkare än
+            själva nedräkningen på den mörka ytan. */}
+        <circle
+          cx="24"
+          cy="24"
+          r={RADIUS}
+          fill="none"
+          stroke="rgba(232, 228, 218, 0.12)"
+          strokeWidth="4"
+        />
         <circle
           cx="24"
           cy="24"
@@ -93,7 +109,7 @@ export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: Circ
       <div
         className="absolute inset-0 flex items-center justify-center text-[11px] font-bold tabular-nums"
         style={{
-          fontFamily: "ui-monospace, 'JetBrains Mono', 'DM Mono', monospace",
+          fontFamily: "var(--font-mono)",
           color,
         }}
       >
@@ -123,9 +139,14 @@ export function TimerSoundToggle() {
       onClick={toggle}
       aria-label={enabled ? "Stäng av timer-ljud" : "Slå på timer-ljud"}
       title={enabled ? "Stäng av timer-ljud" : "Slå på timer-ljud"}
-      className="inline-flex h-7 w-7 items-center justify-center rounded-full text-base text-muted-foreground hover:bg-muted hover:text-foreground"
+      aria-pressed={enabled}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
     >
-      {enabled ? "🔔" : "🔕"}
+      {enabled ? (
+        <Bell className="h-4 w-4" aria-hidden />
+      ) : (
+        <BellOff className="h-4 w-4" aria-hidden />
+      )}
     </button>
   );
 }

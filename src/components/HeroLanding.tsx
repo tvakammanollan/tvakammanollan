@@ -2,12 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { m, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trophy, Medal, Award, type LucideIcon } from "lucide-react";
+import { RankIcon } from "@/components/ui/RankIcon";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { getBotName } from "@/lib/bot";
 import { getLandingStats, type LandingStats, type TopPlayer } from "@/lib/landing.functions";
 import { useShaderCanvas } from "@/components/landing/shaderCanvas";
 import { RANK_TIERS } from "@/types";
+import { formatInt } from "@/lib/sv-format";
 
 const TESTIMONIALS = [
   {
@@ -185,13 +187,13 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
     if (stats && stats.totalMatches > 0) {
       out.push({
         type: "stat",
-        text: `${stats.totalMatches.toLocaleString("sv-SE")} matcher spelade totalt`,
+        text: `${formatInt(stats.totalMatches)} matcher spelade totalt`,
       });
     }
     if (stats && stats.totalPlayers > 0) {
       out.push({
         type: "stat",
-        text: `${stats.totalPlayers.toLocaleString("sv-SE")} registrerade spelare`,
+        text: `${formatInt(stats.totalPlayers)} registrerade spelare`,
       });
     }
 
@@ -228,7 +230,7 @@ function LiveTicker({ stats }: { stats: LandingStats | null }) {
         {looped.map((item, i) => {
           const dotColor =
             item.type === "live"
-              ? "#34d399"
+              ? "var(--success)"
               : item.type === "match"
                 ? AMBER
                 : item.type === "stat"
@@ -513,19 +515,21 @@ function VerbalPodium({ players }: { players: TopPlayer[] }) {
 
 const MEDAL_STYLES: Record<
   1 | 2 | 3,
-  { icon: string; height: string; label: string; accent: string }
+  { icon: LucideIcon; height: string; label: string; accent: string }
 > = {
-  1: { icon: "🥇", height: "sm:pt-0", label: "Guld", accent: "#f2a65a" },
-  2: { icon: "🥈", height: "sm:pt-6", label: "Silver", accent: "rgba(226,232,240,0.85)" },
-  3: { icon: "🥉", height: "sm:pt-8", label: "Brons", accent: "rgba(217,119,87,0.9)" },
+  1: { icon: Trophy, height: "sm:pt-0", label: "Guld", accent: "#f2a65a" },
+  2: { icon: Medal, height: "sm:pt-6", label: "Silver", accent: "#c3ccd6" },
+  3: { icon: Award, height: "sm:pt-8", label: "Brons", accent: "#c98a5e" },
 };
 
 function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 3 }) {
-  const m = MEDAL_STYLES[rank];
+  // Hette tidigare `m` och skuggade framer-motions `m` i just den här scopen.
+  const medal = MEDAL_STYLES[rank];
+  const MedalIcon = medal.icon;
   const isGold = rank === 1;
 
   return (
-    <div className={`${m.height} flex flex-col items-stretch`}>
+    <div className={`${medal.height} flex flex-col items-stretch`}>
       <div
         className={`relative flex flex-1 flex-col items-center p-5 ${GLASS_CLASS}`}
         style={{
@@ -535,14 +539,17 @@ function PodiumCard({ player, rank }: { player: TopPlayer | null; rank: 1 | 2 | 
             : (GLASS_STYLE.boxShadow as string),
         }}
       >
-        <div className="text-[40px] leading-none sm:text-[48px]" aria-hidden>
-          {m.icon}
-        </div>
+        <MedalIcon
+          className="h-10 w-10 sm:h-12 sm:w-12"
+          style={{ color: medal.accent }}
+          aria-hidden
+          strokeWidth={1.5}
+        />
         <div
           className="mt-3 font-mono text-[9px] uppercase tracking-[0.22em]"
-          style={{ color: m.accent }}
+          style={{ color: medal.accent }}
         >
-          {m.label}
+          {medal.label}
         </div>
         {player ? (
           <>
@@ -847,14 +854,10 @@ function TierBar() {
               }
             >
               <div
-                className="mx-auto flex h-11 w-11 items-center justify-center rounded-full text-[18px]"
-                style={{
-                  background: t.bgColor,
-                  color: t.textColor,
-                  border: `2px solid ${t.borderColor}`,
-                }}
+                className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border"
+                style={{ background: t.soft, color: t.accent, borderColor: t.line }}
               >
-                {t.icon}
+                <RankIcon rank={t} className="h-5 w-5" />
               </div>
               <div className="mt-3 text-[13px] font-bold uppercase tracking-wider text-white">
                 {t.tier}

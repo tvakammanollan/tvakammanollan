@@ -128,7 +128,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
         <DialogHeader>
           <DialogTitle style={{ fontFamily: "var(--font-display)" }}>
             {mode === "choose"
-              ? `Starta ${typeLabel.toLowerCase()} battle`
+              ? `Starta ${typeLabel.toLowerCase()} match`
               : mode === "join"
                 ? "Gå med i rum"
                 : "Väntar på motståndare"}
