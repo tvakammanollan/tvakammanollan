@@ -37,11 +37,37 @@ plugins stay out of test runs).
 
 ### Deploy (changed 2026-08-14 — no longer via Lovable)
 
-Both Supabase and Cloudflare now live in Niklas' own accounts. Cloudflare Workers
+Supabase, Cloudflare and DNS all live in Niklas' own accounts. Cloudflare Workers
 Builds is connected straight to the GitHub repo, so **push to `main` = build +
 deploy**, no button to click anywhere. Build command `npm run build`, deploy
-command `npx wrangler deploy`. Live at `tvakammanollan.niklas-pellkvist.workers.dev`;
-`hpkampen.se` still resolves via Strato DNS and has not been cut over yet.
+command `npx wrangler deploy`.
+
+`hpkampen.se` was cut over on 2026-08-15 and is served by the `tvakammanollan`
+Worker through the routes `hpkampen.se/*` and `www.hpkampen.se/*`. Strato is
+registrar and mail host only (MX still points at `smtp.rzone.de`); DNS is
+Cloudflare. **Pushing to `main` changes the live site** — verify before pushing,
+not after. `wrangler versions upload` gives a preview URL that serves the build
+without touching production; use it for anything you cannot check locally.
+
+- **CI installs with `bun`, not npm.** The build runs
+  `bun install --frozen-lockfile`, so a dependency added with npm updates
+  `package-lock.json`, leaves `bun.lock` behind, and the build dies with
+  "lockfile had changes, but lockfile is frozen" — while building perfectly on
+  your machine. The repo carries both lockfiles and CI reads only the bun one, so
+  run `bun install` and commit `bun.lock` with every dependency change.
+- **Builds also fire on feature branches and fail there.** The deploy step targets
+  production, so a red build on a branch is expected noise; only judge `main`.
+- **A SaaS provider holding the hostname silently beats your own Worker routes.**
+  After the nameserver switch the zone was active, records proxied and routes in
+  place, yet Lovable still served hpkampen.se: they had it registered as a
+  Cloudflare for SaaS *custom hostname*, which the edge matches ahead of the zone
+  owner's routes and which also blocks Universal SSL ("This hostname is not covered
+  by a certificate"). The certificate is the tell — a SaaS custom hostname gets a
+  single-name cert (`DNS:hpkampen.se`), real Universal SSL covers
+  `hpkampen.se` *and* `*.hpkampen.se`. Only the other party can release it.
+- Public resolvers cache the old A record for a while after a cutover. Query the
+  zone's nameservers directly (`dig A hpkampen.se @harlan.ns.cloudflare.com`) —
+  a stale public answer looks exactly like a misconfigured proxy.
 
 - **Runtime env vars belong in `wrangler.jsonc`, not the dashboard.** `wrangler deploy`
   treats the config file as the source of truth: the build writes
