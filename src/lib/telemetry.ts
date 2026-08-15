@@ -60,6 +60,28 @@ async function flush() {
   }
 }
 
+/**
+ * Vidare till PostHog också.
+ *
+ * `track()` ligger redan utplacerad i flödena, så den här bryggan gör att både
+ * nuvarande och framtida metrics dyker upp i PostHog utan att någon behöver
+ * komma ihåg att lägga till ett andra anrop bredvid.
+ *
+ * - Bara `metric` skickas. Fel hör hemma i /api/telemetry, inte i produkt-
+ *   analysen — de skulle dränka funnels och kosta events i onödan.
+ * - `userId` skickas inte vidare: PostHog vet redan vem användaren är via
+ *   identify() i <Analytics />.
+ * - captureAnalytics är en no-op utan samtycke, så grinden håller även här.
+ * - Importen är dynamisk för att inte dra in analytics.ts (och därmed en
+ *   posthog-referens) i moduler som körs i Workern.
+ */
+function forwardMetricToAnalytics(event: TelemetryEvent) {
+  if (!isBrowser || event.type !== "metric") return;
+  void import("./analytics")
+    .then((m) => m.captureAnalytics(event.message, event.context))
+    .catch(() => undefined);
+}
+
 export function track(event: TelemetryEvent) {
   pending.push({ ...event, ts: event.ts ?? new Date().toISOString() });
   if (pending.length >= 10) {
@@ -70,6 +92,7 @@ export function track(event: TelemetryEvent) {
   if (event.type === "error") {
     console.error("[telemetry]", event.message, event.context);
   }
+  forwardMetricToAnalytics(event);
 }
 
 export function trackError(error: unknown, context: Record<string, unknown> = {}) {
