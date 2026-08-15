@@ -171,8 +171,8 @@ function TidspressGuidePage() {
         currentPath="/guider/tidspress"
         relatedPaths={[
           "/guider/bra-resultat",
-          "/guider/normering",
-          "/guider/tips-lasforstaelse",
+          "/guider/las",
+          "/guider/dtk",
           "/guider/xyz",
         ]}
       />

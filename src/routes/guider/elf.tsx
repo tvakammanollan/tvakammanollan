@@ -143,7 +143,7 @@ function ElfGuidePage() {
 
       <RelatedGuides
         currentPath="/guider/elf"
-        relatedPaths={["/guider/las", "/guider/tips-lasforstaelse", "/guider/ord", "/guider/mek"]}
+        relatedPaths={["/guider/las", "/guider/ord", "/guider/mek", "/guider/tidspress"]}
       />
     </article>
   );

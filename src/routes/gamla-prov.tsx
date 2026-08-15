@@ -8,6 +8,7 @@ import { useDismissible } from "@/hooks/useDismissible";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { logUsageEvent } from "@/lib/usage.functions";
+import { captureAnalytics } from "@/lib/analytics";
 import {
   ChevronLeft,
   ChevronRight,
@@ -266,6 +267,15 @@ function GamlaProvPage() {
           },
         },
       }).catch(() => {});
+      // Samma händelse till PostHog, för funnel och retention. Skickas bara om
+      // besökaren samtyckt — captureAnalytics är en no-op annars.
+      captureAnalytics("gamla_prov_submit", {
+        term: selectedTerm,
+        provpass: selectedPass,
+        score: hasFacit ? finalScore : null,
+        total,
+        duration_s: durationS,
+      });
     }
   }
 

@@ -234,7 +234,10 @@ is a different selector from `bg-red-500` and needs its own entry.
 
 ### GDPR / privacy — non-negotiable
 
-- `/integritetspolicy` must stay **factually true** — it promises no tracking cookies and no third-party analytics. Never add a third-party script (ads, analytics) without a consent platform + policy update; AdSense was removed for exactly this reason (see comment in `__root.tsx`).
+- `/integritetspolicy` must stay **factually true**. Since 2026-08-15 it documents PostHog analytics behind explicit consent — update it whenever what we collect changes.
+- **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`hpk-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
+- Empty `VITE_PUBLIC_POSTHOG_KEY` = analytics off and no banner. `VITE_` vars are inlined **at build time**, so they must be in `.env`; the `wrangler.jsonc` copy alone does nothing for the client bundle.
+- Ads are still out: they need a certified IAB TCF CMP, which our own banner is not. AdSense was removed for exactly this reason (see comment in `__root.tsx`).
 - Account deletion exists (`src/lib/account.functions.ts` + danger zone on `/stats`): deletes personal data, anonymizes the `users` row (empty username hides it from leaderboards, match FKs survive), hard-deletes the auth user with scramble+ban fallback.
 - Usage analytics go through `logUsageEvent` → `audit_log` with `usage:`-namespaced actions (no new tables needed). Admin dashboard: `/admin` → "Användning".
 - Error messages to clients must be generic Swedish — log the raw DB error server-side (`throwDbError` pattern in `word-practice.functions.ts`).
