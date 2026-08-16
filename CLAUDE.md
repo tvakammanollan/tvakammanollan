@@ -154,6 +154,54 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 - On wrong answer: reset streak to 0, interval to 1 day, decrease ease_factor
 - `fetchFailedWordBatch` serves due words sorted by `next_review_at`
 
+### ORD-beståndet — var orden kommer ifrån
+
+Ordlistan (`questions` med `category = "ORD"`) byggs av två scrapers, båda mot
+hogskoleprovet.nu:
+
+- `scraper/scrape-hp-questions.ts` — nya formatet (2013–). ORD ligger inbakat i
+  `verb1.pdf`/`verb2.pdf`, 10 uppgifter per provpass.
+- `scraper/scrape-ord-old.ts` — gamla formatet (1977–2011). Egen `ord.pdf` med
+  40 uppgifter per prov, och mapparna heter `v2005`/`h2005` i stället för
+  `var-2013`/`host-2013`. Kör `bun run scrape:ord-old` → `ord-old-questions.json`,
+  sedan `bun run seed:ord-old` (torrkörning) och `--apply` för att skriva.
+  Seedaren är idempotent: den läser befintliga ORD-uppslag först och infogar
+  bara det som saknas. Kör `scrape:ord-defs` + `apply:ord-defs` efteråt så får
+  de nya orden definitioner som resten av beståndet.
+
+**Sätt inte `exam_term` på ORD-rader.** `import-gamla-prov` gör
+`delete().not("exam_term", "is", null)` innan den importerar om gamla prov, så
+allt med `exam_term` satt raderas nästa gång någon kör den. Terminen ligger i
+`tags` i stället (`["2005vt"]`), vilket också är varför resten av ORD-beståndet
+har `exam_term` tomt.
+
+Fällor i de gamla PDF:erna — alla hanterade i scriptet, men värda att känna till
+om något liknande dyker upp:
+
+- **`/GNNN`-glyfnamn (2000ht–2005ht).** Delmängdsfonterna har `/Differences` med
+  namn som `/G228`, där talet är teckenkoden (228 = ä). pdfjs känner bara igen
+  `/uniXXXX` och `/uXXXX`, så PDF:erna såg helt tomma ut trots att kodtabellen
+  låg i filen. `oversattGlyfnamn` skriver om namnen i byten före parsning.
+  **v2006 och h2006 är krypterade** (`/Encrypt`, tomt lösenord) — omskrivningen
+  gör xref ogiltig och då tappar pdfjs dekrypteringen ("No password given").
+  Byte-längden går inte att bevara, så de två terminerna kräver att PDF:en
+  avkrypteras först.
+- **MacRoman-deklaration med Latin-1-bytes (v1999, v2001).** "språk" kom ut som
+  "sprÂk", "förklaring" som "fˆrklaring". Sju tecken mappas tillbaka i
+  `cleanText`.
+- **Svarsalternativ som ser ut som sidhuvuden.** v2000 uppgift 31 (*rön*) har
+  "anvisningar" som alternativ B, vilket matchade instruktionsordet
+  "Anvisningar" och kapade uppgiften mitt itu. En rad får bara räknas som
+  sidhuvud när den inte redan tolkats som innehåll — samma sak gäller
+  InDesign-sidfötter (`Ord 09A.indd 2`) som annars klistrades sist i alternativ E.
+- **Inskannade prov.** Allt t.o.m. 1996 plus h1997–h1998 saknar textlager helt
+  och kräver OCR. `h1999` har läsbara frågor men inskannat facit — utan
+  verifierade rättsvar importeras de inte. Fyra terminer (h1982, v1983, h1984,
+  h1988) har döda länkar på källsidan. Scriptet redovisar varje utelämnad termin
+  med orsak i slutet av körningen i stället för att gissa.
+- **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
+  nya börjar vid v2013.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.
