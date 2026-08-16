@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { ordDefinition, ordText, displayCategory } from "./sv-format";
+import {
+  ordDefinition,
+  ordText,
+  displayCategory,
+  formatPercent,
+  formatPercentInt,
+} from "./sv-format";
 
 describe("ordDefinition", () => {
   it("trimmar och inleder med versal", () => {
@@ -64,6 +70,32 @@ describe("ordDefinition", () => {
 describe("ordText", () => {
   it("normaliserar till gemener och enkla mellanslag", () => {
     expect(ordText("  FÅ  SITT   LYSTMÄTE ")).toBe("få sitt lystmäte");
+  });
+});
+
+/**
+ * De två procenthjälparna tar olika sorters tal trots snarlika namn, och det
+ * har redan kostat en bugg: provresultatet visade "0.375 % rätt" i stället för
+ * "38 %" eftersom kvoten gick till formatPercentInt. Kontrakten pinnas här.
+ */
+describe("procentformatering", () => {
+  it("formatPercent tar en kvot 0–1 och gör om den till procent", () => {
+    expect(formatPercent(0.375)).toBe("38 %");
+    expect(formatPercent(0.72)).toBe("72 %");
+    expect(formatPercent(0)).toBe("0 %");
+    expect(formatPercent(1)).toBe("100 %");
+  });
+
+  it("formatPercentInt tar ett färdigt procenttal", () => {
+    expect(formatPercentInt(38)).toBe("38 %");
+    expect(formatPercentInt(100)).toBe("100 %");
+  });
+
+  it("ger tankstreck för saknade värden i stället för NaN", () => {
+    expect(formatPercent(null)).toBe("—");
+    expect(formatPercent(undefined)).toBe("—");
+    expect(formatPercent(Number.NaN)).toBe("—");
+    expect(formatPercentInt(null)).toBe("—");
   });
 });
 

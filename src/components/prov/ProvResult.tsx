@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, RotateCcw, Target, Trophy } from "lucide-react";
-import { formatDecimal, formatPercentInt } from "@/lib/sv-format";
+import { formatDecimal, formatPercent } from "@/lib/sv-format";
 import { normeringFromRaw, HP_TOTAL_QUESTIONS } from "@/lib/normering";
 import { isCorrect } from "@/lib/prov-data";
 import { delprovShort, type ProvPass } from "@/types/gamla-prov";
@@ -66,7 +66,7 @@ export function ProvResult({
           <span className="text-2xl font-normal text-[var(--text-secondary)]">/{total}</span>
         </p>
         <p className="mt-1 text-sm text-[var(--text-secondary)]">
-          {formatPercentInt(ratio)} rätt · {formatDuration(elapsedSeconds)}
+          {formatPercent(ratio)} rätt · {formatDuration(elapsedSeconds)}
           {unanswered > 0 && <> · {unanswered} obesvarade</>}
         </p>
       </section>
@@ -104,7 +104,7 @@ export function ProvResult({
                     {delprovShort(s.code)}
                   </span>
                   <span className="tabular-nums text-[var(--text-secondary)]">
-                    {s.right}/{s.total} · {formatPercentInt(pct)}
+                    {s.right}/{s.total} · {formatPercent(pct)}
                   </span>
                 </div>
                 <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
