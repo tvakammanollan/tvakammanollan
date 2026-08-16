@@ -8,6 +8,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
+import { NextStep } from "@/components/layout/NextStep";
 
 import {
   ArrowRight,
@@ -17,6 +18,9 @@ import {
   GraduationCap,
   Trophy,
   BookOpen,
+  Swords,
+  Target,
+  SlidersHorizontal,
   ChevronDown,
 } from "lucide-react";
 import { ordText, ordDefinition, hasOrdDefinition, formatInt, formatDate } from "@/lib/sv-format";
@@ -776,14 +780,16 @@ function OrdPracticePage() {
               </p>
             )}
 
-            <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <Button onClick={() => void startSession(target)} className="gap-2">
-                <RotateCcw className="h-4 w-4" /> Kör {target} till
-              </Button>
-              <Button variant="outline" onClick={backToSetup}>
-                Välj annan längd
-              </Button>
-            </div>
+            <NextStep
+              primaryLabel={`Kör ${target} till`}
+              onPrimary={() => void startSession(target)}
+              primaryIcon={<RotateCcw className="h-4 w-4" />}
+              forward={[
+                { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+                { label: "Träna delprov", icon: Target, to: "/train" },
+                { label: "Välj annan längd", icon: SlidersHorizontal, onClick: backToSetup },
+              ]}
+            />
           </section>
         )}
       </main>
