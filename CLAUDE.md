@@ -131,11 +131,12 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 ### Gamla prov — arkivet och importen
 
 Alla 27 provtillfällen UHR publicerat (HT2013–VT2026) finns i appen: 108 provpass,
-3 857 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
+3 918 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
 `src/data/prov/` för hand, kör om importen.
 
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
+python3 scripts/hp-import/fetch_elf.py # letar upp originalhäftena med ELF (tar ~40 min)
 python3 scripts/hp-import/build.py     # parsar → src/data/prov/ + public/prov-bilder/
 python3 scripts/hp-import/build.py --fresh   # rendera om alla bilder också (~12 min)
 ```
@@ -152,11 +153,15 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   kommer ur PDF:en som `3 27 x 2 =`; att låtsas att det är text ger fel uppgifter.
   NOG och DTK är löptext, med bildutsnitt som reserv när uppgiften har en figur.
   DTK:s diagramuppslag sparas separat och visas bredvid uppgifterna.
-- **ELF finns nästan inte.** UHR plockar bort den engelska texten ur häftena en
-  vecka efter provdagen (upphovsrätt), så deras filer heter `...-utan-elf.pdf`.
-  De 77 ELF-uppgifter sajten redan hade ligger i
-  `scripts/hp-import/elf-arkiv.json` och vävs in av `build.py`. Ett verbalt pass
-  har alltså 30 eller 40 uppgifter beroende på provtillfälle — det är inte ett fel.
+- **ELF finns bara i en del prov.** UHR byter en vecka efter provdagen ut häftet
+  mot en version utan den engelska texten (upphovsrätt) — deras länkade filer
+  heter `...-utan-elf.pdf`. Originalet raderas dock inte alltid: det ligger kvar
+  avlänkat på samma server, och finns annars ofta i Internet Archive.
+  `fetch_elf.py` letar rätt på det (se filen för hur namnen gissas) och `elf.py`
+  parsar ELF:s tre uppslagstyper. Idag: 138 ELF-uppgifter i nio prov, varav fem
+  är kompletta 160-uppgiftersprov. Resten kommer ur
+  `scripts/hp-import/elf-arkiv.json`, det som redan låg på sajten. Ett verbalt
+  pass har alltså 30 eller 40 uppgifter beroende på provtillfälle — inget fel.
 - **Ett provpass som inte validerar skrivs inte ut.** `build.py` kräver facit på
   varje uppgift och minst fyra alternativ, och listar det som fallerar på slutet.
 - Provdatan laddas via `import.meta.glob` i `src/lib/prov-data.ts` — en chunk per

@@ -2,9 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, FileText } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
+import { ProvResumeCard } from "@/components/prov/ProvResumeCard";
 import { allExams, totalQuestions } from "@/lib/prov-data";
 import { formatInt } from "@/lib/sv-format";
 import { delprovFull, passKindLabel } from "@/types/gamla-prov";
+
+/** Ett fullständigt högskoleprov: fyra räknade provpass à 40 uppgifter. */
+const HELA_PROVET = 160;
 
 /* =====================================================================
    Alla gamla högskoleprov UHR publicerat, ett kort per provtillfälle.
@@ -81,6 +85,8 @@ function GamlaProvPage() {
       />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">
+        <ProvResumeCard />
+
         <ul className="grid gap-3 sm:grid-cols-2">
           {exams.map((exam) => (
             <li key={exam.term}>
@@ -96,8 +102,15 @@ function GamlaProvPage() {
                     aria-hidden
                   />
                 </span>
-                <span className="mt-1 text-xs text-[var(--text-tertiary)]">
-                  {exam.passes.length} provpass · {formatInt(exam.questions)} uppgifter
+                <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
+                  <span>
+                    {exam.passes.length} provpass · {formatInt(exam.questions)} uppgifter
+                  </span>
+                  {exam.questions === HELA_PROVET && (
+                    <span className="rounded-full bg-[var(--teal)]/15 px-2 py-0.5 text-[11px] font-medium text-[var(--teal)]">
+                      Komplett med ELF
+                    </span>
+                  )}
                 </span>
                 <span className="mt-3 flex flex-wrap gap-1.5">
                   {exam.passes.map((p) => (
@@ -135,8 +148,11 @@ function GamlaProvPage() {
               dem sökbara och lästa av skärmläsare.
             </p>
             <p>
-              Engelsk läsförståelse (ELF) saknas i de flesta prov. UHR tar bort den engelska texten
-              ur de publicerade häftena en vecka efter provdagen av upphovsrättsskäl.
+              Engelsk läsförståelse (ELF) finns inte i alla prov. UHR byter en vecka efter provdagen
+              ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Där
+              originalhäftet gick att få tag på är ELF med — de proven är märkta{" "}
+              <span className="text-[var(--teal)]">Komplett med ELF</span> och går att skriva i sin
+              helhet.
             </p>
           </div>
         </section>

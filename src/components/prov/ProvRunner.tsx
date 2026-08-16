@@ -591,9 +591,9 @@ function ProvIntro({
         </a>
       </p>
 
-      {/* Öppen som default: uppgifterna ska finnas i serverrenderad HTML, och
-          många vill bara läsa igenom provet med facit utan att skriva det. */}
-      <details open className="group mt-10 border-t border-white/8 pt-8">
+      {/* Innehållet ligger i serverrenderad HTML även hopfällt, så uppgifterna
+          är läsbara för sökmotorer utan att begrava startvyn. */}
+      <details className="group mt-10 border-t border-white/8 pt-8">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
           <h2
             className="text-[20px] font-bold text-[var(--cream)]"

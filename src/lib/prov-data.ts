@@ -77,10 +77,11 @@ const ALT_LETTERS = ["A", "B", "C", "D", "E"];
 /**
  * Antal svarsalternativ, oavsett om uppgiften är text eller bild.
  *
- * För bilduppgifter räknas alternativen ur provhäftet av importskriptet, och
- * den räkningen slår ibland fel lågt (2021ht-1 nr 33: `altCount: 3`, facit
- * "D"). Renderade vi bara de tre knapparna gick uppgiften inte att svara rätt
- * på alls, så vi sträcker antalet till att åtminstone rymma facit.
+ * För bilduppgifter räknas alternativen ur provhäftet av importskriptet. Den
+ * räkningen har slagit fel lågt (2021ht-1 nr 33 kom ut som `altCount: 3` med
+ * facit "D"), och då gick uppgiften inte att svara rätt på alls — bara tre
+ * knappar renderades. Nuvarande data har inga sådana fall kvar; det här är
+ * ett skydd mot att parsern regredierar, inte en lagning av något aktuellt.
  */
 export function altCount(q: ProvQuestion): number {
   if (q.alternatives?.length) return q.alternatives.length;

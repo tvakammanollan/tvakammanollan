@@ -25,6 +25,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from elf import parse_elf  # noqa: E402
 from facit import parse_facit  # noqa: E402
 from kvant import parse_kvant  # noqa: E402
 from verbal import parse_verbal, section_for  # noqa: E402
@@ -160,9 +161,26 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
                 item["passage"] = q["passage"]
             questions.append(item)
 
-        # ELF ur den gamla datafilen, när vi har den.
-        elf = LEGACY_ELF.get((term, pno))
-        if elf:
+        # ELF ur det orörda provhäftet när fetch_elf.py hittat det, annars ur
+        # arkivet. Det orörda häftet är alltid bättre: det har hela den
+        # engelska texten, inte bara frågorna.
+        full = pass_meta["file"].replace(".pdf", "-full.pdf")
+        recovered = parse_elf(full) if os.path.exists(full) else None
+        if recovered and len(recovered["questions"]) >= 8:
+            offset = len(passages)
+            passages += [passage_json(p) for p in recovered["passages"]]
+            for nr in sorted(recovered["questions"]):
+                q = dict(recovered["questions"][nr])
+                q["delprov"] = "ELF"
+                if q.get("passage") is None:
+                    q.pop("passage", None)
+                else:
+                    q["passage"] += offset
+                questions.append(q)
+            questions.sort(key=lambda x: x["nr"])
+
+        elif LEGACY_ELF.get((term, pno)):
+            elf = LEGACY_ELF[(term, pno)]
             offset = len(passages)
             for p in elf["passages"]:
                 entry = {"paragraphs": [x for x in p["body"].split("\n\n") if x.strip()]}
