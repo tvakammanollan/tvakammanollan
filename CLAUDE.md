@@ -97,6 +97,17 @@ without touching production; use it for anything you cannot check locally.
   async queries, so pages look empty at random. Drive Chrome over CDP with
   `--remote-debugging-port` and poll `document.body.innerText` until the expected text
   shows up (Node 24 has a global `WebSocket`, so no puppeteer needed).
+- **A copy of the repo needs its own `node_modules` — never symlink it.** With a
+  symlink, `vite dev` serves the page but `/@id/virtual:tanstack-start-client-entry`
+  404s, so React never hydrates: the HTML is there, every button is dead, and
+  nothing is logged. It reads exactly like broken code. Run `bun install` in the
+  copy instead (~6 s). This applies to `git worktree` too — the worktree is not
+  what breaks hydration, the shared `node_modules` is.
+- Isolating a copy is worth it when another session is regenerating `src/data/prov`:
+  every `/gamla-prov` route 500s while the files are gone, and `vite dev` caches
+  that failed import, so the server must be restarted *after* the data is back.
+  Take the data from git (`git archive <sha> src/data/prov | tar -x -C <copy>`)
+  and the dataset stays still while you test.
 
 ---
 
@@ -153,6 +164,66 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 - On correct answer: increment streak, increase interval by ease_factor; at streak=5 the row is deleted (word mastered)
 - On wrong answer: reset streak to 0, interval to 1 day, decrease ease_factor
 - `fetchFailedWordBatch` serves due words sorted by `next_review_at`
+
+### Gamla prov — arkivet och importen
+
+Alla provtillfällen som går att få tag på finns i appen: 30 stycken
+(VT2012–VT2026), 118 provpass,
+4 363 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
+`src/data/prov/` för hand, kör om importen.
+
+```bash
+python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
+python3 scripts/hp-import/archive_index.py  # register över allt UHR någonsin lagt upp
+python3 scripts/hp-import/fetch_elf.py      # originalhäftena med ELF, via gissade namn
+python3 scripts/hp-import/harvest_elf.py    # samma sak, men ur arkivregistret
+python3 scripts/hp-import/html_elf.py       # ELF ur 2011–2014 års HTML-provsidor
+python3 scripts/hp-import/html_prov.py      # hela verbala pass ur samma sidor (2012vt)
+python3 scripts/hp-import/build.py     # parsar → src/data/prov/ + public/prov-bilder/
+python3 scripts/hp-import/build.py --fresh   # rendera om alla bilder också (~12 min)
+```
+
+Pipelinen är i Python (PyMuPDF + Pillow) därför att textextraktionen behöver
+koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
+återanvänds bilder som redan finns, vilket tar bygget till några sekunder.
+
+- **Läggs ett nytt prov upp hos UHR** räcker det att köra båda scripten: `fetch.py`
+  läser provlistan på studera.nu, och `build.py` skriver om `index.json`,
+  `exempel.json` och gamla-prov-delen av `public/sitemap.xml` (mellan
+  markörkommentarerna — resten av sitemapen är handskriven).
+- **XYZ och KVA lagras som bildutsnitt**, inte text. Bråk, exponenter och rötter
+  kommer ur PDF:en som `3 27 x 2 =`; att låtsas att det är text ger fel uppgifter.
+  NOG och DTK är löptext, med bildutsnitt som reserv när uppgiften har en figur.
+  DTK:s diagramuppslag sparas separat och visas bredvid uppgifterna.
+- **ELF finns bara i en del prov.** UHR byter en vecka efter provdagen ut häftet
+  mot en version utan den engelska texten (upphovsrätt) — deras länkade filer
+  heter `...-utan-elf.pdf`. Originalet raderas dock inte alltid: det ligger kvar
+  avlänkat på samma server, och finns annars ofta i Internet Archive.
+  `fetch_elf.py` letar rätt på det (se filen för hur namnen gissas) och `elf.py`
+  parsar ELF:s tre uppslagstyper. Idag: 138 ELF-uppgifter i nio prov, varav fem
+  är kompletta 160-uppgiftersprov. Resten kommer ur
+  `scripts/hp-import/elf-arkiv.json`, det som redan låg på sajten. Ett verbalt
+  pass har alltså 30 eller 40 uppgifter beroende på provtillfälle — inget fel.
+- **Ett par provtillfällen står inte på UHR:s provlista** men ligger kvar på
+  servern (2013vt, 2012ht). De är uppräknade i `UNLISTED` i `fetch.py`. Hittar
+  du fler: jämför provlistan mot `archive_index.py`:s register.
+- **2011–2014 publicerades proven som HTML-sidor**, en per delprov, och de
+  sidorna rensades aldrig på ELF. `html_elf.py` läser dem ur Internet Archive,
+  `html_prov.py` hela verbala provpass. Längre bak än så går inte: den
+  kvantitativa delen sattes då som en GIF per uppgift och de bilderna
+  arkiverades aldrig, och höstprovet 2011 saknar facit helt.
+- **Lästexterna delas i stycken på indrag**, inte på blankrad — provhäftena
+  markerar nytt stycke med indrag och ett textblock är ofta en hel spalt.
+  Se `Block.paragraphs`. Utan det kommer var sjätte lästext ut som en vägg.
+- **Arkivfilens ELF (`elf-arkiv.json`) är extraherad av någon annan** och har
+  spalter inflätade i varandra på sina håll. `build.py` känner igen mönstret
+  och hoppar över passets ELF hellre än att visa en text som inte går att läsa.
+- **Ett provpass som inte validerar skrivs inte ut.** `build.py` kräver facit på
+  varje uppgift och minst fyra alternativ, och listar det som fallerar på slutet.
+- Provdatan laddas via `import.meta.glob` i `src/lib/prov-data.ts` — en chunk per
+  provpass. Hämta den aldrig över HTTP: den gamla sidan läste
+  `https://hpkampen.se/gamla-prov-data.json` (916 kB) i webbläsaren, vilket gjorde
+  att lokal utveckling läste produktionsdata.
 
 ### Streak
 
@@ -218,6 +289,14 @@ with a different look in every copy.
 - **Overlays not built on Radix `Dialog`** must call `useDismissible(open, onClose)`
   — it gives Escape-stängning and scroll-lås. Radix does this for you; the four
   hand-rolled overlays did not, and none of them locked the background scroll.
+- **In-view reveals (`Reveal`, `StaggerList`, `whileInView`) take `amount: "some"`,
+  never a fraction.** IntersectionObserver measures the ratio against the
+  *element*, so it can never exceed `(viewport + rootMargin) / elementHeight`.
+  Wrap anything taller than that — the 100-row topplista, a stats panel on a
+  phone — and a `0.2` threshold is unreachable: `inView` never flips, the
+  content stays at `opacity: 0`, and nothing errors. It reads as "loads only
+  sometimes", because a cold load animates in while the skeleton is still short
+  whereas a warm react-query cache renders the full-height table on mount.
 - **Copy:** the unit of play is a **match**, never a "battle". App-språket är
   svenska rakt igenom (`sv-SE`).
 

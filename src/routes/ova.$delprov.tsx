@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { ordText } from "@/lib/sv-format";
-import { type RawQ } from "@/types/gamla-prov";
+import { provExamples } from "@/lib/prov-data";
 import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
 
 /* =====================================================================
@@ -11,8 +11,6 @@ import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
    innehållet är crawlbart. Datan hämtas/filtreras i loadern.
    ===================================================================== */
 
-const DATA_URL = "https://hpkampen.se/gamla-prov-data.json";
-const ALT_KEYS = ["a", "b", "c", "d", "e"] as const;
 const ALT_LABELS = ["A", "B", "C", "D", "E"];
 
 type Delprov = {
@@ -102,23 +100,10 @@ const DELPROV: Record<string, Delprov> = {
 export const DELPROV_SLUGS = Object.keys(DELPROV);
 
 export const Route = createFileRoute("/ova/$delprov")({
-  loader: async ({ params }) => {
+  loader: ({ params }) => {
     const cfg = DELPROV[params.delprov];
     if (!cfg) throw notFound();
-    let examples: RawQ[] = [];
-    try {
-      const res = await fetch(DATA_URL);
-      if (res.ok) {
-        const all = (await res.json()) as RawQ[];
-        examples = all
-          .filter((q) => q.delProv === cfg.code)
-          .sort((a, b) => b.exam_term.localeCompare(a.exam_term) || a.nr - b.nr)
-          .slice(0, 6);
-      }
-    } catch {
-      /* exempel är extra — sidan funkar ändå */
-    }
-    return { examples };
+    return { examples: provExamples(cfg.code) };
   },
   head: ({ params }) => {
     const cfg = DELPROV[params.delprov];
@@ -224,62 +209,77 @@ function OvaDelprovPage() {
           <ol className="mt-4 space-y-3">
             {examples.map((q, i) => (
               <li
-                key={`${q.exam_term}-${q.provpass}-${q.nr}`}
+                key={`${q.term}-${q.pass}-${q.nr}`}
                 className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm"
               >
-                <div className="text-[13px] font-semibold tracking-wide text-[#f2a65a]">
+                <div className="text-[13px] font-semibold tracking-wide text-[var(--amber)]">
                   Exempel {i + 1}
                 </div>
                 {q.passage && (
-                  <p className="mt-2 max-h-40 overflow-hidden whitespace-pre-wrap text-[13px] leading-relaxed text-white/55">
-                    {q.passage.length > 480 ? q.passage.slice(0, 480) + " …" : q.passage}
+                  <p className="mt-2 text-[13px] leading-relaxed text-white/55">{q.passage}</p>
+                )}
+                {q.text && !q.image && (
+                  <p className="mt-2 text-[15px] font-medium leading-relaxed text-[var(--cream)]">
+                    {cfg.code === "ORD" ? ordText(q.text) : q.text}
                   </p>
                 )}
-                <p className="mt-2 whitespace-pre-wrap text-[15px] font-medium leading-relaxed text-[#e8e4da]">
-                  {cfg.code === "ORD" ? ordText(q.fraga) : q.fraga}
-                </p>
+                {q.figure && (
+                  <img
+                    src={q.figure}
+                    alt={`Diagram till ${cfg.code}-uppgift ${q.nr}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="exam-figure mt-3 w-full rounded-lg border border-white/10"
+                  />
+                )}
                 {q.image && (
                   <img
                     src={q.image}
-                    alt={`Figur till ${cfg.code}-exempel ${i + 1}`}
+                    alt={`${cfg.code}-uppgift ${q.nr} ur provhäftet`}
                     loading="lazy"
                     decoding="async"
-                    className="mt-3 w-full rounded-lg border border-white/10 exam-figure object-contain"
-                    style={{ aspectRatio: "5 / 7" }}
+                    className="exam-figure mt-3 w-full rounded-lg border border-white/10"
                   />
                 )}
-                <ul className="mt-3 grid gap-1.5">
-                  {ALT_KEYS.map((k, ai) => {
-                    const text = q[k];
-                    if (!text) return null;
-                    const isCorrect = q.svar?.toUpperCase() === ALT_LABELS[ai];
-                    return (
-                      <li
-                        key={k}
-                        className={`flex items-start gap-2.5 rounded-lg border px-3 py-1.5 text-sm ${
-                          isCorrect
-                            ? "border-[var(--success-line)] bg-[var(--success-soft)] text-[#e8e4da]"
-                            : "border-transparent text-white/65"
-                        }`}
-                      >
-                        <span
-                          className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-[11px] font-bold ${
+                {q.alternatives && (
+                  <ul className="mt-3 grid gap-1.5">
+                    {q.alternatives.map((text, ai) => {
+                      const isCorrect = q.answer === ALT_LABELS[ai];
+                      return (
+                        <li
+                          key={ai}
+                          className={`flex items-start gap-2.5 rounded-lg border px-3 py-1.5 text-sm ${
                             isCorrect
-                              ? "bg-[var(--success)] text-[var(--success-ink)]"
-                              : "bg-white/10 text-white/60"
+                              ? "border-[var(--success-line)] bg-[var(--success-soft)] text-[var(--cream)]"
+                              : "border-transparent text-white/65"
                           }`}
                         >
-                          {ALT_LABELS[ai]}
-                        </span>
-                        <span className="leading-relaxed">
-                          {cfg.code === "ORD" ? ordText(text) : text}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <p className="mt-2.5 text-xs font-semibold text-[#6fb3b8]">
-                  Rätt svar: {q.svar?.toUpperCase()} · {q.exam_term}
+                          <span
+                            className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-[11px] font-bold ${
+                              isCorrect
+                                ? "bg-[var(--success)] text-[var(--success-ink)]"
+                                : "bg-white/10 text-white/60"
+                            }`}
+                          >
+                            {ALT_LABELS[ai]}
+                          </span>
+                          <span className="leading-relaxed">
+                            {cfg.code === "ORD" ? ordText(text) : text}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                <p className="mt-2.5 text-xs font-semibold text-[var(--teal)]">
+                  Rätt svar: {q.answer} ·{" "}
+                  <Link
+                    to="/gamla-prov/$term/$pass"
+                    params={{ term: q.term, pass: String(q.pass) }}
+                    className="underline-offset-2 hover:underline"
+                  >
+                    {q.label}, provpass {q.pass}
+                  </Link>
                 </p>
               </li>
             ))}

@@ -48,6 +48,7 @@ import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resul
 import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as GamlaProvTermPassRouteImport } from './routes/gamla-prov_.$term_.$pass'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const VillkorRoute = VillkorRouteImport.update({
@@ -248,6 +249,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const GamlaProvTermPassRoute = GamlaProvTermPassRouteImport.update({
+  id: '/gamla-prov_/$term_/$pass',
+  path: '/gamla-prov/$term/$pass',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -296,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -338,6 +345,7 @@ export interface FileRoutesByTo {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -381,6 +389,7 @@ export interface FileRoutesById {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/gamla-prov_/$term_/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -425,6 +434,7 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
+    | '/gamla-prov/$term/$pass'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -467,6 +477,7 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider'
     | '/.mcp/invoke-tool/$tool'
+    | '/gamla-prov/$term/$pass'
   id:
     | '__root__'
     | '/'
@@ -509,6 +520,7 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
+    | '/gamla-prov_/$term_/$pass'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -552,6 +564,7 @@ export interface RootRouteChildren {
   ResultMatchIdRoute: typeof ResultMatchIdRoute
   GuiderIndexRoute: typeof GuiderIndexRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  GamlaProvTermPassRoute: typeof GamlaProvTermPassRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -829,6 +842,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gamla-prov_/$term_/$pass': {
+      id: '/gamla-prov_/$term_/$pass'
+      path: '/gamla-prov/$term/$pass'
+      fullPath: '/gamla-prov/$term/$pass'
+      preLoaderRoute: typeof GamlaProvTermPassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -881,6 +901,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResultMatchIdRoute: ResultMatchIdRoute,
   GuiderIndexRoute: GuiderIndexRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  GamlaProvTermPassRoute: GamlaProvTermPassRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

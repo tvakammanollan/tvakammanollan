@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
 
@@ -134,7 +135,8 @@ function FaqPage() {
             className="text-sm font-medium underline-offset-4 hover:underline"
             style={{ color: "var(--amber)" }}
           >
-            Hör av dig →
+            Hör av dig
+            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
 

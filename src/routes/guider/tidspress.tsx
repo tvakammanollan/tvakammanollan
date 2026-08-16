@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
@@ -159,22 +160,18 @@ function TidspressGuidePage() {
           <Link
             to="/matchmaking"
             search={{ type: "verbal" }}
-            className="underline"
+            className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Spela live-match under tidspress →
+            Spela live-match under tidspress
+            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>
 
       <RelatedGuides
         currentPath="/guider/tidspress"
-        relatedPaths={[
-          "/guider/bra-resultat",
-          "/guider/las",
-          "/guider/dtk",
-          "/guider/xyz",
-        ]}
+        relatedPaths={["/guider/bra-resultat", "/guider/las", "/guider/dtk", "/guider/xyz"]}
       />
     </article>
   );

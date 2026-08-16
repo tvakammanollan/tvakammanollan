@@ -20,7 +20,15 @@ import re
 import fitz
 from PIL import Image
 
-from pdfutil import blocks, clean_text, content_rect, drawings_in, join_lines, upright_page
+from pdfutil import (
+    blocks,
+    clean_text,
+    content_rect,
+    drawings_in,
+    join_lines,
+    line_text,
+    upright_page,
+)
 from verbal import (
     _alt_text,
     _is_alt,
@@ -68,7 +76,7 @@ def _label_columns(page: "fitz.Page") -> list[list[tuple[int, float, float]]]:
         for line in b["lines"]:
             if not line["spans"]:
                 continue
-            text = clean_text("".join(s["text"] for s in line["spans"]), keep_soft_hyphen=False)
+            text = clean_text(line_text(line), keep_soft_hyphen=False)
             m = LABEL_RE.match(text)
             if not m:
                 continue
@@ -93,7 +101,42 @@ def _label_columns(page: "fitz.Page") -> list[list[tuple[int, float, float]]]:
     return [_rising(sorted(col, key=lambda t: t[2])) for col in columns]
 
 
+def _ink_rect(page: "fitz.Page", clip: "fitz.Rect", pad: float = 10.0) -> "fitz.Rect":
+    """
+    Ytan inom clip som faktiskt har innehåll.
+
+    Uppgifterna är satta i en smal spalt mitt på en A4-sida, så ett utsnitt av
+    hela spaltbredden blir till hälften tomt papper. Vi beskär till det som är
+    ritat eller skrivet i stället.
+    """
+    ink: fitz.Rect | None = None
+    for b in page.get_text("dict", clip=clip)["blocks"]:
+        if b.get("type") != 0:
+            continue
+        for line in b["lines"]:
+            r = fitz.Rect(line["bbox"])
+            ink = r if ink is None else ink | r
+    page_area = page.rect.width * page.rect.height
+    for d in page.get_drawings():
+        r = fitz.Rect(d["rect"])
+        if not r.intersects(clip) or r.is_empty:
+            continue
+        if r.width * r.height > page_area * 0.8:
+            continue  # sidans ram
+        piece = r & clip
+        ink = piece if ink is None else ink | piece
+    if ink is None or ink.is_empty:
+        return clip
+    ink = fitz.Rect(ink.x0 - pad, ink.y0 - pad, ink.x1 + pad, ink.y1 + pad)
+    return ink & clip
+
+
 def _render(page: "fitz.Page", rect: "fitz.Rect", path: str) -> None:
+    # Bilderna är rena funktioner av provhäftet och ändras aldrig. Att hoppa
+    # över dem som redan finns tar bygget från tolv minuter till några sekunder
+    # när man bara justerar textparsningen.
+    if os.path.exists(path) and os.path.getsize(path) > 0:
+        return
     pix = page.get_pixmap(clip=rect, dpi=int(72 * RENDER_SCALE))
     img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -110,11 +153,14 @@ def _alt_count(page: "fitz.Page", rect: "fitz.Rect") -> int:
         if b.get("type") != 0:
             continue
         for line in b["lines"]:
-            text = clean_text("".join(s["text"] for s in line["spans"]), keep_soft_hyphen=False)
+            text = clean_text(line_text(line), keep_soft_hyphen=False)
             m = re.match(r"^([A-E])\b", text)
             if m and line["bbox"][0] < page.rect.width * 0.55:
                 letters.add(m.group(1))
-    return len(letters) if letters else 4
+    # Ingen kvantitativ uppgift har färre än fyra alternativ. Hittar vi färre
+    # står bokstaven inne i en figur (t.ex. fyra cirkeldiagram märkta A–D) och
+    # kommer inte med i textlagret.
+    return max(4, len(letters))
 
 
 def _read_question(page: "fitz.Page", clip: "fitz.Rect") -> dict:
@@ -147,16 +193,31 @@ def parse_kvant(path: str, image_dir: str, image_url: str) -> dict:
     figures: list[dict] = []
     pending_figure: int | None = None  # diagramsida som väntar på sina uppgifter
 
+    expected = 1
     for pno in range(1, len(doc)):
         page, _holder = upright_page(doc, pno)
         columns = _label_columns(page)
         rect = content_rect(page)
 
+        # Uppgiftsnumren löper 1–40 genom hela häftet. Sifferetiketter i ett
+        # diagram (skalstreck, radnummer) bryter mot den följden och sorteras
+        # bort här — annars läses diagramsidan som en uppgiftssida.
+        kept: list[list[tuple[int, float, float]]] = []
+        for column in columns:
+            valid = []
+            for nr, x, y in column:
+                if expected <= nr <= expected + 2:
+                    valid.append((nr, x, y))
+                    expected = nr + 1
+            if valid:
+                kept.append(valid)
+        columns = kept
+
         if not columns:
             # Diagramuppslag till DTK — sparas som bild och kopplas till
             # uppgifterna på nästa sida.
             name = f"diagram-{len(figures) + 1}.webp"
-            _render(page, rect, os.path.join(image_dir, name))
+            _render(page, _ink_rect(page, rect), os.path.join(image_dir, name))
             figures.append({"src": f"{image_url}/{name}", "page": pno})
             pending_figure = len(figures) - 1
             continue
@@ -185,7 +246,7 @@ def parse_kvant(path: str, image_dir: str, image_url: str) -> dict:
                     q["alternatives"] = read["alternatives"]
                 else:
                     name = f"{nr}.webp"
-                    _render(page, clip, os.path.join(image_dir, name))
+                    _render(page, _ink_rect(page, clip), os.path.join(image_dir, name))
                     q["image"] = f"{image_url}/{name}"
                     q["altCount"] = _alt_count(page, clip)
                     if read["text"]:

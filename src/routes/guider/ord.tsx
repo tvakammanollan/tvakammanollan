@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
@@ -137,20 +138,20 @@ function OrdGuidePage() {
         </ul>
 
         <p className="mt-8">
-          <Link to="/train" className="underline" style={{ color: "var(--amber)" }}>
-            Öva ORD-frågor gratis på HP Kampen →
+          <Link
+            to="/train"
+            className="inline-flex items-center gap-1.5 underline"
+            style={{ color: "var(--amber)" }}
+          >
+            Öva ORD-frågor gratis på HP Kampen
+            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>
 
       <RelatedGuides
         currentPath="/guider/ord"
-        relatedPaths={[
-          "/guider/mek",
-          "/guider/las",
-          "/guider/elf",
-          "/guider/tidspress",
-        ]}
+        relatedPaths={["/guider/mek", "/guider/las", "/guider/elf", "/guider/tidspress"]}
       />
     </article>
   );

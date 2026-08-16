@@ -31,6 +31,26 @@ SECTION_HEADINGS = re.compile(
 UPPGIFTER_RE = re.compile(r"^uppgifter\s*$", re.I)
 
 
+# Provets uppbyggnad har varit densamma i alla häften sedan 2011 och står på
+# varje framsida. Tabellen läses ändå ur häftet — men i fyra av 108 provpass
+# kommer cellerna i en ordning som inte går att läsa radvis, och då används den
+# här uppställningen i stället.
+CANONICAL_SECTIONS = {
+    "verbal": [
+        {"code": "ORD", "count": 10, "first": 1, "last": 10, "minutes": 3},
+        {"code": "LÄS", "count": 10, "first": 11, "last": 20, "minutes": 22},
+        {"code": "MEK", "count": 10, "first": 21, "last": 30, "minutes": 8},
+        {"code": "ELF", "count": 10, "first": 31, "last": 40, "minutes": 22},
+    ],
+    "kvant": [
+        {"code": "XYZ", "count": 12, "first": 1, "last": 12, "minutes": 12},
+        {"code": "KVA", "count": 10, "first": 13, "last": 22, "minutes": 10},
+        {"code": "NOG", "count": 6, "first": 23, "last": 28, "minutes": 10},
+        {"code": "DTK", "count": 12, "first": 29, "last": 40, "minutes": 23},
+    ],
+}
+
+
 def parse_cover(page: "fitz.Page") -> dict:
     """Framsidans tabell: delprov, uppgiftsintervall och rekommenderad tid."""
     flat = re.sub(r"\s*\n\s*", " ", page.get_text())
@@ -43,10 +63,17 @@ def parse_cover(page: "fitz.Page") -> dict:
     ]
     tid = re.search(r"[Pp]rovtiden är (\d+)\s*min", flat)
     total = re.search(r"innehåller (\d+) uppgifter", flat)
+    count = int(total.group(1)) if total else 40
+
+    covered = {n for s in sections for n in range(s["first"], s["last"] + 1)}
+    if covered != set(range(1, count + 1)):
+        kind = "kvant" if re.search(r"Kvantitativ del", flat) else "verbal"
+        sections = [dict(s) for s in CANONICAL_SECTIONS[kind]]
+
     return {
         "sections": sections,
         "minutes": int(tid.group(1)) if tid else 55,
-        "total": int(total.group(1)) if total else 40,
+        "total": count,
     }
 
 
@@ -153,7 +180,17 @@ def _passage_piece(
     # De har ibland bara en enda post och är då lika korta och feta som en
     # rubrik — därför testas de först.
     if GLOSS_RE.match(text):
-        return "gloss", text
+        # Varje post börjar på en ny rad med 'term = '; raderna däremellan är
+        # fortsättningen på föregående förklaring.
+        entries: list[list[str]] = []
+        for raw in b.lines:
+            if not raw.strip():
+                continue
+            if " = " in raw or not entries:
+                entries.append([raw])
+            else:
+                entries[-1].append(raw)
+        return "gloss", "\n".join(join_lines(e) for e in entries)
     # Källa/författare: kort, ensam rad, högerställd.
     if (
         len(b.lines) <= 2
@@ -167,7 +204,8 @@ def _passage_piece(
     # en ny lästext och kopplingen till uppgifterna går förlorad.
     if len(text) <= 90 and b.y0 < page_height * 0.35 and (b.bold or b.max_size > body_size + 0.6):
         return "title", text
-    return "body", text
+    # Brödtext delas i stycken på indrag — se Block.paragraphs.
+    return "body", b.paragraphs()
 
 
 def parse_verbal(path: str) -> dict:
@@ -216,6 +254,8 @@ def parse_verbal(path: str) -> dict:
                 pending["byline"] = text
             elif kind == "gloss":
                 pending["gloss"] = text
+            elif isinstance(text, list):
+                pending["paras"] += text
             else:
                 pending["paras"].append(text)
 
@@ -261,10 +301,12 @@ def _build(
 ) -> dict[int, dict]:
     out: dict[int, dict] = {}
     nr = None
+    last: tuple[str, Block] | None = None  # senaste alternativet och dess block
     for b in task_zone:
         q = _is_question(b)
         if q is not None:
             nr = q
+            last = None
             code = section_for(nr, meta["sections"])
             out[nr] = {
                 "nr": nr,
@@ -276,10 +318,30 @@ def _build(
         letter = _is_alt(b)
         if letter and nr in out:
             out[nr]["alternatives"][letter] = _alt_text(b)
+            last = (letter, b)
         elif nr in out and not out[nr]["alternatives"]:
             # Fortsättning på frågetexten (men inte löptext efter alternativen).
             out[nr]["text"] = join_lines([out[nr]["text"], b.text])
+        elif last is not None and _continues(last[1], b):
+            # Sista alternativet fortsätter i ett eget block strax under, en
+            # bit indraget. Utan det här klipps vart sjuttionde alternativ av
+            # mitt i meningen ("… utförde arbete i").
+            letter, prev = last
+            out[nr]["alternatives"][letter] = join_lines(
+                [out[nr]["alternatives"][letter], b.text]
+            )
+            last = (letter, b)
     return out
+
+
+def _continues(previous: Block, b: Block) -> bool:
+    """Är blocket en fortsättning på raden ovanför?"""
+    return (
+        b.y0 - previous.y1 < 8
+        and b.y0 >= previous.y0
+        and b.x0 > previous.x0
+        and b.x0 - previous.x0 < 60
+    )
 
 
 def _score(questions: dict[int, dict]) -> int:

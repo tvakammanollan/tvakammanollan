@@ -19,6 +19,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { MathText } from "@/components/MathTextLazy";
+import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
+import { useHighlighter } from "@/hooks/useHighlighter";
+import { highlightScope } from "@/lib/highlights";
 import { sounds } from "@/lib/sounds";
 import {
   ArrowRight,
@@ -353,6 +356,20 @@ function TrainPage() {
     return !prev || prev.passage_id !== currentQ.passage_id;
   }, [currentQ, current, questions]);
 
+  // Lästexten kommer som ett fält med radbrytningar; styckena blir egna
+  // element så att en överstrykning alltid hör till en känd textbit.
+  const passageParagraphs = useMemo(() => {
+    const text = currentQ?.passage_text;
+    if (!text) return [];
+    return text.split(/\n{2,}/).filter((p) => p.trim().length > 0);
+  }, [currentQ?.passage_text]);
+
+  // Markeringarna följer lästexten, inte frågan — samma text ska visa samma
+  // streck oavsett vilken av dess frågor man står på.
+  const passageHighlighter = useHighlighter(
+    highlightScope("train", currentQ?.passage_id ?? currentQ?.id ?? "ingen"),
+  );
+
   // ============ SETUP ============
   if (phase === "setup") {
     return (
@@ -537,12 +554,18 @@ function TrainPage() {
         <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
           {showPassage && currentQ.passage_text && (
             <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
-              <div className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground">
-                Textpassage
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <div className="text-xs font-semibold tracking-wide text-muted-foreground">
+                  Textpassage
+                </div>
+                <HighlighterToggle highlighter={passageHighlighter} />
               </div>
-              <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
-                {currentQ.passage_text}
-              </div>
+              <HighlightableText
+                paragraphs={passageParagraphs}
+                highlighter={passageHighlighter}
+                className="space-y-3"
+                paragraphClassName="whitespace-pre-wrap text-sm leading-relaxed text-foreground"
+              />
             </section>
           )}
 
@@ -661,7 +684,8 @@ function TrainPage() {
                   onClick={() => goNext(false)}
                   className="w-full bg-[#f2a65a] py-5 text-base text-[#1a0d04] hover:bg-[#c97b41]"
                 >
-                  {current >= questions.length - 1 ? "Visa resultat →" : "Nästa fråga →"}
+                  {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               ) : (
                 <button
