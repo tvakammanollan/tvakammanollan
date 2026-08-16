@@ -9,6 +9,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { createMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
+import { NextStep } from "@/components/layout/NextStep";
 import { displayCategory, ordText } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
@@ -26,6 +27,7 @@ import {
   ChevronDown,
   RotateCcw,
   BarChart3,
+  BookOpen,
   Home,
   Clock,
   AlertTriangle,
@@ -558,25 +560,20 @@ function ResultPage() {
         Dela resultat
       </Button>
 
-      {/* Actions */}
-      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
-        <Button onClick={playAgain} disabled={creatingRematch} className="gap-1.5">
-          <RotateCcw className="h-4 w-4" />
-          {isPvp ? "Begär revansch" : "Spela igen"}
-        </Button>
-        <Button asChild variant="secondary" className="gap-1.5">
-          <Link to="/stats">
-            <BarChart3 className="h-4 w-4" />
-            Gå till statistik
-          </Link>
-        </Button>
-        <Button asChild variant="ghost" className="gap-1.5">
-          <Link to="/">
-            <Home className="h-4 w-4" />
-            Hem
-          </Link>
-        </Button>
-      </div>
+      {/* Actions — tre likvärdiga knappar gav inget förstaval; nu en
+          primär och vägarna vidare under, samma form som efter ett
+          tränings- eller ordpass. */}
+      <NextStep
+        primaryLabel={isPvp ? "Begär revansch" : "Spela igen"}
+        onPrimary={() => void playAgain()}
+        primaryIcon={<RotateCcw className="h-4 w-4" />}
+        primaryDisabled={creatingRematch}
+        forward={[
+          { label: "Plugga ord", icon: BookOpen, to: "/ord" },
+          { label: "Statistik", icon: BarChart3, to: "/stats" },
+          { label: "Hem", icon: Home, to: "/" },
+        ]}
+      />
 
       {/* Question review */}
       <section className="mt-8">

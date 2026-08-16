@@ -7,7 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
-import { PrimaryCTA, SecondaryCTA } from "@/components/layout/CTAButtons";
+import { PrimaryCTA } from "@/components/layout/CTAButtons";
+import { NextStep } from "@/components/layout/NextStep";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +32,8 @@ import {
   X,
   BookOpen,
   Sigma,
+  Swords,
+  SlidersHorizontal,
   type LucideIcon,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -129,6 +132,7 @@ function TrainPage() {
     difficulty: null,
     count: 10,
   });
+  const [customising, setCustomising] = useState(false);
   const [questions, setQuestions] = useState<TrainQuestion[]>([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -276,6 +280,20 @@ function TrainPage() {
     void startTraining();
   };
 
+  // Läsbar rad som ersätter de fyra stegkorten när de är ihopvikta, så
+  // valen syns utan att behöva öppna dem.
+  const configSummary = (() => {
+    const all = config.track === "verbal" ? VERBAL_SUBS : MATH_SUBS;
+    const subs =
+      config.subs.length === 0
+        ? "inget delprov valt"
+        : config.subs.length === all.length
+          ? "alla delprov"
+          : config.subs.map((s) => displayCategory(s)).join(", ");
+    const diff = config.difficulty === null ? "alla nivåer" : `nivå ${config.difficulty}`;
+    return `${config.track === "verbal" ? "Svenska" : "Matte"} · ${subs} · ${diff} · ${config.count} frågor`;
+  })();
+
   const currentQ = questions[current];
   const optionLetters = ["A", "B", "C", "D", "E"];
 
@@ -384,8 +402,38 @@ function TrainPage() {
         />
 
         <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
-          <div className="space-y-5">
-            <SetupCard step="1" title="Välj match-typ">
+          {/* Defaultkonfigurationen (svenska, alla delprov, alla nivåer, 10
+              frågor) är redan den de flesta vill ha, så fyra obligatoriska
+              stegkort innan första frågan var ren friktion. Starta direkt —
+              den som vill styra öppnar Anpassa. */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+              Ditt pass
+            </p>
+            <p className="mt-1.5 text-[15px] text-[#e8e4da]">{configSummary}</p>
+
+            <PrimaryCTA
+              onClick={startTraining}
+              disabled={config.subs.length === 0}
+              className="mt-4 w-full"
+              icon={<ArrowRight className="h-4 w-4" />}
+            >
+              Starta träning
+            </PrimaryCTA>
+
+            <button
+              type="button"
+              onClick={() => setCustomising((v) => !v)}
+              aria-expanded={customising}
+              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#e8e4da]"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              {customising ? "Dölj inställningar" : "Anpassa"}
+            </button>
+          </div>
+
+          <div className={`space-y-5 ${customising ? "mt-5" : "hidden"}`}>
+            <SetupCard step="1" title="Välj ämne">
               <div className="grid grid-cols-2 gap-3">
                 <TrackCard
                   active={config.track === "verbal"}
@@ -474,17 +522,6 @@ function TrainPage() {
                 ))}
               </div>
             </SetupCard>
-          </div>
-
-          <div className="mt-8">
-            <PrimaryCTA
-              onClick={startTraining}
-              disabled={config.subs.length === 0}
-              className="w-full"
-              icon={<ArrowRight className="h-4 w-4" />}
-            >
-              Starta träning
-            </PrimaryCTA>
           </div>
         </div>
       </div>
@@ -797,21 +834,24 @@ function TrainPage() {
           )}
         </GlassCard>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <PrimaryCTA onClick={restartSame} className="flex-1">
-            Träna igen
-          </PrimaryCTA>
-          <SecondaryCTA
-            onClick={() => {
-              setPhase("setup");
-              setQuestions([]);
-              setResults([]);
-            }}
-            className="flex-1"
-          >
-            Ändra inställningar
-          </SecondaryCTA>
-        </div>
+        <NextStep
+          primaryLabel="Träna igen"
+          onPrimary={restartSame}
+          forward={[
+            { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+            { label: "Plugga ord", icon: BookOpen, to: "/ord" },
+            {
+              label: "Ändra inställningar",
+              icon: SlidersHorizontal,
+              onClick: () => {
+                setPhase("setup");
+                setCustomising(true);
+                setQuestions([]);
+                setResults([]);
+              },
+            },
+          ]}
+        />
       </div>
     );
   }
