@@ -1,6 +1,8 @@
 import { BookOpen, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { ProvPassage } from "@/types/gamla-prov";
+import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
+import type { Highlighter } from "@/hooks/useHighlighter";
 
 /**
  * Lästexten till en LÄS- eller ELF-uppgift.
@@ -11,25 +13,41 @@ import type { ProvPassage } from "@/types/gamla-prov";
  *
  * `gapNumber` sätts för ELF:s luckuppgifter: siffran står mitt i texten och
  * markeras så att man hittar den utan att leta.
+ *
+ * `highlighter` kommer uppifrån och inte härifrån, eftersom panelen renderas
+ * två gånger (en mobil- och en skrivbordsvariant). Med var sin hook hade de
+ * fått var sitt tillstånd och skrivit över varandras markeringar i lagringen.
  */
 export function ProvPassagePanel({
   passage,
   gapNumber,
   collapsible = false,
+  highlighter,
 }: {
   passage: ProvPassage;
   gapNumber?: number;
   collapsible?: boolean;
+  highlighter?: Highlighter;
 }) {
   const [open, setOpen] = useState(!collapsible);
 
   const body = (
     <div className="space-y-4">
-      {passage.paragraphs.map((para, i) => (
-        <p key={i} className="text-[15px] leading-[1.75] text-[var(--cream)]">
-          {gapNumber ? highlightGap(para, gapNumber) : para}
-        </p>
-      ))}
+      {highlighter ? (
+        <HighlightableText
+          paragraphs={passage.paragraphs}
+          highlighter={highlighter}
+          className="space-y-4"
+          paragraphClassName="text-[15px] leading-[1.75] text-[var(--cream)]"
+          decorate={gapNumber ? (text) => highlightGap(text, gapNumber) : undefined}
+        />
+      ) : (
+        passage.paragraphs.map((para, i) => (
+          <p key={i} className="text-[15px] leading-[1.75] text-[var(--cream)]">
+            {gapNumber ? highlightGap(para, gapNumber) : para}
+          </p>
+        ))
+      )}
 
       {passage.byline && (
         <p className="pt-1 text-sm italic text-[var(--text-tertiary)]">{passage.byline}</p>
@@ -81,7 +99,17 @@ export function ProvPassagePanel({
           />
         )}
       </button>
-      {open && <div className="max-h-[70vh] overflow-y-auto px-5 pb-5">{body}</div>}
+      {open && (
+        <div className="max-h-[70vh] overflow-y-auto px-5 pb-5">
+          {highlighter && (
+            <HighlighterToggle
+              highlighter={highlighter}
+              className="mb-3 border-b border-white/[0.06] pb-3"
+            />
+          )}
+          {body}
+        </div>
+      )}
     </section>
   );
 }

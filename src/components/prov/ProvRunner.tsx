@@ -24,6 +24,8 @@ import {
   type ProvProgress,
 } from "@/lib/prov-progress";
 import { formatInt } from "@/lib/sv-format";
+import { highlightScope } from "@/lib/highlights";
+import { useHighlighter } from "@/hooks/useHighlighter";
 import { delprovFull, hasPassage, passKindLabel, type ProvPass } from "@/types/gamla-prov";
 import { ProvNavigator } from "./ProvNavigator";
 import { ProvPassagePanel } from "./ProvPassagePanel";
@@ -64,6 +66,15 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
   const total = questions.length;
   const answeredCount = Object.keys(answers).length;
   const revealed = submittedAt !== null || (mode === "ova" && !!answers[question?.nr ?? -1]);
+
+  // Överstrykningarna hör till en enskild lästext, inte till uppgiften — flera
+  // uppgifter delar samma text och ska visa samma streck. Hooken ligger här
+  // uppe för att panelen renderas i två varianter (mobil/skrivbord) som måste
+  // dela tillstånd, och för att hooks inte får ligga efter en tidig retur.
+  const highlighter = useHighlighter(
+    highlightScope("gamla-prov", data.term, data.pass, question?.passage ?? "ingen"),
+    "local",
+  );
 
   /* ── Sparat läge ─────────────────────────────────────────────── */
 
@@ -358,12 +369,14 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
                         passage={passage}
                         gapNumber={question.cloze ? question.nr : undefined}
                         collapsible
+                        highlighter={highlighter}
                       />
                     </div>
                     <div className="hidden lg:block">
                       <ProvPassagePanel
                         passage={passage}
                         gapNumber={question.cloze ? question.nr : undefined}
+                        highlighter={highlighter}
                       />
                     </div>
                   </>
