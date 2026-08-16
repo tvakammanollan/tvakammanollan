@@ -812,7 +812,7 @@
    earlier light-mode tokens. Revert by deleting this block.
    ============================================================ */
 :root {
-  /* Base palette — deep brown bas matchar landing (#170d05) i stället
+  /* Base palette — deep brown bas matchar landing (#fbf6ec) i stället
      för det gamla blå-navy. Bevarar --navy-namnen för bakåtkompatibilitet
      med komponenter som refererar dem. */
   --navy: #fbf6ec; /* papper, sidans grundyta */
@@ -853,7 +853,7 @@
   --popover-foreground: var(--cream);
   --primary: var(--amber);
   --primary-foreground: var(--navy);
-  --primary-soft: rgba(242, 166, 90, 0.12);
+  --primary-soft: rgba(174, 47, 38, 0.12);
   --secondary: var(--navy-3);
   --secondary-foreground: var(--cream);
   --muted: var(--navy-3);
@@ -952,18 +952,18 @@ body {
 .bg-mesh {
   background-color: var(--navy);
   background-image:
-    radial-gradient(at 20% 30%, rgba(111, 179, 184, 0.32) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(242, 166, 90, 0.28) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(111, 179, 184, 0.22) 0px, transparent 50%),
-    radial-gradient(at 90% 70%, rgba(242, 166, 90, 0.18) 0px, transparent 50%),
-    radial-gradient(at 10% 90%, rgba(111, 179, 184, 0.18) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.32) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.28) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.22) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.18) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, rgba(122, 82, 54, 0.18) 0px, transparent 50%);
 }
 .bg-mesh-light {
   background-color: var(--navy-2);
   background-image:
-    radial-gradient(at 20% 30%, rgba(111, 179, 184, 0.18) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(242, 166, 90, 0.14) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(111, 179, 184, 0.1) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.18) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.1) 0px, transparent 50%);
 }
 .bg-paper {
   background-color: var(--navy-2);
@@ -972,19 +972,19 @@ body {
 .bg-ink {
   background-color: var(--navy-deep);
   background-image:
-    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(111, 179, 184, 0.32), transparent 60%),
-    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(242, 166, 90, 0.26), transparent 60%);
+    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(122, 82, 54, 0.32), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(174, 47, 38, 0.26), transparent 60%);
 }
 .bg-grid,
 .bg-grid-ink {
   background-image:
-    linear-gradient(rgba(232, 228, 218, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232, 228, 218, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(46, 30, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 30, 20, 0.05) 1px, transparent 1px);
 }
 .bg-dots {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(232, 228, 218, 0.08) 1px,
+    rgba(46, 30, 20, 0.08) 1px,
     transparent 0
   );
 }
@@ -1144,7 +1144,7 @@ body {
   }
   .bg-indigo-50,
   .bg-indigo-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-indigo-500,
   .bg-indigo-600,
@@ -1168,13 +1168,13 @@ body {
   .bg-\[\#e0e7ff\],
   .hover\:bg-\[\#e0e7ff\]:hover,
   .hover\:bg-\[\#e0e7ff\]\/50:hover {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-\[\#f0ede8\] {
-    background-color: rgba(232, 228, 218, 0.1);
+    background-color: rgba(46, 30, 20, 0.1);
   }
   .bg-\[\#e6e0d2\] {
-    background-color: rgba(232, 228, 218, 0.14);
+    background-color: rgba(46, 30, 20, 0.14);
   }
   .from-\[\#6366f1\] {
     --tw-gradient-from: var(--amber);
@@ -1227,7 +1227,7 @@ body {
   }
   .bg-violet-50,
   .bg-violet-100 {
-    background-color: rgba(242, 166, 90, 0.1);
+    background-color: rgba(174, 47, 38, 0.1);
   }
   .bg-fuchsia-100,
   .bg-fuchsia-400,
@@ -1272,7 +1272,7 @@ body {
     color: var(--teal);
   }
   .bg-cyan-100 {
-    background-color: rgba(111, 179, 184, 0.14);
+    background-color: rgba(122, 82, 54, 0.14);
   }
   .bg-cyan-400,
   .bg-cyan-500 {
@@ -1451,7 +1451,7 @@ body {
   }
   .bg-amber-50,
   .bg-amber-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-amber-200,
   .bg-amber-400,
@@ -1461,7 +1461,7 @@ body {
   }
   .bg-orange-50,
   .bg-orange-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-orange-500,
   .bg-orange-600 {
@@ -1469,7 +1469,7 @@ body {
     color: var(--navy);
   }
   .bg-yellow-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-yellow-500 {
     background-color: var(--amber);
@@ -1507,13 +1507,13 @@ body {
 
   /* Backdrop/cards that used light tints */
   .bg-white\/5 {
-    background-color: rgba(232, 228, 218, 0.05);
+    background-color: rgba(46, 30, 20, 0.05);
   }
   .bg-white\/10 {
-    background-color: rgba(232, 228, 218, 0.1);
+    background-color: rgba(46, 30, 20, 0.1);
   }
   .bg-white\/15 {
-    background-color: rgba(232, 228, 218, 0.15);
+    background-color: rgba(46, 30, 20, 0.15);
   }
   .bg-white\/90 {
     background-color: rgba(31, 20, 8, 0.9);
@@ -1535,49 +1535,49 @@ body {
      Ankaret /70 = --text-secondary är oförändrat; steget upp och ned
      därifrån är nu strikt stigande. */
   .text-white\/15 {
-    color: rgba(232, 228, 218, 0.22);
+    color: rgba(46, 30, 20, 0.22);
   }
   .text-white\/20 {
-    color: rgba(232, 228, 218, 0.26);
+    color: rgba(46, 30, 20, 0.26);
   }
   .text-white\/25 {
-    color: rgba(232, 228, 218, 0.32);
+    color: rgba(46, 30, 20, 0.32);
   }
   .text-white\/30 {
-    color: rgba(232, 228, 218, 0.38);
+    color: rgba(46, 30, 20, 0.38);
   }
   .text-white\/35 {
-    color: rgba(232, 228, 218, 0.44); /* 0.40 */
+    color: rgba(46, 30, 20, 0.44); /* 0.40 */
   }
   .text-white\/40 {
-    color: rgba(232, 228, 218, 0.5);
+    color: rgba(46, 30, 20, 0.5);
   }
   .text-white\/45 {
-    color: rgba(232, 228, 218, 0.56);
+    color: rgba(46, 30, 20, 0.56);
   }
   .text-white\/50 {
-    color: rgba(232, 228, 218, 0.62); /* 0.55 */
+    color: rgba(46, 30, 20, 0.62); /* 0.55 */
   }
   .text-white\/55 {
-    color: rgba(232, 228, 218, 0.66);
+    color: rgba(46, 30, 20, 0.66);
   }
   .text-white\/60 {
-    color: rgba(232, 228, 218, 0.7);
+    color: rgba(46, 30, 20, 0.7);
   }
   .text-white\/65 {
-    color: rgba(232, 228, 218, 0.74);
+    color: rgba(46, 30, 20, 0.74);
   }
   .text-white\/70 {
     color: var(--text-secondary); /* 0.78 — ankare, oförändrat */
   }
   .text-white\/75 {
-    color: rgba(232, 228, 218, 0.84);
+    color: rgba(46, 30, 20, 0.84);
   }
   .text-white\/80 {
-    color: rgba(232, 228, 218, 0.89);
+    color: rgba(46, 30, 20, 0.89);
   }
   .text-white\/85 {
-    color: rgba(232, 228, 218, 0.94);
+    color: rgba(46, 30, 20, 0.94);
   }
 
   /* Samma problem på kanterna: /10 och /15 remappades båda till --line
@@ -1585,49 +1585,67 @@ body {
      ritades SVAGARE än `border-white/10`, och /15 var identisk med /10.
      Ankaret /10 = --line är oförändrat. */
   .border-white\/5 {
-    border-color: rgba(232, 228, 218, 0.07);
+    border-color: rgba(46, 30, 20, 0.07);
   }
   .border-white\/8 {
-    border-color: rgba(232, 228, 218, 0.11);
+    border-color: rgba(46, 30, 20, 0.11);
   }
   .border-white\/10 {
     border-color: var(--line); /* 0.14 — ankare, oförändrat */
   }
   .border-white\/12 {
-    border-color: rgba(232, 228, 218, 0.17);
+    border-color: rgba(46, 30, 20, 0.17);
   }
   .border-white\/15 {
-    border-color: rgba(232, 228, 218, 0.21);
+    border-color: rgba(46, 30, 20, 0.21);
   }
   .border-white\/25 {
-    border-color: rgba(232, 228, 218, 0.32); /* = --line-strong */
+    border-color: rgba(46, 30, 20, 0.32); /* = --line-strong */
   }
   .border-white\/30 {
-    border-color: rgba(232, 228, 218, 0.38);
+    border-color: rgba(46, 30, 20, 0.38);
+  }
+  /* Tillagda i palettvändningen. De var omappade och renderade som rå
+     vit — vilket bara var kosmetiskt på mörk botten men blir helt
+     osynligt på creme. Rampen hålls monoton. */
+  .border-white\/\[0\.06\] {
+    border-color: rgba(46, 30, 20, 0.09);
+  }
+  .border-white\/20 {
+    border-color: rgba(46, 30, 20, 0.26);
+  }
+  .divide-white\/8 > :not([hidden]) ~ :not([hidden]) {
+    border-color: rgba(46, 30, 20, 0.11);
+  }
+  .ring-white\/10 {
+    --tw-ring-color: rgba(46, 30, 20, 0.14);
+  }
+  .ring-white\/30 {
+    --tw-ring-color: rgba(46, 30, 20, 0.38);
   }
 
   /* Bakgrundstinten var blandad på samma sätt: /5, /10, /15 remappades till
      cream medan /8 och de godtyckliga ([0.02] osv.) förblev rå vit. */
   .bg-white\/8 {
-    background-color: rgba(232, 228, 218, 0.08);
+    background-color: rgba(46, 30, 20, 0.08);
   }
   .bg-white\/\[0\.015\] {
-    background-color: rgba(232, 228, 218, 0.015);
+    background-color: rgba(46, 30, 20, 0.015);
   }
   .bg-white\/\[0\.02\] {
-    background-color: rgba(232, 228, 218, 0.02);
+    background-color: rgba(46, 30, 20, 0.02);
   }
   .bg-white\/\[0\.03\] {
-    background-color: rgba(232, 228, 218, 0.03);
+    background-color: rgba(46, 30, 20, 0.03);
   }
   .bg-white\/\[0\.04\] {
-    background-color: rgba(232, 228, 218, 0.04);
+    background-color: rgba(46, 30, 20, 0.04);
   }
   .bg-white\/\[0\.05\] {
-    background-color: rgba(232, 228, 218, 0.05);
+    background-color: rgba(46, 30, 20, 0.05);
   }
   .bg-white\/\[0\.06\] {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
   }
 
   /* Reading passage exception — light cream background */
@@ -1648,8 +1666,8 @@ body {
   /* Läspassagens överstrykning. Var hårdkodad #fff59d (överstrykningsgult)
      med ärvd cream-text ovanpå — dvs. praktiskt taget osynlig text. */
   .hp-highlight {
-    background-color: rgba(242, 166, 90, 0.28);
-    box-shadow: 0 0 0 1px rgba(242, 166, 90, 0.35);
+    background-color: rgba(174, 47, 38, 0.28);
+    box-shadow: 0 0 0 1px rgba(174, 47, 38, 0.35);
     border-radius: 2px;
     color: inherit;
   }
@@ -1667,26 +1685,26 @@ body {
   .bg-fuchsia-50, .bg-fuchsia-200,
   .bg-purple-50, .bg-purple-100, .bg-purple-200,
   .bg-pink-50, .bg-pink-100, .bg-pink-200 {
-    background-color: rgba(242, 166, 90, 0.10);
+    background-color: rgba(174, 47, 38, 0.10);
   }
   .bg-amber-200, .bg-amber-300,
   .bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300,
   .bg-orange-50, .bg-orange-200, .bg-orange-300 {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-cyan-50, .bg-cyan-200, .bg-cyan-300,
   .bg-teal-50, .bg-teal-100, .bg-teal-200, .bg-teal-300 {
-    background-color: rgba(111, 179, 184, 0.12);
+    background-color: rgba(122, 82, 54, 0.12);
   }
   .bg-emerald-50, .bg-emerald-200, .bg-emerald-300,
   .bg-green-50, .bg-green-200, .bg-green-300 {
     background-color: var(--success-soft);
   }
   .bg-slate-50, .bg-slate-100, .bg-slate-200 {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
   }
   .bg-slate-300, .bg-slate-400 {
-    background-color: rgba(232, 228, 218, 0.12);
+    background-color: rgba(46, 30, 20, 0.12);
   }
   .bg-red-50, .bg-red-100, .bg-red-200,
   .bg-rose-50, .bg-rose-100, .bg-rose-200 {
@@ -1700,10 +1718,10 @@ body {
   /* Opacity-suffix variants (e.g. bg-amber-50/80) */
   .bg-amber-50\/80, .bg-amber-50\/40,
   .bg-yellow-50\/80, .bg-yellow-50\/40, .bg-yellow-50\/30 {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-fuchsia-50, .bg-fuchsia-50\/40 {
-    background-color: rgba(242, 166, 90, 0.10);
+    background-color: rgba(174, 47, 38, 0.10);
   }
 
   /* Gradient stops — light shades */
@@ -1712,23 +1730,23 @@ body {
   .from-fuchsia-50, .from-fuchsia-100,
   .from-pink-50, .from-pink-100,
   .from-rose-50, .from-rose-100 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.10);
+    --tw-gradient-from: rgba(174, 47, 38, 0.10);
   }
   .from-amber-50, .from-amber-100, .from-amber-200, .from-amber-300,
   .from-yellow-50, .from-yellow-100, .from-yellow-200,
   .from-orange-50, .from-orange-100, .from-orange-200, .from-orange-300 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-amber-50\/80,
   .from-yellow-50\/80,
   .from-orange-50\/80 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-emerald-50, .from-cyan-50, .from-teal-50, .from-teal-100 {
-    --tw-gradient-from: rgba(111, 179, 184, 0.14);
+    --tw-gradient-from: rgba(122, 82, 54, 0.14);
   }
   .from-slate-50, .from-slate-100, .from-slate-200, .from-slate-300 {
-    --tw-gradient-from: rgba(232, 228, 218, 0.10);
+    --tw-gradient-from: rgba(46, 30, 20, 0.10);
   }
 
   .to-indigo-50, .to-indigo-100,
@@ -1736,33 +1754,33 @@ body {
   .to-fuchsia-50, .to-fuchsia-100,
   .to-pink-50, .to-pink-100,
   .to-rose-50, .to-rose-100 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.10);
+    --tw-gradient-to: rgba(174, 47, 38, 0.10);
   }
   .to-amber-50, .to-amber-100, .to-amber-200, .to-amber-300,
   .to-yellow-50, .to-yellow-100, .to-yellow-200,
   .to-orange-50, .to-orange-100, .to-orange-200, .to-orange-300 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+    --tw-gradient-to: rgba(174, 47, 38, 0.18);
   }
   .to-yellow-50\/40,
   .to-yellow-50\/30 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.12);
+    --tw-gradient-to: rgba(174, 47, 38, 0.12);
   }
   .to-emerald-50, .to-cyan-50, .to-teal-50 {
-    --tw-gradient-to: rgba(111, 179, 184, 0.14);
+    --tw-gradient-to: rgba(122, 82, 54, 0.14);
   }
   .to-slate-50, .to-slate-100, .to-slate-200, .to-slate-300 {
-    --tw-gradient-to: rgba(232, 228, 218, 0.10);
+    --tw-gradient-to: rgba(46, 30, 20, 0.10);
   }
 
   /* Medals (rank 1-3) — keep distinct gold/silver/bronze look but
      in palette-compatible tones */
-  .from-amber-400 { --tw-gradient-from: #f2a65a; }
+  .from-amber-400 { --tw-gradient-from: #ae2f26; }
   .via-yellow-500 { --tw-gradient-via: #e8c773; }
-  .to-amber-600 { --tw-gradient-to: #c97b41; }
+  .to-amber-600 { --tw-gradient-to: #8f2620; }
   .from-slate-300 { --tw-gradient-from: #cfd5dc; }
   .via-slate-400 { --tw-gradient-via: #9aa3ad; }
   .to-slate-500 { --tw-gradient-to: #6c7480; }
-  .from-orange-400 { --tw-gradient-from: #f2a65a; }
+  .from-orange-400 { --tw-gradient-from: #ae2f26; }
   .via-orange-500 { --tw-gradient-via: #d4894b; }
   .to-orange-700 { --tw-gradient-to: #8a5028; }
 
@@ -1780,12 +1798,12 @@ body {
   .border-amber-300,
   .border-orange-200,
   .border-yellow-200 {
-    border-color: rgba(242, 166, 90, 0.35);
+    border-color: rgba(174, 47, 38, 0.35);
   }
   .border-emerald-200,
   .border-teal-200,
   .border-cyan-200 {
-    border-color: rgba(111, 179, 184, 0.35);
+    border-color: rgba(122, 82, 54, 0.35);
   }
   .border-red-200,
   .border-rose-200 {
@@ -1802,14 +1820,14 @@ body {
   .bg-\[\#fefce8\],
   .bg-\[\#fde68a\],
   .bg-\[\#fde047\] {
-    background-color: rgba(242, 166, 90, 0.18);
+    background-color: rgba(174, 47, 38, 0.18);
     color: var(--cream);
   }
 
   /* Light "peach/beige" backgrounds */
   .bg-\[\#fce7d3\],
   .bg-\[\#faf0e8\] {
-    background-color: rgba(242, 166, 90, 0.14);
+    background-color: rgba(174, 47, 38, 0.14);
     color: var(--cream);
   }
 
@@ -1817,16 +1835,16 @@ body {
   .bg-\[\#f0f2f5\],
   .bg-\[\#f3f4f6\],
   .bg-\[\#f9fafb\] {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
     color: var(--cream);
   }
 
   /* Medium slate */
   .bg-\[\#94a3b8\] {
-    background-color: rgba(232, 228, 218, 0.20);
+    background-color: rgba(46, 30, 20, 0.20);
   }
   .ring-\[\#94a3b8\] {
-    --tw-ring-color: rgba(232, 228, 218, 0.40);
+    --tw-ring-color: rgba(46, 30, 20, 0.40);
   }
 
   /* Amber/gold mid-shade */
@@ -1891,17 +1909,17 @@ body {
   .from-\[\#fef3c7\],
   .from-\[\#fefce8\],
   .from-\[\#fce7d3\] {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-\[\#f3f4f6\] {
-    --tw-gradient-from: rgba(232, 228, 218, 0.06);
+    --tw-gradient-from: rgba(46, 30, 20, 0.06);
   }
   .from-\[\#E8E4DA\] {
     --tw-gradient-from: var(--cream);
   }
   .to-\[\#fef3c7\],
   .to-\[\#fefce8\] {
-    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+    --tw-gradient-to: rgba(174, 47, 38, 0.18);
   }
   .from-\[\#eab308\],
   .to-\[\#eab308\] {

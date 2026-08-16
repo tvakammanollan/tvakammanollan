@@ -56,6 +56,10 @@ export function ProvFigure({
       </figure>
 
       {open && (
+        // Lightboxen förblir mörk även när resten av sajten är ljus: en
+        // inskannad figur ska poppa mot svart. Knapparna använder därför
+        // explicita vita alfa-hex i stället för white/N — remap-lagret
+        // vänder white/N till mörkbrunt, vilket blir osynligt här.
         <div
           className="fixed inset-0 z-50 flex flex-col bg-black/90"
           role="dialog"
@@ -68,7 +72,7 @@ export function ProvFigure({
               onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
               disabled={zoom <= 1}
               aria-label="Zooma ut"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+              className="rounded-full bg-[#ffffff1a] p-2 text-white backdrop-blur transition-colors hover:bg-[#ffffff33] disabled:opacity-40"
             >
               <ZoomOut className="h-5 w-5" aria-hidden />
             </button>
@@ -77,7 +81,7 @@ export function ProvFigure({
               onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
               disabled={zoom >= 4}
               aria-label="Zooma in"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+              className="rounded-full bg-[#ffffff1a] p-2 text-white backdrop-blur transition-colors hover:bg-[#ffffff33] disabled:opacity-40"
             >
               <ZoomIn className="h-5 w-5" aria-hidden />
             </button>
@@ -85,7 +89,7 @@ export function ProvFigure({
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Stäng figuren"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20"
+              className="rounded-full bg-[#ffffff1a] p-2 text-white backdrop-blur transition-colors hover:bg-[#ffffff33]"
             >
               <X className="h-5 w-5" aria-hidden />
             </button>
