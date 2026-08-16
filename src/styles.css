@@ -5,9 +5,57 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ================================================================
+   Typsnitt — självhostade, SIL OFL, licensfilerna ligger bredvid
+   filerna i public/fonts/.
+
+   Playfair Display och Inter stod i stacken men laddades aldrig:
+   ingen @font-face, ingen Google Fonts-länk, ingen public/fonts.
+   Sajten föll alltså tillbaka på Georgia och system-ui. Det här är
+   första gången riktiga snitt faktiskt når webbläsaren.
+
+   TODO: konvertera till WOFF2 (~40 % mindre). Kräver `fonttools`:
+   `python -m fontTools.ttLib.woff2 compress public/fonts/*.ttf`
+   ================================================================ */
+@font-face {
+  font-family: "Young Serif";
+  src: url("/fonts/YoungSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("/fonts/DMMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
-  --font-display: "Playfair Display", ui-serif, Georgia, serif;
-  --font-sans: "Inter", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Young Serif", ui-serif, Georgia, serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -767,27 +815,34 @@
   /* Base palette — deep brown bas matchar landing (#170d05) i stället
      för det gamla blå-navy. Bevarar --navy-namnen för bakåtkompatibilitet
      med komponenter som refererar dem. */
-  --navy: #170d05;
-  --navy-2: #1f1408;
-  --navy-3: #2a1c10;
-  --navy-deep: #0d0702;
-  --cream: #e8e4da;
-  --cream-2: #f3f0e8;
-  --cream-3: #dad4c5;
+  --navy: #fbf6ec; /* papper, sidans grundyta */
+  --navy-2: #ffffff; /* kort */
+  --navy-3: #f3e9d8; /* nedsänkt yta, sekundär */
+  --navy-deep: #f0e4ce; /* djupast nedsänkt */
+  --cream: #2e1e14; /* primärtext (bark) */
+  --cream-2: #1e1209; /* text som ska sticka ut mer */
+  --cream-3: #5e4632; /* dämpad text */
   /* Text på ljusa ytor (läspassagen). Var #0a1320 — det gamla blå-navyt,
      som drog åt blått mot den varma cream-bakgrunden. */
-  --ink: #1a0d04;
-  --hp-muted: #7a8597;
-  --amber: #f2a65a;
-  --amber-deep: #c97b41;
-  --teal: #6fb3b8;
-  --line: rgba(232, 228, 218, 0.14);
-  --line-strong: rgba(232, 228, 218, 0.32);
-  --line-soft: rgba(232, 228, 218, 0.05);
-  --text-primary: #e8e4da;
-  --text-secondary: rgba(232, 228, 218, 0.78);
-  --text-tertiary: rgba(232, 228, 218, 0.55);
-  --text-quiet: rgba(232, 228, 218, 0.4);
+  --ink: #2e1e14;
+  --hp-muted: #755e4c;
+  /* Varumärkets primärfärg. Rött är BELÖNING i det här systemet
+     (äpplen, streak, rank, primär-CTA) — aldrig fel svar. */
+  --amber: #ae2f26; /* äpple */
+  --amber-deep: #8f2620;
+  /* Sekundärfärg. Var teal och betyder "motståndaren" i matchens
+     progressbarer — därför bark och INTE löv, som redan betyder rätt. */
+  --teal: #7a5236; /* bark */
+  /* Alfa-tokens: var ljusa med alfa (för mörk botten). På creme blir
+     de osynliga, därför omvända till mörk alfa. Enskilt viktigaste
+     delen av hela bytet. */
+  --line: rgba(46, 30, 20, 0.16);
+  --line-strong: rgba(46, 30, 20, 0.34);
+  --line-soft: rgba(46, 30, 20, 0.07);
+  --text-primary: #2e1e14;
+  --text-secondary: rgba(46, 30, 20, 0.78);
+  --text-tertiary: rgba(46, 30, 20, 0.66);
+  --text-quiet: rgba(46, 30, 20, 0.54);
 
   /* Shadcn surface tokens → remap to navy palette */
   --background: var(--navy);
@@ -805,8 +860,10 @@
   --muted-foreground: var(--text-tertiary);
   --accent: var(--navy-3);
   --accent-foreground: var(--cream);
-  --destructive: #e25a6a;
-  --destructive-foreground: var(--cream);
+  /* Oåterkalleliga handlingar (radera konto). Mörkare och blåare än
+     äpplerött så den inte förväxlas med primär-CTA. */
+  --destructive: #8c1d18;
+  --destructive-foreground: #fff8f5;
   --border: var(--line);
   --input: var(--line);
   --ring: var(--amber);
@@ -819,14 +876,23 @@
 
      Grönt får INTE vara --teal: teal är varumärkets sekundärfärg och
      används redan för "motståndaren" i matchens progressbarer. */
-  --success: #4fb783;
-  --success-soft: rgba(79, 183, 131, 0.12);
-  --success-line: rgba(79, 183, 131, 0.38);
-  --success-ink: #0d2c1e;
-  --danger: var(--destructive);
-  --danger-soft: rgba(226, 90, 106, 0.12);
-  --danger-line: rgba(226, 90, 106, 0.38);
-  --danger-ink: #2c0d11;
+  --success: #2f6b3c; /* löv */
+  --success-soft: rgba(47, 107, 60, 0.11);
+  --success-line: rgba(47, 107, 60, 0.4);
+  --success-ink: #e7f0e3;
+
+  /* FEL SVAR ÄR BRUNT, INTE RÖTT. Rött är belöningsfärgen i det här
+     systemet (äpplen, streak, rank, primär-CTA); låter man samma röda
+     också betyda "fel" slits den ut och slutar signalera något. Fel
+     svar får fallfruktens ton — nedfallet äpple.
+
+     --danger var tidigare en alias för --destructive. De är nu
+     frikopplade: --danger = fel svar, --destructive = oåterkalleliga
+     handlingar, som fortfarande behöver larma. */
+  --danger: #8e552a; /* fallfrukt */
+  --danger-soft: rgba(142, 85, 42, 0.12);
+  --danger-line: rgba(142, 85, 42, 0.4);
+  --danger-ink: #f6e8d7;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */
@@ -834,9 +900,9 @@
   --color-bg-sunken: var(--navy-deep);
   --color-primary: var(--amber);
   --color-primary-deep: var(--amber-deep);
-  --color-primary-light: rgba(242, 166, 90, 0.16);
+  --color-primary-light: rgba(174, 47, 38, 0.12);
   --color-primary-hover: var(--amber-deep);
-  --color-primary-glow: rgba(242, 166, 90, 0.55);
+  --color-primary-glow: rgba(174, 47, 38, 0.4);
   --color-primary-ink: var(--navy);
   --color-aurora-indigo: var(--teal);
   --color-aurora-violet: var(--teal);
@@ -847,20 +913,22 @@
   --color-aurora-emerald: var(--teal);
   --color-gold-deep: var(--amber-deep);
   --color-gold-bright: var(--amber);
-  --color-gold-light: rgba(242, 166, 90, 0.18);
-  --color-gold-soft: rgba(242, 166, 90, 0.3);
+  --color-gold-light: rgba(174, 47, 38, 0.14);
+  --color-gold-soft: rgba(174, 47, 38, 0.26);
   --color-border-strong: var(--line-strong);
   --color-border-soft: var(--line);
 
-  /* Glow shadows */
+  /* Glöden var färgade halos avsedda för mörk botten. På creme läser
+     de som suddiga färgklot, så de är nedtonade till mjuka varma
+     skuggor med en tunn färgad kant kvar för identiteten. Namnen
+     behålls — de refereras på flera håll. */
   --shadow-glow-indigo:
-    0 0 0 1px rgba(111, 179, 184, 0.22), 0 14px 50px -10px rgba(111, 179, 184, 0.55);
+    0 0 0 1px rgba(122, 82, 54, 0.22), 0 10px 28px -14px rgba(46, 30, 20, 0.34);
   --shadow-glow-aurora:
-    0 0 0 1px rgba(242, 166, 90, 0.2), 0 0 60px -8px rgba(242, 166, 90, 0.35),
-    0 0 80px -16px rgba(111, 179, 184, 0.3);
-  --shadow-glow-gold: 0 0 0 1px rgba(242, 166, 90, 0.22), 0 12px 40px -8px rgba(242, 166, 90, 0.5);
+    0 0 0 1px rgba(174, 47, 38, 0.18), 0 12px 32px -16px rgba(46, 30, 20, 0.38);
+  --shadow-glow-gold: 0 0 0 1px rgba(174, 47, 38, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.34);
   --shadow-glow-emerald:
-    0 0 0 1px rgba(111, 179, 184, 0.2), 0 12px 40px -8px rgba(111, 179, 184, 0.45);
+    0 0 0 1px rgba(47, 107, 60, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.32);
 }
 
 /* Base bg + text */
