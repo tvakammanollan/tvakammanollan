@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowRight, RotateCcw, Target, Trophy } from "lucide-react";
+import { ArrowRight, FileText, ListChecks, RotateCcw, Swords, Target, Trophy } from "lucide-react";
+import { NextStep } from "@/components/layout/NextStep";
 import { formatDecimal, formatPercent } from "@/lib/sv-format";
 import { normeringFromRaw, HP_TOTAL_QUESTIONS } from "@/lib/normering";
 import { isCorrect } from "@/lib/prov-data";
@@ -158,33 +158,33 @@ export function ProvResult({
         </section>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <button
-          type="button"
-          onClick={() => onReview(0)}
-          className="flex items-center justify-center gap-2 rounded-full border border-white/12 px-4 py-2.5 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
-        >
-          Gå igenom alla uppgifter
-        </button>
-        <button
-          type="button"
-          onClick={onRestart}
-          className="flex items-center justify-center gap-2 rounded-full border border-white/12 px-4 py-2.5 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
-        >
-          <RotateCcw className="h-4 w-4" aria-hidden />
-          Gör om provpasset
-        </button>
-      </div>
-
-      {nextPass !== undefined && (
-        <Link
-          to="/gamla-prov/$term/$pass"
-          params={{ term: data.term, pass: String(nextPass) }}
-          className="flex items-center justify-center gap-2 rounded-full bg-[var(--amber)] px-5 py-3 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
-        >
-          Fortsätt med provpass {nextPass}
-          <ArrowRight className="h-4 w-4" aria-hidden />
-        </Link>
+      {/* Nästa provpass är det uppenbara nästa steget, men låg sist — under
+          två likvärdiga outline-knappar. Och saknades det (sista passet)
+          slutade sidan i en återvändsgränd. Samma form som efter en match,
+          ett träningspass och ett ordpass. */}
+      {nextPass !== undefined ? (
+        <NextStep
+          primaryLabel={`Fortsätt med provpass ${nextPass}`}
+          primaryTo="/gamla-prov/$term/$pass"
+          primaryParams={{ term: data.term, pass: String(nextPass) }}
+          primaryIcon={<ArrowRight className="h-4 w-4" />}
+          forward={[
+            { label: "Gå igenom alla uppgifter", icon: ListChecks, onClick: () => onReview(0) },
+            { label: "Gör om provpasset", icon: RotateCcw, onClick: onRestart },
+            { label: "Alla gamla prov", icon: FileText, to: "/gamla-prov" },
+          ]}
+        />
+      ) : (
+        <NextStep
+          primaryLabel="Gör om provpasset"
+          onPrimary={onRestart}
+          primaryIcon={<RotateCcw className="h-4 w-4" />}
+          forward={[
+            { label: "Gå igenom alla uppgifter", icon: ListChecks, onClick: () => onReview(0) },
+            { label: "Alla gamla prov", icon: FileText, to: "/gamla-prov" },
+            { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+          ]}
+        />
       )}
     </div>
   );
