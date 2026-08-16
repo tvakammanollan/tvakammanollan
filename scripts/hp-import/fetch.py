@@ -143,6 +143,43 @@ UNLISTED = [
 
 ASSET_ROOT = f"{BASE}/globalassets/05-hogskoleprovet"
 
+# Provtillfällen som aldrig gavs ut som häfte utan som webbsidor (se
+# html_prov.py). Bara de verbala provpassen går att rädda — den kvantitativa
+# delen sattes som en bild per uppgift och de bilderna finns inte kvar.
+HTML_EXAMS = [
+    {
+        "date": "2012-03-31",
+        "term": "2012vt",
+        "passes": [2, 4],
+        "facit": (
+            "https://web.archive.org/web/20130418id_/http://www.studera.nu/download/"
+            "18.4d068135136738aead98000248/H%C3%B6gskoleprovet+facit+12A.pdf"
+        ),
+    },
+]
+
+
+def html_exams() -> list[dict]:
+    out = []
+    for entry in HTML_EXAMS:
+        out.append(
+            {
+                "date": entry["date"],
+                "page": "https://web.archive.org/",
+                "passes": [
+                    {
+                        "kind": "verbal",
+                        "pass": nr,
+                        "source": "html",
+                        "url": f"{CACHE}/{entry['term']}/pass{nr}-html.json",
+                    }
+                    for nr in entry["passes"]
+                ],
+                "facit": entry["facit"],
+            }
+        )
+    return out
+
 
 def unlisted_exams() -> list[dict]:
     out = []
@@ -181,7 +218,7 @@ def main() -> int:
         seen.add(url)
         exams.append({"date": date, "page": url})
 
-    for extra in unlisted_exams():
+    for extra in html_exams() + unlisted_exams():
         if not any(e["date"] == extra["date"] for e in exams):
             exams.append(extra)
             print(f"  + olistat provtillfälle {extra['date']}")
@@ -195,6 +232,9 @@ def main() -> int:
     for e in exams:
         if e.get("passes"):
             for p in e["passes"]:
+                if p.get("source") == "html":
+                    p["file"] = p["url"]
+                    continue
                 p["file"] = os.path.join(CACHE, e["term"], f"pass{p['pass']}-{p['kind']}.pdf")
                 download(p["url"], p["file"])
             e["facit_file"] = os.path.join(CACHE, e["term"], "facit.pdf")

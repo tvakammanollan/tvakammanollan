@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from elf import parse_elf  # noqa: E402
 from facit import parse_facit  # noqa: E402
 from kvant import parse_kvant  # noqa: E402
-from verbal import parse_verbal, section_for  # noqa: E402
+from verbal import CANONICAL_SECTIONS, parse_verbal, section_for  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 CACHE = os.path.join(ROOT, ".hp-cache")
@@ -129,6 +129,66 @@ def passage_json(p: dict) -> dict:
         if entries:
             out["glossary"] = entries
     return out
+
+
+def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
+    """
+    Ett verbalt provpass som bara finns som webbsida (2011–2012), se
+    html_prov.py. Uppgifter utan facit utelämnas i stället för att fälla hela
+    passet — de årens facit är ofullständiga i arkivet.
+    """
+    with open(pass_meta["file"], encoding="utf-8") as f:
+        raw = json.load(f)
+
+    sections = CANONICAL_SECTIONS["verbal"]
+    questions = []
+    for key in sorted(raw["questions"], key=int):
+        q = dict(raw["questions"][key])
+        nr = int(key)
+        answer = answers.get(nr)
+        if not answer:
+            continue
+        item = {
+            "nr": nr,
+            "delprov": section_for(nr, sections),
+            "text": q["text"],
+            "alternatives": q["alternatives"],
+            "answer": answer[0],
+        }
+        if len(answer) > 1:
+            item["answers"] = list(answer)
+        if q.get("passage") is not None:
+            item["passage"] = q["passage"]
+        questions.append(item)
+
+    passages = [passage_json(p) for p in raw["passages"]]
+    counts: dict[str, int] = {}
+    for q in questions:
+        counts[q["delprov"]] = counts.get(q["delprov"], 0) + 1
+    present = [dict(s, count=counts.get(s["code"], 0)) for s in sections if counts.get(s["code"])]
+
+    problems = []
+    if len(questions) < 25:
+        problems.append(f"bara {len(questions)} uppgifter med facit")
+    for q in questions:
+        if len(q["alternatives"]) < 4 or not all(q["alternatives"]):
+            problems.append(f"uppgift {q['nr']} har {len(q['alternatives'])} alternativ")
+
+    data = {
+        "term": exam["term"],
+        "date": exam["date"],
+        "label": exam["label"],
+        "pass": pass_meta["pass"],
+        "kind": "verbal",
+        "minutes": 55,
+        "sections": present,
+        "missing": [s["code"] for s in sections if not counts.get(s["code"])],
+        "questions": questions,
+        "passages": passages,
+        "figures": [],
+        "source": pass_meta["url"],
+    }
+    return data, problems
 
 
 def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
@@ -406,7 +466,8 @@ def main() -> int:
         }
         for pass_meta in exam["passes"]:
             answers = dict(facit.get(pass_meta["pass"], {}))
-            data, problems = build_pass(exam, pass_meta, answers)
+            builder = build_html_pass if pass_meta.get("source") == "html" else build_pass
+            data, problems = builder(exam, pass_meta, answers)
             name = f"{exam['term']}-{pass_meta['pass']}"
             if problems:
                 failed.append(f"{name}: " + "; ".join(problems[:4]))
