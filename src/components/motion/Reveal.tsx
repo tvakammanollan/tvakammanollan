@@ -30,15 +30,20 @@ const itemVariants: Variants = {
   },
 };
 
+/**
+ * `amount` is "some" (threshold 0) by default: a fractional threshold is
+ * unreachable once the wrapped content is taller than the viewport, which
+ * leaves it invisible for good. See the note in `landing/MotionFX.tsx`.
+ */
 export function Reveal({
   children,
   className,
-  amount = 0.2,
+  amount = "some",
   once = true,
 }: {
   children: ReactNode;
   className?: string;
-  amount?: number;
+  amount?: "some" | "all" | number;
   once?: boolean;
 }) {
   const reduce = useReducedMotion();

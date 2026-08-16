@@ -44,6 +44,8 @@ OUT_IMG = os.path.join(ROOT, "public", "prov-bilder")
 LEGACY = os.path.join(os.path.dirname(__file__), "elf-arkiv.json")
 
 ALT_LETTERS = ["A", "B", "C", "D", "E"]
+# Ensam versal mitt i en mening, om och om igen: spalter som blandats ihop.
+SCRAMBLED_RE = re.compile(r"(?:(?<=[a-zäöå,]) [B-E] (?=[A-ZÅÄÖ]).*){3}", re.S)
 SEASONS = {"vt": "Vårprovet", "ht": "Höstprovet"}
 MONTHS = [
     "januari", "februari", "mars", "april", "maj", "juni",
@@ -162,6 +164,16 @@ def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tup
         questions.append(item)
 
     passages = [passage_json(p) for p in raw["passages"]]
+    # Lästexter som ingen uppgift pekar på ska inte följa med — de blir kvar
+    # när en uppgift utelämnats, och skulle annars visas i facitlistan.
+    used = sorted({q["passage"] for q in questions if q.get("passage") is not None})
+    if len(used) != len(passages):
+        remap = {old: new for new, old in enumerate(used)}
+        passages = [passages[i] for i in used]
+        for q in questions:
+            if q.get("passage") is not None:
+                q["passage"] = remap[q["passage"]]
+
     counts: dict[str, int] = {}
     for q in questions:
         counts[q["delprov"]] = counts.get(q["delprov"], 0) + 1
@@ -250,17 +262,39 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
             questions.sort(key=lambda x: x["nr"])
 
         elif LEGACY_ELF.get((term, pno)):
+            # Arkivfilens lästexter är extraherade spaltvis av någon annan, och
+            # ett par av dem har svarsalternativen inflätade i löptexten
+            # ("Brazil's econ- B His rule led to…"). En sådan uppgift går inte
+            # att svara på — den utelämnas hellre än visas trasig.
             elf = LEGACY_ELF[(term, pno)]
             offset = len(passages)
             for p in elf["passages"]:
                 entry = {"paragraphs": [x for x in p["body"].split("\n\n") if x.strip()]}
-                if p.get("title"):
-                    entry["title"] = p["title"]
+                title = (p.get("title") or "").strip()
+                # En "rubrik" på 45+ tecken utan skiljetecken är i själva verket
+                # ett avklippt svarsalternativ som hamnat fel i arkivfilen.
+                if title and len(title) <= 45:
+                    entry["title"] = title
                 passages.append(entry)
+            dropped: list[int] = []
+            broken = {
+                i
+                for i, entry in enumerate(elf["passages"])
+                if SCRAMBLED_RE.search(entry["body"])
+            }
+            # Är någon text hopblandad är hela passets ELF opålitligt: samma
+            # extraktion har lagt frågor på fel text (2025vt provpass 2 kopplar
+            # sjuksköterskefrågor till en text om Pedro II). Hoppa över alla.
+            if broken:
+                broken = set(range(len(elf["passages"])))
             for q in elf["questions"]:
                 item = dict(q)
                 item.pop("answer", None)
                 if item.get("passage") is not None:
+                    if item["passage"] in broken:
+                        # Uteslut uppgiften, men fäll inte hela provpasset.
+                        dropped.append(item["nr"])
+                        continue
                     item["passage"] = item["passage"] + offset
                 else:
                     item.pop("passage", None)
@@ -299,6 +333,16 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
         if len(answer) > 1:
             # UHR har underkänt uppgiften i efterhand: flera svar godkänns.
             q["answers"] = list(answer)
+
+    # Lästexter som ingen uppgift pekar på ska inte följa med — de blir kvar
+    # när en uppgift utelämnats, och skulle annars visas i facitlistan.
+    used = sorted({q["passage"] for q in questions if q.get("passage") is not None})
+    if len(used) != len(passages):
+        remap = {old: new for new, old in enumerate(used)}
+        passages = [passages[i] for i in used]
+        for q in questions:
+            if q.get("passage") is not None:
+                q["passage"] = remap[q["passage"]]
 
     counts: dict[str, int] = {}
     for q in questions:

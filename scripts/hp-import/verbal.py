@@ -204,7 +204,8 @@ def _passage_piece(
     # en ny lästext och kopplingen till uppgifterna går förlorad.
     if len(text) <= 90 and b.y0 < page_height * 0.35 and (b.bold or b.max_size > body_size + 0.6):
         return "title", text
-    return "body", text
+    # Brödtext delas i stycken på indrag — se Block.paragraphs.
+    return "body", b.paragraphs()
 
 
 def parse_verbal(path: str) -> dict:
@@ -253,6 +254,8 @@ def parse_verbal(path: str) -> dict:
                 pending["byline"] = text
             elif kind == "gloss":
                 pending["gloss"] = text
+            elif isinstance(text, list):
+                pending["paras"] += text
             else:
                 pending["paras"].append(text)
 
@@ -298,10 +301,12 @@ def _build(
 ) -> dict[int, dict]:
     out: dict[int, dict] = {}
     nr = None
+    last: tuple[str, Block] | None = None  # senaste alternativet och dess block
     for b in task_zone:
         q = _is_question(b)
         if q is not None:
             nr = q
+            last = None
             code = section_for(nr, meta["sections"])
             out[nr] = {
                 "nr": nr,
@@ -313,10 +318,30 @@ def _build(
         letter = _is_alt(b)
         if letter and nr in out:
             out[nr]["alternatives"][letter] = _alt_text(b)
+            last = (letter, b)
         elif nr in out and not out[nr]["alternatives"]:
             # Fortsättning på frågetexten (men inte löptext efter alternativen).
             out[nr]["text"] = join_lines([out[nr]["text"], b.text])
+        elif last is not None and _continues(last[1], b):
+            # Sista alternativet fortsätter i ett eget block strax under, en
+            # bit indraget. Utan det här klipps vart sjuttionde alternativ av
+            # mitt i meningen ("… utförde arbete i").
+            letter, prev = last
+            out[nr]["alternatives"][letter] = join_lines(
+                [out[nr]["alternatives"][letter], b.text]
+            )
+            last = (letter, b)
     return out
+
+
+def _continues(previous: Block, b: Block) -> bool:
+    """Är blocket en fortsättning på raden ovanför?"""
+    return (
+        b.y0 - previous.y1 < 8
+        and b.y0 >= previous.y0
+        and b.x0 > previous.x0
+        and b.x0 - previous.x0 < 60
+    )
 
 
 def _score(questions: dict[int, dict]) -> int:

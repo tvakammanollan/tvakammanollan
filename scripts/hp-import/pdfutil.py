@@ -76,13 +76,15 @@ def join_lines(lines: list[str]) -> str:
 class Block:
     """En textblock ur PDF:en med koordinater och radtext."""
 
-    __slots__ = ("bbox", "lines", "sizes", "fonts")
+    __slots__ = ("bbox", "lines", "sizes", "fonts", "line_x")
 
-    def __init__(self, bbox, lines, sizes, fonts):
+    def __init__(self, bbox, lines, sizes, fonts, line_x=None):
         self.bbox = bbox
         self.lines = lines
         self.sizes = sizes
         self.fonts = fonts
+        # Vänsterkanten per rad — indraget markerar nytt stycke.
+        self.line_x = line_x or []
 
     @property
     def x0(self) -> float:
@@ -99,6 +101,30 @@ class Block:
     @property
     def text(self) -> str:
         return join_lines(self.lines)
+
+    def paragraphs(self, indent: float = 3.0) -> list[str]:
+        """
+        Blockets text uppdelad i stycken.
+
+        Provhäftena markerar nytt stycke med indrag, inte med blankrad, och
+        ett block är ofta en hel spalt. Utan den här uppdelningen kommer en
+        lästext ut som en enda vägg på flera tusen tecken.
+        """
+        if len(self.line_x) != len(self.lines):
+            return [self.text]
+        left = min((x for x, line in zip(self.line_x, self.lines) if line.strip()), default=0.0)
+        groups: list[list[str]] = []
+        blank = False
+        for x, line in zip(self.line_x, self.lines):
+            if not line.strip():
+                blank = True  # några texter skiljer stycken med blankrad
+                continue
+            if not groups or blank or x > left + indent:
+                groups.append([line])
+            else:
+                groups[-1].append(line)
+            blank = False
+        return [text for text in (join_lines(g) for g in groups) if text]
 
     @property
     def bold(self) -> bool:
@@ -159,17 +185,18 @@ def blocks(page: "fitz.Page", clip: "fitz.Rect | None" = None) -> list[Block]:
     for b in page.get_text("dict", clip=clip)["blocks"]:
         if b.get("type") != 0:
             continue
-        lines, sizes, fonts = [], [], []
+        lines, sizes, fonts, line_x = [], [], [], []
         for line in b["lines"]:
             txt = line_text(line)
             lines.append(clean_text(txt) if txt.strip() else "")
+            line_x.append(line["bbox"][0])
             for s in line["spans"]:
                 sizes.append(s["size"])
                 fonts.append(s["font"])
         joined = " ".join(x for x in lines if x).strip()
         if not joined or PAGE_NUMBER_RE.match(joined):
             continue
-        out.append(Block(tuple(b["bbox"]), lines, sizes, fonts))
+        out.append(Block(tuple(b["bbox"]), lines, sizes, fonts, line_x))
     return out
 
 

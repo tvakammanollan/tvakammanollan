@@ -87,7 +87,7 @@ def _passage(bs: list[Block], width: float) -> dict | None:
         if title is None and _looks_like_title(b):
             title = re.sub(r"^Alternatives\s+", "", text)
             continue
-        paragraphs.append(text)
+        paragraphs += b.paragraphs()
     byline = None
     if paragraphs and len(paragraphs[-1]) <= 80 and not paragraphs[-1].endswith((".", "?", "!")):
         byline = paragraphs.pop()

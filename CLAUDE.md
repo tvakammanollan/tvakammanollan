@@ -143,7 +143,7 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 
 Alla provtillfällen som går att få tag på finns i appen: 30 stycken
 (VT2012–VT2026), 118 provpass,
-4 373 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
+4 363 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
 `src/data/prov/` för hand, kör om importen.
 
 ```bash
@@ -186,6 +186,12 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   `html_prov.py` hela verbala provpass. Längre bak än så går inte: den
   kvantitativa delen sattes då som en GIF per uppgift och de bilderna
   arkiverades aldrig, och höstprovet 2011 saknar facit helt.
+- **Lästexterna delas i stycken på indrag**, inte på blankrad — provhäftena
+  markerar nytt stycke med indrag och ett textblock är ofta en hel spalt.
+  Se `Block.paragraphs`. Utan det kommer var sjätte lästext ut som en vägg.
+- **Arkivfilens ELF (`elf-arkiv.json`) är extraherad av någon annan** och har
+  spalter inflätade i varandra på sina håll. `build.py` känner igen mönstret
+  och hoppar över passets ELF hellre än att visa en text som inte går att läsa.
 - **Ett provpass som inte validerar skrivs inte ut.** `build.py` kräver facit på
   varje uppgift och minst fyra alternativ, och listar det som fallerar på slutet.
 - Provdatan laddas via `import.meta.glob` i `src/lib/prov-data.ts` — en chunk per
@@ -257,6 +263,14 @@ with a different look in every copy.
 - **Overlays not built on Radix `Dialog`** must call `useDismissible(open, onClose)`
   — it gives Escape-stängning and scroll-lås. Radix does this for you; the four
   hand-rolled overlays did not, and none of them locked the background scroll.
+- **In-view reveals (`Reveal`, `StaggerList`, `whileInView`) take `amount: "some"`,
+  never a fraction.** IntersectionObserver measures the ratio against the
+  *element*, so it can never exceed `(viewport + rootMargin) / elementHeight`.
+  Wrap anything taller than that — the 100-row topplista, a stats panel on a
+  phone — and a `0.2` threshold is unreachable: `inView` never flips, the
+  content stays at `opacity: 0`, and nothing errors. It reads as "loads only
+  sometimes", because a cold load animates in while the skeleton is still short
+  whereas a warm react-query cache renders the full-height table on mount.
 - **Copy:** the unit of play is a **match**, never a "battle". App-språket är
   svenska rakt igenom (`sv-SE`).
 

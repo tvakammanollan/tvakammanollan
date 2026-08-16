@@ -353,6 +353,18 @@ export function StickyNumber({ n }: { n: string }) {
 /* ============================================================ */
 
 /**
+ * NOTE — never give an in-view wrapper a fractional `amount`.
+ * IntersectionObserver's ratio is measured against the *element*, so it can
+ * never exceed (viewport + rootMargin) / elementHeight. Wrap anything taller
+ * than that — a 100-row leaderboard, a stats panel on a phone — and the
+ * threshold is mathematically unreachable: `inView` stays false forever and
+ * the content sits at opacity 0 with no error anywhere. It only looks
+ * intermittent because a cold load renders a short skeleton first (observer
+ * fires while the element is still small) while a warm react-query cache
+ * renders the full-height table on mount. Use "some" (threshold 0).
+ */
+
+/**
  * 3D rotateY/X entrance card. Settles into place when scrolled into view.
  */
 export function FlipCard({
@@ -368,7 +380,7 @@ export function FlipCard({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25, margin: "200px 0px 200px 0px" });
+  const inView = useInView(ref, { once: true, amount: "some", margin: "200px 0px 200px 0px" });
 
   const initial = reduce
     ? { opacity: 0 }
@@ -410,7 +422,7 @@ export function ClipReveal({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3, margin: "200px 0px 200px 0px" });
+  const inView = useInView(ref, { once: true, amount: "some", margin: "200px 0px 200px 0px" });
   return (
     <m.div
       ref={ref}
@@ -694,18 +706,22 @@ export function PageHeader({
 /**
  * Lightweight in-view fade-up. Use anywhere you want a card / panel /
  * paragraph to animate in once. More forgiving than ClipReveal.
+ *
+ * `amount` defaults to "some" (threshold 0) on purpose — see the note above
+ * `FlipCard`: a fractional threshold is unreachable for tall content and
+ * leaves it stuck at opacity 0.
  */
 export function Reveal({
   children,
   delay = 0,
   y = 24,
-  amount = 0.2,
+  amount = "some",
   className,
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
-  amount?: number;
+  amount?: "some" | "all" | number;
   className?: string;
 }) {
   const reduce = useReducedMotion();
@@ -739,14 +755,14 @@ export function StaggerList({
   delayStep = 0.06,
   startDelay = 0,
   y = 20,
-  amount = 0.15,
+  amount = "some",
   className,
 }: {
   children: React.ReactNode;
   delayStep?: number;
   startDelay?: number;
   y?: number;
-  amount?: number;
+  amount?: "some" | "all" | number;
   className?: string;
 }) {
   const reduce = useReducedMotion();
