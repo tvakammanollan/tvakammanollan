@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2, Target } from "lucide-react";
+import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -144,44 +144,36 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
 
         {mode === "choose" && (
           <div className="grid gap-2.5">
+            {/* "Snabbmatch" och "Ranked" var två kort som navigerade till
+                exakt samma ställe med exakt samma parametrar — ett val
+                användaren inte kunde göra fel på, men ändå måste göra. */}
             <ChoiceCard
               icon={
                 busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Zap className="h-5 w-5" />
               }
-              title="Snabbmatch"
-              subtitle="Matchas mot en motståndare direkt"
+              title="Spela nu"
+              subtitle="Matchas direkt mot en spelare med liknande ELO"
               accent="primary"
               onClick={handleQuickMatch}
               disabled={busy}
             />
             <ChoiceCard
-              icon={<Target className="h-5 w-5" />}
-              title="Ranked – möt en random spelare"
-              subtitle="Matchas mot spelare med liknande ELO"
-              accent="primary"
-              badge="NY"
-              onClick={() => {
-                navigate({ to: "/matchmaking", search: { type: matchType } });
-                close();
-              }}
-              disabled={busy}
-            />
-            <ChoiceCard
               icon={<Link2 className="h-5 w-5" />}
-              title="Privat rum"
-              subtitle="Skapa ett rum och dela koden med en vän"
+              title="Bjud in en vän"
+              subtitle="Skapa ett privat rum och dela koden"
               accent="secondary"
               onClick={handleCreateRoom}
               disabled={busy}
             />
-            <ChoiceCard
-              icon={<KeyRound className="h-5 w-5" />}
-              title="Gå med i rum"
-              subtitle="Ange en 6-teckens kod för att ansluta till en pågående väntan"
-              accent="muted"
+            <button
+              type="button"
               onClick={() => setMode("join")}
               disabled={busy}
-            />
+              className="mt-1 inline-flex items-center justify-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
+            >
+              <KeyRound className="h-3.5 w-3.5" />
+              Har du fått en kod?
+            </button>
           </div>
         )}
 
@@ -243,7 +235,6 @@ function ChoiceCard({
   accent,
   onClick,
   disabled,
-  badge,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -251,7 +242,6 @@ function ChoiceCard({
   accent: "primary" | "secondary" | "muted";
   onClick: () => void;
   disabled?: boolean;
-  badge?: string;
 }) {
   const iconBg =
     accent === "primary"
@@ -271,14 +261,7 @@ function ChoiceCard({
         {icon}
       </span>
       <span className="flex-1">
-        <span className="flex items-center gap-2 text-sm font-semibold">
-          {title}
-          {badge && (
-            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-primary">
-              {badge}
-            </span>
-          )}
-        </span>
+        <span className="flex items-center gap-2 text-sm font-semibold">{title}</span>
         <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
           {subtitle}
         </span>

@@ -2,40 +2,27 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
-import { EloChart } from "@/components/EloChart";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { RankIcon } from "@/components/ui/RankIcon";
-import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { HpCountdown } from "@/components/ui/HpCountdown";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
 import { Reveal } from "@/components/landing/MotionFX";
-import { AchievementsCard } from "@/components/AchievementsCard";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
-import { GlassCard } from "@/components/layout/GlassCard";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
-import {
-  GraduationCap,
-  Sigma,
-  BookOpen,
-  Target,
-  Sparkles,
-  Flame,
-  ArrowRight,
-  ScrollText,
-  Trophy,
-  Users,
-  BarChart3,
-} from "lucide-react";
+import { BookOpen, Sparkles, Flame, ArrowRight, Swords } from "lucide-react";
 
 /* =====================================================================
-   HOME DASHBOARD — lugn, fokuserad "vad vill du göra idag?"-sida.
-   Mörkt brand-tema (matchar landing/övriga appen), ett rent läge-rutnät,
-   diskret rörelse. Bygger på befintliga primitiver.
+   HOME DASHBOARD — tre val, inget mer.
+
+   Skärmen svarar på en enda fråga: "vad gör jag nu?". Svaret är spela en
+   match, plugga ord, eller boka coachning. Allt som är uppföljning
+   (ELO-kurva, achievements, HP-estimat) bor på /stats; allt som är
+   navigering bor i navbaren. Läggs något tillbaka här måste det tjäna
+   sin plats mot de tre.
    ===================================================================== */
 
 export function HomeDashboard() {
@@ -47,24 +34,21 @@ export function HomeDashboard() {
 
   if (!user || !profile) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:py-12" aria-busy="true">
-        <div className="skeleton-shimmer h-24 rounded-2xl" />
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="skeleton-shimmer h-32 rounded-2xl" />
-          <div className="skeleton-shimmer h-32 rounded-2xl" />
-          <div className="skeleton-shimmer h-32 rounded-2xl" />
-          <div className="skeleton-shimmer h-32 rounded-2xl" />
+      <div className="mx-auto max-w-3xl px-4 py-10 sm:py-12" aria-busy="true">
+        <div className="skeleton-shimmer h-20 rounded-2xl" />
+        <div className="mt-8 space-y-3">
+          <div className="skeleton-shimmer h-44 rounded-2xl" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="skeleton-shimmer h-28 rounded-2xl" />
+            <div className="skeleton-shimmer h-28 rounded-2xl" />
+          </div>
         </div>
       </div>
     );
   }
 
-  const openMatch = (t: MatchType) => {
-    setMatchType(t);
-    setMatchOpen(true);
-  };
-
   const isGuest = !!user.is_anonymous;
+  const activeElo = matchType === "verbal" ? profile.elo_verbal : profile.elo_math;
 
   const greeting = (() => {
     const h = new Date().getHours();
@@ -79,8 +63,8 @@ export function HomeDashboard() {
       <ResumeMatchBanner />
       {isGuest && <GuestBanner />}
 
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:py-12">
-        {/* ---------- Header ---------- */}
+      <div className="mx-auto max-w-3xl px-4 py-10 sm:py-12">
+        {/* ---------- Header: namn + en enda statusrad ---------- */}
         <Reveal y={16}>
           <header>
             <div className="flex items-center gap-3">
@@ -98,143 +82,96 @@ export function HomeDashboard() {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2.5">
-              <RankPill label="Verbal" elo={profile.elo_verbal} />
-              <RankPill label="Matte" elo={profile.elo_math} />
-              {!isGuest && (profile.current_streak ?? 0) > 0 && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#f2a65a]/25 bg-[#f2a65a]/10 px-3 py-1.5 text-sm font-semibold text-[#f2a65a] tabular-nums">
-                  <Flame className="h-3.5 w-3.5" />
-                  {profile.current_streak} dagar
-                </span>
-              )}
-            </div>
-
-            <NextRankBar elo={Math.max(profile.elo_verbal, profile.elo_math)} />
+            <StatusRow
+              elo={Math.max(profile.elo_verbal, profile.elo_math)}
+              streak={isGuest ? 0 : (profile.current_streak ?? 0)}
+            />
           </header>
         </Reveal>
 
-        {/* ---------- Spela ---------- */}
+        {/* ---------- 1. Spela match ---------- */}
         <Reveal y={20} delay={0.05}>
-          <section className="mt-12">
-            <EyebrowLabel tone="amber">Spela</EyebrowLabel>
-            <h2
-              className="display mt-1 text-[22px] font-bold leading-tight text-[#e8e4da] sm:text-[26px]"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Starta en match
-            </h2>
-            <p className="mt-1.5 text-sm text-white/45">8 frågor · 5 minuter · ELO på spel</p>
+          <section className="mt-10">
+            <div className="relative overflow-hidden rounded-2xl border border-[#f2a65a]/25 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#f2a65a]/10 blur-3xl"
+              />
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <BattleCard
-                icon={<GraduationCap className="h-5 w-5" />}
-                title="Verbal"
-                subtitle="Ord & meningskomplettering"
-                elo={profile.elo_verbal}
-                onClick={() => openMatch("verbal")}
-              />
-              <BattleCard
-                icon={<Sigma className="h-5 w-5" />}
-                title="Matte"
-                subtitle="Xyz · Kva · Nog"
-                elo={profile.elo_math}
-                onClick={() => openMatch("math")}
-              />
-            </div>
+              <div className="relative flex items-start justify-between gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
+                  <Swords className="h-5 w-5" />
+                </span>
+                <RankBadge elo={activeElo} size="sm" />
+              </div>
 
-            {/* Öva i lugn takt */}
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <QuietCard
-                to="/ord"
-                icon={<BookOpen className="h-4 w-4" />}
-                title="Öva ord"
-                subtitle="8 000+ riktiga HP-ord"
-              />
-              <QuietCard
-                to="/train"
-                icon={<Target className="h-4 w-4" />}
-                title="Träna utan tid"
-                subtitle="I lugn takt, inget ELO"
-              />
-            </div>
+              <h2
+                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[#e8e4da] sm:text-[28px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Spela en match
+              </h2>
+              <p className="relative mt-1 text-sm text-white/50">
+                8 frågor · 5 minuter · ELO på spel
+              </p>
 
-            {/* Sekundär rad */}
-            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-              <SecondaryLink to="/gamla-prov" icon={<ScrollText className="h-4 w-4" />}>
-                Gamla prov
-              </SecondaryLink>
-              <SecondaryLink to="/leaderboard" icon={<Trophy className="h-4 w-4" />}>
-                Topplista
-              </SecondaryLink>
-              <SecondaryLink to="/friends" icon={<Users className="h-4 w-4" />}>
-                Vänner
-              </SecondaryLink>
-              <SecondaryLink to="/stats" icon={<BarChart3 className="h-4 w-4" />}>
-                Statistik
-              </SecondaryLink>
+              {/* Ämnesväxel — ett val, inte två kort */}
+              <div
+                role="radiogroup"
+                aria-label="Välj ämne"
+                className="relative mt-4 inline-flex rounded-full border border-white/10 bg-white/[0.03] p-1"
+              >
+                <SubjectPill
+                  label="Verbal"
+                  active={matchType === "verbal"}
+                  onClick={() => setMatchType("verbal")}
+                />
+                <SubjectPill
+                  label="Matte"
+                  active={matchType === "math"}
+                  onClick={() => setMatchType("math")}
+                />
+              </div>
+
               <button
                 type="button"
-                onClick={() => setCoachingOpen(true)}
-                className="inline-flex items-center gap-1.5 text-[#f2a65a] transition-colors hover:text-[#f5c089]"
+                onClick={() => setMatchOpen(true)}
+                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f2a65a] px-5 py-3.5 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 sm:w-auto sm:px-8"
               >
-                <Sparkles className="h-4 w-4" />
-                Gratis coachning
+                Spela {matchType === "verbal" ? "verbal" : "matte"}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </button>
             </div>
           </section>
         </Reveal>
 
-        {/* ---------- Dagens ord ---------- */}
+        {/* ---------- 2. Plugga ord   3. Coachning ---------- */}
         <Reveal y={20} delay={0.08}>
-          <div className="mt-6">
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <ActionCard
+              to="/ord"
+              tone="teal"
+              icon={<BookOpen className="h-5 w-5" />}
+              title="Plugga ord"
+              subtitle="8 000+ riktiga HP-ord, repetition som minns vad du missar"
+            />
+            <ActionCard
+              onClick={() => setCoachingOpen(true)}
+              tone="amber"
+              icon={<Sparkles className="h-5 w-5" />}
+              title="Coachning"
+              subtitle="30 min gratis med en coach som själv fått 1.9+"
+            />
+          </div>
+        </Reveal>
+
+        {/* ---------- Dagens ord ---------- */}
+        <Reveal y={20} delay={0.11}>
+          <div className="mt-3">
             <SafeBoundary label="word-of-the-day">
               <WordOfTheDay />
             </SafeBoundary>
           </div>
-        </Reveal>
-
-        {/* ---------- Din utveckling ---------- */}
-        <Reveal y={20} delay={0.1}>
-          <section className="mt-12">
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <EyebrowLabel tone="teal">Din utveckling</EyebrowLabel>
-                <h2
-                  className="display mt-1 text-[22px] font-bold leading-tight text-[#e8e4da] sm:text-[26px]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  ELO-progression
-                </h2>
-              </div>
-              <div className="hidden sm:block">
-                <HpCountdown size="inline" />
-              </div>
-            </div>
-
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <HpScoreWidget
-                eloVerbal={profile.elo_verbal}
-                eloMath={profile.elo_math}
-                size="full"
-              />
-              <GlassCard variant="default" className="flex flex-col">
-                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/45">
-                  Senaste 20 matcherna
-                </p>
-                <div className="mt-2 flex-1">
-                  <EloChart userId={user.id} />
-                </div>
-              </GlassCard>
-            </div>
-
-            {!isGuest && (
-              <div className="mt-4">
-                <SafeBoundary label="achievements-compact">
-                  <AchievementsCard variant="compact" />
-                </SafeBoundary>
-              </div>
-            )}
-          </section>
         </Reveal>
       </div>
 
@@ -245,7 +182,8 @@ export function HomeDashboard() {
         onClose={() => setOnboardingDismissed(true)}
         onStartFirstMatch={(t) => {
           setOnboardingDismissed(true);
-          openMatch(t);
+          setMatchType(t);
+          setMatchOpen(true);
         }}
       />
     </div>
@@ -256,7 +194,7 @@ export function HomeDashboard() {
 function GuestBanner() {
   return (
     <div className="border-b border-[#f2a65a]/20 bg-[#f2a65a]/[0.06] px-4 py-3">
-      <div className="mx-auto flex max-w-4xl items-center justify-between gap-3">
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 text-sm text-[#e8e4da]">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
             <Sparkles className="h-3.5 w-3.5" />
@@ -277,153 +215,152 @@ function GuestBanner() {
   );
 }
 
-/* =================== RANK PILL =================== */
-function NextRankBar({ elo }: { elo: number }) {
+/* =================== STATUSRAD ===================
+   Rank, streak och "hur långt till nästa rank" på en rad. Tidigare låg
+   detta som fyra separata element (två rank-pills, en streak-pill och en
+   egen progress-sektion) som tillsammans tog mer plats än spela-knappen. */
+function StatusRow({ elo, streak }: { elo: number; streak: number }) {
   const rank = getRankForElo(elo);
   const next = getNextRank(elo);
   const pct = getEloProgressInTier(elo);
-  if (!next) {
-    return (
-      <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-white/55">
-        <RankIcon rank={rank} className="h-3.5 w-3.5" style={{ color: rank.accent }} />
-        Du är på högsta ranken — <span style={{ color: rank.accent }}>{rank.name}</span>.
-      </p>
-    );
-  }
-  const toGo = next.minElo - elo;
+
   return (
-    <div className="mt-3 max-w-xs">
-      <div className="flex items-center justify-between gap-2 text-[11px] text-white/55">
-        <span className="inline-flex items-center gap-1.5">
+    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+      <span className="inline-flex items-center gap-2">
+        <RankBadge elo={elo} size="sm" />
+      </span>
+
+      {streak > 0 && (
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#f2a65a] tabular-nums">
+          <Flame className="h-3.5 w-3.5" />
+          {streak} dagar
+        </span>
+      )}
+
+      {next ? (
+        <span className="inline-flex min-w-[9rem] flex-1 items-center gap-2 text-[11px] text-white/55">
+          <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
+            <span
+              className="block h-full rounded-full transition-all"
+              style={{
+                width: `${pct}%`,
+                background: `linear-gradient(90deg, ${rank.accent}, ${next.accent})`,
+              }}
+            />
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 tabular-nums">
+            {next.minElo - elo} till
+            <RankIcon rank={next} className="h-3.5 w-3.5" style={{ color: next.accent }} />
+            {next.shortName}
+          </span>
+        </span>
+      ) : (
+        <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
           <RankIcon rank={rank} className="h-3.5 w-3.5" style={{ color: rank.accent }} />
-          {rank.shortName}
+          Högsta ranken
         </span>
-        <span className="inline-flex items-center gap-1.5 tabular-nums">
-          {toGo} ELO till
-          <RankIcon rank={next} className="h-3.5 w-3.5" style={{ color: next.accent }} />
-          {next.shortName}
-        </span>
-      </div>
-      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-        <div
-          className="h-full rounded-full transition-all"
-          style={{
-            width: `${pct}%`,
-            background: `linear-gradient(90deg, ${rank.accent}, ${next.accent})`,
-          }}
-        />
-      </div>
+      )}
     </div>
   );
 }
 
-function RankPill({ label, elo }: { label: string; elo: number }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
-      <span className="text-[10px] font-semibold uppercase tracking-wider text-white/50">
-        {label}
-      </span>
-      <RankBadge elo={elo} size="sm" />
-    </span>
-  );
-}
-
-/* =================== BATTLE CARD (primär) =================== */
-function BattleCard({
-  icon,
-  title,
-  subtitle,
-  elo,
+/* =================== ÄMNESVÄXEL ===================
+   Verbal och matte var två jämnstora primärkort, vilket gjorde att
+   skärmen saknade ett tydligt förstaval. Nu är ämnet ett litet val
+   inuti spela-kortet och matchen är den enda knappen. */
+function SubjectPill({
+  label,
+  active,
   onClick,
 }: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-  elo: number;
+  label: string;
+  active: boolean;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
+      role="radio"
+      aria-checked={active}
       onClick={onClick}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-all hover:border-[#f2a65a]/40 hover:bg-white/[0.04]"
+      className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+        active
+          ? "bg-[#f2a65a]/15 text-[#f2a65a]"
+          : "text-white/50 hover:bg-white/[0.04] hover:text-[#e8e4da]"
+      }`}
     >
-      {/* mjuk amber-glöd vid hover */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#f2a65a]/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
-      />
-      <div className="flex items-start justify-between gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#f2a65a]/20 bg-[#f2a65a]/10 text-[#f2a65a]">
-          {icon}
-        </span>
-        <RankBadge elo={elo} size="sm" />
-      </div>
-      <h3
-        className="mt-3.5 text-[20px] font-bold leading-tight text-[#e8e4da]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
-      </h3>
-      <p className="mt-0.5 text-[13px] text-white/50">{subtitle}</p>
-      <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#f2a65a]">
-        Spela
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-      </div>
+      {label}
     </button>
   );
 }
 
-/* =================== QUIET CARD (öva, sekundär) =================== */
-function QuietCard({
+/* =================== ACTION CARD ===================
+   Samma kort oavsett om målet är en route (`to`) eller en modal
+   (`onClick`) — så ord och coachning väger exakt lika mycket. */
+function ActionCard({
   to,
+  onClick,
+  tone,
   icon,
   title,
   subtitle,
 }: {
-  to: string;
+  to?: string;
+  onClick?: () => void;
+  tone: "teal" | "amber";
   icon: React.ReactNode;
   title: string;
   subtitle: string;
 }) {
-  return (
-    <Link
-      to={to}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      params={{} as any}
-      className="group flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.015] px-4 py-3 transition-colors hover:border-white/15 hover:bg-white/[0.03]"
-    >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#6fb3b8]/20 bg-[#6fb3b8]/10 text-[#6fb3b8]">
+  const accent = tone === "teal" ? "#6fb3b8" : "#f2a65a";
+  const className =
+    "group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/[0.04]";
+
+  const body = (
+    <>
+      <span
+        className="flex h-10 w-10 items-center justify-center rounded-xl border"
+        style={{
+          borderColor: `${accent}33`,
+          background: `${accent}1a`,
+          color: accent,
+        }}
+      >
         {icon}
       </span>
-      <div className="min-w-0 flex-1">
-        <div className="text-sm font-semibold text-[#e8e4da]">{title}</div>
-        <div className="text-xs text-white/45">{subtitle}</div>
-      </div>
-      <ArrowRight className="h-4 w-4 shrink-0 text-white/25 transition-all group-hover:translate-x-0.5 group-hover:text-[#6fb3b8]" />
-    </Link>
+      <h3
+        className="mt-3 text-[18px] font-bold leading-tight text-[#e8e4da]"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {title}
+      </h3>
+      <p className="mt-1 flex-1 text-[13px] leading-relaxed text-white/50">{subtitle}</p>
+      <span
+        className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold"
+        style={{ color: accent }}
+      >
+        Öppna
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </>
   );
-}
 
-/* =================== SECONDARY LINK =================== */
-function SecondaryLink({
-  to,
-  icon,
-  children,
-}: {
-  to: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
+  if (to) {
+    return (
+      <Link
+        to={to}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params={{} as any}
+        className={className}
+      >
+        {body}
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      to={to}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      params={{} as any}
-      className="inline-flex items-center gap-1.5 text-white/60 transition-colors hover:text-[#e8e4da]"
-    >
-      {icon}
-      {children}
-    </Link>
+    <button type="button" onClick={onClick} className={className}>
+      {body}
+    </button>
   );
 }

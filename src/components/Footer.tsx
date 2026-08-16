@@ -1,5 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Instagram, Music2, Youtube, Mail } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { BugReportButton } from "@/components/BugReportButton";
 
 const PRODUCT = [
   { label: "Träna", to: "/train" },
@@ -48,7 +50,13 @@ const HIDDEN_PREFIXES = ["/match/", "/matchmaking", "/result/", "/join/"];
 
 export function Footer() {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { user, loading } = useAuth();
   if (HIDDEN_PREFIXES.some((p) => path.startsWith(p))) return null;
+
+  // Inloggad: 22 länkar under varje skärm är brus, inte navigering — den
+  // stora footern är intern SEO-länkning för utloggade och crawlers. Under
+  // SSR är `loading` sant och `user` null, så botar ser alltid full version.
+  if (!loading && user) return <CompactFooter />;
 
   return (
     <footer
@@ -124,6 +132,39 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/* Inloggad footer — en rad. Guider och FAQ ligger här eftersom de togs
+   bort ur mobilmenyn; bugg-rapporten flyttade hit från navbaren. */
+function CompactFooter() {
+  return (
+    <footer className="border-t border-white/8">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
+        <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <FooterMiniLink to="/guider">Guider</FooterMiniLink>
+          <FooterMiniLink to="/faq">Vanliga frågor</FooterMiniLink>
+          <FooterMiniLink to="/kontakt">Kontakt</FooterMiniLink>
+          <FooterMiniLink to="/integritetspolicy">Integritetspolicy</FooterMiniLink>
+        </nav>
+        <div className="flex items-center gap-4">
+          <BugReportButton variant="text" />
+          <p className="text-xs text-white/45">© {new Date().getFullYear()} HP Kampen</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function FooterMiniLink({ to, children }: { to: string; children: React.ReactNode }) {
+  return (
+    <Link
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      to={to as any}
+      className="text-sm text-white/60 transition hover:text-white hover:underline"
+    >
+      {children}
+    </Link>
   );
 }
 

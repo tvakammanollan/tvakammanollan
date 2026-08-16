@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { EloBadge } from "@/components/EloBadge";
 import { UserAvatar } from "@/components/UserAvatar";
-import { BugReportButton } from "@/components/BugReportButton";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import {
@@ -16,6 +15,13 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import {
   Menu,
   LogOut,
   Zap,
@@ -26,8 +32,8 @@ import {
   Trophy,
   Users,
   BarChart3,
-  BookOpen,
-  HelpCircle,
+  Type,
+  ChevronDown,
   Settings,
   type LucideIcon,
 } from "lucide-react";
@@ -93,47 +99,24 @@ export function Navbar() {
         <nav className="hidden items-center gap-2 md:flex">
           {loading ? null : user ? (
             <>
+              {/* Bara de tre vi faktiskt pushar. Resten bor i avatarmenyn —
+                  tidigare låg fem länkar här och samma fem en gång till i
+                  dashboardens sekundärrad, footern och snabbmenyn. */}
+              <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/train">Träna</NavLink>
-              <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
-              <NavLink to="/friends">Vänner</NavLink>
-              <NavLink to="/stats">Statistik</NavLink>
-              {profile?.is_admin && <NavLink to="/admin">Admin</NavLink>}
-              {profile && (
-                <div
-                  className="inline-flex items-center gap-2 rounded-full border"
-                  style={{
-                    borderColor: "var(--line)",
-                    background: "rgba(42, 28, 16, 0.6)",
-                    padding: "4px 12px 4px 4px",
-                    boxShadow: "var(--shadow-sm)",
-                  }}
-                >
-                  <UserAvatar name={profile.username} size={26} />
-                  <span
-                    className="max-w-[10rem] truncate text-sm font-medium"
-                    style={{ color: "var(--cream)" }}
-                    title={profile.username}
-                  >
-                    {profile.username}
-                  </span>
-                  <EloBadge elo={topElo} size="sm" />
-                </div>
-              )}
               {!user.is_anonymous && (
                 <SafeBoundary label="notifications-bell">
                   <NotificationsBell userId={user.id} />
                 </SafeBoundary>
               )}
-              <BugReportButton />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                className="px-2 text-muted-foreground hover:text-foreground"
-              >
-                Logga ut
-              </Button>
+              {profile && (
+                <AccountMenu
+                  profile={profile}
+                  topElo={topElo}
+                  onSignOut={handleSignOut}
+                />
+              )}
             </>
           ) : (
             <>
@@ -230,6 +213,88 @@ function NavLink({
   );
 }
 
+/* ─────────── ACCOUNT MENU — allt sekundärt bakom avataren ─────────── */
+function AccountMenu({
+  profile,
+  topElo,
+  onSignOut,
+}: {
+  profile: NonNullable<ReturnType<typeof useAuth>["profile"]>;
+  topElo: number;
+  onSignOut: () => Promise<void>;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 rounded-full border transition-colors hover:brightness-110"
+          style={{
+            borderColor: "var(--line)",
+            background: "rgba(42, 28, 16, 0.6)",
+            padding: "4px 10px 4px 4px",
+            boxShadow: "var(--shadow-sm)",
+          }}
+        >
+          <UserAvatar name={profile.username} size={26} />
+          <span
+            className="max-w-[8rem] truncate text-sm font-medium"
+            style={{ color: "var(--cream)" }}
+            title={profile.username}
+          >
+            {profile.username}
+          </span>
+          <EloBadge elo={topElo} size="sm" />
+          <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        <AccountMenuLink to="/stats" icon={BarChart3}>
+          Statistik
+        </AccountMenuLink>
+        <AccountMenuLink to="/friends" icon={Users}>
+          Vänner
+        </AccountMenuLink>
+        <AccountMenuLink to="/gamla-prov" icon={FileText}>
+          Gamla prov
+        </AccountMenuLink>
+        {profile.is_admin && (
+          <AccountMenuLink to="/admin" icon={Settings}>
+            Admin
+          </AccountMenuLink>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => void onSignOut()} className="gap-2">
+          <LogOut className="h-4 w-4 opacity-70" />
+          Logga ut
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function AccountMenuLink({
+  to,
+  icon: Icon,
+  children,
+}: {
+  to: string;
+  icon: LucideIcon;
+  children: React.ReactNode;
+}) {
+  // Radix `asChild` kör React.Children.only — håll exakt ett barn här.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const href = to as any;
+  return (
+    <DropdownMenuItem asChild className="gap-2">
+      <Link to={href}>
+        <Icon className="h-4 w-4 opacity-70" />
+        {children}
+      </Link>
+    </DropdownMenuItem>
+  );
+}
+
 /* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
 function MobileMenu({
   profile,
@@ -298,26 +363,25 @@ function MobileMenu({
           <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
           </MobileNavLink>
+          <MobileNavLink to="/ord" onClick={close} icon={Type}>
+            Ord
+          </MobileNavLink>
           <MobileNavLink to="/train" onClick={close} icon={Target}>
             Träna
-          </MobileNavLink>
-          <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
-            Gamla prov
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista
           </MobileNavLink>
-          <MobileNavLink to="/friends" onClick={close} icon={Users}>
-            Vänner
-          </MobileNavLink>
+          {/* Sekundärt — samma uppsättning som avatarmenyn på desktop.
+              Guider och FAQ nås via footern. */}
           <MobileNavLink to="/stats" onClick={close} icon={BarChart3}>
             Statistik
           </MobileNavLink>
-          <MobileNavLink to="/guider" onClick={close} icon={BookOpen}>
-            Guider
+          <MobileNavLink to="/friends" onClick={close} icon={Users}>
+            Vänner
           </MobileNavLink>
-          <MobileNavLink to="/faq" onClick={close} icon={HelpCircle}>
-            Vanliga frågor
+          <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
+            Gamla prov
           </MobileNavLink>
           {profile?.is_admin && (
             <MobileNavLink to="/admin" onClick={close} icon={Settings}>

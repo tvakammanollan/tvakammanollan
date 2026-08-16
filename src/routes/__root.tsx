@@ -20,7 +20,6 @@ import { AchievementWatcher } from "@/components/AchievementWatcher";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
-import { FloatingActionMenuGate } from "@/components/layout/FloatingActionMenuGate";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { Analytics } from "@/components/Analytics";
 
@@ -447,7 +446,6 @@ function RootComponent() {
             <Outlet />
           </main>
           <Footer />
-          <FloatingActionMenuGate />
           <FriendInviteListener />
           <SafeBoundary label="achievement-watcher">
             <AchievementWatcher />
