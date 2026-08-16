@@ -12,6 +12,8 @@
     "format": "prettier --write .",
     "scrape:ord-defs": "bun run scripts/scrape-ord-definitions.ts",
     "apply:ord-defs": "bun run scripts/apply-ord-definitions.ts",
+    "scrape:ord-old": "bun run scraper/scrape-ord-old.ts",
+    "seed:ord-old": "bun run scraper/seed-ord-old.ts",
     "test": "vitest run"
   },
   "dependencies": {
