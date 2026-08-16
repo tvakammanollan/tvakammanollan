@@ -12,6 +12,10 @@ SOFT_HYPHEN = "­"
 # Sidfoten ("– 12 –") och sidhuvudet ("XYZ", "LÄS") ska aldrig hamna i frågetext.
 PAGE_NUMBER_RE = re.compile(r"^[–\-—]\s*\d+\s*[–\-—]$")
 
+# Förled som behåller sitt bindestreck även när nästa rad börjar med gemen:
+# 'icke-invasiv', 'ex-make'. Utan dem blir de ihopslagna vid radbrytning.
+KEEP_HYPHEN = {"icke", "ex", "vice", "s", "e", "u", "o", "b", "pro", "anti"}
+
 
 def clean_text(s: str, keep_soft_hyphen: bool = True) -> str:
     """
@@ -21,6 +25,7 @@ def clean_text(s: str, keep_soft_hyphen: bool = True) -> str:
     veta var ett ord har brutits, och plockar bort dem själv efteråt.
     """
     s = unicodedata.normalize("NFC", s)
+    s = re.sub(r"[    ⁠]", " ", s)
     s = s.replace(" ", " ").replace(" ", " ").replace(" ", " ")
     s = s.replace("ﬁ", "fi").replace("ﬂ", "fl")
     if not keep_soft_hyphen:
@@ -50,9 +55,15 @@ def join_lines(lines: list[str]) -> str:
             line, glue_next = line[:-1].rstrip(), True
         elif line.endswith("-"):
             nxt = next((x.strip() for x in lines[i + 1 :] if x.strip()), "")
-            # 'in-vasiv' → 'invasiv', men 'svensk-norska' behåller sitt streck.
+            # 'in-vasiv' → 'invasiv', men 'Nord-syd' behåller sitt streck.
+            # Sättningen skiljer inte på avstavning och riktigt bindestreck, så
+            # versal efter strecket + en handfull förled får avgöra.
+            last_word = re.split(r"[\s(]", line[:-1])[-1].lower()
             if nxt[:1].islower() and not line.endswith(" -"):
-                line, glue_next = line[:-1], True
+                if last_word in KEEP_HYPHEN:
+                    glue_next = True  # 'icke-' + 'invasivt' → 'icke-invasivt'
+                else:
+                    line, glue_next = line[:-1], True
         if not out:
             out = line
         elif glue_here:
@@ -102,6 +113,40 @@ class Block:
         return f"Block({bb}, {self.text[:60]!r})"
 
 
+def line_text(line: dict) -> str:
+    """
+    Texten på en rad, med mellanslag återinsatta.
+
+    En del årgångar sätter varje ord som en egen textkörning utan
+    mellanslagstecken och låter positioneringen sköta ordmellanrummen. Ren
+    sammanslagning ger då 'sambandmedattalltfler…'. Vi sätter tillbaka ett
+    mellanslag där körningarna står isär.
+    """
+    parts: list[str] = []
+    prev_x1: float | None = None
+    for s in line["spans"]:
+        text = s["text"]
+        if (
+            prev_x1 is not None
+            and s["bbox"][0] - prev_x1 > 1.0
+            and text[:1] not in (" ", "")
+            and parts
+            and not parts[-1].endswith(" ")
+        ):
+            parts.append(" ")
+        parts.append(text)
+        prev_x1 = s["bbox"][2]
+    out = "".join(parts)
+
+    # Ett par årgångar sätter ut mjuka bindestreck i stället för mellanslag i
+    # marginaljusterade rader ('samband\xadmed\xadatt\xadallt\xadfler'). De känns igen
+    # på att raden saknar riktiga mellanslag helt — en rad med vanlig avstavning
+    # har alltid några.
+    if out.count(SOFT_HYPHEN) >= 2 and " " not in out.strip():
+        out = out.replace(SOFT_HYPHEN, " ")
+    return out
+
+
 def blocks(page: "fitz.Page", clip: "fitz.Rect | None" = None) -> list[Block]:
     """
     Textblock utan sidnummer/tomma block.
@@ -116,7 +161,7 @@ def blocks(page: "fitz.Page", clip: "fitz.Rect | None" = None) -> list[Block]:
             continue
         lines, sizes, fonts = [], [], []
         for line in b["lines"]:
-            txt = "".join(s["text"] for s in line["spans"])
+            txt = line_text(line)
             lines.append(clean_text(txt) if txt.strip() else "")
             for s in line["spans"]:
                 sizes.append(s["size"])
@@ -165,9 +210,18 @@ def upright_page(doc: "fitz.Document", pno: int) -> tuple["fitz.Page", "fitz.Doc
     if not dirs or max(dirs, key=dirs.get) == (1, 0):
         return page, None
 
+    # PyMuPDF ger alltid textkoordinater i sidans oroterade rum, även när sidan
+    # har /Rotate satt. Vi nollar därför sidans egen rotation på en kopia innan
+    # råinnehållet vrids ett kvarts varv — annars adderas de två rotationerna
+    # och sidan hamnar tillbaka på tvären (2016–2015 års DTK-uppslag).
+    src = fitz.open()
+    src.insert_pdf(doc, from_page=pno, to_page=pno)
+    src[0].set_rotation(0)
+    box = src[0].rect
+
     tmp = fitz.open()
-    new = tmp.new_page(width=page.rect.height, height=page.rect.width)
-    new.show_pdf_page(new.rect, doc, pno, rotate=270)
+    new = tmp.new_page(width=box.height, height=box.width)
+    new.show_pdf_page(new.rect, src, 0, rotate=270)
     return new, tmp
 
 

@@ -17,7 +17,7 @@ import re
 
 import fitz
 
-from pdfutil import clean_text
+from pdfutil import clean_text, line_text
 
 # Tiotalssiffran sätts ibland som en egen textrad ('1' + '0 B' = '10 B'), och
 # ett par uppgifter har underkänts i efterhand och har två godkända svar
@@ -39,7 +39,7 @@ def _tokens(page: "fitz.Page") -> list[tuple[str, float, float]]:
         if b.get("type") != 0:
             continue
         for line in b["lines"]:
-            txt = clean_text("".join(s["text"] for s in line["spans"]), keep_soft_hyphen=False)
+            txt = clean_text(line_text(line), keep_soft_hyphen=False)
             if txt:
                 raw.append((txt, line["bbox"][0], line["bbox"][2], line["bbox"][1]))
 
