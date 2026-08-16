@@ -71,6 +71,17 @@ command `npx wrangler deploy`. Live at `tvakammanollan.niklas-pellkvist.workers.
   async queries, so pages look empty at random. Drive Chrome over CDP with
   `--remote-debugging-port` and poll `document.body.innerText` until the expected text
   shows up (Node 24 has a global `WebSocket`, so no puppeteer needed).
+- **A copy of the repo needs its own `node_modules` — never symlink it.** With a
+  symlink, `vite dev` serves the page but `/@id/virtual:tanstack-start-client-entry`
+  404s, so React never hydrates: the HTML is there, every button is dead, and
+  nothing is logged. It reads exactly like broken code. Run `bun install` in the
+  copy instead (~6 s). This applies to `git worktree` too — the worktree is not
+  what breaks hydration, the shared `node_modules` is.
+- Isolating a copy is worth it when another session is regenerating `src/data/prov`:
+  every `/gamla-prov` route 500s while the files are gone, and `vite dev` caches
+  that failed import, so the server must be restarted *after* the data is back.
+  Take the data from git (`git archive <sha> src/data/prov | tar -x -C <copy>`)
+  and the dataset stays still while you test.
 
 ---
 
