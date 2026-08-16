@@ -31,6 +31,7 @@ import {
   AlertTriangle,
   Share2,
   Flame,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@/lib/telemetry";
@@ -425,7 +426,10 @@ function ResultPage() {
               asChild
               className="shrink-0 bg-[#f2a65a] px-6 text-base font-semibold text-[#1a0d04] shadow-md hover:bg-[#c97b41]"
             >
-              <Link to="/signup">Skapa konto →</Link>
+              <Link to="/signup">
+                Skapa konto
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
             </Button>
           </div>
         </Reveal>

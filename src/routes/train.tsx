@@ -661,7 +661,8 @@ function TrainPage() {
                   onClick={() => goNext(false)}
                   className="w-full bg-[#f2a65a] py-5 text-base text-[#1a0d04] hover:bg-[#c97b41]"
                 >
-                  {current >= questions.length - 1 ? "Visa resultat →" : "Nästa fråga →"}
+                  {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               ) : (
                 <button

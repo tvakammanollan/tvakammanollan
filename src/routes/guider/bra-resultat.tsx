@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
@@ -229,20 +230,20 @@ function BraResultatGuidePage() {
         </ul>
 
         <p className="mt-8">
-          <Link to="/signup" className="underline" style={{ color: "var(--amber)" }}>
-            Skapa gratis konto och börja träna →
+          <Link
+            to="/signup"
+            className="inline-flex items-center gap-1.5 underline"
+            style={{ color: "var(--amber)" }}
+          >
+            Skapa gratis konto och börja träna
+            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>
 
       <RelatedGuides
         currentPath="/guider/bra-resultat"
-        relatedPaths={[
-          "/guider/tidspress",
-          "/guider/las",
-          "/guider/xyz",
-          "/guider/ord",
-        ]}
+        relatedPaths={["/guider/tidspress", "/guider/las", "/guider/xyz", "/guider/ord"]}
       />
     </article>
   );
