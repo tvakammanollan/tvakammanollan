@@ -166,6 +166,16 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
         # engelska texten, inte bara frågorna.
         full = pass_meta["file"].replace(".pdf", "-full.pdf")
         recovered = parse_elf(full) if os.path.exists(full) else None
+        if not recovered:
+            # ELF ur de HTML-provsidor UHR publicerade 2011–2014, se html_elf.py.
+            scraped = os.path.join(CACHE, term, f"pass{pno}-elf.json")
+            if os.path.exists(scraped):
+                with open(scraped, encoding="utf-8") as f:
+                    data = json.load(f)
+                recovered = {
+                    "questions": {int(k): v for k, v in data["questions"].items()},
+                    "passages": data["passages"],
+                }
         if recovered and len(recovered["questions"]) >= 8:
             offset = len(passages)
             passages += [passage_json(p) for p in recovered["passages"]]

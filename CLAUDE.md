@@ -130,13 +130,17 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 
 ### Gamla prov — arkivet och importen
 
-Alla 27 provtillfällen UHR publicerat (HT2013–VT2026) finns i appen: 108 provpass,
-3 918 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
+Alla provtillfällen som går att få tag på finns i appen: 29 stycken
+(HT2012–VT2026), 116 provpass,
+4 318 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
 `src/data/prov/` för hand, kör om importen.
 
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
-python3 scripts/hp-import/fetch_elf.py # letar upp originalhäftena med ELF (tar ~40 min)
+python3 scripts/hp-import/archive_index.py  # register över allt UHR någonsin lagt upp
+python3 scripts/hp-import/fetch_elf.py      # originalhäftena med ELF, via gissade namn
+python3 scripts/hp-import/harvest_elf.py    # samma sak, men ur arkivregistret
+python3 scripts/hp-import/html_elf.py       # ELF ur 2011–2014 års HTML-provsidor
 python3 scripts/hp-import/build.py     # parsar → src/data/prov/ + public/prov-bilder/
 python3 scripts/hp-import/build.py --fresh   # rendera om alla bilder också (~12 min)
 ```
@@ -162,6 +166,11 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   är kompletta 160-uppgiftersprov. Resten kommer ur
   `scripts/hp-import/elf-arkiv.json`, det som redan låg på sajten. Ett verbalt
   pass har alltså 30 eller 40 uppgifter beroende på provtillfälle — inget fel.
+- **Ett par provtillfällen står inte på UHR:s provlista** men ligger kvar på
+  servern (2013vt, 2012ht). De är uppräknade i `UNLISTED` i `fetch.py`. Hittar
+  du fler: jämför provlistan mot `archive_index.py`:s register.
+- **2011–2014 publicerades proven som HTML-sidor**, en per delprov, och de
+  sidorna rensades aldrig på ELF. `html_elf.py` läser dem ur Internet Archive.
 - **Ett provpass som inte validerar skrivs inte ut.** `build.py` kräver facit på
   varje uppgift och minst fyra alternativ, och listar det som fallerar på slutet.
 - Provdatan laddas via `import.meta.glob` i `src/lib/prov-data.ts` — en chunk per

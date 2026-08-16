@@ -113,6 +113,55 @@ def classify(pdf_url: str) -> tuple[str, int] | None:
     return kind, int(m.group(1))
 
 
+# Provtillfällen som inte står på UHR:s provlista men vars häften ligger kvar
+# på servern. De hittades genom att jämföra listan mot vad Internet Archive
+# sett under /globalassets/ genom åren — se archive_index.py.
+UNLISTED = [
+    {
+        "date": "2013-04-06",
+        "folder": "hp-2013-04-06",
+        "files": {
+            2: ("kvant", "provpass2kvant.pdf"),
+            3: ("verbal", "provpass3vej.pdf"),
+            4: ("kvant", "provpass4kvant.pdf"),
+            5: ("verbal", "provpass5vej.pdf"),
+        },
+        "facit": "facit.pdf",
+    },
+    {
+        "date": "2012-10-27",
+        "folder": "hp-2012-10-27",
+        "files": {
+            1: ("kvant", "provpass1kvant.pdf"),
+            2: ("verbal", "provpass2vejelf12b.pdf"),
+            4: ("kvant", "provpass4kvant.pdf"),
+            5: ("verbal", "provpass5vejelf12b.pdf"),
+        },
+        "facit": "facit.pdf",
+    },
+]
+
+ASSET_ROOT = f"{BASE}/globalassets/05-hogskoleprovet"
+
+
+def unlisted_exams() -> list[dict]:
+    out = []
+    for entry in UNLISTED:
+        folder = f"{ASSET_ROOT}/{entry['folder']}"
+        out.append(
+            {
+                "date": entry["date"],
+                "page": folder,
+                "passes": [
+                    {"kind": kind, "pass": nr, "url": f"{folder}/{name}"}
+                    for nr, (kind, name) in sorted(entry["files"].items())
+                ],
+                "facit": f"{folder}/{entry['facit']}",
+            }
+        )
+    return out
+
+
 def main() -> int:
     print(f"Hämtar provindex från {INDEX_URL}")
     index_html = get(INDEX_URL).decode("utf-8", "replace")
@@ -132,6 +181,11 @@ def main() -> int:
         seen.add(url)
         exams.append({"date": date, "page": url})
 
+    for extra in unlisted_exams():
+        if not any(e["date"] == extra["date"] for e in exams):
+            exams.append(extra)
+            print(f"  + olistat provtillfälle {extra['date']}")
+
     all_dates = [e["date"] for e in exams]
     for e in exams:
         e["term"] = term_id(e["date"], all_dates)
@@ -139,6 +193,14 @@ def main() -> int:
     print(f"  {len(exams)} provtillfällen ({exams[-1]['date']} – {exams[0]['date']})")
 
     for e in exams:
+        if e.get("passes"):
+            for p in e["passes"]:
+                p["file"] = os.path.join(CACHE, e["term"], f"pass{p['pass']}-{p['kind']}.pdf")
+                download(p["url"], p["file"])
+            e["facit_file"] = os.path.join(CACHE, e["term"], "facit.pdf")
+            download(e["facit"], e["facit_file"])
+            print(f"  {e['term']:<8} {e['date']}  {len(e['passes'])} provpass  (olistat)")
+            continue
         page = get(e["page"]).decode("utf-8", "replace")
         pdfs = sorted(set(re.findall(r'href="([^"]+\.pdf)"', page)))
         e["passes"] = []

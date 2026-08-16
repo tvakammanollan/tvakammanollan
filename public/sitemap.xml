@@ -1003,5 +1003,65 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2013vt</loc>
+    <lastmod>2013-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2013vt/2</loc>
+    <lastmod>2013-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2013vt/3</loc>
+    <lastmod>2013-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2013vt/4</loc>
+    <lastmod>2013-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2013vt/5</loc>
+    <lastmod>2013-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012ht</loc>
+    <lastmod>2012-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012ht/1</loc>
+    <lastmod>2012-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012ht/2</loc>
+    <lastmod>2012-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012ht/4</loc>
+    <lastmod>2012-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012ht/5</loc>
+    <lastmod>2012-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- /gamla-prov -->
 </urlset>
