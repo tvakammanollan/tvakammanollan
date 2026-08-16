@@ -13,32 +13,58 @@ import { ArrowRight, type LucideIcon } from "lucide-react";
    ===================================================================== */
 
 export type Forward =
-  | { label: string; icon: LucideIcon; to: string; search?: Record<string, unknown> }
+  | {
+      label: string;
+      icon: LucideIcon;
+      to: string;
+      params?: Record<string, string>;
+      search?: Record<string, unknown>;
+    }
   | { label: string; icon: LucideIcon; onClick: () => void };
 
+/** Den primära handlingen är antingen en knapp eller en länk — aldrig båda. */
+type Primary =
+  | { primaryLabel: string; onPrimary: () => void; primaryTo?: never; primaryParams?: never }
+  | {
+      primaryLabel: string;
+      primaryTo: string;
+      primaryParams?: Record<string, string>;
+      onPrimary?: never;
+    };
+
 export function NextStep({
-  primaryLabel,
-  onPrimary,
   primaryIcon,
   primaryDisabled,
   forward,
-}: {
-  primaryLabel: string;
-  onPrimary: () => void;
+  ...primary
+}: Primary & {
   primaryIcon?: React.ReactNode;
   primaryDisabled?: boolean;
   forward: Forward[];
 }) {
   return (
     <div className="mt-8">
-      <PrimaryCTA
-        onClick={onPrimary}
-        disabled={primaryDisabled}
-        className="w-full"
-        icon={primaryIcon}
-      >
-        {primaryLabel}
-      </PrimaryCTA>
+      {primary.primaryTo ? (
+        <PrimaryCTA
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          to={primary.primaryTo as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          params={primary.primaryParams as any}
+          className="w-full"
+          icon={primaryIcon}
+        >
+          {primary.primaryLabel}
+        </PrimaryCTA>
+      ) : (
+        <PrimaryCTA
+          onClick={primary.onPrimary}
+          disabled={primaryDisabled}
+          className="w-full"
+          icon={primaryIcon}
+        >
+          {primary.primaryLabel}
+        </PrimaryCTA>
+      )}
 
       <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
         {forward.map((f) => {
@@ -59,6 +85,8 @@ export function NextStep({
                 key={f.label}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 to={f.to as any}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                params={f.params as any}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 search={f.search as any}
                 className={className}
