@@ -1,0 +1,129 @@
+# Verifieringsgrind + källa till PostHogs CI/CD-data.
+#
+# Två syften, i den här ordningen:
+#
+#  1. Fånga trasiga bygg INNAN de går ut. Cloudflare Workers Builds deployar
+#     varje push till `main` rakt ut på hpkampen.se utan mellanled — den här
+#     workflowen är det enda stället där ett fel kan upptäckas först.
+#  2. Mata GitHub-webhooken som PostHog lyssnar på. Den prenumererar på
+#     workflow_run, workflow_job, deployment och deployment_status; utan en
+#     workflow här avfyras inget av dem någonsin.
+#
+# eslint körs medvetet INTE: `eslint .` rapporterar ~900 prettier-fel i filer
+# ingen rört, så en blockerande lint vore röd för alltid och skulle träna bort
+# vanan att bry sig om rött. Linta filerna du ändrat lokalt i stället.
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # `main` får aldrig avbrytas — den kön är också deploy-historiken.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  verify:
+    name: Typkoll, tester, bygge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Installationen sker med bun, precis som i Cloudflares bygge. En
+      # dependency som lagts till med npm uppdaterar bara package-lock.json och
+      # dör på `--frozen-lockfile` — det ska hända här, inte i produktionsbygget.
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Skripten körs däremot med node, samma runtime som Cloudflare använder.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Installera beroenden
+        run: bun install --frozen-lockfile
+
+      # Ordningen är densamma som verifieringskedjan i CLAUDE.md: billigast först.
+      - name: Typkoll
+        run: npx tsc --noEmit
+
+      - name: Tester
+        run: npm run test
+
+      # Regenererar också routeTree.gen.ts, så en raderad route fångas här.
+      - name: Bygge
+        run: npm run build
+
+  deployment:
+    name: Registrera produktionsdeploy
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Repots standard är read-only; deployment-objekten kräver detta explicit.
+      deployments: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      # Själva utrullningen ägs av Cloudflare Workers Builds, som inte skapar
+      # några GitHub-deployments. Vi registrerar den därför här, så att
+      # deployment/deployment_status finns som riktiga event med riktiga tider.
+      - name: Öppna deployment
+        id: open
+        run: |
+          id=$(gh api "repos/$REPO/deployments" -X POST \
+            -f ref='${{ github.sha }}' \
+            -f environment=production \
+            -f description='Cloudflare Workers Builds rullar ut hpkampen.se' \
+            -F auto_merge=false \
+            -f 'required_contexts[]' \
+            --jq '.id')
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          gh api "repos/$REPO/deployments/$id/statuses" -X POST \
+            -f state=in_progress \
+            -f environment_url=https://hpkampen.se \
+            -f description='CI grön — väntar på Cloudflares utrullning'
+
+      # Cloudflare bygger parallellt med det här jobbet. Ge det en marginal och
+      # kontrollera sedan att sajten faktiskt lever.
+      #
+      # OBS vad detta bevisar: att hpkampen.se svarar 200 efter deployfönstret,
+      # inte att just den här commiten är den som ligger ute. /api/health
+      # rapporterar ingen commit-SHA att jämföra mot. Det fångar alltså en
+      # deploy som tar ner sajten, inte en som fastnar och lämnar kvar den gamla.
+      - name: Rökprov mot produktion
+        id: probe
+        run: |
+          sleep 120
+          ok=false
+          for i in $(seq 1 10); do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' \
+              --max-time 20 https://hpkampen.se/api/health || echo 000)
+            echo "försök $i: HTTP $code"
+            if [ "$code" = "200" ]; then ok=true; break; fi
+            sleep 30
+          done
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+
+      - name: Stäng deployment
+        if: always()
+        run: |
+          if [ "${{ steps.probe.outputs.ok }}" = "true" ]; then
+            state=success
+            desc='hpkampen.se svarar 200'
+          else
+            state=failure
+            desc='hpkampen.se svarade inte 200 efter utrullningen'
+          fi
+          gh api "repos/$REPO/deployments/${{ steps.open.outputs.id }}/statuses" -X POST \
+            -f state="$state" \
+            -f environment_url=https://hpkampen.se \
+            -f description="$desc"
