@@ -25,6 +25,8 @@ import {
   MIN_TITLE_LENGTH,
   slugifyTitle,
   forumErrorMessage,
+  threadPath,
+  excerpt,
   type BlockReason,
   type CategoryKind,
 } from "./forum";
@@ -649,4 +651,211 @@ export const toggleForumReaction = createServerFn({ method: "POST" })
     if (error) throwRpcError(error, "toggleForumReaction");
     const row = (rows ?? [])[0];
     return { helpfulCount: row?.helpful_count ?? 0, reacted: !!row?.reacted };
+  });
+
+/**
+ * Markera bästa svar. Trådstartaren eller admin — RPC:n avgör vilket, så att
+ * regeln står på ett ställe. Skickas postId: null tas markeringen bort.
+ */
+export const setForumAnswer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        threadId: z.number().int().positive(),
+        postId: z.number().int().positive().nullable(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    assertRateLimit(`forum-answer:${userId}`, limits.forumEdit);
+
+    const { data: answerId, error } = await supabaseAdmin.rpc("forum_set_answer", {
+      _uid: userId,
+      _thread_id: data.threadId,
+      _post_id: data.postId ?? undefined,
+    });
+    if (error) throwRpcError(error, "setForumAnswer");
+    return { answerPostId: (answerId as number | null) ?? null };
+  });
+
+/* ================================================================== *
+ * Prenumerationer
+ * ================================================================== */
+
+/** Vilka reaktioner den inloggade själv satt på en sida av tråden. */
+export const fetchForumThreadState = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        threadId: z.number().int().positive(),
+        postIds: z.array(z.number().int().positive()).max(POSTS_PER_PAGE),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }): Promise<{ subscribed: boolean; reacted: number[] }> => {
+    const { userId } = context;
+
+    const [subRes, reactRes] = await Promise.all([
+      supabaseAdmin.rpc("forum_is_subscribed", { _uid: userId, _thread_id: data.threadId }),
+      data.postIds.length > 0
+        ? supabaseAdmin
+            .from("forum_reactions")
+            .select("post_id")
+            .eq("user_id", userId)
+            .in("post_id", data.postIds)
+        : Promise.resolve({ data: [], error: null }),
+    ]);
+
+    if (subRes.error) console.error("[forum] fetchForumThreadState/sub:", subRes.error.message);
+    if (reactRes.error)
+      console.error("[forum] fetchForumThreadState/react:", reactRes.error.message);
+
+    return {
+      subscribed: !!subRes.data,
+      reacted: (reactRes.data ?? []).map((r) => r.post_id),
+    };
+  });
+
+export const toggleForumSubscription = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z.object({ threadId: z.number().int().positive() }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    assertRateLimit(`forum-sub:${userId}`, limits.forumSubscribe);
+
+    const { data: subscribed, error } = await supabaseAdmin.rpc("forum_toggle_subscription", {
+      _uid: userId,
+      _thread_id: data.threadId,
+    });
+    if (error) throwRpcError(error, "toggleForumSubscription");
+    return { subscribed: !!subscribed };
+  });
+
+/**
+ * Markera tråden läst. Anropas när en inloggad öppnar tråden — tyst, så ett
+ * fel här får aldrig fälla sidan.
+ */
+export const markForumThreadRead = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z.object({ threadId: z.number().int().positive() }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    assertRateLimit(`forum-read:${userId}`, limits.forumSubscribe);
+
+    const { error } = await supabaseAdmin.rpc("forum_mark_thread_read", {
+      _uid: userId,
+      _thread_id: data.threadId,
+    });
+    if (error) console.error("[forum] markForumThreadRead:", error.message);
+    return { ok: true };
+  });
+
+export interface ForumUnread {
+  threadId: number;
+  title: string;
+  path: string;
+  unreadCount: number;
+  lastPostAt: string;
+  lastPoster: string | null;
+}
+
+/** Underlaget till notisklockan: trådar man följer som fått nya svar. */
+export const fetchForumUnread = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<ForumUnread[]> => {
+    const { userId } = context;
+
+    const { data, error } = await supabaseAdmin.rpc("forum_unread_threads", {
+      _uid: userId,
+      _limit: 20,
+    });
+    if (error) {
+      console.error("[forum] fetchForumUnread:", error.message);
+      return [];
+    }
+
+    const rows = data ?? [];
+    const authors = await fetchAuthors(rows.map((r) => r.last_post_by));
+
+    return rows.map((r) => ({
+      threadId: r.thread_id,
+      title: r.title,
+      path: threadPath(r.category_slug, r.thread_id, r.slug),
+      unreadCount: r.unread_count,
+      lastPostAt: r.last_post_at,
+      lastPoster: r.last_post_by ? (authors.get(r.last_post_by)?.username ?? null) : null,
+    }));
+  });
+
+/* ================================================================== *
+ * Sök
+ * ================================================================== */
+
+export interface ForumSearchHit {
+  threadId: number;
+  title: string;
+  path: string;
+  categoryName: string;
+  replyCount: number;
+  lastPostAt: string;
+  excerpt: string;
+  author: ForumAuthor | null;
+}
+
+export interface ForumSearchData {
+  query: string;
+  hits: ForumSearchHit[];
+  total: number;
+  page: number;
+  perPage: number;
+}
+
+export const searchForum = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        q: z.string().trim().min(2).max(120),
+        page: z.number().int().min(1).max(100).default(1),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }): Promise<ForumSearchData> => {
+    assertRateLimit(ipKey("forum-search"), limits.forumSearch);
+
+    const perPage = 20;
+    const { data: rows, error } = await supabaseAdmin.rpc("forum_search", {
+      _q: data.q,
+      _limit: perPage,
+      _offset: (data.page - 1) * perPage,
+    });
+    if (error) throwDbError(error, "searchForum");
+
+    const hits = rows ?? [];
+    const cats = await loadCategories();
+    const catById = new Map(cats.map((c) => [c.id, c]));
+    const authors = await fetchAuthors(hits.map((h) => h.author_id));
+
+    return {
+      query: data.q,
+      hits: hits.map((h) => ({
+        threadId: h.thread_id,
+        title: h.title,
+        path: threadPath(catById.get(h.category_id)?.slug ?? "allmant", h.thread_id, h.slug),
+        categoryName: catById.get(h.category_id)?.name ?? "",
+        replyCount: h.reply_count,
+        lastPostAt: h.last_post_at,
+        excerpt: excerpt(h.match_body ?? "", 180),
+        author: authors.get(h.author_id) ?? null,
+      })),
+      total: Number(hits[0]?.total_count ?? 0),
+      page: data.page,
+      perPage,
+    };
   });

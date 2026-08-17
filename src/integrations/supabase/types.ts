@@ -1283,6 +1283,14 @@ export type Database = {
         Args: { _body: string; _post_id: number; _uid: string }
         Returns: string
       }
+      forum_is_subscribed: {
+        Args: { _thread_id: number; _uid: string }
+        Returns: boolean
+      }
+      forum_mark_thread_read: {
+        Args: { _thread_id: number; _uid: string }
+        Returns: undefined
+      }
       forum_moderation_status: {
         Args: { _body: string; _uid: string }
         Returns: string
@@ -1293,11 +1301,47 @@ export type Database = {
         Args: { _note?: string; _post_id: number; _reason: string; _uid: string }
         Returns: number
       }
+      forum_search: {
+        Args: { _limit?: number; _offset?: number; _q: string }
+        Returns: {
+          author_id: string
+          category_id: number
+          created_at: string
+          last_post_at: string
+          match_body: string | null
+          rank: number
+          reply_count: number
+          slug: string
+          thread_id: number
+          title: string
+          total_count: number
+        }[]
+      }
+      forum_set_answer: {
+        Args: { _post_id?: number; _thread_id: number; _uid: string }
+        Returns: number
+      }
       forum_toggle_reaction: {
         Args: { _post_id: number; _uid: string }
         Returns: {
           helpful_count: number
           reacted: boolean
+        }[]
+      }
+      forum_toggle_subscription: {
+        Args: { _thread_id: number; _uid: string }
+        Returns: boolean
+      }
+      forum_unread_threads: {
+        Args: { _limit?: number; _uid: string }
+        Returns: {
+          category_slug: string
+          last_post_at: string
+          last_post_by: string | null
+          slug: string
+          thread_id: number
+          title: string
+          unread_count: number
         }[]
       }
       get_leaderboard:

@@ -7,16 +7,22 @@ import {
   acceptMatchInvite,
   declineMatchInvite,
 } from "@/lib/friends.functions";
+import { fetchForumUnread } from "@/lib/forum.functions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { UserAvatar } from "@/components/UserAvatar";
-import { Bell, Check, X, Swords, UserPlus, Loader2 } from "lucide-react";
+import { Bell, Check, X, Swords, UserPlus, Loader2, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { sounds } from "@/lib/sounds";
+import { formatInt } from "@/lib/sv-format";
 
 /* =====================================================================
-   NOTISKLOCKA — samlar väntande vänförfrågningar + matchinbjudningar på
-   ett ställe, med acceptera/avböj direkt. Härleds från friendships +
-   match_invites (inga nya tabeller). Uppdateras live via realtime.
+   NOTISKLOCKA — samlar väntande vänförfrågningar, matchinbjudningar och
+   nya svar i trådar man följer på ett ställe. Vän- och matchnotiser går
+   att besvara direkt; forumnotiser leder till tråden.
+
+   Allt härleds ur befintliga tabeller (friendships, match_invites,
+   forum_subscriptions) vid uppslag — ingen notistabell. Uppdateras live
+   via realtime.
    ===================================================================== */
 
 type FriendNotif = {
@@ -33,13 +39,23 @@ type InviteNotif = {
   fromName: string;
   fromId: string;
 };
-type Notif = FriendNotif | InviteNotif;
+type ForumNotif = {
+  kind: "forum";
+  id: string; // `forum-<threadId>`
+  threadId: number;
+  title: string;
+  path: string;
+  unreadCount: number;
+  fromName: string;
+};
+type Notif = FriendNotif | InviteNotif | ForumNotif;
 
 export function NotificationsBell({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const respondReq = useServerFn(respondFriendRequest);
   const acceptInvite = useServerFn(acceptMatchInvite);
   const declineInvite = useServerFn(declineMatchInvite);
+  const loadForumUnread = useServerFn(fetchForumUnread);
 
   const [items, setItems] = useState<Notif[]>([]);
   const [open, setOpen] = useState(false);
@@ -47,7 +63,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
 
   const refresh = useCallback(async () => {
     const nowIso = new Date().toISOString();
-    const [friendRes, inviteRes] = await Promise.all([
+    const [friendRes, inviteRes, forumRes] = await Promise.all([
       supabase
         .from("friendships")
         .select("id, requester_id")
@@ -59,10 +75,14 @@ export function NotificationsBell({ userId }: { userId: string }) {
         .eq("to_user", userId)
         .eq("status", "pending")
         .gt("expires_at", nowIso),
+      // Gäster har inga prenumerationer — anropet returnerar tom lista och
+      // får aldrig fälla resten av klockan.
+      loadForumUnread({}).catch(() => []),
     ]);
 
     const friends = friendRes.data ?? [];
     const invites = inviteRes.data ?? [];
+    const forum = forumRes ?? [];
 
     // Slå upp avsändarnamn via RPC (samma som vänsidan använder).
     const ids = Array.from(
@@ -98,9 +118,21 @@ export function NotificationsBell({ userId }: { userId: string }) {
           fromName: nameMap[f.requester_id as string] ?? "Någon",
         }),
       ),
+      // Sist: forumsvar är sällan lika brådskande som en väntande utmaning.
+      ...forum.map(
+        (t): ForumNotif => ({
+          kind: "forum",
+          id: `forum-${t.threadId}`,
+          threadId: t.threadId,
+          title: t.title,
+          path: t.path,
+          unreadCount: t.unreadCount,
+          fromName: t.lastPoster ?? "Någon",
+        }),
+      ),
     ];
     setItems(next);
-  }, [userId]);
+  }, [userId, loadForumUnread]);
 
   useEffect(() => {
     void refresh();
@@ -121,6 +153,11 @@ export function NotificationsBell({ userId }: { userId: string }) {
         .on(
           "postgres_changes",
           { event: "*", schema: "public", table: "match_invites" },
+          () => void refresh(),
+        )
+        .on(
+          "postgres_changes",
+          { event: "INSERT", schema: "public", table: "forum_posts" },
           () => void refresh(),
         )
         .subscribe();
@@ -223,60 +260,89 @@ export function NotificationsBell({ userId }: { userId: string }) {
           </div>
         ) : (
           <ul className="max-h-[60vh] overflow-y-auto py-1">
-            {items.map((n) => (
-              <li
-                key={`${n.kind}-${n.id}`}
-                className="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-white/[0.03]"
-              >
-                <UserAvatar name={n.fromName} size={34} />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm">
-                    <span className="font-semibold">{n.fromName}</span>
-                  </p>
-                  <p className="flex items-center gap-1 text-xs text-white/55">
-                    {n.kind === "invite" ? (
-                      <>
-                        <Swords className="h-3 w-3" />
-                        Utmanar dig · {n.matchType === "math" ? "matte" : "verbal"}
-                      </>
+            {items.map((n) =>
+              n.kind === "forum" ? (
+                <li key={n.id}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false);
+                      // Trådsidan markerar tråden läst när den öppnas, så
+                      // notisen försvinner av sig själv vid nästa uppslag.
+                      navigate({ to: n.path });
+                    }}
+                    className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-white/[0.03]"
+                  >
+                    <span className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[#f2a65a]">
+                      <MessageSquare className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-semibold">{n.title}</span>
+                      <span className="flex items-center gap-1 text-xs text-white/55">
+                        {n.unreadCount === 1
+                          ? "1 nytt svar"
+                          : `${formatInt(n.unreadCount)} nya svar`}
+                        {" · "}
+                        {n.fromName}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ) : (
+                <li
+                  key={`${n.kind}-${n.id}`}
+                  className="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-white/[0.03]"
+                >
+                  <UserAvatar name={n.fromName} size={34} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm">
+                      <span className="font-semibold">{n.fromName}</span>
+                    </p>
+                    <p className="flex items-center gap-1 text-xs text-white/55">
+                      {n.kind === "invite" ? (
+                        <>
+                          <Swords className="h-3 w-3" />
+                          Utmanar dig · {n.matchType === "math" ? "matte" : "verbal"}
+                        </>
+                      ) : (
+                        <>
+                          <UserPlus className="h-3 w-3" />
+                          Vill bli vän
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1">
+                    {busyId === n.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-white/55" />
                     ) : (
                       <>
-                        <UserPlus className="h-3 w-3" />
-                        Vill bli vän
+                        <button
+                          type="button"
+                          aria-label="Acceptera"
+                          onClick={() =>
+                            n.kind === "invite" ? onAcceptInvite(n) : onAcceptFriend(n.id)
+                          }
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f2a65a] text-[#1a0d04] transition hover:brightness-110"
+                        >
+                          <Check className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label="Avböj"
+                          onClick={() =>
+                            n.kind === "invite" ? onDeclineInvite(n.id) : onDeclineFriend(n.id)
+                          }
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/12 text-white/55 transition hover:bg-white/[0.06] hover:text-white"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
                       </>
                     )}
-                  </p>
-                </div>
-                <div className="flex shrink-0 items-center gap-1">
-                  {busyId === n.id ? (
-                    <Loader2 className="h-4 w-4 animate-spin text-white/55" />
-                  ) : (
-                    <>
-                      <button
-                        type="button"
-                        aria-label="Acceptera"
-                        onClick={() =>
-                          n.kind === "invite" ? onAcceptInvite(n) : onAcceptFriend(n.id)
-                        }
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f2a65a] text-[#1a0d04] transition hover:brightness-110"
-                      >
-                        <Check className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label="Avböj"
-                        onClick={() =>
-                          n.kind === "invite" ? onDeclineInvite(n.id) : onDeclineFriend(n.id)
-                        }
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/12 text-white/55 transition hover:bg-white/[0.06] hover:text-white"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    </>
-                  )}
-                </div>
-              </li>
-            ))}
+                  </div>
+                </li>
+              ),
+            )}
           </ul>
         )}
       </PopoverContent>

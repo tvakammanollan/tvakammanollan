@@ -79,4 +79,8 @@ export const limits = {
   forumPost: { max: 20, windowMs: 60 * 60 * 1000 } as LimitConfig, // 20/h
   forumEdit: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/h
   forumReport: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
+  /** Följ/sluta följ och markera läst — billiga, men klickbara i en loop. */
+  forumSubscribe: { max: 60, windowMs: 60 * 60 * 1000 } as LimitConfig, // 60/h
+  /** Sök — tyngre än en vanlig läsning (två GIN-uppslag + union), per IP. */
+  forumSearch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
 };
