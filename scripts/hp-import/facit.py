@@ -22,9 +22,16 @@ from pdfutil import clean_text, line_text
 # Tiotalssiffran sätts ibland som en egen textrad ('1' + '0 B' = '10 B'), och
 # ett par uppgifter har underkänts i efterhand och har två godkända svar
 # ('35 C, D'). Båda måste igenom samma regex.
-PAIR_RE = re.compile(r"^(\d(?:\s*\d)?)\s*([A-E](?:\s*,\s*[A-E])*)$")
+#
+# UHR stryker också uppgifter i efterhand — facit skriver då 'C – utgår'. Det
+# rätta svaret står kvar; det är bara poängen som inte räknades. Utan den här
+# ändelsen i mönstret plockades svaret aldrig upp, och eftersom build.py kräver
+# facit på varje uppgift försvann hela uppgiften ur provet (2012vt provpass 4
+# tappade fyra av trettio den vägen).
+UTGAR = r"(?:\s*[–—-]\s*utg[åa]r\.?)"
+PAIR_RE = re.compile(rf"^(\d(?:\s*\d)?)\s*([A-E](?:\s*,\s*[A-E])*)({UTGAR})?$", re.I)
 NUM_RE = re.compile(r"^\d(?:\s*\d)?$")
-LETTER_RE = re.compile(r"^[A-E](?:\s*,\s*[A-E])*$")
+LETTER_RE = re.compile(rf"^([A-E](?:\s*,\s*[A-E])*)({UTGAR})?$", re.I)
 PASS_HEADER_RE = re.compile(r"provpass\s*(\d)", re.I)
 
 
@@ -69,28 +76,29 @@ def _letters(s: str) -> str:
     return "".join(sorted(set(re.findall(r"[A-E]", s))))
 
 
-def _answers(tokens: list[tuple[str, float, float]]) -> list[tuple[int, str, float, float]]:
-    """→ [(nr, godkända bokstäver, x, y)]"""
-    found: list[tuple[int, str, float, float]] = []
+def _answers(tokens: list[tuple[str, float, float]]) -> list[tuple[int, str, bool, float, float]]:
+    """→ [(nr, godkända bokstäver, struken, x, y)]"""
+    found: list[tuple[int, str, bool, float, float]] = []
     numbers: list[tuple[int, float, float]] = []
-    letters: list[tuple[str, float, float]] = []
+    letters: list[tuple[str, bool, float, float]] = []
 
     for txt, x, y in tokens:
         m = PAIR_RE.match(txt)
         if m:
-            found.append((int(m.group(1).replace(" ", "")), _letters(m.group(2)), x, y))
+            found.append((int(m.group(1).replace(" ", "")), _letters(m.group(2)), bool(m.group(3)), x, y))
             continue
         if NUM_RE.match(txt):
             numbers.append((int(txt.replace(" ", "")), x, y))
             continue
-        if LETTER_RE.match(txt):
-            letters.append((_letters(txt), x, y))
+        m = LETTER_RE.match(txt)
+        if m:
+            letters.append((_letters(m.group(1)), bool(m.group(2)), x, y))
 
     # Para ihop lösa siffror och bokstäver: samma rad, bokstaven till höger.
     used: set[int] = set()
     for nr, nx, ny in numbers:
         best, bestd = None, 1e9
-        for i, (letter, lx, ly) in enumerate(letters):
+        for i, (_letter, _struken, lx, ly) in enumerate(letters):
             if i in used or lx < nx - 2 or lx - nx > 90 or abs(ly - ny) > 7:
                 continue
             d = lx - nx
@@ -98,13 +106,21 @@ def _answers(tokens: list[tuple[str, float, float]]) -> list[tuple[int, str, flo
                 best, bestd = i, d
         if best is not None:
             used.add(best)
-            found.append((nr, letters[best][0], nx, ny))
+            found.append((nr, letters[best][0], letters[best][1], nx, ny))
     return found
 
 
-def parse_facit(path: str) -> dict[int, dict[int, str]]:
+def parse_facit(path: str) -> tuple[dict[int, dict[int, str]], dict[int, set[int]]]:
+    """
+    → ({provpass: {nr: bokstäver}}, {provpass: {nr som UHR strukit}})
+
+    De strukna ligger även i den första dicten — de har ett rätt svar och ska
+    visas som vanliga uppgifter. Den andra dicten finns för att provet ska kunna
+    berätta att de inte räknades.
+    """
     doc = fitz.open(path)
     result: dict[int, dict[int, str]] = {}
+    withdrawn: dict[int, set[int]] = {}
 
     for page in doc:
         tokens = _tokens(page)
@@ -146,7 +162,10 @@ def parse_facit(path: str) -> dict[int, dict[int, str]]:
                     current = p
             return current
 
-        for nr, letter, x, y in answers:
-            result.setdefault(which(x, y), {})[nr] = letter
+        for nr, letter, struken, x, y in answers:
+            p = which(x, y)
+            result.setdefault(p, {})[nr] = letter
+            if struken:
+                withdrawn.setdefault(p, set()).add(nr)
 
-    return result
+    return result, withdrawn

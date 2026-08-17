@@ -146,6 +146,13 @@ export function ProvQuestionCard({
           UHR har i efterhand godkänt flera svar på den här uppgiften ({correct.join(" och ")}).
         </p>
       )}
+
+      {revealed && question.utgar && (
+        <p className="mt-3 text-xs text-[var(--text-tertiary)]">
+          UHR strök den här uppgiften efter provdagen — den räknades inte i resultatet på det
+          riktiga provet.
+        </p>
+      )}
     </article>
   );
 }

@@ -133,7 +133,9 @@ def passage_json(p: dict) -> dict:
     return out
 
 
-def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
+def build_html_pass(
+    exam: dict, pass_meta: dict, answers: dict[int, str], struck: set[int] | None = None
+) -> tuple[dict, list[str]]:
     """
     Ett verbalt provpass som bara finns som webbsida (2011–2012), se
     html_prov.py. Uppgifter utan facit utelämnas i stället för att fälla hela
@@ -159,6 +161,8 @@ def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tup
         }
         if len(answer) > 1:
             item["answers"] = list(answer)
+        if struck and nr in struck:
+            item["utgar"] = True
         if q.get("passage") is not None:
             item["passage"] = q["passage"]
         questions.append(item)
@@ -203,7 +207,9 @@ def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tup
     return data, problems
 
 
-def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
+def build_pass(
+    exam: dict, pass_meta: dict, answers: dict[int, str], struck: set[int] | None = None
+) -> tuple[dict, list[str]]:
     """Bygger ett provpass. Returnerar (data, problem)."""
     term, pno = exam["term"], pass_meta["pass"]
     img_dir = os.path.join(OUT_IMG, term, f"p{pno}")
@@ -333,6 +339,10 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
         if len(answer) > 1:
             # UHR har underkänt uppgiften i efterhand: flera svar godkänns.
             q["answers"] = list(answer)
+        if struck and q["nr"] in struck:
+            # UHR strök uppgiften efter provdagen. Den visas som vanligt —
+            # svaret är känt — men den räknades inte i det riktiga resultatet.
+            q["utgar"] = True
 
     # Lästexter som ingen uppgift pekar på ska inte följa med — de blir kvar
     # när en uppgift utelämnats, och skulle annars visas i facitlistan.
@@ -501,7 +511,9 @@ def main() -> int:
     failed: list[str] = []
 
     for exam in sorted(sources, key=lambda e: e["date"], reverse=True):
-        facit = parse_facit(exam["facit_file"]) if exam.get("facit_file") else {}
+        facit, struck_all = (
+            parse_facit(exam["facit_file"]) if exam.get("facit_file") else ({}, {})
+        )
         entry = {
             "term": exam["term"],
             "date": exam["date"],
@@ -510,8 +522,9 @@ def main() -> int:
         }
         for pass_meta in exam["passes"]:
             answers = dict(facit.get(pass_meta["pass"], {}))
+            struck = set(struck_all.get(pass_meta["pass"], set()))
             builder = build_html_pass if pass_meta.get("source") == "html" else build_pass
-            data, problems = builder(exam, pass_meta, answers)
+            data, problems = builder(exam, pass_meta, answers, struck)
             name = f"{exam['term']}-{pass_meta['pass']}"
             if problems:
                 failed.append(f"{name}: " + "; ".join(problems[:4]))
