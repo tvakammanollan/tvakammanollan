@@ -20,6 +20,7 @@ const cacheKey = () => `hpk:wotd:${new Date().toISOString().slice(0, 10)}`;
 export function WordOfTheDay() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const [wotd, setWotd] = useState<Wotd | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -56,7 +57,7 @@ export function WordOfTheDay() {
         }
         setWotd(val);
       } catch {
-        /* tyst — kortet visas bara inte */
+        if (!cancelled) setFailed(true);
       }
     })();
     return () => {
@@ -64,7 +65,48 @@ export function WordOfTheDay() {
     };
   }, [fetchBatch]);
 
-  if (!wotd) return null;
+  // Kortet returnerade tidigare null så fort hämtningen inte gick igenom.
+  // Det lämnar ett hål i layouten, och eftersom felet är tyst syns det
+  // som att komponenten är borta snarare än att ett anrop failat. Nu
+  // fyller den alltid sin plats: skelett medan den laddar, och ett
+  // ingångskort till ordträningen om anropet inte gick fram.
+  if (!wotd) {
+    if (!failed) {
+      return (
+        <div className="rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5" aria-busy="true">
+          <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
+          <div className="skeleton-shimmer mt-3 h-8 w-2/3 rounded-lg" />
+          <div className="skeleton-shimmer mt-2.5 h-4 w-full rounded" />
+          <div className="skeleton-shimmer mt-1.5 h-4 w-4/5 rounded" />
+        </div>
+      );
+    }
+    return (
+      <Link
+        to="/ord"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        params={{} as any}
+        className="group block rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5 transition-colors hover:border-[#7a5236]/40"
+      >
+        <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
+        <div
+          className="mt-2 text-[22px] font-bold leading-tight text-[var(--cream)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          10 000 ord väntar
+        </div>
+        <p className="mt-1.5 text-sm leading-relaxed text-white/65">
+          Dagens ord kunde inte hämtas just nu. Gå till ordträningen så plockar den upp där du
+          slutade.
+        </p>
+        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#7a5236]">
+          <BookOpen className="h-3.5 w-3.5" />
+          Öva ord
+          <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </Link>
+    );
+  }
 
   return (
     <Link
