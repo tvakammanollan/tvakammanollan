@@ -74,7 +74,7 @@ export function HomeDashboard() {
                   {greeting}
                 </EyebrowLabel>
                 <h1
-                  className="display truncate text-[30px] font-bold leading-tight text-[#2e1e14] sm:text-[38px]"
+                  className="display truncate text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {isGuest ? "Gäst" : profile.username}.
@@ -106,7 +106,7 @@ export function HomeDashboard() {
               </div>
 
               <h2
-                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[#2e1e14] sm:text-[28px]"
+                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[var(--cream)] sm:text-[28px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Spela en match
@@ -157,7 +157,7 @@ export function HomeDashboard() {
             />
             <ActionCard
               onClick={() => setCoachingOpen(true)}
-              tone="amber"
+              tone="leaf"
               icon={<Sparkles className="h-5 w-5" />}
               title="Coachning"
               subtitle="30 min gratis med en coach som själv fått 1.9+"
@@ -195,7 +195,7 @@ function GuestBanner() {
   return (
     <div className="border-b border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] px-4 py-3">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 text-sm text-[#2e1e14]">
+        <div className="flex items-center gap-2.5 text-sm text-[var(--cream)]">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
             <Sparkles className="h-3.5 w-3.5" />
           </span>
@@ -231,7 +231,7 @@ function StatusRow({ elo, streak }: { elo: number; streak: number }) {
       </span>
 
       {streak > 0 && (
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#ae2f26] tabular-nums">
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2f6b3c] tabular-nums">
           <Flame className="h-3.5 w-3.5" />
           {streak} dagar
         </span>
@@ -285,8 +285,8 @@ function SubjectPill({
       onClick={onClick}
       className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
         active
-          ? "bg-[#ae2f26]/15 text-[#ae2f26]"
-          : "text-white/50 hover:bg-white/[0.04] hover:text-[#2e1e14]"
+          ? "bg-[#7a5236]/15 text-[#7a5236]"
+          : "text-white/50 hover:bg-white/[0.04] hover:text-[var(--cream)]"
       }`}
     >
       {label}
@@ -307,12 +307,13 @@ function ActionCard({
 }: {
   to?: string;
   onClick?: () => void;
-  tone: "teal" | "amber";
+  tone: "teal" | "amber" | "leaf";
   icon: React.ReactNode;
   title: string;
   subtitle: string;
 }) {
-  const accent = tone === "teal" ? "#7a5236" : "#ae2f26";
+    // Apple leder till handling, bark ar struktur, lov ar framsteg.
+  const accent = tone === "teal" ? "#7a5236" : tone === "leaf" ? "#2f6b3c" : "#ae2f26";
   const className =
     "group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/[0.04]";
 
@@ -329,7 +330,7 @@ function ActionCard({
         {icon}
       </span>
       <h3
-        className="mt-3 text-[18px] font-bold leading-tight text-[#2e1e14]"
+        className="mt-3 text-[18px] font-bold leading-tight text-[var(--cream)]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
