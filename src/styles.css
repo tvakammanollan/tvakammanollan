@@ -559,31 +559,7 @@
     radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.05) 0px, transparent 50%);
 }
 
-/* Aurora animated linear gradient */
-.bg-aurora {
-  background: linear-gradient(
-    115deg,
-    #7a5236 0%,
-    #ae2f26 25%,
-    #8b5cf6 50%,
-    #8f2620 75%,
-    #c9463a 100%
-  );
-  background-size: 300% 300%;
-  animation: aurora-shift 12s ease-in-out infinite;
-}
-.bg-aurora-dark {
-  background: linear-gradient(
-    115deg,
-    #1e1b4b 0%,
-    #4c1d95 25%,
-    #ae2f26 50%,
-    #8b5cf6 75%,
-    #1e1b4b 100%
-  );
-  background-size: 300% 300%;
-  animation: aurora-shift 14s ease-in-out infinite;
-}
+/* Aurora animated linear gradient */
 
 /* Glass surfaces (Apple frosted glass) */
 .glass {
@@ -694,40 +670,11 @@
   transform: translateX(120%);
 }
 
-/* Aurora ring border button — for premium CTAs */
-.btn-aurora-ring {
-  position: relative;
-  background: white;
-  border-radius: 14px;
-}
-.btn-aurora-ring::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 16px;
-  background: linear-gradient(115deg, #7a5236, #ae2f26, #8f2620, #c9463a, #7a5236);
-  background-size: 300% 300%;
-  animation: aurora-shift 6s ease-in-out infinite;
-  z-index: -1;
-}
+/* Aurora ring border button — for premium CTAs */
 
 /* ============================================================
    GRADIENT TEXTS
-   ============================================================ */
-.text-gold-gradient {
-  background: linear-gradient(
-    135deg,
-    #b45309 0%,
-    #c9463a 45%,
-    #fde68a 60%,
-    #c9463a 80%,
-    #b45309 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  background-size: 200% 200%;
-}
+   ============================================================ */
 .text-aurora-gradient {
   background: linear-gradient(115deg, #7a5236 0%, #ae2f26 30%, #8f2620 60%, #c9463a 100%);
   -webkit-background-clip: text;
@@ -735,13 +682,7 @@
   color: transparent;
   background-size: 200% 200%;
   animation: aurora-shift 8s ease-in-out infinite;
-}
-.text-indigo-gradient {
-  background: linear-gradient(135deg, #8f2620 0%, #ae2f26 50%, #c9463a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+}
 .text-cluely-gradient {
   background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 30%, #ffffff 60%, #ddd6fe 100%);
   -webkit-background-clip: text;
@@ -753,33 +694,7 @@
 
 /* ============================================================
    FLOATING ORBS (decorative blurred light blobs)
-   ============================================================ */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.55;
-  pointer-events: none;
-  will-change: transform;
-}
-.orb-indigo {
-  background: radial-gradient(circle, #c9463a 0%, transparent 70%);
-}
-.orb-violet {
-  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
-}
-.orb-fuchsia {
-  background: radial-gradient(circle, #f0abfc 0%, transparent 70%);
-}
-.orb-cyan {
-  background: radial-gradient(circle, #67e8f9 0%, transparent 70%);
-}
-.orb-amber {
-  background: radial-gradient(circle, #fde68a 0%, transparent 70%);
-}
-.orb-emerald {
-  background: radial-gradient(circle, #6ee7b7 0%, transparent 70%);
-}
+   ============================================================ */
 
 /* ============================================================
    SCROLL PROGRESS BAR (top of page)
@@ -1022,40 +937,18 @@ button,
   background-clip: text;
   color: transparent;
   background-size: 200% 200%;
-}
-.text-gold-gradient {
-  background: linear-gradient(135deg, var(--amber-deep) 0%, var(--amber) 50%, var(--cream-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.text-indigo-gradient {
-  background: linear-gradient(135deg, var(--teal) 0%, var(--cream) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+}
 .text-cluely-gradient {
   background: linear-gradient(120deg, var(--cream) 0%, var(--teal) 40%, var(--cream) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-
-.orb {
-  opacity: 0.55;
-  filter: blur(70px);
-}
+
 .orb-indigo,
 .orb-violet,
-.orb-cyan,
-.orb-emerald {
-  background: radial-gradient(circle, var(--teal) 0%, transparent 70%);
-}
-.orb-fuchsia,
-.orb-amber {
-  background: radial-gradient(circle, var(--amber) 0%, transparent 70%);
-}
+.orb-cyan,
+.orb-fuchsia,
 
 .eyebrow {
   color: var(--hp-muted);
@@ -1081,13 +974,7 @@ button,
   background: rgba(251, 246, 236, 0.96);
   border: 1px solid var(--line-strong);
 }
-
-.btn-aurora-ring {
-  background: var(--navy-2);
-}
-.btn-aurora-ring::before {
-  background: linear-gradient(115deg, var(--teal), var(--amber), var(--teal));
-}
+
 
 .scroll-progress {
   background: linear-gradient(90deg, var(--teal), var(--cream), var(--amber));
