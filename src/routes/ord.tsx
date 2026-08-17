@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { ordText, ordDefinition, hasOrdDefinition, formatInt, formatDate } from "@/lib/sv-format";
 import { sounds } from "@/lib/sounds";
+import { trackEvent } from "@/lib/events";
 import {
   fetchWordBatch,
   fetchFailedWordBatch,
@@ -260,6 +261,12 @@ function OrdPracticePage() {
         setPicked(null);
         setAnswered([]);
         setPhase("playing");
+        trackEvent("ord_session_started", {
+          count: questions.length,
+          failed_mode: failedMode,
+          source_filter: sourceFilter,
+          difficulty_count: difficulties.length,
+        });
       } catch (err) {
         console.error("startSession failed", err);
         alert("Kunde inte ladda frågor – försök igen om en stund.");
@@ -305,6 +312,15 @@ function OrdPracticePage() {
     sounds.click();
     if (idx + 1 >= batch.length) {
       setPhase("summary");
+      // `answered` fylldes på i onPick, ett klick tidigare — staten har hunnit
+      // flushas och listan är komplett här.
+      const right = answered.filter((a) => a.isCorrect).length;
+      trackEvent("ord_session_completed", {
+        answered: answered.length,
+        correct: right,
+        pct: answered.length > 0 ? Math.round((right / answered.length) * 100) : 0,
+        failed_mode: failedMode,
+      });
       loadProgress();
     } else {
       setIdx((i) => i + 1);

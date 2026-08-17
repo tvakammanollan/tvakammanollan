@@ -36,7 +36,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
-import { track } from "@/lib/telemetry";
+import { trackEvent } from "@/lib/events";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
@@ -120,6 +120,7 @@ function ResultPage() {
   const [creatingRematch, setCreatingRematch] = useState(false);
   const [rankUp, setRankUp] = useState<RankTier | null>(null);
   const confettiFiredRef = useRef(false);
+  const resultLoggedRef = useRef(false);
 
   useEffect(() => {
     if (loading) return;
@@ -246,6 +247,23 @@ function ResultPage() {
     setTimeout(() => fire({ x: 0.5, y: 0.25 }), 280);
   }, [match, user]);
 
+  // Resultatvyn — funnelns sista steg. Ligger som egen effekt före den tidiga
+  // returen nedan, eftersom won/draw räknas ut först efter den och hooks inte
+  // får hamna bakom ett villkor.
+  useEffect(() => {
+    if (!match || !user || resultLoggedRef.current) return;
+    resultLoggedRef.current = true;
+    const isPlayer1 = match.player1_id === user.id;
+    const mine = (isPlayer1 ? match.player1_score : match.player2_score) ?? 0;
+    const theirs = (isPlayer1 ? match.player2_score : match.player1_score) ?? 0;
+    trackEvent("match_result_viewed", {
+      match_type: match.match_type as "verbal" | "math",
+      is_bot_match: !!match.is_bot_match,
+      outcome: mine > theirs ? "win" : mine < theirs ? "loss" : "draw",
+      elo_change: eloChange,
+    });
+  }, [match, user, eloChange]);
+
   const myCorrectByQ = useMemo(() => {
     const m = new Map<string, AnswerRow>();
     for (const a of myAnswers) m.set(a.question_id, a);
@@ -291,10 +309,9 @@ function ResultPage() {
   const playAgain = async () => {
     if (creatingRematch) return;
     setCreatingRematch(true);
-    track({
-      type: "metric",
-      message: "rematch_clicked",
-      context: { pvp: isPvp, matchType: match.match_type },
+    trackEvent("rematch_clicked", {
+      pvp: isPvp,
+      match_type: match.match_type as "verbal" | "math",
     });
     try {
       if (isPvp) {
@@ -319,10 +336,9 @@ function ResultPage() {
   };
 
   const shareResult = async () => {
-    track({
-      type: "metric",
-      message: "result_share_clicked",
-      context: { won, draw, matchType: match.match_type },
+    trackEvent("result_share_clicked", {
+      outcome: draw ? "draw" : won ? "win" : "loss",
+      match_type: match.match_type as "verbal" | "math",
     });
     const elo = eloChange != null ? ` · ELO ${eloChange >= 0 ? "+" : ""}${eloChange}` : "";
     const verb = draw

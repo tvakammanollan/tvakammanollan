@@ -30,6 +30,13 @@ export const logUsageEvent = createServerFn({ method: "POST" })
           .object({
             term: z.string().max(20),
             provpass: z.number().int().min(1).max(10),
+            // Provläge eller övningsläge. Fältet har alltid skickats av
+            // ProvRunner men saknades i schemat, och `.strict()` gör en okänd
+            // nyckel till ett kastat fel — som anropssidan sväljer med
+            // .catch(). Följden var att INGEN gamla-prov-inlämning hamnade i
+            // audit_log, och att admin-vyns siffra stod på noll utan att något
+            // syntes i loggarna.
+            mode: z.enum(["prov", "ova"]).optional(),
             score: z.number().int().min(0).max(200).nullable(),
             total: z.number().int().min(1).max(200),
             duration_s: z

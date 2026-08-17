@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { submitMatch } from "@/lib/match.functions";
-import { captureAnalytics } from "@/lib/analytics";
+import { trackEvent } from "@/lib/events";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -469,9 +469,9 @@ function MatchPage() {
       // Produkthändelse för funnel/retention. No-op utan samtycke, och den
       // ligger efter submitFn med flit — bara matcher som faktiskt gick igenom
       // ska räknas.
-      captureAnalytics("match_submitted", {
-        match_type: match?.match_type,
-        is_bot_match: match?.is_bot_match,
+      trackEvent("match_submitted", {
+        match_type: match?.match_type as "verbal" | "math" | undefined,
+        is_bot_match: match?.is_bot_match ?? undefined,
         auto_submitted: auto,
         answered: answers.size,
         total_questions: questions.length,

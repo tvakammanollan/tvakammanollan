@@ -372,9 +372,30 @@ route-loaders och aldrig hämtas i klienten.
 - Nya `users`-kolumner (`forum_banned_until`, `forum_ban_reason`,
   `forum_post_count`) är tillagda i `users_protect_sensitive_fields` — utan det
   kunde en användare häva sin egen avstängning via sin RLS-tillåtna UPDATE.
-- **Trådsitemap, prenumerationer, notiser, sök och reaktioner är fas 2.**
-  `forum_toggle_reaction` och prenumerationstabellen finns redan i migrationen;
-  UI:t gör det inte.
+- **Fas 2 är byggd (2026-08-17):** trådsitemap, prenumerationer + notiser, sök,
+  reaktioner, bästa svar åt trådstartaren, uppgiftscitat och korslänkblocken.
+  - `/forum-sitemap.xml` byggs i `src/server.ts` (inte som route-fil — svaret
+    behöver ingen React) ur `src/lib/forum-sitemap.server.ts`. Kvalitetsgrind:
+    trådar utan svar och med under 200 tecken skickas inte in. `robots.txt` har
+    en andra `Sitemap:`-rad.
+  - **Notiser har ingen egen tabell.** De härleds ur
+    `forum_subscriptions.last_read_at`, precis som vänförfrågningarna härleds ur
+    `friendships`. Man prenumererar automatiskt på trådar man skriver i.
+  - **Sök kräver en RPC.** `forum_search`
+    (`20260817150000_forum_sok.sql`) — en träff kan komma ur rubriken *eller* ur
+    ett inlägg och ska rangordnas på relevans, vilket inte går i PostgREST.
+    Söksidan är `noindex`: sökresultat är tunt dubblettinnehåll.
+  - **Uppgiftscitat lagras i brödtexten**, som `[[uppgift:2024ht/3/12]]` på egen
+    rad, inte i en egen kolumn — då följer referensen med citat, redigering och
+    radering utan en andra kodväg. `forum-markdown.ts` parsar den till en
+    `exam`-nod och `ExamQuote` renderar kortet; uppgiftstexten laddas först i
+    webbläsaren, så en tråd med fem citat drar inte in fem provpass i SSR:en.
+  - Reaktionsläget (`fetchMyForumReactions`) hämtas i klienten. Trådsidans
+    loader måste förbli användaroberoende — annars finns ingen gemensam HTML
+    att indexera, vilket är hela poängen med forumet.
+- **Kvar (fas 3):** publika profiler `/u/$username`, bilduppladdning,
+  "obesvarade frågor"-vy, veckomejl, edge-cache för utloggade, meta-kategori.
+  Och **seedning** — forumet har noll trådar, så sitemapen är tom.
 
 ### Streak
 
@@ -505,8 +526,16 @@ Kontona och deras 560 matcher är raderade; två lager tillkom:
   avslutas utan ELO och utan statistik. Mäts från `created_at`, som för privata
   rum ligger före spelstart, så golvet kan bara slå på botmatcher.
 
-Kvarstående hål värt att stänga: anonyma konton syns på topplistan, och de går
-att skapa i obegränsat antal. `limits.guestSignup` är 5/h **per IP**.
+Anonyma konton är sedan 2026-08-17 borta ur den publika topplistan
+(`public.guest_user_ids` + filtrering i `leaderboard.functions.ts` och
+`fetchOrdLeaderboard`). Gästen ser fortfarande sin egen rad, och **bara**
+gästen: identiteten läses ur token via `optionalSupabaseAuth`
+(`src/lib/auth-optional.server.ts`), inte ur ett klientskickat `user_id` — annars
+blir den publika endpointen ett uppslagsverk över andras konton. Rangordningen
+sker efter filtreringen, annars får listan hål i numreringen.
+
+Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
+`limits.guestSignup` är 5/h **per IP**.
 
 ### GDPR / privacy — non-negotiable
 
@@ -514,8 +543,32 @@ att skapa i obegränsat antal. `limits.guestSignup` är 5/h **per IP**.
 - **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`hpk-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
 - Empty `VITE_PUBLIC_POSTHOG_KEY` = analytics off and no banner. `VITE_` vars are inlined **at build time**, so they must be in `.env`; the `wrangler.jsonc` copy alone does nothing for the client bundle.
 - Ads are still out: they need a certified IAB TCF CMP, which our own banner is not. AdSense was removed for exactly this reason (see comment in `__root.tsx`).
-- **Product events.** `track({type:"metric"})` in `telemetry.ts` auto-forwards to PostHog — add metrics there, not with a second `captureAnalytics` call beside it. Only `metric` forwards; errors stay in `/api/telemetry`. Direct `captureAnalytics()` calls exist where no `track()` did: `gamla_prov_submit`, `match_submitted`, `onboarding_completed` (`skipped` distinguishes filled-in from skipped — the DB marks both completed).
-- posthog-js renames config keys between versions. `enable_heatmaps` is gone (now `capture_heatmaps`), and the exported client type moved, so `analytics.ts` derives it via `(typeof import("posthog-js"))["default"]` instead of importing a name. Verify keys against `@posthog/types/dist/posthog-config.d.ts` before adding any.
+- **Product events go through `trackEvent()` in `src/lib/events.ts`** — a typed
+  catalogue, not free-form strings. It wraps `track({type:"metric"})`, which
+  auto-forwards to PostHog; only `metric` forwards, errors stay in
+  `/api/telemetry`. Add the event to `ProductEvents` first and the property names
+  are then enforced by the compiler. That is the whole point: `match_type` in one
+  event and `matchType` in the next makes a funnel unbuildable, and nothing tells
+  you until someone tries three weeks later. There are no direct
+  `captureAnalytics()` calls left in feature code.
+- **An event fired before PostHog finished loading used to vanish.**
+  `captureAnalytics` was `client?.capture(...)`, and `client` doesn't exist until
+  the dynamic `import()` resolves — so anything in a mount-time effect (the
+  pageview, `forum_search`, `consent_decided`) hit `undefined` and was dropped
+  silently. `analytics.ts` now queues up to 50 events and flushes them on start;
+  the queue is only filled when consent is already granted, and `stopAnalytics`
+  empties it. Pinned by `src/lib/analytics.test.ts`.
+- **`logUsageEvent`'s `meta` schema is `.strict()`.** ProvRunner had always sent a
+  `mode` field that the schema didn't declare, so every gamla-prov submission
+  threw in validation and was swallowed by the caller's `.catch()` — `audit_log`
+  got nothing and the admin usage view read zero, with no error anywhere. Fixed
+  2026-08-17 by declaring `mode`. Any new field must be added on both sides.
+- posthog-js renames config keys between versions. `enable_heatmaps` is gone (now `capture_heatmaps`), and the exported client type moved, so `analytics.ts` derives it via `(typeof import("posthog-js"))["default"]` instead of importing a name. Verify keys against `@posthog/types/dist/posthog-config.d.ts` before adding any — the keys are **not** in `posthog-js`'s own `.d.ts`.
+- Also on: `capture_dead_clicks`, `capture_performance` (web vitals + network
+  timing). `capture_exceptions` is explicitly `false` — errors have their own path
+  and would drown the funnels. That a feature is live is verifiable in the
+  browser: PostHog fetches `web-vitals.js` / `dead-clicks-autocapture.js` from
+  `eu-assets.i.posthog.com` only when the matching config is on.
 - Account deletion exists (`src/lib/account.functions.ts` + danger zone on `/stats`): deletes personal data, anonymizes the `users` row (empty username hides it from leaderboards, match FKs survive), hard-deletes the auth user with scramble+ban fallback.
 - Usage analytics go through `logUsageEvent` → `audit_log` with `usage:`-namespaced actions (no new tables needed). Admin dashboard: `/admin` → "Användning".
 - Error messages to clients must be generic Swedish — log the raw DB error server-side (`throwDbError` pattern in `word-practice.functions.ts`).

@@ -14,8 +14,11 @@
 /**
  * Höj den här när vi utökar vad som samlas in. Gamla val slutar då gälla och
  * bannern visas igen — samtycke gäller bara det man faktiskt sa ja till.
+ *
+ * 2 (2026-08-17): produkthändelser genom hela appen (se lib/events.ts),
+ * prestandamått (web vitals) och döda klick tillkom.
  */
-export const CONSENT_VERSION = 1;
+export const CONSENT_VERSION = 2;
 
 export const CONSENT_STORAGE_KEY = "hpk-analytics-consent";
 

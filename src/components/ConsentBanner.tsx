@@ -5,6 +5,7 @@ import { ChartNoAxesColumn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { analyticsConfigured } from "@/lib/analytics";
 import { CONSENT_CHANGED_EVENT, needsConsentDecision, writeConsent } from "@/lib/consent";
+import { trackEvent } from "@/lib/events";
 
 /**
  * Samtyckesbanner för analys.
@@ -43,6 +44,9 @@ export function ConsentBanner() {
   // eller senare.
   const decide = (choice: "granted" | "denied") => {
     writeConsent(choice);
+    // Ett nej laddar aldrig PostHog, så bara ja:en syns där. Båda hamnar i
+    // våra egna loggar — det är enda stället kvoten går att läsa.
+    trackEvent("consent_decided", { choice });
     setVisible(false);
   };
 

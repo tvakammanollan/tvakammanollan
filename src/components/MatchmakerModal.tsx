@@ -14,6 +14,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { createMatch, joinMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/lib/events";
+import { isGuestUser, useAuth } from "@/hooks/useAuth";
 
 export type MatchType = "verbal" | "math";
 
@@ -34,6 +36,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
   const navigate = useNavigate();
   const createFn = useServerFn(createMatch);
   const joinFn = useServerFn(joinMatch);
+  const { user } = useAuth();
 
   const reset = () => {
     setMode("choose");
@@ -88,6 +91,11 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
     setBusy(true);
     try {
       const res = await createFn({ data: { match_type: matchType, mode: "private" } });
+      trackEvent("match_created", {
+        match_type: matchType,
+        mode: "private",
+        is_guest: isGuestUser(user),
+      });
       setWaitingMatchId(res.match_id);
       setWaitingCode(res.room_code ?? "");
       setMode("waiting");
@@ -108,6 +116,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
     setBusy(true);
     try {
       const res = await joinFn({ data: { room_code: code.toUpperCase() } });
+      trackEvent("match_joined", { via: "room_code" });
       navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
       close();
     } catch (e) {

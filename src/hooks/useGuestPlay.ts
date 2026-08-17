@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { createMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
-import { track } from "@/lib/telemetry";
+import { trackEvent } from "@/lib/events";
 
 /**
  * Lowest-friction CTA: creates an anonymous guest and drops them
@@ -31,10 +31,11 @@ export function useGuestPlay() {
         }
       }
 
-      track({ type: "metric", message: "guest_match_started", context: { matchType: type } });
+      trackEvent("guest_match_started", { match_type: type });
       // Create a bot match immediately and drop the user into it.
       try {
         const res = await createFn({ data: { match_type: type, mode: "bot" } });
+        trackEvent("match_created", { match_type: type, mode: "bot", is_guest: true });
         navigate({ to: "/match/$matchId", params: { matchId: res.match_id } });
       } catch (matchErr) {
         // Cooldown / other → fall back to matchmaking page (which auto-bot-matches after 6s)

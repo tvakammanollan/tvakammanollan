@@ -12,6 +12,9 @@
  *
  * Instansen hostas i EU (eu.i.posthog.com) — ingen tredjelandsöverföring.
  */
+// consent.ts är ren logik utan react och utan posthog-beroende — ingen cykel,
+// och inget av posthog dras in i huvudbundlen av den här importen.
+import { hasAnalyticsConsent } from "./consent";
 
 /**
  * Typen härleds ur modulen istället för att importeras vid namn. posthog-js
@@ -34,6 +37,31 @@ let client: PostHogClient | null = null;
 let starting: Promise<PostHogClient | null> | null = null;
 
 /**
+ * Händelser som hann avfyras innan skriptet laddat.
+ *
+ * posthog-js köar egna anrop internt, men bara sådana som gjorts på instansen —
+ * och instansen finns inte förrän dynamiska import() gått i mål. Allt som
+ * händer under de första hundradelarna (sidvisningen, en händelse i en
+ * useEffect vid montering) träffade `client?.capture` med client === null och
+ * försvann utan spår. Kön är hård taket 50 poster: utan samtycke töms den
+ * aldrig, och då ska den inte heller kunna växa.
+ */
+const queued: Array<{ event: string; props?: Record<string, unknown> }> = [];
+const MAX_QUEUED = 50;
+
+function flushQueued(ph: PostHogClient): void {
+  if (queued.length === 0) return;
+  const batch = queued.splice(0, queued.length);
+  for (const item of batch) {
+    try {
+      ph.capture(item.event, item.props);
+    } catch {
+      /* best-effort */
+    }
+  }
+}
+
+/**
  * Laddar och startar PostHog. Idempotent — upprepade anrop returnerar samma
  * instans, och parallella anrop delar samma pågående laddning.
  *
@@ -51,6 +79,7 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
     } catch {
       /* best-effort */
     }
+    flushQueued(client);
     return client;
   }
   if (starting) return starting;
@@ -71,6 +100,17 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
         autocapture: true,
         // Hette enable_heatmaps förr — den nyckeln finns inte kvar i typerna.
         capture_heatmaps: true,
+        // Klick som inte ledde till någonting. Det är så man hittar en knapp
+        // som ser klickbar ut men inte är det — autocapture räknar bara de
+        // klick som faktiskt träffade något.
+        capture_dead_clicks: true,
+        // Web vitals (LCP/CLS/INP/FCP) + nätverkstider i inspelningarna. Utan
+        // den här är "sidan känns seg" en åsikt i stället för en siffra.
+        capture_performance: { web_vitals: true, network_timing: true },
+        // Fel har en egen väg (/api/telemetry) och ska inte in i produkt-
+        // analysen — de dränker funnels och kostar events. Uttryckligen av, så
+        // att PostHogs fjärrkonfiguration inte slår på det i vårt ställe.
+        capture_exceptions: false,
         // "always" skulle göra varje anonym sökbesökare till en person och
         // varje händelse till ett identifierat event — upp till 4x dyrare per
         // event, och personsiffrorna blir oläsbara på en sajt som lever på
@@ -89,6 +129,8 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
       // Ingen `loaded`-callback behövs: default-exporten ÄR singletonen, och
       // anrop före laddning köas internt av posthog-js.
       client = posthog;
+      // Allt som avfyrades medan importen pågick.
+      flushQueued(posthog);
       return posthog;
     } catch (error) {
       console.warn("[analytics] kunde inte starta PostHog:", error);
@@ -107,6 +149,9 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
  * nästa sidladdning, men slutar skicka och glömmer vem det såg.
  */
 export function stopAnalytics(): void {
+  // Återtaget samtycke gäller också det som ligger och väntar — annars skulle
+  // kön tömmas mot PostHog nästa gång någon säger ja.
+  queued.length = 0;
   try {
     client?.stopSessionRecording?.();
     client?.opt_out_capturing?.();
@@ -135,6 +180,37 @@ export function identifyAnalyticsUser(
   }
 }
 
+/**
+ * Egenskaper som hängs på VARJE händelse tills sidan laddas om.
+ *
+ * Skillnaden mot personegenskaper spelar roll: super properties följer med in i
+ * händelsen och gör den filtrerbar i efterhand ("visa bara matcher spelade av
+ * gäster"), medan personegenskaper alltid speglar nuläget och därför inte går
+ * att bygga historik på.
+ */
+export function registerAnalyticsProperties(props: Record<string, unknown>): void {
+  try {
+    client?.register(props);
+  } catch {
+    /* best-effort */
+  }
+}
+
+/**
+ * Nuläget för användaren — ELO, rank, streak. Används för kohorter och
+ * segmentering, inte för enskilda händelser.
+ *
+ * Bara identifierade profiler har en personpost (`person_profiles:
+ * "identified_only"`), så det här är en no-op för utloggade besökare.
+ */
+export function setAnalyticsPersonProperties(props: Record<string, unknown>): void {
+  try {
+    client?.setPersonProperties(props);
+  } catch {
+    /* best-effort */
+  }
+}
+
 /** Vid utloggning: nollställ identiteten så nästa besökare inte ärver den. */
 export function resetAnalyticsUser(): void {
   try {
@@ -146,7 +222,16 @@ export function resetAnalyticsUser(): void {
 
 export function captureAnalytics(event: string, props?: Record<string, unknown>): void {
   try {
-    client?.capture(event, props);
+    if (client) {
+      client.capture(event, props);
+      return;
+    }
+    // Inget samtycke → händelsen ska inte ens sparas undan. Grinden ligger kvar
+    // exakt som förut; det enda som ändrats är att ett ja inte längre kräver
+    // att skriptet redan hunnit ladda.
+    if (typeof window === "undefined" || !analyticsConfigured()) return;
+    if (!hasAnalyticsConsent()) return;
+    if (queued.length < MAX_QUEUED) queued.push({ event, props });
   } catch {
     /* best-effort */
   }

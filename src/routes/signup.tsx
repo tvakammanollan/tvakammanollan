@@ -4,7 +4,8 @@ import { useState } from "react";
 import { z } from "zod";
 import { m, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { isGuestUser, useAuth } from "@/hooks/useAuth";
+import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 import { ArrowRight, Mail } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
@@ -51,6 +52,10 @@ function SignupPage() {
       return;
     }
     setSubmitting(true);
+    // Gäst → konto är sajtens viktigaste konvertering. Läses av före signUp,
+    // eftersom sessionen byts ut på vägen.
+    const fromGuest = isGuestUser(user);
+    trackEvent("signup_submitted", { from_guest: fromGuest });
     const { data, error } = await supabase.auth.signUp({
       email: parsed.data.email,
       password: parsed.data.password,
@@ -61,9 +66,14 @@ function SignupPage() {
     setSubmitting(false);
 
     if (error) {
+      trackEvent("signup_failed", { from_guest: fromGuest });
       toast.error("Kunde inte skapa konto", { description: error.message });
       return;
     }
+    trackEvent("signup_completed", {
+      from_guest: fromGuest,
+      needs_email_confirm: !data.session,
+    });
     if (data.session) {
       toast.success("Konto skapat. Välj ditt användarnamn");
       setSuccess(true);

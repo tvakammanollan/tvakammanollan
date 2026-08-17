@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
+import { trackEvent } from "@/lib/events";
 import { displayCategory, ordText } from "@/lib/sv-format";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -274,6 +275,15 @@ function TrainPage() {
     setResults([]);
     setStartedAt(Date.now());
     setPhase("session");
+    // Först här — allt ovanför kan falla tillbaka till setup, och ett pass som
+    // aldrig startade ska inte räknas som startat.
+    trackEvent("training_started", {
+      track: config.track,
+      subs: [...config.subs].sort().join(","),
+      sub_count: config.subs.length,
+      count: mapped.length,
+      difficulty: config.difficulty,
+    });
   };
 
   const restartSame = () => {
@@ -358,8 +368,21 @@ function TrainPage() {
   const goNext = (skipping = false) => {
     if (!skipping && !revealed) return;
     if (current >= questions.length - 1) {
-      setEndedAt(Date.now());
+      const at = Date.now();
+      setEndedAt(at);
       setPhase("result");
+      // handleSkip anropar setResults och goNext i samma händelse, så `results`
+      // saknar då sista raden. Efter ett besvarat svar har staten hunnit
+      // flushas och listan är komplett. Ett överhoppat svar är aldrig rätt.
+      const answered = results.length + (skipping ? 1 : 0);
+      const correct = results.filter((r) => r.isCorrect).length;
+      trackEvent("training_completed", {
+        track: config.track,
+        answered,
+        correct,
+        pct: answered > 0 ? Math.round((correct / answered) * 100) : 0,
+        duration_s: Math.max(0, Math.round((at - startedAt) / 1000)),
+      });
       if (user) void updateStreak(user.id);
       return;
     }
@@ -750,6 +773,11 @@ function TrainPage() {
               <AlertDialogAction
                 onClick={() => {
                   setExitOpen(false);
+                  trackEvent("training_abandoned", {
+                    track: config.track,
+                    answered: results.length,
+                    total: questions.length,
+                  });
                   navigate({ to: "/" });
                 }}
               >

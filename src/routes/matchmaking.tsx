@@ -9,6 +9,7 @@ import { Loader2, Trophy, AlertTriangle } from "lucide-react";
 import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranked.functions";
 import { createMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 
 const search = z.object({ type: z.enum(["verbal", "math"]).default("verbal") });
@@ -79,6 +80,7 @@ function MatchmakingPage() {
     (async () => {
       try {
         const res = await joinFn({ data: { match_type: type } });
+        trackEvent("matchmaking_started", { match_type: type });
         if (!cancelled) setMyElo(res.elo);
       } catch (e) {
         console.error(e);
@@ -112,6 +114,9 @@ function MatchmakingPage() {
           cancelledRef.current = true;
           await cancelFn().catch(() => {});
           const res = await createFn({ data: { match_type: type, mode: "bot" } });
+          // Hur ofta kön faktiskt hittar en människa är den enda siffra som
+          // säger om spelarbasen räcker till riktig matchmaking.
+          trackEvent("matchmaking_bot_fallback", { match_type: type, waited_s: elapsed });
           if (!navigatedRef.current) {
             navigatedRef.current = true;
             setNavigating(true);
@@ -195,6 +200,7 @@ function MatchmakingPage() {
 
   const cancel = async () => {
     cancelledRef.current = true;
+    trackEvent("matchmaking_abandoned", { match_type: type, waited_s: elapsed });
     try {
       await cancelFn();
     } catch {

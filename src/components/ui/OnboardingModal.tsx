@@ -21,7 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { completeOnboarding } from "@/lib/onboarding.functions";
-import { captureAnalytics } from "@/lib/analytics";
+import { trackEvent } from "@/lib/events";
 import { useDismissible } from "@/hooks/useDismissible";
 import { toast } from "sonner";
 
@@ -88,7 +88,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
       return;
     }
     // Onboarding klar — den viktigaste funnel-punkten på sajten.
-    captureAnalytics("onboarding_completed", {
+    trackEvent("onboarding_completed", {
       skipped: false,
       target_score: target,
       preferred_type: focus,
@@ -124,7 +124,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
     }
     // Överhoppad onboarding räknas som avklarad i databasen — håll isär dem
     // här, annars går det inte att se hur många som faktiskt fyllde i något.
-    captureAnalytics("onboarding_completed", { skipped: true });
+    trackEvent("onboarding_completed", { skipped: true });
     refreshProfile();
     onClose();
     setSaving(false);

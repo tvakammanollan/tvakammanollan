@@ -30,7 +30,7 @@ function IntegritetspolicyPage() {
       <PageHero
         eyebrow="Juridik"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-08-15"
+        subtitle="Senast uppdaterad: 2026-08-17"
         variant="compact"
       />
       <article
@@ -89,7 +89,10 @@ function IntegritetspolicyPage() {
               <strong style={{ color: "var(--cream)" }}>Användningsdata</strong> —{" "}
               <em>endast om du samtyckt till analys</em>: vilka sidor du besöker, vad du klickar på,
               ungefärlig plats på landsnivå, enhets- och webbläsartyp samt inspelningar av hur
-              gränssnittet används. Text du skriver i fält maskeras i inspelningarna.
+              gränssnittet används. Text du skriver i fält maskeras i inspelningarna. Vi mäter också
+              hur du använder funktionerna — att en match lämnades in, att ett träningspass
+              avslutades, vad du sökte efter i forumet — och hur snabbt sidorna laddar. Innehållet i
+              det du skriver ingår aldrig, bara att det hände.
             </li>
           </ul>
 

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { m } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
+import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
@@ -48,15 +49,19 @@ function LoginPage() {
       return;
     }
     setSubmitting(true);
-    if (isGuestUser(user)) {
+    // Läses av innan gästsessionen slängs, annars är svaret alltid nej.
+    const fromGuest = isGuestUser(user);
+    if (fromGuest) {
       await supabase.auth.signOut();
     }
     const { error } = await supabase.auth.signInWithPassword(parsed.data);
     setSubmitting(false);
     if (error) {
+      trackEvent("login_failed");
       toast.error("Kunde inte logga in", { description: error.message });
       return;
     }
+    trackEvent("login_completed", { from_guest: fromGuest });
     toast.success("Välkommen tillbaka");
     setSuccess(true);
     // Vänta in dot-matrix reverse-animationen innan navigering

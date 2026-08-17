@@ -14,7 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CircularTimer } from "@/components/ui/CircularTimer";
 import { logUsageEvent } from "@/lib/usage.functions";
-import { captureAnalytics } from "@/lib/analytics";
+import { trackEvent } from "@/lib/events";
 import { isCorrect } from "@/lib/prov-data";
 import {
   clearProgress,
@@ -133,8 +133,8 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     };
     void logUsage({ data: { event: "gamla_prov_submit", meta } }).catch(() => {});
     // Samma händelse till PostHog, för funnel och retention. Skickas bara om
-    // besökaren samtyckt — captureAnalytics är en no-op annars.
-    captureAnalytics("gamla_prov_submit", meta);
+    // besökaren samtyckt — bryggan i telemetry.ts är en no-op annars.
+    trackEvent("gamla_prov_submit", meta);
   }, [answers, data.pass, data.term, logUsage, mode, persist, questions, startedAt, total]);
 
   useEffect(() => {
@@ -235,6 +235,14 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     setResumable(null);
     loggedRef.current = false;
     setPhase("running");
+    // Startade pass mot inlämnade pass är avhoppsfrekvensen för gamla prov —
+    // tidigare loggades bara inlämningarna, alltså bara de som klarade sig.
+    trackEvent("gamla_prov_started", {
+      term: data.term,
+      provpass: data.pass,
+      mode: nextMode,
+      resumed: false,
+    });
   }
 
   function resume(saved: ProvProgress) {
@@ -247,6 +255,14 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     setNow(Date.now());
     setResumable(null);
     setPhase(saved.submittedAt ? "result" : "running");
+    if (!saved.submittedAt) {
+      trackEvent("gamla_prov_started", {
+        term: data.term,
+        provpass: data.pass,
+        mode: saved.mode,
+        resumed: true,
+      });
+    }
   }
 
   function restart() {
