@@ -71,7 +71,12 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
         autocapture: true,
         // Hette enable_heatmaps förr — den nyckeln finns inte kvar i typerna.
         capture_heatmaps: true,
-        person_profiles: "always",
+        // "always" skulle göra varje anonym sökbesökare till en person och
+        // varje händelse till ett identifierat event — upp till 4x dyrare per
+        // event, och personsiffrorna blir oläsbara på en sajt som lever på
+        // organisk trafik. Inloggade identifieras ändå explicit via
+        // identifyAnalyticsUser() i <Analytics />, så ingenting går förlorat.
+        person_profiles: "identified_only",
         persistence: "localStorage+cookie",
         session_recording: {
           // Fritextfält på sajten är i praktiken mejl, användarnamn och
