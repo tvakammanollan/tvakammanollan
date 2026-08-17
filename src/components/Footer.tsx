@@ -62,7 +62,7 @@ export function Footer() {
     <footer
       className="relative"
       style={{
-        background: "linear-gradient(180deg, transparent 0%, rgba(15,8,3,0.6) 30%, #f0e4ce 100%)",
+        background: "#f3e9d8",
       }}
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

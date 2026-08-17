@@ -209,7 +209,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
       <PopoverContent
         align="end"
         sideOffset={8}
-        className="w-80 border-white/10 bg-[rgba(15,8,3,0.96)] p-0 text-[#2e1e14] shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+        className="w-80 border-white/10 bg-[rgba(251, 246, 236, 0.92)] p-0 text-[#2e1e14] shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl"
       >
         <div className="border-b border-white/8 px-4 py-3">
           <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-display)" }}>

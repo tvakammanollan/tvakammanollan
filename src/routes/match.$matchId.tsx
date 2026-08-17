@@ -701,7 +701,7 @@ function MatchPage() {
         style={{
           // Var rgba(7,17,30) — det gamla blå-navyt. Matchskärmen är den mest
           // besökta i appen och hade alltså en blå glasremsa mot brun bakgrund.
-          background: "rgba(15, 8, 3, 0.85)",
+          background: "rgba(251, 246, 236, 0.92)",
           borderBottom: "1px solid var(--line)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",

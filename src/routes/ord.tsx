@@ -558,7 +558,7 @@ function OrdPracticePage() {
                           className="flex items-center justify-between border-b border-red-500/15 px-4 py-2.5 last:border-0"
                         >
                           <div className="min-w-0 flex-1">
-                            <span className="text-sm font-medium tracking-tight text-[#050507]">
+                            <span className="text-sm font-medium tracking-tight text-[#2e1e14]">
                               {ordText(w.question_text)}
                             </span>
                             <div className="mt-1 flex items-center gap-2">

@@ -658,7 +658,7 @@ export function PageHeader({
             {eyebrow}
           </m.p>
         ) : null}
-        <h1 className="display mt-3 text-balance text-[40px] leading-[1.02] text-[#050507] sm:text-[56px] md:text-[68px]">
+        <h1 className="display mt-3 text-balance text-[40px] leading-[1.02] text-[#2e1e14] sm:text-[56px] md:text-[68px]">
           <SplitText as="span" className="block">
             {title}
           </SplitText>
