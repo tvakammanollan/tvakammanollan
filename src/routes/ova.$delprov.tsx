@@ -176,7 +176,7 @@ function OvaDelprovPage() {
             to={cfg.practiceTo}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
           >
             {cfg.practiceLabel}
             <ArrowRight className="h-4 w-4" />

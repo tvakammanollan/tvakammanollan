@@ -463,7 +463,7 @@ function TrainPage() {
                       onClick={() => toggleSub(sub)}
                       className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
                         active
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#2e1e14]"
+                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
                           : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60 hover:text-white"
                       }`}
                     >
@@ -671,7 +671,7 @@ function TrainPage() {
                           : isWrongPick
                             ? "bg-[var(--danger)] text-[#2c0d11]"
                             : isSelected
-                              ? "bg-[#ae2f26] text-[#2e1e14]"
+                              ? "bg-[#ae2f26] text-[#fff8f5]"
                               : "bg-white/10 text-foreground"
                       }`}
                     >
@@ -719,7 +719,7 @@ function TrainPage() {
               {revealed ? (
                 <Button
                   onClick={() => goNext(false)}
-                  className="w-full bg-[#ae2f26] py-5 text-base text-[#2e1e14] hover:bg-[#8f2620]"
+                  className="w-full bg-[#ae2f26] py-5 text-base text-[#fff8f5] hover:bg-[#8f2620]"
                 >
                   {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -926,7 +926,7 @@ function DifficultyBtn({
       onClick={onClick}
       className={`min-w-[48px] rounded-lg border px-3 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#ae2f26] bg-[#ae2f26] text-[#2e1e14]"
+          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
           : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
       }`}
     >

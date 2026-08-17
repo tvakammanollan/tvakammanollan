@@ -60,7 +60,7 @@ function JoinPage() {
           <p className="mt-2 text-sm text-white/65">{error}</p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <Button asChild className="bg-[#ae2f26] text-[#2e1e14] hover:bg-[#8f2620]">
+          <Button asChild className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">
             <Link to="/">Till start</Link>
           </Button>
           <Button asChild variant="outline">

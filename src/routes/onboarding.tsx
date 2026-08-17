@@ -100,7 +100,7 @@ function OnboardingPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#2e1e14] shadow-[0_0_24px_rgba(174, 47, 38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174, 47, 38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#fff8f5] shadow-[0_0_24px_rgba(174, 47, 38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174, 47, 38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
             {!submitting && <ArrowRight className="h-4 w-4" />}

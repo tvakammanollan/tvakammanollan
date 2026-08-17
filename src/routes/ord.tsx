@@ -466,7 +466,7 @@ function OrdPracticePage() {
                       onClick={() => setSourceFilter(o.v)}
                       className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
                         sourceFilter === o.v
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#2e1e14]"
+                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
                           : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
                       }`}
                     >

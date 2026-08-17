@@ -199,7 +199,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
           {count > 0 && (
             <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ae2f26] opacity-60" />
-              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#ae2f26] px-1 text-[10px] font-bold tabular-nums text-[#2e1e14] shadow-sm">
+              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#ae2f26] px-1 text-[10px] font-bold tabular-nums text-[#fff8f5] shadow-sm">
                 {count > 9 ? "9+" : count}
               </span>
             </span>
@@ -258,7 +258,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                         onClick={() =>
                           n.kind === "invite" ? onAcceptInvite(n) : onAcceptFriend(n.id)
                         }
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26] text-[#2e1e14] transition hover:brightness-110"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26] text-[#fff8f5] transition hover:brightness-110"
                       >
                         <Check className="h-4 w-4" />
                       </button>

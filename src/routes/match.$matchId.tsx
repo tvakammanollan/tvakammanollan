@@ -943,7 +943,7 @@ function QuestionCard({
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#ae2f26] text-[#2e1e14]" : "bg-white/10 text-foreground"
+                  isSelected ? "bg-[#ae2f26] text-[#fff8f5]" : "bg-white/10 text-foreground"
                 }`}
               >
                 {letter}

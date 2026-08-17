@@ -86,7 +86,7 @@ export function AchievementCelebration({
 
         <Button
           onClick={onClose}
-          className="mt-6 w-full bg-[#ae2f26] font-semibold text-[#2e1e14] hover:bg-[#ae2f26]/90"
+          className="mt-6 w-full bg-[#ae2f26] font-semibold text-[#fff8f5] hover:bg-[#ae2f26]/90"
         >
           Fortsätt
         </Button>

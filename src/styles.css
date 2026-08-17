@@ -1605,6 +1605,18 @@ body {
   .border-white\/30 {
     border-color: rgba(46, 30, 20, 0.38);
   }
+  /* Blank `text-white` utan opacitet. Den var medvetet oremappad så
+     länge sajten var mörk, för då var vit text rätt nästan överallt.
+     Efter vändningen är det tvärtom: samtliga 67 förekomster sitter på
+     ytor som nu är ljusa, alltså osynliga.
+
+     Texten på solida märkesytor (apple-knappar och liknande) sätts med
+     explicit ljus hex på plats i komponenterna och går inte via den
+     här klassen, så den raden rör dem inte. */
+  .text-white {
+    color: var(--cream);
+  }
+
   /* Tillagda i palettvändningen. De var omappade och renderade som rå
      vit — vilket bara var kosmetiskt på mörk botten men blir helt
      osynligt på creme. Rampen hålls monoton. */

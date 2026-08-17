@@ -253,7 +253,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               <div className="mt-6 flex flex-col gap-2">
                 <Button
                   size="lg"
-                  className="w-full bg-[#ae2f26] text-[#2e1e14] hover:bg-[#8f2620]"
+                  className="w-full bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
                   disabled={saving}
                   onClick={() => finish(true)}
                 >

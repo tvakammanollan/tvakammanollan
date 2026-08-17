@@ -426,7 +426,7 @@ function ResultPage() {
             </div>
             <Button
               asChild
-              className="shrink-0 bg-[#ae2f26] px-6 text-base font-semibold text-[#2e1e14] shadow-md hover:bg-[#8f2620]"
+              className="shrink-0 bg-[#ae2f26] px-6 text-base font-semibold text-[#fff8f5] shadow-md hover:bg-[#8f2620]"
             >
               <Link to="/signup">
                 Skapa konto

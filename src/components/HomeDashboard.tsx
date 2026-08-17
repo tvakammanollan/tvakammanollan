@@ -136,7 +136,7 @@ export function HomeDashboard() {
               <button
                 type="button"
                 onClick={() => setMatchOpen(true)}
-                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#2e1e14] transition hover:brightness-110 sm:w-auto sm:px-8"
+                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110 sm:w-auto sm:px-8"
               >
                 Spela {matchType === "verbal" ? "verbal" : "matte"}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -205,7 +205,7 @@ function GuestBanner() {
         </div>
         <Link
           to="/signup"
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#ae2f26] px-4 py-1.5 text-xs font-semibold text-[#2e1e14] transition hover:brightness-110"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#ae2f26] px-4 py-1.5 text-xs font-semibold text-[#fff8f5] transition hover:brightness-110"
         >
           Skapa konto
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />

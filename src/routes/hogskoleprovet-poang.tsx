@@ -249,7 +249,7 @@ function PoangPage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
           >
             Öva på gamla prov
             <ArrowRight className="h-4 w-4" />

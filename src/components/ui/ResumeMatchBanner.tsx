@@ -75,7 +75,7 @@ export function ResumeMatchBanner() {
         match – vill du fortsätta?
       </span>
       <div className="flex shrink-0 items-center gap-2">
-        <Button asChild size="sm" className="bg-[#ae2f26] text-[#2e1e14] hover:bg-[#8f2620]">
+        <Button asChild size="sm" className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">
           <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
             Fortsätt matchen
           </Link>
