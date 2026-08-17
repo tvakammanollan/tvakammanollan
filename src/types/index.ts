@@ -34,9 +34,9 @@ export type RankTier = {
 export const TIER_ACCENT = {
   brons: "#c98a5e",
   silver: "#c3ccd6",
-  guld: "#f2a65a",
+  guld: "#ae2f26",
   platina: "#9fd4d8",
-  diamant: "#6fb3b8",
+  diamant: "#7a5236",
 } as const;
 
 export const RANK_TIERS: RankTier[] = [
@@ -67,8 +67,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1200,
     maxElo: 1399,
     accent: TIER_ACCENT.guld,
-    soft: "rgba(242, 166, 90, 0.14)",
-    line: "rgba(242, 166, 90, 0.42)",
+    soft: "rgba(174, 47, 38, 0.14)",
+    line: "rgba(174, 47, 38, 0.42)",
   },
   {
     tier: "platina",
@@ -87,8 +87,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1600,
     maxElo: 9999,
     accent: TIER_ACCENT.diamant,
-    soft: "rgba(111, 179, 184, 0.16)",
-    line: "rgba(111, 179, 184, 0.48)",
+    soft: "rgba(122, 82, 54, 0.16)",
+    line: "rgba(122, 82, 54, 0.48)",
   },
 ];
 

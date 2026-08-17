@@ -75,7 +75,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
             <span
               key={a.id}
               title={`${a.name} — ${a.description}`}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2a65a]/10 ring-1"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ae2f26]/10 ring-1"
               style={{ "--tw-ring-color": tierRing(a.tier) } as React.CSSProperties}
             >
               <AchievementIcon id={a.id} style={{ color: TIER_ACCENT[a.tier] }} />
@@ -90,7 +90,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
     <div>
       <div className="mb-4 flex items-baseline justify-between">
         <h2
-          className="relative pb-2 text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
+          className="relative pb-2 text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Utmärkelser
@@ -104,13 +104,13 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
           <div
             key={a.id}
             className={`relative overflow-hidden rounded-xl border p-3.5 transition-colors ${
-              a.unlocked ? "border-[#f2a65a]/30 bg-[#f2a65a]/[0.06]" : "border-border bg-card"
+              a.unlocked ? "border-[#ae2f26]/30 bg-[#ae2f26]/[0.06]" : "border-border bg-card"
             }`}
           >
             <div className="flex items-start gap-3">
               <span
                 className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1 ${
-                  a.unlocked ? "bg-[#f2a65a]/10" : "bg-white/[0.03] ring-white/10"
+                  a.unlocked ? "bg-[#ae2f26]/10" : "bg-white/[0.03] ring-white/10"
                 }`}
                 style={
                   a.unlocked
@@ -135,7 +135,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
               <div className="mt-2.5">
                 <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
                   <div
-                    className="h-full rounded-full bg-[#f2a65a]/70"
+                    className="h-full rounded-full bg-[#ae2f26]/70"
                     style={{ width: `${a.progress}%` }}
                   />
                 </div>

@@ -49,9 +49,9 @@ export function DeleteAccountSection() {
   };
 
   return (
-    <section className="mt-10 rounded-2xl border border-[#e25a6a]/25 bg-[#e25a6a]/[0.04] p-5 sm:p-6">
+    <section className="mt-10 rounded-2xl border border-[#8c1d18]/25 bg-[#8c1d18]/[0.04] p-5 sm:p-6">
       <h2
-        className="text-base font-semibold text-[#e8e4da]"
+        className="text-base font-semibold text-[#2e1e14]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Radera konto
@@ -62,7 +62,7 @@ export function DeleteAccountSection() {
       </p>
       <Button
         variant="outline"
-        className="mt-4 gap-1.5 border-[#e25a6a]/40 text-[#e25a6a] hover:bg-[#e25a6a]/10 hover:text-[#e25a6a]"
+        className="mt-4 gap-1.5 border-[#8c1d18]/40 text-[#8c1d18] hover:bg-[#8c1d18]/10 hover:text-[#8c1d18]"
         onClick={() => {
           setConfirmText("");
           setOpen(true);

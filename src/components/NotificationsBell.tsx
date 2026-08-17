@@ -198,8 +198,8 @@ export function NotificationsBell({ userId }: { userId: string }) {
           <Bell className="h-[18px] w-[18px]" />
           {count > 0 && (
             <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f2a65a] opacity-60" />
-              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#f2a65a] px-1 text-[10px] font-bold tabular-nums text-[#1a0d04] shadow-sm">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ae2f26] opacity-60" />
+              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#ae2f26] px-1 text-[10px] font-bold tabular-nums text-[#2e1e14] shadow-sm">
                 {count > 9 ? "9+" : count}
               </span>
             </span>
@@ -209,7 +209,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
       <PopoverContent
         align="end"
         sideOffset={8}
-        className="w-80 border-white/10 bg-[rgba(15,8,3,0.96)] p-0 text-[#e8e4da] shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+        className="w-80 border-white/10 bg-[rgba(15,8,3,0.96)] p-0 text-[#2e1e14] shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl"
       >
         <div className="border-b border-white/8 px-4 py-3">
           <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-display)" }}>
@@ -258,7 +258,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                         onClick={() =>
                           n.kind === "invite" ? onAcceptInvite(n) : onAcceptFriend(n.id)
                         }
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f2a65a] text-[#1a0d04] transition hover:brightness-110"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26] text-[#2e1e14] transition hover:brightness-110"
                       >
                         <Check className="h-4 w-4" />
                       </button>

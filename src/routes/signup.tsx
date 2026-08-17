@@ -126,7 +126,7 @@ function SignupPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f2a65a] px-6 text-[15px] font-semibold text-[#1a0d04] shadow-[0_0_24px_rgba(242,166,90,0.35)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_32px_rgba(242,166,90,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#2e1e14] shadow-[0_0_24px_rgba(174, 47, 38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174, 47, 38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? "Skapar konto…" : "Skapa konto"}
                 {!submitting && <ArrowRight className="h-4 w-4" />}
@@ -135,7 +135,7 @@ function SignupPage() {
 
             <p className="text-sm text-white/55">
               Har du redan ett konto?{" "}
-              <Link to="/login" className="font-medium text-[#f2a65a] hover:underline">
+              <Link to="/login" className="font-medium text-[#ae2f26] hover:underline">
                 Logga in
               </Link>
             </p>
@@ -219,7 +219,7 @@ function CheckEmailScreen({
 
       <div className="flex justify-center py-2">
         <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm">
-          <Mail className="h-6 w-6 text-[#f2a65a]" />
+          <Mail className="h-6 w-6 text-[#ae2f26]" />
         </div>
       </div>
 

@@ -581,16 +581,16 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-[#f2a65a]">Väntar</p>
+          <p className="eyebrow text-[#ae2f26]">Väntar</p>
           <h1
-            className="mt-1 text-[30px] font-bold leading-tight text-[#e8e4da]"
+            className="mt-1 text-[30px] font-bold leading-tight text-[#2e1e14]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Inbjudan skickad.
@@ -605,7 +605,7 @@ function MatchPage() {
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
           {[0, 1, 2].map((i) => (
-            <span key={i} className="h-2 w-2 rounded-full bg-[#f2a65a]" />
+            <span key={i} className="h-2 w-2 rounded-full bg-[#ae2f26]" />
           ))}
         </m.div>
       </div>
@@ -616,7 +616,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <m.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -662,16 +662,16 @@ function MatchPage() {
           </m.div>
         ) : null}
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-[#f2a65a]">Klart</p>
+          <p className="eyebrow text-[#ae2f26]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#e8e4da]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[#2e1e14]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
@@ -679,12 +679,12 @@ function MatchPage() {
         </div>
         <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[#e8e4da] tabular-nums">{oppSecondsLeft}s</span> kvar
+          <span className="font-semibold text-[#2e1e14] tabular-nums">{oppSecondsLeft}s</span> kvar
           att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <m.div
-            className="h-full bg-gradient-to-r from-[#f2a65a] to-[#f5c089]"
+            className="h-full bg-gradient-to-r from-[#ae2f26] to-[#f5c089]"
             animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
             transition={{ duration: 0.95, ease: "linear" }}
           />
@@ -731,7 +731,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#f2a65a] transition-all duration-500 ease-out"
+                  className="h-full bg-[#ae2f26] transition-all duration-500 ease-out"
                   style={{ width: `${((current + 1) / questions.length) * 100}%` }}
                 />
               </div>
@@ -747,7 +747,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#6fb3b8] transition-all duration-700 ease-out"
+                  className="h-full bg-[#7a5236] transition-all duration-700 ease-out"
                   style={{ width: `${oppProgress * 100}%` }}
                 />
               </div>
@@ -904,7 +904,7 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
+      <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
         {displayCategory(currentQ.category)} · Fråga {current + 1}
       </div>
       <h2
@@ -935,15 +935,15 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2a65a] focus-visible:ring-offset-2 ${
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae2f26] focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-[#f2a65a] bg-[#f2a65a]/15 text-foreground"
-                  : "border border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10"
+                  ? "border-2 border-[#ae2f26] bg-[#ae2f26]/15 text-foreground"
+                  : "border border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#f2a65a] text-[#1a0d04]" : "bg-white/10 text-foreground"
+                  isSelected ? "bg-[#ae2f26] text-[#2e1e14]" : "bg-white/10 text-foreground"
                 }`}
               >
                 {letter}

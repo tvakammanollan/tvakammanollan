@@ -3,7 +3,7 @@ import { useDotMatrixCanvas } from "./dotMatrixCanvas";
 /**
  * Helsidesbakgrund för /login och /signup.
  *
- * Renderar en animerad dot-matrix-shader (amber dots på navy `#170d05`)
+ * Renderar en animerad dot-matrix-shader (amber dots på navy `#fbf6ec`)
  * och lägger innehåll centrerat ovanpå. Reverse-animation triggas via
  * `reverse`-prop när auth-flödet är klart (dots fadar ut från kanterna).
  */
@@ -25,7 +25,7 @@ export function AuthLayout({
   return (
     <div
       className="relative flex min-h-[calc(100vh-64px)] w-full flex-col text-white"
-      style={{ background: "#170d05" }}
+      style={{ background: "#fbf6ec" }}
     >
       <div className="absolute inset-0 z-0">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
@@ -34,14 +34,14 @@ export function AuthLayout({
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at center, rgba(23,13,5,0) 0%, rgba(23,13,5,0.85) 100%)",
+              "radial-gradient(circle at center, rgba(251, 246, 236,0) 0%, rgba(251, 246, 236,0.85) 100%)",
           }}
         />
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 h-1/3"
           style={{
-            background: "linear-gradient(to bottom, rgba(23,13,5,1) 0%, rgba(23,13,5,0) 100%)",
+            background: "linear-gradient(to bottom, rgba(251, 246, 236,1) 0%, rgba(251, 246, 236,0) 100%)",
           }}
         />
       </div>

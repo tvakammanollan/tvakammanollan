@@ -239,7 +239,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#eab308", "#e8c468", "#f2a65a", "#ffffff"],
+        colors: ["#eab308", "#e8c468", "#ae2f26", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });
@@ -274,10 +274,10 @@ function ResultPage() {
 
   // Banner styles
   const bannerClass = draw
-    ? "bg-white/[0.04] text-[#e8e4da] border-white/12"
+    ? "bg-white/[0.04] text-[#2e1e14] border-white/12"
     : won
-      ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#170d05] text-[#e8e4da] border-[#f2a65a]/40 shadow-[0_20px_60px_-15px_rgba(242,166,90,0.4)]"
-      : "bg-white/[0.03] text-[#e8e4da] border-white/12";
+      ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#fbf6ec] text-[#2e1e14] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174, 47, 38,0.4)]"
+      : "bg-white/[0.03] text-[#2e1e14] border-white/12";
   const verdict = draw ? "Oavgjort!" : won ? "Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
@@ -383,7 +383,7 @@ function ResultPage() {
             damping: 16,
           }}
         >
-          <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#f2a65a]" : ""}`} />
+          <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#ae2f26]" : ""}`} />
         </m.div>
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
@@ -405,28 +405,28 @@ function ResultPage() {
       {user?.is_anonymous && (
         <Reveal
           delay={0.2}
-          className="mt-5 overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-6 sm:p-8"
+          className="mt-5 overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.06] p-6 sm:p-8"
         >
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#e8e4da]"
+                className="text-[22px] font-bold leading-tight text-[#2e1e14]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                 Skapa ett gratis konto för att{" "}
-                <strong className="text-[#e8e4da]">spara din ELO</strong>, klättra i rankingen och
+                <strong className="text-[#2e1e14]">spara din ELO</strong>, klättra i rankingen och
                 utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
               asChild
-              className="shrink-0 bg-[#f2a65a] px-6 text-base font-semibold text-[#1a0d04] shadow-md hover:bg-[#c97b41]"
+              className="shrink-0 bg-[#ae2f26] px-6 text-base font-semibold text-[#2e1e14] shadow-md hover:bg-[#8f2620]"
             >
               <Link to="/signup">
                 Skapa konto
@@ -488,7 +488,7 @@ function ResultPage() {
         {/* Streak — förstärk vanan i det heta ögonblicket */}
         {!user?.is_anonymous && (profile?.current_streak ?? 0) > 0 && (
           <div className="mt-3 flex justify-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#f2a65a]/25 bg-[#f2a65a]/10 px-3 py-1 text-sm font-semibold text-[#f2a65a] tabular-nums">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-sm font-semibold text-[#ae2f26] tabular-nums">
               <Flame className="h-3.5 w-3.5" />
               {profile!.current_streak} dagar i rad
               {(profile!.current_streak ?? 0) >= 3 &&
@@ -526,13 +526,13 @@ function ResultPage() {
                                 ? 0.5
                                 : 0.3;
             return (
-              <div className="mt-5 rounded-xl border border-[#f2a65a]/30 bg-[#f2a65a]/[0.06] p-4 text-center">
-                <div className="text-[11px] font-semibold tracking-wide text-[#f2a65a]">
+              <div className="mt-5 rounded-xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.06] p-4 text-center">
+                <div className="text-[11px] font-semibold tracking-wide text-[#ae2f26]">
                   Trolig normering
                 </div>
                 <div className="mt-1 flex items-baseline justify-center gap-2">
                   <span
-                    className="text-4xl font-bold tabular-nums text-[#f2a65a] sm:text-5xl"
+                    className="text-4xl font-bold tabular-nums text-[#ae2f26] sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {norm.toFixed(1)}
@@ -554,7 +554,7 @@ function ResultPage() {
       <Button
         onClick={shareResult}
         variant="outline"
-        className="mt-5 w-full gap-1.5 border-[#f2a65a]/40 text-[#f2a65a] hover:bg-[#f2a65a]/10"
+        className="mt-5 w-full gap-1.5 border-[#ae2f26]/40 text-[#ae2f26] hover:bg-[#ae2f26]/10"
       >
         <Share2 className="h-4 w-4" />
         Dela resultat
@@ -629,7 +629,7 @@ function ResultPage() {
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
                               a.time_spent_seconds > 180
-                                ? "bg-[#f2a65a]/15 text-[#f2a65a]"
+                                ? "bg-[#ae2f26]/15 text-[#ae2f26]"
                                 : "bg-muted text-muted-foreground"
                             }`}
                           >

@@ -107,7 +107,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f2a65a] px-6 text-[15px] font-semibold text-[#1a0d04] shadow-[0_0_24px_rgba(242,166,90,0.35)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_32px_rgba(242,166,90,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#2e1e14] shadow-[0_0_24px_rgba(174, 47, 38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174, 47, 38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? "Loggar in…" : "Logga in"}
               {!submitting && <ArrowRight className="h-4 w-4" />}
@@ -116,7 +116,7 @@ function LoginPage() {
 
           <p className="text-sm text-white/55">
             Inget konto?{" "}
-            <Link to="/signup" className="font-medium text-[#f2a65a] hover:underline">
+            <Link to="/signup" className="font-medium text-[#ae2f26] hover:underline">
               Skapa ett här
             </Link>
           </p>
@@ -191,10 +191,10 @@ export function SuccessScreen() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="py-8"
       >
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#f2a65a] shadow-[0_0_32px_rgba(242,166,90,0.55)]">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26] shadow-[0_0_32px_rgba(174, 47, 38,0.55)]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-[#1a0d04]"
+            className="h-8 w-8 text-[#2e1e14]"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

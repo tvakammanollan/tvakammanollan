@@ -77,7 +77,7 @@ export function NextStep({
             </>
           );
           const className =
-            "group inline-flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#e8e4da]";
+            "group inline-flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#2e1e14]";
 
           if ("to" in f) {
             return (

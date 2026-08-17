@@ -74,7 +74,7 @@ export function HomeDashboard() {
                   {greeting}
                 </EyebrowLabel>
                 <h1
-                  className="display truncate text-[30px] font-bold leading-tight text-[#e8e4da] sm:text-[38px]"
+                  className="display truncate text-[30px] font-bold leading-tight text-[#2e1e14] sm:text-[38px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {isGuest ? "Gäst" : profile.username}.
@@ -92,21 +92,21 @@ export function HomeDashboard() {
         {/* ---------- 1. Spela match ---------- */}
         <Reveal y={20} delay={0.05}>
           <section className="mt-10">
-            <div className="relative overflow-hidden rounded-2xl border border-[#f2a65a]/25 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/25 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#f2a65a]/10 blur-3xl"
+                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
               />
 
               <div className="relative flex items-start justify-between gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
                   <Swords className="h-5 w-5" />
                 </span>
                 <RankBadge elo={activeElo} size="sm" />
               </div>
 
               <h2
-                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[#e8e4da] sm:text-[28px]"
+                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[#2e1e14] sm:text-[28px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Spela en match
@@ -136,7 +136,7 @@ export function HomeDashboard() {
               <button
                 type="button"
                 onClick={() => setMatchOpen(true)}
-                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f2a65a] px-5 py-3.5 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110 sm:w-auto sm:px-8"
+                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#2e1e14] transition hover:brightness-110 sm:w-auto sm:px-8"
               >
                 Spela {matchType === "verbal" ? "verbal" : "matte"}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -193,10 +193,10 @@ export function HomeDashboard() {
 /* =================== GUEST BANNER =================== */
 function GuestBanner() {
   return (
-    <div className="border-b border-[#f2a65a]/20 bg-[#f2a65a]/[0.06] px-4 py-3">
+    <div className="border-b border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] px-4 py-3">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 text-sm text-[#e8e4da]">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#f2a65a]/25 bg-[#f2a65a]/10 text-[#f2a65a]">
+        <div className="flex items-center gap-2.5 text-sm text-[#2e1e14]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
             <Sparkles className="h-3.5 w-3.5" />
           </span>
           <span>
@@ -205,7 +205,7 @@ function GuestBanner() {
         </div>
         <Link
           to="/signup"
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#f2a65a] px-4 py-1.5 text-xs font-semibold text-[#1a0d04] transition hover:brightness-110"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#ae2f26] px-4 py-1.5 text-xs font-semibold text-[#2e1e14] transition hover:brightness-110"
         >
           Skapa konto
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
@@ -231,7 +231,7 @@ function StatusRow({ elo, streak }: { elo: number; streak: number }) {
       </span>
 
       {streak > 0 && (
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#f2a65a] tabular-nums">
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#ae2f26] tabular-nums">
           <Flame className="h-3.5 w-3.5" />
           {streak} dagar
         </span>
@@ -285,8 +285,8 @@ function SubjectPill({
       onClick={onClick}
       className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
         active
-          ? "bg-[#f2a65a]/15 text-[#f2a65a]"
-          : "text-white/50 hover:bg-white/[0.04] hover:text-[#e8e4da]"
+          ? "bg-[#ae2f26]/15 text-[#ae2f26]"
+          : "text-white/50 hover:bg-white/[0.04] hover:text-[#2e1e14]"
       }`}
     >
       {label}
@@ -312,7 +312,7 @@ function ActionCard({
   title: string;
   subtitle: string;
 }) {
-  const accent = tone === "teal" ? "#6fb3b8" : "#f2a65a";
+  const accent = tone === "teal" ? "#7a5236" : "#ae2f26";
   const className =
     "group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/[0.04]";
 
@@ -329,7 +329,7 @@ function ActionCard({
         {icon}
       </span>
       <h3
-        className="mt-3 text-[18px] font-bold leading-tight text-[#e8e4da]"
+        className="mt-3 text-[18px] font-bold leading-tight text-[#2e1e14]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
