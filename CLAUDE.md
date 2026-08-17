@@ -87,6 +87,11 @@ without touching production; use it for anything you cannot check locally.
 
 ### Environment quirks (hard-won)
 
+- **Node ligger inte på PATH i ett icke-inloggat skal.** Den är installerad som
+  officiell tarball i `~/.local/node/bin` (och bun i `~/.local/bun/bin`); båda
+  läggs på PATH av `.zshrc`. Ett skal utan profil ser bara anaconda och får
+  `command not found: node`. Prefixa med
+  `export PATH="$HOME/.local/node/bin:$PATH"`.
 - **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
 - **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
 - External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
@@ -272,6 +277,50 @@ om något liknande dyker upp:
   med orsak i slutet av körningen i stället för att gissa.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
+### Forum
+
+Ett Flashback-liknande diskussionsforum: platta trådar, citat, öppet läsbart.
+Byggt lika mycket som SEO-motor som community — det är därför **allt** renderas i
+route-loaders och aldrig hämtas i klienten.
+
+- **Migration:** `supabase/migrations/20260816120000_forum.sql`. Sju tabeller
+  (`forum_categories/threads/posts/reactions/subscriptions/reports` och
+  `forum_word_filter`), tre nya kolumner på `users`, och alla skrivningar bakom
+  RPC:er.
+- **Skrivgrinden är hela spamskyddet.** Sidan har anonym inloggning påslagen, så
+  `auth.uid() is not null` betyder "vem som helst, obegränsat antal konton, ett
+  HTTP-anrop bort". `public.forum_can_post()` kräver icke-anonymt konto,
+  bekräftad mejl, tio minuters ålder, användarnamn och ingen avstängning.
+  `forum_post_block_reason()` säger *vad* som saknas, så UI:t kan skriva rätt text.
+- **Kvoterna räknas i databasen, inte i `assertRateLimit`.** Limitern i
+  `rate-limit.ts` lever per Cloudflare-isolat; RPC:erna räknar rader i ett
+  tidsfönster (5 trådar/h, 20 inlägg/h, 30 redigeringar/h, och 1 inlägg/2 min för
+  konton med < 5 inlägg). `assertRateLimit` är det billiga första lagret.
+- **Nya användare får inte länka.** Inlägg med URL från ett konto yngre än 24 h
+  eller med < 5 inlägg får `status='pending'` i stället för att avvisas —
+  avvisning lär spammaren vad som släpps igenom. Samma sak för träffar i
+  `forum_word_filter`.
+- **Ingenting raderas hårt.** `status='deleted'` + `deleted_by` + tidpunkt.
+- **`status`-filtret i koden är det riktiga skyddet**, inte RLS-policyn:
+  serverfunktionerna kör med `supabaseAdmin`. Enda stället som medvetet läser
+  dolt innehåll är `forum-moderation.functions.ts`, där `requireAdmin()` ligger
+  först i varje handler.
+- **Inläggstext parsas, renderas aldrig som HTML.** `lib/forum-markdown.ts` ger
+  ett nodträd som `components/forum/ForumBody.tsx` gör React av. Matte (`$…$`)
+  går till befintliga `MathTextLazy`/KaTeX. `dangerouslySetInnerHTML` på
+  användarinnehåll finns inte och ska inte tillkomma.
+- **Tråd-URL:en har id före slug** (`/forum/kvantitativ/482-hur-loser-man-kva`).
+  Uppslag sker på id, så en ändrad rubrik bryter aldrig en gammal länk — fel
+  slug 301:as i loadern. Paginering med `?sida=N`, canonical mot sidan själv
+  (aldrig mot sida 1, det gömmer inläggen från sida 2 och framåt).
+- **Structured data:** `QAPage` med `acceptedAnswer` för `kind='qa'`-kategorier,
+  `DiscussionForumPosting` för resten.
+- Nya `users`-kolumner (`forum_banned_until`, `forum_ban_reason`,
+  `forum_post_count`) är tillagda i `users_protect_sensitive_fields` — utan det
+  kunde en användare häva sin egen avstängning via sin RLS-tillåtna UPDATE.
+- **Trådsitemap, prenumerationer, notiser, sök och reaktioner är fas 2.**
+  `forum_toggle_reaction` och prenumerationstabellen finns redan i migrationen;
+  UI:t gör det inte.
 
 ### Streak
 

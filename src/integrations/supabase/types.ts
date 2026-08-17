@@ -188,6 +188,255 @@ export type Database = {
           },
         ]
       }
+      forum_categories: {
+        Row: {
+          admin_only: boolean
+          created_at: string
+          description: string
+          id: number
+          kind: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          admin_only?: boolean
+          created_at?: string
+          description?: string
+          id?: never
+          kind?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          admin_only?: boolean
+          created_at?: string
+          description?: string
+          id?: never
+          kind?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      forum_posts: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          deleted_at: string | null
+          deleted_by: string | null
+          edit_count: number
+          edited_at: string | null
+          helpful_count: number
+          id: number
+          quoted_post_id: number | null
+          status: string
+          thread_id: number
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          edit_count?: number
+          edited_at?: string | null
+          helpful_count?: number
+          id?: never
+          quoted_post_id?: number | null
+          status?: string
+          thread_id: number
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          edit_count?: number
+          edited_at?: string | null
+          helpful_count?: number
+          id?: never
+          quoted_post_id?: number | null
+          status?: string
+          thread_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_posts_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_reactions: {
+        Row: {
+          created_at: string
+          post_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      forum_reports: {
+        Row: {
+          created_at: string
+          handled_at: string | null
+          handled_by: string | null
+          id: number
+          note: string | null
+          post_id: number
+          reason: string
+          reporter_id: string
+        }
+        Insert: {
+          created_at?: string
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: never
+          note?: string | null
+          post_id: number
+          reason: string
+          reporter_id: string
+        }
+        Update: {
+          created_at?: string
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: never
+          note?: string | null
+          post_id?: number
+          reason?: string
+          reporter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_reports_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_subscriptions: {
+        Row: {
+          last_read_at: string
+          muted: boolean
+          thread_id: number
+          user_id: string
+        }
+        Insert: {
+          last_read_at?: string
+          muted?: boolean
+          thread_id: number
+          user_id: string
+        }
+        Update: {
+          last_read_at?: string
+          muted?: boolean
+          thread_id?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      forum_threads: {
+        Row: {
+          answer_post_id: number | null
+          author_id: string
+          category_id: number
+          created_at: string
+          deleted_at: string | null
+          deleted_by: string | null
+          id: number
+          is_locked: boolean
+          is_pinned: boolean
+          last_post_at: string
+          last_post_by: string | null
+          prov_term: string | null
+          reply_count: number
+          slug: string
+          status: string
+          title: string
+          view_count: number
+        }
+        Insert: {
+          answer_post_id?: number | null
+          author_id: string
+          category_id: number
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          id?: never
+          is_locked?: boolean
+          is_pinned?: boolean
+          last_post_at?: string
+          last_post_by?: string | null
+          prov_term?: string | null
+          reply_count?: number
+          slug: string
+          status?: string
+          title: string
+          view_count?: number
+        }
+        Update: {
+          answer_post_id?: number | null
+          author_id?: string
+          category_id?: number
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          id?: never
+          is_locked?: boolean
+          is_pinned?: boolean
+          last_post_at?: string
+          last_post_by?: string | null
+          prov_term?: string | null
+          reply_count?: number
+          slug?: string
+          status?: string
+          title?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_threads_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "forum_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_word_filter: {
+        Row: {
+          created_at: string
+          pattern: string
+        }
+        Insert: {
+          created_at?: string
+          pattern: string
+        }
+        Update: {
+          created_at?: string
+          pattern?: string
+        }
+        Relationships: []
+      }
       friendships: {
         Row: {
           addressee_id: string
@@ -809,6 +1058,9 @@ export type Database = {
           elo_verbal: number
           elo_verbal_peak: number
           email: string | null
+          forum_ban_reason: string | null
+          forum_banned_until: string | null
+          forum_post_count: number
           games_played: number
           id: string
           is_admin: boolean
@@ -832,6 +1084,9 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          forum_ban_reason?: string | null
+          forum_banned_until?: string | null
+          forum_post_count?: number
           games_played?: number
           id: string
           is_admin?: boolean
@@ -855,6 +1110,9 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          forum_ban_reason?: string | null
+          forum_banned_until?: string | null
+          forum_post_count?: number
           games_played?: number
           id?: string
           is_admin?: boolean
@@ -990,6 +1248,56 @@ export type Database = {
         Returns: {
           id: string
           username: string
+        }[]
+      }
+      forum_can_post: { Args: { _uid: string }; Returns: boolean }
+      forum_create_post: {
+        Args: {
+          _body: string
+          _quoted_post_id?: number
+          _thread_id: number
+          _uid: string
+        }
+        Returns: {
+          post_id: number
+          status: string
+        }[]
+      }
+      forum_create_thread: {
+        Args: {
+          _body: string
+          _category_slug: string
+          _prov_term?: string
+          _slug: string
+          _title: string
+          _uid: string
+        }
+        Returns: {
+          post_id: number
+          slug: string
+          status: string
+          thread_id: number
+        }[]
+      }
+      forum_edit_post: {
+        Args: { _body: string; _post_id: number; _uid: string }
+        Returns: string
+      }
+      forum_moderation_status: {
+        Args: { _body: string; _uid: string }
+        Returns: string
+      }
+      forum_post_block_reason: { Args: { _uid: string }; Returns: string }
+      forum_refresh_thread_stats: { Args: { _thread_id: number }; Returns: undefined }
+      forum_report_post: {
+        Args: { _note?: string; _post_id: number; _reason: string; _uid: string }
+        Returns: number
+      }
+      forum_toggle_reaction: {
+        Args: { _post_id: number; _uid: string }
+        Returns: {
+          helpful_count: number
+          reacted: boolean
         }[]
       }
       get_leaderboard:

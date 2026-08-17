@@ -33,6 +33,7 @@ import {
   Users,
   BarChart3,
   Type,
+  MessagesSquare,
   ChevronDown,
   Settings,
   type LucideIcon,
@@ -111,11 +112,7 @@ export function Navbar() {
                 </SafeBoundary>
               )}
               {profile && (
-                <AccountMenu
-                  profile={profile}
-                  topElo={topElo}
-                  onSignOut={handleSignOut}
-                />
+                <AccountMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
               )}
             </>
           ) : (
@@ -255,6 +252,9 @@ function AccountMenu({
         <AccountMenuLink to="/friends" icon={Users}>
           Vänner
         </AccountMenuLink>
+        <AccountMenuLink to="/forum" icon={MessagesSquare}>
+          Forum
+        </AccountMenuLink>
         <AccountMenuLink to="/gamla-prov" icon={FileText}>
           Gamla prov
         </AccountMenuLink>
@@ -382,6 +382,9 @@ function MobileMenu({
           </MobileNavLink>
           <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
             Gamla prov
+          </MobileNavLink>
+          <MobileNavLink to="/forum" onClick={close} icon={MessagesSquare}>
+            Forum
           </MobileNavLink>
           {profile?.is_admin && (
             <MobileNavLink to="/admin" onClick={close} icon={Settings}>

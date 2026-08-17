@@ -4,6 +4,7 @@ import {
   Plus,
   BarChart3,
   Flag,
+  MessagesSquare,
   Search,
   TrendingUp,
   Check,
@@ -37,6 +38,7 @@ import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
 import { AdminUsageTab } from "@/components/AdminUsageTab";
+import { AdminForumTab } from "@/components/AdminForumTab";
 import { formatDate } from "@/lib/sv-format";
 
 export const Route = createFileRoute("/admin")({
@@ -126,6 +128,10 @@ function AdminPage() {
             <Search className="h-3.5 w-3.5" aria-hidden />
             ORD-audit
           </TabsTrigger>
+          <TabsTrigger value="forum">
+            <MessagesSquare className="h-3.5 w-3.5" aria-hidden />
+            Forum
+          </TabsTrigger>
           <TabsTrigger value="usage">
             <TrendingUp className="h-3.5 w-3.5" aria-hidden />
             Användning
@@ -146,6 +152,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="ord-audit">
           <OrdAuditTab />
+        </TabsContent>
+        <TabsContent value="forum">
+          <AdminForumTab />
         </TabsContent>
         <TabsContent value="usage">
           <AdminUsageTab />

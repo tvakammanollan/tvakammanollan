@@ -10,6 +10,7 @@ const PRODUCT = [
   { label: "Poängräknare", to: "/hogskoleprovet-poangraknare" },
   { label: "Topplista", to: "/leaderboard" },
   { label: "Guider", to: "/guider" },
+  { label: "Forum", to: "/forum" },
 ];
 
 const COMPANY = [
@@ -23,6 +24,7 @@ const COMPANY = [
 const LEGAL = [
   { label: "Integritetspolicy", to: "/integritetspolicy" },
   { label: "Användarvillkor", to: "/villkor" },
+  { label: "Forumregler", to: "/forum/regler" },
 ];
 
 // Öva-sidor per delprov (transaktionell SEO + intern länkning sitewide)
