@@ -525,7 +525,24 @@ def main() -> int:
             "label": exam["label"],
             "passes": [],
         }
-        for pass_meta in exam["passes"]:
+        # Provpass som inte står i provlistan men ligger i cachen. De år UHR
+        # bara publicerade proven som webbsidor finns ingen PDF hos dem alls;
+        # kommer häftet in via adopt_elf.py är det passets enda källa, och det
+        # måste tas med här för att inte tappas bort. Facit avgör som vanligt.
+        listed = {p["pass"] for p in exam["passes"]}
+        extra: list[dict] = []
+        for number in sorted(facit):
+            if number in listed:
+                continue
+            for kind in ("verbal", "kvant"):
+                found = os.path.join(CACHE, exam["term"], f"pass{number}-{kind}.pdf")
+                if os.path.exists(found):
+                    extra.append(
+                        {"kind": kind, "pass": number, "file": found, "url": found}
+                    )
+                    break
+
+        for pass_meta in sorted(exam["passes"] + extra, key=lambda p: p["pass"]):
             answers = dict(facit.get(pass_meta["pass"], {}))
             struck = set(struck_all.get(pass_meta["pass"], set()))
             # 2011–2012 publicerades proven bara som webbsidor, och de sidorna

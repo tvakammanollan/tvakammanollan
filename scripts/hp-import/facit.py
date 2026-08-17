@@ -28,11 +28,21 @@ from pdfutil import clean_text, line_text
 # ändelsen i mönstret plockades svaret aldrig upp, och eftersom build.py kräver
 # facit på varje uppgift försvann hela uppgiften ur provet (2012vt provpass 4
 # tappade fyra av trettio den vägen).
-UTGAR = r"(?:\s*[–—-]\s*utg[åa]r\.?)"
-PAIR_RE = re.compile(rf"^(\d(?:\s*\d)?)\s*([A-E](?:\s*,\s*[A-E])*)({UTGAR})?$", re.I)
+#
+# 'D – ändrat' betyder något annat: uppgiften räknas, men UHR har rättat vilket
+# svar som är rätt. Bokstaven som står där är den korrigerade. Den noteringen
+# finns bara på en uppgift i hela arkivet (2012vt provpass 5, uppgift 18) och
+# fällde tidigare hela provpasset.
+UTGAR = r"(?:\s*[–—-]\s*(utg[åa]r|ändrat)\.?)"
+PAIR_RE = re.compile(rf"^(\d(?:\s*\d)?)\s*([A-E](?:\s*,\s*[A-E])*){UTGAR}?$", re.I)
 NUM_RE = re.compile(r"^\d(?:\s*\d)?$")
-LETTER_RE = re.compile(rf"^([A-E](?:\s*,\s*[A-E])*)({UTGAR})?$", re.I)
+LETTER_RE = re.compile(rf"^([A-E](?:\s*,\s*[A-E])*){UTGAR}?$", re.I)
 PASS_HEADER_RE = re.compile(r"provpass\s*(\d)", re.I)
+
+
+def _struck(note: str | None) -> bool:
+    """Bara 'utgår' betyder struken; 'ändrat' är ett korrigerat rätt svar."""
+    return bool(note) and note.lower().startswith("utg")
 
 
 def _tokens(page: "fitz.Page") -> list[tuple[str, float, float]]:
@@ -85,14 +95,16 @@ def _answers(tokens: list[tuple[str, float, float]]) -> list[tuple[int, str, boo
     for txt, x, y in tokens:
         m = PAIR_RE.match(txt)
         if m:
-            found.append((int(m.group(1).replace(" ", "")), _letters(m.group(2)), bool(m.group(3)), x, y))
+            found.append(
+                (int(m.group(1).replace(" ", "")), _letters(m.group(2)), _struck(m.group(3)), x, y)
+            )
             continue
         if NUM_RE.match(txt):
             numbers.append((int(txt.replace(" ", "")), x, y))
             continue
         m = LETTER_RE.match(txt)
         if m:
-            letters.append((_letters(m.group(1)), bool(m.group(2)), x, y))
+            letters.append((_letters(m.group(1)), _struck(m.group(2)), x, y))
 
     # Para ihop lösa siffror och bokstäver: samma rad, bokstaven till höger.
     used: set[int] = set()

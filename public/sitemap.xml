@@ -1119,7 +1119,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://hpkampen.se/gamla-prov/2012vt/3</loc>
+    <lastmod>2012-03-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://hpkampen.se/gamla-prov/2012vt/4</loc>
+    <lastmod>2012-03-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012vt/5</loc>
     <lastmod>2012-03-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>

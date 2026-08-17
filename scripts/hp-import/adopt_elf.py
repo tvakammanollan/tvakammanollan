@@ -63,6 +63,12 @@ def cover(path: str) -> tuple[str | None, int | None]:
     return date.group(0), int(number.group(1))
 
 
+def pass_kind(path: str) -> str:
+    """'verbal' eller 'kvant' ur häftets framsida — den anger vilken del det är."""
+    text = fitz.open(path)[0].get_text()
+    return "kvant" if re.search(r"[Kk]vantitativ del", text) else "verbal"
+
+
 def same_exam(candidate: str, existing: str) -> bool:
     """
     Är det här samma provpass som det vi redan har?
@@ -123,7 +129,26 @@ def main() -> int:
 
         stripped = file_for.get((term, number))
         if not stripped or not os.path.exists(stripped):
-            rows.append(("?", f"{term} pass {number}: inget sådant provpass — {name}"))
+            # Provpasset finns inte i provlistan alls. Det gäller de år UHR bara
+            # publicerade proven som webbsidor: 2012vt är registrerat med sina
+            # två verbala pass, medan de kvantitativa aldrig fick någon PDF hos
+            # dem. Har vi facit för passet är häftet den enda källa som finns,
+            # och build.py hittar det i cachen på namnet.
+            keys, _ = parse_facit(os.path.join(CACHE, term, "facit.pdf"))
+            answers = len(keys.get(number, {}))
+            if answers < 25:
+                rows.append(("?", f"{term} pass {number}: inget sådant provpass — {name}"))
+                continue
+            target = os.path.join(CACHE, term, f"pass{number}-{pass_kind(path)}.pdf")
+            if os.path.exists(target):
+                rows.append((" ", f"{term} pass {number}: fanns redan"))
+            else:
+                if apply:
+                    shutil.copy(path, target)
+                added += 1
+                rows.append(
+                    ("+", f"{term} pass {number}: nytt {pass_kind(path)}pass, facit {answers}")
+                )
             continue
         # 2011–2012 publicerades proven bara som webbsidor. Kommer provhäftet
         # in den här vägen är det en bättre källa än de sidorna: hela passet i

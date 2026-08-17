@@ -173,12 +173,17 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 ### Gamla prov — arkivet och importen
 
 Alla provtillfällen som går att få tag på finns i appen: 30 stycken
-(VT2012–VT2026), 118 provpass,
-4 720 uppgifter, facit på varje. 29 av 30 prov är kompletta 160-uppgiftersprov
-— HT2012 till VT2026 utan lucka. ELF finns i **samtliga** 60 verbala provpass
-(600 uppgifter); det gäller sedan 2026-08-17 och är inte längre något som
-varierar mellan provtillfällen. Datan är **genererad** — redigera aldrig
-`src/data/prov/` för hand, kör om importen.
+(VT2012–VT2026), 120 provpass, 4 800 uppgifter, facit på varje.
+
+**Arkivet är komplett sedan 2026-08-17.** Varje prov har sina fyra räknade
+provpass à 40 uppgifter — 30 × 160 = 4 800 — och ELF finns i samtliga 60
+verbala pass. Att ett provpass har 30 uppgifter, eller att ett prov saknar
+ELF, är därför inte längre något normalt utan ett tecken på att importen
+gått fel. Motsvarande gäller delproven: ORD, LÄS, MEK och ELF ska vara 600
+var, XYZ och DTK 720, KVA 600, NOG 360.
+
+Datan är **genererad** — redigera aldrig `src/data/prov/` för hand, kör om
+importen.
 
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
@@ -224,6 +229,17 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   2016 står där som 2016-04-04, en måndag; provet skrevs den 9:e, vilket är vad
   UHR:s egen katalognamn (`hp-2016-04-09`) och häftet säger. `adopt_elf.py`
   matchar därför på båda.
+- **Provpass som inte står i provlistan byggs ändå.** De år UHR bara publicerade
+  proven som webbsidor finns ingen PDF hos dem alls, så `sources.json` känner
+  t.ex. bara till 2012vt:s två verbala pass. `build.py` letar därför efter
+  `pass{N}-{verbal,kvant}.pdf` i cachen för varje provpass facit täcker, och
+  bygger det som hittas. Det är så vårprovet 2012 blev komplett.
+- **`utgår` och `ändrat` i facit är inte samma sak.** `C – utgår` betyder att
+  uppgiften strukits i efterhand: rätt svar står kvar men poängen räknades
+  inte. `D – ändrat` betyder att UHR rättat *vilket* svar som är rätt —
+  uppgiften räknas som vanligt. Behandlas de lika blir en giltig uppgift
+  markerad som struken, eller så tappas svaret helt och hela provpasset
+  underkänns (2012vt provpass 5, uppgift 18 — den enda i arkivet).
 - **Vårprovet 2020 ställdes in och skrevs aldrig.** Häftena var redan tryckta,
   och samma prov användes i stället den 25 oktober 2020 — texten är identisk,
   bara framsidans datum skiljer. Ett häfte märkt 2020-04-04 hör alltså till
