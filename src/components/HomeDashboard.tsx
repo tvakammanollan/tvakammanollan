@@ -117,7 +117,12 @@ export function HomeDashboard() {
         {/* ---------- 1. Spela match ---------- */}
         <Reveal y={20} delay={0.05}>
           <section>
-            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/25 bg-[var(--card)] p-5 backdrop-blur-sm sm:p-6">
+            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/30 p-5 backdrop-blur-sm sm:p-6"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(174,47,38,0.07) 0%, rgba(255,255,255,0.9) 55%)",
+              }}
+            >
               <span
                 aria-hidden
                 className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
@@ -345,13 +350,21 @@ function ActionCard({
   const cardStyle: React.CSSProperties = {
     borderTopColor: accent,
     borderTopWidth: 3,
-    background: `linear-gradient(180deg, ${accent}14 0%, #ffffff 60%)`,
+    background: `linear-gradient(180deg, ${accent}14 0%, #fffdf9 60%)`,
   };
   const className =
     "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[rgba(46,30,20,0.16)] p-5 text-left backdrop-blur-sm transition-colors hover:border-[rgba(46,30,20,0.3)]";
 
   const body = (
     <>
+      {badge ? (
+        <span
+          className="pointer-events-none absolute right-0 top-0 rounded-bl-xl px-2.5 py-1 text-[11px] font-bold tracking-wide text-[#fff8f5]"
+          style={{ background: "#ae2f26" }}
+        >
+          {badge}
+        </span>
+      ) : null}
       <span
         className="flex h-10 w-10 items-center justify-center rounded-xl border"
         style={{
