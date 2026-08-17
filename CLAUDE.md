@@ -92,7 +92,7 @@ without touching production; use it for anything you cannot check locally.
   läggs på PATH av `.zshrc`. Ett skal utan profil ser bara anaconda och får
   `command not found: node`. Prefixa med
   `export PATH="$HOME/.local/node/bin:$PATH"`.
-- **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
+- **`SUPABASE_SERVICE_ROLE_KEY` ligger i `.env.local`** (gitignorerad via `*.local`) och pekar på **produktionsdatabasen** — det finns ingen separat utvecklingsinstans. Med den går det att köra REST- och admin-anrop mot skarpa data från terminalen, vilket är hur botkontona städades 2026-08-17. Två följder: `supabaseAdmin` går att anropa lokalt om nyckeln laddas explicit (den läses inte av `vite dev` själv, så i appen är den fortfarande en lazy proxy som kastar vid anrop), och varje sådant anrop träffar riktiga användare. Ta backup före allt som raderar. Nyckeln får aldrig hamna i `.env` — den filen är committad.
 - **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
 - External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
 - `eslint src` reports ~900 pre-existing `prettier/prettier` errors across files nobody
@@ -433,6 +433,26 @@ is a different selector from `bg-red-500` and needs its own entry.
 - Authenticated mutations: `assertRateLimit(\`thing:${userId}\`, limits.xxx)` first in the handler.
 - Public GET endpoints: `assertRateLimit(ipKey("thing"), limits.publicRead)` (keys on `cf-connecting-ip`).
 - Per-isolate on Cloudflare — it's a hammering brake, not an exact global quota.
+- **Volymkvoter måste räknas i databasen.** Av precis det skälet: forumet räknar
+  rader i RPC:erna, och matcher räknas i `matches` via `checkMatchQuota`
+  (`src/lib/match-abuse.ts`). `assertRateLimit` är alltid bara första lagret.
+
+### Matchspam & ELO-odling (2026-08-16)
+
+Fyra anonyma konton körde 20–300 botmatcher var på ett dygn och tog hela toppen
+av den verbala topplistan (översta på 2226 ELO). Hålet: cooldownen i
+`createMatch` **hoppade uttryckligen över botmatcher**, alltså det enda läge som
+ger ELO utan motpart, och den enda andra bromsen var den per-isolat-limitern.
+Kontona och deras 560 matcher är raderade; två lager tillkom:
+
+- `checkMatchQuota` — 20 matcher/h och 80/dygn, räknat ur `matches`, **alla
+  lägen inklusive bot**. En riktig spelare hinner max ~12/h (5 min/match).
+- `isImplausiblyFast` — en match som lämnats in på under 2 sekunder per fråga
+  avslutas utan ELO och utan statistik. Mäts från `created_at`, som för privata
+  rum ligger före spelstart, så golvet kan bara slå på botmatcher.
+
+Kvarstående hål värt att stänga: anonyma konton syns på topplistan, och de går
+att skapa i obegränsat antal. `limits.guestSignup` är 5/h **per IP**.
 
 ### GDPR / privacy — non-negotiable
 
