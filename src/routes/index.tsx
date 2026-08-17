@@ -1,5 +1,6 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
-import { useAuth, isAutoUsername } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
+import { isAutoUsername } from "@/lib/username";
 import { HeroLanding } from "@/components/HeroLanding";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { pageMeta, pageLinks } from "@/lib/page-meta";

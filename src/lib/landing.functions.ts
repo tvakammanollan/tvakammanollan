@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { isRankable } from "./username";
 
 export interface RecentMatch {
   id: string;
@@ -120,13 +121,15 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           .maybeSingle(),
         { data: null } as { data: { elo_math: number | null } | null },
       ),
+      // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
+      // tabellen och sållas bort nedan (isRankable).
       safe(
         supabaseAdmin
           .from("users")
           .select("username, elo_verbal")
           .gte("games_played", 1)
           .order("elo_verbal", { ascending: false })
-          .limit(5),
+          .limit(40),
         { data: [] } as {
           data: Array<{ username: string | null; elo_verbal: number | null }>;
         },
@@ -137,7 +140,7 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           .select("username, elo_math")
           .gte("games_played", 1)
           .order("elo_math", { ascending: false })
-          .limit(5),
+          .limit(40),
         { data: [] } as {
           data: Array<{ username: string | null; elo_math: number | null }>;
         },
@@ -179,7 +182,8 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           elo_verbal: number | null;
         }>
       )
-        .filter((u) => u.username && (u.elo_verbal ?? 0) > 0)
+        .filter((u) => isRankable(u.username) && (u.elo_verbal ?? 0) > 0)
+        .slice(0, 5)
         .map((u) => ({
           username: u.username as string,
           elo: u.elo_verbal as number,
@@ -191,7 +195,8 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           elo_math: number | null;
         }>
       )
-        .filter((u) => u.username && (u.elo_math ?? 0) > 0)
+        .filter((u) => isRankable(u.username) && (u.elo_math ?? 0) > 0)
+        .slice(0, 5)
         .map((u) => ({
           username: u.username as string,
           elo: u.elo_math as number,
