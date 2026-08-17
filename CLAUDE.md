@@ -98,6 +98,15 @@ without touching production; use it for anything you cannot check locally.
 - `eslint src` reports ~900 pre-existing `prettier/prettier` errors across files nobody
   has touched. Lint the files you changed (`npx eslint <path>`) instead of the tree, and
   do not run `--fix` repo-wide unless that reformat is the actual task.
+- **På Windows-maskinen går varken `npm run dev` eller `npm run build`.**
+  `@lovable.dev/mcp-js` jämför Vites `root` (normaliserad med `/`) mot
+  `resolve(root, "src/routes")` (som ger `\`) och kastar
+  `routesDir "src/routes" must resolve under …` redan i `configResolved` — alltså
+  innan någon källfil lästs, oberoende av vad man ändrat. Där går bara
+  `npx tsc --noEmit`, `npx eslint <path>` och `npm run test`; bygge och SSR-rök
+  måste ske på Linux-maskinen eller i CI. Samma utcheckning har dessutom
+  `core.autocrlf=true`, så *varje* fil ger `Delete ␍` i eslint — filtrera bort dem
+  för att se de riktiga träffarna.
 - Verifying rendered pages: `--dump-dom` snapshots fire before React finishes its
   async queries, so pages look empty at random. Drive Chrome over CDP with
   `--remote-debugging-port` and poll `document.body.innerText` until the expected text
@@ -396,6 +405,27 @@ route-loaders och aldrig hämtas i klienten.
 - **Kvar (fas 3):** publika profiler `/u/$username`, bilduppladdning,
   "obesvarade frågor"-vy, veckomejl, edge-cache för utloggade, meta-kategori.
   Och **seedning** — forumet har noll trådar, så sitemapen är tom.
+
+### Topplistan
+
+Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
+`fetchWeeklyLeaderboard` (`leaderboard.functions.ts`) och `fetchOrdLeaderboard`
+(`word-practice.functions.ts`).
+
+- **Anonyma konton rankas inte** (2026-08-17). `isRankable()` i
+  `src/lib/username.ts` är enda definitionen — den täcker både auto-namnen
+  `user_<8 hex>` som `handle_new_user()` sätter och tomma namn. Samma funktion
+  driver `displayName()` i UI:t, så allt som *visas* som "Anonym" är också
+  filtrerat; särar man på dem hamnar namnlösa rader i listan igen.
+- **Filtret måste ligga i serverfunktionen.** Listorna är publika endpoints utan
+  auth — ett klientfilter är kosmetika. Bakgrunden står i `match-abuse.ts`: fyra
+  gästkonton odlade ELO mot bottar och tog hela toppen av den verbala listan.
+- **Sålla före `slice()`, aldrig efter**, annars äter de bortfiltrerade raderna
+  platser i topp 100. `fetchLeaderboard` läser därför `users` sidvis
+  (`SCAN_PAGE`) tills den fyllt `limit` — gästkonton är majoriteten av tabellen,
+  så ett enkelt `.limit()` gav en halvfull lista.
+- Tröskeln på antal matcher är fortfarande **1** och togs medvetet bort en gång;
+  återinför den inte utan att fråga.
 
 ### Streak
 

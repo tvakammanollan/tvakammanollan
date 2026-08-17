@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { isRankable } from "./username";
 
 export interface LeaderboardRow {
   rank: number;
@@ -13,12 +14,6 @@ export interface LeaderboardRow {
   losses: number;
 }
 
-/**
- * Direct query against `users` as service role (bypasses RLS and the
- * too-strict get_leaderboard RPC filter). No client-side filter, no
- * games_played >= N threshold — anyone who has played at least 1 match
- * (incl. guests, test accounts) shows up.
- */
 export interface WeeklyLeaderboardRow {
   rank: number;
   user_id: string;
@@ -61,18 +56,40 @@ export const fetchWeeklyLeaderboard = createServerFn({ method: "GET" })
     const nameMap = new Map<string, string>();
     for (const u of users ?? []) nameMap.set(u.id as string, (u.username as string) ?? "");
 
-    return Array.from(agg.entries())
-      .map(([user_id, v]) => ({
-        user_id,
-        username: nameMap.get(user_id) ?? "",
-        elo_gain: v.gain,
-        games: v.games,
-      }))
-      .sort((a, b) => b.elo_gain - a.elo_gain)
-      .slice(0, limit)
-      .map((r, i) => ({ rank: i + 1, ...r }));
+    return (
+      Array.from(agg.entries())
+        .map(([user_id, v]) => ({
+          user_id,
+          username: nameMap.get(user_id) ?? "",
+          elo_gain: v.gain,
+          games: v.games,
+        }))
+        // Sållas före slice() — annars äter anonyma konton platser i topplistan.
+        .filter((r) => isRankable(r.username))
+        .sort((a, b) => b.elo_gain - a.elo_gain)
+        .slice(0, limit)
+        .map((r, i) => ({ rank: i + 1, ...r }))
+    );
   });
 
+/**
+ * Rader per varv när listan läses igenom. Anonyma konton är majoriteten av
+ * `users` (de flesta spelar en botmatch som gäst och försvinner), så ett enda
+ * `limit`-anrop skulle ge en halvfull lista efter filtret. Sidorna är stabila
+ * tack vare sekundärsorteringen på `id`.
+ */
+const SCAN_PAGE = 500;
+/** Bortre gräns: 3 000 genomlästa rader räcker med marginal för 500 rankade. */
+const SCAN_MAX_PAGES = 6;
+
+/**
+ * "Alltid" — direkt fråga mot `users` som service role (förbi RLS och det
+ * för strikta filtret i get_leaderboard-RPC:n). Ingen tröskel på antal
+ * matcher, en spelad match räcker, men **anonyma konton rankas inte**
+ * (`isRankable`). Filtret ligger här och inte i UI:t: serverfunktionen är
+ * publik, och det var gästkonton som odlade ELO mot bottar och tog hela
+ * toppen av den verbala listan 2026-08-17.
+ */
 export const fetchLeaderboard = createServerFn({ method: "GET" })
   .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
   .handler(async ({ data }) => {
@@ -81,25 +98,35 @@ export const fetchLeaderboard = createServerFn({ method: "GET" })
     const eloCol = data.match_type === "verbal" ? "elo_verbal" : "elo_math";
     const limit = Math.min(Math.max(data.limit ?? 200, 1), 500);
 
-    const { data: rows, error } = await supabaseAdmin
-      .from("users")
-      .select(`id, username, ${eloCol}, games_played, wins, losses`)
-      .gte("games_played", 1)
-      .order(eloCol, { ascending: false })
-      .order("id", { ascending: true })
-      .limit(limit);
+    const ranked: Omit<LeaderboardRow, "rank">[] = [];
+    for (let page = 0; page < SCAN_MAX_PAGES && ranked.length < limit; page++) {
+      const from = page * SCAN_PAGE;
+      const { data: rows, error } = await supabaseAdmin
+        .from("users")
+        .select(`id, username, ${eloCol}, games_played, wins, losses`)
+        .gte("games_played", 1)
+        .order(eloCol, { ascending: false })
+        .order("id", { ascending: true })
+        .range(from, from + SCAN_PAGE - 1);
 
-    if (error) throw new Error(error.message);
+      if (error) throw new Error(error.message);
 
-    return ((rows ?? []) as Array<Record<string, unknown>>).map(
-      (r, i): LeaderboardRow => ({
-        rank: i + 1,
-        user_id: r.id as string,
-        username: (r.username as string) ?? "",
-        elo: (r[eloCol] as number) ?? 1000,
-        games_played: (r.games_played as number) ?? 0,
-        wins: (r.wins as number) ?? 0,
-        losses: (r.losses as number) ?? 0,
-      }),
-    );
+      const batch = (rows ?? []) as Array<Record<string, unknown>>;
+      for (const r of batch) {
+        if (!isRankable(r.username as string)) continue;
+        ranked.push({
+          user_id: r.id as string,
+          username: (r.username as string) ?? "",
+          elo: (r[eloCol] as number) ?? 1000,
+          games_played: (r.games_played as number) ?? 0,
+          wins: (r.wins as number) ?? 0,
+          losses: (r.losses as number) ?? 0,
+        });
+        if (ranked.length >= limit) break;
+      }
+      // Kortare sida än begärt = slut på tabellen, inte slut på rankade konton.
+      if (batch.length < SCAN_PAGE) break;
+    }
+
+    return ranked.map((r, i): LeaderboardRow => ({ rank: i + 1, ...r }));
   });

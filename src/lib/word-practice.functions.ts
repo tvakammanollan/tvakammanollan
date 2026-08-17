@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { isRankable } from "./username";
 
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
@@ -351,13 +352,15 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const userId = data.user_id ?? null;
     // Hämta från ord_practice_stats (redan aggregerad per användare).
-    // Bypass RPC + filter — alla som har minst 1 svar syns.
+    // Bypass RPC + filter — alla som har minst 1 svar syns, utom anonyma konton
+    // (se username.ts). Hämtar 500 för att fylla topp 100 även när en stor del
+    // av raderna är gästkonton.
     const { data: stats, error } = await supabaseAdmin
       .from("ord_practice_stats")
       .select("user_id, correct_count, total_count")
       .gte("total_count", 1)
       .order("correct_count", { ascending: false })
-      .limit(200);
+      .limit(500);
     if (error) throwDbError(error, "fetchOrdLeaderboard");
 
     const statsRows = (stats ?? []) as Array<{
@@ -385,6 +388,8 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
         total_count: s.total_count,
         accuracy: s.total_count > 0 ? Math.round((s.correct_count * 100) / s.total_count) : 0,
       }))
+      // Före slice() — annars äter anonyma konton platser i topp 100.
+      .filter((r) => isRankable(r.username))
       .slice(0, 100)
       .map((r, i) => ({ ...r, rank: i + 1 }));
 

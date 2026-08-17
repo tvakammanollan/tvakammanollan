@@ -23,10 +23,6 @@ export interface Profile {
   last_active_date?: string | null;
 }
 
-export function isAutoUsername(username: string | null | undefined): boolean {
-  return !!username && /^user_[0-9a-f]{8}$/.test(username);
-}
-
 export function isGuestUser(user: User | null | undefined): boolean {
   if (!user) return false;
   return user.is_anonymous === true || user.app_metadata?.provider === "anonymous" || !user.email;

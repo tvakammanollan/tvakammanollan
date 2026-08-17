@@ -17,6 +17,7 @@ import {
   fetchWeeklyLeaderboard,
   type WeeklyLeaderboardRow,
 } from "@/lib/leaderboard.functions";
+import { isRankable } from "@/lib/username";
 import { EmptyState } from "@/components/EmptyState";
 import { Reveal } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
@@ -34,15 +35,19 @@ interface LbRow {
 }
 
 function displayName(username: string): string {
-  if (!username || /^user_[0-9a-f]{6,}/i.test(username.trim())) return "Anonym";
-  return username;
+  return isRankable(username) ? username : "Anonym";
 }
 
+/**
+ * Serverfunktionerna filtrerar redan bort anonyma konton — det här är samma
+ * regel en gång till för "Vänner"-vyn, som sållar i en redan hämtad lista, och
+ * som skydd om en cachad payload från före filtret ligger kvar i react-query.
+ */
 function filterLeaderboard<T extends { username: string; rank: number }>(
   rows: T[] | undefined | null,
 ): T[] {
   return (Array.isArray(rows) ? rows : [])
-    .filter((r) => (r.username ?? "").trim().length > 0)
+    .filter((r) => isRankable(r.username))
     .map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
@@ -127,10 +132,10 @@ function LeaderboardPage() {
             </TabsList>
 
             <TabsContent value="verbal">
-              <Board matchType="verbal" currentUserId={user?.id} />
+              <Board matchType="verbal" currentUserId={user?.id} isGuest={!!user?.is_anonymous} />
             </TabsContent>
             <TabsContent value="math">
-              <Board matchType="math" currentUserId={user?.id} />
+              <Board matchType="math" currentUserId={user?.id} isGuest={!!user?.is_anonymous} />
             </TabsContent>
             <TabsContent value="ord">
               <OrdBoard />
@@ -171,9 +176,11 @@ function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) =
 function Board({
   matchType,
   currentUserId,
+  isGuest,
 }: {
   matchType: MatchType;
   currentUserId: string | undefined;
+  isGuest: boolean;
 }) {
   const fetchLb = useServerFn(fetchLeaderboard);
   const fetchWeekly = useServerFn(fetchWeeklyLeaderboard);
@@ -297,6 +304,7 @@ function Board({
             loading={loading}
             error={error}
             currentUserId={currentUserId}
+            isGuest={isGuest}
             friendsOnly={scope === "friends"}
             friendIds={friendIds}
           />
@@ -311,6 +319,7 @@ function AllTimeTable({
   loading,
   error,
   currentUserId,
+  isGuest,
   friendsOnly,
   friendIds,
 }: {
@@ -318,6 +327,7 @@ function AllTimeTable({
   loading: boolean;
   error: string | null;
   currentUserId: string | undefined;
+  isGuest: boolean;
   friendsOnly: boolean;
   friendIds: Set<string> | null;
 }) {
@@ -327,7 +337,9 @@ function AllTimeTable({
   const top = scoped.slice(0, 100);
   const me = currentUserId ? scoped.find((r) => r.user_id === currentUserId) : undefined;
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  const notRanked = !friendsOnly && !!currentUserId && (!me || me.games_played < 1);
+  // Gästkonton står aldrig i listan, så "spela en match" vore fel besked — de
+  // har redan spelat. Banderollen högst upp på sidan säger vad som krävs.
+  const notRanked = !friendsOnly && !!currentUserId && !isGuest && (!me || me.games_played < 1);
 
   if ((loading && rows.length === 0) || (friendsOnly && friendIds === null))
     return <TableSkeleton />;
@@ -571,6 +583,9 @@ function OrdBoard() {
   }, [load]);
 
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
+  // Gästkonton rankas inte, och `me`-raden från servern saknar placering
+  // (rank 0) — visa den inte som "Din placering: #0".
+  const showMe = !!me && !meInTop && !user?.is_anonymous;
 
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -613,7 +628,7 @@ function OrdBoard() {
               {top.map((r) => (
                 <OrdRow key={r.user_id} r={r} isMe={!!user && r.user_id === user.id} />
               ))}
-              {!meInTop && me && (
+              {showMe && me && (
                 <>
                   <tr>
                     <td colSpan={5} className="px-3 py-2 text-center text-xs text-white/45">
