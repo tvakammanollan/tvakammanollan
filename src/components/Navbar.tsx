@@ -51,8 +51,10 @@ export function Navbar() {
 
   const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
 
-  // Scroll-aware: helt transparent vid top, glas-bg först när användaren
-  // scrollar — så hero-shadern bleeds fritt under navbaren utan strip.
+  // Scroll-aware: raden har alltid en egen yta, men djupnar när man
+  // scrollar. Toppläget var tidigare helt transparent för att
+  // hero-shadern skulle blöda igenom. Shadern är borttagen, och
+  // transparensen gjorde bara att navbaren flöt ihop med sidan.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -63,11 +65,16 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-[background,backdrop-filter] duration-300"
+      // Navbaren låg tidigare helt transparent i toppläget och på 0,88
+      // opacitet vid scroll, vilket gjorde att den flöt ihop med sidan.
+      // Nu en solid, något djupare sandton hela vägen plus en synlig
+      // underkant, så raden alltid har en egen yta att stå på.
+      className="sticky top-0 z-50 border-b transition-[background,border-color,backdrop-filter] duration-300"
       style={{
-        background: scrolled ? "rgba(251, 246, 236, 0.88)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : undefined,
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : undefined,
+        background: scrolled ? "rgba(240, 228, 206, 0.97)" : "rgba(246, 239, 226, 0.95)",
+        borderBottomColor: scrolled ? "rgba(46, 30, 20, 0.15)" : "rgba(46, 30, 20, 0.1)",
+        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
+        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
