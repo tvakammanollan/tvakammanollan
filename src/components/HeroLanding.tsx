@@ -196,7 +196,7 @@ export function HeroLanding() {
               <p className="mt-2 flex-1 text-[15px] leading-relaxed text-white/65">{s}</p>
               <Link
                 to={to}
-                className="mt-5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+                className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
               >
                 {cta}
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
@@ -318,7 +318,7 @@ export function HeroLanding() {
             <div className="mt-6 text-center">
               <Link
                 to="/leaderboard"
-                className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+                className="inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
               >
                 Hela topplistan
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
@@ -342,7 +342,7 @@ export function HeroLanding() {
             </p>
             <Link
               to="/hogskoleprovet-datum"
-              className="mt-6 inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+              className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
             >
               Alla provdatum
               <ArrowRight className="h-3.5 w-3.5" aria-hidden />
@@ -378,7 +378,7 @@ export function HeroLanding() {
           <div className="mt-6 text-center">
             <Link
               to="/faq"
-              className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+              className="inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
             >
               Fler frågor
               <ArrowRight className="h-3.5 w-3.5" aria-hidden />

@@ -218,6 +218,13 @@ export function KunskapsTrad({ score = 1.45, seed = 20260516 }: { score?: number
 
     draw();
 
+    // ResizeObserver, inte bara window-resize: vid montering har canvasen
+    // ännu ingen uppmätt storlek, draw() avbryter på `if (!r.width) return`
+    // och utan en observer görs aldrig ett nytt försök. Trädet blev då en
+    // tom 300x150-ruta utan att något felade.
+    const ro = new ResizeObserver(() => draw());
+    ro.observe(cv);
+
     const onResize = () => draw();
     window.addEventListener("resize", onResize);
 
@@ -240,6 +247,7 @@ export function KunskapsTrad({ score = 1.45, seed = 20260516 }: { score?: number
     }
 
     return () => {
+      ro.disconnect();
       window.removeEventListener("resize", onResize);
       if (io) io.disconnect();
       if (raf) cancelAnimationFrame(raf);
