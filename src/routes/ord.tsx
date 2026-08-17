@@ -155,7 +155,7 @@ function DefinitionBlock({
               {definitionSourceLabel(source)}
             </div>
             <p
-              className="whitespace-pre-wrap text-[#2e1e14]"
+              className="whitespace-pre-wrap text-[var(--cream)]"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
               {ordDefinition(definition)}
@@ -559,7 +559,7 @@ function OrdPracticePage() {
                           className="flex items-center justify-between border-b border-red-500/15 px-4 py-2.5 last:border-0"
                         >
                           <div className="min-w-0 flex-1">
-                            <span className="text-sm font-medium tracking-tight text-[#2e1e14]">
+                            <span className="text-sm font-medium tracking-tight text-[var(--cream)]">
                               {ordText(w.question_text)}
                             </span>
                             <div className="mt-1 flex items-center gap-2">

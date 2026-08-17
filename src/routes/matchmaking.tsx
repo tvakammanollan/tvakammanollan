@@ -215,7 +215,7 @@ function MatchmakingPage() {
         </span>
         <div>
           <h1
-            className="text-xl font-bold text-[#2e1e14]"
+            className="text-xl font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Kunde inte starta en match
@@ -267,7 +267,7 @@ function MatchmakingPage() {
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >

@@ -69,7 +69,7 @@ export function ResumeMatchBanner() {
 
   return (
     <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.08] px-4 py-3 text-sm backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
-      <span className="text-[#2e1e14]">
+      <span className="text-[var(--cream)]">
         ⏳ Du har en pågående{" "}
         {saved.matchType === "math" ? "matte-" : saved.matchType === "verbal" ? "verbal-" : ""}
         match – vill du fortsätta?

@@ -69,8 +69,8 @@ export function CoachingModal({
             <CheckCircle2 className="mx-auto h-12 w-12 text-[#ae2f26]" />
             <h2 className="mt-3 text-xl font-semibold">Tack {name}!</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att boka in dina gratis
-              30 minuter med en av våra 1.9+-coacher.
+              Vi hör av oss till <strong>{email}</strong> inom 24 timmar för att gå igenom ditt
+              upplägg med en av våra 1,95+-coacher.
             </p>
             <Button
               className="mt-6 bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
@@ -86,11 +86,12 @@ export function CoachingModal({
                 <GraduationCap className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">
-                Boka 30 mins gratis coachning
+                Få ett studieupplägg gjort för dig
               </DialogTitle>
               <DialogDescription className="text-center">
-                Få personlig vägledning från en av våra experter som själva fått{" "}
-                <strong>1.9 eller högre</strong> på HP. Helt gratis.
+                Träningen här tar dig långt på egen hand. Vet du inte var tiden ska läggas bygger vi
+                ett upplägg efter var du står och hur lång tid du har kvar, av någon som själv fått{" "}
+                <strong>1,95 eller högre</strong> på provet.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={submit} className="mt-2 space-y-3">
@@ -143,7 +144,7 @@ export function CoachingModal({
                 className="w-full bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Boka mina gratis 30 min
+                Hör av er till mig
               </Button>
             </form>
           </>

@@ -194,7 +194,7 @@ export function SuccessScreen() {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26] shadow-[0_0_32px_rgba(174, 47, 38,0.55)]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 text-[#2e1e14]"
+            className="h-8 w-8 text-[var(--cream)]"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

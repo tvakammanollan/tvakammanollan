@@ -59,7 +59,7 @@ function PoangPage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[40px]"
+          className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet poäng &amp; antagning
@@ -76,7 +76,7 @@ function PoangPage() {
         {/* Vad betyder poängen */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <Calculator className="h-5 w-5 text-[#ae2f26]" />
@@ -93,7 +93,7 @@ function PoangPage() {
         {/* Normering — hur råpoängen blir ett betyg */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <Scale className="h-5 w-5 text-[#ae2f26]" />
@@ -154,7 +154,7 @@ function PoangPage() {
         {/* Hur används HP */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <GraduationCap className="h-5 w-5 text-[#ae2f26]" />
@@ -188,7 +188,7 @@ function PoangPage() {
         {/* Vad krävs */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <TrendingUp className="h-5 w-5 text-[#ae2f26]" />
@@ -237,7 +237,7 @@ function PoangPage() {
       {/* CTA */}
       <section className="mt-12 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Höj din poäng – öva gratis
@@ -257,13 +257,13 @@ function PoangPage() {
           <Link
             to="/ova/$delprov"
             params={{ delprov: "ord" }}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
           >
             Öva per delprov
           </Link>
           <Link
             to="/hogskoleprovet-datum"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
           >
             Provdatum
           </Link>

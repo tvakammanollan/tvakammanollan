@@ -410,7 +410,7 @@ function TrainPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
               Ditt pass
             </p>
-            <p className="mt-1.5 text-[15px] text-[#2e1e14]">{configSummary}</p>
+            <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
 
             <PrimaryCTA
               onClick={startTraining}
@@ -425,7 +425,7 @@ function TrainPage() {
               type="button"
               onClick={() => setCustomising((v) => !v)}
               aria-expanded={customising}
-              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#2e1e14]"
+              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[var(--cream)]"
             >
               <SlidersHorizontal className="h-4 w-4" />
               {customising ? "Dölj inställningar" : "Anpassa"}

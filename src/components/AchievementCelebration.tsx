@@ -57,7 +57,7 @@ export function AchievementCelebration({
           {many ? `${items.length} nya utmärkelser` : "Ny utmärkelse"}
         </p>
         <h2
-          className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
+          className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {many ? "Grymt jobbat!" : "Grattis!"}
@@ -77,7 +77,7 @@ export function AchievementCelebration({
                 />
               </span>
               <div className="min-w-0">
-                <div className="truncate text-[15px] font-bold text-[#2e1e14]">{a.name}</div>
+                <div className="truncate text-[15px] font-bold text-[var(--cream)]">{a.name}</div>
                 <div className="text-xs text-white/60">{a.description}</div>
               </div>
             </li>

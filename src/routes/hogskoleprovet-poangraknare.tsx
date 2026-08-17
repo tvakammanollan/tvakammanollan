@@ -70,7 +70,7 @@ function PoangraknarePage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[38px]"
+          className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet poängräknare
@@ -154,7 +154,7 @@ function PoangraknarePage() {
       {/* CTA */}
       <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[#2e1e14] sm:text-[22px]"
+          className="text-[20px] font-bold text-[var(--cream)] sm:text-[22px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Vill du höja poängen?
@@ -172,7 +172,7 @@ function PoangraknarePage() {
           </Link>
           <Link
             to="/hogskoleprovet-poang"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
           >
             Vad krävs för olika utbildningar?
           </Link>
@@ -197,7 +197,7 @@ function SliderRow({
     <div>
       <div className="flex items-baseline justify-between">
         <div>
-          <span className="text-sm font-semibold text-[#2e1e14]">{label}</span>
+          <span className="text-sm font-semibold text-[var(--cream)]">{label}</span>
           <span className="ml-2 text-xs text-white/40">{hint}</span>
         </div>
         <span

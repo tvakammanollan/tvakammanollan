@@ -274,10 +274,10 @@ function ResultPage() {
 
   // Banner styles
   const bannerClass = draw
-    ? "bg-white/[0.04] text-[#2e1e14] border-white/12"
+    ? "bg-white/[0.04] text-[var(--cream)] border-white/12"
     : won
-      ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[#2e1e14] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174, 47, 38,0.4)]"
-      : "bg-white/[0.03] text-[#2e1e14] border-white/12";
+      ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[var(--cream)] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174, 47, 38,0.4)]"
+      : "bg-white/[0.03] text-[var(--cream)] border-white/12";
   const verdict = draw ? "Oavgjort!" : won ? "Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;
   const subtext = draw
@@ -413,14 +413,14 @@ function ResultPage() {
             </span>
             <div className="flex-1">
               <h3
-                className="text-[22px] font-bold leading-tight text-[#2e1e14]"
+                className="text-[22px] font-bold leading-tight text-[var(--cream)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Bra spelat! Vill du komma in på topplistan?
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                 Skapa ett gratis konto för att{" "}
-                <strong className="text-[#2e1e14]">spara din ELO</strong>, klättra i rankingen och
+                <strong className="text-[var(--cream)]">spara din ELO</strong>, klättra i rankingen och
                 utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>

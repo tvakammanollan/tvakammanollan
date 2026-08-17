@@ -160,7 +160,7 @@ export function HomeDashboard() {
               tone="leaf"
               icon={<Sparkles className="h-5 w-5" />}
               title="Coachning"
-              subtitle="30 min gratis med en coach som själv fått 1.9+"
+              subtitle="Ett studieupplägg byggt av någon som själv fått 1,95+"
             />
           </div>
         </Reveal>

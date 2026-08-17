@@ -55,7 +55,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
           Ny rank
         </p>
         <h2
-          className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
+          className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Grattis!

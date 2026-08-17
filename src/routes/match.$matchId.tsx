@@ -581,7 +581,7 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -590,7 +590,7 @@ function MatchPage() {
         <div>
           <p className="eyebrow text-[#ae2f26]">Väntar</p>
           <h1
-            className="mt-1 text-[30px] font-bold leading-tight text-[#2e1e14]"
+            className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Inbjudan skickad.
@@ -616,7 +616,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <m.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -662,7 +662,7 @@ function MatchPage() {
           </m.div>
         ) : null}
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -671,7 +671,7 @@ function MatchPage() {
         <div>
           <p className="eyebrow text-[#ae2f26]">Klart</p>
           <h1
-            className="mt-1 text-[34px] font-bold leading-tight text-[#2e1e14]"
+            className="mt-1 text-[34px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Du har lämnat in.
@@ -679,7 +679,7 @@ function MatchPage() {
         </div>
         <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[#2e1e14] tabular-nums">{oppSecondsLeft}s</span> kvar
+          <span className="font-semibold text-[var(--cream)] tabular-nums">{oppSecondsLeft}s</span> kvar
           att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">

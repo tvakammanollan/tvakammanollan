@@ -51,7 +51,7 @@ export function DeleteAccountSection() {
   return (
     <section className="mt-10 rounded-2xl border border-[#8c1d18]/25 bg-[#8c1d18]/[0.04] p-5 sm:p-6">
       <h2
-        className="text-base font-semibold text-[#2e1e14]"
+        className="text-base font-semibold text-[var(--cream)]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         Radera konto

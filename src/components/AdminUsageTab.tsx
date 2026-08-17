@@ -105,7 +105,7 @@ function Card({ label, value, hint }: { label: string; value: string; hint?: str
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
       <div className="text-xs font-medium text-muted-foreground">{label}</div>
       <div
-        className="mt-1 text-2xl font-bold tabular-nums text-[#2e1e14]"
+        className="mt-1 text-2xl font-bold tabular-nums text-[var(--cream)]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
@@ -124,7 +124,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
   if (!views) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Sidvisningar</div>
+        <div className="text-sm font-semibold text-[var(--cream)]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">Kunde inte hämta sidvisningar just nu.</p>
       </div>
     );
@@ -133,7 +133,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
   if (!views.since) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Sidvisningar</div>
+        <div className="text-sm font-semibold text-[var(--cream)]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">
           Räkningen är igång men har inte hunnit samla data än. Siffrorna börjar fyllas på från och
           med första besöket efter den här deployen.
@@ -156,7 +156,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
       </div>
 
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Per dygn</div>
+        <div className="text-sm font-semibold text-[var(--cream)]">Per dygn</div>
         <div
           className="mt-3 flex h-28 items-end gap-1"
           role="img"
@@ -178,7 +178,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
       </div>
 
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Mest besökta sidor (30 dagar)</div>
+        <div className="text-sm font-semibold text-[var(--cream)]">Mest besökta sidor (30 dagar)</div>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -190,8 +190,8 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
             <tbody>
               {views.topPages.map((p) => (
                 <tr key={p.path} className="border-t border-white/5">
-                  <td className="py-1.5 pr-3 font-mono text-[13px] text-[#2e1e14]">{p.path}</td>
-                  <td className="py-1.5 text-right tabular-nums text-[#2e1e14]">
+                  <td className="py-1.5 pr-3 font-mono text-[13px] text-[var(--cream)]">{p.path}</td>
+                  <td className="py-1.5 text-right tabular-nums text-[var(--cream)]">
                     {formatInt(p.views)}
                   </td>
                 </tr>

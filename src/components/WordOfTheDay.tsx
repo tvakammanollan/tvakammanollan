@@ -82,7 +82,7 @@ export function WordOfTheDay() {
         </span>
       </div>
       <div
-        className="mt-2 text-[26px] font-bold lowercase leading-tight text-[#2e1e14] sm:text-[30px]"
+        className="mt-2 text-[26px] font-bold lowercase leading-tight text-[var(--cream)] sm:text-[30px]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {wotd.word}

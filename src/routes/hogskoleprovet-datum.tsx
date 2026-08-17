@@ -71,7 +71,7 @@ function DatumPage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[40px]"
+          className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet datum 2026 &amp; 2027
@@ -92,7 +92,7 @@ function DatumPage() {
       {/* Kommande datum */}
       <section className="mt-10">
         <h2
-          className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+          className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           <CalendarDays className="h-5 w-5 text-[#ae2f26]" />
@@ -102,7 +102,7 @@ function DatumPage() {
           {HP_DATES.map((d) => (
             <li key={d.date} className="flex items-center justify-between gap-3 px-5 py-4">
               <div>
-                <div className="text-[15px] font-semibold capitalize text-[#2e1e14]">
+                <div className="text-[15px] font-semibold capitalize text-[var(--cream)]">
                   {fmtLong(d.date)}
                 </div>
                 <div className="mt-0.5 text-xs text-white/50">
@@ -124,7 +124,7 @@ function DatumPage() {
       {/* Anmälan */}
       <section className="mt-10">
         <h2
-          className="text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           När öppnar anmälan?
@@ -157,7 +157,7 @@ function DatumPage() {
       {/* CTA: börja plugga */}
       <section className="mt-12 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
+          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Börja plugga redan idag
@@ -178,13 +178,13 @@ function DatumPage() {
             to="/ord"
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
           >
             Träna ord
           </Link>
           <Link
             to="/guider"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
           >
             <ScrollText className="h-4 w-4" />
             Guider per delprov

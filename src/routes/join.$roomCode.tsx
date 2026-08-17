@@ -52,7 +52,7 @@ function JoinPage() {
         <div>
           <p className="eyebrow text-[#7a5236]">Privat rum</p>
           <h1
-            className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
+            className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Kunde inte ansluta
@@ -74,7 +74,7 @@ function JoinPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
       <m.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
         animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -83,7 +83,7 @@ function JoinPage() {
       <div>
         <p className="eyebrow text-[#7a5236]">Privat rum</p>
         <h1
-          className="mt-1 text-[28px] font-bold leading-tight text-[#2e1e14]"
+          className="mt-1 text-[28px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Ansluter…
