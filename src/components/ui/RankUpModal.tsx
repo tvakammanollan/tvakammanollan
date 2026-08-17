@@ -48,7 +48,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
       aria-label="Ny rank"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(251, 246, 236, 0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ae2f26]">

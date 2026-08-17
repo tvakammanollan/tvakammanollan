@@ -276,7 +276,7 @@ function ResultPage() {
   const bannerClass = draw
     ? "bg-white/[0.04] text-[#2e1e14] border-white/12"
     : won
-      ? "bg-gradient-to-br from-[#3a2414] via-[#2a1810] to-[#fbf6ec] text-[#2e1e14] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174, 47, 38,0.4)]"
+      ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[#2e1e14] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174, 47, 38,0.4)]"
       : "bg-white/[0.03] text-[#2e1e14] border-white/12";
   const verdict = draw ? "Oavgjort!" : won ? "Du vann!" : "Du förlorade";
   const Icon = draw ? Minus : won ? Trophy : Frown;

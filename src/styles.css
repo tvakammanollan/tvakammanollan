@@ -593,7 +593,7 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .glass-dark {
-  background: rgba(10, 10, 15, 0.55);
+  background: rgba(46, 30, 20, 0.5);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1070,15 +1070,15 @@ button,
 }
 
 .glass {
-  background: rgba(31, 20, 8, 0.65);
+  background: rgba(251, 246, 236, 0.92);
   border: 1px solid var(--line);
 }
 .glass-dark {
-  background: rgba(13, 7, 2, 0.65);
+  background: rgba(243, 233, 216, 0.92);
   border: 1px solid var(--line);
 }
 .glass-strong {
-  background: rgba(31, 20, 8, 0.85);
+  background: rgba(251, 246, 236, 0.96);
   border: 1px solid var(--line-strong);
 }
 
@@ -1543,7 +1543,7 @@ button,
     background-color: rgba(46, 30, 20, 0.15);
   }
   .bg-white\/90 {
-    background-color: rgba(31, 20, 8, 0.9);
+    background-color: rgba(251, 246, 236, 0.96);
   }
   .bg-white\/95 {
     background-color: var(--navy-2);

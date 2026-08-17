@@ -231,7 +231,7 @@ function AccountMenu({
           className="inline-flex items-center gap-2 rounded-full border transition-colors hover:brightness-110"
           style={{
             borderColor: "var(--line)",
-            background: "rgba(42, 28, 16, 0.6)",
+            background: "rgba(46, 30, 20, 0.06)",
             padding: "4px 10px 4px 4px",
             boxShadow: "var(--shadow-sm)",
           }}
@@ -317,7 +317,7 @@ function MobileMenu({
           className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors"
           style={{
             borderColor: "var(--line)",
-            background: "rgba(42, 28, 16, 0.6)",
+            background: "rgba(46, 30, 20, 0.06)",
             color: "var(--cream)",
           }}
         >

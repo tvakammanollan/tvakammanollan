@@ -405,7 +405,7 @@ function StatsPage() {
                     contentStyle={{
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(20,12,5,0.96)",
+                      background: "rgba(251, 246, 236, 0.96)",
                       color: "#2e1e14",
                       fontSize: 12,
                     }}
@@ -486,7 +486,7 @@ function StatsPage() {
                     contentStyle={{
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(20,12,5,0.96)",
+                      background: "rgba(251, 246, 236, 0.96)",
                       color: "#2e1e14",
                       fontSize: 12,
                     }}

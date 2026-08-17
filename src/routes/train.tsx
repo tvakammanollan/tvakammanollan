@@ -669,7 +669,7 @@ function TrainPage() {
                         isCorrectOpt
                           ? "bg-[var(--success)] text-[var(--success-ink)]"
                           : isWrongPick
-                            ? "bg-[var(--danger)] text-[#2c0d11]"
+                            ? "bg-[var(--danger)] text-[#fff1f0]"
                             : isSelected
                               ? "bg-[#ae2f26] text-[#fff8f5]"
                               : "bg-white/10 text-foreground"

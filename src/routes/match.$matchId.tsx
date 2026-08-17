@@ -699,7 +699,7 @@ function MatchPage() {
       <header
         className="sticky top-0 z-20"
         style={{
-          // Var rgba(7,17,30) — det gamla blå-navyt. Matchskärmen är den mest
+          // Var rgba(251, 246, 236, 0.92) — det gamla blå-navyt. Matchskärmen är den mest
           // besökta i appen och hade alltså en blå glasremsa mot brun bakgrund.
           background: "rgba(251, 246, 236, 0.92)",
           borderBottom: "1px solid var(--line)",

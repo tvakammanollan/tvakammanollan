@@ -27,7 +27,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs transition-colors hover:bg-white/[0.06]"
         style={{
           borderColor: "var(--line)",
-          background: "rgba(42, 28, 16, 0.6)",
+          background: "rgba(46, 30, 20, 0.06)",
           color: "var(--cream)",
           fontFamily: "var(--font-mono)",
         }}
