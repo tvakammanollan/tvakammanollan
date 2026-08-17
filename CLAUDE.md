@@ -168,7 +168,7 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 ### Gamla prov — arkivet och importen
 
 Alla provtillfällen som går att få tag på finns i appen: 30 stycken
-(VT2012–VT2026), 118 provpass,
+(VT2012–VT2026), 120 provpass,
 4 363 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
 `src/data/prov/` för hand, kör om importen.
 

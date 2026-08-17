@@ -74,7 +74,7 @@ const OMDOME_FARG = ["#ae2f26", "#2f6b3c", "#7a5236"];
 
 function Stjarnor() {
   return (
-    <div className="flex gap-0.5" aria-label="5 av 5">
+    <div className="flex select-none gap-0.5" aria-label="5 av 5">
       {[0, 1, 2, 3, 4].map((i) => (
         <Star key={i} className="h-3.5 w-3.5 fill-[#ae2f26] text-[#ae2f26]" aria-hidden />
       ))}
@@ -253,7 +253,7 @@ export function HeroLanding() {
             {
               icon: FileText,
               t: "Gamla prov",
-              s: "30 provtillfällen, 118 provpass, facit på varje uppgift. Kör ett helt pass med klocka eller plocka enskilda delprov.",
+              s: "30 provtillfällen, 120 provpass, facit på varje uppgift. Kör ett helt pass med klocka eller plocka enskilda delprov.",
               to: "/gamla-prov" as const,
               cta: "Se arkivet",
             },
@@ -448,7 +448,7 @@ export function HeroLanding() {
               })}
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-3">
+            <div className="mt-8 flex select-none items-center justify-center gap-3">
               <button
                 type="button"
                 aria-label="Föregående omdömen"

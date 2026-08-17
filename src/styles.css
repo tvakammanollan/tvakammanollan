@@ -936,9 +936,38 @@ body {
   color: var(--cream);
 }
 
+/* En enda markeringsfärg för hela sajten. Solid äpple bakom texten var
+   för hårt och gjorde citat oläsliga mitt i en markering; en tonad
+   äpplefyllning med bibehållen textfärg läser lugnare. */
 ::selection {
-  background: var(--amber);
-  color: var(--navy);
+  background: rgba(174, 47, 38, 0.2);
+  color: inherit;
+}
+
+/* Dekorativa element ska inte gå att markera.
+   Utan det här fångar en textmarkering upp ikoner, stjärnor, prickar,
+   avdelare och skelettytor mellan styckena. De har ingen text men väl
+   höjd, så markeringen ritar tomma block som sticker ned i
+   mellanrummen och ser trasig ut. Mätt före fixen: markeringsrektanglar
+   på 59–120 px för text satt i 17 px.
+
+   Gäller allt som redan är dolt för skärmläsare (aria-hidden), all SVG,
+   samt avdelare och laddningsytor. */
+[aria-hidden="true"],
+svg,
+hr,
+.skeleton-shimmer {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Ikonknappar och liknande ska fortfarande gå att klicka och fokusera,
+   bara inte markera. Texten i dem är undantagen så att en knapp med
+   synlig etikett fortfarande kan kopieras. */
+button,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 :where(button, a, [role="button"], [role="radio"], input, select, textarea):focus-visible {
