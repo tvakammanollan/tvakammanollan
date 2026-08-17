@@ -333,7 +333,7 @@ export function StickyNumber({ n }: { n: string }) {
   return (
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-0">
       <m.div
-        className="pointer-events-none fixed bottom-6 right-8 z-20 select-none text-[120px] leading-none text-black/[0.04] mix-blend-multiply sm:text-[170px]"
+        className="pointer-events-none fixed bottom-6 right-8 z-20 select-none text-[120px] leading-none text-[#2e1e14]/[0.04] mix-blend-multiply sm:text-[170px]"
         style={{
           opacity,
           y,

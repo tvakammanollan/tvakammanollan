@@ -132,7 +132,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label="Kom igång"

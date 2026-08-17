@@ -328,6 +328,7 @@ function OrdPracticePage() {
   return (
     <>
       <PageHero
+        eyebrowTone="leaf"
         eyebrow="8 000+ ord"
         title="Öva"
         cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}

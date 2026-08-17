@@ -297,6 +297,7 @@ function StatsPage() {
   return (
     <>
       <PageHero
+        eyebrowTone="leaf"
         eyebrow="Din resa"
         title="Din utveckling"
         subtitle="Progression och prestation över tid."

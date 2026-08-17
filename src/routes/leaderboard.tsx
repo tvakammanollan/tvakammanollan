@@ -99,6 +99,7 @@ function LeaderboardPage() {
   return (
     <div className="min-h-screen">
       <PageHero
+        eyebrowTone="leaf"
         eyebrow="Hall of fame"
         title="Se vem som är"
         cycleWords={["bäst.", "snabbast.", "vassast.", "smartast."]}

@@ -1,11 +1,22 @@
 import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-type Tone = "teal" | "amber" | "muted";
+/**
+ * Tonerna heter fortfarande teal och amber sedan den mörka paletten;
+ * namnen behålls så att alla anropsställen slipper röras. Värdena är
+ * Lundens: teal = bark, amber = äpple. `leaf` är ny och finns för att
+ * äpplerött annars bär i stort sett varje accent på sajten — 293
+ * förekomster mot lövets 6 när det här skrevs.
+ *
+ * Riktlinje: äpple för det som leder till handling, bark för struktur
+ * och sammanhang, löv för framsteg och det som gått bra.
+ */
+type Tone = "teal" | "amber" | "leaf" | "muted";
 
 const toneClass: Record<Tone, string> = {
   teal: "text-[#7a5236]",
   amber: "text-[#ae2f26]",
+  leaf: "text-[#2f6b3c]",
   muted: "text-white/60",
 };
 

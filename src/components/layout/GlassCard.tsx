@@ -6,7 +6,7 @@ const variantClass: Record<Variant, string> = {
   default: "border-white/10 bg-white/[0.02]",
   interactive:
     "border-white/10 bg-white/[0.02] transition-colors hover:border-[#ae2f26]/40 hover:bg-white/[0.04]",
-  raised: "border-white/12 bg-white/[0.04] shadow-[0_14px_36px_rgba(0,0,0,0.25)]",
+  raised: "border-white/12 bg-white/[0.04] shadow-[0_14px_36px_rgba(46,30,20,0.22)]",
 };
 
 export function GlassCard({

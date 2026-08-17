@@ -2,7 +2,16 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { m } from "framer-motion";
-import { ArrowRight, Swords, BookOpenText, FileText, Star, Timer } from "lucide-react";
+import {
+  ArrowRight,
+  Swords,
+  BookOpenText,
+  FileText,
+  Star,
+  Timer,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { formatInt } from "@/lib/sv-format";
@@ -32,18 +41,23 @@ const DELPROV = [
   { kod: "DTK", namn: "Diagram, tabeller, kartor", del: "Kvantitativ" },
 ];
 
-/** Riktiga personer, riktiga resultat. Inget av det här är påhittat. */
+/**
+ * Riktiga personer, riktiga resultat. Inget av det här är påhittat.
+ * De tre första visas först; resten når man med pilarna.
+ */
 const OMDOMEN = [
   {
     citat:
       "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet.",
     namn: "Aron",
     resultat: "2,0",
+    alder: "18 år",
   },
   {
     citat: "HP Kampen har allt som behövs för att lyckas på högskoleprovet.",
     namn: "Gustav",
     resultat: "1,9",
+    alder: "18 år",
   },
   {
     citat:
@@ -52,7 +66,11 @@ const OMDOMEN = [
     resultat: "1,95",
     roll: "Grundare",
   },
+  { citat: "Jättebra!", namn: "Ann" },
+  { citat: "Det är skönt att ha allt samlat på ett ställe.", namn: "Theo" },
 ];
+
+const OMDOME_FARG = ["#ae2f26", "#2f6b3c", "#7a5236"];
 
 function Stjarnor() {
   return (
@@ -67,6 +85,7 @@ function Stjarnor() {
 export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
   const [stats, setStats] = useState<LandingStats | null>(null);
+  const [omdomeIdx, setOmdomeIdx] = useState(0);
 
   useEffect(() => {
     let alive = true;
@@ -170,7 +189,7 @@ export function HeroLanding() {
               s: "ur prov sedan 1990-talet",
               c: "#2f6b3c",
             },
-            { icon: FileText, t: "30 gamla prov", s: "118 provpass med facit", c: "#7a5236" },
+            { icon: FileText, t: "30 gamla prov", s: "120 provpass med facit", c: "#7a5236" },
             { icon: Swords, t: "8 delprov", s: "verbalt och kvantitativt", c: "#ae2f26" },
           ].map(({ icon: Icon, t, s, c }, i) => (
             <Reveal key={t} delay={i * 0.06}>
@@ -312,9 +331,9 @@ export function HeroLanding() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { l: "Ord i databasen", v: "8 000+", s: "med definitioner", c: "#2f6b3c" },
-              { l: "Uppgifter", v: "4 363", s: "facit på varje", c: "#7a5236" },
+              { l: "Uppgifter", v: "15 000+", s: "ord och provfrågor", c: "#7a5236" },
               { l: "Gamla prov", v: "30", s: "VT2012 och framåt", c: "#ae2f26" },
-              { l: "Provpass", v: "118", s: "hela pass med klocka", c: "#7a5236" },
+              { l: "Provpass", v: "120", s: "hela pass med klocka", c: "#2f6b3c" },
             ].map((x, i) => (
               <Reveal key={x.l} delay={i * 0.06}>
                 <m.div
@@ -388,33 +407,74 @@ export function HeroLanding() {
               Vad de som skrivit provet säger
             </h2>
           </Reveal>
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {OMDOMEN.map((o, i) => (
-              <Reveal key={o.namn} delay={i * 0.08}>
-                <m.figure
-                  whileHover={{ y: -4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                  className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6"
-                >
-                  <Stjarnor />
-                  <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-white/75">
-                    {o.citat}
-                  </blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-4">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#ae2f26] font-display text-[15px] text-[#fff8f5]">
-                      {o.namn[0]}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[14px] font-semibold">{o.namn}</span>
-                      <span className="block text-[12px] text-white/55">
-                        {o.roll ? o.roll + " · " : ""}
-                        {o.resultat} på provet
+          <div className="relative mt-12">
+            {/* Tre i taget på desktop, ett på mobil. Pilarna roterar
+                fönstret så att Ann och Theo nås utan att trängas in i
+                förstaintrycket. */}
+            <div className="grid gap-4 md:grid-cols-3">
+              {[0, 1, 2].map((slot) => {
+                const o = OMDOMEN[(omdomeIdx + slot) % OMDOMEN.length];
+                return (
+                  <m.figure
+                    key={o.namn}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: slot * 0.05 }}
+                    whileHover={{ y: -4 }}
+                    className={`flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6 ${slot > 0 ? "hidden md:flex" : ""}`}
+                  >
+                    <Stjarnor />
+                    <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-white/75">
+                      {o.citat}
+                    </blockquote>
+                    <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <span
+                        className="flex h-9 w-9 items-center justify-center rounded-full font-display text-[15px] text-[#fff8f5]"
+                        style={{ background: OMDOME_FARG[o.namn.charCodeAt(0) % 3] }}
+                      >
+                        {o.namn[0]}
                       </span>
-                    </span>
-                  </figcaption>
-                </m.figure>
-              </Reveal>
-            ))}
+                      <span className="min-w-0">
+                        <span className="block text-[14px] font-semibold">{o.namn}</span>
+                        <span className="block text-[12px] text-white/55">
+                          {[o.roll, o.alder, o.resultat ? o.resultat + " på provet" : null]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </span>
+                      </span>
+                    </figcaption>
+                  </m.figure>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                aria-label="Föregående omdömen"
+                onClick={() => setOmdomeIdx((i) => (i - 1 + OMDOMEN.length) % OMDOMEN.length)}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 transition-colors hover:bg-white/[0.05]"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden />
+              </button>
+              <div className="flex gap-1.5" aria-hidden>
+                {OMDOMEN.map((o, i) => (
+                  <span
+                    key={o.namn}
+                    className="h-1.5 w-1.5 rounded-full transition-colors"
+                    style={{ background: i === omdomeIdx ? "#ae2f26" : "rgba(46,30,20,0.22)" }}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                aria-label="Fler omdömen"
+                onClick={() => setOmdomeIdx((i) => (i + 1) % OMDOMEN.length)}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 transition-colors hover:bg-white/[0.05]"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden />
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -18,6 +18,7 @@ type Variant = "compact" | "content";
  */
 export function PageHero({
   eyebrow,
+  eyebrowTone = "teal",
   title,
   subtitle,
   cycleWords,
@@ -28,6 +29,8 @@ export function PageHero({
   className,
 }: {
   eyebrow?: string;
+  /** Bark som standard. Löv på sidor som handlar om framsteg och resultat. */
+  eyebrowTone?: "teal" | "amber" | "leaf";
   title: string;
   subtitle?: string;
   cycleWords?: string[];
@@ -50,7 +53,7 @@ export function PageHero({
     >
       <div className={cn("relative mx-auto max-w-6xl px-4 sm:px-6", centered && "text-center")}>
         {eyebrow ? (
-          <EyebrowLabel tone="teal" className={cn(centered && "mx-auto")}>
+          <EyebrowLabel tone={eyebrowTone} className={cn(centered && "mx-auto")}>
             {eyebrow}
           </EyebrowLabel>
         ) : null}
