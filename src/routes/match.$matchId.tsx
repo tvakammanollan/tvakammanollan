@@ -253,11 +253,28 @@ function MatchPage() {
 
   useEffect(() => {
     if (!match || questions.length === 0) return;
-    // Use matchStartedAt (set when questions first load) so that invite matches
-    // don't eat into the 5-minute clock while waiting for the opponent to accept.
-    const start = (matchStartedAt ?? new Date(match.created_at)).getTime();
+    // Klockan startar när spelaren faktiskt får se första frågan, inte när
+    // matchraden skapades. Mellan de två ligger gästinloggning, onboarding och
+    // laddning av frågorna — tid som spelaren aldrig kunde använda men som åt
+    // av de fem minuterna. Ankaret sparas per match, så en omladdning inte ger
+    // ny tid; serverns tidsgolv (`isImplausiblyFast`) står kvar oavsett.
+    //
+    // Att mäta mot klientens egen klocka är också det enda som är robust: går
+    // webbläsarens klocka fel mot databasens blir `created_at` godtyckligt
+    // långt bort, och en match kunde lämnas in automatiskt i samma sekund den
+    // öppnades. Här jämförs alltid Date.now() med ett tidigare Date.now().
+    const anchorKey = `match_start_${matchId}`;
+    let anchor = Number(sessionStorage.getItem(anchorKey)) || 0;
+    if (!anchor) {
+      anchor = matchStartedAt?.getTime() ?? Date.now();
+      try {
+        sessionStorage.setItem(anchorKey, String(anchor));
+      } catch {
+        /* private mode — klockan lever då bara i minnet */
+      }
+    }
     const tick = () => {
-      const elapsed = Math.floor((Date.now() - start) / 1000);
+      const elapsed = Math.floor((Date.now() - anchor) / 1000);
       const left = Math.max(0, TOTAL_SECONDS - elapsed);
       setSecondsLeft(left);
       if (left === 0 && !submittedRef.current) {
@@ -269,7 +286,7 @@ function MatchPage() {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match, matchStartedAt, questions.length]);
+  }, [match, matchStartedAt, questions.length, matchId]);
 
   // When match is "waiting" (invite sent, no player2 yet), listen for it to become active.
   // This lets the invite sender start playing without having to refresh.
@@ -679,8 +696,8 @@ function MatchPage() {
         </div>
         <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[var(--cream)] tabular-nums">{oppSecondsLeft}s</span> kvar
-          att avsluta…
+          <span className="font-semibold text-[var(--cream)] tabular-nums">{oppSecondsLeft}s</span>{" "}
+          kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <m.div
