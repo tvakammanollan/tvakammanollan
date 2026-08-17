@@ -70,7 +70,7 @@ function PoangraknarePage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#e8e4da] sm:text-[38px]"
+          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[38px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet poängräknare
@@ -107,7 +107,7 @@ function PoangraknarePage() {
               </p>
               <div className="mt-1 flex items-baseline gap-2">
                 <span
-                  className="text-[56px] font-bold leading-none tabular-nums text-[#f2a65a]"
+                  className="text-[56px] font-bold leading-none tabular-nums text-[#ae2f26]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {sv(score)}
@@ -115,7 +115,7 @@ function PoangraknarePage() {
                 <span className="text-lg text-white/40">/ 2,0</span>
               </div>
             </div>
-            <span className="rounded-full border border-[#f2a65a]/25 bg-[#f2a65a]/10 px-3 py-1 text-xs font-semibold text-[#f2a65a]">
+            <span className="rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-xs font-semibold text-[#ae2f26]">
               {label}
             </span>
           </div>
@@ -124,11 +124,11 @@ function PoangraknarePage() {
           <div className="mt-5">
             <div className="relative h-2.5 w-full rounded-full bg-white/8">
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#c97b41] to-[#f2a65a]"
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#8f2620] to-[#ae2f26]"
                 style={{ width: `${pct}%` }}
               />
               <div
-                className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#170d05] bg-[#f5c089]"
+                className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#fbf6ec] bg-[#f5c089]"
                 style={{ left: `${pct}%` }}
               />
             </div>
@@ -152,9 +152,9 @@ function PoangraknarePage() {
       </p>
 
       {/* CTA */}
-      <section className="mt-10 rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/[0.06] p-6 sm:p-8">
+      <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[#e8e4da] sm:text-[22px]"
+          className="text-[20px] font-bold text-[#2e1e14] sm:text-[22px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Vill du höja poängen?
@@ -165,14 +165,14 @@ function PoangraknarePage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#f2a65a] px-5 py-2.5 text-sm font-semibold text-[#1a0d04] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
           >
             Öva på gamla prov
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/hogskoleprovet-poang"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#e8e4da] transition hover:border-[#f2a65a]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
           >
             Vad krävs för olika utbildningar?
           </Link>
@@ -197,11 +197,11 @@ function SliderRow({
     <div>
       <div className="flex items-baseline justify-between">
         <div>
-          <span className="text-sm font-semibold text-[#e8e4da]">{label}</span>
+          <span className="text-sm font-semibold text-[#2e1e14]">{label}</span>
           <span className="ml-2 text-xs text-white/40">{hint}</span>
         </div>
         <span
-          className="text-[18px] font-bold tabular-nums text-[#f2a65a]"
+          className="text-[18px] font-bold tabular-nums text-[#ae2f26]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {value}
@@ -216,7 +216,7 @@ function SliderRow({
         onChange={(e) => onChange(Number(e.target.value))}
         aria-label={`${label} – antal rätt av 80`}
         className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10"
-        style={{ accentColor: "#f2a65a" }}
+        style={{ accentColor: "#ae2f26" }}
       />
     </div>
   );

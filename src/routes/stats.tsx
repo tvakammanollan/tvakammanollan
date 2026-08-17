@@ -54,8 +54,8 @@ export const Route = createFileRoute("/stats")({
   }),
 });
 
-const VERBAL_COLOR = "#f2a65a";
-const MATH_COLOR = "#6fb3b8";
+const VERBAL_COLOR = "#ae2f26";
+const MATH_COLOR = "#7a5236";
 
 interface UserRow {
   username: string;
@@ -361,7 +361,7 @@ function StatsPage() {
         <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               ELO över tid
@@ -405,11 +405,11 @@ function StatsPage() {
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
                       background: "rgba(20,12,5,0.96)",
-                      color: "#e8e4da",
+                      color: "#2e1e14",
                       fontSize: 12,
                     }}
-                    labelStyle={{ color: "#e8e4da" }}
-                    itemStyle={{ color: "#e8e4da" }}
+                    labelStyle={{ color: "#2e1e14" }}
+                    itemStyle={{ color: "#2e1e14" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, name: any, props: any) => {
                       const delta = props?.payload?.delta;
@@ -446,7 +446,7 @@ function StatsPage() {
         <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Delprov-prestation
@@ -486,11 +486,11 @@ function StatsPage() {
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
                       background: "rgba(20,12,5,0.96)",
-                      color: "#e8e4da",
+                      color: "#2e1e14",
                       fontSize: 12,
                     }}
-                    labelStyle={{ color: "#e8e4da" }}
-                    itemStyle={{ color: "#e8e4da" }}
+                    labelStyle={{ color: "#2e1e14" }}
+                    itemStyle={{ color: "#2e1e14" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, _name: any, props: any) => {
                       if (!props?.payload?.enough) return ["Ej nog data", "Andel rätt"];
@@ -512,7 +512,7 @@ function StatsPage() {
         <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#f2a65a]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Matchhistorik

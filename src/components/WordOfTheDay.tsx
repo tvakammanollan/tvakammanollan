@@ -71,18 +71,18 @@ export function WordOfTheDay() {
       to="/ord"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       params={{} as any}
-      className="group block rounded-2xl border border-[#6fb3b8]/20 bg-[#6fb3b8]/[0.05] p-5 transition-colors hover:border-[#6fb3b8]/40 hover:bg-[#6fb3b8]/[0.08]"
+      className="group block rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5 transition-colors hover:border-[#7a5236]/40 hover:bg-[#7a5236]/[0.08]"
     >
       <div className="flex items-center justify-between gap-3">
         <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
-        <span className="inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-[#6fb3b8]">
+        <span className="inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-[#7a5236]">
           <BookOpen className="h-3.5 w-3.5" />
           Öva fler
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
       <div
-        className="mt-2 text-[26px] font-bold lowercase leading-tight text-[#e8e4da] sm:text-[30px]"
+        className="mt-2 text-[26px] font-bold lowercase leading-tight text-[#2e1e14] sm:text-[30px]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {wotd.word}

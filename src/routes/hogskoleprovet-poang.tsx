@@ -59,7 +59,7 @@ function PoangPage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#e8e4da] sm:text-[40px]"
+          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet poäng &amp; antagning
@@ -76,10 +76,10 @@ function PoangPage() {
         {/* Vad betyder poängen */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Calculator className="h-5 w-5 text-[#f2a65a]" />
+            <Calculator className="h-5 w-5 text-[#ae2f26]" />
             Vad betyder poängen?
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -93,10 +93,10 @@ function PoangPage() {
         {/* Normering — hur råpoängen blir ett betyg */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Scale className="h-5 w-5 text-[#f2a65a]" />
+            <Scale className="h-5 w-5 text-[#ae2f26]" />
             Hur räknas poängen ut? (normering)
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -124,7 +124,7 @@ function PoangPage() {
                 className="flex items-center gap-4 border-b border-white/8 px-5 py-3.5 last:border-b-0"
               >
                 <span
-                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-[#f2a65a]"
+                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-[#ae2f26]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {r.betyg}
@@ -144,7 +144,7 @@ function PoangPage() {
           </p>
           <Link
             to="/hogskoleprovet-poangraknare"
-            className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[#f2a65a] hover:underline"
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[#ae2f26] hover:underline"
           >
             Räkna ut din normerade poäng
             <ArrowRight className="h-4 w-4" />
@@ -154,31 +154,31 @@ function PoangPage() {
         {/* Hur används HP */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <GraduationCap className="h-5 w-5 text-[#f2a65a]" />
+            <GraduationCap className="h-5 w-5 text-[#ae2f26]" />
             Hur används HP vid antagning?
           </h2>
           <ul className="mt-3 space-y-2.5 text-[15px] leading-relaxed text-white/65">
             <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6fb3b8]" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
               Sökande delas in i <strong className="text-white/80">urvalsgrupper</strong>:
               betygsgrupperna och högskoleprovsgruppen (HP). Du tävlar i den grupp där du har störst
               chans.
             </li>
             <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6fb3b8]" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
               Minst <strong className="text-white/80">en tredjedel</strong> av platserna på de
               flesta program tillsätts via högskoleprovet.
             </li>
             <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6fb3b8]" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
               Ditt resultat är giltigt i <strong className="text-white/80">åtta år</strong> – du kan
               skriva flera gånger och ditt bästa resultat används.
             </li>
             <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6fb3b8]" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
               HP kan bara <strong className="text-white/80">hjälpa</strong> dig – ett svagt prov
               räknas aldrig emot dina betyg.
             </li>
@@ -188,10 +188,10 @@ function PoangPage() {
         {/* Vad krävs */}
         <section>
           <h2
-            className="flex items-center gap-2 text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            className="flex items-center gap-2 text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <TrendingUp className="h-5 w-5 text-[#f2a65a]" />
+            <TrendingUp className="h-5 w-5 text-[#ae2f26]" />
             Vad krävs för olika utbildningar?
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -209,7 +209,7 @@ function PoangPage() {
                 className="flex items-center gap-4 border-b border-white/8 px-5 py-3.5 last:border-b-0"
               >
                 <span
-                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-[#f2a65a]"
+                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-[#ae2f26]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {r.range}
@@ -235,9 +235,9 @@ function PoangPage() {
       </div>
 
       {/* CTA */}
-      <section className="mt-12 rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/[0.06] p-6 sm:p-8">
+      <section className="mt-12 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+          className="text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Höj din poäng – öva gratis
@@ -249,7 +249,7 @@ function PoangPage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#f2a65a] px-5 py-2.5 text-sm font-semibold text-[#1a0d04] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
           >
             Öva på gamla prov
             <ArrowRight className="h-4 w-4" />
@@ -257,13 +257,13 @@ function PoangPage() {
           <Link
             to="/ova/$delprov"
             params={{ delprov: "ord" }}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#e8e4da] transition hover:border-[#f2a65a]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
           >
             Öva per delprov
           </Link>
           <Link
             to="/hogskoleprovet-datum"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#e8e4da] transition hover:border-[#f2a65a]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
           >
             Provdatum
           </Link>

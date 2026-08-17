@@ -164,7 +164,7 @@ function OvaDelprovPage() {
 
       <header className="mt-4">
         <h1
-          className="text-[28px] font-bold leading-tight text-[#e8e4da] sm:text-[38px]"
+          className="text-[28px] font-bold leading-tight text-[#2e1e14] sm:text-[38px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           {cfg.h1}
@@ -176,7 +176,7 @@ function OvaDelprovPage() {
             to={cfg.practiceTo}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#f2a65a] px-5 py-2.5 text-sm font-semibold text-[#1a0d04] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
           >
             {cfg.practiceLabel}
             <ArrowRight className="h-4 w-4" />
@@ -185,7 +185,7 @@ function OvaDelprovPage() {
             to={`/guider/${delprov}` as string}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#e8e4da] transition hover:border-[#f2a65a]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[#2e1e14] transition hover:border-[#ae2f26]/50"
           >
             <ScrollText className="h-4 w-4" />
             {cfg.code}-guide & strategi
@@ -197,7 +197,7 @@ function OvaDelprovPage() {
       {examples.length > 0 && (
         <section className="mt-10">
           <h2
-            className="text-[20px] font-bold text-[#e8e4da] sm:text-[24px]"
+            className="text-[20px] font-bold text-[#2e1e14] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Exempelfrågor med facit
@@ -289,7 +289,7 @@ function OvaDelprovPage() {
             to={cfg.practiceTo}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#f2a65a] hover:underline"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#ae2f26] hover:underline"
           >
             <BookOpen className="h-4 w-4" />
             {cfg.practiceLabel}
@@ -300,7 +300,7 @@ function OvaDelprovPage() {
       {/* Övriga delprov */}
       <section className="mt-14 border-t border-white/8 pt-8">
         <h2
-          className="text-[18px] font-bold text-[#e8e4da]"
+          className="text-[18px] font-bold text-[#2e1e14]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Öva andra delprov
@@ -311,7 +311,7 @@ function OvaDelprovPage() {
               key={s}
               to="/ova/$delprov"
               params={{ delprov: s }}
-              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#f2a65a]/50 hover:text-[#e8e4da]"
+              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#ae2f26]/50 hover:text-[#2e1e14]"
             >
               {DELPROV[s].code}
             </Link>

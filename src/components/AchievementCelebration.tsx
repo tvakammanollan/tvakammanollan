@@ -22,7 +22,7 @@ export function AchievementCelebration({
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.55 },
-        colors: ["#f2a65a", "#6fb3b8", "#f5c089", "#ffffff"],
+        colors: ["#ae2f26", "#7a5236", "#f5c089", "#ffffff"],
         particleCount: Math.floor(220 * particleRatio),
         ...opts,
       });
@@ -50,14 +50,14 @@ export function AchievementCelebration({
       aria-label="Ny utmärkelse"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.6)]"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.6)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f2a65a]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ae2f26]">
           {many ? `${items.length} nya utmärkelser` : "Ny utmärkelse"}
         </p>
         <h2
-          className="mt-1 text-[26px] font-bold leading-tight text-[#e8e4da]"
+          className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {many ? "Grymt jobbat!" : "Grattis!"}
@@ -67,9 +67,9 @@ export function AchievementCelebration({
           {items.map((a) => (
             <li
               key={a.id}
-              className="flex items-center gap-3 rounded-2xl border border-[#f2a65a]/20 bg-[#f2a65a]/[0.07] p-3 text-left"
+              className="flex items-center gap-3 rounded-2xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.07] p-3 text-left"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#f2a65a]/12 ring-1 ring-[#f2a65a]/40">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#ae2f26]/12 ring-1 ring-[#ae2f26]/40">
                 <AchievementIcon
                   id={a.id}
                   className="h-6 w-6"
@@ -77,7 +77,7 @@ export function AchievementCelebration({
                 />
               </span>
               <div className="min-w-0">
-                <div className="truncate text-[15px] font-bold text-[#e8e4da]">{a.name}</div>
+                <div className="truncate text-[15px] font-bold text-[#2e1e14]">{a.name}</div>
                 <div className="text-xs text-white/60">{a.description}</div>
               </div>
             </li>
@@ -86,7 +86,7 @@ export function AchievementCelebration({
 
         <Button
           onClick={onClose}
-          className="mt-6 w-full bg-[#f2a65a] font-semibold text-[#1a0d04] hover:bg-[#f2a65a]/90"
+          className="mt-6 w-full bg-[#ae2f26] font-semibold text-[#fff8f5] hover:bg-[#ae2f26]/90"
         >
           Fortsätt
         </Button>

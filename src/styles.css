@@ -5,9 +5,57 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ================================================================
+   Typsnitt — självhostade, SIL OFL, licensfilerna ligger bredvid
+   filerna i public/fonts/.
+
+   Playfair Display och Inter stod i stacken men laddades aldrig:
+   ingen @font-face, ingen Google Fonts-länk, ingen public/fonts.
+   Sajten föll alltså tillbaka på Georgia och system-ui. Det här är
+   första gången riktiga snitt faktiskt når webbläsaren.
+
+   TODO: konvertera till WOFF2 (~40 % mindre). Kräver `fonttools`:
+   `python -m fontTools.ttLib.woff2 compress public/fonts/*.ttf`
+   ================================================================ */
+@font-face {
+  font-family: "Young Serif";
+  src: url("/fonts/YoungSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("/fonts/DMMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
-  --font-display: "Playfair Display", ui-serif, Georgia, serif;
-  --font-sans: "Inter", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Young Serif", ui-serif, Georgia, serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -764,30 +812,37 @@
    earlier light-mode tokens. Revert by deleting this block.
    ============================================================ */
 :root {
-  /* Base palette — deep brown bas matchar landing (#170d05) i stället
+  /* Base palette — deep brown bas matchar landing (#fbf6ec) i stället
      för det gamla blå-navy. Bevarar --navy-namnen för bakåtkompatibilitet
      med komponenter som refererar dem. */
-  --navy: #170d05;
-  --navy-2: #1f1408;
-  --navy-3: #2a1c10;
-  --navy-deep: #0d0702;
-  --cream: #e8e4da;
-  --cream-2: #f3f0e8;
-  --cream-3: #dad4c5;
+  --navy: #fbf6ec; /* papper, sidans grundyta */
+  --navy-2: #ffffff; /* kort */
+  --navy-3: #f3e9d8; /* nedsänkt yta, sekundär */
+  --navy-deep: #f0e4ce; /* djupast nedsänkt */
+  --cream: #2e1e14; /* primärtext (bark) */
+  --cream-2: #1e1209; /* text som ska sticka ut mer */
+  --cream-3: #5e4632; /* dämpad text */
   /* Text på ljusa ytor (läspassagen). Var #0a1320 — det gamla blå-navyt,
      som drog åt blått mot den varma cream-bakgrunden. */
-  --ink: #1a0d04;
-  --hp-muted: #7a8597;
-  --amber: #f2a65a;
-  --amber-deep: #c97b41;
-  --teal: #6fb3b8;
-  --line: rgba(232, 228, 218, 0.14);
-  --line-strong: rgba(232, 228, 218, 0.32);
-  --line-soft: rgba(232, 228, 218, 0.05);
-  --text-primary: #e8e4da;
-  --text-secondary: rgba(232, 228, 218, 0.78);
-  --text-tertiary: rgba(232, 228, 218, 0.55);
-  --text-quiet: rgba(232, 228, 218, 0.4);
+  --ink: #2e1e14;
+  --hp-muted: #755e4c;
+  /* Varumärkets primärfärg. Rött är BELÖNING i det här systemet
+     (äpplen, streak, rank, primär-CTA) — aldrig fel svar. */
+  --amber: #ae2f26; /* äpple */
+  --amber-deep: #8f2620;
+  /* Sekundärfärg. Var teal och betyder "motståndaren" i matchens
+     progressbarer — därför bark och INTE löv, som redan betyder rätt. */
+  --teal: #7a5236; /* bark */
+  /* Alfa-tokens: var ljusa med alfa (för mörk botten). På creme blir
+     de osynliga, därför omvända till mörk alfa. Enskilt viktigaste
+     delen av hela bytet. */
+  --line: rgba(46, 30, 20, 0.16);
+  --line-strong: rgba(46, 30, 20, 0.34);
+  --line-soft: rgba(46, 30, 20, 0.07);
+  --text-primary: #2e1e14;
+  --text-secondary: rgba(46, 30, 20, 0.78);
+  --text-tertiary: rgba(46, 30, 20, 0.66);
+  --text-quiet: rgba(46, 30, 20, 0.54);
 
   /* Shadcn surface tokens → remap to navy palette */
   --background: var(--navy);
@@ -798,15 +853,17 @@
   --popover-foreground: var(--cream);
   --primary: var(--amber);
   --primary-foreground: var(--navy);
-  --primary-soft: rgba(242, 166, 90, 0.12);
+  --primary-soft: rgba(174, 47, 38, 0.12);
   --secondary: var(--navy-3);
   --secondary-foreground: var(--cream);
   --muted: var(--navy-3);
   --muted-foreground: var(--text-tertiary);
   --accent: var(--navy-3);
   --accent-foreground: var(--cream);
-  --destructive: #e25a6a;
-  --destructive-foreground: var(--cream);
+  /* Oåterkalleliga handlingar (radera konto). Mörkare och blåare än
+     äpplerött så den inte förväxlas med primär-CTA. */
+  --destructive: #8c1d18;
+  --destructive-foreground: #fff8f5;
   --border: var(--line);
   --input: var(--line);
   --ring: var(--amber);
@@ -819,14 +876,23 @@
 
      Grönt får INTE vara --teal: teal är varumärkets sekundärfärg och
      används redan för "motståndaren" i matchens progressbarer. */
-  --success: #4fb783;
-  --success-soft: rgba(79, 183, 131, 0.12);
-  --success-line: rgba(79, 183, 131, 0.38);
-  --success-ink: #0d2c1e;
-  --danger: var(--destructive);
-  --danger-soft: rgba(226, 90, 106, 0.12);
-  --danger-line: rgba(226, 90, 106, 0.38);
-  --danger-ink: #2c0d11;
+  --success: #2f6b3c; /* löv */
+  --success-soft: rgba(47, 107, 60, 0.11);
+  --success-line: rgba(47, 107, 60, 0.4);
+  --success-ink: #e7f0e3;
+
+  /* FEL SVAR ÄR BRUNT, INTE RÖTT. Rött är belöningsfärgen i det här
+     systemet (äpplen, streak, rank, primär-CTA); låter man samma röda
+     också betyda "fel" slits den ut och slutar signalera något. Fel
+     svar får fallfruktens ton — nedfallet äpple.
+
+     --danger var tidigare en alias för --destructive. De är nu
+     frikopplade: --danger = fel svar, --destructive = oåterkalleliga
+     handlingar, som fortfarande behöver larma. */
+  --danger: #8e552a; /* fallfrukt */
+  --danger-soft: rgba(142, 85, 42, 0.12);
+  --danger-line: rgba(142, 85, 42, 0.4);
+  --danger-ink: #f6e8d7;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */
@@ -834,9 +900,9 @@
   --color-bg-sunken: var(--navy-deep);
   --color-primary: var(--amber);
   --color-primary-deep: var(--amber-deep);
-  --color-primary-light: rgba(242, 166, 90, 0.16);
+  --color-primary-light: rgba(174, 47, 38, 0.12);
   --color-primary-hover: var(--amber-deep);
-  --color-primary-glow: rgba(242, 166, 90, 0.55);
+  --color-primary-glow: rgba(174, 47, 38, 0.4);
   --color-primary-ink: var(--navy);
   --color-aurora-indigo: var(--teal);
   --color-aurora-violet: var(--teal);
@@ -847,20 +913,22 @@
   --color-aurora-emerald: var(--teal);
   --color-gold-deep: var(--amber-deep);
   --color-gold-bright: var(--amber);
-  --color-gold-light: rgba(242, 166, 90, 0.18);
-  --color-gold-soft: rgba(242, 166, 90, 0.3);
+  --color-gold-light: rgba(174, 47, 38, 0.14);
+  --color-gold-soft: rgba(174, 47, 38, 0.26);
   --color-border-strong: var(--line-strong);
   --color-border-soft: var(--line);
 
-  /* Glow shadows */
+  /* Glöden var färgade halos avsedda för mörk botten. På creme läser
+     de som suddiga färgklot, så de är nedtonade till mjuka varma
+     skuggor med en tunn färgad kant kvar för identiteten. Namnen
+     behålls — de refereras på flera håll. */
   --shadow-glow-indigo:
-    0 0 0 1px rgba(111, 179, 184, 0.22), 0 14px 50px -10px rgba(111, 179, 184, 0.55);
+    0 0 0 1px rgba(122, 82, 54, 0.22), 0 10px 28px -14px rgba(46, 30, 20, 0.34);
   --shadow-glow-aurora:
-    0 0 0 1px rgba(242, 166, 90, 0.2), 0 0 60px -8px rgba(242, 166, 90, 0.35),
-    0 0 80px -16px rgba(111, 179, 184, 0.3);
-  --shadow-glow-gold: 0 0 0 1px rgba(242, 166, 90, 0.22), 0 12px 40px -8px rgba(242, 166, 90, 0.5);
+    0 0 0 1px rgba(174, 47, 38, 0.18), 0 12px 32px -16px rgba(46, 30, 20, 0.38);
+  --shadow-glow-gold: 0 0 0 1px rgba(174, 47, 38, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.34);
   --shadow-glow-emerald:
-    0 0 0 1px rgba(111, 179, 184, 0.2), 0 12px 40px -8px rgba(111, 179, 184, 0.45);
+    0 0 0 1px rgba(47, 107, 60, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.32);
 }
 
 /* Base bg + text */
@@ -884,18 +952,18 @@ body {
 .bg-mesh {
   background-color: var(--navy);
   background-image:
-    radial-gradient(at 20% 30%, rgba(111, 179, 184, 0.32) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(242, 166, 90, 0.28) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(111, 179, 184, 0.22) 0px, transparent 50%),
-    radial-gradient(at 90% 70%, rgba(242, 166, 90, 0.18) 0px, transparent 50%),
-    radial-gradient(at 10% 90%, rgba(111, 179, 184, 0.18) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.32) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.28) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.22) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.18) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, rgba(122, 82, 54, 0.18) 0px, transparent 50%);
 }
 .bg-mesh-light {
   background-color: var(--navy-2);
   background-image:
-    radial-gradient(at 20% 30%, rgba(111, 179, 184, 0.18) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(242, 166, 90, 0.14) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(111, 179, 184, 0.1) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.18) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.1) 0px, transparent 50%);
 }
 .bg-paper {
   background-color: var(--navy-2);
@@ -904,19 +972,19 @@ body {
 .bg-ink {
   background-color: var(--navy-deep);
   background-image:
-    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(111, 179, 184, 0.32), transparent 60%),
-    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(242, 166, 90, 0.26), transparent 60%);
+    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(122, 82, 54, 0.32), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(174, 47, 38, 0.26), transparent 60%);
 }
 .bg-grid,
 .bg-grid-ink {
   background-image:
-    linear-gradient(rgba(232, 228, 218, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232, 228, 218, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(46, 30, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 30, 20, 0.05) 1px, transparent 1px);
 }
 .bg-dots {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(232, 228, 218, 0.08) 1px,
+    rgba(46, 30, 20, 0.08) 1px,
     transparent 0
   );
 }
@@ -1076,7 +1144,7 @@ body {
   }
   .bg-indigo-50,
   .bg-indigo-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-indigo-500,
   .bg-indigo-600,
@@ -1100,13 +1168,13 @@ body {
   .bg-\[\#e0e7ff\],
   .hover\:bg-\[\#e0e7ff\]:hover,
   .hover\:bg-\[\#e0e7ff\]\/50:hover {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-\[\#f0ede8\] {
-    background-color: rgba(232, 228, 218, 0.1);
+    background-color: rgba(46, 30, 20, 0.1);
   }
   .bg-\[\#e6e0d2\] {
-    background-color: rgba(232, 228, 218, 0.14);
+    background-color: rgba(46, 30, 20, 0.14);
   }
   .from-\[\#6366f1\] {
     --tw-gradient-from: var(--amber);
@@ -1159,7 +1227,7 @@ body {
   }
   .bg-violet-50,
   .bg-violet-100 {
-    background-color: rgba(242, 166, 90, 0.1);
+    background-color: rgba(174, 47, 38, 0.1);
   }
   .bg-fuchsia-100,
   .bg-fuchsia-400,
@@ -1204,7 +1272,7 @@ body {
     color: var(--teal);
   }
   .bg-cyan-100 {
-    background-color: rgba(111, 179, 184, 0.14);
+    background-color: rgba(122, 82, 54, 0.14);
   }
   .bg-cyan-400,
   .bg-cyan-500 {
@@ -1383,7 +1451,7 @@ body {
   }
   .bg-amber-50,
   .bg-amber-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-amber-200,
   .bg-amber-400,
@@ -1393,7 +1461,7 @@ body {
   }
   .bg-orange-50,
   .bg-orange-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-orange-500,
   .bg-orange-600 {
@@ -1401,7 +1469,7 @@ body {
     color: var(--navy);
   }
   .bg-yellow-100 {
-    background-color: rgba(242, 166, 90, 0.12);
+    background-color: rgba(174, 47, 38, 0.12);
   }
   .bg-yellow-500 {
     background-color: var(--amber);
@@ -1439,13 +1507,13 @@ body {
 
   /* Backdrop/cards that used light tints */
   .bg-white\/5 {
-    background-color: rgba(232, 228, 218, 0.05);
+    background-color: rgba(46, 30, 20, 0.05);
   }
   .bg-white\/10 {
-    background-color: rgba(232, 228, 218, 0.1);
+    background-color: rgba(46, 30, 20, 0.1);
   }
   .bg-white\/15 {
-    background-color: rgba(232, 228, 218, 0.15);
+    background-color: rgba(46, 30, 20, 0.15);
   }
   .bg-white\/90 {
     background-color: rgba(31, 20, 8, 0.9);
@@ -1467,49 +1535,49 @@ body {
      Ankaret /70 = --text-secondary är oförändrat; steget upp och ned
      därifrån är nu strikt stigande. */
   .text-white\/15 {
-    color: rgba(232, 228, 218, 0.22);
+    color: rgba(46, 30, 20, 0.24);
   }
   .text-white\/20 {
-    color: rgba(232, 228, 218, 0.26);
+    color: rgba(46, 30, 20, 0.31);
   }
   .text-white\/25 {
-    color: rgba(232, 228, 218, 0.32);
+    color: rgba(46, 30, 20, 0.38);
   }
   .text-white\/30 {
-    color: rgba(232, 228, 218, 0.38);
+    color: rgba(46, 30, 20, 0.44);
   }
   .text-white\/35 {
-    color: rgba(232, 228, 218, 0.44); /* 0.40 */
+    color: rgba(46, 30, 20, 0.51); /* 0.40 */
   }
   .text-white\/40 {
-    color: rgba(232, 228, 218, 0.5);
+    color: rgba(46, 30, 20, 0.59);
   }
   .text-white\/45 {
-    color: rgba(232, 228, 218, 0.56);
+    color: rgba(46, 30, 20, 0.66);
   }
   .text-white\/50 {
-    color: rgba(232, 228, 218, 0.62); /* 0.55 */
+    color: rgba(46, 30, 20, 0.73); /* 0.55 */
   }
   .text-white\/55 {
-    color: rgba(232, 228, 218, 0.66);
+    color: rgba(46, 30, 20, 0.79);
   }
   .text-white\/60 {
-    color: rgba(232, 228, 218, 0.7);
+    color: rgba(46, 30, 20, 0.83);
   }
   .text-white\/65 {
-    color: rgba(232, 228, 218, 0.74);
+    color: rgba(46, 30, 20, 0.88);
   }
   .text-white\/70 {
-    color: var(--text-secondary); /* 0.78 — ankare, oförändrat */
+    color: rgba(46, 30, 20, 0.92); /* 0.78 — ankare, oförändrat */
   }
   .text-white\/75 {
-    color: rgba(232, 228, 218, 0.84);
+    color: rgba(46, 30, 20, 0.95);
   }
   .text-white\/80 {
-    color: rgba(232, 228, 218, 0.89);
+    color: rgba(46, 30, 20, 0.98);
   }
   .text-white\/85 {
-    color: rgba(232, 228, 218, 0.94);
+    color: rgba(46, 30, 20, 1);
   }
 
   /* Samma problem på kanterna: /10 och /15 remappades båda till --line
@@ -1517,49 +1585,79 @@ body {
      ritades SVAGARE än `border-white/10`, och /15 var identisk med /10.
      Ankaret /10 = --line är oförändrat. */
   .border-white\/5 {
-    border-color: rgba(232, 228, 218, 0.07);
+    border-color: rgba(46, 30, 20, 0.07);
   }
   .border-white\/8 {
-    border-color: rgba(232, 228, 218, 0.11);
+    border-color: rgba(46, 30, 20, 0.11);
   }
   .border-white\/10 {
     border-color: var(--line); /* 0.14 — ankare, oförändrat */
   }
   .border-white\/12 {
-    border-color: rgba(232, 228, 218, 0.17);
+    border-color: rgba(46, 30, 20, 0.17);
   }
   .border-white\/15 {
-    border-color: rgba(232, 228, 218, 0.21);
+    border-color: rgba(46, 30, 20, 0.21);
   }
   .border-white\/25 {
-    border-color: rgba(232, 228, 218, 0.32); /* = --line-strong */
+    border-color: rgba(46, 30, 20, 0.32); /* = --line-strong */
   }
   .border-white\/30 {
-    border-color: rgba(232, 228, 218, 0.38);
+    border-color: rgba(46, 30, 20, 0.38);
+  }
+  /* Blank `text-white` utan opacitet. Den var medvetet oremappad så
+     länge sajten var mörk, för då var vit text rätt nästan överallt.
+     Efter vändningen är det tvärtom: samtliga 67 förekomster sitter på
+     ytor som nu är ljusa, alltså osynliga.
+
+     Texten på solida märkesytor (apple-knappar och liknande) sätts med
+     explicit ljus hex på plats i komponenterna och går inte via den
+     här klassen, så den raden rör dem inte. */
+  .text-white {
+    color: var(--cream);
+  }
+
+  /* Tillagda i palettvändningen. De var omappade och renderade som rå
+     vit — vilket bara var kosmetiskt på mörk botten men blir helt
+     osynligt på creme. Rampen hålls monoton. */
+  .border-white\/\[0\.06\] {
+    border-color: rgba(46, 30, 20, 0.09);
+  }
+  .border-white\/20 {
+    border-color: rgba(46, 30, 20, 0.26);
+  }
+  .divide-white\/8 > :not([hidden]) ~ :not([hidden]) {
+    border-color: rgba(46, 30, 20, 0.11);
+  }
+  .ring-white\/10 {
+    --tw-ring-color: rgba(46, 30, 20, 0.14);
+  }
+  .ring-white\/30 {
+    --tw-ring-color: rgba(46, 30, 20, 0.38);
   }
 
   /* Bakgrundstinten var blandad på samma sätt: /5, /10, /15 remappades till
      cream medan /8 och de godtyckliga ([0.02] osv.) förblev rå vit. */
   .bg-white\/8 {
-    background-color: rgba(232, 228, 218, 0.08);
+    background-color: rgba(46, 30, 20, 0.08);
   }
   .bg-white\/\[0\.015\] {
-    background-color: rgba(232, 228, 218, 0.015);
+    background-color: rgba(46, 30, 20, 0.015);
   }
   .bg-white\/\[0\.02\] {
-    background-color: rgba(232, 228, 218, 0.02);
+    background-color: rgba(46, 30, 20, 0.02);
   }
   .bg-white\/\[0\.03\] {
-    background-color: rgba(232, 228, 218, 0.03);
+    background-color: rgba(46, 30, 20, 0.03);
   }
   .bg-white\/\[0\.04\] {
-    background-color: rgba(232, 228, 218, 0.04);
+    background-color: rgba(46, 30, 20, 0.04);
   }
   .bg-white\/\[0\.05\] {
-    background-color: rgba(232, 228, 218, 0.05);
+    background-color: rgba(46, 30, 20, 0.05);
   }
   .bg-white\/\[0\.06\] {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
   }
 
   /* Reading passage exception — light cream background */
@@ -1580,8 +1678,8 @@ body {
   /* Läspassagens överstrykning. Var hårdkodad #fff59d (överstrykningsgult)
      med ärvd cream-text ovanpå — dvs. praktiskt taget osynlig text. */
   .hp-highlight {
-    background-color: rgba(242, 166, 90, 0.28);
-    box-shadow: 0 0 0 1px rgba(242, 166, 90, 0.35);
+    background-color: rgba(174, 47, 38, 0.28);
+    box-shadow: 0 0 0 1px rgba(174, 47, 38, 0.35);
     border-radius: 2px;
     color: inherit;
   }
@@ -1599,26 +1697,26 @@ body {
   .bg-fuchsia-50, .bg-fuchsia-200,
   .bg-purple-50, .bg-purple-100, .bg-purple-200,
   .bg-pink-50, .bg-pink-100, .bg-pink-200 {
-    background-color: rgba(242, 166, 90, 0.10);
+    background-color: rgba(174, 47, 38, 0.10);
   }
   .bg-amber-200, .bg-amber-300,
   .bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300,
   .bg-orange-50, .bg-orange-200, .bg-orange-300 {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-cyan-50, .bg-cyan-200, .bg-cyan-300,
   .bg-teal-50, .bg-teal-100, .bg-teal-200, .bg-teal-300 {
-    background-color: rgba(111, 179, 184, 0.12);
+    background-color: rgba(122, 82, 54, 0.12);
   }
   .bg-emerald-50, .bg-emerald-200, .bg-emerald-300,
   .bg-green-50, .bg-green-200, .bg-green-300 {
     background-color: var(--success-soft);
   }
   .bg-slate-50, .bg-slate-100, .bg-slate-200 {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
   }
   .bg-slate-300, .bg-slate-400 {
-    background-color: rgba(232, 228, 218, 0.12);
+    background-color: rgba(46, 30, 20, 0.12);
   }
   .bg-red-50, .bg-red-100, .bg-red-200,
   .bg-rose-50, .bg-rose-100, .bg-rose-200 {
@@ -1632,10 +1730,10 @@ body {
   /* Opacity-suffix variants (e.g. bg-amber-50/80) */
   .bg-amber-50\/80, .bg-amber-50\/40,
   .bg-yellow-50\/80, .bg-yellow-50\/40, .bg-yellow-50\/30 {
-    background-color: rgba(242, 166, 90, 0.16);
+    background-color: rgba(174, 47, 38, 0.16);
   }
   .bg-fuchsia-50, .bg-fuchsia-50\/40 {
-    background-color: rgba(242, 166, 90, 0.10);
+    background-color: rgba(174, 47, 38, 0.10);
   }
 
   /* Gradient stops — light shades */
@@ -1644,23 +1742,23 @@ body {
   .from-fuchsia-50, .from-fuchsia-100,
   .from-pink-50, .from-pink-100,
   .from-rose-50, .from-rose-100 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.10);
+    --tw-gradient-from: rgba(174, 47, 38, 0.10);
   }
   .from-amber-50, .from-amber-100, .from-amber-200, .from-amber-300,
   .from-yellow-50, .from-yellow-100, .from-yellow-200,
   .from-orange-50, .from-orange-100, .from-orange-200, .from-orange-300 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-amber-50\/80,
   .from-yellow-50\/80,
   .from-orange-50\/80 {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-emerald-50, .from-cyan-50, .from-teal-50, .from-teal-100 {
-    --tw-gradient-from: rgba(111, 179, 184, 0.14);
+    --tw-gradient-from: rgba(122, 82, 54, 0.14);
   }
   .from-slate-50, .from-slate-100, .from-slate-200, .from-slate-300 {
-    --tw-gradient-from: rgba(232, 228, 218, 0.10);
+    --tw-gradient-from: rgba(46, 30, 20, 0.10);
   }
 
   .to-indigo-50, .to-indigo-100,
@@ -1668,33 +1766,33 @@ body {
   .to-fuchsia-50, .to-fuchsia-100,
   .to-pink-50, .to-pink-100,
   .to-rose-50, .to-rose-100 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.10);
+    --tw-gradient-to: rgba(174, 47, 38, 0.10);
   }
   .to-amber-50, .to-amber-100, .to-amber-200, .to-amber-300,
   .to-yellow-50, .to-yellow-100, .to-yellow-200,
   .to-orange-50, .to-orange-100, .to-orange-200, .to-orange-300 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+    --tw-gradient-to: rgba(174, 47, 38, 0.18);
   }
   .to-yellow-50\/40,
   .to-yellow-50\/30 {
-    --tw-gradient-to: rgba(242, 166, 90, 0.12);
+    --tw-gradient-to: rgba(174, 47, 38, 0.12);
   }
   .to-emerald-50, .to-cyan-50, .to-teal-50 {
-    --tw-gradient-to: rgba(111, 179, 184, 0.14);
+    --tw-gradient-to: rgba(122, 82, 54, 0.14);
   }
   .to-slate-50, .to-slate-100, .to-slate-200, .to-slate-300 {
-    --tw-gradient-to: rgba(232, 228, 218, 0.10);
+    --tw-gradient-to: rgba(46, 30, 20, 0.10);
   }
 
   /* Medals (rank 1-3) — keep distinct gold/silver/bronze look but
      in palette-compatible tones */
-  .from-amber-400 { --tw-gradient-from: #f2a65a; }
+  .from-amber-400 { --tw-gradient-from: #ae2f26; }
   .via-yellow-500 { --tw-gradient-via: #e8c773; }
-  .to-amber-600 { --tw-gradient-to: #c97b41; }
+  .to-amber-600 { --tw-gradient-to: #8f2620; }
   .from-slate-300 { --tw-gradient-from: #cfd5dc; }
   .via-slate-400 { --tw-gradient-via: #9aa3ad; }
   .to-slate-500 { --tw-gradient-to: #6c7480; }
-  .from-orange-400 { --tw-gradient-from: #f2a65a; }
+  .from-orange-400 { --tw-gradient-from: #ae2f26; }
   .via-orange-500 { --tw-gradient-via: #d4894b; }
   .to-orange-700 { --tw-gradient-to: #8a5028; }
 
@@ -1712,12 +1810,12 @@ body {
   .border-amber-300,
   .border-orange-200,
   .border-yellow-200 {
-    border-color: rgba(242, 166, 90, 0.35);
+    border-color: rgba(174, 47, 38, 0.35);
   }
   .border-emerald-200,
   .border-teal-200,
   .border-cyan-200 {
-    border-color: rgba(111, 179, 184, 0.35);
+    border-color: rgba(122, 82, 54, 0.35);
   }
   .border-red-200,
   .border-rose-200 {
@@ -1734,14 +1832,14 @@ body {
   .bg-\[\#fefce8\],
   .bg-\[\#fde68a\],
   .bg-\[\#fde047\] {
-    background-color: rgba(242, 166, 90, 0.18);
+    background-color: rgba(174, 47, 38, 0.18);
     color: var(--cream);
   }
 
   /* Light "peach/beige" backgrounds */
   .bg-\[\#fce7d3\],
   .bg-\[\#faf0e8\] {
-    background-color: rgba(242, 166, 90, 0.14);
+    background-color: rgba(174, 47, 38, 0.14);
     color: var(--cream);
   }
 
@@ -1749,16 +1847,16 @@ body {
   .bg-\[\#f0f2f5\],
   .bg-\[\#f3f4f6\],
   .bg-\[\#f9fafb\] {
-    background-color: rgba(232, 228, 218, 0.06);
+    background-color: rgba(46, 30, 20, 0.06);
     color: var(--cream);
   }
 
   /* Medium slate */
   .bg-\[\#94a3b8\] {
-    background-color: rgba(232, 228, 218, 0.20);
+    background-color: rgba(46, 30, 20, 0.20);
   }
   .ring-\[\#94a3b8\] {
-    --tw-ring-color: rgba(232, 228, 218, 0.40);
+    --tw-ring-color: rgba(46, 30, 20, 0.40);
   }
 
   /* Amber/gold mid-shade */
@@ -1823,17 +1921,17 @@ body {
   .from-\[\#fef3c7\],
   .from-\[\#fefce8\],
   .from-\[\#fce7d3\] {
-    --tw-gradient-from: rgba(242, 166, 90, 0.18);
+    --tw-gradient-from: rgba(174, 47, 38, 0.18);
   }
   .from-\[\#f3f4f6\] {
-    --tw-gradient-from: rgba(232, 228, 218, 0.06);
+    --tw-gradient-from: rgba(46, 30, 20, 0.06);
   }
   .from-\[\#E8E4DA\] {
     --tw-gradient-from: var(--cream);
   }
   .to-\[\#fef3c7\],
   .to-\[\#fefce8\] {
-    --tw-gradient-to: rgba(242, 166, 90, 0.18);
+    --tw-gradient-to: rgba(174, 47, 38, 0.18);
   }
   .from-\[\#eab308\],
   .to-\[\#eab308\] {
