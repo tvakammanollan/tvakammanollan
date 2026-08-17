@@ -35,7 +35,89 @@ def clean_text(s: str, keep_soft_hyphen: bool = True) -> str:
     return s.strip()
 
 
-def join_lines(lines: list[str]) -> str:
+def english_words() -> set[str]:
+    """
+    Engelsk ordlista för avstavningsbeslutet i ELF-texterna, se `join_lines`.
+
+    Läses från systemets ordlista och cachas. Saknas den faller `join_lines`
+    tillbaka på svenska regler, vilket bara betyder att någon enstaka engelsk
+    sammansättning tappar sitt bindestreck — importen fungerar ändå.
+    """
+    if _ENGLISH.get("words") is None:
+        try:
+            with open("/usr/share/dict/words", encoding="utf-8", errors="ignore") as f:
+                _ENGLISH["words"] = {w.strip().lower() for w in f if w.strip()}
+        except OSError:
+            _ENGLISH["words"] = set()
+    return _ENGLISH["words"]
+
+
+_ENGLISH: dict[str, set[str] | None] = {"words": None}
+
+
+# Ändelser som är egna uppslagsord i ordlistan men aldrig efterled i en
+# sammansättning. Utan dem klyvs 'focus-ing' och 'research-ers'.
+SUFFIXES = {"ing", "ed", "er", "ers", "es", "ly", "ally", "ness", "ment", "led", "ies"}
+
+# Ord som saknas i systemets ordlista (den bygger på en ordbok från 1934) men
+# som förekommer i ELF-texterna och skrivs i ett ord.
+MODERN = {"internet", "benchmark", "artwork", "artworks", "birthrate", "website",
+          "online", "smartphone", "email", "database", "lifespan", "workforce"}
+
+
+def _is_word(w: str) -> bool:
+    """
+    Ordet, eller dess oböjda form, i ordlistan.
+
+    Systemets ordlista har bara uppslagsformer, så 'workers', 'discussed' och
+    'novelties' saknas — och just de luckorna fick regeln nedan att tro att en
+    hopskrivning var ogiltig och behålla ett bindestreck som inte fanns.
+    """
+    words = english_words()
+    if w in words or w in MODERN:
+        return True
+    if w.endswith("ies") and len(w) > 5 and w[:-3] + "y" in words:
+        return True
+    for suffix in ("s", "es", "ed", "ing", "ly"):
+        if not w.endswith(suffix):
+            continue
+        stem = w[: -len(suffix)]
+        if len(stem) < 3:
+            continue
+        # 'travelling' → 'travel', 'controlled' → 'control'
+        undoubled = stem[:-1] if len(stem) > 3 and stem[-1] == stem[-2] else None
+        if stem in words or stem + "e" in words or (undoubled and undoubled in words):
+            return True
+    return False
+
+
+def _english_compound(before: str, after: str) -> bool:
+    """
+    Är 'before-after' ett äkta bindestreck som råkat hamna vid radslut?
+
+    Engelskan sätter samman ord med bindestreck där svenskan skriver ihop dem,
+    så radbrytningsregeln nedan slår fel just här: 'present-day' blir
+    'presentday' och 'working-class' blir 'workingclass'. Testet är att båda
+    leden är egna engelska ord medan hopskrivningen inte är det — då är
+    strecket innehåll och inte avstavning. 'ines-capability' klarar sig, för
+    'ines' är inget ord; 'stud-ies' likaså, för 'ies' är en ändelse.
+
+    Förledet måste dessutom vara gement. Ett egennamn som brutits mitt itu ser
+    annars ut som en sammansättning så fort båda halvorna råkar vara ord:
+    'Cam-bridge', 'Face-book', 'Hit-ler'. Sammansättningar som verkligen börjar
+    med versal står i praktiken aldrig vid en radbrytning i det här materialet.
+    """
+    words = english_words()
+    if not words or not before[:1].islower():
+        return False
+    a = before.lower()
+    b = re.split(r"[^A-Za-z]", after, 1)[0].lower()
+    if len(a) < 3 or len(b) < 3 or b in SUFFIXES or _is_word(a + b):
+        return False
+    return _is_word(a) and _is_word(b)
+
+
+def join_lines(lines: list[str], english: bool = False) -> str:
     """
     Slår ihop rader från PDF:en till löpande text.
 
@@ -43,6 +125,11 @@ def join_lines(lines: list[str]) -> str:
     riktigt bindestreck. Båda ska bort när nästa rad fortsätter ordet — annars
     får man 'in- vasiv' och 'minut er', vilket är exakt den sortens skräp som
     låg i den gamla datafilen.
+
+    Med `english` gäller dessutom `_english_compound`, som räddar de äkta
+    bindestrecken i ELF:s engelska texter. Den lämnas av för svensk text: där
+    är 'hand-lag' avstavning, men båda leden är engelska ord och regeln skulle
+    behålla ett streck som inte finns.
     """
     out = ""
     glue_next = False  # föregående rad slutade mitt i ett ord
@@ -58,9 +145,11 @@ def join_lines(lines: list[str]) -> str:
             # 'in-vasiv' → 'invasiv', men 'Nord-syd' behåller sitt streck.
             # Sättningen skiljer inte på avstavning och riktigt bindestreck, så
             # versal efter strecket + en handfull förled får avgöra.
-            last_word = re.split(r"[\s(]", line[:-1])[-1].lower()
+            last_word = re.split(r"[\s(]", line[:-1])[-1]
             if nxt[:1].islower() and not line.endswith(" -"):
-                if last_word in KEEP_HYPHEN:
+                if last_word.lower() in KEEP_HYPHEN or (
+                    english and _english_compound(last_word, nxt)
+                ):
                     glue_next = True  # 'icke-' + 'invasivt' → 'icke-invasivt'
                 else:
                     line, glue_next = line[:-1], True
@@ -76,7 +165,7 @@ def join_lines(lines: list[str]) -> str:
 class Block:
     """En textblock ur PDF:en med koordinater och radtext."""
 
-    __slots__ = ("bbox", "lines", "sizes", "fonts", "line_x")
+    __slots__ = ("bbox", "lines", "sizes", "fonts", "line_x", "english")
 
     def __init__(self, bbox, lines, sizes, fonts, line_x=None):
         self.bbox = bbox
@@ -85,6 +174,8 @@ class Block:
         self.fonts = fonts
         # Vänsterkanten per rad — indraget markerar nytt stycke.
         self.line_x = line_x or []
+        # Sätts av elf.py för blocken i den engelska delen, se join_lines.
+        self.english = False
 
     @property
     def x0(self) -> float:
@@ -100,7 +191,7 @@ class Block:
 
     @property
     def text(self) -> str:
-        return join_lines(self.lines)
+        return join_lines(self.lines, english=self.english)
 
     def paragraphs(self, indent: float = 3.0) -> list[str]:
         """
@@ -124,7 +215,7 @@ class Block:
             else:
                 groups[-1].append(line)
             blank = False
-        return [text for text in (join_lines(g) for g in groups) if text]
+        return [t for t in (join_lines(g, english=self.english) for g in groups) if t]
 
     @property
     def bold(self) -> bool:

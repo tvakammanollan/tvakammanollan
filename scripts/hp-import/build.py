@@ -255,6 +255,11 @@ def build_pass(
                     "passages": data["passages"],
                 }
         if recovered and len(recovered["questions"]) >= 8:
+            # Häften som kommit in via adopt_elf.py är passets enda källa, så
+            # parse_verbal har redan läst uppgift 31–40 — fast utan att förstå
+            # ELF:s uppslag. Den versionen ska ersättas, inte kompletteras,
+            # annars får passet 50 uppgifter varav tio utan alternativ.
+            questions = [q for q in questions if q["nr"] not in recovered["questions"]]
             offset = len(passages)
             passages += [passage_json(p) for p in recovered["passages"]]
             for nr in sorted(recovered["questions"]):
@@ -523,6 +528,16 @@ def main() -> int:
         for pass_meta in exam["passes"]:
             answers = dict(facit.get(pass_meta["pass"], {}))
             struck = set(struck_all.get(pass_meta["pass"], set()))
+            # 2011–2012 publicerades proven bara som webbsidor, och de sidorna
+            # ger ett ofullständigt pass: en del uppgifter saknar facit i
+            # arkivet. Dyker själva provhäftet upp senare (adopt_elf.py) är det
+            # den bättre källan — hela passet, med ELF. Filens existens får
+            # avgöra, så valet överlever att fetch.py skriver om sources.json.
+            booklet = os.path.join(
+                CACHE, exam["term"], f"pass{pass_meta['pass']}-verbal.pdf"
+            )
+            if pass_meta.get("source") == "html" and os.path.exists(booklet):
+                pass_meta = pass_meta | {"file": booklet, "kind": "verbal", "source": booklet}
             builder = build_html_pass if pass_meta.get("source") == "html" else build_pass
             data, problems = builder(exam, pass_meta, answers, struck)
             name = f"{exam['term']}-{pass_meta['pass']}"

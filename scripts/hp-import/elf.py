@@ -22,16 +22,24 @@ import fitz
 from pdfutil import Block, blocks, column_sorted, join_lines
 
 INSTRUCTION = re.compile(r"^(In the following text|Read the text|The text below)", re.I)
-HEADING = re.compile(r"^(Questions?|Alternatives|ELF|Engelsk läsförståelse.*)$")
+HEADING = re.compile(r"^(Questions?|Alternatives|ELF|Engelsk läsförståelse.*)$", re.I)
+
+# Avsnittsrubriken, i de två sättningar UHR har använt: 'Engelsk läsförståelse
+# – ELF' (2019–) och 'DELPROV ELF – ENGELSK LÄSFÖRSTÅELSE' (t.o.m. 2018).
+# Skiftläget bär informationen och får inte slarvas bort: varje framsida listar
+# delproven som 'ELF (engelsk läsförståelse)' med gemener, så en okänslig
+# sökning skulle peka ut omslaget som ELF-avsnittets början.
+ELF_SECTION = re.compile(r"Engelsk läsförståelse|ENGELSK LÄSFÖRSTÅELSE")
 QUESTION_RE = re.compile(r"^(\d{1,2})\s*[.)]\s*(.*)$", re.S)
 ALT_RE = re.compile(r"^([A-E])\b\s*(.*)$", re.S)
-GAP_ALT_RE = re.compile(r"^([A-E])$")
+GAP_ALT_RE = re.compile(r"^([A-E])(?:\s+(.*))?$")
+GAP_NUMBER_RE = re.compile(r"\d{1,2}\s*\.")
 
 
 def _first_elf_page(doc: "fitz.Document") -> int | None:
     for i, page in enumerate(doc):
         text = page.get_text()
-        if "Engelsk läsförståelse" in text and len(text) > 600:
+        if ELF_SECTION.search(text) and len(text) > 600:
             return i
     return None
 
@@ -49,7 +57,7 @@ def _question_text(b: Block) -> str:
     lines = [x for x in b.lines if x.strip()]
     m = QUESTION_RE.match(lines[0].strip())
     lines[0] = m.group(2) if m else lines[0]
-    return join_lines(lines)
+    return join_lines(lines, english=b.english)
 
 
 def _looks_like_title(b: Block) -> bool:
@@ -58,21 +66,31 @@ def _looks_like_title(b: Block) -> bool:
 
 
 def _gap_alternatives(b: Block) -> list[str]:
-    """['A', 'activate', 'B', 'relieve', …] → ['activate', 'relieve', …]"""
+    """
+    ['A', 'activate', 'B', 'relieve', …] → ['activate', 'relieve', …]
+
+    Bokstaven står oftast på egen rad, men sättningen låter den ibland dela rad
+    med sitt alternativ ('D prejudice') — och t.o.m. 2018 ligger dessutom
+    uppgiftsnumret först i samma block. Bokstäverna måste komma i ordning
+    A, B, C … för att räknas: annars klyvs ett alternativ som självt inleds med
+    'A ' ('A few individuals …') mitt itu.
+    """
     out: list[str] = []
     current: list[str] | None = None
     for raw in b.lines:
         line = raw.strip()
-        if not line:
+        if not line or GAP_NUMBER_RE.fullmatch(line):
             continue
-        if GAP_ALT_RE.match(line):
+        m = GAP_ALT_RE.match(line)
+        expected = "ABCDE"[min(len(out) + (current is not None), 4)]
+        if m and m.group(1) == expected:
             if current is not None:
-                out.append(join_lines(current))
-            current = []
+                out.append(join_lines(current, english=b.english))
+            current = [m.group(2)] if m.group(2) else []
         elif current is not None:
             current.append(line)
     if current:
-        out.append(join_lines(current))
+        out.append(join_lines(current, english=b.english))
     return [x for x in out if x]
 
 
@@ -141,6 +159,10 @@ def parse_elf(source: str | bytes) -> dict | None:
         bs = blocks(page)
         if not bs:
             continue
+        # Allt härifrån är engelsk text, och engelskan bindestrecksförenar ord
+        # som svenskan skriver ihop. Se join_lines.
+        for b in bs:
+            b.english = True
         text = page.get_text()
         # Häftet innehåller ibland två provversioner efter varandra.
         if pno > start and ("ORD – Ordförståelse" in text or "Provpass" in text):
@@ -161,10 +183,15 @@ def parse_elf(source: str | bytes) -> dict | None:
             for b in sorted([b for b in bs if b.x0 >= mid], key=lambda b: b.y0):
                 if HEADING.match(b.text or ""):
                     continue
-                m = re.fullmatch(r"(\d{1,2})\s*\.", b.text)
+                m = GAP_NUMBER_RE.fullmatch(b.text)
                 if m:
-                    nr = int(m.group(1))
+                    nr = int(b.text.rstrip(". "))
                     continue
+                # T.o.m. 2018 står numret som första rad i alternativblocket i
+                # stället för i ett eget block.
+                head = next((x.strip() for x in b.lines if x.strip()), "")
+                if GAP_NUMBER_RE.fullmatch(head):
+                    nr = int(head.rstrip(". "))
                 alts = _gap_alternatives(b)
                 if nr is not None and len(alts) >= 4:
                     questions[nr] = {
@@ -242,7 +269,9 @@ def _collect(
         # inleds med "A" (artikeln) som ett svarsalternativ.
         expected = "ABCDE"[len(alts)] if len(alts) < 5 else None
         if m and m.group(2) and m.group(1) == expected:
-            alts.append(join_lines([m.group(2)]))
+            alts.append(join_lines([m.group(2)], english=b.english))
         elif not alts:
             # Fortsättning på frågetexten — frågan bryts ibland över två block.
-            questions[nr]["text"] = join_lines([questions[nr]["text"], b.text])
+            questions[nr]["text"] = join_lines(
+                [questions[nr]["text"], b.text], english=b.english
+            )

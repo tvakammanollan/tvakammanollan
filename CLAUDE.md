@@ -174,7 +174,10 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 
 Alla provtillfällen som går att få tag på finns i appen: 30 stycken
 (VT2012–VT2026), 118 provpass,
-4 363 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
+4 720 uppgifter, facit på varje. 29 av 30 prov är kompletta 160-uppgiftersprov
+— HT2012 till VT2026 utan lucka. ELF finns i **samtliga** 60 verbala provpass
+(600 uppgifter); det gäller sedan 2026-08-17 och är inte längre något som
+varierar mellan provtillfällen. Datan är **genererad** — redigera aldrig
 `src/data/prov/` för hand, kör om importen.
 
 ```bash
@@ -184,6 +187,8 @@ python3 scripts/hp-import/fetch_elf.py      # originalhäftena med ELF, via giss
 python3 scripts/hp-import/harvest_elf.py    # samma sak, men ur arkivregistret
 python3 scripts/hp-import/html_elf.py       # ELF ur 2011–2014 års HTML-provsidor
 python3 scripts/hp-import/html_prov.py      # hela verbala pass ur samma sidor (2012vt)
+python3 scripts/hp-import/adopt_elf.py ~/Downloads          # torrkörning
+python3 scripts/hp-import/adopt_elf.py ~/Downloads --apply  # häften hämtade för hand
 python3 scripts/hp-import/build.py     # parsar → src/data/prov/ + public/prov-bilder/
 python3 scripts/hp-import/build.py --fresh   # rendera om alla bilder också (~12 min)
 ```
@@ -205,10 +210,25 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   heter `...-utan-elf.pdf`. Originalet raderas dock inte alltid: det ligger kvar
   avlänkat på samma server, och finns annars ofta i Internet Archive.
   `fetch_elf.py` letar rätt på det (se filen för hur namnen gissas) och `elf.py`
-  parsar ELF:s tre uppslagstyper. Idag: 138 ELF-uppgifter i nio prov, varav fem
-  är kompletta 160-uppgiftersprov. Resten kommer ur
-  `scripts/hp-import/elf-arkiv.json`, det som redan låg på sajten. Ett verbalt
-  pass har alltså 30 eller 40 uppgifter beroende på provtillfälle — inget fel.
+  parsar ELF:s tre uppslagstyper. Går originalet inte att hitta på nätet är
+  sista utvägen att hämta häftet för hand och köra `adopt_elf.py` (nedan) —
+  det är så beståndet från 2012 och framåt blev komplett.
+- **`adopt_elf.py` tar emot häften som laddats ner manuellt.** Provtillfälle och
+  provpass läses ur häftets egen framsida, så filnamnen spelar ingen roll. Ett
+  häfte tas bara emot om `parse_elf` hittar minst åtta uppgifter, facit täcker
+  31–40, **och** den svenska delen är ord för ord samma text som den avskalade
+  version vi redan har. Det sista kravet är det viktiga: två provtillfällen
+  samma termin har identisk framsidelayout men olika innehåll, och utan
+  jämförelsen hamnar ett häfte tyst på fel prov.
+- **Provdatumet på framsidan är inte alltid det i `sources.json`.** Vårprovet
+  2016 står där som 2016-04-04, en måndag; provet skrevs den 9:e, vilket är vad
+  UHR:s egen katalognamn (`hp-2016-04-09`) och häftet säger. `adopt_elf.py`
+  matchar därför på båda.
+- **Vårprovet 2020 ställdes in och skrevs aldrig.** Häftena var redan tryckta,
+  och samma prov användes i stället den 25 oktober 2020 — texten är identisk,
+  bara framsidans datum skiljer. Ett häfte märkt 2020-04-04 hör alltså till
+  höstprovet 2020; se `DATE_ALIASES`. Något eget facit för april finns inte, och
+  ska inte letas efter.
 - **Ett par provtillfällen står inte på UHR:s provlista** men ligger kvar på
   servern (2013vt, 2012ht). De är uppräknade i `UNLISTED` i `fetch.py`. Hittar
   du fler: jämför provlistan mot `archive_index.py`:s register.
@@ -220,6 +240,24 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
 - **Lästexterna delas i stycken på indrag**, inte på blankrad — provhäftena
   markerar nytt stycke med indrag och ett textblock är ofta en hel spalt.
   Se `Block.paragraphs`. Utan det kommer var sjätte lästext ut som en vägg.
+- **ELF-avsnittet har två rubriksättningar** och skiftläget bär informationen:
+  `Engelsk läsförståelse – ELF` (2019–) och `DELPROV ELF – ENGELSK
+  LÄSFÖRSTÅELSE` (t.o.m. 2018). Sök aldrig skiftlägesokänsligt efter dem —
+  varje framsida listar delproven som `ELF (engelsk läsförståelse)` med
+  gemener, och då pekas omslaget ut som avsnittets början.
+- **Luckuppgifternas alternativ är satta på två sätt.** Från 2019 ligger
+  numret i ett eget block och bokstäverna på egna rader; t.o.m. 2018 ligger
+  numret först i alternativblocket och sista bokstaven delar rad med sin text
+  (`'D prejudice'`). `_gap_alternatives` kräver att bokstäverna kommer i
+  ordning A, B, C … så att ett alternativ som självt börjar med `A ` inte klyvs.
+- **Engelskan avstavas inte som svenskan.** `join_lines` tar bort bindestrecket
+  när nästa rad börjar med gemen, vilket är rätt för `in-vasiv` men fel för
+  `present-day` och `working-class`. ELF-blocken sätter därför `english=True`,
+  och `_english_compound` behåller strecket när båda leden är egna engelska ord
+  medan hopskrivningen inte är det. Regeln kräver gement förled — annars klyvs
+  `Cam-bridge` och `Hit-ler` — och ordlistan (`/usr/share/dict/words`) måste
+  kompletteras med böjda former, eftersom `workers` och `novelties` saknas där.
+  Saknas ordlistan faller importen tillbaka på svenska regler utan att fela.
 - **Arkivfilens ELF (`elf-arkiv.json`) är extraherad av någon annan** och har
   spalter inflätade i varandra på sina håll. `build.py` känner igen mönstret
   och hoppar över passets ELF hellre än att visa en text som inte går att läsa.
