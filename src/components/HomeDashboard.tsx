@@ -59,11 +59,22 @@ export function HomeDashboard() {
   })();
 
   return (
-    <div className="min-h-screen">
+    // Två mycket svaga toningar högst upp, en löv och en bark. De ligger
+    // bakom allt och rör inget innehåll, men de tar bort intrycket av en
+    // enda platt cremeyta. Inga klot, ingen kantig gradient — bara en
+    // aning färg som tonar ut inom de första 500 px.
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage:
+          "linear-gradient(180deg, rgba(47,107,60,0.05) 0%, rgba(47,107,60,0) 380px), linear-gradient(180deg, rgba(122,82,54,0.04) 0%, rgba(122,82,54,0) 520px)",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <ResumeMatchBanner />
       {isGuest && <GuestBanner />}
 
-      <div className="mx-auto max-w-3xl px-4 py-10 sm:py-12">
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
         {/* ---------- Header: namn + en enda statusrad ---------- */}
         <Reveal y={16}>
           <header>
@@ -89,10 +100,24 @@ export function HomeDashboard() {
           </header>
         </Reveal>
 
+        {/* Två spalter från lg: dagens ord står kvar i vänsterkanten
+            medan man jobbar sig genom valen till höger. Under lg
+            staplas de och ordet hamnar sist, eftersom "vad gör jag nu"
+            ska komma före på en liten skärm. */}
+        <div className="mt-10 grid items-start gap-4 lg:grid-cols-[288px_minmax(0,1fr)]">
+          <Reveal y={20} delay={0.11}>
+            <aside className="order-2 lg:sticky lg:top-24 lg:order-1">
+              <SafeBoundary label="word-of-the-day">
+                <WordOfTheDay />
+              </SafeBoundary>
+            </aside>
+          </Reveal>
+
+          <div className="order-1 lg:order-2">
         {/* ---------- 1. Spela match ---------- */}
         <Reveal y={20} delay={0.05}>
-          <section className="mt-10">
-            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/25 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+          <section>
+            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/25 bg-[var(--card)] p-5 backdrop-blur-sm sm:p-6">
               <span
                 aria-hidden
                 className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
@@ -119,7 +144,10 @@ export function HomeDashboard() {
               <div
                 role="radiogroup"
                 aria-label="Välj ämne"
-                className="relative mt-4 inline-flex rounded-full border border-white/10 bg-white/[0.03] p-1"
+                // Ligger INUTI ett vitt kort, så den får inte vara vit
+                // också. En aning mörkare än kortet, annars syns inte
+                // spåret bakom det valda alternativet.
+                className="relative mt-4 inline-flex rounded-full border border-[rgba(46,30,20,0.12)] bg-[rgba(46,30,20,0.05)] p-1"
               >
                 <SubjectPill
                   label="Verbal"
@@ -153,26 +181,20 @@ export function HomeDashboard() {
               tone="teal"
               icon={<BookOpen className="h-5 w-5" />}
               title="Plugga ord"
-              subtitle="8 000+ riktiga HP-ord, repetition som minns vad du missar"
+              subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
             />
             <ActionCard
               onClick={() => setCoachingOpen(true)}
               tone="leaf"
+              badge="30 % rabatt"
               icon={<Sparkles className="h-5 w-5" />}
               title="Coachning"
               subtitle="Ett studieupplägg byggt av någon som själv fått 1,95+"
             />
           </div>
         </Reveal>
-
-        {/* ---------- Dagens ord ---------- */}
-        <Reveal y={20} delay={0.11}>
-          <div className="mt-3">
-            <SafeBoundary label="word-of-the-day">
-              <WordOfTheDay />
-            </SafeBoundary>
           </div>
-        </Reveal>
+        </div>
       </div>
 
       <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
@@ -304,18 +326,29 @@ function ActionCard({
   icon,
   title,
   subtitle,
+  badge,
 }: {
   to?: string;
   onClick?: () => void;
   tone: "teal" | "amber" | "leaf";
+  /** Liten flagga i övre högra hörnet, t.ex. en rabatt. */
+  badge?: string;
   icon: React.ReactNode;
   title: string;
   subtitle: string;
 }) {
     // Apple leder till handling, bark ar struktur, lov ar framsteg.
   const accent = tone === "teal" ? "#7a5236" : tone === "leaf" ? "#2f6b3c" : "#ae2f26";
+  // Tonen bär hela kortet, inte bara ikonen: en accentlinje i överkant
+  // och en svag tonad botten. Det är det som ger sidan färg utan att
+  // lägga till dekor som inte betyder något.
+  const cardStyle: React.CSSProperties = {
+    borderTopColor: accent,
+    borderTopWidth: 3,
+    background: `linear-gradient(180deg, ${accent}14 0%, #ffffff 60%)`,
+  };
   const className =
-    "group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-left backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/[0.04]";
+    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[rgba(46,30,20,0.16)] p-5 text-left backdrop-blur-sm transition-colors hover:border-[rgba(46,30,20,0.3)]";
 
   const body = (
     <>
@@ -353,6 +386,7 @@ function ActionCard({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         params={{} as any}
         className={className}
+        style={cardStyle}
       >
         {body}
       </Link>
@@ -360,7 +394,7 @@ function ActionCard({
   }
 
   return (
-    <button type="button" onClick={onClick} className={className}>
+    <button type="button" onClick={onClick} className={className} style={cardStyle}>
       {body}
     </button>
   );

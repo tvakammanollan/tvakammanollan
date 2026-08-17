@@ -31,7 +31,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Hur många ord finns i databasen?",
-    a: "Över 8 000 ord från tidigare HP samt en del nyare uttryck som inte testats på HP men som är på samma nivå.",
+    a: "Över 10 000 ord från tidigare HP samt en del nyare uttryck som inte testats på HP men som är på samma nivå.",
   },
   {
     q: "Vilka delprov kan jag träna?",

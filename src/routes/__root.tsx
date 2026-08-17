@@ -222,7 +222,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "ELO-ranking med tiers från Brons till Diamant",
             "Övningsmatcher utan tidsbegränsning",
             "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
-            "8 000+ HP-ord i databasen",
+            "10 000+ HP-ord i databasen",
             "Gratis coachning av 1.9+-spelare",
           ],
           publisher: { "@id": "https://hpkampen.se/#org" },

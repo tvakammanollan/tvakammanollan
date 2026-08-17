@@ -10,7 +10,7 @@ export const Route = createFileRoute("/guider/ord")({
       path: "/guider/ord",
       title: "ORD-guide: ordkunskap på Högskoleprovet · HP Kampen",
       description:
-        "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 8 000+ riktiga HP-ord.",
+        "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",
       ogTitle: "ORD-guiden · HP Kampen",
       ogDescription:
         "Synonymer, antonymer och ordförrådsbygge för Högskoleprovet. Strategi och tips.",
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/guider/ord")({
         guideArticleJsonLd({
           headline: "ORD-guide: ordkunskap på Högskoleprovet",
           description:
-            "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 8 000+ riktiga HP-ord.",
+            "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",
           url: "https://hpkampen.se/guider/ord",
         }),
       ),

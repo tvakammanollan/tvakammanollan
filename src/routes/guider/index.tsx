@@ -388,7 +388,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                Träna ord (8 000+ ord)
+                Träna ord (10 000+ ord)
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Ordträning med spaced repetition och förklaringar till varje ord.

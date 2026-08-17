@@ -43,10 +43,10 @@ export const Route = createFileRoute("/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/ord",
-      title: "Öva ord · 8 000+ HP-ord · HP Kampen",
+      title: "Öva ord · 10 000+ HP-ord · HP Kampen",
       description:
-        "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
-      ogTitle: "Öva ord · 8 000+ HP-ord",
+        "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
+      ogTitle: "Öva ord · 10 000+ HP-ord",
       ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
     }),
     links: pageLinks("/ord"),
@@ -58,9 +58,9 @@ export const Route = createFileRoute("/ord")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        name: "Öva HP-ord · 8 000+ riktiga ORD-frågor",
+        name: "Öva HP-ord · 10 000+ riktiga ORD-frågor",
         description:
-          "Träna ordförståelse för Högskoleprovet med 8 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
+          "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
         url: "https://hpkampen.se/ord",
         inLanguage: "sv-SE",
         learningResourceType: "Övning",
@@ -329,7 +329,7 @@ function OrdPracticePage() {
     <>
       <PageHero
         eyebrowTone="leaf"
-        eyebrow="8 000+ ord"
+        eyebrow="10 000+ ord"
         title="Öva"
         cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
         subtitle="Spaced repetition. Ingen tidspress. Helt gratis."

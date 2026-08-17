@@ -130,7 +130,7 @@ export function HeroLanding() {
           transition={{ duration: 0.6, delay: 0.12 }}
           className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-white/70"
         >
-          Möt någon i realtid med riktiga HP-frågor. ELO som rör sig efter varje match, 8 000 ord
+          Möt någon i realtid med riktiga HP-frågor. ELO som rör sig efter varje match, 10 000 ord
           med upprepning i intervaller, och 30 gamla prov med facit.
         </m.p>
 
@@ -185,7 +185,7 @@ export function HeroLanding() {
           {[
             {
               icon: BookOpenText,
-              t: "8 000+ ord",
+              t: "10 000+ ord",
               s: "ur prov sedan 1990-talet",
               c: "#2f6b3c",
             },
@@ -246,7 +246,7 @@ export function HeroLanding() {
             {
               icon: BookOpenText,
               t: "Ordträning",
-              s: "8 000 ord med upprepning i intervaller. Ord du missar kommer tillbaka och lämnar högen först när du suttit dem fem gånger i rad.",
+              s: "10 000 ord med upprepning i intervaller. Ord du missar kommer tillbaka och lämnar högen först när du suttit dem fem gånger i rad.",
               to: "/ord" as const,
               cta: "Öva ord",
             },
@@ -330,7 +330,7 @@ export function HeroLanding() {
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { l: "Ord i databasen", v: "8 000+", s: "med definitioner", c: "#2f6b3c" },
+              { l: "Ord i databasen", v: "10 000+", s: "med definitioner", c: "#2f6b3c" },
               { l: "Uppgifter", v: "15 000+", s: "ord och provfrågor", c: "#7a5236" },
               { l: "Gamla prov", v: "30", s: "VT2012 och framåt", c: "#ae2f26" },
               { l: "Provpass", v: "120", s: "hela pass med klocka", c: "#2f6b3c" },
@@ -358,7 +358,13 @@ export function HeroLanding() {
       {/* ---------- coachning ---------- */}
       <section className="border-t border-white/10">
         <div className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
+            <span
+              className="pointer-events-none absolute right-0 top-0 rounded-bl-2xl px-4 py-2 text-[13px] font-bold tracking-wide text-[#fff8f5]"
+              style={{ background: "#ae2f26" }}
+            >
+              30 % rabatt
+            </span>
             <Reveal>
               <p
                 className="text-[11px] font-bold uppercase tracking-[0.16em]"

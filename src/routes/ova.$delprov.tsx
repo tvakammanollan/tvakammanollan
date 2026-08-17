@@ -30,7 +30,7 @@ const DELPROV: Record<string, Delprov> = {
     intro:
       "ORD testar din ordförståelse: du ska hitta synonymen eller den närmaste betydelsen till ett ord. Det är ofta det delprov där man snabbast höjer sitt resultat genom att plugga ord. Här övar du på riktiga ORD-frågor från tidigare högskoleprov, med facit.",
     practiceTo: "/ord",
-    practiceLabel: "Öva 8 000+ ord nu",
+    practiceLabel: "Öva 10 000+ ord nu",
   },
   mek: {
     code: "MEK",

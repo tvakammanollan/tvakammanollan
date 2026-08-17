@@ -11,7 +11,7 @@ Officiell domän: https://hpkampen.se
 - [Hem](https://hpkampen.se/): Startsida — hitta en match, se din ELO och kom igång på 30 sekunder.
 - [Topplista](https://hpkampen.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
 - [Träna HP](https://hpkampen.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
-- [Öva ord](https://hpkampen.se/ord): 8 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
+- [Öva ord](https://hpkampen.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
 - [Gamla prov](https://hpkampen.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 363 uppgifter med facit. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Tio prov är kompletta med engelsk läsförståelse. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
 - [Skapa konto](https://hpkampen.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
 - [Logga in](https://hpkampen.se/login): Logga in på ditt befintliga konto.

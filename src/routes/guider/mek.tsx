@@ -10,7 +10,7 @@ export const Route = createFileRoute("/guider/mek")({
       path: "/guider/mek",
       title: "MEK-guide: meningskomplettering på HP · HP Kampen",
       description:
-        "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från HP Kampen med 8 000+ HP-frågor.",
+        "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från HP Kampen med 10 000+ HP-frågor.",
       ogTitle: "MEK-guiden · HP Kampen",
       ogDescription:
         "Meningskomplettering på HP: strategi, logikord och hur du undviker distraktorer.",
