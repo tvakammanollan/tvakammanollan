@@ -1535,49 +1535,49 @@ body {
      Ankaret /70 = --text-secondary är oförändrat; steget upp och ned
      därifrån är nu strikt stigande. */
   .text-white\/15 {
-    color: rgba(46, 30, 20, 0.22);
+    color: rgba(46, 30, 20, 0.24);
   }
   .text-white\/20 {
-    color: rgba(46, 30, 20, 0.26);
+    color: rgba(46, 30, 20, 0.31);
   }
   .text-white\/25 {
-    color: rgba(46, 30, 20, 0.32);
-  }
-  .text-white\/30 {
     color: rgba(46, 30, 20, 0.38);
   }
+  .text-white\/30 {
+    color: rgba(46, 30, 20, 0.44);
+  }
   .text-white\/35 {
-    color: rgba(46, 30, 20, 0.44); /* 0.40 */
+    color: rgba(46, 30, 20, 0.51); /* 0.40 */
   }
   .text-white\/40 {
-    color: rgba(46, 30, 20, 0.5);
+    color: rgba(46, 30, 20, 0.59);
   }
   .text-white\/45 {
-    color: rgba(46, 30, 20, 0.56);
-  }
-  .text-white\/50 {
-    color: rgba(46, 30, 20, 0.62); /* 0.55 */
-  }
-  .text-white\/55 {
     color: rgba(46, 30, 20, 0.66);
   }
+  .text-white\/50 {
+    color: rgba(46, 30, 20, 0.73); /* 0.55 */
+  }
+  .text-white\/55 {
+    color: rgba(46, 30, 20, 0.79);
+  }
   .text-white\/60 {
-    color: rgba(46, 30, 20, 0.7);
+    color: rgba(46, 30, 20, 0.83);
   }
   .text-white\/65 {
-    color: rgba(46, 30, 20, 0.74);
+    color: rgba(46, 30, 20, 0.88);
   }
   .text-white\/70 {
-    color: var(--text-secondary); /* 0.78 — ankare, oförändrat */
+    color: rgba(46, 30, 20, 0.92); /* 0.78 — ankare, oförändrat */
   }
   .text-white\/75 {
-    color: rgba(46, 30, 20, 0.84);
+    color: rgba(46, 30, 20, 0.95);
   }
   .text-white\/80 {
-    color: rgba(46, 30, 20, 0.89);
+    color: rgba(46, 30, 20, 0.98);
   }
   .text-white\/85 {
-    color: rgba(46, 30, 20, 0.94);
+    color: rgba(46, 30, 20, 1);
   }
 
   /* Samma problem på kanterna: /10 och /15 remappades båda till --line
