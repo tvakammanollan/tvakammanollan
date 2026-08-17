@@ -12,7 +12,7 @@ export function UserAvatar({ name, size = 40, className }: Props) {
     <span
       aria-hidden
       className={cn(
-        "inline-flex items-center justify-center rounded-full font-semibold text-white shadow-sm",
+        "inline-flex items-center justify-center rounded-full font-semibold text-[#fff8f5] shadow-sm",
         className,
       )}
       style={{
