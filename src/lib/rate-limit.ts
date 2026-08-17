@@ -54,6 +54,12 @@ export const limits = {
   guestSignup: { max: 5, windowMs: 60 * 60 * 1000 } as LimitConfig, // 5/hour
   /** Joining matchmaking queue. */
   matchmaking: { max: 10, windowMs: 60 * 1000 } as LimitConfig, // 10/min
+  /**
+   * Matchskapande. OBS: precis som forumet är detta bara det billiga första
+   * lagret — den riktiga kvoten räknas ur `matches` via `checkMatchQuota`
+   * (se `match-abuse.ts`), eftersom limitern här lever per Cloudflare-isolat.
+   */
+  matchCreate: { max: 10, windowMs: 5 * 60 * 1000 } as LimitConfig, // 10/5min
   /** Sending friend requests. */
   friendRequest: { max: 20, windowMs: 60 * 60 * 1000 } as LimitConfig, // 20/hour
   /** Bug reports. */

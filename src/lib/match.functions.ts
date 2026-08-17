@@ -10,6 +10,9 @@ import {
   processMatchResultServer,
 } from "./match.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { checkMatchQuota } from "./match-abuse";
+import { limits } from "./rate-limit";
+import { assertRateLimit } from "./rate-limit.server";
 import type { Database } from "@/integrations/supabase/types";
 
 export const createMatch = createServerFn({ method: "POST" })
@@ -26,9 +29,47 @@ export const createMatch = createServerFn({ method: "POST" })
     const { userId } = context;
     const eloField = data.match_type === "verbal" ? "elo_verbal" : "elo_math";
 
+    // Billigt första lager (per isolat) — bromsar ren hamring.
+    assertRateLimit(`match:${userId}`, limits.matchCreate);
+
+    // Riktiga kvoten: räknas ur `matches`, precis som forumets. Gäller ALLA
+    // lägen, botmatcher inkluderade — undantaget för bot var hålet som lät
+    // fyra konton odla 20–300 matcher var på ett dygn (se `match-abuse.ts`).
+    const now = Date.now();
+    const hourAgo = new Date(now - 60 * 60 * 1000).toISOString();
+    const dayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
+
+    const { count: lastDay, error: quotaErr } = await supabaseAdmin
+      .from("matches")
+      .select("id", { count: "exact", head: true })
+      .eq("player1_id", userId)
+      .gte("created_at", dayAgo);
+    if (quotaErr) {
+      console.error("[match] kunde inte läsa dygnskvot:", quotaErr.message);
+      throw new Error("Kunde inte starta matchen — försök igen.");
+    }
+
+    let lastHour = 0;
+    if ((lastDay ?? 0) > 0) {
+      const { count, error } = await supabaseAdmin
+        .from("matches")
+        .select("id", { count: "exact", head: true })
+        .eq("player1_id", userId)
+        .gte("created_at", hourAgo);
+      if (error) {
+        console.error("[match] kunde inte läsa timkvot:", error.message);
+        throw new Error("Kunde inte starta matchen — försök igen.");
+      }
+      lastHour = count ?? 0;
+    }
+
+    const quota = checkMatchQuota(lastHour, lastDay ?? 0);
+    if (!quota.ok) throw new Error(quota.message);
+
     // 30s cooldown mellan matchskapande för att förhindra automatiserad spam.
     // Gäller bara private rooms — bot-matcher tillåts utan cooldown eftersom
     // gäst-flödet (Hitta match → bot) annars stuprör direkt vid retry.
+    // Volymkvoten ovan täcker botläget i stället.
     if (data.mode === "private") {
       const { data: lastMatch } = await supabaseAdmin
         .from("matches")
