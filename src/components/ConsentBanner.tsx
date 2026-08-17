@@ -58,7 +58,7 @@ export function ConsentBanner() {
       aria-labelledby="consent-title"
       className="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4"
     >
-      <div className="mx-auto flex max-w-3xl flex-col gap-4 rounded-xl border border-white/10 bg-[#fbf6ec]/95 p-4 shadow-2xl backdrop-blur-sm sm:p-5">
+      <div className="mx-auto flex max-w-3xl flex-col gap-4 rounded-xl border border-white/10 bg-[#170d05]/95 p-4 shadow-2xl backdrop-blur-sm sm:p-5">
         <div className="flex gap-3">
           <ChartNoAxesColumn
             className="mt-0.5 size-5 shrink-0"
@@ -95,7 +95,7 @@ export function ConsentBanner() {
           </Button>
           <Button
             onClick={() => decide("granted")}
-            className="bg-[var(--amber)] font-semibold text-[#fbf6ec] hover:bg-[var(--amber)]/90 sm:w-auto"
+            className="bg-[var(--amber)] font-semibold text-[#170d05] hover:bg-[var(--amber)]/90 sm:w-auto"
           >
             Godkänn analys
           </Button>

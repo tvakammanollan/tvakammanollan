@@ -5,7 +5,7 @@ type Variant = "default" | "interactive" | "raised";
 const variantClass: Record<Variant, string> = {
   default: "border-white/10 bg-white/[0.02]",
   interactive:
-    "border-white/10 bg-white/[0.02] transition-colors hover:border-[#ae2f26]/40 hover:bg-white/[0.04]",
+    "border-white/10 bg-white/[0.02] transition-colors hover:border-[#f2a65a]/40 hover:bg-white/[0.04]",
   raised: "border-white/12 bg-white/[0.04] shadow-[0_14px_36px_rgba(0,0,0,0.25)]",
 };
 

@@ -32,7 +32,7 @@ const TESTIMONIALS = [
   },
 ];
 
-const AMBER = "#ae2f26";
+const AMBER = "#f2a65a";
 
 // Återanvändbar glassmorphism: gradient-fyllning + inset-highlight + soft
 // shadow. Synligt även när det inte finns något dynamiskt att blur:a
@@ -59,7 +59,7 @@ export function HeroLanding() {
   }, [fetchStats]);
 
   return (
-    <div className="min-h-screen text-white" style={{ background: "#fbf6ec" }}>
+    <div className="min-h-screen text-white" style={{ background: "#170d05" }}>
       <LiveTicker stats={stats} />
       <Hero stats={stats} />
       <Leaderboard stats={stats} />
@@ -274,14 +274,14 @@ function Hero({ stats }: { stats: LandingStats | null }) {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full touch-none"
-        style={{ background: "#fbf6ec" }}
+        style={{ background: "#170d05" }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(251, 246, 236,0) 0%, rgba(251, 246, 236,0.12) 45%, rgba(251, 246, 236,0.7) 88%, rgba(251, 246, 236,1) 100%)",
+            "linear-gradient(180deg, rgba(23,13,5,0) 0%, rgba(23,13,5,0.12) 45%, rgba(23,13,5,0.7) 88%, rgba(23,13,5,1) 100%)",
         }}
       />
 
@@ -319,7 +319,7 @@ function Hero({ stats }: { stats: LandingStats | null }) {
         >
           <a
             href="/matchmaking"
-            className="group relative inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#2e1e14] transition hover:brightness-110"
+            className="group relative inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-8 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
             style={{ background: AMBER }}
           >
             Hitta match
@@ -384,7 +384,7 @@ function Hero({ stats }: { stats: LandingStats | null }) {
                   >
                     <span className="flex min-w-0 items-center gap-2">
                       <span
-                        className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold uppercase ${isVerbal ? "text-[#2e1e14]" : "bg-white/15 text-white/85"}`}
+                        className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold uppercase ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white/85"}`}
                         style={isVerbal ? { background: AMBER } : undefined}
                       >
                         {isVerbal ? "V" : "M"}
@@ -517,7 +517,7 @@ const MEDAL_STYLES: Record<
   1 | 2 | 3,
   { icon: LucideIcon; height: string; label: string; accent: string }
 > = {
-  1: { icon: Trophy, height: "sm:pt-0", label: "Guld", accent: "#ae2f26" },
+  1: { icon: Trophy, height: "sm:pt-0", label: "Guld", accent: "#f2a65a" },
   2: { icon: Medal, height: "sm:pt-6", label: "Silver", accent: "#c3ccd6" },
   3: { icon: Award, height: "sm:pt-8", label: "Brons", accent: "#c98a5e" },
 };
@@ -630,7 +630,7 @@ function LiveMatch() {
           <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3">
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
               <span
-                className="rounded px-2 py-0.5 font-bold text-[#2e1e14]"
+                className="rounded px-2 py-0.5 font-bold text-[#1a0d04]"
                 style={{ background: AMBER }}
               >
                 ORD
@@ -705,7 +705,7 @@ function PlayerStrip({
     <div className="flex items-center justify-between gap-3 px-5 py-4">
       <div className="flex items-center gap-3">
         <div
-          className={`flex h-10 w-10 items-center justify-center rounded-full text-[14px] font-bold ${you ? "text-[#2e1e14]" : "bg-white/10 text-white/80"}`}
+          className={`flex h-10 w-10 items-center justify-center rounded-full text-[14px] font-bold ${you ? "text-[#1a0d04]" : "bg-white/10 text-white/80"}`}
           style={you ? { background: AMBER } : undefined}
         >
           {name[0]}
@@ -788,7 +788,7 @@ function MatchRow({
     >
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <span
-          className={`flex h-7 items-center rounded px-2 font-mono text-[10px] font-bold uppercase tracking-wider ${isVerbal ? "text-[#2e1e14]" : "bg-white/15 text-white"}`}
+          className={`flex h-7 items-center rounded px-2 font-mono text-[10px] font-bold uppercase tracking-wider ${isVerbal ? "text-[#1a0d04]" : "bg-white/15 text-white"}`}
           style={isVerbal ? { background: AMBER } : undefined}
         >
           {isVerbal ? "Verbal" : "Matte"}
@@ -964,7 +964,7 @@ function TestimonialStackCard({
         dragStartX.current = 0;
       }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className={`absolute inset-0 flex flex-col justify-between rounded-2xl border border-white/12 bg-[#2e1e14]/85 p-7 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.55)] backdrop-blur-md ${
+      className={`absolute inset-0 flex flex-col justify-between rounded-2xl border border-white/12 bg-[#1a0d04]/85 p-7 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.55)] backdrop-blur-md ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
@@ -982,7 +982,7 @@ function TestimonialStackCard({
           )}
         </div>
         <span
-          className="ml-auto shrink-0 rounded px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[#2e1e14]"
+          className="ml-auto shrink-0 rounded px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[#1a0d04]"
           style={{ background: AMBER }}
         >
           HP {t.score}
@@ -1014,7 +1014,7 @@ function Closer() {
         <div className="mx-auto mt-10 flex w-full max-w-sm flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row">
           <a
             href="/matchmaking"
-            className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#2e1e14] transition hover:brightness-110"
+            className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-md px-10 text-[15px] font-semibold text-[#1a0d04] transition hover:brightness-110"
             style={{ background: AMBER }}
           >
             Hitta match

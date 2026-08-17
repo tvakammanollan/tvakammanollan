@@ -12,7 +12,7 @@ interface EmptyStateProps {
 }
 
 /**
- * Standardtomläge. Ikonbrickan var tidigare en solid `#5e4632`-cirkel med en
+ * Standardtomläge. Ikonbrickan var tidigare en solid `#DAD4C5`-cirkel med en
  * emoji i — en ljus fläck mitt i den mörka ytan. Nu samma tonade amber-bricka
  * som ikonerna på dashboarden.
  */
@@ -26,8 +26,8 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="mx-auto flex max-w-sm flex-col items-center px-4 py-12 text-center">
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/10">
-        <Icon className="h-6 w-6 text-[#ae2f26]" aria-hidden />
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/10">
+        <Icon className="h-6 w-6 text-[#f2a65a]" aria-hidden />
       </div>
       <h3
         className="text-lg font-bold text-foreground"

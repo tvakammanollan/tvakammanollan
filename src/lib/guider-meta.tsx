@@ -113,7 +113,7 @@ export function RelatedGuides({
         <Link
           to="/ova/$delprov"
           params={{ delprov: ovaSlug }}
-          className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-4 transition-colors hover:border-[#ae2f26]/50 hover:bg-[#ae2f26]/[0.1]"
+          className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-[#f2a65a]/25 bg-[#f2a65a]/[0.06] p-4 transition-colors hover:border-[#f2a65a]/50 hover:bg-[#f2a65a]/[0.1]"
         >
           <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
             Redo att öva? Kör riktiga {ovaSlug.toUpperCase()}-frågor med facit →
@@ -129,7 +129,7 @@ export function RelatedGuides({
       <h2
         id="related-guides"
         className="text-xs font-semibold uppercase tracking-[0.25em]"
-        style={{ color: "#7a5236" }}
+        style={{ color: "#6fb3b8" }}
       >
         Fler guider
       </h2>
@@ -139,7 +139,7 @@ export function RelatedGuides({
             key={g.path}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             to={g.path as any}
-            className="group block rounded-2xl border p-4 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+            className="group block rounded-2xl border p-4 transition-all hover:border-[#f2a65a]/50 hover:shadow-[0_0_16px_rgba(242,166,90,0.12)]"
             style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
           >
             <div className="text-sm font-semibold" style={{ color: "var(--cream)" }}>

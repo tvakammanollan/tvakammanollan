@@ -76,16 +76,16 @@ export function Navbar() {
           <span
             aria-hidden
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
-            style={{ background: "#ae2f26" }}
+            style={{ background: "#f2a65a" }}
           >
-            <span className="absolute inset-0.5 rounded-[10px] bg-[#fbf6ec]" />
+            <span className="absolute inset-0.5 rounded-[10px] bg-[#170d05]" />
             <span
               className="relative text-[13px] font-black tracking-tighter"
-              style={{ fontFamily: "var(--font-display)", color: "#ae2f26" }}
+              style={{ fontFamily: "var(--font-display)", color: "#f2a65a" }}
             >
               HP
             </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#170d05] bg-emerald-400" />
           </span>
           <span
             className="text-[19px] font-bold text-white sm:text-[21px]"
@@ -130,7 +130,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_20px_rgba(174, 47, 38,0.35)] hover:shadow-[0_0_30px_rgba(174, 47, 38,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
+                className="gap-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_20px_rgba(242,166,90,0.35)] hover:shadow-[0_0_30px_rgba(242,166,90,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -163,7 +163,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1 px-3 text-xs bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_16px_rgba(174, 47, 38,0.35)]"
+                className="gap-1 px-3 text-xs bg-gradient-to-r from-amber-400 to-orange-500 text-[#0a0a0f] font-semibold shadow-[0_0_16px_rgba(242,166,90,0.35)]"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -207,7 +207,7 @@ function NavLink({
       {/* Underline — animates in on hover, persists on active */}
       <span
         className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100"
-        style={{ background: "#ae2f26" }}
+        style={{ background: "#f2a65a" }}
       />
     </Link>
   );
@@ -434,7 +434,7 @@ function MobileNavLink({
       style={{ color: "var(--cream)" }}
       activeProps={{
         style: {
-          background: "rgba(174, 47, 38, 0.12)",
+          background: "rgba(242, 166, 90, 0.12)",
           color: "var(--amber)",
         },
       }}

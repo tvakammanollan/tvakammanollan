@@ -48,7 +48,7 @@ export function AdminUsageTab() {
     };
   }, [fetchViews]);
 
-  if (error) return <p className="p-6 text-sm text-[#8c1d18]">{error}</p>;
+  if (error) return <p className="p-6 text-sm text-[#e25a6a]">{error}</p>;
   if (!stats) return <div className="skeleton-shimmer h-64 rounded-2xl" aria-busy="true" />;
 
   const hours = Math.floor(stats.activeAnswerTimeS / 3600);
@@ -105,7 +105,7 @@ function Card({ label, value, hint }: { label: string; value: string; hint?: str
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
       <div className="text-xs font-medium text-muted-foreground">{label}</div>
       <div
-        className="mt-1 text-2xl font-bold tabular-nums text-[#2e1e14]"
+        className="mt-1 text-2xl font-bold tabular-nums text-[#e8e4da]"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
@@ -124,7 +124,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
   if (!views) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Sidvisningar</div>
+        <div className="text-sm font-semibold text-[#e8e4da]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">Kunde inte hämta sidvisningar just nu.</p>
       </div>
     );
@@ -133,7 +133,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
   if (!views.since) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Sidvisningar</div>
+        <div className="text-sm font-semibold text-[#e8e4da]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">
           Räkningen är igång men har inte hunnit samla data än. Siffrorna börjar fyllas på från och
           med första besöket efter den här deployen.
@@ -156,7 +156,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
       </div>
 
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Per dygn</div>
+        <div className="text-sm font-semibold text-[#e8e4da]">Per dygn</div>
         <div
           className="mt-3 flex h-28 items-end gap-1"
           role="img"
@@ -165,7 +165,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
           {views.daily.map((d) => (
             <div
               key={d.day}
-              className="flex-1 rounded-t bg-[#ae2f26]/70 transition-colors hover:bg-[#ae2f26]"
+              className="flex-1 rounded-t bg-[#f2a65a]/70 transition-colors hover:bg-[#f2a65a]"
               style={{ height: `${Math.max((d.views / peak) * 100, 2)}%` }}
               title={`${d.day}: ${formatInt(d.views)} visningar`}
             />
@@ -178,7 +178,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
       </div>
 
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-        <div className="text-sm font-semibold text-[#2e1e14]">Mest besökta sidor (30 dagar)</div>
+        <div className="text-sm font-semibold text-[#e8e4da]">Mest besökta sidor (30 dagar)</div>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -190,8 +190,8 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
             <tbody>
               {views.topPages.map((p) => (
                 <tr key={p.path} className="border-t border-white/5">
-                  <td className="py-1.5 pr-3 font-mono text-[13px] text-[#2e1e14]">{p.path}</td>
-                  <td className="py-1.5 text-right tabular-nums text-[#2e1e14]">
+                  <td className="py-1.5 pr-3 font-mono text-[13px] text-[#e8e4da]">{p.path}</td>
+                  <td className="py-1.5 text-right tabular-nums text-[#e8e4da]">
                     {formatInt(p.views)}
                   </td>
                 </tr>

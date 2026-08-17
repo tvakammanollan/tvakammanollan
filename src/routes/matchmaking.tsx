@@ -215,7 +215,7 @@ function MatchmakingPage() {
         </span>
         <div>
           <h1
-            className="text-xl font-bold text-[#2e1e14]"
+            className="text-xl font-bold text-[#e8e4da]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Kunde inte starta en match
@@ -250,24 +250,24 @@ function MatchmakingPage() {
       <div className="relative flex h-32 w-32 items-center justify-center">
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/40"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/40"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/30"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/30"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/20"
+          className="absolute inset-0 rounded-full border-2 border-[#f2a65a]/20"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -280,7 +280,7 @@ function MatchmakingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="eyebrow text-[#ae2f26]">Realtid</p>
+        <p className="eyebrow text-[#f2a65a]">Realtid</p>
         <h1
           className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -289,7 +289,7 @@ function MatchmakingPage() {
             "Motståndare hittad!"
           ) : (
             <>
-              Söker <span className="display-italic font-medium text-[#ae2f26]">motståndare…</span>
+              Söker <span className="display-italic font-medium text-[#f2a65a]">motståndare…</span>
             </>
           )}
         </h1>
@@ -319,7 +319,7 @@ function MatchmakingPage() {
           </div>
         )}
         <div
-          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#ae2f26]"
+          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#f2a65a]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {mm}:{ss}

@@ -22,7 +22,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.6 },
-        colors: ["#7a5236", "#ae2f26", "#f5c089"],
+        colors: ["#6fb3b8", "#f2a65a", "#f5c089"],
         particleCount: Math.floor(200 * particleRatio),
         ...opts,
       });
@@ -48,14 +48,14 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
       aria-label="Ny rank"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.6)]"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#f2a65a]/30 bg-[rgba(20,12,5,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.6)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ae2f26]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#f2a65a]">
           Ny rank
         </p>
         <h2
-          className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
+          className="mt-1 text-[26px] font-bold leading-tight text-[#e8e4da]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Grattis!
@@ -72,7 +72,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
 
         <Button
           onClick={onClose}
-          className="mt-7 w-full bg-[#ae2f26] font-semibold text-[#fff8f5] hover:bg-[#ae2f26]/90"
+          className="mt-7 w-full bg-[#f2a65a] font-semibold text-[#1a0d04] hover:bg-[#f2a65a]/90"
         >
           Fortsätt
         </Button>

@@ -46,13 +46,13 @@ function JoinPage() {
   if (error) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-5 px-6 text-center">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#8c1d18]/30 bg-[#8c1d18]/10 text-[#8c1d18]">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#e25a6a]/30 bg-[#e25a6a]/10 text-[#e25a6a]">
           <AlertTriangle className="h-7 w-7" />
         </span>
         <div>
-          <p className="eyebrow text-[#7a5236]">Privat rum</p>
+          <p className="eyebrow text-[#6fb3b8]">Privat rum</p>
           <h1
-            className="mt-1 text-[26px] font-bold leading-tight text-[#2e1e14]"
+            className="mt-1 text-[26px] font-bold leading-tight text-[#e8e4da]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Kunde inte ansluta
@@ -60,7 +60,7 @@ function JoinPage() {
           <p className="mt-2 text-sm text-white/65">{error}</p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <Button asChild className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">
+          <Button asChild className="bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]">
             <Link to="/">Till start</Link>
           </Button>
           <Button asChild variant="outline">
@@ -74,22 +74,22 @@ function JoinPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
       <m.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#2e1e14] shadow-[var(--shadow-glow-gold)]"
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#f2a65a] to-[#c97b41] text-[#1a0d04] shadow-[var(--shadow-glow-gold)]"
         animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         <Users className="h-7 w-7" />
       </m.span>
       <div>
-        <p className="eyebrow text-[#7a5236]">Privat rum</p>
+        <p className="eyebrow text-[#6fb3b8]">Privat rum</p>
         <h1
-          className="mt-1 text-[28px] font-bold leading-tight text-[#2e1e14]"
+          className="mt-1 text-[28px] font-bold leading-tight text-[#e8e4da]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Ansluter…
         </h1>
         <p className="mt-1.5 text-sm text-white/65">
-          Rum-kod: <span className="font-mono font-semibold text-[#ae2f26]">{roomCode}</span>
+          Rum-kod: <span className="font-mono font-semibold text-[#f2a65a]">{roomCode}</span>
         </p>
       </div>
     </div>
