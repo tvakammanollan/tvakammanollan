@@ -3,9 +3,9 @@
  * `RankBadge` (dashboard) hade tidigare varsin tröskeltabell, så samma ELO
  * visades som "Brons" i navbaren och "Silver" på dashboarden på samma skärm.
  *
- * Färgerna är tonade för mörk yta (`accent` = ren färg för text/ikon,
- * `soft`/`line` = fyllning och kant). Inga solida, mättade pillerknappar:
- * de såg inklistrade ut mot resten av glas-ytorna.
+ * Färgerna är tonade för ljus yta sedan Lunden-vändningen (`accent` = ren
+ * färg för text/ikon, `soft`/`line` = fyllning och kant). Inga solida,
+ * mättade pillerknappar: de såg inklistrade ut mot resten av ytorna.
  */
 export type RankTier = {
   name: string;
@@ -30,13 +30,29 @@ export type RankTier = {
  *
  * Bor här och inte i en komponentfil, så att både `lib/`- och UI-lagret kan
  * läsa den utan att dra in React.
+ *
+ * Skalan är en egen metallprogression och följer INTE varumärkets fyra
+ * kulörer. Den ska läsa som brons, silver, guld, platina, diamant även
+ * för någon som inte känner till paletten.
+ *
+ * Omräknad i Lunden-vändningen. De gamla värdena var ljusa metaller
+ * gjorda för mörk botten (silver #c3ccd6, platina #9fd4d8) och hade
+ * varit nästan osynliga på creme. En svepande palettersättning hann
+ * dessutom göra guld äpplerött och diamant barkbrunt, vilket både tog
+ * bort metallkänslan och gjorde diamant mörkare än platina.
+ *
+ * Varje steg är kontrollerat på fyra saker: minst 4,5:1 mot både
+ * papper och kort (lägst är guld på 4,95), tillräckligt avstånd till
+ * äpple, bark och löv så rank inte förväxlas med semantik, tydligt
+ * avstånd mellan stegen, och en ljushet som inte är en rak gradient —
+ * metaller är inte en toning.
  */
 export const TIER_ACCENT = {
-  brons: "#c98a5e",
-  silver: "#c3ccd6",
-  guld: "#ae2f26",
-  platina: "#9fd4d8",
-  diamant: "#7a5236",
+  brons: "#a4530f",
+  silver: "#5f6672",
+  guld: "#7d6a0a",
+  platina: "#46686e",
+  diamant: "#2b5f8f",
 } as const;
 
 export const RANK_TIERS: RankTier[] = [
@@ -47,8 +63,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 600,
     maxElo: 999,
     accent: TIER_ACCENT.brons,
-    soft: "rgba(201, 138, 94, 0.14)",
-    line: "rgba(201, 138, 94, 0.42)",
+    soft: "rgba(164, 83, 15, 0.14)",
+    line: "rgba(164, 83, 15, 0.42)",
   },
   {
     tier: "silver",
@@ -57,8 +73,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1000,
     maxElo: 1199,
     accent: TIER_ACCENT.silver,
-    soft: "rgba(195, 204, 214, 0.12)",
-    line: "rgba(195, 204, 214, 0.38)",
+    soft: "rgba(95, 102, 114, 0.12)",
+    line: "rgba(95, 102, 114, 0.38)",
   },
   {
     tier: "guld",
@@ -67,8 +83,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1200,
     maxElo: 1399,
     accent: TIER_ACCENT.guld,
-    soft: "rgba(174, 47, 38, 0.14)",
-    line: "rgba(174, 47, 38, 0.42)",
+    soft: "rgba(125, 106, 10, 0.14)",
+    line: "rgba(125, 106, 10, 0.42)",
   },
   {
     tier: "platina",
@@ -77,8 +93,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1400,
     maxElo: 1599,
     accent: TIER_ACCENT.platina,
-    soft: "rgba(159, 212, 216, 0.12)",
-    line: "rgba(159, 212, 216, 0.38)",
+    soft: "rgba(70, 104, 110, 0.12)",
+    line: "rgba(70, 104, 110, 0.38)",
   },
   {
     tier: "diamant",
@@ -87,8 +103,8 @@ export const RANK_TIERS: RankTier[] = [
     minElo: 1600,
     maxElo: 9999,
     accent: TIER_ACCENT.diamant,
-    soft: "rgba(122, 82, 54, 0.16)",
-    line: "rgba(122, 82, 54, 0.48)",
+    soft: "rgba(43, 95, 143, 0.16)",
+    line: "rgba(43, 95, 143, 0.48)",
   },
 ];
 
