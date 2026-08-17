@@ -87,7 +87,12 @@ without touching production; use it for anything you cannot check locally.
 
 ### Environment quirks (hard-won)
 
-- **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
+- **Node ligger inte på PATH i ett icke-inloggat skal.** Den är installerad som
+  officiell tarball i `~/.local/node/bin` (och bun i `~/.local/bun/bin`); båda
+  läggs på PATH av `.zshrc`. Ett skal utan profil ser bara anaconda och får
+  `command not found: node`. Prefixa med
+  `export PATH="$HOME/.local/node/bin:$PATH"`.
+- **`SUPABASE_SERVICE_ROLE_KEY` ligger i `.env.local`** (gitignorerad via `*.local`) och pekar på **produktionsdatabasen** — det finns ingen separat utvecklingsinstans. Med den går det att köra REST- och admin-anrop mot skarpa data från terminalen, vilket är hur botkontona städades 2026-08-17. Två följder: `supabaseAdmin` går att anropa lokalt om nyckeln laddas explicit (den läses inte av `vite dev` själv, så i appen är den fortfarande en lazy proxy som kastar vid anrop), och varje sådant anrop träffar riktiga användare. Ta backup före allt som raderar. Nyckeln får aldrig hamna i `.env` — den filen är committad.
 - **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
 - External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
 - `eslint src` reports ~900 pre-existing `prettier/prettier` errors across files nobody
@@ -168,9 +173,17 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 ### Gamla prov — arkivet och importen
 
 Alla provtillfällen som går att få tag på finns i appen: 30 stycken
-(VT2012–VT2026), 120 provpass,
-4 363 uppgifter, facit på varje. Datan är **genererad** — redigera aldrig
-`src/data/prov/` för hand, kör om importen.
+(VT2012–VT2026), 120 provpass, 4 800 uppgifter, facit på varje.
+
+**Arkivet är komplett sedan 2026-08-17.** Varje prov har sina fyra räknade
+provpass à 40 uppgifter — 30 × 160 = 4 800 — och ELF finns i samtliga 60
+verbala pass. Att ett provpass har 30 uppgifter, eller att ett prov saknar
+ELF, är därför inte längre något normalt utan ett tecken på att importen
+gått fel. Motsvarande gäller delproven: ORD, LÄS, MEK och ELF ska vara 600
+var, XYZ och DTK 720, KVA 600, NOG 360.
+
+Datan är **genererad** — redigera aldrig `src/data/prov/` för hand, kör om
+importen.
 
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
@@ -179,6 +192,8 @@ python3 scripts/hp-import/fetch_elf.py      # originalhäftena med ELF, via giss
 python3 scripts/hp-import/harvest_elf.py    # samma sak, men ur arkivregistret
 python3 scripts/hp-import/html_elf.py       # ELF ur 2011–2014 års HTML-provsidor
 python3 scripts/hp-import/html_prov.py      # hela verbala pass ur samma sidor (2012vt)
+python3 scripts/hp-import/adopt_elf.py ~/Downloads          # torrkörning
+python3 scripts/hp-import/adopt_elf.py ~/Downloads --apply  # häften hämtade för hand
 python3 scripts/hp-import/build.py     # parsar → src/data/prov/ + public/prov-bilder/
 python3 scripts/hp-import/build.py --fresh   # rendera om alla bilder också (~12 min)
 ```
@@ -200,10 +215,36 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   heter `...-utan-elf.pdf`. Originalet raderas dock inte alltid: det ligger kvar
   avlänkat på samma server, och finns annars ofta i Internet Archive.
   `fetch_elf.py` letar rätt på det (se filen för hur namnen gissas) och `elf.py`
-  parsar ELF:s tre uppslagstyper. Idag: 138 ELF-uppgifter i nio prov, varav fem
-  är kompletta 160-uppgiftersprov. Resten kommer ur
-  `scripts/hp-import/elf-arkiv.json`, det som redan låg på sajten. Ett verbalt
-  pass har alltså 30 eller 40 uppgifter beroende på provtillfälle — inget fel.
+  parsar ELF:s tre uppslagstyper. Går originalet inte att hitta på nätet är
+  sista utvägen att hämta häftet för hand och köra `adopt_elf.py` (nedan) —
+  det är så beståndet från 2012 och framåt blev komplett.
+- **`adopt_elf.py` tar emot häften som laddats ner manuellt.** Provtillfälle och
+  provpass läses ur häftets egen framsida, så filnamnen spelar ingen roll. Ett
+  häfte tas bara emot om `parse_elf` hittar minst åtta uppgifter, facit täcker
+  31–40, **och** den svenska delen är ord för ord samma text som den avskalade
+  version vi redan har. Det sista kravet är det viktiga: två provtillfällen
+  samma termin har identisk framsidelayout men olika innehåll, och utan
+  jämförelsen hamnar ett häfte tyst på fel prov.
+- **Provdatumet på framsidan är inte alltid det i `sources.json`.** Vårprovet
+  2016 står där som 2016-04-04, en måndag; provet skrevs den 9:e, vilket är vad
+  UHR:s egen katalognamn (`hp-2016-04-09`) och häftet säger. `adopt_elf.py`
+  matchar därför på båda.
+- **Provpass som inte står i provlistan byggs ändå.** De år UHR bara publicerade
+  proven som webbsidor finns ingen PDF hos dem alls, så `sources.json` känner
+  t.ex. bara till 2012vt:s två verbala pass. `build.py` letar därför efter
+  `pass{N}-{verbal,kvant}.pdf` i cachen för varje provpass facit täcker, och
+  bygger det som hittas. Det är så vårprovet 2012 blev komplett.
+- **`utgår` och `ändrat` i facit är inte samma sak.** `C – utgår` betyder att
+  uppgiften strukits i efterhand: rätt svar står kvar men poängen räknades
+  inte. `D – ändrat` betyder att UHR rättat *vilket* svar som är rätt —
+  uppgiften räknas som vanligt. Behandlas de lika blir en giltig uppgift
+  markerad som struken, eller så tappas svaret helt och hela provpasset
+  underkänns (2012vt provpass 5, uppgift 18 — den enda i arkivet).
+- **Vårprovet 2020 ställdes in och skrevs aldrig.** Häftena var redan tryckta,
+  och samma prov användes i stället den 25 oktober 2020 — texten är identisk,
+  bara framsidans datum skiljer. Ett häfte märkt 2020-04-04 hör alltså till
+  höstprovet 2020; se `DATE_ALIASES`. Något eget facit för april finns inte, och
+  ska inte letas efter.
 - **Ett par provtillfällen står inte på UHR:s provlista** men ligger kvar på
   servern (2013vt, 2012ht). De är uppräknade i `UNLISTED` i `fetch.py`. Hittar
   du fler: jämför provlistan mot `archive_index.py`:s register.
@@ -215,6 +256,24 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
 - **Lästexterna delas i stycken på indrag**, inte på blankrad — provhäftena
   markerar nytt stycke med indrag och ett textblock är ofta en hel spalt.
   Se `Block.paragraphs`. Utan det kommer var sjätte lästext ut som en vägg.
+- **ELF-avsnittet har två rubriksättningar** och skiftläget bär informationen:
+  `Engelsk läsförståelse – ELF` (2019–) och `DELPROV ELF – ENGELSK
+  LÄSFÖRSTÅELSE` (t.o.m. 2018). Sök aldrig skiftlägesokänsligt efter dem —
+  varje framsida listar delproven som `ELF (engelsk läsförståelse)` med
+  gemener, och då pekas omslaget ut som avsnittets början.
+- **Luckuppgifternas alternativ är satta på två sätt.** Från 2019 ligger
+  numret i ett eget block och bokstäverna på egna rader; t.o.m. 2018 ligger
+  numret först i alternativblocket och sista bokstaven delar rad med sin text
+  (`'D prejudice'`). `_gap_alternatives` kräver att bokstäverna kommer i
+  ordning A, B, C … så att ett alternativ som självt börjar med `A ` inte klyvs.
+- **Engelskan avstavas inte som svenskan.** `join_lines` tar bort bindestrecket
+  när nästa rad börjar med gemen, vilket är rätt för `in-vasiv` men fel för
+  `present-day` och `working-class`. ELF-blocken sätter därför `english=True`,
+  och `_english_compound` behåller strecket när båda leden är egna engelska ord
+  medan hopskrivningen inte är det. Regeln kräver gement förled — annars klyvs
+  `Cam-bridge` och `Hit-ler` — och ordlistan (`/usr/share/dict/words`) måste
+  kompletteras med böjda former, eftersom `workers` och `novelties` saknas där.
+  Saknas ordlistan faller importen tillbaka på svenska regler utan att fela.
 - **Arkivfilens ELF (`elf-arkiv.json`) är extraherad av någon annan** och har
   spalter inflätade i varandra på sina håll. `build.py` känner igen mönstret
   och hoppar över passets ELF hellre än att visa en text som inte går att läsa.
@@ -272,6 +331,50 @@ om något liknande dyker upp:
   med orsak i slutet av körningen i stället för att gissa.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
+### Forum
+
+Ett Flashback-liknande diskussionsforum: platta trådar, citat, öppet läsbart.
+Byggt lika mycket som SEO-motor som community — det är därför **allt** renderas i
+route-loaders och aldrig hämtas i klienten.
+
+- **Migration:** `supabase/migrations/20260816120000_forum.sql`. Sju tabeller
+  (`forum_categories/threads/posts/reactions/subscriptions/reports` och
+  `forum_word_filter`), tre nya kolumner på `users`, och alla skrivningar bakom
+  RPC:er.
+- **Skrivgrinden är hela spamskyddet.** Sidan har anonym inloggning påslagen, så
+  `auth.uid() is not null` betyder "vem som helst, obegränsat antal konton, ett
+  HTTP-anrop bort". `public.forum_can_post()` kräver icke-anonymt konto,
+  bekräftad mejl, tio minuters ålder, användarnamn och ingen avstängning.
+  `forum_post_block_reason()` säger *vad* som saknas, så UI:t kan skriva rätt text.
+- **Kvoterna räknas i databasen, inte i `assertRateLimit`.** Limitern i
+  `rate-limit.ts` lever per Cloudflare-isolat; RPC:erna räknar rader i ett
+  tidsfönster (5 trådar/h, 20 inlägg/h, 30 redigeringar/h, och 1 inlägg/2 min för
+  konton med < 5 inlägg). `assertRateLimit` är det billiga första lagret.
+- **Nya användare får inte länka.** Inlägg med URL från ett konto yngre än 24 h
+  eller med < 5 inlägg får `status='pending'` i stället för att avvisas —
+  avvisning lär spammaren vad som släpps igenom. Samma sak för träffar i
+  `forum_word_filter`.
+- **Ingenting raderas hårt.** `status='deleted'` + `deleted_by` + tidpunkt.
+- **`status`-filtret i koden är det riktiga skyddet**, inte RLS-policyn:
+  serverfunktionerna kör med `supabaseAdmin`. Enda stället som medvetet läser
+  dolt innehåll är `forum-moderation.functions.ts`, där `requireAdmin()` ligger
+  först i varje handler.
+- **Inläggstext parsas, renderas aldrig som HTML.** `lib/forum-markdown.ts` ger
+  ett nodträd som `components/forum/ForumBody.tsx` gör React av. Matte (`$…$`)
+  går till befintliga `MathTextLazy`/KaTeX. `dangerouslySetInnerHTML` på
+  användarinnehåll finns inte och ska inte tillkomma.
+- **Tråd-URL:en har id före slug** (`/forum/kvantitativ/482-hur-loser-man-kva`).
+  Uppslag sker på id, så en ändrad rubrik bryter aldrig en gammal länk — fel
+  slug 301:as i loadern. Paginering med `?sida=N`, canonical mot sidan själv
+  (aldrig mot sida 1, det gömmer inläggen från sida 2 och framåt).
+- **Structured data:** `QAPage` med `acceptedAnswer` för `kind='qa'`-kategorier,
+  `DiscussionForumPosting` för resten.
+- Nya `users`-kolumner (`forum_banned_until`, `forum_ban_reason`,
+  `forum_post_count`) är tillagda i `users_protect_sensitive_fields` — utan det
+  kunde en användare häva sin egen avstängning via sin RLS-tillåtna UPDATE.
+- **Trådsitemap, prenumerationer, notiser, sök och reaktioner är fas 2.**
+  `forum_toggle_reaction` och prenumerationstabellen finns redan i migrationen;
+  UI:t gör det inte.
 
 ### Streak
 
@@ -302,10 +405,7 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
-- **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (was always-dark until 2026-08-16). Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Palette: paper `--navy #fbf6ec`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, windfall `--danger #8e552a`. **The `--navy`/`--cream` names are now inverted lies** kept so 106 components and the remap layer did not have to change: read `--navy` as "the ground surface" and `--cream` as "the text", not as colours. Never hardcode a surface colour — go through tokens. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
-- **Red means reward, not error.** Apple red is streak, rank, primary CTA. Wrong answers use `--danger` (windfall brown) so the red keeps its meaning. `--danger` is no longer an alias for `--destructive`; `--destructive` (#8c1d18) stays alarming and is only for irreversible actions like account deletion.
-- **Light-on-dark islands.** A few surfaces stay dark in the light theme — currently only the `ProvFigure` lightbox (`bg-black/90`, so scanned line art pops). Inside those, `white/N` utilities must NOT go through the remap: use explicit `bg-[#ffffff1a]`-style hex. The seven other `bg-black/N` usages are scrims behind panels and are unaffected. `text-white` is deliberately not remapped and stays pure white.
-- **Alpha ramps are not contrast-neutral when you flip the theme.** Moving the same alpha from light-on-dark to dark-on-light cost the `text-white/N` ramp up to 1.95 contrast points; `/45` (36 usages) silently fell from 5.13 to 3.62. The ramp is now solved so each step reproduces its *old ratio*, not its old alpha. If you ever touch the base palette again, re-solve it — do not carry alphas across.
+- **Design (anti vibe-coded):** the app is always-dark. Card surface = `border border-white/10 bg-white/[0.02] backdrop-blur-sm`; brand accents amber `#f2a65a` / teal `#6fb3b8` on `--navy #170d05`. Never hardcode light surfaces (`bg-white`, light gradients) — inherited cream text becomes unreadable. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global amber focus ring works automatically.
 - **New indexable pages:** SSR the content (route `loader`, not client fetch), use `pageMeta`/`pageLinks` + JSON-LD, add the URL to `public/sitemap.xml`, and cross-link from related pages (guider ↔ öva ↔ gamla-prov cluster).
 - **Retiring or merging a page:** put a 301 in `PERMANENT_REDIRECTS` at the bottom of `src/server.ts` — it answers before SSR starts, so no React runs. Do NOT leave a route file behind that just redirects: it stays in `routeTree.gen.ts` and keeps showing up in `GUIDES`/`RelatedGuides` as if the page still existed. Then sweep all six places a URL lives: `src/lib/guider-meta.tsx`, the footer link list in `__root.tsx`, the cards **and** the ItemList JSON-LD in `guider/index.tsx`, every `relatedPaths` array, `public/sitemap.xml`, and `public/llms.txt`. A stale path in `relatedPaths` fails silently — `RelatedGuides` filters unknown paths out, so the section just renders 3 cards instead of 4 with no error.
 - **Deleting a route invalidates `routeTree.gen.ts`.** It is checked in but generated, so it still imports the deleted file and `npx tsc --noEmit` fails until the generator runs. `npm run dev` and `npm run build` regenerate it themselves — run one before type-checking, otherwise the failure looks like a real breakage.
@@ -370,11 +470,8 @@ Two bugs of exactly this kind have already been fixed; both looked like
 So: **if you use a new `white/N` step, add it to the ramp**, and keep the ramp
 sorted and increasing. Same for `emerald/red` opacity variants — `bg-red-500/10`
 is a different selector from `bg-red-500` and needs its own entry.
-- **Scanned exam figures** need the `.exam-figure` class, not `bg-white`. The
-  original reason (the remap turned `bg-white` into navy, hiding black line art)
-  went away with the Lunden flip, since `--navy-2` is now white. Keep the class
-  anyway: it pins a literal `#ffffff` backing that survives any future palette
-  change, which is exactly what scanned line art needs.
+- **Scanned exam figures** need the `.exam-figure` class, not `bg-white` — the
+  remap layer turns `bg-white` into navy, which would hide black line art.
 - **`var()` does not work in SVG presentation attributes** (`stroke=`, `fill=`).
   Use a literal hex there, or move the colour into `style={{ }}`.
 
@@ -390,6 +487,26 @@ is a different selector from `bg-red-500` and needs its own entry.
 - Authenticated mutations: `assertRateLimit(\`thing:${userId}\`, limits.xxx)` first in the handler.
 - Public GET endpoints: `assertRateLimit(ipKey("thing"), limits.publicRead)` (keys on `cf-connecting-ip`).
 - Per-isolate on Cloudflare — it's a hammering brake, not an exact global quota.
+- **Volymkvoter måste räknas i databasen.** Av precis det skälet: forumet räknar
+  rader i RPC:erna, och matcher räknas i `matches` via `checkMatchQuota`
+  (`src/lib/match-abuse.ts`). `assertRateLimit` är alltid bara första lagret.
+
+### Matchspam & ELO-odling (2026-08-16)
+
+Fyra anonyma konton körde 20–300 botmatcher var på ett dygn och tog hela toppen
+av den verbala topplistan (översta på 2226 ELO). Hålet: cooldownen i
+`createMatch` **hoppade uttryckligen över botmatcher**, alltså det enda läge som
+ger ELO utan motpart, och den enda andra bromsen var den per-isolat-limitern.
+Kontona och deras 560 matcher är raderade; två lager tillkom:
+
+- `checkMatchQuota` — 20 matcher/h och 80/dygn, räknat ur `matches`, **alla
+  lägen inklusive bot**. En riktig spelare hinner max ~12/h (5 min/match).
+- `isImplausiblyFast` — en match som lämnats in på under 2 sekunder per fråga
+  avslutas utan ELO och utan statistik. Mäts från `created_at`, som för privata
+  rum ligger före spelstart, så golvet kan bara slå på botmatcher.
+
+Kvarstående hål värt att stänga: anonyma konton syns på topplistan, och de går
+att skapa i obegränsat antal. `limits.guestSignup` är 5/h **per IP**.
 
 ### GDPR / privacy — non-negotiable
 

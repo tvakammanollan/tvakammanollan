@@ -1,5 +1,6 @@
 // Server-only helpers for match flow. Imported by *.functions.ts only.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { isImplausiblyFast } from "./match-abuse";
 import type { Database } from "@/integrations/supabase/types";
 
 type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
@@ -365,6 +366,29 @@ export async function processMatchResultServer(matchId: string) {
   if (p1Sub === Infinity || p2Sub === Infinity) {
     // Not both submitted yet
     return { waiting: true };
+  }
+
+  // Tidsgolv: en match som lämnats in snabbare än två sekunder per fråga är
+  // inte spelad, den är skriptad. Den får avslutas — spelaren ska se sitt
+  // resultat — men den ger varken ELO eller statistik. Mäts från `created_at`,
+  // vilket för privata rum alltid är *före* spelstart och därför aldrig kan
+  // slå fel där. Se `match-abuse.ts`.
+  const { count: questionCount } = await supabaseAdmin
+    .from("match_questions")
+    .select("id", { count: "exact", head: true })
+    .eq("match_id", matchId);
+  const elapsedSeconds = (Math.min(p1Sub, p2Sub) - new Date(match.created_at).getTime()) / 1000;
+
+  if (isImplausiblyFast(elapsedSeconds, questionCount ?? 0)) {
+    console.warn("[match] för snabb inlämning, ingen ELO", {
+      matchId,
+      player1: match.player1_id,
+      elapsedSeconds,
+      questionCount,
+      isBot: match.is_bot_match,
+    });
+    await supabaseAdmin.from("matches").update({ status: "finished" }).eq("id", matchId);
+    return { ok: true, skippedElo: "too_fast" as const };
   }
 
   // Determine result (from p1 perspective)

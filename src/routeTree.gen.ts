@@ -27,6 +27,7 @@ import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
+import { Route as ForumRouteImport } from './routes/forum'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -46,9 +47,13 @@ import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
 import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
+import { Route as ForumReglerRouteImport } from './routes/forum_.regler'
+import { Route as ForumNyttRouteImport } from './routes/forum_.nytt'
+import { Route as ForumKategoriRouteImport } from './routes/forum_.$kategori'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as GamlaProvTermPassRouteImport } from './routes/gamla-prov_.$term_.$pass'
+import { Route as ForumKategoriTradRouteImport } from './routes/forum_.$kategori_.$trad'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const VillkorRoute = VillkorRouteImport.update({
@@ -140,6 +145,11 @@ const GamlaProvRoute = GamlaProvRouteImport.update({
 const FriendsRoute = FriendsRouteImport.update({
   id: '/friends',
   path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForumRoute = ForumRouteImport.update({
+  id: '/forum',
+  path: '/forum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -237,6 +247,21 @@ const GamlaProvTermRoute = GamlaProvTermRouteImport.update({
   path: '/gamla-prov/$term',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForumReglerRoute = ForumReglerRouteImport.update({
+  id: '/forum_/regler',
+  path: '/forum/regler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForumNyttRoute = ForumNyttRouteImport.update({
+  id: '/forum_/nytt',
+  path: '/forum/nytt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForumKategoriRoute = ForumKategoriRouteImport.update({
+  id: '/forum_/$kategori',
+  path: '/forum/$kategori',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -254,6 +279,11 @@ const GamlaProvTermPassRoute = GamlaProvTermPassRouteImport.update({
   path: '/gamla-prov/$term/$pass',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForumKategoriTradRoute = ForumKategoriTradRouteImport.update({
+  id: '/forum_/$kategori_/$trad',
+  path: '/forum/$kategori/$trad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93InvokeToolToolRoute =
   Char91DotmcpChar93InvokeToolToolRouteImport.update({
     id: '/.mcp/invoke-tool/$tool',
@@ -265,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
+  '/forum': typeof ForumRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -285,6 +316,9 @@ export interface FileRoutesByFullPath {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/forum/$kategori': typeof ForumKategoriRoute
+  '/forum/nytt': typeof ForumNyttRoute
+  '/forum/regler': typeof ForumReglerRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -302,12 +336,14 @@ export interface FileRoutesByFullPath {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/forum/$kategori/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
+  '/forum': typeof ForumRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -328,6 +364,9 @@ export interface FileRoutesByTo {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/forum/$kategori': typeof ForumKategoriRoute
+  '/forum/nytt': typeof ForumNyttRoute
+  '/forum/regler': typeof ForumReglerRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -345,6 +384,7 @@ export interface FileRoutesByTo {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/forum/$kategori/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRoutesById {
@@ -352,6 +392,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
+  '/forum': typeof ForumRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -372,6 +413,9 @@ export interface FileRoutesById {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/forum_/$kategori': typeof ForumKategoriRoute
+  '/forum_/nytt': typeof ForumNyttRoute
+  '/forum_/regler': typeof ForumReglerRoute
   '/gamla-prov_/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -389,6 +433,7 @@ export interface FileRoutesById {
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/forum_/$kategori_/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov_/$term_/$pass': typeof GamlaProvTermPassRoute
 }
 export interface FileRouteTypes {
@@ -397,6 +442,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/faq'
+    | '/forum'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -417,6 +463,9 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/forum/$kategori'
+    | '/forum/nytt'
+    | '/forum/regler'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -434,12 +483,14 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
+    | '/forum/$kategori/$trad'
     | '/gamla-prov/$term/$pass'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
     | '/faq'
+    | '/forum'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -460,6 +511,9 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/forum/$kategori'
+    | '/forum/nytt'
+    | '/forum/regler'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -477,12 +531,14 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider'
     | '/.mcp/invoke-tool/$tool'
+    | '/forum/$kategori/$trad'
     | '/gamla-prov/$term/$pass'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/faq'
+    | '/forum'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -503,6 +559,9 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/forum_/$kategori'
+    | '/forum_/nytt'
+    | '/forum_/regler'
     | '/gamla-prov_/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -520,6 +579,7 @@ export interface FileRouteTypes {
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
+    | '/forum_/$kategori_/$trad'
     | '/gamla-prov_/$term_/$pass'
   fileRoutesById: FileRoutesById
 }
@@ -527,6 +587,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   FaqRoute: typeof FaqRoute
+  ForumRoute: typeof ForumRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
@@ -547,6 +608,9 @@ export interface RootRouteChildren {
   VillkorRoute: typeof VillkorRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  ForumKategoriRoute: typeof ForumKategoriRoute
+  ForumNyttRoute: typeof ForumNyttRoute
+  ForumReglerRoute: typeof ForumReglerRoute
   GamlaProvTermRoute: typeof GamlaProvTermRoute
   GuiderBraResultatRoute: typeof GuiderBraResultatRoute
   GuiderDtkRoute: typeof GuiderDtkRoute
@@ -564,6 +628,7 @@ export interface RootRouteChildren {
   ResultMatchIdRoute: typeof ResultMatchIdRoute
   GuiderIndexRoute: typeof GuiderIndexRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ForumKategoriTradRoute: typeof ForumKategoriTradRoute
   GamlaProvTermPassRoute: typeof GamlaProvTermPassRoute
 }
 
@@ -693,6 +758,13 @@ declare module '@tanstack/react-router' {
       path: '/friends'
       fullPath: '/friends'
       preLoaderRoute: typeof FriendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forum': {
+      id: '/forum'
+      path: '/forum'
+      fullPath: '/forum'
+      preLoaderRoute: typeof ForumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -828,6 +900,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamlaProvTermRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forum_/regler': {
+      id: '/forum_/regler'
+      path: '/forum/regler'
+      fullPath: '/forum/regler'
+      preLoaderRoute: typeof ForumReglerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forum_/nytt': {
+      id: '/forum_/nytt'
+      path: '/forum/nytt'
+      fullPath: '/forum/nytt'
+      preLoaderRoute: typeof ForumNyttRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forum_/$kategori': {
+      id: '/forum_/$kategori'
+      path: '/forum/$kategori'
+      fullPath: '/forum/$kategori'
+      preLoaderRoute: typeof ForumKategoriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -849,6 +942,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamlaProvTermPassRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forum_/$kategori_/$trad': {
+      id: '/forum_/$kategori_/$trad'
+      path: '/forum/$kategori/$trad'
+      fullPath: '/forum/$kategori/$trad'
+      preLoaderRoute: typeof ForumKategoriTradRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/invoke-tool/$tool': {
       id: '/.mcp/invoke-tool/$tool'
       path: '/.mcp/invoke-tool/$tool'
@@ -863,6 +963,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   FaqRoute: FaqRoute,
+  ForumRoute: ForumRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
@@ -884,6 +985,9 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  ForumKategoriRoute: ForumKategoriRoute,
+  ForumNyttRoute: ForumNyttRoute,
+  ForumReglerRoute: ForumReglerRoute,
   GamlaProvTermRoute: GamlaProvTermRoute,
   GuiderBraResultatRoute: GuiderBraResultatRoute,
   GuiderDtkRoute: GuiderDtkRoute,
@@ -901,6 +1005,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResultMatchIdRoute: ResultMatchIdRoute,
   GuiderIndexRoute: GuiderIndexRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ForumKategoriTradRoute: ForumKategoriTradRoute,
   GamlaProvTermPassRoute: GamlaProvTermPassRoute,
 }
 export const routeTree = rootRouteImport

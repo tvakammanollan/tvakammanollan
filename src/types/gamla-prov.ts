@@ -81,6 +81,12 @@ export interface ProvQuestion {
   answer: string;
   /** Fler godkända svar — UHR har underkänt uppgiften i efterhand. */
   answers?: string[];
+  /**
+   * UHR strök uppgiften efter provdagen ("C – utgår" i facit) och räknade inte
+   * med den i resultatet. Den har ändå ett rätt svar och ingår i provhäftet, så
+   * den visas som vanligt — men det ska framgå att den inte gav poäng.
+   */
+  utgar?: boolean;
 }
 
 export interface ProvGlossEntry {

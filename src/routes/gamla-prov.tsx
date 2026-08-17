@@ -7,9 +7,6 @@ import { allExams, totalQuestions } from "@/lib/prov-data";
 import { formatInt } from "@/lib/sv-format";
 import { delprovFull, passKindLabel } from "@/types/gamla-prov";
 
-/** Ett fullständigt högskoleprov: fyra räknade provpass à 40 uppgifter. */
-const HELA_PROVET = 160;
-
 /* =====================================================================
    Alla gamla högskoleprov UHR publicerat, ett kort per provtillfälle.
    Serverrenderad ur src/data/prov/index.json — sidan hämtade tidigare hela
@@ -106,11 +103,6 @@ function GamlaProvPage() {
                   <span>
                     {exam.passes.length} provpass · {formatInt(exam.questions)} uppgifter
                   </span>
-                  {exam.questions === HELA_PROVET && (
-                    <span className="rounded-full bg-[var(--teal)]/15 px-2 py-0.5 text-[11px] font-medium text-[var(--teal)]">
-                      Komplett med ELF
-                    </span>
-                  )}
                 </span>
                 <span className="mt-3 flex flex-wrap gap-1.5">
                   {exam.passes.map((p) => (
@@ -148,11 +140,10 @@ function GamlaProvPage() {
               dem sökbara och lästa av skärmläsare.
             </p>
             <p>
-              Engelsk läsförståelse (ELF) finns inte i alla prov. UHR byter en vecka efter provdagen
-              ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Där
-              originalhäftet gick att få tag på är ELF med — de proven är märkta{" "}
-              <span className="text-[var(--teal)]">Komplett med ELF</span> och går att skriva i sin
-              helhet.
+              Engelsk läsförståelse (ELF) finns med i varje provpass. UHR byter en vecka efter
+              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl, så
+              de flesta sajter saknar den delen — här är originalhäftena spårade upp, prov för prov.
+              Varje verbalt pass går alltså att skriva i sin helhet.
             </p>
           </div>
         </section>

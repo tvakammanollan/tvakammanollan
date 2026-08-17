@@ -73,7 +73,7 @@ export function CoachingModal({
               upplägg med en av våra 1,95+-coacher.
             </p>
             <Button
-              className="mt-6 bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
+              className="mt-6 bg-[#ae2f26] text-[#2e1e14] hover:bg-[#8f2620]"
               onClick={() => handleClose(false)}
             >
               Stäng
@@ -141,7 +141,7 @@ export function CoachingModal({
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
+                className="w-full bg-[#ae2f26] text-[#2e1e14] hover:bg-[#8f2620]"
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Hör av er till mig

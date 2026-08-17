@@ -158,7 +158,7 @@ function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) =
           type="button"
           onClick={() => onChange(o.value)}
           className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-            scope === o.value ? "bg-[#ae2f26] text-[#fff8f5]" : "text-white/55 hover:text-white"
+            scope === o.value ? "bg-[#ae2f26] text-[#2e1e14]" : "text-white/55 hover:text-white"
           }`}
         >
           {o.label}
@@ -449,7 +449,7 @@ function WeeklyTable({
                   <span className="inline-flex items-center gap-2 text-white">
                     {displayName(r.username)}
                     {isMe && (
-                      <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#fff8f5]">
+                      <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
                         Du
                       </span>
                     )}
@@ -506,7 +506,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           <span className="text-[15px] font-medium text-white">{displayName(r.username)}</span>
           {isMe && (
-            <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#fff8f5]">
+            <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
               Du
             </span>
           )}
@@ -650,7 +650,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {displayName(r.username)}
           {isMe && (
-            <span className="rounded-full bg-[#ae2f26] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#fff8f5]">
+            <span className="rounded-full bg-[#ae2f26] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#2e1e14]">
               Du
             </span>
           )}

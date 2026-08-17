@@ -186,6 +186,49 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- forum: statiska sidor. Trådarna ligger i /forum-sitemap.xml (fas 2). -->
+  <url>
+    <loc>https://hpkampen.se/forum</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/allmant</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/kvantitativ</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/verbal</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/provdagen</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/plugg</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/forum/regler</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
   <url>
     <loc>https://hpkampen.se/gamla-prov</loc>
     <lastmod>2026-04-18</lastmod>
@@ -1076,7 +1119,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://hpkampen.se/gamla-prov/2012vt/3</loc>
+    <lastmod>2012-03-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://hpkampen.se/gamla-prov/2012vt/4</loc>
+    <lastmod>2012-03-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hpkampen.se/gamla-prov/2012vt/5</loc>
     <lastmod>2012-03-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>

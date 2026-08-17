@@ -133,7 +133,9 @@ def passage_json(p: dict) -> dict:
     return out
 
 
-def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
+def build_html_pass(
+    exam: dict, pass_meta: dict, answers: dict[int, str], struck: set[int] | None = None
+) -> tuple[dict, list[str]]:
     """
     Ett verbalt provpass som bara finns som webbsida (2011–2012), se
     html_prov.py. Uppgifter utan facit utelämnas i stället för att fälla hela
@@ -159,6 +161,8 @@ def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tup
         }
         if len(answer) > 1:
             item["answers"] = list(answer)
+        if struck and nr in struck:
+            item["utgar"] = True
         if q.get("passage") is not None:
             item["passage"] = q["passage"]
         questions.append(item)
@@ -203,7 +207,9 @@ def build_html_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tup
     return data, problems
 
 
-def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[dict, list[str]]:
+def build_pass(
+    exam: dict, pass_meta: dict, answers: dict[int, str], struck: set[int] | None = None
+) -> tuple[dict, list[str]]:
     """Bygger ett provpass. Returnerar (data, problem)."""
     term, pno = exam["term"], pass_meta["pass"]
     img_dir = os.path.join(OUT_IMG, term, f"p{pno}")
@@ -249,6 +255,11 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
                     "passages": data["passages"],
                 }
         if recovered and len(recovered["questions"]) >= 8:
+            # Häften som kommit in via adopt_elf.py är passets enda källa, så
+            # parse_verbal har redan läst uppgift 31–40 — fast utan att förstå
+            # ELF:s uppslag. Den versionen ska ersättas, inte kompletteras,
+            # annars får passet 50 uppgifter varav tio utan alternativ.
+            questions = [q for q in questions if q["nr"] not in recovered["questions"]]
             offset = len(passages)
             passages += [passage_json(p) for p in recovered["passages"]]
             for nr in sorted(recovered["questions"]):
@@ -333,6 +344,10 @@ def build_pass(exam: dict, pass_meta: dict, answers: dict[int, str]) -> tuple[di
         if len(answer) > 1:
             # UHR har underkänt uppgiften i efterhand: flera svar godkänns.
             q["answers"] = list(answer)
+        if struck and q["nr"] in struck:
+            # UHR strök uppgiften efter provdagen. Den visas som vanligt —
+            # svaret är känt — men den räknades inte i det riktiga resultatet.
+            q["utgar"] = True
 
     # Lästexter som ingen uppgift pekar på ska inte följa med — de blir kvar
     # när en uppgift utelämnats, och skulle annars visas i facitlistan.
@@ -501,17 +516,47 @@ def main() -> int:
     failed: list[str] = []
 
     for exam in sorted(sources, key=lambda e: e["date"], reverse=True):
-        facit = parse_facit(exam["facit_file"]) if exam.get("facit_file") else {}
+        facit, struck_all = (
+            parse_facit(exam["facit_file"]) if exam.get("facit_file") else ({}, {})
+        )
         entry = {
             "term": exam["term"],
             "date": exam["date"],
             "label": exam["label"],
             "passes": [],
         }
-        for pass_meta in exam["passes"]:
+        # Provpass som inte står i provlistan men ligger i cachen. De år UHR
+        # bara publicerade proven som webbsidor finns ingen PDF hos dem alls;
+        # kommer häftet in via adopt_elf.py är det passets enda källa, och det
+        # måste tas med här för att inte tappas bort. Facit avgör som vanligt.
+        listed = {p["pass"] for p in exam["passes"]}
+        extra: list[dict] = []
+        for number in sorted(facit):
+            if number in listed:
+                continue
+            for kind in ("verbal", "kvant"):
+                found = os.path.join(CACHE, exam["term"], f"pass{number}-{kind}.pdf")
+                if os.path.exists(found):
+                    extra.append(
+                        {"kind": kind, "pass": number, "file": found, "url": found}
+                    )
+                    break
+
+        for pass_meta in sorted(exam["passes"] + extra, key=lambda p: p["pass"]):
             answers = dict(facit.get(pass_meta["pass"], {}))
+            struck = set(struck_all.get(pass_meta["pass"], set()))
+            # 2011–2012 publicerades proven bara som webbsidor, och de sidorna
+            # ger ett ofullständigt pass: en del uppgifter saknar facit i
+            # arkivet. Dyker själva provhäftet upp senare (adopt_elf.py) är det
+            # den bättre källan — hela passet, med ELF. Filens existens får
+            # avgöra, så valet överlever att fetch.py skriver om sources.json.
+            booklet = os.path.join(
+                CACHE, exam["term"], f"pass{pass_meta['pass']}-verbal.pdf"
+            )
+            if pass_meta.get("source") == "html" and os.path.exists(booklet):
+                pass_meta = pass_meta | {"file": booklet, "kind": "verbal", "source": booklet}
             builder = build_html_pass if pass_meta.get("source") == "html" else build_pass
-            data, problems = builder(exam, pass_meta, answers)
+            data, problems = builder(exam, pass_meta, answers, struck)
             name = f"{exam['term']}-{pass_meta['pass']}"
             if problems:
                 failed.append(f"{name}: " + "; ".join(problems[:4]))

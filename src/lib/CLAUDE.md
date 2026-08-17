@@ -25,6 +25,12 @@ traced back to one of these being skipped.
    (`player1_id/player2_id`, `to_user`, etc.) — supabaseAdmin bypasses RLS,
    so YOUR check is the only check.
 
+## select()-kolumnlistor måste vara EN literal
+`const COLS = "a,b," + "c"` blir typen `string`, och då kan supabase-js inte
+längre härleda radtypen — varje rad blir `GenericStringError` och `as`-castet
+till din egen typ vägrar kompilera. Skriv hela listan som en enda strängliteral,
+hur lång den än blir.
+
 ## supabaseAdmin
 Lazy proxy — importing is side-effect-free (tests can import this folder),
 but any call throws locally (no service key). Typed updates: cast dynamic

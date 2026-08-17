@@ -41,6 +41,7 @@ function NotFoundComponent() {
     { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
     { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
     { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
+    { to: "/forum", label: "Forum", desc: "Fråga och svara om HP" },
     { to: "/faq", label: "Vanliga frågor", desc: "Svar på det vanligaste" },
   ] as const;
 
@@ -400,6 +401,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/signup">Skapa konto</a>
           <a href="/login">Logga in</a>
           <a href="/faq">Vanliga frågor</a>
+          <a href="/forum">Forum om högskoleprovet</a>
           <a href="/guider">Guider till HP</a>
           <a href="/guider/ord">ORD-guide</a>
           <a href="/guider/mek">MEK-guide</a>
