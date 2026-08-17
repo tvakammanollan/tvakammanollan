@@ -87,6 +87,11 @@ without touching production; use it for anything you cannot check locally.
 
 ### Environment quirks (hard-won)
 
+- **Node ligger inte på PATH i ett icke-inloggat skal.** Den är installerad som
+  officiell tarball i `~/.local/node/bin` (och bun i `~/.local/bun/bin`); båda
+  läggs på PATH av `.zshrc`. Ett skal utan profil ser bara anaconda och får
+  `command not found: node`. Prefixa med
+  `export PATH="$HOME/.local/node/bin:$PATH"`.
 - **No `SUPABASE_SERVICE_ROLE_KEY` locally** — `supabaseAdmin` is a lazy proxy: importing it is safe, *calling* it throws. Server functions and admin views can only be exercised in production; ask Niklas to test destructive flows (e.g. account deletion) with a throwaway account after deploy.
 - **Lovable pushes its own commits** to `main` ("Changes", MCP updates). If push is rejected: `git pull --rebase origin main`, then re-verify tsc + build (new deps may need `npm install`) before pushing.
 - External curls of `/_serverFn/` endpoints always 500 (seroval framing) — not a bug.
@@ -272,6 +277,50 @@ om något liknande dyker upp:
   med orsak i slutet av körningen i stället för att gissa.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
+### Forum
+
+Ett Flashback-liknande diskussionsforum: platta trådar, citat, öppet läsbart.
+Byggt lika mycket som SEO-motor som community — det är därför **allt** renderas i
+route-loaders och aldrig hämtas i klienten.
+
+- **Migration:** `supabase/migrations/20260816120000_forum.sql`. Sju tabeller
+  (`forum_categories/threads/posts/reactions/subscriptions/reports` och
+  `forum_word_filter`), tre nya kolumner på `users`, och alla skrivningar bakom
+  RPC:er.
+- **Skrivgrinden är hela spamskyddet.** Sidan har anonym inloggning påslagen, så
+  `auth.uid() is not null` betyder "vem som helst, obegränsat antal konton, ett
+  HTTP-anrop bort". `public.forum_can_post()` kräver icke-anonymt konto,
+  bekräftad mejl, tio minuters ålder, användarnamn och ingen avstängning.
+  `forum_post_block_reason()` säger *vad* som saknas, så UI:t kan skriva rätt text.
+- **Kvoterna räknas i databasen, inte i `assertRateLimit`.** Limitern i
+  `rate-limit.ts` lever per Cloudflare-isolat; RPC:erna räknar rader i ett
+  tidsfönster (5 trådar/h, 20 inlägg/h, 30 redigeringar/h, och 1 inlägg/2 min för
+  konton med < 5 inlägg). `assertRateLimit` är det billiga första lagret.
+- **Nya användare får inte länka.** Inlägg med URL från ett konto yngre än 24 h
+  eller med < 5 inlägg får `status='pending'` i stället för att avvisas —
+  avvisning lär spammaren vad som släpps igenom. Samma sak för träffar i
+  `forum_word_filter`.
+- **Ingenting raderas hårt.** `status='deleted'` + `deleted_by` + tidpunkt.
+- **`status`-filtret i koden är det riktiga skyddet**, inte RLS-policyn:
+  serverfunktionerna kör med `supabaseAdmin`. Enda stället som medvetet läser
+  dolt innehåll är `forum-moderation.functions.ts`, där `requireAdmin()` ligger
+  först i varje handler.
+- **Inläggstext parsas, renderas aldrig som HTML.** `lib/forum-markdown.ts` ger
+  ett nodträd som `components/forum/ForumBody.tsx` gör React av. Matte (`$…$`)
+  går till befintliga `MathTextLazy`/KaTeX. `dangerouslySetInnerHTML` på
+  användarinnehåll finns inte och ska inte tillkomma.
+- **Tråd-URL:en har id före slug** (`/forum/kvantitativ/482-hur-loser-man-kva`).
+  Uppslag sker på id, så en ändrad rubrik bryter aldrig en gammal länk — fel
+  slug 301:as i loadern. Paginering med `?sida=N`, canonical mot sidan själv
+  (aldrig mot sida 1, det gömmer inläggen från sida 2 och framåt).
+- **Structured data:** `QAPage` med `acceptedAnswer` för `kind='qa'`-kategorier,
+  `DiscussionForumPosting` för resten.
+- Nya `users`-kolumner (`forum_banned_until`, `forum_ban_reason`,
+  `forum_post_count`) är tillagda i `users_protect_sensitive_fields` — utan det
+  kunde en användare häva sin egen avstängning via sin RLS-tillåtna UPDATE.
+- **Trådsitemap, prenumerationer, notiser, sök och reaktioner är fas 2.**
+  `forum_toggle_reaction` och prenumerationstabellen finns redan i migrationen;
+  UI:t gör det inte.
 
 ### Streak
 
@@ -302,10 +351,7 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
-- **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (was always-dark until 2026-08-16). Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Palette: paper `--navy #fbf6ec`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, windfall `--danger #8e552a`. **The `--navy`/`--cream` names are now inverted lies** kept so 106 components and the remap layer did not have to change: read `--navy` as "the ground surface" and `--cream` as "the text", not as colours. Never hardcode a surface colour — go through tokens. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
-- **Red means reward, not error.** Apple red is streak, rank, primary CTA. Wrong answers use `--danger` (windfall brown) so the red keeps its meaning. `--danger` is no longer an alias for `--destructive`; `--destructive` (#8c1d18) stays alarming and is only for irreversible actions like account deletion.
-- **Light-on-dark islands.** A few surfaces stay dark in the light theme — currently only the `ProvFigure` lightbox (`bg-black/90`, so scanned line art pops). Inside those, `white/N` utilities must NOT go through the remap: use explicit `bg-[#ffffff1a]`-style hex. The seven other `bg-black/N` usages are scrims behind panels and are unaffected. `text-white` is deliberately not remapped and stays pure white.
-- **Alpha ramps are not contrast-neutral when you flip the theme.** Moving the same alpha from light-on-dark to dark-on-light cost the `text-white/N` ramp up to 1.95 contrast points; `/45` (36 usages) silently fell from 5.13 to 3.62. The ramp is now solved so each step reproduces its *old ratio*, not its old alpha. If you ever touch the base palette again, re-solve it — do not carry alphas across.
+- **Design (anti vibe-coded):** the app is always-dark. Card surface = `border border-white/10 bg-white/[0.02] backdrop-blur-sm`; brand accents amber `#f2a65a` / teal `#6fb3b8` on `--navy #170d05`. Never hardcode light surfaces (`bg-white`, light gradients) — inherited cream text becomes unreadable. Icons = Lucide SVG, never emoji-as-icon in UI chrome. New interactive elements need visible hover + the global amber focus ring works automatically.
 - **New indexable pages:** SSR the content (route `loader`, not client fetch), use `pageMeta`/`pageLinks` + JSON-LD, add the URL to `public/sitemap.xml`, and cross-link from related pages (guider ↔ öva ↔ gamla-prov cluster).
 - **Retiring or merging a page:** put a 301 in `PERMANENT_REDIRECTS` at the bottom of `src/server.ts` — it answers before SSR starts, so no React runs. Do NOT leave a route file behind that just redirects: it stays in `routeTree.gen.ts` and keeps showing up in `GUIDES`/`RelatedGuides` as if the page still existed. Then sweep all six places a URL lives: `src/lib/guider-meta.tsx`, the footer link list in `__root.tsx`, the cards **and** the ItemList JSON-LD in `guider/index.tsx`, every `relatedPaths` array, `public/sitemap.xml`, and `public/llms.txt`. A stale path in `relatedPaths` fails silently — `RelatedGuides` filters unknown paths out, so the section just renders 3 cards instead of 4 with no error.
 - **Deleting a route invalidates `routeTree.gen.ts`.** It is checked in but generated, so it still imports the deleted file and `npx tsc --noEmit` fails until the generator runs. `npm run dev` and `npm run build` regenerate it themselves — run one before type-checking, otherwise the failure looks like a real breakage.
@@ -370,11 +416,8 @@ Two bugs of exactly this kind have already been fixed; both looked like
 So: **if you use a new `white/N` step, add it to the ramp**, and keep the ramp
 sorted and increasing. Same for `emerald/red` opacity variants — `bg-red-500/10`
 is a different selector from `bg-red-500` and needs its own entry.
-- **Scanned exam figures** need the `.exam-figure` class, not `bg-white`. The
-  original reason (the remap turned `bg-white` into navy, hiding black line art)
-  went away with the Lunden flip, since `--navy-2` is now white. Keep the class
-  anyway: it pins a literal `#ffffff` backing that survives any future palette
-  change, which is exactly what scanned line art needs.
+- **Scanned exam figures** need the `.exam-figure` class, not `bg-white` — the
+  remap layer turns `bg-white` into navy, which would hide black line art.
 - **`var()` does not work in SVG presentation attributes** (`stroke=`, `fill=`).
   Use a literal hex there, or move the colour into `style={{ }}`.
 

@@ -17,6 +17,8 @@ Officiell domän: https://hpkampen.se
 - [Logga in](https://hpkampen.se/login): Logga in på ditt befintliga konto.
 - [Vanliga frågor](https://hpkampen.se/faq): FAQ om HP Kampen — gratis, ELO, riktiga HP-frågor, gästläge och mer.
 - [Guider till HP](https://hpkampen.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
+- [Forum](https://hpkampen.se/forum): Diskussionsforum om högskoleprovet. Öppet att läsa utan konto; för att skriva krävs ett konto med bekräftad mejladress. Fem kategorier: /forum/allmant (provet i stort), /forum/kvantitativ (XYZ, KVA, NOG, DTK — fråga & svar), /forum/verbal (ORD, LÄS, MEK, ELF — fråga & svar), /forum/provdagen (anmälan, provdagen, normering, resultat), /forum/plugg (studieteknik och motivation). Trådadresser: /forum/<kategori>/<id>-<slug>, paginerade med ?sida=N. Q&A-kategorierna märker ut bästa svar.
+- [Forumregler](https://hpkampen.se/forum/regler): Regler, vem som driver forumet och hur du rapporterar ett inlägg.
 - [Om HP Kampen](https://hpkampen.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
 - [Kontakt](https://hpkampen.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 

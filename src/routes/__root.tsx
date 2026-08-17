@@ -41,6 +41,7 @@ function NotFoundComponent() {
     { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
     { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
     { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
+    { to: "/forum", label: "Forum", desc: "Fråga och svara om HP" },
     { to: "/faq", label: "Vanliga frågor", desc: "Svar på det vanligaste" },
   ] as const;
 
@@ -99,7 +100,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </p>
         <details className="mt-4 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-left text-xs">
           <summary className="cursor-pointer text-white/60">Teknisk info (för debugging)</summary>
-          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-words text-[11px] text-[#8c1d18]">
+          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-words text-[11px] text-[#e25a6a]">
             {error?.name ? `${error.name}: ` : ""}
             {error?.message ?? String(error)}
             {error?.stack ? `\n\n${error.stack.split("\n").slice(0, 5).join("\n")}` : ""}
@@ -160,7 +161,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
       { name: "twitter:image", content: "https://hpkampen.se/og-image.png" },
-      { name: "theme-color", content: "#fbf6ec" },
+      { name: "theme-color", content: "#170d05" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "HP Kampen" },
@@ -400,6 +401,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/signup">Skapa konto</a>
           <a href="/login">Logga in</a>
           <a href="/faq">Vanliga frågor</a>
+          <a href="/forum">Forum om högskoleprovet</a>
           <a href="/guider">Guider till HP</a>
           <a href="/guider/ord">ORD-guide</a>
           <a href="/guider/mek">MEK-guide</a>

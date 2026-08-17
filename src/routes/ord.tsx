@@ -139,7 +139,7 @@ function DefinitionBlock({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 text-xs font-medium text-[#7a5236] underline-offset-4 transition-colors hover:text-[#8ec9ce] hover:underline"
+        className="inline-flex items-center gap-1 text-xs font-medium text-[#6fb3b8] underline-offset-4 transition-colors hover:text-[#8ec9ce] hover:underline"
       >
         <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
         {open ? "Dölj förklaring" : `Vad betyder "${ordText(word)}"?`}
@@ -149,13 +149,13 @@ function DefinitionBlock({
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="mt-2 rounded-lg border-l-4 border-[#ae2f26]/60 bg-[#ae2f26]/[0.07] p-3">
-            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#ae2f26]">
+          <div className="mt-2 rounded-lg border-l-4 border-[#f2a65a]/60 bg-[#f2a65a]/[0.07] p-3">
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#f2a65a]">
               <BookOpen className="h-3.5 w-3.5" />
               {definitionSourceLabel(source)}
             </div>
             <p
-              className="whitespace-pre-wrap text-[#2e1e14]"
+              className="whitespace-pre-wrap text-[#e8e4da]"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
               {ordDefinition(definition)}
@@ -345,11 +345,11 @@ function OrdPracticePage() {
           >
             <GlassCard className="p-6 sm:p-8">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ae2f26]/15 text-[#ae2f26]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2a65a]/15 text-[#f2a65a]">
                   <GraduationCap className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="text-[12px] font-semibold uppercase italic tracking-[0.14em] text-[#7a5236]">
+                  <p className="text-[12px] font-semibold uppercase italic tracking-[0.14em] text-[#6fb3b8]">
                     Steg 1
                   </p>
                   <h2
@@ -375,10 +375,10 @@ function OrdPracticePage() {
                     type="button"
                     onClick={() => void startSession(n)}
                     disabled={loading}
-                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] py-7 transition-all hover:border-[#ae2f26]/50 hover:bg-white/[0.04] disabled:opacity-60"
+                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] py-7 transition-all hover:border-[#f2a65a]/50 hover:bg-white/[0.04] disabled:opacity-60"
                   >
                     <span
-                      className="text-[36px] font-bold leading-none tabular-nums text-[#ae2f26]"
+                      className="text-[36px] font-bold leading-none tabular-nums text-[#f2a65a]"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {n}
@@ -394,9 +394,9 @@ function OrdPracticePage() {
               )}
 
               {progress && progress.totalCount > 0 && (
-                <div className="mt-6 rounded-2xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] p-5 sm:p-6">
+                <div className="mt-6 rounded-2xl border border-[#f2a65a]/20 bg-[#f2a65a]/[0.06] p-5 sm:p-6">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-semibold tracking-wide text-[#ae2f26]">
+                    <span className="text-[11px] font-semibold tracking-wide text-[#f2a65a]">
                       Din ord-bank
                     </span>
                     <span className="text-xs font-medium tabular-nums text-muted-foreground">
@@ -405,7 +405,7 @@ function OrdPracticePage() {
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
                     <span
-                      className="text-4xl font-bold tabular-nums text-[#ae2f26] sm:text-5xl"
+                      className="text-4xl font-bold tabular-nums text-[#f2a65a] sm:text-5xl"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
                       {formatInt(progress.correctCount)}
@@ -415,9 +415,9 @@ function OrdPracticePage() {
                     </span>
                     <span className="ml-1 text-xs text-muted-foreground">ord rätt besvarade</span>
                   </div>
-                  <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/10 ring-1 ring-[#ae2f26]/20">
+                  <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/10 ring-1 ring-[#f2a65a]/20">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#ae2f26] to-[#7a5236] transition-all duration-700"
+                      className="h-full rounded-full bg-gradient-to-r from-[#f2a65a] to-[#6fb3b8] transition-all duration-700"
                       style={{
                         width: `${Math.min(
                           100,
@@ -435,11 +435,11 @@ function OrdPracticePage() {
                       disabled={
                         progress.correctCount >= progress.totalCount || progress.correctCount === 0
                       }
-                      className="h-5 w-5 rounded border-border accent-[#ae2f26] disabled:opacity-40"
+                      className="h-5 w-5 rounded border-border accent-[#f2a65a] disabled:opacity-40"
                     />
                   </label>
                   {excludeCorrect && progress.totalCount - progress.correctCount < 10 && (
-                    <p className="mt-2 text-xs text-[#ae2f26]">
+                    <p className="mt-2 text-xs text-[#f2a65a]">
                       Endast {progress.totalCount - progress.correctCount} ord kvar med detta
                       filter.
                     </p>
@@ -466,7 +466,7 @@ function OrdPracticePage() {
                       onClick={() => setSourceFilter(o.v)}
                       className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
                         sourceFilter === o.v
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
+                          ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
                           : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
                       }`}
                     >
@@ -631,7 +631,7 @@ function OrdPracticePage() {
             </div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#ae2f26] transition-all duration-300"
+                className="h-full bg-[#f2a65a] transition-all duration-300"
                 style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
               />
             </div>
@@ -657,7 +657,7 @@ function OrdPracticePage() {
                       "flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all";
                     if (!showState) {
                       cls +=
-                        " border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10 cursor-pointer";
+                        " border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10 cursor-pointer";
                     } else if (isCorrect) {
                       cls += " border-green-500/50 bg-green-500/10 text-green-100";
                     } else if (isPicked) {
@@ -723,7 +723,7 @@ function OrdPracticePage() {
         {phase === "summary" && (
           <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[#ae2f26]">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[#f2a65a]">
                 <Trophy className="h-8 w-8" />
               </div>
               <h2

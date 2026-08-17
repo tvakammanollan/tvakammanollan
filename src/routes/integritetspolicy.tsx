@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
 import { ConsentSettings } from "@/components/ConsentSettings";
@@ -77,6 +77,11 @@ function IntegritetspolicyPage() {
               ELO-utveckling, statistik per delprov
             </li>
             <li>
+              <strong style={{ color: "var(--cream)" }}>Foruminlägg</strong> — texten du skriver i
+              forumet, tidpunkt och vilket konto som skrev den. Inlägg är offentliga och syns för
+              alla, även utloggade och sökmotorer.
+            </li>
+            <li>
               <strong style={{ color: "var(--cream)" }}>Teknisk information</strong> — IP-adress och
               webbläsarversion, enbart för säkerhet och felsökning (anonymiseras efter 30 dagar)
             </li>
@@ -141,6 +146,35 @@ function IntegritetspolicyPage() {
               max 30 dagar, övrig användningsstatistik max 12 månader
             </li>
           </ul>
+
+          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+            Forumet
+          </h2>
+          <p>
+            Det du skriver i{" "}
+            <Link to="/forum" className="underline" style={{ color: "var(--amber)" }}>
+              forumet
+            </Link>{" "}
+            är offentligt. Inlägget visas med ditt användarnamn — aldrig med din e-postadress — och
+            är läsbart för alla, inklusive sökmotorer och AI-crawlers som indexerar sajten. Räkna
+            med att ett foruminlägg kan finnas kvar i sökmotorers cache även efter att det tagits
+            bort här.
+          </p>
+          <p>
+            Raderar du ditt konto avidentifieras din användarrad och inläggen står kvar utan namn,
+            märkta "Borttagen användare", så att trådarna förblir läsbara för dem som svarat. Vill
+            du i stället ha enskilda inlägg borttagna — mejla oss, så tar vi bort dem.
+          </p>
+          <p>
+            Rapporterar du ett inlägg sparas vilket konto som rapporterade, skälet och din
+            eventuella kommentar. Det behövs för att kunna hantera missbruk av rapportfunktionen och
+            är ett krav för att vi ska kunna uppfylla vår uppsiktsplikt enligt lagen om ansvar för
+            elektroniska anslagstavlor (1998:112). Reglerna, och vem som driver forumet, står på{" "}
+            <Link to="/forum/regler" className="underline" style={{ color: "var(--amber)" }}>
+              forumets regelsida
+            </Link>
+            .
+          </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
             Dina rättigheter

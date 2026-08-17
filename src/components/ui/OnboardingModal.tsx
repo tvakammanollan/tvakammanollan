@@ -144,7 +144,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
             <span
               key={i}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                i <= step ? "bg-[#ae2f26]" : "bg-border"
+                i <= step ? "bg-[#f2a65a]" : "bg-border"
               }`}
             />
           ))}
@@ -166,18 +166,18 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setTarget(g.value)}
                       className={`flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#ae2f26] bg-[#ae2f26]/10"
+                          ? "border-[#f2a65a] bg-[#f2a65a]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
                       <span className="flex items-center gap-3">
-                        <g.icon className="h-5 w-5 text-[#ae2f26]" strokeWidth={1.5} aria-hidden />
+                        <g.icon className="h-5 w-5 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
                         <span>
                           <span className="font-semibold tabular-nums">{g.range}</span>{" "}
                           <span className="text-sm text-muted-foreground">{g.label}</span>
                         </span>
                       </span>
-                      {selected && <Check className="h-4 w-4 text-[#ae2f26]" aria-hidden />}
+                      {selected && <Check className="h-4 w-4 text-[#f2a65a]" aria-hidden />}
                     </button>
                   );
                 })}
@@ -209,16 +209,16 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                       onClick={() => setFocus(f.value)}
                       className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${
                         selected
-                          ? "border-[#ae2f26] bg-[#ae2f26]/10"
+                          ? "border-[#f2a65a] bg-[#f2a65a]/10"
                           : "border-border bg-card hover:border-foreground/20"
                       }`}
                     >
-                      <f.icon className="h-5 w-5 text-[#ae2f26]" strokeWidth={1.5} aria-hidden />
+                      <f.icon className="h-5 w-5 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
                       <span>
                         <div className="font-semibold">{f.label}</div>
                         <div className="text-xs text-muted-foreground">{f.sub}</div>
                       </span>
-                      {selected && <Check className="ml-auto h-4 w-4 text-[#ae2f26]" aria-hidden />}
+                      {selected && <Check className="ml-auto h-4 w-4 text-[#f2a65a]" aria-hidden />}
                     </button>
                   );
                 })}
@@ -253,7 +253,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               <div className="mt-6 flex flex-col gap-2">
                 <Button
                   size="lg"
-                  className="w-full bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]"
+                  className="w-full bg-[#f2a65a] text-[#1a0d04] hover:bg-[#c97b41]"
                   disabled={saving}
                   onClick={() => finish(true)}
                 >

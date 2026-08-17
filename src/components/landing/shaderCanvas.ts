@@ -54,7 +54,7 @@ void main(void){
   O=vec4(col,1);
 }`;
 
-// HP Kampen amber/orange palette — uses brand --amber (#ae2f26)
+// HP Kampen amber/orange palette — uses brand --amber (#f2a65a)
 // Animation ~68% av indigo-versionen (20% slow + 15% extra slow på Niklas
 // önskemål). cloud .4→.27, zoom .2→.14, cos .5→.34.
 export const SHADER_SRC_AMBER = `${SHADER_HEAD}

@@ -2,7 +2,7 @@ import { Trophy, Medal, Award } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const PODIUM = {
-  1: { Icon: Trophy, color: "#ae2f26", label: "Förstaplats" },
+  1: { Icon: Trophy, color: "#f2a65a", label: "Förstaplats" },
   2: { Icon: Medal, color: "#c3ccd6", label: "Andraplats" },
   3: { Icon: Award, color: "#c98a5e", label: "Tredjeplats" },
 } as const;

@@ -31,7 +31,7 @@ export function CyclingTitle({
       {words.map((word, i) => (
         <m.span
           key={i}
-          className="absolute font-semibold text-[#ae2f26]"
+          className="absolute font-semibold text-[#f2a65a]"
           initial={{ opacity: 0, y: -100 }}
           transition={{ type: "spring", stiffness: 50 }}
           animate={index === i ? { y: 0, opacity: 1 } : { y: index > i ? -150 : 150, opacity: 0 }}

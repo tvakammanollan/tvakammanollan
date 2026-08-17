@@ -64,4 +64,13 @@ export const limits = {
   publicRead: { max: 120, windowMs: 60 * 1000 } as LimitConfig, // 120/min
   /** Ordbatch-hämtning (tung query) — per IP. */
   wordBatch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
+  /**
+   * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
+   * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
+   * eftersom limitern här lever per Cloudflare-isolat.
+   */
+  forumThread: { max: 5, windowMs: 60 * 60 * 1000 } as LimitConfig, // 5/h
+  forumPost: { max: 20, windowMs: 60 * 60 * 1000 } as LimitConfig, // 20/h
+  forumEdit: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/h
+  forumReport: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
 };

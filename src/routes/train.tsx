@@ -410,7 +410,7 @@ function TrainPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
               Ditt pass
             </p>
-            <p className="mt-1.5 text-[15px] text-[#2e1e14]">{configSummary}</p>
+            <p className="mt-1.5 text-[15px] text-[#e8e4da]">{configSummary}</p>
 
             <PrimaryCTA
               onClick={startTraining}
@@ -425,7 +425,7 @@ function TrainPage() {
               type="button"
               onClick={() => setCustomising((v) => !v)}
               aria-expanded={customising}
-              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#2e1e14]"
+              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[#e8e4da]"
             >
               <SlidersHorizontal className="h-4 w-4" />
               {customising ? "Dölj inställningar" : "Anpassa"}
@@ -463,8 +463,8 @@ function TrainPage() {
                       onClick={() => toggleSub(sub)}
                       className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
                         active
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
-                          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60 hover:text-white"
+                          ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
+                          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60 hover:text-white"
                       }`}
                     >
                       {displayCategory(sub)}
@@ -473,7 +473,7 @@ function TrainPage() {
                 })}
               </div>
               {config.subs.length === 0 && (
-                <p className="mt-2 text-xs text-[#8c1d18]">Välj minst ett delprov</p>
+                <p className="mt-2 text-xs text-[#e25a6a]">Välj minst ett delprov</p>
               )}
             </SetupCard>
 
@@ -513,8 +513,8 @@ function TrainPage() {
                     onClick={() => setConfig((c) => ({ ...c, count: n }))}
                     className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
                       config.count === n
-                        ? "border-[#ae2f26] bg-[#ae2f26]/10 text-[#ae2f26]"
-                        : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
+                        ? "border-[#f2a65a] bg-[#f2a65a]/10 text-[#f2a65a]"
+                        : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60"
                     }`}
                   >
                     {n} frågor
@@ -554,7 +554,7 @@ function TrainPage() {
         <header
           className="sticky top-0 z-20 border-b border-border"
           style={{
-            background: "rgba(251, 246, 236,0.85)",
+            background: "rgba(23,13,5,0.85)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
           }}
@@ -581,7 +581,7 @@ function TrainPage() {
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#ae2f26] transition-all duration-500 ease-out"
+                className="h-full bg-[#f2a65a] transition-all duration-500 ease-out"
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -611,7 +611,7 @@ function TrainPage() {
             className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
-            <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
+            <div className="mb-2 text-xs font-semibold tracking-wide text-[#f2a65a]">
               {displayCategory(currentQ.category)} · Fråga {current + 1}
             </div>
             <h2
@@ -646,7 +646,7 @@ function TrainPage() {
                 // rätt svar solid amber — exakt samma ton som "valt", så efter
                 // rättning gick de två lägena inte att skilja åt.
                 let cls =
-                  "border border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10";
+                  "border border-white/10 bg-white/[0.02] hover:border-[#f2a65a]/60 hover:bg-[#f2a65a]/10";
                 if (isCorrectOpt) {
                   cls =
                     "border-2 border-[var(--success-line)] bg-[var(--success-soft)] text-foreground";
@@ -654,7 +654,7 @@ function TrainPage() {
                   cls =
                     "border-2 border-[var(--danger-line)] bg-[var(--danger-soft)] text-foreground";
                 } else if (isSelected) {
-                  cls = "border-2 border-[#ae2f26] bg-[#ae2f26]/15";
+                  cls = "border-2 border-[#f2a65a] bg-[#f2a65a]/15";
                 }
                 return (
                   <button
@@ -662,7 +662,7 @@ function TrainPage() {
                     type="button"
                     disabled={revealed}
                     onClick={() => handleSelect(letter)}
-                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae2f26] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
+                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2a65a] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
                   >
                     <span
                       className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
@@ -671,7 +671,7 @@ function TrainPage() {
                           : isWrongPick
                             ? "bg-[var(--danger)] text-[#2c0d11]"
                             : isSelected
-                              ? "bg-[#ae2f26] text-[#fff8f5]"
+                              ? "bg-[#f2a65a] text-[#1a0d04]"
                               : "bg-white/10 text-foreground"
                       }`}
                     >
@@ -719,7 +719,7 @@ function TrainPage() {
               {revealed ? (
                 <Button
                   onClick={() => goNext(false)}
-                  className="w-full bg-[#ae2f26] py-5 text-base text-[#fff8f5] hover:bg-[#8f2620]"
+                  className="w-full bg-[#f2a65a] py-5 text-base text-[#1a0d04] hover:bg-[#c97b41]"
                 >
                   {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -793,7 +793,7 @@ function TrainPage() {
         <GlassCard className="mt-8 p-8">
           <div className="text-center">
             <div
-              className="text-6xl font-bold tabular-nums text-[#ae2f26]"
+              className="text-6xl font-bold tabular-nums text-[#f2a65a]"
               style={{ fontFamily: "var(--font-mono, 'DM Mono', monospace)" }}
             >
               {correct}
@@ -820,11 +820,11 @@ function TrainPage() {
                     <span className="tabular-nums text-white/85">
                       {v.c}/{v.t}{" "}
                       {v.c === v.t ? (
-                        <Check className="ml-1 inline h-4 w-4 text-[#ae2f26]" />
+                        <Check className="ml-1 inline h-4 w-4 text-[#f2a65a]" />
                       ) : v.c === 0 ? (
-                        <XIcon className="ml-1 inline h-4 w-4 text-[#8c1d18]" />
+                        <XIcon className="ml-1 inline h-4 w-4 text-[#e25a6a]" />
                       ) : (
-                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#ae2f26]/70" />
+                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#f2a65a]/70" />
                       )}
                     </span>
                   </div>
@@ -871,7 +871,7 @@ function SetupCard({
   return (
     <GlassCard className="p-5">
       <div className="mb-3 flex items-center gap-3">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[12px] font-bold text-[#ae2f26]">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[12px] font-bold text-[#f2a65a]">
           {step}
         </span>
         <h2 className="text-[15px] font-semibold text-white">{title}</h2>
@@ -900,11 +900,11 @@ function TrackCard({
       onClick={onClick}
       className={`rounded-2xl border p-4 text-left transition ${
         active
-          ? "border-[#ae2f26] bg-[#ae2f26]/10"
-          : "border-white/12 bg-white/[0.02] hover:border-[#ae2f26]/50"
+          ? "border-[#f2a65a] bg-[#f2a65a]/10"
+          : "border-white/12 bg-white/[0.02] hover:border-[#f2a65a]/50"
       }`}
     >
-      <Icon className="h-7 w-7 text-[#ae2f26]" strokeWidth={1.5} aria-hidden />
+      <Icon className="h-7 w-7 text-[#f2a65a]" strokeWidth={1.5} aria-hidden />
       <div className="mt-2 text-lg font-semibold text-white">{label}</div>
       <div className="text-xs text-white/55">{hint}</div>
     </button>
@@ -926,8 +926,8 @@ function DifficultyBtn({
       onClick={onClick}
       className={`min-w-[48px] rounded-lg border px-3 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
-          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
+          ? "border-[#f2a65a] bg-[#f2a65a] text-[#1a0d04]"
+          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#f2a65a]/60"
       }`}
     >
       {label}
