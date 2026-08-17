@@ -881,18 +881,16 @@
   --success-line: rgba(47, 107, 60, 0.4);
   --success-ink: #e7f0e3;
 
-  /* FEL SVAR ÄR BRUNT, INTE RÖTT. Rött är belöningsfärgen i det här
-     systemet (äpplen, streak, rank, primär-CTA); låter man samma röda
-     också betyda "fel" slits den ut och slutar signalera något. Fel
-     svar får fallfruktens ton — nedfallet äpple.
-
-     --danger var tidigare en alias för --destructive. De är nu
-     frikopplade: --danger = fel svar, --destructive = oåterkalleliga
-     handlingar, som fortfarande behöver larma. */
-  --danger: #8e552a; /* fallfrukt */
-  --danger-soft: rgba(142, 85, 42, 0.12);
-  --danger-line: rgba(142, 85, 42, 0.4);
-  --danger-ink: #f6e8d7;
+  /* Fel svar är rött. Tre röda toner som aldrig möts i samma vy:
+       --danger      #d32f2f  fel svar
+       --amber       #ae2f26  varumärke och primär-CTA
+       --destructive #8c1d18  oåterkalleliga handlingar (radera konto)
+     --danger var tidigare en alias för --destructive; de är frikopplade
+     så ett fel svar inte ser lika allvarligt ut som att radera kontot. */
+  --danger: #d32f2f;
+  --danger-soft: rgba(211, 47, 47, 0.11);
+  --danger-line: rgba(211, 47, 47, 0.4);
+  --danger-ink: #fff1f0;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { m } from "framer-motion";
-import { ArrowRight, Swords, BookOpenText, FileText, Star, Timer, Plus, Minus } from "lucide-react";
+import { ArrowRight, Swords, BookOpenText, FileText, Star, Timer } from "lucide-react";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { formatInt } from "@/lib/sv-format";
@@ -54,30 +54,6 @@ const OMDOMEN = [
   },
 ];
 
-/** Hämtat från sajtens egen FAQ så svaren stämmer med resten. */
-const FRAGOR = [
-  {
-    q: "Är HP Kampen verkligen gratis?",
-    a: "Ja. Helt gratis. Inga annonser, inget kreditkort, inga in-app-köp och inga premium-paket. Sajten finansieras av grundaren.",
-  },
-  {
-    q: "Är frågorna från riktiga högskoleprov?",
-    a: "Ja. Hela ordbanken bygger på publicerade högskoleprov från 1990-talet och framåt. Under Gamla prov kan du dessutom skriva hela riktiga provpass med facit på varje uppgift.",
-  },
-  {
-    q: "Kan jag spela utan konto?",
-    a: "Ja, du hoppar rakt in i en match som gäst. Kontot behövs först när du vill att ELO, streak och repetitionshögen ska sparas mellan gångerna.",
-  },
-  {
-    q: "Hur fungerar ELO-systemet?",
-    a: "Samma ratingsystem som i schack. Du börjar runt 1000 och talet rör sig efter vem du möter och hur det går. Verbal och kvantitativ del har varsitt tal, eftersom de mäter olika saker.",
-  },
-  {
-    q: "Hur skapar jag en privat match med vänner?",
-    a: "Gå till Vänner och bjud in via användarnamn. Du kan också dela en rumslänk som de klickar på för att hoppa rakt in i matchen.",
-  },
-];
-
 function Stjarnor() {
   return (
     <div className="flex gap-0.5" aria-label="5 av 5">
@@ -91,7 +67,6 @@ function Stjarnor() {
 export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
   const [stats, setStats] = useState<LandingStats | null>(null);
-  const [open, setOpen] = useState<number | null>(0);
 
   useEffect(() => {
     let alive = true;
@@ -118,7 +93,7 @@ export function HeroLanding() {
           transition={{ duration: 0.5 }}
           className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55"
         >
-          Gratis · inga annonser · inget kort
+          Gratis · riktiga provfrågor · ELO i realtid
         </m.p>
 
         <m.h1
@@ -189,13 +164,18 @@ export function HeroLanding() {
       <section className="border-y border-white/10">
         <div className="mx-auto grid max-w-5xl grid-cols-1 divide-y divide-white/10 px-4 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {[
-            { icon: BookOpenText, t: "8 000+ ord", s: "ur prov sedan 1990-talet" },
-            { icon: FileText, t: "30 provtillfällen", s: "4 363 uppgifter med facit" },
-            { icon: Swords, t: "8 delprov", s: "verbalt och kvantitativt" },
-          ].map(({ icon: Icon, t, s }, i) => (
+            {
+              icon: BookOpenText,
+              t: "8 000+ ord",
+              s: "ur prov sedan 1990-talet",
+              c: "#2f6b3c",
+            },
+            { icon: FileText, t: "30 gamla prov", s: "118 provpass med facit", c: "#7a5236" },
+            { icon: Swords, t: "8 delprov", s: "verbalt och kvantitativt", c: "#ae2f26" },
+          ].map(({ icon: Icon, t, s, c }, i) => (
             <Reveal key={t} delay={i * 0.06}>
               <div className="flex items-center gap-3 px-2 py-6">
-                <Icon className="h-5 w-5 shrink-0 text-[#ae2f26]" aria-hidden />
+                <Icon className="h-5 w-5 shrink-0" style={{ color: c }} aria-hidden />
                 <div>
                   <div className="text-[15px] font-semibold">{t}</div>
                   <div className="text-sm text-white/60">{s}</div>
@@ -315,35 +295,87 @@ export function HeroLanding() {
         </div>
       </section>
 
-      {/* ---------- riktiga siffror ---------- */}
+      {/* ---------- vad som finns i banken ---------- */}
       <section className="border-t border-white/10">
         <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
           <Reveal>
             <h2 className="text-center text-[28px] tracking-tight sm:text-[36px]">
-              Siffrorna är inte påhittade
+              Allt som någonsin publicerats, på ett ställe
             </h2>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <p className="mx-auto mt-5 max-w-xl text-center text-[16px] leading-relaxed text-white/65">
+              Provhäftena finns utspridda hos UHR i olika format och försvinner ur listorna med
+              tiden. Här är de inlästa, uppdelade per delprov och sökbara.
+            </p>
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { l: "Spelare", v: stats && formatInt(stats.totalPlayers), s: "registrerade konton" },
-              { l: "Matcher", v: stats && formatInt(stats.totalMatches), s: "spelade sedan starten" },
-              { l: "Online nu", v: stats && formatInt(stats.activePlayers), s: "senaste kvarten" },
-              {
-                l: "Högsta ELO",
-                v: stats && formatInt(Math.max(stats.topVerbalElo, stats.topMathElo)),
-                s: "just nu",
-              },
+              { l: "Ord i databasen", v: "8 000+", s: "med definitioner", c: "#2f6b3c" },
+              { l: "Uppgifter", v: "4 363", s: "facit på varje", c: "#7a5236" },
+              { l: "Gamla prov", v: "30", s: "VT2012 och framåt", c: "#ae2f26" },
+              { l: "Provpass", v: "118", s: "hela pass med klocka", c: "#7a5236" },
             ].map((x, i) => (
               <Reveal key={x.l} delay={i * 0.06}>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <m.div
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-6"
+                >
                   <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/55">
                     {x.l}
                   </div>
-                  <div className="mt-2 font-mono text-4xl tabular-nums">{x.v ?? "–"}</div>
+                  <div className="mt-2 font-mono text-4xl tabular-nums" style={{ color: x.c }}>
+                    {x.v}
+                  </div>
                   <div className="mt-1.5 text-sm text-white/60">{x.s}</div>
-                </div>
+                </m.div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- coachning ---------- */}
+      <section className="border-t border-white/10">
+        <div className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
+            <Reveal>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.16em]"
+                style={{ color: "#2f6b3c" }}
+              >
+                Personlig coachning
+              </p>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 className="mt-4 text-[28px] leading-tight tracking-tight sm:text-[36px]">
+                Vill du ha ett upplägg som är gjort för dig?
+              </h2>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-white/70">
+                Träningen här tar dig långt på egen hand. Men vet du inte var du ska lägga tiden går
+                det att få ett studieupplägg av någon som själv skrivit högt på provet, byggt efter
+                var du står och hur lång tid du har kvar.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  to="/kontakt"
+                  className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-[#fff8f5] transition-all"
+                  style={{ background: "#2f6b3c" }}
+                >
+                  Läs mer om coachning
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </Link>
+                <span className="text-sm text-white/55">Begränsat antal platser</span>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -447,60 +479,6 @@ export function HeroLanding() {
         </section>
       ) : null}
 
-      {/* ---------- frågor ---------- */}
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-2xl px-4 py-20 sm:py-24">
-          <Reveal>
-            <h2 className="text-center text-[28px] tracking-tight sm:text-[36px]">
-              Vanliga frågor
-            </h2>
-          </Reveal>
-          <div className="mt-10 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10">
-            {FRAGOR.map((f, i) => (
-              <div key={f.q}>
-                <button
-                  type="button"
-                  onClick={() => setOpen(open === i ? null : i)}
-                  aria-expanded={open === i}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left text-[16px] font-medium transition-colors hover:bg-white/[0.03]"
-                >
-                  {f.q}
-                  <span className="shrink-0 text-white/45" aria-hidden>
-                    {open === i ? (
-                      <Minus className="h-4 w-4" />
-                    ) : (
-                      <Plus className="h-4 w-4" />
-                    )}
-                  </span>
-                </button>
-                {open === i ? (
-                  <m.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.24 }}
-                    className="overflow-hidden px-5 pb-5 text-[15px] leading-relaxed text-white/65"
-                  >
-                    {f.a}
-                  </m.p>
-                ) : null}
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 text-center">
-            <Link
-              to="/faq"
-              className="group inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
-            >
-              Fler frågor
-              <ArrowRight
-                className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                aria-hidden
-              />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ---------- slut ---------- */}
       <section className="border-t border-white/10">
         <div className="mx-auto max-w-3xl px-4 py-24 text-center">
@@ -530,7 +508,7 @@ export function HeroLanding() {
           </Reveal>
           <div className="mt-6 flex items-center justify-center gap-2 text-sm text-white/50">
             <Timer className="h-3.5 w-3.5" aria-hidden />
-            Gratis, inga annonser, inget kort
+            Inget konto behövs för att testa
           </div>
         </div>
       </section>
