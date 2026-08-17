@@ -152,6 +152,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   FORUM_RATE_EDITS: "Du har redigerat väldigt mycket den senaste timmen — vänta en stund.",
   FORUM_RATE_NEWUSER: "Nya konton får skriva ett inlägg varannan minut. Vänta lite.",
   FORUM_RATE_REPORTS: "Du har rapporterat många inlägg — vänta en stund.",
+  FORUM_ANSWER_IS_QUESTION: "Frågan kan inte vara sitt eget bästa svar.",
 };
 
 /**

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createFileRoute, Link, notFound, redirect, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Lock, MessageSquarePlus, Pin, Trash2 } from "lucide-react";
+import { ArrowDown, Bell, BellOff, Lock, MessageSquarePlus, Pin, Trash2 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { supabase } from "@/integrations/supabase/client";
 import { ForumPostCard } from "@/components/forum/ForumPostCard";
 import { ForumComposer } from "@/components/forum/ForumComposer";
 import { ForumPagination } from "@/components/forum/ForumPagination";
@@ -13,6 +14,10 @@ import { useAuth } from "@/hooks/useAuth";
 import {
   createForumPost,
   fetchForumThread,
+  fetchForumThreadState,
+  markForumThreadRead,
+  setForumAnswer,
+  toggleForumSubscription,
   type ForumPost,
   type ForumThreadData,
 } from "@/lib/forum.functions";
@@ -217,13 +222,103 @@ function ForumThreadPage() {
   const [quotedPostId, setQuotedPostId] = useState<number | null>(null);
   const [sending, setSending] = useState(false);
 
+  // Egen prenumeration + egna reaktioner. Hämtas separat från loadern, som är
+  // publik och serverrenderad — trådsidan ska kunna cachas lika för alla.
+  const [subscribed, setSubscribed] = useState(false);
+  const [reacted, setReacted] = useState<Set<number>>(() => new Set());
+  const [subBusy, setSubBusy] = useState(false);
+  const [newPosts, setNewPosts] = useState(0);
+
   const post = useServerFn(createForumPost);
   const moderate = useServerFn(moderateForumThread);
+  const markAnswer = useServerFn(setForumAnswer);
+  const loadState = useServerFn(fetchForumThreadState);
+  const toggleSub = useServerFn(toggleForumSubscription);
+  const markRead = useServerFn(markForumThreadRead);
 
   const pages = pageCount(total, perPage);
   const isAdmin = !!profile?.is_admin;
   const isQa = category.kind === "qa";
   const firstNumber = (page - 1) * perPage + 1;
+  const isThreadAuthor = !!userId && thread.author?.id === userId;
+  const canMarkAnswer = isAdmin || isThreadAuthor;
+
+  const postIdsKey = posts.map((p) => p.id).join(",");
+
+  // Eget tillstånd för sidan + markera tråden läst. Båda är tysta: en trasig
+  // notisräknare får aldrig fälla en tråd som annars går att läsa.
+  useEffect(() => {
+    if (!userId) {
+      setSubscribed(false);
+      setReacted(new Set());
+      return;
+    }
+    let cancelled = false;
+    const ids = postIdsKey ? postIdsKey.split(",").map(Number) : [];
+    void (async () => {
+      try {
+        const res = await loadState({ data: { threadId: thread.id, postIds: ids } });
+        if (!cancelled) {
+          setSubscribed(res.subscribed);
+          setReacted(new Set(res.reacted));
+        }
+      } catch {
+        /* tyst */
+      }
+      try {
+        await markRead({ data: { threadId: thread.id } });
+      } catch {
+        /* tyst */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, thread.id, postIdsKey, loadState, markRead]);
+
+  // Realtid: räkna nya inlägg i tråden i stället för att klistra in dem.
+  // Auto-append hoppar i scrollen mitt i att någon läser.
+  useEffect(() => {
+    // Bara på sista sidan — nya inlägg hamnar aldrig på en tidigare sida.
+    if (page !== pages) return;
+
+    // Unikt kanalnamn per montering: ett återanvänt topic under snabb
+    // om-montering kastar "cannot add postgres_changes callbacks after
+    // subscribe()" (har kraschat inloggningen i den här appen förut).
+    const channelName = `forum-thread-${thread.id}-${Math.random().toString(36).slice(2)}`;
+    let ch: ReturnType<typeof supabase.channel> | null = null;
+    try {
+      ch = supabase
+        .channel(channelName)
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "forum_posts",
+            filter: `thread_id=eq.${thread.id}`,
+          },
+          (payload) => {
+            const row = payload.new as { status?: string; author_id?: string };
+            // Egna inlägg syns direkt via invalidate(), och ett inlägg i
+            // moderationskön ska inte annonseras för andra.
+            if (row.status !== "visible" || row.author_id === userId) return;
+            setNewPosts((n) => n + 1);
+          },
+        )
+        .subscribe();
+    } catch {
+      /* realtime kan strula — tråden fungerar ändå, bara utan liveräknare */
+    }
+    return () => {
+      if (ch) void supabase.removeChannel(ch);
+    };
+  }, [thread.id, userId, page, pages]);
+
+  const showNewPosts = useCallback(async () => {
+    setNewPosts(0);
+    await router.invalidate();
+  }, [router]);
 
   const quote = (target: ForumPost) => {
     setQuotedPostId(target.id);
@@ -239,6 +334,7 @@ function ForumThreadPage() {
       });
       setDraft("");
       setQuotedPostId(null);
+      setNewPosts(0); // invalidate() nedan hämtar hem allt nytt ändå
 
       if (res.pending) {
         toast.success("Inlägget är skickat och granskas innan det syns.");
@@ -265,6 +361,38 @@ function ForumThreadPage() {
       toast.success("Klart.");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Något gick fel.");
+    }
+  };
+
+  /**
+   * Bästa svar. Går via forum_set_answer, inte moderationsvägen: det är
+   * trådstartaren som vet vilket svar som löste problemet, och RPC:n avgör
+   * vem som får sätta det.
+   */
+  const runAnswer = async (postId: number | null) => {
+    try {
+      await markAnswer({ data: { threadId: thread.id, postId } });
+      await router.invalidate();
+      toast.success(postId ? "Markerat som bästa svar." : "Markeringen är borttagen.");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Något gick fel.");
+    }
+  };
+
+  const runToggleSubscription = async () => {
+    setSubBusy(true);
+    try {
+      const res = await toggleSub({ data: { threadId: thread.id } });
+      setSubscribed(res.subscribed);
+      toast.success(
+        res.subscribed
+          ? "Du följer tråden och får en notis vid nya svar."
+          : "Du följer inte längre tråden.",
+      );
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Något gick fel.");
+    } finally {
+      setSubBusy(false);
     }
   };
 
@@ -327,6 +455,34 @@ function ForumThreadPage() {
         </p>
       </header>
 
+      {canPost && (
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={() => void runToggleSubscription()}
+            disabled={subBusy}
+            aria-pressed={subscribed}
+            className={
+              subscribed
+                ? "inline-flex items-center gap-2 rounded-lg border border-[var(--amber)]/40 bg-[var(--amber)]/10 px-3 py-1.5 text-xs font-medium text-[var(--amber)] transition-colors hover:bg-[var(--amber)]/20 disabled:opacity-50"
+                : "inline-flex items-center gap-2 rounded-lg border border-white/12 px-3 py-1.5 text-xs text-[var(--text-secondary)] transition-colors hover:border-[var(--amber)]/50 hover:text-[var(--cream)] disabled:opacity-50"
+            }
+          >
+            {subscribed ? (
+              <>
+                <Bell className="h-3.5 w-3.5" aria-hidden />
+                Följer tråden
+              </>
+            ) : (
+              <>
+                <BellOff className="h-3.5 w-3.5" aria-hidden />
+                Följ tråden
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       {thread.isLocked && (
         <p className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-[var(--text-tertiary)]">
           <Lock className="h-4 w-4 shrink-0" aria-hidden />
@@ -371,15 +527,26 @@ function ForumThreadPage() {
               blockReason={reason}
               currentUserId={userId}
               isAdmin={isAdmin}
+              reacted={reacted.has(p.id)}
+              canMarkAnswer={canMarkAnswer}
               onQuote={quote}
               onEdited={() => void router.invalidate()}
-              onMarkAnswer={(postId) =>
-                runModeration({ threadId: thread.id, answerPostId: postId })
-              }
+              onMarkAnswer={runAnswer}
             />
           </li>
         ))}
       </ol>
+
+      {newPosts > 0 && (
+        <button
+          type="button"
+          onClick={() => void showNewPosts()}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--amber)]/30 bg-[var(--amber)]/[0.08] px-4 py-2.5 text-sm font-medium text-[var(--amber)] transition-colors hover:bg-[var(--amber)]/15"
+        >
+          <ArrowDown className="h-4 w-4" aria-hidden />
+          {newPosts === 1 ? "1 nytt inlägg" : `${formatInt(newPosts)} nya inlägg`} — visa
+        </button>
+      )}
 
       <ForumPagination page={page} pageCount={pages} />
 

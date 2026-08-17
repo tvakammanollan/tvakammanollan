@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { CheckCircle2, CornerUpLeft, Flag, Link2, Pencil, Quote, Shield } from "lucide-react";
+import {
+  CheckCircle2,
+  CornerUpLeft,
+  Flag,
+  Link2,
+  Pencil,
+  Quote,
+  Shield,
+  ThumbsUp,
+} from "lucide-react";
 import { UserAvatar } from "@/components/UserAvatar";
 import { EloBadge } from "@/components/EloBadge";
 import { ForumBody } from "./ForumBody";
 import { ForumComposer } from "./ForumComposer";
 import { ReportPostDialog } from "./ReportPostDialog";
-import { editForumPost, type ForumPost } from "@/lib/forum.functions";
+import { editForumPost, toggleForumReaction, type ForumPost } from "@/lib/forum.functions";
 import { displayAuthor, EDIT_WINDOW_MINUTES, type BlockReason } from "@/lib/forum";
-import { formatRelativeTime, formatDate } from "@/lib/sv-format";
+import { formatRelativeTime, formatDate, formatInt } from "@/lib/sv-format";
 
 /**
  * Ett inlägg i en platt, kronologisk tråd.
@@ -28,6 +37,8 @@ export function ForumPostCard({
   blockReason,
   currentUserId,
   isAdmin,
+  reacted,
+  canMarkAnswer,
   onQuote,
   onEdited,
   onMarkAnswer,
@@ -41,6 +52,8 @@ export function ForumPostCard({
   blockReason: BlockReason | null;
   currentUserId: string | null;
   isAdmin: boolean;
+  reacted: boolean;
+  canMarkAnswer: boolean;
   onQuote: (post: ForumPost) => void;
   onEdited: () => void;
   onMarkAnswer?: (postId: number | null) => void;
@@ -51,11 +64,34 @@ export function ForumPostCard({
   const [reporting, setReporting] = useState(false);
   const edit = useServerFn(editForumPost);
 
+  // Reaktionen hålls lokalt: servern är sanningen, men en knapp som väntar på
+  // en router-invalidering känns trasig.
+  const react = useServerFn(toggleForumReaction);
+  const [helpful, setHelpful] = useState({ count: post.helpfulCount, mine: reacted });
+  const [reacting, setReacting] = useState(false);
+
   const isOwn = !!currentUserId && post.author?.id === currentUserId;
   const withinWindow =
     Date.now() - new Date(post.createdAt).getTime() < EDIT_WINDOW_MINUTES * 60 * 1000;
   const canEdit = isAdmin || (isOwn && withinWindow && canPost);
   const author = displayAuthor(post.author?.username);
+
+  const toggleHelpful = async () => {
+    if (reacting) return;
+    setReacting(true);
+    // Optimistiskt — rullas tillbaka om servern säger nej.
+    const before = helpful;
+    setHelpful({ count: before.count + (before.mine ? -1 : 1), mine: !before.mine });
+    try {
+      const res = await react({ data: { postId: post.id } });
+      setHelpful({ count: res.helpfulCount, mine: res.reacted });
+    } catch (e) {
+      setHelpful(before);
+      toast.error(e instanceof Error ? e.message : "Något gick fel.");
+    } finally {
+      setReacting(false);
+    }
+  };
 
   const save = async () => {
     setSaving(true);
@@ -156,6 +192,31 @@ export function ForumPostCard({
 
       {!editing && (
         <footer className="mt-4 flex flex-wrap items-center gap-1 border-t border-white/8 pt-3">
+          {canPost && !isOwn ? (
+            <button
+              type="button"
+              onClick={toggleHelpful}
+              aria-pressed={helpful.mine}
+              className={
+                helpful.mine
+                  ? "inline-flex items-center gap-1.5 rounded-lg bg-[var(--amber)]/15 px-2 py-1 text-xs font-medium text-[var(--amber)] transition-colors hover:bg-[var(--amber)]/25"
+                  : "inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs text-[var(--text-tertiary)] transition-colors hover:bg-white/[0.04] hover:text-[var(--cream)]"
+              }
+            >
+              <ThumbsUp className="h-3.5 w-3.5" aria-hidden />
+              Hjälpsam
+              {helpful.count > 0 && (
+                <span className="tabular-nums">{formatInt(helpful.count)}</span>
+              )}
+            </button>
+          ) : (
+            helpful.count > 0 && (
+              <span className="inline-flex items-center gap-1.5 px-2 py-1 text-xs text-[var(--text-tertiary)]">
+                <ThumbsUp className="h-3.5 w-3.5" aria-hidden />
+                {formatInt(helpful.count)} tyckte detta var hjälpsamt
+              </span>
+            )
+          )}
           {!locked && <PostAction icon={Quote} label="Citera" onClick={() => onQuote(post)} />}
           {canEdit && (
             <PostAction icon={Pencil} label="Redigera" onClick={() => setEditing(true)} />
@@ -164,7 +225,8 @@ export function ForumPostCard({
           {currentUserId && (
             <PostAction icon={Flag} label="Rapportera" onClick={() => setReporting(true)} />
           )}
-          {isAdmin && isQa && onMarkAnswer && (
+          {/* Första inlägget är frågan och kan inte vara sitt eget bästa svar. */}
+          {canMarkAnswer && isQa && number > 1 && onMarkAnswer && (
             <PostAction
               icon={CheckCircle2}
               label={post.isAnswer ? "Ta bort bästa svar" : "Markera som bästa svar"}
