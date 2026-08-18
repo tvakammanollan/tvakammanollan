@@ -60,7 +60,7 @@ export function useCoachingOffer(enabled = true): {
 }
 
 /**
- * "Engångsköp · ingen bindningstid" — men bara när priset faktiskt är ett
+ * "Engångsköp · Ingen bindningstid" — men bara när priset faktiskt är ett
  * engångsköp.
  *
  * Härleds ur `offer.interval` i stället för att skrivas i klartext, därför att
@@ -72,7 +72,7 @@ export function useCoachingOffer(enabled = true): {
  */
 export function coachingTermsLabel(offer: CoachingOffer | null): string | null {
   if (!offer?.available || offer.amount === null) return null;
-  return offer.interval ? null : "Engångsköp · ingen bindningstid";
+  return offer.interval ? null : "Engångsköp · Ingen bindningstid";
 }
 
 /** "1 495 kr" eller "249 kr / månad". null när priset inte gick att läsa. */
