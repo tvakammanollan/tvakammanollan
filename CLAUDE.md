@@ -58,11 +58,23 @@ touching production; use it for anything you cannot check locally.
   Grinden (`canonicalRedirectEnabled()`) skiljer "koden är ute" från "flytten
   är på". Slå på den när `https://tvakommanollan.se/api/health` svarar 200,
   inte förr.
+- **Routerna står i `wrangler.jsonc`, inte i dashboarden** (sedan 2026-08-18).
+  De låg tidigare bara i dashboarden och **apex på den nya domänen saknade
+  sin**: `tvakommanollan.se` svarade 522 medan `www.` gick fram, i två dygn,
+  utan att något i koden såg fel ut. Utan matchande route går Cloudflare till
+  origin, och origin finns inte. Nitro kopierar `routes` till
+  `.output/server/wrangler.json` precis som `vars` — kontrollera där om du
+  tvivlar.
 - **Kanonisk värd hanteras i koden, inte i Cloudflare.** `canonicalRedirect()`
   (`src/lib/canonical-host.ts`, anropad först i `src/server.ts`) 301:ar de tre
   icke-kanoniska värdnamnen till `tvakommanollan.se`. En Redirect Rule i
   dashboarden hade gjort samma sak men inte gått att testa — och undantaget
   nedan är hela poängen med att den är testbar.
+- **`CANONICAL_REDIRECT` är en grind, inte en flagga att städa bort.** Den stod
+  `off` tills apex bevisligen svarade 200; med den `on` samtidigt som apex var
+  nere hade *hela* sajten 301:at till en död värd. Den är `on` sedan
+  2026-08-18 13:18. Ska målvärdnamnet någonsin flyttas igen: sätt `off`, byt
+  route, verifiera 200, sätt `on` — i den ordningen, två deployer.
 - **`/api/` undantas från flytt-301:an.** Stripe följer inte 3xx: en webhook som
   fortfarande pekar på `hpkampen.se` hade läst 301 som misslyckande och slutat
   bokföra köp, tyst, medan kassan såg ut att fungera. Undantaget gör en
