@@ -281,6 +281,100 @@ async function fillDefinitions(request: Request, env: unknown): Promise<Response
 }
 
 /**
+ * Stripe-webhook — bokför coachningsköp.
+ *
+ * Ligger här och inte som route-fil av samma skäl som /api/health: svaret är
+ * JSON och behöver ingen React. Dessutom måste signaturen räknas på den råa
+ * bodyn, byte för byte — allt som parsar och serialiserar om på vägen förstör
+ * den.
+ *
+ * Webhooken är den som faktiskt bokför köpet. Tacksidan bekräftar också, men
+ * bara som reserv: webbläsaren kan stängas i betalögonblicket, webhooken kommer
+ * ändå.
+ */
+async function stripeWebhook(request: Request): Promise<Response> {
+  if (request.method !== "POST") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+
+  const procEnv =
+    (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+  const secret = procEnv.STRIPE_WEBHOOK_SECRET?.trim();
+  if (!secret) {
+    console.error("[stripe] STRIPE_WEBHOOK_SECRET saknas — webhooken kan inte verifieras");
+    return new Response(JSON.stringify({ error: "not configured" }), {
+      status: 503,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const raw = await request.text();
+  const { verifyStripeSignature } = await import("./lib/stripe.server");
+  const valid = await verifyStripeSignature(raw, request.headers.get("stripe-signature"), secret);
+  if (!valid) {
+    // 400 och inget mer: en obehörig ska inte få veta om det var tidsstämpeln,
+    // hemligheten eller nyttolasten som var fel.
+    console.error("[stripe] webhook med ogiltig signatur avvisad");
+    return new Response(JSON.stringify({ error: "invalid signature" }), {
+      status: 400,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  let event: { id?: string; type?: string; data?: { object?: unknown } };
+  try {
+    event = JSON.parse(raw);
+  } catch {
+    return new Response(JSON.stringify({ error: "invalid payload" }), {
+      status: 400,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const PAID_EVENTS = new Set([
+    "checkout.session.completed",
+    "checkout.session.async_payment_succeeded",
+  ]);
+
+  try {
+    if (event.type && PAID_EVENTS.has(event.type)) {
+      const { markCoachingPaid, sessionIsPaid } = await import("./lib/coaching.server");
+      const session = event.data?.object as Parameters<typeof markCoachingPaid>[0];
+      // completed kommer även för betalsätt som ännu inte gått igenom
+      // (fakturor, direktbetalning) — då är payment_status "unpaid" och köpet
+      // bokförs först vid async_payment_succeeded.
+      if (session?.id && sessionIsPaid(session)) {
+        const result = await markCoachingPaid(session);
+        console.log(
+          JSON.stringify({
+            type: "metric",
+            message: "coaching_paid_webhook",
+            context: {
+              event: event.type,
+              newly_paid: result.newlyPaid,
+              amount_total: session.amount_total,
+              currency: session.currency,
+            },
+          }),
+        );
+      }
+    }
+  } catch (e) {
+    // 500 → Stripe försöker igen. Att svara 200 här hade tappat köpet tyst.
+    console.error("[stripe] webhook-hantering misslyckades:", e);
+    return new Response(JSON.stringify({ error: "handler failed" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  return new Response(JSON.stringify({ received: true }), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+}
+
+/**
  * Telemetry sink (#16) — accepts batched events from the browser and emits
  * them as structured Worker logs. Cloudflare Logpush picks them up.
  */
@@ -429,6 +523,10 @@ export default {
     // Telemetry batch sink
     if (url.pathname === "/api/telemetry") {
       return telemetrySink(request);
+    }
+    // Stripe: bokför coachningsköp
+    if (url.pathname === "/api/stripe/webhook") {
+      return stripeWebhook(request);
     }
     // Admin: fyll ORD-definitioner från Wiktionary
     if (url.pathname === "/api/admin/fill-definitions") {

@@ -1,0 +1,128 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { z } from "zod";
+import { CheckCircle2, Loader2, Mail } from "lucide-react";
+import { confirmCoachingCheckout, type CoachingReceipt } from "@/lib/coaching.functions";
+import { formatMoney } from "@/lib/sv-format";
+import { trackEvent } from "@/lib/events";
+
+/**
+ * Kvittosidan efter Stripe Checkout.
+ *
+ * Bokföringen görs egentligen av webhooken — den kommer även om webbläsaren
+ * stängs mitt i betalningen. Den här sidan bekräftar mot Stripe en gång till
+ * så att köparen ser sitt kvitto direkt, även om webhooken är sen. Båda
+ * vägarna är idempotenta.
+ *
+ * noindex: sidan finns bara för den som just betalat, och session-id:t i
+ * URL:en har inget i ett sökindex att göra.
+ */
+export const Route = createFileRoute("/coachning/tack")({
+  component: TackPage,
+  validateSearch: z.object({ session_id: z.string().optional() }),
+  head: () => ({
+    meta: [
+      { title: "Tack för ditt köp · HP Kampen" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
+});
+
+function TackPage() {
+  const { session_id: sessionId } = Route.useSearch();
+  const confirmFn = useServerFn(confirmCoachingCheckout);
+  const [receipt, setReceipt] = useState<CoachingReceipt | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    if (!sessionId) return;
+    let alive = true;
+    confirmFn({ data: { sessionId } })
+      .then((r) => {
+        if (!alive) return;
+        setReceipt(r);
+        // Bara den bekräftelse som faktiskt vände raden räknas — annars blir
+        // en omladdning av tacksidan ett extra köp i statistiken.
+        if (r.paid && r.firstConfirmation) {
+          trackEvent("coaching_purchase_completed", { amount: r.amount, currency: r.currency });
+        }
+      })
+      .catch(() => alive && setFailed(true));
+    return () => {
+      alive = false;
+    };
+  }, [sessionId, confirmFn]);
+
+  const laddar = !!sessionId && !receipt && !failed;
+
+  return (
+    <div className="mx-auto max-w-lg px-4 py-20 text-center sm:py-28">
+      {laddar ? (
+        <div aria-busy="true">
+          <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#ae2f26]" />
+          <p className="mt-4 text-sm text-white/60">Bekräftar din betalning…</p>
+        </div>
+      ) : receipt?.paid ? (
+        <>
+          <CheckCircle2 className="mx-auto h-14 w-14 text-[#2f6b3c]" />
+          <h1
+            className="mt-5 text-[30px] font-bold leading-tight text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Tack för ditt köp!
+          </h1>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/70">
+            {receipt.amount !== null && (
+              <>
+                Vi har tagit emot din betalning på{" "}
+                <strong>{formatMoney(receipt.amount, receipt.currency ?? "SEK")}</strong>.{" "}
+              </>
+            )}
+            Kvittot skickas
+            {receipt.email ? (
+              <>
+                {" "}
+                till <strong>{receipt.email}</strong>
+              </>
+            ) : null}{" "}
+            från Stripe.
+          </p>
+          <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+            Vi hör av oss inom <strong>24 timmar</strong> för att gå igenom ditt upplägg.
+          </p>
+          <Link
+            to="/"
+            className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#ae2f26] px-7 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110"
+          >
+            Tillbaka till träningen
+          </Link>
+        </>
+      ) : (
+        <>
+          <Mail className="mx-auto h-12 w-12 text-[#7a5236]" />
+          <h1
+            className="mt-5 text-[26px] font-bold leading-tight text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Vi hittar ingen slutförd betalning
+          </h1>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/70">
+            Betalningen kan ha avbrutits, eller så tar den några sekunder till att gå igenom. Ladda
+            om sidan — eller mejla{" "}
+            <a href="mailto:info@hpkampen.se" className="underline">
+              info@hpkampen.se
+            </a>{" "}
+            så reder vi ut det. Har pengarna dragits är köpet giltigt oavsett vad som står här.
+          </p>
+          <Link
+            to="/"
+            className="mt-8 inline-flex items-center justify-center rounded-xl border border-[rgba(46,30,20,0.2)] px-7 py-3.5 text-[15px] font-semibold text-[var(--cream)] transition hover:bg-white/5"
+          >
+            Tillbaka till startsidan
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}

@@ -427,6 +427,61 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
 - Tröskeln på antal matcher är fortfarande **1** och togs medvetet bort en gång;
   återinför den inte utan att fråga.
 
+### Coachning & Stripe (2026-08-17)
+
+Sajtens enda betalprodukt: **Studieupplägg**, köpt via Stripe Checkout från
+coachningskortet på startsidan och coachningsblocket på landningssidan. Före
+det här låg där ett bokningsformulär som skrev en rad i `coaching_requests`;
+nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
+
+- **Ingen Stripe-SDK.** `src/lib/stripe.server.ts` pratar REST med `fetch` och
+  räknar webhook-signaturen med WebCrypto. SDK:n måste konfigureras om för
+  Workers och drar in en dependency, vilket i det här repot betyder att både
+  `package-lock.json` och `bun.lock` måste hållas i synk. Tre anrop och en HMAC
+  är inte värt det. **API-versionen pinnas medvetet inte** — en felstavad
+  version ger fel på varje anrop, och fälten vi läser är stabila sedan år.
+- **Priset står aldrig i koden.** `resolveCoachingPrice()` läser det ur Stripe
+  (env `STRIPE_COACHING_PRICE_ID`, annars produkten som heter
+  `STRIPE_COACHING_PRODUCT_NAME` och dess `default_price`), cachat 10 min per
+  isolat. Ett hårdkodat belopp kan visa en annan siffra än den kassan drar.
+  `useCoachingOffer()` delar ett anrop mellan kortet, landningssidan och modalen.
+- **Kortet visar `available: false` i stället för att krascha.**
+  `fetchCoachingOffer` kastar aldrig: utan `STRIPE_SECRET_KEY` (eller när Stripe
+  är nere) visas kontaktvägen i stället för en köpknapp. Startsidan får inte gå
+  sönder för att en betalleverantör inte svarar.
+- **Redirect-kassan kräver ingen ändring i CSP:n.** Inga kortuppgifter, ingen
+  `js.stripe.com`, inget iframe — bara en `window.location` till
+  `checkout.stripe.com`. Den publika nyckeln (`pk_live_…`) behövs alltså inte
+  alls i klienten; lägg inte in den "för säkerhets skull".
+- **Webhooken bokför, tacksidan är reserv.** `/api/stripe/webhook` ligger i
+  `src/server.ts` (som `/api/health`): signaturen måste räknas på den **råa**
+  bodyn, och en route-fil hade parsat den först. `/coachning/tack` bekräftar
+  mot Stripe en gång till så att kvittot syns direkt om webhooken är sen. Båda
+  går genom `markCoachingPaid()`, som är idempotent och returnerar `newlyPaid`
+  — det är den flaggan som gör att köpet räknas en gång i PostHog och inte en
+  gång per omladdning av tacksidan.
+- **Kassan öppnas utan konto.** `startCoachingCheckout` använder
+  `optionalSupabaseAuth` (`src/lib/auth-optional.server.ts`): inloggad → raden
+  får `user_id`, utloggad besökare på landningssidan → `user_id` är null och
+  Stripe samlar in mejl och telefon. Att kräva registrering före ett köp är att
+  slänga bort halva försäljningen.
+- **Formuläret är borta, frågorna finns kvar.** "Vad vill du fokusera på?" och
+  "När passar det att höras?" ställs som `custom_fields` i kassan, båda
+  frivilliga, och skrivs till `goal` / `preferred_time` av webhooken.
+- **Radering av konto rör inte `coaching_requests`.** Det gällde redan förut,
+  men nu innehåller raden ett köp — integritetspolicyn säger därför uttryckligen
+  att köpuppgifter inte försvinner med kontot. Ändras det ena måste det andra
+  ändras.
+- Hemligheterna: `STRIPE_SECRET_KEY` och `STRIPE_WEBHOOK_SECRET` som krypterade
+  Cloudflare-Secrets (`wrangler versions secret put` + `versions deploy`), och i
+  `.env.local` för lokal körning. Aldrig i `.env` eller `wrangler.jsonc` — båda
+  är committade. `STRIPE_COACHING_PRODUCT_NAME` är inte hemlig och ligger i
+  `wrangler.jsonc`.
+- Migration: `supabase/migrations/20260817170000_coachning_stripe.sql`. Släpper
+  NOT NULL på `user_id`/`name`/`email`/`preferred_time` (inget av det finns när
+  kassan öppnas) och lägger till betalfälten + unikt index på
+  `stripe_session_id`, vilket är det som gör dubbelbokföring omöjlig.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.

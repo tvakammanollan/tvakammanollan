@@ -24,6 +24,25 @@ export function formatDecimal(n: number | null | undefined, fractionDigits = 1):
   });
 }
 
+/**
+ * Belopp i minsta enhet (ören) → "1 495 kr".
+ *
+ * Stripe räknar allt i minsta enhet, så beloppet kommer alltid som heltal.
+ * Jämna kronor visas utan decimaler — "1 495,00 kr" på en prisknapp ser ut som
+ * ett systemfel, inte som ett pris.
+ */
+export function formatMoney(minorUnits: number | null | undefined, currency = "SEK"): string {
+  if (minorUnits == null || !Number.isFinite(minorUnits)) return "—";
+  const major = minorUnits / 100;
+  const decimals = minorUnits % 100 === 0 ? 0 : 2;
+  return major.toLocaleString(SV, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+}
+
 export function formatPercent(ratio: number | null | undefined): string {
   if (ratio == null || !Number.isFinite(ratio)) return "—";
   return `${Math.round(ratio * 100)} %`;

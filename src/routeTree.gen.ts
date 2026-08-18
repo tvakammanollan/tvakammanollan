@@ -50,6 +50,7 @@ import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
 import { Route as ForumReglerRouteImport } from './routes/forum_.regler'
 import { Route as ForumNyttRouteImport } from './routes/forum_.nytt'
 import { Route as ForumKategoriRouteImport } from './routes/forum_.$kategori'
+import { Route as CoachningTackRouteImport } from './routes/coachning.tack'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as GamlaProvTermPassRouteImport } from './routes/gamla-prov_.$term_.$pass'
@@ -262,6 +263,11 @@ const ForumKategoriRoute = ForumKategoriRouteImport.update({
   path: '/forum/$kategori',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoachningTackRoute = CoachningTackRouteImport.update({
+  id: '/coachning/tack',
+  path: '/coachning/tack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -316,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/coachning/tack': typeof CoachningTackRoute
   '/forum/$kategori': typeof ForumKategoriRoute
   '/forum/nytt': typeof ForumNyttRoute
   '/forum/regler': typeof ForumReglerRoute
@@ -364,6 +371,7 @@ export interface FileRoutesByTo {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/coachning/tack': typeof CoachningTackRoute
   '/forum/$kategori': typeof ForumKategoriRoute
   '/forum/nytt': typeof ForumNyttRoute
   '/forum/regler': typeof ForumReglerRoute
@@ -413,6 +421,7 @@ export interface FileRoutesById {
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/coachning/tack': typeof CoachningTackRoute
   '/forum_/$kategori': typeof ForumKategoriRoute
   '/forum_/nytt': typeof ForumNyttRoute
   '/forum_/regler': typeof ForumReglerRoute
@@ -463,6 +472,7 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/coachning/tack'
     | '/forum/$kategori'
     | '/forum/nytt'
     | '/forum/regler'
@@ -511,6 +521,7 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/coachning/tack'
     | '/forum/$kategori'
     | '/forum/nytt'
     | '/forum/regler'
@@ -559,6 +570,7 @@ export interface FileRouteTypes {
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/coachning/tack'
     | '/forum_/$kategori'
     | '/forum_/nytt'
     | '/forum_/regler'
@@ -608,6 +620,7 @@ export interface RootRouteChildren {
   VillkorRoute: typeof VillkorRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  CoachningTackRoute: typeof CoachningTackRoute
   ForumKategoriRoute: typeof ForumKategoriRoute
   ForumNyttRoute: typeof ForumNyttRoute
   ForumReglerRoute: typeof ForumReglerRoute
@@ -921,6 +934,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForumKategoriRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coachning/tack': {
+      id: '/coachning/tack'
+      path: '/coachning/tack'
+      fullPath: '/coachning/tack'
+      preLoaderRoute: typeof CoachningTackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -985,6 +1005,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  CoachningTackRoute: CoachningTackRoute,
   ForumKategoriRoute: ForumKategoriRoute,
   ForumNyttRoute: ForumNyttRoute,
   ForumReglerRoute: ForumReglerRoute,

@@ -48,8 +48,8 @@ function IntegritetspolicyPage() {
           </h2>
           <p>
             HP Kampen drivs av <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong>{" "}
-            som privatperson. Sajten är gratis och har ingen kommersiell verksamhet kopplad till
-            sig. Kontakt:{" "}
+            som privatperson. Träningen på sajten är gratis. Det enda som kostar är personlig
+            coachning (studieupplägg), som köps frivilligt. Kontakt:{" "}
             <a
               href="mailto:info@hpkampen.se"
               className="underline"
@@ -82,6 +82,13 @@ function IntegritetspolicyPage() {
               alla, även utloggade och sökmotorer.
             </li>
             <li>
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter</strong> — om du köper
+              coachning: namn, e-postadress, telefonnummer och det du själv skriver i kassans två
+              frågor, samt belopp, valuta och Stripes referens till betalningen.{" "}
+              <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em> — vi ser
+              aldrig ditt kortnummer.
+            </li>
+            <li>
               <strong style={{ color: "var(--cream)" }}>Teknisk information</strong> — IP-adress och
               webbläsarversion, enbart för säkerhet och felsökning (anonymiseras efter 30 dagar)
             </li>
@@ -102,7 +109,7 @@ function IntegritetspolicyPage() {
           <p>
             Vi behandlar uppgifterna med stöd av{" "}
             <strong style={{ color: "var(--cream)" }}>avtal</strong> (för att leverera tjänsten du
-            har skapat konto för) och{" "}
+            har skapat konto för, och den coachning du eventuellt köpt) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
             missbrukshantering och produktförbättring). Användningsdata för analys behandlas enbart
             med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong> — inget
@@ -127,6 +134,23 @@ function IntegritetspolicyPage() {
               <strong style={{ color: "var(--cream)" }}>PostHog</strong> — analys av hur sajten
               används (EU-instans, data lagras inom EU). Laddas endast efter ditt samtycke.
             </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Stripe</strong> — betalningar för coachning.
+              Själva betalningen sker på Stripes egen sida; vi tar emot namn, e-post, telefonnummer,
+              belopp och betalningsstatus tillbaka, aldrig kortuppgifter. Stripe är
+              personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter utanför
+              EU/EES med stöd av EU-kommissionens standardavtalsklausuler. Läs mer i{" "}
+              <a
+                href="https://stripe.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+                style={{ color: "var(--amber)" }}
+              >
+                Stripes integritetspolicy
+              </a>
+              .
+            </li>
           </ul>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -147,6 +171,12 @@ function IntegritetspolicyPage() {
             <li>
               <strong style={{ color: "var(--cream)" }}>Analysdata</strong> — sessionsinspelningar
               max 30 dagar, övrig användningsstatistik max 12 månader
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter</strong> — sparas så länge de
+              behövs för bokföring och för att kunna hantera frågor om köpet. De raderas därför inte
+              automatiskt när du raderar ditt konto. Vill du veta exakt vad som finns sparat om ett
+              köp, mejla oss.
             </li>
           </ul>
 
@@ -191,8 +221,9 @@ function IntegritetspolicyPage() {
             <strong style={{ color: "var(--cream)" }}>Radera kontot själv:</strong> gå till{" "}
             <strong style={{ color: "var(--cream)" }}>Statistik → Radera konto</strong> när du är
             inloggad. Det tar bort din inloggning, e-postadress och all personlig historik direkt;
-            matchresultat behålls enbart i anonymiserad form. För övriga rättigheter, kontakta oss
-            på{" "}
+            matchresultat behålls enbart i anonymiserad form, och har du köpt coachning sparas
+            uppgifterna om det köpet enligt punkten om köpuppgifter ovan. För övriga rättigheter,
+            kontakta oss på{" "}
             <a
               href="mailto:info@hpkampen.se"
               className="underline"

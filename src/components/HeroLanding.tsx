@@ -16,6 +16,8 @@ import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import { getNextHpDate } from "@/lib/hp-dates";
 import { formatInt } from "@/lib/sv-format";
 import { Reveal } from "@/components/landing/MotionFX";
+import { CoachingModal } from "@/components/CoachingModal";
+import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
 
 /**
  * Landningssidan (utloggad).
@@ -86,6 +88,8 @@ export function HeroLanding() {
   const fetchStats = useServerFn(getLandingStats);
   const [stats, setStats] = useState<LandingStats | null>(null);
   const [omdomeIdx, setOmdomeIdx] = useState(0);
+  const [coachingOpen, setCoachingOpen] = useState(false);
+  const coachingPris = coachingPriceLabel(useCoachingOffer().offer);
 
   useEffect(() => {
     let alive = true;
@@ -387,17 +391,18 @@ export function HeroLanding() {
             </Reveal>
             <Reveal delay={0.18}>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link
-                  to="/kontakt"
-                  className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-[#fff8f5] transition-all"
+                <button
+                  type="button"
+                  onClick={() => setCoachingOpen(true)}
+                  className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-[#fff8f5] transition-all hover:brightness-110"
                   style={{ background: "#2f6b3c" }}
                 >
-                  Läs mer om coachning
+                  {coachingPris ? `Kom igång — ${coachingPris}` : "Läs mer om coachning"}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                     aria-hidden
                   />
-                </Link>
+                </button>
                 <span className="text-sm text-white/55">Begränsat antal platser</span>
               </div>
             </Reveal>
@@ -578,6 +583,10 @@ export function HeroLanding() {
           </div>
         </div>
       </section>
+
+      {/* Köpet kräver inget konto — besökaren som vill ha ett upplägg ska inte
+          först tvingas registrera sig. Stripe samlar in mejl och telefon. */}
+      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="landing" />
     </div>
   );
 }

@@ -106,37 +106,55 @@ export type Database = {
       }
       coaching_requests: {
         Row: {
+          amount_total: number | null
           created_at: string
-          email: string
+          currency: string | null
+          email: string | null
           goal: string | null
           id: string
-          name: string
+          name: string | null
+          paid_at: string | null
           phone: string | null
-          preferred_time: string
+          preferred_time: string | null
+          source: string | null
           status: string
-          user_id: string
+          stripe_payment_intent: string | null
+          stripe_session_id: string | null
+          user_id: string | null
         }
         Insert: {
+          amount_total?: number | null
           created_at?: string
-          email: string
+          currency?: string | null
+          email?: string | null
           goal?: string | null
           id?: string
-          name: string
+          name?: string | null
+          paid_at?: string | null
           phone?: string | null
-          preferred_time: string
+          preferred_time?: string | null
+          source?: string | null
           status?: string
-          user_id: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+          user_id?: string | null
         }
         Update: {
+          amount_total?: number | null
           created_at?: string
-          email?: string
+          currency?: string | null
+          email?: string | null
           goal?: string | null
           id?: string
-          name?: string
+          name?: string | null
+          paid_at?: string | null
           phone?: string | null
-          preferred_time?: string
+          preferred_time?: string | null
+          source?: string | null
           status?: string
-          user_id?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

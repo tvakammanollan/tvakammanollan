@@ -71,6 +71,15 @@ export const limits = {
   /** Ordbatch-hämtning (tung query) — per IP. */
   wordBatch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
   /**
+   * Öppna Stripe-kassan. Varje anrop kostar ett API-anrop hos Stripe och en rad
+   * i coaching_requests, och ingen människa behöver fem kassor på tio minuter.
+   * Nyckeln är användar-id för inloggade, annars IP — landningssidan säljer
+   * även till utloggade besökare.
+   */
+  coachingCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
+  /** Prisuppslaget bakom coachningskortet — cachat i isolatet, men publikt. */
+  coachingOffer: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

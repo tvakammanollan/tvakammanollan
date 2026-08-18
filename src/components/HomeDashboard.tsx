@@ -8,6 +8,7 @@ import { RankIcon } from "@/components/ui/RankIcon";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
+import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
 import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -31,6 +32,9 @@ export function HomeDashboard() {
   const [matchType, setMatchType] = useState<MatchType>("verbal");
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
   const [coachingOpen, setCoachingOpen] = useState(false);
+  // Priset på coachningskortet läses ur Stripe. Hämtas här (inte i modalen)
+  // eftersom kortet visar det innan någon klickat — anropet delas via cachen.
+  const coachingPris = coachingPriceLabel(useCoachingOffer().offer);
 
   if (!user || !profile) {
     return (
@@ -195,6 +199,9 @@ export function HomeDashboard() {
               icon={<Sparkles className="h-5 w-5" />}
               title="Coachning"
               subtitle="Ett studieupplägg byggt av någon som själv fått 1,95+"
+              // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
+              // ingen platshållare som hoppar till en siffra.
+              cta={coachingPris ?? undefined}
             />
           </div>
         </Reveal>
@@ -203,7 +210,7 @@ export function HomeDashboard() {
       </div>
 
       <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
-      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} />
+      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="dashboard" />
       <OnboardingModal
         open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
         onClose={() => setOnboardingDismissed(true)}
@@ -332,6 +339,7 @@ function ActionCard({
   title,
   subtitle,
   badge,
+  cta = "Öppna",
 }: {
   to?: string;
   onClick?: () => void;
@@ -341,6 +349,8 @@ function ActionCard({
   icon: React.ReactNode;
   title: string;
   subtitle: string;
+  /** Texten på handlingsraden längst ned — t.ex. priset i stället för "Öppna". */
+  cta?: string;
 }) {
     // Apple leder till handling, bark ar struktur, lov ar framsteg.
   const accent = tone === "teal" ? "#7a5236" : tone === "leaf" ? "#2f6b3c" : "#ae2f26";
@@ -386,7 +396,7 @@ function ActionCard({
         className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold"
         style={{ color: accent }}
       >
-        Öppna
+        {cta}
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
       </span>
     </>

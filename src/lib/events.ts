@@ -20,6 +20,8 @@ export type MatchType = "verbal" | "math";
 export type MatchMode = "bot" | "private" | "ranked";
 export type MatchOutcome = "win" | "loss" | "draw";
 export type TrainingTrack = "verbal" | "math";
+/** Ytan köpet startade från — samma värden som serverfunktionen validerar. */
+export type CoachingSource = "dashboard" | "landing";
 
 export interface ProductEvents {
   /* ── Samtycke ─────────────────────────────────────────────────────────
@@ -108,6 +110,16 @@ export interface ProductEvents {
     total: number;
     duration_s: number;
   };
+
+  /* ── Coachning (Stripe) ──────────────────────────────────────────────
+     `available: false` betyder att priset inte gick att läsa ur Stripe och att
+     användaren fick kontaktvägen i stället — den kvoten är skillnaden mellan
+     "ingen vill köpa" och "ingen kunde köpa". */
+  coaching_offer_opened: { source: CoachingSource; available: boolean };
+  coaching_checkout_started: { source: CoachingSource; is_guest: boolean };
+  coaching_checkout_failed: { source: CoachingSource };
+  /** Fyras på tacksidan, en gång per köp (inte per omladdning). */
+  coaching_purchase_completed: { amount: number | null; currency: string | null };
 
   /* ── Forum ───────────────────────────────────────────────────────────── */
   forum_thread_created: {

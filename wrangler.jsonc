@@ -19,6 +19,16 @@
     // /api/health läser just det här namnet för sin Supabase-probe.
     "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscnZqcG9pY2Jhc3NqdGdtenB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDU2NzcsImV4cCI6MjEwMjEyMTY3N30.ftmYGKTjzwmO_gz6UxQqAqCtRouKJCwR03m9e2hZ_V0",
 
+    // Stripe. Bara det som INTE är hemligt står här — STRIPE_SECRET_KEY och
+    // STRIPE_WEBHOOK_SECRET är krypterade Secrets (sätts med
+    // `wrangler versions secret put <NAMN>` följt av
+    // `wrangler versions deploy "<id>@100%"`, precis som service role-nyckeln).
+    //
+    // Namnet används för att hitta coachningsprodukten i Stripe när
+    // STRIPE_COACHING_PRICE_ID inte är satt. Sätt price-id:t här i stället om
+    // produkten byter namn eller om det finns flera priser på den.
+    "STRIPE_COACHING_PRODUCT_NAME": "Studieupplägg",
+
     // PostHog. Nyckeln är publik (klientnyckel som bara kan skicka in
     // händelser). OBS: VITE_-variabler bakas in vid BYGGET — de måste därför
     // också finnas i .env, annars blir de tomma i bundlen oavsett vad som står
