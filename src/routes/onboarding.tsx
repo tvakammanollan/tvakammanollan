@@ -94,9 +94,9 @@ function OnboardingPage() {
             placeholder="t.ex. lina_p"
             maxLength={20}
             required
-            className="h-12 w-full rounded-full border border-white/12 bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/35 backdrop-blur-sm transition-colors focus:border-white/30 focus:bg-white/[0.06] focus:outline-none"
+            className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 backdrop-blur-sm transition-colors focus:bg-white/[0.06]"
           />
-          <p className="text-xs text-white/40">3–20 tecken. Endast a–z, 0–9, _ och -.</p>
+          <p className="text-xs text-white/45">3–20 tecken. Endast a–z, 0–9, _ och -.</p>
 
           <button
             type="submit"

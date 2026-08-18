@@ -126,13 +126,13 @@ function LoginPage() {
             </Link>
           </p>
 
-          <p className="pt-6 text-xs text-white/40">
+          <p className="pt-6 text-xs text-white/45">
             Genom att logga in godkänner du{" "}
-            <Link to="/villkor" className="underline hover:text-white/60">
+            <Link to="/villkor" className="underline hover:text-white/70">
               villkoren
             </Link>{" "}
             och{" "}
-            <Link to="/integritetspolicy" className="underline hover:text-white/60">
+            <Link to="/integritetspolicy" className="underline hover:text-white/70">
               integritetspolicyn
             </Link>
             .
@@ -167,7 +167,7 @@ function PillInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       required
-      className="h-12 w-full rounded-full border border-white/12 bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/35 backdrop-blur-sm transition-colors focus:border-white/30 focus:bg-white/[0.06] focus:outline-none"
+      className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 backdrop-blur-sm transition-colors focus:bg-white/[0.06]"
     />
   );
 }

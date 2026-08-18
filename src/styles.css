@@ -851,7 +851,12 @@
   --destructive: #8c1d18;
   --destructive-foreground: #fff8f5;
   --border: var(--line);
-  --input: var(--line);
+  /* Fältkanter är inte dekor: WCAG 1.4.11 kräver 3:1 för gränsen runt
+     en kontroll man ska hitta och klicka i. --line (0,16) gav 1,40:1 och
+     gjorde inloggningens fält nästan osynliga mot papperet. 0,5 ger
+     3,14:1. Gäller varje input, textarea och select i appen — de delar
+     alla det här tokenet via border-input. */
+  --input: rgba(46, 30, 20, 0.5);
   --ring: var(--amber);
 
   /* ---- Semantiska svarstillstånd ----------------------------------
@@ -1113,7 +1118,7 @@ button,
     border-color: var(--line);
   }
   .border-input {
-    border-color: var(--line);
+    border-color: var(--input);
   }
 
   /* Indigo family → amber action */
@@ -1562,6 +1567,61 @@ button,
     color: rgba(46, 30, 20, 0.98);
   }
   .text-white\/85 {
+    color: rgba(46, 30, 20, 1);
+  }
+
+  /* ---- Placeholder-trappan -----------------------------------------
+     Tailwind genererar `placeholder:text-white/35` som en EGEN selektor
+     (.placeholder\:text-white\/35::placeholder), och den träffades inte
+     av texttrappan ovan. Följden: placeholdern renderades som rå vit på
+     cremepapper — 1,05:1, alltså osynlig. Inloggningens fält har inga
+     synliga etiketter, så placeholdern ÄR etiketten där.
+     Samma värden som texttrappan, av samma skäl: remappar man bara de
+     steg som råkar användas idag faller nästa steg tillbaka på rå vit.
+     ------------------------------------------------------------------ */
+  .placeholder\:text-white\/15::placeholder {
+    color: rgba(46, 30, 20, 0.24);
+  }
+  .placeholder\:text-white\/20::placeholder {
+    color: rgba(46, 30, 20, 0.31);
+  }
+  .placeholder\:text-white\/25::placeholder {
+    color: rgba(46, 30, 20, 0.38);
+  }
+  .placeholder\:text-white\/30::placeholder {
+    color: rgba(46, 30, 20, 0.44);
+  }
+  .placeholder\:text-white\/35::placeholder {
+    color: rgba(46, 30, 20, 0.51);
+  }
+  .placeholder\:text-white\/40::placeholder {
+    color: rgba(46, 30, 20, 0.59);
+  }
+  .placeholder\:text-white\/45::placeholder {
+    color: rgba(46, 30, 20, 0.66);
+  }
+  .placeholder\:text-white\/50::placeholder {
+    color: rgba(46, 30, 20, 0.73);
+  }
+  .placeholder\:text-white\/55::placeholder {
+    color: rgba(46, 30, 20, 0.79);
+  }
+  .placeholder\:text-white\/60::placeholder {
+    color: rgba(46, 30, 20, 0.83);
+  }
+  .placeholder\:text-white\/65::placeholder {
+    color: rgba(46, 30, 20, 0.88);
+  }
+  .placeholder\:text-white\/70::placeholder {
+    color: rgba(46, 30, 20, 0.92);
+  }
+  .placeholder\:text-white\/75::placeholder {
+    color: rgba(46, 30, 20, 0.95);
+  }
+  .placeholder\:text-white\/80::placeholder {
+    color: rgba(46, 30, 20, 0.98);
+  }
+  .placeholder\:text-white\/85::placeholder {
     color: rgba(46, 30, 20, 1);
   }
 
