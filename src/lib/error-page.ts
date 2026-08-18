@@ -7,7 +7,7 @@ export function renderErrorPage(): string {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <style>
-      body { font: 15px/1.5 system-ui, -apple-system, sans-serif; background: #0E1B2C; color: #F5E9D6; display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 1.5rem; }
+      body { font: 15px/1.5 system-ui, -apple-system, sans-serif; background: #fbf6ec; color: #2e1e14; display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 1.5rem; }
       .card { max-width: 28rem; width: 100%; text-align: center; padding: 2rem; }
       h1 { font-size: 1.5rem; margin: 0 0 0.5rem; color: #F5E9D6; }
       p { color: rgba(245, 233, 214, 0.75); margin: 0 0 1.5rem; }

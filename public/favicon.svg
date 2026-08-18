@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#0e1b2c"/>
-  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="-0.5">HP</text>
-  <circle cx="25" cy="23" r="4" fill="#6366f1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="2,0">
+  <!--
+    Tvåkommanollan: 2,0 är högsta möjliga resultat på högskoleprovet.
+
+    Håller sig läsbar ned till 16 px, vilket är hela poängen med en
+    favicon. Ett tidigare utkast hade inre ring, mindre siffror och ett
+    grönt komma; i den storleken syntes ringen inte, och det gröna
+    kommat lästes som en klump mellan siffrorna i stället för som ett
+    decimaltecken. Nu bara talet, i en ton, så stort det får plats.
+  -->
+  <rect width="32" height="32" rx="7" fill="#ae2f26"/>
+  <g fill="#fbf6ec">
+    <text x="15.5" y="16" text-anchor="middle" dominant-baseline="central"
+          font-family="Georgia, 'Times New Roman', serif" font-weight="700"
+          font-size="21" letter-spacing="-1.5">2 0</text>
+    <!-- Kommat ritas som form: ett text-komma överlever inte 16 px. -->
+    <path d="M14.6 19.6 h2.6 v2.4 q0 2.4 -2.4 3.4 l-.7 -1.3 q1.3 -.6 1.4 -1.9 h-.9z"/>
+  </g>
 </svg>

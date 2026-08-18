@@ -86,12 +86,14 @@ export function Navbar() {
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
             style={{ background: "#ae2f26" }}
           >
-            <span className="absolute inset-0.5 rounded-[10px] bg-[#fbf6ec]" />
+            {/* Samma märke som faviconen och delningsbilden: talet 2,0.
+                Ingen inre skiva längre — den gjorde siffrorna för små
+                för att läsas i 36 px. */}
             <span
-              className="relative text-[13px] font-black tracking-tighter"
-              style={{ fontFamily: "var(--font-display)", color: "#ae2f26" }}
+              className="relative text-[15px] font-black leading-none tracking-[-0.08em] text-[#fff8f5]"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              HP
+              2,0
             </span>
             <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400" />
           </span>

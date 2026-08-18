@@ -168,8 +168,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
     ],
     links: [
+      // SVG först för moderna klienter, PNG som reserv. Google och
+      // Androids "lägg till på hemskärmen" tar inte SVG, så utan
+      // PNG-varianterna föll de tillbaka på en skalad skärmdump.
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "apple-touch-icon", href: "/favicon.svg" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/icon-32.png" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
       // canonical sätts per route (annars duplicerar TanStack länken på alla sidor)
       // hreflang för Sverige-svenska
@@ -239,7 +244,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://hpkampen.se/#org",
           name: "HP Kampen",
           url: "https://hpkampen.se",
-          logo: "https://hpkampen.se/favicon.svg",
+          logo: "https://hpkampen.se/icon-192.png",
           areaServed: "SE",
           description:
             "Sveriges enda gratis plattform för Högskoleprovet med realtidsmatcher och ELO-ranking. Träna alla 8 delprov med riktiga HP-frågor.",
