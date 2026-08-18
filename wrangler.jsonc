@@ -5,6 +5,17 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
 
+  // Fyra routes, en per värdnamn sajten svarar på. De låg tidigare bara i
+  // dashboarden, och apex på den nya domänen saknade sin — därför svarade
+  // tvakommanollan.se 522 medan www gick fram. Här är de en del av deployen
+  // och kan inte tappas bort i ett klick.
+  "routes": [
+    { "pattern": "tvakommanollan.se/*", "zone_name": "tvakommanollan.se" },
+    { "pattern": "www.tvakommanollan.se/*", "zone_name": "tvakommanollan.se" },
+    { "pattern": "hpkampen.se/*", "zone_name": "hpkampen.se" },
+    { "pattern": "www.hpkampen.se/*", "zone_name": "hpkampen.se" }
+  ],
+
   // Runtime-variabler MÅSTE ligga här, inte bara i Cloudflare-dashboarden:
   // deploy-steget kör `wrangler deploy`, och då blir den här filen sanningen
   // för `vars` — allt som satts som vanlig variabel i dashboarden raderas vid
