@@ -38,6 +38,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
+import { displayName } from "@/lib/guest-name";
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
@@ -243,11 +244,11 @@ function AccountMenu({
             boxShadow: "var(--shadow-sm)",
           }}
         >
-          <UserAvatar name={profile.username} size={26} />
+          <UserAvatar name={displayName(profile.username, profile.id)} size={26} />
           <span
             className="max-w-[8rem] truncate text-sm font-medium"
             style={{ color: "var(--cream)" }}
-            title={profile.username}
+            title={displayName(profile.username, profile.id)}
           >
             {profile.username}
           </span>
@@ -349,7 +350,7 @@ function MobileMenu({
           </SheetTitle>
           {profile && (
             <div className="mt-3 flex items-center gap-3">
-              <UserAvatar name={profile.username} size={36} />
+              <UserAvatar name={displayName(profile.username, profile.id)} size={36} />
               <div className="min-w-0 flex-1">
                 <div
                   className="truncate text-sm font-semibold"

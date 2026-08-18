@@ -163,7 +163,7 @@ function MatchPage() {
 
       // Opponent name (hide bot identity)
       if ((m as MatchRow).is_bot_match) {
-        setOpponentName(getBotName((m as MatchRow).bot_elo ?? 1000));
+        setOpponentName(getBotName((m as MatchRow).bot_elo ?? 1000, (m as MatchRow).id));
       } else {
         const oppId =
           (m as MatchRow).player1_id === user.id

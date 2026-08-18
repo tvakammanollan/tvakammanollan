@@ -146,7 +146,7 @@ function ResultPage() {
       // Opponent display
       if (mr.is_bot_match) {
         setOpponentSeed(mr.id);
-        setOpponentName(getBotName(mr.bot_elo ?? 1000));
+        setOpponentName(getBotName(mr.bot_elo ?? 1000, mr.id));
       } else {
         const oppId = mr.player1_id === user.id ? mr.player2_id : mr.player1_id;
         if (oppId) {

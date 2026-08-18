@@ -551,7 +551,7 @@ function StatsPage() {
                       const draw = m.winner_id === null;
                       const oppId = isP1 ? m.player2_id : m.player1_id;
                       const oppLabel = m.is_bot_match
-                        ? getBotName(m.bot_elo ?? 1000)
+                        ? getBotName(m.bot_elo ?? 1000, m.id)
                         : (oppId && opponentNames.get(oppId)) || "Motståndare";
                       const delta = eloByMatch.get(m.id);
                       const rowBg = draw
