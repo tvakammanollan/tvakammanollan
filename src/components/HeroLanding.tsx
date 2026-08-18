@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { getLandingStats, type LandingStats } from "@/lib/landing.functions";
 import { getNextHpDate } from "@/lib/hp-dates";
-import { formatInt } from "@/lib/sv-format";
+import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { Reveal } from "@/components/landing/MotionFX";
 import { CoachingModal } from "@/components/CoachingModal";
 import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
@@ -28,7 +28,8 @@ import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
  *
  * Alla siffror är riktiga och kommer ur getLandingStats eller ur
  * provarkivet. Omdömena är riktiga personer med riktiga resultat —
- * inga påhittade citat och ingen uppfunnen genomsnittsrating. Ingen
+ * inga påhittade citat. Snittbetyget under hjälte-CTA:n är räknat ur
+ * OMDOMEN och får inte skrivas för hand: SNITTBETYG nedan. Ingen
  * prissektion, sajten är gratis.
  */
 
@@ -46,6 +47,10 @@ const DELPROV = [
 /**
  * Riktiga personer, riktiga resultat. Inget av det här är påhittat.
  * De tre första visas först; resten når man med pilarna.
+ *
+ * `betyg` utelämnas när personen gav fem stjärnor — det är fallet för
+ * alla utom Liang, och en explicit femma på varje rad hade bara gjort
+ * det lättare att missa den som inte är det.
  */
 const OMDOMEN = [
   {
@@ -68,18 +73,42 @@ const OMDOMEN = [
     resultat: "1,95",
     roll: "Grundare",
   },
+  { citat: "Utmärkt!", namn: "Liang", alder: "19 år", betyg: 4 },
   { citat: "Jättebra!", namn: "Ann" },
   { citat: "Det är skönt att ha allt samlat på ett ställe.", namn: "Theo" },
 ];
 
 const OMDOME_FARG = ["#ae2f26", "#2f6b3c", "#7a5236"];
 
-function Stjarnor() {
+/** Snittet av OMDOMEN, inte en siffra någon valt. Just nu 4,8. */
+const SNITTBETYG = OMDOMEN.reduce((summa, o) => summa + (o.betyg ?? 5), 0) / OMDOMEN.length;
+
+/**
+ * Stjärnor med delfyllnad. Snittet är inte längre ett jämnt tal, och fem
+ * fyllda stjärnor bredvid siffran 4,8 säger emot siffran.
+ */
+function Stjarnor({ betyg = 5 }: { betyg?: number }) {
   return (
-    <div className="flex select-none gap-0.5" aria-label="5 av 5">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <Star key={i} className="h-3.5 w-3.5 fill-[#ae2f26] text-[#ae2f26]" aria-hidden />
-      ))}
+    <div
+      className="flex select-none gap-0.5"
+      aria-label={`${formatDecimal(betyg, Number.isInteger(betyg) ? 0 : 1)} av 5`}
+    >
+      {[0, 1, 2, 3, 4].map((i) => {
+        const fyllnad = Math.max(0, Math.min(1, betyg - i));
+        return (
+          <span key={i} className="relative inline-flex h-3.5 w-3.5" aria-hidden>
+            <Star className="h-3.5 w-3.5 text-[#ae2f26]" />
+            {fyllnad > 0 ? (
+              <span
+                className="absolute inset-y-0 left-0 overflow-hidden"
+                style={{ width: `${fyllnad * 100}%` }}
+              >
+                <Star className="h-3.5 w-3.5 fill-[#ae2f26] text-[#ae2f26]" />
+              </span>
+            ) : null}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -171,8 +200,8 @@ export function HeroLanding() {
           className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-white/60"
         >
           <span className="inline-flex items-center gap-2">
-            <Stjarnor />
-            <span className="font-semibold text-white/75">5,0</span>
+            <Stjarnor betyg={SNITTBETYG} />
+            <span className="font-semibold text-white/75">{formatDecimal(SNITTBETYG, 1)}</span>
           </span>
           {stats ? (
             <>
@@ -428,7 +457,7 @@ export function HeroLanding() {
                     whileHover={{ y: -4 }}
                     className={`flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6 ${slot > 0 ? "hidden md:flex" : ""}`}
                   >
-                    <Stjarnor />
+                    <Stjarnor betyg={o.betyg ?? 5} />
                     <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-white/75">
                       {o.citat}
                     </blockquote>

@@ -575,6 +575,34 @@ head: () => ({
 
 Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured data.
 
+### Märket, delningsbilden och omdömena (2026-08-18)
+
+- **Märket är talet 2,0**, inte "HP" i en ruta. Det sitter i navbaren, i
+  `public/favicon.svg` och i delningsbilden, och faviconen är ritad för 16 px:
+  bara talet i en ton, kommat som form. PNG-varianterna (`icon-32`, `icon-192`,
+  `apple-touch-icon`) måste finnas kvar — Google och Androids "lägg till på
+  hemskärmen" tar inte SVG och faller annars tillbaka på en skalad skärmdump.
+- **Byt URL, inte bara innehåll, när delningsbilden ändras.** Snapchat, Facebook,
+  LinkedIn och Slack cachar förhandsbilden på URL:en, ofta i månader, och
+  Cloudflare svarade `CF-Cache-Status: HIT` på den gamla vägen. Bilden heter
+  därför `og-image-2.png` — nästa gång blir det `-3`. Fyra ställen följer med:
+  `__root` (`og:image` + `twitter:image`), `guider-meta.tsx`, `manifest.json`
+  och kommentaren i `page-meta.ts`.
+- **Bytet av bild och bytet av domän gjordes på var sin gren och möttes först i
+  en rebase.** Den ena sidan hade `hpkampen.se/og-image-2.png`, den andra
+  `tvakommanollan.se/og-image.png`, och båda hade rätt i var sin halva. Sitter
+  du i samma konflikt igen: **ny domän, nytt filnamn.**
+- **`public/fonts/` finns inte i repot.** Mappen togs bort i revert `98d852a` och
+  kom aldrig tillbaka, medan `styles.css` fortfarande `@font-face`:ar fyra filer
+  därifrån. **Sajten 404:ar alltså sina egna typsnitt och faller tillbaka på
+  Georgia/system-ui.** Filerna finns kvar i historiken:
+  `git show 189d203:public/fonts/YoungSerif-Regular.ttf > public/fonts/…`.
+- **Snittbetyget på landningssidan räknas ur `OMDOMEN`** (`SNITTBETYG` i
+  `HeroLanding.tsx`), det skrivs aldrig för hand. `Stjarnor` tar `betyg` och
+  fyller sista stjärnan delvis — fem hela stjärnor bredvid "4,8" säger emot
+  siffran. Omdömena är riktiga personer; lägg aldrig till ett citat som ingen
+  har sagt, och justera aldrig snittet utan att listan ändras.
+
 ### Key conventions
 
 - All user-facing text is in Swedish (sv-SE)
