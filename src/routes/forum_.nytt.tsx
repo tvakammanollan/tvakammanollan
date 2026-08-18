@@ -113,7 +113,7 @@ function NewThreadPage() {
         Ny tråd
       </h1>
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
-        Skriv en rubrik som säger vad frågan gäller — det är den som andra googlar. "KVA med rötter,
+        Skriv en rubrik som säger vad frågan gäller. Det är den som andra googlar. "KVA med rötter,
         uppgift 12 VT2024" hittas; "hjälp!!!" gör det inte.
       </p>
 
@@ -188,7 +188,7 @@ function NewThreadPage() {
               canPost={canPost}
               blockReason={reason}
               submitLabel="Publicera tråd"
-              placeholder="Beskriv vad du fastnat på. Har du testat något som inte funkade — skriv det också, då slipper den som svarar gissa."
+              placeholder="Beskriv vad du fastnat på. Har du testat något som inte funkade, skriv det också, då slipper den som svarar gissa."
             />
           </div>
         </div>
@@ -210,7 +210,7 @@ function NewThreadPage() {
           <Link to="/forum/regler" className="text-[var(--teal)] hover:underline">
             forumreglerna
           </Link>
-          . Klistra inte in hela lästexter eller provuppgifter ur UHR:s häften — länka till{" "}
+          . Klistra inte in hela lästexter eller provuppgifter ur UHR:s häften, länka till{" "}
           <Link to="/gamla-prov" className="text-[var(--teal)] hover:underline">
             gamla prov
           </Link>{" "}

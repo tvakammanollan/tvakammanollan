@@ -9,7 +9,7 @@ export const Route = createFileRoute("/villkor")({
       path: "/villkor",
       title: "Användarvillkor · HP Kampen",
       description:
-        "Användarvillkoren för HP Kampen. Vad du får göra, vad vi förväntar oss och hur vi hanterar konton.",
+        "Användarvillkoren för HP Kampen. Vad du får göra, hur vi hanterar konton, och villkoren för köp av coachning med 14 dagars ångerrätt.",
       ogTitle: "Användarvillkor · HP Kampen",
       ogDescription: "Användarvillkoren för HP Kampen.",
     }),
@@ -29,7 +29,7 @@ function VillkorPage() {
       <PageHero
         eyebrow="Juridik"
         title="Användarvillkor"
-        subtitle="Senast uppdaterad: 2026-05-18"
+        subtitle="Senast uppdaterad: 2026-08-18"
         variant="compact"
       />
       <article
@@ -39,8 +39,9 @@ function VillkorPage() {
         <section className="space-y-6">
           <p>
             Genom att använda HP Kampen godkänner du dessa villkor. Tjänsten drivs av{" "}
-            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson och
-            är gratis utan kommersiell verksamhet. Kontakt:{" "}
+            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
+            All träning på sajten är gratis. Det enda som kostar är personlig coachning, som du
+            köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
             <a
               href="mailto:info@hpkampen.se"
               className="underline"
@@ -55,7 +56,10 @@ function VillkorPage() {
             Användning
           </h2>
           <ul className="list-disc space-y-2 pl-6">
-            <li>HP Kampen är gratis att använda.</li>
+            <li>
+              All träning på HP Kampen är gratis att använda. Coachning är en betaltjänst med egna
+              villkor, se avsnittet om köp nedan.
+            </li>
             <li>Du måste vara minst 13 år för att skapa konto.</li>
             <li>
               Ett konto per person. Inga botar eller automatiserad användning (utöver de bottar vi
@@ -88,12 +92,81 @@ function VillkorPage() {
             högskolerådet (UHR). Materialet får användas för studiesyfte men inte för kommersiell
             vidareförsäljning. HP Kampen är inte officiellt godkänt eller affilierat med UHR. Vi
             eftersträvar korrekthet i frågor, facit och normering men kan inte garantera att alla
-            svar är felfria — hittar du fel, rapportera via bug-knappen så fixar vi det.
+            svar är felfria. Hittar du fel, rapportera via bug-knappen så fixar vi det.
           </p>
           <p>
-            Tjänsten tillhandahålls "i befintligt skick" utan garantier. Som privat ideellt projekt
-            utan kommersiell verksamhet ansvarar vi inte för indirekta skador som följer av
-            användningen (t.ex. uteblivet provresultat, missade ansökningar).
+            Den kostnadsfria delen av tjänsten tillhandahålls "i befintligt skick" utan garantier,
+            och vi ansvarar inte för indirekta skador som följer av användningen (t.ex. uteblivet
+            provresultat, missade ansökningar). För coachning du har betalat för gäller i stället
+            det som står under Köp av coachning, och i övrigt svensk konsumenträtt.
+          </p>
+
+          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+            Köp av coachning
+          </h2>
+          <p>
+            Coachning (studieupplägg) är den enda betaltjänsten på HP Kampen. Avtalet ingås mellan
+            dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha ett
+            konto för att köpa.
+          </p>
+          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+            Vad du får
+          </h3>
+          <p>
+            Ett studieupplägg anpassat efter din nivå och hur lång tid du har kvar till provet,
+            framtaget av en coach som själv skrivit 1,95 eller högre på högskoleprovet. Vi kontaktar
+            dig inom 24 timmar efter köpet, på den e-postadress eller det telefonnummer du angav i
+            kassan.
+          </p>
+          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+            Pris och betalning
+          </h3>
+          <p>
+            Priset som visas i kassan är det du betalar. Inga avgifter tillkommer efteråt.
+            Betalningen hanteras av Stripe, som också skickar kvittot. Kortuppgifter passerar aldrig
+            våra egna servrar.
+          </p>
+          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+            Ångerrätt
+          </h3>
+          <p>
+            Du har <strong style={{ color: "var(--cream)" }}>14 dagars ångerrätt</strong> från köpet
+            enligt lagen (2005:59) om distansavtal och avtal utanför affärslokaler. Du behöver inte
+            ange något skäl. Meddela oss på{" "}
+            <a
+              href="mailto:info@hpkampen.se?subject=Ångerrätt%20coachning"
+              className="underline"
+              style={{ color: "var(--amber)" }}
+            >
+              info@hpkampen.se
+            </a>{" "}
+            inom fristen, så betalar vi tillbaka hela beloppet inom 14 dagar från att meddelandet
+            kom fram, med samma betalsätt som du använde. Du kan också använda{" "}
+            <a
+              href="https://www.konsumentverket.se/for-foretag/konsumentratt-for-foretagare/blanketter-och-mallar/"
+              className="underline"
+              style={{ color: "var(--amber)" }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Konsumentverkets standardblankett
+            </a>
+            .
+          </p>
+          <p>
+            Vill du att arbetet ska börja direkt, utan att vänta ut ångerfristen, går det bra. Säg
+            bara till när vi hör av oss. Ångrar du dig sedan betalar du för den del av arbetet som
+            hunnit utföras, och resten betalas tillbaka. Ångerrätten upphör helt först när upplägget
+            är levererat i sin helhet och du dessförinnan uttryckligen har gått med på att arbetet
+            påbörjas under fristen och att ångerrätten då faller bort.
+          </p>
+          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+            Om något går fel
+          </h3>
+          <p>
+            Kan vi inte leverera det du betalat för, betalar vi tillbaka hela beloppet. Är du inte
+            nöjd med upplägget, hör av dig så gör vi om det eller betalar tillbaka. Klagomål som vi
+            inte kan lösa i samförstånd kan du ta vidare till ARN, se nedan.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>

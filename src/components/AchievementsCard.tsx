@@ -74,7 +74,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
           {unlocked.slice(0, 8).map((a) => (
             <span
               key={a.id}
-              title={`${a.name} — ${a.description}`}
+              title={`${a.name}: ${a.description}`}
               className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ae2f26]/10 ring-1"
               style={{ "--tw-ring-color": tierRing(a.tier) } as React.CSSProperties}
             >

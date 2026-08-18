@@ -636,7 +636,7 @@ function ProvIntro({
           />
         </summary>
         <p className="mt-1 text-sm text-[var(--text-tertiary)]">
-          Rätt svar är markerat. Vill du rätta dig själv i stället — börja med provläge ovan.
+          Rätt svar är markerat. Vill du rätta dig själv i stället, börja med provläge ovan.
         </p>
         <div className="mt-6">
           <ProvFacitList data={data} />

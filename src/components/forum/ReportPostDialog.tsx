@@ -41,7 +41,7 @@ export function ReportPostDialog({
     setSending(true);
     try {
       await report({ data: { postId, reason, note: note.trim() || undefined } });
-      toast.success("Tack — inlägget är rapporterat.");
+      toast.success("Tack, inlägget är rapporterat.");
       onOpenChange(false);
       setNote("");
     } catch (e) {

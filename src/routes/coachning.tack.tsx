@@ -109,7 +109,7 @@ function TackPage() {
           </h1>
           <p className="mt-4 text-[15px] leading-relaxed text-white/70">
             Betalningen kan ha avbrutits, eller så tar den några sekunder till att gå igenom. Ladda
-            om sidan — eller mejla{" "}
+            om sidan, eller mejla{" "}
             <a href="mailto:info@hpkampen.se" className="underline">
               info@hpkampen.se
             </a>{" "}

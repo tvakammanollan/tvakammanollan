@@ -179,7 +179,7 @@ function QueueItem({
               <Flag className="mt-0.5 h-3 w-3 shrink-0" aria-hidden />
               <span>
                 <span className="font-medium">{REASON_LABEL.get(r.reason) ?? r.reason}</span>
-                {r.note ? ` — ${r.note}` : ""}
+                {r.note ? `: ${r.note}` : ""}
               </span>
             </li>
           ))}
@@ -244,7 +244,7 @@ function QueueItem({
             variant="ghost"
             disabled={busy}
             onClick={() => {
-              if (!confirm(`${opt.label} — ${displayAuthor(post.authorName)}?`)) return;
+              if (!confirm(`${opt.label}: ${displayAuthor(post.authorName)}?`)) return;
               void run(async () => {
                 await moderate({ data: { postId: post.id, action: "delete" } });
                 await ban({ data: { targetId: post.authorId, days: opt.days } });

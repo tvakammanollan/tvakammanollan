@@ -149,8 +149,8 @@ export function ProvQuestionCard({
 
       {revealed && question.utgar && (
         <p className="mt-3 text-xs text-[var(--text-tertiary)]">
-          UHR strök den här uppgiften efter provdagen — den räknades inte i resultatet på det
-          riktiga provet.
+          UHR strök den här uppgiften efter provdagen. Den räknades inte i resultatet på det riktiga
+          provet.
         </p>
       )}
     </article>

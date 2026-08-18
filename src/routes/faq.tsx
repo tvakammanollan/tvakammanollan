@@ -51,7 +51,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad är ett bra resultat på Högskoleprovet?",
-    a: "Medelvärdet ligger kring 0,9. Ett resultat på 1,2 placerar dig över snittet. För att komma in på populära utbildningar (läkare, jurist, civilingenjör i storstäder) brukar man behöva 1,7 eller högre. Ett bra resultat beror på vilken utbildning du söker — kolla antagningsstatistiken för just din linje.",
+    a: "Medelvärdet ligger kring 0,9. Ett resultat på 1,2 placerar dig över snittet. För att komma in på populära utbildningar (läkare, jurist, civilingenjör i storstäder) brukar man behöva 1,7 eller högre. Ett bra resultat beror på vilken utbildning du söker. Kolla antagningsstatistiken för just din linje.",
   },
   {
     q: "Hur länge är HP-resultatet giltigt?",
@@ -59,7 +59,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad kostar det att skriva Högskoleprovet?",
-    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). HP Kampen kostar däremot ingenting — vi finansieras av grundaren.",
+    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). HP Kampen kostar däremot ingenting. Sajten finansieras av grundaren.",
   },
   {
     q: "Vad är skillnaden mellan verbal och kvantitativ del?",
@@ -67,11 +67,11 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Hjälper HP Kampen verkligen mot att höja mitt resultat?",
-    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet — det styrks av studier på testpreparation. HP Kampen ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
+    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet, vilket styrks av studier på testpreparation. HP Kampen ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
   },
   {
     q: "Finns det ett snabbtest för att uppskatta min HP-nivå?",
-    a: "Ja — skriv ett helt provpass under Gamla prov så får du både råpoäng och en ungefärlig normerad HP-poäng direkt efter inlämning. Det är den mest exakta uppskattningen utan att faktiskt skriva provet.",
+    a: "Ja. Skriv ett helt provpass under Gamla prov så får du både råpoäng och en ungefärlig normerad HP-poäng direkt efter inlämning. Det är den mest exakta uppskattningen utan att faktiskt skriva provet.",
   },
   {
     q: "Vad är coachning på HP Kampen?",

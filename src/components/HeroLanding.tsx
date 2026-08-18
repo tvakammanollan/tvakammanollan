@@ -363,12 +363,6 @@ export function HeroLanding() {
       <section className="border-t border-white/10">
         <div className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
-            <span
-              className="pointer-events-none absolute right-0 top-0 rounded-bl-2xl px-4 py-2 text-[13px] font-bold tracking-wide text-[#fff8f5]"
-              style={{ background: "#ae2f26" }}
-            >
-              30 % rabatt
-            </span>
             <Reveal>
               <p
                 className="text-[11px] font-bold uppercase tracking-[0.16em]"
@@ -397,7 +391,7 @@ export function HeroLanding() {
                   className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-[#fff8f5] transition-all hover:brightness-110"
                   style={{ background: "#2f6b3c" }}
                 >
-                  {coachingPris ? `Kom igång — ${coachingPris}` : "Läs mer om coachning"}
+                  {coachingPris ? `Kom igång för ${coachingPris}` : "Läs mer om coachning"}
                   <ArrowRight
                     className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                     aria-hidden

@@ -70,7 +70,7 @@ export function AdminUsageTab() {
         <Card
           label="Aktiv svarstid (alla svar)"
           value={`${formatInt(hours)} h ${mins} min`}
-          hint="Summerad tid per besvarad fråga — match + träning. Ordsvar och läsning räknas inte."
+          hint="Summerad tid per besvarad fråga, match plus träning. Ordsvar och läsning räknas inte."
         />
         <Card
           label="Gamla prov: inlämningar"
@@ -78,7 +78,7 @@ export function AdminUsageTab() {
           hint={
             stats.gamlaProv.trackedSince
               ? `Spåras sedan ${stats.gamlaProv.trackedSince.slice(0, 10)}`
-              : "Spårning aktiverad nu — historik före denna deploy finns inte."
+              : "Spårning aktiverad nu. Historik före denna deploy finns inte."
           }
         />
         <Card

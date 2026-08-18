@@ -84,7 +84,7 @@ export function ProvResult({
         </p>
         <p className="mt-1 text-xs leading-relaxed text-[var(--text-tertiary)]">
           Gäller om du fick lika stor andel rätt på hela provet ({HP_TOTAL_QUESTIONS} uppgifter).
-          Ett provpass räcker inte för en riktig normering — UHR sätter gränserna först efter
+          Ett provpass räcker inte för en riktig normering. UHR sätter gränserna först efter
           provdagen, och de skiljer sig mellan provtillfällen.
         </p>
       </section>

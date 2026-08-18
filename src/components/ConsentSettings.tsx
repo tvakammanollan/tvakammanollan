@@ -56,7 +56,7 @@ export function ConsentSettings() {
           <X className="size-4 shrink-0" aria-hidden="true" />
         )}
         <span>
-          {granted ? "Analys är påslagen." : "Analys är avstängd — inget analysskript laddas."}
+          {granted ? "Analys är påslagen." : "Analys är avstängd. Inget analysskript laddas."}
           {record ? ` Valt ${formatRelativeTime(record.decidedAt)}.` : " Du har inte svarat ännu."}
         </span>
       </p>
@@ -82,7 +82,7 @@ export function ConsentSettings() {
       </div>
       <p className="mt-3 text-xs" style={{ color: "var(--text-secondary)" }}>
         Stänger du av slutar insamlingen direkt och den lokala identifieraren nollställs. Data som
-        redan samlats in tas bort om du mejlar oss — se Dina rättigheter ovan.
+        redan samlats in tas bort om du mejlar oss, se Dina rättigheter ovan.
       </p>
     </div>
   );

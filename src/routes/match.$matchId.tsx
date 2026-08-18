@@ -657,7 +657,7 @@ function MatchPage() {
             role="status"
             aria-live="polite"
           >
-            <p>Kunde inte återansluta — matchstatusen kan inte bekräftas live.</p>
+            <p>Kunde inte återansluta. Matchstatusen kan inte bekräftas live.</p>
             <Button
               size="sm"
               variant="outline"
@@ -783,7 +783,7 @@ function MatchPage() {
             aria-live="polite"
           >
             <TimerIcon className="h-3.5 w-3.5" aria-hidden />
-            Motståndaren är klar — automatisk inlämning om{" "}
+            Motståndaren är klar. Automatisk inlämning om{" "}
             <span className="tabular-nums">{oppForceCountdown} s</span>
           </div>
         )}

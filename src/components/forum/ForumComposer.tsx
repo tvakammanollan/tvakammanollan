@@ -136,7 +136,7 @@ export function ForumComposer({
 function SignUpPrompt({ reason }: { reason: BlockReason | null }) {
   const message =
     blockReasonMessage(reason) ??
-    "Skapa ett konto för att skriva — det tar 20 sekunder och du behåller din statistik.";
+    "Skapa ett konto för att skriva. Det tar 20 sekunder och du behåller din statistik.";
   const isAccountIssue = reason === "gast" || reason === "konto" || reason === null;
 
   return (

@@ -76,7 +76,7 @@ export function ConsentBanner() {
             <p className="text-[13px] leading-relaxed text-[var(--text-secondary)]">
               Vi vill förstå vilka delar av HP Kampen som faktiskt hjälper, så att rätt saker byggs
               vidare. Säger du ja laddas ett analysverktyg (PostHog, hostat i EU) som registrerar
-              sidvisningar, klick och sessioner. Säger du nej laddas det inte alls — sajten fungerar
+              sidvisningar, klick och sessioner. Säger du nej laddas det inte alls. Sajten fungerar
               likadant, och du kan ändra dig när du vill.{" "}
               <Link
                 to="/integritetspolicy"

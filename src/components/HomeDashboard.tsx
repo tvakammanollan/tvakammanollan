@@ -195,7 +195,6 @@ export function HomeDashboard() {
             <ActionCard
               onClick={() => setCoachingOpen(true)}
               tone="leaf"
-              badge="30 % rabatt"
               icon={<Sparkles className="h-5 w-5" />}
               title="Coachning"
               subtitle="Ett studieupplägg byggt av någon som själv fått 1,95+"
