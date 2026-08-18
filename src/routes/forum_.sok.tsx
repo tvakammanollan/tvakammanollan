@@ -33,7 +33,7 @@ export const Route = createFileRoute("/forum_/sok")({
   },
   head: ({ loaderData }) => {
     const q = loaderData?.query;
-    const title = q ? `Sök: ${q} · HP Kampens forum` : "Sök i forumet · HP Kampen";
+    const title = q ? `Sök: ${q} · Tvåkommanollans forum` : "Sök i forumet · Tvåkommanollan";
     return {
       meta: pageMeta({
         path: "/forum/sok",
