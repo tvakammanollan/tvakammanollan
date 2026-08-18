@@ -23,7 +23,17 @@ export function useCoachingOffer(enabled = true): {
   const [loading, setLoading] = useState(enabled && !cache);
 
   useEffect(() => {
-    if (!enabled || cache) return;
+    if (!enabled) return;
+    if (cache) {
+      // Cachen kan ha fyllts av en annan komponent efter att den här
+      // monterades — modalen slår ju inte på hämtningen förrän den öppnas.
+      // Utan det här steget står dess egen state kvar på null för alltid, och
+      // resultatet blev en köpknapp som visade priset bredvid en modal som
+      // påstod att köp inte var igång.
+      setOffer(cache);
+      setLoading(false);
+      return;
+    }
     let alive = true;
     setLoading(true);
     const request = (inflight ??= offerFn());
