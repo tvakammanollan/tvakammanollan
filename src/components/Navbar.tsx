@@ -52,10 +52,9 @@ export function Navbar() {
 
   const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
 
-  // Scroll-aware: raden har alltid en egen yta, men djupnar när man
-  // scrollar. Toppläget var tidigare helt transparent för att
-  // hero-shadern skulle blöda igenom. Shadern är borttagen, och
-  // transparensen gjorde bara att navbaren flöt ihop med sidan.
+  // Scroll-aware: glaset tätnar och lyfter när man scrollar. Helt
+  // transparent i toppläget har provats och gjorde att raden flöt ihop
+  // med sidan — glaset behöver en egen yta även överst, bara tunnare.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -66,17 +65,12 @@ export function Navbar() {
 
   return (
     <header
-      // Navbaren låg tidigare helt transparent i toppläget och på 0,88
-      // opacitet vid scroll, vilket gjorde att den flöt ihop med sidan.
-      // Nu en solid, något djupare sandton hela vägen plus en synlig
-      // underkant, så raden alltid har en egen yta att stå på.
-      className="sticky top-0 z-50 border-b transition-[background,border-color,backdrop-filter] duration-300"
-      style={{
-        background: scrolled ? "rgba(240, 228, 206, 0.97)" : "rgba(246, 239, 226, 0.95)",
-        borderBottomColor: scrolled ? "rgba(46, 30, 20, 0.15)" : "rgba(46, 30, 20, 0.1)",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
-      }}
+      // Glasreceptet bor i .navbar-glass (styles.css) och inte här, därför
+      // att det behöver @supports: utan backdrop-filter blir en
+      // halvgenomskinlig rad oläslig, och en fallback går inte att uttrycka
+      // i en inline-style. Scrolläget är ett data-attribut av samma skäl.
+      className="navbar-glass sticky top-0 z-50"
+      data-scrolled={scrolled}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
         {/* Loggan är bara märket. "Kampen" stod bredvid som ord, men
@@ -120,11 +114,7 @@ export function Navbar() {
                 </SafeBoundary>
               )}
               {profile && (
-                <AccountMenu
-                  profile={profile}
-                  topElo={topElo}
-                  onSignOut={handleSignOut}
-                />
+                <AccountMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
               )}
             </>
           ) : (
