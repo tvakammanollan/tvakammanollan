@@ -104,7 +104,7 @@ export function Navbar() {
                   tidigare låg fem länkar här och samma fem en gång till i
                   dashboardens sekundärrad, footern och snabbmenyn. */}
               <NavLink to="/ord">Ord</NavLink>
-              <NavLink to="/train">Träna</NavLink>
+              <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
               {!user.is_anonymous && (
                 <SafeBoundary label="notifications-bell">
@@ -255,8 +255,8 @@ function AccountMenu({
         <AccountMenuLink to="/forum" icon={MessagesSquare}>
           Forum
         </AccountMenuLink>
-        <AccountMenuLink to="/gamla-prov" icon={FileText}>
-          Gamla prov
+        <AccountMenuLink to="/train" icon={Target}>
+          Träna
         </AccountMenuLink>
         {profile.is_admin && (
           <AccountMenuLink to="/admin" icon={Settings}>
@@ -366,8 +366,8 @@ function MobileMenu({
           <MobileNavLink to="/ord" onClick={close} icon={Type}>
             Ord
           </MobileNavLink>
-          <MobileNavLink to="/train" onClick={close} icon={Target}>
-            Träna
+          <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
+            Gamla prov
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista
@@ -380,8 +380,8 @@ function MobileMenu({
           <MobileNavLink to="/friends" onClick={close} icon={Users}>
             Vänner
           </MobileNavLink>
-          <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
-            Gamla prov
+          <MobileNavLink to="/train" onClick={close} icon={Target}>
+            Träna
           </MobileNavLink>
           <MobileNavLink to="/forum" onClick={close} icon={MessagesSquare}>
             Forum

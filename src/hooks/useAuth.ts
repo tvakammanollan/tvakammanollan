@@ -32,6 +32,12 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  // Vilken användare profil-hämtningen hunnit svara för. Skilt från
+  // `profile !== null` — en användare utan rad i public.users är färdighämtad,
+  // inte pågående, och ska inte fastna i en evig laddning. Knuten till id:t så
+  // att ett byte av användare räknas som ohämtat igen, medan refreshProfile()
+  // (samma id) inte flimrar tillbaka till laddat läge.
+  const [profileLoadedFor, setProfileLoadedFor] = useState<string | null>(null);
   const [profileTick, setProfileTick] = useState(0);
 
   useEffect(() => {
@@ -56,7 +62,10 @@ export function useAuth() {
     let cancelled = false;
     (async () => {
       const { data } = await supabase.from("users").select("*").eq("id", user.id).maybeSingle();
-      if (!cancelled) setProfile((data as Profile) ?? null);
+      if (!cancelled) {
+        setProfile((data as Profile) ?? null);
+        setProfileLoadedFor(user.id);
+      }
     })();
     return () => {
       cancelled = true;
@@ -69,5 +78,7 @@ export function useAuth() {
     await supabase.auth.signOut();
   };
 
-  return { user, profile, loading, refreshProfile, signOut };
+  const profileLoaded = !!user && profileLoadedFor === user.id;
+
+  return { user, profile, loading, profileLoaded, refreshProfile, signOut };
 }

@@ -144,6 +144,28 @@ File naming: `*.functions.ts` = server functions, `*.server.ts` = server-only he
 - Server functions that need auth use `.middleware([requireSupabaseAuth])` — this reads the Bearer token from the Authorization header
 - Auth token is automatically injected into server function requests by `installSupabaseFetchAuth()` (called once in `__root.tsx`), which patches `window.fetch` to add the token to all `/_serverFn/` requests
 
+### Google-inloggning
+
+`GoogleButton` (`src/components/auth/GoogleButton.tsx`) på `/login` och `/signup`. Flödet är **implicit grant** — `client.ts` sätter inget `flowType` och auth-js default är implicit, så Supabase skickar tillbaka access-token i URL-fragmentet och `detectSessionInUrl` plockar upp den i webbläsaren. Fragmentet når aldrig servern; SSR:en behöver inte veta något om returen.
+
+`redirectTo` pekar på `/onboarding`, samma mål som e-postregistreringen. Google skickar inget username, så `handle_new_user()` ger nya konton auto-namnet `user_xxxxxxxx` och onboarding är där man byter till ett riktigt (annars hamnar kontot utanför topplistan, se `isRankable`). Återvändare bounceas vidare till `/` av sidans guard — den väntar in `profileLoaded` från `useAuth()` först, annars blinkar namnformuläret förbi vid varje inloggning.
+
+**Knappen fungerar bara om providern är påslagen i Supabase.** Kolla utan att öppna dashboarden:
+
+```bash
+curl -s "$SUPABASE_URL/auth/v1/settings" -H "apikey: $SUPABASE_PUBLISHABLE_KEY" | grep -o '"google":[a-z]*'
+```
+
+Är den av svarar `/auth/v1/authorize` 400 `{"error_code":"validation_failed","msg":"Unsupported provider: provider is not enabled"}`. `signInWithOAuth` navigerar utan att först fråga API:t, så användaren landar på en rå JSON-sida i stället för hos Google — och klienten får aldrig något fel att visa. Det var så knappen såg trasig ut innan den plockades bort i `5daf101` (2026-05-19).
+
+Att slå på den kräver tre saker, alla utanför repot:
+
+1. Google Cloud Console → OAuth 2.0 Client ID (Web application) med redirect-URI `<VITE_SUPABASE_URL>/auth/v1/callback` (ref:en står i `.env`)
+2. Supabase → Authentication → Providers → Google: på, med client ID + secret
+3. Supabase → Authentication → URL Configuration: Site URL `https://hpkampen.se` och redirect-allowlist för `https://hpkampen.se/**` + `http://localhost:8080/**` (dev-porten kommer från `@lovable.dev/vite-tanstack-config`). Saknas `/onboarding` i allowlistan kastar Supabase tyst bort `redirectTo` och skickar användaren till Site URL i stället.
+
+Fel på vägen tillbaka (`#error=access_denied…`) fångas av `useOAuthErrorToast()` i `RootComponent` — den ligger i roten och inte på en callback-sida, eftersom landningsroute:n beror på både `redirectTo` och Site URL. Parsern är ren och testad i `src/lib/oauth-error.test.ts`.
+
 ### Supabase clients
 
 - **`supabase`** (`src/integrations/supabase/client.ts`) — browser client, respects RLS

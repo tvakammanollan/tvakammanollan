@@ -25,13 +25,24 @@ const usernameSchema = z
   .regex(/^[a-z0-9_-]+$/, "Endast a–z, 0–9, _ och - tillåtna");
 
 function OnboardingPage() {
-  const { user, profile, loading, refreshProfile } = useAuth();
+  const { user, profile, loading, profileLoaded, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   if (!loading && !user) return <Navigate to="/login" />;
   if (profile && !isAutoUsername(profile.username)) return <Navigate to="/" />;
+
+  // Google-inloggningen landar här (se GoogleButton), och den som redan valt
+  // namn skickas vidare av guarden ovan — men först när profilen kommit hem.
+  // Utan grinden hinner formuläret blinka förbi på varje återkommande login.
+  if (loading || !profileLoaded) {
+    return (
+      <AuthLayout>
+        <div className="mx-auto h-12 w-full max-w-sm animate-pulse rounded-full bg-white/[0.06]" />
+      </AuthLayout>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

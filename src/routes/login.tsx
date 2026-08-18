@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
+import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { ArrowRight } from "lucide-react";
 
@@ -86,33 +87,38 @@ function LoginPage() {
             <p className="text-[16px] text-white/65">Fortsätt där du slutade.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <PillInput
-              type="email"
-              label="E-postadress"
-              placeholder="info@gmail.com"
-              autoComplete="email"
-              value={email}
-              onChange={setEmail}
-            />
-            <PillInput
-              type="password"
-              label="Lösenord"
-              placeholder="Lösenord"
-              autoComplete="current-password"
-              value={password}
-              onChange={setPassword}
-            />
+          <div className="space-y-4">
+            <GoogleButton />
+            <AuthDivider />
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f2a65a] px-6 text-[15px] font-semibold text-[#1a0d04] shadow-[0_0_24px_rgba(242,166,90,0.35)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_32px_rgba(242,166,90,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {submitting ? "Loggar in…" : "Logga in"}
-              {!submitting && <ArrowRight className="h-4 w-4" />}
-            </button>
-          </form>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <PillInput
+                type="email"
+                label="E-postadress"
+                placeholder="info@gmail.com"
+                autoComplete="email"
+                value={email}
+                onChange={setEmail}
+              />
+              <PillInput
+                type="password"
+                label="Lösenord"
+                placeholder="Lösenord"
+                autoComplete="current-password"
+                value={password}
+                onChange={setPassword}
+              />
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f2a65a] px-6 text-[15px] font-semibold text-[#1a0d04] shadow-[0_0_24px_rgba(242,166,90,0.35)] transition-all hover:bg-[#f2a65a]/90 hover:shadow-[0_0_32px_rgba(242,166,90,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {submitting ? "Loggar in…" : "Logga in"}
+                {!submitting && <ArrowRight className="h-4 w-4" />}
+              </button>
+            </form>
+          </div>
 
           <p className="text-sm text-white/55">
             Inget konto?{" "}

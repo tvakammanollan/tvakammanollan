@@ -11,6 +11,7 @@ Disallow: /stats
 Disallow: /onboarding
 Disallow: /result/
 Disallow: /join/
+Disallow: /forum/sok
 
 # AI-crawlers (träning + svar)
 User-agent: GPTBot
@@ -71,3 +72,4 @@ User-agent: MistralAI-User
 Allow: /
 
 Sitemap: https://hpkampen.se/sitemap.xml
+Sitemap: https://hpkampen.se/forum-sitemap.xml

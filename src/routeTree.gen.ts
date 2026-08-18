@@ -27,6 +27,7 @@ import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
+import { Route as ForumSitemapDotxmlRouteImport } from './routes/forum-sitemap[.]xml'
 import { Route as ForumRouteImport } from './routes/forum'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -47,6 +48,7 @@ import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
 import { Route as GamlaProvTermRouteImport } from './routes/gamla-prov_.$term'
+import { Route as ForumSokRouteImport } from './routes/forum_.sok'
 import { Route as ForumReglerRouteImport } from './routes/forum_.regler'
 import { Route as ForumNyttRouteImport } from './routes/forum_.nytt'
 import { Route as ForumKategoriRouteImport } from './routes/forum_.$kategori'
@@ -145,6 +147,11 @@ const GamlaProvRoute = GamlaProvRouteImport.update({
 const FriendsRoute = FriendsRouteImport.update({
   id: '/friends',
   path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForumSitemapDotxmlRoute = ForumSitemapDotxmlRouteImport.update({
+  id: '/forum-sitemap.xml',
+  path: '/forum-sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForumRoute = ForumRouteImport.update({
@@ -247,6 +254,11 @@ const GamlaProvTermRoute = GamlaProvTermRouteImport.update({
   path: '/gamla-prov/$term',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForumSokRoute = ForumSokRouteImport.update({
+  id: '/forum_/sok',
+  path: '/forum/sok',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForumReglerRoute = ForumReglerRouteImport.update({
   id: '/forum_/regler',
   path: '/forum/regler',
@@ -296,6 +308,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
+  '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -319,6 +332,7 @@ export interface FileRoutesByFullPath {
   '/forum/$kategori': typeof ForumKategoriRoute
   '/forum/nytt': typeof ForumNyttRoute
   '/forum/regler': typeof ForumReglerRoute
+  '/forum/sok': typeof ForumSokRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -344,6 +358,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
+  '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -367,6 +382,7 @@ export interface FileRoutesByTo {
   '/forum/$kategori': typeof ForumKategoriRoute
   '/forum/nytt': typeof ForumNyttRoute
   '/forum/regler': typeof ForumReglerRoute
+  '/forum/sok': typeof ForumSokRoute
   '/gamla-prov/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -393,6 +409,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
+  '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
@@ -416,6 +433,7 @@ export interface FileRoutesById {
   '/forum_/$kategori': typeof ForumKategoriRoute
   '/forum_/nytt': typeof ForumNyttRoute
   '/forum_/regler': typeof ForumReglerRoute
+  '/forum_/sok': typeof ForumSokRoute
   '/gamla-prov_/$term': typeof GamlaProvTermRoute
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
@@ -443,6 +461,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/faq'
     | '/forum'
+    | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -466,6 +485,7 @@ export interface FileRouteTypes {
     | '/forum/$kategori'
     | '/forum/nytt'
     | '/forum/regler'
+    | '/forum/sok'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -491,6 +511,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/faq'
     | '/forum'
+    | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -514,6 +535,7 @@ export interface FileRouteTypes {
     | '/forum/$kategori'
     | '/forum/nytt'
     | '/forum/regler'
+    | '/forum/sok'
     | '/gamla-prov/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -539,6 +561,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/faq'
     | '/forum'
+    | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
@@ -562,6 +585,7 @@ export interface FileRouteTypes {
     | '/forum_/$kategori'
     | '/forum_/nytt'
     | '/forum_/regler'
+    | '/forum_/sok'
     | '/gamla-prov_/$term'
     | '/guider/bra-resultat'
     | '/guider/dtk'
@@ -588,6 +612,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   FaqRoute: typeof FaqRoute
   ForumRoute: typeof ForumRoute
+  ForumSitemapDotxmlRoute: typeof ForumSitemapDotxmlRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
@@ -611,6 +636,7 @@ export interface RootRouteChildren {
   ForumKategoriRoute: typeof ForumKategoriRoute
   ForumNyttRoute: typeof ForumNyttRoute
   ForumReglerRoute: typeof ForumReglerRoute
+  ForumSokRoute: typeof ForumSokRoute
   GamlaProvTermRoute: typeof GamlaProvTermRoute
   GuiderBraResultatRoute: typeof GuiderBraResultatRoute
   GuiderDtkRoute: typeof GuiderDtkRoute
@@ -760,6 +786,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FriendsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forum-sitemap.xml': {
+      id: '/forum-sitemap.xml'
+      path: '/forum-sitemap.xml'
+      fullPath: '/forum-sitemap.xml'
+      preLoaderRoute: typeof ForumSitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forum': {
       id: '/forum'
       path: '/forum'
@@ -900,6 +933,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GamlaProvTermRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forum_/sok': {
+      id: '/forum_/sok'
+      path: '/forum/sok'
+      fullPath: '/forum/sok'
+      preLoaderRoute: typeof ForumSokRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forum_/regler': {
       id: '/forum_/regler'
       path: '/forum/regler'
@@ -964,6 +1004,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   FaqRoute: FaqRoute,
   ForumRoute: ForumRoute,
+  ForumSitemapDotxmlRoute: ForumSitemapDotxmlRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
@@ -988,6 +1029,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForumKategoriRoute: ForumKategoriRoute,
   ForumNyttRoute: ForumNyttRoute,
   ForumReglerRoute: ForumReglerRoute,
+  ForumSokRoute: ForumSokRoute,
   GamlaProvTermRoute: GamlaProvTermRoute,
   GuiderBraResultatRoute: GuiderBraResultatRoute,
   GuiderDtkRoute: GuiderDtkRoute,
