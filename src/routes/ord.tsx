@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { NextStep } from "@/components/layout/NextStep";
+import { PrimaryCTA } from "@/components/layout/CTAButtons";
 
 import {
   ArrowRight,
   Check,
   X,
   RotateCcw,
-  GraduationCap,
   Trophy,
   BookOpen,
   Swords,
@@ -23,13 +23,12 @@ import {
   SlidersHorizontal,
   ChevronDown,
 } from "lucide-react";
-import { ordText, ordDefinition, hasOrdDefinition, formatInt, formatDate } from "@/lib/sv-format";
+import { ordText, ordDefinition, hasOrdDefinition, formatInt } from "@/lib/sv-format";
 import { sounds } from "@/lib/sounds";
 import { trackEvent } from "@/lib/events";
 import {
   fetchWordBatch,
   fetchFailedWordBatch,
-  countOrdQuestions,
   recordOrdAnswer,
   getWordProgress,
   getOrdFilterCounts,
@@ -171,7 +170,6 @@ function DefinitionBlock({
 function OrdPracticePage() {
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchFailedBatch = useServerFn(fetchFailedWordBatch);
-  const fetchCount = useServerFn(countOrdQuestions);
   const fetchProgress = useServerFn(getWordProgress);
   const fetchFilterCounts = useServerFn(getOrdFilterCounts);
   const fetchFailedCount = useServerFn(getFailedWordCount);
@@ -186,7 +184,6 @@ function OrdPracticePage() {
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
   const [answered, setAnswered] = useState<AnsweredItem[]>([]);
-  const [poolSize, setPoolSize] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<{
     correctCount: number;
@@ -195,11 +192,15 @@ function OrdPracticePage() {
   } | null>(null);
   const [excludeCorrect, setExcludeCorrect] = useState(false);
   const [sourceFilter, setSourceFilter] = useState<"all" | "hp" | "list">("all");
-  const [failedMode, setFailedMode] = useState(false);
   const [failedCount, setFailedCount] = useState<number | null>(null);
   const [failedWords, setFailedWords] = useState<FailedWordEntry[]>([]);
-  const [failedListOpen, setFailedListOpen] = useState(false);
   const [difficulties, setDifficulties] = useState<number[]>([]);
+  // Setupen visar ett förval och en knapp; allt annat ligger bakom Anpassa.
+  // Samma mönster som /train.
+  const [customising, setCustomising] = useState(false);
+  // Vilket läge det pågående passet startades i. `failed_mode` rapporteras
+  // både vid start och vid slut, och slut-eventet ligger utanför startSession.
+  const [sessionMode, setSessionMode] = useState<"normal" | "repetition">("normal");
   const [filterCounts, setFilterCounts] = useState<{
     all: number;
     hp: number;
@@ -216,9 +217,6 @@ function OrdPracticePage() {
   }, [fetchProgress]);
 
   useEffect(() => {
-    void fetchCount({})
-      .then((c) => setPoolSize(c.count))
-      .catch(() => setPoolSize(0));
     void fetchFilterCounts({})
       .then((c) => setFilterCounts(c))
       .catch(() => setFilterCounts(null));
@@ -226,22 +224,23 @@ function OrdPracticePage() {
       .then((r) => setFailedCount(r.count))
       .catch(() => setFailedCount(null));
     void fetchFailedList({})
-      .then((r) => setFailedWords(r.words))
+      .then((r) => setFailedWords(r.words ?? []))
       .catch(() => setFailedWords([]));
     loadProgress();
-  }, [fetchCount, fetchFilterCounts, fetchFailedCount, fetchFailedList, loadProgress]);
+  }, [fetchFilterCounts, fetchFailedCount, fetchFailedList, loadProgress]);
 
   const toggleDifficulty = (d: number) => {
     setDifficulties((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
   };
 
   const startSession = useCallback(
-    async (n: SessionLength) => {
+    async (n: SessionLength, mode: "normal" | "repetition" = "normal") => {
       setTarget(n);
+      setSessionMode(mode);
       setLoading(true);
       try {
         let questions: WordQuestion[];
-        if (failedMode) {
+        if (mode === "repetition") {
           const res = await fetchFailedBatch({ data: { count: n } });
           questions = res.questions;
         } else {
@@ -263,7 +262,7 @@ function OrdPracticePage() {
         setPhase("playing");
         trackEvent("ord_session_started", {
           count: questions.length,
-          failed_mode: failedMode,
+          failed_mode: mode === "repetition",
           source_filter: sourceFilter,
           difficulty_count: difficulties.length,
         });
@@ -274,15 +273,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [
-      fetchBatch,
-      fetchFailedBatch,
-      failedMode,
-      excludeCorrect,
-      progress,
-      sourceFilter,
-      difficulties,
-    ],
+    [fetchBatch, fetchFailedBatch, excludeCorrect, progress, sourceFilter, difficulties],
   );
 
   const current = batch[idx];
@@ -319,7 +310,7 @@ function OrdPracticePage() {
         answered: answered.length,
         correct: right,
         pct: answered.length > 0 ? Math.round((right / answered.length) * 100) : 0,
-        failed_mode: failedMode,
+        failed_mode: sessionMode === "repetition",
       });
       loadProgress();
     } else {
@@ -337,6 +328,32 @@ function OrdPracticePage() {
     setPicked(null);
     loadProgress();
   };
+
+  // Läsbar rad som ersätter filterpanelerna när de är hopfällda, så valen syns
+  // utan att behöva öppna dem. Motsvarar configSummary i train.tsx.
+  const configSummary = (() => {
+    const source =
+      sourceFilter === "all" ? "alla källor" : sourceFilter === "hp" ? "gamla HP" : "ordlistan";
+    const diffNames: Record<number, string> = { 1: "lätt", 2: "medel", 3: "svår" };
+    const diff =
+      difficulties.length === 0 || difficulties.length === 3
+        ? "alla nivåer"
+        : difficulties
+            .slice()
+            .sort()
+            .map((d) => diffNames[d])
+            .join(", ");
+    const filtered = excludeCorrect ? " · utan ord du redan kan" : "";
+    return `${target} ord · ${source} · ${diff}${filtered}`;
+  })();
+
+  // Ord som är mogna för repetition just nu. Körs vid varje render, till
+  // skillnad från listan den ersätter som låg bakom `failedCount > 0` —
+  // serverfunktionen svarar 401 för utloggade och kan då ge ett svar utan
+  // `words`, så defaulten måste sitta här också.
+  const dueCount = (failedWords ?? []).filter(
+    (w) => new Date(w.next_review_at) <= new Date(),
+  ).length;
 
   const correctCount = answered.filter((a) => a.isCorrect).length;
   const pct = answered.length > 0 ? Math.round((correctCount / answered.length) * 100) : 0;
@@ -360,277 +377,163 @@ function OrdPracticePage() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
+            {/* Förvalet (10 ord, alla källor, alla nivåer) är redan det de flesta
+                vill ha. Framför första ordet låg tidigare tre längdknappar, tre
+                källfilter, tre svårighetsknappar, en kryssruta, en lägestoggle
+                och hela listan över felade ord. Starta direkt — den som vill
+                styra öppnar Anpassa, precis som på /train. */}
             <GlassCard className="p-6 sm:p-8">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ae2f26]/15 text-[#ae2f26]">
-                  <GraduationCap className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="text-[12px] font-semibold uppercase italic tracking-[0.14em] text-[#7a5236]">
-                    Steg 1
-                  </p>
-                  <h2
-                    className="text-[22px] font-bold leading-tight text-white sm:text-[26px]"
-                    style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
-                  >
-                    Hur många ord vill du öva?
-                  </h2>
-                </div>
-              </div>
-              <p className="mt-3 text-sm text-white/55">
-                Välj längd på passet. Du får en sammanställning efteråt.
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+                Ditt pass
               </p>
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                {COUNT_OPTIONS.map((n, i) => (
-                  <m.button
-                    key={n}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + i * 0.05 }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
-                    type="button"
-                    onClick={() => void startSession(n)}
-                    disabled={loading}
-                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] py-7 transition-all hover:border-[#ae2f26]/50 hover:bg-white/[0.04] disabled:opacity-60"
-                  >
-                    <span
-                      className="text-[36px] font-bold leading-none tabular-nums text-[#ae2f26]"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {n}
-                    </span>
-                    <span className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/45">
-                      ord
-                    </span>
-                  </m.button>
-                ))}
-              </div>
-              {loading && (
-                <p className="mt-4 text-center text-sm text-muted-foreground">Förbereder pass…</p>
-              )}
+              <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
 
-              {progress && progress.totalCount > 0 && (
-                <div className="mt-6 rounded-2xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] p-5 sm:p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-semibold tracking-wide text-[#ae2f26]">
-                      Din ord-bank
-                    </span>
-                    <span className="text-xs font-medium tabular-nums text-muted-foreground">
-                      {Math.round((progress.correctCount / progress.totalCount) * 100)}%
-                    </span>
-                  </div>
-                  <div className="mt-2 flex items-baseline gap-2">
-                    <span
-                      className="text-4xl font-bold tabular-nums text-[#ae2f26] sm:text-5xl"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {formatInt(progress.correctCount)}
-                    </span>
-                    <span className="text-xl font-medium tabular-nums text-muted-foreground sm:text-2xl">
-                      / {formatInt(progress.totalCount)}
-                    </span>
-                    <span className="ml-1 text-xs text-muted-foreground">ord rätt besvarade</span>
-                  </div>
-                  <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/10 ring-1 ring-[#ae2f26]/20">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#ae2f26] to-[#7a5236] transition-all duration-700"
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          (progress.correctCount / progress.totalCount) * 100,
-                        )}%`,
-                      }}
-                    />
-                  </div>
-                  <label className="mt-4 flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/5 px-3 py-2.5">
-                    <span className="text-sm font-medium">Filtrera bort ord jag redan kan</span>
-                    <input
-                      type="checkbox"
-                      checked={excludeCorrect}
-                      onChange={(e) => setExcludeCorrect(e.target.checked)}
-                      disabled={
-                        progress.correctCount >= progress.totalCount || progress.correctCount === 0
-                      }
-                      className="h-5 w-5 rounded border-border accent-[#ae2f26] disabled:opacity-40"
-                    />
-                  </label>
-                  {excludeCorrect && progress.totalCount - progress.correctCount < 10 && (
-                    <p className="mt-2 text-xs text-[#ae2f26]">
-                      Endast {progress.totalCount - progress.correctCount} ord kvar med detta
-                      filter.
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* Source filter */}
-              <div
-                className={`mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm ${failedMode ? "opacity-40 pointer-events-none" : ""}`}
+              <PrimaryCTA
+                onClick={() => void startSession(target)}
+                disabled={loading}
+                className="mt-4 w-full"
+                icon={<ArrowRight className="h-4 w-4" />}
               >
-                <div className="mb-3 text-sm font-semibold">Vilka ord vill du öva på?</div>
-                <div className="grid grid-cols-3 gap-2">
-                  {(
-                    [
-                      { v: "all", label: "Alla", c: filterCounts?.all },
-                      { v: "list", label: "Ordlistan", c: filterCounts?.list },
-                      { v: "hp", label: "Gamla HP", c: filterCounts?.hp },
-                    ] as const
-                  ).map((o) => (
-                    <button
-                      key={o.v}
-                      type="button"
-                      onClick={() => setSourceFilter(o.v)}
-                      className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition ${
-                        sourceFilter === o.v
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
-                          : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
-                      }`}
-                    >
-                      <div>{o.label}</div>
-                      {o.c != null && (
-                        <div className="text-xs opacity-70">{formatInt(o.c)} ord</div>
-                      )}
-                    </button>
-                  ))}
-                </div>
+                {loading ? "Förbereder…" : `Öva ${target} ord`}
+              </PrimaryCTA>
 
-                <div className="mt-4 mb-2 text-sm font-semibold">Svårighetsgrad</div>
-                <div className="grid grid-cols-3 gap-2">
-                  {(
-                    [
-                      { d: 1, label: "Lätt", c: filterCounts?.easy, color: "#2d7a52" },
-                      { d: 2, label: "Medel", c: filterCounts?.medium, color: "#b88500" },
-                      { d: 3, label: "Svår", c: filterCounts?.hard, color: "#a02020" },
-                    ] as const
-                  ).map((o) => {
-                    const active = difficulties.includes(o.d);
-                    const disabled = !o.c;
-                    return (
-                      <button
-                        key={o.d}
-                        type="button"
-                        disabled={disabled}
-                        onClick={() => toggleDifficulty(o.d)}
-                        className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
-                          active
-                            ? "text-white"
-                            : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]"
-                        }`}
-                        style={active ? { background: o.color, borderColor: o.color } : undefined}
-                      >
-                        <div>{o.label}</div>
-                        <div className="text-xs opacity-70">{formatInt(o.c ?? 0)} ord</div>
-                      </button>
-                    );
-                  })}
-                </div>
-                {difficulties.length === 0 &&
-                  (filterCounts?.easy ?? 0) +
-                    (filterCounts?.medium ?? 0) +
-                    (filterCounts?.hard ?? 0) >
-                    0 && (
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      Inget valt = alla svårighetsgrader
-                    </p>
-                  )}
+              <button
+                type="button"
+                onClick={() => setCustomising((v) => !v)}
+                aria-expanded={customising}
+                className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[var(--cream)]"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                {customising ? "Dölj inställningar" : "Anpassa"}
+              </button>
+            </GlassCard>
+
+            {/* Repetition — en rad. Var en panel med varje felat ord, dess
+                progressbar, nästa repetitionsdatum och felräknare: en
+                studiedagbok mitt på en startskärm. */}
+            {failedCount != null && failedCount > 0 && (
+              <div
+                className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-4 sm:p-5"
+                style={{
+                  borderColor: "var(--danger-line)",
+                  background: "var(--danger-soft)",
+                }}
+              >
+                <p className="text-sm text-[var(--cream)]">
+                  <strong className="font-semibold">{formatInt(failedCount)} ord</strong> att
+                  repetera
+                  {dueCount > 0 && <> — {formatInt(dueCount)} är klara nu</>}
+                </p>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => void startSession(target, "repetition")}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-semibold transition hover:brightness-110 disabled:opacity-50"
+                  style={{ borderColor: "var(--danger-line)", color: "var(--danger)" }}
+                >
+                  Repetera
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </button>
               </div>
+            )}
 
-              {/* Felaktiga ord — spaced repetition */}
-              {failedCount != null && failedCount > 0 && (
-                <div className="mt-5 overflow-hidden rounded-xl border border-red-500/30 bg-red-500/10">
-                  <div className="flex items-center justify-between px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-red-300">Felaktiga ord</span>
-                      <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-xs font-bold text-red-200">
-                        {failedCount}
+            {/* ANPASSA — allt som förut låg framme */}
+            <div className={`mt-3 ${customising ? "" : "hidden"}`}>
+              <GlassCard className="p-5 sm:p-6">
+                <SetupRow title="Antal ord">
+                  <div className="grid grid-cols-3 gap-2">
+                    {COUNT_OPTIONS.map((n) => (
+                      <OptionButton key={n} active={target === n} onClick={() => setTarget(n)}>
+                        {n} ord
+                      </OptionButton>
+                    ))}
+                  </div>
+                </SetupRow>
+
+                <SetupRow title="Källa">
+                  <div className="grid grid-cols-3 gap-2">
+                    {(
+                      [
+                        { v: "all", label: "Alla", c: filterCounts?.all },
+                        { v: "list", label: "Ordlistan", c: filterCounts?.list },
+                        { v: "hp", label: "Gamla HP", c: filterCounts?.hp },
+                      ] as const
+                    ).map((o) => (
+                      <OptionButton
+                        key={o.v}
+                        active={sourceFilter === o.v}
+                        onClick={() => setSourceFilter(o.v)}
+                        hint={o.c != null ? `${formatInt(o.c)} ord` : undefined}
+                      >
+                        {o.label}
+                      </OptionButton>
+                    ))}
+                  </div>
+                </SetupRow>
+
+                <SetupRow title="Svårighetsgrad" hint="Inget valt = alla nivåer">
+                  <div className="grid grid-cols-3 gap-2">
+                    {(
+                      [
+                        { d: 1, label: "Lätt", c: filterCounts?.easy },
+                        { d: 2, label: "Medel", c: filterCounts?.medium },
+                        { d: 3, label: "Svår", c: filterCounts?.hard },
+                      ] as const
+                    ).map((o) => (
+                      <OptionButton
+                        key={o.d}
+                        active={difficulties.includes(o.d)}
+                        disabled={!o.c}
+                        onClick={() => toggleDifficulty(o.d)}
+                        hint={`${formatInt(o.c ?? 0)} ord`}
+                      >
+                        {o.label}
+                      </OptionButton>
+                    ))}
+                  </div>
+                </SetupRow>
+
+                {progress && progress.totalCount > 0 && (
+                  <SetupRow title="Din ord-bank">
+                    <div className="flex items-baseline gap-2">
+                      <span
+                        className="text-2xl font-bold tabular-nums text-[#ae2f26]"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {formatInt(progress.correctCount)}
+                      </span>
+                      <span className="text-sm tabular-nums text-white/55">
+                        / {formatInt(progress.totalCount)} ord rätt besvarade
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => setFailedMode((v) => !v)}
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition ${
-                        failedMode
-                          ? "bg-red-600 text-white"
-                          : "border border-red-500/40 bg-transparent text-red-300 hover:bg-red-500/10"
-                      }`}
-                    >
-                      {failedMode ? (
-                        <>
-                          <Check className="h-3.5 w-3.5" aria-hidden />
-                          Aktivt
-                        </>
-                      ) : (
-                        "Öva dessa"
-                      )}
-                    </button>
-                  </div>
-
-                  <div className="max-h-72 overflow-y-auto border-t border-red-500/20">
-                    {failedWords.map((w) => {
-                      const isDue = new Date(w.next_review_at) <= new Date();
-                      return (
-                        <div
-                          key={w.question_id}
-                          className="flex items-center justify-between border-b border-red-500/15 px-4 py-2.5 last:border-0"
-                        >
-                          <div className="min-w-0 flex-1">
-                            <span className="text-sm font-medium tracking-tight text-[var(--cream)]">
-                              {ordText(w.question_text)}
-                            </span>
-                            <div className="mt-1 flex items-center gap-2">
-                              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-red-200">
-                                <div
-                                  className="h-full rounded-full bg-red-500 transition-all"
-                                  style={{ width: `${Math.round((w.review_streak / 5) * 100)}%` }}
-                                />
-                              </div>
-                              <span className="text-[10px] text-muted-foreground tabular-nums">
-                                {w.review_streak}/5
-                              </span>
-                            </div>
-                          </div>
-                          <div className="ml-3 shrink-0 text-right">
-                            {isDue ? (
-                              <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
-                                Klar nu
-                              </span>
-                            ) : (
-                              <span className="text-[10px] text-muted-foreground">
-                                {formatDate(w.next_review_at)}
-                              </span>
-                            )}
-                            <div className="mt-0.5 text-[10px] text-red-400">
-                              {w.fail_count}× fel
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-5 border-t border-border pt-4 text-center">
-                <Link
-                  to="/leaderboard"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  <Trophy className="h-4 w-4" aria-hidden />
-                  Se ord-topplistan
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-                </Link>
-                <span className="mx-3 text-muted-foreground">·</span>
-                <Link
-                  to="/guider/ord"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  <BookOpen className="h-4 w-4" aria-hidden />
-                  Läs ORD-strategiguiden
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-                </Link>
-              </div>
-            </GlassCard>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-[#ae2f26] to-[#7a5236] transition-all duration-700"
+                        style={{
+                          width: `${Math.min(
+                            100,
+                            (progress.correctCount / progress.totalCount) * 100,
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                    <label className="mt-3 flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/5 px-3 py-2.5">
+                      <span className="text-sm font-medium">Filtrera bort ord jag redan kan</span>
+                      <input
+                        type="checkbox"
+                        checked={excludeCorrect}
+                        onChange={(e) => setExcludeCorrect(e.target.checked)}
+                        disabled={
+                          progress.correctCount >= progress.totalCount ||
+                          progress.correctCount === 0
+                        }
+                        className="h-5 w-5 rounded border-border accent-[#ae2f26] disabled:opacity-40"
+                      />
+                    </label>
+                  </SetupRow>
+                )}
+              </GlassCard>
+            </div>
           </m.div>
         )}
 
@@ -811,5 +714,63 @@ function OrdPracticePage() {
         )}
       </main>
     </>
+  );
+}
+
+/* =====================================================================
+   SETUP-HJÄLPARE — en rad per inställning bakom Anpassa.
+
+   Filtren låg tidigare som fristående block med tre olika knappstilar:
+   fylld apple för källa, färgkodad bakgrund för svårighet, ram för antal.
+   Samma sorts val ska se likadana ut.
+   ===================================================================== */
+function SetupRow({
+  title,
+  hint,
+  children,
+}: {
+  title: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mt-5 first:mt-0">
+      <div className="mb-2 flex items-baseline justify-between gap-3">
+        <span className="text-sm font-semibold text-[var(--cream)]">{title}</span>
+        {hint && <span className="text-xs text-white/45">{hint}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function OptionButton({
+  active,
+  disabled,
+  onClick,
+  hint,
+  children,
+}: {
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
+        active
+          ? "border-[#ae2f26] bg-[#ae2f26]/15 text-[#ae2f26]"
+          : "border-white/10 bg-white/[0.02] text-white/80 hover:border-[#ae2f26]/60 hover:text-[var(--cream)]"
+      }`}
+    >
+      <div>{children}</div>
+      {hint && <div className="text-xs opacity-70">{hint}</div>}
+    </button>
   );
 }
