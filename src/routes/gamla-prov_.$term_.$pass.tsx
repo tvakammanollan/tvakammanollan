@@ -29,7 +29,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
     return {
       meta: pageMeta({
         path,
-        title: `${data.label} provpass ${data.pass} (${delprov}) med facit · HP Kampen`,
+        title: `${data.label} provpass ${data.pass} (${delprov}) med facit · Tvåkommanollan`,
         description:
           `Skriv provpass ${data.pass} från högskoleprovet ${data.label}: ` +
           `${formatInt(data.questions.length)} uppgifter i ${delprov} på ${data.minutes} minuter, ` +

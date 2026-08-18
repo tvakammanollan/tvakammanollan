@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/las")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/las",
-      title: "LÄS-guide: svensk läsförståelse på HP · HP Kampen",
+      title: "LÄS-guide: svensk läsförståelse på HP · Tvåkommanollan",
       description:
-        "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering. Konkreta tips för läsförståelse på HP — fungerar för både LÄS och ELF.",
-      ogTitle: "LÄS-guiden · HP Kampen",
+        "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering. Konkreta tips för läsförståelse på HP. Fungerar för både LÄS och ELF.",
+      ogTitle: "LÄS-guiden · Tvåkommanollan",
       ogDescription:
         "Svensk läsförståelse på HP: lästeknik, tre frågetyper och hur du disponerar 5 min per text.",
     }),
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/guider/las")({
             "@type": "HowToStep",
             position: 2,
             name: "Identifiera frågetypen",
-            text: "Faktafråga, slutledningsfråga eller attitydfråga — typen avgör var i texten svaret finns.",
+            text: "Faktafråga, slutledningsfråga eller attitydfråga: typen avgör var i texten svaret finns.",
           },
           {
             "@type": "HowToStep",
@@ -60,7 +60,7 @@ export const Route = createFileRoute("/guider/las")({
             "@type": "HowToStep",
             position: 4,
             name: "Eliminera orimliga alternativ",
-            text: "Stryk det som strider mot texten och välj det som bäst stöds av den — svaret måste förankras i texten, inte i din förkunskap.",
+            text: "Stryk det som strider mot texten och välj det som bäst stöds av den. Svaret måste förankras i texten, inte i din förkunskap.",
           },
           {
             "@type": "HowToStep",
@@ -103,7 +103,7 @@ function LasGuidePage() {
           LÄS-delprovet består av fyra svenska texter per provpass med fem frågor per text, totalt
           20 uppgifter. Texterna är hämtade från vetenskap, samhällsdebatt och kultur och är ofta
           komplexa med ett akademiskt eller resonerande språk. Frågorna testar inte om du kan
-          memorera texten utan om du kan navigera i den — hitta information, dra slutsatser och
+          memorera texten utan om du kan navigera i den: hitta information, dra slutsatser och
           förstå vad författaren menar och anser.
         </p>
 
@@ -114,7 +114,7 @@ function LasGuidePage() {
           Den kanske viktigaste strategin för LÄS: läs frågorna för en text innan du läser texten.
           Det ger dig en karta att navigera med. Du vet vad du letar efter och kan markera relevanta
           stycken direkt när du läser igenom texten. Utan denna förberedelse läser du hela texten
-          och behöver sedan leta upp svaren i efterhand — det kostar dubbelt så mycket tid.
+          och behöver sedan leta upp svaren i efterhand. Det kostar dubbelt så mycket tid.
         </p>
         <p>
           Markera nyckelord i varje fråga (namn, siffror, begrepp) och scanna texten efter just dem
@@ -130,17 +130,17 @@ function LasGuidePage() {
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Faktafråga</strong> — svaret finns direkt i
+            <strong style={{ color: "var(--cream)" }}>Faktafråga:</strong> svaret finns direkt i
             texten, ofta ordagrant eller nära ordagrant. Lokalisera rätt stycke och peka ut
             informationen.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Slutledningsfråga</strong> — svaret kräver att
+            <strong style={{ color: "var(--cream)" }}>Slutledningsfråga:</strong> svaret kräver att
             du kombinerar information från två eller fler ställen i texten och drar en slutsats.
             Ingen av alternativen är citerade direkt.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Attitydfråga</strong> — vad menar, anser eller
+            <strong style={{ color: "var(--cream)" }}>Attitydfråga:</strong> vad menar, anser eller
             antyder författaren? Fokusera på ordval, ton och vad som betonas eller tonas ner i
             texten.
           </li>
@@ -155,17 +155,17 @@ function LasGuidePage() {
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Argument/debatt</strong> — leta efter tes och
+            <strong style={{ color: "var(--cream)" }}>Argument/debatt:</strong> leta efter tes och
             motargument. Frågorna handlar ofta om vad författaren anser eller hur hen bemöter
             kritik.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Populärvetenskap</strong> — leta efter
+            <strong style={{ color: "var(--cream)" }}>Populärvetenskap:</strong> leta efter
             orsak–verkan-samband och slutsatser. Frågorna testar om du förstår mekanismerna, inte
             bara fakta.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Historisk/kronologisk</strong> — lägg märke
+            <strong style={{ color: "var(--cream)" }}>Historisk/kronologisk:</strong> lägg märke
             till tidsmarkörer. Frågorna handlar ofta om sekvenser och samband mellan händelser.
           </li>
         </ul>
@@ -176,7 +176,7 @@ function LasGuidePage() {
         <p>
           Om du är osäker: arbeta bakifrån. Stryk de alternativ som direkt strider mot texten. Av de
           kvarvarande väljer du det som <em>bäst</em> stöds av texten. Det rätta svaret behöver inte
-          vara perfekt — det behöver bara vara bättre än de andra tre.
+          vara perfekt. Det behöver bara vara bättre än de andra tre.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -185,7 +185,7 @@ function LasGuidePage() {
         <p>
           Stöter du på ett ord du inte känner igen: fortsätt läsa. Kontexten runt ordet ger ofta
           tillräcklig information för att förstå vad meningen säger. Gissa inte ett ords betydelse
-          isolerat — läs hela meningen och stycket runt om det. Samma teknik fungerar på{" "}
+          isolerat. Läs hela meningen och stycket runt om det. Samma teknik fungerar på{" "}
           <Link to="/guider/elf" className="underline" style={{ color: "var(--amber)" }}>
             ELF
           </Link>
@@ -211,16 +211,16 @@ function LasGuidePage() {
         </h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Välj det som stöds av texten</strong> — inte
+            <strong style={{ color: "var(--cream)" }}>Välj det som stöds av texten:</strong> inte
             det som "låter rimligt" utifrån dina egna kunskaper. Svaret måste förankras i texten.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Missa negationer</strong> — ord som{" "}
+            <strong style={{ color: "var(--cream)" }}>Missa negationer:</strong> ord som{" "}
             <em>inte, sällan, knappast, aldrig</em> vänder helt innebörden. Läs långsamt kring
             negationer.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Välja det "mest sanna" alternativet</strong> —
+            <strong style={{ color: "var(--cream)" }}>Välja det "mest sanna" alternativet:</strong>{" "}
             i verkligheten kan ett alternativ vara sant men ändå fel för frågan om det inte svarar
             på vad som faktiskt frågades.
           </li>
@@ -232,7 +232,7 @@ function LasGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva LÄS-frågor gratis på HP Kampen
+            Öva LÄS-frågor gratis på Tvåkommanollan
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>

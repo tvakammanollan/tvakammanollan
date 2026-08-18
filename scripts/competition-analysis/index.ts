@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Konkurrentanalys-workflow för hpkampen.se
+ * Konkurrentanalys-workflow för tvakommanollan.se
  *
  * Alt 1 (standard): Kör i Claude Code-konversationen — ingen API-nyckel behövs.
  *   Claude gör discovery + analys och sparar till analysis-data.json.
@@ -23,7 +23,7 @@ const OUTPUT_DIR = join(import.meta.dirname);
 
 async function main() {
   const mode = getProviderMode();
-  console.log(`\n═══ hpkampen.se Konkurrentanalys ═══`);
+  console.log(`\n═══ tvakommanollan.se Konkurrentanalys ═══`);
   console.log(`Läge: ${mode === "api" ? "🤖 Claude API" : "📋 Pre-filled (Claude Code)"}`);
   console.log(`Starttid: ${new Date().toLocaleString("sv-SE")}\n`);
 

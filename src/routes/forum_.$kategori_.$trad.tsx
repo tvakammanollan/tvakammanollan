@@ -83,7 +83,7 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
     return {
       meta: pageMeta({
         path,
-        title: `${thread.title}${suffix} · HP Kampens forum`,
+        title: `${thread.title}${suffix} · Tvåkommanollans forum`,
         description,
         ogTitle: thread.title,
         ogDescription: description,
@@ -544,7 +544,7 @@ function ForumThreadPage() {
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--amber)]/30 bg-[var(--amber)]/[0.08] px-4 py-2.5 text-sm font-medium text-[var(--amber)] transition-colors hover:bg-[var(--amber)]/15"
         >
           <ArrowDown className="h-4 w-4" aria-hidden />
-          {newPosts === 1 ? "1 nytt inlägg" : `${formatInt(newPosts)} nya inlägg`} — visa
+          {newPosts === 1 ? "1 nytt inlägg" : `${formatInt(newPosts)} nya inlägg`} · visa
         </button>
       )}
 
@@ -587,7 +587,7 @@ function ForumThreadPage() {
               submitLabel="Publicera svar"
               placeholder={
                 isQa
-                  ? "Visa gärna hur du tänker, inte bara svaret — det är det folk kommer tillbaka för."
+                  ? "Visa gärna hur du tänker, inte bara svaret. Det är det folk kommer tillbaka för."
                   : "Skriv ditt svar…"
               }
             />

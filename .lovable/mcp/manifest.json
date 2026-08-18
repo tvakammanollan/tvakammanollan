@@ -7,9 +7,9 @@
   },
   "mcp": {
     "server": {
-      "name": "hpkampen-mcp",
+      "name": "tvakommanollan-mcp",
       "version": "0.1.0",
-      "title": "HP Kampen"
+      "title": "Tvåkommanollan"
     },
     "tools": [
       {
@@ -37,7 +37,7 @@
       {
         "name": "get_leaderboard",
         "title": "Topplista",
-        "description": "Hämtar topplistan för HP Kampen — spelare rankade efter ELO i antingen verbal (ORD/MEK/LÄS/ELF) eller matematisk (XYZ/KVA/NOG/DTK) del.",
+        "description": "Hämtar topplistan för Tvåkommanollan — spelare rankade efter ELO i antingen verbal (ORD/MEK/LÄS/ELF) eller matematisk (XYZ/KVA/NOG/DTK) del.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,

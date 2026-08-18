@@ -123,8 +123,8 @@ describe("forumErrorMessage", () => {
 
   it("läcker aldrig databastext för okända fel", () => {
     const raw = 'duplicate key value violates unique constraint "forum_threads_pkey"';
-    expect(forumErrorMessage(raw)).toBe("Något gick fel — försök igen om en stund.");
-    expect(forumErrorMessage(null)).toBe("Något gick fel — försök igen om en stund.");
+    expect(forumErrorMessage(raw)).toBe("Något gick fel. Försök igen om en stund.");
+    expect(forumErrorMessage(null)).toBe("Något gick fel. Försök igen om en stund.");
   });
 });
 

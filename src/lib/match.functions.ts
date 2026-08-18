@@ -46,7 +46,7 @@ export const createMatch = createServerFn({ method: "POST" })
       .gte("created_at", dayAgo);
     if (quotaErr) {
       console.error("[match] kunde inte läsa dygnskvot:", quotaErr.message);
-      throw new Error("Kunde inte starta matchen — försök igen.");
+      throw new Error("Kunde inte starta matchen. Försök igen.");
     }
 
     let lastHour = 0;
@@ -58,7 +58,7 @@ export const createMatch = createServerFn({ method: "POST" })
         .gte("created_at", hourAgo);
       if (error) {
         console.error("[match] kunde inte läsa timkvot:", error.message);
-        throw new Error("Kunde inte starta matchen — försök igen.");
+        throw new Error("Kunde inte starta matchen. Försök igen.");
       }
       lastHour = count ?? 0;
     }

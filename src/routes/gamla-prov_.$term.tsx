@@ -33,12 +33,12 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
     return {
       meta: pageMeta({
         path,
-        title: `Högskoleprovet ${exam.label} – alla provpass med facit · HP Kampen`,
+        title: `Högskoleprovet ${exam.label} – alla provpass med facit · Tvåkommanollan`,
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
         ogTitle: `Högskoleprovet ${exam.label} – provpass & facit`,
-        ogDescription: `${formatInt(exam.questions)} uppgifter med rätta svar. Öva gratis på HP Kampen.`,
+        ogDescription: `${formatInt(exam.questions)} uppgifter med rätta svar. Öva gratis på Tvåkommanollan.`,
       }),
       links: pageLinks(path),
       scripts: [
@@ -96,7 +96,7 @@ function ExamTermPage() {
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Provdagen var {formatDateLong(exam.date)}. Här finns alla {formatInt(exam.questions)}{" "}
           uppgifter från provets {exam.passes.length} räknade provpass, med facit. Välj ett pass för
-          att skriva det på tid med automatisk rättning — eller läs rätta svaren längre ned.
+          att skriva det på tid med automatisk rättning, eller läs rätta svaren längre ned.
         </p>
       </header>
 

@@ -44,7 +44,7 @@ import { formatDate } from "@/lib/sv-format";
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
-    meta: [{ title: "Admin · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [{ title: "Admin · Tvåkommanollan" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 

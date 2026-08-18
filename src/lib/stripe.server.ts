@@ -20,7 +20,7 @@
 const STRIPE_API = "https://api.stripe.com/v1";
 
 /** Publikt felmeddelande. Detaljerna loggas server-side och stannar där. */
-const GENERIC_ERROR = "Betalningen kunde inte startas just nu — försök igen om en stund.";
+const GENERIC_ERROR = "Betalningen kunde inte startas just nu. Försök igen om en stund.";
 
 export type StripeParam =
   | string

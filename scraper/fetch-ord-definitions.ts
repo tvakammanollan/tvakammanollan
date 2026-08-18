@@ -49,7 +49,7 @@ async function fetchDefinition(
   const page = await browser.newPage();
 
   try {
-    await page.setUserAgent("HPKampen-Bot/1.0 (educational project)");
+    await page.setUserAgent("Tvakommanollan-Bot/1.0 (educational project)");
     await page.goto(url, { waitUntil: "networkidle2", timeout: 20_000 });
 
     // Vänta kort på att eventuellt lazy-loaded innehåll renderas

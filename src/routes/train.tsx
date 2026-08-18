@@ -49,10 +49,10 @@ export const Route = createFileRoute("/train")({
   head: () => ({
     meta: pageMeta({
       path: "/train",
-      title: "Träna HP · alla 8 delprov utan tidspress · HP Kampen",
+      title: "Träna HP · alla 8 delprov utan tidspress · Tvåkommanollan",
       description:
         "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
-      ogTitle: "Träna HP utan tidspress · HP Kampen",
+      ogTitle: "Träna HP utan tidspress · Tvåkommanollan",
       ogDescription:
         "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor. Ingen klocka, gratis.",
     }),
@@ -82,7 +82,11 @@ export const Route = createFileRoute("/train")({
           "Kvantitativa resonemang (NOG)",
           "Diagram, tabeller och kartor (DTK)",
         ],
-        provider: { "@type": "Organization", name: "HP Kampen", url: "https://tvakommanollan.se" },
+        provider: {
+          "@type": "Organization",
+          name: "Tvåkommanollan",
+          url: "https://tvakommanollan.se",
+        },
         offers: { "@type": "Offer", price: "0", priceCurrency: "SEK", category: "Free" },
         hasCourseInstance: {
           "@type": "CourseInstance",
@@ -233,7 +237,7 @@ function TrainPage() {
     // Visa varning om vi inte fick så många som användaren bad om
     if (pool.length < config.count) {
       toast.warning(
-        `Bara ${pool.length} frågor matchade — kör med dem istället för ${config.count}`,
+        `Bara ${pool.length} frågor matchade, kör med dem i stället för ${config.count}`,
       );
     }
     const mapped: TrainQuestion[] = pool.map((q) => {

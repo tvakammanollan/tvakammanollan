@@ -16,12 +16,12 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poang",
-      title: "Högskoleprovet poäng, normering & antagning – vad krävs? · HP Kampen",
+      title: "Högskoleprovet poäng, normering & antagning – vad krävs? · Tvåkommanollan",
       description:
         "Vad betyder högskoleprovets poäng (0,00–2,00), hur fungerar normeringen från råpoäng till betyg och hur används resultatet vid antagning? Urvalsgrupper, giltighetstid och ungefärliga antagningspoäng.",
       ogTitle: "Högskoleprovet poäng & antagning – så funkar det",
       ogDescription:
-        "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på HP Kampen.",
+        "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på Tvåkommanollan.",
     }),
     links: pageLinks("/hogskoleprovet-poang"),
     scripts: [

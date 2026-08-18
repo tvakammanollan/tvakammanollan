@@ -93,7 +93,7 @@ export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text
         <DialogHeader>
           <DialogTitle>Rapportera bugg</DialogTitle>
           <DialogDescription>
-            HP Kampen är ett projekt under uppbyggnad så vissa buggar finns tyvärr fortfarande.
+            Tvåkommanollan är ett projekt under uppbyggnad så vissa buggar finns tyvärr fortfarande.
             Beskriv vad som gick fel så fixar vi det.
           </DialogDescription>
         </DialogHeader>

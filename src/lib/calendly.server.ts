@@ -17,7 +17,7 @@
 const CALENDLY_API = "https://api.calendly.com";
 
 /** Publikt felmeddelande. Detaljerna loggas server-side och stannar där. */
-const GENERIC_ERROR = "Tiden kunde inte läsas in just nu — försök igen om en stund.";
+const GENERIC_ERROR = "Tiden kunde inte läsas in just nu. Försök igen om en stund.";
 
 /**
  * Invitee-URI:n kommer från webbläsaren och stoppas rakt in i en URL som vi

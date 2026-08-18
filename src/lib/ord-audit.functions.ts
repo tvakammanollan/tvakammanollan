@@ -141,7 +141,7 @@ export const applyOrdAudit = createServerFn({ method: "POST" })
             from: fix.from,
             to: fix.to,
             status: "fixed",
-            note: "DRY RUN — not written",
+            note: "DRY RUN, not written",
           });
           result.fixed++;
           continue;

@@ -30,7 +30,7 @@ import urllib.request
 
 CACHE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".hp-cache"))
 CDX = "http://web.archive.org/cdx/search/cdx"
-UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
+UA = "tvakommanollan-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 
 # Värdar som har eller har haft provmaterialet. acc.studera.nu är UHR:s
 # acceptanstestmiljö, som råkat bli crawlad och ibland har filer kvar som

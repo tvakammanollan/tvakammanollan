@@ -28,7 +28,7 @@ import urllib.request
 
 CACHE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".hp-cache"))
 CDX = "http://web.archive.org/cdx/search/cdx"
-UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
+UA = "tvakommanollan-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 
 QUESTION_RE = re.compile(r"^(\d{1,2})\s*[.)]\s*(.*)$")
 ALT_RE = re.compile(r"^([A-E])[\t ]+(.+)$")

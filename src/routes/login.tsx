@@ -17,9 +17,9 @@ export const Route = createFileRoute("/login")({
   head: () => ({
     meta: pageMeta({
       path: "/login",
-      title: "Logga in · HP Kampen",
-      description: "Logga in på HP Kampen och fortsätt klättra i ELO-rankingen.",
-      ogTitle: "Logga in · HP Kampen",
+      title: "Logga in · Tvåkommanollan",
+      description: "Logga in på Tvåkommanollan och fortsätt klättra i ELO-rankingen.",
+      ogTitle: "Logga in · Tvåkommanollan",
       ogDescription: "Logga in för att fortsätta tävla mot vänner och spara dina HP-resultat.",
       noindex: true,
     }),

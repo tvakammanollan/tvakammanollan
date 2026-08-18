@@ -1,6 +1,6 @@
 {
-  "name": "HP Kampen — Tävla mot vänner i Högskoleprovet",
-  "short_name": "HP Kampen",
+  "name": "Tvåkommanollan · Tävla mot vänner i Högskoleprovet",
+  "short_name": "Tvåkommanollan",
   "description": "Realtidsmatcher, ELO-ranking och bot-träning för Högskoleprovet. Alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Gratis.",
   "start_url": "/",
   "scope": "/",
@@ -52,7 +52,7 @@
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "HP Kampen — startsidan"
+      "label": "Tvåkommanollan · startsidan"
     }
   ],
   "shortcuts": [

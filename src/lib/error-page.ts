@@ -3,7 +3,7 @@ export function renderErrorPage(): string {
 <html lang="sv">
   <head>
     <meta charset="utf-8" />
-    <title>Sidan kunde inte laddas · HP Kampen</title>
+    <title>Sidan kunde inte laddas · Tvåkommanollan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <style>
@@ -22,7 +22,7 @@ export function renderErrorPage(): string {
     <div class="card">
       <div class="badge">Tekniskt fel</div>
       <h1>Sidan kunde inte laddas</h1>
-      <p>Något gick fel på vår sida. Du kan prova att ladda om — eller gå tillbaka till startsidan så löser det sig oftast direkt.</p>
+      <p>Något gick fel på vår sida. Du kan prova att ladda om, eller gå tillbaka till startsidan så löser det sig oftast direkt.</p>
       <div class="actions">
         <button class="primary" onclick="location.reload()">Försök igen</button>
         <a class="secondary" href="/">Till hem</a>

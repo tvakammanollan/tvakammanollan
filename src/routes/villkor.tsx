@@ -7,11 +7,11 @@ export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: pageMeta({
       path: "/villkor",
-      title: "Användarvillkor · HP Kampen",
+      title: "Användarvillkor · Tvåkommanollan",
       description:
-        "Användarvillkoren för HP Kampen. Vad du får göra, hur vi hanterar konton, och villkoren för köp av coachning med 14 dagars ångerrätt.",
-      ogTitle: "Användarvillkor · HP Kampen",
-      ogDescription: "Användarvillkoren för HP Kampen.",
+        "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton, och villkoren för köp av coachning med 14 dagars ångerrätt.",
+      ogTitle: "Användarvillkor · Tvåkommanollan",
+      ogDescription: "Användarvillkoren för Tvåkommanollan.",
     }),
     links: pageLinks("/villkor"),
     scripts: [
@@ -38,7 +38,7 @@ function VillkorPage() {
       >
         <section className="space-y-6">
           <p>
-            Genom att använda HP Kampen godkänner du dessa villkor. Tjänsten drivs av{" "}
+            Genom att använda Tvåkommanollan godkänner du dessa villkor. Tjänsten drivs av{" "}
             <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
             All träning på sajten är gratis. Det enda som kostar är personlig coachning, som du
             köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
@@ -57,8 +57,8 @@ function VillkorPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              All träning på HP Kampen är gratis att använda. Coachning är en betaltjänst med egna
-              villkor, se avsnittet om köp nedan.
+              All träning på Tvåkommanollan är gratis att använda. Coachning är en betaltjänst med
+              egna villkor, se avsnittet om köp nedan.
             </li>
             <li>Du måste vara minst 13 år för att skapa konto.</li>
             <li>
@@ -88,10 +88,10 @@ function VillkorPage() {
             Innehåll, upphovsrätt och ansvar
           </h2>
           <p>
-            Frågor på HP Kampen baseras på publicerade högskoleprov från Universitets- och
+            Frågor på Tvåkommanollan baseras på publicerade högskoleprov från Universitets- och
             högskolerådet (UHR). Materialet får användas för studiesyfte men inte för kommersiell
-            vidareförsäljning. HP Kampen är inte officiellt godkänt eller affilierat med UHR. Vi
-            eftersträvar korrekthet i frågor, facit och normering men kan inte garantera att alla
+            vidareförsäljning. Tvåkommanollan är inte officiellt godkänt eller affilierat med UHR.
+            Vi eftersträvar korrekthet i frågor, facit och normering men kan inte garantera att alla
             svar är felfria. Hittar du fel, rapportera via bug-knappen så fixar vi det.
           </p>
           <p>
@@ -105,9 +105,9 @@ function VillkorPage() {
             Köp av coachning
           </h2>
           <p>
-            Coachning (studieupplägg) är den enda betaltjänsten på HP Kampen. Avtalet ingås mellan
-            dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha ett
-            konto för att köpa.
+            Coachning (studieupplägg) är den enda betaltjänsten på Tvåkommanollan. Avtalet ingås
+            mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha
+            ett konto för att köpa.
           </p>
           <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
             Vad du får
@@ -134,11 +134,11 @@ function VillkorPage() {
             enligt lagen (2005:59) om distansavtal och avtal utanför affärslokaler. Du behöver inte
             ange något skäl. Meddela oss på{" "}
             <a
-              href="mailto:info@hpkampen.se?subject=Ångerrätt%20coachning"
+              href="mailto:info@tvakommanollan.se?subject=Ångerrätt%20coachning"
               className="underline"
               style={{ color: "var(--amber)" }}
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>{" "}
             inom fristen, så betalar vi tillbaka hela beloppet inom 14 dagar från att meddelandet
             kom fram, med samma betalsätt som du använde. Du kan också använda{" "}

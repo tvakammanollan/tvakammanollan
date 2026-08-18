@@ -8,10 +8,10 @@ export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: pageMeta({
       path: "/integritetspolicy",
-      title: "Integritetspolicy · HP Kampen",
+      title: "Integritetspolicy · Tvåkommanollan",
       description:
-        "Hur HP Kampen samlar in, använder och skyddar dina personuppgifter enligt GDPR.",
-      ogTitle: "Integritetspolicy · HP Kampen",
+        "Hur Tvåkommanollan samlar in, använder och skyddar dina personuppgifter enligt GDPR.",
+      ogTitle: "Integritetspolicy · Tvåkommanollan",
       ogDescription: "Hur vi hanterar dina personuppgifter enligt GDPR.",
     }),
     links: pageLinks("/integritetspolicy"),
@@ -39,17 +39,18 @@ function IntegritetspolicyPage() {
       >
         <section className="space-y-6">
           <p>
-            Denna policy beskriver hur HP Kampen samlar in och hanterar dina personuppgifter när du
-            använder tvakommanollan.se.
+            Denna policy beskriver hur Tvåkommanollan samlar in och hanterar dina personuppgifter
+            när du använder tvakommanollan.se.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
             Personuppgiftsansvarig
           </h2>
           <p>
-            HP Kampen drivs av <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong>{" "}
-            som privatperson. Träningen på sajten är gratis. Det enda som kostar är personlig
-            coachning (studieupplägg), som köps frivilligt. Kontakt:{" "}
+            Tvåkommanollan drivs av{" "}
+            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
+            Träningen på sajten är gratis. Det enda som kostar är personlig coachning
+            (studieupplägg), som köps frivilligt. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -65,41 +66,41 @@ function IntegritetspolicyPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong style={{ color: "var(--cream)" }}>E-postadress</strong> — vid
-              kontoregistrering (för inloggning och eventuell återställning av lösenord)
+              <strong style={{ color: "var(--cream)" }}>E-postadress:</strong> vid kontoregistrering
+              (för inloggning och eventuell återställning av lösenord)
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Användarnamn</strong> — självvalt, visas på
+              <strong style={{ color: "var(--cream)" }}>Användarnamn:</strong> självvalt, visas på
               topplistan och i matcher
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Spelhistorik</strong> — matchresultat,
+              <strong style={{ color: "var(--cream)" }}>Spelhistorik:</strong> matchresultat,
               ELO-utveckling, statistik per delprov
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Foruminlägg</strong> — texten du skriver i
+              <strong style={{ color: "var(--cream)" }}>Foruminlägg:</strong> texten du skriver i
               forumet, tidpunkt och vilket konto som skrev den. Inlägg är offentliga och syns för
               alla, även utloggade och sökmotorer.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Köpuppgifter</strong> — om du köper
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper
               coachning: namn, e-postadress, telefonnummer, den tid du bokar och det du själv
               skriver i frågorna vid bokning och i kassan, samt belopp, valuta och Stripes referens
               till betalningen.{" "}
-              <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em> — vi ser
+              <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em>: vi ser
               aldrig ditt kortnummer.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Teknisk information</strong> — IP-adress och
+              <strong style={{ color: "var(--cream)" }}>Teknisk information:</strong> IP-adress och
               webbläsarversion, enbart för säkerhet och felsökning (anonymiseras efter 30 dagar)
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Användningsdata</strong> —{" "}
-              <em>endast om du samtyckt till analys</em>: vilka sidor du besöker, vad du klickar på,
-              ungefärlig plats på landsnivå, enhets- och webbläsartyp samt inspelningar av hur
+              <strong style={{ color: "var(--cream)" }}>Användningsdata</strong>{" "}
+              <em>(endast om du samtyckt till analys)</em>: vilka sidor du besöker, vad du klickar
+              på, ungefärlig plats på landsnivå, enhets- och webbläsartyp samt inspelningar av hur
               gränssnittet används. Text du skriver i fält maskeras i inspelningarna. Vi mäter också
-              hur du använder funktionerna — att en match lämnades in, att ett träningspass
-              avslutades, vad du sökte efter i forumet — och hur snabbt sidorna laddar. Innehållet i
+              hur du använder funktionerna: att en match lämnades in, att ett träningspass
+              avslutades, vad du sökte efter i forumet och hur snabbt sidorna laddar. Innehållet i
               det du skriver ingår aldrig, bara att det hände.
             </li>
           </ul>
@@ -113,7 +114,7 @@ function IntegritetspolicyPage() {
             har skapat konto för, och den coachning du eventuellt köpt) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
             missbrukshantering och produktförbättring). Användningsdata för analys behandlas enbart
-            med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong> — inget
+            med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke:</strong> inget
             analysskript laddas innan du sagt ja, och du kan ta tillbaka valet när som helst längre
             ned på den här sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part
             för marknadsföring.
@@ -124,19 +125,19 @@ function IntegritetspolicyPage() {
           </h2>
           <ul className="list-disc space-y-1 pl-6">
             <li>
-              <strong style={{ color: "var(--cream)" }}>Supabase</strong> — databas och
-              autentisering (data hostas inom EU)
+              <strong style={{ color: "var(--cream)" }}>Supabase:</strong> databas och autentisering
+              (data hostas inom EU)
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Cloudflare</strong> — CDN, hosting och
+              <strong style={{ color: "var(--cream)" }}>Cloudflare:</strong> CDN, hosting och
               DDoS-skydd
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>PostHog</strong> — analys av hur sajten
+              <strong style={{ color: "var(--cream)" }}>PostHog:</strong> analys av hur sajten
               används (EU-instans, data lagras inom EU). Laddas endast efter ditt samtycke.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Calendly</strong> — tidsbokning för
+              <strong style={{ color: "var(--cream)" }}>Calendly:</strong> tidsbokning för
               coachning. Väljer du en tid skickas ditt namn, din e-postadress och dina svar på
               bokningsfrågorna till Calendly, som skapar mötet och skickar kalenderinbjudan.
               Calendly är personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter
@@ -153,7 +154,7 @@ function IntegritetspolicyPage() {
               .
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Stripe</strong> — betalningar för coachning.
+              <strong style={{ color: "var(--cream)" }}>Stripe:</strong> betalningar för coachning.
               Själva betalningen sker på Stripes egen sida; vi tar emot namn, e-post, telefonnummer,
               belopp och betalningsstatus tillbaka, aldrig kortuppgifter. Stripe är
               personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter utanför
@@ -176,22 +177,22 @@ function IntegritetspolicyPage() {
           </h2>
           <ul className="list-disc space-y-1 pl-6">
             <li>
-              <strong style={{ color: "var(--cream)" }}>Kontodata</strong> — så länge du har ett
+              <strong style={{ color: "var(--cream)" }}>Kontodata:</strong> så länge du har ett
               aktivt konto, plus 30 dagar efter radering (för backup-rotation)
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Spelhistorik</strong> — anonymiseras när
+              <strong style={{ color: "var(--cream)" }}>Spelhistorik:</strong> anonymiseras när
               kontot raderas (statistik behålls i aggregerad form för leaderboard)
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>IP-loggar</strong> — max 30 dagar
+              <strong style={{ color: "var(--cream)" }}>IP-loggar:</strong> max 30 dagar
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Analysdata</strong> — sessionsinspelningar
+              <strong style={{ color: "var(--cream)" }}>Analysdata:</strong> sessionsinspelningar
               max 30 dagar, övrig användningsstatistik max 12 månader
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Köpuppgifter</strong> — sparas så länge de
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> sparas så länge de
               behövs för bokföring och för att kunna hantera frågor om köpet. De raderas därför inte
               automatiskt när du raderar ditt konto. Vill du veta exakt vad som finns sparat om ett
               köp, mejla oss.
@@ -206,15 +207,15 @@ function IntegritetspolicyPage() {
             <Link to="/forum" className="underline" style={{ color: "var(--amber)" }}>
               forumet
             </Link>{" "}
-            är offentligt. Inlägget visas med ditt användarnamn — aldrig med din e-postadress — och
-            är läsbart för alla, inklusive sökmotorer och AI-crawlers som indexerar sajten. Räkna
-            med att ett foruminlägg kan finnas kvar i sökmotorers cache även efter att det tagits
-            bort här.
+            är offentligt. Inlägget visas med ditt användarnamn, aldrig med din e-postadress, och är
+            läsbart för alla, inklusive sökmotorer och AI-crawlers som indexerar sajten. Räkna med
+            att ett foruminlägg kan finnas kvar i sökmotorers cache även efter att det tagits bort
+            här.
           </p>
           <p>
             Raderar du ditt konto avidentifieras din användarrad och inläggen står kvar utan namn,
             märkta "Borttagen användare", så att trådarna förblir läsbara för dem som svarat. Vill
-            du i stället ha enskilda inlägg borttagna — mejla oss, så tar vi bort dem.
+            du i stället ha enskilda inlägg borttagna: mejla oss, så tar vi bort dem.
           </p>
           <p>
             Rapporterar du ett inlägg sparas vilket konto som rapporterade, skälet och din
@@ -249,7 +250,7 @@ function IntegritetspolicyPage() {
             >
               info@tvakommanollan.se
             </a>{" "}
-            så hjälper vi dig — vi svarar inom 30 dagar. Är du missnöjd med vår hantering kan du
+            så hjälper vi dig. Vi svarar inom 30 dagar. Är du missnöjd med vår hantering kan du
             klaga hos{" "}
             <a
               href="https://www.imy.se"
@@ -267,12 +268,12 @@ function IntegritetspolicyPage() {
             Cookies och analys
           </h2>
           <p>
-            <strong style={{ color: "var(--cream)" }}>Nödvändig lagring</strong> — cookies och
+            <strong style={{ color: "var(--cream)" }}>Nödvändig lagring:</strong> cookies och
             localStorage som behövs för inloggning, sessionshantering och dina inställningar. Den
             går inte att välja bort, eftersom tjänsten inte fungerar utan den.
           </p>
           <p>
-            <strong style={{ color: "var(--cream)" }}>Analys (frivilligt)</strong> — säger du ja
+            <strong style={{ color: "var(--cream)" }}>Analys (frivilligt):</strong> säger du ja
             laddas PostHog, som sätter en identifierare för att kunna se att flera besök hör ihop.
             Det används för att förstå vilka delar av sajten som hjälper och var folk fastnar. Säger
             du nej laddas skriptet inte alls, och ingen identifierare sätts.
@@ -284,7 +285,7 @@ function IntegritetspolicyPage() {
           <p>
             Oavsett ditt val för vi enkel besöksstatistik i vår egen databas: antal visningar per
             sida och dygn. Den innehåller varken IP-adress, användare eller session och kan inte
-            kopplas till dig — därför kräver den inget samtycke.
+            kopplas till dig, och därför kräver den inget samtycke.
           </p>
 
           <ConsentSettings />

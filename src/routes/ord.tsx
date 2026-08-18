@@ -43,7 +43,7 @@ export const Route = createFileRoute("/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/ord",
-      title: "Öva ord · 10 000+ HP-ord · HP Kampen",
+      title: "Öva ord · 10 000+ HP-ord · Tvåkommanollan",
       description:
         "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
       ogTitle: "Öva ord · 10 000+ HP-ord",
@@ -293,7 +293,7 @@ function OrdPracticePage() {
       if (!recordWarnedRef.current) {
         recordWarnedRef.current = true;
         toast.warning("Kunde inte spara ditt svar till topplistan", {
-          description: "Du kan fortsätta öva som vanligt — vi försöker igen på nästa svar.",
+          description: "Du kan fortsätta öva som vanligt. Vi försöker igen på nästa svar.",
         });
       }
     });
@@ -695,7 +695,7 @@ function OrdPracticePage() {
 
             {answered.some((a) => !a.isCorrect) && (
               <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-2.5 text-center text-xs text-red-300">
-                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord" — öva
+                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord". Öva
                 dem igen nästa gång
               </p>
             )}

@@ -49,7 +49,10 @@ import { normeringForAccuracy } from "@/lib/hpScore";
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
   head: () => ({
-    meta: [{ title: "Resultat · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [
+      { title: "Resultat · Tvåkommanollan" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
   }),
 });
 
@@ -143,7 +146,7 @@ function ResultPage() {
 
       // Nyss avslutad match kan ha låst upp utmärkelser — be watchern kolla
       // direkt (förbi 20s-throttlen) så firandet sker här och inte senare.
-      window.dispatchEvent(new Event("hpk:achievements:check"));
+      window.dispatchEvent(new Event("tkn:achievements:check"));
 
       // Opponent display
       if (mr.is_bot_match) {
@@ -352,11 +355,11 @@ function ResultPage() {
       : won
         ? `vann ${myScore}–${oppScore}`
         : `förlorade ${myScore}–${oppScore}`;
-    const text = `Jag ${verb} mot ${opponentName} på HP Kampen${elo}! 🏆`;
+    const text = `Jag ${verb} mot ${opponentName} på Tvåkommanollan${elo}! 🏆`;
     const url = "https://tvakommanollan.se";
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({ title: "HP Kampen", text, url });
+        await navigator.share({ title: "Tvåkommanollan", text, url });
       } else {
         await navigator.clipboard.writeText(`${text}\nSpela gratis: ${url}`);
         toast.success("Resultatet kopierat – klistra in var du vill!");

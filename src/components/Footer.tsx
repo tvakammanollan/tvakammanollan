@@ -126,7 +126,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-white/45">
-            © {new Date().getFullYear()} HP Kampen. Gratis. Alltid.
+            © {new Date().getFullYear()} Tvåkommanollan. Gratis. Alltid.
           </p>
           <p className="text-xs text-white/45">Byggt i Sverige för svenska HP-pluggare.</p>
         </div>
@@ -149,7 +149,7 @@ function CompactFooter() {
         </nav>
         <div className="flex items-center gap-4">
           <BugReportButton variant="text" />
-          <p className="text-xs text-white/45">© {new Date().getFullYear()} HP Kampen</p>
+          <p className="text-xs text-white/45">© {new Date().getFullYear()} Tvåkommanollan</p>
         </div>
       </div>
     </footer>

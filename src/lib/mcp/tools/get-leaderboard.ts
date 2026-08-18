@@ -17,11 +17,9 @@ export default defineTool({
   name: "get_leaderboard",
   title: "Topplista",
   description:
-    "Hämtar topplistan för HP Kampen — spelare rankade efter ELO i antingen verbal (ORD/MEK/LÄS/ELF) eller matematisk (XYZ/KVA/NOG/DTK) del.",
+    "Hämtar topplistan för Tvåkommanollan, med spelare rankade efter ELO i antingen verbal (ORD/MEK/LÄS/ELF) eller matematisk (XYZ/KVA/NOG/DTK) del.",
   inputSchema: {
-    match_type: z
-      .enum(["verbal", "math"])
-      .describe("Vilken kategori topplistan gäller."),
+    match_type: z.enum(["verbal", "math"]).describe("Vilken kategori topplistan gäller."),
     limit: z
       .number()
       .int()

@@ -36,7 +36,7 @@ MONTHS = {
     "december": 12,
 }
 
-UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
+UA = "tvakommanollan-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 
 
 def get(url: str) -> bytes:

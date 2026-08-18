@@ -13,7 +13,10 @@ import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
   head: () => ({
-    meta: [{ title: "Välkommen · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [
+      { title: "Välkommen · Tvåkommanollan" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
   }),
 });
 

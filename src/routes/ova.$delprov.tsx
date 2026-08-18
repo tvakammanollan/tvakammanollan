@@ -112,7 +112,7 @@ export const Route = createFileRoute("/ova/$delprov")({
     return {
       meta: pageMeta({
         path,
-        title: `Öva ${cfg.code} (${cfg.name}) gratis – frågor med facit · HP Kampen`,
+        title: `Öva ${cfg.code} (${cfg.name}) gratis – frågor med facit · Tvåkommanollan`,
         description: `${cfg.intro.slice(0, 150)} Gratis och utan inloggning.`,
         ogTitle: `Öva ${cfg.code} – ${cfg.name}`,
         ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,

@@ -4,7 +4,7 @@
 //   ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS provpass_num int;
 //   ALTER TABLE public.questions ADD COLUMN IF NOT EXISTS q_num int;
 //
-// Kräver admin. Kör från browser-konsolen på hpkampen.se som inloggad admin
+// Kräver admin. Kör från browser-konsolen på tvakommanollan.se som inloggad admin
 // (sessionens access_token måste följa med):
 //   const { data } = await window.supabase.auth.getSession();
 //   fetch("https://plrvjpoicbassjtgmzpx.supabase.co/functions/v1/import-gamla-prov", {
@@ -36,7 +36,7 @@ Deno.serve(async (req) => {
   if (denied) return denied;
 
   // Fetch question data from the deployed app
-  const jsonRes = await fetch("https://hpkampen.se/gamla-prov-data.json");
+  const jsonRes = await fetch("https://tvakommanollan.se/gamla-prov-data.json");
   if (!jsonRes.ok) {
     return new Response(
       JSON.stringify({ error: `Could not fetch data: ${jsonRes.status}` }),

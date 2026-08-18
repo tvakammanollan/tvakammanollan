@@ -2,7 +2,7 @@ import * as cheerio from "cheerio";
 import type { Competitor, ScrapedCompetitor, ScrapedPage } from "./types.ts";
 import { getProviderMode } from "./provider.ts";
 
-const UA = "HPKampen-Analysis/1.0 (competitive research)";
+const UA = "Tvakommanollan-Analysis/1.0 (competitive research)";
 const DELAY_MS = 1200;
 
 async function fetchPage(url: string): Promise<string | null> {

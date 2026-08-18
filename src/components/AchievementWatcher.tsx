@@ -14,7 +14,7 @@ import { AchievementCelebration } from "@/components/AchievementCelebration";
    Körs klient-only; kollar vid inloggning + (strypt) vid sidbyte.
    ===================================================================== */
 
-const KEY = (uid: string) => `hpk:ach:v1:${uid}`;
+const KEY = (uid: string) => `tkn:ach:v1:${uid}`;
 const THROTTLE_MS = 20_000;
 
 function readSeen(uid: string): Set<string> | null {
@@ -94,8 +94,8 @@ export function AchievementWatcher() {
       lastCheckRef.current = Date.now();
       void check();
     };
-    window.addEventListener("hpk:achievements:check", onDemand);
-    return () => window.removeEventListener("hpk:achievements:check", onDemand);
+    window.addEventListener("tkn:achievements:check", onDemand);
+    return () => window.removeEventListener("tkn:achievements:check", onDemand);
   }, [user, check]);
 
   if (celebrating.length === 0) return null;

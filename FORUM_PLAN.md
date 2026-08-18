@@ -1,6 +1,6 @@
 # Forum — plan
 
-Ett diskussionsforum på hpkampen.se. Flashback-modellen (platta trådar, citat,
+Ett diskussionsforum på tvakommanollan.se. Flashback-modellen (platta trådar, citat,
 öppet läsbart) fast för högskoleprovet, byggt på det som redan finns i appen.
 
 Målet är inte "en forum-funktion". Målet är **den sida folk googlar sig till när
@@ -322,7 +322,7 @@ i en takt som inga handskrivna guider kan matcha.
   trådar. Lägg en serverrutt `/forum-sitemap.xml` (samma mönster som `mcp.ts` /
   `[.well-known]`) som listar synliga trådar sorterade på `last_post_at`, max
   50 000 per fil, cachad 1 h vid kanten. Lägg till en andra rad i `robots.txt`:
-  `Sitemap: https://hpkampen.se/forum-sitemap.xml`.
+  `Sitemap: https://tvakommanollan.se/forum-sitemap.xml`.
 - **Korslänkning åt båda håll.** Varje guide och varje gamla-prov-pass får ett
   "Diskutera i forumet"-block; varje tråd länkar tillbaka till relevant guide.
   Det är samma guider ↔ öva ↔ gamla-prov-kluster som CLAUDE.md redan beskriver,

@@ -44,7 +44,7 @@ export const Route = createFileRoute("/stats")({
   head: () => ({
     meta: pageMeta({
       path: "/stats",
-      title: "Din statistik · HP Kampen",
+      title: "Din statistik · Tvåkommanollan",
       description:
         "Följ din HP-progression: ELO-utveckling, win rate, prestanda per delprov och uppskattad normerad HP-poäng.",
       noindex: true,

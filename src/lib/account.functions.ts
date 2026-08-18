@@ -60,7 +60,7 @@ export const deleteAccount = createServerFn({ method: "POST" })
       .eq("id", userId);
     if (anonErr) {
       console.error("[account] anonymisering misslyckades:", anonErr.message);
-      throw new Error("Kunde inte radera kontot — försök igen eller mejla info@tvakommanollan.se.");
+      throw new Error("Kunde inte radera kontot. Försök igen eller mejla info@tvakommanollan.se.");
     }
 
     // 3) Radera auth-användaren (tar bort inloggning + e-post ur auth-systemet).
@@ -77,7 +77,7 @@ export const deleteAccount = createServerFn({ method: "POST" })
       if (banErr) {
         console.error("[account] fallback misslyckades:", banErr.message);
         throw new Error(
-          "Dina uppgifter är raderade men kontot kunde inte stängas helt — mejla info@tvakommanollan.se så fixar vi det.",
+          "Dina uppgifter är raderade men kontot kunde inte stängas helt. Mejla info@tvakommanollan.se så fixar vi det.",
         );
       }
     }

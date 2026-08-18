@@ -39,11 +39,11 @@ export const Route = createFileRoute("/forum_/$kategori")({
     return {
       meta: pageMeta({
         path,
-        title: `${category.name} · forum om högskoleprovet${suffix} · HP Kampen`,
+        title: `${category.name} · forum om högskoleprovet${suffix} · Tvåkommanollan`,
         description:
           `${category.description} ${formatInt(total)} trådar. Ställ din fråga eller läs vad andra ` +
           `som pluggar inför högskoleprovet har frågat.`,
-        ogTitle: `${category.name} · HP Kampens forum`,
+        ogTitle: `${category.name} · Tvåkommanollans forum`,
         ogDescription: category.description,
       }),
       links: pageLinks(path),
@@ -128,7 +128,7 @@ function ForumCategoryPage() {
         <EmptyState
           icon={MessageSquare}
           title="Inga trådar här än"
-          subtitle="Ställ den första frågan i kategorin — den blir dessutom lättare att hitta för alla som googlar samma sak."
+          subtitle="Ställ den första frågan i kategorin. Den blir dessutom lättare att hitta för alla som googlar samma sak."
           ctaLabel="Starta en tråd"
           ctaHref="/forum/nytt"
         />

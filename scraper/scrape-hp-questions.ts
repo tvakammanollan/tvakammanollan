@@ -18,7 +18,7 @@ import { writeFileSync, appendFileSync, existsSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 import { PDFParse } from "pdf-parse";
 
-const UA = "HPKampen-Bot/1.0 (educational project)";
+const UA = "Tvakommanollan-Bot/1.0 (educational project)";
 const DELAY_MS = 1000;
 const OUT_PATH = join(process.cwd(), "scraper", "hp-questions.json");
 const ERR_PATH = join(process.cwd(), "scraper", "fel.log");

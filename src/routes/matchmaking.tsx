@@ -19,7 +19,7 @@ export const Route = createFileRoute("/matchmaking")({
   component: MatchmakingPage,
   head: () => ({
     meta: [
-      { title: "Hitta match · HP Kampen" },
+      { title: "Hitta match · Tvåkommanollan" },
       {
         name: "description",
         content:

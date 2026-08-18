@@ -46,6 +46,43 @@ command `npx wrangler deploy`.
 2026-08-15 → 2026-08-18). Samma Worker (`tvakammanollan`) serverar båda, genom
 fyra routes: `{,www.}tvakommanollan.se/*` och `{,www.}hpkampen.se/*`. Strato är
 registrar och mejlvärd för båda (MX `smtp.rzone.de`); DNS ligger i Cloudflare.
+
+### Namnet (2026-08-18)
+
+Sajten heter **Tvåkommanollan** — med å, i bestämd form, i all text som en
+människa läser. Namnet är märket utskrivet: 2,0 är högsta möjliga resultat på
+högskoleprovet. Det gamla namnet **HP Kampen är utrotat ur koden**; dyker det
+upp igen är det något som kopierats från en gammal gren.
+
+- **`å` i text, `a` i teknik.** Rubriker, brödtext, `<title>`, JSON-LD `name`,
+  manifestet och alla meddelanden skriver `Tvåkommanollan`. Domän, paketnamn,
+  user-agent-strängar, MCP-servernamn och lagringsnycklar skriver
+  `tvakommanollan` — en URL eller ett npm-namn tål inte å. JSON-LD har
+  `alternateName: "Tvakommanollan"` just för att det är så folk skriver det när
+  de söker.
+- **`hpkampen.se` i koden är inte namnet, det är den gamla domänen** och ska
+  ligga kvar: `LEGACY_HOSTS` i `canonical-host.ts`, dess test, och de två
+  routerna i `wrangler.jsonc`. Att "städa bort" dem släcker 301:an som Google
+  ska följa i minst ett år till. Se avsnitten ovan.
+- **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
+  `tkn-analytics-consent`, `tkn-coaching-prompt`, `tkn:ach:v1:<uid>`,
+  `tkn:wotd:<datum>`, `tkn:consent-changed`, `tkn:achievements:check`.
+  De två förstnämnda flyttas över från sina `hpk-`-föregångare. Båda modulerna läser den gamla
+  `hpk-`-nyckeln en gång och skriver om den — utan flytten hade varje besökare
+  som redan svarat om samtycke fått bannern igen, och varje köpare av
+  studieupplägget fått nudgen igen. Flytten är pinnad i `consent.test.ts` och
+  `coaching-prompt.test.ts`; ta bort den tidigast när `hpk-`-nycklarna rimligen
+  hunnit försvinna ur alla webbläsare.
+- **Workern heter fortfarande `tvakammanollan`** (`wrangler.jsonc`), med
+  stavfelet — "kamma", inte "komma". Namnet är Workerns identitet: byts det i
+  konfigen skapar nästa deploy en **ny** Worker medan den gamla behåller
+  routerna, alltså en tyst nedsläckning. Ska det rättas görs det för hand, i
+  ordningen ny Worker → flytta routes → verifiera → ta bort den gamla.
+  `package.json` heter numera `tvakommanollan` — det är ett lokalt namn och rör
+  inte driften.
+- **`public/hpkampen-1778669612-…​.txt`** är en verifieringsfil åt en tredje
+  part (innehållet = filnamnet). Den är inte ett varumärke och får inte döpas
+  om — ta bort den först när du vet vem som frågar efter den.
 **Pushing to `main` changes the live site** — verify before pushing, not after.
 `wrangler versions upload` gives a preview URL that serves the build without
 touching production; use it for anything you cannot check locally.
@@ -650,7 +687,7 @@ landningssidan — det finns fortfarande bara en väg till Stripe.
   där och `promptTrigger` respekterar den. Att slå på återkommande är alltså
   att höja en siffra, inte att bygga om — och `coaching-prompt.test.ts` pinnar
   både trösklarna och vilotiden redan nu.
-- **Räkningen ligger i localStorage** (`hpk-coaching-prompt`, versionerad som
+- **Räkningen ligger i localStorage** (`tkn-coaching-prompt`, versionerad som
   samtycket) och inte i databasen: nudgen ska gälla besökare utan konto, och
   "hur många sidor har du tittat på" hör inte hemma hos oss. Trasig eller
   gammal lagring tolkas som ett rent blad — värsta utfallet blir en visning för
@@ -869,7 +906,7 @@ Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
 ### GDPR / privacy — non-negotiable
 
 - `/integritetspolicy` must stay **factually true**. Since 2026-08-15 it documents PostHog analytics behind explicit consent — update it whenever what we collect changes.
-- **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`hpk-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
+- **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`tkn-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
 - Empty `VITE_PUBLIC_POSTHOG_KEY` = analytics off and no banner. `VITE_` vars are inlined **at build time**, so they must be in `.env`; the `wrangler.jsonc` copy alone does nothing for the client bundle.
 - Ads are still out: they need a certified IAB TCF CMP, which our own banner is not. AdSense was removed for exactly this reason (see comment in `__root.tsx`).
 - **Product events go through `trackEvent()` in `src/lib/events.ts`** — a typed
@@ -892,6 +929,37 @@ Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
   threw in validation and was swallowed by the caller's `.catch()` — `audit_log`
   got nothing and the admin usage view read zero, with no error anywhere. Fixed
   2026-08-17 by declaring `mode`. Any new field must be added on both sides.
+- **Var PostHog nås står på ett ställe i koden**: `src/lib/analytics-host.ts`.
+  Klientens `api_host` och Workerns CSP läser samma `VITE_PUBLIC_POSTHOG_HOST`,
+  därför att en CSP som pekar på en annan värd än klienten ringer blockerar
+  varje händelse **utan att något kastas eller loggas** — siffrorna planar bara
+  ut. Vite bakar in `.env`-värdet i *båda* bundlarna vid bygget (verifierat i
+  `.output/server/_ssr/index.mjs`), så det är `.env` som avgör; `process.env`
+  är en reserv som optimeras bort i ett normalt bygge. Håll kopian i
+  `wrangler.jsonc` i synk ändå.
+- **Managed reverse proxy (PostHog → Settings → Managed reverse proxy)** är inte
+  påslagen ännu. Den finns för att ad-blockerare blockerar `eu.i.posthog.com` på
+  värdnamnet; en egen underdomän går förbi filtren. Gratis på PostHog Cloud.
+  Ordningen är hela poängen — koden är redan förberedd, det som saknas är
+  domänen:
+  1. Skapa proxyn i PostHog och välj en **neutral** underdomän. Inte `analytics`,
+     `track` eller `stats` — de orden står i filterlistorna, och då var hela
+     övningen förgäves. `lund.tvakommanollan.se` eller liknande.
+  2. CNAME i Cloudflare från underdomänen till värdet PostHog visar
+     (`<hash>.proxy-eu.posthog.com`), **DNS only / grått moln**. Med orange moln
+     terminerar Cloudflare TLS och PostHog kan aldrig utfärda sitt certifikat.
+  3. Vänta 2–30 min på certifikatet. Under tiden **hårdfelar** underdomänen i
+     webbläsaren, eftersom vårt HSTS-huvud har `includeSubDomains` med ett års
+     max-age — det är väntat, inte ett fel att felsöka.
+  4. Sätt `VITE_PUBLIC_POSTHOG_HOST` till `https://<underdomän>` i `.env` (det
+     är den som bakas in) och i `wrangler.jsonc`, pusha, och kontrollera i
+     nätverksfliken att
+     anropen går till underdomänen och svarar 200. CSP:n följer med av sig
+     själv. `ui_host` ska fortsätta peka på `https://eu.posthog.com` — det är
+     bara länkarna in i PostHogs eget gränssnitt.
+  PostHogs egna värdnamn står kvar i CSP:n även efter bytet. Det försämrar inte
+  proxyn (blockeraren läser adressen i anropet, inte CSP-huvudet) och gör att
+  steg 4 inte kan släcka analysen om proxyn ännu inte svarar.
 - posthog-js renames config keys between versions. `enable_heatmaps` is gone (now `capture_heatmaps`), and the exported client type moved, so `analytics.ts` derives it via `(typeof import("posthog-js"))["default"]` instead of importing a name. Verify keys against `@posthog/types/dist/posthog-config.d.ts` before adding any — the keys are **not** in `posthog-js`'s own `.d.ts`.
 - Also on: `capture_dead_clicks`, `capture_performance` (web vitals + network
   timing). `capture_exceptions` is explicitly `false` — errors have their own path

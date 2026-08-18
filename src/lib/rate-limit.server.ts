@@ -25,6 +25,6 @@ export function assertRateLimit(key: string, cfg: LimitConfig): void {
   const r = rateLimit(key, cfg);
   if (!r.ok) {
     const s = Math.max(1, Math.ceil(r.resetIn / 1000));
-    throw new Error(`Lugna dig lite — försök igen om ${s} sekunder.`);
+    throw new Error(`Lugna dig lite. Försök igen om ${s} sekunder.`);
   }
 }

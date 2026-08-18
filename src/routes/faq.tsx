@@ -10,7 +10,7 @@ interface FaqItem {
 
 const FAQ: FaqItem[] = [
   {
-    q: "Är HP Kampen verkligen gratis?",
+    q: "Är Tvåkommanollan verkligen gratis?",
     a: "Ja. Helt gratis. Inga annonser, inget kreditkort, inga in-app-köp och inga premium-paket. Sajten finansieras av grundaren.",
   },
   {
@@ -59,22 +59,22 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad kostar det att skriva Högskoleprovet?",
-    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). HP Kampen kostar däremot ingenting. Sajten finansieras av grundaren.",
+    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). Tvåkommanollan kostar däremot ingenting. Sajten finansieras av grundaren.",
   },
   {
     q: "Vad är skillnaden mellan verbal och kvantitativ del?",
     a: "Verbal del = ORD, MEK, LÄS och ELF (totalt 80 uppgifter). Kvantitativ del = XYZ, KVA, NOG och DTK (totalt 80 uppgifter). De viktas lika i normeringen, så båda halvorna är lika viktiga för slutbetyget.",
   },
   {
-    q: "Hjälper HP Kampen verkligen mot att höja mitt resultat?",
-    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet, vilket styrks av studier på testpreparation. HP Kampen ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
+    q: "Hjälper Tvåkommanollan verkligen mot att höja mitt resultat?",
+    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet, vilket styrks av studier på testpreparation. Tvåkommanollan ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
   },
   {
     q: "Finns det ett snabbtest för att uppskatta min HP-nivå?",
     a: "Ja. Skriv ett helt provpass under Gamla prov så får du både råpoäng och en ungefärlig normerad HP-poäng direkt efter inlämning. Det är den mest exakta uppskattningen utan att faktiskt skriva provet.",
   },
   {
-    q: "Vad är coachning på HP Kampen?",
+    q: "Vad är coachning på Tvåkommanollan?",
     a: "Vi erbjuder gratis 30-minuters videocoachning från en spelare som själv fått 1,9 eller högre på HP. Coachen går igenom dina svagheter och ger en personlig plan. Boka via knappen 'Gratis coachning' i hemvyn.",
   },
 ];
@@ -84,12 +84,12 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: pageMeta({
       path: "/faq",
-      title: "Vanliga frågor om HP Kampen · FAQ",
+      title: "Vanliga frågor om Tvåkommanollan · FAQ",
       description:
-        "Svar på vanliga frågor: är HP Kampen gratis, hur fungerar ELO, är frågorna riktiga, behöver jag konto.",
-      ogTitle: "Vanliga frågor · HP Kampen",
+        "Svar på vanliga frågor: är Tvåkommanollan gratis, hur fungerar ELO, är frågorna riktiga, behöver jag konto.",
+      ogTitle: "Vanliga frågor · Tvåkommanollan",
       ogDescription:
-        "Allt du undrar om HP Kampen: gratis, ELO-ranking, riktiga HP-frågor, gästläge.",
+        "Allt du undrar om Tvåkommanollan: gratis, ELO-ranking, riktiga HP-frågor, gästläge.",
     }),
     links: pageLinks("/faq"),
     // Page-level FAQPage JSON-LD (per-page, distinct from the root one which

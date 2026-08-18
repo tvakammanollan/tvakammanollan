@@ -362,13 +362,13 @@ export function CoachingModal({
                   <a href="mailto:info@tvakommanollan.se" className="underline">
                     info@tvakommanollan.se
                   </a>{" "}
-                  så tar vi det därifrån — tiden är redan din.
+                  så tar vi det därifrån. Tiden är redan din.
                 </p>
               </div>
             ) : (
               <div className="py-12 text-center" aria-busy="true">
                 <Loader2 className="mx-auto h-7 w-7 animate-spin text-[#ae2f26]" />
-                <p className="mt-4 text-sm text-white/60">Tiden är bokad — öppnar kassan…</p>
+                <p className="mt-4 text-sm text-white/60">Tiden är bokad, öppnar kassan…</p>
               </div>
             )}
           </>

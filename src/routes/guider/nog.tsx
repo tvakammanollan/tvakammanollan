@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/nog")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/nog",
-      title: "NOG-guide: kvantitativa resonemang på HP · HP Kampen",
+      title: "NOG-guide: kvantitativa resonemang på HP · Tvåkommanollan",
       description:
         "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information. Strategi och vanliga fällor förklaras.",
-      ogTitle: "NOG-guiden · HP Kampen",
+      ogTitle: "NOG-guiden · Tvåkommanollan",
       ogDescription:
         "NOG på HP: de fem svarsalternativen, arbetsordning och varför du inte behöver lösa uppgiften.",
     }),
@@ -62,7 +62,7 @@ function NogGuidePage() {
         <p>
           NOG är Högskoleprovets mest unika delprovsformat. Du presenteras med en fråga (t.ex. "Hur
           stor är vinkeln x?") följt av två påståenden: (1) och (2). Din uppgift är inte att beräkna
-          svaret — din uppgift är att avgöra om informationen i påståendena räcker för att besvara
+          svaret. Din uppgift är att avgöra om informationen i påståendena räcker för att besvara
           frågan. De fem svarsalternativen är alltid:
         </p>
         <ul className="list-none space-y-1 pl-4">
@@ -94,12 +94,12 @@ function NogGuidePage() {
         <p>Följ alltid denna ordning för att inte missa alternativ:</p>
         <ol className="list-decimal space-y-2 pl-6">
           <li>
-            Testa påstående (1) <em>ensamt</em> — ignorera (2) helt. Räcker (1) för att besvara
+            Testa påstående (1) <em>ensamt</em>: ignorera (2) helt. Räcker (1) för att besvara
             frågan entydigt? Om ja → möjliga svar är A eller D.
           </li>
           <li>
-            Testa påstående (2) <em>ensamt</em> — ignorera (1) helt. Räcker (2)? Om ja → möjliga
-            svar är B eller D.
+            Testa påstående (2) <em>ensamt</em>: ignorera (1) helt. Räcker (2)? Om ja → möjliga svar
+            är B eller D.
           </li>
           <li>
             Om inget ensamt räcker: testa (1) + (2) tillsammans. Räcker kombinationen? Om ja → svar
@@ -113,17 +113,17 @@ function NogGuidePage() {
         </h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Du behöver inte beräkna svaret</strong> — det
+            <strong style={{ color: "var(--cream)" }}>Du behöver inte beräkna svaret:</strong> det
             räcker att fastslå om det GÅR att beräkna ett entydigt svar. Många tar NOG som en
             XYZ-uppgift och slösar tid på att räkna ut det faktiska värdet.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Entydigt svar krävs</strong> — om påståendet
+            <strong style={{ color: "var(--cream)" }}>Entydigt svar krävs:</strong> om påståendet
             ger upphov till två möjliga svar (t.ex. x = 3 eller x = −3) räcker det inte. Det måste
             finnas ett och endast ett svar.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Blanda inte ihop påståendena</strong> — när du
+            <strong style={{ color: "var(--cream)" }}>Blanda inte ihop påståendena:</strong> när du
             testar (1) ensamt ska du bokstavligen täcka (2) med handen och låtsas att det inte
             finns. Att omedvetet använda information från båda är den vanligaste NOG-tabben.
           </li>
@@ -133,9 +133,9 @@ function NogGuidePage() {
           Tidseffektivitet
         </h2>
         <p>
-          NOG-uppgifter är ofta de snabbaste att lösa i det kvantitativa passet — om du inte
-          försöker räkna ut hela svaret. Många uppgifter avgörs inom 30–45 sekunder med rätt metod.
-          Sikta på att klara 6 NOG-uppgifter på 8 minuter, vilket lämnar extra tid till DTK och XYZ.
+          NOG-uppgifter är ofta de snabbaste att lösa i det kvantitativa passet, om du inte försöker
+          räkna ut hela svaret. Många uppgifter avgörs inom 30–45 sekunder med rätt metod. Sikta på
+          att klara 6 NOG-uppgifter på 8 minuter, vilket lämnar extra tid till DTK och XYZ.
         </p>
 
         <p className="mt-8">
@@ -144,7 +144,7 @@ function NogGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva NOG-uppgifter gratis på HP Kampen
+            Öva NOG-uppgifter gratis på Tvåkommanollan
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>

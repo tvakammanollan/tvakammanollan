@@ -34,7 +34,7 @@ import {
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
   console.error(`[forum] ${ctx}:`, error.message);
-  throw new Error("Något gick fel — försök igen om en stund.");
+  throw new Error("Något gick fel. Försök igen om en stund.");
 }
 
 /** Fel ur en RPC: översätt vår felkod, logga resten. */
@@ -554,7 +554,7 @@ export const createForumThread = createServerFn({ method: "POST" })
     if (error) throwRpcError(error, "createForumThread");
 
     const row = (rows ?? [])[0];
-    if (!row) throw new Error("Något gick fel — försök igen om en stund.");
+    if (!row) throw new Error("Något gick fel. Försök igen om en stund.");
     return {
       threadId: row.thread_id,
       postId: row.post_id,
@@ -588,7 +588,7 @@ export const createForumPost = createServerFn({ method: "POST" })
     if (error) throwRpcError(error, "createForumPost");
 
     const row = (rows ?? [])[0];
-    if (!row) throw new Error("Något gick fel — försök igen om en stund.");
+    if (!row) throw new Error("Något gick fel. Försök igen om en stund.");
     return { postId: row.post_id, pending: row.status === "pending" };
   });
 

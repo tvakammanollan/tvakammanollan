@@ -22,7 +22,7 @@ import { slugifyTitle } from "./forum";
 
 function throwDbError(error: { message: string }, ctx: string): never {
   console.error(`[forum-mod] ${ctx}:`, error.message);
-  throw new Error("Något gick fel — försök igen om en stund.");
+  throw new Error("Något gick fel. Försök igen om en stund.");
 }
 
 /**

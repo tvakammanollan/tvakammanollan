@@ -11,7 +11,7 @@ export const Route = createFileRoute("/join/$roomCode")({
   component: JoinPage,
   head: () => ({
     meta: [
-      { title: "Gå med i match · HP Kampen" },
+      { title: "Gå med i match · Tvåkommanollan" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

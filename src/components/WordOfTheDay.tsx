@@ -15,7 +15,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 
 type Wotd = { word: string; definition: string };
 
-const cacheKey = () => `hpk:wotd:${new Date().toISOString().slice(0, 10)}`;
+const cacheKey = () => `tkn:wotd:${new Date().toISOString().slice(0, 10)}`;
 
 export function WordOfTheDay() {
   const fetchBatch = useServerFn(fetchWordBatch);

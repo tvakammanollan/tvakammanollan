@@ -147,11 +147,11 @@ const ERROR_MESSAGES: Record<string, string> = {
   FORUM_NOT_OWNER: "Du kan bara redigera dina egna inlägg.",
   FORUM_LOCKED: "Tråden är låst och går inte att svara i.",
   FORUM_EDIT_WINDOW: `Redigeringsfönstret på ${EDIT_WINDOW_MINUTES} minuter har gått ut.`,
-  FORUM_RATE_THREADS: "Du har startat många trådar den senaste timmen — vänta en stund.",
-  FORUM_RATE_POSTS: "Du har skrivit många inlägg den senaste timmen — vänta en stund.",
-  FORUM_RATE_EDITS: "Du har redigerat väldigt mycket den senaste timmen — vänta en stund.",
+  FORUM_RATE_THREADS: "Du har startat många trådar den senaste timmen. Vänta en stund.",
+  FORUM_RATE_POSTS: "Du har skrivit många inlägg den senaste timmen. Vänta en stund.",
+  FORUM_RATE_EDITS: "Du har redigerat väldigt mycket den senaste timmen. Vänta en stund.",
   FORUM_RATE_NEWUSER: "Nya konton får skriva ett inlägg varannan minut. Vänta lite.",
-  FORUM_RATE_REPORTS: "Du har rapporterat många inlägg — vänta en stund.",
+  FORUM_RATE_REPORTS: "Du har rapporterat många inlägg. Vänta en stund.",
   FORUM_ANSWER_IS_QUESTION: "Frågan kan inte vara sitt eget bästa svar.",
 };
 
@@ -161,7 +161,7 @@ const ERROR_MESSAGES: Record<string, string> = {
  */
 export function forumErrorMessage(raw: string | null | undefined): string {
   const code = Object.keys(ERROR_MESSAGES).find((k) => (raw ?? "").includes(k));
-  return code ? ERROR_MESSAGES[code] : "Något gick fel — försök igen om en stund.";
+  return code ? ERROR_MESSAGES[code] : "Något gick fel. Försök igen om en stund.";
 }
 
 /** Varför en inloggad användare inte får skriva (från forum_post_block_reason). */
@@ -179,7 +179,7 @@ export function blockReasonMessage(reason: BlockReason | null): string | null {
       return null;
     case "gast":
     case "konto":
-      return "Skapa ett konto för att skriva — det tar 20 sekunder och du behåller din statistik.";
+      return "Skapa ett konto för att skriva. Det tar 20 sekunder och du behåller din statistik.";
     case "ej_bekraftad":
       return "Bekräfta din mejladress för att kunna skriva i forumet. Kolla inkorgen (och skräpposten).";
     case "for_nytt":

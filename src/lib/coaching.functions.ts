@@ -151,7 +151,7 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
 
     if (error || !row) {
       console.error("[coaching] kunde inte skapa förfrågan:", error?.message);
-      throw new Error("Kunde inte öppna kassan just nu — försök igen om en stund.");
+      throw new Error("Kunde inte öppna kassan just nu. Försök igen om en stund.");
     }
 
     const session = await createCheckoutSession(
@@ -168,7 +168,7 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
 
     if (!session.url) {
       console.error("[coaching] Stripe gav ingen kassa-URL för session", session.id);
-      throw new Error("Kunde inte öppna kassan just nu — försök igen om en stund.");
+      throw new Error("Kunde inte öppna kassan just nu. Försök igen om en stund.");
     }
 
     await supabaseAdmin
@@ -181,7 +181,7 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
 
 /* ===================== Tidsbokning (Calendly) ===================== */
 
-const BOOKING_ERROR = "Kunde inte öppna kassan just nu — försök igen om en stund.";
+const BOOKING_ERROR = "Kunde inte öppna kassan just nu. Försök igen om en stund.";
 
 export interface CoachingBookingStart {
   /** Länken iframen laddar. null = tidsbokning är inte påslagen här. */

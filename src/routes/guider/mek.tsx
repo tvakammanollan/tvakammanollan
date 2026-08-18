@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/mek")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/mek",
-      title: "MEK-guide: meningskomplettering på HP · HP Kampen",
+      title: "MEK-guide: meningskomplettering på HP · Tvåkommanollan",
       description:
-        "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från HP Kampen med 10 000+ HP-frågor.",
-      ogTitle: "MEK-guiden · HP Kampen",
+        "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från Tvåkommanollan med 10 000+ HP-frågor.",
+      ogTitle: "MEK-guiden · Tvåkommanollan",
       ogDescription:
         "Meningskomplettering på HP: strategi, logikord och hur du undviker distraktorer.",
     }),
@@ -86,7 +86,7 @@ function MekGuidePage() {
           Logikord att känna igen
         </h2>
         <p>
-          Många MEK-uppgifter kretsar kring konnektiver — ord som signalerar relationen mellan
+          Många MEK-uppgifter kretsar kring konnektiver, alltså ord som signalerar relationen mellan
           meningars delar. Att känna igen dem reflexmässigt sparar sekunder:
         </p>
         <ul className="list-disc space-y-2 pl-6">
@@ -121,17 +121,17 @@ function MekGuidePage() {
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Felaktig konnektiv</strong> — ett alternativ
+            <strong style={{ color: "var(--cream)" }}>Felaktig konnektiv:</strong> ett alternativ
             har rätt innehållsord men fel logisk relation. En adversativ mening med "dessutom" låter
             fel även om ordet i sig är vanligt.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Liknande form, fel valör</strong> — ord som
-            "försiggå" och "förekomma" liknar varandra men har különböző stilnivå och passar i
-            diferentes sammanhang.
+            <strong style={{ color: "var(--cream)" }}>Liknande form, fel valör:</strong> ord som
+            "försiggå" och "förekomma" liknar varandra men har olika stilnivå och passar i olika
+            sammanhang.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Felaktig ton</strong> — en formell akademisk
+            <strong style={{ color: "var(--cream)" }}>Felaktig ton:</strong> en formell akademisk
             mening kräver ett formellt alternativ. Väljer du ett alltför vardagligt ord bryter det
             meningens register.
           </li>

@@ -16,10 +16,10 @@ export const Route = createFileRoute("/forum_/regler")({
   head: () => ({
     meta: pageMeta({
       path: "/forum/regler",
-      title: "Forumregler · HP Kampen",
+      title: "Forumregler · Tvåkommanollan",
       description:
-        "Reglerna för HP Kampens forum: vem som driver det, vad som lagras, vad som inte får publiceras och hur du rapporterar ett inlägg.",
-      ogTitle: "Forumregler · HP Kampen",
+        "Reglerna för Tvåkommanollans forum: vem som driver det, vad som lagras, vad som inte får publiceras och hur du rapporterar ett inlägg.",
+      ogTitle: "Forumregler · Tvåkommanollan",
       ogDescription: "Regler, tillhandahållare och hur du rapporterar ett inlägg.",
     }),
     links: pageLinks("/forum/regler"),
@@ -57,12 +57,11 @@ function ForumRulesPage() {
       <div className="mx-auto max-w-2xl px-4 pb-24 sm:px-6">
         <Section title="Vem driver forumet">
           <p>
-            HP Kampen drivs av <Strong>Niklas Pellkvist</Strong> som privatperson. Forumet är en del
-            av tvakommanollan.se och tillhandahålls utan kostnad och utan annonser.
+            Tvåkommanollan drivs av <Strong>Niklas Pellkvist</Strong> som privatperson. Forumet är
+            en del av tvakommanollan.se och tillhandahålls utan kostnad och utan annonser.
           </p>
           <p>
-            Kontakt i alla frågor som rör forumet — inklusive begäran om att få ett inlägg
-            borttaget:{" "}
+            Kontakt i alla frågor som rör forumet, inklusive begäran om att få ett inlägg borttaget:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="text-[var(--teal)] underline underline-offset-2"
@@ -86,7 +85,7 @@ function ForumRulesPage() {
           <p>
             Raderar du ditt konto avidentifieras din användarrad, och dina inlägg står kvar utan
             namn (märkta "Borttagen användare") så att trådarna förblir läsbara. Vill du ha ett
-            enskilt inlägg borttaget — hör av dig.
+            enskilt inlägg borttaget: hör av dig.
           </p>
           <p>
             Hela bilden av vad sajten samlar in står i{" "}
@@ -101,7 +100,7 @@ function ForumRulesPage() {
           <List
             items={[
               "Skriv en rubrik som säger vad frågan gäller. Den är det andra googlar.",
-              "Visa hur du tänkt, inte bara vad svaret blev — det är därför folk kommer tillbaka.",
+              "Visa hur du tänkt, inte bara vad svaret blev. Det är därför folk kommer tillbaka.",
               "Svara på frågan som ställdes. Går diskussionen åt ett annat håll: starta en ny tråd.",
               "Matte skrivs mellan dollartecken: $x^2$, $\\frac{3}{4}$.",
             ]}
@@ -119,8 +118,8 @@ function ForumRulesPage() {
             items={[
               "Reklam, spam och länkar vars enda syfte är att sälja något.",
               "Påhopp på andra användare. Kritisera resonemang, inte personer.",
-              "Personuppgifter om någon annan — namn, skola, bilder, kontaktuppgifter.",
-              "Inklistrade lästexter och provuppgifter ur UHR:s häften. De är upphovsrättsskyddade — det är just därför den engelska läsförståelsen plockas bort ur häftena en vecka efter provdagen. Länka till uppgiften i gamla prov i stället.",
+              "Personuppgifter om någon annan: namn, skola, bilder, kontaktuppgifter.",
+              "Inklistrade lästexter och provuppgifter ur UHR:s häften. De är upphovsrättsskyddade. Det är just därför den engelska läsförståelsen plockas bort ur häftena en vecka efter provdagen. Länka till uppgiften i gamla prov i stället.",
               "Läckta uppgifter från ett pågående provtillfälle. Det är den enda innehållstypen som kan skada sajtens möjlighet att alls publicera gamla prov, och trådar kring provdatum kan låsas i förebyggande syfte.",
             ]}
           />
@@ -129,15 +128,15 @@ function ForumRulesPage() {
         <Section title="Vem får skriva">
           <p>
             Läsa kan alla, även utan konto. För att skriva krävs ett konto med bekräftad mejladress
-            som är äldre än tio minuter. Gästkonton — de som skapas automatiskt när du spelar utan
-            att registrera dig — kan inte skriva.
+            som är äldre än tio minuter. Gästkonton, de som skapas automatiskt när du spelar utan
+            att registrera dig, kan inte skriva.
           </p>
           <p>
             Det är inte krångel för krånglets skull: utan den spärren kan vem som helst skapa
             obegränsat med konton på några sekunder, och forumet vore spammat inom en vecka.
           </p>
           <p>
-            Nya konton har lite hårdare gränser de första inläggen — bland annat hamnar inlägg med
+            Nya konton har lite hårdare gränser de första inläggen. Bland annat hamnar inlägg med
             länkar i granskning i stället för att publiceras direkt. Det släpper av sig självt.
           </p>
         </Section>
@@ -150,7 +149,7 @@ function ForumRulesPage() {
           </p>
           <p>
             Åtgärderna är: godkänna, dölja, radera, och i upprepade fall stänga av kontot från
-            forumet. Ingenting raderas hårt — ett inlägg som tagits bort går att återställa om det
+            forumet. Ingenting raderas hårt. Ett inlägg som tagits bort går att återställa om det
             visar sig ha varit fel.
           </p>
           <p>

@@ -61,14 +61,14 @@ const OMDOMEN = [
     alder: "18 år",
   },
   {
-    citat: "HP Kampen har allt som behövs för att lyckas på högskoleprovet.",
+    citat: "Tvåkommanollan har allt som behövs för att lyckas på högskoleprovet.",
     namn: "Gustav",
     resultat: "1,9",
     alder: "18 år",
   },
   {
     citat:
-      "HP Kampen innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
+      "Tvåkommanollan innehåller verktyg jag hade haft stor nytta av när jag pluggade till högskoleprovet, helt gratis.",
     namn: "Niklas",
     resultat: "1,95",
     roll: "Grundare",

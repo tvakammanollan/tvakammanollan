@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { CANONICAL_HOST, canonicalRedirect, canonicalRedirectEnabled } from "./lib/canonical-host";
+import { posthogCspOrigins } from "./lib/analytics-host";
 import { renderErrorPage } from "./lib/error-page";
 
 type ServerEntry = {
@@ -77,6 +78,11 @@ function withSecurityHeaders(response: Response): Response {
   if (!ct.includes("text/html")) return response;
 
   const headers = new Headers(response.headers);
+  // Värdnamnen härleds ur VITE_PUBLIC_POSTHOG_HOST i stället för att stå här:
+  // pekas analysen om till en egen proxy (PostHogs managed reverse proxy) måste
+  // CSP:n följa med i samma sekund, annars blockerar webbläsaren varje anrop
+  // utan att något syns i loggarna. Se src/lib/analytics-host.ts.
+  const posthog = posthogCspOrigins();
   // CSP — supabase + lovable analytics tillåts, strikt i övrigt.
   // (Google Fonts-posterna borttagna 2026-07 — fonterna laddas inte längre.)
   //
@@ -88,11 +94,11 @@ function withSecurityHeaders(response: Response): Response {
     "Content-Security-Policy",
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev https://eu-assets.i.posthog.com",
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev ${posthog.script.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+      `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app ${posthog.connect.join(" ")}`,
       // Calendly-iframen i coachningsmodalen. Bara ramen öppnas — deras
       // widget.js behövs inte, vi lyssnar själva på postMessage, så script-src
       // står kvar orörd.
@@ -195,7 +201,7 @@ async function fetchWiktionaryDefinition(word: string): Promise<string | null> {
   const url = `https://sv.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(word)}&prop=revisions&rvprop=content&format=json&formatversion=2`;
   try {
     const res = await fetch(url, {
-      headers: { "User-Agent": "HPKampen-Bot/1.0 (educational project; tvakommanollan.se)" },
+      headers: { "User-Agent": "Tvakommanollan-Bot/1.0 (educational project; tvakommanollan.se)" },
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;

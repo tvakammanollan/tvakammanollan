@@ -36,7 +36,7 @@ export async function discoverViaApi(): Promise<Competitor[]> {
       {
         role: "user",
         content:
-          "Lista 10-12 svenska webbplatser som konkurrerar med hpkampen.se kring HP-provförberedelse " +
+          "Lista 10-12 svenska webbplatser som konkurrerar med tvakommanollan.se kring HP-provförberedelse " +
           "(Högskoleprovet). Returnera ENDAST giltig JSON-array: [{name, url, description}]. " +
           "Inkludera bara sajter som faktiskt finns och är relevanta.",
       },
@@ -53,7 +53,7 @@ export async function analyzeViaApi(scraped: ScrapedCompetitor[]): Promise<Analy
   const { Anthropic } = await import("@anthropic-ai/sdk");
   const client = new Anthropic();
 
-  const prompt = `Du är en SEO- och produktanalytiker. Analysera dessa konkurrenter till hpkampen.se
+  const prompt = `Du är en SEO- och produktanalytiker. Analysera dessa konkurrenter till tvakommanollan.se
 (en svensk app för HP-provförberedelse med ELO-ranking, matchmode och spaced repetition).
 
 Konkurrenter (scrapad data):
@@ -78,7 +78,7 @@ Returnera ENDAST giltig JSON med strukturen:
     "overallScore"
   }],
   "opportunities": ["möjlighet 1", ...],
-  "hpkampenStrengths": ["styrka 1", ...]
+  "tvakommanollanStrengths": ["styrka 1", ...]
 }`;
 
   const msg = await client.messages.create({

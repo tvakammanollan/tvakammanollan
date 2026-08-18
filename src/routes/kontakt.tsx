@@ -8,10 +8,10 @@ export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: pageMeta({
       path: "/kontakt",
-      title: "Kontakt · HP Kampen",
+      title: "Kontakt · Tvåkommanollan",
       description:
-        "Hör av dig till HP Kampen. E-post, buggrapporter och feedback. Vi svarar oftast inom 1 vardag.",
-      ogTitle: "Kontakt · HP Kampen",
+        "Hör av dig till Tvåkommanollan. E-post, buggrapporter och feedback. Vi svarar oftast inom 1 vardag.",
+      ogTitle: "Kontakt · Tvåkommanollan",
       ogDescription: "Hör av dig. E-post, buggrapporter och feedback.",
     }),
     links: pageLinks("/kontakt"),
@@ -23,9 +23,9 @@ export const Route = createFileRoute("/kontakt")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "ContactPage",
-        name: "Kontakt · HP Kampen",
+        name: "Kontakt · Tvåkommanollan",
         url: "https://tvakommanollan.se/kontakt",
-        description: "Kontaktinformation till HP Kampen — e-post, buggrapporter och feedback.",
+        description: "Kontaktinformation till Tvåkommanollan: e-post, buggrapporter och feedback.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
       }),
     ],
@@ -71,7 +71,7 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Buggrapport</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Använd bug-knappen i appen (kräver inloggning) — då får vi med rätt context
+                  Använd bug-knappen i appen (kräver inloggning), så får vi med rätt context
                   automatiskt. Annars mejla{" "}
                   <a
                     href="mailto:info@tvakommanollan.se?subject=Bugg-rapport"
@@ -95,7 +95,7 @@ function KontaktPage() {
                 style={{ color: "var(--amber)" }}
               />
               <span>
-                <span className="block font-semibold">Vem driver HP Kampen?</span>
+                <span className="block font-semibold">Vem driver Tvåkommanollan?</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
                   Sajten drivs av Niklas Pellkvist som privatperson. Den är gratis, utan annonser
                   och utan kommersiell verksamhet kopplad till sig. Mer om varför sajten finns:{" "}

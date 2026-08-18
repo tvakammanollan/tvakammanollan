@@ -71,10 +71,10 @@ export const Route = createFileRoute("/leaderboard")({
   head: () => ({
     meta: pageMeta({
       path: "/leaderboard",
-      title: "Topplista · HP Kampen ELO-ranking",
+      title: "Topplista · Tvåkommanollan ELO-ranking",
       description:
         "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
-      ogTitle: "Topplista · HP Kampen",
+      ogTitle: "Topplista · Tvåkommanollan",
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
     links: pageLinks("/leaderboard"),
@@ -86,7 +86,7 @@ export const Route = createFileRoute("/leaderboard")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        name: "Topplista — HP Kampen",
+        name: "Topplista · Tvåkommanollan",
         description:
           "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte och ord. Uppdateras live efter varje match.",
         url: "https://tvakommanollan.se/leaderboard",
@@ -117,7 +117,7 @@ function LeaderboardPage() {
       <div className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
         {user?.is_anonymous && (
           <p className="mb-4 rounded-xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] px-4 py-2.5 text-sm text-white/70">
-            Du spelar som gäst — din ELO sparas inte.{" "}
+            Du spelar som gäst. Din ELO sparas inte.{" "}
             <Link to="/signup" className="font-semibold text-[#ae2f26] hover:underline">
               Skapa konto
             </Link>{" "}

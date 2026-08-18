@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   EMPTY_PROMPT_STATE,
   MATCHES_PER_PROMPT,
@@ -12,6 +12,7 @@ import {
   markPromptShown,
   parsePromptState,
   promptTrigger,
+  readPromptState,
   serializePromptState,
   stopPrompts,
   type PromptState,
@@ -156,5 +157,70 @@ describe("isPromptablePath", () => {
     ]) {
       expect(isPromptablePath(path), path).toBe(false);
     }
+  });
+});
+
+/**
+ * Samma namnbyte som för samtycket: nyckeln flyttade från `hpk-` till `tkn-`.
+ * Det som absolut inte får tappas är `stopped` — den som köpt studieupplägget
+ * ska aldrig få nudgen igen.
+ */
+describe("flytten från den gamla nyckeln", () => {
+  const LEGACY_KEY = "hpk-coaching-prompt";
+  const NEW_KEY = "tkn-coaching-prompt";
+
+  function fakeStorage(): Storage {
+    const map = new Map<string, string>();
+    return {
+      getItem: (k: string) => map.get(k) ?? null,
+      setItem: (k: string, v: string) => void map.set(k, v),
+      removeItem: (k: string) => void map.delete(k),
+      clear: () => map.clear(),
+      key: (i: number) => [...map.keys()][i] ?? null,
+      get length() {
+        return map.size;
+      },
+    } as Storage;
+  }
+
+  let store: Storage;
+
+  beforeEach(() => {
+    store = fakeStorage();
+    (globalThis as { window?: unknown }).window = { localStorage: store };
+  });
+
+  afterEach(() => {
+    delete (globalThis as { window?: unknown }).window;
+  });
+
+  it("tar med sig 'stopped' så att en köpare slipper nudgen igen", () => {
+    store.setItem(LEGACY_KEY, serializePromptState(stopPrompts(EMPTY_PROMPT_STATE)));
+
+    expect(readPromptState().stopped).toBe(true);
+    expect(parsePromptState(store.getItem(NEW_KEY)).stopped).toBe(true);
+    expect(store.getItem(LEGACY_KEY)).toBeNull();
+  });
+
+  it("tar med sig räknarna och antalet visningar", () => {
+    const gammalt = markPromptShown(efter(3, countPageview), NU);
+    store.setItem(LEGACY_KEY, serializePromptState({ ...gammalt, pageviews: 3 }));
+
+    const flyttat = readPromptState();
+    expect(flyttat.pageviews).toBe(3);
+    expect(flyttat.shown).toBe(1);
+    expect(flyttat.shownAt).toBe(NU.toISOString());
+  });
+
+  it("låter den nya nyckeln vinna när båda finns", () => {
+    store.setItem(LEGACY_KEY, serializePromptState(stopPrompts(EMPTY_PROMPT_STATE)));
+    store.setItem(NEW_KEY, serializePromptState(EMPTY_PROMPT_STATE));
+
+    expect(readPromptState().stopped).toBe(false);
+    expect(store.getItem(LEGACY_KEY)).not.toBeNull();
+  });
+
+  it("ger tomt läge när ingen av nycklarna finns", () => {
+    expect(readPromptState()).toEqual(EMPTY_PROMPT_STATE);
   });
 });

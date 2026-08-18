@@ -79,7 +79,7 @@ export function Navbar() {
             annars blir den en klickyta utan text för skärmläsare. */}
         <Link
           to="/"
-          aria-label="HP Kampen, till startsidan"
+          aria-label="Tvåkommanollan, till startsidan"
           className="group inline-flex shrink-0 items-center"
         >
           <span

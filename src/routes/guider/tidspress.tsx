@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/tidspress")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/tidspress",
-      title: "Tidspress på Högskoleprovet · strategi för varje delprov · HP Kampen",
+      title: "Tidspress på Högskoleprovet · strategi för varje delprov · Tvåkommanollan",
       description:
-        "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med HP Kampen.",
-      ogTitle: "Tidspress på HP · HP Kampen",
+        "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
+      ogTitle: "Tidspress på HP · Tvåkommanollan",
       ogDescription:
         "Tidsdisposition för alla 8 delprov, hoppa-strategin och varför du aldrig ska lämna blankt.",
     }),
@@ -57,7 +57,7 @@ function TidspressGuidePage() {
 
       <p className="mb-8">
         Tid är den knappaste resursen på HP. Varje provpass är 55 minuter och innehåller ungefär 40
-        uppgifter — det ger dig lite drygt en minut per uppgift. Med rätt strategi hinner du alla
+        uppgifter. Det ger dig lite drygt en minut per uppgift. Med rätt strategi hinner du alla
         uppgifter och har restid kvar. Utan strategi riskerar du att lägga för lång tid på svåra
         uppgifter och missa enkla poäng längre fram.
       </p>
@@ -78,19 +78,19 @@ function TidspressGuidePage() {
             </p>
             <ul className="mt-2 list-none space-y-1 pl-4">
               <li>
-                <strong style={{ color: "var(--cream)" }}>ORD</strong> — 10 uppgifter ≈ 10 min (1
+                <strong style={{ color: "var(--cream)" }}>ORD:</strong> 10 uppgifter ≈ 10 min (1
                 min/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>MEK</strong> — 10 uppgifter ≈ 10 min (1
+                <strong style={{ color: "var(--cream)" }}>MEK:</strong> 10 uppgifter ≈ 10 min (1
                 min/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>LÄS</strong> — 20 uppgifter ≈ 20 min (5
+                <strong style={{ color: "var(--cream)" }}>LÄS:</strong> 20 uppgifter ≈ 20 min (5
                 min/text)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>ELF</strong> — 20 uppgifter ≈ 20 min (5
+                <strong style={{ color: "var(--cream)" }}>ELF:</strong> 20 uppgifter ≈ 20 min (5
                 min/text)
               </li>
             </ul>
@@ -102,19 +102,19 @@ function TidspressGuidePage() {
             </p>
             <ul className="mt-2 list-none space-y-1 pl-4">
               <li>
-                <strong style={{ color: "var(--cream)" }}>XYZ</strong> — 12 uppgifter ≈ 15 min (75
+                <strong style={{ color: "var(--cream)" }}>XYZ:</strong> 12 uppgifter ≈ 15 min (75
                 sek/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>KVA</strong> — 10 uppgifter ≈ 10 min (60
+                <strong style={{ color: "var(--cream)" }}>KVA:</strong> 10 uppgifter ≈ 10 min (60
                 sek/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>NOG</strong> — 6 uppgifter ≈ 8 min (80
+                <strong style={{ color: "var(--cream)" }}>NOG:</strong> 6 uppgifter ≈ 8 min (80
                 sek/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>DTK</strong> — 12 uppgifter ≈ 22 min (3–5
+                <strong style={{ color: "var(--cream)" }}>DTK:</strong> 12 uppgifter ≈ 22 min (3–5
                 frågor per figur)
               </li>
             </ul>
@@ -130,7 +130,7 @@ function TidspressGuidePage() {
           med restiden.
         </p>
         <p>
-          Varför? Alla uppgifter på HP är lika värda — en poäng var, oavsett svårighet. Att lägga 3
+          Varför? Alla uppgifter på HP är lika värda: en poäng var, oavsett svårighet. Att lägga 3
           minuter på en svår uppgift kostar dig samma tid som du hade kunnat använda till tre enkla
           uppgifter. Svåra uppgifter är värda exakt lika mycket som lätta.
         </p>
@@ -141,15 +141,15 @@ function TidspressGuidePage() {
         <p>
           HP har inget avdrag för fel svar. Det finns ingen anledning att någonsin lämna en uppgift
           obesvarad. Om du kör fast: gissa. Med fyra alternativ är sannolikheten 25 % per ren
-          gissning — och med eliminering av ett eller två orimliga alternativ stiger oddsen
-          kraftigt. En blank ruta ger alltid noll poäng.
+          gissning, och med eliminering av ett eller två orimliga alternativ stiger oddsen kraftigt.
+          En blank ruta ger alltid noll poäng.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Träna tidspressen
         </h2>
         <p>
-          Tidspress känns annorlunda i verkligheten än när du tränar utan klocka. HP Kampens
+          Tidspress känns annorlunda i verkligheten än när du tränar utan klocka. Tvåkommanollans
           live-matcher är designade för att simulera exakt detta: 8 frågor på 8 minuter mot en
           motspelare med samma ELO-rating som du. Samma känsla av klockan som tickar, samma
           beslutspressen som på riktigt HP. Regelbunden matchträning bygger den mentala vana som gör

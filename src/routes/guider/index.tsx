@@ -7,10 +7,10 @@ export const Route = createFileRoute("/guider/")({
   head: () => ({
     meta: pageMeta({
       path: "/guider",
-      title: "Guider till Högskoleprovet · alla 8 delprov · HP Kampen",
+      title: "Guider till Högskoleprovet · alla 8 delprov · Tvåkommanollan",
       description:
         "Kompletta guider till alla 8 delprov på Högskoleprovet: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK. Plus normering, tidspress och toppresultat.",
-      ogTitle: "Guider till Högskoleprovet · HP Kampen",
+      ogTitle: "Guider till Högskoleprovet · Tvåkommanollan",
       ogDescription:
         "Kompletta guider till alla 8 delprov på HP. Strategi, tidspress och normering förklaras.",
     }),
@@ -24,13 +24,13 @@ export const Route = createFileRoute("/guider/")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Course",
-        name: "HP Kampens guidekurs · alla 8 delprov + strategi",
+        name: "Tvåkommanollans guidekurs · alla 8 delprov + strategi",
         description:
           "10 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus tidspress och en komplett studieplan, samt en genomgång av normering och antagningspoäng. Helt gratis.",
         url: "https://tvakommanollan.se/guider",
         provider: {
           "@type": "Organization",
-          name: "HP Kampen",
+          name: "Tvåkommanollan",
           url: "https://tvakommanollan.se",
           "@id": "https://tvakommanollan.se/#org",
         },
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/guider/")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "ItemList",
-        name: "HP Kampens guider",
+        name: "Tvåkommanollans guider",
         itemListOrder: "https://schema.org/ItemListOrderAscending",
         numberOfItems: 12,
         itemListElement: [
@@ -328,7 +328,7 @@ function GuiderPage() {
             Öva &amp; resurser
           </h2>
           <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>
-            Läst klart? Gå från teori till handling — öva på riktiga frågor per delprov.
+            Läst klart? Gå från teori till handling: öva på riktiga frågor per delprov.
           </p>
           <div className="mb-4 flex flex-wrap gap-2">
             {["ord", "mek", "las", "elf", "xyz", "kva", "nog", "dtk"].map((s) => (

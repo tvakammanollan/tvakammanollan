@@ -42,5 +42,5 @@ export interface AnalysisResult {
   summary: string;
   competitors: CompetitorAnalysis[];
   opportunities: string[];
-  hpkampenStrengths: string[];
+  tvakommanollanStrengths: string[];
 }

@@ -182,7 +182,9 @@ describe("resolveCoachingPrice", () => {
   it("matchar produktnamnet oberoende av skiftläge och blanksteg", async () => {
     process.env.STRIPE_COACHING_PRODUCT_NAME = "  coachning studieUPPLÄGG ";
     stubba({
-      data: [{ id: "prod_1", name: "Coachning Studieupplägg", active: true, default_price: ettPris }],
+      data: [
+        { id: "prod_1", name: "Coachning Studieupplägg", active: true, default_price: ettPris },
+      ],
     });
     await expect(resolveCoachingPrice()).resolves.toMatchObject({ priceId: "price_abc" });
   });
@@ -226,7 +228,7 @@ describe("verifyStripeSignature — flera hemligheter", () => {
   const body = JSON.stringify({ id: "evt_2", type: "checkout.session.completed" });
   const now = 1_760_000_000_000;
   const t = Math.floor(now / 1000);
-  const hpk = "whsec_hpkampen";
+  const hpk = "whsec_tvakommanollan";
   const nya = "whsec_nyadoman";
 
   it("godkänner en händelse signerad med endera endpointens hemlighet", async () => {

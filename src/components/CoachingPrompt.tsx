@@ -159,7 +159,7 @@ export function CoachingPrompt() {
                 punkterna nedan bildar den en sammanhållen spalt. */}
             <DialogDescription className="text-[14.5px] leading-relaxed text-white/70">
               {ÖPPNINGSRAD[trigger.current]} Det som lyfter resultatet härifrån är sällan fler
-              timmar — det är att veta vilka timmar som ger mest. Ett personligt studieupplägg byggs
+              timmar. Det är att veta vilka timmar som ger mest. Ett personligt studieupplägg byggs
               efter var du står och hur lång tid du har kvar till provet.
             </DialogDescription>
 

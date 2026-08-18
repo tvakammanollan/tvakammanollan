@@ -630,7 +630,9 @@
     radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.05) 0px, transparent 50%);
 }
 
-/* Aurora animated linear gradient */
+/* Aurora animated linear gradient */
+
+
 
 /* Glass surfaces (Apple frosted glass) */
 .glass {
@@ -741,11 +743,14 @@
   transform: translateX(120%);
 }
 
-/* Aurora ring border button — for premium CTAs */
+/* Aurora ring border button — for premium CTAs */
+
+
 
 /* ============================================================
    GRADIENT TEXTS
-   ============================================================ */
+   ============================================================ */
+
 .text-aurora-gradient {
   background: linear-gradient(115deg, #7a5236 0%, #ae2f26 30%, #8f2620 60%, #c9463a 100%);
   -webkit-background-clip: text;
@@ -753,7 +758,8 @@
   color: transparent;
   background-size: 200% 200%;
   animation: aurora-shift 8s ease-in-out infinite;
-}
+}
+
 .text-cluely-gradient {
   background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 30%, #ffffff 60%, #ddd6fe 100%);
   -webkit-background-clip: text;
@@ -765,7 +771,14 @@
 
 /* ============================================================
    FLOATING ORBS (decorative blurred light blobs)
-   ============================================================ */
+   ============================================================ */
+
+
+
+
+
+
+
 
 /* ============================================================
    SCROLL PROGRESS BAR (top of page)
@@ -791,7 +804,7 @@
 }
 
 /* ============================================================
-   HPKAMPEN PALETTE  (override layer)
+   TVÅKOMMANOLLAN PALETTE  (override layer)
    ------------------------------------------------------------
    Navy backgrounds, cream text, two-accent rule: amber for
    action, teal for state. Loaded LAST so it overrides the
@@ -1013,18 +1026,23 @@ button,
   background-clip: text;
   color: transparent;
   background-size: 200% 200%;
-}
+}
+
+
 .text-cluely-gradient {
   background: linear-gradient(120deg, var(--cream) 0%, var(--teal) 40%, var(--cream) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-
+
+
 .orb-indigo,
 .orb-violet,
-.orb-cyan,
-.orb-fuchsia,
+.orb-cyan,
+
+.orb-fuchsia,
+
 
 .eyebrow {
   color: var(--hp-muted);
@@ -1050,7 +1068,9 @@ button,
   background: rgba(251, 246, 236, 0.96);
   border: 1px solid var(--line-strong);
 }
-
+
+
+
 
 .scroll-progress {
   background: linear-gradient(90deg, var(--teal), var(--cream), var(--amber));

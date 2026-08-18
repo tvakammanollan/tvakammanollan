@@ -54,7 +54,7 @@ export const GUIDES: GuideMeta[] = [
     path: "/guider/nog",
     label: "NOG · Kvantitativa resonemang",
     short: "NOG",
-    description: "Avgör om informationen räcker — strategi och fällor.",
+    description: "Avgör om informationen räcker: strategi och fällor.",
   },
   {
     path: "/guider/dtk",
@@ -206,7 +206,7 @@ export function guideArticleJsonLd({
     },
     publisher: {
       "@type": "Organization",
-      name: "HP Kampen",
+      name: "Tvåkommanollan",
       url: "https://tvakommanollan.se",
       logo: {
         "@type": "ImageObject",

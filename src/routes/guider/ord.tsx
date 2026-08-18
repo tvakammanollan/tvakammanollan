@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/ord",
-      title: "ORD-guide: ordkunskap på Högskoleprovet · HP Kampen",
+      title: "ORD-guide: ordkunskap på Högskoleprovet · Tvåkommanollan",
       description:
         "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",
-      ogTitle: "ORD-guiden · HP Kampen",
+      ogTitle: "ORD-guiden · Tvåkommanollan",
       ogDescription:
         "Synonymer, antonymer och ordförrådsbygge för Högskoleprovet. Strategi och tips.",
     }),
@@ -61,7 +61,7 @@ function OrdGuidePage() {
         </h2>
         <p>
           ORD-delprovet innehåller 40 uppgifter totalt, fördelat på 10 per provpass. Du presenteras
-          med ett ord och ska välja det alternativ som bäst matchar ordets betydelse — antingen som
+          med ett ord och ska välja det alternativ som bäst matchar ordets betydelse, antingen som
           synonym eller antonym. Orden hämtas från ett brett spektrum av svenska texter:
           facklitteratur, skönlitteratur och akademiska sammanhang. Det innebär att du möter allt
           från vardagliga men subtila ord till ovanliga termer från medicin, juridik och filosofi.
@@ -73,16 +73,15 @@ function OrdGuidePage() {
         <p>De flesta ORD-uppgifter faller in i ett av tre mönster:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Synonym</strong> — välj det ord som betyder
+            <strong style={{ color: "var(--cream)" }}>Synonym:</strong> välj det ord som betyder
             ungefär samma sak som det givna ordet. Vanligast på provet.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Antonym</strong> — välj det ord som har
-            motsatt betydelse. Kräver att du känner till både det givna och de alternativa ordens
-            nyanser.
+            <strong style={{ color: "var(--cream)" }}>Antonym:</strong> välj det ord som har motsatt
+            betydelse. Kräver att du känner till både det givna och de alternativa ordens nyanser.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Bildlig/abstrakt användning</strong> — ibland
+            <strong style={{ color: "var(--cream)" }}>Bildlig/abstrakt användning:</strong> ibland
             används det givna ordet i överförd bemärkelse. Läs noggrant om det finns en liten
             kontext i uppgiften.
           </li>
@@ -92,11 +91,11 @@ function OrdGuidePage() {
           Tidsstrategin
         </h2>
         <p>
-          Du har ungefär 10 minuter på 10 ord — alltså en minut per uppgift. Det är gott om tid för
+          Du har ungefär 10 minuter på 10 ord, alltså en minut per uppgift. Det är gott om tid för
           de flesta ord, men snabbt om du fastnar. Arbeta så här: svara direkt på de ord du känner
           igen utan att tveka, markera osäkra uppgifter och återvänd till dem med den tid som är
-          kvar. Hoppa aldrig över ett ord helt — gissa alltid, eftersom det inte finns avdrag för
-          fel svar.
+          kvar. Hoppa aldrig över ett ord helt. Gissa alltid, eftersom det inte finns avdrag för fel
+          svar.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -105,17 +104,17 @@ function OrdGuidePage() {
         <p>Ett brett ordförråd byggs över tid, men det finns smarta genvägar inför HP:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Läs breda källor</strong> — dagstidningar som
+            <strong style={{ color: "var(--cream)" }}>Läs breda källor:</strong> dagstidningar som
             DN och SvD, vetenskapsjournalistik och facklitteratur inom olika ämnen exponerar dig för
             ord som faktiskt dyker upp på provet.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Träna aktivt med HP Kampen</strong> — öva
+            <strong style={{ color: "var(--cream)" }}>Träna aktivt med Tvåkommanollan:</strong> öva
             ORD-frågor från riktiga prov i lugn takt eller i live-matcher under tidspress.
             Upprepning i kontext fastnar bättre än ordlistor.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Studera prefix och suffix</strong> — känner du
+            <strong style={{ color: "var(--cream)" }}>Studera prefix och suffix:</strong> känner du
             igen morfemen vet du ofta ordets valör även om du aldrig sett just det ordet:{" "}
             <em>-het</em> (abstrakt egenskap), <em>-ing</em> (handling/process), <em>-mässig</em> (i
             stil med), <em>o-</em> (negation), <em>miss-</em> (fel/dålig).
@@ -143,7 +142,7 @@ function OrdGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva ORD-frågor gratis på HP Kampen
+            Öva ORD-frågor gratis på Tvåkommanollan
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>

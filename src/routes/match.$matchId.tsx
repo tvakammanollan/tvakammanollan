@@ -30,7 +30,7 @@ import { getBotName } from "@/lib/bot";
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
   head: () => ({
-    meta: [{ title: "Match · HP Kampen" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [{ title: "Match · Tvåkommanollan" }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 

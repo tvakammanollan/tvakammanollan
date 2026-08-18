@@ -9,25 +9,25 @@ export const Route = createFileRoute("/om")({
   head: () => ({
     meta: pageMeta({
       path: "/om",
-      title: "Om HP Kampen · varför sajten finns",
+      title: "Om Tvåkommanollan · varför sajten finns",
       description:
-        "HP Kampen är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,9 på HP), varför sajten är gratis och vad vi tror på.",
-      ogTitle: "Om HP Kampen",
+        "Tvåkommanollan är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,9 på HP), varför sajten är gratis och vad vi tror på.",
+      ogTitle: "Om Tvåkommanollan",
       ogDescription: "Sveriges enda gratis ELO-rankade högskoleprovsplattform. Varför vi finns.",
     }),
     links: pageLinks("/om"),
     scripts: [
       breadcrumbScript([
         { name: "Hem", path: "/" },
-        { name: "Om HP Kampen", path: "/om" },
+        { name: "Om Tvåkommanollan", path: "/om" },
       ]),
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "AboutPage",
-        name: "Om HP Kampen",
+        name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om HP Kampen — Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,9 på Högskoleprovet.",
+          "Om Tvåkommanollan: Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,9 på Högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
@@ -42,7 +42,7 @@ function OmPage() {
         eyebrow="Om oss"
         title="Vi gör HP"
         cycleWords={["enklare.", "roligare.", "gratis.", "modernt."]}
-        subtitle="HP Kampen är Sveriges enda plattform där du tävlar mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt utan kostnad."
+        subtitle="Tvåkommanollan är Sveriges enda plattform där du tävlar mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt utan kostnad."
         align="center"
         variant="content"
       />
@@ -56,17 +56,17 @@ function OmPage() {
           </h2>
           <p>
             Jag heter <strong style={{ color: "var(--cream)" }}>Niklas</strong> och fick 1,9 på
-            Högskoleprovet. Innan jag tog provet använde jag allt jag kunde komma över — gamla prov,
+            Högskoleprovet. Innan jag tog provet använde jag allt jag kunde komma över: gamla prov,
             ordlistor, YouTube-genomgångar och dyra kursplattformar. Det fungerade, men det var
             spretigt, dyrt och oftast tråkigt. Det fanns ingenting som gjorde att jag faktiskt ville
             fortsätta plugga en kväll till.
           </p>
           <p>
-            HP Kampen är vad jag önskat fanns när jag pluggade: ett ställe där du kan träna riktiga
-            HP-frågor under riktig tidspress, mot någon på din nivå, och se ditt resultat klättra
-            över veckorna. Konkurrensen gör att du orkar längre. ELO-systemet ger en ärlig bild av
-            var du står. Och allt — varje delprov, varje gammalt prov, varje funktion — är gratis.
-            Alltid.
+            Tvåkommanollan är vad jag önskat fanns när jag pluggade: ett ställe där du kan träna
+            riktiga HP-frågor under riktig tidspress, mot någon på din nivå, och se ditt resultat
+            klättra över veckorna. Konkurrensen gör att du orkar längre. ELO-systemet ger en ärlig
+            bild av var du står. Och allt, varje delprov, varje gammalt prov och varje funktion, är
+            gratis. Alltid.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -85,8 +85,8 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . HP Kampen finansieras av grundaren — det finns inga annonser, inga premium-paket, inga
-            in-app-köp. Du betalar aldrig med pengar, tid eller uppmärksamhet.
+            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser, inga premium-paket,
+            inga in-app-köp. Du betalar aldrig med pengar, tid eller uppmärksamhet.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -116,12 +116,12 @@ function OmPage() {
             Vart vi är på väg
           </h2>
           <p>
-            HP Kampen växer organiskt. Vi lägger till fler funktioner när de efterfrågas och
+            Tvåkommanollan växer organiskt. Vi lägger till fler funktioner när de efterfrågas och
             förbättrar det som inte funkar tillräckligt bra. Närmast på listan: fler gamla prov,
             bättre statistik per delprov, och studiegrupper för dig som vill plugga med vänner
-            regelbundet. Har du önskemål eller hittat en bugg —{" "}
+            regelbundet. Har du önskemål eller hittat en bugg?{" "}
             <Link to="/kontakt" className="underline" style={{ color: "var(--amber)" }}>
-              hör av dig
+              Hör av dig
             </Link>
             .
           </p>
@@ -133,20 +133,20 @@ function OmPage() {
             <li>
               <Link to="/guider" className="underline" style={{ color: "var(--amber)" }}>
                 Guider till alla 8 delprov
-              </Link>{" "}
-              — strategi, tidsdisposition och tips per delprov
+              </Link>
+              : strategi, tidsdisposition och tips per delprov
             </li>
             <li>
               <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
                 Gamla prov 2022–2026
-              </Link>{" "}
-              — skriv hela provpass med facit och normering
+              </Link>
+              : skriv hela provpass med facit och normering
             </li>
             <li>
               <Link to="/faq" className="underline" style={{ color: "var(--amber)" }}>
                 Vanliga frågor
-              </Link>{" "}
-              — svar på det vi får mest mejl om
+              </Link>
+              : svar på det vi får mest mejl om
             </li>
           </ul>
 
@@ -162,7 +162,7 @@ function OmPage() {
             >
               info@tvakommanollan.se
             </a>
-            . Bug eller önskemål? Använd gärna bug-knappen längst ner i gränssnittet — då hamnar
+            . Bug eller önskemål? Använd gärna bug-knappen längst ner i gränssnittet, så hamnar
             feedbacken direkt hos rätt person.
           </p>
         </section>

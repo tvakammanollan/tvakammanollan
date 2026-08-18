@@ -36,13 +36,14 @@ export function DeleteAccountSection() {
     try {
       await deleteFn({ data: { confirm: "RADERA" } });
       toast.success("Ditt konto är raderat.", {
-        description: "Tack för den här tiden — lycka till på provet!",
+        description: "Tack för den här tiden. Lycka till på provet!",
       });
       await signOut().catch(() => {});
       navigate({ to: "/" });
     } catch (e) {
       toast.error("Kunde inte radera kontot", {
-        description: e instanceof Error ? e.message : "Försök igen eller mejla info@tvakommanollan.se.",
+        description:
+          e instanceof Error ? e.message : "Försök igen eller mejla info@tvakommanollan.se.",
       });
       setBusy(false);
     }

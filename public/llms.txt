@@ -1,23 +1,23 @@
-# HP Kampen
+# Tvåkommanollan
 
 > Sveriges gratis plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Helt gratis, inga annonser, inget kreditkort.
 
-HP Kampen är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,9 på HP och vill att bra HP-träning ska vara gratis för alla.
+Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,9 på HP och vill att bra HP-träning ska vara gratis för alla.
 
 Officiell domän: https://tvakommanollan.se
 
 ## Pages
 
-- [Hem](https://tvakommanollan.se/): Startsida — hitta en match, se din ELO och kom igång på 30 sekunder.
+- [Hem](https://tvakommanollan.se/): Startsida. Hitta en match, se din ELO och kom igång på 30 sekunder.
 - [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
 - [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
 - [Öva ord](https://tvakommanollan.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
 - [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 363 uppgifter med facit. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Tio prov är kompletta med engelsk läsförståelse. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
-- [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
+- [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google), tar under en minut.
 - [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
-- [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om HP Kampen — gratis, ELO, riktiga HP-frågor, gästläge och mer.
+- [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om Tvåkommanollan: gratis, ELO, riktiga HP-frågor, gästläge och mer.
 - [Guider till HP](https://tvakommanollan.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
-- [Om HP Kampen](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
+- [Om Tvåkommanollan](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
 - [Kontakt](https://tvakommanollan.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 
 ## Guider per delprov
@@ -40,8 +40,8 @@ Officiell domän: https://tvakommanollan.se
 ## Optional
 
 - [Matchmaking](https://tvakommanollan.se/matchmaking): Hitta en motståndare på din ELO-nivå inom sekunder (kräver inloggning).
-- [Statistik](https://tvakommanollan.se/stats): Privat — din ELO-utveckling, win rate och prestanda per delprov.
-- [Vänner](https://tvakommanollan.se/friends): Privat — lägg till vänner och bjud in till privata matcher.
+- [Statistik](https://tvakommanollan.se/stats): Privat. Din ELO-utveckling, win rate och prestanda per delprov.
+- [Vänner](https://tvakommanollan.se/friends): Privat. Lägg till vänner och bjud in till privata matcher.
 - [Integritetspolicy](https://tvakommanollan.se/integritetspolicy): GDPR och datahantering.
 - [Användarvillkor](https://tvakommanollan.se/villkor): Användarvillkor för plattformen.
 
@@ -57,20 +57,20 @@ Officiell domän: https://tvakommanollan.se
 
 ## De 8 delproven på Högskoleprovet
 
-- ORD — Ordkunskap. 10 frågor, ca 3 minuter.
-- MEK — Meningskomplettering. 10 frågor, ca 8 minuter.
-- LÄS — Svensk läsförståelse. 10 frågor, ca 22 minuter.
-- ELF — Engelsk läsförståelse. 10 frågor, ca 22 minuter.
-- XYZ — Matematisk problemlösning. 12 frågor, ca 12 minuter.
-- KVA — Kvantitativa jämförelser. 10 frågor, ca 10 minuter.
-- NOG — Kvantitativa resonemang. 6 frågor, ca 10 minuter.
-- DTK — Diagram, tabeller och kartor. 12 frågor, ca 25 minuter.
+- ORD: Ordkunskap. 10 frågor, ca 3 minuter.
+- MEK: Meningskomplettering. 10 frågor, ca 8 minuter.
+- LÄS: Svensk läsförståelse. 10 frågor, ca 22 minuter.
+- ELF: Engelsk läsförståelse. 10 frågor, ca 22 minuter.
+- XYZ: Matematisk problemlösning. 12 frågor, ca 12 minuter.
+- KVA: Kvantitativa jämförelser. 10 frågor, ca 10 minuter.
+- NOG: Kvantitativa resonemang. 6 frågor, ca 10 minuter.
+- DTK: Diagram, tabeller och kartor. 12 frågor, ca 25 minuter.
 
 Verbal del = ORD + MEK + LÄS + ELF. Matte del = XYZ + KVA + NOG + DTK.
 
 ## Hur HP-poängen räknas
 
-Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultatet baseras på andel rätta svar i de åtta delproven och normeras mot övriga skrivande. Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga runt 0,9–1,0. Ett resultat på 1,5 motsvarar ungefär percentil 90; 1,9–2,0 är topp ~1%.
+Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultatet baseras på andel rätta svar i de åtta delproven och normeras mot övriga skrivande. Felaktiga svar ger inga minuspoäng, det lönar sig alltid att gissa. Medelvärdet brukar ligga runt 0,9–1,0. Ett resultat på 1,5 motsvarar ungefär percentil 90; 1,9–2,0 är topp ~1%.
 
 ## Kommande HP-datum
 
@@ -82,7 +82,7 @@ Anmälan öppnar ungefär tre månader innan via antagning.se.
 
 ## FAQ
 
-**Vad är HP Kampen?**
+**Vad är Tvåkommanollan?**
 En gratis svensk plattform där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
 
 **Kostar det något?**
@@ -104,7 +104,7 @@ Alla 8: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK.
 Riktiga frågor från gamla högskoleprov (offentligt material från UHR) och kvalitetskontrollerade övningsfrågor.
 
 **Finns sajten som app?**
-Det är en PWA (Progressive Web App) — lägg till på hemskärmen från Safari/Chrome för app-känsla.
+Det är en PWA (Progressive Web App). Lägg till på hemskärmen från Safari/Chrome för app-känsla.
 
 ## Contact
 
@@ -112,4 +112,4 @@ E-post: info@tvakommanollan.se. Svar oftast inom en vardag. Mer info på [/konta
 
 ## Ägare
 
-HP Kampen drivs av Niklas Pellkvist som privatperson (ingen kommersiell verksamhet). Niklas fick 1,9 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten finansieras av grundaren och har inga annonser och inga in-app-köp. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt — se integritetspolicyn.
+Tvåkommanollan drivs av Niklas Pellkvist som privatperson (ingen kommersiell verksamhet). Niklas fick 1,9 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten finansieras av grundaren och har inga annonser och inga in-app-köp. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.

@@ -58,6 +58,12 @@
     // händelser). OBS: VITE_-variabler bakas in vid BYGGET — de måste därför
     // också finnas i .env, annars blir de tomma i bundlen oavsett vad som står
     // här. Tom nyckel = ingen analys och ingen samtyckesbanner.
+    //
+    // HOST styr både klientens api_host och Workerns CSP (se
+    // src/lib/analytics-host.ts). Den som avgör är .env — Vite bakar in värdet
+    // i båda bundlarna vid bygget, så CSP:n kan aldrig peka på en annan värd än
+    // den klienten ringer. Kopian här är reserv och ska hållas i synk; byts den
+    // ena utan den andra ser felsökningen ut att ljuga.
     "VITE_PUBLIC_POSTHOG_KEY": "phc_q2oscEfWmxtbHGnLsYR32scjdb3NU43jZ4eRaz2foQyD",
     "VITE_PUBLIC_POSTHOG_HOST": "https://eu.i.posthog.com"
   }

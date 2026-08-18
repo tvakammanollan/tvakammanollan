@@ -31,12 +31,12 @@ export const Route = createFileRoute("/forum")({
     return {
       meta: pageMeta({
         path: "/forum",
-        title: "Forum om högskoleprovet · frågor, svar och plugg · HP Kampen",
+        title: "Forum om högskoleprovet · frågor, svar och plugg · Tvåkommanollan",
         description:
           "Ställ frågor om högskoleprovet och få svar av andra som pluggar. Diskutera KVA, XYZ, NOG, DTK, ORD och läsförståelse, anmälan, normering och resultat. Gratis och öppet att läsa.",
-        ogTitle: "Forum om högskoleprovet · HP Kampen",
+        ogTitle: "Forum om högskoleprovet · Tvåkommanollan",
         ogDescription:
-          "Frågor och svar om högskoleprovet — uppgifter, plugg, anmälan och normering.",
+          "Frågor och svar om högskoleprovet: uppgifter, plugg, anmälan och normering.",
       }),
       links: pageLinks("/forum"),
       scripts: [
@@ -79,8 +79,8 @@ function ForumHomePage() {
         title="Forum"
         subtitle={
           totalThreads > 0
-            ? `${formatInt(totalThreads)} trådar och ${formatInt(totalPosts)} inlägg om högskoleprovet. Läs fritt — skriv med ett konto.`
-            : "Frågor och svar om högskoleprovet. Läs fritt — skriv med ett konto."
+            ? `${formatInt(totalThreads)} trådar och ${formatInt(totalPosts)} inlägg om högskoleprovet. Läs fritt, skriv med ett konto.`
+            : "Frågor och svar om högskoleprovet. Läs fritt, skriv med ett konto."
         }
         align="center"
         variant="compact"
@@ -162,7 +162,7 @@ function ForumHomePage() {
             <EmptyState
               icon={MessageSquare}
               title="Inga trådar än"
-              subtitle="Bli den första som ställer en fråga — den som svarar sitter förmodligen och pluggar just nu."
+              subtitle="Bli den första som ställer en fråga. Den som svarar sitter förmodligen och pluggar just nu."
               ctaLabel="Starta en tråd"
               ctaHref="/forum/nytt"
             />
@@ -185,11 +185,11 @@ function ForumHomePage() {
           <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
             <p>
               Forumet är öppet att läsa för alla. För att skriva behövs ett konto med bekräftad
-              mejladress — det är enda sättet att hålla spam borta från ett forum som annars går att
+              mejladress. Det är enda sättet att hålla spam borta från ett forum som annars går att
               skapa hur många konton som helst i.
             </p>
             <p>
-              Klistra inte in hela lästexter eller provuppgifter ur UHR:s häften — de är
+              Klistra inte in hela lästexter eller provuppgifter ur UHR:s häften. De är
               upphovsrättsskyddade. Länka i stället till uppgiften i{" "}
               <Link to="/gamla-prov" className="text-[var(--teal)] hover:underline">
                 gamla prov
@@ -199,8 +199,8 @@ function ForumHomePage() {
             <p>
               <Link to="/forum/regler" className="text-[var(--teal)] hover:underline">
                 Läs hela reglerna
-              </Link>{" "}
-              — de är korta.
+              </Link>
+              : de är korta.
             </p>
           </div>
         </section>

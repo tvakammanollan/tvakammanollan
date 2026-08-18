@@ -15,6 +15,9 @@
 // consent.ts är ren logik utan react och utan posthog-beroende — ingen cykel,
 // och inget av posthog dras in i huvudbundlen av den här importen.
 import { hasAnalyticsConsent } from "./consent";
+// Samma värdnamn som Workern öppnar i CSP:n. Delad definition med flit — se
+// analytics-host.ts.
+import { posthogHost } from "./analytics-host";
 
 /**
  * Typen härleds ur modulen istället för att importeras vid namn. posthog-js
@@ -25,8 +28,6 @@ import { hasAnalyticsConsent } from "./consent";
 type PostHogClient = (typeof import("posthog-js"))["default"];
 
 const POSTHOG_KEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY as string | undefined;
-const POSTHOG_HOST =
-  (import.meta.env.VITE_PUBLIC_POSTHOG_HOST as string | undefined) || "https://eu.i.posthog.com";
 
 /** Utan nyckel finns inget att samtycka till — då ska bannern inte ens visas. */
 export function analyticsConfigured(): boolean {
@@ -89,7 +90,7 @@ export async function startAnalytics(): Promise<PostHogClient | null> {
     try {
       const { default: posthog } = await import("posthog-js");
       posthog.init(POSTHOG_KEY as string, {
-        api_host: POSTHOG_HOST,
+        api_host: posthogHost(),
         ui_host: "https://eu.posthog.com",
         // Vi laddas först efter ja — ingen anledning att starta avstängd.
         opt_out_capturing_by_default: false,

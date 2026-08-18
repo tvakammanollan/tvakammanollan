@@ -64,7 +64,7 @@ const CONCURRENCY = val("--concurrency") ? Math.max(1, parseInt(val("--concurren
 // med kontakt (annars throttlas/blockeras anrop).
 const UA_BROWSER =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
-const UA_WIKIMEDIA = "hpkampen-orddefs/1.0 (https://hpkampen.se; niklas.pellkvist@gmail.com)";
+const UA_WIKIMEDIA = "tvakommanollan-orddefs/1.0 (https://tvakommanollan.se; niklas.pellkvist@gmail.com)";
 const uaFor = (url: string) => (/wik(ipedia|tionary)\.org/.test(url) ? UA_WIKIMEDIA : UA_BROWSER);
 const API = "https://svenska.se/api/search";
 

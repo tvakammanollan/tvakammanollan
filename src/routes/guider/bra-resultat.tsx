@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/bra-resultat")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/bra-resultat",
-      title: "Hur får man bra resultat på HP? · Komplett guide · HP Kampen",
+      title: "Hur får man bra resultat på HP? · Komplett guide · Tvåkommanollan",
       description:
         "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat. Från 1.0 till 2.0 med rätt strategi.",
-      ogTitle: "Bra resultat på HP · HP Kampen",
+      ogTitle: "Bra resultat på HP · Tvåkommanollan",
       ogDescription:
         "Studieplan 6–8 veckor, kartläggning av delprov och mentala tips för provdagen. Från 1.0 till 2.0.",
     }),
@@ -49,13 +49,13 @@ export const Route = createFileRoute("/guider/bra-resultat")({
             "@type": "HowToStep",
             position: 2,
             name: "Vecka 1–2: fokusera på svagaste delprov",
-            text: "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller matte — välj din starkare sida och gör den perfekt.",
+            text: "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller matte: välj din starkare sida och gör den perfekt.",
           },
           {
             "@type": "HowToStep",
             position: 3,
             name: "Vecka 3–5: daglig träning",
-            text: "Träna ORD, MEK, LÄS/ELF eller XYZ, KVA, NOG, DTK dagligen via HP Kampen. Kort intensiv träning är mer effektivt än långa pass.",
+            text: "Träna ORD, MEK, LÄS/ELF eller XYZ, KVA, NOG, DTK dagligen via Tvåkommanollan. Kort intensiv träning är mer effektivt än långa pass.",
           },
           {
             "@type": "HowToStep",
@@ -73,7 +73,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
             "@type": "HowToStep",
             position: 6,
             name: "Provdagen",
-            text: "Frukost och vatten. Var på plats i god tid. Börja med det lättaste delprovet i passet. Hoppa aldrig — gissa alltid när du kör fast.",
+            text: "Frukost och vatten. Var på plats i god tid. Börja med det lättaste delprovet i passet. Hoppa aldrig. Gissa alltid när du kör fast.",
           },
         ],
       }),
@@ -103,7 +103,7 @@ function BraResultatGuidePage() {
       </header>
 
       <p className="mb-8">
-        Det finns inget hemligt recept — men det finns ett systematiskt tillvägagångssätt som
+        Det finns inget hemligt recept, men det finns ett systematiskt tillvägagångssätt som
         konsekvent ger förbättringar. Nyckeln är att träna smart, inte bara hårt: identifiera dina
         svagaste delprov, lägg fokus där förbättringsmarginalen är störst och simulera
         provförhållanden regelbundet.
@@ -114,9 +114,9 @@ function BraResultatGuidePage() {
           Börja med en kartläggning
         </h2>
         <p>
-          Gör ett komplett gammalt prov under riktiga förhållanden — tid, tystnad, inga hjälpmedel —
-          och räkna sedan ut din råpoäng per delprov. Det ger dig en ärlig bild av din startnivå.
-          Identifiera:
+          Gör ett komplett gammalt prov under riktiga förhållanden, alltså tid, tystnad och inga
+          hjälpmedel, och räkna sedan ut din råpoäng per delprov. Det ger dig en ärlig bild av din
+          startnivå. Identifiera:
         </p>
         <ul className="list-disc space-y-1 pl-6">
           <li>Vilket delprov ger dig flest fel?</li>
@@ -130,7 +130,7 @@ function BraResultatGuidePage() {
         </h2>
         <p>
           Förbättringsmarginalen är störst i mitten av betygsskalan. Att gå från 1.0 till 1.5 kräver
-          ungefär lika mycket träning som att gå från 1.5 till 1.8 — men att gå från 1.9 till 2.0
+          ungefär lika mycket träning som att gå från 1.5 till 1.8, men att gå från 1.9 till 2.0
           kräver enorm precision och lämnar mycket lite utrymme för fel.
         </p>
         <p>
@@ -154,7 +154,7 @@ function BraResultatGuidePage() {
           <li>
             <strong style={{ color: "var(--cream)" }}>Vecka 3–5: Fokusträning</strong>
             <br />
-            Daglig träning med HP Kampen på prioriterade delprov. Varva solo-träning (ostressad
+            Daglig träning med Tvåkommanollan på prioriterade delprov. Varva solo-träning (ostressad
             teknikövning) med live-matcher (tidspress och konkurrens). Sikta på 30–45 min per dag.
           </li>
           <li>
@@ -162,9 +162,8 @@ function BraResultatGuidePage() {
               Vecka 6–7: Gamla prov under riktiga förhållanden
             </strong>
             <br />
-            Skriv kompletta gamla prov med äkta tidsgränser. Analysera varje fel — var det
-            tidsbrist, kunskapslucka eller slarv? Justera fokus baserat på var felen fortfarande
-            uppstår.
+            Skriv kompletta gamla prov med äkta tidsgränser. Analysera varje fel. Var det tidsbrist,
+            kunskapslucka eller slarv? Justera fokus baserat på var felen fortfarande uppstår.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>
@@ -182,26 +181,26 @@ function BraResultatGuidePage() {
         </h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Frukost och vatten</strong> — blodsockret
+            <strong style={{ color: "var(--cream)" }}>Frukost och vatten:</strong> blodsockret
             påverkar koncentrationen. Ät en riktig frukost och ha vatten med dig om det tillåts.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Var på plats i god tid</strong> — stressad
+            <strong style={{ color: "var(--cream)" }}>Var på plats i god tid:</strong> stressad
             ankomst sätter kroppen i alarmberedskap och sänker prestationen. Planera buffert.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Börja med det lättaste</strong> — i varje
+            <strong style={{ color: "var(--cream)" }}>Börja med det lättaste:</strong> i varje
             provpass: starta med det moment du känner dig tryggast i. Det bygger självförtroende och
             säkerställer tidiga poäng.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Gissa alltid — lämna aldrig blankt</strong> —
+            <strong style={{ color: "var(--cream)" }}>Gissa alltid, lämna aldrig blankt:</strong>{" "}
             ingen uppgift ska lämnas obesvarad. Inget avdrag för fel.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Lita på din förberedelse</strong> — du har
-            tränat. Övertänk inte enskilda uppgifter. Gå på din första instinkt om du är osäker —
-            forskning visar att den ofta är rätt.
+            <strong style={{ color: "var(--cream)" }}>Lita på din förberedelse:</strong> du har
+            tränat. Övertänk inte enskilda uppgifter. Gå på din första instinkt om du är osäker.
+            Forskning visar att den ofta är rätt.
           </li>
         </ul>
 
@@ -211,21 +210,21 @@ function BraResultatGuidePage() {
         <ul className="list-disc space-y-2 pl-6">
           <li>
             <Link to="/train" className="underline" style={{ color: "var(--amber)" }}>
-              HP Kampen
-            </Link>{" "}
-            — gratis live-matcher och solo-träning på riktiga HP-frågor
+              Tvåkommanollan
+            </Link>
+            : gratis live-matcher och solo-träning på riktiga HP-frågor
           </li>
           <li>
             <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
               Gamla prov
-            </Link>{" "}
-            — skriv kompletta provpass med facit
+            </Link>
+            : skriv kompletta provpass med facit
           </li>
           <li>
             <Link to="/faq" className="underline" style={{ color: "var(--amber)" }}>
               FAQ
-            </Link>{" "}
-            — svar på vanliga frågor om HP, anmälan och resultat
+            </Link>
+            : svar på vanliga frågor om HP, anmälan och resultat
           </li>
         </ul>
 

@@ -58,7 +58,7 @@ function NotFoundComponent() {
         </h1>
         <h2 className="mt-3 text-xl font-semibold sm:text-2xl">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Den här sidan finns inte — men din ELO väntar. Här är några populära ställen att gå till
+          Den här sidan finns inte, men din ELO väntar. Här är några populära ställen att gå till
           istället:
         </p>
 
@@ -135,13 +135,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
+      { title: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "description",
         content:
           "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK – gratis.",
       },
-      { property: "og:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
+      {
+        property: "og:title",
+        content: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov",
+      },
       {
         property: "og:description",
         content:
@@ -153,10 +156,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://tvakommanollan.se/og-image-3.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "HP Kampen · Tävla mot vänner i Högskoleprovet" },
-      { property: "og:site_name", content: "HP Kampen" },
+      { property: "og:image:alt", content: "Tvåkommanollan · Tävla mot vänner i Högskoleprovet" },
+      { property: "og:site_name", content: "Tvåkommanollan" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "HP Kampen – Gratis ELO-rankade HP-dueller & övningsprov" },
+      {
+        name: "twitter:title",
+        content: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov",
+      },
       {
         name: "twitter:description",
         content:
@@ -166,7 +172,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#fbf6ec" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
-      { name: "apple-mobile-web-app-title", content: "HP Kampen" },
+      { name: "apple-mobile-web-app-title", content: "Tvåkommanollan" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
     ],
     links: [
@@ -209,8 +215,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "@id": "https://tvakommanollan.se/#webapp",
-          name: "HP Kampen",
-          alternateName: "HP-Kampen",
+          name: "Tvåkommanollan",
+          alternateName: "Tvakommanollan",
           url: "https://tvakommanollan.se",
           description:
             "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
@@ -244,7 +250,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
           "@id": "https://tvakommanollan.se/#org",
-          name: "HP Kampen",
+          name: "Tvåkommanollan",
           url: "https://tvakommanollan.se",
           logo: "https://tvakommanollan.se/icon-192.png",
           areaServed: "SE",
@@ -279,7 +285,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Niklas",
           jobTitle: "Grundare",
           worksFor: { "@id": "https://tvakommanollan.se/#org" },
-          description: "Grundare av HP Kampen. Fick 1,9 på Högskoleprovet.",
+          description: "Grundare av Tvåkommanollan. Fick 1,9 på Högskoleprovet.",
         }),
       },
       // Schema.org FAQPage — Google rich results
@@ -291,18 +297,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           mainEntity: [
             {
               "@type": "Question",
-              name: "Vad är HP Kampen?",
+              name: "Vad är Tvåkommanollan?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "HP Kampen är en gratis plattform där du tävlar mot vänner i realtid med frågor från Högskoleprovet. Du klättrar i en ELO-ranking och kan träna alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
+                text: "Tvåkommanollan är en gratis plattform där du tävlar mot vänner i realtid med frågor från Högskoleprovet. Du klättrar i en ELO-ranking och kan träna alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
               },
             },
             {
               "@type": "Question",
-              name: "Kostar HP Kampen något?",
+              name: "Kostar Tvåkommanollan något?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Nej, HP Kampen är helt gratis. Inga annonser, inget kreditkort, inga in-app-köp. Du kan även få en gratis 30-min coachning från en spelare som fått 1,9+ på HP.",
+                text: "Nej, Tvåkommanollan är helt gratis. Inga annonser, inget kreditkort, inga in-app-köp. Du kan även få en gratis 30-min coachning från en spelare som fått 1,9+ på HP.",
               },
             },
             {
@@ -364,7 +370,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "WebSite",
           "@id": "https://tvakommanollan.se/#website",
           url: "https://tvakommanollan.se",
-          name: "HP Kampen",
+          name: "Tvåkommanollan",
           description: "Realtidsmatcher och ELO-ranking för Högskoleprovet. Gratis.",
           inLanguage: "sv-SE",
           publisher: { "@id": "https://tvakommanollan.se/#org" },
@@ -421,7 +427,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/hogskoleprovet-poang">HP-poäng och normering</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
-          <a href="/om">Om HP Kampen</a>
+          <a href="/om">Om Tvåkommanollan</a>
           <a href="/kontakt">Kontakt</a>
         </nav>
         <Scripts />

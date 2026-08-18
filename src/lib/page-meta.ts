@@ -9,9 +9,9 @@
  *   head: () => ({
  *     meta: pageMeta({
  *       path: "/train",
- *       title: "Träna HP · alla 8 delprov utan tidspress · HP Kampen",
+ *       title: "Träna HP · alla 8 delprov utan tidspress · Tvåkommanollan",
  *       description: "...",
- *       ogTitle: "Träna HP utan tidspress · HP Kampen",
+ *       ogTitle: "Träna HP utan tidspress · Tvåkommanollan",
  *       ogDescription: "...",
  *     }),
  *     links: pageLinks("/train"),

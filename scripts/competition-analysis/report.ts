@@ -214,21 +214,21 @@ function buildHtml(data: AnalysisResult): string {
   </div>
 
   <div class="section">
-    <h2>Möjligheter för hpkampen.se</h2>
+    <h2>Möjligheter för tvakommanollan.se</h2>
     <ul class="opp-list">
       ${data.opportunities.map((o) => `<li>${o}</li>`).join("")}
     </ul>
   </div>
 
   <div class="section">
-    <h2>hpkampen.se styrkor</h2>
+    <h2>tvakommanollan.se styrkor</h2>
     <ul class="strength-list">
-      ${data.hpkampenStrengths.map((s) => `<li>${s}</li>`).join("")}
+      ${data.tvakommanollanStrengths.map((s) => `<li>${s}</li>`).join("")}
     </ul>
   </div>
 
   <div class="footer">
-    hpkampen.se · Konkurrentanalys ${date} · Genererad av Claude Code
+    tvakommanollan.se · Konkurrentanalys ${date} · Genererad av Claude Code
   </div>
 
 </div>

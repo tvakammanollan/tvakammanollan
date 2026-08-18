@@ -10,7 +10,7 @@ import { LEADERBOARD_SIZE } from "./leaderboard.functions";
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
   console.error(`[word-practice] ${ctx}:`, error.message);
-  throw new Error("Något gick fel — försök igen om en stund.");
+  throw new Error("Något gick fel. Försök igen om en stund.");
 }
 
 export type WordQuestion = {

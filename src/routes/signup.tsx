@@ -18,10 +18,10 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: pageMeta({
       path: "/signup",
-      title: "Skapa konto · gratis HP-träning · HP Kampen",
+      title: "Skapa konto · gratis HP-träning · Tvåkommanollan",
       description:
-        "Skapa gratis konto på HP Kampen på 30 sekunder. Inget kreditkort. Börja tävla direkt.",
-      ogTitle: "Skapa konto gratis · HP Kampen",
+        "Skapa gratis konto på Tvåkommanollan på 30 sekunder. Inget kreditkort. Börja tävla direkt.",
+      ogTitle: "Skapa konto gratis · Tvåkommanollan",
       ogDescription: "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
       noindex: true,
     }),

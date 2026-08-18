@@ -1,10 +1,10 @@
-# HP Kampen first edition
+# Tvåkommanollan first edition
 
 jag har pratat med claud eom att bygga en prompt för ett saas jag har i tankrna som byger på att tävla i hp-ppgifter med ett elo system online mot andra. jag kmr att skicka 7 stycken promptar till dig en i taget. om d är några frgor säg till o ananars matar jag på en efter en
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://hpkampen.lovable.app
+**Live app**: https://tvakommanollan.se
 
 ## Build with Lovable
 

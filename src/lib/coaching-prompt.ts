@@ -15,7 +15,14 @@
  * så påslaget är en siffra, inte en ombyggnad.
  */
 
-export const PROMPT_STORAGE_KEY = "hpk-coaching-prompt";
+export const PROMPT_STORAGE_KEY = "tkn-coaching-prompt";
+
+/**
+ * Nyckeln hette `hpk-coaching-prompt` fram till namnbytet till
+ * Tvåkommanollan. Den flyttas över vid första läsningen — annars tappas
+ * `stopped`, och den som redan köpt studieupplägget hade fått nudgen igen.
+ */
+const LEGACY_PROMPT_STORAGE_KEY = "hpk-coaching-prompt";
 
 /** Höj när trösklarna eller innehållet ändras — gamla räknare nollställs då. */
 export const PROMPT_VERSION = 1;
@@ -171,7 +178,14 @@ export function isPromptablePath(path: string): boolean {
 export function readPromptState(): PromptState {
   if (typeof window === "undefined") return EMPTY_PROMPT_STATE;
   try {
-    return parsePromptState(window.localStorage.getItem(PROMPT_STORAGE_KEY));
+    const raw = window.localStorage.getItem(PROMPT_STORAGE_KEY);
+    if (raw !== null) return parsePromptState(raw);
+    const legacy = window.localStorage.getItem(LEGACY_PROMPT_STORAGE_KEY);
+    window.localStorage.removeItem(LEGACY_PROMPT_STORAGE_KEY);
+    if (legacy === null) return EMPTY_PROMPT_STATE;
+    const state = parsePromptState(legacy);
+    window.localStorage.setItem(PROMPT_STORAGE_KEY, serializePromptState(state));
+    return state;
   } catch {
     return EMPTY_PROMPT_STATE;
   }

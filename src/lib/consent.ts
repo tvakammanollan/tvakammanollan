@@ -20,10 +20,18 @@
  */
 export const CONSENT_VERSION = 2;
 
-export const CONSENT_STORAGE_KEY = "hpk-analytics-consent";
+export const CONSENT_STORAGE_KEY = "tkn-analytics-consent";
+
+/**
+ * Nyckeln hette `hpk-analytics-consent` fram till namnbytet till
+ * Tvåkommanollan. Ett byte utan flytt hade tolkats som "inget val gjort" och
+ * visat bannern igen för alla som redan svarat — samtycket finns, det ligger
+ * bara på fel nyckel. `readConsent` flyttar över det första gången.
+ */
+const LEGACY_CONSENT_STORAGE_KEY = "hpk-analytics-consent";
 
 /** Skickas när valet ändras i samma flik (storage-eventet når bara andra flikar). */
-export const CONSENT_CHANGED_EVENT = "hpk:consent-changed";
+export const CONSENT_CHANGED_EVENT = "tkn:consent-changed";
 
 export type ConsentChoice = "granted" | "denied";
 
@@ -82,10 +90,26 @@ export function readConsent(): ConsentRecord | null {
   const store = safeStorage();
   if (!store) return null;
   try {
-    return parseConsent(store.getItem(CONSENT_STORAGE_KEY));
+    const current = parseConsent(store.getItem(CONSENT_STORAGE_KEY));
+    if (current) return current;
+    return migrateLegacyConsent(store);
   } catch {
     return null;
   }
+}
+
+/**
+ * Läser den gamla nyckeln en gång och skriver om den till den nya. Posten
+ * valideras av `parseConsent` precis som vanligt, så en föråldrad version
+ * flyttas inte över — då ska bannern visas igen, vilket är hela poängen med
+ * CONSENT_VERSION.
+ */
+function migrateLegacyConsent(store: Storage): ConsentRecord | null {
+  const legacy = parseConsent(store.getItem(LEGACY_CONSENT_STORAGE_KEY));
+  store.removeItem(LEGACY_CONSENT_STORAGE_KEY);
+  if (!legacy) return null;
+  store.setItem(CONSENT_STORAGE_KEY, serializeConsent(legacy));
+  return legacy;
 }
 
 export function writeConsent(choice: ConsentChoice): ConsentRecord {
@@ -107,6 +131,7 @@ export function clearConsent(): void {
   const store = safeStorage();
   try {
     store?.removeItem(CONSENT_STORAGE_KEY);
+    store?.removeItem(LEGACY_CONSENT_STORAGE_KEY);
   } catch {
     /* ignoreras — se writeConsent */
   }

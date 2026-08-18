@@ -23,11 +23,11 @@ export const Route = createFileRoute("/gamla-prov")({
     return {
       meta: pageMeta({
         path: "/gamla-prov",
-        title: `Gamla högskoleprov ${oldest}–${newest} · alla provpass med facit · HP Kampen`,
+        title: `Gamla högskoleprov ${oldest}–${newest} · alla provpass med facit · Tvåkommanollan`,
         description:
-          `Skriv ${exams.length} riktiga högskoleprov online — ${formatInt(count)} uppgifter från ` +
+          `Skriv ${exams.length} riktiga högskoleprov online: ${formatInt(count)} uppgifter från ` +
           `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,
-        ogTitle: `Gamla högskoleprov ${oldest}–${newest} · HP Kampen`,
+        ogTitle: `Gamla högskoleprov ${oldest}–${newest} · Tvåkommanollan`,
         ogDescription: `${exams.length} provtillfällen, ${formatInt(count)} uppgifter med facit. Gratis.`,
       }),
       links: pageLinks("/gamla-prov"),
@@ -76,7 +76,7 @@ function GamlaProvPage() {
       <PageHero
         eyebrow="Högskoleprovet · gamla prov"
         title="Alla gamla högskoleprov"
-        subtitle={`${exams.length} provtillfällen och ${formatInt(count)} uppgifter med facit — skriv hela provpass på tid, direkt i webbläsaren.`}
+        subtitle={`${exams.length} provtillfällen och ${formatInt(count)} uppgifter med facit. Skriv hela provpass på tid, direkt i webbläsaren.`}
         align="center"
         variant="compact"
       />
@@ -130,7 +130,7 @@ function GamlaProvPage() {
           <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
             <p>
               Ett högskoleprov består av fem provpass, varav ett är ett utprövningspass som inte
-              räknas. De fyra som räknas — två verbala och två kvantitativa — publiceras av
+              räknas. De fyra som räknas, två verbala och två kvantitativa, publiceras av
               Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade
               precis som i provhäftet och med samma tidsgräns: 55 minuter per pass.
             </p>
@@ -142,7 +142,7 @@ function GamlaProvPage() {
             <p>
               Engelsk läsförståelse (ELF) finns med i varje provpass. UHR byter en vecka efter
               provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl, så
-              de flesta sajter saknar den delen — här är originalhäftena spårade upp, prov för prov.
+              de flesta sajter saknar den delen. Här är originalhäftena spårade upp, prov för prov.
               Varje verbalt pass går alltså att skriva i sin helhet.
             </p>
           </div>

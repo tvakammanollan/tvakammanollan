@@ -19,11 +19,12 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: "Högskoleprovet datum 2026 & 2027 – när är nästa prov? · HP Kampen",
+      title: "Högskoleprovet datum 2026 & 2027 – när är nästa prov? · Tvåkommanollan",
       description:
         "Alla kommande datum för högskoleprovet (HP): höstprovet 2026, vårprovet 2027 och framåt. Se nedräkning till nästa prov, när anmälan öppnar och börja öva gratis.",
       ogTitle: "Högskoleprovet datum – när är nästa prov?",
-      ogDescription: "Kommande HP-datum, nedräkning och anmälningsinfo. Öva gratis på HP Kampen.",
+      ogDescription:
+        "Kommande HP-datum, nedräkning och anmälningsinfo. Öva gratis på Tvåkommanollan.",
     }),
     links: pageLinks("/hogskoleprovet-datum"),
     scripts: [

@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-05-24T00:00:00.000Z",
-  "summary": "Marknaden för HP-förberedelse i Sverige är mogen och fragmenterad, med HPGuiden som en 21-årig dominant aktör och HP-spelet som en ny stark utmanare med 25 000+ frågor och gratis-modell. hpkampen.se har ett unikt erbjudande i form av ELO-baserat matchläge och ranksystem — något ingen annan aktör replikerar fullt ut — men saknar videoinnehåll och organisk SEO-tyngd som de etablerade spelarna byggt under decennier.",
+  "summary": "Marknaden för HP-förberedelse i Sverige är mogen och fragmenterad, med HPGuiden som en 21-årig dominant aktör och HP-spelet som en ny stark utmanare med 25 000+ frågor och gratis-modell. tvakommanollan.se har ett unikt erbjudande i form av ELO-baserat matchläge och ranksystem — något ingen annan aktör replikerar fullt ut — men saknar videoinnehåll och organisk SEO-tyngd som de etablerade spelarna byggt under decennier.",
   "competitors": [
     {
       "name": "HP-spelet",
@@ -22,11 +22,11 @@
       },
       "features": {
         "score": 5,
-        "notes": "Branschens bredaste utbud: 25 000+ frågor, AI-förklaringar, adaptiv inlärning, multiplayer och dagliga utmaningar. Direktkonkurrent till hpkampen.se på gamification-axeln.",
+        "notes": "Branschens bredaste utbud: 25 000+ frågor, AI-förklaringar, adaptiv inlärning, multiplayer och dagliga utmaningar. Direktkonkurrent till tvakommanollan.se på gamification-axeln.",
         "strengths": [
           "25 000+ autentiska frågor från alla 8 kategorier — branschens störst utbud",
           "AI-genererade förklaringar per fråga (rätta OCH felaktiga svar förklaras)",
-          "Multiplayer och tävlingselement — direkt konkurrens mot hpkampen.ses matchläge",
+          "Multiplayer och tävlingselement — direkt konkurrens mot tvakommanollan.ses matchläge",
           "Adaptiv algoritm som anpassar svårighetsgrad baserat på prestanda",
           "Streaks, dagliga utmaningar och diagnostiska bedömningar"
         ],
@@ -371,15 +371,15 @@
   ],
   "opportunities": [
     "Stärk ELO-rankingsystemet som unikt USP — ingen annan aktör på marknaden erbjuder äkta ELO-baserad rankning. Kommunicera detta tydligare på startsidan med en konkret ranking-visualisering.",
-    "SEO-gap: Skapa innehållssidor kring 'träna HP mot vänner', 'HP rankingsystem' och 'HP ELO' — dessa sökord är helt outnyttjade av konkurrenterna och matchar hpkampen.ses unika position.",
+    "SEO-gap: Skapa innehållssidor kring 'träna HP mot vänner', 'HP rankingsystem' och 'HP ELO' — dessa sökord är helt outnyttjade av konkurrenterna och matchar tvakommanollan.ses unika position.",
     "Lägg till videoförklaringar för de svåraste frågorna — samtliga starka konkurrenter (HPGuiden: 2 600+, HPKursen: 50+, HP-appen: 81+) erbjuder video. Avsaknaden är ett tydligt gap.",
     "Community-funktion: HPGuiden äger 'Sveriges största forum'. En enkel fråge-/diskussionstråd kopplad till specifika uppgifter skulle differentiera utan att kräva ett fullt forum.",
-    "Transparent priskommunikation: HPGuiden och HP-spelet är otydliga med priser på startsidan — hpkampen.ses gratismodell (annonsfinansierad) är ett starkt värdeerbjudande som bör lyftas tydligare.",
-    "HP-spelet är närmaste konkurrenten på gamification — bevaka deras multiplayer-implementering noga. hpkampen.ses realtids-matchläge är ett tydligare real-time-erbjudande och bör betonas.",
-    "Mobilapp: Tre av de starkaste konkurrenterna (HP-appen, HPGuiden, Pluggahp) erbjuder mobilappar. En PWA eller native-app för hpkampen.se skulle minska friktionen för mobilanvändare.",
+    "Transparent priskommunikation: HPGuiden och HP-spelet är otydliga med priser på startsidan — tvakommanollan.ses gratismodell (annonsfinansierad) är ett starkt värdeerbjudande som bör lyftas tydligare.",
+    "HP-spelet är närmaste konkurrenten på gamification — bevaka deras multiplayer-implementering noga. tvakommanollan.ses realtids-matchläge är ett tydligare real-time-erbjudande och bör betonas.",
+    "Mobilapp: Tre av de starkaste konkurrenterna (HP-appen, HPGuiden, Pluggahp) erbjuder mobilappar. En PWA eller native-app för tvakommanollan.se skulle minska friktionen för mobilanvändare.",
     "Spaced repetition för fler kategorier: Funktion finns för ORD — expandera till MEK och ELF som har högt repetitionsvärde och liknande formel-/formelbaserat innehåll."
   ],
-  "hpkampenStrengths": [
+  "tvakommanollanStrengths": [
     "Unikt realtids-matchläge (1v1) mot riktiga motspelare eller bot — ingen annan aktör erbjuder detta fullt ut",
     "ELO-baserat ranksystem (Brons → Diamant) skapar djup progression och återkomstmotivation",
     "Helt gratis för användaren (annonsfinansierat) — den enda gratis-first-aktören med genuint competitive gameplay",
