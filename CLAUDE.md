@@ -599,6 +599,53 @@ Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
   `calendly_invitee_uri` (en bokning hör till exakt ett köp) och vyn ovan med
   `security_invoker = true`.
 
+### Nudgen om studieupplägget (2026-08-18)
+
+Erbjudandet kommer upp av sig självt: **var sjunde sidvisning eller varannan
+avslutade match**, det som inträffar först. `CoachingPrompt` (monterad i
+`__root` under `SafeBoundary`) äger rutan, `lib/coaching-prompt.ts` äger
+räkningen, och knappen går in i samma `CoachingModal` som korten på start- och
+landningssidan — det finns fortfarande bara en väg till Stripe.
+
+- **`MAX_PROMPTS = 1` är hela engångsspärren.** Allt annat är redan byggt
+  återkommande: räknarna nollas vid visning, `PROMPT_COOLDOWN_MS` (24 h) står
+  där och `promptTrigger` respekterar den. Att slå på återkommande är alltså
+  att höja en siffra, inte att bygga om — och `coaching-prompt.test.ts` pinnar
+  både trösklarna och vilotiden redan nu.
+- **Räkningen ligger i localStorage** (`hpk-coaching-prompt`, versionerad som
+  samtycket) och inte i databasen: nudgen ska gälla besökare utan konto, och
+  "hur många sidor har du tittat på" hör inte hemma hos oss. Trasig eller
+  gammal lagring tolkas som ett rent blad — värsta utfallet blir en visning för
+  mycket, aldrig en räkning som tystnar för alltid.
+- **Aldrig mitt i något.** `isPromptablePath` håller den borta från matcher,
+  provpass, kassan och inloggningen. `/train` och `/ord` ligger med trots att de
+  har en startvy: själva passet byter aldrig URL, så det går inte att skilja
+  "har inte börjat" från "mitt i". En tröskad nudge på en blockerad väg går
+  inte förlorad — räknarna står kvar och den kommer vid nästa tillåtna sida.
+- **Aldrig ovanpå något annat.** Är en annan overlay uppe (utmärkelser,
+  rank-up, onboarding, samtyckesbannern) hoppas visningen över helt.
+  Kontrollen är `[role="dialog"]:not([data-state="closed"])` — Radix sätter
+  `data-state`, de handrullade sätter `aria-modal`, alla sätter `role`.
+- **Priset hämtas först när rutan ska upp** (`useCoachingOffer(öppen)`).
+  Annars hade varje sidladdning i appen kostat ett anrop till en endpoint som
+  bara nudgen behöver. Av samma skäl monteras `CoachingModal` först när nudgen
+  visats — den drar in `useAuth`, alltså en auth-lyssnare och en profil-query
+  per mount.
+- **`autoStart` hoppar förbi erbjudandesteget** och går rakt på tidsväljaren,
+  eftersom nudgen redan visat pris och argument. Bara när tidsbokning
+  bevisligen är påslagen: utan Calendly faller `öppnaTidsval` vidare till
+  Stripe, och att skicka någon in i en betalning på ett klick är inte samma sak
+  som att visa lediga tider.
+- **Köpet tystar den permanent.** `/coachning/tack` anropar
+  `stopCoachingPrompts()` vid varje bekräftat köp, inte bara det första —
+  `firstConfirmation` är falskt vid en omladdning.
+- Matchen räknas när **resultatet visas**, inte när matchen startas: en
+  påbörjad match som aldrig lämnas in är ingen spelad match. Samma engångsspärr
+  som `match_result_viewed` gäller, så en omladdning räknar inte igen.
+- Mätning: `coaching_prompt_{shown,clicked,dismissed}` med `trigger`
+  (`pageviews` / `matches`). Källan in i Stripe-raden är `source: "popup"` —
+  tillagd i alla tre zod-enumen i `coaching.functions.ts`.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.

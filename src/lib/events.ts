@@ -21,7 +21,9 @@ export type MatchMode = "bot" | "private" | "ranked";
 export type MatchOutcome = "win" | "loss" | "draw";
 export type TrainingTrack = "verbal" | "math";
 /** Ytan köpet startade från — samma värden som serverfunktionen validerar. */
-export type CoachingSource = "dashboard" | "landing";
+export type CoachingSource = "dashboard" | "landing" | "popup";
+/** Vad som tröskade fram nudgen. Speglar PromptTrigger i coaching-prompt.ts. */
+export type CoachingPromptTrigger = "pageviews" | "matches";
 
 export interface ProductEvents {
   /* ── Samtycke ─────────────────────────────────────────────────────────
@@ -125,6 +127,11 @@ export interface ProductEvents {
   coaching_time_booked: { source: CoachingSource };
   /** Fyras på tacksidan, en gång per köp (inte per omladdning). */
   coaching_purchase_completed: { amount: number | null; currency: string | null };
+  /** Nudgen kom upp av sig själv. `trigger` skiljer sidbläddraren från spelaren. */
+  coaching_prompt_shown: { trigger: CoachingPromptTrigger };
+  /** Klick på nudgens knapp. Kvoten mot `shown` är hela dess existensberättigande. */
+  coaching_prompt_clicked: { trigger: CoachingPromptTrigger };
+  coaching_prompt_dismissed: { trigger: CoachingPromptTrigger };
 
   /* ── Forum ───────────────────────────────────────────────────────────── */
   forum_thread_created: {

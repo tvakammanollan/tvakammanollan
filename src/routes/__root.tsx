@@ -21,6 +21,7 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { CoachingPrompt } from "@/components/CoachingPrompt";
 import { Analytics } from "@/components/Analytics";
 
 installSupabaseFetchAuth();
@@ -462,6 +463,9 @@ function RootComponent() {
           </SafeBoundary>
           <SafeBoundary label="consent-banner">
             <ConsentBanner />
+          </SafeBoundary>
+          <SafeBoundary label="coaching-prompt">
+            <CoachingPrompt />
           </SafeBoundary>
           <Toaster richColors position="top-center" />
         </div>

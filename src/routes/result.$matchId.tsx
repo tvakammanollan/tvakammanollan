@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/events";
+import { recordMatchFinished } from "@/lib/coaching-prompt";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
@@ -263,6 +264,10 @@ function ResultPage() {
       outcome: mine > theirs ? "win" : mine < theirs ? "loss" : "draw",
       elo_change: eloChange,
     });
+    // Räknas här och inte vid start: en påbörjad match som aldrig lämnas in
+    // är inte en spelad match. Samma engångsspärr (resultLoggedRef) gäller,
+    // så en omladdning av resultatsidan räknar inte en gång till.
+    recordMatchFinished();
   }, [match, user, eloChange]);
 
   const myCorrectByQ = useMemo(() => {

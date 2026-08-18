@@ -61,10 +61,13 @@ export function CoachingModal({
   open,
   onOpenChange,
   source = "dashboard",
+  autoStart = false,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
   source?: CoachingSource;
+  /** Hoppa förbi erbjudandesteget och gå rakt på tidsväljaren när den öppnas. */
+  autoStart?: boolean;
 }) {
   const { user, profile } = useAuth();
   const checkoutFn = useServerFn(startCoachingCheckout);
@@ -153,6 +156,29 @@ export function CoachingModal({
       toast.error(e instanceof Error ? e.message : "Kunde inte öppna tidsvalet");
     }
   };
+
+  /**
+   * Öppnad från nudgen, som redan visat pris och argument: gå rakt på
+   * kalendern i stället för att säga samma sak en gång till.
+   *
+   * Bara när tidsbokning bevisligen är påslagen. Utan Calendly faller
+   * `öppnaTidsval` vidare till Stripe, och att skicka någon in i en betalning
+   * på ett klick är inte samma sak som att visa lediga tider — då får
+   * erbjudandesteget stå kvar och köparen klicka själv.
+   */
+  const öppnaTidsvalRef = useRef(öppnaTidsval);
+  öppnaTidsvalRef.current = öppnaTidsval;
+  const autoStartad = useRef(false);
+  useEffect(() => {
+    if (!open) {
+      autoStartad.current = false;
+      return;
+    }
+    if (!autoStart || autoStartad.current) return;
+    if (!offer?.available || !offer.schedulingEnabled) return;
+    autoStartad.current = true;
+    void öppnaTidsvalRef.current();
+  }, [open, autoStart, offer]);
 
   const slutför = useCallback(
     async (uri: string) => {

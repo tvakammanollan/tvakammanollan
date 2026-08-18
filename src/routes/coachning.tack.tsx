@@ -6,6 +6,7 @@ import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { confirmCoachingCheckout, type CoachingReceipt } from "@/lib/coaching.functions";
 import { formatDateLong, formatMoney, formatTime } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
+import { stopCoachingPrompts } from "@/lib/coaching-prompt";
 
 /**
  * Kvittosidan efter Stripe Checkout.
@@ -47,6 +48,10 @@ function TackPage() {
         if (r.paid && r.firstConfirmation) {
           trackEvent("coaching_purchase_completed", { amount: r.amount, currency: r.currency });
         }
+        // Den som köpt ska aldrig se nudgen igen. Läggs vid varje bekräftat
+        // köp och inte bara det första: firstConfirmation är falskt vid en
+        // omladdning, och räkningen sitter i webbläsaren.
+        if (r.paid) stopCoachingPrompts();
       })
       .catch(() => alive && setFailed(true));
     return () => {
