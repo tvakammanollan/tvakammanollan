@@ -516,8 +516,9 @@
    Raden ska läsa som en glasskiva ovanpå sidan, inte som ett solitt
    band. Tre saker gör glaset, och alla tre behövs:
 
-   1. Genomsläpp — bakgrunden är en aning ljusare än papperet men
-      långt ifrån täckande, så innehåll syns röra sig under.
+   1. Genomsläpp — samma sandton som raden alltid haft, men långt
+      ifrån täckande, så innehåll syns röra sig under. Tonen är
+      medvetet oförändrad: glaset ska ändra genomsläpp, inte kulör.
    2. `backdrop-filter` med blur OCH saturate. Bara blur ger disigt
       grått; mättnaden är det som gör att färger under lyser igenom
       som genom riktigt glas.
@@ -525,17 +526,16 @@
       säljer illusionen av en fysisk skiva; utan den ser ytan bara
       halvgenomskinlig ut.
 
-   Kontrast: bläcket (#2e1e14) mot glaset över papper ligger långt
-   över AA. Värsta fallet är mörkt innehåll som scrollar under —
-   då landar den komposierade ytan runt (174,166,159) och bläcket
-   ger 6,7:1, alltså fortfarande AA. Sänk inte alfat utan att räkna
-   om det; regeln i CLAUDE.md om att mäta mot den komposierade
-   bakgrunden gäller i högsta grad här.
+   Kontrast, mätt mot den komposierade bakgrunden: bläcket (#2e1e14)
+   ger 14,23:1 över papper i toppläget och 13,03:1 scrollat. Värsta
+   fallet är helmörkt innehåll som scrollar under — då 7,87:1
+   respektive 9,54:1, alltså fortfarande över AA. Sänk inte alfat
+   utan att räkna om.
    ============================================================ */
 .navbar-glass {
   /* Fallback först: utan backdrop-filter blir en halvgenomskinlig rad
      oläslig, så då körs den nästan täckande varianten. */
-  background: rgba(250, 245, 235, 0.96);
+  background: rgba(246, 239, 226, 0.96);
   border-bottom: 1px solid rgba(46, 30, 20, 0.1);
   transition:
     background 300ms ease,
@@ -545,11 +545,11 @@
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .navbar-glass {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 253, 249, 0.72) 0%,
-      rgba(249, 243, 232, 0.58) 100%
-    );
+    /* Samma sandton som raden alltid haft, bara genomskinlig. En ljusare,
+       vitare tint gjorde att navbaren bytte färg mot resten av sidan —
+       glaset ska ändra genomsläpp, inte kulör. Platt fyllning av samma
+       skäl: en gradient låter tonen vandra över raden. */
+    background: rgba(246, 239, 226, 0.72);
     border-bottom-color: rgba(46, 30, 20, 0.08);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
     backdrop-filter: blur(18px) saturate(180%);
@@ -562,11 +562,7 @@
   /* Scrollat: skivan lyfter — tätare, hårdare blur, och en mjuk skugga
      som skiljer den från innehållet som passerar under. */
   .navbar-glass[data-scrolled="true"] {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 253, 249, 0.85) 0%,
-      rgba(248, 241, 229, 0.74) 100%
-    );
+    background: rgba(240, 228, 206, 0.85);
     border-bottom-color: rgba(46, 30, 20, 0.14);
     -webkit-backdrop-filter: blur(28px) saturate(200%);
     backdrop-filter: blur(28px) saturate(200%);
@@ -579,7 +575,7 @@
 @media (prefers-reduced-transparency: reduce) {
   .navbar-glass,
   .navbar-glass[data-scrolled="true"] {
-    background: rgba(250, 245, 235, 0.98);
+    background: rgba(240, 228, 206, 0.98);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
