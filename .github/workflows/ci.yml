@@ -3,7 +3,7 @@
 # Två syften, i den här ordningen:
 #
 #  1. Fånga trasiga bygg INNAN de går ut. Cloudflare Workers Builds deployar
-#     varje push till `main` rakt ut på hpkampen.se utan mellanled — den här
+#     varje push till `main` rakt ut på tvakommanollan.se utan mellanled — den här
 #     workflowen är det enda stället där ett fel kan upptäckas först.
 #  2. Mata GitHub-webhooken som PostHog lyssnar på. Den prenumererar på
 #     workflow_run, workflow_job, deployment och deployment_status; utan en
@@ -82,20 +82,20 @@ jobs:
           id=$(gh api "repos/$REPO/deployments" -X POST \
             -f ref='${{ github.sha }}' \
             -f environment=production \
-            -f description='Cloudflare Workers Builds rullar ut hpkampen.se' \
+            -f description='Cloudflare Workers Builds rullar ut tvakommanollan.se' \
             -F auto_merge=false \
             -f 'required_contexts[]' \
             --jq '.id')
           echo "id=$id" >> "$GITHUB_OUTPUT"
           gh api "repos/$REPO/deployments/$id/statuses" -X POST \
             -f state=in_progress \
-            -f environment_url=https://hpkampen.se \
+            -f environment_url=https://tvakommanollan.se \
             -f description='CI grön — väntar på Cloudflares utrullning'
 
       # Cloudflare bygger parallellt med det här jobbet. Ge det en marginal och
       # kontrollera sedan att sajten faktiskt lever.
       #
-      # OBS vad detta bevisar: att hpkampen.se svarar 200 efter deployfönstret,
+      # OBS vad detta bevisar: att tvakommanollan.se svarar 200 efter deployfönstret,
       # inte att just den här commiten är den som ligger ute. /api/health
       # rapporterar ingen commit-SHA att jämföra mot. Det fångar alltså en
       # deploy som tar ner sajten, inte en som fastnar och lämnar kvar den gamla.
@@ -106,7 +106,7 @@ jobs:
           ok=false
           for i in $(seq 1 10); do
             code=$(curl -sS -o /dev/null -w '%{http_code}' \
-              --max-time 20 https://hpkampen.se/api/health || echo 000)
+              --max-time 20 https://tvakommanollan.se/api/health || echo 000)
             echo "försök $i: HTTP $code"
             if [ "$code" = "200" ]; then ok=true; break; fi
             sleep 30
@@ -118,12 +118,12 @@ jobs:
         run: |
           if [ "${{ steps.probe.outputs.ok }}" = "true" ]; then
             state=success
-            desc='hpkampen.se svarar 200'
+            desc='tvakommanollan.se svarar 200'
           else
             state=failure
-            desc='hpkampen.se svarade inte 200 efter utrullningen'
+            desc='tvakommanollan.se svarade inte 200 efter utrullningen'
           fi
           gh api "repos/$REPO/deployments/${{ steps.open.outputs.id }}/statuses" -X POST \
             -f state="$state" \
-            -f environment_url=https://hpkampen.se \
+            -f environment_url=https://tvakommanollan.se \
             -f description="$desc"

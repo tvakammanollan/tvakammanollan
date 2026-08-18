@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   buildCoachingCheckoutParams,
   COACHING_FIELD_FOCUS,
+  COACHING_FIELD_TIMING,
   isCoachingSession,
 } from "./coaching.server";
 import { encodeStripeForm } from "./stripe.server";
@@ -18,7 +19,7 @@ const bas = {
   requestId: "11111111-2222-3333-4444-555555555555",
   userId: "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
   source: "dashboard",
-  origin: "https://hpkampen.se",
+  origin: "https://tvakommanollan.se",
 };
 
 describe("buildCoachingCheckoutParams", () => {
@@ -34,9 +35,9 @@ describe("buildCoachingCheckoutParams", () => {
   it("returadressen bär Stripes platshållare, inte ett tomt session_id", () => {
     const p = buildCoachingCheckoutParams(bas) as unknown as Record<string, string>;
     expect(p.success_url).toBe(
-      "https://hpkampen.se/coachning/tack?session_id={CHECKOUT_SESSION_ID}",
+      "https://tvakommanollan.se/coachning/tack?session_id={CHECKOUT_SESSION_ID}",
     );
-    expect(p.cancel_url).toBe("https://hpkampen.se/?coachning=avbruten");
+    expect(p.cancel_url).toBe("https://tvakommanollan.se/?coachning=avbruten");
   });
 
   it("engångspris ger mode=payment, abonnemang ger mode=subscription", () => {
@@ -110,5 +111,33 @@ describe("isCoachingSession", () => {
   it("märkningen följer med i kassans parametrar", () => {
     const p = buildCoachingCheckoutParams(bas) as { metadata: Record<string, string> };
     expect(p.metadata.product).toBe("coaching");
+  });
+});
+
+describe("buildCoachingCheckoutParams med bokad tid", () => {
+  const bokat = { ...bas, scheduledAt: "2026-09-01T12:00:00.000000Z" };
+
+  it("frågar inte om tiden igen när den redan är vald", () => {
+    const p = buildCoachingCheckoutParams(bokat) as { custom_fields: { key: string }[] };
+    const nycklar = p.custom_fields.map((f) => f.key);
+    expect(nycklar).toContain(COACHING_FIELD_FOCUS);
+    expect(nycklar).not.toContain(COACHING_FIELD_TIMING);
+  });
+
+  it("hoppar över fokusfrågan när den besvarades i Calendly", () => {
+    const p = buildCoachingCheckoutParams({ ...bokat, focusAnswered: true }) as {
+      custom_fields: unknown[];
+    };
+    expect(p.custom_fields).toHaveLength(0);
+  });
+
+  it("lägger tiden i metadata så den syns bredvid betalningen i Stripe", () => {
+    const p = buildCoachingCheckoutParams(bokat) as { metadata: Record<string, string> };
+    expect(p.metadata.scheduled_at).toBe(bokat.scheduledAt);
+  });
+
+  it("utan bokning står metadata-nyckeln inte med alls", () => {
+    const p = buildCoachingCheckoutParams(bas) as { metadata: Record<string, string> };
+    expect(p.metadata.scheduled_at).toBeUndefined();
   });
 });

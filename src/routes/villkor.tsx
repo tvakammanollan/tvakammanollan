@@ -43,11 +43,11 @@ function VillkorPage() {
             All träning på sajten är gratis. Det enda som kostar är personlig coachning, som du
             köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="underline"
               style={{ color: "var(--amber)" }}
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>
             .
           </p>

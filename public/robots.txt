@@ -70,4 +70,4 @@ Allow: /
 User-agent: MistralAI-User
 Allow: /
 
-Sitemap: https://hpkampen.se/sitemap.xml
+Sitemap: https://tvakommanollan.se/sitemap.xml

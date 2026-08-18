@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/kva")({
           headline: "KVA-guide: kvantitativa jämförelser på Högskoleprovet",
           description:
             "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert.",
-          url: "https://hpkampen.se/guider/kva",
+          url: "https://tvakommanollan.se/guider/kva",
         }),
       ),
     ],

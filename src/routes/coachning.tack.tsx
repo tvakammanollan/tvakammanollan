@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { confirmCoachingCheckout, type CoachingReceipt } from "@/lib/coaching.functions";
-import { formatMoney } from "@/lib/sv-format";
+import { formatDateLong, formatMoney, formatTime } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
 
 /**
@@ -88,9 +88,20 @@ function TackPage() {
             ) : null}{" "}
             från Stripe.
           </p>
-          <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-            Vi hör av oss inom <strong>24 timmar</strong> för att gå igenom ditt upplägg.
-          </p>
+          {receipt.scheduledAt ? (
+            // Tiden valdes före betalningen, så den kan bekräftas direkt här.
+            // Datumet formateras i besökarens egen tidszon — samma tid som
+            // Calendly visade när den bokades.
+            <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+              Vi ses <strong>{formatDateLong(receipt.scheduledAt)}</strong> kl{" "}
+              <strong>{formatTime(receipt.scheduledAt)}</strong>. En kalenderinbjudan med länk
+              kommer från Calendly.
+            </p>
+          ) : (
+            <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+              Vi hör av oss inom <strong>24 timmar</strong> för att gå igenom ditt upplägg.
+            </p>
+          )}
           <Link
             to="/"
             className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#ae2f26] px-7 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110"
@@ -110,8 +121,8 @@ function TackPage() {
           <p className="mt-4 text-[15px] leading-relaxed text-white/70">
             Betalningen kan ha avbrutits, eller så tar den några sekunder till att gå igenom. Ladda
             om sidan, eller mejla{" "}
-            <a href="mailto:info@hpkampen.se" className="underline">
-              info@hpkampen.se
+            <a href="mailto:info@tvakommanollan.se" className="underline">
+              info@tvakommanollan.se
             </a>{" "}
             så reder vi ut det. Har pengarna dragits är köpet giltigt oavsett vad som står här.
           </p>

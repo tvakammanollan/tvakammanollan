@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/mek")({
           headline: "MEK-guide: meningskomplettering på Högskoleprovet",
           description:
             "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition.",
-          url: "https://hpkampen.se/guider/mek",
+          url: "https://tvakommanollan.se/guider/mek",
         }),
       ),
     ],

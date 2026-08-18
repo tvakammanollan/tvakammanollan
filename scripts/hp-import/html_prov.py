@@ -27,7 +27,7 @@ import urllib.request
 
 CACHE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".hp-cache"))
 CDX = "http://web.archive.org/cdx/search/cdx"
-UA = "hpkampen-import/1.0 (+https://hpkampen.se; kontakt via sajten)"
+UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 
 # Provtillfällen som bara finns som HTML-sidor.
 EXAMS = {"2011-10-29": "2011ht", "2012-03-31": "2012vt"}

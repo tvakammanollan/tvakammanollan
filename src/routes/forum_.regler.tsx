@@ -33,10 +33,10 @@ export const Route = createFileRoute("/forum_/regler")({
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "Forumregler",
-        url: "https://hpkampen.se/forum/regler",
+        url: "https://tvakommanollan.se/forum/regler",
         inLanguage: "sv-SE",
-        isPartOf: { "@id": "https://hpkampen.se/#website" },
-        publisher: { "@id": "https://hpkampen.se/#org" },
+        isPartOf: { "@id": "https://tvakommanollan.se/#website" },
+        publisher: { "@id": "https://tvakommanollan.se/#org" },
       }),
     ],
   }),
@@ -58,16 +58,16 @@ function ForumRulesPage() {
         <Section title="Vem driver forumet">
           <p>
             HP Kampen drivs av <Strong>Niklas Pellkvist</Strong> som privatperson. Forumet är en del
-            av hpkampen.se och tillhandahålls utan kostnad och utan annonser.
+            av tvakommanollan.se och tillhandahålls utan kostnad och utan annonser.
           </p>
           <p>
             Kontakt i alla frågor som rör forumet — inklusive begäran om att få ett inlägg
             borttaget:{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="text-[var(--teal)] underline underline-offset-2"
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>
             .
           </p>
@@ -156,10 +156,10 @@ function ForumRulesPage() {
           <p>
             Tycker du att jag gjort fel bedömning: mejla{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="text-[var(--teal)] underline underline-offset-2"
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>{" "}
             så tittar jag på det igen.
           </p>

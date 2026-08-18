@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/ord")({
           headline: "ORD-guide: ordkunskap på Högskoleprovet",
           description:
             "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",
-          url: "https://hpkampen.se/guider/ord",
+          url: "https://tvakommanollan.se/guider/ord",
         }),
       ),
     ],

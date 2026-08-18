@@ -40,7 +40,7 @@ function IntegritetspolicyPage() {
         <section className="space-y-6">
           <p>
             Denna policy beskriver hur HP Kampen samlar in och hanterar dina personuppgifter när du
-            använder hpkampen.se.
+            använder tvakommanollan.se.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -51,11 +51,11 @@ function IntegritetspolicyPage() {
             som privatperson. Träningen på sajten är gratis. Det enda som kostar är personlig
             coachning (studieupplägg), som köps frivilligt. Kontakt:{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="underline"
               style={{ color: "var(--amber)" }}
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>
             .
           </p>
@@ -83,8 +83,9 @@ function IntegritetspolicyPage() {
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Köpuppgifter</strong> — om du köper
-              coachning: namn, e-postadress, telefonnummer och det du själv skriver i kassans två
-              frågor, samt belopp, valuta och Stripes referens till betalningen.{" "}
+              coachning: namn, e-postadress, telefonnummer, den tid du bokar och det du själv
+              skriver i frågorna vid bokning och i kassan, samt belopp, valuta och Stripes referens
+              till betalningen.{" "}
               <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em> — vi ser
               aldrig ditt kortnummer.
             </li>
@@ -133,6 +134,23 @@ function IntegritetspolicyPage() {
             <li>
               <strong style={{ color: "var(--cream)" }}>PostHog</strong> — analys av hur sajten
               används (EU-instans, data lagras inom EU). Laddas endast efter ditt samtycke.
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Calendly</strong> — tidsbokning för
+              coachning. Väljer du en tid skickas ditt namn, din e-postadress och dina svar på
+              bokningsfrågorna till Calendly, som skapar mötet och skickar kalenderinbjudan.
+              Calendly är personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter
+              utanför EU/EES med stöd av EU-kommissionens standardavtalsklausuler. Läs mer i{" "}
+              <a
+                href="https://calendly.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+                style={{ color: "var(--amber)" }}
+              >
+                Calendlys integritetspolicy
+              </a>
+              .
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Stripe</strong> — betalningar för coachning.
@@ -225,11 +243,11 @@ function IntegritetspolicyPage() {
             uppgifterna om det köpet enligt punkten om köpuppgifter ovan. För övriga rättigheter,
             kontakta oss på{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="underline"
               style={{ color: "var(--amber)" }}
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>{" "}
             så hjälper vi dig — vi svarar inom 30 dagar. Är du missnöjd med vår hantering kan du
             klaga hos{" "}

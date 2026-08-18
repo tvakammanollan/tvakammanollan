@@ -202,18 +202,18 @@ export function guideArticleJsonLd({
     author: {
       "@type": "Person",
       name: "Niklas",
-      url: "https://hpkampen.se/om",
+      url: "https://tvakommanollan.se/om",
     },
     publisher: {
       "@type": "Organization",
       name: "HP Kampen",
-      url: "https://hpkampen.se",
+      url: "https://tvakommanollan.se",
       logo: {
         "@type": "ImageObject",
-        url: "https://hpkampen.se/favicon.svg",
+        url: "https://tvakommanollan.se/favicon.svg",
       },
     },
-    image: "https://hpkampen.se/og-image-2.png",
+    image: "https://tvakommanollan.se/og-image-2.png",
     inLanguage: "sv-SE",
     isAccessibleForFree: true,
     mainEntityOfPage: {

@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/dtk")({
           headline: "DTK-guide: diagram, tabeller och kartor på Högskoleprovet",
           description:
             "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet.",
-          url: "https://hpkampen.se/guider/dtk",
+          url: "https://tvakommanollan.se/guider/dtk",
         }),
       ),
     ],

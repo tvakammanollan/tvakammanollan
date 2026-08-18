@@ -38,12 +38,12 @@ describe("parseInline", () => {
   });
 
   it("autolänkar URL:er och lämnar meningens skiljetecken utanför", () => {
-    const nodes = parseInline("Se https://hpkampen.se/gamla-prov.");
+    const nodes = parseInline("Se https://tvakommanollan.se/gamla-prov.");
     const link = nodes.find((n) => n.kind === "link");
     expect(link).toEqual({
       kind: "link",
-      href: "https://hpkampen.se/gamla-prov",
-      text: "https://hpkampen.se/gamla-prov",
+      href: "https://tvakommanollan.se/gamla-prov",
+      text: "https://tvakommanollan.se/gamla-prov",
     });
     expect(inlineText(nodes)).toContain(".");
   });

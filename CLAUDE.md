@@ -42,12 +42,31 @@ Builds is connected straight to the GitHub repo, so **push to `main` = build +
 deploy**, no button to click anywhere. Build command `npm run build`, deploy
 command `npx wrangler deploy`.
 
-`hpkampen.se` was cut over on 2026-08-15 and is served by the `tvakammanollan`
-Worker through the routes `hpkampen.se/*` and `www.hpkampen.se/*`. Strato is
-registrar and mail host only (MX still points at `smtp.rzone.de`); DNS is
-Cloudflare. **Pushing to `main` changes the live site** — verify before pushing,
-not after. `wrangler versions upload` gives a preview URL that serves the build
-without touching production; use it for anything you cannot check locally.
+**`tvakommanollan.se` är sajtens domän sedan 2026-08-18** (`hpkampen.se` var det
+2026-08-15 → 2026-08-18). Samma Worker (`tvakammanollan`) serverar båda, genom
+fyra routes: `{,www.}tvakommanollan.se/*` och `{,www.}hpkampen.se/*`. Strato är
+registrar och mejlvärd för båda (MX `smtp.rzone.de`); DNS ligger i Cloudflare.
+**Pushing to `main` changes the live site** — verify before pushing, not after.
+`wrangler versions upload` gives a preview URL that serves the build without
+touching production; use it for anything you cannot check locally.
+
+- **Kanonisk värd hanteras i koden, inte i Cloudflare.** `canonicalRedirect()`
+  (`src/lib/canonical-host.ts`, anropad först i `src/server.ts`) 301:ar de tre
+  icke-kanoniska värdnamnen till `tvakommanollan.se`. En Redirect Rule i
+  dashboarden hade gjort samma sak men inte gått att testa — och undantaget
+  nedan är hela poängen med att den är testbar.
+- **`/api/` undantas från flytt-301:an.** Stripe följer inte 3xx: en webhook som
+  fortfarande pekar på `hpkampen.se` hade läst 301 som misslyckande och slutat
+  bokföra köp, tyst, medan kassan såg ut att fungera. Undantaget gör en
+  kvarglömd endpoint hos tredje part ofarlig. Ta inte bort det utan att först
+  kontrollera var Stripe-webhooken faktiskt pekar.
+- **`hpkampen.se` ska ligga kvar registrerad och i Cloudflare.** 301:an och
+  HSTS-huvudet (`max-age=31536000`) kräver att zonen behåller giltigt
+  certifikat. Google vill ha 301:an kvar i minst ett år efter adressändringen.
+- Både `info@hpkampen.se` och `info@tvakommanollan.se` är levande brevlådor
+  under övergången; koden hänvisar till den nya. **Varken domänen har SPF-post**
+  trots `_dmarc p=reject` — utgående mejl riskerar därför att avvisas. Fixas med
+  en TXT på apex i respektive zon.
 
 - **CI installs with `bun`, not npm.** The build runs
   `bun install --frozen-lockfile`, so a dependency added with npm updates
@@ -487,6 +506,53 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
   NOT NULL på `user_id`/`name`/`email`/`preferred_time` (inget av det finns när
   kassan öppnas) och lägger till betalfälten + unikt index på
   `stripe_session_id`, vilket är det som gör dubbelbokföring omöjlig.
+
+### Tidsbokning i coachningen (Calendly, 2026-08-18)
+
+Köparen väljer en tid **innan** kassan öppnas. Modalen har två steg:
+erbjudandet, och Calendlys tidsväljare i en iframe. `startCoachingBooking`
+skapar raden och länken, `completeCoachingBooking` läser den bokade tiden ur
+Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
+
+- **Ordningen har en känd baksida och den är accepterad.** En Calendly-bokning
+  är ett åtagande i samma sekund den görs, medan Checkout går att överge — så
+  en tid kan bli stående obetald. Vyn `coaching_obetalda_bokningar` listar dem
+  (`paid_at IS NULL AND scheduled_at IS NOT NULL`) och de avbokas för hand via
+  `calendly_cancel_url`. Byt inte ordningen "för säkerhets skull": den som redan
+  har en tid i kalendern slutför köpet oftare än den som ska höra av sig sen.
+- **`utm_content` är hela kopplingen mellan bokning och köp.** Raden i
+  `coaching_requests` skapas före tidsvalet just för att dess id ska kunna
+  följa med in i Calendly-länken och komma tillbaka i invitee-resursens
+  `tracking`. Tas den bort går bokningen inte att knyta till rätt betalning.
+  Följden: rader med status `'booking'` blir kvar efter alla som öppnar
+  tidsväljaren och ångrar sig. De är avsiktligt inte med i vyn.
+- **Tiden hämtas server-side, aldrig från klienten.** `event_scheduled` via
+  postMessage innehåller bara URI:er. `fetchCalendlyBooking` slår upp dem —
+  och `INVITEE_URI_PATTERN` låser formen till exakt den resursen först, för
+  URI:n kommer från webbläsaren och skickas i en fetch med vårt Bearer-token.
+  Utan mönstret är det en SSRF som läcker tokenet, tyst.
+- **Bara `frame-src https://calendly.com` öppnas i CSP:n.** Calendlys `widget.js`
+  används inte: allt scriptet gör är att lyssna på postMessage, vilket modalen
+  gör själv. Lägg inte till `script-src` för Calendly.
+- **Kassan upprepar inte en fråga som redan ställts.** `buildCoachingCheckoutParams`
+  utelämnar `tid`-fältet när `scheduledAt` är satt och `fokus`-fältet när
+  Calendly redan fått ett svar (`focusAnswered`). Samma fråga två gånger läser
+  som att första svaret inte togs emot.
+- **Halvt konfigurerat är inte påslaget.** `calendlyConfigured()` kräver både
+  `CALENDLY_EVENT_URL` (publik, i `wrangler.jsonc`) och `CALENDLY_API_TOKEN`
+  (krypterad Secret, `wrangler versions secret put` + `versions deploy`).
+  Saknas något hoppas steget över och `startCoachingCheckout` går rakt till
+  kassan som förut — `fetchCoachingOffer` säger `schedulingEnabled: false` och
+  modalen byter knapptext. Det är samma princip som att kortet visar
+  kontaktvägen när Stripe saknas.
+- **`vite dev` läser `.env.local` självt, men servern är kall.** Priset och
+  bokningsläget kommer först efter första riktiga requesten; en headless-koll
+  som klickar direkt ser "Läs mer om coachning" i stället för priset och ser ut
+  som att Stripe inte är konfigurerat. Värm med en `curl /` först.
+- Migration: `supabase/migrations/20260818090000_coachning_calendly.sql`.
+  `scheduled_at`, `calendly_*`-kolumnerna, unikt index på
+  `calendly_invitee_uri` (en bokning hör till exakt ett köp) och vyn ovan med
+  `security_invoker = true`.
 
 ### Streak
 

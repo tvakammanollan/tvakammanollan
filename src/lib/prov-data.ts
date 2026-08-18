@@ -5,7 +5,7 @@
  * varje provsida. Själva provpassen laddas som egna chunkar via import.meta.glob:
  * SSR läser dem utan nätanrop och klienten hämtar bara det pass användaren
  * öppnar. Den tidigare lösningen hämtade hela datamängden (916 kB) från en
- * hårdkodad https://hpkampen.se-URL, vilket gjorde att lokal utveckling läste
+ * hårdkodad https://tvakommanollan.se-URL, vilket gjorde att lokal utveckling läste
  * produktionsdata och att varje besök på /gamla-prov drog hem alla prov.
  */
 import indexJson from "@/data/prov/index.json";

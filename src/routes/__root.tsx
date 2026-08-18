@@ -25,10 +25,10 @@ import { Analytics } from "@/components/Analytics";
 
 installSupabaseFetchAuth();
 
-// Origin för preconnect/dns-prefetch. Faller tillbaka på hpkampen.se så att
+// Origin för preconnect/dns-prefetch. Faller tillbaka på tvakommanollan.se så att
 // en saknad env-variabel inte ger en trasig <link>-tagg i <head>.
 const SUPABASE_ORIGIN =
-  import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://hpkampen.se";
+  import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://tvakommanollan.se";
 
 // Framer-motions animations-runtime laddas asynkront (egen chunk) — se
 // src/lib/motion-features.ts. `strict` gör att en glömd motion.→m.-migrering
@@ -146,9 +146,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://hpkampen.se/" },
+      { property: "og:url", content: "https://tvakommanollan.se/" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://hpkampen.se/og-image-2.png" },
+      { property: "og:image", content: "https://tvakommanollan.se/og-image-2.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "HP Kampen · Tävla mot vänner i Högskoleprovet" },
@@ -160,7 +160,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
-      { name: "twitter:image", content: "https://hpkampen.se/og-image-2.png" },
+      { name: "twitter:image", content: "https://tvakommanollan.se/og-image-2.png" },
       { name: "theme-color", content: "#fbf6ec" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -178,8 +178,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.json" },
       // canonical sätts per route (annars duplicerar TanStack länken på alla sidor)
       // hreflang för Sverige-svenska
-      { rel: "alternate", hrefLang: "sv-SE", href: "https://hpkampen.se/" },
-      { rel: "alternate", hrefLang: "x-default", href: "https://hpkampen.se/" },
+      { rel: "alternate", hrefLang: "sv-SE", href: "https://tvakommanollan.se/" },
+      { rel: "alternate", hrefLang: "x-default", href: "https://tvakommanollan.se/" },
       { rel: "stylesheet", href: appCss },
       // Preconnect / DNS-prefetch för snabbare Core Web Vitals.
       // Härledd ur miljön, inte hårdkodad: den gamla adressen låg kvar efter
@@ -206,10 +206,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          "@id": "https://hpkampen.se/#webapp",
+          "@id": "https://tvakommanollan.se/#webapp",
           name: "HP Kampen",
           alternateName: "HP-Kampen",
-          url: "https://hpkampen.se",
+          url: "https://tvakommanollan.se",
           description:
             "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
           applicationCategory: "EducationalApplication",
@@ -231,8 +231,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "10 000+ HP-ord i databasen",
             "Gratis coachning av 1.9+-spelare",
           ],
-          publisher: { "@id": "https://hpkampen.se/#org" },
-          creator: { "@id": "https://hpkampen.se/#niklas" },
+          publisher: { "@id": "https://tvakommanollan.se/#org" },
+          creator: { "@id": "https://tvakommanollan.se/#niklas" },
         }),
       },
       // Schema.org EducationalOrganization
@@ -241,14 +241,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
-          "@id": "https://hpkampen.se/#org",
+          "@id": "https://tvakommanollan.se/#org",
           name: "HP Kampen",
-          url: "https://hpkampen.se",
-          logo: "https://hpkampen.se/icon-192.png",
+          url: "https://tvakommanollan.se",
+          logo: "https://tvakommanollan.se/icon-192.png",
           areaServed: "SE",
           description:
             "Sveriges enda gratis plattform för Högskoleprovet med realtidsmatcher och ELO-ranking. Träna alla 8 delprov med riktiga HP-frågor.",
-          founder: { "@id": "https://hpkampen.se/#niklas" },
+          founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",
             "HP",
@@ -273,10 +273,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
-          "@id": "https://hpkampen.se/#niklas",
+          "@id": "https://tvakommanollan.se/#niklas",
           name: "Niklas",
           jobTitle: "Grundare",
-          worksFor: { "@id": "https://hpkampen.se/#org" },
+          worksFor: { "@id": "https://tvakommanollan.se/#org" },
           description: "Grundare av HP Kampen. Fick 1,9 på Högskoleprovet.",
         }),
       },
@@ -360,12 +360,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "@id": "https://hpkampen.se/#website",
-          url: "https://hpkampen.se",
+          "@id": "https://tvakommanollan.se/#website",
+          url: "https://tvakommanollan.se",
           name: "HP Kampen",
           description: "Realtidsmatcher och ELO-ranking för Högskoleprovet. Gratis.",
           inLanguage: "sv-SE",
-          publisher: { "@id": "https://hpkampen.se/#org" },
+          publisher: { "@id": "https://tvakommanollan.se/#org" },
         }),
       },
     ],

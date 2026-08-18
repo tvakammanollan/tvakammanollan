@@ -33,7 +33,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from elf import parse_elf  # noqa: E402
 
 CACHE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".hp-cache"))
-UA = "hpkampen-import/1.0 (+https://hpkampen.se; kontakt via sajten)"
+UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 CDX = "http://web.archive.org/cdx/search/cdx"
 
 # Alla stavningar UHR använt för "utan ELF" genom åren.

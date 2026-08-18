@@ -80,6 +80,12 @@ export const limits = {
   /** Prisuppslaget bakom coachningskortet — cachat i isolatet, men publikt. */
   coachingOffer: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
   /**
+   * Öppna tidsväljaren. Generösare än kassan: varje anrop är bara en rad och en
+   * länk, och den som backar ur bokningen och försöker igen ska inte låsas ute
+   * från ett köp. Raden i sig kostar ingenting förrän en tid faktiskt bokas.
+   */
+  coachingBooking: { max: 15, windowMs: 10 * 60 * 1000 } as LimitConfig, // 15/10min
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

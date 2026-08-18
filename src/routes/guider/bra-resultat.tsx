@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
           headline: "Hur får man bra resultat på HP? · Komplett guide",
           description:
             "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat.",
-          url: "https://hpkampen.se/guider/bra-resultat",
+          url: "https://tvakommanollan.se/guider/bra-resultat",
         }),
       ),
       // HowTo schema — Google rich-result eligibility för studieplanen

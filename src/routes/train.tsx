@@ -68,7 +68,7 @@ export const Route = createFileRoute("/train")({
         name: "Träna Högskoleprovet · alla 8 delprov",
         description:
           "Gratis solo-träning inför Högskoleprovet med riktiga frågor i alla åtta delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
-        url: "https://hpkampen.se/train",
+        url: "https://tvakommanollan.se/train",
         inLanguage: "sv-SE",
         isAccessibleForFree: true,
         educationalLevel: "Gymnasium / högskolesökande",
@@ -82,7 +82,7 @@ export const Route = createFileRoute("/train")({
           "Kvantitativa resonemang (NOG)",
           "Diagram, tabeller och kartor (DTK)",
         ],
-        provider: { "@type": "Organization", name: "HP Kampen", url: "https://hpkampen.se" },
+        provider: { "@type": "Organization", name: "HP Kampen", url: "https://tvakommanollan.se" },
         offers: { "@type": "Offer", price: "0", priceCurrency: "SEK", category: "Free" },
         hasCourseInstance: {
           "@type": "CourseInstance",

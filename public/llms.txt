@@ -4,46 +4,46 @@
 
 HP Kampen är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,9 på HP och vill att bra HP-träning ska vara gratis för alla.
 
-Officiell domän: https://hpkampen.se
+Officiell domän: https://tvakommanollan.se
 
 ## Pages
 
-- [Hem](https://hpkampen.se/): Startsida — hitta en match, se din ELO och kom igång på 30 sekunder.
-- [Topplista](https://hpkampen.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
-- [Träna HP](https://hpkampen.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
-- [Öva ord](https://hpkampen.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
-- [Gamla prov](https://hpkampen.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 363 uppgifter med facit. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Tio prov är kompletta med engelsk läsförståelse. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
-- [Skapa konto](https://hpkampen.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
-- [Logga in](https://hpkampen.se/login): Logga in på ditt befintliga konto.
-- [Vanliga frågor](https://hpkampen.se/faq): FAQ om HP Kampen — gratis, ELO, riktiga HP-frågor, gästläge och mer.
-- [Guider till HP](https://hpkampen.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
-- [Om HP Kampen](https://hpkampen.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
-- [Kontakt](https://hpkampen.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
+- [Hem](https://tvakommanollan.se/): Startsida — hitta en match, se din ELO och kom igång på 30 sekunder.
+- [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
+- [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
+- [Öva ord](https://tvakommanollan.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
+- [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 363 uppgifter med facit. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Tio prov är kompletta med engelsk läsförståelse. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
+- [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google) — tar under en minut.
+- [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
+- [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om HP Kampen — gratis, ELO, riktiga HP-frågor, gästläge och mer.
+- [Guider till HP](https://tvakommanollan.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
+- [Om HP Kampen](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
+- [Kontakt](https://tvakommanollan.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 
 ## Guider per delprov
 
-- [ORD-guide](https://hpkampen.se/guider/ord): Synonymer, antonymer, ordförrådsbygge, prefix/suffix-strategi.
-- [MEK-guide](https://hpkampen.se/guider/mek): Luckteknik, konnektiv-taxonomi och hur man undviker fällor.
-- [LÄS-guide](https://hpkampen.se/guider/las): Frågetyper, lässtrategi och 5 min/text-disposition.
-- [ELF-guide](https://hpkampen.se/guider/elf): Akademisk engelska, AWL, except/NOT-fällor.
-- [XYZ-guide](https://hpkampen.se/guider/xyz): Algebra, geometri, sannolikhet, elimineringstaktik.
-- [KVA-guide](https://hpkampen.se/guider/kva): "Kan ej avgöras"-regeln och algebraiska genvägar.
-- [NOG-guide](https://hpkampen.se/guider/nog): De 5 svarsalternativen och testordningen.
-- [DTK-guide](https://hpkampen.se/guider/dtk): Axlarna först, vanliga skala-fällor.
+- [ORD-guide](https://tvakommanollan.se/guider/ord): Synonymer, antonymer, ordförrådsbygge, prefix/suffix-strategi.
+- [MEK-guide](https://tvakommanollan.se/guider/mek): Luckteknik, konnektiv-taxonomi och hur man undviker fällor.
+- [LÄS-guide](https://tvakommanollan.se/guider/las): Frågetyper, lässtrategi och 5 min/text-disposition.
+- [ELF-guide](https://tvakommanollan.se/guider/elf): Akademisk engelska, AWL, except/NOT-fällor.
+- [XYZ-guide](https://tvakommanollan.se/guider/xyz): Algebra, geometri, sannolikhet, elimineringstaktik.
+- [KVA-guide](https://tvakommanollan.se/guider/kva): "Kan ej avgöras"-regeln och algebraiska genvägar.
+- [NOG-guide](https://tvakommanollan.se/guider/nog): De 5 svarsalternativen och testordningen.
+- [DTK-guide](https://tvakommanollan.se/guider/dtk): Axlarna först, vanliga skala-fällor.
 
 ## Strategiguider
 
-- [Poäng, normering och antagning](https://hpkampen.se/hogskoleprovet-poang): Råpoäng → betyg 0,0–2,0, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
-- [Tidspress på HP](https://hpkampen.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
-- [Få bra HP-resultat](https://hpkampen.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
+- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,0–2,0, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
+- [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
+- [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 
 ## Optional
 
-- [Matchmaking](https://hpkampen.se/matchmaking): Hitta en motståndare på din ELO-nivå inom sekunder (kräver inloggning).
-- [Statistik](https://hpkampen.se/stats): Privat — din ELO-utveckling, win rate och prestanda per delprov.
-- [Vänner](https://hpkampen.se/friends): Privat — lägg till vänner och bjud in till privata matcher.
-- [Integritetspolicy](https://hpkampen.se/integritetspolicy): GDPR och datahantering.
-- [Användarvillkor](https://hpkampen.se/villkor): Användarvillkor för plattformen.
+- [Matchmaking](https://tvakommanollan.se/matchmaking): Hitta en motståndare på din ELO-nivå inom sekunder (kräver inloggning).
+- [Statistik](https://tvakommanollan.se/stats): Privat — din ELO-utveckling, win rate och prestanda per delprov.
+- [Vänner](https://tvakommanollan.se/friends): Privat — lägg till vänner och bjud in till privata matcher.
+- [Integritetspolicy](https://tvakommanollan.se/integritetspolicy): GDPR och datahantering.
+- [Användarvillkor](https://tvakommanollan.se/villkor): Användarvillkor för plattformen.
 
 ## Key facts
 
@@ -108,7 +108,7 @@ Det är en PWA (Progressive Web App) — lägg till på hemskärmen från Safari
 
 ## Contact
 
-E-post: info@hpkampen.se. Svar oftast inom en vardag. Mer info på [/kontakt](https://hpkampen.se/kontakt).
+E-post: info@tvakommanollan.se. Svar oftast inom en vardag. Mer info på [/kontakt](https://tvakommanollan.se/kontakt).
 
 ## Ägare
 

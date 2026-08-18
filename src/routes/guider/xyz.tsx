@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/xyz")({
           headline: "XYZ-guide: matematisk problemlösning på Högskoleprovet",
           description:
             "Lär dig lösa XYZ-uppgifter snabbare med rätt metod. Algebra, geometri, sannolikhet och kombinatorik förklaras steg för steg.",
-          url: "https://hpkampen.se/guider/xyz",
+          url: "https://tvakommanollan.se/guider/xyz",
         }),
       ),
     ],

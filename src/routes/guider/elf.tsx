@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/elf")({
           headline: "ELF-guide: engelsk läsförståelse på Högskoleprovet",
           description:
             "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen.",
-          url: "https://hpkampen.se/guider/elf",
+          url: "https://tvakommanollan.se/guider/elf",
         }),
       ),
     ],

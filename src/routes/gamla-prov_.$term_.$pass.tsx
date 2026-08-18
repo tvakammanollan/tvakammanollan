@@ -49,7 +49,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
           "@context": "https://schema.org",
           "@type": "Quiz",
           name: `${data.label} – provpass ${data.pass} (${passKindLabel(data.kind)})`,
-          url: `https://hpkampen.se${path}`,
+          url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
           isAccessibleForFree: true,
           educationalLevel: "Högskoleförberedande",
@@ -57,7 +57,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
           timeRequired: `PT${data.minutes}M`,
           numberOfQuestions: data.questions.length,
           about: data.sections.map((s) => ({ "@type": "Thing", name: delprovFull(s.code) })),
-          isPartOf: { "@id": "https://hpkampen.se/#website" },
+          isPartOf: { "@id": "https://tvakommanollan.se/#website" },
         }),
       ],
     };

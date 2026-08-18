@@ -18,7 +18,7 @@
  *   })
  */
 
-const ORIGIN = "https://hpkampen.se";
+const ORIGIN = "https://tvakommanollan.se";
 
 export interface PageMetaInput {
   path: string; // e.g. "/train"

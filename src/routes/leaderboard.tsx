@@ -88,9 +88,9 @@ export const Route = createFileRoute("/leaderboard")({
         name: "Topplista — HP Kampen",
         description:
           "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte och ord. Uppdateras live efter varje match.",
-        url: "https://hpkampen.se/leaderboard",
+        url: "https://tvakommanollan.se/leaderboard",
         inLanguage: "sv-SE",
-        isPartOf: { "@id": "https://hpkampen.se/#website" },
+        isPartOf: { "@id": "https://tvakommanollan.se/#website" },
         about: { "@type": "Thing", name: "Högskoleprovet ELO-ranking" },
       }),
     ],

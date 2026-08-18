@@ -24,9 +24,9 @@ export const Route = createFileRoute("/kontakt")({
         "@context": "https://schema.org",
         "@type": "ContactPage",
         name: "Kontakt · HP Kampen",
-        url: "https://hpkampen.se/kontakt",
+        url: "https://tvakommanollan.se/kontakt",
         description: "Kontaktinformation till HP Kampen — e-post, buggrapporter och feedback.",
-        publisher: { "@id": "https://hpkampen.se/#org" },
+        publisher: { "@id": "https://tvakommanollan.se/#org" },
       }),
     ],
   }),
@@ -49,13 +49,13 @@ function KontaktPage() {
         <ul className="space-y-4">
           <li>
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="flex items-center gap-3 rounded-2xl border p-4 transition hover:bg-white/5"
               style={{ borderColor: "var(--line)", color: "var(--cream)" }}
             >
               <Mail className="h-5 w-5" style={{ color: "var(--amber)" }} />
               <span>
-                <span className="font-semibold">info@hpkampen.se</span>
+                <span className="font-semibold">info@tvakommanollan.se</span>
                 <span className="ml-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
                   Allmänt, feedback, press, samarbeten
                 </span>
@@ -74,11 +74,11 @@ function KontaktPage() {
                   Använd bug-knappen i appen (kräver inloggning) — då får vi med rätt context
                   automatiskt. Annars mejla{" "}
                   <a
-                    href="mailto:info@hpkampen.se?subject=Bugg-rapport"
+                    href="mailto:info@tvakommanollan.se?subject=Bugg-rapport"
                     className="underline"
                     style={{ color: "var(--amber)" }}
                   >
-                    info@hpkampen.se
+                    info@tvakommanollan.se
                   </a>
                   .
                 </span>

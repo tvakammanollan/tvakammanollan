@@ -465,7 +465,7 @@ def write_sitemap(index: list[dict]) -> None:
         for path, priority in entries:
             lines += [
                 "  <url>",
-                f"    <loc>https://hpkampen.se{path}</loc>",
+                f"    <loc>https://tvakommanollan.se{path}</loc>",
                 f"    <lastmod>{exam['date']}</lastmod>",
                 "    <changefreq>yearly</changefreq>",
                 f"    <priority>{priority}</priority>",
@@ -475,7 +475,7 @@ def write_sitemap(index: list[dict]) -> None:
 
     hub = [
         "  <url>",
-        "    <loc>https://hpkampen.se/gamla-prov</loc>",
+        "    <loc>https://tvakommanollan.se/gamla-prov</loc>",
         f"    <lastmod>{index[0]['date'] if index else ''}</lastmod>",
         "    <changefreq>weekly</changefreq>",
         "    <priority>0.9</priority>",

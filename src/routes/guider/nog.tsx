@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/nog")({
           headline: "NOG-guide: kvantitativa resonemang på Högskoleprovet",
           description:
             "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information.",
-          url: "https://hpkampen.se/guider/nog",
+          url: "https://tvakommanollan.se/guider/nog",
         }),
       ),
     ],

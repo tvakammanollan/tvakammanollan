@@ -32,7 +32,7 @@ import fitz  # noqa: E402
 from elf import parse_elf  # noqa: E402
 
 CACHE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".hp-cache"))
-UA = "hpkampen-import/1.0 (+https://hpkampen.se; kontakt via sajten)"
+UA = "hpkampen-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
 
 DATE_RE = re.compile(r"\b(20\d{2})-(\d{2})-(\d{2})\b")
 PASS_RE = re.compile(r"Provpass\s*(\d)", re.I)

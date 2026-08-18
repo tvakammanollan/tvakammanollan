@@ -107,6 +107,10 @@ export type Database = {
       coaching_requests: {
         Row: {
           amount_total: number | null
+          calendly_cancel_url: string | null
+          calendly_event_uri: string | null
+          calendly_invitee_uri: string | null
+          calendly_reschedule_url: string | null
           created_at: string
           currency: string | null
           email: string | null
@@ -116,6 +120,7 @@ export type Database = {
           paid_at: string | null
           phone: string | null
           preferred_time: string | null
+          scheduled_at: string | null
           source: string | null
           status: string
           stripe_payment_intent: string | null
@@ -124,6 +129,10 @@ export type Database = {
         }
         Insert: {
           amount_total?: number | null
+          calendly_cancel_url?: string | null
+          calendly_event_uri?: string | null
+          calendly_invitee_uri?: string | null
+          calendly_reschedule_url?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -133,6 +142,7 @@ export type Database = {
           paid_at?: string | null
           phone?: string | null
           preferred_time?: string | null
+          scheduled_at?: string | null
           source?: string | null
           status?: string
           stripe_payment_intent?: string | null
@@ -141,6 +151,10 @@ export type Database = {
         }
         Update: {
           amount_total?: number | null
+          calendly_cancel_url?: string | null
+          calendly_event_uri?: string | null
+          calendly_invitee_uri?: string | null
+          calendly_reschedule_url?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -150,6 +164,7 @@ export type Database = {
           paid_at?: string | null
           phone?: string | null
           preferred_time?: string | null
+          scheduled_at?: string | null
           source?: string | null
           status?: string
           stripe_payment_intent?: string | null

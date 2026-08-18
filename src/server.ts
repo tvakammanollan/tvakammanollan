@@ -1,6 +1,7 @@
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
+import { CANONICAL_HOST, canonicalRedirect } from "./lib/canonical-host";
 import { renderErrorPage } from "./lib/error-page";
 
 type ServerEntry = {
@@ -92,6 +93,10 @@ function withSecurityHeaders(response: Response): Response {
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+      // Calendly-iframen i coachningsmodalen. Bara ramen öppnas — deras
+      // widget.js behövs inte, vi lyssnar själva på postMessage, så script-src
+      // står kvar orörd.
+      "frame-src https://calendly.com",
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
@@ -170,7 +175,7 @@ async function fetchWiktionaryDefinition(word: string): Promise<string | null> {
   const url = `https://sv.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(word)}&prop=revisions&rvprop=content&format=json&formatversion=2`;
   try {
     const res = await fetch(url, {
-      headers: { "User-Agent": "HPKampen-Bot/1.0 (educational project; hpkampen.se)" },
+      headers: { "User-Agent": "HPKampen-Bot/1.0 (educational project; tvakommanollan.se)" },
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
@@ -510,11 +515,16 @@ export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     const url = new URL(request.url);
 
-    const redirectTarget = PERMANENT_REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
-    if (redirectTarget) {
+    // Före allt annat: sajten får bara indexeras på ett värdnamn, och
+    // sammanslagna sidor ska till sin efterträdare. Båda avgörs i samma steg
+    // så att en gammal adress till en sammanslagen sida tar ett hopp och inte
+    // två — en 301-kedja läcker länkkraft och Google följer bara ett fåtal.
+    const mergedPath = PERMANENT_REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
+    const canonicalHost = canonicalRedirect(url) ? `https://${CANONICAL_HOST}` : "";
+    if (mergedPath || canonicalHost) {
       return new Response(null, {
         status: 301,
-        headers: { location: redirectTarget + url.search },
+        headers: { location: canonicalHost + (mergedPath ?? url.pathname) + url.search },
       });
     }
 

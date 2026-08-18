@@ -61,7 +61,7 @@ export const Route = createFileRoute("/ord")({
         name: "Öva HP-ord · 10 000+ riktiga ORD-frågor",
         description:
           "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
-        url: "https://hpkampen.se/ord",
+        url: "https://tvakommanollan.se/ord",
         inLanguage: "sv-SE",
         learningResourceType: "Övning",
         educationalLevel: "Gymnasium",

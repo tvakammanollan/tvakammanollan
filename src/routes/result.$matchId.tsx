@@ -348,7 +348,7 @@ function ResultPage() {
         ? `vann ${myScore}–${oppScore}`
         : `förlorade ${myScore}–${oppScore}`;
     const text = `Jag ${verb} mot ${opponentName} på HP Kampen${elo}! 🏆`;
-    const url = "https://hpkampen.se";
+    const url = "https://tvakommanollan.se";
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share({ title: "HP Kampen", text, url });

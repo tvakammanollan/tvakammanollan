@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/tidspress")({
           headline: "Tidspress på Högskoleprovet · strategi för varje delprov",
           description:
             "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart.",
-          url: "https://hpkampen.se/guider/tidspress",
+          url: "https://tvakommanollan.se/guider/tidspress",
         }),
       ),
     ],

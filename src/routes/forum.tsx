@@ -48,10 +48,10 @@ export const Route = createFileRoute("/forum")({
           "@type": "CollectionPage",
           name: "Forum om högskoleprovet",
           description: `Diskussionsforum om högskoleprovet med ${formatInt(threads)} trådar.`,
-          url: "https://hpkampen.se/forum",
+          url: "https://tvakommanollan.se/forum",
           inLanguage: "sv-SE",
-          isPartOf: { "@id": "https://hpkampen.se/#website" },
-          publisher: { "@id": "https://hpkampen.se/#org" },
+          isPartOf: { "@id": "https://tvakommanollan.se/#website" },
+          publisher: { "@id": "https://tvakommanollan.se/#org" },
         }),
       ],
     };

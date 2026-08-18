@@ -26,7 +26,7 @@ export const Route = createFileRoute("/guider/las")({
         guideArticleJsonLd({
           headline: "LÄS-guide: svensk läsförståelse på Högskoleprovet",
           description: "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering.",
-          url: "https://hpkampen.se/guider/las",
+          url: "https://tvakommanollan.se/guider/las",
         }),
       ),
       // HowTo schema — Google rich-result eligibility för numrerade steg.

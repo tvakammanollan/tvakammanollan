@@ -77,11 +77,11 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               <li>
                 <a
-                  href="mailto:info@hpkampen.se"
+                  href="mailto:info@tvakommanollan.se"
                   className="inline-flex items-center gap-2 text-sm text-white/80 transition hover:text-white hover:underline"
                 >
                   <Mail className="h-3.5 w-3.5" style={{ color: "#ae2f26" }} />
-                  info@hpkampen.se
+                  info@tvakommanollan.se
                 </a>
               </li>
             </ul>

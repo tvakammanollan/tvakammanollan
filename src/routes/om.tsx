@@ -25,11 +25,11 @@ export const Route = createFileRoute("/om")({
         "@context": "https://schema.org",
         "@type": "AboutPage",
         name: "Om HP Kampen",
-        url: "https://hpkampen.se/om",
+        url: "https://tvakommanollan.se/om",
         description:
           "Om HP Kampen — Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,9 på Högskoleprovet.",
-        publisher: { "@id": "https://hpkampen.se/#org" },
-        about: { "@id": "https://hpkampen.se/#niklas" },
+        publisher: { "@id": "https://tvakommanollan.se/#org" },
+        about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
     ],
   }),
@@ -156,11 +156,11 @@ function OmPage() {
           <p>
             E-post:{" "}
             <a
-              href="mailto:info@hpkampen.se"
+              href="mailto:info@tvakommanollan.se"
               className="underline"
               style={{ color: "var(--amber)" }}
             >
-              info@hpkampen.se
+              info@tvakommanollan.se
             </a>
             . Bug eller önskemål? Använd gärna bug-knappen längst ner i gränssnittet — då hamnar
             feedbacken direkt hos rätt person.

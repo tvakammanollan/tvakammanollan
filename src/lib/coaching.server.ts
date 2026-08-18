@@ -61,6 +61,15 @@ export interface CheckoutParamsInput {
   email?: string;
   /** Absolut origin, utan avslutande snedstreck. */
   origin: string;
+  /**
+   * Starttid (ISO, UTC) som redan bokats i Calendly, om tidsbokningen är
+   * påslagen. Är den satt ställs inte tidsfrågan i kassan — köparen har redan
+   * valt, och en andra fråga om samma sak ser ut som att bokningen inte gick
+   * igenom.
+   */
+  scheduledAt?: string | null;
+  /** true om köparen redan svarat på en fråga i Calendly — då hoppas fokusfrågan över. */
+  focusAnswered?: boolean;
 }
 
 /**
@@ -88,25 +97,37 @@ export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
       coaching_request_id: input.requestId,
       user_id: input.userId ?? "",
       source: input.source,
+      // Syns i Stripe-dashboarden bredvid betalningen, så att en fråga om ett
+      // köp går att besvara utan att slå upp raden i databasen.
+      ...(input.scheduledAt ? { scheduled_at: input.scheduledAt } : {}),
     },
-    // Formuläret som låg i modalen är borta — de två frågor coachen faktiskt
-    // behöver ställs i kassan i stället, båda frivilliga så att de inte kan
-    // stoppa ett köp.
+    // Formuläret som låg i modalen är borta — frågorna coachen faktiskt behöver
+    // ställs i kassan i stället, alltid frivilliga så att de inte kan stoppa ett
+    // köp. Varje fråga som redan besvarats tidigare i flödet utelämnas: samma
+    // fråga två gånger läser som att första svaret inte togs emot.
     custom_fields: [
-      {
-        key: COACHING_FIELD_FOCUS,
-        type: "text",
-        optional: true,
-        label: { type: "custom", custom: "Vad vill du fokusera på?" },
-        text: { maximum_length: 200 },
-      },
-      {
-        key: COACHING_FIELD_TIMING,
-        type: "text",
-        optional: true,
-        label: { type: "custom", custom: "När passar det att höras?" },
-        text: { maximum_length: 100 },
-      },
+      ...(input.focusAnswered
+        ? []
+        : [
+            {
+              key: COACHING_FIELD_FOCUS,
+              type: "text",
+              optional: true,
+              label: { type: "custom", custom: "Vad vill du fokusera på?" },
+              text: { maximum_length: 200 },
+            },
+          ]),
+      ...(input.scheduledAt
+        ? []
+        : [
+            {
+              key: COACHING_FIELD_TIMING,
+              type: "text",
+              optional: true,
+              label: { type: "custom", custom: "När passar det att höras?" },
+              text: { maximum_length: 100 },
+            },
+          ]),
     ],
     // Bara vid engångsköp — Stripe avvisar fältet i subscription-läge.
     ...(input.recurring

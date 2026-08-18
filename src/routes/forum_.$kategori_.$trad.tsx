@@ -120,7 +120,7 @@ function answerSchema(post: ForumPost, base: string) {
     "@type": "Answer",
     text: post.body,
     dateCreated: post.createdAt,
-    url: `https://hpkampen.se${base}#inlagg-${post.id}`,
+    url: `https://tvakommanollan.se${base}#inlagg-${post.id}`,
     author: authorSchema(post.author?.username),
     upvoteCount: post.helpfulCount,
   };
@@ -149,7 +149,7 @@ function qaPageSchema({
     "@context": "https://schema.org",
     "@type": "QAPage",
     inLanguage: "sv-SE",
-    isPartOf: { "@id": "https://hpkampen.se/#website" },
+    isPartOf: { "@id": "https://tvakommanollan.se/#website" },
     mainEntity: {
       "@type": "Question",
       name: thread.title,
@@ -157,7 +157,7 @@ function qaPageSchema({
       dateCreated: thread.createdAt,
       answerCount: Math.max(0, total - 1),
       author: authorSchema(thread.author?.username),
-      url: `https://hpkampen.se${base}`,
+      url: `https://tvakommanollan.se${base}`,
       about: { "@type": "Thing", name: `Högskoleprovet – ${category.name}` },
       ...(answer ? { acceptedAnswer: answerSchema(answer, base) } : {}),
       ...(suggested.length > 0
@@ -187,10 +187,10 @@ function discussionSchema({
     headline: thread.title,
     articleBody: first?.body ?? "",
     datePublished: thread.createdAt,
-    url: `https://hpkampen.se${base}`,
+    url: `https://tvakommanollan.se${base}`,
     inLanguage: "sv-SE",
     author: authorSchema(thread.author?.username),
-    isPartOf: { "@id": "https://hpkampen.se/#website" },
+    isPartOf: { "@id": "https://tvakommanollan.se/#website" },
     about: { "@type": "Thing", name: `Högskoleprovet – ${category.name}` },
     interactionStatistic: {
       "@type": "InteractionCounter",
@@ -201,7 +201,7 @@ function discussionSchema({
       "@type": "Comment",
       text: p.body,
       dateCreated: p.createdAt,
-      url: `https://hpkampen.se${base}#inlagg-${p.id}`,
+      url: `https://tvakommanollan.se${base}#inlagg-${p.id}`,
       author: authorSchema(p.author?.username),
     })),
   };

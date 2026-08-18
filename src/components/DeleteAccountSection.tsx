@@ -42,7 +42,7 @@ export function DeleteAccountSection() {
       navigate({ to: "/" });
     } catch (e) {
       toast.error("Kunde inte radera kontot", {
-        description: e instanceof Error ? e.message : "Försök igen eller mejla info@hpkampen.se.",
+        description: e instanceof Error ? e.message : "Försök igen eller mejla info@tvakommanollan.se.",
       });
       setBusy(false);
     }
