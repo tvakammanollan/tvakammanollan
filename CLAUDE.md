@@ -473,6 +473,14 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
   `package-lock.json` och `bun.lock` måste hållas i synk. Tre anrop och en HMAC
   är inte värt det. **API-versionen pinnas medvetet inte** — en felstavad
   version ger fel på varje anrop, och fälten vi läser är stabila sedan år.
+- **Arkivera aldrig det pinnade priset innan det nya id:t är utrullat.**
+  `STRIPE_COACHING_PRICE_ID` läses ur den *deployade* `wrangler.jsonc`, så ett
+  byte i arbetsträdet betyder ingenting förrän koden pushats. Arkiveras det
+  gamla priset i förväg fortsätter `GET /prices/{id}` att svara — kortet visar
+  alltså priset och köpknappen ser normal ut — men
+  `POST /checkout/sessions` avvisas med "The price specified is inactive".
+  Felet syns först i sista steget, för den som faktiskt tänkte betala. Ordning:
+  skapa nytt pris → pusha → verifiera → arkivera gamla. (Hände 2026-08-18.)
 - **Produkten har exakt ett aktivt pris: 350 kr engångsköp**
   (`price_1U5jVF…`, satt som produktens `default_price` sedan 2026-08-18).
   Det är medvetet att pinnat id och `default_price` pekar på samma pris —
