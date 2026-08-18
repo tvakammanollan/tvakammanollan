@@ -618,9 +618,14 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - **Byt URL, inte bara innehåll, när delningsbilden ändras.** Snapchat, Facebook,
   LinkedIn och Slack cachar förhandsbilden på URL:en, ofta i månader, och
   Cloudflare svarade `CF-Cache-Status: HIT` på den gamla vägen. Bilden heter
-  därför `og-image-2.png` — nästa gång blir det `-3`. Fyra ställen följer med:
+  därför `og-image-3.png` — nästa gång blir det `-4`. Fyra ställen följer med:
   `__root` (`og:image` + `twitter:image`), `guider-meta.tsx`, `manifest.json`
   och kommentaren i `page-meta.ts`.
+- **Domänen står i bildens pixlar.** `-2` gjordes på en gren som saknade
+  domänbytet och hade `hpkampen.se` tryckt i nederkant; `-3` är samma bild med
+  den raden ommålad (Instrument Sans 25 px, `#755e4c`, baslinje y=556). Det
+  finns inget generatorscript för den här bilden — byts motivet igen får den
+  ritas om för hand, och då måste nederkanten kollas.
 - **Bytet av bild och bytet av domän gjordes på var sin gren och möttes först i
   en rebase.** Den ena sidan hade `hpkampen.se/og-image-2.png`, den andra
   `tvakommanollan.se/og-image.png`, och båda hade rätt i var sin halva. Sitter
