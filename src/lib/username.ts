@@ -1,21 +1,32 @@
-// Vad som räknas som ett anonymt konto. Ren modul utan beroenden — samma
-// definition används av topplistans serverfunktioner och av UI:t som renderar
-// namnen, och de två får aldrig glida isär.
+// Vad som räknas som ett konto utan valt namn. Definitionen ligger på ett
+// ställe därför att både topplistans serverfunktioner, UI:t som renderar
+// namnen och routingen till onboarding hänger på den — glider de isär börjar
+// konton läcka in på listan, vilket de gjorde 2026-08-18.
+
+import { isGeneratedGuestName } from "./guest-name";
 
 /**
- * Auto-genererat användarnamn: `user_` + de åtta första tecknen av UUID:t.
- * Sätts av `handle_new_user()` när kontot skapas utan eget namn — alltså allt
- * gästspel (`signInAnonymously`) och registreringar där namnet inte hann med.
+ * Har kontot ett namn det aldrig valt?
  *
- * Regexen är avsiktligt vidare än triggern (sex tecken eller fler, versaler
- * tillåtna): topplistan både filtrerar och renderar på den här funktionen, så
- * allt som *visas* som "Anonym" måste också *räknas* som anonymt. Vore den
- * strikt (`{8}$`) kunde en rad passera filtret och sedan hamna i listan utan
- * namn. Priset är att ett självvalt `user_deadbeef` också döljs — det namnet
+ * Två sådana scheman finns. `handle_new_user()` faller tillbaka på `user_` +
+ * åtta tecken av UUID:t, och sedan 2026-08-18 sätter `useGuestPlay` i stället
+ * `Gäst ekorre` i metadatan redan vid `signInAnonymously` — se `guest-name.ts`,
+ * som äger ordlistan och känner igen båda.
+ *
+ * Regexen här är avsiktligt vidare än triggern (sex tecken eller fler,
+ * versaler tillåtna): topplistan både filtrerar och renderar på den här
+ * funktionen, så allt som *visas* som "Anonym" måste också *räknas* som
+ * anonymt. Priset är att ett självvalt `user_deadbeef` också döljs — det
  * visas ändå som "Anonym" i dag.
+ *
+ * Följd i routingen (`routes/index.tsx`): en gäst som skaffar riktigt konto
+ * behåller sitt gästnamn i databasen och skickas nu till onboarding för att
+ * välja ett eget — annars hade hen blivit osynlig på topplistan för alltid.
  */
 export function isAutoUsername(username: string | null | undefined): boolean {
-  return !!username && /^user_[0-9a-f]{6,}/i.test(username.trim());
+  if (!username) return false;
+  const trimmed = username.trim();
+  return /^user_[0-9a-f]{6,}/i.test(trimmed) || isGeneratedGuestName(trimmed);
 }
 
 /**

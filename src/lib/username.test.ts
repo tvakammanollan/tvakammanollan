@@ -20,6 +20,19 @@ describe("isAutoUsername", () => {
     expect(isAutoUsername(null)).toBe(false);
     expect(isAutoUsername(undefined)).toBe(false);
   });
+
+  it("känner igen gästnamnen som sätts i metadatan", () => {
+    // useGuestPlay sätter "Gäst ekorre" vid signInAnonymously sedan 2026-08-18.
+    expect(isAutoUsername("Gäst ekorre")).toBe(true);
+    expect(isAutoUsername("Gäst lönnlöv")).toBe(true);
+    expect(isAutoUsername("gäst TRAST")).toBe(true);
+  });
+
+  it("rör inte namn som bara börjar på Gäst", () => {
+    expect(isAutoUsername("Gäst i huset")).toBe(false);
+    expect(isAutoUsername("Gästen")).toBe(false);
+    expect(isAutoUsername("Gäst kvantfysiker")).toBe(false);
+  });
 });
 
 describe("isRankable", () => {
@@ -34,5 +47,10 @@ describe("isRankable", () => {
     expect(isRankable("")).toBe(false);
     expect(isRankable("   ")).toBe(false);
     expect(isRankable(null)).toBe(false);
+  });
+
+  it("rankar inte gästkonton med genererat gästnamn", () => {
+    expect(isRankable("Gäst ekorre")).toBe(false);
+    expect(isRankable("gäst blåbär")).toBe(false);
   });
 });

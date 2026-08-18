@@ -58,6 +58,28 @@ export function isAutoGuestName(name: string | null | undefined): boolean {
 }
 
 /**
+ * Är namnet genererat åt kontot i stället för valt av användaren — oavsett
+ * vilket av de två schemana det kom ur?
+ *
+ * Två format finns i `users.username`: `user_1a2b3c4d` från triggerns
+ * fallback, och `Gäst ekorre` som sätts i metadatan sedan 2026-08-18. Båda
+ * betyder samma sak: kontot har aldrig valt ett namn. De måste kännas igen
+ * på ett enda ställe, annars glider topplistans filter isär från
+ * namnsättningen — vilket hände: filtret kände bara igen det gamla formatet,
+ * och nya gäster började rankas fyra minuter efter att det gick live.
+ *
+ * Matchningen kräver ett ord ur ORD och är skiftlägesokänslig, så någon som
+ * väljer "Gäst i huset" berörs inte.
+ */
+export function isGeneratedGuestName(name: string | null | undefined): boolean {
+  if (!name) return false;
+  const trimmed = name.trim();
+  if (isAutoGuestName(trimmed)) return true;
+  const match = /^gäst\s+(\S+)$/i.exec(trimmed);
+  return !!match && ORD.includes(match[1].toLowerCase());
+}
+
+/**
  * Namnet som ska visas. Gaster som skapades innan namnsattningen fanns
  * ligger kvar som user_xxxx i databasen; de far ett vanligt namn har i
  * visningslagret i stallet for en migration over befintliga rader.
