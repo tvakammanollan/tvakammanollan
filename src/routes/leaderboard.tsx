@@ -583,8 +583,8 @@ function OrdBoard() {
   }, [load]);
 
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  // Gästkonton rankas inte, och `me`-raden från servern saknar placering
-  // (rank 0) — visa den inte som "Din placering: #0".
+  // Gästkonton rankas inte alls, så en egen rad vore en placering de inte
+  // har. Banderollen högst upp på sidan säger vad som krävs i stället.
   const showMe = !!me && !meInTop && !user?.is_anonymous;
 
   return (
@@ -632,7 +632,7 @@ function OrdBoard() {
                 <>
                   <tr>
                     <td colSpan={5} className="px-3 py-2 text-center text-xs text-white/45">
-                      Din placering: #{me.rank}
+                      {me.rank > 0 ? `Din placering: #${me.rank}` : "Din statistik"}
                     </td>
                   </tr>
                   <OrdRow r={me} isMe />

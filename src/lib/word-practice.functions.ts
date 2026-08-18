@@ -379,7 +379,9 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
       for (const u of us ?? []) nameMap.set(u.id as string, (u.username as string) ?? "");
     }
 
-    const top: OrdLeaderboardRow[] = statsRows
+    // Hela den rankade listan, inte bara de hundra som visas: användarens
+    // egen placering ska stämma även för den som ligger på plats 137.
+    const ranked: OrdLeaderboardRow[] = statsRows
       .map((s) => ({
         rank: 0,
         user_id: s.user_id,
@@ -388,14 +390,18 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
         total_count: s.total_count,
         accuracy: s.total_count > 0 ? Math.round((s.correct_count * 100) / s.total_count) : 0,
       }))
-      // Före slice() — annars äter anonyma konton platser i topp 100.
+      // Före numreringen — annars äter anonyma konton platser i listan.
       .filter((r) => isRankable(r.username))
-      .slice(0, 100)
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
-    // Fetch "me" row separately if not in top — from samma stats-tabell.
+    const top = ranked.slice(0, 100);
+
+    // Egen rad: leta i hela listan, inte bara i topp 100. Hittas den inte
+    // där är kontot antingen utanför de 500 hämtade raderna eller inte
+    // rankbart (gäst) — då hämtas siffrorna separat och rank lämnas 0,
+    // vilket betyder "placering okänd" och renderas som tankstreck.
     let me: OrdLeaderboardRow | null = userId
-      ? (top.find((r) => r.user_id === userId) ?? null)
+      ? (ranked.find((r) => r.user_id === userId) ?? null)
       : null;
     if (!me && userId) {
       const { data: meRow } = await supabaseAdmin

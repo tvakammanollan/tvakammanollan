@@ -112,7 +112,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#fff8f5] shadow-[0_0_24px_rgba(174, 47, 38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174, 47, 38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#fff8f5] shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? "Loggar in…" : "Logga in"}
               {!submitting && <ArrowRight className="h-4 w-4" />}
@@ -196,7 +196,7 @@ export function SuccessScreen() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="py-8"
       >
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26] shadow-[0_0_32px_rgba(174, 47, 38,0.55)]">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26] shadow-[0_0_32px_rgba(174,47,38,0.55)]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-8 w-8 text-[var(--cream)]"

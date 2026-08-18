@@ -25,6 +25,20 @@ export function PodiumRank({
 }) {
   const entry = PODIUM[rank as 1 | 2 | 3];
 
+  // rank 0 = placeringen ar okand (t.ex. egen rad hamtad utanfor listan).
+  // "#0" ser ut som en plats; tankstreck sager att siffran saknas.
+  if (!Number.isFinite(rank) || rank <= 0) {
+    return (
+      <span
+        className={cn("text-sm font-bold tabular-nums text-white/45", className)}
+        style={{ fontFamily: "var(--font-display)" }}
+        title="Placering okänd"
+      >
+        –
+      </span>
+    );
+  }
+
   if (!entry) {
     return (
       <span

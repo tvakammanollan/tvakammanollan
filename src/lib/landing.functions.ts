@@ -30,9 +30,7 @@ export interface LandingStats {
   /** Matches finished in the last minute — for the "live" feel. */
   matchesPerMin: number;
   /** Highest verbal ELO across all users right now. */
-  topVerbalElo: number;
   /** Highest math ELO across all users right now. */
-  topMathElo: number;
   recent: RecentMatch[];
   /** Top players by ELO (verbal + math interleaved by score, max 8). */
   topPlayers: TopPlayer[];
@@ -51,101 +49,72 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
         () => fallback as T,
       );
 
-    const [
-      matchesCount,
-      usersCount,
-      activeAgg,
-      perMinAgg,
-      recent,
-      topVerbal,
-      topMath,
-      topVerbalList,
-      topMathList,
-    ] = await Promise.all([
-      safe(
-        supabaseAdmin
-          .from("matches")
-          .select("*", { count: "exact", head: true })
-          .eq("status", "finished"),
-        { count: 0 } as { count: number | null },
-      ),
-      safe(supabaseAdmin.from("users").select("*", { count: "exact", head: true }), {
-        count: 0,
-      } as { count: number | null }),
-      safe(
-        supabaseAdmin
-          .from("matches")
-          .select("player1_id,player2_id", { head: false })
-          .gte("created_at", fifteenMinAgo)
-          .eq("status", "finished"),
-        { data: [] } as {
-          data: Array<{ player1_id: string | null; player2_id: string | null }>;
-        },
-      ),
-      safe(
-        supabaseAdmin
-          .from("matches")
-          .select("*", { count: "exact", head: true })
-          .gte("created_at", oneMinAgo)
-          .eq("status", "finished"),
-        { count: 0 } as { count: number | null },
-      ),
-      safe(
-        supabaseAdmin
-          .from("matches")
-          .select(
-            "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
-          )
-          .eq("status", "finished")
-          .order("created_at", { ascending: false })
-          .limit(10),
-        { data: [] } as { data: never[] },
-      ),
-      safe(
-        supabaseAdmin
-          .from("users")
-          .select("elo_verbal")
-          .gte("games_played", 1)
-          .order("elo_verbal", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-        { data: null } as { data: { elo_verbal: number | null } | null },
-      ),
-      safe(
-        supabaseAdmin
-          .from("users")
-          .select("elo_math")
-          .gte("games_played", 1)
-          .order("elo_math", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-        { data: null } as { data: { elo_math: number | null } | null },
-      ),
-      // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
-      // tabellen och sållas bort nedan (isRankable).
-      safe(
-        supabaseAdmin
-          .from("users")
-          .select("username, elo_verbal")
-          .gte("games_played", 1)
-          .order("elo_verbal", { ascending: false })
-          .limit(40),
-        { data: [] } as {
-          data: Array<{ username: string | null; elo_verbal: number | null }>;
-        },
-      ),
-      safe(
-        supabaseAdmin
-          .from("users")
-          .select("username, elo_math")
-          .gte("games_played", 1)
-          .order("elo_math", { ascending: false })
-          .limit(40),
-        { data: [] } as {
-          data: Array<{ username: string | null; elo_math: number | null }>;
-        },
-      ),
-    ]);
+    const [matchesCount, usersCount, activeAgg, perMinAgg, recent, topVerbalList, topMathList] =
+      await Promise.all([
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("*", { count: "exact", head: true })
+            .eq("status", "finished"),
+          { count: 0 } as { count: number | null },
+        ),
+        safe(supabaseAdmin.from("users").select("*", { count: "exact", head: true }), {
+          count: 0,
+        } as { count: number | null }),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("player1_id,player2_id", { head: false })
+            .gte("created_at", fifteenMinAgo)
+            .eq("status", "finished"),
+          { data: [] } as {
+            data: Array<{ player1_id: string | null; player2_id: string | null }>;
+          },
+        ),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select("*", { count: "exact", head: true })
+            .gte("created_at", oneMinAgo)
+            .eq("status", "finished"),
+          { count: 0 } as { count: number | null },
+        ),
+        safe(
+          supabaseAdmin
+            .from("matches")
+            .select(
+              "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
+            )
+            .eq("status", "finished")
+            .order("created_at", { ascending: false })
+            .limit(10),
+          { data: [] } as { data: never[] },
+        ),
+        // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
+        // tabellen och sållas bort nedan (isRankable).
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("username, elo_verbal")
+            .gte("games_played", 1)
+            .order("elo_verbal", { ascending: false })
+            .limit(40),
+          { data: [] } as {
+            data: Array<{ username: string | null; elo_verbal: number | null }>;
+          },
+        ),
+        safe(
+          supabaseAdmin
+            .from("users")
+            .select("username, elo_math")
+            .gte("games_played", 1)
+            .order("elo_math", { ascending: false })
+            .limit(40),
+          { data: [] } as {
+            data: Array<{ username: string | null; elo_math: number | null }>;
+          },
+        ),
+      ]);
 
     const activeIds = new Set<string>();
     for (const r of (activeAgg.data ?? []) as Array<{
@@ -211,8 +180,6 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       totalPlayers: usersCount.count ?? 0,
       activePlayers: activeIds.size,
       matchesPerMin: perMinAgg.count ?? 0,
-      topVerbalElo: topVerbal.data?.elo_verbal ?? 0,
-      topMathElo: topMath.data?.elo_math ?? 0,
       recent: matches.map((m) => ({
         ...m,
         p1_name: nameMap.get(m.player1_id) ?? null,

@@ -139,7 +139,7 @@ export function RelatedGuides({
             key={g.path}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             to={g.path as any}
-            className="group block rounded-2xl border p-4 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+            className="group block rounded-2xl border p-4 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
             style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
           >
             <div className="text-sm font-semibold" style={{ color: "var(--cream)" }}>

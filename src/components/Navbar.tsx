@@ -138,7 +138,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1.5 bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_20px_rgba(174, 47, 38,0.35)] hover:shadow-[0_0_30px_rgba(174, 47, 38,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
+                className="gap-1.5 bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_20px_rgba(174,47,38,0.35)] hover:shadow-[0_0_30px_rgba(174,47,38,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -171,7 +171,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1 px-3 text-xs bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_16px_rgba(174, 47, 38,0.35)]"
+                className="gap-1 px-3 text-xs bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_16px_rgba(174,47,38,0.35)]"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3 w-3 animate-spin" />

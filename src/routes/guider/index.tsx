@@ -159,7 +159,7 @@ function GuiderPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
               to="/guider/ord"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -173,7 +173,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/mek"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -187,7 +187,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/las"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -201,7 +201,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/elf"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -221,7 +221,7 @@ function GuiderPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
               to="/guider/xyz"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -235,7 +235,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/kva"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -248,7 +248,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/nog"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -261,7 +261,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/dtk"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -281,7 +281,7 @@ function GuiderPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
               to="/hogskoleprovet-poang"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -295,7 +295,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/tidspress"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -309,7 +309,7 @@ function GuiderPage() {
 
             <Link
               to="/guider/bra-resultat"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -346,7 +346,7 @@ function GuiderPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
               to="/gamla-prov"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -358,7 +358,7 @@ function GuiderPage() {
             </Link>
             <Link
               to="/hogskoleprovet-datum"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -370,7 +370,7 @@ function GuiderPage() {
             </Link>
             <Link
               to="/hogskoleprovet-poang"
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
@@ -384,7 +384,7 @@ function GuiderPage() {
               to="/ord"
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               params={{} as any}
-              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174, 47, 38,0.12)]"
+              className="group block rounded-2xl border p-5 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>

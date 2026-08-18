@@ -50,7 +50,7 @@ export function FloatingTestCta() {
         disabled={guestLoading}
         aria-label="Testa gratis, hoppa direkt in i en match"
         data-cursor="link"
-        className="group pointer-events-auto relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 px-7 py-4 text-[15px] font-bold text-[#fff8f5] shadow-[0_10px_40px_rgba(174, 47, 38,0.5),0_0_0_1px_rgba(255,255,255,0.15)] transition-transform hover:scale-105 active:scale-95 disabled:opacity-70 sm:px-8 sm:py-5 sm:text-base"
+        className="group pointer-events-auto relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 px-7 py-4 text-[15px] font-bold text-[#fff8f5] shadow-[0_10px_40px_rgba(174,47,38,0.5),0_0_0_1px_rgba(255,255,255,0.15)] transition-transform hover:scale-105 active:scale-95 disabled:opacity-70 sm:px-8 sm:py-5 sm:text-base"
       >
         {/* Pulsing halo */}
         <span

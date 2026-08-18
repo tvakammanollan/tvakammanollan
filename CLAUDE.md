@@ -98,15 +98,21 @@ without touching production; use it for anything you cannot check locally.
 - `eslint src` reports ~900 pre-existing `prettier/prettier` errors across files nobody
   has touched. Lint the files you changed (`npx eslint <path>`) instead of the tree, and
   do not run `--fix` repo-wide unless that reformat is the actual task.
-- **På Windows-maskinen går varken `npm run dev` eller `npm run build`.**
+- **På Windows kräver `npm run dev` och `npm run build` en lokal lappning.**
   `@lovable.dev/mcp-js` jämför Vites `root` (normaliserad med `/`) mot
   `resolve(root, "src/routes")` (som ger `\`) och kastar
-  `routesDir "src/routes" must resolve under …` redan i `configResolved` — alltså
-  innan någon källfil lästs, oberoende av vad man ändrat. Där går bara
-  `npx tsc --noEmit`, `npx eslint <path>` och `npm run test`; bygge och SSR-rök
-  måste ske på Linux-maskinen eller i CI. Samma utcheckning har dessutom
-  `core.autocrlf=true`, så *varje* fil ger `Delete ␍` i eslint — filtrera bort dem
-  för att se de riktiga träffarna.
+  `routesDir "src/routes" must resolve under …` redan i `configResolved`.
+  Pluginet har en oanvänd `normalizePath`-hjälpare precis ovanför; kör den på
+  båda sidor i `assertContains` i
+  `node_modules/@lovable.dev/mcp-js/dist/stacks/tanstack/vite.js` och jämför mot
+  `parent + "/"`, så fungerar både bygge och dev-server. `node_modules` är
+  gitignorerad, så lappningen följer aldrig med i en commit — men den försvinner
+  vid nästa `npm install` och måste läggas tillbaka. Rapportera den gärna
+  uppströms; det är en ren bugg i pluginet.
+  Utcheckningen har dessutom `core.autocrlf=true`, så *varje* fil ger
+  `Delete ␍` i eslint — filtrera bort dem för att se de riktiga träffarna, och
+  kontrollera misstänkta prettier-fel mot `origin/main` innan du rättar dem:
+  flera är pre-existerande (`Navbar.tsx:122`, `result.$matchId.tsx:439`).
 - Verifying rendered pages: `--dump-dom` snapshots fire before React finishes its
   async queries, so pages look empty at random. Drive Chrome over CDP with
   `--remote-debugging-port` and poll `document.body.innerText` until the expected text
