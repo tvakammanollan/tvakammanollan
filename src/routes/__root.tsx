@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
+import { useOAuthErrorToast } from "@/hooks/useOAuthErrorToast";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { LazyMotion } from "framer-motion";
@@ -431,6 +432,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // OAuth-returen kan landa på vilken route som helst (redirectTo + Site URL),
+  // så felet fångas här i stället för på en enskild callback-sida.
+  useOAuthErrorToast();
   useEffect(() => {
     installGlobalClickSound();
     // Install client-side error telemetry (#16)

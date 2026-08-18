@@ -801,7 +801,9 @@ export const fetchForumUnread = createServerFn({ method: "GET" })
 export interface ForumSearchHit {
   threadId: number;
   title: string;
-  path: string;
+  /** Delarna till <Link to="/forum/$kategori/$trad"> — typade rutter, ingen råsträng. */
+  categorySlug: string;
+  trad: string;
   categoryName: string;
   replyCount: number;
   lastPostAt: string;
@@ -847,7 +849,8 @@ export const searchForum = createServerFn({ method: "GET" })
       hits: hits.map((h) => ({
         threadId: h.thread_id,
         title: h.title,
-        path: threadPath(catById.get(h.category_id)?.slug ?? "allmant", h.thread_id, h.slug),
+        categorySlug: catById.get(h.category_id)?.slug ?? "allmant",
+        trad: `${h.thread_id}-${h.slug}`,
         categoryName: catById.get(h.category_id)?.name ?? "",
         replyCount: h.reply_count,
         lastPostAt: h.last_post_at,

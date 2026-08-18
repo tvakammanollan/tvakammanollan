@@ -6,6 +6,7 @@ import {
   MessageSquare,
   Plus,
   ScrollText,
+  Search,
   Sparkles,
 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
@@ -94,12 +95,21 @@ function ForumHomePage() {
             <Plus className="h-4 w-4" aria-hidden />
             Ny tråd
           </Link>
-          <Link
-            to="/forum/regler"
-            className="text-sm text-[var(--text-tertiary)] underline-offset-4 hover:text-[var(--cream)] hover:underline"
-          >
-            Regler och vem som driver forumet
-          </Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/forum/sok"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/12 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:border-[var(--amber)]/50 hover:text-[var(--cream)]"
+            >
+              <Search className="h-4 w-4" aria-hidden />
+              Sök
+            </Link>
+            <Link
+              to="/forum/regler"
+              className="text-sm text-[var(--text-tertiary)] underline-offset-4 hover:text-[var(--cream)] hover:underline"
+            >
+              Regler och vem som driver forumet
+            </Link>
+          </div>
         </div>
 
         <ul className="grid gap-3">

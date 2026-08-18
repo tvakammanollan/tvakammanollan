@@ -9,6 +9,7 @@ import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 import { ArrowRight, Mail } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
+import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { SuccessScreen } from "@/routes/login";
 
@@ -112,36 +113,41 @@ function SignupPage() {
               <p className="text-[16px] text-white/65">Gratis. Inga kort, bara matcher.</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <PillInput
-                type="email"
-                label="E-postadress"
-                placeholder="info@gmail.com"
-                autoComplete="email"
-                value={email}
-                onChange={setEmail}
-              />
-              <div>
-                <PillInput
-                  type="password"
-                  label="Lösenord"
-                  placeholder="Lösenord (minst 6 tecken)"
-                  autoComplete="new-password"
-                  value={password}
-                  onChange={setPassword}
-                  minLength={6}
-                />
-              </div>
+            <div className="space-y-4">
+              <GoogleButton />
+              <AuthDivider />
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#2e1e14] shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {submitting ? "Skapar konto…" : "Skapa konto"}
-                {!submitting && <ArrowRight className="h-4 w-4" />}
-              </button>
-            </form>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <PillInput
+                  type="email"
+                  label="E-postadress"
+                  placeholder="info@gmail.com"
+                  autoComplete="email"
+                  value={email}
+                  onChange={setEmail}
+                />
+                <div>
+                  <PillInput
+                    type="password"
+                    label="Lösenord"
+                    placeholder="Lösenord (minst 6 tecken)"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={setPassword}
+                    minLength={6}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#ae2f26] px-6 text-[15px] font-semibold text-[#2e1e14] shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitting ? "Skapar konto…" : "Skapa konto"}
+                  {!submitting && <ArrowRight className="h-4 w-4" />}
+                </button>
+              </form>
+            </div>
 
             <p className="text-sm text-white/55">
               Har du redan ett konto?{" "}
