@@ -180,7 +180,7 @@ const PRICE_TTL_MS = 10 * 60 * 1000;
 let priceCache: { at: number; value: CoachingPrice } | null = null;
 
 /** Default-namnet matchar produkten i Stripe. Kan bytas via env. */
-const DEFAULT_PRODUCT_NAME = "Studieupplägg";
+const DEFAULT_PRODUCT_NAME = "Coachning Studieupplägg";
 
 function toCoachingPrice(price: StripePrice, fallbackName: string): CoachingPrice {
   if (price.unit_amount === null) {
@@ -307,6 +307,9 @@ async function hmacSha256Hex(secret: string, payload: string): Promise<string> {
  * Verifierar `Stripe-Signature` enligt Stripes schema:
  * `HMAC-SHA256(secret, "<t>.<rå body>")`, jämfört mot varje `v1=`.
  *
+ * `secret` får innehålla flera hemligheter separerade med komma eller
+ * blanksteg — då räcker det att en av dem stämmer.
+ *
  * Utan tidsstämpelkontrollen räcker det att spela upp en gammal, giltigt
  * signerad händelse igen för att markera ett köp som betalt. Toleransen är
  * densamma som Stripes egen (5 min).
@@ -318,7 +321,23 @@ export async function verifyStripeSignature(
   toleranceSeconds = 300,
   nowMs: number = Date.now(),
 ): Promise<boolean> {
-  if (!signatureHeader || !secret) return false;
+  // Flera hemligheter samtidigt: under ett domänbyte finns två endpoints hos
+  // Stripe, en per domän, med var sin hemlighet. Utan det här avvisas allt från
+  // den ena med 400 medan trafiken flyttas.
+  const secrets = secret
+    .split(/[,\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (!signatureHeader || secrets.length === 0) return false;
+  if (secrets.length > 1) {
+    for (const s of secrets) {
+      if (await verifyStripeSignature(rawBody, signatureHeader, s, toleranceSeconds, nowMs)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  secret = secrets[0];
 
   let timestamp: string | null = null;
   const candidates: string[] = [];

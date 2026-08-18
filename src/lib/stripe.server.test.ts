@@ -122,7 +122,7 @@ describe("resolveCoachingPrice", () => {
     unit_amount: 149500,
     type: "one_time",
     recurring: null,
-    product: { id: "prod_1", name: "Studieupplägg", active: true, default_price: null },
+    product: { id: "prod_1", name: "Coachning Studieupplägg", active: true, default_price: null },
   };
 
   let anrop: string[] = [];
@@ -170,19 +170,19 @@ describe("resolveCoachingPrice", () => {
           active: true,
           default_price: { ...ettPris, id: "p_fel" },
         },
-        { id: "prod_1", name: "Studieupplägg", active: true, default_price: ettPris },
+        { id: "prod_1", name: "Coachning Studieupplägg", active: true, default_price: ettPris },
       ],
     });
     const p = await resolveCoachingPrice();
     expect(p.priceId).toBe("price_abc");
-    expect(p.productName).toBe("Studieupplägg");
+    expect(p.productName).toBe("Coachning Studieupplägg");
     expect(anrop[0]).toContain("/products");
   });
 
   it("matchar produktnamnet oberoende av skiftläge och blanksteg", async () => {
-    process.env.STRIPE_COACHING_PRODUCT_NAME = "  studieUPPLÄGG ";
+    process.env.STRIPE_COACHING_PRODUCT_NAME = "  coachning studieUPPLÄGG ";
     stubba({
-      data: [{ id: "prod_1", name: "Studieupplägg", active: true, default_price: ettPris }],
+      data: [{ id: "prod_1", name: "Coachning Studieupplägg", active: true, default_price: ettPris }],
     });
     await expect(resolveCoachingPrice()).resolves.toMatchObject({ priceId: "price_abc" });
   });
@@ -219,5 +219,37 @@ describe("resolveCoachingPrice", () => {
     const p = await resolveCoachingPrice();
     expect(p.recurring).toBe(true);
     expect(p.interval).toBe("month");
+  });
+});
+
+describe("verifyStripeSignature — flera hemligheter", () => {
+  const body = JSON.stringify({ id: "evt_2", type: "checkout.session.completed" });
+  const now = 1_760_000_000_000;
+  const t = Math.floor(now / 1000);
+  const hpk = "whsec_hpkampen";
+  const nya = "whsec_nyadoman";
+
+  it("godkänner en händelse signerad med endera endpointens hemlighet", async () => {
+    for (const s of [hpk, nya]) {
+      expect(await verifyStripeSignature(body, sign(s, t, body), `${hpk},${nya}`, 300, now)).toBe(
+        true,
+      );
+    }
+  });
+
+  it("avvisar fortfarande en hemlighet som inte står med", async () => {
+    expect(
+      await verifyStripeSignature(body, sign("whsec_tredje", t, body), `${hpk},${nya}`, 300, now),
+    ).toBe(false);
+  });
+
+  it("tål blanksteg och tomma poster i listan", async () => {
+    expect(
+      await verifyStripeSignature(body, sign(nya, t, body), ` ${hpk} , , ${nya} `, 300, now),
+    ).toBe(true);
+  });
+
+  it("en lista med bara skräptecken godkänner ingenting", async () => {
+    expect(await verifyStripeSignature(body, sign(hpk, t, body), " , , ", 300, now)).toBe(false);
   });
 });

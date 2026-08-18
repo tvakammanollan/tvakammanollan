@@ -338,12 +338,14 @@ async function stripeWebhook(request: Request): Promise<Response> {
 
   try {
     if (event.type && PAID_EVENTS.has(event.type)) {
-      const { markCoachingPaid, sessionIsPaid } = await import("./lib/coaching.server");
+      const { markCoachingPaid, sessionIsPaid, isCoachingSession } =
+        await import("./lib/coaching.server");
       const session = event.data?.object as Parameters<typeof markCoachingPaid>[0];
       // completed kommer även för betalsätt som ännu inte gått igenom
       // (fakturor, direktbetalning) — då är payment_status "unpaid" och köpet
-      // bokförs först vid async_payment_succeeded.
-      if (session?.id && sessionIsPaid(session)) {
+      // bokförs först vid async_payment_succeeded. isCoachingSession sållar bort
+      // köp i kontot som inte kommer härifrån: endpointen lyssnar brett.
+      if (session?.id && isCoachingSession(session) && sessionIsPaid(session)) {
         const result = await markCoachingPaid(session);
         console.log(
           JSON.stringify({

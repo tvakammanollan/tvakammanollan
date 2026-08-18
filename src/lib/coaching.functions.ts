@@ -24,7 +24,12 @@ import {
   retrieveCheckoutSession,
   stripeConfigured,
 } from "./stripe.server";
-import { buildCoachingCheckoutParams, markCoachingPaid, sessionIsPaid } from "./coaching.server";
+import {
+  buildCoachingCheckoutParams,
+  isCoachingSession,
+  markCoachingPaid,
+  sessionIsPaid,
+} from "./coaching.server";
 
 export interface CoachingOffer {
   /** false = Stripe är inte konfigurerat här; UI:t visar kontaktvägen i stället. */
@@ -177,7 +182,9 @@ export const confirmCoachingCheckout = createServerFn({ method: "POST" })
     assertRateLimit(ipKey("coaching-confirm"), limits.publicRead);
 
     const session = await retrieveCheckoutSession(data.sessionId);
-    if (!sessionIsPaid(session)) {
+    // Ett giltigt men främmande session-id ska inte kunna kvitteras som ett
+    // coachningsköp — svaret blir detsamma som för en obetald session.
+    if (!isCoachingSession(session) || !sessionIsPaid(session)) {
       return { paid: false, amount: null, currency: null, email: null, firstConfirmation: false };
     }
 

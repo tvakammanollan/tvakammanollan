@@ -24,10 +24,12 @@
     // `wrangler versions secret put <NAMN>` följt av
     // `wrangler versions deploy "<id>@100%"`, precis som service role-nyckeln).
     //
-    // Namnet används för att hitta coachningsprodukten i Stripe när
-    // STRIPE_COACHING_PRICE_ID inte är satt. Sätt price-id:t här i stället om
-    // produkten byter namn eller om det finns flera priser på den.
-    "STRIPE_COACHING_PRODUCT_NAME": "Studieupplägg",
+    // Priset på coachningen. Exakt id, inte namnuppslag: produkten heter
+    // "Coachning Studieupplägg" och ett namn som glider isär från koden gör att
+    // knappen tyst tappar sitt pris. Namnet står kvar som reserv om id:t byts
+    // ut mot ett nytt pris utan att den här filen hinner uppdateras.
+    "STRIPE_COACHING_PRICE_ID": "price_1U52c8PzBQuvmB8TgKqyuByR",
+    "STRIPE_COACHING_PRODUCT_NAME": "Coachning Studieupplägg",
 
     // PostHog. Nyckeln är publik (klientnyckel som bara kan skicka in
     // händelser). OBS: VITE_-variabler bakas in vid BYGGET — de måste därför

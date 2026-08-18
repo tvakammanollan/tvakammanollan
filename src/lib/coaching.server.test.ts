@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { buildCoachingCheckoutParams, COACHING_FIELD_FOCUS } from "./coaching.server";
+import {
+  buildCoachingCheckoutParams,
+  COACHING_FIELD_FOCUS,
+  isCoachingSession,
+} from "./coaching.server";
 import { encodeStripeForm } from "./stripe.server";
 
 /**
@@ -80,5 +84,31 @@ describe("buildCoachingCheckoutParams", () => {
     };
     expect(p.custom_fields).toHaveLength(2);
     expect(p.custom_fields.every((f) => f.optional)).toBe(true);
+  });
+});
+
+describe("isCoachingSession", () => {
+  const som = (metadata: Record<string, string> | null) =>
+    ({ id: "cs_1", metadata }) as unknown as Parameters<typeof isCoachingSession>[0];
+
+  it("känner igen en session vi själva skapat", () => {
+    expect(isCoachingSession(som({ product: "coaching", coaching_request_id: "x" }))).toBe(true);
+  });
+
+  it("accepterar ett köp som påbörjades innan märkningen fanns", () => {
+    expect(isCoachingSession(som({ coaching_request_id: "x" }))).toBe(true);
+  });
+
+  it("släpper inte igenom ett främmande köp i samma Stripe-konto", () => {
+    // Endpointen lyssnar på alla händelser i kontot; utan den här spärren blir
+    // någon annans checkout en betald coachningsrad.
+    expect(isCoachingSession(som({ product: "nagot_annat" }))).toBe(false);
+    expect(isCoachingSession(som({}))).toBe(false);
+    expect(isCoachingSession(som(null))).toBe(false);
+  });
+
+  it("märkningen följer med i kassans parametrar", () => {
+    const p = buildCoachingCheckoutParams(bas) as { metadata: Record<string, string> };
+    expect(p.metadata.product).toBe("coaching");
   });
 });

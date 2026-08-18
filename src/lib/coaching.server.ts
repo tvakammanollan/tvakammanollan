@@ -12,6 +12,17 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { customFieldValue, type StripeCheckoutSession, type StripeParam } from "./stripe.server";
 
+/**
+ * Märker sessionen som vår.
+ *
+ * Kontot har en webhook-endpoint som lyssnar på i stort sett alla händelser, och
+ * `checkout.session.completed` fyras för varje köp i hela kontot — även sådant
+ * som inte har med sajten att göra. Utan en märkning skulle ett främmande köp
+ * hamna som en betald coachningsrad, eftersom hanteraren annars skapar raden
+ * när den inte hittar någon.
+ */
+export const COACHING_PRODUCT_TAG = "coaching";
+
 /** Nycklarna på Checkout-sidans egna frågor. Samma namn skrivs och läses. */
 export const COACHING_FIELD_FOCUS = "fokus";
 export const COACHING_FIELD_TIMING = "tid";
@@ -20,6 +31,19 @@ export interface MarkPaidResult {
   /** true bara för den som faktiskt vände raden från obetald till betald. */
   newlyPaid: boolean;
   requestId: string | null;
+}
+
+/**
+ * Hör sessionen till coachningen?
+ *
+ * `coaching_request_id` accepteras också, så att ett köp som hann påbörjas före
+ * märkningen infördes fortfarande bokförs.
+ */
+export function isCoachingSession(session: StripeCheckoutSession): boolean {
+  return (
+    session.metadata?.product === COACHING_PRODUCT_TAG ||
+    Boolean(session.metadata?.coaching_request_id)
+  );
 }
 
 /** Ett Checkout-köp är betalt både vid direktbetalning och vid gratis kupong. */
@@ -60,6 +84,7 @@ export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
     phone_number_collection: { enabled: true },
     customer_email: input.email,
     metadata: {
+      product: COACHING_PRODUCT_TAG,
       coaching_request_id: input.requestId,
       user_id: input.userId ?? "",
       source: input.source,
@@ -99,6 +124,10 @@ export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
  * utfallet — därför skapas raden hellre i efterhand än tappas.
  */
 export async function markCoachingPaid(session: StripeCheckoutSession): Promise<MarkPaidResult> {
+  // Sista spärren mot att ett främmande köp blir en coachningsrad. Ligger här
+  // och inte bara i anropen, eftersom det är det här stället som skriver.
+  if (!isCoachingSession(session)) return { newlyPaid: false, requestId: null };
+
   const requestId = session.metadata?.coaching_request_id ?? session.client_reference_id ?? null;
 
   const details = session.customer_details;
