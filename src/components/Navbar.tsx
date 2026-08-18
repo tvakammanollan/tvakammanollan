@@ -79,16 +79,21 @@ export function Navbar() {
       }}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
-        <Link to="/" className="group inline-flex items-center gap-2.5 shrink-0">
-          {/* Monogram crest — amber */}
+        {/* Loggan är bara märket. "Kampen" stod bredvid som ord, men
+            märket bär namnet självt — tvåkommanollan är vad sajten
+            heter. Länken måste därför ha ett eget tillgängligt namn,
+            annars blir den en klickyta utan text för skärmläsare. */}
+        <Link
+          to="/"
+          aria-label="HP Kampen, till startsidan"
+          className="group inline-flex shrink-0 items-center"
+        >
           <span
             aria-hidden
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl text-white shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
+            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
             style={{ background: "#ae2f26" }}
           >
-            {/* Samma märke som faviconen och delningsbilden: talet 2,0.
-                Ingen inre skiva längre — den gjorde siffrorna för små
-                för att läsas i 36 px. */}
+            {/* Samma märke som faviconen och delningsbilden: talet 2,0. */}
             <span
               className="relative text-[15px] font-black leading-none tracking-[-0.08em] text-[#fff8f5]"
               style={{ fontFamily: "var(--font-display)" }}
@@ -96,12 +101,6 @@ export function Navbar() {
               2,0
             </span>
             <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400" />
-          </span>
-          <span
-            className="text-[19px] font-bold text-white sm:text-[21px]"
-            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
-          >
-            Kampen
           </span>
         </Link>
 

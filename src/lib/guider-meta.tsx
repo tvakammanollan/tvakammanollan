@@ -213,7 +213,7 @@ export function guideArticleJsonLd({
         url: "https://hpkampen.se/favicon.svg",
       },
     },
-    image: "https://hpkampen.se/og-image.png",
+    image: "https://hpkampen.se/og-image-2.png",
     inLanguage: "sv-SE",
     isAccessibleForFree: true,
     mainEntityOfPage: {

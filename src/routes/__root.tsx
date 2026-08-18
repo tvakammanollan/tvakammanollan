@@ -148,7 +148,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://hpkampen.se/" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://hpkampen.se/og-image.png" },
+      { property: "og:image", content: "https://hpkampen.se/og-image-2.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "HP Kampen · Tävla mot vänner i Högskoleprovet" },
@@ -160,7 +160,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
       },
-      { name: "twitter:image", content: "https://hpkampen.se/og-image.png" },
+      { name: "twitter:image", content: "https://hpkampen.se/og-image-2.png" },
       { name: "theme-color", content: "#fbf6ec" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
