@@ -1262,6 +1262,12 @@ export type Database = {
       }
     }
     Functions: {
+      admin_question_answer: {
+        Args: {
+          _id: string
+        }
+        Returns: string
+      }
       apply_match_result: {
         Args: {
           _loser_elo_change: number

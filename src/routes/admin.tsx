@@ -179,7 +179,7 @@ function ManageTab() {
     let q = supabase
       .from("questions")
       .select(
-        "id, category, subject_type, question_text, passage_text, options, correct_answer, difficulty, explanation, tags",
+        "id, category, subject_type, question_text, passage_text, options, difficulty, explanation, tags",
       )
       .order("category")
       .limit(200);
@@ -446,11 +446,21 @@ function ReportsTab() {
     const { data } = await supabase
       .from("questions")
       .select(
-        "id, category, subject_type, question_text, passage_text, options, correct_answer, difficulty, explanation, tags",
+        "id, category, subject_type, question_text, passage_text, options, difficulty, explanation, tags",
       )
       .eq("id", qId)
       .maybeSingle();
-    if (data) setEditing(data as QuestionRow);
+    if (!data) return;
+    // Facit går inte längre att läsa som kolumn — se
+    // 20260818140000_dolj_facit.sql. Admin hämtar det via definer-funktionen,
+    // som kontrollerar is_admin i stället för kolumnrättigheten.
+    const { data: answer, error } = await supabase.rpc("admin_question_answer", { _id: qId });
+    if (error) {
+      console.error("[admin] kunde inte hämta facit", error.message);
+      toast.error("Kunde inte hämta facit för frågan");
+      return;
+    }
+    setEditing({ ...(data as object), correct_answer: answer ?? "" } as QuestionRow);
   };
 
   return (

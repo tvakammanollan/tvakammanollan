@@ -4,6 +4,8 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { fetchTrainingBatch } from "@/lib/train.functions";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
@@ -129,6 +131,7 @@ type Phase = "setup" | "loading" | "session" | "result";
 
 function TrainPage() {
   const { user, loading: authLoading } = useAuth();
+  const getTrainingBatch = useServerFn(fetchTrainingBatch);
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("setup");
   const [config, setConfig] = useState<TrainConfig>({
@@ -190,33 +193,23 @@ function TrainPage() {
       return;
     }
     setPhase("loading");
-    let q = supabase
-      .from("questions")
-      .select(
-        "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
-      )
-      .in("category", config.subs);
-    if (config.difficulty !== null) {
-      q = q.eq("difficulty", config.difficulty);
-    }
-    // Pull a wider pool then shuffle client-side.
-    // try/catch: en kastad nätverksexception (inte bara {error}) får inte
-    // lämna kvar "loading"-fasen som en evig spinner.
-    let data: Awaited<ReturnType<typeof q.limit>>["data"];
-    let error: Awaited<ReturnType<typeof q.limit>>["error"];
+    // Frågorna hämtas via serverfunktionen, inte med webbläsarklienten.
+    // Facit ligger i tabellen och får inte gå att slå upp på id härifrån —
+    // se kommentaren i train.functions.ts. Servern väljer och blandar.
+    let data: Array<Record<string, unknown>> | null = null;
     try {
-      ({ data, error } = await q.limit(300));
+      const res = await getTrainingBatch({
+        data: {
+          categories: config.subs,
+          difficulty: config.difficulty,
+          count: config.count,
+        },
+      });
+      data = res.questions as Array<Record<string, unknown>>;
     } catch (e) {
       console.error("[train] question fetch threw", e);
       toast.error("Kunde inte hämta frågor", {
         description: "Kontrollera din uppkoppling och försök igen.",
-      });
-      setPhase("setup");
-      return;
-    }
-    if (error) {
-      toast.error("Kunde inte hämta frågor", {
-        description: "Försök igen om en stund eller ladda om sidan.",
       });
       setPhase("setup");
       return;
@@ -232,8 +225,7 @@ function TrainPage() {
       setPhase("setup");
       return;
     }
-    // Shuffle
-    const pool = [...data].sort(() => Math.random() - 0.5).slice(0, config.count);
+    const pool = data;
     // Visa varning om vi inte fick så många som användaren bad om
     if (pool.length < config.count) {
       toast.warning(
