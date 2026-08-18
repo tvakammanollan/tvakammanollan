@@ -313,6 +313,13 @@ export const completeCoachingBooking = createServerFn({ method: "POST" })
     if (!booking.utmContent) {
       console.warn(`[coaching] bokning ${booking.inviteeUri} saknar utm_content`);
     }
+    // En avbokad tid är ingen tid. Utan kontrollen kan någon återanvända en
+    // gammal, avbokad bokning för att ta sig till kassan med ett `scheduled_at`
+    // som inte finns i kalendern.
+    if (booking.status !== "active") {
+      console.error(`[coaching] bokning ${booking.inviteeUri} har status ${booking.status}`);
+      throw new Error(BOOKING_ERROR);
+    }
 
     const goal = formatCalendlyAnswers(booking.answers);
 

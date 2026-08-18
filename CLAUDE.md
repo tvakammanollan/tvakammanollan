@@ -50,6 +50,14 @@ registrar och mejlvärd för båda (MX `smtp.rzone.de`); DNS ligger i Cloudflare
 `wrangler versions upload` gives a preview URL that serves the build without
 touching production; use it for anything you cannot check locally.
 
+- **301:an är avstängd tills `CANONICAL_REDIRECT=on` sätts.** Den pekar på ett
+  värdnamn som måste ha en Worker-route först: 2026-08-18 var
+  `tvakommanollan.se` proxad i Cloudflare men hade ingen route, alltså 522 —
+  och eftersom omdirigeringen gäller allt utom `/api/` hade en utrullning
+  släckt hela sajten medan `hpkampen.se` fungerade utmärkt sekunden innan.
+  Grinden (`canonicalRedirectEnabled()`) skiljer "koden är ute" från "flytten
+  är på". Slå på den när `https://tvakommanollan.se/api/health` svarar 200,
+  inte förr.
 - **Kanonisk värd hanteras i koden, inte i Cloudflare.** `canonicalRedirect()`
   (`src/lib/canonical-host.ts`, anropad först i `src/server.ts`) 301:ar de tre
   icke-kanoniska värdnamnen till `tvakommanollan.se`. En Redirect Rule i
@@ -465,6 +473,13 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
   `package-lock.json` och `bun.lock` måste hållas i synk. Tre anrop och en HMAC
   är inte värt det. **API-versionen pinnas medvetet inte** — en felstavad
   version ger fel på varje anrop, och fälten vi läser är stabila sedan år.
+- **Produkten har exakt ett aktivt pris: 350 kr engångsköp**
+  (`price_1U5jVF…`, satt som produktens `default_price` sedan 2026-08-18).
+  Det är medvetet att pinnat id och `default_price` pekar på samma pris —
+  innan dess sålde det pinnade id:t 300 kr engångsköp medan reservvägen
+  (namnuppslag → `default_price`) hade blivit 350 kr **per månad**. Reserven
+  hade alltså börjat dra pengar varje månad den dag varen tappades. Lägger du
+  till ett pris: håll ihop dem, eller ta bort reservvägen.
 - **Priset står aldrig i koden.** `resolveCoachingPrice()` läser det ur Stripe
   (env `STRIPE_COACHING_PRICE_ID`, annars produkten som heter
   `STRIPE_COACHING_PRODUCT_NAME` och dess `default_price`), cachat 10 min per
@@ -549,6 +564,16 @@ Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
   bokningsläget kommer först efter första riktiga requesten; en headless-koll
   som klickar direkt ser "Läs mer om coachning" i stället för priset och ser ut
   som att Stripe inte är konfigurerat. Värm med en `curl /` först.
+- **Event-typens slug är en tyst enpunktsfelkälla.** `CALENDLY_EVENT_URL` är en
+  sträng som pekar på något vi inte äger. Byts sluggen i Calendly (det hände:
+  `30min` → `60min`) laddar iframen en 404-sida, ingen kan boka, och ingenting
+  loggas eller kastar. `/api/health` rapporterar därför `calendly: "ok" |
+  "fail" | "av"` — `"av"` betyder att tidsbokningen inte är påslagen, vilket är
+  ett giltigt läge.
+- **Slå INTE på "Collect payment" på event-typen i Calendly.** Kontot är kopplat
+  till Stripe, men `is_paid` måste förbli `false`: annars betalar köparen i
+  Calendly *och* `completeCoachingBooking` öppnar en andra Checkout-session
+  efteråt. Det är en dubbeldebitering, och inget i koden upptäcker den.
 - Migration: `supabase/migrations/20260818090000_coachning_calendly.sql`.
   `scheduled_at`, `calendly_*`-kolumnerna, unikt index på
   `calendly_invitee_uri` (en bokning hör till exakt ett köp) och vyn ovan med

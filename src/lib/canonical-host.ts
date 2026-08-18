@@ -35,3 +35,23 @@ export function canonicalRedirect(url: URL): string | null {
   if (url.pathname === "/api" || url.pathname.startsWith("/api/")) return null;
   return `https://${CANONICAL_HOST}${url.pathname}${url.search}`;
 }
+
+/**
+ * Är flytten påslagen?
+ *
+ * 301:an ovan pekar på ett värdnamn som måste ha en Worker-route innan den
+ * aktiveras. Saknas routen svarar Cloudflare 522 — och eftersom omdirigeringen
+ * gäller allt utom `/api/` skulle hela sajten slockna i samma sekund koden
+ * rullas ut, medan den gamla domänen fortfarande fungerade utmärkt sekunden
+ * innan. Det var läget när det här skrevs: `tvakommanollan.se` var proxad i
+ * Cloudflare men ingen route besvarade den.
+ *
+ * Grinden gör de två stegen oberoende av varandra: koden kan pushas när som
+ * helst, och flytten slås på med `CANONICAL_REDIRECT=on` i `wrangler.jsonc`
+ * först när målet bevisligen svarar 200. Ta inte bort den till förmån för ett
+ * "det är ju redan fixat" — den kostar en env-variabel och skyddar mot ett
+ * totalstopp.
+ */
+export function canonicalRedirectEnabled(): boolean {
+  return process.env.CANONICAL_REDIRECT?.trim().toLowerCase() === "on";
+}

@@ -1,7 +1,7 @@
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
-import { CANONICAL_HOST, canonicalRedirect } from "./lib/canonical-host";
+import { CANONICAL_HOST, canonicalRedirect, canonicalRedirectEnabled } from "./lib/canonical-host";
 import { renderErrorPage } from "./lib/error-page";
 
 type ServerEntry = {
@@ -152,9 +152,29 @@ async function healthCheck(env: unknown): Promise<Response> {
       supabaseStatus = "fail";
     }
   }
+  // Calendly-länken är en sträng i konfigurationen som pekar på något vi inte
+  // äger. Byts event-typens slug i Calendly blir den tyst fel: iframen laddar
+  // en 404-sida, och ingen kan boka — utan att något loggas eller kastar. Det
+  // hände på riktigt (slug 30min → 60min). Sonden gör felet synligt.
+  const calendlyUrl = procEnv.CALENDLY_EVENT_URL?.trim();
+  let calendlyStatus: "ok" | "fail" | "av" = "av";
+  if (calendlyUrl && procEnv.CALENDLY_API_TOKEN?.trim()) {
+    try {
+      const r = await fetch(calendlyUrl, {
+        method: "HEAD",
+        signal: AbortSignal.timeout(3000),
+      });
+      calendlyStatus = r.ok ? "ok" : "fail";
+    } catch {
+      calendlyStatus = "fail";
+    }
+  }
+
   const body = {
     status: supabaseStatus === "fail" ? "degraded" : "ok",
     supabase: supabaseStatus,
+    // "av" = tidsbokningen är inte påslagen här, vilket är ett giltigt läge.
+    calendly: calendlyStatus,
     checked_at: new Date().toISOString(),
     // Service role-nyckeln är det som gör att server functions kan läsa DB:t;
     // saknas den svarar sajten men all inloggad data blir tom. Rapportera bara
@@ -520,7 +540,10 @@ export default {
     // så att en gammal adress till en sammanslagen sida tar ett hopp och inte
     // två — en 301-kedja läcker länkkraft och Google följer bara ett fåtal.
     const mergedPath = PERMANENT_REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
-    const canonicalHost = canonicalRedirect(url) ? `https://${CANONICAL_HOST}` : "";
+    // Grinden först: utan den släcker en utrullning sajten om målvärdnamnet
+    // ännu inte har en Worker-route. Se canonicalRedirectEnabled().
+    const canonicalHost =
+      canonicalRedirectEnabled() && canonicalRedirect(url) ? `https://${CANONICAL_HOST}` : "";
     if (mergedPath || canonicalHost) {
       return new Response(null, {
         status: 301,

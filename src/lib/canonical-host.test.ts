@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
-import { canonicalRedirect } from "./canonical-host";
+import { canonicalRedirect, canonicalRedirectEnabled } from "./canonical-host";
 
 const at = (href: string) => canonicalRedirect(new URL(href));
 
@@ -37,5 +37,36 @@ describe("canonicalRedirect", () => {
 
   it("rör inte lokal utveckling", () => {
     expect(at("http://localhost:3000/train")).toBeNull();
+  });
+});
+
+/**
+ * Grinden är det som skiljer "koden är utrullad" från "flytten är på". Utan
+ * den tar en push ner hela sajten så länge målvärdnamnet saknar Worker-route:
+ * 301:an gäller allt utom /api/, och Cloudflare svarar 522 på ett värdnamn
+ * ingen route besvarar.
+ */
+describe("canonicalRedirectEnabled", () => {
+  const original = process.env.CANONICAL_REDIRECT;
+  afterEach(() => {
+    if (original === undefined) delete process.env.CANONICAL_REDIRECT;
+    else process.env.CANONICAL_REDIRECT = original;
+  });
+
+  it("är avstängd när variabeln saknas — säkert läge är default", () => {
+    delete process.env.CANONICAL_REDIRECT;
+    expect(canonicalRedirectEnabled()).toBe(false);
+  });
+
+  it("slås på av exakt 'on', oavsett skiftläge och blanktecken", () => {
+    process.env.CANONICAL_REDIRECT = " ON ";
+    expect(canonicalRedirectEnabled()).toBe(true);
+  });
+
+  it("räknar inte 'true', '1' eller 'off' som påslaget", () => {
+    for (const v of ["true", "1", "off", "yes", ""]) {
+      process.env.CANONICAL_REDIRECT = v;
+      expect(canonicalRedirectEnabled(), v).toBe(false);
+    }
   });
 });

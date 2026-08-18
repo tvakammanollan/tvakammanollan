@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "tvakammanollan",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
@@ -28,14 +28,20 @@
     // "Coachning Studieupplägg" och ett namn som glider isär från koden gör att
     // knappen tyst tappar sitt pris. Namnet står kvar som reserv om id:t byts
     // ut mot ett nytt pris utan att den här filen hinner uppdateras.
-    "STRIPE_COACHING_PRICE_ID": "price_1U52c8PzBQuvmB8TgKqyuByR",
+    // Domänflytten. "on" slår på 301:an från hpkampen.se till
+    // tvakommanollan.se — sätt den FÖRST när tvakommanollan.se har en
+    // Worker-route och svarar 200, annars 301:as hela sajten till ett
+    // värdnamn som ger 522. Se src/lib/canonical-host.ts.
+    "CANONICAL_REDIRECT": "off",
+
+    "STRIPE_COACHING_PRICE_ID": "price_1U5jVFPzBQuvmB8TMV9QKlto",
     "STRIPE_COACHING_PRODUCT_NAME": "Coachning Studieupplägg",
 
     // Calendly. Den publika bokningslänken till coachningens event-typ — inte
     // hemlig, den syns i iframen. Tokenet (CALENDLY_API_TOKEN) är däremot en
     // krypterad Secret. Saknas någon av dem hoppas tidsvalet över och köpet går
     // rakt till kassan som förut.
-    "CALENDLY_EVENT_URL": "",
+    "CALENDLY_EVENT_URL": "https://calendly.com/niklas-pellkvist/60min",
 
     // PostHog. Nyckeln är publik (klientnyckel som bara kan skicka in
     // händelser). OBS: VITE_-variabler bakas in vid BYGGET — de måste därför

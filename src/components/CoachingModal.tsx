@@ -79,6 +79,13 @@ export function CoachingModal({
   const [bookingError, setBookingError] = useState<string | null>(null);
   /** Sparad för att kunna försöka igen — tiden är redan bokad hos Calendly. */
   const [inviteeUri, setInviteeUri] = useState<string | null>(null);
+  /**
+   * Calendly skickar ibland samma `event_scheduled` mer än en gång. Utan
+   * spärren blir varje dubblett en extra Checkout-session hos Stripe, och
+   * användaren skickas till den sista av dem — betalningen hamnar då på en
+   * annan session än den vi hann skriva på raden.
+   */
+  const hanteradBokning = useRef<string | null>(null);
 
   const riktigtKonto = !!user && !user.is_anonymous;
   const email = riktigtKonto ? (profile?.email ?? undefined) : undefined;
@@ -100,6 +107,7 @@ export function CoachingModal({
     setBookingError(null);
     setInviteeUri(null);
     setRedirecting(false);
+    hanteradBokning.current = null;
   }, [open]);
 
   /** Rakt till Stripe — vägen när tidsbokning inte är påslagen. */
@@ -117,6 +125,12 @@ export function CoachingModal({
   }, [checkoutFn, email, riktigtKonto, source]);
 
   const öppnaTidsval = async () => {
+    // Den som backar till erbjudandet och går fram igen ska inte lämna en ny
+    // övergiven rad i coaching_requests för varje klick.
+    if (schedulingUrl && requestId) {
+      setSteg("tid");
+      return;
+    }
     setRedirecting(true);
     try {
       const { schedulingUrl: url, requestId: id } = await bookingFn({
@@ -169,6 +183,8 @@ export function CoachingModal({
       if (e.origin !== CALENDLY_ORIGIN) return;
       const uri = readScheduledInviteeUri(e.data);
       if (!uri) return;
+      if (hanteradBokning.current === uri) return;
+      hanteradBokning.current = uri;
       trackEvent("coaching_time_booked", { source });
       void slutförRef.current(uri);
     };
@@ -296,7 +312,12 @@ export function CoachingModal({
                   Din tid är bokad, men kassan öppnade inte: {bookingError}
                 </p>
                 <Button
-                  onClick={() => inviteeUri && slutför(inviteeUri)}
+                  onClick={() => {
+                    // Spärren ovan gäller dubbletter från Calendly, inte ett
+                    // medvetet omförsök efter ett fel.
+                    hanteradBokning.current = null;
+                    if (inviteeUri) void slutför(inviteeUri);
+                  }}
                   className="mt-5 bg-[#ae2f26] px-6 py-5 text-[15px] text-[#fff8f5] hover:bg-[#8f2620]"
                 >
                   Försök igen
