@@ -972,6 +972,17 @@ Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
 
 ### DB migrations
 
+- **En kolumn-`REVOKE` mot en tabellbred `GRANT` gör ingenting.**
+  `revoke select (correct_answer) on public.questions from authenticated`
+  lyckas utan att ändra något, eftersom rättigheten är beviljad på hela
+  tabellen. Kolumnskydd kräver att tabellrättigheten dras in och beviljas om
+  kolumn för kolumn — se `20260818140100_dolj_facit.sql`. Kontrollera alltid
+  efteråt i `information_schema.column_privileges`; utan den kontrollen ser en
+  verkningslös migration ut som en genomförd.
+- **Kolumnlistan måste hållas i synk.** Läggs en ny kolumn till på `questions`
+  saknar klienterna `SELECT` på den tills den lagts in i grant-listan.
+
+
 SQL files in `supabase/migrations/` — run manually in Supabase SQL editor (production has no CLI migration runner). After adding a table, update `src/integrations/supabase/types.ts` manually.
 
 ### Things a schema dump does NOT carry (found moving to the new project)
