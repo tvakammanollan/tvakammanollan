@@ -26,6 +26,37 @@ export function combinedHpScore(eloVerbal: number, eloMath: number): string {
   return ((v + m) / 2).toFixed(1);
 }
 
+/**
+ * Trolig normering för ETT delprov utifrån andel rätt.
+ *
+ * Skild från `estimateHpScore`, som går från ELO. Den här används direkt
+ * efter en match, där det enda vi vet är hur många av frågorna som blev
+ * rätt. Låg tidigare som 20 rader nästlade ternärer inne i resultatskärmen.
+ *
+ * Grov uppskattning: den riktiga normeringen sätts per provtillfälle och
+ * varierar med provets svårighet.
+ */
+const ACCURACY_TO_NORM: ReadonlyArray<{ minPct: number; norm: number }> = [
+  { minPct: 95, norm: 2.0 },
+  { minPct: 90, norm: 1.9 },
+  { minPct: 82, norm: 1.7 },
+  { minPct: 75, norm: 1.5 },
+  { minPct: 67, norm: 1.3 },
+  { minPct: 58, norm: 1.1 },
+  { minPct: 50, norm: 0.9 },
+  { minPct: 40, norm: 0.7 },
+  { minPct: 30, norm: 0.5 },
+  { minPct: 0, norm: 0.3 },
+];
+
+export function normeringForAccuracy(correct: number, total: number): number {
+  if (total <= 0) return 0.3;
+  const pct = (correct / total) * 100;
+  return (
+    ACCURACY_TO_NORM.find((e) => pct >= e.minPct) ?? ACCURACY_TO_NORM[ACCURACY_TO_NORM.length - 1]
+  ).norm;
+}
+
 /** Kvalitativ etikett för en sammanlagd HP-poäng (0.0–2.0). */
 export function hpScoreLabel(score: number): string {
   if (score < 0.9) return "Under godkänt";

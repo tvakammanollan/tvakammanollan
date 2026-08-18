@@ -43,6 +43,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 import { getBotName } from "@/lib/bot";
+import { normeringForAccuracy } from "@/lib/hpScore";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -436,8 +437,8 @@ function ResultPage() {
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                 Skapa ett gratis konto för att{" "}
-                <strong className="text-[var(--cream)]">spara din ELO</strong>, klättra i rankingen och
-                utmana dina vänner. Tar 30 sekunder.
+                <strong className="text-[var(--cream)]">spara din ELO</strong>, klättra i rankingen
+                och utmana dina vänner. Tar 30 sekunder.
               </p>
             </div>
             <Button
@@ -519,28 +520,7 @@ function ResultPage() {
           (() => {
             const correctCount = myAnswers.filter((a) => a.is_correct).length;
             const total = questions.length;
-            const pct = (correctCount / total) * 100;
-            // Approximate HP normering for one delprov (verbal/quant), based on accuracy
-            const norm =
-              pct >= 95
-                ? 2.0
-                : pct >= 90
-                  ? 1.9
-                  : pct >= 82
-                    ? 1.7
-                    : pct >= 75
-                      ? 1.5
-                      : pct >= 67
-                        ? 1.3
-                        : pct >= 58
-                          ? 1.1
-                          : pct >= 50
-                            ? 0.9
-                            : pct >= 40
-                              ? 0.7
-                              : pct >= 30
-                                ? 0.5
-                                : 0.3;
+            const norm = normeringForAccuracy(correctCount, total);
             return (
               <div className="mt-5 rounded-xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.06] p-4 text-center">
                 <div className="text-[11px] font-semibold tracking-wide text-[#ae2f26]">

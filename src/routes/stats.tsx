@@ -27,7 +27,6 @@ import {
   Sigma,
   Star,
   Flame,
-  Award,
   TrendingUp,
   Swords,
 } from "lucide-react";
@@ -342,15 +341,13 @@ function StatsPage() {
             value={Math.max(profile.elo_verbal_peak, profile.elo_math_peak)}
             sub={`V ${profile.elo_verbal_peak} · M ${profile.elo_math_peak}`}
           />
+          {/* Ett kort, inte två. "Nuvarande" och "Längsta" är samma begrepp,
+              och rekordet betyder bara något i relation till var man står nu. */}
           <StatCard
             icon={<Flame className="h-4 w-4" />}
-            label="Nuvarande streak"
+            label="Streak"
             value={`${profile.current_streak ?? 0} dagar`}
-          />
-          <StatCard
-            icon={<Award className="h-4 w-4" />}
-            label="Längsta streak"
-            value={`${profile.longest_streak ?? 0} dagar`}
+            sub={`Rekord: ${profile.longest_streak ?? 0} dagar`}
           />
         </StaggerList>
         {/* Achievements */}
