@@ -491,8 +491,24 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
   platser i topp 100. `fetchLeaderboard` läser därför `users` sidvis
   (`SCAN_PAGE`) tills den fyllt `limit` — gästkonton är majoriteten av tabellen,
   så ett enkelt `.limit()` gav en halvfull lista.
-- Tröskeln på antal matcher är fortfarande **1** och togs medvetet bort en gång;
-  återinför den inte utan att fråga.
+- **Ingen tröskel på antal matcher sedan 2026-08-18.** Ett valt användarnamn är
+  hela kravet: ett nyregistrerat konto står på listan direkt med 1000 i ELO och
+  tankstreck (inte `0 %`) i Win %. Bakgrunden: 22 av 88 riktiga konton hade
+  aldrig spelat en match och syntes därför inte alls, vilket gjorde listan
+  kortare än antalet registrerade — 65 rader på 605 konton. Tröskeln har nu
+  ändrats medvetet två gånger; återinför den inte utan att fråga.
+- **Listan visar 50 rader**, `LEADERBOARD_SIZE` i `leaderboard.functions.ts`,
+  och talet styr alla tre flikarna (verbal, matte, ord). `limit` i anropen
+  måste förbli **större** än det: den som ligger utanför toppen får ändå se sin
+  egen placering under tabellen, och den raden plockas ur samma svar.
+- **Tre ytor visar samma lista och måste lyda samma regler**: topplistan,
+  topp 5-blocket på landningssidan (`landing.functions.ts`) och MCP-verktyget
+  `get_leaderboard`. Verktyget saknade dessutom namnfiltret helt fram till
+  2026-08-18 och listade alltså gästkonton — det hämtar nu 500 rader och
+  sållar med `isRankable` som de andra två.
+- **Sedan tröskeln föll är `!me` i `AllTimeTable` liktydigt med "har inte valt
+  användarnamn"**, inte "har inte spelat". Tomma tillståndet pekar därför på
+  `/onboarding`, inte på "spela en match" — det senare hjälper inte.
 
 ### Coachning & Stripe (2026-08-17)
 

@@ -13,6 +13,7 @@ import { formatTime } from "@/lib/sv-format";
 import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
 import {
+  LEADERBOARD_SIZE,
   fetchLeaderboard,
   fetchWeeklyLeaderboard,
   type WeeklyLeaderboardRow,
@@ -190,7 +191,9 @@ function Board({
   const [weeklyLoading, setWeeklyLoading] = useState(false);
 
   // react-query-pilot: cache/dedup/refetch utan manuell orkestrering.
-  // Server-fn (service-role) returnerar ALLA users med games_played >= 1.
+  // Server-fn (service-role) returnerar ALLA konton med valt användarnamn,
+  // spelade matcher eller ej. Fler än LEADERBOARD_SIZE hämtas med flit: den
+  // som ligger utanför toppen ska ändå få se sin egen placering.
   const {
     data: rows = [],
     isLoading: loading,
@@ -242,7 +245,7 @@ function Board({
     setWeeklyLoading(true);
     (async () => {
       try {
-        const w = await fetchWeekly({ data: { match_type: matchType, limit: 100 } });
+        const w = await fetchWeekly({ data: { match_type: matchType, limit: LEADERBOARD_SIZE } });
         if (!cancelled) setWeekly(filterLeaderboard(w as WeeklyLeaderboardRow[]));
       } catch {
         if (!cancelled) setWeekly([]);
@@ -334,12 +337,15 @@ function AllTimeTable({
   const scoped = friendsOnly
     ? filterLeaderboard(rows.filter((r) => friendIds?.has(r.user_id)))
     : rows;
-  const top = scoped.slice(0, 100);
+  const top = scoped.slice(0, LEADERBOARD_SIZE);
   const me = currentUserId ? scoped.find((r) => r.user_id === currentUserId) : undefined;
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  // Gästkonton står aldrig i listan, så "spela en match" vore fel besked — de
-  // har redan spelat. Banderollen högst upp på sidan säger vad som krävs.
-  const notRanked = !friendsOnly && !!currentUserId && !isGuest && (!me || me.games_played < 1);
+  // Sedan matchtröskeln togs bort finns bara ett skäl kvar för ett inloggat
+  // konto att saknas i listan: användarnamnet är det automatgenererade. Att
+  // säga "spela en match" vore fel besked — det hjälper inte.
+  // Gästkonton står aldrig i listan alls; banderollen högst upp på sidan
+  // säger vad som krävs för dem.
+  const notRanked = !friendsOnly && !!currentUserId && !isGuest && !me;
 
   if ((loading && rows.length === 0) || (friendsOnly && friendIds === null))
     return <TableSkeleton />;
@@ -396,9 +402,9 @@ function AllTimeTable({
           <EmptyState
             icon={Medal}
             title="Du är inte rankad ännu"
-            subtitle="Spela en match så hamnar du på listan."
-            ctaLabel="Spela nu"
-            ctaHref="/"
+            subtitle="Välj ett användarnamn så hamnar du på listan."
+            ctaLabel="Välj namn"
+            ctaHref="/onboarding"
           />
         </div>
       )}
@@ -495,7 +501,9 @@ function WeeklyTable({
 }
 
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
-  const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : 0;
+  // Tankstreck, inte 0 %, för den som ännu inte spelat — sedan matchtröskeln
+  // togs bort står de på listan, och "0 %" läser som spelat och förlorat allt.
+  const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : null;
   const isPodium = r.rank <= 3;
   const rowBg = isMe
     ? "bg-[#ae2f26]/10 ring-1 ring-[#ae2f26]/40"
@@ -539,8 +547,10 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       </td>
       <td className="px-4 py-4 text-right">
         <span className="inline-flex items-center justify-end gap-1.5">
-          <span className="text-sm font-semibold tabular-nums text-white">{wr}%</span>
-          {wr >= 50 && (
+          <span className="text-sm font-semibold tabular-nums text-white">
+            {wr === null ? "—" : `${wr}%`}
+          </span>
+          {wr !== null && wr >= 50 && (
             <span
               className="h-1.5 w-1.5 rounded-full bg-emerald-400"
               aria-label="Vinnande win rate"

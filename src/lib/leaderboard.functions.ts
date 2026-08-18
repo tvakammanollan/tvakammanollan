@@ -4,6 +4,14 @@ import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { isRankable } from "./username";
 
+/**
+ * Hur många rader topplistan visar. Ett ställe för alla tre listorna på
+ * /leaderboard (verbal, matte, ord) — sänkt från 100 till 50 2026-08-18.
+ * Den som ligger utanför får ändå sin egen placering under tabellen, så
+ * `limit` i anropen nedan måste förbli större än det här talet.
+ */
+export const LEADERBOARD_SIZE = 50;
+
 export interface LeaderboardRow {
   rank: number;
   user_id: string;
@@ -84,11 +92,18 @@ const SCAN_MAX_PAGES = 6;
 
 /**
  * "Alltid" — direkt fråga mot `users` som service role (förbi RLS och det
- * för strikta filtret i get_leaderboard-RPC:n). Ingen tröskel på antal
- * matcher, en spelad match räcker, men **anonyma konton rankas inte**
- * (`isRankable`). Filtret ligger här och inte i UI:t: serverfunktionen är
- * publik, och det var gästkonton som odlade ELO mot bottar och tog hela
- * toppen av den verbala listan 2026-08-17.
+ * för strikta filtret i get_leaderboard-RPC:n).
+ *
+ * **Enda kravet är ett valt användarnamn** (`isRankable`). Tröskeln på antal
+ * matcher togs bort helt 2026-08-18: ett nyregistrerat konto står på listan
+ * direkt med sina 1000 i ingångs-ELO. 22 av 88 riktiga konton hade aldrig
+ * spelat en match och syntes därför inte alls, vilket gjorde listan kortare
+ * än antalet registrerade. Återinför inte tröskeln utan att fråga — det här
+ * är andra gången den ändras medvetet.
+ *
+ * Namnfiltret ligger här och inte i UI:t: serverfunktionen är publik, och det
+ * var gästkonton som odlade ELO mot bottar och tog hela toppen av den verbala
+ * listan 2026-08-17.
  */
 export const fetchLeaderboard = createServerFn({ method: "GET" })
   .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
@@ -104,7 +119,6 @@ export const fetchLeaderboard = createServerFn({ method: "GET" })
       const { data: rows, error } = await supabaseAdmin
         .from("users")
         .select(`id, username, ${eloCol}, games_played, wins, losses`)
-        .gte("games_played", 1)
         .order(eloCol, { ascending: false })
         .order("id", { ascending: true })
         .range(from, from + SCAN_PAGE - 1);

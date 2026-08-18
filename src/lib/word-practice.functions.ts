@@ -5,6 +5,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { isRankable } from "./username";
+import { LEADERBOARD_SIZE } from "./leaderboard.functions";
 
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
@@ -353,8 +354,12 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
     const userId = data.user_id ?? null;
     // Hämta från ord_practice_stats (redan aggregerad per användare).
     // Bypass RPC + filter — alla som har minst 1 svar syns, utom anonyma konton
-    // (se username.ts). Hämtar 500 för att fylla topp 100 även när en stor del
+    // (se username.ts). Hämtar 500 för att fylla listan även när en stor del
     // av raderna är gästkonton.
+    //
+    // Tröskeln `total_count >= 1` är inte den som togs bort på ELO-listorna:
+    // här finns raden över huvud taget bara för den som övat, och listan
+    // rangordnar på antal rätta ord.
     const { data: stats, error } = await supabaseAdmin
       .from("ord_practice_stats")
       .select("user_id, correct_count, total_count")
@@ -379,8 +384,8 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
       for (const u of us ?? []) nameMap.set(u.id as string, (u.username as string) ?? "");
     }
 
-    // Hela den rankade listan, inte bara de hundra som visas: användarens
-    // egen placering ska stämma även för den som ligger på plats 137.
+    // Hela den rankade listan, inte bara de som visas: användarens egen
+    // placering ska stämma även för den som ligger på plats 137.
     const ranked: OrdLeaderboardRow[] = statsRows
       .map((s) => ({
         rank: 0,
@@ -394,9 +399,9 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
       .filter((r) => isRankable(r.username))
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
-    const top = ranked.slice(0, 100);
+    const top = ranked.slice(0, LEADERBOARD_SIZE);
 
-    // Egen rad: leta i hela listan, inte bara i topp 100. Hittas den inte
+    // Egen rad: leta i hela listan, inte bara i den visade toppen. Hittas den inte
     // där är kontot antingen utanför de 500 hämtade raderna eller inte
     // rankbart (gäst) — då hämtas siffrorna separat och rank lämnas 0,
     // vilket betyder "placering okänd" och renderas som tankstreck.

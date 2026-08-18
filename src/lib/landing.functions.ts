@@ -91,12 +91,13 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           { data: [] } as { data: never[] },
         ),
         // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
-        // tabellen och sållas bort nedan (isRankable).
+        // tabellen och sållas bort nedan (isRankable). Ingen tröskel på antal
+        // matcher, precis som i fetchLeaderboard sedan 2026-08-18: förhandsvisningen
+        // och topplistan måste lyda samma regel, annars säger de emot varandra.
         safe(
           supabaseAdmin
             .from("users")
             .select("username, elo_verbal")
-            .gte("games_played", 1)
             .order("elo_verbal", { ascending: false })
             .limit(40),
           { data: [] } as {
@@ -107,7 +108,6 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
           supabaseAdmin
             .from("users")
             .select("username, elo_math")
-            .gte("games_played", 1)
             .order("elo_math", { ascending: false })
             .limit(40),
           { data: [] } as {
