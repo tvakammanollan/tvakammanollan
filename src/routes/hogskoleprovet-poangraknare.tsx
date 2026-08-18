@@ -3,6 +3,7 @@ import { useState } from "react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { normeringFromRaw } from "@/lib/normering";
 import { hpScoreLabel } from "@/lib/hpScore";
+import { formatDecimal } from "@/lib/sv-format";
 import { ArrowRight } from "lucide-react";
 
 /* =====================================================================
@@ -11,7 +12,20 @@ import { ArrowRight } from "lucide-react";
    Helt klient-sida (ingen auth/DB). SSR renderar startläget.
    ===================================================================== */
 
-const sv = (n: number) => n.toFixed(1).replace(".", ",");
+/**
+ * TVÅ decimaler, inte en. Normerad poäng går i steg om 0,05 — 1,95 är ett
+ * riktigt resultat, inte en avrundningsartefakt.
+ *
+ * `normeringFromRaw` når alla 41 värden mellan 0,00 och 2,00, men `toFixed(1)`
+ * pressade ner dem i 21: 145 rätt (1,90) och 150 rätt (1,95) blev båda "1,9",
+ * och ingen kunde få en x,x5:a ur räknaren. Den såg ut att räkna på en
+ * påhittad tiondelsskala.
+ *
+ * Avrundningen var dessutom inte ens konsekvent, eftersom halvstegen inte går
+ * att representera exakt binärt: 0,45 → "0,5" men 0,95 → "0,9". Två lika fall
+ * åt olika håll, utan något mönster en läsare kan se.
+ */
+const sv = (n: number) => formatDecimal(n, 2);
 
 export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
   head: () => ({
@@ -19,10 +33,10 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
       path: "/hogskoleprovet-poangraknare",
       title: "Högskoleprovet poängräknare – räkna ut din normerade poäng · HP Kampen",
       description:
-        "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,0–2,0) direkt.",
+        "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
       ogTitle: "Högskoleprovet poängräknare",
       ogDescription:
-        "Räkna ut din uppskattade HP-poäng (0,0–2,0) från antal rätt. Gratis normeringskalkylator.",
+        "Räkna ut din uppskattade HP-poäng (0,00–2,00) från antal rätt. Gratis normeringskalkylator.",
     }),
     links: pageLinks("/hogskoleprovet-poangraknare"),
     scripts: [
@@ -41,7 +55,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
         isAccessibleForFree: true,
         offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
         description:
-          "Interaktiv normeringskalkylator som uppskattar din HP-poäng (0,0–2,0) utifrån antal rätt.",
+          "Interaktiv normeringskalkylator som uppskattar din HP-poäng (0,00–2,00) utifrån antal rätt.",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
       }),
     ],
@@ -77,7 +91,8 @@ function PoangraknarePage() {
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Fyll i hur många rätt du hade på den verbala respektive kvantitativa delen (80 uppgifter
-          var) så får du din uppskattade normerade poäng direkt.
+          var) så får du din uppskattade normerade poäng direkt. Skalan går från 0,00 till 2,00 i
+          steg om 0,05.
         </p>
       </header>
 
@@ -112,7 +127,7 @@ function PoangraknarePage() {
                 >
                   {sv(score)}
                 </span>
-                <span className="text-lg text-white/40">/ 2,0</span>
+                <span className="text-lg text-white/40">/ 2,00</span>
               </div>
             </div>
             <span className="rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-xs font-semibold text-[#ae2f26]">
@@ -133,9 +148,9 @@ function PoangraknarePage() {
               />
             </div>
             <div className="mt-1.5 flex justify-between text-[10px] tabular-nums text-white/35">
-              <span>0,0</span>
-              <span>1,0</span>
-              <span>2,0</span>
+              <span>0,00</span>
+              <span>1,00</span>
+              <span>2,00</span>
             </div>
           </div>
 

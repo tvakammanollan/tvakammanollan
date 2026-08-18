@@ -57,7 +57,7 @@ export function normeringForAccuracy(correct: number, total: number): number {
   ).norm;
 }
 
-/** Kvalitativ etikett för en sammanlagd HP-poäng (0.0–2.0). */
+/** Kvalitativ etikett för en sammanlagd HP-poäng (0,00–2,00). */
 export function hpScoreLabel(score: number): string {
   if (score < 0.9) return "Under godkänt";
   if (score < 1.3) return "Godkänt";

@@ -350,7 +350,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Hur räknas HP-poäng?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng, det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
+                text: "Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng, det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
               },
             },
           ],

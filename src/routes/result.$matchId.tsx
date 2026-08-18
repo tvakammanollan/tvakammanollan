@@ -10,7 +10,7 @@ import { createMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
 import { NextStep } from "@/components/layout/NextStep";
-import { displayCategory, ordText } from "@/lib/sv-format";
+import { displayCategory, formatDecimal, ordText } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   Accordion,
@@ -536,7 +536,7 @@ function ResultPage() {
                     className="text-4xl font-bold tabular-nums text-[#ae2f26] sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {norm.toFixed(1)}
+                    {formatDecimal(norm, 2)}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     ({correctCount}/{total} rätt)

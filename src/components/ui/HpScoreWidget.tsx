@@ -6,7 +6,10 @@ import { formatDecimal } from "@/lib/sv-format";
 const VERBAL = "#ae2f26";
 const MATH = "#7a5236";
 /** hpScore-modulen returnerar strängar med punkt; visa svenskt decimaltecken. */
-const sv = (s: string) => formatDecimal(parseFloat(s), 1);
+// Två decimaler: normerad poäng skrivs 1,60, inte 1,6 — skalan går i steg om
+// 0,05. Samma skrivsätt som poängräknaren, annars säger de två ytorna emot
+// varandra om vad en HP-poäng ens är för slags tal.
+const sv = (s: string) => formatDecimal(parseFloat(s), 2);
 
 interface HpScoreWidgetProps {
   eloVerbal: number;
@@ -68,7 +71,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         >
           {sv(combined)}
         </span>
-        <span className="text-lg text-white/40">/ 2,0</span>
+        <span className="text-lg text-white/40">/ 2,00</span>
       </div>
 
       {/* HP-skala (gauge) */}
@@ -85,9 +88,9 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
           />
         </div>
         <div className="mt-1.5 flex justify-between text-[10px] tabular-nums text-white/35">
-          <span>0,0</span>
-          <span>1,0</span>
-          <span>2,0</span>
+          <span>0,00</span>
+          <span>1,00</span>
+          <span>2,00</span>
         </div>
       </div>
 

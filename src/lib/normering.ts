@@ -1,5 +1,9 @@
 /**
- * Ungefärlig HP-normering: råpoäng (antal rätt av 160) → normerad poäng 0,0–2,0.
+ * Ungefärlig HP-normering: råpoäng (antal rätt av 160) → normerad poäng 0,00–2,00.
+ *
+ * Skalan går i steg om 0,05, aldrig 0,1 — funktionen avrundar därför till
+ * närmaste tjugondel och når alla 41 värdena. Visas resultatet med en decimal
+ * försvinner halva skalan; se poängräknaren.
  *
  * Tabellen är en approximation baserad på historiska normeringar (UHR normerar
  * varje prov för sig, så exakta gränser varierar). Samma tabell som används i
@@ -39,7 +43,7 @@ const TABLE: readonly [number, number][] = [
 /** Totalt antal normerade uppgifter på ett högskoleprov. */
 export const HP_TOTAL_QUESTIONS = 160;
 
-/** Uppskattad normerad poäng (0,0–2,0) från antal rätt av 160. */
+/** Uppskattad normerad poäng (0,00–2,00, i steg om 0,05) från antal rätt av 160. */
 export function normeringFromRaw(rawOf160: number): number {
   const raw = Math.max(0, Math.min(HP_TOTAL_QUESTIONS, Math.round(rawOf160)));
   for (let i = 0; i < TABLE.length - 1; i++) {

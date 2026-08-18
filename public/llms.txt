@@ -33,7 +33,7 @@ Officiell domän: https://tvakommanollan.se
 
 ## Strategiguider
 
-- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,0–2,0, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
+- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 
@@ -70,7 +70,7 @@ Verbal del = ORD + MEK + LÄS + ELF. Matte del = XYZ + KVA + NOG + DTK.
 
 ## Hur HP-poängen räknas
 
-Högskoleprovet ger ett resultat mellan 0,0 och 2,0 med en decimal. Resultatet baseras på andel rätta svar i de åtta delproven och normeras mot övriga skrivande. Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga runt 0,9–1,0. Ett resultat på 1,5 motsvarar ungefär percentil 90; 1,9–2,0 är topp ~1%.
+Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultatet baseras på andel rätta svar i de åtta delproven och normeras mot övriga skrivande. Felaktiga svar ger inga minuspoäng — det lönar sig alltid att gissa. Medelvärdet brukar ligga runt 0,9–1,0. Ett resultat på 1,5 motsvarar ungefär percentil 90; 1,9–2,0 är topp ~1%.
 
 ## Kommande HP-datum
 

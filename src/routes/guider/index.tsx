@@ -288,7 +288,7 @@ function GuiderPage() {
                 Normering, poäng och antagning
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Hur råpoäng omvandlas till betyg 0.0–2.0, historiska gränser och vad som krävs för
+                Hur råpoäng omvandlas till betyg 0,00–2,00, historiska gränser och vad som krävs för
                 olika utbildningar.
               </div>
             </Link>

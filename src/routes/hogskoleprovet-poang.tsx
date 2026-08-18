@@ -7,7 +7,7 @@ import { ArrowRight, Calculator, GraduationCap, Scale, TrendingUp } from "lucide
    högskoleprovet", "högskoleprovet antagning", "urvalsgrupp HP"). Statiskt SSR.
 
    Täcker även normeringen (råpoäng → betyg). Det låg tidigare på en egen sida,
-   /guider/normering, men båda sidorna förklarade 0,0–2,0-skalan, giltighetstiden
+   /guider/normering, men båda sidorna förklarade 0,00–2,00-skalan, giltighetstiden
    och urvalskvoterna — två sidor som konkurrerade om samma sökord. Den sidan
    301:as hit i src/server.ts.
    ===================================================================== */
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       path: "/hogskoleprovet-poang",
       title: "Högskoleprovet poäng, normering & antagning – vad krävs? · HP Kampen",
       description:
-        "Vad betyder högskoleprovets poäng (0,0–2,0), hur fungerar normeringen från råpoäng till betyg och hur används resultatet vid antagning? Urvalsgrupper, giltighetstid och ungefärliga antagningspoäng.",
+        "Vad betyder högskoleprovets poäng (0,00–2,00), hur fungerar normeringen från råpoäng till betyg och hur används resultatet vid antagning? Urvalsgrupper, giltighetstid och ungefärliga antagningspoäng.",
       ogTitle: "Högskoleprovet poäng & antagning – så funkar det",
       ogDescription:
         "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på HP Kampen.",
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
         "@type": "Article",
         headline: "Högskoleprovet poäng, normering och antagning – så funkar det",
         description:
-          "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,0–2,0 går till och hur resultatet används vid antagning till högskola och universitet.",
+          "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,00–2,00 går till och hur resultatet används vid antagning till högskola och universitet.",
         inLanguage: "sv-SE",
         about: { "@type": "Thing", name: "Högskoleprovet antagning" },
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -83,7 +83,7 @@ function PoangPage() {
             Vad betyder poängen?
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
-            Resultatet är ett normerat värde mellan 0,0 och 2,0 med en decimal. Medelresultatet
+            Resultatet är ett normerat värde mellan 0,00 och 2,00, i steg om 0,05. Medelresultatet
             brukar ligga kring 0,9–1,0. Poängen baseras på hur många rätt du har jämfört med alla
             andra som skrev samma prov – felaktiga svar ger inga minuspoäng, så det lönar sig alltid
             att gissa.
@@ -112,12 +112,12 @@ function PoangPage() {
           </p>
           <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
             {[
-              { betyg: "2,0", rapoang: "≈ 155–160 rätt av 160" },
-              { betyg: "1,9", rapoang: "≈ 145–150 rätt av 160" },
-              { betyg: "1,8", rapoang: "≈ 135–142 rätt av 160" },
-              { betyg: "1,7", rapoang: "≈ 125–133 rätt av 160" },
-              { betyg: "1,5", rapoang: "≈ 105–115 rätt av 160" },
-              { betyg: "1,0", rapoang: "≈ 65–75 rätt av 160" },
+              { betyg: "2,00", rapoang: "≈ 155–160 rätt av 160" },
+              { betyg: "1,90", rapoang: "≈ 145–150 rätt av 160" },
+              { betyg: "1,80", rapoang: "≈ 135–142 rätt av 160" },
+              { betyg: "1,70", rapoang: "≈ 125–133 rätt av 160" },
+              { betyg: "1,50", rapoang: "≈ 105–115 rätt av 160" },
+              { betyg: "1,00", rapoang: "≈ 65–75 rätt av 160" },
             ].map((r) => (
               <li
                 key={r.betyg}
