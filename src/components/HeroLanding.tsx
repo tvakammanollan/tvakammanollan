@@ -17,7 +17,7 @@ import { getNextHpDate } from "@/lib/hp-dates";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { Reveal } from "@/components/landing/MotionFX";
 import { CoachingModal } from "@/components/CoachingModal";
-import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
+import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 
 /**
  * Landningssidan (utloggad).
@@ -118,7 +118,9 @@ export function HeroLanding() {
   const [stats, setStats] = useState<LandingStats | null>(null);
   const [omdomeIdx, setOmdomeIdx] = useState(0);
   const [coachingOpen, setCoachingOpen] = useState(false);
-  const coachingPris = coachingPriceLabel(useCoachingOffer().offer);
+  const coachingErbjudande = useCoachingOffer().offer;
+  const coachingPris = coachingPriceLabel(coachingErbjudande);
+  const coachingVillkor = coachingTermsLabel(coachingErbjudande);
 
   useEffect(() => {
     let alive = true;
@@ -328,7 +330,10 @@ export function HeroLanding() {
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {DELPROV.map((d, i) => (
               <Reveal key={d.kod} delay={(i % 4) * 0.05}>
-                <m.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 320, damping: 24 }}>
+                <m.div
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                >
                   <Link
                     to="/ova/$delprov"
                     params={{ delprov: d.kod.toLowerCase() }}
@@ -426,7 +431,9 @@ export function HeroLanding() {
                     aria-hidden
                   />
                 </button>
-                <span className="text-sm text-white/55">Begränsat antal platser</span>
+                <span className="text-sm text-white/55">
+                  {coachingVillkor ? `${coachingVillkor} · ` : ""}Begränsat antal platser
+                </span>
               </div>
             </Reveal>
           </div>

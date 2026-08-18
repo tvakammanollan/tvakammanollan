@@ -17,7 +17,7 @@ import {
   startCoachingBooking,
   startCoachingCheckout,
 } from "@/lib/coaching.functions";
-import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
+import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { trackEvent, type CoachingSource } from "@/lib/events";
 
 /* =====================================================================
@@ -193,6 +193,7 @@ export function CoachingModal({
   }, [steg, schedulingUrl, source]);
 
   const priceLabel = coachingPriceLabel(offer);
+  const termsLabel = coachingTermsLabel(offer);
   const bokning = steg !== "erbjudande";
 
   return (
@@ -241,6 +242,14 @@ export function CoachingModal({
                     {priceLabel}
                   </span>
                 </div>
+                {/* Beloppet ensamt läser som ett abonnemang för den som är van
+                    vid att allt är månadsvis. Raden härleds ur priset i Stripe
+                    och uteblir om det någonsin blir återkommande. */}
+                {termsLabel && (
+                  <p className="mt-1.5 text-center text-[13px] font-medium text-[#2f6b3c]">
+                    {termsLabel}
+                  </p>
+                )}
                 <Button
                   onClick={offer.schedulingEnabled ? öppnaTidsval : köpDirekt}
                   disabled={redirecting}

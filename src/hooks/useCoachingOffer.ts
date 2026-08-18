@@ -59,6 +59,22 @@ export function useCoachingOffer(enabled = true): {
   return { offer, loading };
 }
 
+/**
+ * "Engångsköp · ingen bindningstid" — men bara när priset faktiskt är ett
+ * engångsköp.
+ *
+ * Härleds ur `offer.interval` i stället för att skrivas i klartext, därför att
+ * priset läses ur Stripe vid körning. En hårdkodad rad hade blivit en osanning
+ * i samma sekund som produkten fick ett månadspris — och reservvägen
+ * (namnuppslag → default_price) har redan en gång pekat på ett återkommande
+ * pris utan att någon märkte det. Är priset återkommande säger vi hellre
+ * ingenting alls än fel sak.
+ */
+export function coachingTermsLabel(offer: CoachingOffer | null): string | null {
+  if (!offer?.available || offer.amount === null) return null;
+  return offer.interval ? null : "Engångsköp · ingen bindningstid";
+}
+
 /** "1 495 kr" eller "249 kr / månad". null när priset inte gick att läsa. */
 export function coachingPriceLabel(offer: CoachingOffer | null): string | null {
   if (!offer?.available || offer.amount === null) return null;

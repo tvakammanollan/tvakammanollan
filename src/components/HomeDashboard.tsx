@@ -8,7 +8,7 @@ import { RankIcon } from "@/components/ui/RankIcon";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
-import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
+import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -34,7 +34,9 @@ export function HomeDashboard() {
   const [coachingOpen, setCoachingOpen] = useState(false);
   // Priset på coachningskortet läses ur Stripe. Hämtas här (inte i modalen)
   // eftersom kortet visar det innan någon klickat — anropet delas via cachen.
-  const coachingPris = coachingPriceLabel(useCoachingOffer().offer);
+  const coachingErbjudande = useCoachingOffer().offer;
+  const coachingPris = coachingPriceLabel(coachingErbjudande);
+  const coachingVillkor = coachingTermsLabel(coachingErbjudande);
 
   if (!user || !profile) {
     return (
@@ -118,92 +120,95 @@ export function HomeDashboard() {
           </Reveal>
 
           <div className="order-1 lg:order-2">
-        {/* ---------- 1. Spela match ---------- */}
-        <Reveal y={20} delay={0.05}>
-          <section>
-            <div className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/30 p-5 backdrop-blur-sm sm:p-6"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(174,47,38,0.07) 0%, rgba(255,255,255,0.9) 55%)",
-              }}
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
-              />
+            {/* ---------- 1. Spela match ---------- */}
+            <Reveal y={20} delay={0.05}>
+              <section>
+                <div
+                  className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/30 p-5 backdrop-blur-sm sm:p-6"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(174,47,38,0.07) 0%, rgba(255,255,255,0.9) 55%)",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
+                  />
 
-              <div className="relative flex items-start justify-between gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
-                  <Swords className="h-5 w-5" />
-                </span>
-                <RankBadge elo={activeElo} size="sm" />
-              </div>
+                  <div className="relative flex items-start justify-between gap-3">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
+                      <Swords className="h-5 w-5" />
+                    </span>
+                    <RankBadge elo={activeElo} size="sm" />
+                  </div>
 
-              <h2
-                className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[var(--cream)] sm:text-[28px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Spela en match
-              </h2>
-              <p className="relative mt-1 text-sm text-white/50">
-                8 frågor · 5 minuter · ELO på spel
-              </p>
+                  <h2
+                    className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[var(--cream)] sm:text-[28px]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    Spela en match
+                  </h2>
+                  <p className="relative mt-1 text-sm text-white/50">
+                    8 frågor · 5 minuter · ELO på spel
+                  </p>
 
-              {/* Ämnesväxel — ett val, inte två kort */}
-              <div
-                role="radiogroup"
-                aria-label="Välj ämne"
-                // Ligger INUTI ett vitt kort, så den får inte vara vit
-                // också. En aning mörkare än kortet, annars syns inte
-                // spåret bakom det valda alternativet.
-                className="relative mt-4 inline-flex rounded-full border border-[rgba(46,30,20,0.12)] bg-[rgba(46,30,20,0.05)] p-1"
-              >
-                <SubjectPill
-                  label="Verbal"
-                  active={matchType === "verbal"}
-                  onClick={() => setMatchType("verbal")}
+                  {/* Ämnesväxel — ett val, inte två kort */}
+                  <div
+                    role="radiogroup"
+                    aria-label="Välj ämne"
+                    // Ligger INUTI ett vitt kort, så den får inte vara vit
+                    // också. En aning mörkare än kortet, annars syns inte
+                    // spåret bakom det valda alternativet.
+                    className="relative mt-4 inline-flex rounded-full border border-[rgba(46,30,20,0.12)] bg-[rgba(46,30,20,0.05)] p-1"
+                  >
+                    <SubjectPill
+                      label="Verbal"
+                      active={matchType === "verbal"}
+                      onClick={() => setMatchType("verbal")}
+                    />
+                    <SubjectPill
+                      label="Matte"
+                      active={matchType === "math"}
+                      onClick={() => setMatchType("math")}
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setMatchOpen(true)}
+                    className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110 sm:w-auto sm:px-8"
+                  >
+                    Spela {matchType === "verbal" ? "verbal" : "matte"}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                </div>
+              </section>
+            </Reveal>
+
+            {/* ---------- 2. Plugga ord   3. Coachning ---------- */}
+            <Reveal y={20} delay={0.08}>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <ActionCard
+                  to="/ord"
+                  tone="teal"
+                  icon={<BookOpen className="h-5 w-5" />}
+                  title="Plugga ord"
+                  subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
                 />
-                <SubjectPill
-                  label="Matte"
-                  active={matchType === "math"}
-                  onClick={() => setMatchType("math")}
+                <ActionCard
+                  onClick={() => setCoachingOpen(true)}
+                  tone="leaf"
+                  icon={<Sparkles className="h-5 w-5" />}
+                  title="Coachning"
+                  subtitle={`Ett studieupplägg byggt av någon som själv fått 1,95+.${
+                    coachingVillkor ? ` ${coachingVillkor}.` : ""
+                  }`}
+                  // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
+                  // ingen platshållare som hoppar till en siffra.
+                  cta={coachingPris ?? undefined}
                 />
               </div>
-
-              <button
-                type="button"
-                onClick={() => setMatchOpen(true)}
-                className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110 sm:w-auto sm:px-8"
-              >
-                Spela {matchType === "verbal" ? "verbal" : "matte"}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </button>
-            </div>
-          </section>
-        </Reveal>
-
-        {/* ---------- 2. Plugga ord   3. Coachning ---------- */}
-        <Reveal y={20} delay={0.08}>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <ActionCard
-              to="/ord"
-              tone="teal"
-              icon={<BookOpen className="h-5 w-5" />}
-              title="Plugga ord"
-              subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
-            />
-            <ActionCard
-              onClick={() => setCoachingOpen(true)}
-              tone="leaf"
-              icon={<Sparkles className="h-5 w-5" />}
-              title="Coachning"
-              subtitle="Ett studieupplägg byggt av någon som själv fått 1,95+"
-              // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
-              // ingen platshållare som hoppar till en siffra.
-              cta={coachingPris ?? undefined}
-            />
-          </div>
-        </Reveal>
+            </Reveal>
           </div>
         </div>
       </div>
@@ -351,7 +356,7 @@ function ActionCard({
   /** Texten på handlingsraden längst ned — t.ex. priset i stället för "Öppna". */
   cta?: string;
 }) {
-    // Apple leder till handling, bark ar struktur, lov ar framsteg.
+  // Apple leder till handling, bark ar struktur, lov ar framsteg.
   const accent = tone === "teal" ? "#7a5236" : tone === "leaf" ? "#2f6b3c" : "#ae2f26";
   // Tonen bär hela kortet, inte bara ikonen: en accentlinje i överkant
   // och en svag tonad botten. Det är det som ger sidan färg utan att
