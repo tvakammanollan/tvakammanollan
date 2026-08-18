@@ -724,17 +724,13 @@ function MatchPage() {
           WebkitBackdropFilter: "blur(12px)",
         }}
       >
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 pt-3 pb-2">
-          <div className="text-sm font-semibold tabular-nums">
-            Fråga {current + 1} av {questions.length}
-          </div>
-          <div className="flex items-center gap-2">
-            <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
-            <TimerSoundToggle />
-          </div>
-          <div className="hidden text-xs text-muted-foreground sm:block">
-            Mot: <span className="font-medium text-foreground">{opponentName}</span>
-          </div>
+        {/* Bara klockan. Raden bar tidigare också "Fråga 3 av 8" och
+            "Mot: {namn}" — båda står ordagrant i progressbarerna direkt
+            under, så frågepositionen syntes tre gånger på skärmen och
+            motståndarens namn två. */}
+        <div className="mx-auto flex max-w-3xl items-center justify-center gap-2 px-4 pt-3 pb-2">
+          <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
+          <TimerSoundToggle />
         </div>
         {/* Dual progress bars: own + opponent (proportional, jumps per question) */}
         <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
@@ -814,9 +810,6 @@ function MatchPage() {
               selectAnswer={selectAnswer}
               setCurrent={setCurrent}
               goNext={goNext}
-              persistAnswer={persistAnswer}
-              setConfirmOpen={setConfirmOpen}
-              submitting={submitting}
             />
           </div>
         </main>
@@ -832,9 +825,6 @@ function MatchPage() {
             selectAnswer={selectAnswer}
             setCurrent={setCurrent}
             goNext={goNext}
-            persistAnswer={persistAnswer}
-            setConfirmOpen={setConfirmOpen}
-            submitting={submitting}
           />
         </main>
       )}
@@ -893,9 +883,6 @@ interface QuestionCardProps {
   selectAnswer: (qId: string, choice: string) => void | Promise<void>;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
   goNext: () => void | Promise<void>;
-  persistAnswer: (qId: string, choice: string | null) => Promise<void>;
-  setConfirmOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  submitting: boolean;
 }
 
 function QuestionCard({
@@ -906,9 +893,6 @@ function QuestionCard({
   selectAnswer,
   setCurrent,
   goNext,
-  persistAnswer,
-  setConfirmOpen,
-  submitting,
 }: QuestionCardProps) {
   const optionLetters = ["A", "B", "C", "D", "E"];
   const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
@@ -921,8 +905,9 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
+      {/* Delprovet, inte frågenumret — det står i progressbaren ovanför. */}
       <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
-        {displayCategory(currentQ.category)} · Fråga {current + 1}
+        {displayCategory(currentQ.category)}
       </div>
       <h2
         className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
@@ -973,6 +958,9 @@ function QuestionCard({
         })}
       </div>
 
+      {/* Kortet navigerar, bottenlisten lämnar in. På sista frågan bytte
+          "Nästa fråga" plats med ett andra "Lämna in svar" — samma knapp som
+          suttit kvar i bottenlisten hela matchen, strax därunder. */}
       <div className="mt-5 flex items-center justify-between">
         <Button
           variant="ghost"
@@ -981,19 +969,9 @@ function QuestionCard({
         >
           Föregående
         </Button>
-        {current < total - 1 ? (
+        {current < total - 1 && (
           <Button disabled={!choice} onClick={() => void goNext()}>
             Nästa fråga
-          </Button>
-        ) : (
-          <Button
-            disabled={!choice || submitting}
-            onClick={async () => {
-              if (choice) await persistAnswer(currentQ.id, choice);
-              setConfirmOpen(true);
-            }}
-          >
-            Lämna in svar
           </Button>
         )}
       </div>
