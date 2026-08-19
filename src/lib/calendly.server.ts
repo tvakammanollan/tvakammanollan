@@ -196,7 +196,7 @@ export async function fetchCalendlyBooking(inviteeUri: string): Promise<Calendly
 
   // Kommer från Calendly, men kontrolleras ändå: svaret styr nästa hämtning.
   const eventUri = invitee.event?.trim() ?? "";
-  if (!/^https:\/\/api\.calendly\.com\/scheduled_events\/[0-9a-f-]{36}$/i.test(eventUri)) {
+  if (!isCalendlyEventUri(eventUri)) {
     console.error(
       `[calendly] invitee ${uri} pekar på oväntad event-URI: ${eventUri.slice(0, 120)}`,
     );
@@ -239,4 +239,207 @@ export function formatCalendlyAnswers(
   if (answers.length === 0) return null;
   if (answers.length === 1) return answers[0].answer;
   return answers.map((a) => `${a.question}: ${a.answer}`).join("\n");
+}
+
+/* ===================== Avbokning och städning ===================== */
+
+/**
+ * Event-URI:n, samma formlåsning som invitee-URI:n ovan och av samma skäl:
+ * den stoppas in i en URL som vi skickar vårt Bearer-token till, och i det här
+ * fallet dessutom i en POST som avbokar något.
+ */
+export const EVENT_URI_PATTERN = /^https:\/\/api\.calendly\.com\/scheduled_events\/[0-9a-f-]{36}$/i;
+
+export function isCalendlyEventUri(uri: string): boolean {
+  return EVENT_URI_PATTERN.test(uri.trim());
+}
+
+async function calendlyPost<T>(uri: string, body: Record<string, unknown>): Promise<T> {
+  const token = calendlyToken();
+  if (!token) {
+    console.error("[calendly] CALENDLY_API_TOKEN saknas — tidsbokning är avstängd");
+    throw new Error(GENERIC_ERROR);
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(uri, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(15_000),
+    });
+  } catch (e) {
+    console.error(`[calendly] POST ${uri} nådde aldrig fram:`, e);
+    throw new Error(GENERIC_ERROR);
+  }
+
+  const text = await res.text();
+  if (!res.ok) {
+    console.error(`[calendly] POST ${uri} → ${res.status}: ${text.slice(0, 300)}`);
+    throw new Error(GENERIC_ERROR);
+  }
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    console.error(`[calendly] POST ${uri} gav inget JSON: ${text.slice(0, 200)}`);
+    throw new Error(GENERIC_ERROR);
+  }
+}
+
+/**
+ * Avbokar en tid.
+ *
+ * `reason` mejlas till den som bokat, av Calendly, på svenska — det är enda
+ * beskedet de får om att tiden är borta, så texten måste säga *varför* och hur
+ * man gör rätt i stället.
+ */
+export async function cancelCalendlyBooking(eventUri: string, reason: string): Promise<void> {
+  const uri = eventUri.trim();
+  if (!isCalendlyEventUri(uri)) {
+    console.error(`[calendly] vägrade avboka event-URI med fel form: ${uri.slice(0, 120)}`);
+    throw new Error(GENERIC_ERROR);
+  }
+  await calendlyPost(`${uri}/cancellation`, { reason });
+}
+
+/** En bokad tid, så som städaren behöver se den. */
+export interface CalendlyScheduledEvent {
+  eventUri: string;
+  /** När bokningen gjordes (ISO, UTC) — fristen räknas härifrån. */
+  createdAt: string;
+  startTime: string;
+  status: string;
+}
+
+interface CalendlyEventListResource {
+  uri: string;
+  created_at: string;
+  start_time: string;
+  status: string;
+}
+
+/* Uppslaget nedan cachas per isolat, precis som Stripe-priset: det svarar
+ * likadant varje gång och städaren körs ofta. TTL:n finns för att en ändrad
+ * slug ska läka av sig själv i stället för att kräva en deploy. */
+const LOOKUP_TTL_MS = 30 * 60 * 1000;
+
+export interface CalendlyCoachingEventType {
+  /** Event-typens API-URI. */
+  uri: string;
+  /**
+   * Kontots användar-URI. Följer med därför att `/scheduled_events` kräver
+   * `user`, `organization` eller `group` — ett filter på bara `event_type`
+   * avvisas med 400, vilket inte syns förrän man kör mot riktiga data.
+   */
+  userUri: string;
+}
+
+let eventTypeCache: { value: CalendlyCoachingEventType | null; at: number } | null = null;
+
+/**
+ * Event-typen bakom `CALENDLY_EVENT_URL`.
+ *
+ * Den står medvetet inte som egen miljövariabel: två strängar som pekar på
+ * samma sak glider isär, och slugen är redan känd som en tyst felkälla. Här
+ * finns bara en sanning — matchar den publika länken ingen event-typ har
+ * slugen bytts, och då säger loggen det rakt ut.
+ */
+export async function resolveCoachingEventType(): Promise<CalendlyCoachingEventType | null> {
+  const wanted = calendlyEventUrl();
+  if (!wanted) return null;
+
+  const now = Date.now();
+  if (eventTypeCache && now - eventTypeCache.at < LOOKUP_TTL_MS) return eventTypeCache.value;
+
+  let value: CalendlyCoachingEventType | null = null;
+  try {
+    const me = await calendlyGet<{ resource: { uri: string } }>(`${CALENDLY_API}/users/me`);
+    const userUri = me.resource.uri;
+    const list = await calendlyGet<{
+      collection: { uri: string; scheduling_url: string; active: boolean }[];
+    }>(`${CALENDLY_API}/event_types?count=100&user=${encodeURIComponent(userUri)}`);
+
+    const hit = list.collection.find(
+      (t) => t.scheduling_url.replace(/\/+$/, "") === wanted.replace(/\/+$/, ""),
+    );
+    if (!hit) {
+      console.error(
+        `[calendly] ingen event-typ matchar CALENDLY_EVENT_URL (${wanted}) — har slugen bytts?`,
+      );
+    }
+    value = hit ? { uri: hit.uri, userUri } : null;
+  } catch (e) {
+    // Cachas inte vid fel: nästa anrop ska få försöka igen.
+    console.error("[calendly] kunde inte slå upp event-typen:", e);
+    return null;
+  }
+
+  eventTypeCache = { value, at: now };
+  return value;
+}
+
+/** Bara för tester — nollställer isolatets uppslagscache. */
+export function clearCalendlyEventTypeCache(): void {
+  eventTypeCache = null;
+}
+
+/**
+ * Kommande, aktiva bokningar på coachningens event-typ.
+ *
+ * Filtret på event-typ är avsiktligt och viktigt: städaren avbokar saker, och
+ * den ska aldrig kunna röra en tid som bokats på någon annan av kontots
+ * event-typer. Vill du boka in någon för hand — gör det på en annan event-typ.
+ */
+export async function listCoachingBookings(fromTime: Date): Promise<CalendlyScheduledEvent[]> {
+  const eventType = await resolveCoachingEventType();
+  if (!eventType) return [];
+
+  const params = new URLSearchParams({
+    user: eventType.userUri,
+    event_type: eventType.uri,
+    status: "active",
+    min_start_time: fromTime.toISOString(),
+    sort: "start_time:asc",
+    count: "100",
+  });
+
+  const res = await calendlyGet<{ collection: CalendlyEventListResource[] }>(
+    `${CALENDLY_API}/scheduled_events?${params.toString()}`,
+  );
+
+  return res.collection.map((e) => ({
+    eventUri: e.uri,
+    createdAt: e.created_at,
+    startTime: e.start_time,
+    status: e.status,
+  }));
+}
+
+/**
+ * En bokningslänk som bara går att använda en gång.
+ *
+ * Skälet är att den publika `/60min`-länken annars ligger i iframens `src` och
+ * går att spara undan och boka på när som helst, utan att passera kassan.
+ * Engångslänken är inte hela skyddet — den som redan känner till den publika
+ * slugen kommer förbi den — men den tar bort den självklara vägen, och
+ * städaren river det som ändå tar sig igenom.
+ *
+ * Returnerar null i stället för att kasta: en Calendly-hicka får inte ta ner
+ * köpet, den får bara falla tillbaka på den publika länken.
+ */
+export async function createSingleUseSchedulingLink(): Promise<string | null> {
+  const eventType = await resolveCoachingEventType();
+  if (!eventType) return null;
+  try {
+    const res = await calendlyPost<{ resource: { booking_url: string } }>(
+      `${CALENDLY_API}/scheduling_links`,
+      { max_event_count: 1, owner: eventType.uri, owner_type: "EventType" },
+    );
+    const url = res.resource?.booking_url?.trim();
+    return url && url.startsWith("https://calendly.com/") ? url : null;
+  } catch (e) {
+    console.error("[calendly] kunde inte skapa engångslänk, faller tillbaka på den publika:", e);
+    return null;
+  }
 }

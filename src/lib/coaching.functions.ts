@@ -14,8 +14,10 @@
  * inte ta ner köpet, den får bara ta bort sitt eget steg.
  *
  * Ordningen tid-före-betalning är ett medvetet val med en känd baksida: en tid
- * kan bli bokad utan att köpet slutförs. De raderna listas av vyn
- * `coaching_obetalda_bokningar` och avbokas för hand via `calendly_cancel_url`.
+ * kan bli bokad utan att köpet slutförs. Sedan 2026-08-19 städas den baksidan
+ * automatiskt — `coaching-sweep.server.ts` avbokar tiden när betalfönstret
+ * stängt, och `checkout.session.expired` släpper den direkt. Vyn
+ * `coaching_obetalda_bokningar` listar det som ändå blir kvar.
  *
  * Priset ligger aldrig i koden. Det läses ur Stripe, så en ändring i
  * dashboarden syns i appen utan deploy — och kan aldrig råka visa fel belopp
@@ -36,6 +38,7 @@ import {
 } from "./stripe.server";
 import {
   buildCoachingCheckoutParams,
+  checkoutExpiresAt,
   isCoachingSession,
   markCoachingPaid,
   sessionIsPaid,
@@ -44,6 +47,7 @@ import {
   buildSchedulingUrl,
   calendlyConfigured,
   calendlyEventUrl,
+  createSingleUseSchedulingLink,
   fetchCalendlyBooking,
   formatCalendlyAnswers,
 } from "./calendly.server";
@@ -241,9 +245,16 @@ export const startCoachingBooking = createServerFn({ method: "POST" })
       throw new Error(BOOKING_ERROR);
     }
 
+    // Engångslänk när Calendly ger oss en, annars den publika. Skälet är att
+    // den publika slugen annars ligger i iframens `src` på varje sidvisning och
+    // går att spara undan och boka på när som helst, utan att passera kassan.
+    // Att falla tillbaka är rätt: en Calendly-hicka ska ta bort skyddet, inte
+    // köpet — och städaren river ändå det som bokas utan betalning.
+    const singleUse = await createSingleUseSchedulingLink();
+
     return {
       schedulingUrl: buildSchedulingUrl({
-        eventUrl,
+        eventUrl: singleUse ?? eventUrl,
         embedDomain: new URL(siteOrigin()).host,
         requestId: row.id,
         name: data.name,
@@ -358,6 +369,9 @@ export const completeCoachingBooking = createServerFn({ method: "POST" })
         origin: siteOrigin(),
         scheduledAt: booking.startTime,
         focusAnswered: booking.answers.length > 0,
+        // Tiden är tagen i kalendern och städaren släpper den efter fristen —
+        // då får kassan inte gå att betala efteråt. Se CHECKOUT_TTL_MIN.
+        expiresAt: checkoutExpiresAt(new Date()),
       }),
     );
 

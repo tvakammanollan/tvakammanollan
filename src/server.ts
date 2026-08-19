@@ -368,6 +368,25 @@ async function stripeWebhook(request: Request): Promise<Response> {
   ]);
 
   try {
+    // Kassan gick ut utan betalning. Är en tid bokad ska den släppas nu och
+    // inte stå kvar tills nästa svep — det här är det exakta beskedet att
+    // köparen inte tänker betala. Kräver att `checkout.session.expired` är
+    // påslagen på webhook-endpointen i Stripe; är den inte det tar svepet
+    // tiden ändå, bara några minuter senare.
+    if (event.type === "checkout.session.expired") {
+      const { isCoachingSession } = await import("./lib/coaching.server");
+      const session = event.data?.object as {
+        id?: string;
+        metadata?: Record<string, string> | null;
+        client_reference_id?: string | null;
+      } & Parameters<typeof import("./lib/coaching.server").isCoachingSession>[0];
+      const requestId = session?.metadata?.coaching_request_id ?? session?.client_reference_id;
+      if (session?.id && isCoachingSession(session) && requestId) {
+        const { releaseBookingForExpiredCheckout } = await import("./lib/coaching-sweep.server");
+        await releaseBookingForExpiredCheckout(requestId);
+      }
+    }
+
     if (event.type && PAID_EVENTS.has(event.type)) {
       const { markCoachingPaid, sessionIsPaid, isCoachingSession } =
         await import("./lib/coaching.server");
@@ -405,6 +424,59 @@ async function stripeWebhook(request: Request): Promise<Response> {
     status: 200,
     headers: { "content-type": "application/json" },
   });
+}
+
+/**
+ * Städaren — avbokar coachningstider som aldrig betalades.
+ *
+ * Ligger här och inte som route-fil av samma skäl som `/api/health`: svaret är
+ * JSON och behöver ingen React. Anropas av pg_cron var femtonde minut (se
+ * `supabase/migrations/20260819120100_coachning_stadning_cron.sql`) och går att
+ * köra för hand under felsökning.
+ *
+ * Cloudflares egna Cron Triggers hade varit den självklara vägen, men den
+ * byggda Workerns `scheduled` ropar på nitro-hooken `cloudflare:scheduled` och
+ * TanStack Start ger oss ingen väg att registrera en nitro-plugin. Kroken finns
+ * men går inte att haka i.
+ *
+ * `?dry=1` tvingar torrläge: samma svar, men ingenting avbokas. Kör den först.
+ */
+async function coachingSweep(request: Request): Promise<Response> {
+  const json = (body: unknown, status = 200) =>
+    new Response(JSON.stringify(body), {
+      status,
+      // Ett svar som beskriver bokningar hör aldrig hemma i någons cache.
+      headers: { "content-type": "application/json", "cache-control": "no-store" },
+    });
+
+  const procEnv =
+    (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+  const secret = procEnv.COACHING_SWEEP_SECRET?.trim();
+  if (!secret) {
+    console.error("[coaching] COACHING_SWEEP_SECRET saknas — städaren kan inte anropas");
+    return json({ error: "not configured" }, 503);
+  }
+
+  const params = new URL(request.url).searchParams;
+  const given = params.get("secret") ?? "";
+  // Konstant tid: en hemlighet som läcker sin längd eller sitt prefix genom
+  // svarstiden är ingen hemlighet.
+  const { timingSafeEqualString } = await import("./lib/timing-safe");
+  if (!(await timingSafeEqualString(given, secret))) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  try {
+    const { sweepUnpaidCoachingBookings } = await import("./lib/coaching-sweep.server");
+    const result = await sweepUnpaidCoachingBookings({
+      force: true,
+      ...(params.get("dry") ? { mode: "report" as const } : {}),
+    });
+    return json(result);
+  } catch (e) {
+    console.error("[coaching] städaren fallerade:", e);
+    return json({ error: "sweep failed" }, 500);
+  }
 }
 
 /**
@@ -568,6 +640,10 @@ export default {
     // Stripe: bokför coachningsköp
     if (url.pathname === "/api/stripe/webhook") {
       return stripeWebhook(request);
+    }
+    // Städaren: avbokar coachningstider som aldrig betalades (pg_cron)
+    if (url.pathname === "/api/coaching/sweep") {
+      return coachingSweep(request);
     }
     // Admin: fyll ORD-definitioner från Wiktionary
     if (url.pathname === "/api/admin/fill-definitions") {

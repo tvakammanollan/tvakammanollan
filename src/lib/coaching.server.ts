@@ -70,6 +70,26 @@ export interface CheckoutParamsInput {
   scheduledAt?: string | null;
   /** true om köparen redan svarat på en fråga i Calendly — då hoppas fokusfrågan över. */
   focusAnswered?: boolean;
+  /**
+   * Unix-sekunder när kassan ska sluta gälla. Sätts bara när en tid redan är
+   * bokad — se `CHECKOUT_TTL_MIN`.
+   */
+  expiresAt?: number;
+}
+
+/**
+ * Hur länge kassan lever när en tid redan är bokad.
+ *
+ * Utan den här kan en övergiven kassa betalas ett dygn senare — alltså långt
+ * efter att städaren släppt tiden — och köparen står med en betald rad och
+ * ingenting i kalendern. Måste vara kortare än `UNPAID_GRACE_MS` i
+ * `coaching-sweep.ts`, och Stripe kräver minst 30 minuter.
+ */
+export const CHECKOUT_TTL_MIN = 35;
+
+/** Unix-sekunder när en kassa öppnad `now` ska gå ut. */
+export function checkoutExpiresAt(now: Date): number {
+  return Math.floor(now.getTime() / 1000) + CHECKOUT_TTL_MIN * 60;
 }
 
 /**
@@ -92,6 +112,9 @@ export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
     allow_promotion_codes: true,
     phone_number_collection: { enabled: true },
     customer_email: input.email,
+    // Bara när tiden redan är bokad: då är kassan knuten till en plats i
+    // kalendern som städaren släpper, och de två fönstren måste hänga ihop.
+    ...(input.expiresAt ? { expires_at: input.expiresAt } : {}),
     metadata: {
       product: COACHING_PRODUCT_TAG,
       coaching_request_id: input.requestId,

@@ -54,6 +54,25 @@
     // rakt till kassan som förut.
     "CALENDLY_EVENT_URL": "https://calendly.com/niklas-pellkvist/60min",
 
+    // Städaren som avbokar coachningstider vars köp aldrig slutfördes.
+    // En grind, inte en flagga att städa bort — samma tanke som
+    // CANONICAL_REDIRECT. Tre lägen:
+    //   "on"     avbokar på riktigt
+    //   "report" räknar och loggar, rör ingenting (kör den här först)
+    //   allt annat, inklusive osatt = av
+    // Osatt betyder AV med flit: .env.local bär produktionstoken, så en lokal
+    // dev-server skulle annars kunna avboka skarpa möten. Värdet finns bara
+    // här, alltså bara i Workern.
+    //
+    // Städaren tittar enbart på coachningens egen event-typ i Calendly. Ska du
+    // boka in någon för hand — använd en ANNAN event-typ, annars river den din
+    // bokning och personen får ett avbokningsmejl.
+    //
+    // Hemligheten som skyddar /api/coaching/sweep heter COACHING_SWEEP_SECRET
+    // och är en krypterad Secret (wrangler versions secret put + versions
+    // deploy), aldrig en var här.
+    "COACHING_SWEEP": "on",
+
     // PostHog. Nyckeln är publik (klientnyckel som bara kan skicka in
     // händelser). OBS: VITE_-variabler bakas in vid BYGGET — de måste därför
     // också finnas i .env, annars blir de tomma i bundlen oavsett vad som står
