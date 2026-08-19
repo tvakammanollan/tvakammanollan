@@ -22,6 +22,8 @@ import { displayCategory, ordText } from "@/lib/sv-format";
 import { LogOut, Trophy, Timer as TimerIcon } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
+import { CropView, type Crop } from "@/components/question/CropView";
+import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
@@ -51,6 +53,9 @@ interface QuestionRow {
   passage_id: string | null;
   passage_text: string | null;
   image_url: string | null;
+  /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
+  stem: ExamStem | null;
+  optionCrops: Crop[] | null;
 }
 
 interface MatchRow {
@@ -211,7 +216,7 @@ function MatchPage() {
         ? await supabase
             .from("questions")
             .select(
-              "id, category, question_text, options, passage_id, passage_text, image_url, difficulty, cleaned_question_text, cleaned_options, clean_status",
+              "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, difficulty, cleaned_question_text, cleaned_options, clean_status",
             )
             .in("id", qIds)
         : { data: [], error: null };
@@ -247,6 +252,10 @@ function MatchPage() {
             passage_id: q.passage_id,
             passage_text: q.passage_text,
             image_url: q.image_url ?? null,
+            // Beskärningarna gäller uppgiftens eget utsnitt; den städade texten
+            // beskriver en annan uppgift än den bilden visar.
+            stem: useCleaned ? null : parseStem(q.image_caption),
+            optionCrops: useCleaned ? null : parseOptionCrops(q.options),
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -953,12 +962,22 @@ function QuestionCard({
       </h2>
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
-          <img
-            src={currentQ.image_url}
-            alt="Figur till frågan"
-            decoding="async"
-            className="w-full object-contain"
-          />
+          {currentQ.stem ? (
+            <CropView
+              src={currentQ.image_url}
+              crop={currentQ.stem.stem}
+              imageAspect={currentQ.stem.aspect}
+              alt="Uppgiften ur provhäftet"
+              className="w-full"
+            />
+          ) : (
+            <img
+              src={currentQ.image_url}
+              alt="Figur till frågan"
+              decoding="async"
+              className="w-full object-contain"
+            />
+          )}
         </div>
       )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
@@ -987,7 +1006,20 @@ function QuestionCard({
                 {letter}
               </span>
               <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
+                {currentQ.optionCrops && currentQ.image_url ? (
+                  <CropView
+                    src={currentQ.image_url}
+                    crop={currentQ.optionCrops[i]}
+                    imageAspect={currentQ.stem?.aspect ?? 1}
+                    alt={`Svarsalternativ ${letter}`}
+                  />
+                ) : isMath ? (
+                  <MathText>{opt}</MathText>
+                ) : isOrd ? (
+                  ordText(opt)
+                ) : (
+                  opt
+                )}
               </span>
             </button>
           );
