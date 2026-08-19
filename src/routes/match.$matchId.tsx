@@ -27,6 +27,7 @@ import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
+import { isImageQuestion } from "@/lib/math-question";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -915,6 +916,10 @@ function QuestionCard({
   // ORD-ord har blandad casing i datan — normalisera alltid vid visning.
   const isOrd = currentQ.category === "ORD";
   const displayQ = isOrd ? ordText(currentQ.question_text) : currentQ.question_text;
+  const bildUppgift = isImageQuestion({
+    image_url: currentQ.image_url,
+    options: currentQ.options,
+  });
   return (
     <div
       key={currentQ.id}
@@ -925,17 +930,23 @@ function QuestionCard({
       <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
         {displayCategory(currentQ.category)}
       </div>
-      <h2
-        className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
-        style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
-      >
-        {isMath ? <MathText>{currentQ.question_text}</MathText> : displayQ}
-      </h2>
+      {/* Bilduppgifter (utsnitt ur provhäftet) bär hela frågan i bilden.
+          Texten är då PDF-extraktionen av samma sak — "3 27 x 2 =" där häftet
+          visar en kubikrot — och renderades tidigare ovanför bilden, så
+          uppgiften stod två gånger. Se `math-question.ts`. */}
+      {!bildUppgift && (
+        <h2
+          className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
+          style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+        >
+          {isMath ? <MathText>{currentQ.question_text}</MathText> : displayQ}
+        </h2>
+      )}
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
           <img
             src={currentQ.image_url}
-            alt="Figur till frågan"
+            alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
             decoding="async"
             className="w-full object-contain"
           />
@@ -966,9 +977,13 @@ function QuestionCard({
               >
                 {letter}
               </span>
-              <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
-              </span>
+              {/* Alternativtexten på en bilduppgift är bara sin egen bokstav
+                  — den står redan i brickan till vänster. */}
+              {!bildUppgift && (
+                <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                  {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
+                </span>
+              )}
             </button>
           );
         })}

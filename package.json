@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "gen:math-explanations": "bun run scripts/generate-math-explanations.ts",
     "scrape:ord-defs": "bun run scripts/scrape-ord-definitions.ts",
     "apply:ord-defs": "bun run scripts/apply-ord-definitions.ts",
     "scrape:ord-old": "bun run scraper/scrape-ord-old.ts",

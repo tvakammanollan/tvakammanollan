@@ -47,6 +47,7 @@ import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
+import { isImageQuestion } from "@/lib/math-question";
 import { processMatchResult } from "@/lib/match.functions";
 
 export const Route = createFileRoute("/result/$matchId")({
@@ -99,6 +100,7 @@ interface QuestionRow {
   passage_id: string | null;
   passage_text: string | null;
   explanation: string | null;
+  image_url: string | null;
 }
 
 function formatDuration(startIso: string, endIso: string | null): string {
@@ -240,6 +242,7 @@ function ResultPage() {
             passage_id: (q.passage_id as string) ?? null,
             passage_text: (q.passage_text as string) ?? null,
             explanation: (q.explanation as string) ?? null,
+            image_url: (q.image_url as string) ?? null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -786,15 +789,35 @@ function ResultPage() {
                         </div>
                       )}
 
-                      <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                        {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
-                          <MathText autoDetect>{q.question_text}</MathText>
-                        ) : q.category === "ORD" ? (
-                          ordText(q.question_text)
-                        ) : (
-                          q.question_text
-                        )}
-                      </div>
+                      {/* Bilduppgift: hela frågan och alternativen står i
+                          utsnittet ur provhäftet. Texten är PDF-extraktionen
+                          av samma sak och obegriplig. Se `math-question.ts`. */}
+                      {!isImageQuestion(q) && (
+                        <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                          {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
+                            <MathText autoDetect>{q.question_text}</MathText>
+                          ) : q.category === "ORD" ? (
+                            ordText(q.question_text)
+                          ) : (
+                            q.question_text
+                          )}
+                        </div>
+                      )}
+                      {q.image_url && (
+                        <div className="mt-2 overflow-hidden rounded-lg border border-border">
+                          <img
+                            src={q.image_url}
+                            alt={
+                              isImageQuestion(q)
+                                ? `Uppgift ${i + 1} ur provhäftet`
+                                : "Figur till frågan"
+                            }
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full object-contain"
+                          />
+                        </div>
+                      )}
                       <ul className="mt-2 grid gap-1">
                         {q.options.map((opt) => {
                           const isCorrect = opt.id === q.correct_answer;
@@ -814,15 +837,17 @@ function ResultPage() {
                               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
                                 {opt.id}
                               </span>
-                              <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
-                                {isMath ? (
-                                  <MathText autoDetect>{opt.text}</MathText>
-                                ) : q.category === "ORD" ? (
-                                  ordText(opt.text)
-                                ) : (
-                                  opt.text
-                                )}
-                              </span>
+                              {!isImageQuestion(q) && (
+                                <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
+                                  {isMath ? (
+                                    <MathText autoDetect>{opt.text}</MathText>
+                                  ) : q.category === "ORD" ? (
+                                    ordText(opt.text)
+                                  ) : (
+                                    opt.text
+                                  )}
+                                </span>
+                              )}
                               {isCorrect && (
                                 <Check className="ml-auto h-4 w-4 text-[var(--success)]" />
                               )}
@@ -833,7 +858,14 @@ function ResultPage() {
                           );
                         })}
                       </ul>
-                      <ExplanationBlock explanation={q.explanation} />
+                      {/* Utan förklaring i datan visas åtminstone rätt svar i
+                          klartext — en ensam bokstav lär ingen någonting. */}
+                      <ExplanationBlock
+                        explanation={q.explanation}
+                        answerLetter={q.correct_answer}
+                        answerText={q.options.find((o) => o.id === q.correct_answer)?.text ?? null}
+                        math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
+                      />
                     </li>
                   );
                 })}

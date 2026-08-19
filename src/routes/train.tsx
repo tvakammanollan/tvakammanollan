@@ -44,6 +44,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { displayCategory, ordText } from "@/lib/sv-format";
+import { isImageQuestion } from "@/lib/math-question";
 import { Spinner } from "@/components/ui/Spinner";
 
 export const Route = createFileRoute("/train")({
@@ -545,6 +546,10 @@ function TrainPage() {
   // ============ SESSION ============
   if (phase === "session" && currentQ) {
     const isMath = MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number]);
+    const bildUppgift = isImageQuestion({
+      image_url: currentQ.image_url,
+      options: currentQ.options,
+    });
     return (
       <div className="flex min-h-screen flex-col bg-background">
         {/* Top bar */}
@@ -611,23 +616,28 @@ function TrainPage() {
             <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
               {displayCategory(currentQ.category)} · Fråga {current + 1}
             </div>
-            <h2
-              className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
-              style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
-            >
-              {isMath ? (
-                <MathText>{currentQ.question_text}</MathText>
-              ) : currentQ.category === "ORD" ? (
-                ordText(currentQ.question_text)
-              ) : (
-                currentQ.question_text
-              )}
-            </h2>
+            {/* Bilduppgifter bär hela frågan i bilden — texten är då bara
+                PDF-extraktionen av samma sak och stod tidigare ovanför.
+                Se `math-question.ts`. */}
+            {!bildUppgift && (
+              <h2
+                className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
+                style={{ fontFamily: "var(--font-display)", lineHeight: 1.5 }}
+              >
+                {isMath ? (
+                  <MathText>{currentQ.question_text}</MathText>
+                ) : currentQ.category === "ORD" ? (
+                  ordText(currentQ.question_text)
+                ) : (
+                  currentQ.question_text
+                )}
+              </h2>
+            )}
             {currentQ.image_url && (
               <div className="mb-5 overflow-hidden rounded-xl border border-border">
                 <img
                   src={currentQ.image_url}
-                  alt="Figur till frågan"
+                  alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
                   decoding="async"
                   className="w-full object-contain"
                 />
@@ -680,15 +690,19 @@ function TrainPage() {
                         letter
                       )}
                     </span>
-                    <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                      {isMath ? (
-                        <MathText>{opt}</MathText>
-                      ) : currentQ.category === "ORD" ? (
-                        ordText(opt)
-                      ) : (
-                        opt
-                      )}
-                    </span>
+                    {/* På en bilduppgift är alternativtexten bara sin egen
+                        bokstav — den står redan i brickan till vänster. */}
+                    {!bildUppgift && (
+                      <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                        {isMath ? (
+                          <MathText>{opt}</MathText>
+                        ) : currentQ.category === "ORD" ? (
+                          ordText(opt)
+                        ) : (
+                          opt
+                        )}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -697,7 +711,16 @@ function TrainPage() {
             {/* Explanation */}
             {revealed && (
               <>
-                <ExplanationBlock explanation={currentQ.explanation} />
+                {/* Utan förklaring i datan visas åtminstone rätt svar i
+                    klartext — en ensam bokstav lär ingen någonting. */}
+                <ExplanationBlock
+                  explanation={currentQ.explanation}
+                  answerLetter={currentQ.correct_answer}
+                  answerText={
+                    currentQ.options[optionLetters.indexOf(currentQ.correct_answer)] ?? null
+                  }
+                  math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
+                />
                 {user && (
                   <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
                     <span>Felaktig fråga?</span>
