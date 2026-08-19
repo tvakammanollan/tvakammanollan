@@ -616,18 +616,35 @@ function OrdPracticePage() {
                     const isPicked = picked === opt.id;
                     const isCorrect = opt.id === current.correct_answer;
                     const showState = picked !== null;
+                    // Ordet är innehåll, inte status: det behåller full
+                    // bläckfärg och bokstavsbrickan bär färgen — samma
+                    // uppdelning som /train. Tidigare stod texten i
+                    // `text-green-100`, en nästan vit grön ton, ovanpå den
+                    // ljusgröna bottnen: kontrasten hamnade på ~1,05 och
+                    // rätt svar gick i praktiken inte att läsa.
                     let cls =
                       "flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all";
                     if (!showState) {
                       cls +=
                         " border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10 cursor-pointer";
                     } else if (isCorrect) {
-                      cls += " border-green-500/50 bg-green-500/10 text-green-100";
+                      cls +=
+                        " border-2 border-[var(--success-line)] bg-[var(--success-soft)] text-foreground";
                     } else if (isPicked) {
-                      cls += " border-red-500/50 bg-red-500/10 text-red-100";
+                      cls +=
+                        " border-2 border-[var(--danger-line)] bg-[var(--danger-soft)] text-foreground";
                     } else {
                       cls += " border-white/10 bg-white/[0.02] opacity-60";
                     }
+                    // Brickan är den enda ytan som är solid nog att bära den
+                    // ljusa inktonen.
+                    const badgeCls = !showState
+                      ? "border border-border text-muted-foreground"
+                      : isCorrect
+                        ? "bg-[var(--success)] text-[var(--success-ink)]"
+                        : isPicked
+                          ? "bg-[var(--danger)] text-[var(--danger-ink)]"
+                          : "border border-border text-muted-foreground";
                     return (
                       <button
                         key={opt.id}
@@ -637,14 +654,18 @@ function OrdPracticePage() {
                         className={cls}
                       >
                         <span className="flex items-center gap-3">
-                          <span className="flex h-6 w-6 items-center justify-center rounded-md border border-border text-xs font-semibold tabular-nums text-muted-foreground">
+                          <span
+                            className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold tabular-nums ${badgeCls}`}
+                          >
                             {opt.id}
                           </span>
                           <span>{ordText(opt.text)}</span>
                         </span>
-                        {showState && isCorrect && <Check className="h-5 w-5 text-green-400" />}
+                        {showState && isCorrect && (
+                          <Check className="h-5 w-5 shrink-0 text-[var(--success)]" />
+                        )}
                         {showState && isPicked && !isCorrect && (
-                          <X className="h-5 w-5 text-red-400" />
+                          <X className="h-5 w-5 shrink-0 text-[var(--danger)]" />
                         )}
                       </button>
                     );

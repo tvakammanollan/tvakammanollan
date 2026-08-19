@@ -153,7 +153,7 @@ export function ForumPostCard({
       </header>
 
       {post.isAnswer && (
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--success-ink)]">
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--success)]">
           <CheckCircle2 className="h-4 w-4" aria-hidden />
           Bästa svar
         </p>

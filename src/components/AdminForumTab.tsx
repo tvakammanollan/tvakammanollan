@@ -152,7 +152,7 @@ function QueueItem({
               </span>
             )}
             {banned && (
-              <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--danger-ink)]">
+              <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--destructive)]">
                 Avstängd t.o.m. {formatDate(post.authorBannedUntil!)}
               </span>
             )}
@@ -175,7 +175,7 @@ function QueueItem({
       {post.reports.length > 0 && (
         <ul className="mt-3 space-y-1 rounded-xl border border-[var(--danger-line)] bg-[var(--danger-soft)] p-3">
           {post.reports.map((r) => (
-            <li key={r.id} className="flex items-start gap-2 text-xs text-[var(--danger-ink)]">
+            <li key={r.id} className="flex items-start gap-2 text-xs text-[var(--destructive)]">
               <Flag className="mt-0.5 h-3 w-3 shrink-0" aria-hidden />
               <span>
                 <span className="font-medium">{REASON_LABEL.get(r.reason) ?? r.reason}</span>

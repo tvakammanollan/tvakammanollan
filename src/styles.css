@@ -14,40 +14,50 @@
    Sajten föll alltså tillbaka på Georgia och system-ui. Det här är
    första gången riktiga snitt faktiskt når webbläsaren.
 
-   TODO: konvertera till WOFF2 (~40 % mindre). Kräver `fonttools`:
-   `python -m fontTools.ttLib.woff2 compress public/fonts/*.ttf`
+   Filerna låg borta ur arbetsträdet mellan revert 98d852a och 2026-08-19,
+   medan de här reglerna stod kvar: sajten 404:ade alltså sina egna fem
+   typsnitt vid varje sidladdning och föll tillbaka på Georgia/system-ui.
+   Ett saknat typsnitt syns inte som ett fel någonstans — texten renderas,
+   bara med fel snitt — så kontrollera att /fonts/*.woff2 svarar 200 om
+   typografin ser oväntad ut.
+
+   WOFF2, inte TTF: samma snitt på 141 kB i stället för 360 kB. Källfilerna
+   är TTF och konverteras med
+   `python3 -m fontTools.ttLib.woff2 compress -o X.woff2 X.ttf`
+   (kräver `fonttools` + `brotli`); de okomprimerade TTF:erna ligger kvar i
+   commit 189d203 och behöver inte versionshanteras vidare.
    ================================================================ */
 @font-face {
   font-family: "Young Serif";
-  src: url("/fonts/YoungSerif-Regular.ttf") format("truetype");
+  src: url("/fonts/YoungSerif-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/fonts/InstrumentSans-Regular.ttf") format("truetype");
+  src: url("/fonts/InstrumentSans-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/fonts/InstrumentSans-Bold.ttf") format("truetype");
+  src: url("/fonts/InstrumentSans-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Instrument Sans";
-  src: url("/fonts/InstrumentSans-Italic.ttf") format("truetype");
+  src: url("/fonts/InstrumentSans-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: "DM Mono";
-  src: url("/fonts/DMMono-Regular.ttf") format("truetype");
+  src: url("/fonts/DMMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

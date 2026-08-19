@@ -707,6 +707,40 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
   kassan öppnas) och lägger till betalfälten + unikt index på
   `stripe_session_id`, vilket är det som gör dubbelbokföring omöjlig.
 
+**Tratten, steg för steg (2026-08-19).** Hela vägen mäts, och stegen är valda så
+att varje avhopp går att peka ut. Alla ligger i `ProductEvents` och bär `source`
+(`dashboard` / `landing` / `popup`), så samma tratt går att bryta ner per yta:
+
+```
+coaching_card_viewed      kortet/blocket syntes på skärmen
+coaching_offer_opened     modalen öppnades           (+ available)
+coaching_booking_opened   tidsvalet begärdes         (+ scheduling)
+coaching_calendar_viewed  Calendlys väljare renderade
+coaching_time_selected    en ledig tid klickades
+coaching_time_booked      bokningen bekräftades
+coaching_checkout_started skickades till Stripe      (+ is_guest)
+coaching_purchase_completed  betalt (en gång per köp, från tacksidan)
+```
+
+- **Visningen är nämnaren.** Utan `coaching_card_viewed` betyder ett lågt antal
+  öppningar antingen "ingen vill" eller "ingen skrollade dit", och de två kräver
+  motsatta åtgärder. Den mäts med `useImpression` (`src/hooks/useImpression.ts`),
+  en **callback-ref** och inte `useInView` från framer-motion: den senare läser
+  `ref.current` i en effekt vars beroenden saknar elementet, så ett kort som
+  monteras senare än komponenten (dashboarden renderar skelett tills profilen
+  landat) hade aldrig fått någon observer — tyst.
+- **`available` i `coaching_offer_opened` var falsk för alla fram till
+  2026-08-19.** Flaggan finns för att skilja "ingen vill köpa" från "ingen kunde
+  köpa", och rapporterades i samma andetag som modalen öppnades — innan priset
+  hunnit in i statet. Två saker rättades: händelsen väntar på att hämtningen
+  landat, och `useCoachingOffer` läser modulcachen **i renderingen** i stället
+  för i en effekt. Det senare tog också bort en bildruta där modalen sa "köp
+  direkt i appen är inte igång just nu" fast priset stod på knappen bakom.
+- Nudgens egna `coaching_prompt_*` ligger före det här i kedjan; se avsnittet
+  om den. En popup-öppning hoppar över erbjudandesteget (`autoStart`), men
+  `coaching_offer_opened` fyras ändå — den betyder "modalen öppnades", inte
+  "erbjudandet lästes".
+
 ### Tidsbokning i coachningen (Calendly, 2026-08-18)
 
 Köparen väljer en tid **innan** kassan öppnas. Modalen har två steg:
@@ -714,12 +748,15 @@ erbjudandet, och Calendlys tidsväljare i en iframe. `startCoachingBooking`
 skapar raden och länken, `completeCoachingBooking` läser den bokade tiden ur
 Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
 
-- **Ordningen har en känd baksida och den är accepterad.** En Calendly-bokning
-  är ett åtagande i samma sekund den görs, medan Checkout går att överge — så
-  en tid kan bli stående obetald. Vyn `coaching_obetalda_bokningar` listar dem
-  (`paid_at IS NULL AND scheduled_at IS NOT NULL`) och de avbokas för hand via
-  `calendly_cancel_url`. Byt inte ordningen "för säkerhets skull": den som redan
-  har en tid i kalendern slutför köpet oftare än den som ska höra av sig sen.
+- **Ordningen har en känd baksida, och sedan 2026-08-19 städas den maskinellt.**
+  En Calendly-bokning är ett åtagande i samma sekund den görs, medan Checkout
+  går att överge — så en tid kan bli stående obetald, och det hände på riktigt
+  2026-08-18 (någon bokade, stängde kassan och hade en timme gratis). Ordningen
+  står kvar: den som redan har en tid i kalendern slutför köpet oftare än den
+  som ska höra av sig sen. Det som ändrats är att tiden nu släpps av sig själv,
+  se **Städaren** nedan. Vyn `coaching_obetalda_bokningar` listar det som ändå
+  blir kvar (`paid_at IS NULL AND scheduled_at IS NOT NULL AND canceled_at IS
+  NULL`) och avbokas för hand via `calendly_cancel_url`.
 - **`utm_content` är hela kopplingen mellan bokning och köp.** Raden i
   `coaching_requests` skapas före tidsvalet just för att dess id ska kunna
   följa med in i Calendly-länken och komma tillbaka i invitee-resursens
@@ -754,15 +791,87 @@ Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
   `30min` → `60min`) laddar iframen en 404-sida, ingen kan boka, och ingenting
   loggas eller kastar. `/api/health` rapporterar därför `calendly: "ok" |
   "fail" | "av"` — `"av"` betyder att tidsbokningen inte är påslagen, vilket är
-  ett giltigt läge.
+  ett giltigt läge. Sedan 2026-08-19 syns det även i mätningen:
+  `coaching_booking_opened` utan ett `coaching_calendar_viewed` efter sig
+  betyder att iframen laddade något annat än en väljare (se tratten nedan).
 - **Slå INTE på "Collect payment" på event-typen i Calendly.** Kontot är kopplat
   till Stripe, men `is_paid` måste förbli `false`: annars betalar köparen i
   Calendly *och* `completeCoachingBooking` öppnar en andra Checkout-session
   efteråt. Det är en dubbeldebitering, och inget i koden upptäcker den.
+- **Vad som händer inne i iframen läses ur Calendlys postMessage**, inte ur
+  deras `widget.js` — det enda scriptet gör är att lyssna på samma meddelanden,
+  och att göra det själva håller CSP:n vid `frame-src`. Parsern ligger i
+  `src/lib/calendly-embed.ts` (ren och testad, eftersom URI:n därifrån går
+  vidare in i ett anrop med vårt Bearer-token). Verifierat mot den skarpa
+  widgeten 2026-08-19: den skickar `event_type_viewed` (två gånger, därav
+  avdupliceringen), `date_and_time_selected` när "Next" trycks, och
+  `page_height` däremellan som vi ignorerar.
 - Migration: `supabase/migrations/20260818090000_coachning_calendly.sql`.
   `scheduled_at`, `calendly_*`-kolumnerna, unikt index på
   `calendly_invitee_uri` (en bokning hör till exakt ett köp) och vyn ovan med
   `security_invoker = true`.
+
+### Städaren — obetalda tider rivs automatiskt (2026-08-19)
+
+Det gick att kringgå Stripe på två sätt: boka i modalen och stänga kassan, eller
+gå direkt på den publika Calendly-länken (den låg i iframens `src`) och aldrig
+röra sajten. Båda lämnade en levande tid i kalendern. Tre lager stänger det.
+
+- **`src/lib/coaching-sweep.ts` äger beslutet, `-.server.ts` gör jobbet.** Den
+  rena delen ligger för sig därför att det handlar om att avboka någon annans
+  möte: det ska gå att läsa och tvista om utan att ett nätverk är inblandat.
+  Två frister, och de är olika långa med flit — en obetald rad är bevisligen vår
+  och bevisligen obetald (`UNPAID_GRACE_MS`, 45 min), medan en bokning helt utan
+  rad kan vara sekunder från att få sin (`ORPHAN_GRACE_MS`, 15 min).
+- **`UNPAID_GRACE_MS` måste förbli längre än `CHECKOUT_TTL_MIN`** (35 min,
+  `coaching.server.ts`, satt som `expires_at` på sessionen så snart en tid är
+  bokad). Annars går det att betala för en tid vi just släppt, och köparen står
+  med en betald rad utan tid i kalendern. Testet pinnar olikheten.
+- **Städaren tittar BARA på coachningens egen event-typ.** Ska du boka in någon
+  för hand — gör det på en **annan** event-typ i Calendly, annars river städaren
+  bokningen och personen får ett avbokningsmejl. Det är den enda riktigt farliga
+  egenskapen hos den här funktionen.
+- **`COACHING_SWEEP` är en grind, inte en flagga att städa bort** — samma tanke
+  som `CANONICAL_REDIRECT`. `on` avbokar, `report` räknar och loggar utan att
+  röra något, osatt betyder **av**. Att osatt är av är avsiktligt: `.env.local`
+  bär produktionstoken, så en lokal dev-server hade annars kunnat avboka skarpa
+  möten. Kör alltid `?dry=1` mot skarpa data innan du slår på den.
+- **Ett oläsbart `created_at` läses som "nyss", aldrig som "urgammal".** Motsatsen
+  hade avbokat allt på en gång den dag Calendly ändrar sitt tidsformat.
+- **Raden märks först när Calendly sagt ja.** Omvänd ordning ger en rad som ser
+  avbokad ut medan tiden står kvar i kalendern — det enda utfallet som är sämre
+  än att inte städa alls. Misslyckas Calendly-anropet görs inget, och nästa svep
+  tar den (raden med `status='canceled'` men levande tid behandlas som "försök
+  igen", inte som "klar").
+- **Tre saker triggar den:**
+  1. `checkout.session.expired` i Stripe-webhooken → släpper just den tiden
+     direkt. Det är det exakta beskedet "den här köparen tänker inte betala".
+     **Eventet måste vara påslaget på webhook-endpointen** — den lyssnade bara
+     på `completed` + `async_payment_succeeded` fram till 2026-08-19.
+  2. `GET /api/coaching/sweep?secret=…` var 15:e minut via **pg_cron**
+     (`20260819120100_coachning_stadning_cron.sql`). Hemligheten står inte i
+     filen — repot är publikt.
+  3. Samma endpoint för hand, med `?dry=1` för torrläge.
+- **Cloudflares Cron Triggers går inte att använda här.** Den byggda Workern
+  *har* en `scheduled`-export (nitro lägger dit den, syns i
+  `.output/server/index.mjs`), men den ropar bara på nitro-hooken
+  `cloudflare:scheduled`, och TanStack Start ger ingen väg att registrera en
+  nitro-plugin. Kroken finns men går inte att haka i — därför pg_cron.
+- **`GET /scheduled_events` kräver `user`, `organization` eller `group`.** Ett
+  filter på bara `event_type` avvisas med 400. Det syns inte i en curl som råkar
+  ha `user` med, bara i en riktig körning.
+- **Engångslänkar i stället för den publika slugen.**
+  `createSingleUseSchedulingLink()` (`POST /scheduling_links`, `max_event_count:
+  1`) ger en `calendly.com/d/…`-länk per bokningsförsök, så den publika
+  `/60min`-adressen ligger inte längre i sidkällan. Den faller tillbaka på den
+  publika länken om Calendly strular — en hicka får ta bort skyddet, inte köpet.
+  **Skyddet är inte komplett:** den som redan känner slugen kommer förbi det, och
+  event-typen svarar även när den är satt till "secret" i Calendly. Det är
+  städaren som är garantin, inte länken.
+- **Event-typens URI slås upp ur `CALENDLY_EVENT_URL`**, den står inte som egen
+  variabel: två strängar som pekar på samma sak glider isär, och slugen är redan
+  en känd tyst felkälla. Byts slugen matchar ingen event-typ, loggen säger det
+  rakt ut, och städaren gör då **ingenting** (den avbokar aldrig i blindo).
 
 ### Nudgen om studieupplägget (2026-08-18)
 
@@ -871,11 +980,25 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
   en rebase.** Den ena sidan hade `hpkampen.se/og-image-2.png`, den andra
   `tvakommanollan.se/og-image.png`, och båda hade rätt i var sin halva. Sitter
   du i samma konflikt igen: **ny domän, nytt filnamn.**
-- **`public/fonts/` finns inte i repot.** Mappen togs bort i revert `98d852a` och
-  kom aldrig tillbaka, medan `styles.css` fortfarande `@font-face`:ar fyra filer
-  därifrån. **Sajten 404:ar alltså sina egna typsnitt och faller tillbaka på
-  Georgia/system-ui.** Filerna finns kvar i historiken:
-  `git show 189d203:public/fonts/YoungSerif-Regular.ttf > public/fonts/…`.
+- **`public/fonts/` är återställd 2026-08-19, som WOFF2.** Mappen togs bort i
+  revert `98d852a` medan `styles.css` fortsatte `@font-face`:a fem filer
+  därifrån, så sajten 404:ade sina egna typsnitt vid varje sidladdning och
+  renderade i Georgia/system-ui. Felet överlevde i månader därför att ett
+  saknat typsnitt **inte syns som ett fel någonstans** — texten renderas, bara
+  med fel snitt, och varken bygget, testerna eller konsolen klagar.
+- **Typsnitt kontrolleras i webbläsaren, inte i CSS:en.** Att `@font-face`
+  står rätt bevisar ingenting. `document.fonts.check('16px "Young Serif"')` kan
+  dessutom svara `true` på fallbacken i vissa lägen, så mät i stället samma
+  sträng mot snittet och mot dess fallback i en canvas: skiljer sig bredden
+  används den egna filen (Young Serif 354,4 px mot Georgia 310,3 px).
+  Kör Chrome över CDP enligt avsnittet om verifiering ovan.
+- **Snitten ligger som WOFF2, källorna som TTF i `189d203`.** 141 kB mot 360 kB
+  för samma fem snitt. Konvertering:
+  `python3 -m fontTools.ttLib.woff2 compress -o X.woff2 X.ttf` (`pip install
+  fonttools brotli`). OFL-filerna måste ligga kvar bredvid — licensen kräver
+  det. `Instrument Sans italic` laddas inte på startsidan och står som
+  `unloaded` i `document.fonts`; det är CSS Font Loading API som bara hämtar
+  snitt sidan faktiskt använder, inte ett fel.
 - **Snittbetyget på landningssidan räknas ur `OMDOMEN`** (`SNITTBETYG` i
   `HeroLanding.tsx`), det skrivs aldrig för hand. `Stjarnor` tar `betyg` och
   fyller sista stjärnan delvis — fem hela stjärnor bredvid "4,8" säger emot
@@ -913,6 +1036,20 @@ with a different look in every copy.
   `styles.css` also routes `emerald/green → success` and `rose/red → danger`,
   *including* the `/10`-style opacity variants, which are separate selectors and
   are easy to miss when adding a new shade.
+- **`--success-ink` / `--danger-ink` hör hemma på SOLID botten, ingen annanstans.**
+  De är ljusa (`#e7f0e3`, `#fff1f0`) och avsedda för text ovanpå `--success`
+  respektive `--danger` i full styrka. Läggs de på `--success-soft` /
+  `--danger-soft`, eller rakt på kortet, blir kontrasten **1,0–1,2** — texten
+  försvinner helt utan att något ser trasigt ut i koden. Det hände på fem
+  ställen samtidigt: rätt svar i `/ord` (`text-green-100` på `bg-green-500/10`,
+  1,14), "Löst"-pillret, "Bästa svar", avstängningsbrickan och
+  anmälningslistan. **På mjuk botten är texten `--success` / `--destructive`**
+  (5,09 / 7,21). `--danger` som text på `--danger-soft` räcker inte — 3,94,
+  under 4,5.
+- **Mönstret för rätt/fel-alternativ står i `/train`** och `/ord` följer det:
+  själva svarstexten är innehåll och behåller `text-foreground` (12,7), medan
+  bokstavsbrickan är solid `--success`/`--danger` och bär färgen. Färga aldrig
+  svarstexten efter status — den som just svarat vill kunna läsa vad ordet var.
 - **Rank:** `RANK_TIERS` in `src/types` is the only rank scale (brons 600–999,
   silver 1000–1199, guld 1200–1399, platina 1400–1599, diamant 1600+). Render it
   with `RankBadge`, `EloBadge` or `RankIcon` — all three read that one table.

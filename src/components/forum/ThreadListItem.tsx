@@ -39,7 +39,7 @@ export function ThreadListItem({
               {thread.title}
             </h3>
             {thread.hasAnswer && (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--success-ink)]">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--success)]">
                 <CheckCircle2 className="h-3 w-3" aria-hidden />
                 Löst
               </span>
