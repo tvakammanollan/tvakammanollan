@@ -106,6 +106,13 @@ export const limits = {
    */
   verificationRedeem: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/h
   /**
+   * Sparat provförsök. Ett provpass tar 55 minuter att skriva, så taket är
+   * rundligt tilltaget även för den som skriver om ett pass flera gånger —
+   * det är inte den här som ska hindra spam, det är unikindexet på
+   * (user_id, term, pass) som gör att raderna inte kan bli fler än proven.
+   */
+  provAttempt: { max: 40, windowMs: 60 * 60 * 1000 } as LimitConfig, // 40/h
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

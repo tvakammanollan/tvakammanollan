@@ -1170,6 +1170,53 @@ export type Database = {
           },
         ]
       }
+      prov_attempts: {
+        Row: {
+          answers: Json
+          duration_s: number | null
+          id: string
+          mode: string
+          pass: number
+          score: number
+          submitted_at: string
+          term: string
+          total: number
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          duration_s?: number | null
+          id?: string
+          mode?: string
+          pass: number
+          score: number
+          submitted_at?: string
+          term: string
+          total: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          duration_s?: number | null
+          id?: string
+          mode?: string
+          pass?: number
+          score?: number
+          submitted_at?: string
+          term?: string
+          total?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prov_attempts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           bot_matches_today: number

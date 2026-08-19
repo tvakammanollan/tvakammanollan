@@ -1,10 +1,20 @@
-import { ArrowRight, FileText, ListChecks, RotateCcw, Swords, Target, Trophy } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  FileText,
+  ListChecks,
+  RotateCcw,
+  Swords,
+  Target,
+  Trophy,
+  X,
+} from "lucide-react";
 import { NextStep } from "@/components/layout/NextStep";
 import { ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { formatDecimal, formatPercent } from "@/lib/sv-format";
 import { normeringFromRaw, HP_TOTAL_QUESTIONS } from "@/lib/normering";
-import { findExam, isCorrect } from "@/lib/prov-data";
+import { acceptedAnswers, findExam, isCorrect } from "@/lib/prov-data";
 import { summariseExam } from "@/lib/prov-results";
 import { delprovShort, type ProvPass } from "@/types/gamla-prov";
 
@@ -58,6 +68,7 @@ export function ProvResult({
   const wrong = data.questions
     .map((q, i) => ({ q, i }))
     .filter(({ q }) => !isCorrect(q, answers[q.nr]));
+  const alla = data.questions.map((q, i) => ({ q, i }));
 
   return (
     <div className="space-y-5">
@@ -141,36 +152,51 @@ export function ProvResult({
         <ProvScorePanel result={examResult} title={`Hela ${data.label.toLowerCase()}`} />
       )}
 
-      {wrong.length > 0 && (
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-            Att gå igenom ({wrong.length})
-          </h2>
-          <ul className="space-y-2">
-            {wrong.map(({ q, i }) => (
-              <li key={q.nr}>
-                <button
-                  type="button"
-                  onClick={() => onReview(i)}
-                  className="flex w-full items-start gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.03]"
-                >
-                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[var(--danger-soft)] text-xs font-bold tabular-nums text-[var(--danger)]">
-                    {q.nr}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="line-clamp-2 text-sm text-[var(--cream)]">
-                      {q.text ?? `${q.delprov}-uppgift ${q.nr}`}
-                    </span>
-                    <span className="mt-0.5 block text-xs tabular-nums text-[var(--text-tertiary)]">
-                      Du svarade {answers[q.nr] ?? "—"} · rätt svar {q.answer}
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      {/* Genomgången. Låg tidigare bara som en lista över FELEN, vilket gjorde
+          att den som svarat rätt på en uppgift genom att gissa aldrig fick veta
+          det — och att en uppgift man var osäker på men råkade pricka inte gick
+          att hitta tillbaka till. Nu står alla fyrtio: ditt svar, rätt svar och
+          om det blev rätt. Fel först, eftersom det är där genomgången börjar. */}
+      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <h2 className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
+          Genomgång ({alla.length} uppgifter)
+        </h2>
+        <p className="mb-3 text-xs text-[var(--text-tertiary)]">
+          Klicka på en uppgift för att se den med alternativen och facit.
+        </p>
+
+        {wrong.length > 0 && (
+          <>
+            <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">
+              Att gå igenom ({wrong.length})
+            </h3>
+            <ul className="space-y-2">
+              {wrong.map(({ q, i }) => (
+                <li key={q.nr}>
+                  <ReviewRow q={q} answer={answers[q.nr]} onClick={() => onReview(i)} />
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        {alla.length > wrong.length && (
+          <>
+            <h3 className="mb-2 mt-5 text-[11px] font-semibold uppercase tracking-wider text-[var(--success)]">
+              Rätt ({alla.length - wrong.length})
+            </h3>
+            <ul className="space-y-2">
+              {alla
+                .filter(({ q }) => isCorrect(q, answers[q.nr]))
+                .map(({ q, i }) => (
+                  <li key={q.nr}>
+                    <ReviewRow q={q} answer={answers[q.nr]} onClick={() => onReview(i)} />
+                  </li>
+                ))}
+            </ul>
+          </>
+        )}
+      </section>
 
       {/* Nästa provpass är det uppenbara nästa steget, men låg sist — under
           två likvärdiga outline-knappar. Och saknades det (sista passet)
@@ -201,5 +227,60 @@ export function ProvResult({
         />
       )}
     </div>
+  );
+}
+
+/**
+ * En rad i genomgången: uppgiftsnummer, uppgiftens början, ditt svar och facit.
+ *
+ * `acceptedAnswers` och inte `q.answer`: UHR har i efterhand godkänt flera svar
+ * på ett antal uppgifter, och då är båda rätt. Att skriva ut `q.answer` ensamt
+ * hade markerat ett godkänt svar som fel.
+ */
+function ReviewRow({
+  q,
+  answer,
+  onClick,
+}: {
+  q: ProvPass["questions"][number];
+  answer: string | undefined;
+  onClick: () => void;
+}) {
+  const facit = acceptedAnswers(q);
+  const rätt = isCorrect(q, answer);
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-start gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.03]"
+    >
+      <span
+        className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-bold tabular-nums ${
+          rätt
+            ? "bg-[var(--success)] text-[var(--success-ink)]"
+            : "bg-[var(--danger)] text-[var(--danger-ink)]"
+        }`}
+      >
+        {q.nr}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="line-clamp-2 text-sm text-[var(--cream)]">
+          {q.text ?? `${q.delprov}-uppgift ${q.nr}`}
+        </span>
+        <span className="mt-0.5 block text-xs text-[var(--text-tertiary)]">
+          Du svarade{" "}
+          <strong className={rätt ? "text-[var(--success)]" : "text-[var(--destructive)]"}>
+            {answer ?? "—"}
+          </strong>{" "}
+          · rätt svar <strong className="text-[var(--cream)]">{facit.join(" eller ")}</strong>
+          {q.utgar ? " · uppgiften ströks av UHR" : ""}
+        </span>
+      </span>
+      {rätt ? (
+        <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--success)]" aria-hidden />
+      ) : (
+        <X className="mt-0.5 h-4 w-4 shrink-0 text-[var(--danger)]" aria-hidden />
+      )}
+    </button>
   );
 }

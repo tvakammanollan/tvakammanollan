@@ -14,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CircularTimer } from "@/components/ui/CircularTimer";
 import { logUsageEvent } from "@/lib/usage.functions";
+import { fetchProvAttempt, saveProvAttempt } from "@/lib/prov-attempts.functions";
 import { useAuth } from "@/hooks/useAuth";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
@@ -26,7 +27,7 @@ import {
   type ProvProgress,
 } from "@/lib/prov-progress";
 import { saveResult } from "@/lib/prov-results";
-import { formatInt } from "@/lib/sv-format";
+import { formatDateLong, formatInt } from "@/lib/sv-format";
 import { highlightScope } from "@/lib/highlights";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { delprovFull, hasPassage, passKindLabel, type ProvPass } from "@/types/gamla-prov";
@@ -75,7 +76,15 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const logUsage = useServerFn(logUsageEvent);
+  const saveAttempt = useServerFn(saveProvAttempt);
+  const loadAttempt = useServerFn(fetchProvAttempt);
   const loggedRef = useRef(false);
+  /** Ett tidigare inlämnat försök ur databasen — genomgången i efterhand. */
+  const [savedAttempt, setSavedAttempt] = useState<{
+    answers: Record<number, string>;
+    mode: ProvMode;
+    submittedAt: string;
+  } | null>(null);
   // Provpasset ska räknas som dagens aktivitet. Gamla prov fungerar utan
   // konto, så användaren är ofta null — då finns ingen streak att uppdatera.
   const { user } = useAuth();
@@ -101,6 +110,28 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     const saved = loadProgress(data.term, data.pass);
     if (saved) setResumable(saved);
   }, [data.term, data.pass]);
+
+  // Ett tidigare inlämnat försök, för den som är inloggad. Progressen i
+  // localStorage städas efter en vecka, så utan det här fanns bara poängen
+  // kvar när man kom tillbaka till ett prov man skrivit — ingen genomgång.
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await loadAttempt({ data: { term: data.term, pass: data.pass } });
+        if (cancelled || !res) return;
+        const svar: Record<number, string> = {};
+        for (const [nr, letter] of Object.entries(res.answers)) svar[Number(nr)] = letter;
+        setSavedAttempt({ answers: svar, mode: res.mode, submittedAt: res.submittedAt });
+      } catch {
+        /* Ett saknat försök är det normala — inget att visa. */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user, data.term, data.pass, loadAttempt]);
 
   const persist = useCallback(
     (next: Partial<ProvProgress>) => {
@@ -155,7 +186,23 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
       duration_s: Math.min(6 * 3600, Math.round((at - startedAt) / 1000)),
     };
     void logUsage({ data: { event: "gamla_prov_submit", meta } }).catch(() => {});
-    if (user) void updateStreak(user.id);
+    if (user) {
+      void updateStreak(user.id);
+      // Svaren sparas så att passet går att gå igenom i efterhand, inte bara
+      // så länge localStorage råkar finnas kvar. Poängen räknas om på servern
+      // — det som skickas är bara vilka bokstäver som valdes.
+      const svar: Record<string, string> = {};
+      for (const [nr, letter] of Object.entries(answers)) svar[String(nr)] = letter;
+      void saveAttempt({
+        data: {
+          term: data.term,
+          pass: data.pass,
+          mode,
+          answers: svar,
+          durationS: meta.duration_s,
+        },
+      }).catch((e) => console.error("[prov] kunde inte spara försöket:", e));
+    }
     // Samma händelse till PostHog, för funnel och retention. Skickas bara om
     // besökaren samtyckt — bryggan i telemetry.ts är en no-op annars.
     trackEvent("gamla_prov_submit", meta);
@@ -171,6 +218,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     startedAt,
     total,
     user,
+    saveAttempt,
   ]);
 
   useEffect(() => {
@@ -301,6 +349,28 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     }
   }
 
+  /**
+   * Öppnar genomgången av ett tidigare inlämnat pass, hämtat ur databasen.
+   *
+   * Ingen ny inlämning görs och `saveResult` rörs inte — resultatet finns
+   * redan. Det som händer är att svaren läggs tillbaka i vyn så att facit kan
+   * visas mot dem, precis som direkt efter inlämningen.
+   */
+  function reviewSaved() {
+    if (!savedAttempt) return;
+    setMode(savedAttempt.mode);
+    setAnswers(savedAttempt.answers);
+    setFlagged([]);
+    const at = new Date(savedAttempt.submittedAt).getTime();
+    setStartedAt(at);
+    setEndsAt(null);
+    setSubmittedAt(at);
+    setNow(Date.now());
+    setResumable(null);
+    setCurrent(0);
+    setPhase("result");
+  }
+
   function restart() {
     clearProgress(data.term, data.pass);
     setPhase("intro");
@@ -314,8 +384,10 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
       <ProvIntro
         data={data}
         resumable={resumable}
+        savedAttempt={savedAttempt}
         onStart={start}
         onResume={resume}
+        onReviewSaved={reviewSaved}
         onDiscard={() => {
           clearProgress(data.term, data.pass);
           setResumable(null);
@@ -559,14 +631,18 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
 function ProvIntro({
   data,
   resumable,
+  savedAttempt,
   onStart,
   onResume,
+  onReviewSaved,
   onDiscard,
 }: {
   data: ProvPass;
   resumable: ProvProgress | null;
+  savedAttempt: { answers: Record<number, string>; mode: ProvMode; submittedAt: string } | null;
   onStart: (mode: ProvMode) => void;
   onResume: (saved: ProvProgress) => void;
+  onReviewSaved: () => void;
   onDiscard: () => void;
 }) {
   const answered = resumable ? Object.keys(resumable.answers).length : 0;
@@ -618,6 +694,30 @@ function ProvIntro({
             en vecka efter provdagen av upphovsrättsskäl, så uppgifterna finns inte att tillgå.
           </span>
         </p>
+      )}
+
+      {/* Ett tidigare inlämnat pass. Visas bara när det INTE finns ett
+          påbörjat försök i webbläsaren — det senare är färskare och ska
+          erbjudas först. */}
+      {!resumable && savedAttempt && (
+        <section className="mt-6 rounded-2xl border border-[var(--success-line)] bg-[var(--success-soft)] p-5">
+          <h2 className="text-sm font-semibold text-[var(--cream)]">
+            Du har redan skrivit det här passet
+          </h2>
+          <p className="mt-1 text-xs text-[var(--text-secondary)]">
+            Inlämnat {formatDateLong(savedAttempt.submittedAt)}
+            {savedAttempt.mode === "ova" ? " i övningsläge" : ""}. Dina svar finns kvar, så
+            genomgången visar vad du svarade och vad som var rätt.
+          </p>
+          <button
+            type="button"
+            onClick={onReviewSaved}
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[var(--success)] px-4 py-2 text-sm font-semibold text-[var(--success-ink)] transition hover:brightness-110"
+          >
+            <ListChecks className="h-4 w-4" aria-hidden />
+            Se din rättning
+          </button>
+        </section>
       )}
 
       {resumable && (
