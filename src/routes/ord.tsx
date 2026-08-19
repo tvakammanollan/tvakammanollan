@@ -5,6 +5,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { toast } from "sonner";
 import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
@@ -211,6 +212,7 @@ function DefinitionBlock({
 }
 
 function OrdPracticePage() {
+  const { user, loading: authLoading } = useAuth();
   const fetchBatch = useServerFn(fetchWordBatch);
   const fetchFailedBatch = useServerFn(fetchFailedWordBatch);
   const fetchProgress = useServerFn(getWordProgress);
@@ -259,10 +261,28 @@ function OrdPracticePage() {
       .catch(() => setProgress(null));
   }, [fetchProgress]);
 
+  // Antalen per filter kräver ingen inloggning — de kan hämtas direkt.
   useEffect(() => {
     void fetchFilterCounts({})
       .then((c) => setFilterCounts(c))
       .catch(() => setFilterCounts(null));
+  }, [fetchFilterCounts]);
+
+  // De tre nedan går bakom `requireSupabaseAuth` och väntar därför in sessionen.
+  // Tidigare fyrades de vid montering oavsett: utloggad gav tre 401 per
+  // sidladdning, och en inloggad vars access-token just höll på att förnyas fick
+  // samma sak. Varje fel sväljs av .catch() och sätter värdet till null, så
+  // sidan renderade utan framsteg, utan antal felade ord och utan
+  // repetitionslista — helt tyst. Nästa laddning såg ut att "laga" det, vilket
+  // är precis så buggen rapporterades.
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      setFailedCount(null);
+      setFailedWords([]);
+      setProgress(null);
+      return;
+    }
     void fetchFailedCount({})
       .then((r) => setFailedCount(r.count))
       .catch(() => setFailedCount(null));
@@ -270,7 +290,7 @@ function OrdPracticePage() {
       .then((r) => setFailedWords(r.words ?? []))
       .catch(() => setFailedWords([]));
     loadProgress();
-  }, [fetchFilterCounts, fetchFailedCount, fetchFailedList, loadProgress]);
+  }, [authLoading, user, fetchFailedCount, fetchFailedList, loadProgress]);
 
   const toggleDifficulty = (d: number) => {
     setDifficulties((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
