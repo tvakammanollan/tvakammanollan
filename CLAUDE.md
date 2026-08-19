@@ -189,6 +189,14 @@ File naming: `*.functions.ts` = server functions, `*.server.ts` = server-only he
 - Server functions that need auth use `.middleware([requireSupabaseAuth])` — this reads the Bearer token from the Authorization header
 - Auth token is automatically injected into server function requests by `installSupabaseFetchAuth()` (called once in `__root.tsx`), which patches `window.fetch` to add the token to all `/_serverFn/` requests
 
+### Inloggning med användarnamn
+
+Fältet på `/login` tar både e-post och användarnamn; `@` skiljer dem åt (namn får bara innehålla a–z, 0–9, `_` och `-`, så ett namn kan aldrig innehålla @). E-post går som förut rakt på `signInWithPassword`.
+
+Namnvägen går via `signInWithUsername` (`src/lib/auth.functions.ts`). Supabase känner bara till e-post och telefon, så namnet måste översättas till en adress — och **det uppslaget får aldrig ligga i klienten**: en endpoint som svarar på "vilken e-post hör till lina_p" låter vem som helst skörda adresser ur topplistan. Servern slår upp, loggar in och returnerar `{access_token, refresh_token}`, klienten kör `supabase.auth.setSession()`. Svaret är detsamma vare sig namnet saknas eller lösenordet är fel.
+
+Inloggningen görs med den publika nyckeln, inte service role — annars kringgås Supabase egna spärrar (bannade konton, obekräftad adress). Uppslaget använder `.eq`, inte `.ilike` som vänsöket: `_` är jokertecken i LIKE och tillåtet i namn, så `lina_p` skulle matcha även `linaxp` och `maybeSingle()` fela. Gästkonton (auto-namn) filtreras bort med `isAutoUsername` så de inte går att sondera.
+
 ### Google-inloggning
 
 `GoogleButton` (`src/components/auth/GoogleButton.tsx`) på `/login` och `/signup`. Flödet är **implicit grant** — `client.ts` sätter inget `flowType` och auth-js default är implicit, så Supabase skickar tillbaka access-token i URL-fragmentet och `detectSessionInUrl` plockar upp den i webbläsaren. Fragmentet når aldrig servern; SSR:en behöver inte veta något om returen.
@@ -291,7 +299,6 @@ importskriptet — Supabase-texterna går inte genom det. Två fällor:
 Teckenoffseten som överstrykningarna sparas som pekar på den *städade* texten.
 Ändras städningen ska prefixet i `lib/highlights.ts` (`hp-highlights:2:`) räknas
 upp, annars pekar sparade markeringar på fel tecken.
-
 
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)

@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { signInWithUsername } from "@/lib/auth.functions";
 import { useState } from "react";
 import { z } from "zod";
 import { m } from "framer-motion";
@@ -27,39 +29,68 @@ export const Route = createFileRoute("/login")({
   }),
 });
 
+// Fältet tar både e-post och användarnamn. `@` skiljer dem åt och duger som
+// hel regel: onboarding tillåter bara a–z, 0–9, _ och - i namn, så ett namn
+// kan aldrig innehålla ett @.
 const schema = z.object({
-  email: z.string().trim().email("Ogiltig e-postadress").max(255),
+  identifier: z.string().trim().min(3, "Fyll i e-post eller användarnamn").max(255),
   password: z.string().min(6, "Minst 6 tecken").max(128),
 });
+
+const looksLikeEmail = (value: string) => value.includes("@");
 
 function LoginPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const usernameLogin = useServerFn(signInWithUsername);
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   if (!loading && user && !isGuestUser(user)) return <Navigate to="/" />;
 
+  /**
+   * Namnvägen: servern slår upp adressen och loggar in åt oss (se
+   * auth.functions.ts), vi sätter bara sessionen där klienten förväntar sig
+   * den. Returnerar ett felmeddelande, eller undefined när det gick vägen.
+   */
+  const signInByUsername = async (username: string, password: string) => {
+    try {
+      const session = await usernameLogin({ data: { username, password } });
+      const { error } = await supabase.auth.setSession(session);
+      return error?.message;
+    } catch (e) {
+      return e instanceof Error ? e.message : "Något gick fel.";
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = schema.safeParse({ email, password });
+    const parsed = schema.safeParse({ identifier, password });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
     }
+    const { identifier: id, password: pw } = parsed.data;
+    if (!looksLikeEmail(id) && !/^[a-z0-9_-]+$/i.test(id)) {
+      toast.error("Ogiltigt användarnamn", { description: "Endast a–z, 0–9, _ och -." });
+      return;
+    }
+
     setSubmitting(true);
     // Läses av innan gästsessionen slängs, annars är svaret alltid nej.
     const fromGuest = isGuestUser(user);
     if (fromGuest) {
       await supabase.auth.signOut();
     }
-    const { error } = await supabase.auth.signInWithPassword(parsed.data);
+    const failure = looksLikeEmail(id)
+      ? (await supabase.auth.signInWithPassword({ email: id, password: pw })).error?.message
+      : await signInByUsername(id.toLowerCase(), pw);
     setSubmitting(false);
-    if (error) {
+    if (failure) {
       trackEvent("login_failed");
-      toast.error("Kunde inte logga in", { description: error.message });
+      toast.error("Kunde inte logga in", { description: failure });
       return;
     }
     trackEvent("login_completed", { from_guest: fromGuest });
@@ -98,12 +129,12 @@ function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <PillInput
-                type="email"
-                label="E-postadress"
-                placeholder="info@gmail.com"
-                autoComplete="email"
-                value={email}
-                onChange={setEmail}
+                type="text"
+                label="E-post eller användarnamn"
+                placeholder="E-post eller användarnamn"
+                autoComplete="username"
+                value={identifier}
+                onChange={setIdentifier}
               />
               <PillInput
                 type="password"
