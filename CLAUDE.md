@@ -328,6 +328,27 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   läser provlistan på studera.nu, och `build.py` skriver om `index.json`,
   `exempel.json` och gamla-prov-delen av `public/sitemap.xml` (mellan
   markörkommentarerna — resten av sitemapen är handskriven).
+- **Matten i `questions` kommer ur arkivet sedan 2026-08-19.**
+  `scripts/import-prov-questions.ts` (torrkörning som standard, `--apply` för att
+  skriva) flyttar över alla matteuppgifter: 2 343 rader — XYZ 696, KVA 580,
+  NOG 348, DTK 719 — märkta med `exam_term`/`provpass_num`/`q_num` och
+  `clean_status = 'ok'`. Före det fanns 512 skrapade rader och **noll DTK**.
+  - **DTK:s bild är diagramuppslaget, inte uppgiftsutsnittet.** Arkivet kopplar
+    det via `figure`-index i passet, inte via `q.image`; missar man det
+    importeras 642 uppgifter utan det diagram de ska läsas ur. Av samma skäl
+    följer `crop` i `options` bara med när `image_url` faktiskt *är* utsnittet —
+    koordinaterna är räknade mot det och pekar ut fel yta på ett diagram.
+  - **De skrapade raderna raderades inte.** `match_answers`, `match_questions`
+    och `question_reports` har främmande nycklar mot `questions.id`; 421 rader
+    var refererade och fick `clean_status = 'retired'`, 91 orefererade togs bort.
+  - **`questions` har ett unikt index på `lower(question_text)`.** Det gäller
+    även pensionerade rader, så 279 av dem fick prefixet `[utgången] ` för att
+    släppa fram arkivets version av samma uppgift. Fem skilda XYZ-uppgifter
+    frågar dessutom "Hur stor är vinkeln v?" — de 17 interna krockarna får
+    provtillfället tillagt i texten.
+  - `clean-math-questions` är borttagen. Den bad en LLM rekonstruera skräpet och
+    **hittade på**: alternativ B `31x` blev `$\frac{31x}{27}$`. Den kunde inte
+    heller återskapa ett DTK-diagram som aldrig fanns i indata.
 - **`build.py` går inte att köra om — arkivet blir fattigare.** Den raderar allt i
   `src/data/prov/` och bygger från cachen, men cachen går inte att återskapa:
   ELF-häftena från flera terminer finns inte kvar hos UHR utan har hämtats för
