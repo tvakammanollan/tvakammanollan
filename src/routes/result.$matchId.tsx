@@ -44,6 +44,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 import { getBotName } from "@/lib/bot";
+import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
 import { processMatchResult } from "@/lib/match.functions";
@@ -192,7 +193,10 @@ function ResultPage() {
             .select("username")
             .eq("id", oppId)
             .maybeSingle();
-          setOpponentName(u?.username ?? "Motståndare");
+          // Namnet, inte ordet "Motståndare". Ett raderat konto har ingen
+          // rad kvar och blir "Okänd spelare" — matchen finns ändå, eftersom
+          // kontoradering bevarar matchhistoriken (se account.functions.ts).
+          setOpponentName(u ? displayName(u.username, oppId) : "Okänd spelare");
         }
       }
 

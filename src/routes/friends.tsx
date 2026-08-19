@@ -17,6 +17,16 @@ import { toast } from "sonner";
 import { UserAvatar } from "@/components/UserAvatar";
 import { UserPlus, Check, X, Trash2, Swords, Loader2 } from "lucide-react";
 import { sounds } from "@/lib/sounds";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/friends")({
   component: FriendsPage,
@@ -51,6 +61,8 @@ function FriendsPage() {
   const [username, setUsername] = useState("");
   const [busy, setBusy] = useState(false);
   const [tick, setTick] = useState(0);
+  /** Vänskapen som väntar på bekräftelse innan den tas bort. */
+  const [pendingRemoval, setPendingRemoval] = useState<{ id: string; name: string } | null>(null);
 
   const sendReq = useServerFn(sendFriendRequest);
   const respondReq = useServerFn(respondFriendRequest);
@@ -288,11 +300,20 @@ function FriendsPage() {
                     >
                       <Swords className="h-4 w-4" /> Matte
                     </Button>
+                    {/* Papperskorgen sitter bredvid två knappar man trycker
+                        ofta, och borttagningen gick tidigare igenom direkt.
+                        En felträff kostade en vänskap som bara den andra
+                        parten kan återställa. */}
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => remove(r.id)}
-                      aria-label="Ta bort vän"
+                      onClick={() =>
+                        setPendingRemoval({
+                          id: r.id,
+                          name: r.other?.username ?? "den här vännen",
+                        })
+                      }
+                      aria-label={`Ta bort ${r.other?.username ?? "vän"}`}
                     >
                       <Trash2 className="h-4 w-4 text-muted-foreground" />
                     </Button>
@@ -329,6 +350,34 @@ function FriendsPage() {
           </section>
         )}
       </div>
+
+      <AlertDialog
+        open={pendingRemoval !== null}
+        onOpenChange={(open) => !open && setPendingRemoval(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Ta bort {pendingRemoval?.name} som vän?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Ni försvinner ur varandras vänlistor och kan inte längre bjuda in varandra till
+              privata matcher. Spelade matcher och ELO påverkas inte. Ni kan lägga till varandra
+              igen när som helst.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Avbryt</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                const id = pendingRemoval?.id;
+                setPendingRemoval(null);
+                if (id) void remove(id);
+              }}
+            >
+              Ta bort
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

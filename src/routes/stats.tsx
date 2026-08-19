@@ -34,6 +34,8 @@ import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
 import { displayCategory, formatDate } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
+import { displayName } from "@/lib/guest-name";
+import { outcomeFor } from "@/lib/match-outcome";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
@@ -196,7 +198,9 @@ function StatsPage() {
         if (oppIds.length > 0) {
           const { data: us } = await supabase.from("users").select("id, username").in("id", oppIds);
           const nm = new Map<string, string>();
-          for (const u of us ?? []) nm.set(u.id as string, u.username as string);
+          // displayName ger gästkonton sitt lundnamn i stället för user_xxxx.
+          for (const u of us ?? [])
+            nm.set(u.id as string, displayName(u.username as string, u.id as string));
           setOpponentNames(nm);
         }
       }
@@ -544,12 +548,19 @@ function StatsPage() {
                       const isP1 = m.player1_id === user!.id;
                       const myScore = isP1 ? (m.player1_score ?? 0) : (m.player2_score ?? 0);
                       const oppScore = isP1 ? (m.player2_score ?? 0) : (m.player1_score ?? 0);
-                      const won = m.winner_id === user!.id;
-                      const draw = m.winner_id === null;
+                      // winner_id ensamt duger inte: en FÖRLORAD botmatch har
+                      // winner_id = player2_id, som är NULL för bottar — och
+                      // lästes därför som oavgjort. Se `match-outcome.ts`.
+                      const outcome = outcomeFor(user!.id, m);
+                      const won = outcome === "win";
+                      const draw = outcome === "draw";
                       const oppId = isP1 ? m.player2_id : m.player1_id;
                       const oppLabel = m.is_bot_match
                         ? getBotName(m.bot_elo ?? 1000, m.id)
-                        : (oppId && opponentNames.get(oppId)) || "Motståndare";
+                        : // Ett raderat konto har ingen rad kvar i users —
+                          // matchen finns ändå, eftersom kontoradering bevarar
+                          // motpartens historik.
+                          (oppId && opponentNames.get(oppId)) || "Okänd spelare";
                       const delta = eloByMatch.get(m.id);
                       const rowBg = draw
                         ? "bg-background"
@@ -568,7 +579,13 @@ function StatsPage() {
                           <td className="px-2 py-2 capitalize">{m.match_type}</td>
                           <td className="px-2 py-2">{oppLabel}</td>
                           <td className="px-2 py-2 font-medium">
-                            {draw ? "Oavgjort" : won ? "Vinst" : "Förlust"}
+                            {outcome === null
+                              ? "Pågår"
+                              : draw
+                                ? "Oavgjort"
+                                : won
+                                  ? "Vinst"
+                                  : "Förlust"}
                           </td>
                           <td className="px-2 py-2 text-right tabular-nums">
                             {myScore}–{oppScore}

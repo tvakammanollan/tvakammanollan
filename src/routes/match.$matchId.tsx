@@ -26,6 +26,7 @@ import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
+import { displayName } from "@/lib/guest-name";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -177,7 +178,10 @@ function MatchPage() {
             .select("username")
             .eq("id", oppId)
             .maybeSingle();
-          setOpponentName(u?.username ?? "Motståndare");
+          // Namnet, inte ordet "Motståndare". `displayName` ger gästkonton
+          // sitt lundnamn i stället för user_c8a56e2c. Finns ingen rad kvar
+          // är kontot raderat — då sägs det rakt ut.
+          setOpponentName(u ? displayName(u.username, oppId) : "Okänd spelare");
         }
       }
 
@@ -764,7 +768,7 @@ function MatchPage() {
             <div>
               <div className="flex items-center justify-between text-[11px]">
                 <span className="truncate font-medium text-foreground">
-                  {opponentName || "Motståndare"}
+                  {opponentName || "Okänd spelare"}
                 </span>
                 <span className="tabular-nums text-muted-foreground">
                   {Math.round(oppProgress * questions.length)}/{questions.length}

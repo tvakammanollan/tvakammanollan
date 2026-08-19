@@ -245,7 +245,10 @@ function Board({
     setWeeklyLoading(true);
     (async () => {
       try {
-        const w = await fetchWeekly({ data: { match_type: matchType, limit: LEADERBOARD_SIZE } });
+        // Hämtar mycket mer än listan visar: den som ligger utanför topp 10
+        // ska ändå se sin egen placering under tabellen, och den raden
+        // plockas ur samma svar.
+        const w = await fetchWeekly({ data: { match_type: matchType, limit: 200 } });
         if (!cancelled) setWeekly(filterLeaderboard(w as WeeklyLeaderboardRow[]));
       } catch {
         if (!cancelled) setWeekly([]);
@@ -432,6 +435,10 @@ function WeeklyTable({
         ctaHref="/"
       />
     );
+  // Topp 10 i tabellen; den egna raden separat under om man ligger utanför.
+  const top = rows.slice(0, LEADERBOARD_SIZE);
+  const me = currentUserId ? rows.find((r) => r.user_id === currentUserId) : undefined;
+  const meInTop = me && top.some((r) => r.user_id === me.user_id);
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -448,7 +455,7 @@ function WeeklyTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((r) => {
+          {top.map((r) => {
             const isMe = !!currentUserId && r.user_id === currentUserId;
 
             return (
@@ -494,6 +501,46 @@ function WeeklyTable({
               </tr>
             );
           })}
+          {!meInTop && me && (
+            <>
+              <tr>
+                <td colSpan={4} className="px-3 py-2 text-center text-xs text-white/45">
+                  Din placering: #{me.rank}
+                </td>
+              </tr>
+              <tr className="border-t border-white/8 bg-[#ae2f26]/10 font-semibold ring-1 ring-[#ae2f26]/40">
+                <td className="px-4 py-3.5 tabular-nums">
+                  <PodiumRank rank={me.rank} />
+                </td>
+                <td className="px-4 py-3.5">
+                  <span className="inline-flex items-center gap-2 text-white">
+                    {displayName(me.username)}
+                    <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
+                      Du
+                    </span>
+                  </span>
+                </td>
+                <td className="px-4 py-3.5 text-right">
+                  <span
+                    className={`text-[16px] font-bold tabular-nums ${
+                      me.elo_gain > 0
+                        ? "text-emerald-400"
+                        : me.elo_gain < 0
+                          ? "text-rose-400"
+                          : "text-white/55"
+                    }`}
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {me.elo_gain >= 0 ? "+" : ""}
+                    {me.elo_gain}
+                  </span>
+                </td>
+                <td className="hidden px-4 py-3.5 text-right tabular-nums text-white/55 sm:table-cell">
+                  {me.games}
+                </td>
+              </tr>
+            </>
+          )}
         </tbody>
       </table>
     </div>

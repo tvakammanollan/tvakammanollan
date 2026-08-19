@@ -36,6 +36,16 @@ import { ProvQuestionCard } from "./ProvQuestionCard";
 import { ProvResult } from "./ProvResult";
 import { ProvFigure } from "./ProvFigure";
 import { ProvFacitList } from "./ProvFacitList";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type Phase = "intro" | "running" | "result";
 
@@ -60,6 +70,9 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
   const [now, setNow] = useState(() => Date.now());
   const [showNavigator, setShowNavigator] = useState(false);
   const [resumable, setResumable] = useState<ProvProgress | null>(null);
+  // Inlämningen är oåterkallelig — provet rättas och klockan stannar. En
+  // felklickad "Lämna in" på uppgift 12 av 40 kostar hela passet.
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const logUsage = useServerFn(logUsageEvent);
   const loggedRef = useRef(false);
@@ -370,8 +383,8 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
             {!submittedAt && (
               <button
                 type="button"
-                onClick={submit}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110"
+                onClick={() => setConfirmOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
               >
                 <Send className="h-3.5 w-3.5" aria-hidden />
                 Lämna in
@@ -395,6 +408,31 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
           />
         </div>
       </header>
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Lämna in provpasset?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {answeredCount < total
+                ? `Du har svarat på ${answeredCount} av ${total} uppgifter. De obesvarade räknas som fel.`
+                : `Alla ${total} uppgifter är besvarade.`}{" "}
+              Efter inlämning rättas passet och det går inte att ändra svaren.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Fortsätt skriva</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setConfirmOpen(false);
+                submit();
+              }}
+            >
+              Lämna in
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6">
         <div className={hasPane ? "grid gap-5 lg:grid-cols-12" : ""}>
@@ -462,24 +500,31 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
                 <Grid3x3 className="h-4 w-4" aria-hidden />
                 Översikt
               </button>
-              {current < total - 1 ? (
-                <button
-                  type="button"
-                  onClick={() => goTo(current + 1)}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
-                >
-                  Nästa
-                  <ChevronRight className="h-4 w-4" aria-hidden />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={submittedAt ? () => setPhase("result") : submit}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-5 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
-                >
-                  {submittedAt ? "Till resultatet" : "Lämna in"}
-                </button>
-              )}
+              {/* Nästa och Lämna in delar EN plats med fast bredd. Knappen är
+                  primär (röd) hela vägen: den är det man gör 39 gånger av 40,
+                  och en outline-knapp bredvid "Föregående" gav ingen ledtråd
+                  om vilken av dem som förde provet framåt. Fast bredd så att
+                  raden inte hoppar när texten byts på sista uppgiften. */}
+              <div className="flex w-[9.5rem] justify-end">
+                {current < total - 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => goTo(current + 1)}
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
+                  >
+                    Nästa
+                    <ChevronRight className="h-4 w-4" aria-hidden />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={submittedAt ? () => setPhase("result") : () => setConfirmOpen(true)}
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+                  >
+                    {submittedAt ? "Till resultatet" : "Lämna in"}
+                  </button>
+                )}
+              </div>
             </div>
 
             <section

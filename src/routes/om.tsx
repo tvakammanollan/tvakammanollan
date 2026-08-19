@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
+import { APP_VERSION_LABEL } from "@/lib/app-version";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { ArrowRight } from "lucide-react";
 
@@ -140,9 +141,10 @@ function OmPage() {
             </li>
             <li>
               <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
-                Gamla prov 2022–2026
+                Gamla prov 2012–2026
               </Link>
-              : skriv hela provpass med facit och normering
+              : alla 30 provtillfällen, 120 provpass och 4 800 uppgifter — skriv hela provpass med
+              facit och normering
             </li>
             <li>
               <Link to="/faq" className="underline" style={{ color: "var(--amber)" }}>
@@ -164,8 +166,16 @@ function OmPage() {
             >
               info@tvakommanollan.se
             </a>
-            . Bug eller önskemål? Använd gärna bug-knappen längst ner i gränssnittet, så hamnar
-            feedbacken direkt hos rätt person.
+            . Har du hittat en bugg eller har ett önskemål? Använd gärna knappen &quot;Rapportera
+            bugg&quot; längst ner på sidan — då följer det med vilken sida du var på, vilket gör att
+            vi kan börja leta direkt.
+          </p>
+
+          {/* Versionen läses ur package.json (se app-version.ts). Stod
+              tidigare som en handskriven siffra, och en sådan blir gammal
+              utan att någon märker det. */}
+          <p className="pt-2 text-xs" style={{ color: "var(--text-tertiary)" }}>
+            Tvåkommanollan {APP_VERSION_LABEL}
           </p>
         </section>
 

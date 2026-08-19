@@ -109,18 +109,23 @@ function KontaktPage() {
             </div>
           </li>
           <li>
+            {/* Samma kort som de andra tre — ram, ikon i accentfärg, samma
+                text- och radavstånd. Låg tidigare som en solid LinkedIn-blå
+                platta i en spalt där allt annat är gräddvitt med brun ram:
+                den enda främmande färgen på hela sidan, och dessutom en färg
+                som inte finns någon annanstans i märket. */}
             <a
               href="https://www.linkedin.com/in/niklas-pellkvist-a3b1382b2/"
               target="_blank"
               rel="me noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-[#0a66c2] p-4 transition hover:bg-[#004182]"
-              style={{ color: "#fff8f5" }}
+              className="flex items-start gap-3 rounded-2xl border p-4 transition-colors hover:border-[var(--amber)]/50"
+              style={{ borderColor: "var(--line)", color: "var(--cream)" }}
             >
-              <Linkedin className="h-5 w-5 shrink-0" />
+              <Linkedin className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "var(--amber)" }} />
               <span>
                 <span className="block font-semibold">Niklas Pellkvist på LinkedIn</span>
-                <span className="mt-0.5 block text-xs" style={{ color: "rgba(255,248,245,0.75)" }}>
-                  Samarbeten, frågor om sajten eller bara connecta
+                <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
+                  Samarbeten, frågor om sajten eller bara connecta.
                 </span>
               </span>
             </a>

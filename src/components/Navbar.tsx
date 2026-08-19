@@ -35,6 +35,7 @@ import {
   Type,
   ChevronDown,
   Settings,
+  Swords,
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
@@ -73,14 +74,17 @@ export function Navbar() {
       data-scrolled={scrolled}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
-        {/* Loggan är bara märket. "Kampen" stod bredvid som ord, men
-            märket bär namnet självt — tvåkommanollan är vad sajten
-            heter. Länken måste därför ha ett eget tillgängligt namn,
-            annars blir den en klickyta utan text för skärmläsare. */}
+        {/* Märket OCH namnet. Märket satt tidigare ensamt, med motiveringen
+            att det bär namnet självt — men en 36 px röd ruta med "2,0" i
+            läser inte som ett sajtnamn för den som kommer utifrån, och
+            hörnet såg tomt ut. Ordmärket står i display-snittet och med å,
+            precis som i all annan text (se CLAUDE.md: å i text, a i teknik).
+            Det döljs under sm så att raden inte trängs på en liten skärm —
+            aria-label på länken bär namnet för skärmläsare oavsett. */}
         <Link
           to="/"
           aria-label="Tvåkommanollan, till startsidan"
-          className="group inline-flex shrink-0 items-center"
+          className="group inline-flex shrink-0 items-center gap-2"
         >
           <span
             aria-hidden
@@ -96,6 +100,13 @@ export function Navbar() {
             </span>
             <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400" />
           </span>
+          <span
+            aria-hidden
+            className="hidden text-[17px] font-bold leading-none tracking-[-0.02em] text-[var(--cream)] transition-colors group-hover:text-[#ae2f26] sm:inline"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Tvåkommanollan
+          </span>
         </Link>
 
         {/* ===== DESKTOP NAV (≥ md) ===== */}
@@ -105,6 +116,9 @@ export function Navbar() {
               {/* Bara de tre vi faktiskt pushar. Resten bor i avatarmenyn —
                   tidigare låg fem länkar här och samma fem en gång till i
                   dashboardens sekundärrad, footern och snabbmenyn. */}
+              {/* Duellen är sajtens kärna men saknades helt i navbaren —
+                  den nåddes bara via ett kort på startsidan. */}
+              <NavLink to="/matchmaking">Duell</NavLink>
               <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
@@ -361,6 +375,9 @@ function MobileMenu({
         <nav className="flex flex-col px-2 py-3">
           <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
+          </MobileNavLink>
+          <MobileNavLink to="/matchmaking" onClick={close} icon={Swords}>
+            Duell
           </MobileNavLink>
           <MobileNavLink to="/ord" onClick={close} icon={Type}>
             Ord

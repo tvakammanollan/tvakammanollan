@@ -6,11 +6,13 @@ import { isRankable } from "./username";
 
 /**
  * Hur många rader topplistan visar. Ett ställe för alla tre listorna på
- * /leaderboard (verbal, matte, ord) — sänkt från 100 till 50 2026-08-18.
- * Den som ligger utanför får ändå sin egen placering under tabellen, så
- * `limit` i anropen nedan måste förbli större än det här talet.
+ * /leaderboard (verbal, matte, ord) — 100 → 50 (2026-08-18) → 10 (2026-08-19).
+ *
+ * Den som ligger utanför topplistan får ändå sin egen placering under
+ * tabellen, och den raden plockas ur samma svar — därför måste `limit` i
+ * anropen nedan förbli mycket större än det här talet.
  */
-export const LEADERBOARD_SIZE = 50;
+export const LEADERBOARD_SIZE = 10;
 
 export interface LeaderboardRow {
   rank: number;
