@@ -28,6 +28,7 @@ function IntegritetspolicyPage() {
   return (
     <div className="min-h-screen">
       <PageHero
+        align="center"
         eyebrow="Juridik"
         title="Integritetspolicy"
         subtitle="Senast uppdaterad: 2026-08-17"
@@ -43,7 +44,7 @@ function IntegritetspolicyPage() {
             när du använder tvakommanollan.se.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Personuppgiftsansvarig
           </h2>
           <p>
@@ -61,7 +62,7 @@ function IntegritetspolicyPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Vilka uppgifter samlar vi in?
           </h2>
           <ul className="list-disc space-y-2 pl-6">
@@ -91,6 +92,16 @@ function IntegritetspolicyPage() {
               aldrig ditt kortnummer.
             </li>
             <li>
+              <strong style={{ color: "var(--cream)" }}>
+                Telefonnummer om du ber oss höra av oss:
+              </strong>{" "}
+              om du fyller i formuläret &quot;Osäker på om det är något för dig?&quot; sparar vi
+              ditt mobilnummer, ditt namn om du skrev det, dina två svar och tidpunkten du skickade
+              in. Att skicka in numret är ditt samtycke: texten över knappen säger vad numret
+              används till. Det används <em>enbart</em> för att ringa eller sms:a dig om
+              studieupplägget. Vi hör inte av oss om något annat, och numret lämnas inte vidare.
+            </li>
+            <li>
               <strong style={{ color: "var(--cream)" }}>Teknisk information:</strong> IP-adress och
               webbläsarversion, enbart för säkerhet och felsökning (anonymiseras efter 30 dagar)
             </li>
@@ -105,7 +116,7 @@ function IntegritetspolicyPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Rättslig grund och syften
           </h2>
           <p>
@@ -113,14 +124,17 @@ function IntegritetspolicyPage() {
             <strong style={{ color: "var(--cream)" }}>avtal</strong> (för att leverera tjänsten du
             har skapat konto för, och den coachning du eventuellt köpt) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
-            missbrukshantering och produktförbättring). Användningsdata för analys behandlas enbart
-            med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke:</strong> inget
-            analysskript laddas innan du sagt ja, och du kan ta tillbaka valet när som helst längre
-            ned på den här sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part
-            för marknadsföring.
+            missbrukshantering och produktförbättring). Ditt telefonnummer behandlas med stöd av
+            ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong> — som du lämnar genom
+            att skicka in formuläret — och du kan när som helst be oss radera det genom att mejla
+            adressen ovan. Användningsdata för analys behandlas enbart med stöd av ditt{" "}
+            <strong style={{ color: "var(--cream)" }}>samtycke:</strong> inget analysskript laddas
+            innan du sagt ja, och du kan ta tillbaka valet när som helst längre ned på den här
+            sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part för
+            marknadsföring.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Tredjepartstjänster vi använder
           </h2>
           <ul className="list-disc space-y-1 pl-6">
@@ -172,7 +186,7 @@ function IntegritetspolicyPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Hur länge sparar vi uppgifterna?
           </h2>
           <ul className="list-disc space-y-1 pl-6">
@@ -199,7 +213,7 @@ function IntegritetspolicyPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Forumet
           </h2>
           <p>
@@ -228,7 +242,7 @@ function IntegritetspolicyPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Dina rättigheter
           </h2>
           <p>
@@ -241,8 +255,10 @@ function IntegritetspolicyPage() {
             <strong style={{ color: "var(--cream)" }}>Statistik → Radera konto</strong> när du är
             inloggad. Det tar bort din inloggning, e-postadress och all personlig historik direkt;
             matchresultat behålls enbart i anonymiserad form, och har du köpt coachning sparas
-            uppgifterna om det köpet enligt punkten om köpuppgifter ovan. För övriga rättigheter,
-            kontakta oss på{" "}
+            uppgifterna om det köpet enligt punkten om köpuppgifter ovan. Har du lämnat ditt
+            telefonnummer i det formuläret medan du var inloggad raderas det tillsammans med kontot.
+            Lämnade du numret utan att vara inloggad kan vi inte koppla det till dig automatiskt —
+            mejla oss så tar vi bort det. För övriga rättigheter, kontakta oss på{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -264,7 +280,7 @@ function IntegritetspolicyPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Cookies och analys
           </h2>
           <p>
@@ -290,7 +306,7 @@ function IntegritetspolicyPage() {
 
           <ConsentSettings />
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ändringar av denna policy
           </h2>
           <p>

@@ -176,6 +176,48 @@ export type Database = {
         }
         Relationships: []
       }
+      coaching_leads: {
+        Row: {
+          answers: Json
+          consent_at: string
+          contacted_at: string | null
+          created_at: string
+          id: string
+          name: string | null
+          note: string | null
+          phone: string
+          source: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          answers?: Json
+          consent_at: string
+          contacted_at?: string | null
+          created_at?: string
+          id?: string
+          name?: string | null
+          note?: string | null
+          phone: string
+          source?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          answers?: Json
+          consent_at?: string
+          contacted_at?: string | null
+          created_at?: string
+          id?: string
+          name?: string | null
+          note?: string | null
+          phone?: string
+          source?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       elo_history: {
         Row: {
           created_at: string

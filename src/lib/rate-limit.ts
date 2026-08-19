@@ -86,6 +86,13 @@ export const limits = {
    */
   coachingBooking: { max: 15, windowMs: 10 * 60 * 1000 } as LimitConfig, // 15/10min
   /**
+   * Kvalificeringsformuläret ("ring mig om studieupplägget"). Snävare än
+   * kassan: varje rad blir ett telefonsamtal någon faktiskt ska ringa, så
+   * skräp kostar arbetstid och inte bara diskutrymme. Nyckeln är IP —
+   * formuläret är öppet för utloggade.
+   */
+  coachingLead: { max: 3, windowMs: 60 * 60 * 1000 } as LimitConfig, // 3/h
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

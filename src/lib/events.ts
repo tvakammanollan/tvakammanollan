@@ -135,6 +135,23 @@ export interface ProductEvents {
   coaching_time_booked: { source: CoachingSource };
   /** Fyras på tacksidan, en gång per köp (inte per omladdning). */
   coaching_purchase_completed: { amount: number | null; currency: string | null };
+
+  /* --- Kvalificeringsformuläret ("ring mig") ------------------------------
+     Egen tratt bredvid köptratten, med samma `source`, eftersom den säljer
+     till en annan person: den som inte är redo att betala men vill prata.
+     Utan `viewed` som nämnare betyder få inskick antingen "ingen vill" eller
+     "ingen såg boxen", och de två kräver motsatta åtgärder. */
+  coaching_quiz_viewed: { source: CoachingSource };
+  coaching_quiz_started: { source: CoachingSource };
+  /** Ett av de två stegen besvarades. `step` är 1 eller 2. */
+  coaching_quiz_answered: { source: CoachingSource; step: number; value: string };
+  /** Sammanfattningen visades, dvs. båda frågorna är besvarade. */
+  coaching_quiz_qualified: { source: CoachingSource };
+  /** Numret skickades in. Detta är leadet. */
+  coaching_lead_submitted: { source: CoachingSource; is_guest: boolean };
+  /** Servern avvisade inskicket — nästan alltid ett nummer som inte validerar.
+      Sticker den här upp är det formulärets fält som är problemet, inte viljan. */
+  coaching_lead_failed: { source: CoachingSource };
   /** Nudgen kom upp av sig själv. `trigger` skiljer sidbläddraren från spelaren. */
   coaching_prompt_shown: { trigger: CoachingPromptTrigger };
   /** Klick på nudgens knapp. Kvoten mot `shown` är hela dess existensberättigande. */

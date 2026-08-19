@@ -7,6 +7,7 @@ import {
   MessagesSquare,
   Search,
   TrendingUp,
+  Phone,
   Check,
   X,
   ArrowLeft,
@@ -37,6 +38,7 @@ import {
 import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { applyOrdAudit, type OrdAuditResult } from "@/lib/ord-audit.functions";
+import { AdminLeadsTab } from "@/components/AdminLeadsTab";
 import { AdminUsageTab } from "@/components/AdminUsageTab";
 import { AdminForumTab } from "@/components/AdminForumTab";
 import { formatDate } from "@/lib/sv-format";
@@ -136,6 +138,10 @@ function AdminPage() {
             <TrendingUp className="h-3.5 w-3.5" aria-hidden />
             Användning
           </TabsTrigger>
+          <TabsTrigger value="leads">
+            <Phone className="h-3.5 w-3.5" aria-hidden />
+            Ringlista
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="manage">
@@ -158,6 +164,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="usage">
           <AdminUsageTab />
+        </TabsContent>
+        <TabsContent value="leads">
+          <AdminLeadsTab />
         </TabsContent>
       </Tabs>
     </main>

@@ -13,6 +13,7 @@ import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
 import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
+import { CoachingQuizCard } from "@/components/CoachingQuizCard";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
@@ -118,15 +119,27 @@ export function HomeDashboard() {
             staplas de och ordet hamnar sist, eftersom "vad gör jag nu"
             ska komma före på en liten skärm. */}
         <div className="mt-10 grid items-start gap-4 lg:grid-cols-[288px_minmax(0,1fr)]">
-          <Reveal y={20} delay={0.11}>
-            <aside className="order-2 lg:sticky lg:top-24 lg:order-1">
+          {/* Ordningsklasserna sitter på Reveal och inte på <aside>: Reveal är
+              grid-barnet, och `order-*` på ett element som inte är ett
+              flex/grid-item gör ingenting. Utan det här hamnade dagens ord och
+              kvalificeringen ÖVERST på mobil, före "Spela en match" — tvärtemot
+              vad kommentaren ovan påstod. */}
+          <Reveal y={20} delay={0.11} className="order-2 lg:order-1">
+            <aside className="space-y-3 lg:sticky lg:top-24">
               <SafeBoundary label="word-of-the-day">
                 <WordOfTheDay />
+              </SafeBoundary>
+              {/* Kvalificeringen står här och inte bredvid coachningskortet
+                  med flit: köpknappen säljer till den som redan bestämt sig,
+                  den här rutan till den som inte har det. Egen SafeBoundary —
+                  ett fel i formuläret får inte ta med sig dagens ord. */}
+              <SafeBoundary label="coaching-quiz">
+                <CoachingQuizCard />
               </SafeBoundary>
             </aside>
           </Reveal>
 
-          <div className="order-1 lg:order-2">
+          <div className="order-1 lg:order-2 min-w-0">
             {/* ---------- 1. Spela match ---------- */}
             <Reveal y={20} delay={0.05}>
               <section>
