@@ -6,7 +6,7 @@ import { Reveal } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
-import { createMatch } from "@/lib/match.functions";
+import { createMatch, finalizeMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
 import { NextStep } from "@/components/layout/NextStep";
@@ -44,6 +44,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 import { getBotName } from "@/lib/bot";
+import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 
 export const Route = createFileRoute("/result/$matchId")({
@@ -108,6 +109,7 @@ function ResultPage() {
   const navigate = useNavigate();
   const createMatchFn = useServerFn(createMatch);
   const rematchFn = useServerFn(requestRematch);
+  const finalizeFn = useServerFn(finalizeMatch);
 
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [opponentName, setOpponentName] = useState("");
@@ -121,6 +123,11 @@ function ResultPage() {
   const [showPassageMap, setShowPassageMap] = useState<Record<string, boolean>>({});
   const [creatingRematch, setCreatingRematch] = useState(false);
   const [rankUp, setRankUp] = useState<RankTier | null>(null);
+  // Matchen kan nå resultatsidan innan den är avgjord: motståndaren har inte
+  // lämnat in, och karenstiden har inte gått ut än. Då finns varken poäng
+  // eller facit att visa, och sidan väntar in det i stället för att hitta på.
+  const [awaitingOpponent, setAwaitingOpponent] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
   const confettiFiredRef = useRef(false);
   const resultLoggedRef = useRef(false);
 
@@ -138,8 +145,38 @@ function ResultPage() {
         .eq("id", matchId)
         .maybeSingle();
       if (cancelled || !m) return;
-      const mr = m as MatchRow;
+      let mr = m as MatchRow;
+
+      // Ligger matchen kvar som `active` har motståndaren aldrig lämnat in.
+      // Facit ligger bakom `get_match_review`, som bara svarar för avslutade
+      // matcher — utan det här steget blev resultatet 0–0 utan ELO och
+      // genomgången tom ("Genomgång av alla 0 frågor"). Servern avslutar
+      // matchen åt oss så fort karenstiden gått ut.
+      if (mr.status !== "finished") {
+        let finalized = false;
+        try {
+          const r = (await finalizeFn({ data: { matchId } })) as { ok?: boolean };
+          finalized = !!r?.ok;
+        } catch (e) {
+          console.error("[result] kunde inte avsluta matchen", e);
+        }
+        if (cancelled) return;
+        if (!finalized) {
+          setAwaitingOpponent(true);
+          return;
+        }
+        const { data: m2 } = await supabase
+          .from("matches")
+          .select("*")
+          .eq("id", matchId)
+          .maybeSingle();
+        if (cancelled) return;
+        if (m2) mr = m2 as MatchRow;
+      }
+      // Sätts först här: renderas matchen innan den är avgjord blinkar 0–0
+      // och en tom genomgång förbi innan rätt siffror hinner fram.
       setMatch(mr);
+      setAwaitingOpponent(false);
 
       // Nyss avslutad match kan ha låst upp utmärkelser — be watchern kolla
       // direkt (förbi 20s-throttlen) så firandet sker här och inte senare.
@@ -158,7 +195,9 @@ function ResultPage() {
             .select("username")
             .eq("id", oppId)
             .maybeSingle();
-          setOpponentName(u?.username ?? "Motståndare");
+          // Gästkonton heter `user_1a2b3c4d` i databasen. Samma översättning
+          // som i navbaren och i matchen — motståndaren ska ha ett namn.
+          setOpponentName(displayName(u?.username, oppId));
         }
       }
 
@@ -229,7 +268,18 @@ function ResultPage() {
     return () => {
       cancelled = true;
     };
-  }, [matchId, user, loading, navigate]);
+    // finalizeFn utelämnad med flit: useServerFn ger en ny identitet varje
+    // render, och effekten skulle då läsa om matchen i en evig loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matchId, user, loading, navigate, retryTick]);
+
+  // Väntar vi på motståndaren håller vi ett lugnt öga på matchen i stället för
+  // att låta spelaren ladda om sidan själv.
+  useEffect(() => {
+    if (!awaitingOpponent) return;
+    const id = setTimeout(() => setRetryTick((t) => t + 1), 5000);
+    return () => clearTimeout(id);
+  }, [awaitingOpponent, retryTick]);
 
   // Confetti for winner
   useEffect(() => {
@@ -280,6 +330,41 @@ function ResultPage() {
     return (
       <div className="flex min-h-screen items-center justify-center text-muted-foreground">
         Laddar resultat…
+      </div>
+    );
+  }
+
+  // Matchen är inte avgjord än. Att visa 0–0 och en tom genomgång vore att
+  // hitta på ett resultat som inte finns — vänta in motståndaren i stället.
+  if (awaitingOpponent) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
+        <m.span
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-7 w-7" />
+        </m.span>
+        <div>
+          <p className="eyebrow text-[#ae2f26]">Nästan klart</p>
+          <h1
+            className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Väntar på motståndaren.
+          </h1>
+        </div>
+        <p className="text-white/65">
+          Resultatet och genomgången av alla frågor visas så fort matchen är avgjord. Sidan
+          uppdaterar sig själv.
+        </p>
+        <Button variant="outline" onClick={() => setRetryTick((t) => t + 1)}>
+          Försök igen
+        </Button>
+        <Button asChild variant="ghost">
+          <Link to="/">Till startsidan</Link>
+        </Button>
       </div>
     );
   }
@@ -586,7 +671,9 @@ function ResultPage() {
             <AccordionTrigger className="text-base font-semibold">
               <span className="flex items-center gap-2">
                 <ChevronDown className="h-4 w-4 opacity-60" />
-                Genomgång av alla {questions.length} frågor
+                {questions.length > 0
+                  ? `Genomgång av alla ${questions.length} frågor`
+                  : "Genomgången är inte tillgänglig"}
                 {(() => {
                   const times = myAnswers
                     .map((a) => a.time_spent_seconds)
@@ -605,6 +692,12 @@ function ResultPage() {
               </span>
             </AccordionTrigger>
             <AccordionContent>
+              {questions.length === 0 && (
+                <p className="pb-3 text-sm text-white/65">
+                  Facit går bara att visa för avgjorda matcher. Ladda om sidan om motståndaren
+                  precis blev klar.
+                </p>
+              )}
               <ol className="grid gap-3 pb-2">
                 {questions.map((q, i) => {
                   const a = myCorrectByQ.get(q.id);

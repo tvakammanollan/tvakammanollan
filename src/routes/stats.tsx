@@ -38,6 +38,7 @@ import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
+import { displayName } from "@/lib/guest-name";
 
 export const Route = createFileRoute("/stats")({
   component: StatsPage,
@@ -196,7 +197,10 @@ function StatsPage() {
         if (oppIds.length > 0) {
           const { data: us } = await supabase.from("users").select("id, username").in("id", oppIds);
           const nm = new Map<string, string>();
-          for (const u of us ?? []) nm.set(u.id as string, u.username as string);
+          // Samma översättning som i matchen och på resultatsidan: ett
+          // gästkonto heter `user_1a2b3c4d` i databasen, inte i historiken.
+          for (const u of us ?? [])
+            nm.set(u.id as string, displayName(u.username as string, u.id as string));
           setOpponentNames(nm);
         }
       }

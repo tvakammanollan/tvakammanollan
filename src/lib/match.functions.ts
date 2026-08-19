@@ -14,6 +14,7 @@ import { checkMatchQuota } from "./match-abuse";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
 import type { Database } from "@/integrations/supabase/types";
+import { OPPONENT_GRACE_SECONDS } from "./match-clock";
 
 export const createMatch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -250,6 +251,98 @@ export const submitMatch = createServerFn({ method: "POST" })
     // Try to process result (will no-op if both haven't submitted)
     const result = await processMatchResultServer(data.matchId);
     return { ok: true, result };
+  });
+
+/**
+ * Avsluta en match vars motståndare aldrig lämnade in.
+ *
+ * Utan den här hängde matchen kvar i `active` för alltid: den som lämnade in
+ * först väntade ut sina 30 sekunder, skickades vidare till resultatsidan och
+ * möttes av 0–0, ingen ELO och "Genomgång av alla 0 frågor" — facit ligger
+ * bakom `get_match_review`, som bara svarar för avslutade matcher. Det gällde
+ * bara PvP; botmatcher avgörs direkt i `submitMatch`.
+ *
+ * Motståndaren får de poäng hen faktiskt hann svara rätt på (oftast noll) och
+ * matchen räknas som spelad. Karenstiden kontrolleras här och inte i klienten,
+ * så ingen kan lämna in på sekund noll och plocka hem en gratisvinst.
+ */
+export const finalizeMatch = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ matchId: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+
+    const { data: match, error } = await supabaseAdmin
+      .from("matches")
+      .select("*")
+      .eq("id", data.matchId)
+      .single();
+    if (error || !match) throw error ?? new Error("Match not found");
+
+    const isP1 = match.player1_id === userId;
+    const isP2 = match.player2_id === userId;
+    if (!isP1 && !isP2) throw new Error("Inte din match");
+    if (match.status === "finished") return { ok: true, alreadyFinished: true as const };
+
+    const mySubmittedAt = isP1 ? match.player1_submitted_at : match.player2_submitted_at;
+    const oppSubmittedAt = isP1 ? match.player2_submitted_at : match.player1_submitted_at;
+
+    // Bara den som själv är klar får avsluta matchen.
+    if (!mySubmittedAt) return { ok: false, notSubmitted: true as const };
+
+    // Båda är inne — realtidshändelsen tappades bara bort. Räkna ut resultatet.
+    if (oppSubmittedAt) {
+      const result = await processMatchResultServer(data.matchId);
+      return { ok: true, result };
+    }
+
+    const oppId = isP1 ? match.player2_id : match.player1_id;
+    if (!oppId) return { ok: false, noOpponent: true as const };
+
+    const waitedSeconds = (Date.now() - new Date(mySubmittedAt).getTime()) / 1000;
+    if (waitedSeconds < OPPONENT_GRACE_SECONDS) {
+      return {
+        ok: false,
+        waiting: true as const,
+        secondsLeft: Math.ceil(OPPONENT_GRACE_SECONDS - waitedSeconds),
+      };
+    }
+
+    // Poängsätt det motståndaren hann svara på. Samma serverberäkning som i
+    // submitMatch — klientens `is_correct` är aldrig att lita på.
+    const { data: oppAnswers } = await supabaseAdmin
+      .from("match_answers")
+      .select("id, selected_answer, questions:question_id(correct_answer)")
+      .eq("match_id", data.matchId)
+      .eq("user_id", oppId);
+
+    let oppScore = 0;
+    for (const a of oppAnswers ?? []) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const correct = (a as any).questions?.correct_answer ?? null;
+      const isCorrect = a.selected_answer != null && a.selected_answer === correct;
+      if (isCorrect) oppScore += 1;
+      await supabaseAdmin.from("match_answers").update({ is_correct: isCorrect }).eq("id", a.id);
+    }
+
+    const update: Record<string, unknown> = isP1
+      ? { player2_score: oppScore, player2_submitted_at: new Date().toISOString() }
+      : { player1_score: oppScore, player1_submitted_at: new Date().toISOString() };
+
+    await supabaseAdmin
+      .from("matches")
+      .update(update as Database["public"]["Tables"]["matches"]["Update"])
+      .eq("id", data.matchId);
+
+    console.log("[match] motståndaren lämnade aldrig in — matchen avslutas", {
+      matchId: data.matchId,
+      opponent: oppId,
+      oppScore,
+      waitedSeconds: Math.round(waitedSeconds),
+    });
+
+    const result = await processMatchResultServer(data.matchId);
+    return { ok: true, result, opponentForfeited: true as const };
   });
 
 export const processMatchResult = createServerFn({ method: "POST" })
