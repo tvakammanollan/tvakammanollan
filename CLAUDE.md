@@ -261,6 +261,38 @@ var, XYZ och DTK 720, KVA 600, NOG 360.
 Datan är **genererad** — redigera aldrig `src/data/prov/` för hand, kör om
 importen.
 
+**Lästexterna städas vid rendering, inte i datafilerna** (`src/lib/passage-text.ts`,
+2026-08-19). PDF-extraktionen lämnar fyra skador som alla ser likadana ut för
+den som läser — texten bryts mitt i:
+
+| skada | exempel | antal |
+| --- | --- | --- |
+| ligatur blir mellanslag | "de fl esta", "fi nns" | 125 i lästext + 33 i uppgiftstext |
+| spalt/sidbrytning blir nytt stycke | "…på 22 trädgårds-" / "sångare, alla yngre…" | 409 |
+| kerning läses som ordmellanrum | "elever b ehöver u tveckla" | 86 |
+| sidfot mitt i löptexten | "– 11 –", "Verbaldel ELF16A V1.indd 12" | 30 |
+
+Städningen sitter i `loadPass()` och i `normalizePassageText()` (som match och
+träning använder på `questions.passage_text` i Supabase), alltså **inte** i
+importskriptet — Supabase-texterna går inte genom det. Två fällor:
+
+- **Regeln för lösa bokstäver får aldrig röra uppgiftstext.** I XYZ, KVA och NOG
+  är en ensam bokstav en variabel: "heltalet x divideras med 8", "Funktionen g
+  ges av g(x)". Alla 115 lösa bokstäver i uppgiftstexten ligger i just de tre
+  delproven, ingen i de verbala. Uppgifterna kör därför `repairBrokenWords()`,
+  som bara lagar ligaturer.
+- **Ligaturregeln får inte slå ihop riktiga ordmellanrum.** "picked off the
+  shelf" och "en biografi om Selma" ser precis ut som "fi nns". Skiljelinjen är
+  `COMMON_WORDS` + `WORDS_ENDING_IN_F` i filen; ändras de, kör om kontrollen mot
+  hela arkivet innan du tror på resultatet. Kända rester (medvetna): "topografi
+  ska", "geografi ska" och "off entliggörs" — där är nästa ord ett vanligt ord
+  och regeln avstår hellre än gissar.
+
+Teckenoffseten som överstrykningarna sparas som pekar på den *städade* texten.
+Ändras städningen ska prefixet i `lib/highlights.ts` (`hp-highlights:2:`) räknas
+upp, annars pekar sparade markeringar på fel tecken.
+
+
 ```bash
 python3 scripts/hp-import/fetch.py     # laddar ner PDF:er till .hp-cache/ (gitignorerad)
 python3 scripts/hp-import/archive_index.py  # register över allt UHR någonsin lagt upp
@@ -808,6 +840,14 @@ is a different selector from `bg-red-500` and needs its own entry.
   change, which is exactly what scanned line art needs.
 - **`var()` does not work in SVG presentation attributes** (`stroke=`, `fill=`).
   Use a literal hex there, or move the colour into `style={{ }}`.
+- **`text-white` is remapped to `--cream` (bark, `#2e1e14`) — it is not white.**
+  Rimligt på papper, men på en *fylld* knapp (`bg-[var(--amber)]`) ger det
+  mörkbrunt på rött: 40 px knapp, oläslig etikett, och inget i klassnamnet
+  antyder det. Skriv `text-[#fbf6ec]` för text som ska ligga på en mättad
+  brandfärg — så gör `ConsentBanner` och överstrykningspennans knapp
+  (`HighlightableText`). Kontrollen är en rad i konsolen på sidan:
+  `getComputedStyle(el).color` — står det `rgb(46, 30, 20)` har remappen tagit
+  över.
 
 ### Realtime (Supabase) — crash class to avoid
 

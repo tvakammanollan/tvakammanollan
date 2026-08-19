@@ -3,6 +3,7 @@ import { ChevronDown, FileText } from "lucide-react";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
+import { normalizePassageText } from "@/lib/passage-text";
 
 interface PassagePaneProps {
   matchId: string;
@@ -33,10 +34,9 @@ export function PassagePane({
   const pid = passageId ?? "no-pid";
   const highlighter = useHighlighter(highlightScope("match", matchId, pid));
 
-  const paragraphs = useMemo(
-    () => passageText.split(/\n{2,}/).filter((p) => p.trim().length > 0),
-    [passageText],
-  );
+  // Städas innan den visas: lästexterna bär med sig brutna ord och
+  // spaltbrytningar ur provhäftets PDF. Se lib/passage-text.ts.
+  const paragraphs = useMemo(() => normalizePassageText(passageText), [passageText]);
 
   // Både ORD/LÄS och ELF visas med svensk etikett — resten av panelen
   // ("tryck för att läsa", "Rensa") är på svenska ändå.

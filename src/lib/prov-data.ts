@@ -10,6 +10,7 @@
  */
 import indexJson from "@/data/prov/index.json";
 import examplesJson from "@/data/prov/exempel.json";
+import { normalizeParagraphs, repairBrokenWords } from "@/lib/passage-text";
 import type {
   ExamIndex,
   ExamSummary,
@@ -40,12 +41,40 @@ export function totalQuestions(): number {
   return index.exams.reduce((sum, e) => sum + e.questions, 0);
 }
 
+/**
+ * Städade provpass, en gång per pass. Modulen som `import()` ger tillbaka är
+ * delad och cachad av bundlern, så den får inte muteras — därför en egen karta
+ * med kopior i stället.
+ */
+const normalized = new Map<string, ProvPass>();
+
 /** Laddar ett provpass, eller null om det inte finns. */
 export async function loadPass(term: string, pass: number): Promise<ProvPass | null> {
   const key = Object.keys(passModules).find((k) => k.endsWith(`/${term}-${pass}.json`));
   if (!key) return null;
+  const cached = normalized.get(key);
+  if (cached) return cached;
+
   const mod = await passModules[key]();
-  return mod.default;
+  // Lästexterna bär med sig brutna ord och spaltbrytningar ur PDF:en; se
+  // lib/passage-text.ts. Städningen sker här så att provvyn, facit och
+  // överstrykningarnas teckenoffset alla utgår från samma text.
+  const data: ProvPass = {
+    ...mod.default,
+    passages: mod.default.passages.map((p) => ({
+      ...p,
+      paragraphs: normalizeParagraphs(p.paragraphs),
+    })),
+    // Uppgifterna har samma brutna ord som lästexterna — "fi nfördela",
+    // "krass defi nition". Bara ligaturerna lagas här; se repairBrokenWords.
+    questions: mod.default.questions.map((q) => ({
+      ...q,
+      text: q.text === undefined ? undefined : repairBrokenWords(q.text),
+      alternatives: q.alternatives?.map(repairBrokenWords),
+    })),
+  };
+  normalized.set(key, data);
+  return data;
 }
 
 /** Ett urval riktiga uppgifter i ett delprov, för övningssidorna. */

@@ -28,7 +28,13 @@ export interface Segment {
   start: number;
 }
 
-const PREFIX = "hp-highlights:";
+/**
+ * Versionen i nyckeln: teckenoffsetarna gäller en viss text, och lästexterna
+ * städas sedan av `lib/passage-text.ts` (brutna ord fogas ihop, spaltbrytningar
+ * slås samman). Sparade offsets från före städningen pekar på fel tecken, så de
+ * ska inte läsas in igen — en ny prefix låter dem falla bort av sig själva.
+ */
+const PREFIX = "hp-highlights:2:";
 /** Påbörjade markeringar städas bort efter en vecka, som gamla-prov-svaren. */
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -54,6 +60,42 @@ export function addRange(list: HighlightRange[], next: HighlightRange): Highligh
   }
   rest.push({ p: next.p, start, end });
   return sortRanges(rest);
+}
+
+/** Bokstav eller siffra — allt annat räknas som ordgräns. */
+const WORD_CHAR = /[\p{L}\p{N}]/u;
+
+/**
+ * Drar ut en markering till hela ord.
+ *
+ * En markering med musen slutar där fingret eller pekaren råkar släppa, mitt
+ * inne i ett ord lika ofta som mellan två. Med en riktig överstrykningspenna
+ * går det inte att stryka över ett halvt ord, och en markering som skär av
+ * "samhäl|let" ser ut som ett misstag. Här putsas kanterna: mellanslag i
+ * ändarna åker ut, och står kanten inne i ett ord flyttas den ut till
+ * ordgränsen.
+ *
+ * Returnerar null när ingenting blir kvar (ett klick utan drag).
+ */
+export function snapToWords(
+  text: string,
+  start: number,
+  end: number,
+): { start: number; end: number } | null {
+  let a = Math.max(0, Math.min(text.length, start));
+  let b = Math.max(0, Math.min(text.length, end));
+  if (b <= a) return null;
+
+  // Mellanslag i kanterna hör inte till markeringen.
+  while (a < b && /\s/.test(text[a])) a++;
+  while (b > a && /\s/.test(text[b - 1])) b--;
+  if (b <= a) return null;
+
+  // Står kanten mitt i ett ord — ta med hela ordet.
+  while (a > 0 && WORD_CHAR.test(text[a - 1]) && WORD_CHAR.test(text[a])) a--;
+  while (b < text.length && WORD_CHAR.test(text[b]) && WORD_CHAR.test(text[b - 1])) b++;
+
+  return { start: a, end: b };
 }
 
 /**

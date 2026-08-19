@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { addRange, removeAt, segmentParagraph, highlightScope } from "./highlights";
+import { addRange, removeAt, segmentParagraph, highlightScope, snapToWords } from "./highlights";
 
 const R = (p: number, start: number, end: number) => ({ p, start, end });
 
@@ -95,11 +95,47 @@ describe("segmentParagraph", () => {
 describe("highlightScope", () => {
   it("bygger en nyckel av delarna", () => {
     expect(highlightScope("gamla-prov", "2026vt", 2, 0)).toBe(
-      "hp-highlights:gamla-prov:2026vt:2:0",
+      "hp-highlights:2:gamla-prov:2026vt:2:0",
     );
   });
 
   it("skiljer olika passager åt", () => {
     expect(highlightScope("train", "abc")).not.toBe(highlightScope("train", "abd"));
+  });
+});
+
+describe("snapToWords", () => {
+  const text = "Den svenska modellen bygger på samverkan.";
+
+  it("drar ut en kant som hamnat mitt i ett ord", () => {
+    // "sven|ska modellen bygger" → hela "svenska modellen bygger"
+    expect(snapToWords(text, 8, 27)).toEqual({ start: 4, end: 27 });
+  });
+
+  it("lämnar en markering som redan följer ordgränserna", () => {
+    expect(snapToWords(text, 4, 11)).toEqual({ start: 4, end: 11 });
+  });
+
+  it("släpper mellanslag i kanterna", () => {
+    expect(snapToWords(text, 3, 12)).toEqual({ start: 4, end: 11 });
+  });
+
+  it("tar med hela ordet men inte punkten efter", () => {
+    expect(snapToWords(text, 33, 36)).toEqual({ start: 31, end: 40 });
+  });
+
+  it("ger null för ett klick utan drag och för bara mellanslag", () => {
+    expect(snapToWords(text, 7, 7)).toBeNull();
+    expect(snapToWords(text, 9, 4)).toBeNull();
+    expect(snapToWords(text, 3, 4)).toBeNull();
+  });
+
+  it("håller sig inom texten även när offseten ligger utanför", () => {
+    expect(snapToWords(text, -5, 999)).toEqual({ start: 0, end: text.length });
+  });
+
+  it("räknar å, ä och ö som bokstäver", () => {
+    const s = "påverkan är stor";
+    expect(snapToWords(s, 2, 5)).toEqual({ start: 0, end: 8 });
   });
 });

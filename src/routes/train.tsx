@@ -23,6 +23,7 @@ import { MathText } from "@/components/MathTextLazy";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
+import { normalizePassageText } from "@/lib/passage-text";
 import { sounds } from "@/lib/sounds";
 import {
   ArrowRight,
@@ -192,6 +193,12 @@ function TrainPage() {
         "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
       )
       .in("category", config.subs);
+    // Matte hämtas bara i städat skick, precis som i match.server.ts. Utan den
+    // här raden serverade Träna de råaste uppgifterna av alla: en tredjedel av
+    // de skrapade matteraderna bär nästa uppgifts text i sista alternativet.
+    if (config.track === "math") {
+      q = q.eq("clean_status", "ok");
+    }
     if (config.difficulty !== null) {
       q = q.eq("difficulty", config.difficulty);
     }
@@ -398,12 +405,12 @@ function TrainPage() {
   }, [currentQ, current, questions]);
 
   // Lästexten kommer som ett fält med radbrytningar; styckena blir egna
-  // element så att en överstrykning alltid hör till en känd textbit.
-  const passageParagraphs = useMemo(() => {
-    const text = currentQ?.passage_text;
-    if (!text) return [];
-    return text.split(/\n{2,}/).filter((p) => p.trim().length > 0);
-  }, [currentQ?.passage_text]);
+  // element så att en överstrykning alltid hör till en känd textbit. Samtidigt
+  // städas de brutna orden och spaltbrytningarna ur PDF:en — lib/passage-text.ts.
+  const passageParagraphs = useMemo(
+    () => normalizePassageText(currentQ?.passage_text),
+    [currentQ?.passage_text],
+  );
 
   // Markeringarna följer lästexten, inte frågan — samma text ska visa samma
   // streck oavsett vilken av dess frågor man står på.
