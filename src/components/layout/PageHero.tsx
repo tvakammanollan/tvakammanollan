@@ -71,10 +71,7 @@ export function PageHero({
             {title}
           </SplitText>
           {cycleWords && cycleWords.length > 0 ? (
-            <CyclingTitle
-              words={cycleWords}
-              className={cn("mt-1", isCompact ? "h-[1.05em]" : "h-[1.02em]")}
-            />
+            <CyclingTitle words={cycleWords} className={cn(!centered && "justify-items-start")} />
           ) : null}
         </h1>
 
