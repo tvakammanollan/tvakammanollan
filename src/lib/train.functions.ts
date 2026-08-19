@@ -61,5 +61,38 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     // Blandningen sker här och inte i klienten: urvalet är hela skyddet, och
     // ett urval som klienten gör själv är inget urval.
     const pool = [...(rows ?? [])].sort(() => Math.random() - 0.5).slice(0, data.count);
-    return { questions: pool };
+
+    // Passet hålls ihop. Ett flerkategoripass levererades tidigare helt
+    // slumpat, så en ORD-fråga följdes av en LÄS-text följd av en MEK-mening —
+    // man hann aldrig komma in i en uppgiftstyp innan den byttes ut. Nu
+    // kommer kategorierna i den ordning anroparen bad om dem, med
+    // blandningen kvar INOM varje kategori.
+    //
+    // Frågor som delar lästext hamnar dessutom bredvid varandra. Utan det kan
+    // samma text dyka upp två gånger i passet med tre frågor emellan, och
+    // överstrykningarna (som hör till texten) ser ut att komma och gå.
+    const rank = new Map(data.categories.map((c, i) => [c as string, i]));
+    const passageOrder = new Map<string, number>();
+    for (const row of pool) {
+      const r = row as { passage_id?: string | null };
+      if (r.passage_id && !passageOrder.has(r.passage_id)) {
+        passageOrder.set(r.passage_id, passageOrder.size);
+      }
+    }
+    const sorted = pool
+      .map((row, i) => ({ row, i }))
+      .sort((a, b) => {
+        const ra = a.row as { category: string; passage_id?: string | null };
+        const rb = b.row as { category: string; passage_id?: string | null };
+        const ca = rank.get(ra.category) ?? 99;
+        const cb = rank.get(rb.category) ?? 99;
+        if (ca !== cb) return ca - cb;
+        const pa = ra.passage_id ? (passageOrder.get(ra.passage_id) ?? 0) : -1;
+        const pb = rb.passage_id ? (passageOrder.get(rb.passage_id) ?? 0) : -1;
+        if (pa !== pb) return pa - pb;
+        return a.i - b.i; // behåll den slumpade ordningen inom gruppen
+      })
+      .map((x) => x.row);
+
+    return { questions: sorted };
   });

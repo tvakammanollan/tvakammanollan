@@ -134,13 +134,18 @@ function TrainPage() {
   const getTrainingBatch = useServerFn(fetchTrainingBatch);
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("setup");
+  // Inget förvalt delprov. Startvyn hade tidigare "alla verbala delprov"
+  // ifyllt och en stor Starta-knapp, så den som klickade Träna fick ett pass
+  // med blandade ORD/MEK/LÄS/ELF-frågor i slumpad ordning — och eftersom ORD
+  // är den största kategorin började det nästan alltid med ord. Det läste som
+  // "Träna skickar mig till ord och ger sedan slumpfrågor", vilket det i
+  // praktiken gjorde. Nu är valet första steget och passet hålls ihop.
   const [config, setConfig] = useState<TrainConfig>({
     track: "verbal",
-    subs: [...VERBAL_SUBS],
+    subs: [],
     difficulty: null,
     count: 10,
   });
-  const [customising, setCustomising] = useState(false);
   const [questions, setQuestions] = useState<TrainQuestion[]>([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -170,21 +175,13 @@ function TrainPage() {
     if (!user) navigate({ to: "/login" });
   }, [authLoading, user, navigate]);
 
-  // Reset when track changes
-  const setTrack = (t: Track) => {
-    setConfig((c) => ({
-      ...c,
-      track: t,
-      subs: t === "verbal" ? [...VERBAL_SUBS] : [...MATH_SUBS],
-    }));
-  };
-
-  const toggleSub = (sub: string) => {
-    setConfig((c) => {
-      const has = c.subs.includes(sub);
-      const next = has ? c.subs.filter((s) => s !== sub) : [...c.subs, sub];
-      return { ...c, subs: next };
-    });
+  /**
+   * Ett val = ett pass. Antingen ett delprov, eller hela den verbala
+   * respektive kvantitativa delen blandat — men det senare är då ett aktivt
+   * val och inte något man råkar hamna i.
+   */
+  const välj = (track: Track, subs: readonly string[]) => {
+    setConfig((c) => ({ ...c, track, subs: [...subs] }));
   };
 
   const startTraining = async () => {
@@ -421,127 +418,108 @@ function TrainPage() {
         />
 
         <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
-          {/* Defaultkonfigurationen (svenska, alla delprov, alla nivåer, 10
-              frågor) är redan den de flesta vill ha, så fyra obligatoriska
-              stegkort innan första frågan var ren friktion. Starta direkt —
-              den som vill styra öppnar Anpassa. */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
-              Ditt pass
+          {/* STEG 1 — vad. Ligger öppet och inte bakom en "Anpassa"-knapp:
+              valet ÄR passet, och ett förvalt "alla delprov" gav i praktiken
+              ett slumpat pass som ingen bett om. */}
+          <SetupCard step="1" title="Vad vill du träna på?">
+            <p className="-mt-1 mb-3 text-sm text-white/55">
+              Ett delprov i taget håller ihop passet — du hinner komma in i uppgiftstypen innan den
+              byts ut.
             </p>
-            <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
+            <div className="space-y-4">
+              <TrackGroup
+                label="Svenska"
+                icon={BookOpen}
+                subs={VERBAL_SUBS}
+                mixLabel="Hela verbala delen"
+                active={config.subs}
+                activeTrack={config.track}
+                track="verbal"
+                onPick={välj}
+              />
+              <TrackGroup
+                label="Matte"
+                icon={Sigma}
+                subs={MATH_SUBS}
+                mixLabel="Hela kvantitativa delen"
+                active={config.subs}
+                activeTrack={config.track}
+                track="math"
+                onPick={välj}
+              />
+            </div>
+          </SetupCard>
 
-            <PrimaryCTA
-              onClick={startTraining}
-              disabled={config.subs.length === 0}
-              className="mt-4 w-full"
-              icon={<ArrowRight className="h-4 w-4" />}
-            >
-              Starta träning
-            </PrimaryCTA>
-
-            <button
-              type="button"
-              onClick={() => setCustomising((v) => !v)}
-              aria-expanded={customising}
-              className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[var(--cream)]"
-            >
-              <SlidersHorizontal className="h-4 w-4" />
-              {customising ? "Dölj inställningar" : "Anpassa"}
-            </button>
-          </div>
-
-          <div className={`space-y-5 ${customising ? "mt-5" : "hidden"}`}>
-            <SetupCard step="1" title="Välj ämne">
-              <div className="grid grid-cols-2 gap-3">
-                <TrackCard
-                  active={config.track === "verbal"}
-                  onClick={() => setTrack("verbal")}
-                  icon={BookOpen}
-                  label="Svenska"
-                  hint="Ord · Mek · Läs · Elf"
-                />
-                <TrackCard
-                  active={config.track === "math"}
-                  onClick={() => setTrack("math")}
-                  icon={Sigma}
-                  label="Matte"
-                  hint="Xyz · Kva · Nog · Dtk"
-                />
+          {/* STEG 2 och 3 visas först när något är valt. Att visa dem tomma
+              gör startvyn till ett formulär i stället för ett val. */}
+          {config.subs.length > 0 && (
+            <>
+              <div className="mt-5">
+                <SetupCard step="2" title="Svårighetsgrad">
+                  <div className="flex flex-wrap gap-2">
+                    <DifficultyBtn
+                      active={config.difficulty === null}
+                      label="Alla"
+                      onClick={() => setConfig((c) => ({ ...c, difficulty: null }))}
+                    />
+                    {/* Tre nivåer, inte fem. Knapparna gick tidigare till 5
+                        medan serverfunktionen bara tar emot 1–3, så nivå 4 och
+                        5 gav "Kunde inte hämta frågor" utan att något
+                        förklarade varför. */}
+                    {(
+                      [
+                        [1, "Lätt"],
+                        [2, "Medel"],
+                        [3, "Svår"],
+                      ] as const
+                    ).map(([d, label]) => (
+                      <DifficultyBtn
+                        key={d}
+                        active={config.difficulty === d}
+                        label={label}
+                        onClick={() => setConfig((c) => ({ ...c, difficulty: d }))}
+                      />
+                    ))}
+                  </div>
+                </SetupCard>
               </div>
-            </SetupCard>
 
-            <SetupCard step="2" title="Välj delprov">
-              <div className="flex flex-wrap gap-2">
-                {(config.track === "verbal" ? VERBAL_SUBS : MATH_SUBS).map((sub) => {
-                  const active = config.subs.includes(sub);
-                  return (
-                    <button
-                      key={sub}
-                      type="button"
-                      onClick={() => toggleSub(sub)}
-                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
-                        active
-                          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
-                          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60 hover:text-white"
-                      }`}
-                    >
-                      {displayCategory(sub)}
-                    </button>
-                  );
-                })}
+              <div className="mt-5">
+                <SetupCard step="3" title="Antal frågor">
+                  <div className="grid grid-cols-3 gap-2">
+                    {[5, 10, 20].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setConfig((c) => ({ ...c, count: n }))}
+                        className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
+                          config.count === n
+                            ? "border-[#ae2f26] bg-[#ae2f26]/10 text-[#ae2f26]"
+                            : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
+                        }`}
+                      >
+                        {n} frågor
+                      </button>
+                    ))}
+                  </div>
+                </SetupCard>
               </div>
-              {config.subs.length === 0 && (
-                <p className="mt-2 text-xs text-[#8c1d18]">Välj minst ett delprov</p>
-              )}
-            </SetupCard>
 
-            <SetupCard step="3" title="Välj svårighetsgrad">
-              <div className="flex flex-wrap gap-2">
-                <DifficultyBtn
-                  active={config.difficulty === null}
-                  label="Alla"
-                  onClick={() => setConfig((c) => ({ ...c, difficulty: null }))}
-                />
-                {[1, 2, 3, 4, 5].map((d) => (
-                  <DifficultyBtn
-                    key={d}
-                    active={config.difficulty === d}
-                    label={String(d)}
-                    onClick={() => setConfig((c) => ({ ...c, difficulty: d }))}
-                  />
-                ))}
+              <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+                  Ditt pass
+                </p>
+                <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
+                <PrimaryCTA
+                  onClick={startTraining}
+                  className="mt-4 w-full"
+                  icon={<ArrowRight className="h-4 w-4" />}
+                >
+                  Starta träning
+                </PrimaryCTA>
               </div>
-              <p className="mt-2 text-xs text-white/50">
-                {config.difficulty === null
-                  ? "Alla nivåer"
-                  : config.difficulty === 1
-                    ? "Lätt"
-                    : config.difficulty === 5
-                      ? "Avancerat"
-                      : `Nivå ${config.difficulty}`}
-              </p>
-            </SetupCard>
-
-            <SetupCard step="4" title="Antal frågor">
-              <div className="grid grid-cols-3 gap-2">
-                {[5, 10, 20].map((n) => (
-                  <button
-                    key={n}
-                    type="button"
-                    onClick={() => setConfig((c) => ({ ...c, count: n }))}
-                    className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
-                      config.count === n
-                        ? "border-[#ae2f26] bg-[#ae2f26]/10 text-[#ae2f26]"
-                        : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
-                    }`}
-                  >
-                    {n} frågor
-                  </button>
-                ))}
-              </div>
-            </SetupCard>
-          </div>
+            </>
+          )}
         </div>
       </div>
     );
@@ -869,7 +847,6 @@ function TrainPage() {
               icon: SlidersHorizontal,
               onClick: () => {
                 setPhase("setup");
-                setCustomising(true);
                 setQuestions([]);
                 setResults([]);
               },
@@ -905,33 +882,88 @@ function SetupCard({
   );
 }
 
-function TrackCard({
-  active,
-  onClick,
-  icon: Icon,
+/**
+ * En spalt per del: delproven var för sig, och sist ett blandat alternativ.
+ *
+ * Blandat är kvar därför att en del faktiskt vill ha det inför provet — men
+ * det ska vara ett val man gör, inte det man får när man inte valt.
+ */
+const DELPROV_HINT: Record<string, string> = {
+  ORD: "Ordförståelse",
+  MEK: "Meningskomplettering",
+  LAS: "Svensk läsförståelse",
+  ELF: "Engelsk läsförståelse",
+  XYZ: "Matematisk problemlösning",
+  KVA: "Kvantitativa jämförelser",
+  NOG: "Kvantitativa resonemang",
+  DTK: "Diagram, tabeller och kartor",
+};
+
+function TrackGroup({
   label,
-  hint,
+  icon: Icon,
+  subs,
+  mixLabel,
+  track,
+  active,
+  activeTrack,
+  onPick,
 }: {
-  active: boolean;
-  onClick: () => void;
-  icon: LucideIcon;
   label: string;
-  hint: string;
+  icon: LucideIcon;
+  subs: readonly string[];
+  mixLabel: string;
+  track: Track;
+  active: string[];
+  activeTrack: Track;
+  onPick: (track: Track, subs: readonly string[]) => void;
 }) {
+  const mixValt = activeTrack === track && active.length === subs.length;
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-2xl border p-4 text-left transition ${
-        active
-          ? "border-[#ae2f26] bg-[#ae2f26]/10"
-          : "border-white/12 bg-white/[0.02] hover:border-[#ae2f26]/50"
-      }`}
-    >
-      <Icon className="h-7 w-7 text-[#ae2f26]" strokeWidth={1.5} aria-hidden />
-      <div className="mt-2 text-lg font-semibold text-white">{label}</div>
-      <div className="text-xs text-white/55">{hint}</div>
-    </button>
+    <div>
+      <p className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+        <Icon className="h-3.5 w-3.5" aria-hidden />
+        {label}
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {subs.map((sub) => {
+          const valt = activeTrack === track && active.length === 1 && active[0] === sub;
+          return (
+            <button
+              key={sub}
+              type="button"
+              aria-pressed={valt}
+              onClick={() => onPick(track, [sub])}
+              className={`rounded-xl border px-3.5 py-3 text-left transition ${
+                valt
+                  ? "border-[#ae2f26] bg-[#ae2f26]/10"
+                  : "border-white/12 bg-white/[0.02] hover:border-[#ae2f26]/50"
+              }`}
+            >
+              <span className="block text-sm font-semibold text-[var(--cream)]">
+                {displayCategory(sub)}
+              </span>
+              <span className="mt-0.5 block text-[11px] leading-snug text-white/55">
+                {DELPROV_HINT[sub]}
+              </span>
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          aria-pressed={mixValt}
+          onClick={() => onPick(track, subs)}
+          className={`col-span-2 rounded-xl border px-3.5 py-2.5 text-left transition ${
+            mixValt
+              ? "border-[#ae2f26] bg-[#ae2f26]/10"
+              : "border-dashed border-white/15 bg-transparent hover:border-[#ae2f26]/50"
+          }`}
+        >
+          <span className="text-sm font-medium text-white/75">{mixLabel}</span>
+          <span className="ml-1.5 text-[11px] text-white/45">— alla fyra blandat</span>
+        </button>
+      </div>
+    </div>
   );
 }
 
