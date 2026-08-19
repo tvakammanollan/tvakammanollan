@@ -18,6 +18,8 @@ import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { Reveal } from "@/components/landing/MotionFX";
 import { CoachingModal } from "@/components/CoachingModal";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
+import { useImpression } from "@/hooks/useImpression";
+import { trackEvent } from "@/lib/events";
 
 /**
  * Landningssidan (utloggad).
@@ -121,6 +123,11 @@ export function HeroLanding() {
   const coachingErbjudande = useCoachingOffer().offer;
   const coachingPris = coachingPriceLabel(coachingErbjudande);
   const coachingVillkor = coachingTermsLabel(coachingErbjudande);
+  // Blocket ligger långt ner på en lång sida — de flesta besökare ser det
+  // aldrig, och det är skillnaden mellan "vill inte" och "kom inte dit".
+  const coachningSedd = useImpression<HTMLElement>(() =>
+    trackEvent("coaching_card_viewed", { source: "landing" }),
+  );
 
   useEffect(() => {
     let alive = true;
@@ -394,7 +401,7 @@ export function HeroLanding() {
       </section>
 
       {/* ---------- coachning ---------- */}
-      <section className="border-t border-white/10">
+      <section ref={coachningSedd} className="border-t border-white/10">
         <div className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
             <Reveal>

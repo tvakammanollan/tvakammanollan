@@ -19,6 +19,8 @@ import {
 } from "@/lib/coaching.functions";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { trackEvent, type CoachingSource } from "@/lib/events";
+import { trackError } from "@/lib/telemetry";
+import { CALENDLY_ORIGIN, readCalendlyMessage } from "@/lib/calendly-embed";
 
 /* =====================================================================
    COACHING — välj en tid, betala sedan.
@@ -38,22 +40,6 @@ import { trackEvent, type CoachingSource } from "@/lib/events";
    någonsin sajten. Priset står inte i koden utan läses ur produkten i
    Stripe, så ett ändrat pris i dashboarden syns här utan deploy.
    ===================================================================== */
-
-/** Calendly pratar bara med oss härifrån — allt annat i fönstret ignoreras. */
-const CALENDLY_ORIGIN = "https://calendly.com";
-
-interface CalendlyScheduledMessage {
-  event: string;
-  payload?: { invitee?: { uri?: string } };
-}
-
-function readScheduledInviteeUri(data: unknown): string | null {
-  if (!data || typeof data !== "object") return null;
-  const msg = data as CalendlyScheduledMessage;
-  if (msg.event !== "calendly.event_scheduled") return null;
-  const uri = msg.payload?.invitee?.uri;
-  return typeof uri === "string" && uri ? uri : null;
-}
 
 type Steg = "erbjudande" | "tid" | "kassa";
 
@@ -89,16 +75,23 @@ export function CoachingModal({
    * annan session än den vi hann skriva på raden.
    */
   const hanteradBokning = useRef<string | null>(null);
+  /** En öppning ska räknas en gång, och Calendlys visningshändelser likaså —
+      `event_type_viewed` kommer om igen varje gång väljaren byter vy. */
+  const rapporterad = useRef({ öppning: false, kalender: false, tidsval: false });
 
   const riktigtKonto = !!user && !user.is_anonymous;
   const email = riktigtKonto ? (profile?.email ?? undefined) : undefined;
   const namn = riktigtKonto ? (profile?.username ?? undefined) : undefined;
 
+  // En gång per öppning, men först när priset landat: `useCoachingOffer` börjar
+  // hämta när modalen öppnas, så ett anrop i samma andetag som `open` hade
+  // rapporterat `available: false` för alla vars cache ännu är kall — alltså
+  // precis den kvot flaggan finns för ("ingen vill köpa" mot "ingen kunde").
   useEffect(() => {
-    if (open) trackEvent("coaching_offer_opened", { source, available: offer?.available ?? false });
-    // Bara vid öppning — inte varje gång priset landar.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+    if (!open || loadingOffer || rapporterad.current.öppning) return;
+    rapporterad.current.öppning = true;
+    trackEvent("coaching_offer_opened", { source, available: offer?.available ?? false });
+  }, [open, loadingOffer, offer, source]);
 
   // Nollställ när modalen stängs, annars öppnas den nästa gång mitt i ett
   // halvfärdigt bokningssteg med en länk som hör till ett annat köp.
@@ -111,6 +104,7 @@ export function CoachingModal({
     setInviteeUri(null);
     setRedirecting(false);
     hanteradBokning.current = null;
+    rapporterad.current = { öppning: false, kalender: false, tidsval: false };
   }, [open]);
 
   /** Rakt till Stripe — vägen när tidsbokning inte är påslagen. */
@@ -201,18 +195,46 @@ export function CoachingModal({
   // Calendly meddelar bokningen via postMessage. Nyttolasten innehåller bara
   // URI:er — själva tiden hämtas server-side, så det finns inget här att lita
   // på utöver att meddelandet kom från rätt origin.
+  //
+  // Samma ström bär de två visningshändelserna, och de är enda sättet att se
+  // in i iframen: `calendar_viewed` skiljer "väljaren laddade" från en trasig
+  // event-typ-slug, `time_selected` skiljer "tittade på tiderna" från "valde en".
   const slutförRef = useRef(slutför);
   slutförRef.current = slutför;
   useEffect(() => {
     if (steg !== "tid" || !schedulingUrl) return;
     const lyssnare = (e: MessageEvent) => {
       if (e.origin !== CALENDLY_ORIGIN) return;
-      const uri = readScheduledInviteeUri(e.data);
-      if (!uri) return;
-      if (hanteradBokning.current === uri) return;
-      hanteradBokning.current = uri;
+      const msg = readCalendlyMessage(e.data);
+      if (!msg) return;
+      if (msg.kind === "calendar_viewed") {
+        if (rapporterad.current.kalender) return;
+        rapporterad.current.kalender = true;
+        trackEvent("coaching_calendar_viewed", { source });
+        return;
+      }
+      if (msg.kind === "time_selected") {
+        if (rapporterad.current.tidsval) return;
+        rapporterad.current.tidsval = true;
+        trackEvent("coaching_time_selected", { source });
+        return;
+      }
+      // Bokad. Nyckeln får inte vara URI:n ensam — utan den skulle en
+      // dubblett räknas som ett andra köp.
+      const nyckel = msg.inviteeUri ?? "utan-uri";
+      if (hanteradBokning.current === nyckel) return;
+      hanteradBokning.current = nyckel;
       trackEvent("coaching_time_booked", { source });
-      void slutförRef.current(uri);
+      if (!msg.inviteeUri) {
+        // Tiden ÄR bokad, men utan invitee-URI går den inte att slå upp och
+        // därmed inte att knyta till en betalning. Säg det hellre än att låta
+        // köparen sitta kvar i en kalender som ser klar ut.
+        trackError("calendly: event_scheduled utan invitee-uri", { source });
+        setSteg("kassa");
+        setBookingError("vi fick inte tillbaka din bokningsreferens");
+        return;
+      }
+      void slutförRef.current(msg.inviteeUri);
     };
     window.addEventListener("message", lyssnare);
     return () => window.removeEventListener("message", lyssnare);
@@ -346,17 +368,21 @@ export function CoachingModal({
                 <p className="text-[15px] leading-relaxed text-white/70">
                   Din tid är bokad, men kassan öppnade inte: {bookingError}
                 </p>
-                <Button
-                  onClick={() => {
-                    // Spärren ovan gäller dubbletter från Calendly, inte ett
-                    // medvetet omförsök efter ett fel.
-                    hanteradBokning.current = null;
-                    if (inviteeUri) void slutför(inviteeUri);
-                  }}
-                  className="mt-5 bg-[#ae2f26] px-6 py-5 text-[15px] text-[#fff8f5] hover:bg-[#8f2620]"
-                >
-                  Försök igen
-                </Button>
+                {/* Utan invitee-URI finns inget att försöka igen med — knappen
+                    hade sett ut som en väg framåt och inte gjort någonting. */}
+                {inviteeUri && (
+                  <Button
+                    onClick={() => {
+                      // Spärren ovan gäller dubbletter från Calendly, inte ett
+                      // medvetet omförsök efter ett fel.
+                      hanteradBokning.current = null;
+                      void slutför(inviteeUri);
+                    }}
+                    className="mt-5 bg-[#ae2f26] px-6 py-5 text-[15px] text-[#fff8f5] hover:bg-[#8f2620]"
+                  >
+                    Försök igen
+                  </Button>
+                )}
                 <p className="mt-4 text-xs text-white/50">
                   Fortsätter det att strula, mejla{" "}
                   <a href="mailto:info@tvakommanollan.se" className="underline">

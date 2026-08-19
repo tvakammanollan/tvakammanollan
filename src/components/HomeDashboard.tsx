@@ -9,6 +9,8 @@ import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { CoachingModal } from "@/components/CoachingModal";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
+import { useImpression } from "@/hooks/useImpression";
+import { trackEvent } from "@/lib/events";
 import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -37,6 +39,11 @@ export function HomeDashboard() {
   const coachingErbjudande = useCoachingOffer().offer;
   const coachingPris = coachingPriceLabel(coachingErbjudande);
   const coachingVillkor = coachingTermsLabel(coachingErbjudande);
+  // Kortet ligger under matchkortet och är ofta utanför bild vid inläsning.
+  // Utan den här är antalet öppnade erbjudanden ett tal utan nämnare.
+  const coachningSedd = useImpression(() =>
+    trackEvent("coaching_card_viewed", { source: "dashboard" }),
+  );
 
   if (!user || !profile) {
     return (
@@ -195,18 +202,22 @@ export function HomeDashboard() {
                   title="Plugga ord"
                   subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
                 />
-                <ActionCard
-                  onClick={() => setCoachingOpen(true)}
-                  tone="leaf"
-                  icon={<Sparkles className="h-5 w-5" />}
-                  title="Coachning"
-                  subtitle={`Ett studieupplägg byggt av någon som själv fått 1,95+.${
-                    coachingVillkor ? ` ${coachingVillkor}.` : ""
-                  }`}
-                  // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
-                  // ingen platshållare som hoppar till en siffra.
-                  cta={coachingPris ?? undefined}
-                />
+                {/* Wrappern bär bara visningsmätningen — h-full så att kortet
+                    fyller radhöjden precis som när det låg direkt i gridet. */}
+                <div ref={coachningSedd} className="h-full">
+                  <ActionCard
+                    onClick={() => setCoachingOpen(true)}
+                    tone="leaf"
+                    icon={<Sparkles className="h-5 w-5" />}
+                    title="Coachning"
+                    subtitle={`Ett studieupplägg byggt av någon som själv fått 1,95+.${
+                      coachingVillkor ? ` ${coachingVillkor}.` : ""
+                    }`}
+                    // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
+                    // ingen platshållare som hoppar till en siffra.
+                    cta={coachingPris ?? undefined}
+                  />
+                </div>
               </div>
             </Reveal>
           </div>

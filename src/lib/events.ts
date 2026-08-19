@@ -113,15 +113,23 @@ export interface ProductEvents {
     duration_s: number;
   };
 
-  /* ── Coachning (Stripe) ──────────────────────────────────────────────
-     `available: false` betyder att priset inte gick att läsa ur Stripe och att
-     användaren fick kontaktvägen i stället — den kvoten är skillnaden mellan
-     "ingen vill köpa" och "ingen kunde köpa". */
+  /* ── Coachning (Stripe) ────────────────────────────────────────────── */
+  /** Kortet eller blocket syntes på skärmen. Nämnaren till allt nedan: utan den
+      går "ingen vill köpa" inte att skilja från "ingen skrollade dit". */
+  coaching_card_viewed: { source: CoachingSource };
+  /** `available: false` betyder att priset inte gick att läsa ur Stripe och att
+      användaren fick kontaktvägen i stället — den kvoten är skillnaden mellan
+      "ingen vill köpa" och "ingen kunde köpa". */
   coaching_offer_opened: { source: CoachingSource; available: boolean };
   coaching_checkout_started: { source: CoachingSource; is_guest: boolean };
   coaching_checkout_failed: { source: CoachingSource };
-  /** Tidsväljaren visades. `scheduling: false` = Calendly är inte påslaget. */
+  /** Tidsväljaren begärdes. `scheduling: false` = Calendly är inte påslaget. */
   coaching_booking_opened: { source: CoachingSource; scheduling: boolean };
+  /** Calendlys väljare renderade inne i iframen. Öppningar utan den här är
+      måttet på en trasig event-typ-slug — den felar annars helt tyst. */
+  coaching_calendar_viewed: { source: CoachingSource };
+  /** En ledig tid klickades, före Calendlys eget formulär. */
+  coaching_time_selected: { source: CoachingSource };
   /** En tid valdes i Calendly. Klyftan hit från `booking_opened` är tratten
       som säger om tidsvalet säljer eller stoppar. */
   coaching_time_booked: { source: CoachingSource };

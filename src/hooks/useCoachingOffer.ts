@@ -20,22 +20,17 @@ export function useCoachingOffer(enabled = true): {
 } {
   const offerFn = useServerFn(fetchCoachingOffer);
   const [offer, setOffer] = useState<CoachingOffer | null>(cache);
-  const [loading, setLoading] = useState(enabled && !cache);
+  /** Hämtningen har landat — på ett pris eller på ingenting. */
+  const [färdig, setFärdig] = useState(!!cache);
 
   useEffect(() => {
     if (!enabled) return;
     if (cache) {
-      // Cachen kan ha fyllts av en annan komponent efter att den här
-      // monterades — modalen slår ju inte på hämtningen förrän den öppnas.
-      // Utan det här steget står dess egen state kvar på null för alltid, och
-      // resultatet blev en köpknapp som visade priset bredvid en modal som
-      // påstod att köp inte var igång.
       setOffer(cache);
-      setLoading(false);
+      setFärdig(true);
       return;
     }
     let alive = true;
-    setLoading(true);
     const request = (inflight ??= offerFn());
     request
       .then((data) => {
@@ -49,14 +44,22 @@ export function useCoachingOffer(enabled = true): {
       })
       .finally(() => {
         inflight = null;
-        if (alive) setLoading(false);
+        if (alive) setFärdig(true);
       });
     return () => {
       alive = false;
     };
   }, [enabled, offerFn]);
 
-  return { offer, loading };
+  // Cachen läses i renderingen, inte bara i effekten ovan. Den kan ha fyllts av
+  // en annan komponent efter att den här monterades — modalen slår ju inte på
+  // hämtningen förrän den öppnas — och en effekt hinner inte före det första
+  // rendret efter öppningen. Utan det här visade modalen "köp är inte igång"
+  // i en bildruta innan priset kom, och `coaching_offer_opened` rapporterade
+  // `available: false` för alla som öppnade den, eftersom det var exakt det
+  // rendret som mättes.
+  const aktuell = enabled ? (offer ?? cache) : offer;
+  return { offer: aktuell, loading: enabled && !aktuell && !färdig };
 }
 
 /**
