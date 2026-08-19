@@ -103,7 +103,6 @@ function SignupPage() {
             className="space-y-7 text-center"
           >
             <div className="space-y-2">
-              <EyebrowLabel tone="teal">Bli en HP-kämpe</EyebrowLabel>
               <h1
                 className="text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[44px]"
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}

@@ -14,6 +14,10 @@ export function useOAuthErrorToast() {
     const err = parseOAuthError(window.location.href);
     if (!err) return;
 
+    // Råtexten försvinner ur URL:en två rader ner, och toasten visar en
+    // svensk mening. Utan det här spåret finns felet ingenstans när något
+    // faktiskt är trasigt i providerkonfigurationen.
+    console.warn(`[oauth] ${err.code}: ${err.description ?? "(ingen beskrivning)"}`);
     toast.error(err.message);
     window.history.replaceState({}, "", stripOAuthError(window.location.href));
   }, []);

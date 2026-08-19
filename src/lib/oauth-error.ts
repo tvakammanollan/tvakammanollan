@@ -12,6 +12,8 @@ export interface OAuthReturnError {
   code: string;
   /** Färdig svensk mening att visa för användaren. */
   message: string;
+  /** Råtexten från Supabase. Hör hemma i konsolen, inte i en toast. */
+  description: string | null;
 }
 
 const ERROR_PARAMS = ["error", "error_code", "error_description"] as const;
@@ -38,7 +40,8 @@ export function parseOAuthError(href: string): OAuthReturnError | null {
   if (!error) return null;
 
   const code = pick("error_code") ?? error;
-  return { code, message: messageFor(code, pick("error_description")) };
+  const description = pick("error_description");
+  return { code, message: messageFor(code, description), description };
 }
 
 function messageFor(code: string, description: string | null): string {
@@ -49,6 +52,15 @@ function messageFor(code: string, description: string | null): string {
     return "Google-inloggning är inte påslagen för det här kontot ännu.";
 
   const text = (description ?? "").trim();
+
+  // Token-utbytet mellan Supabase och Google föll. Supabase klistrar in
+  // Googles råa auktoriseringskod i meddelandet ("Unable to exchange external
+  // code: 4/0A…"), vilket är obegripligt för en besökare och dessutom inget
+  // som hör hemma på skärmen. Orsaken är i praktiken alltid fel client secret
+  // i Supabase — ett driftfel, inget användaren kan åtgärda.
+  if (/unable to exchange external code/i.test(text))
+    return "Google-inloggningen kunde inte slutföras. Försök igen om en stund.";
+
   return text.length > 0 ? text : "Något gick snett med Google-inloggningen.";
 }
 

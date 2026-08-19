@@ -23,6 +23,16 @@ describe("parseOAuthError", () => {
     expect(err?.message).toBe("Google-inloggning är inte påslagen för det här kontot ännu.");
   });
 
+  it("visar inte Googles råa kod när token-utbytet föll", () => {
+    // Så här ser det ut när client secreten i Supabase är fel.
+    const err = parseOAuthError(
+      `${BASE}#error=server_error&error_description=Unable+to+exchange+external+code%3A+4%2F0AVGzR1abc`,
+    );
+    expect(err?.message).toBe("Google-inloggningen kunde inte slutföras. Försök igen om en stund.");
+    // Råtexten finns kvar för konsolen — den är det enda spåret av vad som hände.
+    expect(err?.description).toContain("Unable to exchange external code");
+  });
+
   it("faller tillbaka på en svensk mening när beskrivningen saknas", () => {
     expect(parseOAuthError(`${BASE}#error=server_error`)?.message).toBe(
       "Något gick snett med Google-inloggningen.",
