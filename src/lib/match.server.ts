@@ -4,6 +4,7 @@ import { isImplausiblyFast } from "./match-abuse";
 import type { Database } from "@/integrations/supabase/types";
 
 type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
+type MatchesUpdate = Database["public"]["Tables"]["matches"]["Update"];
 
 export type MatchType = "verbal" | "math";
 
@@ -333,7 +334,43 @@ export function calcNewElo(oldElo: number, oppElo: number, result: 0 | 0.5 | 1):
 
 // ---------- Process result ----------
 
-export async function processMatchResultServer(matchId: string) {
+/**
+ * Hur länge en färdig spelare väntar innan motpartens match räknas som
+ * lämnad in med det som faktiskt hunnit sparas.
+ *
+ * Klienten har en egen 30-sekundersnedräkning som tvingar fram en inlämning —
+ * men bara om motpartens flik fortfarande är öppen. Stängs den mitt i matchen
+ * fanns tidigare ingenting som avslutade matchen: den som lämnat in stod kvar
+ * på "väntar", och resultatsidan hade ingen färdig rad att läsa. Den här
+ * fristen ligger med marginal efter klientens 30 s, så den normala vägen
+ * hinner först och golvet bara fångar den som försvann.
+ */
+export const FORCE_FINISH_AFTER_MS = 45_000;
+
+/**
+ * Rättar och skriver in poängen för en spelare ur svaren som redan ligger i
+ * `match_answers`. Används både av den vanliga inlämningen och av
+ * fristen ovan.
+ */
+async function scoreFromSavedAnswers(matchId: string, userId: string): Promise<number> {
+  const { data: answers } = await supabaseAdmin
+    .from("match_answers")
+    .select("id, selected_answer, questions:question_id(correct_answer)")
+    .eq("match_id", matchId)
+    .eq("user_id", userId);
+
+  let score = 0;
+  for (const a of answers ?? []) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const correct = (a as any).questions?.correct_answer ?? null;
+    const isCorrect = a.selected_answer != null && a.selected_answer === correct;
+    if (isCorrect) score += 1;
+    await supabaseAdmin.from("match_answers").update({ is_correct: isCorrect }).eq("id", a.id);
+  }
+  return score;
+}
+
+export async function processMatchResultServer(matchId: string, opts?: { force?: boolean }) {
   const { data: match, error } = await supabaseAdmin
     .from("matches")
     .select("*")
@@ -364,8 +401,37 @@ export async function processMatchResultServer(matchId: string) {
     : Infinity;
 
   if (p1Sub === Infinity || p2Sub === Infinity) {
-    // Not both submitted yet
-    return { waiting: true };
+    // Bara en har lämnat in. Normalt väntar vi — men har fristen gått ut har
+    // motparten lämnat matchen, och den som spelade klart ska inte bli
+    // stående. Poängen räknas då ur det som faktiskt hann sparas.
+    const submittedAt = Math.min(p1Sub, p2Sub);
+    const missingIsP1 = p1Sub === Infinity;
+    const missingId = missingIsP1 ? match.player1_id : match.player2_id;
+
+    if (!opts?.force || !Number.isFinite(submittedAt) || !missingId) {
+      return { waiting: true };
+    }
+    if (Date.now() - submittedAt < FORCE_FINISH_AFTER_MS) {
+      return { waiting: true };
+    }
+
+    const score = await scoreFromSavedAnswers(matchId, missingId);
+    const now = new Date().toISOString();
+    await supabaseAdmin
+      .from("matches")
+      .update(
+        (missingIsP1
+          ? { player1_score: score, player1_submitted_at: now }
+          : { player2_score: score, player2_submitted_at: now }) as MatchesUpdate,
+      )
+      .eq("id", matchId);
+    console.warn("[match] motparten lämnade aldrig in — matchen avgörs på sparade svar", {
+      matchId,
+      missingId,
+      score,
+    });
+    // Räkna om från en färsk rad i stället för att duplicera logiken nedan.
+    return processMatchResultServer(matchId);
   }
 
   // Tidsgolv: en match som lämnats in snabbare än två sekunder per fråga är
@@ -377,7 +443,8 @@ export async function processMatchResultServer(matchId: string) {
     .from("match_questions")
     .select("id", { count: "exact", head: true })
     .eq("match_id", matchId);
-  const elapsedSeconds = (Math.min(p1Sub, p2Sub) - new Date(match.created_at).getTime()) / 1000;
+  const elapsedSeconds =
+    (Math.min(p1Sub, p2Sub) - new Date(match.started_at ?? match.created_at).getTime()) / 1000;
 
   if (isImplausiblyFast(elapsedSeconds, questionCount ?? 0)) {
     console.warn("[match] för snabb inlämning, ingen ELO", {

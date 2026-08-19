@@ -45,6 +45,8 @@ import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 import { getBotName } from "@/lib/bot";
 import { normeringForAccuracy } from "@/lib/hpScore";
+import { outcomeFor, scoresFor } from "@/lib/match-outcome";
+import { processMatchResult } from "@/lib/match.functions";
 
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
@@ -70,6 +72,8 @@ interface MatchRow {
   bot_elo: number | null;
   status: string;
   created_at: string;
+  /** När klockan faktiskt startade. Null på matcher skapade före 2026-08-19. */
+  started_at: string | null;
 }
 
 interface AnswerRow {
@@ -111,6 +115,7 @@ function ResultPage() {
   const navigate = useNavigate();
   const createMatchFn = useServerFn(createMatch);
   const rematchFn = useServerFn(requestRematch);
+  const resolveFn = useServerFn(processMatchResult);
 
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [opponentName, setOpponentName] = useState("");
@@ -124,6 +129,11 @@ function ResultPage() {
   const [showPassageMap, setShowPassageMap] = useState<Record<string, boolean>>({});
   const [creatingRematch, setCreatingRematch] = useState(false);
   const [rankUp, setRankUp] = useState<RankTier | null>(null);
+  // Resultatsidan visar ingenting förrän servern räknat klart matchen. Se
+  // `match-outcome.ts`: en halvskriven rad läser som 0–0, alltså "oavgjort",
+  // och båda spelarna kunde samtidigt se sig själva som vinnare.
+  const [attempt, setAttempt] = useState(0);
+  const [giveUp, setGiveUp] = useState(false);
   const confettiFiredRef = useRef(false);
   const resultLoggedRef = useRef(false);
 
@@ -134,6 +144,7 @@ function ResultPage() {
       return;
     }
     let cancelled = false;
+    let retry: ReturnType<typeof setTimeout> | null = null;
     (async () => {
       const { data: m } = await supabase
         .from("matches")
@@ -143,6 +154,26 @@ function ResultPage() {
       if (cancelled || !m) return;
       const mr = m as MatchRow;
       setMatch(mr);
+
+      // Inte färdigräknad än: be servern räkna (den avgör också matcher där
+      // motparten aldrig lämnade in, efter FORCE_FINISH_AFTER_MS) och fråga
+      // igen. Efter ~40 s slutar vi fråga och visar det vi har, hellre än att
+      // snurra i evighet.
+      if (mr.status !== "finished") {
+        try {
+          await resolveFn({ data: { matchId } });
+        } catch {
+          /* servern kan svara "waiting" — det är inte ett fel */
+        }
+        if (cancelled) return;
+        if (attempt >= 20) {
+          setGiveUp(true);
+          return;
+        }
+        retry = setTimeout(() => setAttempt((a) => a + 1), 2000);
+        return;
+      }
+      setGiveUp(false);
 
       // Nyss avslutad match kan ha låst upp utmärkelser — be watchern kolla
       // direkt (förbi 20s-throttlen) så firandet sker här och inte senare.
@@ -231,13 +262,14 @@ function ResultPage() {
     })();
     return () => {
       cancelled = true;
+      if (retry) clearTimeout(retry);
     };
-  }, [matchId, user, loading, navigate]);
+  }, [matchId, user, loading, navigate, attempt, resolveFn]);
 
   // Confetti for winner
   useEffect(() => {
     if (!match || !user || confettiFiredRef.current) return;
-    if (match.winner_id !== user.id) return;
+    if (outcomeFor(user.id, match) !== "win") return;
     confettiFiredRef.current = true;
     const fire = (origin: { x: number; y: number }) =>
       confetti({
@@ -257,14 +289,15 @@ function ResultPage() {
   // får hamna bakom ett villkor.
   useEffect(() => {
     if (!match || !user || resultLoggedRef.current) return;
+    // Bara färdigräknade matcher räknas — annars hade varje väntande omgång
+    // loggats som "draw" och tratten blivit obrukbar.
+    const outcome = outcomeFor(user.id, match);
+    if (!outcome) return;
     resultLoggedRef.current = true;
-    const isPlayer1 = match.player1_id === user.id;
-    const mine = (isPlayer1 ? match.player1_score : match.player2_score) ?? 0;
-    const theirs = (isPlayer1 ? match.player2_score : match.player1_score) ?? 0;
     trackEvent("match_result_viewed", {
       match_type: match.match_type as "verbal" | "math",
       is_bot_match: !!match.is_bot_match,
-      outcome: mine > theirs ? "win" : mine < theirs ? "loss" : "draw",
+      outcome,
       elo_change: eloChange,
     });
     // Räknas här och inte vid start: en påbörjad match som aldrig lämnas in
@@ -287,17 +320,69 @@ function ResultPage() {
     );
   }
 
+  // Matchen är inte färdigräknad. Att visa poängen här hade betytt att gissa
+  // ur en halvskriven rad — och det är precis den gissningen som gjorde att
+  // båda spelarna kunde se "Du vann!" och att en vinst visades som oavgjort.
+  if (match.status !== "finished" && !giveUp) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
+        <m.span
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[#fff8f5]"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Trophy className="h-7 w-7" />
+        </m.span>
+        <p className="text-base font-semibold text-[var(--cream)]">Räknar ut resultatet…</p>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          {match.is_bot_match
+            ? "Ett ögonblick bara."
+            : "Väntar in motståndarens sista svar. Lämnar hen aldrig in avgörs matchen på det som hunnit sparas."}
+        </p>
+      </div>
+    );
+  }
+
+  if (match.status !== "finished" && giveUp) {
+    return (
+      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
+        <AlertTriangle className="h-10 w-10 text-[var(--danger)]" aria-hidden />
+        <h1
+          className="text-2xl font-bold text-[var(--cream)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Matchen är inte klar än
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Vi kunde inte räkna ut resultatet just nu. Ladda om sidan om en stund — dina svar är
+          sparade och ELO räknas när matchen avgörs.
+        </p>
+        <Button onClick={() => window.location.reload()}>Försök igen</Button>
+        <Button variant="ghost" asChild>
+          <Link to="/">Till startsidan</Link>
+        </Button>
+      </div>
+    );
+  }
+
   const isP1 = match.player1_id === user!.id;
-  const myScore = isP1 ? (match.player1_score ?? 0) : (match.player2_score ?? 0);
-  const oppScore = isP1 ? (match.player2_score ?? 0) : (match.player1_score ?? 0);
+  const { mine: myScore, theirs: oppScore } = scoresFor(user!.id, match);
   const mySubmittedAt = isP1 ? match.player1_submitted_at : match.player2_submitted_at;
   const oppSubmittedAt = isP1 ? match.player2_submitted_at : match.player1_submitted_at;
-  const myDuration = formatDuration(match.created_at, mySubmittedAt);
-  const oppDuration = formatDuration(match.created_at, oppSubmittedAt);
+  // Tiden räknas från när matchen startade, inte från när raden skapades.
+  // För ett privat rum ligger `created_at` före spelstart — där gav den gamla
+  // formeln väntetiden i rummet som "din tid".
+  const clockFrom = match.started_at ?? match.created_at;
+  const myDuration = formatDuration(clockFrom, mySubmittedAt);
+  const oppDuration = formatDuration(clockFrom, oppSubmittedAt);
 
-  const scoreDelta = myScore - oppScore;
-  const won = scoreDelta > 0;
-  const draw = scoreDelta === 0;
+  // Nämnaren är matchens egna antal frågor, inte en hårdkodad åtta.
+  const questionTotal = questions.length || 8;
+
+  // Serverns beslut, inte en jämförelse i webbläsaren. Se `match-outcome.ts`.
+  const outcome = outcomeFor(user!.id, match);
+  const won = outcome === "win";
+  const draw = outcome === "draw";
 
   // Banner styles
   const bannerClass = draw
@@ -477,6 +562,7 @@ function ResultPage() {
             }
             seed={user!.id}
             score={myScore}
+            total={questionTotal}
             duration={myDuration}
             highlight={won}
           />
@@ -484,6 +570,7 @@ function ResultPage() {
             name={opponentName}
             seed={opponentSeed}
             score={oppScore}
+            total={questionTotal}
             duration={oppDuration}
             highlight={!won && !draw}
           />
@@ -766,12 +853,15 @@ function PlayerColumn({
   name,
   seed,
   score,
+  total,
   duration,
   highlight,
 }: {
   name: string;
   seed: string;
   score: number;
+  /** Antal frågor i matchen. Stod som hårdkodad "/8". */
+  total: number;
   duration: string;
   highlight: boolean;
 }) {
@@ -790,7 +880,7 @@ function PlayerColumn({
         style={{ fontFamily: "var(--font-display)" }}
       >
         {score}
-        <span className="text-base font-normal text-muted-foreground">/8</span>
+        <span className="text-base font-normal text-muted-foreground">/{total}</span>
       </div>
       <div className="mt-1 text-[11px] tracking-wide text-muted-foreground">
         Tid: <span className="font-medium text-foreground">{duration}</span>

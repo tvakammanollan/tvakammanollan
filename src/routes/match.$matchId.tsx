@@ -55,6 +55,8 @@ interface MatchRow {
   bot_elo: number | null;
   status: string;
   created_at: string;
+  /** När matchen blev spelbar. Null på matcher skapade före 2026-08-19. */
+  started_at: string | null;
 }
 
 function MatchPage() {
@@ -263,10 +265,18 @@ function MatchPage() {
     // webbläsarens klocka fel mot databasens blir `created_at` godtyckligt
     // långt bort, och en match kunde lämnas in automatiskt i samma sekund den
     // öppnades. Här jämförs alltid Date.now() med ett tidigare Date.now().
+    // Serverns `started_at` går först: den är samma för båda spelarna, och
+    // det är den resultatsidan, botens tid och tidsgolvet räknar ifrån. Utan
+    // den kunde min klocka och min redovisade tid skilja sig åt med minuter.
+    // Den lokala ankaret finns kvar som reserv för äldre matcher (started_at
+    // är NULL där) och för de sekunder som går innan raden är läst.
     const anchorKey = `match_start_${matchId}`;
-    let anchor = Number(sessionStorage.getItem(anchorKey)) || 0;
+    const serverStart = match.started_at ? new Date(match.started_at).getTime() : 0;
+    let anchor = serverStart || Number(sessionStorage.getItem(anchorKey)) || 0;
     if (!anchor) {
       anchor = matchStartedAt?.getTime() ?? Date.now();
+    }
+    if (!serverStart) {
       try {
         sessionStorage.setItem(anchorKey, String(anchor));
       } catch {
@@ -315,7 +325,7 @@ function MatchPage() {
   // Bot match: deterministic fake opponent progress
   useEffect(() => {
     if (!match || !match.is_bot_match) return;
-    const start = new Date(match.created_at).getTime();
+    const start = new Date(match.started_at ?? match.created_at).getTime();
     let h = 0;
     for (let i = 0; i < matchId.length; i++) h = (h * 31 + matchId.charCodeAt(i)) | 0;
     const rand = (i: number) => {
@@ -469,20 +479,22 @@ function MatchPage() {
       } catch {
         /* ignore */
       }
-      // Persist current answer if any
-      if (currentQ) {
-        const c = answers.get(currentQ.id);
-        if (c) await persistAnswer(currentQ.id, c);
+      // Hela svarsbilden går med inlämningen. Den skrivs löpande under matchen
+      // också, men den vägen kan misslyckas tyst (RLS, tappat nät, sövd flik)
+      // och då blev resultatet "0/8" bredvid åtta besvarade frågor. Servern
+      // skriver om raderna med service role och rättar dem i samma anrop.
+      const payload = questions.map((q) => ({
+        question_id: q.id,
+        selected_answer: answers.get(q.id) ?? null,
+        time_spent_seconds: answerTimesRef.current[q.id] ?? null,
+      }));
+      // Behåll den löpande skrivningen som första försök — den gör svaren
+      // synliga för motståndarens vy direkt, innan inlämningen.
+      for (const a of payload) {
+        if (!a.selected_answer) continue;
+        await persistAnswer(a.question_id, a.selected_answer);
       }
-      // Insert NULL answers for any unanswered questions
-      for (const q of questions) {
-        if (!answers.has(q.id) && q.id !== currentQ?.id) {
-          await persistAnswer(q.id, null);
-        } else if (q.id === currentQ?.id && !answers.get(q.id)) {
-          await persistAnswer(q.id, null);
-        }
-      }
-      const res = await submitFn({ data: { matchId } });
+      const res = await submitFn({ data: { matchId, answers: payload } });
       // Produkthändelse för funnel/retention. No-op utan samtycke, och den
       // ligger efter submitFn med flit — bara matcher som faktiskt gick igenom
       // ska räknas.

@@ -107,6 +107,8 @@ export const createMatch = createServerFn({ method: "POST" })
           status: "active",
           is_bot_match: true,
           bot_elo: botElo,
+          // Botmatchen är spelbar i samma stund raden finns.
+          started_at: new Date().toISOString(),
         })
         .select()
         .single();
@@ -160,16 +162,44 @@ export const joinMatch = createServerFn({ method: "POST" })
 
     const { error: updErr } = await supabaseAdmin
       .from("matches")
-      .update({ player2_id: userId, status: "active" })
+      // Klockan startar här — inte när rummet öppnades. Väntetiden i rummet
+      // är inte speltid och ska inte redovisas som sådan.
+      .update({ player2_id: userId, status: "active", started_at: new Date().toISOString() })
       .eq("id", match.id);
     if (updErr) throw updErr;
 
     return { match_id: match.id };
   });
 
+/**
+ * Svaren som klienten skickar med inlämningen.
+ *
+ * De sparas löpande under matchen också (`persistAnswer`), men den vägen går
+ * via klientens egen Supabase-anslutning och kan misslyckas tyst: en RLS-miss,
+ * ett tappat nät eller en flik som sövs ger ett `console.error` som ingen ser
+ * och noll rader i `match_answers`. Resultatet blev "0/8" bredvid åtta svarade
+ * frågor. Med svaren i inlämningen skrivs de en gång till, med service role,
+ * i samma anrop som rättar dem.
+ *
+ * `is_correct` kommer aldrig härifrån — den räknas alltid ur `correct_answer`
+ * på servern. Bara *vilket* alternativ som valdes är klientens att bestämma.
+ */
+const submittedAnswersSchema = z
+  .array(
+    z.object({
+      question_id: z.string().uuid(),
+      selected_answer: z.string().max(8).nullable(),
+      time_spent_seconds: z.number().int().min(0).max(3600).nullable().optional(),
+    }),
+  )
+  .max(64)
+  .optional();
+
 export const submitMatch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ matchId: z.string().uuid() }).parse(input))
+  .inputValidator((input: unknown) =>
+    z.object({ matchId: z.string().uuid(), answers: submittedAnswersSchema }).parse(input),
+  )
   .handler(async ({ data, context }) => {
     const { userId } = context;
 
@@ -183,6 +213,57 @@ export const submitMatch = createServerFn({ method: "POST" })
     const isP1 = match.player1_id === userId;
     const isP2 = match.player2_id === userId;
     if (!isP1 && !isP2) throw new Error("Inte din match");
+
+    // En färdigräknad match skrivs aldrig om. Utan spärren kunde en andra
+    // inlämning (omladdning, dubbelklick, auto-inlämning som krockar med den
+    // manuella) simulera boten en gång till EFTER att vinnaren avgjorts: raden
+    // fick en ny motståndarpoäng medan `winner_id` stod kvar från den gamla.
+    // Resultatsidan visade då en vinnare som inte stämde med poängen — eller
+    // "oavgjort" bredvid 6–3.
+    if (match.status === "finished") {
+      return { ok: true, result: { alreadyFinished: true as const } };
+    }
+
+    const alreadySubmitted = isP1 ? match.player1_submitted_at : match.player2_submitted_at;
+    if (alreadySubmitted) {
+      // Egen inlämning finns redan. Rör inte poängen — försök bara räkna klart,
+      // ifall motparten hann in emellan.
+      const result = await processMatchResultServer(data.matchId);
+      return { ok: true, result };
+    }
+
+    // Frågorna som faktiskt hör till matchen. Klientens svar sållas mot den
+    // här listan — annars kunde vem som helst skicka in svar på frågor som
+    // inte ingår, eller på en annan spelares match.
+    const { data: matchQuestionRows } = await supabaseAdmin
+      .from("match_questions")
+      .select("question_id")
+      .eq("match_id", data.matchId);
+    const matchQuestionIds = new Set((matchQuestionRows ?? []).map((r) => r.question_id));
+
+    if (data.answers && data.answers.length > 0) {
+      const rows = data.answers
+        .filter((a) => matchQuestionIds.has(a.question_id))
+        .map((a) => ({
+          match_id: data.matchId,
+          user_id: userId,
+          question_id: a.question_id,
+          selected_answer: a.selected_answer,
+          // Räknas om nedan ur facit — värdet här är bara en platshållare.
+          is_correct: false,
+          time_spent_seconds: a.time_spent_seconds ?? null,
+        }));
+      if (rows.length > 0) {
+        const { error: upsertErr } = await supabaseAdmin
+          .from("match_answers")
+          .upsert(rows, { onConflict: "match_id,user_id,question_id" });
+        if (upsertErr) {
+          // Loggas men stoppar inte inlämningen: det som redan hunnit sparas
+          // under matchen rättas ändå nedan.
+          console.error("[match] kunde inte spara inskickade svar:", upsertErr.message);
+        }
+      }
+    }
 
     // Recompute correctness server-side; never trust client-supplied is_correct
     const { data: answers } = await supabaseAdmin
@@ -218,7 +299,8 @@ export const submitMatch = createServerFn({ method: "POST" })
       .eq("id", data.matchId);
 
     // If bot match, simulate bot now using per-question category accuracy.
-    if (match.is_bot_match) {
+    // Bara en gång: `player2_submitted_at` är boten som redan spelat.
+    if (match.is_bot_match && !match.player2_submitted_at) {
       const { data: mqRows } = await supabaseAdmin
         .from("match_questions")
         .select("question_id, questions:question_id(category)")
@@ -236,7 +318,7 @@ export const submitMatch = createServerFn({ method: "POST" })
         correctIds: sim.correctQuestionIds,
       });
       const submittedAt = new Date(
-        new Date(match.created_at).getTime() + sim.submitTimeSeconds * 1000,
+        new Date(match.started_at ?? match.created_at).getTime() + sim.submitTimeSeconds * 1000,
       ).toISOString();
       await supabaseAdmin
         .from("matches")
@@ -265,5 +347,8 @@ export const processMatchResult = createServerFn({ method: "POST" })
     if (!m || (m.player1_id !== userId && m.player2_id !== userId)) {
       throw new Response("Forbidden", { status: 403 });
     }
-    return processMatchResultServer(data.matchId);
+    // `force`: resultatsidan frågar när den väntat färdigt. Har motparten
+    // aldrig lämnat in räknas matchen på det som hann sparas (se
+    // FORCE_FINISH_AFTER_MS) i stället för att bli stående för evigt.
+    return processMatchResultServer(data.matchId, { force: true });
   });

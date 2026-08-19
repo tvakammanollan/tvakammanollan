@@ -125,6 +125,8 @@ export const pollRankedMatch = createServerFn({ method: "POST" })
         status: "active",
         is_bot_match: false,
         is_ranked: true,
+        // Rankad match är spelbar direkt — båda står redan i kön.
+        started_at: new Date().toISOString(),
       })
       .select("id")
       .single();

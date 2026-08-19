@@ -257,7 +257,8 @@ export const acceptMatchInvite = createServerFn({ method: "POST" })
 
     await supabaseAdmin
       .from("matches")
-      .update({ player2_id: userId, status: "active" })
+      // Klockan startar när inbjudan accepteras, inte när den skickades.
+      .update({ player2_id: userId, status: "active", started_at: new Date().toISOString() })
       .eq("id", match.id);
 
     await supabaseAdmin.from("match_invites").update({ status: "accepted" }).eq("id", invite.id);

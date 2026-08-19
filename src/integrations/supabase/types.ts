@@ -701,6 +701,7 @@ export type Database = {
           player2_score: number | null
           player2_submitted_at: string | null
           room_code: string | null
+          started_at: string | null
           status: string
           winner_id: string | null
         }
@@ -718,6 +719,7 @@ export type Database = {
           player2_score?: number | null
           player2_submitted_at?: string | null
           room_code?: string | null
+          started_at?: string | null
           status?: string
           winner_id?: string | null
         }
@@ -735,6 +737,7 @@ export type Database = {
           player2_score?: number | null
           player2_submitted_at?: string | null
           room_code?: string | null
+          started_at?: string | null
           status?: string
           winner_id?: string | null
         }
