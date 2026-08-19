@@ -66,7 +66,8 @@ upp igen är det något som kopierats från en gammal gren.
   ska följa i minst ett år till. Se avsnitten ovan.
 - **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
   `tkn-analytics-consent`, `tkn-coaching-prompt`, `tkn:ach:v1:<uid>`,
-  `tkn:wotd:<datum>`, `tkn:consent-changed`, `tkn:achievements:check`.
+  `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:consent-changed`,
+  `tkn:achievements:check`.
   De två förstnämnda flyttas över från sina `hpk-`-föregångare. Båda modulerna läser den gamla
   `hpk-`-nyckeln en gång och skriver om den — utan flytten hade varje besökare
   som redan svarat om samtycke fått bannern igen, och varje köpare av
@@ -534,6 +535,46 @@ om något liknande dyker upp:
   med orsak i slutet av körningen i stället för att gissa.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
+### Resultat på gamla prov (2026-08-19)
+
+Provlistan visar vad du fått: rätt av antal på varje skrivet provpass, en poäng
+per provdel så snart båda dess pass är skrivna, och en totalpoäng när alla fyra
+är det. `src/lib/prov-results.ts` räknar, `components/prov/ProvScore.tsx`
+renderar, och samma siffror står på tre ytor — provlistan, provtillfällets sida
+och resultatskärmen efter ett inlämnat pass.
+
+- **Resultatet är ett eget lager, inte ett fält i `prov-progress.ts`.**
+  Progressen är färskvara och städas efter en vecka (`MAX_AGE_MS`); resultatet
+  ska stå kvar. Och det som sparas är summan (`score`/`total`), inte de fyrtio
+  svaren: listsidan summerar trettio provtillfällen, och att räkna rätt ur
+  svaren hade krävt att alla 120 provpassfilerna laddades — en chunk var — för
+  att svara på en fråga som ryms i två heltal.
+- **Nyckeln är `tkn:prov-resultat:v1`**, ett objekt med `"<term>:<pass>"` som
+  nyckel. Lokalt lagrat av samma skäl som resten av gamla prov-flödet: det ska
+  fungera utan konto, och servern har ingen anledning att veta vad någon övat
+  på.
+- **Totalpoängen är medelvärdet av delarnas poäng, inte en uppslagning av den
+  sammanlagda råpoängen.** Så räknas provet — delarna normeras var för sig och
+  snittas — och det är också det svar en provskrivare väntar sig: 1,90 verbalt
+  och 2,00 kvantitativt blir 1,95. De två vägarna skiljer sig så fort delarna
+  går isär, eftersom normeringstabellen inte är rät: 20 av 80 plus 80 av 80 blir
+  1,10 som snitt men 1,25 som summa. `normeringFromParts` gör det förra.
+  Poängräknaren på `/hogskoleprovet-poangraknare` gör det senare och ska
+  fortsätta göra det — den tar emot råpoäng och har inga delpoäng att snitta.
+- **En provdel får ingen poäng förrän båda dess provpass är skrivna.** Ett pass
+  är fyrtio uppgifter av åttio, och en normering ur halva underlaget hade sett
+  ut som ett provresultat utan att vara det. Rutan skriver därför ut vad som
+  saknas ("1 av 2 pass") i stället för att bara utelämna siffran.
+- **`useProvResults` returnerar `null` fram till första effekten.** Sidorna är
+  serverrenderade och identiska för alla; läses lagringen redan under första
+  renderingen blir det en hydreringsmiss på varje kort som har ett resultat.
+- **Övningsläget räknas med, men märks ut.** Svaret låses när det läggs, så
+  poängen är riktig — det som saknas är tidspressen, och det står vid passet
+  och i rutans fottext.
+- Poster som inte håller kastas i `parseResults`. localStorage är besökarens
+  egen fil: ett `NaN` som slinker igenom hamnar inte i en logg utan i en poäng,
+  som "NaN/40" bredvid provpasset.
+
 ### Forum
 
 Ett Flashback-liknande diskussionsforum: platta trådar, citat, öppet läsbart.
