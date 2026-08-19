@@ -49,3 +49,7 @@ scripts/.ord-defs/
 
 # Nedladdade provhäften från studera.nu (importpipeline, se scripts/hp-import/).
 .hp-cache/
+
+# Python-bytecode från scripts/hp-import
+__pycache__/
+*.pyc
