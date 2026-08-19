@@ -414,11 +414,23 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
                   </>
                 )}
                 {figure && (
-                  <ProvFigure
-                    src={figure.src}
-                    alt={`Diagramunderlag till uppgift ${question.nr}`}
-                    label="Diagram ur provhäftet"
-                  />
+                  <>
+                    <div className="lg:hidden">
+                      <ProvFigure
+                        src={figure.src}
+                        alt={`Diagramunderlag till uppgift ${question.nr}`}
+                        label="Diagram ur provhäftet"
+                        collapsible
+                      />
+                    </div>
+                    <div className="hidden lg:block">
+                      <ProvFigure
+                        src={figure.src}
+                        alt={`Diagramunderlag till uppgift ${question.nr}`}
+                        label="Diagram ur provhäftet"
+                      />
+                    </div>
+                  </>
                 )}
               </div>
             </aside>

@@ -72,6 +72,31 @@ export interface ProvQuestion {
   image?: string;
   /** Antal svarsalternativ för bilduppgifter. */
   altCount?: number;
+  /**
+   * Var uppgiftens stam och varje svarsalternativ sitter i `image`, som andelar
+   * `[x0, y0, x1, y1]` av bildens bredd och höjd. Nycklarna är `stem` och
+   * bokstäverna A–E.
+   *
+   * Med dem kan kortet visa samma bild i flera rutor — stammen överst, ett
+   * alternativ i varje knapp — i stället för fyra tomma bokstavsknappar under
+   * ett utsnitt där alternativen redan står. Uppgiftsnumret och bokstäverna är
+   * bortklippta, eftersom kortet ritar sina egna.
+   *
+   * Saknas fältet gick beskärningen inte att lita på (alternativen låg inne i
+   * en figur och inte i textlagret); då visas hela utsnittet med en bokstavsrad
+   * under, precis som förut.
+   */
+  crops?: Record<string, [number, number, number, number]>;
+  /** Bildens proportion (bredd/höjd). Följer alltid med `crops`. */
+  imageAspect?: number;
+  /**
+   * Uppgiftens bild finns inte i UHR:s publicerade material och går inte att
+   * få tag på. Gäller vårprovet 2012:s kvantitativa provpass, som bara
+   * publicerades som webbsidor med en GIF per uppgift — bilderna arkiverades
+   * aldrig. Uppgiftstexten finns kvar där den är läsbar, men svarsalternativen
+   * stod i bilden och saknas därför helt.
+   */
+  figureMissing?: boolean;
   /** Index i passets `passages`. */
   passage?: number;
   /** Index i passets `figures` (DTK-diagram). */

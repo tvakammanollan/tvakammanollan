@@ -146,21 +146,186 @@ def _render(page: "fitz.Page", rect: "fitz.Rect", path: str) -> None:
         f.write(buf.getvalue())
 
 
-def _alt_count(page: "fitz.Page", rect: "fitz.Rect") -> int:
-    """Räknar svarsalternativ (A, B, C …) inom ett bildutsnitt."""
-    letters = set()
-    for b in page.get_text("dict", clip=rect)["blocks"]:
+LETTERS = ["A", "B", "C", "D", "E"]
+
+
+def _alt_lines(page: "fitz.Page", clip: "fitz.Rect") -> list[tuple[str, "fitz.Rect"]]:
+    """Rader inom utsnittet som inleds med ett svarsalternativs bokstav."""
+    found: list[tuple[str, fitz.Rect]] = []
+    for b in page.get_text("dict", clip=clip)["blocks"]:
         if b.get("type") != 0:
             continue
         for line in b["lines"]:
             text = clean_text(line_text(line), keep_soft_hyphen=False)
             m = re.match(r"^([A-E])\b", text)
             if m and line["bbox"][0] < page.rect.width * 0.55:
-                letters.add(m.group(1))
+                found.append((m.group(1), fitz.Rect(line["bbox"])))
+    found.sort(key=lambda t: t[1].y0)
+    return found
+
+
+def _alt_count(page: "fitz.Page", rect: "fitz.Rect") -> int:
+    """Räknar svarsalternativ (A, B, C …) inom ett bildutsnitt."""
+    letters = {letter for letter, _ in _alt_lines(page, rect)}
     # Ingen kvantitativ uppgift har färre än fyra alternativ. Hittar vi färre
     # står bokstaven inne i en figur (t.ex. fyra cirkeldiagram märkta A–D) och
     # kommer inte med i textlagret.
     return max(4, len(letters))
+
+
+def _alt_sequence(page: "fitz.Page", clip: "fitz.Rect") -> list[tuple[str, "fitz.Rect"]]:
+    """
+    Svarsalternativen som A, B, C … uppifrån och ned.
+
+    Alternativen står sist i uppgiften och alltid i bokstavsordning, så följden
+    räknas från den *sista* raden som inleds med "A". Utan det kravet plockas ett
+    "A" ur uppgiftstexten upp som första alternativ och hela beskärningen
+    förskjuts ett steg.
+    """
+    cands = _alt_lines(page, clip)
+    starts = [i for i, (letter, _) in enumerate(cands) if letter == "A"]
+    if not starts:
+        return []
+    seq: list[tuple[str, fitz.Rect]] = []
+    for letter, rect in cands[starts[-1] :]:
+        if len(seq) < len(LETTERS) and letter == LETTERS[len(seq)]:
+            seq.append((letter, rect))
+    return seq if len(seq) >= 4 else []
+
+
+def _text_start(page: "fitz.Page", line: "fitz.Rect", right: float) -> float:
+    """
+    x-läget där raden börjar *efter* sin inledande etikett.
+
+    Kortet ritar sin egen bokstavsbricka och sitt eget uppgiftsnummer. Ligger de
+    kvar i bilden visas de två gånger.
+
+    Sökrutan måste sträckas ut till uppgiftens högerkant: bokstaven är ofta en
+    egen textrad i PDF:en — "A" och "−12" sätts som skilda körningar — så radens
+    egen bredd rymmer bara bokstaven. Med den som ruta hittas aldrig något andra
+    ord, och etiketten blir kvar i utsnittet.
+    """
+    box = fitz.Rect(line.x0, line.y0, max(right, line.x1), line.y1)
+    words = sorted(page.get_text("words", clip=box), key=lambda w: w[0])
+    return words[1][0] if len(words) >= 2 else line.x0
+
+
+def _stem_rect(page: "fitz.Page", clip: "fitz.Rect", first_alt_y: float) -> "fitz.Rect":
+    """Uppgiftens stam: allt ovanför första alternativet, utan uppgiftsnumret."""
+    region = fitz.Rect(clip.x0, clip.y0, clip.x1, first_alt_y - 2)
+    ink = _ink_rect(page, region, pad=4)
+    words = page.get_text("words", clip=region)
+    if not words:
+        return ink
+    # Numret hänger ut till vänster om brödtexten, så det är alltid det ord som
+    # står längst åt vänster. Att i stället ta det *översta* ordet fungerar inte:
+    # en bråktäljare sätts högre än raden, så "1" i 1/3 kom före "16." och såg
+    # självt ut som uppgiftsnumret — då uteblev trimningen tyst.
+    lead = min(range(len(words)), key=lambda i: (words[i][0], words[i][1]))
+    if not re.match(r"^\d{1,2}\.?$", words[lead][4]):
+        return ink
+    body = [w[0] for i, w in enumerate(words) if i != lead]
+    if not body:
+        return ink
+    left = min(body)
+    # Figurer kan gå längre vänster än brödtexten (NOG:s stugor, XYZ:s grafer).
+    # De ska inte klippas bort tillsammans med numret.
+    page_area = page.rect.width * page.rect.height
+    for d in page.get_drawings():
+        r = fitz.Rect(d["rect"])
+        if r.is_empty or not r.intersects(region):
+            continue
+        # Sidans ram täcker hela uppslaget och skulle annars dra `left` ut till
+        # papperskanten, så att nummertrimningen tyst blev verkningslös.
+        if r.width * r.height > page_area * 0.8:
+            continue
+        if r.width * r.height < 12.0:
+            continue
+        if r.width > page.rect.width * 0.85 and r.height < 3:
+            continue
+        left = min(left, (r & region).x0)
+    ink.x0 = max(ink.x0, min(left - 4, region.x1))
+    return ink
+
+
+def _norm(inner: "fitz.Rect", outer: "fitz.Rect") -> list[float] | None:
+    """Delrektangel uttryckt som andelar 0–1 av den renderade bilden."""
+    if outer.width <= 0 or outer.height <= 0:
+        return None
+
+    def f(v: float) -> float:
+        return round(min(1.0, max(0.0, v)), 4)
+
+    return [
+        f((inner.x0 - outer.x0) / outer.width),
+        f((inner.y0 - outer.y0) / outer.height),
+        f((inner.x1 - outer.x0) / outer.width),
+        f((inner.y1 - outer.y0) / outer.height),
+    ]
+
+
+def _crops(
+    page: "fitz.Page",
+    clip: "fitz.Rect",
+    shot: "fitz.Rect",
+    seq: list[tuple[str, "fitz.Rect"]],
+) -> dict[str, list[float]] | None:
+    """
+    Var stammen och varje svarsalternativ sitter i bilden, som andelar av den.
+
+    Med de här koordinaterna kan uppgiftskortet visa samma bild i flera rutor —
+    stammen överst, ett alternativ i varje knapp — i stället för fyra tomma
+    bokstavsknappar under ett utsnitt där alternativen redan står. Koordinater
+    i stället för en egen bildfil per alternativ: det blir samma sak i
+    gränssnittet, men utan att femdubbla antalet filer i public/.
+
+    Returnerar None så fort något inte går ihop. Ett kort som visar hela
+    utsnittet är sämre än ett med riktiga knappar, men mycket bättre än ett med
+    felbeskurna.
+    """
+    if len(seq) < 4:
+        return None
+    stem = _stem_rect(page, clip, seq[0][1].y0)
+    if stem.is_empty or stem.height < 8 or stem.width < 20:
+        return None
+    box = _norm(stem, shot)
+    if box is None:
+        return None
+    out: dict[str, list[float]] = {"stem": box}
+    for i, (letter, rect) in enumerate(seq):
+        bottom = seq[i + 1][1].y0 - 2 if i + 1 < len(seq) else shot.y1
+        r = fitz.Rect(_text_start(page, rect, clip.x1), rect.y0 - 2, shot.x1, bottom)
+        if r.is_empty or r.height < 5 or r.width < 10:
+            return None
+        box = _norm(r, shot)
+        if box is None:
+            return None
+        out[letter] = box
+    return out
+
+
+_SHRED_SINGLES = re.compile(r"(?:^|\s)[A-Za-z0-9](?:\s+[A-Za-z0-9]){2,}(?:\s|$)")
+_SHRED_DOUBLE_OP = re.compile(r"[<>=+#](?:\s+[<>=+#])+")
+_SHRED_HANGING = re.compile(r"=-(?:\s|$)|(?:^|\s)[<>=+]\s*(?:\(|$)")
+
+
+def _shredded(text: str) -> bool:
+    """
+    Sant när PDF-extraktionen har strimlat matematiken i texten.
+
+    Bråkstreck, exponenter och olikhetstecken sätts som egna textkörningar och
+    kommer ut i läsordning i stället för formelordning: 'a b c d < < < .' var en
+    gång 'a < b < c < d'. Sådan text går inte att läsa, och uppgiften ska då
+    renderas som bildutsnitt precis som XYZ och KVA.
+
+    Mönstren är avstämda mot hela arkivet: de träffar 14 av de 819 NOG/DTK som
+    lagras som text, och ingen av de 2 400 verbala uppgifterna.
+    """
+    return bool(
+        _SHRED_SINGLES.search(text)
+        or _SHRED_DOUBLE_OP.search(text)
+        or _SHRED_HANGING.search(text)
+    )
 
 
 def _read_question(page: "fitz.Page", clip: "fitz.Rect") -> dict:
@@ -237,6 +402,8 @@ def parse_kvant(path: str, image_dir: str, image_url: str) -> dict:
                     read["text"]
                     and len(read["alternatives"]) >= 4
                     and all(read["alternatives"].values())
+                    and not _shredded(read["text"])
+                    and not any(_shredded(a) for a in read["alternatives"].values())
                 )
                 # XYZ och KVA är formeltunga och renderas alltid som bild.
                 # NOG/DTK tas som text när texten är komplett och uppgiften
@@ -246,9 +413,19 @@ def parse_kvant(path: str, image_dir: str, image_url: str) -> dict:
                     q["alternatives"] = read["alternatives"]
                 else:
                     name = f"{nr}.webp"
-                    _render(page, _ink_rect(page, clip), os.path.join(image_dir, name))
+                    shot = _ink_rect(page, clip)
+                    _render(page, shot, os.path.join(image_dir, name))
                     q["image"] = f"{image_url}/{name}"
-                    q["altCount"] = _alt_count(page, clip)
+                    seq = _alt_sequence(page, clip)
+                    q["altCount"] = max(4, len(seq)) if seq else _alt_count(page, clip)
+                    crops = _crops(page, clip, shot, seq)
+                    if crops:
+                        q["crops"] = crops
+                        # Bildens proportion behövs för att kortet ska kunna ge
+                        # varje utsnitt rätt höjd innan bilden har laddats.
+                        # Renderingen är likformig, så utsnittets proportion är
+                        # bildens gånger kvoten mellan andelarna.
+                        q["imageAspect"] = round(shot.width / shot.height, 4)
                     if read["text"]:
                         q["text"] = read["text"]  # för sökning och alt-text
                 if code == "DTK" and pending_figure is not None:
