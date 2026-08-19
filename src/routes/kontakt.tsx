@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { Mail, MessageSquare, Bug } from "lucide-react";
+import { Mail, MessageSquare, Bug, Linkedin } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
 
 export const Route = createFileRoute("/kontakt")({
@@ -97,8 +97,9 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Vem driver Tvåkommanollan?</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Sajten drivs av Niklas Pellkvist som privatperson. Den är gratis, utan annonser
-                  och utan kommersiell verksamhet kopplad till sig. Mer om varför sajten finns:{" "}
+                  Sajten drivs av Niklas Pellkvist som privatperson. Allt pluggmaterial är gratis
+                  och vi visar inga annonser. Det enda som kostar pengar är personlig coachning
+                  (studieupplägget), och den är helt frivillig. Mer om varför sajten finns:{" "}
                   <Link to="/om" className="underline" style={{ color: "var(--amber)" }}>
                     /om
                   </Link>
@@ -106,6 +107,23 @@ function KontaktPage() {
                 </span>
               </span>
             </div>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/niklas-pellkvist-a3b1382b2/"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-[#0a66c2] p-4 transition hover:bg-[#004182]"
+              style={{ color: "#fff8f5" }}
+            >
+              <Linkedin className="h-5 w-5 shrink-0" />
+              <span>
+                <span className="block font-semibold">Niklas Pellkvist på LinkedIn</span>
+                <span className="mt-0.5 block text-xs" style={{ color: "rgba(255,248,245,0.75)" }}>
+                  Samarbeten, frågor om sajten eller bara connecta
+                </span>
+              </span>
+            </a>
           </li>
         </ul>
 

@@ -85,8 +85,9 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser, inga premium-paket,
-            inga in-app-köp. Du betalar aldrig med pengar, tid eller uppmärksamhet.
+            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser och ingen betalspärr
+            — allt pluggmaterial är gratis. Det enda som kostar pengar är personlig coachning, som
+            är helt frivillig. Du betalar aldrig med din uppmärksamhet.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -108,7 +109,8 @@ function OmPage() {
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Gratis betyder gratis.</strong> Inga
-              premium-paket, inga in-app-köp, inga annonser.
+              annonser, ingen betalspärr, inget premium-läge. Personlig coachning är det enda som
+              kostar, och inget i appen kräver den.
             </li>
           </ul>
 
