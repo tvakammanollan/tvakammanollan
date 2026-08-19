@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Bug } from "lucide-react";
+import { Bug, CheckCircle2 } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -12,65 +14,75 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { rateLimit, limits } from "@/lib/rate-limit";
+import { submitBugReport } from "@/lib/bug-report.functions";
+
+/* =====================================================================
+   RAPPORTERA BUGG
+
+   Knappen krävde tidigare inloggning och svarade "Du måste vara inloggad
+   för att rapportera buggar" — alltså ingen väg alls för den som stötte på
+   ett fel i startsidan, registreringen eller gamla prov, som alla går att
+   använda utan konto. Rapporten hamnade dessutom i en tabell som ingen
+   läste: inget mejl, ingen notis.
+
+   Nu går inskicket genom en serverfunktion som skriver raden med service
+   role OCH mejlar den vidare, och rutan visar en riktig bekräftelse i
+   stället för att bara stängas.
+   ===================================================================== */
 
 export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text" }) {
   const { user } = useAuth();
+  const submitFn = useServerFn(submitBugReport);
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
+  const [replyEmail, setReplyEmail] = useState("");
   const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  // Ett riktigt konto har en adress vi redan känner. Gäster (anonym
+  // inloggning) har det inte, och ska därför få frågan precis som utloggade.
+  const harKontoEpost = !!user && !user.is_anonymous;
+
+  const stäng = (v: boolean) => {
+    setOpen(v);
+    if (!v) {
+      // Nollställ först när rutan stängts, annars blinkar formuläret förbi
+      // ovanpå bekräftelsen på vägen ut.
+      setTimeout(() => {
+        setSent(false);
+        setMsg("");
+        setReplyEmail("");
+      }, 200);
+    }
+  };
 
   const submit = async () => {
-    if (!user) {
-      toast.error("Du måste vara inloggad för att rapportera buggar.");
-      return;
-    }
-    if (msg.trim().length < 3) {
+    if (msg.trim().length < 5) {
       toast.error("Skriv lite mer så vi förstår problemet.");
       return;
     }
-    // Client-side throttle (server enforces too via submit_bug_report RPC).
-    const r = rateLimit(`bug:${user.id}`, limits.bugReport);
-    if (!r.ok) {
-      toast.error(`Vänta ${Math.ceil(r.resetIn / 60000)} min innan nästa rapport.`);
-      return;
-    }
     setSending(true);
-    // Try the new RPC (with throttle + rate limit). Fall back to direct
-    // insert into bug_reports if the migration isn't applied yet.
-    const meta = {
-      page: typeof window !== "undefined" ? window.location.pathname : null,
-      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
-    };
-    const r1 = await supabase.rpc("submit_bug_report", {
-      _message: msg.trim(),
-      _meta: meta,
-    });
-    let error = r1.error;
-    if (error && /function .* does not exist|could not find/i.test(error.message)) {
-      // Legacy path
-      const r2 = await supabase.from("bug_reports").insert({
-        user_id: user.id,
-        message: msg.trim(),
-        page: meta.page,
-        user_agent: meta.user_agent,
+    try {
+      await submitFn({
+        data: {
+          message: msg.trim(),
+          page: typeof window !== "undefined" ? window.location.pathname : undefined,
+          userAgent:
+            typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 400) : undefined,
+          replyEmail: replyEmail.trim() || undefined,
+        },
       });
-      error = r2.error;
+      setSent(true);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Kunde inte skicka. Försök igen.");
+    } finally {
+      setSending(false);
     }
-    setSending(false);
-    if (error) {
-      toast.error(error.message ?? "Kunde inte skicka. Försök igen.");
-      return;
-    }
-    toast.success("Tack! Buggen är rapporterad.");
-    setMsg("");
-    setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={stäng}>
       <DialogTrigger asChild>
         {variant === "icon" ? (
           <Button
@@ -90,28 +102,69 @@ export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text
         )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Rapportera bugg</DialogTitle>
-          <DialogDescription>
-            Tvåkommanollan är ett projekt under uppbyggnad så vissa buggar finns tyvärr fortfarande.
-            Beskriv vad som gick fel så fixar vi det.
-          </DialogDescription>
-        </DialogHeader>
-        <Textarea
-          value={msg}
-          onChange={(e) => setMsg(e.target.value)}
-          placeholder="T.ex. 'Det stod oavgjort men jag tappade ELO i match X'…"
-          rows={5}
-          maxLength={2000}
-        />
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => setOpen(false)}>
-            Avbryt
-          </Button>
-          <Button onClick={submit} disabled={sending}>
-            {sending ? "Skickar…" : "Skicka"}
-          </Button>
-        </DialogFooter>
+        {sent ? (
+          <>
+            <DialogHeader>
+              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#2f6b3c]/15 text-[#2f6b3c]">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <DialogTitle className="text-center">Tack — rapporten är skickad</DialogTitle>
+              <DialogDescription className="text-center">
+                Den ligger nu hos oss tillsammans med vilken sida du var på, så vi kan börja leta
+                direkt.
+                {replyEmail.trim() || harKontoEpost
+                  ? " Vi hör av oss om vi behöver veta mer."
+                  : " Vill du ha svar kan du mejla info@tvakommanollan.se så kopplar vi ihop det."}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button onClick={() => stäng(false)} className="w-full">
+                Stäng
+              </Button>
+            </DialogFooter>
+          </>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>Rapportera bugg</DialogTitle>
+              <DialogDescription>
+                Tvåkommanollan byggs fortfarande, så en del går sönder. Beskriv vad som hände och
+                vad du väntade dig — det räcker långt.
+              </DialogDescription>
+            </DialogHeader>
+            <Textarea
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+              placeholder="T.ex. 'Jag vann 6–3 mot boten men resultatsidan sa oavgjort.'"
+              rows={5}
+              maxLength={2000}
+              aria-label="Beskriv buggen"
+            />
+            {!harKontoEpost && (
+              <div>
+                <Input
+                  type="email"
+                  value={replyEmail}
+                  onChange={(e) => setReplyEmail(e.target.value)}
+                  placeholder="Din e-post (frivilligt)"
+                  aria-label="Din e-postadress, frivilligt"
+                  maxLength={200}
+                />
+                <p className="mt-1.5 text-xs text-muted-foreground">
+                  Bara om du vill ha svar. Vi använder den inte till något annat.
+                </p>
+              </div>
+            )}
+            <DialogFooter>
+              <Button variant="ghost" onClick={() => stäng(false)}>
+                Avbryt
+              </Button>
+              <Button onClick={() => void submit()} disabled={sending}>
+                {sending ? "Skickar…" : "Skicka"}
+              </Button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
