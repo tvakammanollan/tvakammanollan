@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
-import { submitMatch } from "@/lib/match.functions";
+import { finalizeMatch, submitMatch } from "@/lib/match.functions";
 import { trackEvent } from "@/lib/events";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +26,13 @@ import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
+import { displayName } from "@/lib/guest-name";
+import {
+  MATCH_TOTAL_SECONDS,
+  OPPONENT_GRACE_SECONDS,
+  matchStartKey,
+  secondsLeftFrom,
+} from "@/lib/match-clock";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -34,7 +41,7 @@ export const Route = createFileRoute("/match/$matchId")({
   }),
 });
 
-const TOTAL_SECONDS = 5 * 60;
+const TOTAL_SECONDS = MATCH_TOTAL_SECONDS;
 
 interface QuestionRow {
   id: string;
@@ -62,6 +69,13 @@ function MatchPage() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const submitFn = useServerFn(submitMatch);
+  // Ref: väntan-effekten nedan får inte prenumerera om varje gång
+  // useServerFn returnerar en ny funktionsidentitet.
+  const finalizeFn = useServerFn(finalizeMatch);
+  const finalizeRef = useRef(finalizeFn);
+  useEffect(() => {
+    finalizeRef.current = finalizeFn;
+  }, [finalizeFn]);
 
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
@@ -175,7 +189,10 @@ function MatchPage() {
             .select("username")
             .eq("id", oppId)
             .maybeSingle();
-          setOpponentName(u?.username ?? "Motståndare");
+          // displayName, inte username rakt av: ett gästkonto heter
+          // `user_1a2b3c4d` i databasen och ska visas som "Gäst enbär".
+          // Ett id är inte ett namn att möta i en match.
+          setOpponentName(displayName(u?.username, oppId));
         }
       }
 
@@ -263,7 +280,7 @@ function MatchPage() {
     // webbläsarens klocka fel mot databasens blir `created_at` godtyckligt
     // långt bort, och en match kunde lämnas in automatiskt i samma sekund den
     // öppnades. Här jämförs alltid Date.now() med ett tidigare Date.now().
-    const anchorKey = `match_start_${matchId}`;
+    const anchorKey = matchStartKey(matchId);
     let anchor = Number(sessionStorage.getItem(anchorKey)) || 0;
     if (!anchor) {
       anchor = matchStartedAt?.getTime() ?? Date.now();
@@ -274,8 +291,7 @@ function MatchPage() {
       }
     }
     const tick = () => {
-      const elapsed = Math.floor((Date.now() - anchor) / 1000);
-      const left = Math.max(0, TOTAL_SECONDS - elapsed);
+      const left = secondsLeftFrom(anchor);
       setSecondsLeft(left);
       if (left === 0 && !submittedRef.current) {
         submittedRef.current = true;
@@ -368,9 +384,9 @@ function MatchPage() {
             questionsCountRef.current > 0
           ) {
             oppForceStartedRef.current = true;
-            setOppForceCountdown(30);
+            setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
-            toast.info("Motståndaren är klar – du har 30 sekunder kvar!");
+            toast.info(`Motståndaren är klar – du har ${OPPONENT_GRACE_SECONDS} sekunder kvar!`);
           }
         },
       )
@@ -515,7 +531,7 @@ function MatchPage() {
   // Wait for opponent (private) — with exponential-backoff reconnect
   useEffect(() => {
     if (!waitingForOpp) return;
-    let opp = 30;
+    let opp = OPPONENT_GRACE_SECONDS;
     setOppSecondsLeft(opp);
 
     let attempts = 0;
@@ -574,7 +590,15 @@ function MatchPage() {
       setOppSecondsLeft(opp);
       if (opp <= 0) {
         clearInterval(id);
-        navigate({ to: "/result/$matchId", params: { matchId } });
+        // Motståndaren dök aldrig upp. Avsluta matchen på servern INNAN vi går
+        // till resultatet — annars står matchen kvar som `active`, och då ger
+        // varken ELO eller facit något: `get_match_review` svarar bara för
+        // avslutade matcher, vilket är hela orsaken till "Genomgång av alla
+        // 0 frågor". Går anropet fel visar resultatsidan sitt väntläge.
+        void finalizeRef
+          .current({ data: { matchId } })
+          .catch((e) => console.error("[match] finalize failed", e))
+          .finally(() => navigate({ to: "/result/$matchId", params: { matchId } }));
       }
     }, 1000);
 
@@ -696,13 +720,17 @@ function MatchPage() {
         </div>
         <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[var(--cream)] tabular-nums">{oppSecondsLeft}s</span>{" "}
+          <span className="font-semibold text-[var(--cream)] tabular-nums">
+            {Math.max(0, oppSecondsLeft)}s
+          </span>{" "}
           kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <m.div
             className="h-full bg-gradient-to-r from-[#ae2f26] to-[#f5c089]"
-            animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
+            animate={{
+              width: `${Math.max(0, oppSecondsLeft / OPPONENT_GRACE_SECONDS) * 100}%`,
+            }}
             transition={{ duration: 0.95, ease: "linear" }}
           />
         </div>
@@ -810,6 +838,8 @@ function MatchPage() {
               selectAnswer={selectAnswer}
               setCurrent={setCurrent}
               goNext={goNext}
+              onSubmit={() => setConfirmOpen(true)}
+              submitting={submitting}
             />
           </div>
         </main>
@@ -825,6 +855,8 @@ function MatchPage() {
             selectAnswer={selectAnswer}
             setCurrent={setCurrent}
             goNext={goNext}
+            onSubmit={() => setConfirmOpen(true)}
+            submitting={submitting}
           />
         </main>
       )}
@@ -855,7 +887,7 @@ function MatchPage() {
             <AlertDialogDescription>
               {match.is_bot_match
                 ? "Resultatet räknas ut direkt."
-                : "Motståndaren får 30 sekunder på sig att avsluta."}
+                : `Motståndaren får ${OPPONENT_GRACE_SECONDS} sekunder på sig att avsluta.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -883,6 +915,8 @@ interface QuestionCardProps {
   selectAnswer: (qId: string, choice: string) => void | Promise<void>;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
   goNext: () => void | Promise<void>;
+  onSubmit: () => void;
+  submitting: boolean;
 }
 
 function QuestionCard({
@@ -893,6 +927,8 @@ function QuestionCard({
   selectAnswer,
   setCurrent,
   goNext,
+  onSubmit,
+  submitting,
 }: QuestionCardProps) {
   const optionLetters = ["A", "B", "C", "D", "E"];
   const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
@@ -958,9 +994,11 @@ function QuestionCard({
         })}
       </div>
 
-      {/* Kortet navigerar, bottenlisten lämnar in. På sista frågan bytte
-          "Nästa fråga" plats med ett andra "Lämna in svar" — samma knapp som
-          suttit kvar i bottenlisten hela matchen, strax därunder. */}
+      {/* Framåtknappen står stilla hela matchen. Sju gånger heter den
+          "Nästa fråga", på den åttonde "Lämna in svar" — samma plats, samma
+          tumme. Bottenlisten behåller sin knapp för den som vill lämna in
+          tidigare, men den som svarat klart ska inte behöva leta efter
+          vägen ut. */}
       <div className="mt-5 flex items-center justify-between">
         <Button
           variant="ghost"
@@ -969,9 +1007,17 @@ function QuestionCard({
         >
           Föregående
         </Button>
-        {current < total - 1 && (
+        {current < total - 1 ? (
           <Button disabled={!choice} onClick={() => void goNext()}>
             Nästa fråga
+          </Button>
+        ) : (
+          <Button
+            disabled={submitting}
+            onClick={onSubmit}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            Lämna in svar
           </Button>
         )}
       </div>
