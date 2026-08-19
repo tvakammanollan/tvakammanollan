@@ -412,6 +412,96 @@ hogskoleprovet.nu:
   bara det som saknas. Kör `scrape:ord-defs` + `apply:ord-defs` efteråt så får
   de nya orden definitioner som resten av beståndet.
 
+### Ordförklaringarna (`questions.definition`)
+
+Varje ORD-rad har en förklaring, skrapad från svenska.se (SO primärt, sedan
+SAOL, SO:s idiom, SAOB), Wiktionary och Wikipedia — `scripts/scrape-ord-definitions.ts`
+bygger `scripts/ord-definitions.json`, `scripts/apply-ord-definitions.ts`
+skriver in den. Täckningen är 100 % (8 761 av 8 761).
+
+- **`src/lib/ord-definition.ts` äger allt som rör förklaringar** — utskrivning
+  av förkortningar, textformatet, parsern och `ordDefinition()` självt.
+  `sv-format.ts` återexporterar `ordDefinition`/`hasOrdDefinition` eftersom
+  hela appen redan importerar dem därifrån. **UI ska använda
+  `ordDefinitionParts()`**, inte `ordDefinition()` — den senare ger rå text
+  inklusive sektionsraderna.
+- **Ordböckerna skriver förkortat och det skrivs ut vid rendering**, inte i
+  databasen: "el." → eller (1 028 rader), "särsk." → särskilt (814), "äv." →
+  även, "anv." → används, "p.g.a.", "t.ex.", "m.m." med flera. Samma funktion
+  körs i skrapan, så nyskrapade rader är redan utskrivna och renderingslagret
+  är skyddsnätet för äldre rader. Lägg till nya förkortningar **i
+  `ABBREVIATIONS` i fallande längdordning** — annars äter `el.` upp `el. d.`
+  och `t.ex.` blir halvt utskrivet. Varje mönster kräver att ingen bokstav
+  står omedelbart före, annars blir "modell." till "modeleller".
+- **Tre förkortningar böjs efter ett framförställt ord** (`s.k.`, `eg.`,
+  `urspr.`) via `agreeingForm()`: "de eg. invånarnas" → egentliga, "något eg.
+  resultat" → egentligt, "som man eg. är beroende av" → egentligen. Utan det
+  blev var tredje fel.
+- **Definitionen är ett textfält med märkta sektioner sist**, inte egna
+  kolumner:
+
+  ```
+  1. Ta sig upp i eller ombord på rigg respektive fartyg.
+  2. Göra entré på en scen eller dylikt.
+  Exempel: äntra stormasten | lotsen kunde äntra skeppet trots sjögången
+  Liknande ord: borda, entré
+  Ordklass: verb
+  ```
+
+  `formatOrdDefinition()` skriver formen, `parseOrdDefinition()` läser den.
+  Skälet är att en ny kolumn hade krävt en migration mot produktion för rent
+  presentationsdata, och att texten fortfarande läses rakt av den som slår upp
+  ordet i databasen eller via MCP-verktyget. **Parsern måste fortsätta klara
+  den äldre formen** där betydelserna låg på en rad separerade med dubbla
+  mellanslag (`1. ...  2. ...`) — det är så alla rader såg ut före 2026-08-18.
+- **Exempelmening, liknande ord och ordklass kommer gratis ur SO-svaret** och
+  användes inte alls tidigare: `syntex` (finns för ~83 % av orden),
+  JFR-hänvisningarna i `hänvisningar` (~53 %) och `ordklass` (100 %).
+  JFR-listan är den viktigaste — för "frist" ger den andrum, anstånd,
+  nådatid, respit, rådrum och uppskov, alltså precis de synonymer ORD-frågorna
+  handlar om. `collectRich()` i skrapan hämtar dem, även ur
+  `underbetydelser`.
+- **Homografsiffror.** svenska.se numrerar likstavade uppslagsord och siffran
+  följde med skrapet, både klistrad vid ordet ("2smitta") och som eget ord
+  ("Ge ifrån sig 1 något viktigt"). Det andra fallet städas av
+  `stripLooseHomographDigit()`, som måste skilja markören från riktiga tal
+  ("med början 1 januari", "heltal mellan 1 och …", "1 Mos. 11:1–9") **och
+  från betydelsenumreringen** — en siffra följd av punkt rörs aldrig, annars
+  slås betydelse 1 och 2 ihop till en enda text.
+- **Gissade uppslagsord måste stämmas mot facit.** Tre vägar i skrapan slår
+  upp ett *annat* ord än det efterfrågade: stavningsrättelsen
+  (`lookupSuggest`), närmaste granne på redigeringsavstånd (`lookupFuzzy`)
+  och frasens huvudord (`lookupPhraseHead`) — plus engelska Wiktionary, som
+  har egna homografer. Alla fyra går genom `corroboratedByAnswer()`, som
+  kräver att definitionen delar något med ORD-uppgiftens eget rätta svar.
+  Utan den grinden fick **`blam`** definitionen av *blad*, `keratit` av
+  *keratin*, `hema-` av *hemi-*, `töra` av *tora*, `fysikus` av *fysikum*,
+  `vinna gehör` av *vinna* ("utgå som segrare i tävling") och `linda in
+  orden` av *linda* (tygremsan spädbarn lindades med). Redigeringsavståndet
+  var 1 i samtliga fall, så avståndet kan omöjligt skilja rätt från fel —
+  **det kan bara betydelsen göra**, och facit är den enda betydelse vi
+  äger. Faller gissningen bort landar ordet till slut på facit-synonymen,
+  som är rätt per definition: en tunn men riktig förklaring slår en fyllig
+  och felaktig.
+- **Jämförelsen är generöst satt och ska förbli det.** Fem tecken prefix plus
+  containment åt båda håll, med funktionsorden bortsållade. Fyra tecken
+  räckte inte (`förlåta` och `förlöpa` delar sina fyra första, vilket
+  godkände fel definition för `tillge`), och utan stoppordslistan
+  korroborerades `punktur` av att både facit och definitionen innehöll
+  "med". Ett falskt larm kostar bara en fylligare formulering; ett missat fel
+  visar något osant för den som pluggar.
+- **Kvalifikationerna i `definition_source` måste synas i UI:t.**
+  `definitionSourceLabel()` i `ord.tsx` skriver ut både `– om "X"` och
+  `rättstavat "X"`. Kapas de bort ser en förklaring av *sälla* ut som en
+  förklaring av *sälla sig till*, och läsaren har inget sätt att märka det.
+- **`apply:ord-defs` skriver bara rader där `definition IS NULL`.** Har
+  skrapan byggts om måste `--overwrite` med, annars landar ingenting — alla
+  8 761 rader är redan ifyllda. Även med `--overwrite` hoppas rader med
+  identisk text över, så en omkörning rör ingenting.
+- Skrapan är återupptagbar via `scripts/.ord-defs/cache.json`; en full
+  omskrapning av alla ord tar ~25–40 min vid `--concurrency 8`. Cachen har
+  samma form som artefakten, så ändras textformatet måste cachen bort.
+
 **Sätt inte `exam_term` på ORD-rader.** `import-gamla-prov` gör
 `delete().not("exam_term", "is", null)` innan den importerar om gamla prov, så
 allt med `exam_term` satt raderas nästa gång någon kör den. Terminen ligger i

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { fetchWordBatch } from "@/lib/word-practice.functions";
-import { ordText, ordDefinition } from "@/lib/sv-format";
+import { ordText } from "@/lib/sv-format";
+import { ordDefinitionParts } from "@/lib/ord-definition";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { ArrowRight, BookOpen } from "lucide-react";
 
@@ -46,9 +47,13 @@ export function WordOfTheDay() {
           (q) => q.definition && q.definition.trim().length > 0 && q.question_text,
         );
         if (!pick || cancelled) return;
+        // Bara betydelserna: kortet klipper på tre rader, och exempelmening
+        // plus liknande ord hör hemma i ord-övningen där det finns plats.
+        const parts = ordDefinitionParts(pick.definition);
+        if (parts.senses.length === 0) return;
         const val: Wotd = {
           word: ordText(pick.question_text),
-          definition: ordDefinition(pick.definition),
+          definition: parts.senses.join(" "),
         };
         try {
           localStorage.setItem(cacheKey(), JSON.stringify(val));

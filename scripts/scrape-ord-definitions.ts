@@ -6,10 +6,14 @@
  *
  *   scripts/ord-definitions.json
  *
- * INGEN service-role-nyckel behövs här – orden läses via den publika
- * anon-nyckeln (anonym inloggning). Att ladda in datan i databasen är
- * ett separat steg: scripts/apply-ord-definitions.ts (kräver service key,
- * körs senare när nyckeln finns – t.ex. via Lovable).
+ * Orden läses helst med service-role-nyckeln ur .env.local. Sedan
+ * 20260818140100_dolj_facit.sql har `authenticated` inte längre SELECT på
+ * questions.correct_answer, och ett anon-anrop som ber om den kolumnen får
+ * 401 "permission denied for table questions" – vilket är hela poängen med
+ * den migrationen. Utan service-nyckel kör skrapan vidare på anon-nyckeln,
+ * men då går sista reservkällan (HP-facits egen synonym) inte att läsa.
+ * Att ladda in datan i databasen är ett separat steg:
+ * scripts/apply-ord-definitions.ts.
  *
  * Källa: svenska.se:s interna API (samma som sajten anropar). Primärt SO
  * (Svensk ordbok – bäst pedagogiska definitioner), faller tillbaka på SAOL.
@@ -33,12 +37,22 @@
 import { createClient } from "@supabase/supabase-js";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+// Samma modul som appen renderar med — utskrivna förkortningar och
+// textformatet för exempel/liknande ord får inte skilja sig åt mellan det
+// som skrivs och det som läses.
+import {
+  expandOrdAbbreviations,
+  formatOrdDefinition,
+  parseOrdDefinition,
+} from "../src/lib/ord-definition";
 
-// bun läser .env automatiskt.
+// bun läser .env och .env.local automatiskt.
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const ANON_KEY =
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
-if (!SUPABASE_URL || !ANON_KEY) {
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const READ_KEY = SERVICE_KEY || ANON_KEY;
+if (!SUPABASE_URL || !READ_KEY) {
   console.error(
     "Saknar env: VITE_SUPABASE_URL och VITE_SUPABASE_PUBLISHABLE_KEY (finns normalt i .env).",
   );
@@ -123,18 +137,87 @@ function correctOptionText(options: any, correct: any): string | null {
 // ---- Snygg formatering ----
 const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 function polishSentence(s: string): string {
-  let t = s.trim().replace(/\s+/g, " ");
+  let t = expandOrdAbbreviations(s.trim().replace(/\s+/g, " "));
   if (!t) return t;
   t = cap(t);
   if (!/[.!?…]$/.test(t)) t += ".";
   return t;
 }
-// Flera betydelser → numrerad, snygg lista. En betydelse → en mening.
-function formatSenses(senses: string[]): string | null {
+// Flera betydelser → numrerad lista, en betydelse → en mening. Går genom
+// formatOrdDefinition så att appens parser läser tillbaka exakt samma form.
+function formatSenses(senses: string[], extra: Partial<RichParts> = {}): string | null {
   const clean = senses.map((s) => s.trim()).filter(Boolean).slice(0, 4);
   if (clean.length === 0) return null;
-  if (clean.length === 1) return polishSentence(clean[0]);
-  return clean.map((s, i) => `${i + 1}. ${polishSentence(s)}`).join("  ");
+  return formatOrdDefinition({
+    senses: clean.map(polishSentence),
+    examples: extra.examples ?? [],
+    related: extra.related ?? [],
+    wordClass: extra.wordClass ?? null,
+  });
+}
+
+type RichParts = {
+  examples: string[];
+  related: string[];
+  wordClass: string | null;
+};
+
+/**
+ * Plockar ut det ordboken har utöver själva betydelsen: autentiska
+ * exempelmeningar (`syntex`), närliggande ord (JFR-hänvisningarna) och
+ * ordklass.
+ *
+ * Det här är hela poängen med att skrapa om beståndet. En ren definition
+ * ("senareläggning av den tidpunkt när något måste ske") säger vad ordet
+ * betyder; exempelmeningen visar hur det används, och JFR-listan ger
+ * synonymerna — vilket är precis vad ORD-uppgifterna frågar efter. För
+ * "frist" ligger andrum, anstånd, nådatid, respit, rådrum och uppskov
+ * gratis i svaret och användes inte alls tidigare.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function collectRich(src: any, word: string): RichParts {
+  const examples: string[] = [];
+  const related: string[] = [];
+  const norm = normalizeWord(word);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const addRelated = (node: any) => {
+    for (const h of node?.hänvisningar ?? []) {
+      if (!String(h?.typ ?? "").startsWith("JFR")) continue;
+      // Uppslagsordets homografsiffra följer med i länktexten ("entré 1").
+      const w = stripHtml(String(h?.hänvisning ?? ""))
+        .replace(/\s*\d+$/, "")
+        .trim()
+        .toLowerCase();
+      if (w && w !== norm && !related.includes(w)) related.push(w);
+    }
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const addExamples = (node: any) => {
+    for (const ex of node?.syntex ?? []) {
+      const t = stripHtml(String(ex)).trim();
+      if (t && !examples.includes(t)) examples.push(t);
+    }
+  };
+
+  const hbs = src?.huvudbetydelser ?? src?.huvudbetydelse ?? [];
+  for (const hb of Array.isArray(hbs) ? hbs : [hbs]) {
+    addRelated(hb);
+    addExamples(hb);
+    for (const ub of hb?.underbetydelser ?? []) {
+      addRelated(ub);
+      addExamples(ub);
+    }
+  }
+
+  // Hela meningar före lösryckta fraser: "lotsen kunde äntra skeppet trots
+  // sjögången" lär ut mer än "äntra stormasten".
+  examples.sort((a, b) => b.split(" ").length - a.split(" ").length);
+  return {
+    examples: examples.slice(0, 2).map((e) => expandOrdAbbreviations(e)),
+    related: related.slice(0, 6),
+    wordClass: src?.ordklass ? String(src.ordklass).trim() : null,
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -157,7 +240,7 @@ function buildDefinition(hits: any[], word: string): string | null {
     const text = stripHtml(String(hb?.definition_full || hb?.definition || ""));
     if (text) senses.push(text);
   }
-  return formatSenses(senses);
+  return formatSenses(senses, collectRich(src, word));
 }
 
 // ---- Fallback: SO-idiom (för uttryck/fraser, t.ex. "vara i svang") ----
@@ -390,6 +473,59 @@ async function lookupFuzzy(word: string): Promise<CacheVal> {
   return { definition: null, source: null };
 }
 
+/**
+ * Stämmer en gissad definition med uppgiftens eget facit?
+ *
+ * `lookupSuggest` och `lookupFuzzy` slår upp ett ANNAT uppslagsord än det som
+ * efterfrågades — en stavningsrättelse eller närmaste grannen på
+ * redigeringsavstånd. Ofta rätt ("obsetrik" → obstetrik), men lika ofta ett
+ * helt annat ord: "blam" → blad, "keratit" → keratin, "hema-" → hemi-,
+ * "töra" → tora, "fysikus" → fysikum. Avståndet är 1 i samtliga fall, så
+ * avståndet kan inte skilja dem åt.
+ *
+ * Det som kan skilja dem åt är att ORD-uppgifter ÄR synonymuppgifter: facit
+ * ger ett ord med samma betydelse. Delar den gissade definitionen inget med
+ * facit är den med stor sannolikhet fel ord, och då är det bättre att falla
+ * vidare i kedjan – sista anhalten är facit självt, som är rätt per
+ * definition. En tunn men riktig synonym slår en fyllig och felaktig artikel.
+ *
+ * Jämförelsen är medvetet generös (fyra tecken prefix, plus containment åt
+ * båda håll) eftersom ett falskt larm bara kostar en fylligare formulering,
+ * medan ett missat fel visar något osant för den som pluggar.
+ */
+// Funktionsord bär ingen betydelse och får inte räknas som träff. Utan den
+// här listan godkändes "punktur" (facit "föra in med spruta") av att både
+// facit och definitionen råkade innehålla "med".
+const STOPWORDS = new Set(
+  ("och att som med för den det ett den de dem sig man vid från till ur om av på" +
+    " inte icke inom under över inför inte inga inte inte vara blir bli göra inte" +
+    " inte eller men samt något någon några sådan sådant annan annat andra")
+    .split(" "),
+);
+
+function corroboratedByAnswer(definition: string, word: string): boolean {
+  const answer = answerKey.get(normalizeWord(word));
+  if (!answer) return true; // inget facit att pröva mot – låt den passera
+  const parts = parseOrdDefinition(definition);
+  const haystack = [...parts.senses, ...parts.related].join(" ").toLowerCase();
+  const hayWords = [...haystack.matchAll(/\p{L}{3,}/gu)]
+    .map((m) => m[0])
+    .filter((w) => !STOPWORDS.has(w));
+  const needles = [...String(answer).toLowerCase().matchAll(/\p{L}{3,}/gu)]
+    .map((m) => m[0])
+    .filter((w) => !STOPWORDS.has(w));
+  // Fem tecken, inte fyra: svenskans produktiva förled gör att "förlåta" och
+  // "förlöpa" delar sina första fyra. Sammansättningar fångas ändå av
+  // containment-ledet ("förstena" ⊃ "sten", "filmscen" ⊃ "film").
+  for (const needle of needles) {
+    if (hayWords.some((h) => h.slice(0, 5) === needle.slice(0, 5))) return true;
+    if (hayWords.some((h) => h.length >= 4 && (h.includes(needle) || needle.includes(h)))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchJson(url: string, tries = 6): Promise<any | null> {
   for (let attempt = 0; attempt < tries; attempt++) {
@@ -441,18 +577,47 @@ async function lookupPhraseHead(phrase: string): Promise<CacheVal> {
   return { definition: null, source: null };
 }
 
+/**
+ * Är ordet en ordboksartikel för ett förled/efterled, inte ett vanligt ord?
+ *
+ * Bindestreck räcker inte som kännetecken. "papier-maché", "spin-off",
+ * "laissez-faire" och "aha-upplevelse" är hela uppslagsord som SO kan svara
+ * på, men de plockades isär i sina delar och förklarades ledvis: papier-maché
+ * blev "en sorts formpressad pappersmassa" i stället för SO:s hela artikel.
+ * Ett riktigt förled/efterled har strecket i kanten ("de-", "-graf") eller
+ * listar sina former med komma eller snedstreck ("graf,gram").
+ */
+const isAffixEntry = (word: string) => /^-|-$/.test(word.trim()) || /[,/]/.test(word);
+
 // Förled/efterled & kombinationsformer ("hema-", "graf,gram", "sym-,sym-").
 async function lookupAffix(word: string): Promise<CacheVal> {
-  if (!/[-,/]/.test(word)) return { definition: null, source: null };
-  const parts = [...new Set(word.split(/[,/]/).map((p) => p.trim()).filter(Boolean))];
+  if (!isAffixEntry(word)) return { definition: null, source: null };
+  const parts = [
+    ...new Set(
+      word
+        .split(/[,/]/)
+        .map((p) => p.trim())
+        .filter(Boolean),
+    ),
+  ];
   const out: string[] = [];
   for (const p of parts) {
-    let g = await fetchWiktGloss(p); // affixformen som den är, t.ex. "hema-"
-    if (!g) {
+    // Rå gloss från Wiktionary ska poleras; det resolveSingle() ger tillbaka
+    // är redan en färdig definition med sina sektionsrader, och polishSentence
+    // kollapsar allt blanktecken – då hamnar "Exempel:" och "Ordklass:" mitt
+    // inne i meningen. Håll isär de två.
+    const gloss = await fetchWiktGloss(p); // affixformen som den är, t.ex. "hema-"
+    let text = gloss ? polishSentence(gloss) : null;
+    if (!text) {
       const base = p.replace(/-/g, "").trim();
-      if (base && base !== p) g = (await resolveSingle(base)).definition;
+      const resolved = base && base !== p ? (await resolveSingle(base)).definition : null;
+      // Ett enda led får behålla hela formen; en lista med flera led radas
+      // upp på en rad och då är bara betydelserna läsbara.
+      if (resolved) {
+        text = parts.length > 1 ? parseOrdDefinition(resolved).senses.join(" ") : resolved;
+      }
     }
-    if (g) out.push(parts.length > 1 ? `${p}: ${polishSentence(g)}` : polishSentence(g));
+    if (text) out.push(parts.length > 1 ? `${p}: ${text}` : text);
   }
   if (out.length === 0) return { definition: null, source: null };
   return { definition: out.join("  "), source: "Wiktionary (förled/efterled)" };
@@ -462,12 +627,6 @@ async function lookup(word: string): Promise<CacheVal> {
   const q = encodeURIComponent(word);
   const isPhrase = word.includes(" ");
 
-  // 0. Förled/efterled & kombinationsformer (innehåller bindestreck/komma).
-  if (/[-,/]/.test(word) && !isPhrase) {
-    const affix = await lookupAffix(word);
-    if (affix.definition) return affix;
-  }
-
   // 1. SO (Svensk ordbok) – bäst pedagogiska definitioner.
   const soDef = buildDefinition((await fetchJson(`${API}/so?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], word);
   if (soDef) return { definition: soDef, source: "SO (svenska.se)" };
@@ -475,6 +634,18 @@ async function lookup(word: string): Promise<CacheVal> {
   // 2. SAOL – när det finns en definition.
   const saolDef = buildDefinition((await fetchJson(`${API}/saol?q=${q}&exact_match=true&size=3`))?.hits?.hits ?? [], word);
   if (saolDef) return { definition: saolDef, source: "SAOL (svenska.se)" };
+
+  // 2b. Förled/efterled & kombinationsformer (streck i kanten, eller lista).
+  //
+  // Efter ordböckerna, inte före. SO har egna artiklar för många förled och
+  // de är utförligare än Wiktionarys: "de-" blev "Miss, av, ner, från" när
+  // affix-vägen kördes först, mot SO:s "med avskiljande eller avslutande
+  // verkan i förhållande till den aktuella processen". Affix-vägen behövs
+  // fortfarande för det ordböckerna inte har ("hema-", "graf,gram").
+  if (isAffixEntry(word) && !isPhrase) {
+    const affix = await lookupAffix(word);
+    if (affix.definition) return affix;
+  }
 
   // 3. Idiom/uttryck → SO:s idiomdata under huvudordet.
   if (isPhrase) {
@@ -491,25 +662,35 @@ async function lookup(word: string): Promise<CacheVal> {
   if (wiki) return { definition: wiki, source: "Wikipedia" };
 
   // 6. svenska.se:s stavningsrättelse + närmaste uppslagsord (felstavningar/varianter).
+  //    Båda gissar ett annat uppslagsord och måste stämmas mot facit först.
   if (!isPhrase) {
     const sug = await lookupSuggest(word);
-    if (sug.definition) return sug;
+    if (sug.definition && corroboratedByAnswer(sug.definition, word)) return sug;
     const fuzzy = await lookupFuzzy(word);
-    if (fuzzy.definition) return fuzzy;
+    if (fuzzy.definition && corroboratedByAnswer(fuzzy.definition, word)) return fuzzy;
     // 7. SAOB (Svenska Akademiens ordbok) – ålderdomliga/ovanliga ord.
     const saob = await lookupSAOB(word);
     if (saob) return { definition: saob, source: "SAOB (svenska.se)" };
   }
 
-  // 8. Fras utan egen träff → förklara via frasens huvudord.
+  // 8. Fras utan egen träff → förklara via frasens huvudord. Också en gissning
+  //    på ett annat uppslagsord, och den slår fel på just de uttryck som inte
+  //    betyder summan av sina delar: "vinna gehör" fick "utgå som segrare i
+  //    tävling", "linda in orden" fick tygremsan man lindade spädbarn med.
   if (isPhrase) {
     const head = await lookupPhraseHead(word);
-    if (head.definition) return head;
+    if (head.definition && corroboratedByAnswer(head.definition, word)) return head;
   }
 
-  // 9. Engelska Wiktionary – engelsk förklaring av ordet.
+  // 9. Engelska Wiktionary – engelsk förklaring av ordet. Samma korroborering
+  //    som gissningarna ovan: engelskan har egna homografer, och "blam" fick
+  //    "a sudden, explosive sound" när facit säger skam, "filera" fick "row,
+  //    line" när facit säger hålla ut tonen. En engelsk text som dessutom är
+  //    fel hjälper ingen som pluggar svenska ord.
   const en = await lookupEnWiktionary(word);
-  if (en) return { definition: en, source: "Wiktionary (engelska)" };
+  if (en && corroboratedByAnswer(en, word)) {
+    return { definition: en, source: "Wiktionary (engelska)" };
+  }
 
   // 10. Garanterad fallback: ORD-frågans eget rätta svar (synonym ur HP-facit).
   const ans = answerKey.get(word);
@@ -520,11 +701,22 @@ async function lookup(word: string): Promise<CacheVal> {
 
 // Läs alla ORD-ord via anon-nyckeln + bygg HP-facit-synonymkarta (answerKey).
 async function loadWords(): Promise<string[]> {
-  const supabase = createClient(SUPABASE_URL!, ANON_KEY!, {
+  const supabase = createClient(SUPABASE_URL!, READ_KEY!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
-  const { error: authErr } = await supabase.auth.signInAnonymously();
-  if (authErr) throw authErr;
+  // Anon-nyckeln måste logga in för att komma förbi RLS; service-nyckeln
+  // går förbi den ändå och ska inte logga in som någon.
+  if (!SERVICE_KEY) {
+    const { error: authErr } = await supabase.auth.signInAnonymously();
+    if (authErr) throw authErr;
+    console.warn(
+      "[bygg] ingen SUPABASE_SERVICE_ROLE_KEY – facit (correct_answer) kan inte läsas, så" +
+        ' reservkällan "HP-facit (rätt svar)" är avstängd för den här körningen.',
+    );
+  }
+  // correct_answer är revokerad för anon sedan facit-migrationen; be inte om
+  // kolumnen då, för PostgREST svarar 401 på hela anropet.
+  const COLUMNS = SERVICE_KEY ? "question_text, options, correct_answer" : "question_text, options";
 
   const fill = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -541,7 +733,7 @@ async function loadWords(): Promise<string[]> {
   if (ONLY_WORD) {
     const { data } = await supabase
       .from("questions")
-      .select("question_text, options, correct_answer")
+      .select(COLUMNS)
       .eq("category", "ORD")
       .ilike("question_text", ONLY_WORD);
     fill(data ?? []);
@@ -554,7 +746,7 @@ async function loadWords(): Promise<string[]> {
   for (;;) {
     const { data, error } = await supabase
       .from("questions")
-      .select("question_text, options, correct_answer")
+      .select(COLUMNS)
       .eq("category", "ORD")
       .order("id", { ascending: true })
       .range(from, from + PAGE - 1);

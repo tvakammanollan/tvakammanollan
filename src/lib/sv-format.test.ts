@@ -32,8 +32,9 @@ describe("ordDefinition", () => {
     });
 
     it("rör inte mängder eller enheter", () => {
+      // "särsk." skrivs ut av förkortningslagret; siffrorna är det som testas.
       expect(ordDefinition("10 000 m2 särsk. för angivande av åkerareal")).toBe(
-        "10 000 m2 särsk. för angivande av åkerareal",
+        "10 000 m2 särskilt för angivande av åkerareal",
       );
     });
 
@@ -50,8 +51,10 @@ describe("ordDefinition", () => {
 
   describe("html-entiteter", () => {
     it("avkodar hex, decimal och namngivna", () => {
-      expect(ordDefinition("(&#x2020;) i fråga om")).toBe("(†) i fråga om");
-      expect(ordDefinition("&#8224; märke")).toBe("† märke");
+      // Avkodningen sker före utskrivningen, så "†" hinner bli "föråldrat" —
+      // att det står där bevisar att entiteten lästes.
+      expect(ordDefinition("(&#x2020;) i fråga om")).toBe("(föråldrat) i fråga om");
+      expect(ordDefinition("&#8224; märke")).toBe("Föråldrat: märke");
       expect(ordDefinition("ett &amp; annat")).toBe("Ett & annat");
     });
 

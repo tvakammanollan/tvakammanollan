@@ -1,5 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
+import { ordDefinitionParts } from "@/lib/ord-definition";
 
 export default defineTool({
   name: "lookup_word",
@@ -44,19 +45,27 @@ export default defineTool({
       };
     }
     const row = rows[0];
+    // Databasen lagrar betydelse, exempelmening, liknande ord och ordklass i
+    // ett textfält. Anropare ska slippa parsa det själva — och den råa texten
+    // innehåller dessutom ordboksförkortningar som först skrivs ut här.
+    const parts = ordDefinitionParts(row.definition);
     const payload = {
       found: true,
       word: row.question_text,
-      definition: row.definition,
+      definition: parts.senses.join(" "),
+      senses: parts.senses,
+      examples: parts.examples,
+      related: parts.related,
+      wordClass: parts.wordClass,
       source: row.definition_source,
     };
+    const lines = [`${row.question_text}: ${parts.senses.join(" ")}`];
+    if (parts.wordClass) lines[0] += ` (${parts.wordClass})`;
+    for (const e of parts.examples) lines.push(`Exempel: ${e}`);
+    if (parts.related.length) lines.push(`Liknande ord: ${parts.related.join(", ")}`);
+    if (row.definition_source) lines.push(`Källa: ${row.definition_source}`);
     return {
-      content: [
-        {
-          type: "text",
-          text: `${row.question_text}: ${row.definition}${row.definition_source ? ` (källa: ${row.definition_source})` : ""}`,
-        },
-      ],
+      content: [{ type: "text", text: lines.join("\n") }],
       structuredContent: payload,
     };
   },

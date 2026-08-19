@@ -23,7 +23,8 @@ import {
   SlidersHorizontal,
   ChevronDown,
 } from "lucide-react";
-import { ordText, ordDefinition, hasOrdDefinition, formatInt } from "@/lib/sv-format";
+import { ordText, hasOrdDefinition, formatInt } from "@/lib/sv-format";
+import { ordDefinitionParts, definitionSourceLabel } from "@/lib/ord-definition";
 import { sounds } from "@/lib/sounds";
 import { trackEvent } from "@/lib/events";
 import {
@@ -103,16 +104,63 @@ interface AnsweredItem {
   isCorrect: boolean;
 }
 
-function definitionSourceLabel(s?: string | null): string {
-  if (!s) return "Förklaring";
-  if (s.startsWith("SO idiom")) return "SO · idiom (svenska.se)";
-  if (s.startsWith("SO")) return "SO · Svensk ordbok (svenska.se)";
-  if (s.startsWith("SAOL")) return "SAOL (svenska.se)";
-  if (s.startsWith("SAOB")) return "SAOB (svenska.se)";
-  if (s.startsWith("Wikipedia")) return "Wikipedia";
-  if (s.startsWith("Wiktionary")) return "Wiktionary";
-  if (s.startsWith("HP-facit")) return "Synonym (HP-facit)";
-  return "Förklaring";
+/**
+ * Själva innehållet i förklaringsrutan. Betydelse, exempelmening, liknande
+ * ord och ordklass kommer i ett textfält från databasen och delas upp av
+ * `ordDefinitionParts()`.
+ *
+ * Varje del får sin egen form av ett skäl: betydelserna är det man läser,
+ * exempelmeningen är ett citat ur ordboken (kursiv, för att den inte ska
+ * läsas som vår egen text), och de liknande orden är de som faktiskt dyker
+ * upp som svarsalternativ i ORD — de ska gå att skumma, inte läsas i en
+ * mening. Ordklassen står sist och lågmält; den är en pusselbit, inte en
+ * rubrik.
+ */
+function DefinitionBody({ definition }: { definition: string | null | undefined }) {
+  const { senses, examples, related, wordClass } = ordDefinitionParts(definition);
+  return (
+    <div style={{ fontSize: 14, lineHeight: 1.7 }} className="text-[var(--cream)]">
+      {senses.length > 1 ? (
+        <ol className="list-inside list-decimal space-y-1">
+          {senses.map((s, i) => (
+            <li key={i}>{s}</li>
+          ))}
+        </ol>
+      ) : (
+        <p className="whitespace-pre-wrap">{senses[0] ?? ""}</p>
+      )}
+
+      {examples.length > 0 && (
+        <div className="mt-2.5 space-y-0.5 border-l-2 border-[#7a5236]/30 pl-2.5">
+          {examples.map((e, i) => (
+            <p key={i} className="italic text-white/70">
+              {e}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {related.length > 0 && (
+        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
+            Liknande ord
+          </span>
+          {related.map((w) => (
+            <span
+              key={w}
+              className="rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[12px] text-[var(--cream)]"
+            >
+              {w}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {wordClass && (
+        <p className="mt-2 text-[11px] uppercase tracking-wide text-white/45">{wordClass}</p>
+      )}
+    </div>
+  );
 }
 
 function DefinitionBlock({
@@ -154,12 +202,7 @@ function DefinitionBlock({
               <BookOpen className="h-3.5 w-3.5" />
               {definitionSourceLabel(source)}
             </div>
-            <p
-              className="whitespace-pre-wrap text-[var(--cream)]"
-              style={{ fontSize: 14, lineHeight: 1.7 }}
-            >
-              {ordDefinition(definition)}
-            </p>
+            <DefinitionBody definition={definition} />
           </div>
         </div>
       </div>

@@ -13,9 +13,17 @@
  *   bun run apply:ord-defs --dry          # visa vad som skulle skrivas
  *   bun run apply:ord-defs                # skriv på riktigt
  *
- * Säkert: rör bara rader där definition IS NULL (återupptagbart), och
- * skriver inget i --dry. Definitionerna syns direkt i ord-övningen efteråt
+ * Säkert: rör som standard bara rader där definition IS NULL (återupptagbart),
+ * och skriver inget i --dry. Definitionerna syns direkt i ord-övningen efteråt
  * (DefinitionBlock i src/routes/ord.tsx) – ingen deploy behövs.
+ *
+ *   bun run apply:ord-defs --overwrite --dry   # räkna om hur många som ändras
+ *   bun run apply:ord-defs --overwrite         # skriv över befintliga texter
+ *
+ * --overwrite behövs när skrapan har byggts om och redan ifyllda rader ska
+ * ersättas – t.ex. när exempelmeningar, liknande ord och ordklass tillkom.
+ * Även då skrivs bara de rader vars text faktiskt skiljer sig, så en andra
+ * körning rör ingenting.
  * ─────────────────────────────────────────────────────────────────
  */
 import { createClient } from "@supabase/supabase-js";
@@ -31,6 +39,7 @@ if (!SUPABASE_URL || !SERVICE_KEY) {
 
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry");
+const OVERWRITE = args.includes("--overwrite");
 const LIMIT = args.includes("--limit")
   ? parseInt(args[args.indexOf("--limit") + 1], 10)
   : Infinity;
@@ -53,16 +62,20 @@ async function main() {
   const defs = artifact.definitions;
   console.log(`[apply] ${Object.keys(defs).length} ord med definition i artefakten  dry=${DRY}`);
 
-  // Läs alla ORD-rader som saknar definition → mappa normaliserat ord -> ids.
+  // Läs ORD-raderna → mappa normaliserat ord -> ids. Utan --overwrite bara de
+  // som saknar definition; med --overwrite alla, men rader som redan har exakt
+  // rätt text filtreras bort nedan så att en omkörning inte skriver något.
   const byWord = new Map<string, string[]>();
   let from = 0;
+  let unchanged = 0;
   const PAGE = 1000;
   for (;;) {
-    const { data, error } = await supabase
+    let query = supabase
       .from("questions")
-      .select("id, question_text")
-      .eq("category", "ORD")
-      .is("definition", null)
+      .select("id, question_text, definition")
+      .eq("category", "ORD");
+    if (!OVERWRITE) query = query.is("definition", null);
+    const { data, error } = await query
       .order("id", { ascending: true })
       .range(from, from + PAGE - 1);
     if (error) throw error;
@@ -70,13 +83,21 @@ async function main() {
     for (const r of rows) {
       const w = normalizeWord(r.question_text as string);
       if (!w) continue;
+      const next = defs[w]?.definition;
+      if (next && r.definition === next) {
+        unchanged++;
+        continue;
+      }
       if (!byWord.has(w)) byWord.set(w, []);
       byWord.get(w)!.push(r.id as string);
     }
     if (rows.length < PAGE) break;
     from += PAGE;
   }
-  console.log(`[apply] ${byWord.size} unika ord saknar definition i DB`);
+  console.log(
+    `[apply] ${byWord.size} unika ord att skriva` +
+      (OVERWRITE ? `  (${unchanged} rader redan aktuella)` : "  (saknar definition)"),
+  );
 
   let updatedWords = 0;
   let updatedRows = 0;
