@@ -314,6 +314,38 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   läser provlistan på studera.nu, och `build.py` skriver om `index.json`,
   `exempel.json` och gamla-prov-delen av `public/sitemap.xml` (mellan
   markörkommentarerna — resten av sitemapen är handskriven).
+- **`build.py` går inte att köra om — arkivet blir fattigare.** Den raderar allt i
+  `src/data/prov/` och bygger från cachen, men cachen går inte att återskapa:
+  ELF-häftena från flera terminer finns inte kvar hos UHR utan har hämtats för
+  hand och matats in med `adopt_elf.py`. En körning med bara `fetch.py` bakom sig
+  ger 140 uppgifter per prov i stället för 160 (all ELF borta) och kraschar
+  dessutom på 2012vt, som behöver `html_prov.py`. Ska bara enstaka fält läggas
+  till i efterhand: skriv ett skript som *muterar* de befintliga filerna, som
+  `add_crops.py`. Provdatan ligger i git, så `git checkout -- src/data/prov`
+  återställer efter ett misstag.
+- **`add_crops.py` lägger beskärningskoordinater på bilduppgifterna** utan att
+  bygga om arkivet (`--apply` för att skriva; torrkörning annars). Den sätter
+  `crops` och `imageAspect`, och flyttar de NOG/DTK vars text är sönderskuren av
+  extraktionen till bildläge. 1 518 av 1 594 bilduppgifter (95 %) har crops;
+  resten faller tillbaka på hela utsnittet med en bokstavsrad under.
+- **`crops` låter kortet rita sina egna knappar.** Bilden innehåller hela
+  uppgiften — nummer, stam *och* alternativ — vilket förr gav fyra tomma
+  bokstavsknappar under en bild där alternativen redan stod, plus numret två
+  gånger. `crops` säger var varje del sitter som andelar av bilden, och
+  `CropView` visar en av dem. Samma fil till alla utsnitt, alltså en hämtning —
+  och **aldrig `loading="lazy"` på dem**: bilden är avsiktligt förskjuten utanför
+  sin klippruta, så webbläsaren räknar den som osynlig och laddar den aldrig.
+- **Vårprovet 2012:s kvantitativa pass har inga bilder och kan inte få några.**
+  `2012vt-{3,5}.json` byggdes på en annan maskin (`source` är en macOS-sökväg)
+  där `pass{3,5}-kvant.pdf` fanns i cachen; JSON:en committades men de renderade
+  bilderna aldrig. 57 uppgifter pekade därför på filer som inte finns i git och
+  renderades som trasiga bilder. PDF:erna går inte att få tillbaka — den
+  kvantitativa delen publicerades bara som webbsidor med en GIF per uppgift och
+  de bilderna arkiverades aldrig (Internet Archive har bara årets broschyr).
+  `fix_missing_images.py` tar bort döda bildreferenser och sätter
+  `figureMissing`, så kortet säger rakt ut att svarsalternativen saknas.
+  Uppgiftstexten finns kvar i 50 av 57 fall. Kör skriptet igen om en framtida
+  import lämnar fler bildlösa uppgifter efter sig.
 - **XYZ och KVA lagras som bildutsnitt**, inte text. Bråk, exponenter och rötter
   kommer ur PDF:en som `3 27 x 2 =`; att låtsas att det är text ger fel uppgifter.
   NOG och DTK är löptext, med bildutsnitt som reserv när uppgiften har en figur.
@@ -407,9 +439,9 @@ hogskoleprovet.nu:
   bara det som saknas. Kör `scrape:ord-defs` + `apply:ord-defs` efteråt så får
   de nya orden definitioner som resten av beståndet.
 
-**Sätt inte `exam_term` på ORD-rader.** `import-gamla-prov` gör
-`delete().not("exam_term", "is", null)` innan den importerar om gamla prov, så
-allt med `exam_term` satt raderas nästa gång någon kör den. Terminen ligger i
+**Sätt inte `exam_term` på ORD-rader.** Gamla-prov-importen gör
+`delete().not("exam_term", "is", null)` innan den importerar om, så allt med
+`exam_term` satt raderas nästa gång någon kör den. Terminen ligger i
 `tags` i stället (`["2005vt"]`), vilket också är varför resten av ORD-beståndet
 har `exam_term` tomt.
 
@@ -956,9 +988,10 @@ leaves out everything below. All are fixed now, but check them first when a
 `verify_jwt` is **not** an authorization check — anonymous sign-in is enabled, so
 anyone can mint a valid JWT in one request. Destructive or paid functions must call
 `requireAdmin()` from `supabase/functions/_shared/require-admin.ts`, which verifies
-the caller's token and reads `is_admin` with the service role. `import-gamla-prov`
-(deletes the whole gamla-prov set before re-importing) and `clean-math-questions`
-(bills per AI call) both use it.
+the caller's token and reads `is_admin` with the service role. `clean-math-questions`
+(bills per AI call) uses it. `import-gamla-prov` gjorde det också, men togs bort
+2026-08-19: den hämtade `https://hpkampen.se/gamla-prov-data.json`, en fil som
+försvann när provdatan flyttade in i `import.meta.glob`, på den gamla domänen.
 
 Deploy with the standalone CLI binary and an access token:
 `SUPABASE_ACCESS_TOKEN=... supabase functions deploy <name> --project-ref <ref>`.
