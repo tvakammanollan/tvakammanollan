@@ -13,7 +13,7 @@
  *   VITE_SUPABASE_URL
  *   SUPABASE_SERVICE_ROLE_KEY
  *
- * OBS: sätter medvetet inte exam_term. Edge-funktionen import-gamla-prov gör
+ * OBS: sätter medvetet inte exam_term. Gamla-prov-importen gör
  * `delete().not("exam_term", "is", null)` innan den importerar om gamla prov,
  * så allt med exam_term satt raderas nästa gång den körs. Terminen ligger i
  * tags i stället, precis som resten av ORD-beståndet lämnar exam_term tomt.

@@ -8,20 +8,10 @@ import { lazy, Suspense } from "react";
  */
 const MathTextInner = lazy(() => import("./MathText").then((m) => ({ default: m.MathText })));
 
-export function MathText({
-  children,
-  autoDetect,
-  className,
-}: {
-  children: string;
-  autoDetect?: boolean;
-  className?: string;
-}) {
+export function MathText({ children, className }: { children: string; className?: string }) {
   return (
     <Suspense fallback={<span className={className}>{children}</span>}>
-      <MathTextInner autoDetect={autoDetect} className={className}>
-        {children}
-      </MathTextInner>
+      <MathTextInner className={className}>{children}</MathTextInner>
     </Suspense>
   );
 }

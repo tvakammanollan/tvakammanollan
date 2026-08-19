@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, Lightbulb } from "lucide-react";
+import { MathText } from "@/components/MathTextLazy";
 
 interface Props {
   explanation: string | null | undefined;
@@ -38,11 +39,13 @@ export function ExplanationBlock({ explanation, defaultOpen = true }: Props) {
             <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#ae2f26]">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring
             </div>
+            {/* Matteförklaringar bär LaTeX i $…$ — utan MathText stod de rått
+                i texten, mitt i den enda mening som skulle förklara svaret. */}
             <p
               className="whitespace-pre-wrap text-foreground"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
-              {explanation}
+              <MathText>{explanation}</MathText>
             </p>
           </div>
         </div>

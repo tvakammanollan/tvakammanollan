@@ -694,7 +694,7 @@ function ResultPage() {
 
                       <div className="whitespace-pre-wrap text-sm leading-relaxed">
                         {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
-                          <MathText autoDetect>{q.question_text}</MathText>
+                          <MathText>{q.question_text}</MathText>
                         ) : q.category === "ORD" ? (
                           ordText(q.question_text)
                         ) : (
@@ -722,7 +722,7 @@ function ResultPage() {
                               </span>
                               <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
                                 {isMath ? (
-                                  <MathText autoDetect>{opt.text}</MathText>
+                                  <MathText>{opt.text}</MathText>
                                 ) : q.category === "ORD" ? (
                                   ordText(opt.text)
                                 ) : (
