@@ -80,10 +80,13 @@ export interface CheckoutParamsInput {
 /**
  * Hur länge kassan lever när en tid redan är bokad.
  *
- * Utan den här kan en övergiven kassa betalas ett dygn senare — alltså långt
- * efter att städaren släppt tiden — och köparen står med en betald rad och
- * ingenting i kalendern. Måste vara kortare än `UNPAID_GRACE_MS` i
- * `coaching-sweep.ts`, och Stripe kräver minst 30 minuter.
+ * OANVÄND SEDAN 2026-08-19, men medvetet kvar. Ordningen är nu betala först,
+ * boka sedan, så det finns ingen tid att gå ut på när kassan öppnas. Skulle
+ * ordningen någonsin vändas tillbaka är den här — och testet som pinnar att
+ * den är kortare än städarens `UNPAID_GRACE_MS` — det som hindrar att en
+ * övergiven kassa betalas ett dygn senare, efter att tiden redan släppts, så
+ * att köparen står med en betald rad och ingenting i kalendern. Stripe kräver
+ * minst 30 minuter.
  */
 export const CHECKOUT_TTL_MIN = 35;
 
@@ -237,4 +240,78 @@ export async function markCoachingPaid(session: StripeCheckoutSession): Promise<
     throw new Error("Kunde inte bekräfta betalningen.");
   }
   return { newlyPaid: true, requestId: inserted.id };
+}
+
+/* ── Bekräftelsemejl ─────────────────────────────────────────────── */
+
+/**
+ * Skickar köpbekräftelsen — högst en gång per köp.
+ *
+ * Två vägar bokför samma köp (webhooken, som är sanningen, och tacksidan, som
+ * är reserv när webhooken är sen). Utan en spärr hade båda skickat var sitt
+ * mejl. Spärren är en villkorad UPDATE: den som lyckas sätta
+ * `confirmation_email_sent_at` medan den fortfarande är NULL är den som får
+ * skicka. Det är samma mönster som `paid_at`.
+ *
+ * Tidsstämpeln sätts FÖRE utskicket med flit. Ett dubbelmejl är värre än ett
+ * uteblivet: det andra ser ut som en andra debitering. Går utskicket fel loggas
+ * det och kan skickas för hand.
+ *
+ * Kastar aldrig — ett mejl som inte går fram får inte göra att webhooken
+ * svarar 500 och Stripe försöker bokföra köpet om och om igen.
+ */
+export async function sendCoachingConfirmation(requestId: string, origin: string): Promise<void> {
+  try {
+    const { data: row } = await supabaseAdmin
+      .from("coaching_requests")
+      .select("id,email,amount_total,currency,scheduled_at,stripe_session_id")
+      .eq("id", requestId)
+      .maybeSingle();
+
+    if (!row?.email) {
+      console.warn(`[coaching] rad ${requestId} saknar mejladress — ingen bekräftelse skickad`);
+      return;
+    }
+
+    const { data: claimed, error } = await supabaseAdmin
+      .from("coaching_requests")
+      .update({ confirmation_email_sent_at: new Date().toISOString() })
+      .eq("id", requestId)
+      .is("confirmation_email_sent_at", null)
+      .select("id");
+    if (error) {
+      console.error("[coaching] kunde inte reservera bekräftelsemejlet:", error.message);
+      return;
+    }
+    // Någon annan väg hann före. Rätt utfall: mejlet är redan skickat.
+    if (!claimed || claimed.length === 0) return;
+
+    const { sendEmail } = await import("./email.server");
+    const { coachingConfirmationTemplate } = await import("./email-templates");
+    const { formatMoney, formatDateLong, formatTime } = await import("./sv-format");
+
+    const mail = coachingConfirmationTemplate({
+      amountLabel:
+        row.amount_total !== null ? formatMoney(row.amount_total, row.currency ?? "SEK") : null,
+      scheduledLabel: row.scheduled_at
+        ? `${formatDateLong(row.scheduled_at)} kl. ${formatTime(row.scheduled_at)}`
+        : null,
+      receiptUrl: row.stripe_session_id
+        ? `${origin}/coachning/tack?session_id=${encodeURIComponent(row.stripe_session_id)}`
+        : `${origin}/coachning/tack`,
+    });
+
+    const res = await sendEmail({
+      to: row.email,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+      tag: "coachning-bekraftelse",
+    });
+    if (!res.ok) {
+      console.error(`[coaching] bekräftelsemejlet för ${requestId} gick inte fram (${res.reason})`);
+    }
+  } catch (e) {
+    console.error("[coaching] bekräftelsemejlet kraschade:", e);
+  }
 }

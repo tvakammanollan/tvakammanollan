@@ -4,17 +4,23 @@ import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { confirmCoachingCheckout, type CoachingReceipt } from "@/lib/coaching.functions";
-import { formatDateLong, formatMoney, formatTime } from "@/lib/sv-format";
+import { formatMoney } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
 import { stopCoachingPrompts } from "@/lib/coaching-prompt";
+import { CoachingScheduler } from "@/components/CoachingScheduler";
 
 /**
- * Kvittosidan efter Stripe Checkout.
+ * Kvittosidan efter Stripe Checkout — och det är HÄR tiden väljs.
  *
  * Bokföringen görs egentligen av webhooken — den kommer även om webbläsaren
  * stängs mitt i betalningen. Den här sidan bekräftar mot Stripe en gång till
  * så att köparen ser sitt kvitto direkt, även om webhooken är sen. Båda
  * vägarna är idempotenta.
+ *
+ * Tidsväljaren låg tidigare FÖRE kassan. Den flyttades hit 2026-08-19 därför
+ * att en Calendly-bokning binder tiden i samma sekund den görs medan Checkout
+ * går att stänga: en tid kunde alltså tas i anspråk utan att någon betalade.
+ * Se `startPaidCoachingBooking`.
  *
  * noindex: sidan finns bara för den som just betalat, och session-id:t i
  * URL:en har inget i ett sökindex att göra.
@@ -93,20 +99,10 @@ function TackPage() {
             ) : null}{" "}
             från Stripe.
           </p>
-          {receipt.scheduledAt ? (
-            // Tiden valdes före betalningen, så den kan bekräftas direkt här.
-            // Datumet formateras i besökarens egen tidszon — samma tid som
-            // Calendly visade när den bokades.
-            <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-              Vi ses <strong>{formatDateLong(receipt.scheduledAt)}</strong> kl{" "}
-              <strong>{formatTime(receipt.scheduledAt)}</strong>. En kalenderinbjudan med länk
-              kommer från Calendly.
-            </p>
-          ) : (
-            <p className="mt-3 text-[15px] leading-relaxed text-white/70">
-              Vi hör av oss inom <strong>24 timmar</strong> för att gå igenom ditt upplägg.
-            </p>
-          )}
+          {/* Tidsvalet. Komponenten sköter själv fallen "redan bokad",
+              "Calendly är inte påslaget" och "något gick fel" — och den
+              öppnar aldrig en väljare utan en betald session bakom sig. */}
+          {sessionId && <CoachingScheduler sessionId={sessionId} />}
           <Link
             to="/"
             className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#ae2f26] px-7 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110"

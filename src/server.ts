@@ -397,6 +397,13 @@ async function stripeWebhook(request: Request): Promise<Response> {
       // köp i kontot som inte kommer härifrån: endpointen lyssnar brett.
       if (session?.id && isCoachingSession(session) && sessionIsPaid(session)) {
         const result = await markCoachingPaid(session);
+        // Bekräftelsen skickas härifrån och inte från tacksidan: webhooken
+        // kommer även om köparen stänger fliken mitt i betalningen. Funktionen
+        // är spärrad mot dubbelutskick och kastar aldrig.
+        if (result.requestId) {
+          const { sendCoachingConfirmation } = await import("./lib/coaching.server");
+          await sendCoachingConfirmation(result.requestId, new URL(request.url).origin);
+        }
         console.log(
           JSON.stringify({
             type: "metric",

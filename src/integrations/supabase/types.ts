@@ -112,6 +112,7 @@ export type Database = {
           calendly_invitee_uri: string | null
           calendly_reschedule_url: string | null
           canceled_at: string | null
+          confirmation_email_sent_at: string | null
           created_at: string
           currency: string | null
           email: string | null
@@ -135,6 +136,7 @@ export type Database = {
           calendly_invitee_uri?: string | null
           calendly_reschedule_url?: string | null
           canceled_at?: string | null
+          confirmation_email_sent_at?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
@@ -158,6 +160,7 @@ export type Database = {
           calendly_invitee_uri?: string | null
           calendly_reschedule_url?: string | null
           canceled_at?: string | null
+          confirmation_email_sent_at?: string | null
           created_at?: string
           currency?: string | null
           email?: string | null
