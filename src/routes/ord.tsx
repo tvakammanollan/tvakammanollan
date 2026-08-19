@@ -28,6 +28,7 @@ import { ordText, hasOrdDefinition, formatInt } from "@/lib/sv-format";
 import { ordDefinitionParts, definitionSourceLabel } from "@/lib/ord-definition";
 import { sounds } from "@/lib/sounds";
 import { trackEvent } from "@/lib/events";
+import { updateStreak } from "@/lib/streak";
 import {
   fetchWordBatch,
   fetchFailedWordBatch,
@@ -375,6 +376,9 @@ function OrdPracticePage() {
         pct: answered.length > 0 ? Math.round((right / answered.length) * 100) : 0,
         failed_mode: sessionMode === "repetition",
       });
+      // Ett ordpass är också "spelat idag". Utan det här kunde en dag med
+      // bara ordträning se ut som en tom dag i streaken.
+      if (user) void updateStreak(user.id);
       loadProgress();
     } else {
       setIdx((i) => i + 1);

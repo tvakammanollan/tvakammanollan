@@ -107,8 +107,15 @@ export function HomeDashboard() {
               </div>
             </div>
 
+            {/* ELO:t följer ämnesvalet i spela-kortet nedanför och visar det
+                faktiska talet. Här stod tidigare `Math.max(verbal, math)`,
+                vilket gjorde två saker fel på en gång: ett verbalt ELO som
+                sjunkit under startvärdet doldes bakom mattens orörda 1000 —
+                alltså ett golv som inte finns i datan — och siffran ändrade
+                sig aldrig när man växlade mellan Verbal och Matte. */}
             <StatusRow
-              elo={Math.max(profile.elo_verbal, profile.elo_math)}
+              elo={activeElo}
+              track={matchType}
               streak={isGuest ? 0 : (profile.current_streak ?? 0)}
             />
           </header>
@@ -281,7 +288,7 @@ function GuestBanner() {
    Rank, streak och "hur långt till nästa rank" på en rad. Tidigare låg
    detta som fyra separata element (två rank-pills, en streak-pill och en
    egen progress-sektion) som tillsammans tog mer plats än spela-knappen. */
-function StatusRow({ elo, streak }: { elo: number; streak: number }) {
+function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; streak: number }) {
   const rank = getRankForElo(elo);
   const next = getNextRank(elo);
   const pct = getEloProgressInTier(elo);
@@ -290,6 +297,11 @@ function StatusRow({ elo, streak }: { elo: number; streak: number }) {
     <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
       <span className="inline-flex items-center gap-2">
         <RankBadge elo={elo} size="sm" />
+        {/* Vilket ELO som visas måste stå utskrivet — annars ser samma rad
+            olika ut vid två besök utan att något förklarar varför. */}
+        <span className="text-xs font-medium text-white/50">
+          {track === "verbal" ? "verbal" : "matte"}
+        </span>
       </span>
 
       {streak > 0 && (

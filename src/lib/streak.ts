@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { stockholmDate, streakStep } from "./streak-dates";
 
 export interface StreakResult {
   /** Streak value AFTER update */
@@ -13,13 +14,13 @@ export interface StreakResult {
   broken: boolean;
 }
 
-function isoDate(d: Date): string {
-  return d.toISOString().split("T")[0];
-}
-
 /**
- * Update the user's streak counter. Increments at most once per day.
- * Shows a toast if a streak of >=3 days was broken.
+ * Uppdaterar dagsstreaken. Räknar som mest en gång per kalenderdag, i svensk
+ * tid — se `streak-dates.ts` för varför tidszonen är hela poängen.
+ *
+ * Anropas från allt som räknas som ett pass: match, träning, ordövning och
+ * inlämnat provpass. Tidigare bara från match och träning, vilket gjorde att
+ * en dag med bara ordövning inte syntes i streaken alls.
  */
 export async function updateStreak(userId: string): Promise<StreakResult | null> {
   const { data: profile, error } = await supabase
@@ -30,13 +31,14 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
 
   if (error || !profile) return null;
 
-  const today = isoDate(new Date());
-  const yesterday = isoDate(new Date(Date.now() - 86_400_000));
+  const today = stockholmDate();
   const lastActive = profile.last_active_date as string | null;
   const prevStreak = profile.current_streak ?? 0;
   const prevLongest = profile.longest_streak ?? 0;
 
-  if (lastActive === today) {
+  const step = streakStep(lastActive, prevStreak, today);
+
+  if (step.kind === "already-counted") {
     return {
       current: prevStreak,
       longest: prevLongest,
@@ -46,10 +48,10 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
     };
   }
 
-  const continued = lastActive === yesterday;
-  const newStreak = continued ? prevStreak + 1 : 1;
+  const continued = step.kind === "continued";
+  const newStreak = continued ? step.streak : 1;
   const newLongest = Math.max(newStreak, prevLongest);
-  const broken = !continued && prevStreak >= 1 && lastActive !== null;
+  const broken = step.kind === "restarted" && step.broken;
 
   await supabase
     .from("users")

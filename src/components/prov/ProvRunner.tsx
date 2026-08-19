@@ -14,6 +14,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CircularTimer } from "@/components/ui/CircularTimer";
 import { logUsageEvent } from "@/lib/usage.functions";
+import { useAuth } from "@/hooks/useAuth";
+import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { isCorrect } from "@/lib/prov-data";
 import {
@@ -61,6 +63,9 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
 
   const logUsage = useServerFn(logUsageEvent);
   const loggedRef = useRef(false);
+  // Provpasset ska räknas som dagens aktivitet. Gamla prov fungerar utan
+  // konto, så användaren är ofta null — då finns ingen streak att uppdatera.
+  const { user } = useAuth();
 
   const questions = data.questions;
   const question = questions[current];
@@ -137,6 +142,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
       duration_s: Math.min(6 * 3600, Math.round((at - startedAt) / 1000)),
     };
     void logUsage({ data: { event: "gamla_prov_submit", meta } }).catch(() => {});
+    if (user) void updateStreak(user.id);
     // Samma händelse till PostHog, för funnel och retention. Skickas bara om
     // besökaren samtyckt — bryggan i telemetry.ts är en no-op annars.
     trackEvent("gamla_prov_submit", meta);
@@ -151,6 +157,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     questions,
     startedAt,
     total,
+    user,
   ]);
 
   useEffect(() => {
