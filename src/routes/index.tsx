@@ -4,8 +4,18 @@ import { isAutoUsername } from "@/lib/username";
 import { HeroLanding } from "@/components/HeroLanding";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { pageMeta, pageLinks } from "@/lib/page-meta";
+import { fetchWordOfTheDay } from "@/lib/word-practice.functions";
 
 export const Route = createFileRoute("/")({
+  // Dagens ord hämtas i loadern och inte i kortet. Skälet är laddningsordning:
+  // kortet ligger först i dashboardens vänsterspalt, men monteras inte förrän
+  // både sessionen och profilen landat — så en hämtning där började sist av
+  // allt och poppade in efter resten av sidan. Här är ordet med i den
+  // serverrenderade HTML:en och står på plats i första målningen.
+  //
+  // Kostnaden är noll extra databasanrop i praktiken: serverfunktionen cachar
+  // dygnets ord per isolat, eftersom svaret ändå är samma för alla till midnatt.
+  loader: async () => ({ wotd: await fetchWordOfTheDay().catch(() => null) }),
   component: Index,
   head: () => ({
     meta: pageMeta({
@@ -22,6 +32,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { user, profile, loading } = useAuth();
+  const { wotd } = Route.useLoaderData();
 
   // SEO / AI-crawlers / first-paint: serve the marketing landing by default.
   // During SSR `loading` is true and there is no user yet — without this fall-
@@ -50,5 +61,5 @@ function Index() {
     return <Navigate to="/onboarding" />;
   }
 
-  return <HomeDashboard />;
+  return <HomeDashboard wordOfTheDay={wotd} />;
 }

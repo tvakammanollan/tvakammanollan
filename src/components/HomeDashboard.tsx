@@ -13,6 +13,7 @@ import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
 import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
+import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { CoachingQuizCard } from "@/components/CoachingQuizCard";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
@@ -29,7 +30,7 @@ import { BookOpen, Sparkles, Flame, ArrowRight, Swords } from "lucide-react";
    sin plats mot de tre.
    ===================================================================== */
 
-export function HomeDashboard() {
+export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) {
   const { user, profile } = useAuth();
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
@@ -134,7 +135,7 @@ export function HomeDashboard() {
           <Reveal y={20} delay={0.11} className="order-2 lg:order-1">
             <aside className="space-y-3 lg:sticky lg:top-24">
               <SafeBoundary label="word-of-the-day">
-                <WordOfTheDay />
+                <WordOfTheDay initial={wordOfTheDay} />
               </SafeBoundary>
               {/* Kvalificeringen står här och inte bredvid coachningskortet
                   med flit: köpknappen säljer till den som redan bestämt sig,

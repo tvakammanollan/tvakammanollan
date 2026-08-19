@@ -429,3 +429,105 @@ export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
     }
     return { top, me };
   });
+
+/* ── Dagens ord ──────────────────────────────────────────────────── */
+
+/**
+ * Samma ord för alla, hela dygnet, och byte vid midnatt svensk tid.
+ *
+ * Tidigare hämtade `WordOfTheDay` fyrtio slumpade ord i webbläsaren och tog
+ * det första med en förklaring. Det gav ett eget "dagens ord" per besökare och
+ * per rensad localStorage — alltså inte dagens ord utan ett ord.
+ *
+ * Valet görs nu här, av datumet:
+ *
+ *  - **Dagnumret** räknas i `Europe/Stockholm` (samma tidszon som streaken, se
+ *    `streak-dates.ts`). Med UTC hade ordet bytts klockan 01 eller 02 på
+ *    natten, mitt i den tid någon faktiskt sitter och pluggar.
+ *  - **Steget är ett primtal**, inte en slumpad hash. `(dag * STEG) % antal`
+ *    går igenom HELA listan innan något ord kommer tillbaka, förutsatt att
+ *    steget och antalet saknar gemensam faktor. En hash hade i stället gett
+ *    dubbletter med några veckors mellanrum — födelsedagsparadoxen — vilket är
+ *    precis det "undvik att samma ord återkommer för tätt" handlar om.
+ *  - **Ordningen är `id`**, som är stabil. Sorterar man på något som ändras
+ *    (t.ex. `definition`) byter alla ord plats den dag en rad uppdateras.
+ */
+const WOTD_STEG = 7919;
+
+/** Dagnummer sedan epoken, räknat i svensk tid. */
+export function wordOfTheDayIndex(count: number, at: Date = new Date()): number {
+  if (count <= 0) return 0;
+  const svenskt = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Europe/Stockholm",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(at);
+  const dag = Math.floor(Date.parse(`${svenskt}T00:00:00Z`) / 86_400_000);
+  return (((dag * WOTD_STEG) % count) + count) % count;
+}
+
+export interface WordOfTheDay {
+  word: string;
+  definition: string;
+  /** Datumet ordet gäller (svensk tid), så klienten kan cacha rätt. */
+  date: string;
+}
+
+/**
+ * Dygnscache per isolat. Ordet är samma för alla under ett dygn, och kortet
+ * laddas på varje sidvisning av startsidan — utan cachen hade varje besök
+ * kostat en `count(*)` över hela ORD-beståndet plus ett uppslag, för ett svar
+ * som inte ändrar sig förrän i morgon.
+ */
+let wotdCache: { date: string; value: WordOfTheDay | null } | null = null;
+
+export const fetchWordOfTheDay = createServerFn({ method: "GET" }).handler(
+  async (): Promise<WordOfTheDay | null> => {
+    assertRateLimit(ipKey("wotd"), limits.publicRead);
+    const today = new Intl.DateTimeFormat("sv-SE", {
+      timeZone: "Europe/Stockholm",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
+    if (wotdCache?.date === today) return wotdCache.value;
+
+    const supabase = supabaseAdmin;
+
+    // Bara ord som HAR en förklaring — kortet visar betydelsen, och ett ord
+    // utan den är ett tomt kort. Räkningen och uppslaget använder exakt samma
+    // filter, annars pekar indexet på fel rad.
+    const base = () =>
+      supabase
+        .from("questions")
+        .select("question_text, definition")
+        .eq("category", "ORD")
+        .not("definition", "is", null)
+        .neq("definition", "");
+
+    const { count, error: countError } = await supabase
+      .from("questions")
+      .select("id", { count: "exact", head: true })
+      .eq("category", "ORD")
+      .not("definition", "is", null)
+      .neq("definition", "");
+    if (countError) throwDbError(countError, "fetchWordOfTheDay/count");
+    if (!count) return null;
+
+    const index = wordOfTheDayIndex(count);
+    const { data, error } = await base().order("id", { ascending: true }).range(index, index);
+    if (error) throwDbError(error, "fetchWordOfTheDay");
+
+    const row = data?.[0] as { question_text: string; definition: string } | undefined;
+    if (!row) return null;
+
+    const value: WordOfTheDay = {
+      word: row.question_text,
+      definition: row.definition,
+      date: today,
+    };
+    wotdCache = { date: today, value };
+    return value;
+  },
+);

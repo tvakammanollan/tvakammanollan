@@ -1,35 +1,67 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { fetchWordBatch } from "@/lib/word-practice.functions";
+import { fetchWordOfTheDay, type WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { ordText } from "@/lib/sv-format";
 import { ordDefinitionParts } from "@/lib/ord-definition";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { ArrowRight, BookOpen } from "lucide-react";
 
 /* =====================================================================
-   DAGENS ORD — en daglig lärnudge på dashboarden. Hämtar ett riktigt
-   HP-ord med förklaring (återanvänder fetchWordBatch, ingen DB-ändring),
-   och cachar dagens val i localStorage så det är stabilt per dygn.
-   Helt fail-safe: renderar inget om data saknas/fel.
+   DAGENS ORD — ett riktigt HP-ord med förklaring, samma för alla.
+
+   Valet görs på servern (`fetchWordOfTheDay`) av dagens datum i svensk tid.
+   Kortet hämtade tidigare fyrtio slumpade ord i webbläsaren och tog det
+   första med en förklaring, vilket gav ett eget "dagens ord" per besökare.
+
+   LADDNINGSORDNING. Kortet är det första blocket i vänsterspalten och ska
+   inte poppa in efter resten:
+
+     - Ordet skickas in som `initial` när sidan redan har det (dashboardens
+       loader hämtar det parallellt med resten), och renderas då direkt i
+       första målningen — ingen hämtning i webbläsaren alls.
+     - Utan `initial` hämtas det i en effekt, men skelettet har samma höjd
+       som det färdiga kortet, så layouten hoppar inte när det landar.
+     - Dygnets val cachas i localStorage under `tkn:wotd:<datum>` så en
+       återkommande besökare slipper anropet helt.
    ===================================================================== */
 
-type Wotd = { word: string; definition: string };
+type Visning = { word: string; definition: string };
 
-const cacheKey = () => `tkn:wotd:${new Date().toISOString().slice(0, 10)}`;
+const cacheKey = (date: string) => `tkn:wotd:${date}`;
 
-export function WordOfTheDay() {
-  const fetchBatch = useServerFn(fetchWordBatch);
-  const [wotd, setWotd] = useState<Wotd | null>(null);
+/** Datumsträngen används både som cachenyckel och som "är detta dagens?". */
+function svensktDatum(): string {
+  return new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Europe/Stockholm",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function tillVisning(w: Wotd): Visning | null {
+  // Bara betydelserna: kortet klipper på tre rader, och exempelmening plus
+  // liknande ord hör hemma i ord-övningen där det finns plats.
+  const parts = ordDefinitionParts(w.definition);
+  if (parts.senses.length === 0) return null;
+  return { word: ordText(w.word), definition: parts.senses.join(" ") };
+}
+
+export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
+  const fetchWotd = useServerFn(fetchWordOfTheDay);
+  const [wotd, setWotd] = useState<Visning | null>(() => (initial ? tillVisning(initial) : null));
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    if (wotd) return;
     let cancelled = false;
-    // Cachad för idag?
+    const datum = svensktDatum();
+
     try {
-      const raw = localStorage.getItem(cacheKey());
+      const raw = localStorage.getItem(cacheKey(datum));
       if (raw) {
-        const parsed = JSON.parse(raw) as Wotd;
+        const parsed = JSON.parse(raw) as Visning;
         if (parsed?.word && parsed?.definition) {
           setWotd(parsed);
           return;
@@ -38,25 +70,18 @@ export function WordOfTheDay() {
     } catch {
       /* ignorera trasig cache */
     }
+
     (async () => {
       try {
-        const res = (await fetchBatch({ data: { count: 40 } })) as {
-          questions: { question_text: string; definition: string | null }[];
-        };
-        const pick = (res.questions ?? []).find(
-          (q) => q.definition && q.definition.trim().length > 0 && q.question_text,
-        );
-        if (!pick || cancelled) return;
-        // Bara betydelserna: kortet klipper på tre rader, och exempelmening
-        // plus liknande ord hör hemma i ord-övningen där det finns plats.
-        const parts = ordDefinitionParts(pick.definition);
-        if (parts.senses.length === 0) return;
-        const val: Wotd = {
-          word: ordText(pick.question_text),
-          definition: parts.senses.join(" "),
-        };
+        const res = (await fetchWotd()) as Wotd | null;
+        if (cancelled) return;
+        const val = res ? tillVisning(res) : null;
+        if (!val) {
+          setFailed(true);
+          return;
+        }
         try {
-          localStorage.setItem(cacheKey(), JSON.stringify(val));
+          localStorage.setItem(cacheKey(res!.date), JSON.stringify(val));
         } catch {
           /* localStorage kan vara blockerad */
         }
@@ -68,17 +93,20 @@ export function WordOfTheDay() {
     return () => {
       cancelled = true;
     };
-  }, [fetchBatch]);
+  }, [fetchWotd, wotd]);
 
   // Kortet returnerade tidigare null så fort hämtningen inte gick igenom.
-  // Det lämnar ett hål i layouten, och eftersom felet är tyst syns det
-  // som att komponenten är borta snarare än att ett anrop failat. Nu
-  // fyller den alltid sin plats: skelett medan den laddar, och ett
-  // ingångskort till ordträningen om anropet inte gick fram.
+  // Det lämnar ett hål i layouten, och eftersom felet är tyst syns det som
+  // att komponenten är borta snarare än att ett anrop failat. Nu fyller den
+  // alltid sin plats: skelett medan den laddar, och ett ingångskort till
+  // ordträningen om anropet inte gick fram.
   if (!wotd) {
     if (!failed) {
       return (
-        <div className="rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5" aria-busy="true">
+        <div
+          className="rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5"
+          aria-busy="true"
+        >
           <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
           <div className="skeleton-shimmer mt-3 h-8 w-2/3 rounded-lg" />
           <div className="skeleton-shimmer mt-2.5 h-4 w-full rounded" />
