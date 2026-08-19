@@ -1,7 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { PassScoreBadge, ProvScorePanel } from "@/components/prov/ProvScore";
+import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
+import { passResult, summariseExam, type PassResult } from "@/lib/prov-results";
 import { formatDateLong, formatInt } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type PassSummary } from "@/types/gamla-prov";
 
@@ -72,6 +75,11 @@ function ExamTermPage() {
   const { newer, older } = examNeighbours(exam.term);
   const others = allExams().filter((e) => e.term !== exam.term);
 
+  // Skrivna provpass ligger i webbläsaren, inte hos oss — sidan är
+  // serverrenderad och identisk för alla, det här lägger sig ovanpå.
+  const results = useProvResults();
+  const examResult = results ? summariseExam(exam, results) : null;
+
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
       <nav className="text-xs text-white/45" aria-label="Brödsmulor">
@@ -100,10 +108,20 @@ function ExamTermPage() {
         </p>
       </header>
 
+      {examResult && (
+        <div className="mt-8">
+          <ProvScorePanel result={examResult} />
+        </div>
+      )}
+
       <ol className="mt-8 space-y-3">
         {exam.passes.map((p) => (
           <li key={p.pass}>
-            <PassCard term={exam.term} pass={p} />
+            <PassCard
+              term={exam.term}
+              pass={p}
+              result={results ? passResult(results, exam.term, p.pass) : undefined}
+            />
           </li>
         ))}
       </ol>
@@ -192,7 +210,15 @@ function ExamTermPage() {
   );
 }
 
-function PassCard({ term, pass }: { term: string; pass: PassSummary }) {
+function PassCard({
+  term,
+  pass,
+  result,
+}: {
+  term: string;
+  pass: PassSummary;
+  result?: PassResult;
+}) {
   return (
     <Link
       to="/gamla-prov/$term/$pass"
@@ -218,6 +244,7 @@ function PassCard({ term, pass }: { term: string; pass: PassSummary }) {
           {pass.missing.length > 0 && <span>{pass.missing.join(", ")} saknas</span>}
         </span>
       </span>
+      {result && <PassScoreBadge result={result} />}
       <ArrowRight
         className="h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-colors group-hover:text-[var(--amber)]"
         aria-hidden

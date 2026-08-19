@@ -1,8 +1,11 @@
 import { ArrowRight, FileText, ListChecks, RotateCcw, Swords, Target, Trophy } from "lucide-react";
 import { NextStep } from "@/components/layout/NextStep";
+import { ProvScorePanel } from "@/components/prov/ProvScore";
+import { useProvResults } from "@/hooks/useProvResults";
 import { formatDecimal, formatPercent } from "@/lib/sv-format";
 import { normeringFromRaw, HP_TOTAL_QUESTIONS } from "@/lib/normering";
-import { isCorrect } from "@/lib/prov-data";
+import { findExam, isCorrect } from "@/lib/prov-data";
+import { summariseExam } from "@/lib/prov-results";
 import { delprovShort, type ProvPass } from "@/types/gamla-prov";
 
 function formatDuration(seconds: number): string {
@@ -33,6 +36,13 @@ export function ProvResult({
   onRestart: () => void;
   nextPass?: number;
 }) {
+  // Provtillfället i stort: passet som just lämnades in är sparat, så panelen
+  // vet redan om det var det som gjorde den verbala delen — eller hela provet
+  // — färdig. Läses ur localStorage efter montering, alltså efter submit().
+  const results = useProvResults();
+  const exam = findExam(data.term);
+  const examResult = results && exam ? summariseExam(exam, results) : null;
+
   const total = data.questions.length;
   const score = data.questions.filter((q) => isCorrect(q, answers[q.nr])).length;
   const unanswered = data.questions.filter((q) => !answers[q.nr]).length;
@@ -126,6 +136,10 @@ export function ProvResult({
           })}
         </div>
       </section>
+
+      {examResult && (
+        <ProvScorePanel result={examResult} title={`Hela ${data.label.toLowerCase()}`} />
+      )}
 
       {wrong.length > 0 && (
         <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">

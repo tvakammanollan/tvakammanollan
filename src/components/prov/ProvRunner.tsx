@@ -23,6 +23,7 @@ import {
   type ProvMode,
   type ProvProgress,
 } from "@/lib/prov-progress";
+import { saveResult } from "@/lib/prov-results";
 import { formatInt } from "@/lib/sv-format";
 import { highlightScope } from "@/lib/highlights";
 import { useHighlighter } from "@/hooks/useHighlighter";
@@ -120,9 +121,13 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     persist({ submittedAt: at });
     window.scrollTo({ top: 0, behavior: "smooth" });
 
+    const score = questions.filter((q) => isCorrect(q, answers[q.nr])).length;
+    // Resultatet sparas för sig, inte i progressen: progressen städas efter en
+    // vecka, och det som ska stå kvar på provlistan är just det här.
+    saveResult(data.term, data.pass, { score, total, kind: data.kind, mode, at });
+
     if (loggedRef.current) return;
     loggedRef.current = true;
-    const score = questions.filter((q) => isCorrect(q, answers[q.nr])).length;
     const meta = {
       term: data.term,
       provpass: data.pass,
@@ -135,7 +140,18 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     // Samma händelse till PostHog, för funnel och retention. Skickas bara om
     // besökaren samtyckt — bryggan i telemetry.ts är en no-op annars.
     trackEvent("gamla_prov_submit", meta);
-  }, [answers, data.pass, data.term, logUsage, mode, persist, questions, startedAt, total]);
+  }, [
+    answers,
+    data.kind,
+    data.pass,
+    data.term,
+    logUsage,
+    mode,
+    persist,
+    questions,
+    startedAt,
+    total,
+  ]);
 
   useEffect(() => {
     if (phase === "running" && remaining === 0) submit();

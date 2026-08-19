@@ -56,3 +56,36 @@ export function normeringFromRaw(rawOf160: number): number {
   }
   return 0;
 }
+
+/** Antal normerade uppgifter i en provdel — verbal respektive kvantitativ. */
+export const HP_PART_QUESTIONS = HP_TOTAL_QUESTIONS / 2;
+
+/**
+ * Normerad poäng utifrån *andel* rätt i stället för antal.
+ *
+ * Tabellen ovan är satt för hela provet, men andelen är det enda som behövs:
+ * ett enskilt provpass (40 uppgifter) och en hel provdel (80) räknas upp till
+ * samma 160-skala. Det är en uppskattning och sägs vara det i gränssnittet —
+ * UHR normerar varje prov för sig, med gränser satta efter provdagen.
+ */
+export function normeringFromRatio(ratio: number): number {
+  if (!Number.isFinite(ratio)) return 0;
+  return normeringFromRaw(ratio * HP_TOTAL_QUESTIONS);
+}
+
+/**
+ * Provets sammanlagda poäng ur delarnas: medelvärdet, avrundat till 0,05.
+ *
+ * Så räknas högskoleprovet — den verbala och den kvantitativa delen normeras
+ * var för sig och snittas — och det är också det svar en provskrivare väntar
+ * sig: 1,90 verbalt och 2,00 kvantitativt blir 1,95, inte något tredje tal.
+ *
+ * Att i stället lägga ihop råpoängen och slå upp summan i tabellen ger ett
+ * annat värde så fort delarna går isär, eftersom tabellen inte är rät: 20 av
+ * 80 verbalt och 80 av 80 kvantitativt blir 1,10 som snitt men 1,25 som summa.
+ * Poängräknaren på /hogskoleprovet-poangraknare gör det senare — den tar emot
+ * råpoäng och har ingen delnormering att snitta.
+ */
+export function normeringFromParts(verbal: number, kvant: number): number {
+  return Math.round(((verbal + kvant) / 2) * 20) / 20;
+}

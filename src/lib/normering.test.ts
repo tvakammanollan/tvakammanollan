@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { HP_TOTAL_QUESTIONS, normeringFromRaw } from "./normering";
+import {
+  HP_TOTAL_QUESTIONS,
+  normeringFromParts,
+  normeringFromRatio,
+  normeringFromRaw,
+} from "./normering";
 
 describe("normeringFromRaw", () => {
   it("kända ankarvärden ur tabellen", () => {
@@ -46,5 +51,45 @@ describe("normeringFromRaw", () => {
       expect(v).toBeGreaterThanOrEqual(prev);
       prev = v;
     }
+  });
+});
+
+describe("normeringFromRatio", () => {
+  it("räknar upp en andel till 160-skalan", () => {
+    expect(normeringFromRatio(1)).toBe(2.0);
+    expect(normeringFromRatio(0.75)).toBe(normeringFromRaw(120));
+    expect(normeringFromRatio(0)).toBe(0);
+  });
+
+  it("ger samma poäng oavsett hur många uppgifter andelen räknats på", () => {
+    // Ett provpass (36 av 40) och en hel provdel (72 av 80) är samma andel.
+    expect(normeringFromRatio(36 / 40)).toBe(normeringFromRatio(72 / 80));
+  });
+
+  it("klarar en nolldivision utan att svara NaN", () => {
+    expect(normeringFromRatio(0 / 0)).toBe(0);
+  });
+});
+
+describe("normeringFromParts", () => {
+  // Provets poäng är snittet av delarnas, inte en tredje uppslagning.
+  it("1,90 verbalt och 2,00 kvantitativt blir 1,95", () => {
+    expect(normeringFromParts(1.9, 2.0)).toBe(1.95);
+  });
+
+  it("avrundar till närmaste 0,05", () => {
+    expect(normeringFromParts(1.0, 1.05)).toBe(1.05);
+    expect(normeringFromParts(0.7, 1.35)).toBe(1.05);
+    expect(normeringFromParts(2.0, 2.0)).toBe(2.0);
+    expect(normeringFromParts(0, 0)).toBe(0);
+  });
+
+  // Snittet av två uppslagningar är inte samma sak som en uppslagning av
+  // summan, eftersom tabellen inte är rät. Det är snittet som gäller.
+  it("skiljer sig medvetet från att slå upp den sammanlagda råpoängen", () => {
+    const verbal = normeringFromRatio(20 / 80);
+    const kvant = normeringFromRatio(80 / 80);
+    expect(normeringFromParts(verbal, kvant)).toBe(1.1);
+    expect(normeringFromRaw(100)).toBe(1.25);
   });
 });
