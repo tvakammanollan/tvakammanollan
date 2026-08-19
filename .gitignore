@@ -49,3 +49,6 @@ scripts/.ord-defs/
 
 # Nedladdade provhäften från studera.nu (importpipeline, se scripts/hp-import/).
 .hp-cache/
+
+# genererade typsnitt åt scripts/build-og-image.py
+.og-cache/

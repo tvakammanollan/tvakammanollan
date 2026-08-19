@@ -213,7 +213,7 @@ export function guideArticleJsonLd({
         url: "https://tvakommanollan.se/favicon.svg",
       },
     },
-    image: "https://tvakommanollan.se/og-image-3.png",
+    image: "https://tvakommanollan.se/og-image-4.png",
     inLanguage: "sv-SE",
     isAccessibleForFree: true,
     mainEntityOfPage: {

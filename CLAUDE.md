@@ -752,14 +752,31 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - **Byt URL, inte bara innehåll, när delningsbilden ändras.** Snapchat, Facebook,
   LinkedIn och Slack cachar förhandsbilden på URL:en, ofta i månader, och
   Cloudflare svarade `CF-Cache-Status: HIT` på den gamla vägen. Bilden heter
-  därför `og-image-3.png` — nästa gång blir det `-4`. Fyra ställen följer med:
+  därför `og-image-4.png` — nästa gång blir det `-5`. Fyra ställen följer med:
   `__root` (`og:image` + `twitter:image`), `guider-meta.tsx`, `manifest.json`
   och kommentaren i `page-meta.ts`.
-- **Domänen står i bildens pixlar.** `-2` gjordes på en gren som saknade
-  domänbytet och hade `hpkampen.se` tryckt i nederkant; `-3` är samma bild med
-  den raden ommålad (Instrument Sans 25 px, `#755e4c`, baslinje y=556). Det
-  finns inget generatorscript för den här bilden — byts motivet igen får den
-  ritas om för hand, och då måste nederkanten kollas.
+- **Bilden ritas av `scripts/build-og-image.py`** sedan 2026-08-19 (Pillow,
+  `python3 scripts/build-og-image.py`). Den var tidigare en PNG utan källa, och
+  det kostade: `-3` hann ligga ute med **`HP Kampen`** som ordmärke i ett dygn
+  efter namnbytet, eftersom en bild inte syns i en `grep` efter det gamla
+  namnet. Ändras namnet, domänen eller siffrorna igen — kör om scriptet.
+  Typsnitten hämtas ur `public/fonts/` om de finns, annars ur commit `189d203`
+  till `.og-cache/` (gitignorerad), så scriptet fungerar trots att mappen är
+  borta ur arbetsträdet.
+- **Delningsbilden är centrerad, och det är ett krav — inte smak.** WhatsApp och
+  iMessage beskär 1200×630 till en kvadrat mitt i bilden (x 285–915). Den
+  vänsterställda `-3` la märket på x=96 och statistikraden ut till x=1104, så
+  båda föll utanför den beskärningen. `SQUARE_SAFE` i scriptet krymper
+  ordmärket tills det ryms, och allt innehåll ligger inom x 293–906.
+- **Domänen står i bildens pixlar** — nederkantens rad. `-2` gjordes på en gren
+  som saknade domänbytet och hade `hpkampen.se` tryckt där. Byts domänen måste
+  `FOOTER` i scriptet med.
+- **Centrering mäts, den ögonmåttas inte.** Två fel som såg rätt ut i
+  förhandsvisningen: jämnt fördelade kolumnmitter i statistikraden la radens
+  bläck 16 px vänster om mitten (`10 000+` är tre gånger bredare än `8`), och
+  `ImageDraw.rectangle` ritar inklusive slutkoordinaten, så det övre bandet blev
+  en pixel tjockare än det undre. Mät blockens bläck-bbox efteråt i stället för
+  att titta.
 - **Bytet av bild och bytet av domän gjordes på var sin gren och möttes först i
   en rebase.** Den ena sidan hade `hpkampen.se/og-image-2.png`, den andra
   `tvakommanollan.se/og-image.png`, och båda hade rätt i var sin halva. Sitter
