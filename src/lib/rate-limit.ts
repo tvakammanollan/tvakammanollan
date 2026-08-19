@@ -93,6 +93,19 @@ export const limits = {
    */
   coachingLead: { max: 3, windowMs: 60 * 60 * 1000 } as LimitConfig, // 3/h
   /**
+   * Verifieringsmejl. Utskicket kostar pengar och mottagarens tålamod, så
+   * "skicka igen" får gå några gånger i timmen men inte i en loop. Nyckeln är
+   * användar-id och inte IP: två personer på samma skolnät ska inte kunna
+   * låsa varandra ute från sitt eget konto.
+   */
+  verificationEmail: { max: 5, windowMs: 60 * 60 * 1000 } as LimitConfig, // 5/h
+  /**
+   * Inlösen av verifieringslänk. Per IP, och rundligt tilltaget — en riktig
+   * användare klickar en gång, men mejlklienter förhandshämtar länkar.
+   * Gissning av token är ändå ogörligt (32 byte slump).
+   */
+  verificationRedeem: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/h
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

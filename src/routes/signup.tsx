@@ -10,6 +10,8 @@ import { toast } from "sonner";
 import { ArrowRight, Mail } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
+import { useServerFn } from "@tanstack/react-start";
+import { sendVerificationEmail } from "@/lib/email-verification.functions";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { SuccessScreen } from "@/routes/login";
 
@@ -42,6 +44,7 @@ function SignupPage() {
   const [submitting, setSubmitting] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const sendVerification = useServerFn(sendVerificationEmail);
 
   if (!loading && user && !user.is_anonymous) return <Navigate to="/" />;
 
@@ -76,10 +79,17 @@ function SignupPage() {
       needs_email_confirm: !data.session,
     });
     if (data.session) {
+      // Kontot är inloggat direkt — verifieringen är en påminnelse, inte en
+      // vägg (se BUGFIX-LOG punkt 2). Mejlet skickas i bakgrunden: går det
+      // inte fram ska registreringen ändå vara klar, och remsan under
+      // navbaren har en "skicka igen"-knapp.
+      void sendVerification().catch(() => {});
       toast.success("Konto skapat. Välj ditt användarnamn");
       setSuccess(true);
       setTimeout(() => navigate({ to: "/onboarding" }), 1400);
     } else {
+      // Hit kommer vi bara om "Confirm email" råkar vara påslaget i Supabase
+      // igen. Skärmen står kvar som säkerhetsnät men ska inte nås i drift.
       setSentTo(parsed.data.email);
     }
   };

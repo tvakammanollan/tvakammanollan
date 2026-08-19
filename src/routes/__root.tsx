@@ -23,6 +23,7 @@ import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { CoachingPrompt } from "@/components/CoachingPrompt";
+import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
 import { Analytics } from "@/components/Analytics";
 
 installSupabaseFetchAuth();
@@ -460,6 +461,12 @@ function RootComponent() {
           </a>
           <AppMotion />
           <Navbar />
+          {/* Diskret remsa, direkt under navbaren — aldrig en overlay.
+              Registreringen loggar in på en gång och allt fungerar utan
+              bekräftad adress; det här är påminnelsen, inte grinden. */}
+          <SafeBoundary label="email-verification-notice">
+            <EmailVerificationNotice />
+          </SafeBoundary>
           <main id="main-content" className="animate-fade-up">
             <Outlet />
           </main>

@@ -45,6 +45,19 @@
     // värdnamn som ger 522. Se src/lib/canonical-host.ts.
     "CANONICAL_REDIRECT": "on",
 
+    // E-post (Resend). RESEND_API_KEY är en krypterad Secret — de tre nedan är
+    // bara adresser och hör hemma här.
+    //
+    // FROM måste ligga på en domän som är verifierad i Resend (DKIM + SPF, se
+    // BUGFIX-LOG punkt 19). REPLY_TO är den brevlåda svaren ska landa i, och
+    // den MÅSTE vara en riktig inkorg som någon läser: hela poängen med att
+    // skilja dem åt är att avsändaren får vara en no-reply utan att mottagaren
+    // hamnar i tomma intet när hen trycker "svara".
+    // ADMIN får driftnotiser (nya i ringlistan, buggrapporter).
+    "EMAIL_FROM": "Tvåkommanollan <no-reply@tvakommanollan.se>",
+    "EMAIL_REPLY_TO": "info@tvakommanollan.se",
+    "EMAIL_ADMIN": "info@tvakommanollan.se",
+
     "STRIPE_COACHING_PRICE_ID": "price_1U5jVFPzBQuvmB8TMV9QKlto",
     "STRIPE_COACHING_PRODUCT_NAME": "Coachning Studieupplägg",
 

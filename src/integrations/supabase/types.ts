@@ -1129,6 +1129,44 @@ export type Database = {
           },
         ]
       }
+      email_verifications: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          token_hash: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          token_hash: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          token_hash?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_verifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           bot_matches_today: number
@@ -1139,6 +1177,7 @@ export type Database = {
           elo_verbal: number
           elo_verbal_peak: number
           email: string | null
+          email_verified_at: string | null
           forum_ban_reason: string | null
           forum_banned_until: string | null
           forum_post_count: number
@@ -1165,6 +1204,7 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          email_verified_at?: string | null
           forum_ban_reason?: string | null
           forum_banned_until?: string | null
           forum_post_count?: number
@@ -1191,6 +1231,7 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          email_verified_at?: string | null
           forum_ban_reason?: string | null
           forum_banned_until?: string | null
           forum_post_count?: number

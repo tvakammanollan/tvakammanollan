@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VillkorRouteImport } from './routes/villkor'
+import { Route as VerifieraEpostRouteImport } from './routes/verifiera-epost'
 import { Route as TrainRouteImport } from './routes/train'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -62,6 +63,11 @@ import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[
 const VillkorRoute = VillkorRouteImport.update({
   id: '/villkor',
   path: '/villkor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifieraEpostRoute = VerifieraEpostRouteImport.update({
+  id: '/verifiera-epost',
+  path: '/verifiera-epost',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrainRoute = TrainRouteImport.update({
@@ -332,6 +338,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/verifiera-epost': typeof VerifieraEpostRoute
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -383,6 +390,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/verifiera-epost': typeof VerifieraEpostRoute
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -435,6 +443,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
+  '/verifiera-epost': typeof VerifieraEpostRoute
   '/villkor': typeof VillkorRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -488,6 +497,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/stats'
     | '/train'
+    | '/verifiera-epost'
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -539,6 +549,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/stats'
     | '/train'
+    | '/verifiera-epost'
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -590,6 +601,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/stats'
     | '/train'
+    | '/verifiera-epost'
     | '/villkor'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
@@ -642,6 +654,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
+  VerifieraEpostRoute: typeof VerifieraEpostRoute
   VillkorRoute: typeof VillkorRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -678,6 +691,13 @@ declare module '@tanstack/react-router' {
       path: '/villkor'
       fullPath: '/villkor'
       preLoaderRoute: typeof VillkorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verifiera-epost': {
+      id: '/verifiera-epost'
+      path: '/verifiera-epost'
+      fullPath: '/verifiera-epost'
+      preLoaderRoute: typeof VerifieraEpostRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/train': {
@@ -1042,6 +1062,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
+  VerifieraEpostRoute: VerifieraEpostRoute,
   VillkorRoute: VillkorRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
