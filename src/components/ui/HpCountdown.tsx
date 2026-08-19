@@ -74,8 +74,8 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
         style={{ background: "radial-gradient(circle, var(--amber), transparent 70%)" }}
       />
 
-      <div className="relative">
-        <div className="flex items-center gap-2">
+      <div className="relative text-center">
+        <div className="flex items-center justify-center gap-2">
           <CalendarDays className="h-4 w-4" style={{ color: "var(--amber)" }} />
           <p
             className="text-[10px] font-semibold uppercase tracking-[0.22em]"
@@ -92,7 +92,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
           {next.label}
         </h3>
 
-        <div className="mt-5 flex items-baseline gap-3">
+        <div className="mt-5 flex items-baseline justify-center gap-3">
           <span
             className="display text-[56px] font-bold leading-none tabular-nums sm:text-[72px]"
             style={{
@@ -112,7 +112,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
         </div>
 
         <div
-          className="mt-4 flex items-center gap-3 font-mono text-[13px] tabular-nums"
+          className="mt-4 flex items-center justify-center gap-3 font-mono text-[13px] tabular-nums"
           style={{ color: "var(--text-tertiary)" }}
         >
           <TimeBlock value={t.hours} label="tim" />

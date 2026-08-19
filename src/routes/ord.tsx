@@ -425,7 +425,7 @@ function OrdPracticePage() {
                 källfilter, tre svårighetsknappar, en kryssruta, en lägestoggle
                 och hela listan över felade ord. Starta direkt — den som vill
                 styra öppnar Anpassa, precis som på /train. */}
-            <GlassCard className="p-6 sm:p-8">
+            <GlassCard className="p-6 text-center sm:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
                 Ditt pass
               </p>

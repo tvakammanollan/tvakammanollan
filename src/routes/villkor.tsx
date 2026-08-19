@@ -27,6 +27,7 @@ function VillkorPage() {
   return (
     <div className="min-h-screen">
       <PageHero
+        align="center"
         eyebrow="Juridik"
         title="Användarvillkor"
         subtitle="Senast uppdaterad: 2026-08-18"
@@ -52,7 +53,7 @@ function VillkorPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Användning
           </h2>
           <ul className="list-disc space-y-2 pl-6">
@@ -75,7 +76,7 @@ function VillkorPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Kontosäkerhet
           </h2>
           <p>
@@ -84,7 +85,7 @@ function VillkorPage() {
             säkra kontot.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Innehåll, upphovsrätt och ansvar
           </h2>
           <p>
@@ -101,7 +102,7 @@ function VillkorPage() {
             det som står under Köp av coachning, och i övrigt svensk konsumenträtt.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Köp av coachning
           </h2>
           <p>
@@ -109,7 +110,7 @@ function VillkorPage() {
             mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha
             ett konto för att köpa.
           </p>
-          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Vad du får
           </h3>
           <p>
@@ -118,7 +119,7 @@ function VillkorPage() {
             dig inom 24 timmar efter köpet, på den e-postadress eller det telefonnummer du angav i
             kassan.
           </p>
-          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Pris och betalning
           </h3>
           <p>
@@ -126,7 +127,7 @@ function VillkorPage() {
             Betalningen hanteras av Stripe, som också skickar kvittot. Kortuppgifter passerar aldrig
             våra egna servrar.
           </p>
-          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ångerrätt
           </h3>
           <p>
@@ -160,7 +161,7 @@ function VillkorPage() {
             är levererat i sin helhet och du dessförinnan uttryckligen har gått med på att arbetet
             påbörjas under fristen och att ångerrätten då faller bort.
           </p>
-          <h3 className="mt-6 font-semibold" style={{ color: "var(--cream)" }}>
+          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Om något går fel
           </h3>
           <p>
@@ -169,7 +170,7 @@ function VillkorPage() {
             inte kan lösa i samförstånd kan du ta vidare till ARN, se nedan.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Avstängning
           </h2>
           <p>
@@ -178,7 +179,7 @@ function VillkorPage() {
             till ditt konto och din ELO-historik.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Tillämplig lag och tvister
           </h2>
           <p>
@@ -196,7 +197,7 @@ function VillkorPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ändringar
           </h2>
           <p>

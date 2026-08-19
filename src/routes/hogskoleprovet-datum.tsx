@@ -70,14 +70,14 @@ function DatumPage() {
         <span className="text-white/70">Högskoleprovet datum</span>
       </nav>
 
-      <header className="mt-4">
+      <header className="mt-4 text-center">
         <h1
           className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
           Högskoleprovet datum 2026 &amp; 2027
         </h1>
-        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
+        <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Högskoleprovet (HP) hålls två gånger om året – ett{" "}
           <strong className="text-white/80">vårprov</strong> och ett{" "}
           <strong className="text-white/80">höstprov</strong>, nästan alltid en lördag. Här är alla
@@ -93,7 +93,7 @@ function DatumPage() {
       {/* Kommande datum */}
       <section className="mt-10">
         <h2
-          className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+          className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           <CalendarDays className="h-5 w-5 text-[#ae2f26]" />
@@ -125,7 +125,7 @@ function DatumPage() {
       {/* Anmälan */}
       <section className="mt-10">
         <h2
-          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+          className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           När öppnar anmälan?
@@ -158,7 +158,7 @@ function DatumPage() {
       {/* CTA: börja plugga */}
       <section className="mt-12 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+          className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Börja plugga redan idag

@@ -82,7 +82,7 @@ function PoangraknarePage() {
         <span className="text-white/70">Poängräknare</span>
       </nav>
 
-      <header className="mt-4">
+      <header className="mt-4 text-center">
         <h1
           className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
@@ -169,7 +169,7 @@ function PoangraknarePage() {
       {/* CTA */}
       <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
         <h2
-          className="text-[20px] font-bold text-[var(--cream)] sm:text-[22px]"
+          className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[22px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Vill du höja poängen?

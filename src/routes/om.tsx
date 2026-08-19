@@ -51,7 +51,7 @@ function OmPage() {
         style={{ color: "var(--text-secondary)" }}
       >
         <section className="space-y-6">
-          <h2 className="mt-4 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-4 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Grundaren
           </h2>
           <p>
@@ -69,7 +69,7 @@ function OmPage() {
             gratis. Alltid.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Varför gratis?
           </h2>
           <p>
@@ -90,7 +90,7 @@ function OmPage() {
             är helt frivillig. Du betalar aldrig med din uppmärksamhet.
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Vad vi tror på
           </h2>
           <ul className="list-disc space-y-2 pl-6">
@@ -114,7 +114,7 @@ function OmPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Vart vi är på väg
           </h2>
           <p>
@@ -128,7 +128,7 @@ function OmPage() {
             .
           </p>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Resurser
           </h2>
           <ul className="list-disc space-y-1 pl-6">
@@ -152,7 +152,7 @@ function OmPage() {
             </li>
           </ul>
 
-          <h2 className="mt-8 text-xl font-semibold" style={{ color: "var(--cream)" }}>
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Kontakt
           </h2>
           <p>
