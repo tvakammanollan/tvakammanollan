@@ -47,7 +47,12 @@ export function PageHero({
     <section
       className={cn(
         "relative overflow-hidden",
-        isCompact ? "pt-20 pb-12 sm:pt-24 sm:pb-16" : "pt-28 pb-20 sm:pt-32 sm:pb-24",
+        // Compact-heron låg 16 px för tätt inpå navbaren. Det syntes mest på
+        // /ord, därför att "Öva" börjar på ett Ö: prickarna når 0,99em över
+        // baslinjen medan ett vanligt versalt begynnelsebokstav stannar på 0,72,
+        // så samma ruta ger 14 px mindre optisk luft än "Se vem som är" på
+        // /leaderboard. Rutan var alltså snål överallt och /ord avslöjade det.
+        isCompact ? "pt-24 pb-12 sm:pt-28 sm:pb-16" : "pt-28 pb-20 sm:pt-32 sm:pb-24",
         className,
       )}
     >
