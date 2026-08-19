@@ -30,7 +30,10 @@ async function pickRandom(
   // Fetch a pool then shuffle in JS (avoids heavy ORDER BY random on large tables).
   // Verbal ORD pool is large (10 000+ words) so we use a higher limit to ensure
   // word-list questions (source=null) are reachable, not just the first 500.
-  const poolLimit = isMath ? 600 : 9000;
+  // Matten kommer ur arkivet sedan 2026-08-19 och är större än förut: DTK ensamt
+  // har 719 uppgifter. Med den gamla gränsen på 600 var resten av varje kategori
+  // omöjlig att bli tilldelad.
+  const poolLimit = isMath ? 1000 : 9000;
   let q = supabaseAdmin
     .from("questions")
     .select(

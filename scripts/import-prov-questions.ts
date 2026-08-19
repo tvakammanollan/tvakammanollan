@@ -79,6 +79,17 @@ interface Row {
   q_num: number;
   source: string;
   clean_status: string;
+  /**
+   * Bildmetadata som JSON: `{"stem":[x0,y0,x1,y1],"aspect":1.69}`.
+   *
+   * `questions` har ingen kolumn för uppgiftens stambeskärning, och att lägga
+   * till en är en migration mot produktionsdatabasen. Fältet är en fritextrubrik
+   * för just den här bilden och används inte till något annat — alla rader har
+   * det tomt — så beskrivningen av bilden får bo här tills en kolumn behövs på
+   * riktigt. `CropView` behöver proportionen för att ge rutan rätt höjd innan
+   * bilden laddats.
+   */
+  image_caption: string | null;
 }
 
 function env(name: string): string {
@@ -201,6 +212,10 @@ function collect(): { rows: Row[]; skipped: Record<string, number> } {
         // deras frågetext finns i question_text, så diagrammet är det som måste
         // med när raden bara rymmer en bild.
         image_url: imageUrl,
+        image_caption:
+          imageUrl !== null && imageUrl === q.image && q.crops?.stem && q.imageAspect
+            ? JSON.stringify({ stem: q.crops.stem, aspect: q.imageAspect })
+            : null,
         exam_term: pass.term,
         provpass_num: pass.pass,
         q_num: q.nr,

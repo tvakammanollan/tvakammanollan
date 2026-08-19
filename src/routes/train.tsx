@@ -20,6 +20,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { MathText } from "@/components/MathTextLazy";
+import { CropView, type Crop } from "@/components/question/CropView";
+import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
@@ -113,6 +115,9 @@ interface TrainQuestion {
   correct_answer: string;
   explanation: string | null;
   difficulty: number | null;
+  /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
+  stem: ExamStem | null;
+  optionCrops: Crop[] | null;
 }
 
 interface TrainConfig {
@@ -190,7 +195,7 @@ function TrainPage() {
     let q = supabase
       .from("questions")
       .select(
-        "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
+        "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status",
       )
       .in("category", config.subs);
     // Matte hämtas bara i städat skick, precis som i match.server.ts. Utan den
@@ -270,6 +275,10 @@ function TrainPage() {
         passage_id: row.passage_id,
         passage_text: row.passage_text,
         image_url: row.image_url ?? null,
+        // Beskärningarna gäller uppgiftens eget utsnitt. Den städade texten är
+        // en annan uppgift än den bilden visar, så de två får aldrig blandas.
+        stem: useCleaned ? null : parseStem(row.image_caption),
+        optionCrops: useCleaned ? null : parseOptionCrops(row.options),
         correct_answer: row.correct_answer,
         explanation: row.explanation,
         difficulty: row.difficulty,
@@ -658,12 +667,22 @@ function TrainPage() {
             </h2>
             {currentQ.image_url && (
               <div className="mb-5 overflow-hidden rounded-xl border border-border">
-                <img
-                  src={currentQ.image_url}
-                  alt="Figur till frågan"
-                  decoding="async"
-                  className="w-full object-contain"
-                />
+                {currentQ.stem ? (
+                  <CropView
+                    src={currentQ.image_url}
+                    crop={currentQ.stem.stem}
+                    imageAspect={currentQ.stem.aspect}
+                    alt="Uppgiften ur provhäftet"
+                    className="w-full"
+                  />
+                ) : (
+                  <img
+                    src={currentQ.image_url}
+                    alt="Figur till frågan"
+                    decoding="async"
+                    className="w-full object-contain"
+                  />
+                )}
               </div>
             )}
             <div className="grid gap-2" role="radiogroup">
@@ -713,8 +732,17 @@ function TrainPage() {
                         letter
                       )}
                     </span>
-                    <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                      {isMath ? (
+                    <span
+                      className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
+                    >
+                      {currentQ.optionCrops && currentQ.image_url ? (
+                        <CropView
+                          src={currentQ.image_url}
+                          crop={currentQ.optionCrops[i]}
+                          imageAspect={currentQ.stem?.aspect ?? 1}
+                          alt={`Svarsalternativ ${letter}`}
+                        />
+                      ) : isMath ? (
                         <MathText>{opt}</MathText>
                       ) : currentQ.category === "ORD" ? (
                         ordText(opt)
