@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Loader2, Phone, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Loader2, Send, Sparkles } from "lucide-react";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { useAuth } from "@/hooks/useAuth";
 import { useImpression } from "@/hooks/useImpression";
@@ -261,8 +261,8 @@ export function CoachingQuizCard() {
               </>
             ) : (
               <>
-                <Phone className="h-4 w-4" />
-                Ring mig
+                <Send className="h-4 w-4" />
+                Skicka in
               </>
             )}
           </button>
@@ -278,7 +278,7 @@ export function CoachingQuizCard() {
             className="mt-3 text-[18px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Tack — vi hör av oss
+            Tack, vi hör av oss
           </h3>
           <p className="mt-1.5 text-[13px] leading-relaxed text-white/65">
             Vi hör av oss till {savedPhone ? formatPhone(savedPhone) : "dig"} inom ett par dagar.

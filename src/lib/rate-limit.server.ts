@@ -3,6 +3,7 @@
 // på Cloudflare, dvs. en absolut spärr mot hamring, inte en exakt global kvot.
 import { getRequest } from "@tanstack/react-start/server";
 import { rateLimit, type LimitConfig } from "./rate-limit";
+import { formatWaitTime } from "./wait-time";
 
 /**
  * Nyckel per klient-IP (Cloudflare `cf-connecting-ip`, fallback
@@ -20,11 +21,16 @@ export function ipKey(prefix: string): string {
   }
 }
 
-/** Kasta ett användarvänligt svenskt fel om gränsen är nådd. */
+/**
+ * Kasta ett användarvänligt svenskt fel om gränsen är nådd.
+ *
+ * Väntetiden skrevs tidigare alltid i sekunder, vilket gav "Försök igen om
+ * 3501 sekunder" på en timkvot: rätt tal, fel enhet, och det läser som en bugg
+ * i stället för som en gräns. `formatWaitTime` väljer enhet.
+ */
 export function assertRateLimit(key: string, cfg: LimitConfig): void {
   const r = rateLimit(key, cfg);
   if (!r.ok) {
-    const s = Math.max(1, Math.ceil(r.resetIn / 1000));
-    throw new Error(`Lugna dig lite. Försök igen om ${s} sekunder.`);
+    throw new Error(`För många försök. Försök igen om ${formatWaitTime(r.resetIn)}.`);
   }
 }

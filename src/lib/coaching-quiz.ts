@@ -47,7 +47,7 @@ export const QUIZ_STEPS: QuizStep[] = [
       {
         value: "en",
         label: "Ja, en gång",
-        insight: "Har du skrivit en gång vet du redan var det tog emot — det är mycket värt.",
+        insight: "Har du skrivit en gång vet du redan var det tog emot, och det är mycket värt.",
       },
       {
         value: "flera",
@@ -73,7 +73,7 @@ export const QUIZ_STEPS: QuizStep[] = [
       {
         value: "verbal",
         label: "Den verbala delen",
-        insight: "ORD och LÄS svarar snabbt på rätt sorts träning — MEK och ELF långsammare.",
+        insight: "ORD och LÄS svarar snabbt på rätt sorts träning. MEK och ELF tar längre tid.",
       },
       {
         value: "tid",
