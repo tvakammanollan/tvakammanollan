@@ -14,6 +14,7 @@ import { checkMatchQuota } from "./match-abuse";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
 import type { Database } from "@/integrations/supabase/types";
+import { writeTolerant } from "./schema-tolerant.server";
 
 export const createMatch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -99,9 +100,11 @@ export const createMatch = createServerFn({ method: "POST" })
       const botElo = calcBotElo(playerElo);
       const questions = await selectQuestionsFor(data.match_type, userId);
 
-      const { data: match, error } = await supabaseAdmin
-        .from("matches")
-        .insert({
+      // `started_at` är valfri här: körs koden innan migrationen skrivs raden
+      // utan den, och läskoden faller tillbaka på `created_at`. Utan
+      // toleransen gick det inte att starta en match alls i glappet.
+      const { data: match, error } = await writeTolerant(
+        {
           match_type: data.match_type,
           player1_id: userId,
           status: "active",
@@ -109,9 +112,15 @@ export const createMatch = createServerFn({ method: "POST" })
           bot_elo: botElo,
           // Botmatchen är spelbar i samma stund raden finns.
           started_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
+        },
+        ["started_at"],
+        (payload) =>
+          supabaseAdmin
+            .from("matches")
+            .insert(payload as Database["public"]["Tables"]["matches"]["Insert"])
+            .select()
+            .single(),
+      );
       if (error || !match) throw error ?? new Error("Could not create match");
 
       await insertMatchQuestions(match.id, questions);
@@ -160,12 +169,18 @@ export const joinMatch = createServerFn({ method: "POST" })
     const questions = await selectQuestionsFor(match.match_type as "verbal" | "math", userId);
     await insertMatchQuestions(match.id, questions);
 
-    const { error: updErr } = await supabaseAdmin
-      .from("matches")
-      // Klockan startar här — inte när rummet öppnades. Väntetiden i rummet
-      // är inte speltid och ska inte redovisas som sådan.
-      .update({ player2_id: userId, status: "active", started_at: new Date().toISOString() })
-      .eq("id", match.id);
+    // Klockan startar här — inte när rummet öppnades. Väntetiden i rummet är
+    // inte speltid och ska inte redovisas som sådan.
+    const { error: updErr } = await writeTolerant(
+      { player2_id: userId, status: "active", started_at: new Date().toISOString() },
+      ["started_at"],
+      (payload) =>
+        supabaseAdmin
+          .from("matches")
+          .update(payload as Database["public"]["Tables"]["matches"]["Update"])
+          .eq("id", match.id)
+          .select("id"),
+    );
     if (updErr) throw updErr;
 
     return { match_id: match.id };

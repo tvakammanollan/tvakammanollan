@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { writeTolerant } from "./schema-tolerant.server";
+import type { Database } from "@/integrations/supabase/types";
 import { selectQuestionsFor, insertMatchQuestions } from "./match.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
@@ -255,11 +257,18 @@ export const acceptMatchInvite = createServerFn({ method: "POST" })
     const questions = await selectQuestionsFor(match.match_type as "verbal" | "math", userId);
     await insertMatchQuestions(match.id, questions);
 
-    await supabaseAdmin
-      .from("matches")
-      // Klockan startar när inbjudan accepteras, inte när den skickades.
-      .update({ player2_id: userId, status: "active", started_at: new Date().toISOString() })
-      .eq("id", match.id);
+    // Klockan startar när inbjudan accepteras, inte när den skickades.
+    // `started_at` är valfri tills migrationen körts — se schema-tolerant.server.
+    await writeTolerant(
+      { player2_id: userId, status: "active", started_at: new Date().toISOString() },
+      ["started_at"],
+      (payload) =>
+        supabaseAdmin
+          .from("matches")
+          .update(payload as Database["public"]["Tables"]["matches"]["Update"])
+          .eq("id", match.id)
+          .select("id"),
+    );
 
     await supabaseAdmin.from("match_invites").update({ status: "accepted" }).eq("id", invite.id);
 

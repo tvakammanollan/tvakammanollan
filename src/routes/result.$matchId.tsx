@@ -564,8 +564,13 @@ function ResultPage() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <PlayerColumn
+            // displayName ger gästkonton sitt lundnamn i stället för
+            // user_86b94273 — samma namn som motståndaren ser.
             name={
-              profile?.username ?? (user?.user_metadata?.username as string | undefined) ?? "Du"
+              displayName(
+                profile?.username ?? (user?.user_metadata?.username as string | undefined),
+                user!.id,
+              ) || "Du"
             }
             seed={user!.id}
             score={myScore}

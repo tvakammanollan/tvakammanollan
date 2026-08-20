@@ -19,6 +19,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { writeTolerant } from "./schema-tolerant.server";
+import type { Database } from "@/integrations/supabase/types";
 import { optionalSupabaseAuth } from "./auth-optional.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
@@ -58,13 +60,23 @@ export const submitBugReport = createServerFn({ method: "POST" })
 
     const replyEmail = data.replyEmail?.trim() || kontoEpost || null;
 
-    const { error } = await supabaseAdmin.from("bug_reports").insert({
-      user_id: userId ?? null,
-      message: data.message.trim(),
-      page: data.page ?? null,
-      user_agent: data.userAgent ?? null,
-      reply_email: replyEmail,
-    });
+    // `reply_email` är valfri mot databasen tills migrationen körts — se
+    // schema-tolerant.server. Rapporten är viktigare än svarsadressen.
+    const { error } = await writeTolerant(
+      {
+        user_id: userId ?? null,
+        message: data.message.trim(),
+        page: data.page ?? null,
+        user_agent: data.userAgent ?? null,
+        reply_email: replyEmail,
+      },
+      ["reply_email"],
+      (payload) =>
+        supabaseAdmin
+          .from("bug_reports")
+          .insert(payload as Database["public"]["Tables"]["bug_reports"]["Insert"])
+          .select("id"),
+    );
     if (error) {
       console.error("[bug] kunde inte spara rapporten:", error.message);
       throw new Error("Kunde inte skicka rapporten just nu. Försök igen om en stund.");

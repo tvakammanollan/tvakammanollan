@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { writeTolerant } from "./schema-tolerant.server";
+import type { Database } from "@/integrations/supabase/types";
 import { selectQuestionsFor, insertMatchQuestions } from "./match.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
@@ -116,9 +118,9 @@ export const pollRankedMatch = createServerFn({ method: "POST" })
     // 4. Create the match (admin) and questions, then atomically pair both queue rows.
     const questions = await selectQuestionsFor(data.match_type, userId);
 
-    const { data: match, error: insErr } = await supabaseAdmin
-      .from("matches")
-      .insert({
+    // `started_at` är valfri tills migrationen körts — se schema-tolerant.server.
+    const { data: match, error: insErr } = await writeTolerant(
+      {
         match_type: data.match_type,
         player1_id: userId,
         player2_id: opponent.player_id,
@@ -127,9 +129,15 @@ export const pollRankedMatch = createServerFn({ method: "POST" })
         is_ranked: true,
         // Rankad match är spelbar direkt — båda står redan i kön.
         started_at: new Date().toISOString(),
-      })
-      .select("id")
-      .single();
+      },
+      ["started_at"],
+      (payload) =>
+        supabaseAdmin
+          .from("matches")
+          .insert(payload as Database["public"]["Tables"]["matches"]["Insert"])
+          .select("id")
+          .single(),
+    );
     if (insErr || !match) throw insErr ?? new Error("Could not create match");
 
     await insertMatchQuestions(match.id, questions);

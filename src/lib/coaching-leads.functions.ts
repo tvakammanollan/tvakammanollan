@@ -20,6 +20,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { writeTolerant } from "./schema-tolerant.server";
+import type { Database } from "@/integrations/supabase/types";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { optionalSupabaseAuth } from "./auth-optional.server";
 import { limits } from "./rate-limit";
@@ -88,21 +90,32 @@ export const submitCoachingLead = createServerFn({ method: "POST" })
     const email = data.email?.trim() || null;
     const message = data.message?.trim() || null;
 
-    const { error } = await supabaseAdmin.from("coaching_leads").insert({
-      user_id: context.userId,
-      phone: phone.e164,
-      name: name && name.length > 0 ? name : null,
-      email,
-      message,
-      answers: data.answers,
-      source: data.source,
-      // Samtycket ÄR inskicket: formuläret säger före knappen vad numret
-      // används till, och att trycka på den är den entydiga viljeyttringen.
-      // Tidpunkten sätts på servern, inte av klienten — den är beviset och
-      // ska inte gå att skicka in.
-      consent_at: new Date().toISOString(),
-    });
-    if (error) throwDbError(error, "insert");
+    // `email` och `message` är valfria också mot databasen: körs koden innan
+    // migrationen sparas leadet utan dem i stället för att inte sparas alls.
+    // Ett tappat telefonnummer är ett tappat samtal. Se schema-tolerant.server.
+    const { error } = await writeTolerant(
+      {
+        user_id: context.userId,
+        phone: phone.e164,
+        name: name && name.length > 0 ? name : null,
+        email,
+        message,
+        answers: data.answers,
+        source: data.source,
+        // Samtycket ÄR inskicket: formuläret säger före knappen vad numret
+        // används till, och att trycka på den är den entydiga viljeyttringen.
+        // Tidpunkten sätts på servern, inte av klienten — den är beviset och
+        // ska inte gå att skicka in.
+        consent_at: new Date().toISOString(),
+      },
+      ["email", "message"],
+      (payload) =>
+        supabaseAdmin
+          .from("coaching_leads")
+          .insert(payload as Database["public"]["Tables"]["coaching_leads"]["Insert"])
+          .select("id"),
+    );
+    if (error) throwDbError({ message: error.message ?? "okänt fel" }, "insert");
 
     // Notis till oss. Ett lead som ingen ser är ett samtal som inte blir av,
     // och listan ligger bakom admin-inloggning som ingen öppnar utan anledning.
@@ -191,6 +204,9 @@ export const fetchCoachingLeads = createServerFn({ method: "GET" })
     const sort = data.sort ?? (data.status === "new" ? "oldest" : "newest");
     let q = supabaseAdmin
       .from("coaching_leads")
+      // Kolumnlistan nämner email och message. Saknas de (migrationen inte
+      // körd) svarar PostgREST med fel på HELA frågan, så listan faller
+      // tillbaka nedan i stället för att visa ett tomt admingränssnitt.
       .select(
         "id,created_at,phone,name,email,message,answers,source,status,contacted_at,note,user_id",
       )
