@@ -27,5 +27,12 @@ COMMENT ON COLUMN public.coaching_requests.confirmation_email_sent_at IS
 -- Vyn över obetalda bokningar står kvar oförändrad. Den ska inte kunna få nya
 -- rader genom sajtens eget flöde längre, men den som bokar via en känd publik
 -- Calendly-slug hamnar fortfarande där — och då vill vi se det.
-COMMENT ON VIEW public.coaching_obetalda_bokningar IS
-  'Bokade tider utan betalning. Efter 2026-08-19 kan sajtens eget flöde inte skapa dessa (kassan går före tidsvalet) — en rad här betyder att någon bokat direkt via Calendly, eller att en betalning återkallats. Städaren avbokar dem automatiskt; kolumnen calendly_cancel_url finns för att göra det för hand.';
+-- Villkorlig: COMMENT ON VIEW kastar om vyn inte finns, och ett fel här skulle
+-- fälla hela migrationsbatchen för en ren dokumentationsrad.
+DO $$
+BEGIN
+  IF to_regclass('public.coaching_obetalda_bokningar') IS NOT NULL THEN
+    EXECUTE $c$COMMENT ON VIEW public.coaching_obetalda_bokningar IS
+      'Bokade tider utan betalning. Efter 2026-08-19 kan sajtens eget flöde inte skapa dessa (kassan går före tidsvalet) — en rad här betyder att någon bokat direkt via Calendly, eller att en betalning återkallats. Städaren avbokar dem automatiskt; kolumnen calendly_cancel_url finns för att göra det för hand.'$c$;
+  END IF;
+END $$;

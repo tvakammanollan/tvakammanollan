@@ -18,8 +18,15 @@ COMMENT ON COLUMN public.coaching_leads.message IS
 -- Söker man i ringlistan söker man på namn, nummer eller adress. Ett
 -- trigram-index gör LIKE-sökningen på tre kolumner billig även när listan
 -- växer; utan det blir varje tangenttryck en full tabellskanning.
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-
-CREATE INDEX IF NOT EXISTS coaching_leads_sok_idx
-  ON public.coaching_leads
-  USING gin ((coalesce(name, '') || ' ' || phone || ' ' || coalesce(email, '')) gin_trgm_ops);
+-- Indexet är en optimering, inte ett krav: sökningen fungerar utan det, bara
+-- långsammare. Saknas rättighet att skapa tillägget ska det INTE fälla resten
+-- av migrationen — därför i ett block som sväljer felet och säger till.
+DO $$
+BEGIN
+  CREATE EXTENSION IF NOT EXISTS pg_trgm;
+  CREATE INDEX IF NOT EXISTS coaching_leads_sok_idx
+    ON public.coaching_leads
+    USING gin ((coalesce(name, '') || ' ' || phone || ' ' || coalesce(email, '')) gin_trgm_ops);
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Hoppade över trigram-indexet för ringlistan: %. Sökningen fungerar ändå.', SQLERRM;
+END $$;
