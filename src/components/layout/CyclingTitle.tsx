@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { m, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +18,7 @@ const HANDOFF = 0.26;
 /**
  * The word that swaps out under a page title.
  *
- * Four things here are deliberate and easy to undo by accident:
+ * Fem saker här är medvetna och lätta att råka göra ogjorda:
  *
  * 1. **The vertical padding is the only reason the glyphs are whole.**
  *    `overflow-hidden` clips at the *padding* edge, and Young Serif's ink runs
@@ -37,17 +37,26 @@ const HANDOFF = 0.26;
  *    the negative margins is not the fix either — it pushes the word down and
  *    opens a 0.62em gap between the two heading lines, so they stop reading as
  *    one block. Grow the window, keep the footprint.
- * 3. **Every word sits in the same grid cell**, centred with
- *    `justify-items-center`. They were absolutely positioned inside a flex
- *    container before, which leaves the horizontal placement to the browser's
- *    static-position rules for abspos flex children. Chrome does centre them,
- *    but nothing in the layout said so, and the same trick is what forced the
- *    fixed height in (2).
+ * 3. **Every word sits i samma rutnätscell**, vänsterställda med
+ *    `justify-items-start`. De var absolutpositionerade i en flex-container
+ *    förut, vilket lämnar den vågräta placeringen åt webbläsarens regler för
+ *    statisk position hos absolutpositionerade flexbarn. Chrome centrerar dem,
+ *    men ingenting i layouten sa det, och samma trick är vad som tvingade in
+ *    den fasta höjden i (2).
  * 4. **Offsets are a percentage of the word's own height, not pixels.** The old
  *    ±150px was most of a line on a phone and a third of one on desktop, and
  *    the spring it rode on (stiffness 50, default damping) overshot far enough
  *    to bounce the word against the clip edge on the way in. See `TRAVEL` for
  *    why the distance is short rather than a full height.
+ * 5. **Rutan står inline, på samma rad som rubriken, och följer ordets
+ *    bredd.** Ordet är sista ordet i en mening ("Träna ORD.", "Se vem som är
+ *    bäst.") — låg den som ett eget block bröts meningen mitt itu och det som
+ *    skulle vara ett mellanslag blev en radbrytning. Två följder av att stå
+ *    inline: bredden måste mätas (se `bredd` nedan), annars är rutan alltid så
+ *    bred som det längsta ordet och mellanrummet efter rubriken hoppar; och
+ *    masken måste klippa i höjdled **men inte i sidled** — därav `clip-path`
+ *    i stället för `overflow-hidden`, som klipper i båda riktningarna och
+ *    kapade det inkommande ordet så länge rutan ännu inte hunnit växa.
  *
  * Direction is the same every time, wrap-around included: the word leaving goes
  * up, the next one rises from below, and they take turns rather than crossing —
@@ -65,6 +74,8 @@ export function CyclingTitle({
 }) {
   const reduce = useReducedMotion();
   const [{ index, previous }, setStep] = useState({ index: 0, previous: -1 });
+  const wordRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const [bredd, setBredd] = useState<number | null>(null);
 
   useEffect(() => {
     if (words.length < 2) return;
@@ -74,15 +85,40 @@ export function CyclingTitle({
     return () => clearTimeout(id);
   }, [index, intervalMs, words.length]);
 
+  // Bredden går inte att räkna fram, den måste mätas: orden är olika långa,
+  // rubriken står före på samma rad, och rutan ska vara exakt så bred som
+  // ordet som visas just nu. Det inaktiva ordet ligger på `w-0` (se nedan), så
+  // serverns HTML har redan rätt bredd — mätningen finns bara för att kunna
+  // ANIMERA bytet, som en intrinsisk bredd aldrig går att göra.
+  useEffect(() => {
+    const mät = () => {
+      const el = wordRefs.current[index];
+      if (el) setBredd(el.offsetWidth);
+    };
+    mät();
+    window.addEventListener("resize", mät);
+    // Typsnittet laddas asynkront och Young Serif är bredare än fallbacken —
+    // mäts bara en gång före det fastnar rutan på systemsnittets bredd.
+    void document.fonts?.ready.then(mät).catch(() => {});
+    return () => window.removeEventListener("resize", mät);
+  }, [index, words]);
+
   return (
-    <span
+    <m.span
       className={cn(
-        "grid grid-cols-1 grid-rows-1 justify-items-center overflow-hidden",
+        "inline-grid grid-cols-1 grid-rows-1 justify-items-start align-baseline",
         // Paddingen är fönstret, marginalerna nollar den mot layouten — annars
         // skjuts ordet ner och de två rubrikraderna glider isär.
         "pt-[0.22em] pb-[0.12em] -mt-[0.22em] -mb-[0.12em]",
         className,
       )}
+      // Masken klipper bara i höjdled. Negativa insättningar i sidled låter
+      // ordet sticka ut medan rutan växer ikapp; `overflow-hidden` hade kapat
+      // det på mitten under just de bildrutor då det syns som mest.
+      style={{ clipPath: "inset(0 -100%)" }}
+      initial={false}
+      animate={bredd != null ? { width: bredd } : {}}
+      transition={reduce ? { duration: 0 } : { duration: 0.5, ease: EASE, delay: HANDOFF }}
     >
       {words.map((word, i) => {
         const active = i === index;
@@ -90,8 +126,17 @@ export function CyclingTitle({
         return (
           <m.span
             key={i}
+            ref={(el: HTMLSpanElement | null) => {
+              wordRefs.current[i] = el;
+            }}
             aria-hidden={!active}
-            className="col-start-1 row-start-1 whitespace-nowrap text-[var(--amber)]"
+            className={cn(
+              "col-start-1 row-start-1 whitespace-nowrap text-[var(--amber)]",
+              // Bara det synliga ordet får bidra till bredden. Utan det blir
+              // rutan så bred som det längsta ordet redan i serverns HTML, och
+              // en centrerad rubrik står snett tills mätningen hunnit köra.
+              !active && "w-0",
+            )}
             initial={{ opacity: 0, y: reduce ? "0%" : TRAVEL }}
             animate={{
               opacity: active ? 1 : 0,
@@ -114,6 +159,6 @@ export function CyclingTitle({
           </m.span>
         );
       })}
-    </span>
+    </m.span>
   );
 }

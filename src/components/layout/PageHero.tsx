@@ -12,9 +12,9 @@ type Variant = "compact" | "content";
  * `compact` = workspace pages (lower height).
  * `content` = marketing/long-form pages (taller).
  *
- * Pass `cycleWords` to render the cycling-word animation instead of a
- * static `title`. When `cycleWords` is set, `title` becomes the static
- * prefix shown above the cycling line.
+ * Pass `cycleWords` to render the cycling-word animation. `title` är då den
+ * fasta delen av meningen och det cyklande ordet står efter den, på samma
+ * rad, med ett vanligt mellanslag emellan.
  */
 export function PageHero({
   eyebrow,
@@ -72,11 +72,18 @@ export function PageHero({
           )}
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
         >
-          <SplitText as="span" className="block">
-            {title}
-          </SplitText>
+          {/* Rubrik och cyklande ord är EN mening ("Träna ORD.", "Se vem som
+              är bäst."), så mellan dem står ett riktigt mellanslag. Ordet låg
+              tidigare som ett eget block under rubriken: meningen bröts mitt
+              itu och mellanslaget blev en radbrytning. Mellanslaget är också
+              en radbrytningsmöjlighet, så på en smal skärm bryts meningen där
+              den ska brytas i stället för att svämma över. */}
+          <SplitText as="span">{title}</SplitText>
           {cycleWords && cycleWords.length > 0 ? (
-            <CyclingTitle words={cycleWords} className={cn(!centered && "justify-items-start")} />
+            <>
+              {" "}
+              <CyclingTitle words={cycleWords} />
+            </>
           ) : null}
         </h1>
 
