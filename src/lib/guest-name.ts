@@ -58,9 +58,17 @@ export function guestName(seed?: string): string {
   return `Gäst ${ORD[Math.abs(h) % ORD.length]}`;
 }
 
-/** `user_1a2b3c4d` från triggern — namnet användaren aldrig valde. */
+/**
+ * `user_1a2b3c4d` från triggern — namnet användaren aldrig valde.
+ *
+ * Åtta hextecken *eller fler*: triggern skriver normalt åtta, men faller
+ * tillbaka på hela UUID:t när det korta namnet redan är taget (se
+ * `20260820150000_registrering_overlever_upptaget_namn.sql`). Låstes det vid
+ * exakt åtta skulle just de kontona visa sitt id i UI:t och dessutom slinka
+ * in på topplistan.
+ */
 export function isAutoGuestName(name: string | null | undefined): boolean {
-  return !!name && /^user_[0-9a-f]{8}$/i.test(name);
+  return !!name && /^user_[0-9a-f]{8,}$/i.test(name);
 }
 
 /**

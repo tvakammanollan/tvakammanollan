@@ -78,3 +78,18 @@ describe("guestName är en visningshjälpare, inte en nyckel", () => {
     expect(guestName("abc")).toMatch(/^Gäst \S+$/);
   });
 });
+
+describe("triggerns reservnamn", () => {
+  // Faller det korta namnet bort skriver triggern hela UUID:t. Känns det
+  // inte igen visar UI:t ett id och topplistan rankar ett namnlöst konto.
+  const helt = "user_5e19eb201b6243788d4773fd31913125";
+
+  it("räknas som auto-namn", () => {
+    expect(isAutoGuestName(helt)).toBe(true);
+    expect(isGeneratedGuestName(helt)).toBe(true);
+  });
+
+  it("renderas som gäst, inte som id", () => {
+    expect(displayName(helt)).toMatch(/^Gäst /);
+  });
+});
