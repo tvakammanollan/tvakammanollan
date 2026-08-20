@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://tvakommanollan.se/ova/ord</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -91,6 +91,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tvakommanollan.se/ordlista</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tvakommanollan.se/faq</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
@@ -104,7 +110,7 @@
   </url>
   <url>
     <loc>https://tvakommanollan.se/guider/ord</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -152,7 +158,7 @@
   </url>
   <url>
     <loc>https://tvakommanollan.se/guider/tidspress</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -186,42 +192,15 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <!-- forum: statiska sidor. Trådarna ligger i /forum-sitemap.xml (fas 2). -->
+  <!-- forum: bara navet och reglerna. Kategorisidorna och trådarna ligger i
+       /forum-sitemap.xml, som bygger dem ur databasen — en kategori utan
+       trådar sätter noindex, och en noindexad adress i en inskickad
+       sitemap är ett fel i Search Console. Samma villkor styr båda. -->
   <url>
     <loc>https://tvakommanollan.se/forum</loc>
-    <lastmod>2026-08-16</lastmod>
+    <lastmod>2026-08-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tvakommanollan.se/forum/allmant</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tvakommanollan.se/forum/kvantitativ</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tvakommanollan.se/forum/verbal</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tvakommanollan.se/forum/provdagen</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tvakommanollan.se/forum/plugg</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tvakommanollan.se/forum/regler</loc>

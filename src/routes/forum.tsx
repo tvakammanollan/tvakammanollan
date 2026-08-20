@@ -13,7 +13,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { PageHero } from "@/components/layout/PageHero";
 import { ThreadListItem } from "@/components/forum/ThreadListItem";
 import { fetchForumHome } from "@/lib/forum.functions";
-import { formatInt } from "@/lib/sv-format";
+import { antal, formatInt } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 
 /* =====================================================================
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/forum")({
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "Forum om högskoleprovet",
-          description: `Diskussionsforum om högskoleprovet med ${formatInt(threads)} trådar.`,
+          description: `Diskussionsforum om högskoleprovet med ${antal(threads, "tråd", "trådar")}.`,
           url: "https://tvakommanollan.se/forum",
           inLanguage: "sv-SE",
           isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -76,10 +76,12 @@ function ForumHomePage() {
     <div className="min-h-screen">
       <PageHero
         eyebrow="Högskoleprovet · forum"
-        title="Forum"
+        // H1:n stod på ett enda ord. Sidans <title> bar sökordet men rubriken
+        // gjorde det inte, och H1 är det Google väger tyngst efter titeln.
+        title="Forum om högskoleprovet"
         subtitle={
           totalThreads > 0
-            ? `${formatInt(totalThreads)} trådar och ${formatInt(totalPosts)} inlägg om högskoleprovet. Läs fritt, skriv med ett konto.`
+            ? `${antal(totalThreads, "tråd", "trådar")} och ${antal(totalPosts, "inlägg", "inlägg")} om högskoleprovet. Läs fritt, skriv med ett konto.`
             : "Frågor och svar om högskoleprovet. Läs fritt, skriv med ett konto."
         }
         align="center"
@@ -140,7 +142,8 @@ function ForumHomePage() {
                       {cat.description}
                     </span>
                     <span className="mt-2 block text-xs tabular-nums text-[var(--text-tertiary)]">
-                      {formatInt(cat.threadCount)} trådar · {formatInt(cat.postCount)} inlägg
+                      {antal(cat.threadCount, "tråd", "trådar")} ·{" "}
+                      {antal(cat.postCount, "inlägg", "inlägg")}
                     </span>
                   </span>
                 </Link>

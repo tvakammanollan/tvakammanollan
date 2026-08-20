@@ -16,6 +16,18 @@ export function formatInt(n: number | null | undefined): string {
   return n.toLocaleString(SV);
 }
 
+/**
+ * Antal med rätt böjt substantiv: `antal(1, "tråd", "trådar")` → "1 tråd".
+ *
+ * Skrivet för att "1 trådar" stod på forumets startsida, alltså på en sida
+ * som indexeras. Svenskan böjer inte alla ord (ett inlägg, två inlägg), så
+ * pluralformen skickas in i stället för att härledas — den som skriver
+ * texten vet, funktionen kan inte veta.
+ */
+export function antal(n: number, singular: string, plural: string): string {
+  return `${formatInt(n)} ${n === 1 ? singular : plural}`;
+}
+
 export function formatDecimal(n: number | null | undefined, fractionDigits = 1): string {
   if (n == null || !Number.isFinite(n)) return "—";
   return n.toLocaleString(SV, {

@@ -543,6 +543,77 @@ om något liknande dyker upp:
   med orsak i slutet av körningen i stället för att gissa.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
+### Ordlistan — /ordlista (2026-08-20)
+
+ORD-beståndet är sajtens största textmängd (8 761 rader, 8 760 sluggar) och gick
+fram till nu bara att nå genom att öva. Ordlistan ger varje uppslag en egen
+adress: betydelse, exempelmening, liknande ord, ordklass — och **uppgiften ordet
+faktiskt kom ur**, med sina fem alternativ och facit. Det sista är poängen: utan
+det är sidan en ordboksavskrift, med det är den något som inte finns någon
+annanstans.
+
+Tre adresser: `/ordlista` (nav), `/ordlista/bokstav/<b>` (register) och
+`/ordlista/<ord>` (uppslaget). Ren logik i `ord-slug.ts`, databasdelen i
+`ordlista.server.ts`, serverfunktionerna i `ordlista.functions.ts`.
+
+- **`bokstav` är ett statiskt mellanled och måste förbli det.** `/ordlista/<b>`
+  hade krockat med uppslagssidan, och det finns uppslag på ett tecken.
+- **Å, Ä och Ö står kvar i sluggen — translitterera dem aldrig.** `får`/`far`,
+  `hår`/`har` och `mål`/`mal` är olika uppslag i det här beståndet och slås ihop
+  av a/a/o. Länkar, canonical och sitemap procentkodar likadant
+  (`%C3%A5b%C3%A4kig`); ändras kodningen på ett av de tre ställena får varje ord
+  med å, ä eller ö två adresser.
+- **Inledande och avslutande bindestreck trimmas inte** — de är affixen
+  (`-ism`, `a-`), och trimmade går de inte att skilja från vanliga ord.
+- **Registret cachas per isolat i en timme.** Slugen står inte i databasen utan
+  räknas ur `question_text`, så uppslagningen behöver hela listan. Ett
+  `ilike`-mönster (bindestreck ↔ ett tecken) är *nästan* nog men matchar
+  ingenting för de sju uppslag som tappar tecken i slugen (`crêpe`, `garçon`,
+  `di-,diko-` …). `building`-löftet finns för att en kall isolat annars startar
+  nio databasanrop *per* samtidig crawlerbegäran.
+- **Två uppslag ger samma slug** (`crème de la crème` / `crème-de-la-crème`).
+  Valet mellan dem är deterministiskt (kortast, sedan alfabetiskt) — annars
+  pekar sitemapen på en rad och länkarna på en annan beroende på svarsordning.
+- **Visningsformen går genom `ordText()`.** 953 rader står versalt i databasen
+  ("VAKANT", "VALÖR"); en rubrik som skriker läses som ett fel.
+- **Länkvägarna är tre, och de behövs alla.** Ordbokens JFR-ord räcker bara till
+  var sjätte sida (15,5 %), så alternativen i uppgiften länkas också när de
+  själva är uppslag, och varje sida bär grannarna i bokstavsordning. Kedjan är
+  det som gör hela listan krypbar utan att något ligger djupt.
+- **Sitemapen är egen** (`/ordlista-sitemap.xml`, 8 791 adresser, ~1 MB) och
+  står i `robots.txt` bredvid de två andra. `public/sitemap.xml` bär bara navet
+  — den är handskriven och kan inte bära nio tusen adresser.
+- **Förklaringarna är hämtade ur ordböcker** (91 % SO/svenska.se) och källan
+  skrivs ut på varje sida via `definitionSourceLabel()`. Kapas källraden ser en
+  ordboksdefinition ut som vår egen text. Att publicera dem som indexerbara
+  sidor exponerar dem bredare än övningsläget gjorde — det är ett medvetet val
+  och värt att ompröva om Svenska Akademien hör av sig.
+
+### SEO-städning vid domänflytten (2026-08-20)
+
+- **FAQPage-datan låg i `__root.tsx`** och renderades därför på alla 189 sidor,
+  även provpass och guider där inget av svaren syns. Googles krav är att
+  FAQ-innehållet står synligt på just den sidan, så markupen var ogiltig
+  överallt utom på `/faq` — som dessutom har en egen, korrekt FAQPage och alltså
+  bar två. Borttagen ur roten. **Lägg inte tillbaka den där**: rätt ställe är
+  den enskilda sidan vars innehåll faktiskt är frågorna.
+- **hreflang låg också i roten**, hårdkodad till `/`. Varje undersida sa alltså
+  åt Google att dess alternativa version var startsidan, tvärtemot sidans egen
+  canonical. Sajten finns på ett språk och ska då inte ha hreflang alls.
+- **"8 frågor på 8 minuter" stod på fem ställen** och matchen är 5 minuter
+  (`TOTAL_SECONDS`, `match.$matchId.tsx`). Rättat i FAQ, tidspress-guiden och
+  `llms.txt`.
+- **`llms.txt` är statisk och driver AI-sökmotorernas svar.** Den hade 4 363
+  uppgifter (är 4 800), "tio prov med ELF" (är alla 60 verbala pass), gratis
+  coachning (är sajtens enda betaltjänst) och 1,9 i stället för 1,95. Den
+  uppdateras inte av något bygge — rätta den för hand när fakta ändras.
+- **En forumkategori utan trådar sätter `noindex, follow`.** Sex sidor med en
+  rubrik och en mening är tunt innehåll som drar ner hela sajten. Grinden
+  släpper av sig själv när första tråden postas; den är inte en flagga att
+  komma ihåg.
+- `antal()` i `sv-format.ts` finns för att "1 trådar" stod på forumets
+  startsida — alltså på en indexerad sida.
+
 ### Resultat på gamla prov (2026-08-19)
 
 Provlistan visar vad du fått: rätt av antal på varje skrivet provpass, en poäng
@@ -1110,6 +1181,19 @@ vilket är den allvarligare halvan av det som rättades.
 - Number/date formatting helpers (`formatInt`, `formatDecimal`, `formatRelativeTime`, etc.) are in `src/lib/sv-format.ts` — use these everywhere instead of raw `toLocaleString`
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
+- **En klippmask på ett inline-element får ALDRIG vara `overflow: hidden`.** En
+  inline-block vars overflow inte är `visible` tar sin baslinje från
+  **bottenmarginalkanten** i stället för från texten, alltså hamnar ordet
+  ~0,19em för högt mot allt annat på samma rad (12 px vid 64px-rubriken). Det
+  var därför det cyklande röda ordet i `CyclingTitle` såg ut att "hänga lägre"
+  än rubriken på /ord, /om, /train, /leaderboard och /guider — i själva verket
+  satt det röda ordet rätt och `SplitText` satt högt, och samma rubrik stod på
+  två olika höjder beroende på om besökaren hade reduced motion på (då renderas
+  ren text, utan mask). Båda maskerar nu i höjdled med
+  `clip-path: inset(0 -100%)`, som lämnar baslinjen i fred och dessutom inte
+  klipper i sidled. Mät alltid ihop de två: `blackWrap.top === grid.top` på
+  samma rad, och kontrollera att bläcket ryms i fönstret (smalaste marginalen i
+  beståndet är 2,7 px, för "LÄS." uppåt och "betydelser." nedåt).
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.

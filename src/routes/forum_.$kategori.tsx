@@ -7,7 +7,7 @@ import { ForumPagination } from "@/components/forum/ForumPagination";
 import { EmptyState } from "@/components/EmptyState";
 import { fetchForumCategory } from "@/lib/forum.functions";
 import { pageCount, threadPath } from "@/lib/forum";
-import { formatInt } from "@/lib/sv-format";
+import { antal, formatInt } from "@/lib/sv-format";
 
 /* =====================================================================
    Trådlistan i en kategori, paginerad med ?sida=N.
@@ -41,10 +41,16 @@ export const Route = createFileRoute("/forum_/$kategori")({
         path,
         title: `${category.name} · forum om högskoleprovet${suffix} · Tvåkommanollan`,
         description:
-          `${category.description} ${formatInt(total)} trådar. Ställ din fråga eller läs vad andra ` +
+          `${category.description} ${antal(total, "tråd", "trådar")}. Ställ din fråga eller läs vad andra ` +
           `som pluggar inför högskoleprovet har frågat.`,
         ogTitle: `${category.name} · Tvåkommanollans forum`,
         ogDescription: category.description,
+        // En kategori utan trådar är en rubrik och en mening — tunt innehåll,
+        // och sex sådana sidor drar ner bedömningen av hela sajten. `follow`
+        // så länkarna vidare fortfarande räknas. Grinden släpper av sig själv
+        // i samma sekund den första tråden postas; den ska inte bli en flagga
+        // någon måste komma ihåg att stänga av.
+        noindex: total === 0,
       }),
       links: pageLinks(path),
       scripts: [
@@ -109,7 +115,7 @@ function ForumCategoryPage() {
             {category.description}
           </p>
           <p className="mt-1 text-xs tabular-nums text-[var(--text-tertiary)]">
-            {formatInt(total)} trådar
+            {antal(total, "tråd", "trådar")}
             {pages > 1 ? ` · sida ${page} av ${pages}` : ""}
           </p>
         </div>
