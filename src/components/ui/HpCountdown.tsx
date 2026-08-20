@@ -12,9 +12,8 @@
  */
 import { useEffect, useState } from "react";
 import { m } from "framer-motion";
-import { getNextHpDate, timeUntil } from "@/lib/hp-dates";
+import { getNextHpDate, hpDateLong, timeUntil } from "@/lib/hp-dates";
 import { CalendarDays } from "lucide-react";
-import { formatDateLong } from "@/lib/sv-format";
 
 interface HpCountdownProps {
   size?: "card" | "inline";
@@ -41,15 +40,21 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
   }
 
   const t = timeUntil(next.date, now);
-  const formattedDate = formatDateLong(next.date);
+  // UTC-låst via hpDateLong: formatDateLong formar i läsarens egen tidszon, så
+  // kortet skrev ut ett annat datum än listan ovanför för alla väster om UTC.
+  const formattedDate = hpDateLong(next.entry.date);
 
   if (size === "inline") {
     return (
       <div className="inline-flex items-center gap-2 text-sm">
         <CalendarDays className="h-4 w-4" style={{ color: "var(--amber)" }} />
         <span style={{ color: "var(--text-secondary)" }}>{next.label}:</span>
-        <span className="font-bold tabular-nums" style={{ color: "var(--amber)" }}>
-          {t.days} dagar
+        <span
+          suppressHydrationWarning
+          className="font-bold tabular-nums"
+          style={{ color: "var(--amber)" }}
+        >
+          {t.days} {t.days === 1 ? "dag" : "dagar"}
         </span>
       </div>
     );
@@ -94,6 +99,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
 
         <div className="mt-5 flex items-baseline justify-center gap-3">
           <span
+            suppressHydrationWarning
             className="display text-[56px] font-bold leading-none tabular-nums sm:text-[72px]"
             style={{
               color: "var(--amber)",
@@ -104,6 +110,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
             {t.days}
           </span>
           <span
+            suppressHydrationWarning
             className="text-[15px] font-medium sm:text-[17px]"
             style={{ color: "var(--text-secondary)" }}
           >
@@ -133,7 +140,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
 function TimeBlock({ value, label }: { value: number; label: string }) {
   return (
     <span className="inline-flex items-baseline gap-1">
-      <span style={{ color: "var(--cream)" }} className="font-bold">
+      <span suppressHydrationWarning style={{ color: "var(--cream)" }} className="font-bold">
         {value.toString().padStart(2, "0")}
       </span>
       <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-quiet)" }}>
