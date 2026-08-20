@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { fitTitle } from "@/lib/seo-text";
+import { describeWithin, fitTitle, trimToWord } from "@/lib/seo-text";
 import { getOrdlistaEntry } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
@@ -40,24 +40,25 @@ export const Route = createFileRoute("/ordlista_/$ord")({
     const { word, slug, senses, wordClass, related } = loaderData;
     const path = `/ordlista/${encodeURIComponent(slug)}`;
     const firstSense = senses[0] ?? "";
-    // Beskrivningen är betydelsen, kapad vid en meningsgräns om det går.
-    // En avhuggen mening mitt i ett ord blir ett dåligt utdrag i träfflistan.
-    const short =
-      firstSense.length > 130
-        ? firstSense.slice(0, 127).replace(/[\s,]+\S*$/, "") + "…"
-        : firstSense;
     const synonyms = related.map((r) => r.word).slice(0, 4);
+    // Betydelsen och synonymerna som två meningar, så att describeWithin kan
+    // släppa den andra hel i stället för att kapa den första mitt i. Att
+    // kapa betydelsen på egen hand räckte inte: ordklassen, uppslagsordet
+    // och synonymerna kommer ovanpå, och summan sprack (filibuster 192
+    // tecken, censur 183) fastän varje del för sig såg lagom ut.
+    const body =
+      `${word}${wordClass ? ` (${wordClass})` : ""}: ${firstSense}` +
+      `${synonyms.length ? ` Liknande ord: ${synonyms.join(", ")}.` : ""}`;
 
     return {
       meta: pageMeta({
         path,
         title: fitTitle(`${word} – vad betyder det?`, "· Ordlista", "· Tvåkommanollan"),
-        description:
-          `${word}${wordClass ? ` (${wordClass})` : ""}: ${short} ` +
-          `${synonyms.length ? `Liknande ord: ${synonyms.join(", ")}. ` : ""}` +
-          `Se uppgiften ordet kom ur på högskoleprovet.`,
+        description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
         ogTitle: `Vad betyder ${word}?`,
-        ogDescription: short || `${word} — förklaring, exempel och HP-uppgiften ordet kom ur.`,
+        ogDescription:
+          trimToWord(firstSense, 140) ||
+          `${word} — förklaring, exempel och HP-uppgiften ordet kom ur.`,
       }),
       links: pageLinks(path),
       scripts: [
