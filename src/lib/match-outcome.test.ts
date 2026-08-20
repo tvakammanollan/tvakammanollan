@@ -43,7 +43,12 @@ describe("outcomeFor", () => {
     expect(outcomeFor(P1, halvskriven)).toBeNull();
     expect(outcomeFor(P2, halvskriven)).toBeNull();
 
-    const tom = match({ status: "active", player1_score: null, player2_score: null, winner_id: null });
+    const tom = match({
+      status: "active",
+      player1_score: null,
+      player2_score: null,
+      winner_id: null,
+    });
     expect(outcomeFor(P1, tom)).toBeNull();
   });
 
