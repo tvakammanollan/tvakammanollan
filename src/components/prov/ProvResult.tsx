@@ -13,7 +13,7 @@ import { NextStep } from "@/components/layout/NextStep";
 import { ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { formatDecimal, formatPercent } from "@/lib/sv-format";
-import { normeringFromRaw, HP_TOTAL_QUESTIONS } from "@/lib/normering";
+import { HP_TOTAL_QUESTIONS, normeringForPart } from "@/lib/normering";
 import { acceptedAnswers, findExam, isCorrect } from "@/lib/prov-data";
 import { summariseExam } from "@/lib/prov-results";
 import { delprovShort, type ProvPass } from "@/types/gamla-prov";
@@ -57,7 +57,11 @@ export function ProvResult({
   const score = data.questions.filter((q) => isCorrect(q, answers[q.nr])).length;
   const unanswered = data.questions.filter((q) => !answers[q.nr]).length;
   const ratio = total > 0 ? score / total : 0;
-  const normering = normeringFromRaw(ratio * HP_TOTAL_QUESTIONS);
+  // UHR:s egen tabell för DET HÄR provtillfället när den finns. Ett provpass
+  // är halva provdelen, så andelen räknas upp — det är en uppskattning ur ett
+  // halvt underlag oavsett tabell, och det står i texten under.
+  const del = normeringForPart(data.term, data.kind, score, total);
+  const normering = del.value;
 
   const perSection = data.sections.map((section) => {
     const items = data.questions.filter((q) => q.delprov === section.code);
@@ -104,9 +108,12 @@ export function ProvResult({
           {formatDecimal(normering, 2)}
         </p>
         <p className="mt-1 text-xs leading-relaxed text-[var(--text-tertiary)]">
-          Gäller om du fick lika stor andel rätt på hela provet ({HP_TOTAL_QUESTIONS} uppgifter).
-          Ett provpass räcker inte för en riktig normering. UHR sätter gränserna först efter
-          provdagen, och de skiljer sig mellan provtillfällen.
+          Gäller om du fick lika stor andel rätt på hela{" "}
+          {data.kind === "verbal" ? "den verbala" : "den kvantitativa"} delen. Ett provpass är halva
+          delen, så det räcker inte för en riktig normering.{" "}
+          {del.official
+            ? `Uppslagen i UHR:s egen tabell för ${data.label.toLowerCase()}.`
+            : `UHR:s tabell för ${data.label.toLowerCase()} finns inte att hämta, så siffran kommer ur en generell tabell över ${HP_TOTAL_QUESTIONS} uppgifter.`}
         </p>
       </section>
 

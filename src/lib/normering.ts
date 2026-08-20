@@ -89,3 +89,101 @@ export function normeringFromRatio(ratio: number): number {
 export function normeringFromParts(verbal: number, kvant: number): number {
   return Math.round(((verbal + kvant) / 2) * 20) / 20;
 }
+
+/* ── Officiell normering per provtillfälle ───────────────────────── */
+
+import NORMERING_DATA from "@/data/prov/normering.json";
+
+/**
+ * UHR:s RIKTIGA normeringstabeller, en per provtillfälle och provdel.
+ *
+ * Tabellen ovan är en approximation som är densamma för vårprovet 2012 och
+ * höstprovet 2025 — alltså i praktiken "ett prov som referens" oavsett vilket
+ * prov man faktiskt skrivit. Men UHR normerar varje prov för sig, och
+ * gränserna rör sig rejält mellan tillfällena: 50 rätt av 80 på den verbala
+ * delen var 1,0 hösten 2025 men kan vara 1,1 eller 0,9 ett annat år. Det är
+ * skillnaden mellan en gissning och ett besked.
+ *
+ * Filen byggs av `scripts/hp-import/normering.py` ur UHR:s egna PDF:er.
+ * Formen är `[minsta antal rätt, största antal rätt, normerad poäng]`, och
+ * poängen går i steg om 0,1 — halvstegen (1,95) uppstår först när provets två
+ * delar snittas.
+ *
+ * Provtillfällen som saknas i filen faller tillbaka på approximationen, och
+ * UI:t säger då att siffran är en uppskattning. Det gäller de äldsta proven,
+ * där tabellerna inte finns kvar någonstans.
+ */
+type NormeringTabell = [number, number, number][];
+
+interface NormeringPost {
+  date?: string;
+  verbal?: NormeringTabell;
+  kvant?: NormeringTabell;
+}
+
+const OFFICIELL = NORMERING_DATA as unknown as Record<string, NormeringPost>;
+
+/**
+ * Antal uppgifter i provdelen tabellen är satt för.
+ *
+ * Läses ur tabellens sista intervall och antas INTE vara 80: vårprovet 2012
+ * hade 76 uppgifter i den verbala delen (provformatet ändrades när ELF
+ * infördes), och en hårdkodad åttio hade räknat om det till fel andel.
+ */
+function partMax(table: NormeringTabell): number {
+  return table[table.length - 1][1];
+}
+
+/** Finns UHR:s egen tabell för den här provdelen? Styr vad UI:t skriver. */
+export function hasOfficialNormering(term: string, kind: "verbal" | "kvant"): boolean {
+  return !!OFFICIELL[term]?.[kind];
+}
+
+/** Finns officiella tabeller för BÅDA delarna, alltså för hela provet? */
+export function hasOfficialExamNormering(term: string): boolean {
+  return hasOfficialNormering(term, "verbal") && hasOfficialNormering(term, "kvant");
+}
+
+/**
+ * Normerad poäng för en provdel: antal rätt av 80 → 0,0–2,0.
+ *
+ * `null` när provtillfället saknar officiell tabell — anroparen ska då säga
+ * att siffran är uppskattad, inte tyst byta till approximationen.
+ */
+export function officialNormering(
+  term: string,
+  kind: "verbal" | "kvant",
+  score: number,
+  total: number,
+): number | null {
+  const table = OFFICIELL[term]?.[kind];
+  if (!table || table.length === 0 || total <= 0) return null;
+  const max = partMax(table);
+  // Skrivet underlag räknas upp till tabellens skala. Har man skrivit hela
+  // delen är det en ren identitet; har man skrivit ett av två provpass är det
+  // samma antagande som resten av flödet gör, och det sägs i gränssnittet.
+  const raw = Math.max(0, Math.min(max, Math.round((score / total) * max)));
+  for (const [lo, hi, value] of table) {
+    if (raw >= lo && raw <= hi) return value;
+  }
+  // Utanför tabellen ska inte kunna hända (importen validerar att den är
+  // sammanhängande från 0), men ett tyst 0 vore värre än närmaste kända värde.
+  return raw < table[0][0] ? table[0][2] : table[table.length - 1][2];
+}
+
+/**
+ * Normerad poäng för en provdel, med approximationen som reserv.
+ *
+ * Returnerar också VILKEN väg som användes, så gränssnittet kan säga
+ * "officiell normering för det här provet" respektive "uppskattning".
+ */
+export function normeringForPart(
+  term: string,
+  kind: "verbal" | "kvant",
+  score: number,
+  total: number,
+): { value: number; official: boolean } {
+  const officiell = officialNormering(term, kind, score, total);
+  if (officiell !== null) return { value: officiell, official: true };
+  return { value: normeringFromRatio(total > 0 ? score / total : 0), official: false };
+}

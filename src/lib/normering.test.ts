@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   HP_TOTAL_QUESTIONS,
+  hasOfficialNormering,
+  normeringForPart,
   normeringFromParts,
   normeringFromRatio,
   normeringFromRaw,
+  officialNormering,
 } from "./normering";
 
 describe("normeringFromRaw", () => {
@@ -91,5 +94,69 @@ describe("normeringFromParts", () => {
     const kvant = normeringFromRatio(80 / 80);
     expect(normeringFromParts(verbal, kvant)).toBe(1.1);
     expect(normeringFromRaw(100)).toBe(1.25);
+  });
+});
+
+/* ── Officiell normering per provtillfälle ───────────────────────── */
+
+describe("officialNormering", () => {
+  it("olika provtillfällen ger olika poäng för samma antal rätt", () => {
+    // Hela poängen med punkt 5: en gemensam tabell för alla prov är i
+    // praktiken att normera mot fel prov. UHR sätter gränserna efter
+    // provdagen och de rör sig mellan tillfällena.
+    const värden = ["2020ht", "2022ht", "2024vt", "2025ht"]
+      .map((term) => officialNormering(term, "verbal", 60, 80))
+      .filter((v): v is number => v !== null);
+    expect(värden.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(värden).size).toBeGreaterThan(1);
+  });
+
+  it("täcker hela skalan för ett prov som har tabell", () => {
+    expect(officialNormering("2025ht", "verbal", 0, 80)).toBe(0);
+    expect(officialNormering("2025ht", "verbal", 80, 80)).toBe(2);
+    const mitten = officialNormering("2025ht", "verbal", 50, 80);
+    expect(mitten).toBeGreaterThan(0);
+    expect(mitten).toBeLessThan(2);
+  });
+
+  it("är monoton: fler rätt kan aldrig ge lägre poäng", () => {
+    let förra = -1;
+    for (let rätt = 0; rätt <= 80; rätt++) {
+      const v = officialNormering("2025ht", "kvant", rätt, 80);
+      expect(v).not.toBeNull();
+      expect(v!).toBeGreaterThanOrEqual(förra);
+      förra = v!;
+    }
+  });
+
+  it("provtillfällen utan tabell ger null i stället för en gissning", () => {
+    expect(officialNormering("1999vt", "verbal", 40, 80)).toBeNull();
+    expect(hasOfficialNormering("1999vt", "verbal")).toBe(false);
+  });
+
+  it("räknar upp ett halvt underlag till tabellens skala", () => {
+    // Ett skrivet provpass är fyrtio uppgifter av åttio. 30 av 40 ska landa
+    // på samma poäng som 60 av 80.
+    expect(officialNormering("2025ht", "verbal", 30, 40)).toBe(
+      officialNormering("2025ht", "verbal", 60, 80),
+    );
+  });
+
+  it("2012 hade 76 uppgifter i den verbala delen, inte 80", () => {
+    // Provformatet ändrades när ELF infördes. En hårdkodad 80:a hade räknat
+    // om alla resultat på det provet till fel andel.
+    expect(officialNormering("2012vt", "verbal", 76, 76)).toBe(2);
+    expect(officialNormering("2012vt", "verbal", 0, 76)).toBe(0);
+  });
+});
+
+describe("normeringForPart", () => {
+  it("säger vilken väg som användes", () => {
+    const officiell = normeringForPart("2025ht", "verbal", 60, 80);
+    expect(officiell.official).toBe(true);
+
+    const uppskattad = normeringForPart("1999vt", "verbal", 60, 80);
+    expect(uppskattad.official).toBe(false);
+    expect(uppskattad.value).toBeGreaterThan(0);
   });
 });

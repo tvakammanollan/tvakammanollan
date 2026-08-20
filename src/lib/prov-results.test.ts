@@ -54,7 +54,12 @@ describe("summariseExam", () => {
       "2020ht:1": result(36, "verbal"),
       "2020ht:5": result(36, "verbal"),
     });
-    expect(hel.verbal.normering).toBe(1.9);
+    // 1,8 och inte 1,9: siffran kommer ur UHR:s EGEN tabell för höstprovet
+    // 2020, där 72 rätt av 80 verbalt är 1,8. Approximationen gav 1,9 — det
+    // är precis skillnaden mellan att normera mot rätt prov och mot ett
+    // medelvärde av alla prov.
+    expect(hel.verbal.normering).toBe(1.8);
+    expect(hel.verbal.official).toBe(true);
     expect(hel.verbal.score).toBe(72);
     expect(hel.verbal.total).toBe(80);
     // Den kvantitativa delen är orörd, alltså finns ingen totalpoäng.
@@ -72,9 +77,12 @@ describe("summariseExam", () => {
       "2020ht:4": result(39, "kvant"),
     });
     expect(r.done).toBe(4);
-    expect(r.verbal.normering).toBe(1.9);
+    expect(r.verbal.normering).toBe(1.8);
     expect(r.kvant.normering).toBe(2.0);
-    expect(r.normering).toBe(1.95);
+    // Snittet av delarnas poäng, inte en uppslagning av summan. Så räknas
+    // provet, och det är också vad en provskrivare väntar sig.
+    expect(r.normering).toBe(1.9);
+    expect(r.official).toBe(true);
     expect(r.practice).toBe(false);
   });
 
@@ -86,7 +94,9 @@ describe("summariseExam", () => {
     });
     expect(r.verbal.score).toBe(60);
     expect(r.verbal.total).toBe(70);
-    expect(r.verbal.normering).toBe(1.8); // 60/70 rätt ≈ 137 av 160
+    // 60 av 70 räknas upp till tabellens skala (≈69 av 80) och slås upp i
+    // höstprovet 2020:s verbala tabell.
+    expect(r.verbal.normering).toBe(1.7);
   });
 
   it("flaggar att något pass skrevs i övningsläge", () => {

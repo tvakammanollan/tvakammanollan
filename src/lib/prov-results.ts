@@ -15,7 +15,7 @@
  * Lagringen är lokal, som resten av gamla prov-flödet: det fungerar utan
  * konto, och servern har ingen anledning att veta vad någon övat på.
  */
-import { normeringFromParts, normeringFromRatio } from "./normering";
+import { hasOfficialExamNormering, normeringForPart, normeringFromParts } from "./normering";
 import type { ProvMode } from "./prov-progress";
 import type { ExamSummary } from "@/types/gamla-prov";
 
@@ -146,6 +146,13 @@ export interface PartResult {
   total: number;
   /** Normerad poäng — sätts först när hela delen är skriven. */
   normering: number | null;
+  /**
+   * Sant när poängen kommer ur UHR:s EGEN tabell för just det här
+   * provtillfället, falskt när den är en uppskattning ur den generella
+   * approximationen. Gränssnittet måste skriva ut skillnaden: en officiell
+   * siffra är ett besked, en uppskattning är en fingervisning.
+   */
+  official: boolean;
 }
 
 /** Ett provtillfälle: båda delarna och den sammanlagda poängen. */
@@ -157,6 +164,8 @@ export interface ExamResult {
   passes: number;
   /** Sammanlagd poäng — först när båda delarna är hela. */
   normering: number | null;
+  /** Sant bara när BÅDA delarna räknats ur officiella tabeller. */
+  official: boolean;
   /** Sant om något av passen skrevs i övningsläge, alltså utan klocka. */
   practice: boolean;
 }
@@ -183,13 +192,21 @@ export function summariseExam(exam: ExamSummary, results: ProvResults): ExamResu
     const total = written.reduce((sum, r) => sum + r.total, 0);
     const complete = passes.length > 0 && written.length === passes.length && total > 0;
 
+    // UHR:s egen tabell för DET HÄR provtillfället när den finns, annars den
+    // generella approximationen. Gränserna rör sig rejält mellan provtillfällen
+    // — 50 rätt av 80 verbalt var 1,0 hösten 2025 men kan vara 0,9 eller 1,1 ett
+    // annat år — så en gemensam tabell för alla prov är i praktiken att normera
+    // mot fel prov.
+    const normering = complete ? normeringForPart(exam.term, kind, score, total) : null;
+
     return {
       kind,
       done: written.length,
       passes: passes.length,
       score,
       total,
-      normering: complete ? normeringFromRatio(score / total) : null,
+      normering: normering?.value ?? null,
+      official: normering?.official ?? false,
     };
   };
 
@@ -205,6 +222,9 @@ export function summariseExam(exam: ExamSummary, results: ProvResults): ExamResu
       verbal.normering !== null && kvant.normering !== null
         ? normeringFromParts(verbal.normering, kvant.normering)
         : null,
+    // Hela provet är officiellt bara om båda delarna är det. En officiell
+    // verbal poäng snittad med en uppskattad kvantitativ är en uppskattning.
+    official: verbal.official && kvant.official && hasOfficialExamNormering(exam.term),
     practice: done.some((r) => r.mode === "ova"),
   };
 }

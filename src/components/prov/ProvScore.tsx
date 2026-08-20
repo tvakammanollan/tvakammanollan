@@ -98,9 +98,16 @@ export function ProvScorePanel({
       </div>
 
       <p className="mt-3 text-xs leading-relaxed text-[var(--text-tertiary)]">
-        {complete
-          ? "Delarnas poäng räknas ur andelen rätt, och totalpoängen är medelvärdet av dem — så räknas provet. Det är ändå en uppskattning: UHR normerar varje prov för sig och sätter gränserna först efter provdagen."
-          : "Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."}
+        {/* Officiell och uppskattad poäng måste gå att skilja åt. Tidigare
+            räknades allt med EN approximationstabell, densamma för vårprovet
+            2012 och höstprovet 2025 — alltså i praktiken mot fel prov. Nu
+            används UHR:s egen tabell när den finns, och texten säger vilket
+            det är. */}
+        {!complete
+          ? "Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."
+          : result.official
+            ? "Poängen är hämtad ur UHR:s egen normeringstabell för det här provtillfället. Totalpoängen är medelvärdet av delarnas — så räknas provet."
+            : "UHR:s normeringstabell för det här provtillfället finns inte att hämta, så poängen är uppskattad ur en generell tabell. Gränserna sätts efter provdagen och skiljer sig mellan provtillfällen."}
         {result.practice && " Något av passen är skrivet i övningsläge, alltså utan tidspress."}
       </p>
     </section>

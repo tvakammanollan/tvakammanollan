@@ -3,6 +3,7 @@ Hämtar UHR:s riktiga normeringstabeller och skriver dem till
 `src/data/prov/normering.json`.
 
     python3 scripts/hp-import/normering.py
+    python3 scripts/hp-import/normering.py --offline   # bygg om ur cachen
 
 VARFÖR DEN HÄR FINNS
 Appen räknade tidigare all normering med EN handskriven approximationstabell
@@ -75,6 +76,11 @@ OUT = os.path.join(ROOT, "src", "data", "prov", "normering.json")
 INDEX_JSON = os.path.join(ROOT, "src", "data", "prov", "index.json")
 
 UA = "tvakommanollan-import/1.0 (+https://tvakommanollan.se; kontakt via sajten)"
+
+# Adresser som inte fanns. Sparas därför att gissningslistan är ~1 500 poster
+# lång och nästan alla är bommar: utan den här filen tar varje omkörning en
+# halvtimme av rena 404:or, och parserändringar blir opraktiska att prova.
+MISSES = os.path.join(CACHE, "saknas.json")
 
 # Raden i tabellen. Sista intervallet skrivs ibland som "76 - 80" och ibland
 # som bara "80", därav den valfria andra halvan.
@@ -187,13 +193,21 @@ def parse_table(path: str) -> list[list[float]]:
 
 
 def valid(table: list[list[float]]) -> str | None:
-    """Returnerar felet, eller None om tabellen håller."""
+    """
+    Returnerar felet, eller None om tabellen håller.
+
+    Antalet uppgifter i en provdel är INTE alltid 80. Vårprovet 2012 hade 76 i
+    den verbala delen — provformatet ändrades när ELF infördes — och en
+    hårdkodad 80:a förkastade därför en fullt giltig tabell. Kravet är i
+    stället att tabellen är sammanhängande från 0 och slutar på ett rimligt
+    tal; hur stort det talet är läses sedan ur tabellen själv.
+    """
     if len(table) < 10:
         return f"bara {len(table)} rader"
     if table[0][0] != 0:
         return f"börjar på {table[0][0]} rätt, inte 0"
-    if table[-1][1] != 80:
-        return f"slutar på {table[-1][1]} rätt, inte 80"
+    if not (40 <= table[-1][1] <= 80):
+        return f"slutar på {table[-1][1]} rätt, utanför 40–80"
     scores = [row[2] for row in table]
     if scores != sorted(scores):
         return "poängen är inte stigande"
@@ -336,10 +350,29 @@ def pdf_exam_date(path: str) -> str | None:
     return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
 
 
-def try_download(url: str, path: str) -> bool:
+_misses: set[str] = set()
+
+
+def load_misses() -> None:
+    try:
+        with open(MISSES, encoding="utf-8") as f:
+            _misses.update(json.load(f))
+    except Exception:
+        pass
+
+
+def save_misses() -> None:
+    os.makedirs(CACHE, exist_ok=True)
+    with open(MISSES, "w", encoding="utf-8") as f:
+        json.dump(sorted(_misses), f, ensure_ascii=False, indent=1)
+
+
+def try_download(url: str, path: str, offline: bool = False) -> bool:
     """Hämtar från UHR, annars från Internet Archive. False = finns inte."""
     if os.path.exists(path) and os.path.getsize(path) > 0:
         return True
+    if offline or url in _misses:
+        return False
     for candidate in (url, f"https://web.archive.org/web/2020id_/{url}"):
         try:
             data = get(candidate)
@@ -352,6 +385,7 @@ def try_download(url: str, path: str) -> bool:
             f.write(data)
         time.sleep(0.4)  # var snäll mot servrarna
         return True
+    _misses.add(url)
     return False
 
 
@@ -365,6 +399,12 @@ DATE_ALIASES = {
 
 
 def main() -> int:
+    # --offline bygger om filen ur det som redan ligger i cachen. Ingen
+    # nätverkstrafik alls, går på sekunder, och är vägen att prova en ändring
+    # i parsern utan att belasta UHR:s server igen.
+    offline = "--offline" in sys.argv
+    load_misses()
+
     with open(INDEX_JSON, encoding="utf-8") as f:
         exams = json.load(f)["exams"]
     by_date = {e["date"]: e["term"] for e in exams}
@@ -373,23 +413,31 @@ def main() -> int:
             by_date[pdf_datum] = by_date[listans_datum]
     dates = sorted(by_date)
 
-    print(f"Hämtar provsidor från {INDEX_URL}")
     kandidater: list[str] = []
-    for page_url in exam_pages():
-        try:
-            page = get(page_url).decode("utf-8", "replace")
-        except urllib.error.HTTPError as e:
-            print(f"  {page_url}: {e}")
-            continue
-        kandidater += norm_links(page)
-    print(f"  {len(kandidater)} länkade tabeller")
+    if offline:
+        # Allt som redan ligger i cachen, oavsett var adressen kom ifrån.
+        for mapp, _dirs, filer in os.walk(CACHE):
+            for namn in filer:
+                if namn.endswith(".pdf"):
+                    kandidater.append(f"{NORM_ROOT}/{os.path.basename(mapp)}/{namn}")
+        print(f"Offline: {len(kandidater)} tabeller i cachen\n")
+    else:
+        print(f"Hämtar provsidor från {INDEX_URL}")
+        for page_url in exam_pages():
+            try:
+                page = get(page_url).decode("utf-8", "replace")
+            except urllib.error.HTTPError as e:
+                print(f"  {page_url}: {e}")
+                continue
+            kandidater += norm_links(page)
+        print(f"  {len(kandidater)} länkade tabeller")
 
-    arkiv = archive_links()
-    print(f"  {len(arkiv)} adresser ur Internet Archives register")
+        arkiv = archive_links()
+        print(f"  {len(arkiv)} adresser ur Internet Archives register")
 
-    gissade = guessed_links(dates)
-    kandidater = list(dict.fromkeys(kandidater + arkiv + gissade))
-    print(f"  {len(kandidater)} adresser att prova\n")
+        gissade = guessed_links(dates)
+        kandidater = list(dict.fromkeys(kandidater + arkiv + gissade))
+        print(f"  {len(kandidater)} adresser att prova ({len(_misses)} kända bommar hoppas över)\n")
 
     result: dict[str, dict] = {}
     misslyckade: list[str] = []
@@ -402,7 +450,7 @@ def main() -> int:
         namn = url.rsplit("/", 1)[-1]
         mapp = url.rsplit("/", 2)[-2] if url.count("/") > 6 else "rot"
         path = os.path.join(CACHE, mapp, namn)
-        if not try_download(url, path):
+        if not try_download(url, path, offline):
             saknas.add(url)
             continue
 
@@ -432,6 +480,8 @@ def main() -> int:
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(dict(sorted(result.items())), f, ensure_ascii=False, indent=1)
         f.write("\n")
+
+    save_misses()
 
     hela = sorted(t for t, e in result.items() if "verbal" in e and "kvant" in e)
     print(f"\n{len(result)} provtillfällen, varav {len(hela)} med båda delarna → {OUT}")
