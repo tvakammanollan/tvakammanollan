@@ -902,16 +902,20 @@ function ResultPage() {
                           );
                         })}
                       </ul>
-                      {/* Vad du svarade och vad som var rätt, med innehållet
-                          och inte bara bokstaven. På bilduppgifter klipps de
-                          två alternativen ur uppgiftsbilden. */}
-                      <AnswerContext
-                        options={q.options}
-                        selected={a?.selected_answer}
-                        correct={q.correct_answer}
-                        imageUrl={q.image_url}
-                        math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
-                      />
+                      {/* Bara när listan ovanför är bokstäver utan text, alltså
+                          när alternativen står i uppgiftsbilden — då klipps de
+                          två raderna ut ur den. På textuppgifter står svaren
+                          redan utskrivna och färgmarkerade i listan, och rutan
+                          upprepade dem bara. */}
+                      {isImageQuestion(q) && (
+                        <AnswerContext
+                          options={q.options}
+                          selected={a?.selected_answer}
+                          correct={q.correct_answer}
+                          imageUrl={q.image_url}
+                          math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
+                        />
+                      )}
                       <ExplanationBlock
                         explanation={q.explanation}
                         math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}

@@ -734,16 +734,22 @@ function TrainPage() {
             {/* Explanation */}
             {revealed && (
               <>
-                {/* Vad du svarade och vad som var rätt, med innehållet och
-                    inte bara bokstaven. På bilduppgifter klipps de två
-                    alternativen ur uppgiftsbilden. */}
-                <AnswerContext
-                  options={currentQ.rawOptions}
-                  selected={selected}
-                  correct={currentQ.correct_answer}
-                  imageUrl={currentQ.image_url}
-                  math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
-                />
+                {/* Bara när alternativen står i uppgiftsbilden — då klipps de
+                    två raderna ut ur den. På textuppgifter står svaren redan
+                    utskrivna och färgmarkerade i listan ovanför, och rutan
+                    upprepade dem bara. */}
+                {isImageQuestion({
+                  image_url: currentQ.image_url,
+                  options: currentQ.rawOptions,
+                }) && (
+                  <AnswerContext
+                    options={currentQ.rawOptions}
+                    selected={selected}
+                    correct={currentQ.correct_answer}
+                    imageUrl={currentQ.image_url}
+                    math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
+                  />
+                )}
                 <ExplanationBlock
                   explanation={currentQ.explanation}
                   math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
