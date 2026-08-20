@@ -188,7 +188,9 @@ export type Database = {
           consent_at: string
           contacted_at: string | null
           created_at: string
+          email: string | null
           id: string
+          message: string | null
           name: string | null
           note: string | null
           phone: string
@@ -201,7 +203,9 @@ export type Database = {
           consent_at: string
           contacted_at?: string | null
           created_at?: string
+          email?: string | null
           id?: string
+          message?: string | null
           name?: string | null
           note?: string | null
           phone: string
@@ -214,7 +218,9 @@ export type Database = {
           consent_at?: string
           contacted_at?: string | null
           created_at?: string
+          email?: string | null
           id?: string
+          message?: string | null
           name?: string | null
           note?: string | null
           phone?: string

@@ -99,17 +99,78 @@ def download(url: str, path: str) -> bool:
     return True
 
 
+def _rows_streaming(lines: list[str]) -> list[list[float]]:
+    """
+    Radvis layout: intervall, poäng, tre statistikkolumner, nästa intervall…
+
+    Poängen prövas FÖRE intervallet så snart ett intervall väntar på sitt
+    värde. Utan den ordningen slukas en poäng som skrivs utan decimal ("0"
+    i stället för "0.0") av intervallmönstret, raden tappas, och tabellen
+    börjar på fel antal rätt — det hände höstprovet 2016.
+    """
+    out: list[list[float]] = []
+    pending: tuple[int, int] | None = None
+    for raw in lines:
+        line = raw.strip()
+        if not line:
+            continue
+        if pending is not None:
+            s = SCORE.match(line)
+            if s:
+                out.append([pending[0], pending[1], float(s.group(1).replace(",", "."))])
+                pending = None
+                continue
+        m = ROW.match(line)
+        if m:
+            lo = int(m.group(1))
+            hi = int(m.group(2)) if m.group(2) else lo
+            if pending is None and 0 <= lo <= 80 and hi <= 80:
+                pending = (lo, hi)
+            continue
+        # Vad som helst annat bryter en påbörjad rad — annars kan ett intervall
+        # från en sidfot para ihop sig med nästa sidas första poäng.
+        pending = None
+    return out
+
+
+def _rows_columnar(lines: list[str]) -> list[list[float]]:
+    """
+    Kolumnvis layout: ALLA intervall först, sedan alla poäng, sedan statistiken.
+
+    Höstprovet 2018 är satt så, och en radvis läsning ger då en enda rad
+    (sista intervallet + första poängen). Här samlas i stället intervallen och
+    poängen var för sig och paras ihop i ordning — vilket bara godtas om de är
+    exakt lika många.
+    """
+    intervals: list[tuple[int, int]] = []
+    scores: list[float] = []
+    for raw in lines:
+        line = raw.strip()
+        if not line:
+            continue
+        m = ROW.match(line)
+        if m and m.group(2):  # kräver bindestreck: ett ensamt tal är statistik
+            lo, hi = int(m.group(1)), int(m.group(2))
+            if 0 <= lo <= hi <= 80 and not scores:
+                intervals.append((lo, hi))
+            continue
+        s = SCORE.match(line)
+        if s and intervals and len(scores) < len(intervals):
+            scores.append(float(s.group(1).replace(",", ".")))
+    if not intervals or len(scores) != len(intervals):
+        return []
+    return [[lo, hi, sc] for (lo, hi), sc in zip(intervals, scores)]
+
+
 def parse_table(path: str) -> list[list[float]]:
     """
     PDF → [[min_rätt, max_rätt, poäng], ...].
 
-    Texten kommer ut som en rad per cell, i läsordning, så tabellen läses som
-    en ström: ett intervall följt av ett tal mellan 0.0 och 2.0 är en rad.
-    Statistikkolumnerna efter poängen ignoreras — de har egna format och kan
-    innehålla mellanslag som tusentalsavgränsare.
-
-    Att matcha på formen och inte på position är avsiktligt: layouten har
-    ändrats flera gånger sedan 2012, men "intervall, sedan poäng" har inte det.
+    Texten kommer ut i läsordning, och layouten har ändrats flera gånger sedan
+    2011. Två strategier prövas, i tur och ordning, och den som ger en tabell
+    som håller vinner. Att matcha på FORM och inte på position är avsiktligt:
+    "intervall följt av poäng" har varit sant hela tiden, till skillnad från
+    var på sidan kolumnerna råkar ligga.
     """
     doc = fitz.open(path)
     lines: list[str] = []
@@ -117,32 +178,12 @@ def parse_table(path: str) -> list[list[float]]:
         lines.extend(page.get_text().splitlines())
     doc.close()
 
-    out: list[list[float]] = []
-    pending: tuple[int, int] | None = None
-    for raw in lines:
-        line = raw.strip()
-        if not line:
-            continue
-        m = ROW.match(line)
-        if m:
-            lo = int(m.group(1))
-            hi = int(m.group(2)) if m.group(2) else lo
-            # Ett ensamt tal utan bindestreck kan lika gärna vara en
-            # statistikkolumn. Det godtas bara som intervall om det ligger
-            # inom 0–80 och vi inte redan väntar på en poäng.
-            if pending is None and 0 <= lo <= 80 and hi <= 80:
-                pending = (lo, hi)
-            continue
-        s = SCORE.match(line)
-        if s and pending is not None:
-            out.append([pending[0], pending[1], float(s.group(1).replace(",", "."))])
-            pending = None
-            continue
-        # Vad som helst annat bryter en påbörjad rad — annars kan ett
-        # intervall från en sidfot para ihop sig med nästa sidas första poäng.
-        pending = None
-
-    return out
+    for strategi in (_rows_streaming, _rows_columnar):
+        table = strategi(lines)
+        if table and valid(table) is None:
+            return table
+    # Ingen höll — returnera den radvisa, så `valid` kan rapportera VARFÖR.
+    return _rows_streaming(lines)
 
 
 def valid(table: list[list[float]]) -> str | None:
@@ -314,10 +355,22 @@ def try_download(url: str, path: str) -> bool:
     return False
 
 
+# Provdatumet på ett häfte är inte alltid det som står i provlistan. Samma
+# lista som `DATE_ALIASES` i build.py finns här av samma skäl: vårprovet 2016
+# står i UHR:s katalog som 2016-04-04 (en måndag) medan provet skrevs den 9:e,
+# vilket är det datum normeringstabellen bär.
+DATE_ALIASES = {
+    "2016-04-09": "2016-04-04",
+}
+
+
 def main() -> int:
     with open(INDEX_JSON, encoding="utf-8") as f:
         exams = json.load(f)["exams"]
     by_date = {e["date"]: e["term"] for e in exams}
+    for pdf_datum, listans_datum in DATE_ALIASES.items():
+        if listans_datum in by_date:
+            by_date[pdf_datum] = by_date[listans_datum]
     dates = sorted(by_date)
 
     print(f"Hämtar provsidor från {INDEX_URL}")

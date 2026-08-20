@@ -39,6 +39,12 @@ export function CoachingQuizCard() {
   const [answers, setAnswers] = useState<QuizAnswers>({});
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  // E-post och meddelande är frivilliga. Numret är fortfarande det enda som
+  // krävs — produkten är ett telefonsamtal — men går personen inte att nå på
+  // telefon fanns tidigare ingen andra väg alls, och den som har något
+  // specifikt att berätta hade ingenstans att skriva det.
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [savedPhone, setSavedPhone] = useState<string | null>(null);
@@ -88,6 +94,12 @@ export function CoachingQuizCard() {
       phoneRef.current?.focus();
       return;
     }
+    // Frivilligt fält, men ett ifyllt fält ska vara rätt ifyllt: en felstavad
+    // adress är sämre än ingen, eftersom den ser ut som en väg att nå någon.
+    if (email.trim() && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email.trim())) {
+      setError("E-postadressen ser inte ut att stämma.");
+      return;
+    }
     if (!quizComplete(answers)) {
       setError("Svara på båda frågorna först.");
       setPhase("q1");
@@ -100,6 +112,8 @@ export function CoachingQuizCard() {
         data: {
           phone,
           name: name.trim() || undefined,
+          email: email.trim() || undefined,
+          message: message.trim() || undefined,
           answers: { forsok: answers.forsok!, hinder: answers.hinder! },
           source: SOURCE,
         },
@@ -220,14 +234,45 @@ export function CoachingQuizCard() {
             className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
           />
 
+          <label htmlFor="lead-epost" className="mt-3 block text-xs font-medium text-white/70">
+            E-post <span className="text-white/45">(frivilligt)</span>
+          </label>
+          <input
+            id="lead-epost"
+            type="email"
+            inputMode="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (error) setError(null);
+            }}
+            autoComplete="email"
+            placeholder="du@exempel.se"
+            maxLength={200}
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+          />
+
+          <label htmlFor="lead-meddelande" className="mt-3 block text-xs font-medium text-white/70">
+            Något vi bör veta? <span className="text-white/45">(frivilligt)</span>
+          </label>
+          <textarea
+            id="lead-meddelande"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={2}
+            maxLength={1000}
+            placeholder="T.ex. när du skriver provet, eller vad du fastnar på"
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+          />
+
           {/* Ingen kryssruta. Samtycket är själva inskicket: texten står före
               knappen, den säger exakt vad som händer, och att trycka på "Ring
               mig" är den entydiga viljeyttring GDPR kräver. En kryssruta är ett
               av flera sätt att visa samtycke, inte det enda. `consent_at`
               skrivs fortfarande på raden — beviset är tidpunkten för inskicket. */}
           <p className="mt-3 text-[12px] leading-relaxed text-white/55">
-            När du skickar sparar vi numret för att kunna kontakta dig om studieupplägget, och inget
-            annat. Se{" "}
+            När du skickar sparar vi dina uppgifter för att kunna kontakta dig om studieupplägget,
+            och inget annat. Se{" "}
             <Link
               to="/integritetspolicy"
               className="underline underline-offset-2"
