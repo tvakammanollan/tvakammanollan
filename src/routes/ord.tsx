@@ -427,16 +427,21 @@ function OrdPracticePage() {
 
   return (
     <>
-      <PageHero
-        eyebrowTone="leaf"
-        eyebrow="10 000+ ord"
-        title="Öva"
-        cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
-        subtitle="Spaced repetition. Ingen tidspress. Helt gratis."
-        align="center"
-        variant="compact"
-      />
-      <main className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
+      {/* Bara i startvyn, precis som /train. Hjälten är en halv skärm hög och
+          låg tidigare kvar under hela passet, så varje ord sköts ner under
+          vecket och man fick skrolla förbi den trettio gånger i rad. */}
+      {phase === "setup" && (
+        <PageHero
+          eyebrowTone="leaf"
+          eyebrow="10 000+ ord"
+          title="Öva"
+          cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
+          subtitle="Spaced repetition. Ingen tidspress. Helt gratis."
+          align="center"
+          variant="compact"
+        />
+      )}
+      <main className={`mx-auto max-w-2xl px-4 pb-20 sm:px-6 ${phase === "setup" ? "" : "pt-8"}`}>
         {/* SETUP */}
         {phase === "setup" && (
           <m.div
