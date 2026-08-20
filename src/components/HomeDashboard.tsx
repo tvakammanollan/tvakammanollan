@@ -18,6 +18,7 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { BookOpen, Sparkles, Flame, ArrowRight, Swords } from "lucide-react";
+import { displayName } from "@/lib/guest-name";
 
 /* =====================================================================
    HOME DASHBOARD — tre val, inget mer.
@@ -93,7 +94,7 @@ export function HomeDashboard() {
         <Reveal y={16}>
           <header>
             <div className="flex items-center gap-3">
-              <UserAvatar name={isGuest ? "Gäst" : profile.username} size={44} />
+              <UserAvatar name={displayName(profile.username, profile.id)} size={44} />
               <div className="min-w-0">
                 <EyebrowLabel tone="teal" animate={false}>
                   {greeting}
@@ -102,7 +103,7 @@ export function HomeDashboard() {
                   className="display truncate text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {isGuest ? "Gäst" : profile.username}.
+                  {displayName(profile.username, profile.id)}.
                 </h1>
               </div>
             </div>

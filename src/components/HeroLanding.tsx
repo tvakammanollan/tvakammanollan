@@ -20,6 +20,7 @@ import { CoachingModal } from "@/components/CoachingModal";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
+import { rankedName } from "@/lib/username";
 
 /**
  * Landningssidan (utloggad).
@@ -558,7 +559,7 @@ export function HeroLanding() {
                         key={p.username + p.type + i}
                         className="border-b border-white/10 transition-colors last:border-0 hover:bg-white/[0.03]"
                       >
-                        <td className="px-4 py-3 font-medium">{p.username}</td>
+                        <td className="px-4 py-3 font-medium">{rankedName(p.username)}</td>
                         <td className="px-4 py-3 text-white/60">
                           {p.type === "verbal" ? "Verbal" : "Kvantitativ"}
                         </td>

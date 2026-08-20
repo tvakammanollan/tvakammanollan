@@ -80,11 +80,23 @@ export function isGeneratedGuestName(name: string | null | undefined): boolean {
 }
 
 /**
- * Namnet som ska visas. Gaster som skapades innan namnsattningen fanns
- * ligger kvar som user_xxxx i databasen; de far ett vanligt namn har i
- * visningslagret i stallet for en migration over befintliga rader.
+ * Namnet som ska visas. Gäster som skapades innan namnsättningen fanns
+ * ligger kvar som `user_xxxx` i databasen; de får ett läsbart namn här i
+ * visningslagret i stället för en migration över befintliga rader.
+ *
+ * **Inget användarnamn renderas rått i UI:t — allt går genom den här.**
+ * Annars driver ytorna isär: navbaren visade "Gäst ekorre" på avataren och
+ * `user_5e19eb20` i texten bredvid, på samma konto och samma rad.
+ *
+ * Fröet är alltid användarnamnet, aldrig id:t, trots att `id` finns kvar i
+ * signaturen. Anledningen är att `id` inte är tillgängligt överallt — forumet
+ * och vänlistan har bara namnet — och två olika frön ger samma konto två
+ * olika gästnamn beroende på var man tittar. `user_1a2b3c4d` bär ändå med sig
+ * kontots åtta första tecken, så det duger gott som frö. `id` används bara när
+ * namnet saknas helt.
  */
 export function displayName(username: string | null | undefined, id?: string): string {
-  if (!username) return "Gäst";
-  return isAutoGuestName(username) ? guestName(id ?? username) : username;
+  const name = (username ?? "").trim();
+  if (!name) return id ? guestName(id) : "Gäst";
+  return isAutoGuestName(name) ? guestName(name) : name;
 }

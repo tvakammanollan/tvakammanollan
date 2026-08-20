@@ -241,7 +241,7 @@ function AccountMenu({
             style={{ color: "var(--cream)" }}
             title={displayName(profile.username, profile.id)}
           >
-            {profile.username}
+            {displayName(profile.username, profile.id)}
           </span>
           <EloBadge elo={topElo} size="sm" />
           <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
@@ -346,9 +346,9 @@ function MobileMenu({
                 <div
                   className="truncate text-sm font-semibold"
                   style={{ color: "var(--cream)" }}
-                  title={profile.username}
+                  title={displayName(profile.username, profile.id)}
                 >
-                  {profile.username}
+                  {displayName(profile.username, profile.id)}
                 </div>
                 <div className="mt-0.5">
                   <EloBadge elo={topElo} size="sm" />

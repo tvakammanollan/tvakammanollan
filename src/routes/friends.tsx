@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { UserAvatar } from "@/components/UserAvatar";
 import { UserPlus, Check, X, Trash2, Swords, Loader2 } from "lucide-react";
 import { sounds } from "@/lib/sounds";
+import { displayName } from "@/lib/guest-name";
 
 export const Route = createFileRoute("/friends")({
   component: FriendsPage,
@@ -224,8 +225,10 @@ function FriendsPage() {
                   className="flex items-center justify-between rounded-xl border border-border bg-card p-3 shadow-card"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={r.other?.username ?? "?"} size={36} />
-                    <span className="text-sm font-medium">{r.other?.username ?? "Okänd"}</span>
+                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={36} />
+                    <span className="text-sm font-medium">
+                      {displayName(r.other?.username, r.other?.id)}
+                    </span>
                   </div>
                   <div className="flex gap-1.5">
                     <Button
@@ -263,9 +266,11 @@ function FriendsPage() {
                   className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-card sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={r.other?.username ?? "?"} size={40} />
+                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={40} />
                     <div>
-                      <div className="text-sm font-semibold">{r.other?.username}</div>
+                      <div className="text-sm font-semibold">
+                        {displayName(r.other?.username, r.other?.id)}
+                      </div>
                       <div className="text-xs text-muted-foreground tabular-nums">
                         Verbal {r.other?.elo_verbal ?? 1000} · Matte {r.other?.elo_math ?? 1000}
                       </div>
@@ -316,8 +321,8 @@ function FriendsPage() {
                   className="flex items-center justify-between rounded-xl border border-border bg-card/60 p-3"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={r.other?.username ?? "?"} size={32} />
-                    <span className="text-sm">{r.other?.username}</span>
+                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={32} />
+                    <span className="text-sm">{displayName(r.other?.username, r.other?.id)}</span>
                     <span className="text-xs text-muted-foreground">Väntar…</span>
                   </div>
                   <Button size="sm" variant="ghost" onClick={() => remove(r.id)}>

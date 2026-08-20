@@ -6,6 +6,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { acceptMatchInvite } from "@/lib/friends.functions";
 import { sounds } from "@/lib/sounds";
+import { displayName } from "@/lib/guest-name";
 
 /**
  * Lyssnar globalt på inkommande matchinbjudningar via Supabase Realtime
@@ -42,7 +43,7 @@ export function FriendInviteListener() {
               .select("username")
               .eq("id", inv.from_user)
               .maybeSingle();
-            const name = sender?.username ?? "En vän";
+            const name = sender?.username ? displayName(sender.username) : "En vän";
             const typeLabel = inv.match_type === "math" ? "matte" : "verbal";
             sounds.invite();
             toast.message(`${name} bjuder in dig`, {

@@ -557,9 +557,10 @@ function ResultPage() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <PlayerColumn
-            name={
-              profile?.username ?? (user?.user_metadata?.username as string | undefined) ?? "Du"
-            }
+            name={displayName(
+              profile?.username ?? (user?.user_metadata?.username as string | undefined),
+              user?.id,
+            )}
             seed={user!.id}
             score={myScore}
             duration={myDuration}
