@@ -2,7 +2,7 @@
 
 > Sveriges gratis plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Helt gratis, inga annonser, inget kreditkort.
 
-Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,9 på HP och vill att bra HP-träning ska vara gratis för alla.
+Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP och vill att bra HP-träning ska vara gratis för alla.
 
 Officiell domän: https://tvakommanollan.se
 
@@ -12,9 +12,13 @@ Officiell domän: https://tvakommanollan.se
 - [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
 - [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
 - [Öva ord](https://tvakommanollan.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
-- [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 363 uppgifter med facit. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Tio prov är kompletta med engelsk läsförståelse. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
+- [Ordlista](https://tvakommanollan.se/ordlista): Uppslagsverk över varje ord som förekommit på ORD-delprovet — 8 760 sidor, en per ord, med betydelse, exempelmening, liknande ord och den HP-uppgift ordet kom ur. Adresser: /ordlista/<ord> (t.ex. /ordlista/viskös) och bokstavsregister på /ordlista/bokstav/<bokstav>.
+- [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 800 uppgifter med facit — 30 provtillfällen × 4 räknade provpass × 40 uppgifter. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Engelsk läsförståelse (ELF) finns i samtliga 60 verbala provpass. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
 - [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google), tar under en minut.
 - [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
+- [Provdatum för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-datum): Nästa provdatum, anmälningsperiod och provavgift, med nedräkning.
+- [Poängräknare](https://tvakommanollan.se/hogskoleprovet-poangraknare): Räkna om råpoäng till normerat resultat 0,00–2,00.
+- [Forum](https://tvakommanollan.se/forum): Öppet diskussionsforum om högskoleprovet — frågor, svar, uppgiftshjälp och plugg. Kategorier: /forum/allmant, /forum/verbal, /forum/kvantitativ, /forum/provdagen, /forum/plugg.
 - [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om Tvåkommanollan: gratis, ELO, riktiga HP-frågor, gästläge och mer.
 - [Guider till HP](https://tvakommanollan.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
 - [Om Tvåkommanollan](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
@@ -30,6 +34,19 @@ Officiell domän: https://tvakommanollan.se
 - [KVA-guide](https://tvakommanollan.se/guider/kva): "Kan ej avgöras"-regeln och algebraiska genvägar.
 - [NOG-guide](https://tvakommanollan.se/guider/nog): De 5 svarsalternativen och testordningen.
 - [DTK-guide](https://tvakommanollan.se/guider/dtk): Axlarna först, vanliga skala-fällor.
+
+## Övningssidor per delprov
+
+Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg vidare till träningsläget.
+
+- [Öva ORD](https://tvakommanollan.se/ova/ord): Ordförståelse.
+- [Öva MEK](https://tvakommanollan.se/ova/mek): Meningskomplettering.
+- [Öva LÄS](https://tvakommanollan.se/ova/las): Svensk läsförståelse.
+- [Öva ELF](https://tvakommanollan.se/ova/elf): Engelsk läsförståelse.
+- [Öva XYZ](https://tvakommanollan.se/ova/xyz): Matematisk problemlösning.
+- [Öva KVA](https://tvakommanollan.se/ova/kva): Kvantitativa jämförelser.
+- [Öva NOG](https://tvakommanollan.se/ova/nog): Kvantitativa resonemang (tillräcklig information).
+- [Öva DTK](https://tvakommanollan.se/ova/dtk): Diagram, tabeller och kartor.
 
 ## Strategiguider
 
@@ -47,13 +64,14 @@ Officiell domän: https://tvakommanollan.se
 
 ## Key facts
 
-- Helt gratis. Inga annonser, inga köp, inget kreditkort.
-- En match består av 8 frågor på 8 minuter.
+- All träning är gratis: inga annonser, ingen betalspärr, inget kreditkort för att spela.
+- Enda betaltjänsten är ett personligt studieupplägg (coachning). Frivilligt, engångsköp, priset står i kassan.
+- En match består av 8 frågor på 5 minuter.
 - ELO-systemet liknar schackets: börja på 1 000, vinn poäng mot starkare spelare, tappa mot svagare.
 - Tiers: Brons (<1 000), Silver (1 000–1 199), Guld (1 200–1 399), Platina (1 400–1 599), Diamant (1 600+).
 - Du kan spela som gäst utan konto, men då sparas ingen ELO.
 - Bot-träning finns när det är få spelare online.
-- Coachning från 1,9+-spelare erbjuds gratis till nya användare.
+- Coachning: ett personligt studieupplägg byggt av någon som själv fått 1,95 på provet. Betaltjänst, engångsköp, med tidsbokning direkt efter köpet.
 
 ## De 8 delproven på Högskoleprovet
 
@@ -85,13 +103,13 @@ Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. 
 En gratis svensk plattform där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
 
 **Kostar det något?**
-Nej. Inga annonser, inga köp, inget kreditkort. Drivs som ett ideellt projekt.
+All träning är gratis — matcher, gamla prov, ordträning, guider. Inga annonser och ingen betalspärr. Det enda som kostar är ett personligt studieupplägg (coachning), som är helt frivilligt och köps som engångsköp; priset står i kassan.
 
 **Behöver jag konto?**
 Du kan spela som gäst, men då sparas ingen ELO och du syns inte på topplistan. Konto tar 30 sekunder med e-post eller Google.
 
 **Hur funkar matcherna?**
-Välj verbal eller matte. Du matchas mot en spelare på din ELO-nivå inom sekunder. Match = 8 frågor på 8 minuter. Vinnaren får ELO, förloraren tappar.
+Välj verbal eller matte. Du matchas mot en spelare på din ELO-nivå inom sekunder. Match = 8 frågor på 5 minuter. Vinnaren får ELO, förloraren tappar.
 
 **Vad är ELO?**
 Rankingsystem från schack. Du börjar på 1 000. Vinst mot starkare ger fler poäng, förlust mot svagare kostar mer. Tiers: Brons, Silver, Guld, Platina, Diamant.
@@ -111,4 +129,4 @@ E-post: info@tvakommanollan.se. Svar oftast inom en vardag. Mer info på [/konta
 
 ## Ägare
 
-Tvåkommanollan drivs av Niklas Pellkvist som privatperson (ingen kommersiell verksamhet). Niklas fick 1,9 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten finansieras av grundaren och har inga annonser och inga in-app-köp. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.
+Tvåkommanollan drivs av Niklas Pellkvist som privatperson. All träning är gratis; sajten säljer en enda tjänst, ett personligt studieupplägg. Niklas fick 1,95 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten har inga annonser. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.

@@ -25,7 +25,6 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import { CoachingPrompt } from "@/components/CoachingPrompt";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
 import { Analytics } from "@/components/Analytics";
-import { hpDatesAnswer } from "@/lib/hp-dates";
 
 installSupabaseFetchAuth();
 
@@ -45,6 +44,7 @@ function NotFoundComponent() {
     { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
     { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
     { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
+    { to: "/ordlista", label: "Ordlista", desc: "Alla HP-ord med förklaring" },
     { to: "/forum", label: "Forum", desc: "Fråga och svara om HP" },
     { to: "/faq", label: "Vanliga frågor", desc: "Svar på det vanligaste" },
   ] as const;
@@ -187,9 +187,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
       // canonical sätts per route (annars duplicerar TanStack länken på alla sidor)
-      // hreflang för Sverige-svenska
-      { rel: "alternate", hrefLang: "sv-SE", href: "https://tvakommanollan.se/" },
-      { rel: "alternate", hrefLang: "x-default", href: "https://tvakommanollan.se/" },
+      // OBS: här låg hreflang sv-SE + x-default, båda hårdkodade till "/".
+      // Roten renderar på varje sida, så varje undersida sa åt Google att dess
+      // alternativa version var startsidan — tvärtemot vad annoteringen betyder,
+      // och i strid med sidans egen canonical. Sajten finns bara på ett språk,
+      // och då ska hreflang utelämnas helt: en självrefererande annotering utan
+      // en enda översättning tillför ingenting. Språket står i <html lang="sv">
+      // och i inLanguage i JSON-LD.
       { rel: "stylesheet", href: appCss },
       // Preconnect / DNS-prefetch för snabbare Core Web Vitals.
       // Härledd ur miljön, inte hårdkodad: den gamla adressen låg kvar efter
@@ -290,81 +294,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           description: "Grundare av Tvåkommanollan. Fick 1,95 på Högskoleprovet.",
         }),
       },
-      // Schema.org FAQPage — Google rich results
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: [
-            {
-              "@type": "Question",
-              name: "Vad är Tvåkommanollan?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Tvåkommanollan är en gratis plattform där du tävlar mot vänner i realtid med frågor från Högskoleprovet. Du klättrar i en ELO-ranking och kan träna alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Kostar Tvåkommanollan något?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "All träning är gratis: inga annonser, inget kreditkort, ingen betalspärr. Det enda som kostar är personlig coachning — ett studieupplägg byggt av någon som själv fått 1,95 på provet — och den är helt frivillig.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Hur funkar matcherna?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Du väljer verbal eller matte, sen matchar vi dig mot en spelare på din ELO-nivå inom sekunder. En match är 8 frågor på 8 minuter. Vinnaren får ELO, förloraren tappar.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Vad är ELO?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "ELO är ett rankingsystem från schackvärlden. Du börjar på 1 000. Vinner du mot en starkare spelare får du fler poäng. Förlorar du mot en svagare tappar du mer. Tiers: Brons under 1 000, Silver 1 000–1 199, Guld 1 200–1 399, Platina 1 400–1 599, Diamant 1 600+.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Vilka delprov kan jag träna?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Alla åtta: ORD (ordkunskap), MEK (meningskomplettering), LÄS (läsförståelse), ELF (engelsk läsförståelse), XYZ (matematisk problemlösning), KVA (kvantitativa jämförelser), NOG (kvantitativa resonemang) och DTK (diagram, tabeller och kartor).",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Behöver jag ett konto?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Du kan spela som gäst utan konto, men då sparas inte din ELO och du syns inte på topplistan. Kontoregistrering tar 30 sekunder med bara e-post och lösenord.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "När är nästa Högskoleprovet?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: hpDatesAnswer(),
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Hur räknas HP-poäng?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultatet baseras på andel rätta svar i de åtta delproverna (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Felaktiga svar ger inga minuspoäng, det lönar sig alltid att gissa. Medelvärdet brukar ligga kring 0,9–1,0.",
-              },
-            },
-          ],
-        }),
-      },
-      // Schema.org WebSite med SearchAction (för Google site search box)
+      // OBS: FAQPage-datan låg här och renderades därför på sajtens alla 189
+      // sidor — även på provpass och guider där inget av svaren syns. Googles
+      // krav är att FAQ-innehållet finns synligt på just den sidan, så markupen
+      // var ogiltig överallt utom på /faq (som dessutom har en egen, korrekt
+      // FAQPage — sidan bar alltså två). Lägg inte tillbaka den i roten: rätt
+      // ställe är den enskilda sidan vars innehåll faktiskt är frågorna.
+      // Schema.org WebSite. Ingen SearchAction: den kräver en sökfunktion
+      // över hela sajten, och /forum/sok söker bara i forumet.
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -411,6 +348,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/gamla-prov">Gamla prov</a>
           <a href="/train">Träna HP</a>
           <a href="/ord">Öva ord</a>
+          <a href="/ordlista">Ordlista för högskoleprovet</a>
           <a href="/matchmaking">Hitta match</a>
           <a href="/friends">Vänner</a>
           <a href="/signup">Skapa konto</a>

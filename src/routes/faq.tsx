@@ -40,7 +40,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Hur länge tar en match?",
-    a: "En match är 8 frågor på 8 minuter. Du kan välja verbal eller matte. Direkt efter matchen ser du ditt nya ELO och statistik per fråga.",
+    a: "En match är 8 frågor på 5 minuter. Du kan välja verbal eller matte. Direkt efter matchen ser du ditt nya ELO och statistik per fråga.",
   },
   {
     q: "Hur fungerar Gamla prov-läget?",
