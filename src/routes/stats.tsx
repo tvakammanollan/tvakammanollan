@@ -36,6 +36,7 @@ import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { outcomeFor } from "@/lib/match-outcome";
+import { buildEloSeries, type EloSeries } from "@/lib/elo-series";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
@@ -71,14 +72,11 @@ interface UserRow {
   longest_streak?: number;
 }
 
-interface EloPoint {
-  ts: number;
-  date: string;
-  verbal?: number;
-  math?: number;
-  delta?: number;
-  match_type: "verbal" | "math";
-}
+/**
+ * Hur många matcher per del kurvan sträcker sig över. Räknas per del och inte
+ * totalt — se hämtningen nedan.
+ */
+const ELO_POINTS_PER_TRACK = 50;
 
 interface EloRow {
   match_type: "verbal" | "math";
@@ -115,7 +113,7 @@ function StatsPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserRow | null>(null);
-  const [eloPoints, setEloPoints] = useState<EloPoint[]>([]);
+  const [eloSeries, setEloSeries] = useState<EloSeries | null>(null);
   const [matchHistory, setMatchHistory] = useState<MatchHistRow[]>([]);
   const [eloByMatch, setEloByMatch] = useState<Map<string, number>>(new Map());
   const [opponentNames, setOpponentNames] = useState<Map<string, string>>(new Map());
@@ -142,23 +140,32 @@ function StatsPage() {
       if (cancelled) return;
       setProfile(prof as UserRow);
 
-      // ELO history – last 30
-      const { data: eh } = await supabase
-        .from("elo_history")
-        .select("match_type, elo_after, elo_change, created_at")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false })
-        .limit(30);
-      const ordered = ((eh ?? []) as EloRow[]).slice().reverse();
-      setEloPoints(
-        ordered.map((r) => ({
-          ts: new Date(r.created_at).getTime(),
-          date: formatDate(r.created_at),
-          verbal: r.match_type === "verbal" ? r.elo_after : undefined,
-          math: r.match_type === "math" ? r.elo_after : undefined,
-          delta: r.elo_change,
-          match_type: r.match_type,
-        })),
+      // ELO-historik. Hämtas EN GÅNG PER DEL med flit: ett gemensamt
+      // `limit(30)` över hela historiken betyder att den som spelat trettio
+      // mattematcher inte har en enda verbal punkt kvar i urvalet, och den
+      // verbala linjen försvinner utan förklaring.
+      const [verbalRes, mathRes] = await Promise.all([
+        supabase
+          .from("elo_history")
+          .select("match_type, elo_after, elo_change, created_at")
+          .eq("user_id", user.id)
+          .eq("match_type", "verbal")
+          .order("created_at", { ascending: false })
+          .limit(ELO_POINTS_PER_TRACK),
+        supabase
+          .from("elo_history")
+          .select("match_type, elo_after, elo_change, created_at")
+          .eq("user_id", user.id)
+          .eq("match_type", "math")
+          .order("created_at", { ascending: false })
+          .limit(ELO_POINTS_PER_TRACK),
+      ]);
+      if (cancelled) return;
+      setEloSeries(
+        buildEloSeries([
+          ...((verbalRes.data ?? []) as EloRow[]),
+          ...((mathRes.data ?? []) as EloRow[]),
+        ]),
       );
 
       // Match history – all matches the user has played, finished
@@ -368,9 +375,60 @@ function StatsPage() {
             >
               ELO över tid
             </h2>
-            <span className="text-xs text-muted-foreground">Senaste 30 matcherna</span>
+            <span className="text-xs text-muted-foreground">
+              Senaste {ELO_POINTS_PER_TRACK} matcherna per del
+            </span>
           </div>
-          {eloPoints.length < 2 ? (
+
+          {/* Sammanfattning per del. Kurvan visar utvecklingen, den här raden
+              säger vad den betyder — och den skiljer "har inte spelat matte"
+              från "matte står stilla", vilket en linje inte kan. */}
+          {eloSeries && (
+            <div className="mb-4 flex flex-wrap gap-x-6 gap-y-2 text-xs">
+              {(
+                [
+                  ["verbal", "Verbal", VERBAL_COLOR],
+                  ["math", "Matte", MATH_COLOR],
+                ] as const
+              ).map(([track, label, color]) => {
+                const span = eloSeries.span[track];
+                const antal = eloSeries.counts[track];
+                return (
+                  <span key={track} className="inline-flex items-center gap-1.5">
+                    <span
+                      aria-hidden
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ background: color }}
+                    />
+                    <span className="font-medium text-foreground">{label}:</span>
+                    {span && antal > 0 ? (
+                      <span className="tabular-nums text-muted-foreground">
+                        {span.last}
+                        <span
+                          className={
+                            span.last - span.first > 0
+                              ? "ml-1 text-[var(--success)]"
+                              : span.last - span.first < 0
+                                ? "ml-1 text-[var(--danger)]"
+                                : "ml-1"
+                          }
+                        >
+                          ({span.last - span.first >= 0 ? "+" : ""}
+                          {span.last - span.first})
+                        </span>
+                        <span className="ml-1">
+                          på {antal} {antal === 1 ? "match" : "matcher"}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground">inga matcher än</span>
+                    )}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+          {!eloSeries || eloSeries.points.length < 2 ? (
             <EmptyState
               icon={TrendingUp}
               title="Inte tillräckligt med data ännu"
@@ -381,14 +439,26 @@ function StatsPage() {
           ) : (
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={eloPoints} margin={{ top: 8, right: 12, left: -10, bottom: 0 }}>
+                <LineChart
+                  data={eloSeries.points}
+                  margin={{ top: 8, right: 12, left: -10, bottom: 0 }}
+                >
                   <CartesianGrid
                     stroke="rgba(255,255,255,0.08)"
                     strokeDasharray="3 3"
                     vertical={false}
                   />
+                  {/* Riktig tidsaxel. Var tidigare matchens ordningsnummer,
+                      så två matcher samma kväll låg lika långt isär som två
+                      med en månad emellan. */}
                   <XAxis
-                    dataKey="date"
+                    dataKey="ts"
+                    type="number"
+                    scale="time"
+                    domain={["dataMin", "dataMax"]}
+                    tickFormatter={(v: number) =>
+                      formatDate(new Date(v), { month: "short", day: "numeric" })
+                    }
                     stroke="rgba(255,255,255,0.42)"
                     fontSize={11}
                     tickLine={false}
@@ -412,11 +482,17 @@ function StatsPage() {
                     }}
                     labelStyle={{ color: "#2e1e14" }}
                     itemStyle={{ color: "#2e1e14" }}
+                    labelFormatter={(v) => formatDate(new Date(Number(v)))}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, name: any, props: any) => {
-                      const delta = props?.payload?.delta;
-                      const sign = delta >= 0 ? "+" : "";
-                      return [`${value} (${sign}${delta})`, name];
+                      // Ändringen hör till den del som faktiskt spelades. Utan
+                      // kontrollen fick BÅDA linjerna samma delta i rutan, så
+                      // en verbal vinst såg ut att ha höjt matte-ELO också.
+                      const p = props?.payload;
+                      const track = name === "Verbal" ? "verbal" : "math";
+                      if (p?.changed !== track || p?.delta == null) return [`${value}`, name];
+                      const sign = p.delta >= 0 ? "+" : "";
+                      return [`${value} (${sign}${p.delta})`, name];
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
