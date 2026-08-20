@@ -48,6 +48,8 @@ import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
+import { parseQuestionText } from "@/lib/question-text";
+import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 import { AnswerContext } from "@/components/AnswerContext";
 import { processMatchResult } from "@/lib/match.functions";
 
@@ -97,6 +99,8 @@ interface QuestionOpt {
 interface QuestionRow {
   id: string;
   question_text: string;
+  /** Struken ur provet i efterhand — rätt svar gäller, poängen räknades inte. */
+  withdrawn: boolean;
   category: string;
   options: QuestionOpt[];
   correct_answer: string;
@@ -240,9 +244,11 @@ function ResultPage() {
             }
             return { id: String.fromCharCode(65 + i), text: String(o) };
           });
+          const parsed = parseQuestionText(q.question_text as string);
           return {
             id: q.question_id as string,
-            question_text: q.question_text as string,
+            question_text: parsed.text,
+            withdrawn: parsed.withdrawn,
             category: q.category as string,
             options,
             correct_answer: q.correct_answer as string,
@@ -754,6 +760,7 @@ function ResultPage() {
                       <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
                         <span>{i + 1}.</span>
                         <span>{displayCategory(q.category)}</span>
+                        {q.withdrawn && <WithdrawnBadge />}
                         {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${

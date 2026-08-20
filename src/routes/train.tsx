@@ -46,6 +46,8 @@ import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { displayCategory, ordText } from "@/lib/sv-format";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
+import { parseQuestionText } from "@/lib/question-text";
+import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 import { Spinner } from "@/components/ui/Spinner";
 
 export const Route = createFileRoute("/train")({
@@ -112,6 +114,8 @@ const MATH_SUBS = ["XYZ", "KVA", "NOG", "DTK"] as const;
 interface TrainQuestion {
   id: string;
   question_text: string;
+  /** Struken ur provet i efterhand — rätt svar gäller, poängen räknades inte. */
+  withdrawn: boolean;
   options: string[];
   /** Råa alternativ ur datan — bär `crop` på bilduppgifter (se AnswerContext). */
   rawOptions: { id: string; text: string; crop?: unknown }[];
@@ -262,9 +266,11 @@ function TrainPage() {
         }
         return { id: bokstav, text: String(o ?? "") };
       });
+      const parsed = parseQuestionText(useCleaned ? row.cleaned_question_text : row.question_text);
       return {
         id: row.id,
-        question_text: useCleaned ? row.cleaned_question_text : row.question_text,
+        question_text: parsed.text,
+        withdrawn: parsed.withdrawn,
         options,
         rawOptions,
         category: row.category,
@@ -627,8 +633,11 @@ function TrainPage() {
             className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
-            <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
-              {displayCategory(currentQ.category)} · Fråga {current + 1}
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold tracking-wide text-[#ae2f26]">
+                {displayCategory(currentQ.category)} · Fråga {current + 1}
+              </span>
+              {currentQ.withdrawn && <WithdrawnBadge />}
             </div>
             {/* Bilduppgifter bär hela frågan i bilden — texten är då bara
                 PDF-extraktionen av samma sak och stod tidigare ovanför.

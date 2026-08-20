@@ -28,6 +28,8 @@ import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
+import { parseQuestionText } from "@/lib/question-text";
+import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -41,6 +43,8 @@ const TOTAL_SECONDS = 5 * 60;
 interface QuestionRow {
   id: string;
   question_text: string;
+  /** Struken ur provet i efterhand — rätt svar gäller, poängen räknades inte. */
+  withdrawn: boolean;
   options: string[];
   category: string;
   passage_id: string | null;
@@ -229,9 +233,11 @@ function MatchPage() {
                 ? String((o as { text: unknown }).text)
                 : String(o),
           );
+          const parsed = parseQuestionText(useCleaned ? q.cleaned_question_text : q.question_text);
           return {
             id: q.id,
-            question_text: useCleaned ? q.cleaned_question_text : q.question_text,
+            question_text: parsed.text,
+            withdrawn: parsed.withdrawn,
             options,
             category: q.category,
             passage_id: q.passage_id,
@@ -927,8 +933,11 @@ function QuestionCard({
       style={{ boxShadow: "var(--shadow-md)" }}
     >
       {/* Delprovet, inte frågenumret — det står i progressbaren ovanför. */}
-      <div className="mb-2 text-xs font-semibold tracking-wide text-[#ae2f26]">
-        {displayCategory(currentQ.category)}
+      <div className="mb-2 flex flex-wrap items-center gap-2">
+        <span className="text-xs font-semibold tracking-wide text-[#ae2f26]">
+          {displayCategory(currentQ.category)}
+        </span>
+        {currentQ.withdrawn && <WithdrawnBadge />}
       </div>
       {/* Bilduppgifter (utsnitt ur provhäftet) bär hela frågan i bilden.
           Texten är då PDF-extraktionen av samma sak — "3 27 x 2 =" där häftet
