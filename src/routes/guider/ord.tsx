@@ -137,6 +137,15 @@ function OrdGuidePage() {
         </ul>
 
         <p className="mt-8">
+          Vill du slå upp ett enskilt ord i stället för att öva finns{" "}
+          <Link to="/ordlista" className="underline" style={{ color: "var(--amber)" }}>
+            ordlistan
+          </Link>
+          : varje ord som förekommit på ORD, med betydelse, exempelmening och den uppgift det kom
+          ur.
+        </p>
+
+        <p className="mt-8">
           <Link
             to="/train"
             className="inline-flex items-center gap-1.5 underline"

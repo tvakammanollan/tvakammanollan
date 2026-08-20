@@ -6,6 +6,7 @@ import { BugReportButton } from "@/components/BugReportButton";
 const PRODUCT = [
   { label: "Träna", to: "/train" },
   { label: "Öva ord", to: "/ord" },
+  { label: "Ordlista", to: "/ordlista" },
   { label: "Gamla prov", to: "/gamla-prov" },
   { label: "Poängräknare", to: "/hogskoleprovet-poangraknare" },
   { label: "Topplista", to: "/leaderboard" },

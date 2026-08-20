@@ -73,3 +73,4 @@ Allow: /
 
 Sitemap: https://tvakommanollan.se/sitemap.xml
 Sitemap: https://tvakommanollan.se/forum-sitemap.xml
+Sitemap: https://tvakommanollan.se/ordlista-sitemap.xml

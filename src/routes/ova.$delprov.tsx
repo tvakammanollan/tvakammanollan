@@ -297,6 +297,27 @@ function OvaDelprovPage() {
         </section>
       )}
 
+      {/* ORD har en egen ordlista med varje ord som förekommit på delprovet.
+          Länken står bara här och inte på de sju andra sidorna — de har inget
+          motsvarande register, och en länk som inte hör hemma är brus. */}
+      {delprov === "ord" && (
+        <section className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+          <h2
+            className="text-[18px] font-bold text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Slå upp orden i stället
+          </h2>
+          <p className="mt-2 text-[15px] leading-relaxed text-white/60">
+            Varje ord som förekommit på ORD finns i{" "}
+            <Link to="/ordlista" className="text-[var(--amber)] underline underline-offset-2">
+              ordlistan
+            </Link>
+            , med betydelse, exempelmening, liknande ord och uppgiften det kom ur.
+          </p>
+        </section>
+      )}
+
       {/* Övriga delprov */}
       <section className="mt-14 border-t border-white/8 pt-8">
         <h2

@@ -14,6 +14,8 @@ import { Route as VerifieraEpostRouteImport } from './routes/verifiera-epost'
 import { Route as TrainRouteImport } from './routes/train'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as OrdlistaSitemapDotxmlRouteImport } from './routes/ordlista-sitemap[.]xml'
+import { Route as OrdlistaRouteImport } from './routes/ordlista'
 import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OmRouteImport } from './routes/om'
@@ -36,6 +38,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuiderIndexRouteImport } from './routes/guider/index'
 import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
 import { Route as OvaDelprovRouteImport } from './routes/ova.$delprov'
+import { Route as OrdlistaOrdRouteImport } from './routes/ordlista_.$ord'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
@@ -56,6 +59,7 @@ import { Route as ForumKategoriRouteImport } from './routes/forum_.$kategori'
 import { Route as CoachningTackRouteImport } from './routes/coachning.tack'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as OrdlistaBokstavBokstavRouteImport } from './routes/ordlista_.bokstav.$bokstav'
 import { Route as GamlaProvTermPassRouteImport } from './routes/gamla-prov_.$term_.$pass'
 import { Route as ForumKategoriTradRouteImport } from './routes/forum_.$kategori_.$trad'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -83,6 +87,16 @@ const StatsRoute = StatsRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdlistaSitemapDotxmlRoute = OrdlistaSitemapDotxmlRouteImport.update({
+  id: '/ordlista-sitemap.xml',
+  path: '/ordlista-sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdlistaRoute = OrdlistaRouteImport.update({
+  id: '/ordlista',
+  path: '/ordlista',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrdRoute = OrdRouteImport.update({
@@ -196,6 +210,11 @@ const OvaDelprovRoute = OvaDelprovRouteImport.update({
   path: '/ova/$delprov',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdlistaOrdRoute = OrdlistaOrdRouteImport.update({
+  id: '/ordlista_/$ord',
+  path: '/ordlista/$ord',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MatchMatchIdRoute = MatchMatchIdRouteImport.update({
   id: '/match/$matchId',
   path: '/match/$matchId',
@@ -298,6 +317,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const OrdlistaBokstavBokstavRoute = OrdlistaBokstavBokstavRouteImport.update({
+  id: '/ordlista_/bokstav/$bokstav',
+  path: '/ordlista/bokstav/$bokstav',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GamlaProvTermPassRoute = GamlaProvTermPassRouteImport.update({
   id: '/gamla-prov_/$term_/$pass',
   path: '/gamla-prov/$term/$pass',
@@ -335,6 +359,8 @@ export interface FileRoutesByFullPath {
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
+  '/ordlista': typeof OrdlistaRoute
+  '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -360,12 +386,14 @@ export interface FileRoutesByFullPath {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ordlista/$ord': typeof OrdlistaOrdRoute
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/forum/$kategori/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
+  '/ordlista/bokstav/$bokstav': typeof OrdlistaBokstavBokstavRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -387,6 +415,8 @@ export interface FileRoutesByTo {
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
+  '/ordlista': typeof OrdlistaRoute
+  '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -412,12 +442,14 @@ export interface FileRoutesByTo {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ordlista/$ord': typeof OrdlistaOrdRoute
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/forum/$kategori/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov/$term/$pass': typeof GamlaProvTermPassRoute
+  '/ordlista/bokstav/$bokstav': typeof OrdlistaBokstavBokstavRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -440,6 +472,8 @@ export interface FileRoutesById {
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
+  '/ordlista': typeof OrdlistaRoute
+  '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -465,12 +499,14 @@ export interface FileRoutesById {
   '/guider/xyz': typeof GuiderXyzRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
+  '/ordlista_/$ord': typeof OrdlistaOrdRoute
   '/ova/$delprov': typeof OvaDelprovRoute
   '/result/$matchId': typeof ResultMatchIdRoute
   '/guider/': typeof GuiderIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/forum_/$kategori_/$trad': typeof ForumKategoriTradRoute
   '/gamla-prov_/$term_/$pass': typeof GamlaProvTermPassRoute
+  '/ordlista_/bokstav/$bokstav': typeof OrdlistaBokstavBokstavRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -494,6 +530,8 @@ export interface FileRouteTypes {
     | '/om'
     | '/onboarding'
     | '/ord'
+    | '/ordlista'
+    | '/ordlista-sitemap.xml'
     | '/signup'
     | '/stats'
     | '/train'
@@ -519,12 +557,14 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ordlista/$ord'
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
     | '/forum/$kategori/$trad'
     | '/gamla-prov/$term/$pass'
+    | '/ordlista/bokstav/$bokstav'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -546,6 +586,8 @@ export interface FileRouteTypes {
     | '/om'
     | '/onboarding'
     | '/ord'
+    | '/ordlista'
+    | '/ordlista-sitemap.xml'
     | '/signup'
     | '/stats'
     | '/train'
@@ -571,12 +613,14 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ordlista/$ord'
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider'
     | '/.mcp/invoke-tool/$tool'
     | '/forum/$kategori/$trad'
     | '/gamla-prov/$term/$pass'
+    | '/ordlista/bokstav/$bokstav'
   id:
     | '__root__'
     | '/'
@@ -598,6 +642,8 @@ export interface FileRouteTypes {
     | '/om'
     | '/onboarding'
     | '/ord'
+    | '/ordlista'
+    | '/ordlista-sitemap.xml'
     | '/signup'
     | '/stats'
     | '/train'
@@ -623,12 +669,14 @@ export interface FileRouteTypes {
     | '/guider/xyz'
     | '/join/$roomCode'
     | '/match/$matchId'
+    | '/ordlista_/$ord'
     | '/ova/$delprov'
     | '/result/$matchId'
     | '/guider/'
     | '/.mcp/invoke-tool/$tool'
     | '/forum_/$kategori_/$trad'
     | '/gamla-prov_/$term_/$pass'
+    | '/ordlista_/bokstav/$bokstav'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -651,6 +699,8 @@ export interface RootRouteChildren {
   OmRoute: typeof OmRoute
   OnboardingRoute: typeof OnboardingRoute
   OrdRoute: typeof OrdRoute
+  OrdlistaRoute: typeof OrdlistaRoute
+  OrdlistaSitemapDotxmlRoute: typeof OrdlistaSitemapDotxmlRoute
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
@@ -676,12 +726,14 @@ export interface RootRouteChildren {
   GuiderXyzRoute: typeof GuiderXyzRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
+  OrdlistaOrdRoute: typeof OrdlistaOrdRoute
   OvaDelprovRoute: typeof OvaDelprovRoute
   ResultMatchIdRoute: typeof ResultMatchIdRoute
   GuiderIndexRoute: typeof GuiderIndexRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ForumKategoriTradRoute: typeof ForumKategoriTradRoute
   GamlaProvTermPassRoute: typeof GamlaProvTermPassRoute
+  OrdlistaBokstavBokstavRoute: typeof OrdlistaBokstavBokstavRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -719,6 +771,20 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ordlista-sitemap.xml': {
+      id: '/ordlista-sitemap.xml'
+      path: '/ordlista-sitemap.xml'
+      fullPath: '/ordlista-sitemap.xml'
+      preLoaderRoute: typeof OrdlistaSitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ordlista': {
+      id: '/ordlista'
+      path: '/ordlista'
+      fullPath: '/ordlista'
+      preLoaderRoute: typeof OrdlistaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ord': {
@@ -875,6 +941,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OvaDelprovRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ordlista_/$ord': {
+      id: '/ordlista_/$ord'
+      path: '/ordlista/$ord'
+      fullPath: '/ordlista/$ord'
+      preLoaderRoute: typeof OrdlistaOrdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/match/$matchId': {
       id: '/match/$matchId'
       path: '/match/$matchId'
@@ -1015,6 +1088,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ordlista_/bokstav/$bokstav': {
+      id: '/ordlista_/bokstav/$bokstav'
+      path: '/ordlista/bokstav/$bokstav'
+      fullPath: '/ordlista/bokstav/$bokstav'
+      preLoaderRoute: typeof OrdlistaBokstavBokstavRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gamla-prov_/$term_/$pass': {
       id: '/gamla-prov_/$term_/$pass'
       path: '/gamla-prov/$term/$pass'
@@ -1059,6 +1139,8 @@ const rootRouteChildren: RootRouteChildren = {
   OmRoute: OmRoute,
   OnboardingRoute: OnboardingRoute,
   OrdRoute: OrdRoute,
+  OrdlistaRoute: OrdlistaRoute,
+  OrdlistaSitemapDotxmlRoute: OrdlistaSitemapDotxmlRoute,
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
@@ -1085,12 +1167,14 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderXyzRoute: GuiderXyzRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
+  OrdlistaOrdRoute: OrdlistaOrdRoute,
   OvaDelprovRoute: OvaDelprovRoute,
   ResultMatchIdRoute: ResultMatchIdRoute,
   GuiderIndexRoute: GuiderIndexRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ForumKategoriTradRoute: ForumKategoriTradRoute,
   GamlaProvTermPassRoute: GamlaProvTermPassRoute,
+  OrdlistaBokstavBokstavRoute: OrdlistaBokstavBokstavRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
