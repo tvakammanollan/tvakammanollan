@@ -96,7 +96,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           <header>
             <div className="flex items-center gap-3">
               <UserAvatar
-                name={isGuest ? "Gäst" : displayName(profile.username, profile.id)}
+                name={displayName(profile.username, profile.id)}
                 seed={profile.id}
                 size={44}
               />
@@ -108,7 +108,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   className="display truncate text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {isGuest ? "Gäst" : profile.username}.
+                  {displayName(profile.username, profile.id)}.
                 </h1>
               </div>
             </div>

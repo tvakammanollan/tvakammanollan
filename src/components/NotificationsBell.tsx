@@ -14,6 +14,7 @@ import { Bell, Check, X, Swords, UserPlus, Loader2, MessageSquare } from "lucide
 import { toast } from "sonner";
 import { sounds } from "@/lib/sounds";
 import { formatInt } from "@/lib/sv-format";
+import { displayName } from "@/lib/guest-name";
 
 /* =====================================================================
    NOTISKLOCKA — samlar väntande vänförfrågningar, matchinbjudningar och
@@ -95,7 +96,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
     if (ids.length > 0) {
       const { data: us } = await supabase.rpc("get_users_basic", { _ids: ids });
       nameMap = Object.fromEntries(
-        (us ?? []).map((u) => [u.id as string, (u.username as string) ?? "Okänd"]),
+        (us ?? []).map((u) => [u.id as string, displayName(u.username as string, u.id as string)]),
       );
     }
 

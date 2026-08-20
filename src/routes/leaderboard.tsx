@@ -18,7 +18,8 @@ import {
   fetchWeeklyLeaderboard,
   type WeeklyLeaderboardRow,
 } from "@/lib/leaderboard.functions";
-import { isRankable } from "@/lib/username";
+import { isRankable, rankedName } from "@/lib/username";
+import { displayName } from "@/lib/guest-name";
 import { EmptyState } from "@/components/EmptyState";
 import { Reveal } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
@@ -33,10 +34,6 @@ interface LbRow {
   games_played: number;
   wins: number;
   losses: number;
-}
-
-function displayName(username: string): string {
-  return isRankable(username) ? username : "Anonym";
 }
 
 /**
@@ -472,7 +469,7 @@ function WeeklyTable({
                 </td>
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
-                    {displayName(r.username)}
+                    {rankedName(r.username)}
                     {isMe && (
                       <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
                         Du
@@ -571,7 +568,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       </td>
       <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
-          <span className="text-[15px] font-medium text-white">{displayName(r.username)}</span>
+          <span className="text-[15px] font-medium text-white">{rankedName(r.username)}</span>
           {isMe && (
             <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
               Du
@@ -720,7 +717,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       </td>
       <td className="px-3 py-2.5 text-white">
         <span className="inline-flex items-center gap-2">
-          {displayName(r.username)}
+          {rankedName(r.username)}
           {isMe && (
             <span className="rounded-full bg-[#ae2f26] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#2e1e14]">
               Du

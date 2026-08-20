@@ -43,3 +43,19 @@ export function isRankable(username: string | null | undefined): boolean {
   const name = (username ?? "").trim();
   return name.length > 0 && !isAutoUsername(name);
 }
+
+/**
+ * Namnet i en rankad lista — topplistan och landningssidans utdrag.
+ *
+ * Medvetet en annan regel än `displayName` i guest-name.ts: där ska ett
+ * namnlöst konto få ett läsbart namn, här ska det INTE se ut som en spelare.
+ * Ett "Gäst ekorre" bland de rankade läses som någon som tagit sig dit;
+ * "Anonym" gör det inte.
+ *
+ * Serverfunktionerna sållar redan bort de här raderna. Det här är samma regel
+ * en gång till, för listor som filtrerar i redan hämtad data och som skydd om
+ * en cachad payload från före filtret ligger kvar i react-query.
+ */
+export function rankedName(username: string | null | undefined): string {
+  return isRankable(username) ? (username as string) : "Anonym";
+}

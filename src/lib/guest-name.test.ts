@@ -1,48 +1,80 @@
-import { describe, expect, it } from "vitest";
+import { describe, it, expect } from "vitest";
 import { displayName, guestName, isAutoGuestName, isGeneratedGuestName } from "./guest-name";
-import { isRankable } from "./username";
-
-describe("guestName", () => {
-  it("är deterministiskt per frö", () => {
-    expect(guestName("abc")).toBe(guestName("abc"));
-  });
-
-  it("ger ett namn ur listan", () => {
-    expect(guestName("abc")).toMatch(/^Gäst \S+$/);
-  });
-});
 
 describe("displayName", () => {
-  // Hela gästnamnsfunktionen vilar på den här raden sedan namnet slutade
-  // skrivas till databasen: triggern sätter user_<8 hex>, och det är BARA
-  // här det blir "Gäst ekorre". Slutar den mappa syns id:t i navbaren, i
-  // matchen och på resultatskärmen.
-  it("gör om triggerns user_<hex> till ett lundnamn", () => {
-    const id = "86b94273-1f0e-4a55-9d3c-9a1f6d0b2c11";
-    expect(displayName("user_86b94273", id)).toBe(guestName(id));
-    expect(displayName("user_86b94273", id)).toMatch(/^Gäst /);
+  it("lämnar valda namn i fred", () => {
+    expect(displayName("lina_p")).toBe("lina_p");
+    expect(displayName("lina_p", "5e19eb20-1b62-4378-8d47-73fd31913125")).toBe("lina_p");
   });
 
-  it("lämnar valda namn i fred", () => {
-    expect(displayName("lina_p", "id")).toBe("lina_p");
+  it("byter ut triggerns auto-namn mot ett läsbart", () => {
+    const namn = displayName("user_5e19eb20");
+    expect(namn).not.toContain("user_");
+    expect(namn.startsWith("Gäst ")).toBe(true);
+  });
+
+  it("ger SAMMA namn med och utan id — annars spretar ytorna", () => {
+    // Navbaren har profile.id, forumet och vänlistan har bara namnet. Skiljer
+    // de sig åt heter samma konto olika saker på olika sidor.
+    const medId = displayName("user_5e19eb20", "5e19eb20-1b62-4378-8d47-73fd31913125");
+    const utanId = displayName("user_5e19eb20");
+    expect(medId).toBe(utanId);
+  });
+
+  it("är stabilt över anrop", () => {
+    expect(displayName("user_a1b2c3d4")).toBe(displayName("user_a1b2c3d4"));
+  });
+
+  it("hanterar tomt namn", () => {
+    // Tom sträng = raderat konto (deleteAccount). Forumet har egen text för
+    // det; här räcker en neutral fallback.
+    expect(displayName("")).toBe("Gäst");
+    expect(displayName(null)).toBe("Gäst");
+    expect(displayName(undefined)).toBe("Gäst");
+  });
+
+  it("trimmar innan den bedömer", () => {
+    expect(displayName("  user_5e19eb20  ")).toBe(displayName("user_5e19eb20"));
   });
 });
 
-describe("gästkonton rankas inte", () => {
-  // Båda schemana måste kännas igen: nya konton får triggerns user_<hex>,
-  // och de 15 rader som hann skrivas med "Gäst <ord>" ligger kvar.
+describe("isAutoGuestName", () => {
   it("känner igen triggerns format", () => {
-    expect(isAutoGuestName("user_86b94273")).toBe(true);
-    expect(isRankable("user_86b94273")).toBe(false);
+    expect(isAutoGuestName("user_5e19eb20")).toBe(true);
+    expect(isAutoGuestName("user_ABCDEF12")).toBe(true);
   });
 
-  it("känner igen de kvarvarande Gäst-raderna", () => {
-    expect(isGeneratedGuestName("Gäst ekorre")).toBe(true);
-    expect(isRankable("Gäst ekorre")).toBe(false);
+  it("släpper igenom självvalda namn", () => {
+    expect(isAutoGuestName("user_niklas")).toBe(false); // inte hex
+    expect(isAutoGuestName("lina_p")).toBe(false);
+    expect(isAutoGuestName(null)).toBe(false);
+  });
+});
+
+describe("isGeneratedGuestName", () => {
+  it("täcker båda schemana", () => {
+    expect(isGeneratedGuestName("user_5e19eb20")).toBe(true);
+    expect(isGeneratedGuestName(guestName("frö"))).toBe(true);
   });
 
-  it("rör inte någon som valt ett namn som börjar på Gäst", () => {
+  it("rör inte den som valt ett namn som börjar på Gäst", () => {
     expect(isGeneratedGuestName("Gäst i huset")).toBe(false);
-    expect(isRankable("Gäst i huset")).toBe(true);
+  });
+});
+
+describe("guestName är en visningshjälpare, inte en nyckel", () => {
+  // Bakgrunden: namnet skickades en tid med i metadatan vid
+  // signInAnonymously, så triggern skrev in det i users.username — som är
+  // UNIQUE. Listan är tjugo ord lång, så gästläget dog för 75 % av
+  // besökarna med ett 500 från auth. Kollisionerna nedan är alltså inte en
+  // egenhet att leva med, de är skälet till att namnet aldrig får lagras.
+  it("kolliderar med flit — pölen är liten och ändlig", () => {
+    const namn = new Set(Array.from({ length: 500 }, (_, i) => guestName(`frö-${i}`)));
+    expect(namn.size).toBeLessThan(50);
+  });
+
+  it("är deterministiskt per frö", () => {
+    expect(guestName("abc")).toBe(guestName("abc"));
+    expect(guestName("abc")).toMatch(/^Gäst \S+$/);
   });
 });

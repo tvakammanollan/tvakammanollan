@@ -5,6 +5,7 @@
  * (`src/lib/forum.test.ts`). Renderingen av inläggstext ligger i
  * ./forum-markdown.ts, som också är ren.
  */
+import { displayName } from "./guest-name";
 
 /** Inlägg per sida i en tråd. Ändras detta ändras även paginerade URL:er. */
 export const POSTS_PER_PAGE = 30;
@@ -26,9 +27,14 @@ export type ForumStatus = "visible" | "pending" | "hidden" | "deleted";
 /** Namn att visa för en användare vars konto raderats (GDPR-anonymisering). */
 export const DELETED_USER_NAME = "Borttagen användare";
 
+/**
+ * Tomt namn betyder raderat konto — det vet bara forumet, så den regeln bor
+ * kvar här. Allt annat lämnas till `displayName`, annars heter ett konto som
+ * aldrig valt namn "Gäst ekorre" i navbaren och `user_5e19eb20` i tråden.
+ */
 export function displayAuthor(username: string | null | undefined): string {
   const name = (username ?? "").trim();
-  return name.length > 0 ? name : DELETED_USER_NAME;
+  return name.length > 0 ? displayName(name) : DELETED_USER_NAME;
 }
 
 /* ------------------------------------------------------------------ *
