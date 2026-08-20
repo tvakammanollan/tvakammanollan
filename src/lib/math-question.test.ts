@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isImageQuestion, showQuestionText } from "./math-question";
+import { isImageQuestion, optionHasOwnText, showQuestionText } from "./math-question";
 
 const BOKSTAVSALT = [
   { id: "A", text: "A" },
@@ -77,5 +77,23 @@ describe("showQuestionText", () => {
   it("tom text visas aldrig", () => {
     expect(showQuestionText({ question_text: "   ", options: RIKTIGA_ALT })).toBe(false);
     expect(showQuestionText({ question_text: null, options: RIKTIGA_ALT })).toBe(false);
+  });
+});
+
+describe("optionHasOwnText", () => {
+  it("en bokstav som bara är sig själv har ingen egen text", () => {
+    // `{id:"A", text:"A"}` betyder "alternativet står i bilden". Renderas den
+    // texten blir raden "A  A" — brickan följd av samma bokstav igen.
+    expect(optionHasOwnText({ id: "A", text: "A" }, 0)).toBe(false);
+    expect(optionHasOwnText({ id: "B", text: "b" }, 1)).toBe(false);
+    expect(optionHasOwnText({ id: "C", text: "  " }, 2)).toBe(false);
+    expect(optionHasOwnText("D", 3)).toBe(false);
+  });
+
+  it("riktig text räknas som egen text", () => {
+    expect(optionHasOwnText({ id: "A", text: "Kockgård" }, 0)).toBe(true);
+    expect(optionHasOwnText("4711", 0)).toBe(true);
+    // Ett alternativ som ÄR bokstaven A som svar (t.ex. "A och B") räknas.
+    expect(optionHasOwnText({ id: "A", text: "A och B" }, 0)).toBe(true);
   });
 });

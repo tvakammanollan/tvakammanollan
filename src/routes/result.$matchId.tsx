@@ -47,7 +47,8 @@ import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
-import { isImageQuestion } from "@/lib/math-question";
+import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
+import { AnswerContext } from "@/components/AnswerContext";
 import { processMatchResult } from "@/lib/match.functions";
 
 export const Route = createFileRoute("/result/$matchId")({
@@ -89,6 +90,8 @@ interface AnswerRow {
 interface QuestionOpt {
   id: string;
   text: string;
+  /** Alternativets utsnitt i uppgiftsbilden — finns på bilduppgifter. */
+  crop?: unknown;
 }
 
 interface QuestionRow {
@@ -228,8 +231,12 @@ function ResultPage() {
           const rawOpts = Array.isArray(q.options) ? (q.options as unknown[]) : [];
           const options: QuestionOpt[] = rawOpts.map((o: unknown, i: number) => {
             if (o && typeof o === "object" && "text" in (o as Record<string, unknown>)) {
-              const obj = o as { id?: string; text: unknown };
-              return { id: obj.id ?? String.fromCharCode(65 + i), text: String(obj.text) };
+              const obj = o as { id?: string; text: unknown; crop?: unknown };
+              return {
+                id: obj.id ?? String.fromCharCode(65 + i),
+                text: String(obj.text),
+                crop: obj.crop,
+              };
             }
             return { id: String.fromCharCode(65 + i), text: String(o) };
           });
@@ -246,6 +253,25 @@ function ResultPage() {
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
+      // Bilden hämtas separat och inte ur RPC:n. `image_url` är en publikt
+      // läsbar kolumn (den står i grant-listan i dolj_facit-migrationen), till
+      // skillnad från `correct_answer` som är hela skälet till att RPC:n finns.
+      // Att läsa den här gör att genomgången visar uppgiftsbilden — och
+      // därmed vad svarsalternativen faktiskt var — utan att vänta på att
+      // RPC-migrationen körts. Misslyckas den ritas allt som förut.
+      if (qs.length > 0) {
+        const { data: bilder } = await supabase
+          .from("questions")
+          .select("id, image_url")
+          .in(
+            "id",
+            qs.map((q) => q.id),
+          );
+        if (!cancelled && bilder) {
+          const byId = new Map(bilder.map((b) => [b.id as string, b.image_url as string | null]));
+          for (const q of qs) q.image_url = q.image_url ?? byId.get(q.id) ?? null;
+        }
+      }
       setQuestions(qs);
 
       const { data: mine } = await supabase
@@ -809,7 +835,13 @@ function ResultPage() {
                         </div>
                       )}
                       {q.image_url && (
-                        <div className="mt-2 overflow-hidden rounded-lg border border-border">
+                        // Höjdbegränsad, inte breddstyrd. Utsnitten ur
+                        // provhäftet är små och ofta stående (202×370 px är
+                        // vanligt); `w-full` skalade upp en sådan till 660×1200
+                        // och gjorde en enkel uppgift till en skärm av suddig
+                        // text. `w-auto` + maxhöjd låter bilden ta sin egen
+                        // storlek och krympa på små skärmar.
+                        <div className="mt-2 flex justify-center rounded-lg border border-border bg-white p-2">
                           <img
                             src={q.image_url}
                             alt={
@@ -819,7 +851,7 @@ function ResultPage() {
                             }
                             loading="lazy"
                             decoding="async"
-                            className="w-full object-contain"
+                            className="max-h-[50vh] w-auto max-w-full object-contain"
                           />
                         </div>
                       )}
@@ -842,7 +874,7 @@ function ResultPage() {
                               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
                                 {opt.id}
                               </span>
-                              {!isImageQuestion(q) && (
+                              {optionHasOwnText(opt, q.options.indexOf(opt)) && (
                                 <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
                                   {isMath ? (
                                     <MathText autoDetect>{opt.text}</MathText>
@@ -863,12 +895,18 @@ function ResultPage() {
                           );
                         })}
                       </ul>
-                      {/* Utan förklaring i datan visas åtminstone rätt svar i
-                          klartext — en ensam bokstav lär ingen någonting. */}
+                      {/* Vad du svarade och vad som var rätt, med innehållet
+                          och inte bara bokstaven. På bilduppgifter klipps de
+                          två alternativen ur uppgiftsbilden. */}
+                      <AnswerContext
+                        options={q.options}
+                        selected={a?.selected_answer}
+                        correct={q.correct_answer}
+                        imageUrl={q.image_url}
+                        math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
+                      />
                       <ExplanationBlock
                         explanation={q.explanation}
-                        answerLetter={q.correct_answer}
-                        answerText={q.options.find((o) => o.id === q.correct_answer)?.text ?? null}
                         math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
                       />
                     </li>

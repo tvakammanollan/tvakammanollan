@@ -12,7 +12,7 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om Tvåkommanollan · varför sajten finns",
       description:
-        "Tvåkommanollan är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,9 på HP), varför sajten är gratis och vad vi tror på.",
+        "Tvåkommanollan är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,95 på HP), varför sajten är gratis och vad vi tror på.",
       ogTitle: "Om Tvåkommanollan",
       ogDescription: "Sveriges enda gratis ELO-rankade högskoleprovsplattform. Varför vi finns.",
     }),
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/om")({
         name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om Tvåkommanollan: Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,9 på Högskoleprovet.",
+          "Om Tvåkommanollan: Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
@@ -56,7 +56,7 @@ function OmPage() {
             Grundaren
           </h2>
           <p>
-            Jag heter <strong style={{ color: "var(--cream)" }}>Niklas</strong> och fick 1,9 på
+            Jag heter <strong style={{ color: "var(--cream)" }}>Niklas</strong> och fick 1,95 på
             Högskoleprovet. Innan jag tog provet använde jag allt jag kunde komma över: gamla prov,
             ordlistor, YouTube-genomgångar och dyra kursplattformar. Det fungerade, men det var
             spretigt, dyrt och oftast tråkigt. Det fanns ingenting som gjorde att jag faktiskt ville

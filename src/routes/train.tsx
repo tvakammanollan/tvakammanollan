@@ -40,11 +40,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { AnswerContext } from "@/components/AnswerContext";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { displayCategory, ordText } from "@/lib/sv-format";
-import { isImageQuestion } from "@/lib/math-question";
+import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { Spinner } from "@/components/ui/Spinner";
 
 export const Route = createFileRoute("/train")({
@@ -112,6 +113,8 @@ interface TrainQuestion {
   id: string;
   question_text: string;
   options: string[];
+  /** Råa alternativ ur datan — bär `crop` på bilduppgifter (se AnswerContext). */
+  rawOptions: { id: string; text: string; crop?: unknown }[];
   category: string;
   passage_id: string | null;
   passage_text: string | null;
@@ -249,10 +252,21 @@ function TrainPage() {
             ? String((o as { text: unknown }).text)
             : String(o),
       );
+      // Utsnittskoordinaterna följer med orörda: rättningen klipper ut
+      // alternativen ur uppgiftsbilden när de inte har någon egen text.
+      const rawOptions = rawOpts.map((o: unknown, i: number) => {
+        const bokstav = String.fromCharCode(65 + i);
+        if (o && typeof o === "object") {
+          const obj = o as { id?: string; text?: unknown; crop?: unknown };
+          return { id: obj.id ?? bokstav, text: String(obj.text ?? ""), crop: obj.crop };
+        }
+        return { id: bokstav, text: String(o ?? "") };
+      });
       return {
         id: row.id,
         question_text: useCleaned ? row.cleaned_question_text : row.question_text,
         options,
+        rawOptions,
         category: row.category,
         passage_id: row.passage_id,
         passage_text: row.passage_text,
@@ -639,7 +653,7 @@ function TrainPage() {
                   src={currentQ.image_url}
                   alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
                   decoding="async"
-                  className="w-full object-contain"
+                  className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
                 />
               </div>
             )}
@@ -690,9 +704,9 @@ function TrainPage() {
                         letter
                       )}
                     </span>
-                    {/* På en bilduppgift är alternativtexten bara sin egen
-                        bokstav — den står redan i brickan till vänster. */}
-                    {!bildUppgift && (
+                    {/* En alternativtext som bara är sin egen bokstav skrivs
+                        inte ut — den står redan i brickan till vänster. */}
+                    {optionHasOwnText(opt, i) && (
                       <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
                         {isMath ? (
                           <MathText>{opt}</MathText>
@@ -711,14 +725,18 @@ function TrainPage() {
             {/* Explanation */}
             {revealed && (
               <>
-                {/* Utan förklaring i datan visas åtminstone rätt svar i
-                    klartext — en ensam bokstav lär ingen någonting. */}
+                {/* Vad du svarade och vad som var rätt, med innehållet och
+                    inte bara bokstaven. På bilduppgifter klipps de två
+                    alternativen ur uppgiftsbilden. */}
+                <AnswerContext
+                  options={currentQ.rawOptions}
+                  selected={selected}
+                  correct={currentQ.correct_answer}
+                  imageUrl={currentQ.image_url}
+                  math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
+                />
                 <ExplanationBlock
                   explanation={currentQ.explanation}
-                  answerLetter={currentQ.correct_answer}
-                  answerText={
-                    currentQ.options[optionLetters.indexOf(currentQ.correct_answer)] ?? null
-                  }
                   math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
                 />
                 {user && (

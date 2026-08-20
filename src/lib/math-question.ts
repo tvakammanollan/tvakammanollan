@@ -44,6 +44,19 @@ function optionText(option: unknown, index: number): { id: string; text: string 
 }
 
 /**
+ * Har alternativet en egen text, eller är det bara sin egen bokstav?
+ *
+ * `{id:"A", text:"A"}` betyder "alternativet står i bilden". Att rendera den
+ * texten ger raden `A  A` — bokstavsbrickan följd av samma bokstav en gång
+ * till — vilket ser ut som ett renderingsfel.
+ */
+export function optionHasOwnText(option: unknown, index: number): boolean {
+  const { id, text } = optionText(option, index);
+  const t = text.trim();
+  return t !== "" && t !== id && t !== id.toLowerCase();
+}
+
+/**
  * Sant när bilden ÄR uppgiften: uppgiftstexten och alternativtexterna ska då
  * inte renderas, eftersom de bara är trasiga kopior av det bilden visar.
  */
@@ -54,11 +67,7 @@ export function isImageQuestion(q: RenderableQuestion): boolean {
   // Alla alternativ är bara sin egen bokstav (eller tomma) → texterna finns i
   // bilden. Ett enda alternativ med riktig text räcker för att det ska vara
   // en textuppgift med figur.
-  return raw.every((o, i) => {
-    const { id, text } = optionText(o, i);
-    const t = text.trim();
-    return t === "" || t === id || t === id.toLowerCase();
-  });
+  return raw.every((o, i) => !optionHasOwnText(o, i));
 }
 
 /** Sant när uppgiftstexten ska skrivas ut ovanför bilden. */

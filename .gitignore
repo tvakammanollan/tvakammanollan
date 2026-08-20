@@ -52,3 +52,4 @@ scripts/.ord-defs/
 
 # genererade typsnitt åt scripts/build-og-image.py
 .og-cache/
+__pycache__/

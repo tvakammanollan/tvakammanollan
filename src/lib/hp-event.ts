@@ -46,9 +46,7 @@ export const HP_EVENT_IMAGES = [
 export type HpExamDateWithWindow = HpExamDate &
   Required<Pick<HpExamDate, "registrationOpens" | "registrationCloses">>;
 
-export function hasRegistrationWindow(
-  entry: HpExamDate,
-): entry is HpExamDateWithWindow {
+export function hasRegistrationWindow(entry: HpExamDate): entry is HpExamDateWithWindow {
   return Boolean(entry.registrationOpens && entry.registrationCloses);
 }
 
@@ -68,10 +66,7 @@ const CLOSES_AT = "23:59";
  * "du kan inte anmäla dig nu". Att låta den stå kvar på InStock hade skickat
  * folk till en anmälan som inte går att göra.
  */
-export function offerAvailability(
-  entry: HpExamDateWithWindow,
-  now: Date = new Date(),
-): string {
+export function offerAvailability(entry: HpExamDateWithWindow, now: Date = new Date()): string {
   const t = now.getTime();
   if (t < Date.parse(hpDateTime(entry.registrationOpens, OPENS_AT))) {
     return "https://schema.org/PreOrder";

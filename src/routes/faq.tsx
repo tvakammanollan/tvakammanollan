@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
+import { HP_FEE_SEK, hpDatesAnswer } from "@/lib/hp-dates";
 
 interface FaqItem {
   q: string;
@@ -47,7 +48,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "När är nästa Högskoleprovet?",
-    a: "Högskoleprovet ges normalt två gånger per år: en gång i mars/april och en gång i oktober. Nästa officiella datum: 24 oktober 2026. Anmälan öppnar ungefär tre månader innan via antagning.se.",
+    a: hpDatesAnswer(),
   },
   {
     q: "Vad är ett bra resultat på Högskoleprovet?",
@@ -59,7 +60,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad kostar det att skriva Högskoleprovet?",
-    a: "Anmälningsavgiften ligger kring 550 kronor (kontrollera aktuell avgift på studera.nu). Tvåkommanollan kostar däremot ingenting. Sajten finansieras av grundaren.",
+    a: `Provavgiften är ${HP_FEE_SEK} kronor och betalas i samband med anmälan på hogskoleprov.nu. Avgiften återbetalas inte om du uteblir. Tvåkommanollan kostar däremot ingenting. Sajten finansieras av grundaren.`,
   },
   {
     q: "Vad är skillnaden mellan verbal och kvantitativ del?",
@@ -75,7 +76,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad är coachning på Tvåkommanollan?",
-    a: "Vi erbjuder gratis 30-minuters videocoachning från en spelare som själv fått 1,9 eller högre på HP. Coachen går igenom dina svagheter och ger en personlig plan. Boka via knappen 'Gratis coachning' i hemvyn.",
+    a: "Ett studieupplägg byggt efter din nivå och tiden du har kvar till provet, av någon som själv fått 1,95 på högskoleprovet. Det är sajtens enda betaltjänst — priset står i kassan — och direkt efter köpet väljer du en tid för samtalet. All träning på sajten är och förblir gratis.",
   },
 ];
 

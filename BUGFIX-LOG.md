@@ -117,14 +117,45 @@ mejlgrind läser fortfarande `auth.users.email_confirmed_at`.
 **Utanför repot, och kan bara du göra:**
 
 1. **Supabase → Authentication → Providers → Email → "Confirm email" AV.**
-   Det är den här inställningen punkt 2 handlar om. Utan den slutförs inte
-   registreringen direkt.
-2. **`RESEND_API_KEY`** som krypterad Cloudflare-Secret:
-   `wrangler versions secret put RESEND_API_KEY` följt av
-   `wrangler versions deploy "<id>@100%"`. Utan den skickas inga mejl alls —
-   allt loggas och släpps, och inget flöde går sönder.
-3. **DNS för e-post** — se punkt 19. Domänen måste verifieras i Resend, och
-   `tvakommanollan.se` saknar SPF helt trots `_dmarc p=reject`.
+   Det är den här inställningen punkt 2 handlar om, och den är **gratis och tar
+   tio sekunder**. Utan den slutförs inte registreringen direkt.
+
+Och det var allt. Ingen ny API-nyckel behövs för att det som är byggt ska
+fungera — se nästa avsnitt.
+
+## Nycklar: vad som behövs, och vad som inte gör det
+
+**Ingenting nytt krävs just nu.** Allt som är byggt fungerar utan en enda ny
+nyckel. Två saker är förberedda men vilande:
+
+| Nyckel | Vad den låser upp | Utan den |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Utgående e-post: verifieringsmejl, köpbekräftelse, notis om nytt lead, buggrapport i inkorgen | Mejlet loggas och släpps. **Inget flöde går sönder** — köpet går igenom, leadet sparas, buggrapporten hamnar i tabellen och i admin-vyn. |
+| `ANTHROPIC_API_KEY` | `gen:math-explanations` | Behövs inte. Rättningen visar kontexten ur uppgiftsbilden i stället, gratis. Scriptet körs inte. |
+
+**Vad frånvaron av Resend faktiskt kostar, och vad jag gjorde åt det.**
+
+Utan mejl kan ingen klicka i en verifieringslänk, så `email_verified_at` förblir
+NULL för alla som registrerar sig med e-post. Hade forumets spamgrind krävt den
+flaggan rakt av skulle forumet **låsas permanent för alla nya konton**, utan att
+något felmeddelande pekar ut varför.
+
+Kravet ligger därför bakom en flagga i `app_config`, satt till `false` av
+migrationen. Slå på den samma dag mejlen fungerar — ingen deploy behövs:
+
+```sql
+UPDATE public.app_config SET value = 'true'::jsonb
+ WHERE key = 'forum_kraver_verifierad_epost';
+```
+
+Tills dess står forumets övriga lager kvar: inget gästkonto, tio minuters
+kontoålder, valt användarnamn, ingen avstängning, länkspärr för nya konton och
+kvoterna som räknas i RPC:erna. Ett lager av sex saknas, inte grinden.
+
+**När du väl skapar Resend-kontot** behövs, utöver nyckeln: verifiera
+`tvakommanollan.se` i Resend, lägg in DKIM-posterna i Cloudflare DNS, och lägg
+till SPF på apex — se punkt 19. **SPF saknas redan idag** trots `_dmarc
+p=reject`, alltså oberoende av det här passet.
 
 ---
 
@@ -466,43 +497,86 @@ och 16.
 `src/lib/prov-attempts.functions.ts` (ny), `src/components/prov/ProvRunner.tsx`,
 `src/components/prov/ProvResult.tsx`.
 
-### 15. Matterättningen förklarade för lite ✅ (delvis — se nedan)
+### 15. Matterättningen förklarade för lite ✅
 
 **Vad som var fel.** `questions.explanation` fanns i tabellen men var **NULL på
-samtliga 12 338 rader** (räknat mot produktionsdatabasen 2026-08-19, inklusive
-alla 2 764 mattefrågor). Förklaringsblocket ritades alltså aldrig ut, och hela
-rättningen på mattedelen var "rätt svar: C".
+samtliga 12 338 rader** (räknat mot produktionsdatabasen). Förklaringsblocket
+ritades alltså aldrig ut, och hela rättningen på mattedelen var "rätt svar: C".
 
 Och `get_match_review` returnerade överhuvudtaget inte `explanation` — sidan
 läste `q.explanation` ur svaret och fick `undefined` varje gång. Tyst.
 
-**Vad jag ändrade.**
+**Vad jag ändrade.** Inga betaltjänster i realtid, och inget genererat innehåll.
+I stället: **kontexten fanns redan i datan.**
 
-- RPC:n returnerar nu `explanation` **och** `image_url`, plus de rensade
-  mattekolumnerna så att genomgången visar samma version av uppgiften som
-  matchen gjorde.
-- `ExplanationBlock` har en reserv: finns ingen förklaring skrivs rätt svar ut i
-  **klartext** (`C — 4711`), med KaTeX på mattefrågor. En ensam bokstav lär ingen
-  någonting.
-- `scripts/generate-math-explanations.ts` fyller fältet på riktigt. Modellen får
-  facit och ska förklara vägen dit; landar den i ett annat svar, eller säger att
-  uppgiften inte går att förstå, skrivs **ingenting** — en lösning som motsäger
-  facit är den värsta möjliga produkten. Torrkörning som standard, `--apply` för
-  att skriva. `bun run gen:math-explanations`.
+De flesta KVA-uppgifter (och en del XYZ) ligger som en bild av hela uppgiften,
+och varje alternativ bär sina egna koordinater i den bilden:
 
-**Vilka frågor som saknar förklaring.** Alla, tills scriptet körts. Av de 2 764
-mattefrågorna är **2 260 bildutsnitt** ur provhäftet (737 XYZ, 607 KVA, 197 NOG,
-719 DTK) — där är `question_text` PDF-extraktionen och obrukbar, så scriptet
-hoppar över dem och redovisar antalet. De kräver att bilden skickas med, vilket
-är ett eget jobb (`--vision`, ej byggt). **Cirka 504 mattefrågor och alla
-verbala** går att generera direkt.
+```json
+{ "id": "D", "text": "D", "crop": [0.2669, 0.8682, 1, 1] }
+```
 
-**Kräver ett beslut från dig:** scriptet kostar pengar per uppgift och behöver
-`ANTHROPIC_API_KEY`. Jag har inte kört det.
+Nya `AnswerContext` klipper ut just de två raderna ur samma bild som redan
+laddats — **ditt svar** och **det rätta** — och ställer dem mot varandra. På
+uppgiften jag verifierade mot betyder det att rättningen går från "rätt svar:
+D" till att visa `I är större än II` mot `informationen är otillräcklig`. Har
+alternativet egen text visas den i stället; saknas båda sägs det rakt ut att
+alternativen står i bilden ovanför, i stället för en tom ruta.
 
-**Filer.** `supabase/migrations/20260819200000_match_review_bild_och_forklaring.sql`,
+Ingen extra hämtning, ingen ny data, ingen kostnad — koordinaterna låg redan i
+`options`.
+
+RPC:n returnerar nu också `explanation` och `image_url`, plus de rensade
+mattekolumnerna, så genomgången visar samma version av uppgiften som matchen
+gjorde. `ExplanationBlock` visar bara en riktig förklaring och slutade upprepa
+en bokstav.
+
+**Om generering.** `scripts/generate-math-explanations.ts` ligger kvar men är
+**inte körd och ska inte köras** förrän det finns intäkter — den kostar per
+uppgift. Den är byggd så att modellen får facit och ska förklara vägen dit;
+landar den i ett annat svar skrivs ingenting, eftersom en lösning som motsäger
+facit är den värsta möjliga produkten. Kör `bun run gen:math-explanations`
+(torrkörning) den dag det blir aktuellt.
+
+**Filer.** `src/lib/option-crop.ts` + `.test.ts`, `src/hooks/useImageSize.ts`,
+`src/components/AnswerContext.tsx` (alla nya), `src/lib/math-question.ts`,
 `src/components/ExplanationBlock.tsx`, `src/routes/result.$matchId.tsx`,
-`src/routes/train.tsx`, `scripts/generate-math-explanations.ts` (ny).
+`src/routes/match.$matchId.tsx`, `src/routes/train.tsx`,
+`supabase/migrations/20260819200000_match_review_bild_och_forklaring.sql`.
+
+**Två fel som bara syntes i en skärmdump.** Formeln var rätt men resultatet
+såg fel ut, och det gick inte att se i vare sig typkontroll eller tester:
+
+- **Rutans höjd byggde på fel antagande.** Ett utsnitt anges i andelar, och en
+  andel säger ingenting om form förrän man vet vad den är en andel av: 73 % av
+  bredden och 9 % av höjden är en textrad i en bild som är 202×370 och något
+  helt annat i en som är 900×300. `useImageSize` mäter källbilden i
+  webbläsaren (cachat per URL, eftersom samma bild visas i tre rutor per
+  fråga). Utsnittet sätts dessutom efter HÖJD och inte efter bredd —
+  koordinaterna i datan är generöst tilltagna, så en fullbreddsruta blev en
+  textrad högst upp i ett stort tomt fält.
+- **Uppgiftsbilderna skalades upp till oläslighet.** `w-full` på en stående
+  skanning på 202×370 px gav 660×1200 — en enkel uppgift blev en skärm av
+  suddig text. Nu höjdbegränsad och centrerad, i genomgången, matchen och
+  träningen.
+
+Samtidigt: en alternativtext som bara är sin egen bokstav skrivs inte längre ut
+(`optionHasOwnText`). Raden `A  A` — bokstavsbrickan följd av samma bokstav —
+såg ut som ett renderingsfel.
+
+**Verifierat.** Tio enhetstester på utsnittsmatematiken (delning med noll när
+utsnittet täcker hela bredden, proportioner ur verkliga bildmått, ogiltiga
+koordinater). CSS-formeln kontrollerad i en **riktig webbläsare**: utsnittet
+renderades headless och skärmdumpades, och gav samma alternativtext som en
+referensbeskärning med Pillow. Och hela genomgången skärmdumpad i en spelad
+mattematch: `DITT SVAR ✕ 3` mot `RÄTT SVAR ✓ 4`, uppgiften typsatt, noll
+horisontell overflow.
+
+**En sak till, så att det fungerar redan innan migrationen.** Genomgången
+hämtar `image_url` direkt ur `questions` i stället för att vänta på
+RPC-ändringen. Kolumnen är publikt läsbar (den står i grant-listan i
+`dolj_facit`-migrationen), till skillnad från `correct_answer` som är hela
+skälet till att RPC:n finns.
 
 ### 16. Matteuppgifternas rendering standardiserad ✅
 
@@ -665,25 +739,32 @@ matcher påverkas inte) och avbryt. Papperskorgen sitter bredvid två knappar ma
 trycker ofta, och borttagningen gick förut igenom direkt.
 **Fil:** `src/routes/friends.tsx`.
 
-### 28. Versionsnumret på Om-sidan ⚠️ delvis — kräver ett beslut
+### 28. Versionsnumret på Om-sidan ✅
 
-**Vad jag hittade.** Det finns **inget mjukvaruversionsnummer** någonstans på
-sajten. Den enda "1,9" på `/om` är meningen *"Jag heter Niklas och fick 1,9 på
-Högskoleprovet"* — alltså ditt provresultat, inte en version.
+**Vad jag hittade.** Det fanns **inget mjukvaruversionsnummer** någonstans på
+sajten. Den enda "1,9" på `/om` var meningen *"Jag heter Niklas och fick 1,9 på
+Högskoleprovet"* — ditt provresultat, inte en version. Coachningstexterna sa
+samtidigt "1,95 eller högre".
 
-**Vad jag gjorde.** Byggde det du bad om: `version` i `package.json`,
-`src/lib/app-version.ts` som läser den, och en diskret rad längst ned på `/om`.
-Satte **2.0.0**, med motiveringen att namnbytet till Tvåkommanollan och den ljusa
-Lunden-temat är en majorändring. Ändra i `package.json` om du vill ha en annan.
+**Vad jag ändrade.** Båda sakerna:
 
-**Vad jag INTE gjorde, och som du behöver ta ställning till.** `/om` säger att du
-fick **1,9**. Coachningskortet, modalen, nudgen och villkoren säger alla
-"**1,95 eller högre**". En av dem är fel, och det är samma sajt som säger båda.
-Jag rör inte en siffra om ditt eget provresultat utan att du säger till — att
-skriva upp den vore värre än att skriva ner den. Säg vilken som stämmer så
-rättar jag den andra.
+1. **Versionen finns nu**, läst ur `package.json` (`src/lib/app-version.ts`) och
+   utskriven längst ned på `/om`. Satt till **2.0.0** — namnbytet till
+   Tvåkommanollan och den ljusa Lunden-temat är en majorändring. Ändra i
+   `package.json` om du vill ha en annan.
+2. **1,9 → 1,95** på alla fem ställen det stod: brödtexten på `/om`, sidans två
+   metabeskrivningar, `Person`-schemat i JSON-LD och FAQ-svaret. Gustavs "1,9"
+   i omdömena på landningssidan är någon annans resultat och står kvar.
 
-**Filer.** `package.json`, `src/lib/app-version.ts` (ny), `src/routes/om.tsx`.
+**Bonusfynd i samma svep.** Tre ställen påstod att coachningen är **gratis** —
+inklusive `FAQPage`-schemat, alltså strukturerad data som Google läser:
+*"Du kan även få en gratis 30-min coachning"* och *"Gratis coachning av
+1.9+-spelare"*. Produkten kostar 350 kr. Ett felaktigt prisuppgift i JSON-LD är
+värre än på sidan, eftersom den kan hamna i sökresultatet. Alla tre omskrivna
+till att träningen är gratis och att coachning är den enda betaltjänsten.
+
+**Filer.** `package.json`, `src/lib/app-version.ts` (ny), `src/routes/om.tsx`,
+`src/routes/faq.tsx`, `src/routes/__root.tsx`.
 
 ### 29. Städning av de små sidorna ✅
 
@@ -818,7 +899,7 @@ Kört efter varje punkt, och en gång till på slutet, i CLAUDE.md:s ordning:
 | --- | --- |
 | `npx tsc --noEmit` | rent |
 | `npx eslint <ändrade filer>` | 0 fel |
-| `npm run test` | **415 tester** i 39 filer (från 325 i 29) |
+| `npm run test` | **430 tester** i 41 filer (från 325 i 29) |
 | `npm run build` | grönt, byggt på ~15 s |
 | SSR-rök: 16 routes | alla 200 |
 | SSR-rök: ogiltiga slugs | `/finns-inte`, `/gamla-prov/1999xx`, `/gamla-prov/2025ht/9` → alla 404 |
@@ -828,9 +909,9 @@ Kört efter varje punkt, och en gång till på slutet, i CLAUDE.md:s ordning:
 `npx eslint src` över hela trädet kör jag inte: ~900 pre-existerande
 `prettier/prettier`-fel i filer ingen rört, precis som CLAUDE.md beskriver.
 
-**Nya tester (90 stycken):** `match-outcome`, `streak-dates`, `email-templates`,
-`word-of-the-day`, `math-question`, `csv`, `elo-series`, `schema-tolerant`, plus
-utökade `normering` och ändrade `prov-results`.
+**Nya tester (105 stycken):** `match-outcome`, `streak-dates`, `email-templates`,
+`word-of-the-day`, `math-question`, `csv`, `elo-series`, `schema-tolerant`,
+`option-crop`, plus utökade `normering` och ändrade `prov-results`.
 
 ---
 
@@ -848,8 +929,10 @@ utskrivna nedan (15 och 28).
    saknas tills de är det.
 2. **Stäng av "Confirm email"** i Supabase (punkt 2). Utan den slutförs inte
    registreringen direkt, vilket var hela poängen med punkten.
-3. **Sätt `RESEND_API_KEY`** som Cloudflare-Secret och **verifiera domänen i
-   Resend**. Utan den skickas inga mejl — allt loggas och släpps.
+3. **När du skapar Resend-kontot:** sätt `RESEND_API_KEY` som Cloudflare-Secret,
+   verifiera domänen, och slå sedan på `forum_kraver_verifierad_epost` i
+   `app_config`. Inget brådskar — utan nyckeln loggas mejlen och släpps, och
+   inget flöde går sönder.
 4. **Lägg SPF på `tvakommanollan.se`** (punkt 19). Den saknas **idag**, trots
    `_dmarc p=reject`, och det gäller oberoende av det här passet: utgående mejl
    riskerar att avvisas redan nu.
@@ -859,18 +942,11 @@ utskrivna nedan (15 och 28).
 
 ### Kräver ett beslut från dig
 
-1. **1,9 eller 1,95?** `/om` säger att du fick 1,9 på högskoleprovet.
-   Coachningskortet, modalen, nudgen och villkoren säger "1,95 eller högre". Jag
-   rörde ingen av dem. Säg vilken som stämmer.
-2. **Ska jag köra `gen:math-explanations`?** Den kostar pengar per uppgift och
-   behöver `ANTHROPIC_API_KEY`. Cirka 504 mattefrågor och alla verbala går att
-   generera; de 2 260 bildutsnitten kräver att bilden skickas med, vilket är ett
-   eget jobb.
-3. **Appversionen är satt till 2.0.0** som ett antagande. Ändra i `package.json`
+1. **Appversionen är satt till 2.0.0** som ett antagande. Ändra i `package.json`
    om du vill ha något annat.
-4. **Navbarens ELO-bricka** visar fortfarande högsta av verbal och matte. Punkt
+2. **Navbarens ELO-bricka** visar fortfarande högsta av verbal och matte. Punkt
    8 och 9 gällde hemskärmen; säg till om du vill ha samma ändring där.
-5. **Fyra provtillfällen saknar officiell normering** (2019ht, 2023ht, 2024ht,
+3. **Fyra provtillfällen saknar officiell normering** (2019ht, 2023ht, 2024ht,
    2025vt saknar en provdel var). De faller tillbaka på approximationen och
    märks ut som uppskattning. Hittar du tabellerna någon annanstans lägger jag
    in dem — kör annars `python3 scripts/hp-import/normering.py` igen om ett tag,

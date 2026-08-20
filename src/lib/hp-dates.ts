@@ -100,8 +100,7 @@ export function stockholmOffset(isoDate: string): "+01:00" | "+02:00" {
   // Mät mitt på dagen: bytet sker nattetid, så middag kan aldrig hamna i
   // den timme som är tvetydig.
   const noonUtc = Date.UTC(y, m - 1, d, 12);
-  const summer =
-    noonUtc >= lastSundayAt01Utc(y, 2) && noonUtc < lastSundayAt01Utc(y, 9);
+  const summer = noonUtc >= lastSundayAt01Utc(y, 2) && noonUtc < lastSundayAt01Utc(y, 9);
   return summer ? "+02:00" : "+01:00";
 }
 
@@ -127,6 +126,42 @@ export function hpDateLong(isoDate: string): string {
     year: "numeric",
     timeZone: "UTC",
   });
+}
+
+/** "18 oktober 2026" — samma UTC-låsning som `hpDateLong`, utan veckodag. */
+export function hpDateShort(isoDate: string): string {
+  return formatDate(new Date(`${isoDate}T12:00:00Z`), {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/**
+ * Svaret på "När är nästa högskoleprov?", byggt ur listan.
+ *
+ * Samma mening stod handskriven på tre ställen — FAQ-sidan, FAQPage-datan i
+ * `__root.tsx` och `public/llms.txt` — och alla tre bar kvar de gamla, felaktiga
+ * datumen och hänvisade dessutom till antagning.se. Två av dem är
+ * strukturerad data, alltså text Google kan visa som ett svar.
+ *
+ * `llms.txt` är en statisk fil och måste fortfarande rättas för hand.
+ */
+export function hpDatesAnswer(): string {
+  const parts = HP_DATES.map(
+    (d) => `${hpDateShort(d.date)} (${d.session === "höst" ? "höstprovet" : "vårprovet"})`,
+  );
+  const list =
+    parts.length > 1
+      ? `${parts.slice(0, -1).join(", ")} och ${parts[parts.length - 1]}`
+      : (parts[0] ?? "");
+  return (
+    "Högskoleprovet ges två gånger per år: vårprovet på en lördag i april och " +
+    `höstprovet på en söndag i oktober. Kommande datum: ${list}. Anmälan görs på ` +
+    `hogskoleprov.nu under en kort period ett par månader före provdagen och ` +
+    `provavgiften är ${HP_FEE_SEK} kronor.`
+  );
 }
 
 /**

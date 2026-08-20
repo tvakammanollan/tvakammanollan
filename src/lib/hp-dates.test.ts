@@ -4,7 +4,9 @@ import {
   HP_DAY_START,
   getNextHpDate,
   hpDateLong,
+  hpDateShort,
   hpDateTime,
+  hpDatesAnswer,
   stockholmOffset,
 } from "./hp-dates";
 
@@ -74,5 +76,24 @@ describe("getNextHpDate", () => {
 
   it("null när alla prov passerat", () => {
     expect(getNextHpDate(new Date("2030-01-01T00:00:00Z"))).toBeNull();
+  });
+});
+
+describe("hpDatesAnswer", () => {
+  const svar = hpDatesAnswer();
+
+  it("räknar upp varje provdatum ur listan", () => {
+    for (const d of HP_DATES) {
+      expect(svar).toContain(hpDateShort(d.date));
+    }
+  });
+
+  it("hänvisar till hogskoleprov.nu och inte till antagning.se", () => {
+    expect(svar).toContain("hogskoleprov.nu");
+    expect(svar).not.toContain("antagning.se");
+  });
+
+  it("nämner provavgiften", () => {
+    expect(svar).toContain("550 kronor");
   });
 });

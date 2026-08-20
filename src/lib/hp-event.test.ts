@@ -33,9 +33,7 @@ describe("hpEventJsonLd — de fyra fält Search Console saknade 2026-08-20", ()
 
   it("endDate ligger samma dag som startDate, men senare", () => {
     expect(e.endDate).toBe("2026-10-18T17:00:00+02:00");
-    expect(Date.parse(e.endDate as string)).toBeGreaterThan(
-      Date.parse(e.startDate as string),
-    );
+    expect(Date.parse(e.endDate as string)).toBeGreaterThan(Date.parse(e.startDate as string));
   });
 
   it("image är tre absoluta URL:er i olika bildformat", () => {

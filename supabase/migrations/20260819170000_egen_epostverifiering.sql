@@ -114,6 +114,38 @@ REVOKE UPDATE (email_verified_at) ON public.users FROM anon, authenticated;
 
 -- ============== FORUMETS GRIND LÄSER DEN EGNA FLAGGAN ==============
 
+-- ============== GRINDEN ÄR AVSTÄNGD TILLS MEJLEN KAN SKICKAS ==============
+-- Verifieringen kräver att ett mejl faktiskt går iväg (Resend). Är det inte
+-- uppsatt kan INGEN sätta sin email_verified_at, och en grind på den flaggan
+-- hade då låst forumet för alla nya konton — permanent och utan att något
+-- felmeddelande pekar ut varför.
+--
+-- Flaggan ligger i app_config och inte i koden, så den kan slås på i samma
+-- stund mejlen börjar fungera, utan deploy:
+--
+--   UPDATE public.app_config SET value = 'true'::jsonb
+--    WHERE key = 'forum_kraver_verifierad_epost';
+--
+-- SLÅ PÅ DEN så fort Resend är konfigurerat. Tills dess står forumets övriga
+-- lager kvar (inget gästkonto, tio minuters ålder, valt användarnamn, ingen
+-- avstängning, och kvoterna som räknas i RPC:erna) — men ett lager saknas.
+INSERT INTO public.app_config (key, value, description)
+VALUES (
+  'forum_kraver_verifierad_epost',
+  'false'::jsonb,
+  'Kräver bekräftad e-postadress för att skriva i forumet. Måste vara false tills utgående e-post (Resend) är uppsatt — annars kan ingen verifiera sig och forumet låses för alla nya konton.'
+)
+ON CONFLICT (key) DO NOTHING;
+
+CREATE OR REPLACE FUNCTION public.forum_kraver_verifierad_epost()
+RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path = public AS $$
+  -- Saknas raden helt är svaret false: ett bortglömt konfigvärde ska öppna
+  -- forumet, inte låsa det.
+  SELECT COALESCE((SELECT value::text = 'true' FROM public.app_config
+                    WHERE key = 'forum_kraver_verifierad_epost'), false);
+$$;
+
 CREATE OR REPLACE FUNCTION public.forum_can_post(_uid uuid)
 RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER
 SET search_path = public, auth AS $$
@@ -122,7 +154,8 @@ SET search_path = public, auth AS $$
     JOIN public.users u ON u.id = au.id
     WHERE au.id = _uid
       AND COALESCE(au.is_anonymous, false) = false        -- inga gästkonton
-      AND u.email_verified_at IS NOT NULL                 -- bevisad adress
+      AND (u.email_verified_at IS NOT NULL
+           OR NOT public.forum_kraver_verifierad_epost()) -- bevisad adress
       AND au.created_at < now() - interval '10 minutes'   -- ingen engångsspam
       AND length(btrim(u.username)) > 0
       AND COALESCE(u.forum_banned_until, '-infinity'::timestamptz) < now()
@@ -148,7 +181,9 @@ BEGIN
 
   IF NOT FOUND THEN RETURN 'konto'; END IF;
   IF _anon THEN RETURN 'gast'; END IF;
-  IF _conf IS NULL THEN RETURN 'ej_bekraftad'; END IF;
+  IF _conf IS NULL AND public.forum_kraver_verifierad_epost() THEN
+    RETURN 'ej_bekraftad';
+  END IF;
   IF _created >= now() - interval '10 minutes' THEN RETURN 'for_nytt'; END IF;
   IF _name IS NULL OR _name = '' THEN RETURN 'anvandarnamn'; END IF;
   IF _ban IS NOT NULL AND _ban >= now() THEN RETURN 'avstangd'; END IF;

@@ -27,7 +27,7 @@ import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
-import { isImageQuestion } from "@/lib/math-question";
+import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -948,7 +948,7 @@ function QuestionCard({
             src={currentQ.image_url}
             alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
             decoding="async"
-            className="w-full object-contain"
+            className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
           />
         </div>
       )}
@@ -977,9 +977,9 @@ function QuestionCard({
               >
                 {letter}
               </span>
-              {/* Alternativtexten på en bilduppgift är bara sin egen bokstav
-                  — den står redan i brickan till vänster. */}
-              {!bildUppgift && (
+              {/* En alternativtext som bara är sin egen bokstav skrivs inte
+                  ut — den står redan i brickan till vänster. */}
+              {optionHasOwnText(opt, i) && (
                 <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
                   {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
                 </span>

@@ -25,6 +25,7 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import { CoachingPrompt } from "@/components/CoachingPrompt";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
 import { Analytics } from "@/components/Analytics";
+import { hpDatesAnswer } from "@/lib/hp-dates";
 
 installSupabaseFetchAuth();
 
@@ -238,7 +239,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "Övningsmatcher utan tidsbegränsning",
             "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
             "10 000+ HP-ord i databasen",
-            "Gratis coachning av 1.9+-spelare",
+            "Personlig coachning av en 1,95-spelare",
           ],
           publisher: { "@id": "https://tvakommanollan.se/#org" },
           creator: { "@id": "https://tvakommanollan.se/#niklas" },
@@ -286,7 +287,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Niklas",
           jobTitle: "Grundare",
           worksFor: { "@id": "https://tvakommanollan.se/#org" },
-          description: "Grundare av Tvåkommanollan. Fick 1,9 på Högskoleprovet.",
+          description: "Grundare av Tvåkommanollan. Fick 1,95 på Högskoleprovet.",
         }),
       },
       // Schema.org FAQPage — Google rich results
@@ -309,7 +310,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "Kostar Tvåkommanollan något?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Nej, Tvåkommanollan är helt gratis. Inga annonser, inget kreditkort, inga in-app-köp. Du kan även få en gratis 30-min coachning från en spelare som fått 1,9+ på HP.",
+                text: "All träning är gratis: inga annonser, inget kreditkort, ingen betalspärr. Det enda som kostar är personlig coachning — ett studieupplägg byggt av någon som själv fått 1,95 på provet — och den är helt frivillig.",
               },
             },
             {
@@ -349,7 +350,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               name: "När är nästa Högskoleprovet?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Högskoleprovet ges normalt två gånger per år: en gång i mars/april och en gång i oktober. Kommande datum 2026–2027: 24 oktober 2026, 27 mars 2027, 23 oktober 2027. Anmälan öppnar ungefär tre månader innan via antagning.se.",
+                text: hpDatesAnswer(),
               },
             },
             {

@@ -29,11 +29,17 @@ export interface PageMetaInput {
   /**
    * Optional per-page OG/Twitter image override. Defaults to /og-image-4.png
    * set in __root.tsx. Pass a relative path like "/og-faq.png" or an
-   * absolute URL. Always include width/height for proper rich preview
-   * rendering on Slack, Twitter, LinkedIn, Discord.
+   * absolute URL.
+   *
+   * **Skicka alltid `ogImageWidth`/`ogImageHeight` med.** Roten sätter
+   * `og:image:width`/`height` till 1200x630 för delningsbilden, och en
+   * sidbild med andra mått ärvde dem tyst: Slack, LinkedIn och Discord
+   * litar på måtten och ritade rutan i fel proportion.
    */
   ogImage?: string;
   ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   noindex?: boolean;
 }
 
@@ -55,6 +61,10 @@ export function pageMeta(input: PageMetaInput) {
     const imageUrl = input.ogImage.startsWith("http") ? input.ogImage : ORIGIN + input.ogImage;
     meta.push({ property: "og:image", content: imageUrl });
     meta.push({ name: "twitter:image", content: imageUrl });
+    if (input.ogImageWidth && input.ogImageHeight) {
+      meta.push({ property: "og:image:width", content: String(input.ogImageWidth) });
+      meta.push({ property: "og:image:height", content: String(input.ogImageHeight) });
+    }
     if (input.ogImageAlt) {
       meta.push({ property: "og:image:alt", content: input.ogImageAlt });
     }

@@ -990,6 +990,55 @@ head: () => ({
 
 Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured data.
 
+### Provdatum och Event-data (2026-08-20)
+
+Search Console rapporterade fyra "mindre allvarliga" Event-varningar på
+`/hogskoleprovet-datum` — `image`, `offers`, `endDate` och `performer`
+saknades. Alla fyra är rekommenderade fält i Googles Event-dokumentation och
+är nu satta. Under fixen visade det sig att **alla tre provdatum var fel**,
+vilket är den allvarligare halvan av det som rättades.
+
+- **`HP_DATES` i `src/lib/hp-dates.ts` är enda källan** och matas rakt in i
+  Event-datan, alltså i det Google kan visa som provdatum. **Lägg aldrig in
+  ett gissat datum.** Kontrollera mot uhr.se:s kalender, studera.nu *och*
+  hogskoleprov.nu — alla tre ska säga samma sak.
+- **Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober**
+  (söndag sedan 2022). Listan hade lördagsdatum för båda och låg 6 dagar fel
+  på höstprovet 2026. Testet i `hp-dates.test.ts` pinnar veckodagen per
+  årstid — det hade fångat felet.
+- **Anmälan görs på `hogskoleprov.nu`, inte antagning.se.** Antagning.se är
+  ansökan till utbildningar. Sidan, FAQ:n och `llms.txt` hänvisade alla fel.
+- **Anmälningsperioden är en dryg vecka**, ett par månader före provdagen
+  (11–18 aug 2026, 7–14 jan 2027), inte "tre månader innan" som texten sa.
+  Provavgiften är 550 kr, `HP_FEE_SEK`.
+- **Ett provtillfälle utan publicerad anmälningsperiod får ingen Event-data.**
+  `hasRegistrationWindow` sållar. Google vill ha `validFrom` på `offers`, och
+  ett halvt `offers` ger tillbaka exakt den varning fältet finns för att ta
+  bort. Datumet får däremot gärna stå i den synliga listan.
+- **`stockholmOffset()` räknar ut +01:00/+02:00, det får inte hårdkodas.**
+  Höstprovet 2025 låg den 26 oktober, dagen efter sommartidsbytet — med det
+  gamla hårdkodade `+02:00` hade nedräkningen legat en timme fel.
+- **Datumtexter låses till UTC** (`hpDateLong`, `hpDateShort`,
+  `registrationPeriodText`). Servern renderar i UTC och webbläsaren i sin
+  egen zon; utan låsningen blir det en hydreringsmiss för alla öster om
+  Sverige. `timeZone: "Europe/Stockholm"` löser det bara om runtime har full
+  ICU, vilket inte är något att förlita sig på i en Worker.
+- **`performer` är UHR.** Fältet är skrivet för konserter, men schema.org
+  tillåter Organization och UHR är det enda ärliga svaret på "vem utför
+  det här". `availability: SoldOut` betyder "anmälan är stängd" — av Googles
+  tre värden är det enda som säger att man inte kan anmäla sig nu.
+- **Samma mening stod handskriven på tre ställen** (FAQ-sidan, FAQPage-datan
+  i `__root.tsx`, `llms.txt`) och alla tre bar kvar de gamla datumen. De två
+  första kommer nu ur `hpDatesAnswer()`. **`llms.txt` är statisk och måste
+  rättas för hand** när listan ändras.
+- **Bilderna ritas av `scripts/build-event-image.py`** (tre bildformat,
+  1200 px breda) och är medvetet datumlösa — en bild med "18 oktober 2026"
+  tryckt i sig blir fel dagen efter provet, och Google cachar bilder länge.
+  Gemensamma byggstenar för den och delningsbilden ligger i
+  `scripts/brand_image.py`.
+- Efter en ändring: **validera på <https://search.google.com/test/rich-results>**
+  innan push, och begär omvalidering i Search Console efteråt.
+
 ### Märket, delningsbilden och omdömena (2026-08-18)
 
 - **Märket är talet 2,0**, inte "HP" i en ruta. Det sitter i navbaren, i
