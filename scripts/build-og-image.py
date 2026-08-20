@@ -25,107 +25,36 @@ ligger därför innanför den centrerade kvadraten (x 285-915).
 from __future__ import annotations
 
 import argparse
-import subprocess
-import sys
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parent.parent
-
-# Paletten från src/styles.css (Lunden-temat, alltid ljust).
-PAPER = (251, 246, 236)  # --navy   "underlaget"
-INK = (46, 30, 20)  # --cream  "texten"
-APPLE = (174, 47, 38)  # --amber  handling
-BARK = (122, 82, 54)  # --teal   struktur
-LEAF = (47, 107, 60)  # --success framsteg
+from brand_image import (
+    APPLE,
+    BARK,
+    INK,
+    LEAF,
+    PAPER,
+    ROOT,
+    SS,
+    draw_badge,
+    draw_centered,
+    fit,
+    ink_box,
+    load,
+    measure,
+)
 
 W, H = 1200, 630
 # Den centrerade kvadraten som kvadratiska förhandsvisningar beskär till.
 SQUARE_SAFE = 620
 FOOTER = "Gratis  ·  inga annonser  ·  tvakommanollan.se"
-SS = 2  # supersampling — ritas i 2x och skalas ned, annars fransar texten
-
-# Typsnitten ligger inte i public/fonts (borttagna i revert 98d852a), men finns
-# kvar i historiken. Hämta dem därifrån om de saknas i arbetsträdet.
-FONT_COMMIT = "189d203"
-FONT_CACHE = ROOT / ".og-cache"
-FONTS = {
-    "serif": "YoungSerif-Regular.ttf",
-    "sans": "InstrumentSans-Regular.ttf",
-    "sans_bold": "InstrumentSans-Bold.ttf",
-}
-
-
-def font_path(name: str) -> Path:
-    """Typsnittsfilen ur public/fonts, annars ur git-historiken."""
-    live = ROOT / "public" / "fonts" / name
-    if live.exists():
-        return live
-    cached = FONT_CACHE / name
-    if not cached.exists():
-        FONT_CACHE.mkdir(exist_ok=True)
-        try:
-            blob = subprocess.run(
-                ["git", "show", f"{FONT_COMMIT}:public/fonts/{name}"],
-                cwd=ROOT,
-                check=True,
-                capture_output=True,
-            ).stdout
-        except subprocess.CalledProcessError:
-            sys.exit(f"Hittar inte {name} — varken i public/fonts/ eller i {FONT_COMMIT}.")
-        cached.write_bytes(blob)
-    return cached
-
-
-def load(kind: str, size: int) -> ImageFont.FreeTypeFont:
-    return ImageFont.truetype(str(font_path(FONTS[kind])), size * SS)
-
-
-def fit(loader, kind, size: int, text: str, max_w: int) -> ImageFont.FreeTypeFont:
-    """Största gradtal <= size där texten ryms i max_w."""
-    probe = Image.new("RGB", (1, 1))
-    d = ImageDraw.Draw(probe)
-    while size > 8:
-        font = loader(kind, size)
-        x0, _, x1, _ = d.textbbox((0, 0), text, font=font)
-        if x1 - x0 <= max_w:
-            return font
-        size -= 1
-    return loader(kind, size)
-
-
-def ink_box(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont):
-    """Textens faktiska bläckyta, inte fontens radmått.
-
-    Centrering på radmåtten ser skev ut: 'Tvåkommanollan' har ringen över å
-    men inget som går under baslinjen, så fontens box har luft i underkant
-    som bläcket inte fyller.
-    """
-    return draw.textbbox((0, 0), text, font=font)
-
-
-def draw_centered(draw, text, font, fill, cx: int, top: int) -> int:
-    """Ritar texten optiskt centrerad kring cx med bläckets överkant på top.
-
-    Returnerar bläckets underkant, så anroparen kan stapla med sanna mellanrum
-    i stället för mellanrum som beror på fontens radhöjd.
-    """
-    x0, y0, x1, y1 = ink_box(draw, text, font)
-    draw.text((cx - (x0 + x1) / 2, top - y0), text, font=font, fill=fill)
-    return top + (y1 - y0)
-
-
-def measure(draw, text, font) -> tuple[int, int]:
-    x0, y0, x1, y1 = ink_box(draw, text, font)
-    return x1 - x0, y1 - y0
 
 
 def build(out: Path) -> None:
     img = Image.new("RGB", (W * SS, H * SS), PAPER)
     d = ImageDraw.Draw(img)
 
-    f_badge = load("serif", 52)
     # Ordmärket skalas ned tills bläcket ryms i den centrerade kvadraten.
     # WhatsApp och iMessage beskär 1200x630 till en kvadrat mitt i bilden
     # (x 285-915); ett ordmärke som är bredare får T och n avhuggna där.
@@ -189,23 +118,7 @@ def build(out: Path) -> None:
     y = (H * SS - total) // 2
 
     # --- märket: samma rundade kvadrat som faviconen och navbaren ---------
-    bs = BADGE * SS
-    bx = cx - bs // 2
-    d.rounded_rectangle(
-        [bx, y, bx + bs, y + bs],
-        radius=int(bs * 7 / 32),  # samma förhållande som favicon.svg
-        fill=APPLE,
-    )
-    # "2,0" optiskt centrerat i rutan — inte på fontens box, kommat hänger
-    # under baslinjen och drar annars talet uppåt.
-    x0, y0, x1, y1 = ink_box(d, "2,0", f_badge)
-    d.text(
-        (cx - (x0 + x1) / 2, y + bs / 2 - (y0 + y1) / 2),
-        "2,0",
-        font=f_badge,
-        fill=PAPER,
-    )
-    y += bs + GAP_BADGE * SS
+    y = draw_badge(d, cx, y, BADGE) + GAP_BADGE * SS
 
     # --- ordmärket --------------------------------------------------------
     y = draw_centered(d, "Tvåkommanollan", f_word, INK, cx, y) + GAP_WORD * SS
