@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ProvRunner } from "@/components/prov/ProvRunner";
 import { findExam, loadPass } from "@/lib/prov-data";
 import { formatInt } from "@/lib/sv-format";
@@ -29,11 +30,25 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
     return {
       meta: pageMeta({
         path,
-        title: `${data.label} provpass ${data.pass} (${delprov}) med facit · Tvåkommanollan`,
-        description:
-          `Skriv provpass ${data.pass} från högskoleprovet ${data.label}: ` +
-          `${formatInt(data.questions.length)} uppgifter i ${delprov} på ${data.minutes} minuter, ` +
-          `med facit och automatisk rättning. Gratis och utan inloggning.`,
+        // Titeln var 83 tecken och kapades i träfflistan. Varumärket är den
+        // svans som tål att falla bort — Google skriver ofta dit sajtnamnet
+        // ändå, härlett ur og:site_name.
+        title: fitTitle(
+          `${data.label} provpass ${data.pass} – ${delprov}`,
+          "med facit",
+          "· Tvåkommanollan",
+        ),
+        // Två meningar, inte en: `data.label` bär redan ordet provet ("Skriv
+        // provpass 1 från högskoleprovet Höstprovet 2025" stammade), och en
+        // enda lång mening kan bara kapas mitt i — den andra meningen kan
+        // falla bort hel när terminsnamnet är långt ("Vårprovet 2021
+        // (13 mars)"), vilket är vad describeWithin gör.
+        description: describeWithin(
+          `Skriv provpass ${data.pass} från ${data.label} på originaltid: ` +
+            `${formatInt(data.questions.length)} uppgifter i ${delprov} på ${data.minutes} minuter. ` +
+            `Facit och automatisk rättning direkt.`,
+          "Gratis och utan inloggning.",
+        ),
         ogTitle: `${data.label} · provpass ${data.pass}`,
         ogDescription: `${formatInt(data.questions.length)} uppgifter i ${delprov} med facit.`,
       }),

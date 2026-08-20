@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaEntry } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
@@ -50,7 +51,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
     return {
       meta: pageMeta({
         path,
-        title: `${word} – vad betyder det? · Ordlista · Tvåkommanollan`,
+        title: fitTitle(`${word} – vad betyder det?`, "· Ordlista", "· Tvåkommanollan"),
         description:
           `${word}${wordClass ? ` (${wordClass})` : ""}: ${short} ` +
           `${synonyms.length ? `Liknande ord: ${synonyms.join(", ")}. ` : ""}` +

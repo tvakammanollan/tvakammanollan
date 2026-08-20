@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { HpCountdown } from "@/components/ui/HpCountdown";
-import { HP_DATES, HP_FEE_SEK, HP_REGISTRATION_URL, hpDateLong } from "@/lib/hp-dates";
+import { HP_DATES, HP_FEE_SEK, HP_REGISTRATION_URL, hpDateLong, hpDateShort } from "@/lib/hp-dates";
 import {
   HP_EVENT_IMAGES,
   hasRegistrationWindow,
@@ -35,9 +36,16 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: "Högskoleprovet datum 2026 & 2027 – när är nästa prov? · Tvåkommanollan",
-      description:
-        "Alla kommande datum för högskoleprovet (HP): höstprovet 18 oktober 2026 och vårprovet 10 april 2027. Nedräkning, anmälningsperiod, provavgift och schema för provdagen.",
+      title: fitTitle("Högskoleprovet datum 2026 & 2027 – när är nästa prov?", "· Tvåkommanollan"),
+      // Datumen stod handskrivna här och skulle bli fel dagen HP_DATES ändras
+      // — samma fel som redan städats bort ur FAQ:n och FAQPage-datan. De
+      // härleds nu ur listan, och beskrivningen kortas till det Google visar.
+      description: describeWithin(
+        `Alla kommande datum för högskoleprovet: ${HP_DATES.map(
+          (d) => `${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)}`,
+        ).join(" och ")}.`,
+        "Nedräkning, anmälningsperiod och provavgift.",
+      ),
       ogTitle: "Högskoleprovet datum – när är nästa prov?",
       ogDescription:
         "Kommande HP-datum, nedräkning och anmälningsinfo. Öva gratis på Tvåkommanollan.",

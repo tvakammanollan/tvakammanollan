@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ordText } from "@/lib/sv-format";
 import { provExamples } from "@/lib/prov-data";
 import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
@@ -112,8 +113,10 @@ export const Route = createFileRoute("/ova/$delprov")({
     return {
       meta: pageMeta({
         path,
-        title: `Öva ${cfg.code} (${cfg.name}) gratis – frågor med facit · Tvåkommanollan`,
-        description: `${cfg.intro.slice(0, 150)} Gratis och utan inloggning.`,
+        // slice(0, 150) kapade mitt i ett ord: Google visade "Öva på riktiga
+        // DTK-uppg Gratis och utan inloggning." på alla åtta sidorna.
+        title: fitTitle(`Öva ${cfg.code} (${cfg.name}) – frågor med facit`, "· Tvåkommanollan"),
+        description: describeWithin(cfg.intro, "Gratis och utan inloggning."),
         ogTitle: `Öva ${cfg.code} – ${cfg.name}`,
         ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,
       }),

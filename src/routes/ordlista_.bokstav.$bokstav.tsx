@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaLetter } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
     return {
       meta: pageMeta({
         path,
-        title: `Ord på ${label} – ordlista för högskoleprovet · Tvåkommanollan`,
+        title: fitTitle(`Ord på ${label} – ordlista för högskoleprovet`, "· Tvåkommanollan"),
         description:
           `${formatInt(count)} ord på ${label} från ORD-delprovet, med betydelse och den uppgift de kom ur. ` +
           `Bland dem: ${sample}.`,

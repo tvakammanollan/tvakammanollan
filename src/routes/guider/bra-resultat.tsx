@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/bra-resultat")({
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/bra-resultat",
-      title: "Hur får man bra resultat på HP? · Komplett guide · Tvåkommanollan",
+      title: fitTitle("Hur får man bra resultat på HP? · Komplett guide", "· Tvåkommanollan"),
       description:
         "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat. Från 1.0 till 2.0 med rätt strategi.",
       ogTitle: "Bra resultat på HP · Tvåkommanollan",

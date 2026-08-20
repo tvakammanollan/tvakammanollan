@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaOverview } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
@@ -21,7 +22,10 @@ export const Route = createFileRoute("/ordlista")({
     return {
       meta: pageMeta({
         path: "/ordlista",
-        title: "Ordlista för högskoleprovet – alla ORD-ord med förklaring · Tvåkommanollan",
+        title: fitTitle(
+          "Ordlista för högskoleprovet – alla ord med förklaring",
+          "· Tvåkommanollan",
+        ),
         description:
           `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
           `exempelmening, liknande ord och uppgiften ordet kom ur. Sök på bokstav och plugga gratis.`,

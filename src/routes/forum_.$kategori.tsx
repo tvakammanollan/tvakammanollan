@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { z } from "zod";
 import { MessageSquare, Plus } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ThreadListItem } from "@/components/forum/ThreadListItem";
 import { ForumPagination } from "@/components/forum/ForumPagination";
 import { EmptyState } from "@/components/EmptyState";
@@ -39,10 +40,13 @@ export const Route = createFileRoute("/forum_/$kategori")({
     return {
       meta: pageMeta({
         path,
-        title: `${category.name} · forum om högskoleprovet${suffix} · Tvåkommanollan`,
-        description:
-          `${category.description} ${antal(total, "tråd", "trådar")}. Ställ din fråga eller läs vad andra ` +
-          `som pluggar inför högskoleprovet har frågat.`,
+        title: fitTitle(`${category.name} · forum om högskoleprovet${suffix}`, "· Tvåkommanollan"),
+        // Kategoribeskrivningen är olika lång per kategori och sprack på de
+        // längsta — därför en budget i stället för en fast mening.
+        description: describeWithin(
+          `${category.description} ${antal(total, "tråd", "trådar")}.`,
+          "Ställ din fråga eller läs vad andra som pluggar frågat.",
+        ),
         ogTitle: `${category.name} · Tvåkommanollans forum`,
         ogDescription: category.description,
         // En kategori utan trådar är en rubrik och en mening — tunt innehåll,

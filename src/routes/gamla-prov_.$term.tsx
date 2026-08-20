@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { PassScoreBadge, ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
@@ -36,7 +37,9 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
     return {
       meta: pageMeta({
         path,
-        title: `Högskoleprovet ${exam.label} – alla provpass med facit · Tvåkommanollan`,
+        // Stod som "Högskoleprovet Höstprovet 2025 – …" på alla 30 sidorna:
+        // `label` bär redan ordet provet, så prefixet stammade.
+        title: fitTitle(`${exam.label} – alla provpass med facit`, "· Tvåkommanollan"),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,

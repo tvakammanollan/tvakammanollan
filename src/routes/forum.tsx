@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
 import { ThreadListItem } from "@/components/forum/ThreadListItem";
 import { fetchForumHome } from "@/lib/forum.functions";
@@ -31,9 +32,9 @@ export const Route = createFileRoute("/forum")({
     return {
       meta: pageMeta({
         path: "/forum",
-        title: "Forum om högskoleprovet · frågor, svar och plugg · Tvåkommanollan",
+        title: fitTitle("Forum om högskoleprovet · frågor och svar", "· Tvåkommanollan"),
         description:
-          "Ställ frågor om högskoleprovet och få svar av andra som pluggar. Diskutera KVA, XYZ, NOG, DTK, ORD och läsförståelse, anmälan, normering och resultat. Gratis och öppet att läsa.",
+          "Ställ frågor om högskoleprovet och få svar av andra som pluggar: uppgifter i KVA, XYZ, NOG och DTK, anmälan, normering och resultat. Gratis att läsa.",
         ogTitle: "Forum om högskoleprovet · Tvåkommanollan",
         ogDescription:
           "Frågor och svar om högskoleprovet: uppgifter, plugg, anmälan och normering.",

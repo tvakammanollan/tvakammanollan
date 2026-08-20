@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { normeringFromRaw } from "@/lib/normering";
 import { hpScoreLabel } from "@/lib/hpScore";
 import { formatDecimal } from "@/lib/sv-format";
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poangraknare",
-      title: "Högskoleprovet poängräknare – räkna ut din normerade poäng · Tvåkommanollan",
+      title: fitTitle("Högskoleprovet poängräknare – räkna ut din poäng", "· Tvåkommanollan"),
       description:
         "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
       ogTitle: "Högskoleprovet poängräknare",

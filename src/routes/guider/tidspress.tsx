@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/tidspress")({
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/guider/tidspress")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/tidspress",
-      title: "Tidspress på Högskoleprovet · strategi för varje delprov · Tvåkommanollan",
+      title: fitTitle("Tidspress på HP · strategi för varje delprov", "· Tvåkommanollan"),
       description:
         "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
       ogTitle: "Tidspress på HP · Tvåkommanollan",

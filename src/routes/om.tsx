@@ -12,7 +12,7 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om Tvåkommanollan · varför sajten finns",
       description:
-        "Tvåkommanollan är Sveriges enda gratis ELO-rankade högskoleprovsplattform. Läs om grundaren Niklas (1,95 på HP), varför sajten är gratis och vad vi tror på.",
+        "Sveriges enda gratis ELO-rankade plattform för högskoleprovet. Läs om grundaren Niklas (1,95 på HP) och varför all träning är gratis.",
       ogTitle: "Om Tvåkommanollan",
       ogDescription: "Sveriges enda gratis ELO-rankade högskoleprovsplattform. Varför vi finns.",
     }),

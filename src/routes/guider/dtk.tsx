@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
 
 export const Route = createFileRoute("/guider/dtk")({
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/guider/dtk")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/dtk",
-      title: "DTK-guide: diagram, tabeller och kartor på HP · Tvåkommanollan",
+      title: fitTitle("DTK-guide: diagram, tabeller och kartor på HP", "· Tvåkommanollan"),
       description:
         "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet. DTK-guide med strategi och vanliga misstag.",
       ogTitle: "DTK-guiden · Tvåkommanollan",

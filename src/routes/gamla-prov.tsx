@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, FileText } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
+import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProvResumeCard } from "@/components/prov/ProvResumeCard";
 import { ProvScoreRow } from "@/components/prov/ProvScore";
@@ -26,7 +27,10 @@ export const Route = createFileRoute("/gamla-prov")({
     return {
       meta: pageMeta({
         path: "/gamla-prov",
-        title: `Gamla högskoleprov ${oldest}–${newest} · alla provpass med facit · Tvåkommanollan`,
+        title: fitTitle(
+          `Gamla högskoleprov ${oldest}–${newest} · alla provpass med facit`,
+          "· Tvåkommanollan",
+        ),
         description:
           `Skriv ${exams.length} riktiga högskoleprov online: ${formatInt(count)} uppgifter från ` +
           `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,
