@@ -37,17 +37,19 @@ export const Route = createFileRoute("/ordlista_/$ord")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
-    const { word, slug, senses, wordClass, related } = loaderData;
+    const { word, slug, sense, wordClass, related, question } = loaderData;
     const path = `/ordlista/${encodeURIComponent(slug)}`;
-    const firstSense = senses[0] ?? "";
     const synonyms = related.map((r) => r.word).slice(0, 4);
     // Betydelsen och synonymerna som två meningar, så att describeWithin kan
     // släppa den andra hel i stället för att kapa den första mitt i. Att
     // kapa betydelsen på egen hand räckte inte: ordklassen, uppslagsordet
     // och synonymerna kommer ovanpå, och summan sprack (filibuster 192
     // tecken, censur 183) fastän varje del för sig såg lagom ut.
+    // Facit ur ORD-uppgiften först: det är en synonym till ordet, hämtad ur
+    // UHR:s öppna material, och alltså vårt eget svar på "vad betyder X".
     const body =
-      `${word}${wordClass ? ` (${wordClass})` : ""}: ${firstSense}` +
+      `${word}${wordClass ? ` (${wordClass})` : ""}: ` +
+      `${question?.correctText ? `${question.correctText}. ` : ""}${sense}` +
       `${synonyms.length ? ` Liknande ord: ${synonyms.join(", ")}.` : ""}`;
 
     return {
@@ -57,7 +59,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
         description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
         ogTitle: `Vad betyder ${word}?`,
         ogDescription:
-          trimToWord(firstSense, 140) ||
+          trimToWord(question?.correctText ?? sense, 140) ||
           `${word} — förklaring, exempel och HP-uppgiften ordet kom ur.`,
       }),
       links: pageLinks(path),
@@ -75,7 +77,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
           "@type": "DefinedTerm",
           "@id": `https://tvakommanollan.se${path}#term`,
           name: word,
-          description: senses.join(" "),
+          description: sense,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
           termCode: slug,
@@ -96,11 +98,11 @@ function OrdlistaEntryPage() {
   const entry = Route.useLoaderData();
   const {
     word,
-    senses,
-    examples,
+    sense,
     related,
     wordClass,
     sourceLabel,
+    sourceUrl,
     question,
     prev,
     next,
@@ -140,34 +142,41 @@ function OrdlistaEntryPage() {
         {wordClass && <p className="mt-1 text-sm italic text-white/45">{wordClass}</p>}
       </header>
 
-      {/* Betydelsen. Källraden står med av samma skäl som i övningsläget:
-          texten är ordbokens, inte vår. */}
+      {/* Vad ordet betyder. Facit ur ORD-uppgiften står först — det är en
+          synonym till ordet, ur UHR:s öppna provmaterial, alltså vårt eget
+          svar på frågan. Ordbokens rad står under, kort och källhänvisad:
+          hela artikeln hör hemma hos den som äger den, och länken går dit. */}
       <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
         <h2 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#ae2f26]">
           <BookOpen className="h-3.5 w-3.5" />
           Vad betyder {word}?
         </h2>
-        {senses.length > 1 ? (
-          <ol className="mt-2.5 list-inside list-decimal space-y-1.5 text-[15px] leading-[1.7] text-[var(--cream)]">
-            {senses.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ol>
-        ) : (
-          <p className="mt-2.5 text-[16px] leading-[1.7] text-[var(--cream)]">{senses[0] ?? ""}</p>
+
+        {question?.correctText && (
+          <p className="mt-2.5 text-[17px] leading-[1.6] text-[var(--cream)]">
+            På högskoleprovet var rätt svar{" "}
+            <strong className="font-semibold">{question.correctText}</strong>.
+          </p>
         )}
 
-        {examples.length > 0 && (
-          <div className="mt-4 space-y-1 border-l-2 border-[#7a5236]/30 pl-3">
-            {examples.map((e, i) => (
-              <p key={i} className="text-[14px] italic leading-relaxed text-white/70">
-                {e}
-              </p>
-            ))}
-          </div>
+        {sense && (
+          <p className="mt-3 text-[15px] leading-[1.7] text-white/70">&rdquo;{sense}&rdquo;</p>
         )}
 
-        <p className="mt-4 text-[11px] uppercase tracking-wide text-white/45">{sourceLabel}</p>
+        <p className="mt-4 text-[11px] uppercase tracking-wide text-white/45">
+          {sourceUrl ? (
+            <a
+              href={sourceUrl}
+              rel="noopener nofollow"
+              target="_blank"
+              className="underline underline-offset-2 transition hover:text-white/70"
+            >
+              {sourceLabel}
+            </a>
+          ) : (
+            sourceLabel
+          )}
+        </p>
       </section>
 
       {related.length > 0 && (

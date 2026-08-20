@@ -19,6 +19,7 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { ordSlug, ordLetter, ordCollator, ORD_LETTERS, ORD_LETTER_OTHER } from "./ord-slug";
 import { ordDefinitionParts, definitionSourceLabel } from "./ord-definition";
+import { trimToWord } from "./seo-text";
 import { ordText } from "./sv-format";
 import { CANONICAL_HOST } from "./canonical-host";
 
@@ -120,6 +121,30 @@ export async function getOrdIndex(): Promise<OrdIndex> {
   return building;
 }
 
+/**
+ * Så lång den citerade betydelsen får bli.
+ *
+ * Nog för att svara på "vad betyder ordet", för kort för att ersätta ett
+ * uppslag i ordboken. Se kommentaren på `OrdlistaEntry.sense`.
+ */
+const SENSE_MAX = 180;
+
+/**
+ * Adress till uppslaget hos källan.
+ *
+ * Att hänvisa vidare är både hyggligt mot den som äger texten och nyttigt
+ * för läsaren, som ofta vill ha hela artikeln. svenska.se slår upp alla tre
+ * ordböckerna på samma sökadress.
+ */
+function sourceUrl(source: string | null, word: string): string | null {
+  if (!source) return null;
+  const q = encodeURIComponent(word.trim().toLowerCase());
+  if (/^(SO|SAOL|SAOB)/.test(source)) return `https://svenska.se/tre/?sok=${q}`;
+  if (source.startsWith("Wiktionary")) return `https://sv.wiktionary.org/wiki/${q}`;
+  if (source.startsWith("Wikipedia")) return `https://sv.wikipedia.org/wiki/${q}`;
+  return null;
+}
+
 export type OrdlistaEntry = {
   slug: string;
   /**
@@ -131,12 +156,31 @@ export type OrdlistaEntry = {
    * första en läsare tar för ett fel.
    */
   word: string;
-  senses: string[];
-  examples: string[];
+  /**
+   * EN betydelse, kortad — inte ordbokens fulla artikel.
+   *
+   * Beståndets förklaringar kommer till 91 % ur SO (svenska.se). Att visa
+   * dem i övningsläget, ett ord i taget för den som pluggar, är en sak. Att
+   * publicera hela artikeln — alla betydelser och ordbokens egna
+   * exempelmeningar — på 8 760 indexerbara sidor är en annan: det är en
+   * systematisk återgivning av en väsentlig del av ordboken, vilket
+   * katalogskyddet i 49 § URL träffar oavsett om den enskilda definitionen
+   * har verkshöjd. Citaträtten bär inte heller, eftersom citaten då är
+   * själva produkten.
+   *
+   * Sidan leder därför med det vi äger: uppgiften ordet kom ur och dess
+   * facit — som i ORD *är* en synonym till ordet, hämtad ur UHR:s öppna
+   * material. Ordboken bidrar med en kort, källhänvisad rad.
+   *
+   * Övningsläget (/ord) rör detta inte.
+   */
+  sense: string;
   /** JFR-orden ur ordboken, med slug för dem som har en egen sida. */
   related: { word: string; slug: string | null }[];
   wordClass: string | null;
   sourceLabel: string;
+  /** Uppslaget hos källan, när den har en publik adress att hänvisa till. */
+  sourceUrl: string | null;
   /** Uppgiften som ordet faktiskt kom ur — sajtens eget, unika innehåll. */
   question: {
     /**
@@ -199,14 +243,15 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
   return {
     slug,
     word: ordText(word),
-    senses: parts.senses,
-    examples: parts.examples,
+    // Bara första betydelsen, och kortad. Se kommentaren på `sense`.
+    sense: trimToWord(parts.senses[0] ?? "", SENSE_MAX),
     // Bara ord som har en egen sida blir länkar. Ett JFR-ord som inte finns i
     // beståndet ska stå kvar som text — det är fortfarande upplysande — men
     // aldrig som en länk till en 404:a.
     related: parts.related.map((r) => ({ word: r, slug: linkSlug(r) })),
     wordClass: parts.wordClass,
     sourceLabel: definitionSourceLabel(data.definition_source),
+    sourceUrl: sourceUrl(data.definition_source, word),
     question:
       options.length >= 2
         ? {
