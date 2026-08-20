@@ -876,6 +876,12 @@ function MatchPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Lämna in nu?</AlertDialogTitle>
             <AlertDialogDescription>
+              {/* Antalet obesvarade står först och med flit: inlämningen går
+                  inte att ångra, och en felklickad knapp på fråga 3 av 8
+                  kostade hela matchen utan att något sa till. Gamla prov-
+                  runnern säger redan samma sak. */}
+              {questions.length - answers.size > 0 &&
+                `${questions.length - answers.size} av ${questions.length} frågor är obesvarade. `}
               {match.is_bot_match
                 ? "Resultatet räknas ut direkt."
                 : "Motståndaren får 30 sekunder på sig att avsluta."}
