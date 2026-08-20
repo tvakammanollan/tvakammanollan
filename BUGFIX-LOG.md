@@ -818,7 +818,7 @@ Kört efter varje punkt, och en gång till på slutet, i CLAUDE.md:s ordning:
 | --- | --- |
 | `npx tsc --noEmit` | rent |
 | `npx eslint <ändrade filer>` | 0 fel |
-| `npm run test` | **390 tester** i 39 filer (från 325 i 29) |
+| `npm run test` | **415 tester** i 39 filer (från 325 i 29) |
 | `npm run build` | grönt, byggt på ~15 s |
 | SSR-rök: 16 routes | alla 200 |
 | SSR-rök: ogiltiga slugs | `/finns-inte`, `/gamla-prov/1999xx`, `/gamla-prov/2025ht/9` → alla 404 |
@@ -828,7 +828,7 @@ Kört efter varje punkt, och en gång till på slutet, i CLAUDE.md:s ordning:
 `npx eslint src` över hela trädet kör jag inte: ~900 pre-existerande
 `prettier/prettier`-fel i filer ingen rört, precis som CLAUDE.md beskriver.
 
-**Nya tester (65 stycken):** `match-outcome`, `streak-dates`, `email-templates`,
+**Nya tester (90 stycken):** `match-outcome`, `streak-dates`, `email-templates`,
 `word-of-the-day`, `math-question`, `csv`, `elo-series`, `schema-tolerant`, plus
 utökade `normering` och ändrade `prov-results`.
 
