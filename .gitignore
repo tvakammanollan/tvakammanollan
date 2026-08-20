@@ -52,4 +52,6 @@ scripts/.ord-defs/
 
 # genererade typsnitt åt scripts/build-og-image.py
 .og-cache/
+# Python-bytecode från scripts/hp-import
 __pycache__/
+*.pyc

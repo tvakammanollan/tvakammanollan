@@ -205,7 +205,8 @@ function StatsPage() {
         if (oppIds.length > 0) {
           const { data: us } = await supabase.from("users").select("id, username").in("id", oppIds);
           const nm = new Map<string, string>();
-          // displayName ger gästkonton sitt lundnamn i stället för user_xxxx.
+          // Samma översättning som i matchen och på resultatsidan: ett
+          // gästkonto heter `user_1a2b3c4d` i databasen, inte i historiken.
           for (const u of us ?? [])
             nm.set(u.id as string, displayName(u.username as string, u.id as string));
           setOpponentNames(nm);

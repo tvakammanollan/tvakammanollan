@@ -31,9 +31,11 @@ import { assertRateLimit, ipKey } from "./rate-limit.server";
 
 const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"] as const;
 
+const MATH = new Set(["XYZ", "KVA", "NOG", "DTK"]);
+
 /** Kolumnerna träningsläget renderar. En enda literal — annars tappar supabase-js radtypen. */
 const COLS =
-  "id, category, question_text, options, passage_id, passage_text, image_url, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status";
+  "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status";
 
 export const fetchTrainingBatch = createServerFn({ method: "GET" })
   .inputValidator((data: { categories: string[]; difficulty?: number | null; count?: number }) =>
@@ -51,6 +53,10 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
 
     let query = supabaseAdmin.from("questions").select(COLS).in("category", data.categories);
     if (data.difficulty !== null) query = query.eq("difficulty", data.difficulty);
+    // Matten kommer ur arkivet sedan importen och är alltid "ok". De skrapade
+    // raderna ligger kvar som "retired" för matchhistorikens skull och ska inte
+    // delas ut igen — utan filtret serverar Träna dem som om inget hänt.
+    if (data.categories.some((c) => MATH.has(c))) query = query.eq("clean_status", "ok");
 
     const { data: rows, error } = await query.limit(300);
     if (error) {

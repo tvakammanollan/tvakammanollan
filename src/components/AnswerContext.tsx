@@ -90,7 +90,7 @@ function Rad({
           />
         ) : harText ? (
           <p className="mt-0.5 text-sm leading-relaxed text-foreground">
-            {math ? <MathText autoDetect>{text!}</MathText> : text}
+            {math ? <MathText>{text!}</MathText> : text}
           </p>
         ) : (
           // Varken utsnitt eller egen text. Hänvisa till bilden BARA om det

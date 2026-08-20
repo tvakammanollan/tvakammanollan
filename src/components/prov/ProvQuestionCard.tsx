@@ -2,6 +2,7 @@ import { Check, Flag, X } from "lucide-react";
 import { ordText } from "@/lib/sv-format";
 import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovShort, type ProvQuestion } from "@/types/gamla-prov";
+import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "./ProvFigure";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
@@ -9,10 +10,16 @@ const LETTERS = ["A", "B", "C", "D", "E"];
 /**
  * En uppgift med sina svarsalternativ.
  *
- * Uppgifterna kommer i två former och ska ändå kännas likadana: ORD/MEK/LÄS
- * har text, XYZ/KVA är utsnitt ur provhäftet där alternativen syns i bilden.
- * I bildfallet blir knapparna bara bokstäver — samma knappar, samma lägen,
- * samma tangentbord.
+ * Uppgifterna kommer i tre former och ska ändå kännas likadana:
+ *
+ *  - **text** — ORD, MEK, LÄS, ELF och de flesta NOG/DTK.
+ *  - **bild med beskärningar** — XYZ och KVA. Uppgiften är ett utsnitt ur
+ *    provhäftet, men importen vet var stammen och varje alternativ sitter i
+ *    det, så knapparna får riktigt innehåll och kortet ritar sitt eget nummer
+ *    och sina egna bokstäver.
+ *  - **bild utan beskärningar** — reservläget, när alternativen står inne i en
+ *    figur och inte i textlagret. Då visas hela utsnittet med en bokstavsrad
+ *    under, precis som förut.
  *
  * `revealed` styr om facit visas (direkt i övningsläge, efter inlämning i
  * provläge).
@@ -39,6 +46,15 @@ export function ProvQuestionCard({
   const correct = acceptedAnswers(question);
   const isOrd = question.delprov === "ORD";
   const letters = LETTERS.slice(0, altCount(question));
+  // Beskärningarna används bara när allt de behöver finns. Halva uppsättningar
+  // ska falla tillbaka på hela utsnittet, inte visa några knappar med innehåll
+  // och några tomma.
+  const aspect = question.imageAspect;
+  const crops =
+    question.image && question.crops?.stem && aspect
+      ? (question.crops as Record<string, Crop>)
+      : undefined;
+  const cropped = crops && letters.every((l) => crops[l]) ? crops : undefined;
 
   return (
     <article className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
@@ -78,24 +94,45 @@ export function ProvQuestionCard({
         </p>
       )}
 
-      {question.image && (
-        <ProvFigure
-          src={question.image}
-          alt={`${question.delprov}-uppgift ${question.nr} ur provhäftet`}
-          className="mb-1"
-        />
+      {question.figureMissing && (
+        <p className="mt-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-xs leading-relaxed text-[var(--text-tertiary)]">
+          UHR publicerade aldrig den här uppgiftens bild — vårprovet 2012:s kvantitativa del lades
+          bara ut som webbsidor, och de bilderna finns inte kvar. Svarsalternativen stod i bilden och
+          går därför inte att visa.
+        </p>
       )}
 
-      {/* Bilduppgifternas alternativ står i bilden — då behövs bara bokstaven,
-          och knappraden får se ut som svarshäftets rutor i stället för fyra
-          tomma textrader. */}
+      {question.image &&
+        (cropped ? (
+          <CropView
+            src={question.image}
+            crop={cropped.stem}
+            imageAspect={aspect!}
+            alt={`${question.delprov}-uppgift ${question.nr} ur provhäftet`}
+            className="mb-1 w-full"
+          />
+        ) : (
+          <ProvFigure
+            src={question.image}
+            alt={`${question.delprov}-uppgift ${question.nr} ur provhäftet`}
+            className="mb-1"
+          />
+        ))}
+
+      {/* Har uppgiften beskärningar får varje alternativ sitt eget utsnitt och
+          knapparna ser ut som textuppgifternas. Utan dem står alternativen kvar
+          inne i bilden, och då behövs bara bokstaven — knappraden får se ut som
+          svarshäftets rutor i stället för fyra tomma textrader. */}
       <div
         className={
-          question.alternatives ? "mt-4 grid gap-2" : "mt-4 grid grid-cols-4 gap-2 sm:max-w-md"
+          question.alternatives || cropped
+            ? "mt-4 grid gap-2"
+            : "mt-4 grid grid-cols-4 gap-2 sm:max-w-md"
         }
       >
         {letters.map((letter, i) => {
           const text = question.alternatives?.[i];
+          const crop = cropped?.[letter];
           const picked = answer === letter;
           const isRight = revealed && correct.includes(letter);
           const isWrong = revealed && picked && !isRight;
@@ -107,7 +144,7 @@ export function ProvQuestionCard({
               onClick={() => onAnswer(letter)}
               aria-pressed={picked}
               className={[
-                question.alternatives
+                question.alternatives || crop
                   ? "flex w-full items-start gap-3 rounded-xl border px-3.5 py-3 text-left text-sm transition-colors"
                   : "flex w-full items-center justify-center rounded-xl border py-3 text-sm transition-colors",
                 isRight
@@ -134,6 +171,15 @@ export function ProvQuestionCard({
                 {letter}
               </span>
               {text && <span className="leading-relaxed">{isOrd ? ordText(text) : text}</span>}
+              {crop && (
+                <CropView
+                  src={question.image!}
+                  crop={crop}
+                  imageAspect={aspect!}
+                  alt={`Svarsalternativ ${letter}`}
+                  className="min-w-0 flex-1"
+                />
+              )}
               {isRight && <Check className="ml-auto h-4 w-4 text-[var(--success)]" aria-hidden />}
               {isWrong && <X className="ml-auto h-4 w-4 text-[var(--danger)]" aria-hidden />}
             </button>

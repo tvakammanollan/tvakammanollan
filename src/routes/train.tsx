@@ -22,6 +22,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { MathText } from "@/components/MathTextLazy";
+import { CropView, type Crop } from "@/components/question/CropView";
+import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
@@ -126,6 +128,9 @@ interface TrainQuestion {
   correct_answer: string;
   explanation: string | null;
   difficulty: number | null;
+  /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
+  stem: ExamStem | null;
+  optionCrops: Crop[] | null;
 }
 
 interface TrainConfig {
@@ -277,6 +282,10 @@ function TrainPage() {
         passage_id: row.passage_id,
         passage_text: row.passage_text,
         image_url: row.image_url ?? null,
+        // Beskärningarna gäller uppgiftens eget utsnitt. Den städade texten är
+        // en annan uppgift än den bilden visar, så de två får aldrig blandas.
+        stem: useCleaned ? null : parseStem(row.image_caption),
+        optionCrops: useCleaned ? null : parseOptionCrops(row.options),
         correct_answer: row.correct_answer,
         explanation: row.explanation,
         difficulty: row.difficulty,
@@ -658,12 +667,22 @@ function TrainPage() {
             )}
             {currentQ.image_url && (
               <div className="mb-5 overflow-hidden rounded-xl border border-border">
-                <img
-                  src={currentQ.image_url}
-                  alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
-                  decoding="async"
-                  className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
-                />
+                {currentQ.stem ? (
+                  <CropView
+                    src={currentQ.image_url}
+                    crop={currentQ.stem.stem}
+                    imageAspect={currentQ.stem.aspect}
+                    alt={`Uppgift ${current + 1} ur provhäftet`}
+                    className="w-full"
+                  />
+                ) : (
+                  <img
+                    src={currentQ.image_url}
+                    alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
+                    decoding="async"
+                    className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
+                  />
+                )}
               </div>
             )}
             <div className="grid gap-2" role="radiogroup">
@@ -713,18 +732,35 @@ function TrainPage() {
                         letter
                       )}
                     </span>
-                    {/* En alternativtext som bara är sin egen bokstav skrivs
-                        inte ut — den står redan i brickan till vänster. */}
-                    {optionHasOwnText(opt, i) && (
-                      <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                        {isMath ? (
-                          <MathText>{opt}</MathText>
-                        ) : currentQ.category === "ORD" ? (
-                          ordText(opt)
-                        ) : (
-                          opt
-                        )}
+                    {/* Alternativen sitter i bilden på arkivets matteuppgifter
+                        och klipps då ut ur den. Annars är det text — och en
+                        alternativtext som bara är sin egen bokstav skrivs inte
+                        ut, den står redan i brickan till vänster. */}
+                    {currentQ.optionCrops && currentQ.image_url ? (
+                      <span
+                        className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
+                      >
+                        <CropView
+                          src={currentQ.image_url}
+                          crop={currentQ.optionCrops[i]}
+                          imageAspect={currentQ.stem?.aspect ?? 1}
+                          alt={`Svarsalternativ ${letter}`}
+                        />
                       </span>
+                    ) : (
+                      optionHasOwnText(opt, i) && (
+                        <span
+                          className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
+                        >
+                          {isMath ? (
+                            <MathText>{opt}</MathText>
+                          ) : currentQ.category === "ORD" ? (
+                            ordText(opt)
+                          ) : (
+                            opt
+                          )}
+                        </span>
+                      )
                     )}
                   </button>
                 );
@@ -734,26 +770,25 @@ function TrainPage() {
             {/* Explanation */}
             {revealed && (
               <>
-                {/* Bara när alternativen står i uppgiftsbilden — då klipps de
-                    två raderna ut ur den. På textuppgifter står svaren redan
-                    utskrivna och färgmarkerade i listan ovanför, och rutan
-                    upprepade dem bara. */}
-                {isImageQuestion({
-                  image_url: currentQ.image_url,
-                  options: currentQ.rawOptions,
-                }) && (
-                  <AnswerContext
-                    options={currentQ.rawOptions}
-                    selected={selected}
-                    correct={currentQ.correct_answer}
-                    imageUrl={currentQ.image_url}
-                    math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
-                  />
-                )}
-                <ExplanationBlock
-                  explanation={currentQ.explanation}
-                  math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
-                />
+                {/* Bara när alternativen står i uppgiftsbilden UTAN att vara
+                    utklippta i listan ovanför. På textuppgifter står svaren
+                    redan utskrivna och färgmarkerade där, och på arkivets
+                    matteuppgifter står de som utsnitt — i båda fallen
+                    upprepade rutan bara det som redan syntes. */}
+                {!currentQ.optionCrops &&
+                  isImageQuestion({
+                    image_url: currentQ.image_url,
+                    options: currentQ.rawOptions,
+                  }) && (
+                    <AnswerContext
+                      options={currentQ.rawOptions}
+                      selected={selected}
+                      correct={currentQ.correct_answer}
+                      imageUrl={currentQ.image_url}
+                      math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
+                    />
+                  )}
+                <ExplanationBlock explanation={currentQ.explanation} />
                 {user && (
                   <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
                     <span>Felaktig fråga?</span>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { MATCH_TOTAL_SECONDS, matchStartKey } from "@/lib/match-clock";
 
 interface SavedMatch {
   matchId: string;
@@ -9,8 +10,6 @@ interface SavedMatch {
   matchType?: string;
   createdAt?: string;
 }
-
-const MATCH_DURATION = 8 * 60; // 480s
 
 export function ResumeMatchBanner() {
   const [saved, setSaved] = useState<SavedMatch | null>(null);
@@ -23,9 +22,16 @@ export function ResumeMatchBanner() {
         const raw = sessionStorage.getItem("active_match");
         if (!raw) return;
         const data = JSON.parse(raw) as SavedMatch;
-        const refTime = data.createdAt ?? data.savedAt;
-        const elapsed = (Date.now() - new Date(refTime).getTime()) / 1000;
-        if (elapsed >= MATCH_DURATION) {
+        // Samma klocka som matchsidan räknar på: ankaret sätts när spelaren
+        // ser första frågan. Banderollen körde tidigare på 8 minuter mot
+        // matchens 5 och mätte dessutom från `created_at`, som för privata rum
+        // ligger före spelstart. Följden var att "Fortsätt matchen" stod kvar
+        // efter att tiden gått ut — och den som klickade landade på en match
+        // med noll sekunder kvar, som lämnades in automatiskt direkt.
+        const anchor = Number(sessionStorage.getItem(matchStartKey(data.matchId))) || 0;
+        const refTime = anchor || new Date(data.createdAt ?? data.savedAt).getTime();
+        const elapsed = (Date.now() - refTime) / 1000;
+        if (elapsed >= MATCH_TOTAL_SECONDS) {
           sessionStorage.removeItem("active_match");
           return;
         }

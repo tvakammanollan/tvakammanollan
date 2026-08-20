@@ -11,8 +11,6 @@ interface Props {
    * samma ruta betedde sig olika på olika sidor.
    */
   defaultOpen?: boolean;
-  /** Renderar förklaringen med KaTeX. Sätts för XYZ, KVA, NOG och DTK. */
-  math?: boolean;
 }
 
 /**
@@ -23,8 +21,11 @@ interface Props {
  *
  * `explanation` är i skrivande stund NULL på hela beståndet (12 338 rader), så
  * blocket renderar oftast ingenting. Se scripts/generate-math-explanations.ts.
+ *
+ * Ingen `math`-flagga: `MathText` renderar bara det som står mellan $…$ och
+ * lämnar all annan text i fred, så en verbal förklaring går oförändrad igenom.
  */
-export function ExplanationBlock({ explanation, defaultOpen = true, math = false }: Props) {
+export function ExplanationBlock({ explanation, defaultOpen = true }: Props) {
   const [open, setOpen] = useState(defaultOpen);
   if (!explanation || !explanation.trim()) return null;
 
@@ -50,12 +51,14 @@ export function ExplanationBlock({ explanation, defaultOpen = true, math = false
             <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-[#ae2f26]">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring
             </div>
-            <div
+            {/* Matteförklaringar bär LaTeX i $…$ — utan MathText stod de rått
+                i texten, mitt i den enda mening som skulle förklara svaret. */}
+            <p
               className="whitespace-pre-wrap text-foreground"
               style={{ fontSize: 14, lineHeight: 1.7 }}
             >
-              {math ? <MathText autoDetect>{explanation!}</MathText> : explanation}
-            </div>
+              <MathText>{explanation}</MathText>
+            </p>
           </div>
         </div>
       </div>

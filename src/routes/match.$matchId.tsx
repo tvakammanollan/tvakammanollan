@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
-import { submitMatch } from "@/lib/match.functions";
+import { finalizeMatch, submitMatch } from "@/lib/match.functions";
 import { trackEvent } from "@/lib/events";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +22,8 @@ import { displayCategory, ordText } from "@/lib/sv-format";
 import { LogOut, Trophy, Timer as TimerIcon } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
+import { CropView, type Crop } from "@/components/question/CropView";
+import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
@@ -30,6 +32,12 @@ import { displayName } from "@/lib/guest-name";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
+import {
+  MATCH_TOTAL_SECONDS,
+  OPPONENT_GRACE_SECONDS,
+  matchStartKey,
+  secondsLeftFrom,
+} from "@/lib/match-clock";
 
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
@@ -38,7 +46,7 @@ export const Route = createFileRoute("/match/$matchId")({
   }),
 });
 
-const TOTAL_SECONDS = 5 * 60;
+const TOTAL_SECONDS = MATCH_TOTAL_SECONDS;
 
 interface QuestionRow {
   id: string;
@@ -50,6 +58,9 @@ interface QuestionRow {
   passage_id: string | null;
   passage_text: string | null;
   image_url: string | null;
+  /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
+  stem: ExamStem | null;
+  optionCrops: Crop[] | null;
 }
 
 interface MatchRow {
@@ -70,6 +81,13 @@ function MatchPage() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const submitFn = useServerFn(submitMatch);
+  // Ref: väntan-effekten nedan får inte prenumerera om varje gång
+  // useServerFn returnerar en ny funktionsidentitet.
+  const finalizeFn = useServerFn(finalizeMatch);
+  const finalizeRef = useRef(finalizeFn);
+  useEffect(() => {
+    finalizeRef.current = finalizeFn;
+  }, [finalizeFn]);
 
   const [match, setMatch] = useState<MatchRow | null>(null);
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
@@ -184,8 +202,9 @@ function MatchPage() {
             .eq("id", oppId)
             .maybeSingle();
           // Namnet, inte ordet "Motståndare". `displayName` ger gästkonton
-          // sitt lundnamn i stället för user_c8a56e2c. Finns ingen rad kvar
-          // är kontot raderat — då sägs det rakt ut.
+          // sitt lundnamn i stället för user_c8a56e2c — ett id är inte ett
+          // namn att möta i en match. Finns ingen rad kvar är kontot raderat,
+          // och då sägs det rakt ut.
           setOpponentName(u ? displayName(u.username, oppId) : "Okänd spelare");
         }
       }
@@ -205,7 +224,7 @@ function MatchPage() {
         ? await supabase
             .from("questions")
             .select(
-              "id, category, question_text, options, passage_id, passage_text, image_url, difficulty, cleaned_question_text, cleaned_options, clean_status",
+              "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, difficulty, cleaned_question_text, cleaned_options, clean_status",
             )
             .in("id", qIds)
         : { data: [], error: null };
@@ -243,6 +262,10 @@ function MatchPage() {
             passage_id: q.passage_id,
             passage_text: q.passage_text,
             image_url: q.image_url ?? null,
+            // Beskärningarna gäller uppgiftens eget utsnitt; den städade texten
+            // beskriver en annan uppgift än den bilden visar.
+            stem: useCleaned ? null : parseStem(q.image_caption),
+            optionCrops: useCleaned ? null : parseOptionCrops(q.options),
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -279,9 +302,9 @@ function MatchPage() {
     // Serverns `started_at` går först: den är samma för båda spelarna, och
     // det är den resultatsidan, botens tid och tidsgolvet räknar ifrån. Utan
     // den kunde min klocka och min redovisade tid skilja sig åt med minuter.
-    // Den lokala ankaret finns kvar som reserv för äldre matcher (started_at
+    // Det lokala ankaret finns kvar som reserv för äldre matcher (started_at
     // är NULL där) och för de sekunder som går innan raden är läst.
-    const anchorKey = `match_start_${matchId}`;
+    const anchorKey = matchStartKey(matchId);
     const serverStart = match.started_at ? new Date(match.started_at).getTime() : 0;
     let anchor = serverStart || Number(sessionStorage.getItem(anchorKey)) || 0;
     if (!anchor) {
@@ -295,8 +318,7 @@ function MatchPage() {
       }
     }
     const tick = () => {
-      const elapsed = Math.floor((Date.now() - anchor) / 1000);
-      const left = Math.max(0, TOTAL_SECONDS - elapsed);
+      const left = secondsLeftFrom(anchor);
       setSecondsLeft(left);
       if (left === 0 && !submittedRef.current) {
         submittedRef.current = true;
@@ -389,9 +411,9 @@ function MatchPage() {
             questionsCountRef.current > 0
           ) {
             oppForceStartedRef.current = true;
-            setOppForceCountdown(30);
+            setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
-            toast.info("Motståndaren är klar – du har 30 sekunder kvar!");
+            toast.info(`Motståndaren är klar – du har ${OPPONENT_GRACE_SECONDS} sekunder kvar!`);
           }
         },
       )
@@ -538,7 +560,7 @@ function MatchPage() {
   // Wait for opponent (private) — with exponential-backoff reconnect
   useEffect(() => {
     if (!waitingForOpp) return;
-    let opp = 30;
+    let opp = OPPONENT_GRACE_SECONDS;
     setOppSecondsLeft(opp);
 
     let attempts = 0;
@@ -597,7 +619,15 @@ function MatchPage() {
       setOppSecondsLeft(opp);
       if (opp <= 0) {
         clearInterval(id);
-        navigate({ to: "/result/$matchId", params: { matchId } });
+        // Motståndaren dök aldrig upp. Avsluta matchen på servern INNAN vi går
+        // till resultatet — annars står matchen kvar som `active`, och då ger
+        // varken ELO eller facit något: `get_match_review` svarar bara för
+        // avslutade matcher, vilket är hela orsaken till "Genomgång av alla
+        // 0 frågor". Går anropet fel visar resultatsidan sitt väntläge.
+        void finalizeRef
+          .current({ data: { matchId } })
+          .catch((e) => console.error("[match] finalize failed", e))
+          .finally(() => navigate({ to: "/result/$matchId", params: { matchId } }));
       }
     }, 1000);
 
@@ -719,13 +749,17 @@ function MatchPage() {
         </div>
         <p className="text-white/65">
           Motståndaren har{" "}
-          <span className="font-semibold text-[var(--cream)] tabular-nums">{oppSecondsLeft}s</span>{" "}
+          <span className="font-semibold text-[var(--cream)] tabular-nums">
+            {Math.max(0, oppSecondsLeft)}s
+          </span>{" "}
           kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <m.div
             className="h-full bg-gradient-to-r from-[#ae2f26] to-[#f5c089]"
-            animate={{ width: `${(oppSecondsLeft / 30) * 100}%` }}
+            animate={{
+              width: `${Math.max(0, oppSecondsLeft / OPPONENT_GRACE_SECONDS) * 100}%`,
+            }}
             transition={{ duration: 0.95, ease: "linear" }}
           />
         </div>
@@ -833,6 +867,8 @@ function MatchPage() {
               selectAnswer={selectAnswer}
               setCurrent={setCurrent}
               goNext={goNext}
+              onSubmit={() => setConfirmOpen(true)}
+              submitting={submitting}
             />
           </div>
         </main>
@@ -848,6 +884,8 @@ function MatchPage() {
             selectAnswer={selectAnswer}
             setCurrent={setCurrent}
             goNext={goNext}
+            onSubmit={() => setConfirmOpen(true)}
+            submitting={submitting}
           />
         </main>
       )}
@@ -884,7 +922,7 @@ function MatchPage() {
                 `${questions.length - answers.size} av ${questions.length} frågor är obesvarade. `}
               {match.is_bot_match
                 ? "Resultatet räknas ut direkt."
-                : "Motståndaren får 30 sekunder på sig att avsluta."}
+                : `Motståndaren får ${OPPONENT_GRACE_SECONDS} sekunder på sig att avsluta.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -912,6 +950,8 @@ interface QuestionCardProps {
   selectAnswer: (qId: string, choice: string) => void | Promise<void>;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
   goNext: () => void | Promise<void>;
+  onSubmit: () => void;
+  submitting: boolean;
 }
 
 function QuestionCard({
@@ -922,6 +962,8 @@ function QuestionCard({
   selectAnswer,
   setCurrent,
   goNext,
+  onSubmit,
+  submitting,
 }: QuestionCardProps) {
   const optionLetters = ["A", "B", "C", "D", "E"];
   const isMath = ["XYZ", "KVA", "NOG", "DTK"].includes(currentQ.category);
@@ -959,12 +1001,22 @@ function QuestionCard({
       )}
       {currentQ.image_url && (
         <div className="mb-5 overflow-hidden rounded-xl border border-border">
-          <img
-            src={currentQ.image_url}
-            alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
-            decoding="async"
-            className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
-          />
+          {currentQ.stem ? (
+            <CropView
+              src={currentQ.image_url}
+              crop={currentQ.stem.stem}
+              imageAspect={currentQ.stem.aspect}
+              alt={`Uppgift ${current + 1} ur provhäftet`}
+              className="w-full"
+            />
+          ) : (
+            <img
+              src={currentQ.image_url}
+              alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
+              decoding="async"
+              className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
+            />
+          )}
         </div>
       )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
@@ -992,21 +1044,36 @@ function QuestionCard({
               >
                 {letter}
               </span>
-              {/* En alternativtext som bara är sin egen bokstav skrivs inte
-                  ut — den står redan i brickan till vänster. */}
-              {optionHasOwnText(opt, i) && (
+              {/* Alternativen sitter i bilden på arkivets matteuppgifter och
+                  klipps då ut ur den. Annars är det text — och en
+                  alternativtext som bara är sin egen bokstav skrivs inte ut,
+                  den står redan i brickan till vänster. */}
+              {currentQ.optionCrops && currentQ.image_url ? (
                 <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
-                  {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
+                  <CropView
+                    src={currentQ.image_url}
+                    crop={currentQ.optionCrops[i]}
+                    imageAspect={currentQ.stem?.aspect ?? 1}
+                    alt={`Svarsalternativ ${letter}`}
+                  />
                 </span>
+              ) : (
+                optionHasOwnText(opt, i) && (
+                  <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                    {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
+                  </span>
+                )
               )}
             </button>
           );
         })}
       </div>
 
-      {/* Kortet navigerar, bottenlisten lämnar in. På sista frågan bytte
-          "Nästa fråga" plats med ett andra "Lämna in svar" — samma knapp som
-          suttit kvar i bottenlisten hela matchen, strax därunder. */}
+      {/* Framåtknappen står stilla hela matchen. Sju gånger heter den
+          "Nästa fråga", på den åttonde "Lämna in svar" — samma plats, samma
+          tumme. Bottenlisten behåller sin knapp för den som vill lämna in
+          tidigare, men den som svarat klart ska inte behöva leta efter
+          vägen ut. */}
       <div className="mt-5 flex items-center justify-between">
         <Button
           variant="ghost"
@@ -1015,9 +1082,17 @@ function QuestionCard({
         >
           Föregående
         </Button>
-        {current < total - 1 && (
+        {current < total - 1 ? (
           <Button disabled={!choice} onClick={() => void goNext()}>
             Nästa fråga
+          </Button>
+        ) : (
+          <Button
+            disabled={submitting}
+            onClick={onSubmit}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            Lämna in svar
           </Button>
         )}
       </div>
