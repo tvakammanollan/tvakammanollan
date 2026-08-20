@@ -185,26 +185,35 @@ export function SplitText({
         return (
           <span
             key={i}
-            className="inline-block overflow-hidden align-baseline"
+            className="inline-block align-baseline"
             // Masken måste vara större än radrutan, annars kapar den bokstäverna
             // den ska maskera. Young Serifs bläck går 0,99em över baslinjen (Ö,
             // Ä) och 0,215em under den (g, p) — 1,21em mot en radhöjd på
             // 1,02–1,05em. Utan paddingen tappade "Öva" sina prickar och "gör"
             // sin svans, på skarpa sajten, i varje rubrik som råkade ha ett
-            // sådant tecken.
+            // sådant tecken. Marginalerna nollar paddingen mot layouten, så
+            // rutan växer utan att raden gör det.
             //
-            // Marginalerna nollar paddingen mot layouten: en inline-block med
-            // overflow hidden tar sin baslinje från BOTTENMARGINALKANTEN, så en
-            // negativ bottenmarginal låter klipprutan växa nedanför baslinjen
-            // utan att texten flyttar sig, och den negativa toppmarginalen
-            // håller radrutan i föräldern oförändrad. Rubriken står alltså
-            // exakt där den stod — det är bara fönstret som blivit större.
+            // Klippningen är `clip-path`, INTE `overflow: hidden` — och det är
+            // en riktig bugg som rättats, inte en smaksak. En inline-block vars
+            // overflow inte är `visible` tar sin baslinje från
+            // BOTTENMARGINALKANTEN i stället för från texten, alltså hamnar
+            // ordets baslinje ~0,19em (12 px vid 64px-rubriken) för HÖGT mot
+            // allt annat på samma rad. Det syntes som att det cyklande röda
+            // ordet i `CyclingTitle` "hängde lägre" — i själva verket satt det
+            // rätt och rubriken satt högt. Samma sak gällde mot
+            // reduced-motion-vägen nedan, som renderar ren text: samma rubrik
+            // stod på två olika höjder beroende på användarens inställning.
+            // `clip-path` klipper likadant i höjdled men lämnar baslinjen i
+            // fred (negativa insättningar i sidled = ingen klippning där, precis
+            // som i `CyclingTitle`). Byt inte tillbaka.
             style={{
               verticalAlign: "baseline",
               paddingTop: "0.22em",
               paddingBottom: "0.12em",
               marginTop: "-0.22em",
               marginBottom: "-0.12em",
+              clipPath: "inset(0 -100%)",
             }}
           >
             <m.span
