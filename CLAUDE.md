@@ -1114,6 +1114,19 @@ Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured 
 - Number/date formatting helpers (`formatInt`, `formatDecimal`, `formatRelativeTime`, etc.) are in `src/lib/sv-format.ts` — use these everywhere instead of raw `toLocaleString`
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
+- **En klippmask på ett inline-element får ALDRIG vara `overflow: hidden`.** En
+  inline-block vars overflow inte är `visible` tar sin baslinje från
+  **bottenmarginalkanten** i stället för från texten, alltså hamnar ordet
+  ~0,19em för högt mot allt annat på samma rad (12 px vid 64px-rubriken). Det
+  var därför det cyklande röda ordet i `CyclingTitle` såg ut att "hänga lägre"
+  än rubriken på /ord, /om, /train, /leaderboard och /guider — i själva verket
+  satt det röda ordet rätt och `SplitText` satt högt, och samma rubrik stod på
+  två olika höjder beroende på om besökaren hade reduced motion på (då renderas
+  ren text, utan mask). Båda maskerar nu i höjdled med
+  `clip-path: inset(0 -100%)`, som lämnar baslinjen i fred och dessutom inte
+  klipper i sidled. Mät alltid ihop de två: `blackWrap.top === grid.top` på
+  samma rad, och kontrollera att bläcket ryms i fönstret (smalaste marginalen i
+  beståndet är 2,7 px, för "LÄS." uppåt och "betydelser." nedåt).
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.
