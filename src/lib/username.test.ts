@@ -21,8 +21,9 @@ describe("isAutoUsername", () => {
     expect(isAutoUsername(undefined)).toBe(false);
   });
 
-  it("känner igen gästnamnen som sätts i metadatan", () => {
-    // useGuestPlay sätter "Gäst ekorre" vid signInAnonymously sedan 2026-08-18.
+  it("känner igen de gamla Gäst-namnen i tabellen", () => {
+    // Skrevs av useGuestPlay 2026-08-18–20. Raderna ligger kvar; nya
+    // gäster får triggerns user_<hex> igen. Se guest-name.ts.
     expect(isAutoUsername("Gäst ekorre")).toBe(true);
     expect(isAutoUsername("Gäst lönnlöv")).toBe(true);
     expect(isAutoUsername("gäst TRAST")).toBe(true);

@@ -10,7 +10,6 @@ import { joinRankedQueue, pollRankedMatch, cancelRankedQueue } from "@/lib/ranke
 import { createMatch } from "@/lib/match.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/lib/events";
-import { guestName } from "@/lib/guest-name";
 import { toast } from "sonner";
 
 const search = z.object({ type: z.enum(["verbal", "math"]).default("verbal") });
@@ -62,14 +61,12 @@ function MatchmakingPage() {
     if (loading || user || guestSignInRef.current) return;
     guestSignInRef.current = true;
     void (async () => {
-      // Namnet måste med i metadatan HÄR. DB-triggern `handle_new_user` läser
-      // `raw_user_meta_data->>username` och faller annars tillbaka på
-      // `user_ || left(id, 8)` — vilket är exakt varför user_1a2b3c4d fanns
-      // kvar efter att gästnamnen infördes: `useGuestPlay` skickade med ett
-      // namn, den här vägen in i spelet gjorde det inte.
-      const { error } = await supabase.auth.signInAnonymously({
-        options: { data: { username: guestName() } },
-      });
+      // Skicka INTE med något username. `users.username` är UNIQUE och
+      // gästnamnen räcker till 20 konton — därefter felar triggern och
+      // auth svarar 500, alltså "Kunde inte starta gästläge" för alla.
+      // Triggern sätter `user_ || left(id, 8)` och `displayName()` gör om
+      // det till lundnamnet där det visas. Se `useGuestPlay`.
+      const { error } = await supabase.auth.signInAnonymously();
       if (error) {
         guestSignInRef.current = false;
         console.error("guest sign-in failed", error);

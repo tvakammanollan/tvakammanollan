@@ -8,10 +8,11 @@ import { isGeneratedGuestName } from "./guest-name";
 /**
  * Har kontot ett namn det aldrig valt?
  *
- * Två sådana scheman finns. `handle_new_user()` faller tillbaka på `user_` +
- * åtta tecken av UUID:t, och sedan 2026-08-18 sätter `useGuestPlay` i stället
- * `Gäst ekorre` i metadatan redan vid `signInAnonymously` — se `guest-name.ts`,
- * som äger ordlistan och känner igen båda.
+ * Två sådana scheman finns i tabellen. `handle_new_user()` faller tillbaka på
+ * `user_` + åtta tecken av UUID:t — det enda som skrivs i dag — och de rader
+ * som hann skapas 2026-08-18–20 bär `Gäst ekorre`, från den tid namnet gick
+ * med i metadatan vid `signInAnonymously`. Se `guest-name.ts`, som äger
+ * ordlistan, känner igen båda och förklarar varför den vägen är borta.
  *
  * Regexen här är avsiktligt vidare än triggern (sex tecken eller fler,
  * versaler tillåtna): topplistan både filtrerar och renderar på den här

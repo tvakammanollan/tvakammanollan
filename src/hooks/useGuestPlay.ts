@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { createMatch } from "@/lib/match.functions";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/events";
-import { guestName } from "@/lib/guest-name";
 
 /**
  * Lowest-friction CTA: creates an anonymous guest and drops them
@@ -24,13 +23,14 @@ export function useGuestPlay() {
       // Ensure we have a session — sign in anonymously if needed
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session?.user) {
-        // Skicka med ett namn i metadatan direkt. Triggern
-        // handle_new_user laser raw_user_meta_data->>username forst och
-        // faller tillbaka pa user_ || left(id, 8) — utan detta heter
-        // varje gast user_c8a56e2c i navbaren och pa resultatskarmen.
-        const { error } = await supabase.auth.signInAnonymously({
-          options: { data: { username: guestName() } },
-        });
+        // INGET username i metadatan. `users.username` är UNIQUE och
+        // gästnamnen kommer ur en lista på 20 ord, så det tjugoförsta
+        // "Gäst ekorre" fick triggern att fela — auth svarade 500
+        // "Database error creating anonymous user" och gästläget dog för
+        // en växande andel av besökarna. Låt triggern sätta
+        // user_ || left(id, 8), som är unikt per konstruktion;
+        // `displayName()` gör om det till lundnamnet vid rendering.
+        const { error } = await supabase.auth.signInAnonymously();
         if (error) {
           toast.error("Kunde inte starta gästläge", { description: error.message });
           setLoading(false);

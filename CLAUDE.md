@@ -1382,6 +1382,30 @@ sker efter filtreringen, annars får listan hål i numreringen.
 Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
 `limits.guestSignup` är 5/h **per IP**.
 
+### Gästnamnet får aldrig skrivas till `users.username` (2026-08-20)
+
+`users.username` är **UNIQUE**, och `guestName()` lottar ur en lista på **20
+ord**. Mellan 2026-08-18 och 2026-08-20 skickade `useGuestPlay` och
+`matchmaking.tsx` med namnet i metadatan vid `signInAnonymously()`, så triggern
+skrev in det — och det tjugoförsta gästkontot som lottade ett upptaget namn
+fick unique-violation i `handle_new_user`, vilket auth svarar på med
+`500 "Database error creating anonymous user"`. Användaren såg **"Kunde inte
+starta gästläge"**.
+
+- **Felet ratchetar och är därför inte reproducerbart på beställning.** Varje
+  lyckad gäst gör nästa sämre: vid upptäckten var 15 av 20 namn tagna, alltså
+  föll 75 % av alla försök, slumpmässigt. Det såg ut som ett flakigt nätverk.
+- **Ingen migration behövs och ingen ska göras.** Triggerns fallback
+  `'user_' || left(id, 8)` är unik per konstruktion, och `displayName()`
+  (`guest-name.ts`) gör om den till "Gäst ekorre" **vid rendering** — navbar,
+  match och resultatskärm går alla genom den. Namnet var alltså redundant med
+  visningslagret hela tiden.
+- **`guestName()` är en ren visningshjälpare.** Kollisioner är acceptabla där
+  och bara där. Skriv den aldrig till databasen igen.
+- De 15 rader som hann skrivas ligger kvar och är giltiga; `isAutoUsername`
+  känner igen båda schemana, pinnat i `username.test.ts` och
+  `guest-name.test.ts`.
+
 ### GDPR / privacy — non-negotiable
 
 - `/integritetspolicy` must stay **factually true**. Since 2026-08-15 it documents PostHog analytics behind explicit consent — update it whenever what we collect changes.

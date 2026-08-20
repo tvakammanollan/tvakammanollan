@@ -6,9 +6,14 @@
 // på resultatskärmen, och ser ut som ett internt id snarare än en
 // person.
 //
-// Namnet sätts i metadatan REDAN vid inloggningen, så triggern plockar
-// upp det. Det kräver alltså ingen migration och ingen extra skrivning
-// mot users-tabellen.
+// Namnet sätts BARA vid rendering, aldrig i databasen. Det låg en tid i
+// metadatan vid `signInAnonymously()` så att triggern skrev in det — men
+// `users.username` är UNIQUE och listan är 20 ord lång, så när det
+// tjugoförsta kontot råkade lotta ett upptaget namn felade triggern och
+// auth svarade 500 "Database error creating anonymous user". Gästläget
+// dog då för en växande andel av besökarna (15 av 20 namn var tagna när
+// det upptäcktes, alltså 75 % av försöken). Låt triggern sätta sitt
+// `user_ || left(id, 8)` — unikt per konstruktion — och gör om det här.
 //
 // Orden är hämtade ur lunden: samma bildvärld som resten av sajten.
 
@@ -39,8 +44,9 @@ const ORD = [
  * Deterministiskt gästnamn, t.ex. "Gäst ekorre". Samma frö ger alltid
  * samma namn, så en gäst som laddar om sidan heter likadant.
  *
- * Kollisioner är acceptabla: gästkonton hamnar inte på topplistan och
- * namnet är en artighet, inte en identitet.
+ * Kollisioner är acceptabla HÄR och bara här: namnet renderas, det lagras
+ * aldrig. Skriv det aldrig till `users.username` — kolumnen är UNIQUE och
+ * tjugo ord tar slut.
  */
 export function guestName(seed?: string): string {
   const s = seed ?? Math.random().toString(36).slice(2);
