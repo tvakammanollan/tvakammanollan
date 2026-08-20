@@ -31,7 +31,7 @@ function IntegritetspolicyPage() {
         align="center"
         eyebrow="Juridik"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-08-17"
+        subtitle="Senast uppdaterad: 2026-08-20"
         variant="compact"
       />
       <article
@@ -67,8 +67,11 @@ function IntegritetspolicyPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong style={{ color: "var(--cream)" }}>E-postadress:</strong> vid kontoregistrering
-              (för inloggning och eventuell återställning av lösenord)
+              <strong style={{ color: "var(--cream)" }}>E-postadress:</strong> vid
+              kontoregistrering, för inloggning och återställning av lösenord. Vi skickar ett mejl
+              med en länk för att bekräfta att adressen är din, och sparar då länkens engångsnyckel
+              tills den använts eller gått ut (ett dygn). Du är inloggad och kan använda sajten
+              direkt — bekräftelsen behövs bara för att skriva i forumet.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Användarnamn:</strong> självvalt, visas på
@@ -77,6 +80,17 @@ function IntegritetspolicyPage() {
             <li>
               <strong style={{ color: "var(--cream)" }}>Spelhistorik:</strong> matchresultat,
               ELO-utveckling, statistik per delprov
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Skrivna provpass:</strong> när du är
+              inloggad och lämnar in ett gammalt prov sparar vi vilka svar du lade och hur många
+              rätt du fick, så att du kan gå igenom rättningen i efterhand. Är du utloggad stannar
+              allt i din egen webbläsare och når aldrig oss.
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Buggrapporter:</strong> texten du skriver,
+              vilken sida du var på, din webbläsarversion och — om du fyller i den — en e-postadress
+              vi kan svara på.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Foruminlägg:</strong> texten du skriver i
@@ -96,10 +110,11 @@ function IntegritetspolicyPage() {
                 Telefonnummer om du ber oss höra av oss:
               </strong>{" "}
               om du fyller i formuläret &quot;Osäker på om det är något för dig?&quot; sparar vi
-              ditt mobilnummer, ditt namn om du skrev det, dina två svar och tidpunkten du skickade
-              in. Att skicka in numret är ditt samtycke: texten över knappen säger vad numret
-              används till. Det används <em>enbart</em> för att ringa eller sms:a dig om
-              studieupplägget. Vi hör inte av oss om något annat, och numret lämnas inte vidare.
+              ditt mobilnummer, samt namn, e-postadress och meddelande om du skrev något av det,
+              dina två svar och tidpunkten du skickade in. Att skicka in numret är ditt samtycke:
+              texten över knappen säger vad numret används till. Uppgifterna används <em>enbart</em>{" "}
+              för att kontakta dig om studieupplägget. Vi hör inte av oss om något annat, och de
+              lämnas inte vidare.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Teknisk information:</strong> IP-adress och
@@ -151,11 +166,28 @@ function IntegritetspolicyPage() {
               används (EU-instans, data lagras inom EU). Laddas endast efter ditt samtycke.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Calendly:</strong> tidsbokning för
-              coachning. Väljer du en tid skickas ditt namn, din e-postadress och dina svar på
-              bokningsfrågorna till Calendly, som skapar mötet och skickar kalenderinbjudan.
-              Calendly är personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter
+              <strong style={{ color: "var(--cream)" }}>Resend:</strong> utskick av e-post
+              (bekräftelse av din adress, kvitto på köp). Din adress och mejlets innehåll passerar
+              deras servrar. Resend är personuppgiftsbiträde åt oss och kan överföra uppgifter
               utanför EU/EES med stöd av EU-kommissionens standardavtalsklausuler. Läs mer i{" "}
+              <a
+                href="https://resend.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+                style={{ color: "var(--amber)" }}
+              >
+                Resends integritetspolicy
+              </a>
+              .
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Calendly:</strong> tidsbokning för
+              coachning. Efter ett genomfört köp väljer du en tid, och då skickas ditt namn, din
+              e-postadress och dina svar på bokningsfrågorna till Calendly, som skapar mötet och
+              skickar kalenderinbjudan. Calendly är personuppgiftsansvarig för sin egen behandling
+              och kan överföra uppgifter utanför EU/EES med stöd av EU-kommissionens
+              standardavtalsklausuler. Läs mer i{" "}
               <a
                 href="https://calendly.com/privacy"
                 target="_blank"

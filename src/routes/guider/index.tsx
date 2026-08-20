@@ -353,7 +353,7 @@ function GuiderPage() {
                 Gamla prov med facit
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Skriv hela prov 2022–2026 med rättning och uppskattad normering.
+                Skriv hela prov 2012–2026 med rättning och uppskattad normering.
               </div>
             </Link>
             <Link

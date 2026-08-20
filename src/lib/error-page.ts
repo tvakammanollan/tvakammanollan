@@ -25,7 +25,7 @@ export function renderErrorPage(): string {
       <p>Något gick fel på vår sida. Du kan prova att ladda om, eller gå tillbaka till startsidan så löser det sig oftast direkt.</p>
       <div class="actions">
         <button class="primary" onclick="location.reload()">Försök igen</button>
-        <a class="secondary" href="/">Till hem</a>
+        <a class="secondary" href="/">Till startsidan</a>
       </div>
     </div>
   </body>

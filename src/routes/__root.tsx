@@ -40,7 +40,7 @@ const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => m
 
 function NotFoundComponent() {
   const POPULAR = [
-    { to: "/gamla-prov", label: "Gamla prov", desc: "Skriv hela HP-pass 2022–2026" },
+    { to: "/gamla-prov", label: "Gamla prov", desc: "Skriv hela HP-pass 2012–2026" },
     { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
     { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
     { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
@@ -83,7 +83,7 @@ function NotFoundComponent() {
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
           >
-            Till hem
+            Till startsidan
           </Link>
         </div>
       </div>
@@ -99,7 +99,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
       <div className="max-w-lg text-center">
         <h1 className="text-xl font-semibold tracking-tight">Något gick snett</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Försök igen eller gå tillbaka till hem.
+          Försök igen, eller gå tillbaka till startsidan.
         </p>
         <details className="mt-4 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-left text-xs">
           <summary className="cursor-pointer text-white/60">Teknisk info (för debugging)</summary>
@@ -123,7 +123,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition hover:bg-accent"
           >
-            Till hem
+            Till startsidan
           </a>
         </div>
       </div>

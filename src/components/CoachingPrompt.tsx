@@ -32,8 +32,10 @@ import {
       över helt och räknarna står kvar, så nudgen kommer vid nästa
       navigering i stället.
 
-   Knappen går rakt in i tidsväljaren via CoachingModal (`autoStart`) — samma
-   köpväg som kortet på startsidan, ingen andra kodväg till Stripe.
+   Knappen går rakt till kassan via CoachingModal (`autoStart`) — samma köpväg
+   som kortet på startsidan, ingen andra kodväg till Stripe. Nudgen har redan
+   visat pris och argument, så erbjudandesteget vore att säga samma sak en
+   gång till. Tiden väljs efter betalningen, på tacksidan.
    ===================================================================== */
 
 /**
@@ -168,7 +170,7 @@ export function CoachingPrompt() {
                 "Byggt efter din nivå och tiden du har kvar",
                 "Av någon som själv skrivit 1,95 eller högre på provet",
                 tidsbokning
-                  ? "Du väljer en tid som passar innan du betalar"
+                  ? "Direkt efter köpet väljer du en tid som passar dig"
                   : "Vi hör av oss inom 24 timmar efter köpet",
               ].map((rad) => (
                 <li key={rad} className="flex items-start gap-2.5">
@@ -189,11 +191,7 @@ export function CoachingPrompt() {
               onClick={boka}
               className={`w-full bg-[#ae2f26] py-6 text-[15px] text-[#fff8f5] hover:bg-[#8f2620] ${villkor ? "mt-2.5" : "mt-6"}`}
             >
-              {pris
-                ? tidsbokning
-                  ? `Boka en tid · ${pris}`
-                  : `Kom igång för ${pris}`
-                : "Läs mer om coachning"}
+              {pris ? `Kom igång för ${pris}` : "Läs mer om coachning"}
             </Button>
 
             <button

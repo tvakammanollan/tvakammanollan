@@ -30,7 +30,7 @@ function VillkorPage() {
         align="center"
         eyebrow="Juridik"
         title="Användarvillkor"
-        subtitle="Senast uppdaterad: 2026-08-18"
+        subtitle="Senast uppdaterad: 2026-08-20"
         variant="compact"
       />
       <article
@@ -115,9 +115,10 @@ function VillkorPage() {
           </h3>
           <p>
             Ett studieupplägg anpassat efter din nivå och hur lång tid du har kvar till provet,
-            framtaget av en coach som själv skrivit 1,95 eller högre på högskoleprovet. Vi kontaktar
-            dig inom 24 timmar efter köpet, på den e-postadress eller det telefonnummer du angav i
-            kassan.
+            framtaget av en coach som själv skrivit 1,95 eller högre på högskoleprovet. Direkt efter
+            att betalningen gått igenom väljer du en tid för samtalet bland de lediga tiderna, och
+            får en kalenderinbjudan. Går det inte att välja tid just då hör vi av oss inom 24 timmar
+            på den e-postadress eller det telefonnummer du angav i kassan.
           </p>
           <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Pris och betalning

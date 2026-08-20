@@ -43,7 +43,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Hur fungerar Gamla prov-läget?",
-    a: "Du väljer ett provpass från ett gammalt högskoleprov (2022–2026) och skriver alla 40 frågor i din egen takt. Efter att du lämnat in får du facit och en uppskattning av vad det skulle motsvara i normerad HP-poäng.",
+    a: "Du väljer ett provpass från ett gammalt högskoleprov (2012–2026) och skriver alla 40 frågor i din egen takt. Efter att du lämnat in får du facit och en uppskattning av vad det skulle motsvara i normerad HP-poäng.",
   },
   {
     q: "När är nästa Högskoleprovet?",
