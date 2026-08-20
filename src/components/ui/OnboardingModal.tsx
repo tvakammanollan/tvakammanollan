@@ -23,6 +23,7 @@ import {
 import { completeOnboarding } from "@/lib/onboarding.functions";
 import { trackEvent } from "@/lib/events";
 import { useDismissible } from "@/hooks/useDismissible";
+import { displayName } from "@/lib/guest-name";
 import { toast } from "sonner";
 
 const GOALS: ReadonlyArray<{ icon: LucideIcon; range: string; label: string; value: number }> = [
@@ -154,7 +155,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
           {step === 0 && (
             <>
               <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-                Välkommen, {profile.username}!
+                Välkommen, {displayName(profile.username, profile.id)}!
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">Vad siktar du på för HP-poäng?</p>
               <div className="mt-5 grid gap-2">

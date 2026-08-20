@@ -55,4 +55,16 @@ describe("initials", () => {
     expect(initials("niklas")).toBe("NI");
     expect(initials("!!")).toBe("??");
   });
+
+  it("behåller å, ä och ö i stället för att stryka dem", () => {
+    // Med [^a-zA-Z0-9] föll bokstaven bort och "Åke" blev "KE".
+    expect(initials("Åke")).toBe("ÅK");
+    expect(initials("Öberg")).toBe("ÖB");
+    expect(initials("äppelmos")).toBe("ÄP");
+  });
+
+  it("hoppar över mellanslag och skiljetecken", () => {
+    expect(initials("Gäst kantarell")).toBe("GÄ");
+    expect(initials("lina_p")).toBe("LI");
+  });
 });

@@ -20,9 +20,16 @@ export function avatarColor(seed: string): string {
   return PALETTE[h % PALETTE.length];
 }
 
+/**
+ * Två tecken ur namnet till avatarbrickan.
+ *
+ * `\p{L}` och inte `a-zA-Z`: den gamla klassen strök å, ä och ö helt, så
+ * "Åke" blev **KE** och "Öberg" blev **BE** — på en sajt där varannat namn
+ * har en av dem. Siffror är med eftersom användarnamn får innehålla dem.
+ */
 export function initials(name: string): string {
   const clean = name
-    .replace(/[^a-zA-Z0-9]/g, "")
+    .replace(/[^\p{L}\p{N}]/gu, "")
     .slice(0, 2)
     .toUpperCase();
   return clean || "??";

@@ -950,7 +950,7 @@ function PlayerColumn({
         highlight ? "border-primary/40 bg-primary/5" : "border-border bg-background"
       }`}
     >
-      <UserAvatar name={seed || name} size={48} />
+      <UserAvatar name={name} seed={seed} size={48} />
       <div className="mt-2 truncate text-sm font-semibold" title={name}>
         {name}
       </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
+import { displayName } from "@/lib/guest-name";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { RankIcon } from "@/components/ui/RankIcon";
@@ -94,7 +95,11 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
         <Reveal y={16}>
           <header>
             <div className="flex items-center gap-3">
-              <UserAvatar name={isGuest ? "Gäst" : profile.username} size={44} />
+              <UserAvatar
+                name={isGuest ? "Gäst" : displayName(profile.username, profile.id)}
+                seed={profile.id}
+                size={44}
+              />
               <div className="min-w-0">
                 <EyebrowLabel tone="teal" animate={false}>
                   {greeting}
