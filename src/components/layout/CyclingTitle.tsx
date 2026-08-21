@@ -37,12 +37,25 @@ const HANDOFF = 0.26;
  *    the negative margins is not the fix either — it pushes the word down and
  *    opens a 0.62em gap between the two heading lines, so they stop reading as
  *    one block. Grow the window, keep the footprint.
- * 3. **Every word sits i samma rutnätscell**, vänsterställda med
- *    `justify-items-start`. De var absolutpositionerade i en flex-container
- *    förut, vilket lämnar den vågräta placeringen åt webbläsarens regler för
- *    statisk position hos absolutpositionerade flexbarn. Chrome centrerar dem,
- *    men ingenting i layouten sa det, och samma trick är vad som tvingade in
- *    den fasta höjden i (2).
+ * 3. **Rutan är en `inline-block` med `position: relative`, och orden ligger
+ *    ovanpå varandra genom att alla utom det synliga är absolutpositionerade.**
+ *    Två tidigare varianter är förkastade, båda av skäl som står kvar:
+ *      - *Absolutpositionerade barn i en FLEX-container* lämnar den vågräta
+ *        placeringen åt webbläsarens regler för statisk position. Chrome
+ *        centrerar dem, men ingenting i layouten sa det. Här är containern en
+ *        vanlig blockbox, så `left: 0` betyder `left: 0`.
+ *      - *En `inline-grid` där alla ord låg i samma cell* placerade rätt, men
+ *        gjorde varje ord till ett grid-item — alltså en blocknivåbox. Kopierar
+ *        man rubriken lägger webbläsaren en RADBRYTNING vid varje sådan gräns
+ *        OCH tar med alla ord: "Bemästra Ord." blev fem rader, varav fyra ord
+ *        aldrig hade synts på skärmen. Mätt i Chrome 2026-08-21: `inline-grid`
+ *        ger `"Bemästra \nOrd.\nLäsning."`, `inline-block` ger `"Bemästra
+ *        Ord."`. `user-select: none` tar bort de osynliga orden men INTE
+ *        radbrytningen — det är boxtypen som avgör den. Byt inte tillbaka.
+ *    Paddingen ligger på rutan, och de absolutpositionerade orden bär samma
+ *    padding-top: en absolutpositionerad box hänger på PADDINGKANTEN, medan
+ *    det inflödande ordet börjar vid innehållskanten, så utan den skulle det
+ *    utgående ordet ligga 0,22em för högt.
  * 4. **Offsets are a percentage of the word's own height, not pixels.** The old
  *    ±150px was most of a line on a phone and a third of one on desktop, and
  *    the spring it rode on (stiffness 50, default damping) overshot far enough
@@ -57,6 +70,8 @@ const HANDOFF = 0.26;
  *    masken måste klippa i höjdled **men inte i sidled** — därav `clip-path`
  *    i stället för `overflow-hidden`, som klipper i båda riktningarna och
  *    kapade det inkommande ordet så länge rutan ännu inte hunnit växa.
+ *    `overflow: visible` är dessutom vad som håller baslinjen i texten i
+ *    stället för i bottenmarginalkanten — se (1) och `SplitText`.
  *
  * Direction is the same every time, wrap-around included: the word leaving goes
  * up, the next one rises from below, and they take turns rather than crossing —
@@ -87,9 +102,9 @@ export function CyclingTitle({
 
   // Bredden går inte att räkna fram, den måste mätas: orden är olika långa,
   // rubriken står före på samma rad, och rutan ska vara exakt så bred som
-  // ordet som visas just nu. Det inaktiva ordet ligger på `w-0` (se nedan), så
-  // serverns HTML har redan rätt bredd — mätningen finns bara för att kunna
-  // ANIMERA bytet, som en intrinsisk bredd aldrig går att göra.
+  // ordet som visas just nu. Det inaktiva ordet ligger utanför flödet (se
+  // nedan), så serverns HTML har redan rätt bredd — mätningen finns bara för
+  // att kunna ANIMERA bytet, som en intrinsisk bredd aldrig går att göra.
   useEffect(() => {
     const mät = () => {
       const el = wordRefs.current[index];
@@ -106,7 +121,7 @@ export function CyclingTitle({
   return (
     <m.span
       className={cn(
-        "inline-grid grid-cols-1 grid-rows-1 justify-items-start align-baseline",
+        "relative inline-block align-baseline",
         // Paddingen är fönstret, marginalerna nollar den mot layouten — annars
         // skjuts ordet ner och de två rubrikraderna glider isär.
         "pt-[0.22em] pb-[0.12em] -mt-[0.22em] -mb-[0.12em]",
@@ -131,12 +146,17 @@ export function CyclingTitle({
             }}
             aria-hidden={!active}
             className={cn(
-              "col-start-1 row-start-1 whitespace-nowrap text-[var(--amber)]",
-              // Bara det synliga ordet får bidra till bredden. Utan det blir
-              // rutan så bred som det längsta ordet redan i serverns HTML, och
-              // en centrerad rubrik står snett tills mätningen hunnit köra.
-              !active && "w-0",
+              "whitespace-nowrap text-[var(--amber)]",
+              // Bara det synliga ordet ligger i flödet — det ger rutan sin
+              // höjd och sin bredd. Resten hänger ovanpå det, utanför flödet,
+              // och är dessutom `select-none`: de ska varken synas, mätas
+              // eller följa med när någon kopierar rubriken.
+              active ? "inline-block" : "absolute left-0 select-none",
             )}
+            // En absolutpositionerad box hänger på paddingkanten, det inflödande
+            // ordet börjar vid innehållskanten. Samma padding-top här lägger
+            // dem på samma rad. Se punkt 3 i doc-kommentaren.
+            style={active ? undefined : { top: 0, paddingTop: "0.22em" }}
             initial={{ opacity: 0, y: reduce ? "0%" : TRAVEL }}
             animate={{
               opacity: active ? 1 : 0,
