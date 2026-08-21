@@ -34,7 +34,7 @@ const ALLA = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"];
 const valda = kategorier.length > 0 ? kategorier : ALLA;
 
 const FÄLT =
-  "id,category,exam_term,q_num,question_text,options,correct_answer,image_url,image_caption";
+  "id,category,exam_term,provpass_num,q_num,question_text,options,correct_answer,image_url,image_caption";
 
 async function hämta(kategori: string): Promise<ValidatableQuestion[]> {
   const ut: ValidatableQuestion[] = [];
@@ -127,23 +127,38 @@ if (delad.length > 0) {
   for (const e of delad) {
     const term = e.q.exam_term;
     if (!term) continue;
-    // Provpasset står inte på raden; leta i alla pass för terminen.
+    // Frågenummer är inte unikt per TERMIN — det är unikt per PROVPASS
+    // (varje kvantitativt pass har sina egna 1–40). Att leta i "alla pass för
+    // terminen" utan att kolla `provpass_num` kan råka hitta en annan
+    // uppgift med samma nummer i ett annat pass och jämföra fel bild mot
+    // fel arkivrad — exakt den bugg det här skriptet en gång skulle avslöja.
     let arkivfråga: { image?: string } | undefined;
-    for (let pass = 1; pass <= 5; pass++) {
+    const pass = e.q.provpass_num;
+    if (pass != null) {
       const fil = `src/data/prov/${term}-${pass}.json`;
-      if (!existsSync(fil)) continue;
-      const data = JSON.parse(readFileSync(fil, "utf8")) as {
-        questions?: Array<{ nr?: number; delprov?: string; image?: string }>;
-      };
-      const träff = (data.questions ?? []).find(
-        (q) => q.nr === e.q.q_num && q.delprov === e.q.category,
-      );
-      if (träff) {
-        arkivfråga = träff;
-        break;
+      if (existsSync(fil)) {
+        const data = JSON.parse(readFileSync(fil, "utf8")) as {
+          questions?: Array<{ nr?: number; delprov?: string; image?: string }>;
+        };
+        arkivfråga = (data.questions ?? []).find(
+          (q) => q.nr === e.q.q_num && q.delprov === e.q.category,
+        );
       }
     }
-    if (arkivfråga?.image && arkivfråga.image === e.q.image_url) egenBild++;
+    // Bilden att jämföra mot arkivet är `image_caption.optionsImage` när den
+    // finns (DTK, efter 2026-08-21-fixen) — annars `image_url`, som gällde
+    // innan (XYZ/KVA). De två bär aldrig samma sak samtidigt.
+    let egenBildFältet: string | undefined;
+    if (typeof e.q.image_caption === "string" && e.q.image_caption.startsWith("{")) {
+      try {
+        const parsed = JSON.parse(e.q.image_caption) as { optionsImage?: unknown };
+        if (typeof parsed.optionsImage === "string") egenBildFältet = parsed.optionsImage;
+      } catch {
+        /* ingen JSON — inget fel, faller vidare till image_url */
+      }
+    }
+    egenBildFältet ??= e.q.image_url ?? undefined;
+    if (arkivfråga?.image && arkivfråga.image === egenBildFältet) egenBild++;
     else delarBild.push(e);
   }
   console.log(

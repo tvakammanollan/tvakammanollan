@@ -24,7 +24,14 @@ import {
 import { MathText } from "@/components/MathTextLazy";
 import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "@/components/prov/ProvFigure";
-import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
+import {
+  parseStem,
+  parseOptionCrops,
+  parseOptionsImage,
+  optionCropSource,
+  type ExamStem,
+  type OptionsImage,
+} from "@/components/question/examCrops";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
@@ -132,6 +139,8 @@ interface TrainQuestion {
   /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
   stem: ExamStem | null;
   optionCrops: Crop[] | null;
+  /** DTK: alternativen i en EGEN bild, skild från `image_url` (diagrammet). */
+  optionsImage: OptionsImage | null;
 }
 
 interface TrainConfig {
@@ -273,6 +282,11 @@ function TrainPage() {
         return { id: bokstav, text: String(o ?? "") };
       });
       const parsed = parseQuestionText(useCleaned ? row.cleaned_question_text : row.question_text);
+      const stem = useCleaned ? null : parseStem(row.image_caption);
+      // DTK: alternativen kan ligga i en EGEN bild, skild från `image_url`
+      // (diagrammet). Samma `image_caption`-fält bär bara en av de två
+      // formerna åt gången — se `examCrops.ts`.
+      const optionsImage = useCleaned ? null : parseOptionsImage(row.image_caption);
       return {
         id: row.id,
         question_text: parsed.text,
@@ -285,8 +299,16 @@ function TrainPage() {
         image_url: row.image_url ?? null,
         // Beskärningarna gäller uppgiftens eget utsnitt. Den städade texten är
         // en annan uppgift än den bilden visar, så de två får aldrig blandas.
-        stem: useCleaned ? null : parseStem(row.image_caption),
-        optionCrops: useCleaned ? null : parseOptionCrops(row.options),
+        //
+        // `optionCrops` kräver `stem` ELLER `optionsImage.aspect`: ettdera
+        // bär `aspect` (hela bildens bredd/höjd), och utan den föll CropView
+        // tillbaka på `?? 1` — rätt bara för kvadratiska bilder. Varje annan
+        // bild fick fel höjd på beskärningsrutan: text som klipptes, eller ett
+        // utsnitt som hamnade fel i rutan. Halva uppsättningar faller redan
+        // tillbaka på hela utsnittet när `optionCrops` är null.
+        stem,
+        optionsImage,
+        optionCrops: stem || optionsImage?.aspect ? parseOptionCrops(row.options) : null,
         correct_answer: row.correct_answer,
         explanation: row.explanation,
         difficulty: row.difficulty,
@@ -579,7 +601,18 @@ function TrainPage() {
     const bildUppgift = isImageQuestion({
       image_url: currentQ.image_url,
       options: currentQ.options,
+      hasOwnOptionsImage: !!currentQ.optionsImage,
     });
+    // Käll­bilden och proportionen för ALTERNATIVENS beskärningar — kan
+    // skilja sig från stammens (DTK). Se `examCrops.ts`.
+    const cropSource = optionCropSource(currentQ.image_url, currentQ.stem, currentQ.optionsImage);
+    // De 18 (av 77) DTK-uppgifter vars egen bild aldrig fick per-bokstav-
+    // koordinater: ingen `optionCrops`, men `optionsImage` finns. Hela bilden
+    // visas då i stället för ett utsnitt per alternativ.
+    const helBildFallback =
+      currentQ.optionsImage && !currentQ.optionsImage.aspect && !currentQ.optionCrops
+        ? currentQ.optionsImage
+        : null;
     return (
       <div className="flex min-h-screen flex-col bg-background">
         {/* Top bar */}
@@ -696,6 +729,17 @@ function TrainPage() {
                 )}
               </div>
             )}
+            {/* DTK utan per-bokstav-koordinater (18 av 77): uppgiftens EGNA
+                bild visar alternativen som en helhet, ovanför knapparna. */}
+            {helBildFallback && (
+              <div className="mb-5">
+                <ProvFigure
+                  src={helBildFallback.src}
+                  alt="Svarsalternativ ur provhäftet"
+                  label="Svarsalternativ ur provhäftet"
+                />
+              </div>
+            )}
             <div className="grid gap-2" role="radiogroup">
               {currentQ.options.map((opt, i) => {
                 const letter = optionLetters[i] ?? String(i + 1);
@@ -747,14 +791,14 @@ function TrainPage() {
                         och klipps då ut ur den. Annars är det text — och en
                         alternativtext som bara är sin egen bokstav skrivs inte
                         ut, den står redan i brickan till vänster. */}
-                    {currentQ.optionCrops && currentQ.image_url ? (
+                    {currentQ.optionCrops && cropSource ? (
                       <span
                         className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
                       >
                         <CropView
-                          src={currentQ.image_url}
+                          src={cropSource.src}
                           crop={currentQ.optionCrops[i]}
-                          imageAspect={currentQ.stem?.aspect ?? 1}
+                          imageAspect={cropSource.aspect}
                           alt={`Svarsalternativ ${letter}`}
                         />
                       </span>
@@ -795,7 +839,11 @@ function TrainPage() {
                       options={currentQ.rawOptions}
                       selected={selected}
                       correct={currentQ.correct_answer}
-                      imageUrl={currentQ.image_url}
+                      // DTK: bilden med alternativen (visad ovanför via
+                      // `helBildFallback`) är inte `image_url` (diagrammet) —
+                      // passar man in fel bild pekar "Alternativen står i
+                      // bilden ovanför" på en bild som inte har dem.
+                      imageUrl={currentQ.optionsImage?.src ?? currentQ.image_url}
                       math={MATH_SUBS.includes(currentQ.category as (typeof MATH_SUBS)[number])}
                     />
                   )}

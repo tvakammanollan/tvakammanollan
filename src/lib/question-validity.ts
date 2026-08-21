@@ -27,6 +27,9 @@ export interface ValidatableQuestion {
   id: string;
   category: string;
   exam_term?: string | null;
+  /** Frågenumret är unikt PER PASS, inte per termin — 1–40 upprepas i varje
+      kvantitativt pass. Krävs för att slå upp rätt arkivrad. */
+  provpass_num?: number | null;
   q_num?: number | null;
   question_text?: string | null;
   options?: unknown;
@@ -112,6 +115,46 @@ export function hasStemAspect(caption: unknown): boolean {
 }
 
 /**
+ * Bär `image_caption` en EGEN bild för alternativen, skild från `image_url`?
+ *
+ * DTK:s `image_url` är diagramuppslaget och innehåller aldrig alternativen
+ * (se CLAUDE.md). 77 uppgifter hade ändå bara sin egen bokstav som
+ * alternativtext — mönstret `alternativ_endast_i_delad_bild` nedan — trots
+ * att arkivet HAR en egen bild med alternativen, sparad separat. `aspect`
+ * saknas för 18 av dem (PDF-extraktionen fångade aldrig var varje bokstav
+ * sitter) och de visar då hela bilden i stället för ett utsnitt per
+ * alternativ — se `examCrops.ts`s `parseOptionsImage`.
+ */
+export function hasOwnOptionsImage(caption: unknown): boolean {
+  if (typeof caption !== "string" || !caption.startsWith("{")) return false;
+  try {
+    const v = JSON.parse(caption) as { optionsImage?: unknown };
+    return typeof v.optionsImage === "string" && v.optionsImage.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Bär `image_caption` en giltig proportion för `optionsImage`?
+ *
+ * Skild från `hasOwnOptionsImage`: 18 av de 77 DTK-uppgifterna HAR en egen
+ * bild men saknar `optionsAspect` (PDF-extraktionen fångade aldrig var varje
+ * bokstav sitter) — de visar hela bilden i stället för ett utsnitt, och då
+ * finns det ingen beskärningsmatte att räcka en proportion till. Den skillnaden
+ * är avsiktlig, inte ett fel — se `parseOptionsImage`.
+ */
+export function hasOwnOptionsAspect(caption: unknown): boolean {
+  if (typeof caption !== "string" || !caption.startsWith("{")) return false;
+  try {
+    const v = JSON.parse(caption) as { optionsAspect?: unknown };
+    return typeof v.optionsAspect === "number" && v.optionsAspect > 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Alla fel på uppgiften. Tom lista = spelbar.
  *
  * Returnerar ALLA fel och inte bara det första: rapporten ska kunna säga hur
@@ -121,7 +164,10 @@ export function hasStemAspect(caption: unknown): boolean {
 export function questionFaults(q: ValidatableQuestion): QuestionFault[] {
   const fel: QuestionFault[] = [];
   const raw = Array.isArray(q.options) ? q.options : [];
-  const hasImage = !!q.image_url;
+  // En egen bild för alternativen (DTK) räknas som "det finns en bild att
+  // klippa ur" precis som `image_url` gör för XYZ/KVA — se
+  // `hasOwnOptionsImage` ovan.
+  const hasImage = !!q.image_url || hasOwnOptionsImage(q.image_caption);
 
   if (!q.correct_answer || !String(q.correct_answer).trim()) {
     fel.push("saknar_facit");
@@ -167,8 +213,14 @@ export function questionFaults(q: ValidatableQuestion): QuestionFault[] {
   if (ingenEgenText && !hasImage) fel.push("bilduppgift_utan_bild");
 
   // Utan bildproportion faller `CropView` tillbaka på 1:1, och varje utsnitt
-  // ur en bild som inte är kvadratisk blir då fel beskuret.
-  if (medCrop.length > 0 && !hasStemAspect(q.image_caption)) {
+  // ur en bild som inte är kvadratisk blir då fel beskuret. Två giltiga
+  // källor till proportionen: `stem.aspect` (XYZ/KVA) eller
+  // `optionsImage.optionsAspect` (DTK) — aldrig båda på samma rad.
+  if (
+    medCrop.length > 0 &&
+    !hasStemAspect(q.image_caption) &&
+    !hasOwnOptionsAspect(q.image_caption)
+  ) {
     fel.push("beskärning_utan_bildproportion");
   }
 

@@ -24,7 +24,14 @@ import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
 import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "@/components/prov/ProvFigure";
-import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
+import {
+  parseStem,
+  parseOptionCrops,
+  parseOptionsImage,
+  optionCropSource,
+  type ExamStem,
+  type OptionsImage,
+} from "@/components/question/examCrops";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
@@ -64,6 +71,8 @@ interface QuestionRow {
   /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
   stem: ExamStem | null;
   optionCrops: Crop[] | null;
+  /** DTK: alternativen i en EGEN bild, skild från `image_url` (diagrammet). */
+  optionsImage: OptionsImage | null;
 }
 
 interface MatchRow {
@@ -271,6 +280,21 @@ function MatchPage() {
                 : String(o),
           );
           const parsed = parseQuestionText(useCleaned ? q.cleaned_question_text : q.question_text);
+          // Beskärningarna gäller uppgiftens eget utsnitt; den städade texten
+          // beskriver en annan uppgift än den bilden visar.
+          const stem = useCleaned ? null : parseStem(q.image_caption);
+          // DTK: alternativen kan ligga i en EGEN bild, skild från `image_url`
+          // (diagrammet). Se `examCrops.ts`. Kolliderar aldrig med `stem` —
+          // samma `image_caption`-rad bär bara en av de två formerna.
+          const optionsImage = useCleaned ? null : parseOptionsImage(q.image_caption);
+          // Alternativens crops kräver `stem` ELLER `optionsImage.aspect` —
+          // ettdera bär `aspect` (hela bildens bredd/höjd). Utan den föll
+          // CropView tillbaka på `?? 1`, vilket bara stämmer för kvadratiska
+          // bilder: varje annan bild fick fel höjd på beskärningsrutan, alltså
+          // text som klipptes eller ett utsnitt som hamnade helt fel i rutan.
+          // Halva uppsättningar (crops utan källa) ska falla tillbaka på hela
+          // utsnittet, som redan sker när `optionCrops` är null.
+          const optionCrops = stem || optionsImage?.aspect ? parseOptionCrops(q.options) : null;
           return {
             id: q.id,
             question_text: parsed.text,
@@ -280,10 +304,9 @@ function MatchPage() {
             passage_id: q.passage_id,
             passage_text: q.passage_text,
             image_url: q.image_url ?? null,
-            // Beskärningarna gäller uppgiftens eget utsnitt; den städade texten
-            // beskriver en annan uppgift än den bilden visar.
-            stem: useCleaned ? null : parseStem(q.image_caption),
-            optionCrops: useCleaned ? null : parseOptionCrops(q.options),
+            stem,
+            optionCrops,
+            optionsImage,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -1033,7 +1056,18 @@ function QuestionCard({
   const bildUppgift = isImageQuestion({
     image_url: currentQ.image_url,
     options: currentQ.options,
+    hasOwnOptionsImage: !!currentQ.optionsImage,
   });
+  // Käll­bilden och proportionen för ALTERNATIVENS beskärningar — kan skilja
+  // sig från stammens (DTK). Se `examCrops.ts`.
+  const cropSource = optionCropSource(currentQ.image_url, currentQ.stem, currentQ.optionsImage);
+  // De 18 (av 77) DTK-uppgifter vars egen bild aldrig fick per-bokstav-
+  // koordinater: ingen `optionCrops`, men `optionsImage` finns. Hela bilden
+  // visas då i stället för ett utsnitt per alternativ.
+  const helBildFallback =
+    currentQ.optionsImage && !currentQ.optionsImage.aspect && !currentQ.optionCrops
+      ? currentQ.optionsImage
+      : null;
   return (
     <div
       key={currentQ.id}
@@ -1093,6 +1127,19 @@ function QuestionCard({
           )}
         </div>
       )}
+      {/* DTK utan per-bokstav-koordinater (18 av 77): uppgiftens EGNA bild
+          visar alternativen som en helhet, ovanför knapparna. Knapparna
+          visar bara A/B/C/D — texten "Alternativ A: A" i aria-label:en är
+          medvetet inte hela historien, bilden bär innehållet. */}
+      {helBildFallback && (
+        <div className="mb-5">
+          <ProvFigure
+            src={helBildFallback.src}
+            alt="Svarsalternativ ur provhäftet"
+            label="Svarsalternativ ur provhäftet"
+          />
+        </div>
+      )}
       <div className="grid gap-2" role="radiogroup" aria-label="Svarsalternativ">
         {currentQ.options.map((opt, i) => {
           const letter = optionLetters[i] ?? String(i + 1);
@@ -1132,14 +1179,14 @@ function QuestionCard({
                   Mätt i Chrome: 0 px före, 616 px med `flex: 1 1 0%`.
                   `train.tsx` och `ProvQuestionCard.tsx` har haft raden hela
                   tiden — det var matchsidan som glidit isär. */}
-              {currentQ.optionCrops && currentQ.image_url ? (
+              {currentQ.optionCrops && cropSource ? (
                 <span
                   className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
                 >
                   <CropView
-                    src={currentQ.image_url}
+                    src={cropSource.src}
                     crop={currentQ.optionCrops[i]}
-                    imageAspect={currentQ.stem?.aspect ?? 1}
+                    imageAspect={cropSource.aspect}
                     alt={`Svarsalternativ ${letter}`}
                   />
                 </span>

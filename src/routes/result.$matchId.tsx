@@ -48,6 +48,7 @@ import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { cropStyle, isCrop, type Crop } from "@/lib/option-crop";
+import { parseOptionsImage, type OptionsImage } from "@/components/question/examCrops";
 import { useImageSize } from "@/hooks/useImageSize";
 import { ProvFigure } from "@/components/prov/ProvFigure";
 import { parseQuestionText } from "@/lib/question-text";
@@ -109,6 +110,8 @@ interface QuestionRow {
   passage_text: string | null;
   explanation: string | null;
   image_url: string | null;
+  /** DTK: alternativen i en EGEN bild, skild från `image_url` (diagrammet). */
+  optionsImage: OptionsImage | null;
 }
 
 /**
@@ -301,6 +304,7 @@ function ResultPage() {
             passage_text: (q.passage_text as string) ?? null,
             explanation: (q.explanation as string) ?? null,
             image_url: (q.image_url as string) ?? null,
+            optionsImage: null,
           } as QuestionRow;
         })
         .filter(Boolean) as QuestionRow[];
@@ -313,14 +317,25 @@ function ResultPage() {
       if (qs.length > 0) {
         const { data: bilder } = await supabase
           .from("questions")
-          .select("id, image_url")
+          .select("id, image_url, image_caption")
           .in(
             "id",
             qs.map((q) => q.id),
           );
         if (!cancelled && bilder) {
-          const byId = new Map(bilder.map((b) => [b.id as string, b.image_url as string | null]));
-          for (const q of qs) q.image_url = q.image_url ?? byId.get(q.id) ?? null;
+          const byId = new Map(
+            bilder.map((b) => [
+              b.id as string,
+              { image_url: b.image_url as string | null, image_caption: b.image_caption },
+            ]),
+          );
+          for (const q of qs) {
+            const b = byId.get(q.id);
+            q.image_url = q.image_url ?? b?.image_url ?? null;
+            // DTK: alternativen kan ligga i en EGEN bild, skild från
+            // `image_url` (diagrammet). Se `examCrops.ts`.
+            q.optionsImage = parseOptionsImage(b?.image_caption);
+          }
         }
       }
       setQuestions(qs);
@@ -896,42 +911,69 @@ function ResultPage() {
 
                       {/* Bilduppgift: hela frågan och alternativen står i
                           utsnittet ur provhäftet. Texten är PDF-extraktionen
-                          av samma sak och obegriplig. Se `math-question.ts`. */}
-                      {!isImageQuestion(q) && (
-                        <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                          {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
-                            <MathText>{q.question_text}</MathText>
-                          ) : q.category === "ORD" ? (
-                            ordText(q.question_text)
-                          ) : (
-                            q.question_text
-                          )}
-                        </div>
-                      )}
-                      {q.image_url && (
-                        // Höjdbegränsad, inte breddstyrd. Utsnitten ur
-                        // provhäftet är små och ofta stående (202×370 px är
-                        // vanligt); `w-full` skalade upp en sådan till 660×1200
-                        // och gjorde en enkel uppgift till en skärm av suddig
-                        // text. `w-auto` + maxhöjd låter bilden ta sin egen
-                        // storlek och krympa på små skärmar.
-                        <div className="mt-2">
-                          {/* Zoombar, som i duellen och i gamla prov. Ett DTK-diagram
-                              är ~1 500 px brett i original; på en telefon renderas det
-                              på ~300 px och texten i det går inte att läsa. */}
-                          <ProvFigure
-                            src={q.image_url}
-                            alt={
-                              isImageQuestion(q)
-                                ? `Uppgift ${i + 1} ur provhäftet`
-                                : "Figur till frågan"
-                            }
-                            label={
-                              isImageQuestion(q) ? "Uppgift ur provhäftet" : "Figur till frågan"
-                            }
-                          />
-                        </div>
-                      )}
+                          av samma sak och obegriplig. Se `math-question.ts`.
+                          DTK är undantaget: dess `image_url` är diagrammet,
+                          aldrig uppgiftens egna utsnitt, och `question_text`
+                          är där alltid riktig — `hasOwnOptionsImage` säger
+                          det till `isImageQuestion`. */}
+                      {(() => {
+                        const bildUppgift = isImageQuestion({
+                          image_url: q.image_url,
+                          options: q.options,
+                          hasOwnOptionsImage: !!q.optionsImage,
+                        });
+                        return (
+                          <>
+                            {!bildUppgift && (
+                              <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                                {["XYZ", "KVA", "NOG", "DTK"].includes(q.category) ? (
+                                  <MathText>{q.question_text}</MathText>
+                                ) : q.category === "ORD" ? (
+                                  ordText(q.question_text)
+                                ) : (
+                                  q.question_text
+                                )}
+                              </div>
+                            )}
+                            {q.image_url && (
+                              // Höjdbegränsad, inte breddstyrd. Utsnitten ur
+                              // provhäftet är små och ofta stående (202×370 px är
+                              // vanligt); `w-full` skalade upp en sådan till 660×1200
+                              // och gjorde en enkel uppgift till en skärm av suddig
+                              // text. `w-auto` + maxhöjd låter bilden ta sin egen
+                              // storlek och krympa på små skärmar.
+                              <div className="mt-2">
+                                {/* Zoombar, som i duellen och i gamla prov. Ett DTK-diagram
+                                    är ~1 500 px brett i original; på en telefon renderas det
+                                    på ~300 px och texten i det går inte att läsa. */}
+                                <ProvFigure
+                                  src={q.image_url}
+                                  alt={
+                                    bildUppgift
+                                      ? `Uppgift ${i + 1} ur provhäftet`
+                                      : "Figur till frågan"
+                                  }
+                                  label={
+                                    bildUppgift ? "Uppgift ur provhäftet" : "Figur till frågan"
+                                  }
+                                />
+                              </div>
+                            )}
+                            {/* DTK utan per-bokstav-koordinater (18 av 77):
+                                uppgiftens EGNA bild visar alternativen som en
+                                helhet, skild från diagrammet ovan. */}
+                            {q.optionsImage && !q.optionsImage.aspect && (
+                              <div className="mt-2">
+                                <ProvFigure
+                                  src={q.optionsImage.src}
+                                  alt="Svarsalternativ ur provhäftet"
+                                  label="Svarsalternativ ur provhäftet"
+                                />
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
                       {/* `grid-cols-1` (= minmax(0, 1fr)) och inte bara `grid`: ett utsnitt har
                           `aspect-ratio`, alltså en max-content-bredd på höjd × proportion. En
                           naken `grid` sätter kolumnen efter det och raden blev 1 117 px bred i
@@ -966,10 +1008,17 @@ function ResultPage() {
                                   )}
                                 </span>
                               ) : (
-                                q.image_url &&
-                                isCrop(opt.crop) && (
-                                  <OptionCrop imageUrl={q.image_url} crop={opt.crop} />
-                                )
+                                (() => {
+                                  // DTK: beskärningen gäller uppgiftens EGNA
+                                  // bild, inte diagrammet.
+                                  const cropSrc = q.optionsImage?.src ?? q.image_url;
+                                  return (
+                                    cropSrc &&
+                                    isCrop(opt.crop) && (
+                                      <OptionCrop imageUrl={cropSrc} crop={opt.crop} />
+                                    )
+                                  );
+                                })()
                               )}
                               {isCorrect && (
                                 <Check className="ml-auto h-4 w-4 text-[var(--success)]" />
@@ -991,7 +1040,10 @@ function ResultPage() {
                           options={q.options}
                           selected={a?.selected_answer}
                           correct={q.correct_answer}
-                          imageUrl={q.image_url}
+                          // DTK: bilden med alternativen är inte `image_url`
+                          // (diagrammet) — fel bild pekar "Alternativen står
+                          // i bilden ovanför" på en bild som inte har dem.
+                          imageUrl={q.optionsImage?.src ?? q.image_url}
                           math={["XYZ", "KVA", "NOG", "DTK"].includes(q.category)}
                         />
                       )}

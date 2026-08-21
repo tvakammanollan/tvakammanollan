@@ -51,6 +51,33 @@ describe("isImageQuestion", () => {
     expect(isImageQuestion({ image_url: "/x.png", options: ["A", "B", "C", "D"] })).toBe(true);
     expect(isImageQuestion({ image_url: "/x.png", options: ["17", "18"] })).toBe(false);
   });
+
+  it("hasOwnOptionsImage kortsluter till false — DTK:s image_url är diagrammet, inte uppgiften", () => {
+    // Regressionstest (2026-08-21). DTK:s `image_url` pekar alltid på det
+    // delade diagramuppslaget och innehåller aldrig alternativen — men
+    // `question_text` är på DTK ALLTID riktig, korrekt extraherad text.
+    // Utan flaggan läste denna funktion "alternativen saknar egen text" som
+    // "hela uppgiften ligger i image_url" och dolde en korrekt frågetext
+    // ovanför ett diagram som aldrig visade svaren. 77 uppgifter renderade
+    // då varken text eller alternativ.
+    expect(
+      isImageQuestion({
+        image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+        options: BOKSTAVSALT,
+        hasOwnOptionsImage: true,
+      }),
+    ).toBe(false);
+  });
+
+  it("utan hasOwnOptionsImage (eller satt till false) är beteendet oförändrat", () => {
+    expect(
+      isImageQuestion({
+        image_url: "/prov-bilder/kva.png",
+        options: BOKSTAVSALT,
+        hasOwnOptionsImage: false,
+      }),
+    ).toBe(true);
+  });
 });
 
 describe("showQuestionText", () => {

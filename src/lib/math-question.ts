@@ -28,6 +28,18 @@ export interface RenderableQuestion {
   image_url?: string | null;
   /** Alternativen, som strängar eller `{id, text}`. */
   options?: unknown;
+  /**
+   * Sant när alternativen ligger i en EGEN bild, skild från `image_url`.
+   *
+   * DTK:s `image_url` är diagramuppslaget — det innehåller aldrig
+   * alternativen, och den extraherade `question_text` är på DTK alltid riktig
+   * (inte PDF-skräp). Utan flaggan läste `isImageQuestion` "alternativen
+   * saknar egen text" som "hela uppgiften ligger i image_url" och dolde en
+   * korrekt frågetext ovanför ett diagram som aldrig visade svaren — 77
+   * uppgifter renderade då varken text eller alternativ. Se
+   * `examCrops.ts`s `parseOptionsImage`.
+   */
+  hasOwnOptionsImage?: boolean;
 }
 
 function optionText(option: unknown, index: number): { id: string; text: string } {
@@ -61,6 +73,9 @@ export function optionHasOwnText(option: unknown, index: number): boolean {
  * inte renderas, eftersom de bara är trasiga kopior av det bilden visar.
  */
 export function isImageQuestion(q: RenderableQuestion): boolean {
+  // Finns en egen bild för alternativen kan `image_url` omöjligen VARA
+  // uppgiften — de är per definition två olika bilder.
+  if (q.hasOwnOptionsImage) return false;
   if (!q.image_url) return false;
   const raw = Array.isArray(q.options) ? q.options : [];
   if (raw.length === 0) return true;

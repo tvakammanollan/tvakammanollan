@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   cropIsSane,
+  hasOwnOptionsAspect,
+  hasOwnOptionsImage,
   hasStemAspect,
   optionRenderable,
   questionFaults,
@@ -79,6 +81,36 @@ describe("hasStemAspect", () => {
     expect(hasStemAspect("Figur till frågan")).toBe(false);
     expect(hasStemAspect(null)).toBe(false);
     expect(hasStemAspect("{trasig json")).toBe(false);
+  });
+});
+
+describe("hasOwnOptionsImage / hasOwnOptionsAspect", () => {
+  it("skiljer på om bilden finns och om den har koordinater", () => {
+    // 59 av 77 DTK-uppgifter: egen bild OCH per-bokstav-koordinater.
+    const medKoordinater = JSON.stringify({
+      optionsImage: "/prov-bilder/2013ht/p3/29.webp",
+      optionsAspect: 2.28,
+    });
+    expect(hasOwnOptionsImage(medKoordinater)).toBe(true);
+    expect(hasOwnOptionsAspect(medKoordinater)).toBe(true);
+
+    // 18 av 77: egen bild, men PDF-extraktionen fångade aldrig koordinaterna.
+    const utanKoordinater = JSON.stringify({ optionsImage: "/prov-bilder/2013ht/p3/31.webp" });
+    expect(hasOwnOptionsImage(utanKoordinater)).toBe(true);
+    expect(hasOwnOptionsAspect(utanKoordinater)).toBe(false);
+  });
+
+  it("kolliderar inte med XYZ/KVA:s stem-form", () => {
+    const stemForm = JSON.stringify({ stem: [0, 0, 1, 0.3], aspect: 1.3 });
+    expect(hasOwnOptionsImage(stemForm)).toBe(false);
+    expect(hasOwnOptionsAspect(stemForm)).toBe(false);
+  });
+
+  it("fritext, trasig JSON och null är inget fel", () => {
+    for (const v of ["Figur till frågan", "{trasig", null]) {
+      expect(hasOwnOptionsImage(v)).toBe(false);
+      expect(hasOwnOptionsAspect(v)).toBe(false);
+    }
   });
 });
 
@@ -164,6 +196,43 @@ describe("questionFaults", () => {
     const fel = questionFaults(reserv);
     expect(fel).toContain("alternativ_endast_i_delad_bild");
     expect(fel).not.toContain("alternativ_utan_innehåll");
+  });
+
+  it("DTK med egen bild och koordinater är spelbar — image_url är diagrammet, optionsImage bär alternativen", () => {
+    const dtkMedKoordinater = bra({
+      category: "DTK",
+      image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+      image_caption: JSON.stringify({
+        optionsImage: "/prov-bilder/2013ht/p3/29.webp",
+        optionsAspect: 2.28,
+      }),
+      options: [
+        { id: "A", text: "A", crop: [0.15, 0.53, 1, 0.63] },
+        { id: "B", text: "B", crop: [0.15, 0.63, 1, 0.73] },
+        { id: "C", text: "C", crop: [0.15, 0.73, 1, 0.84] },
+        { id: "D", text: "D", crop: [0.15, 0.84, 1, 1] },
+      ],
+    });
+    expect(questionFaults(dtkMedKoordinater)).toEqual([]);
+  });
+
+  it("DTK med egen bild men UTAN koordinater faller till reservläge, inte trasigt", () => {
+    // De 18 av 77 där PDF-extraktionen aldrig fångade var bokstäverna sitter.
+    const dtkUtanKoordinater = bra({
+      category: "DTK",
+      image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+      image_caption: JSON.stringify({ optionsImage: "/prov-bilder/2013ht/p3/31.webp" }),
+      options: [
+        { id: "A", text: "A" },
+        { id: "B", text: "B" },
+        { id: "C", text: "C" },
+        { id: "D", text: "D" },
+      ],
+    });
+    const fel = questionFaults(dtkUtanKoordinater);
+    expect(fel).toContain("alternativ_endast_i_delad_bild");
+    expect(fel).not.toContain("alternativ_utan_innehåll");
+    expect(fel).not.toContain("bilduppgift_utan_bild");
   });
 
   it("rapporterar alla fel, inte bara det första", () => {

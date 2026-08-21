@@ -18,8 +18,16 @@ export interface ExamStem {
   aspect: number;
 }
 
+// Samma gräns som `option-crop.ts`s `isCrop` och `question-validity.ts`s
+// `cropIsSane`: koordinaterna är andelar av bilden, så allt utanför 0–1 eller
+// icke-ändligt pekar utanför bilden och renderas som ett fel skuret utsnitt
+// i stället för att döljas.
 function isCrop(v: unknown): v is Crop {
-  return Array.isArray(v) && v.length === 4 && v.every((n) => typeof n === "number");
+  return (
+    Array.isArray(v) &&
+    v.length === 4 &&
+    v.every((n) => typeof n === "number" && Number.isFinite(n) && n >= 0 && n <= 1)
+  );
 }
 
 /** Stambeskärningen ur `image_caption`, eller null om raden inte har någon. */
@@ -33,6 +41,64 @@ export function parseStem(caption: unknown): ExamStem | null {
   } catch {
     // Fältet är en fritextrubrik i grunden — en rad som inte bär JSON är inget fel.
   }
+  return null;
+}
+
+/**
+ * En bild som bär alternativen men INTE är `image_url`.
+ *
+ * DTK:s `image_url` är avsiktligt diagramuppslaget (se CLAUDE.md) — det delas
+ * av flera uppgifter i samma provpass och innehåller aldrig svarsalternativen.
+ * 77 DTK-uppgifter hade ändå bara sin egen bokstav som alternativtext, alltså
+ * exakt mönstret "alternativen står i bilden" — fast i en bild som aldrig
+ * sparades. Arkivets EGNA utsnitt (`29.webp`, skilt från `diagram-1.webp`)
+ * har den, och `image_caption` bär nu båda: `{optionsImage, optionsAspect}`
+ * vid sidan av (aldrig samtidigt som) XYZ/KVA:s `{stem, aspect}`.
+ *
+ * `aspect` är `null` för de 18 uppgifter (av 77) där själva PDF-extraktionen
+ * aldrig fångade var varje bokstav sitter — bara att bilden finns. De visar
+ * hela `optionsImage` i stället för ett utsnitt per alternativ; se
+ * `question-validity.ts`s `alternativ_endast_i_delad_bild` för hur den
+ * skillnaden kontrolleras maskinellt.
+ */
+export interface OptionsImage {
+  src: string;
+  aspect: number | null;
+}
+
+export function parseOptionsImage(caption: unknown): OptionsImage | null {
+  if (typeof caption !== "string" || !caption.startsWith("{")) return null;
+  try {
+    const v = JSON.parse(caption) as { optionsImage?: unknown; optionsAspect?: unknown };
+    if (typeof v.optionsImage === "string" && v.optionsImage) {
+      const aspect =
+        typeof v.optionsAspect === "number" && v.optionsAspect > 0 ? v.optionsAspect : null;
+      return { src: v.optionsImage, aspect };
+    }
+  } catch {
+    // Fältet är en fritextrubrik i grunden — en rad som inte bär JSON är inget fel.
+  }
+  return null;
+}
+
+/**
+ * Var alternativens beskärningar ska klippas ifrån, och den bildens
+ * proportion. Två källor:
+ *  - XYZ/KVA-bildutsnitt: alternativen ligger i SAMMA bild som stammen
+ *    (`image_url`); proportionen kommer ur `stem.aspect`.
+ *  - DTK med egen bild: alternativen ligger i `optionsImage.src`, en bild
+ *    skild från `image_url` (diagrammet); proportionen är `optionsImage.aspect`.
+ * `null` när ingen av de två finns, ELLER när `optionsImage` finns men saknar
+ * `aspect` (de 18 utan per-bokstav-koordinater — se ovan; de får sin egna
+ * rendering, inte beskärningsmatte).
+ */
+export function optionCropSource(
+  imageUrl: string | null | undefined,
+  stem: ExamStem | null,
+  optionsImage: OptionsImage | null,
+): { src: string; aspect: number } | null {
+  if (optionsImage?.aspect) return { src: optionsImage.src, aspect: optionsImage.aspect };
+  if (stem && imageUrl) return { src: imageUrl, aspect: stem.aspect };
   return null;
 }
 
