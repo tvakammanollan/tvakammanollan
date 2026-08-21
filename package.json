@@ -16,7 +16,8 @@
     "apply:ord-defs": "bun run scripts/apply-ord-definitions.ts",
     "scrape:ord-old": "bun run scraper/scrape-ord-old.ts",
     "seed:ord-old": "bun run scraper/seed-ord-old.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "validate:questions": "bun run scripts/validate-questions.ts"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
