@@ -140,7 +140,9 @@ export function TimerSoundToggle() {
       aria-label={enabled ? "Stäng av timer-ljud" : "Slå på timer-ljud"}
       title={enabled ? "Stäng av timer-ljud" : "Slå på timer-ljud"}
       aria-pressed={enabled}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
+      // 44×44 är minsta tryckyta på telefon; knappen var 36×36 och sitter i
+      // matchens topplist, mellan klockan och skärmkanten.
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
     >
       {enabled ? (
         <Bell className="h-4 w-4" aria-hidden />

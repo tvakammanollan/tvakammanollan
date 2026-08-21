@@ -41,7 +41,7 @@ export function FloatingTestCta() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-5 z-[100] flex justify-center px-4 sm:bottom-7 sm:right-7 sm:left-auto sm:justify-end sm:px-0 pointer-events-none"
+      className="fixed inset-x-0 bottom-5 z-[100] flex justify-center px-4 pb-safe sm:bottom-7 sm:right-7 sm:left-auto sm:justify-end sm:px-0 sm:pb-0 pointer-events-none"
       aria-hidden={false}
     >
       <button

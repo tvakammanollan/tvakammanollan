@@ -70,7 +70,7 @@ export function Navbar() {
       // att det behöver @supports: utan backdrop-filter blir en
       // halvgenomskinlig rad oläslig, och en fallback går inte att uttrycka
       // i en inline-style. Scrolläget är ett data-attribut av samma skäl.
-      className="navbar-glass sticky top-0 z-50"
+      className="navbar-glass sticky top-0 z-50 pt-safe px-safe"
       data-scrolled={scrolled}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">

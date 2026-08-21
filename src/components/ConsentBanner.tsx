@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
+import { isPromptablePath } from "@/lib/coaching-prompt";
 import { m } from "framer-motion";
 import { ChartNoAxesColumn } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ export function ConsentBanner() {
   // Renderas aldrig under SSR: valet ligger i localStorage, och att gissa
   // skulle ge hydration-mismatch.
   const [visible, setVisible] = useState(false);
+  const { pathname } = useLocation();
 
   const sync = useCallback(() => {
     setVisible(analyticsConfigured() && needsConsentDecision());
@@ -50,7 +52,13 @@ export function ConsentBanner() {
     setVisible(false);
   };
 
-  if (!visible) return null;
+  // Aldrig ovanpå något som pågår. Bannern är full bredd på telefon och tar
+  // ~40 % av skärmen: mitt i en match dolde den svarsalternativ D och E OCH
+  // hela inlämningslisten, medan klockan tickade. Samma väg och samma regel
+  // som coachningsnudgen (`isPromptablePath`) — den kommer upp på nästa sida
+  // som inte är ett pågående pass. Att skjuta upp frågan är dessutom det
+  // integritetsmässigt säkra hållet: utan svar laddas ingen analys alls.
+  if (!visible || !isPromptablePath(pathname)) return null;
 
   return (
     <m.div
@@ -60,7 +68,7 @@ export function ConsentBanner() {
       role="dialog"
       aria-modal="false"
       aria-labelledby="consent-title"
-      className="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4"
+      className="fixed inset-x-0 bottom-0 z-50 px-3 pt-3 pb-safe sm:px-4 sm:pt-4"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-4 rounded-xl border border-white/10 bg-[#fbf6ec]/95 p-4 shadow-2xl backdrop-blur-sm sm:p-5">
         <div className="flex gap-3">

@@ -136,7 +136,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      // `viewport-fit=cover` krävs för att `env(safe-area-inset-*)` ska ha
+      // något annat värde än noll. Utan den är varje säkerhetsyta i CSS:en
+      // död kod; med den måste allt som ligger an mot en skärmkant bära
+      // `pt-safe`/`pb-safe` (se styles.css), annars hamnar det under notchen
+      // eller hemindikatorn.
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "description",

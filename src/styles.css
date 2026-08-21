@@ -2014,3 +2014,32 @@ button,
     --tw-gradient-to: var(--amber);
   }
 }
+
+/* =====================================================================
+   SÄKRA YTOR — notch, dynamic island och home-indikatorn.
+
+   Sajten hade ingen `env(safe-area-inset-*)` alls, och `viewport-fit=cover`
+   sätts nu i `__root.tsx`. De två hör ihop: utan `cover` är varje `env()`
+   noll, och med `cover` men utan padding hamnar innehållet UNDER
+   systemfälten. Matchens inlämningsknapp låg mitt i gestområdet för
+   hemindikatorn (34 px på moderna iPhones) — den mest tryckta knappen i
+   appen, i den enda yta där ett svep tar dig ur appen i stället.
+
+   Klasserna ADDERAR till elementets befintliga padding i stället för att
+   ersätta den, så en `py-3` blir 12 px på en gammal telefon och 12+34 px på
+   en ny. Använd dem på allt som ligger an mot en skärmkant: sticky/fixed
+   listor upptill och nedtill.
+   ===================================================================== */
+@layer utilities {
+  .pb-safe {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  /* Sidled behövs i landskapsläge, där notchen ligger på kanten. */
+  .px-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+}
