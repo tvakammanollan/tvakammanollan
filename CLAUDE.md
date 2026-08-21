@@ -279,9 +279,69 @@ Matches have two types: `"verbal"` (ORD, MEK, LAS, ELF) and `"math"` (XYZ, KVA, 
 
 Ranked matchmaking uses a `matchmaking_queue` table and is handled in `src/lib/ranked.functions.ts`. Bot time and score are simulated server-side in `simulateBotMatch` (`src/lib/match.server.ts`).
 
+#### Klockan får bara gå på en `active` match (2026-08-21)
+
+Steg 3 ovan skriver **frågorna först och statusen sedan**. Mellan de två
+skrivningarna finns en match som har åtta frågor men inte har börjat, och
+matchsidan gick bara på "finns det frågor?". Inbjudarens flik började därför
+räkna ned redan där — och sparade ankaret i sessionStorage. När vännen sedan
+accepterade var de fem minuterna brända, och matchen lämnades in automatiskt i
+samma sekund den blev spelbar, med "Tiden är slut" i rutan. Reproducerat mot
+skarpa data: en `waiting`-rad med frågor gav löpande klocka och
+`player1_submitted_at` satt, poäng 0.
+
+- **`matchIsLive(status)` (`match-clock.ts`) är grinden** och gäller klockan,
+  auto-inlämningen, `active_match`-posten och `ResumeMatchBanner`. Bara
+  `"active"` räknas.
+- **Botmatch och rankad match skapas direkt som `active` med `started_at`**, så
+  fönstret finns bara på vänmatcher och privata rum. Det är hela förklaringen
+  till att buggen syntes just där.
+- **Ankarreglerna är rena och testade** (`resolveMatchAnchor`): server först,
+  lokalt ankare sedan, `nu` sist. Ett oläsbart eller framtida ankare läses som
+  "nyss", aldrig som "urgammalt" — samma regel som `coaching-sweep.ts`, av
+  samma skäl: ett trasigt värde ska inte kunna avsluta någons match. Ett
+  **gammalt men giltigt** ankare behålls med flit; den som somnade om fliken
+  SKA mötas av en match vars tid tagit slut.
+- En `finished` match skickas till resultatsidan i stället för att renderas som
+  ett spelbart bräde med noll på klockan.
+
+#### Oavgjort finns inte (2026-08-21)
+
+Vid lika poäng vinner **den som lämnade in först**. Regeln bor i
+`decideWinnerSide()` i `src/lib/match-outcome.ts` och **bara** där: servern
+anropar den när `winner_id` skrivs, klienten när `winner_id` är NULL (vilket
+det alltid är när en bot vinner — en bot har inget konto att peka på). Två
+kopior av regeln var precis vad som lät resultatskärmen och historiken säga
+olika saker om samma match.
+
+- Ordningen: poäng → inlämningstid → (saknas båda tiderna) player1. Det sista
+  är ett **deterministiskt** fallback, inte en gissning: servern och båda
+  klienterna måste komma fram till samma svar utan att prata med varandra, och
+  `player2_id` är NULL i varje botmatch.
+- `Outcome` är `"win" | "loss"`. Lägg inte tillbaka `"draw"` — varken i typen,
+  i `ProductEvents` eller i UI-strängar.
+- Lika poäng skrivs ut på resultatsidan ("Lika många rätt – du lämnade in
+  först"). Utan den raden ser "6–6, du vann" ut som ett fel.
+
 ### ELO & ranks
 
 K-factor tiers in `src/lib/match.server.ts`: `<1500 → 96`, `1500–1800 → 60`, `>1800 → 30`. Bot ELO is randomized ±150 from the player's ELO.
+
+**Tidsgolvet mot fusk är en KLAMP, inte ett hopp över (2026-08-21).**
+`isImplausiblyFast` avbröt tidigare hela uträkningen: `status = finished` och
+retur. Följden var att en snabbt inlämnad match inte gav någon ELO alls, ingen
+`winner_id` och ingen rad i `elo_history` — en förlust var gratis och
+resultatskärmen kunde inte säga vem som vann. Nu räknas matchen som vanligt och
+`applyEloFloor()` klampar bara **vinsten** till ±0; en förlust dras i sin
+helhet. Asymmetrin är poängen: det går inte att klicka sig uppåt, men det
+kostar alltid att klicka sig till en förlust. Verifierat 2026-08-21 mot skarpa
+data (inlämning på 11,7 s mot golvets 16 s): förloraren −55, vinnaren ±0, båda
+med rad i `elo_history`.
+
+**ELO-skrivningarna felkontrolleras.** `update()`-anropen mot `users` låg som
+nakna `await` utan att svaret lästes: gick de fel markerades matchen ändå som
+`finished`, resultatsidan visade en ELO-ändring som aldrig nådde databasen, och
+skillnaden syntes först som ett omöjligt tal på topplistan långt senare.
 
 Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `src/types/index.ts` with helpers `getRankForElo()`, `getNextRank()`, `getEloProgressInTier()`. HP score estimation (ELO → 0.6–2.0 scale) is in `src/lib/hpScore.ts`.
 
@@ -1249,6 +1309,25 @@ vilket är den allvarligare halvan av det som rättades.
   siffran. Omdömena är riktiga personer; lägg aldrig till ett citat som ingen
   har sagt, och justera aldrig snittet utan att listan ändras.
 
+### Mobil: säkra ytor och tryckytor (2026-08-21)
+
+- **`viewport-fit=cover` står i `__root.tsx` och hör ihop med `pb-safe` /
+  `pt-safe` / `px-safe` i `styles.css`.** Utan `cover` är varje `env(safe-area-
+  inset-*)` noll; med `cover` men utan padding hamnar innehållet UNDER
+  systemfälten. Lägger du till ett nytt element som ligger an mot en skärmkant
+  (sticky/fixed upptill eller nedtill) måste det bära en av klasserna — annars
+  är det matchens inlämningsknapp i hemindikatorns gestområde om igen.
+  Klasserna adderar till befintlig padding, de ersätter den inte.
+- **44×44 är minsta tryckyta.** `Button`s standardhöjd är 36 px (`h-9`), så
+  knappar i matchflödet sätter `min-h-[44px]` explicit. Höjden kommer från
+  padding, inte från en fast höjd, så texten fortsätter styra bredden.
+- **Ingenting får läggas ovanpå ett pågående pass.** `isPromptablePath()` i
+  `coaching-prompt.ts` är den gemensamma regeln, och **samtyckesbannern lyder
+  under den sedan 2026-08-21**: på telefon är den full bredd och tog ~40 % av
+  skärmen, alltså svarsalternativ D och E plus hela inlämningslisten, medan
+  klockan tickade. Att skjuta upp frågan är dessutom integritetsmässigt säkert
+  — utan svar laddas ingen analys.
+
 ### Key conventions
 
 - All user-facing text is in Swedish (sv-SE)
@@ -1256,6 +1335,17 @@ vilket är den allvarligare halvan av det som rättades.
 - Number/date formatting helpers (`formatInt`, `formatDecimal`, `formatRelativeTime`, etc.) are in `src/lib/sv-format.ts` — use these everywhere instead of raw `toLocaleString`
 - `@/` path alias maps to `src/`
 - Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
+- **En rubrik får inte byggas av blocknivåboxar.** Webbläsaren lägger en
+  RADBRYTNING i kopierad text vid varje sådan gräns, och tar dessutom med text
+  som ligger osynlig i DOM:en. `CyclingTitle` var en `inline-grid` där alla ord
+  låg i samma cell — att kopiera `/guider`:s rubrik gav
+  `"Bemästra \nOrd.\nLäsning.\nMatte.\nTidspress."`, fem rader varav fyra ord
+  aldrig hade synts. Rutan är nu `position: relative; display: inline-block`
+  med det synliga ordet i flödet och resten absolutpositionerade och
+  `select-none`. Mätt i Chrome: `inline-grid` → radbrytning, `inline-block` →
+  ren rad. `user-select: none` tar bort de osynliga orden men INTE
+  radbrytningen — det är boxtypen som avgör den. `SplitText`s ord är
+  `inline-block` och kopierar därför rent redan.
 - **En klippmask på ett inline-element får ALDRIG vara `overflow: hidden`.** En
   inline-block vars overflow inte är `visible` tar sin baslinje från
   **bottenmarginalkanten** i stället för från texten, alltså hamnar ordet
