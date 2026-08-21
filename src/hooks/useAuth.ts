@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { createContext, useContext, useEffect, useState, useSyncExternalStore } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -70,7 +70,49 @@ export function useHasStoredSession(): boolean {
   return useSyncExternalStore(ingenPrenumeration, läsSparadSession, () => false);
 }
 
-export function useAuth() {
+export interface AuthValue {
+  user: User | null;
+  profile: Profile | null;
+  loading: boolean;
+  profileLoaded: boolean;
+  refreshProfile: () => void;
+  signOut: () => Promise<void>;
+}
+
+/**
+ * EN delad auth-state för hela appen.
+ *
+ * `useAuth()` var tidigare en vanlig hook med eget `useState`, och 34
+ * komponenter kallade den. Var och en höll alltså sin EGEN kopia av `profile`
+ * och gjorde sin egen `select * from users` — 34 hämtningar per sidladdning,
+ * och 34 tal som inte kunde hållas i synk. Följden var att navbaren visade
+ * ELO:t från sidladdningen medan resultatsidan visade det nya: samma användare,
+ * två siffror, ingen väg att invalidera den ena från den andra.
+ *
+ * Nu bor state:t i en provider och `useAuth()` läser ur den. Anropsställena är
+ * oförändrade — samma namn, samma returform — men det finns bara ett värde,
+ * och `refreshProfile()` når alla.
+ */
+const AuthContext = createContext<AuthValue | null>(null);
+
+export function useAuth(): AuthValue {
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    // Providern monteras i `__root.tsx` och omsluter hela trädet. Hamnar man
+    // här renderas komponenten utanför den, och att tyst falla tillbaka på en
+    // egen kopia hade återinfört precis den drift som providern finns för.
+    throw new Error("useAuth() kräver <AuthProvider> — den monteras i __root.tsx");
+  }
+  return ctx;
+}
+
+export { AuthContext };
+
+/**
+ * Själva tillståndet. Anropas EN gång, av `AuthProvider`.
+ * Komponenter ska använda `useAuth()`.
+ */
+export function useAuthState(): AuthValue {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);

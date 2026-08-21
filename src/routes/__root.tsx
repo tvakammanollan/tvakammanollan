@@ -16,6 +16,7 @@ import { useOAuthErrorToast } from "@/hooks/useOAuthErrorToast";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
 import { LazyMotion } from "framer-motion";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AchievementWatcher } from "@/components/AchievementWatcher";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -393,44 +394,48 @@ function RootComponent() {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
-      <LazyMotion features={loadMotionFeatures} strict>
-        <div className="min-h-screen bg-background">
-          {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
+      {/* Auth-state finns i EXAKT ett exemplar och ligger ytterst, utanför allt
+          som kallar `useAuth()`. Se `useAuth.ts`. */}
+      <AuthProvider>
+        <LazyMotion features={loadMotionFeatures} strict>
+          <div className="min-h-screen bg-background">
+            {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
             Visas bara vid keyboard-focus (sr-only:focus). */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          >
-            Hoppa till innehåll
-          </a>
-          <AppMotion />
-          <Navbar />
-          {/* Diskret remsa, direkt under navbaren — aldrig en overlay.
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              Hoppa till innehåll
+            </a>
+            <AppMotion />
+            <Navbar />
+            {/* Diskret remsa, direkt under navbaren — aldrig en overlay.
               Registreringen loggar in på en gång och allt fungerar utan
               bekräftad adress; det här är påminnelsen, inte grinden. */}
-          <SafeBoundary label="email-verification-notice">
-            <EmailVerificationNotice />
-          </SafeBoundary>
-          <main id="main-content" className="animate-fade-up">
-            <Outlet />
-          </main>
-          <Footer />
-          <FriendInviteListener />
-          <SafeBoundary label="achievement-watcher">
-            <AchievementWatcher />
-          </SafeBoundary>
-          <SafeBoundary label="analytics">
-            <Analytics />
-          </SafeBoundary>
-          <SafeBoundary label="consent-banner">
-            <ConsentBanner />
-          </SafeBoundary>
-          <SafeBoundary label="coaching-prompt">
-            <CoachingPrompt />
-          </SafeBoundary>
-          <Toaster richColors position="top-center" />
-        </div>
-      </LazyMotion>
+            <SafeBoundary label="email-verification-notice">
+              <EmailVerificationNotice />
+            </SafeBoundary>
+            <main id="main-content" className="animate-fade-up">
+              <Outlet />
+            </main>
+            <Footer />
+            <FriendInviteListener />
+            <SafeBoundary label="achievement-watcher">
+              <AchievementWatcher />
+            </SafeBoundary>
+            <SafeBoundary label="analytics">
+              <Analytics />
+            </SafeBoundary>
+            <SafeBoundary label="consent-banner">
+              <ConsentBanner />
+            </SafeBoundary>
+            <SafeBoundary label="coaching-prompt">
+              <CoachingPrompt />
+            </SafeBoundary>
+            <Toaster richColors position="top-center" />
+          </div>
+        </LazyMotion>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -157,7 +157,7 @@ function formatDuration(startIso: string, endIso: string | null): string {
 
 function ResultPage() {
   const { matchId } = Route.useParams();
-  const { user, profile, loading } = useAuth();
+  const { user, profile, loading, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const createMatchFn = useServerFn(createMatch);
   const rematchFn = useServerFn(requestRematch);
@@ -388,6 +388,11 @@ function ResultPage() {
     const outcome = outcomeFor(user.id, match);
     if (!outcome) return;
     resultLoggedRef.current = true;
+    // Matchen har ändrat ELO i databasen. Utan det här behöll navbaren sitt
+    // värde från sidladdningen tills sidan laddades om — samma användare med
+    // två olika tal på skärmen samtidigt. Går till den DELADE auth-staten
+    // (se `AuthProvider`), så alla ytor uppdateras på en gång.
+    refreshProfile();
     trackEvent("match_result_viewed", {
       match_type: match.match_type as "verbal" | "math",
       is_bot_match: !!match.is_bot_match,
@@ -398,6 +403,7 @@ function ResultPage() {
     // är inte en spelad match. Samma engångsspärr (resultLoggedRef) gäller,
     // så en omladdning av resultatsidan räknar inte en gång till.
     recordMatchFinished();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match, user, eloChange]);
 
   // Ett svar är ett svar bara om ett alternativ faktiskt valdes.

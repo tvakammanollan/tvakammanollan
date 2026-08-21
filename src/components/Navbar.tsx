@@ -51,7 +51,16 @@ export function Navbar() {
     navigate({ to: "/" });
   };
 
-  const topElo = profile ? Math.max(profile.elo_verbal, profile.elo_math) : 1000;
+  // Två delar, två ELO — och ingen av dem är "mitt ELO".
+  //
+  // Här stod `Math.max(elo_verbal, elo_math)`, vilket gav fel tal i precis det
+  // läge man tittar på siffran: efter en förlorad verbal match visade
+  // navbaren mattens orörda 1000 medan resultatsidan och dashboarden visade
+  // 963. Det såg ut som att ELO:t "ibland stämmer inte" — det stämde aldrig,
+  // det råkade bara sammanfalla när båda delarna låg lika. Samma fel rättades
+  // på dashboarden tidigare; navbaren lämnades kvar.
+  const eloVerbal = profile?.elo_verbal ?? 1000;
+  const eloMath = profile?.elo_math ?? 1000;
 
   // Scroll-aware: glaset tätnar och lyfter när man scrollar. Helt
   // transparent i toppläget har provats och gjorde att raden flöt ihop
@@ -128,7 +137,12 @@ export function Navbar() {
                 </SafeBoundary>
               )}
               {profile && (
-                <AccountMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
+                <AccountMenu
+                  profile={profile}
+                  eloVerbal={eloVerbal}
+                  eloMath={eloMath}
+                  onSignOut={handleSignOut}
+                />
               )}
             </>
           ) : (
@@ -165,7 +179,12 @@ export function Navbar() {
                   <NotificationsBell userId={user.id} />
                 </SafeBoundary>
               )}
-              <MobileMenu profile={profile} topElo={topElo} onSignOut={handleSignOut} />
+              <MobileMenu
+                profile={profile}
+                eloVerbal={eloVerbal}
+                eloMath={eloMath}
+                onSignOut={handleSignOut}
+              />
             </>
           ) : (
             <>
@@ -229,11 +248,13 @@ function NavLink({
 /* ─────────── ACCOUNT MENU — allt sekundärt bakom avataren ─────────── */
 function AccountMenu({
   profile,
-  topElo,
+  eloVerbal,
+  eloMath,
   onSignOut,
 }: {
   profile: NonNullable<ReturnType<typeof useAuth>["profile"]>;
-  topElo: number;
+  eloVerbal: number;
+  eloMath: number;
   onSignOut: () => Promise<void>;
 }) {
   return (
@@ -249,7 +270,11 @@ function AccountMenu({
             boxShadow: "var(--shadow-sm)",
           }}
         >
-          <UserAvatar name={displayName(profile.username, profile.id)} size={26} />
+          <UserAvatar
+            name={displayName(profile.username, profile.id)}
+            seed={profile.id}
+            size={26}
+          />
           <span
             className="max-w-[8rem] truncate text-sm font-medium"
             style={{ color: "var(--cream)" }}
@@ -257,7 +282,10 @@ function AccountMenu({
           >
             {displayName(profile.username, profile.id)}
           </span>
-          <EloBadge elo={topElo} size="sm" />
+          <span className="flex items-center gap-1">
+            <EloBadge elo={eloVerbal} label="V" size="sm" />
+            <EloBadge elo={eloMath} label="M" size="sm" />
+          </span>
           <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
         </button>
       </DropdownMenuTrigger>
@@ -311,11 +339,13 @@ function AccountMenuLink({
 /* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
 function MobileMenu({
   profile,
-  topElo,
+  eloVerbal,
+  eloMath,
   onSignOut,
 }: {
   profile: ReturnType<typeof useAuth>["profile"];
-  topElo: number;
+  eloVerbal: number;
+  eloMath: number;
   onSignOut: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
@@ -355,7 +385,11 @@ function MobileMenu({
           </SheetTitle>
           {profile && (
             <div className="mt-3 flex items-center gap-3">
-              <UserAvatar name={displayName(profile.username, profile.id)} size={36} />
+              <UserAvatar
+                name={displayName(profile.username, profile.id)}
+                seed={profile.id}
+                size={36}
+              />
               <div className="min-w-0 flex-1">
                 <div
                   className="truncate text-sm font-semibold"
@@ -365,7 +399,10 @@ function MobileMenu({
                   {displayName(profile.username, profile.id)}
                 </div>
                 <div className="mt-0.5">
-                  <EloBadge elo={topElo} size="sm" />
+                  <span className="flex items-center gap-1">
+                    <EloBadge elo={eloVerbal} label="V" size="sm" />
+                    <EloBadge elo={eloMath} label="M" size="sm" />
+                  </span>
                 </div>
               </div>
             </div>
