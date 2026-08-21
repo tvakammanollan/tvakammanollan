@@ -1425,6 +1425,33 @@ with a different look in every copy.
   whereas a warm react-query cache renders the full-height table on mount.
 - **Copy:** the unit of play is a **match**, never a "battle". App-språket är
   svenska rakt igenom (`sv-SE`).
+- **Inga tankstreck mitt i en mening** (2026-08-21). Sajten hade 95 stycken i
+  text besökare läser, nästan alla i samma konstruktion: färdig sats, streck,
+  påhängd förklaring ("alla 8 delprov – helt gratis"). Em-streck (`—`) är
+  dessutom en engelsk konvention; svenskt tankstreck är kort streck med
+  mellanslag och används sparsamt. I den tätheten läser texten som
+  maskinskriven, vilket är precis vad en sajt byggd med LLM inte vill se ut
+  som. Välj i stället det skiljetecken strecket gjorde jobbet åt: **punkt**
+  mellan två självständiga satser, **komma** vid apposition, **kolon** före en
+  uppräkning, **parentes** vid inskott, och `·` — sajtens egen separator — där
+  strecket skilde namn från etikett i en titel.
+  - **Ett komma är inte lösningen.** Att byta `– helt gratis` mot
+    `, helt gratis` behåller konstruktionen och därmed problemet; det var så
+    startsidans `ogDescription` slank igenom första svepet. Skriv om ledet till
+    en egen mening, eller flytta in ordet i satsen ("Träna **gratis** på ORD,
+    …").
+  - **Strecket som betyder "inget värde" är något annat** och ska vara kvar:
+    `formatPercent(null)` → `–`, tomma tabellceller, `PodiumRank` utan
+    placering. Det är en symbol, inte skiljetecken. Använd tankstreck (`–`)
+    till det, aldrig em-streck — de två glyferna användes tidigare om vartannat
+    för exakt samma sak.
+  - **Intervall behåller sitt streck utan mellanslag** (`2012–2026`, `A–E`,
+    `11–18 augusti`). Det är korrekt och skvallrar inte.
+  - Kodkommentarer är undantagna. Repot är skrivet i den stilen rakt igenom och
+    ingen besökare läser dem; att städa dem är brus utan effekt.
+  - **`index.tsx` sätter egen `description`/`ogDescription` och överrider alltså
+    `__root.tsx` för `/`.** Det är den texten som syns när någon delar
+    startsidan. Rättar du rotens strängar utan den, ändras ingenting utåt.
 
 ### The Tailwind remap layer — read this before adding a shade
 
