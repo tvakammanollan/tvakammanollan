@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -26,6 +26,48 @@ export interface Profile {
 export function isGuestUser(user: User | null | undefined): boolean {
   if (!user) return false;
   return user.is_anonymous === true || user.app_metadata?.provider === "anonymous" || !user.email;
+}
+
+/**
+ * Finns det en sparad session i webbläsaren? Svaret ges SYNKRONT.
+ *
+ * `useAuth().loading` är sant tills `getSession()` svarat, och under den tiden
+ * ser en inloggad besökare ut som en utloggad. Startsidan visade därför
+ * marknadsföringssidan först, sedan ett skelett, sedan sin dashboard — tre
+ * olika layouter efter varandra vid varje laddning.
+ *
+ * `getServerSnapshot` är `false` med flit: servern har ingen localStorage, och
+ * SSR:en SKA fortsätta rendera landningssidan (det är den crawlers och
+ * first paint ska få — se kommentaren i `routes/index.tsx`). Klienten byter
+ * till skelettet direkt efter hydreringen, utan att servern och klienten
+ * någonsin är oense om första målningen.
+ *
+ * Nyckeln är supabase-js egen (`sb-<ref>-auth-token`). Den läses bara som
+ * "finns/finns inte" — innehållet, giltigheten och utgångstiden är
+ * `getSession()`:s sak, och en utgången token betyder bara att skelettet visas
+ * en halv sekund innan landningssidan tar över.
+ */
+const AUTH_KEY = /^sb-.+-auth-token$/;
+
+function läsSparadSession(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && AUTH_KEY.test(k)) return true;
+    }
+  } catch {
+    /* privat läge — då får landningssidan gälla */
+  }
+  return false;
+}
+
+// Ingen prenumeration: värdet konsulteras bara under de millisekunder
+// `loading` är sant, och varje riktig auth-ändring går ändå genom `useAuth`.
+const ingenPrenumeration = () => () => {};
+
+export function useHasStoredSession(): boolean {
+  return useSyncExternalStore(ingenPrenumeration, läsSparadSession, () => false);
 }
 
 export function useAuth() {

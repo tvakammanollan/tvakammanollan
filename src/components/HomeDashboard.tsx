@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { UserAvatar } from "@/components/UserAvatar";
 import { displayName } from "@/lib/guest-name";
@@ -12,7 +13,6 @@ import { CoachingModal } from "@/components/CoachingModal";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
-import { Reveal } from "@/components/landing/MotionFX";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { CoachingQuizCard } from "@/components/CoachingQuizCard";
@@ -90,9 +90,25 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
       <ResumeMatchBanner />
       {isGuest && <GuestBanner />}
 
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
+      {/* EN övergång för hela skärmen, inte en per kort.
+          Korten låg tidigare i var sitt `Reveal` med olika `delay` (0 / 0,05 /
+          0,08 / 0,11) och var sin IntersectionObserver. `Reveal` är dessutom en
+          SCROLL-primitiv: den väntar på att elementet syns, vilket för en yta
+          som redan ligger ovanför vecket betyder "vänta på nästa
+          observer-callback". Fyra block som var för sig väntar in en observer
+          och sedan animerar i 0,75 s kommer in i trappa — och eftersom dagens
+          ord serverrenderas medan coachningskortets pris hämtas från Stripe såg
+          trappan olika ut vid varje laddning. Nu rör sig hela skärmen som en
+          enhet, och det som fortfarande saknar data har ett skelett i sin egen
+          höjd i stället för en egen inflygning. */}
+      <m.div
+        className="mx-auto max-w-5xl px-4 py-10 sm:py-12"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
         {/* ---------- Header: namn + en enda statusrad ---------- */}
-        <Reveal y={16}>
+        <div>
           <header>
             <div className="flex items-center gap-3">
               <UserAvatar
@@ -125,19 +141,19 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               streak={isGuest ? 0 : (profile.current_streak ?? 0)}
             />
           </header>
-        </Reveal>
+        </div>
 
         {/* Två spalter från lg: dagens ord står kvar i vänsterkanten
             medan man jobbar sig genom valen till höger. Under lg
             staplas de och ordet hamnar sist, eftersom "vad gör jag nu"
             ska komma före på en liten skärm. */}
         <div className="mt-10 grid items-start gap-4 lg:grid-cols-[288px_minmax(0,1fr)]">
-          {/* Ordningsklasserna sitter på Reveal och inte på <aside>: Reveal är
-              grid-barnet, och `order-*` på ett element som inte är ett
+          {/* Ordningsklasserna sitter på WRAPPERN och inte på <aside>: wrappern
+              är grid-barnet, och `order-*` på ett element som inte är ett
               flex/grid-item gör ingenting. Utan det här hamnade dagens ord och
               kvalificeringen ÖVERST på mobil, före "Spela en match" — tvärtemot
               vad kommentaren ovan påstod. */}
-          <Reveal y={20} delay={0.11} className="order-2 lg:order-1">
+          <div className="order-2 lg:order-1">
             <aside className="space-y-3 lg:sticky lg:top-24">
               <SafeBoundary label="word-of-the-day">
                 <WordOfTheDay initial={wordOfTheDay} />
@@ -150,11 +166,11 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 <CoachingQuizCard />
               </SafeBoundary>
             </aside>
-          </Reveal>
+          </div>
 
           <div className="order-1 lg:order-2 min-w-0">
             {/* ---------- 1. Spela match ---------- */}
-            <Reveal y={20} delay={0.05}>
+            <div>
               <section>
                 <div
                   className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/30 p-5 backdrop-blur-sm sm:p-6"
@@ -216,10 +232,10 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   </button>
                 </div>
               </section>
-            </Reveal>
+            </div>
 
             {/* ---------- 2. Plugga ord   3. Coachning ---------- */}
-            <Reveal y={20} delay={0.08}>
+            <div>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <ActionCard
                   to="/ord"
@@ -245,10 +261,10 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   />
                 </div>
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
-      </div>
+      </m.div>
 
       <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
       <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="dashboard" />
