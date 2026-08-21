@@ -4,10 +4,19 @@ import { cn } from "@/lib/utils";
 interface Props {
   name: string;
   /**
-   * Vad färgen räknas ur, när den ska vara stabil per konto och inte per
-   * namn — typiskt användarens id. Bokstäverna kommer alltid ur `name`:
-   * resultatsidan skickade in id:t som namn för att få en stabil färg, och
-   * brickan visade då **CD** ur `cd3c30d2-…` i stället för personens namn.
+   * Vad färgen räknas ur. **Skicka alltid användarens id.**
+   *
+   * Färgen ska vara stabil per KONTO, inte per namn. Av tolv anropsställen
+   * skickade bara två `seed`; resten föll tillbaka på `name`, så samma person
+   * hade en färg i navbaren, en annan i vänlistan och en tredje i forumet —
+   * och bytte färg så fort de bytte användarnamn. Bokstäverna kommer alltid
+   * ur `name`: resultatsidan skickade en gång in id:t som namn för att få en
+   * stabil färg, och brickan visade då **CD** ur `cd3c30d2-…` i stället för
+   * personens namn.
+   *
+   * Valfri bara för att en del forum- och notisrader kan ha en raderad
+   * avsändare utan id. Saknas den faller färgen tillbaka på namnet, vilket är
+   * bättre än ingen färg alls — men det är reservläget, inte normalfallet.
    */
   seed?: string;
   size?: number;

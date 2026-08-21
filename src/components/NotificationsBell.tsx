@@ -294,7 +294,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                   key={`${n.kind}-${n.id}`}
                   className="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-white/[0.03]"
                 >
-                  <UserAvatar name={n.fromName} size={34} />
+                  <UserAvatar name={n.fromName} seed={n.fromId} size={34} />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm">
                       <span className="font-semibold">{n.fromName}</span>

@@ -237,7 +237,11 @@ function FriendsPage() {
                   className="flex items-center justify-between rounded-xl border border-border bg-card p-3 shadow-card"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={36} />
+                    <UserAvatar
+                      name={displayName(r.other?.username, r.other?.id)}
+                      seed={r.other?.id}
+                      size={36}
+                    />
                     <span className="text-sm font-medium">
                       {displayName(r.other?.username, r.other?.id)}
                     </span>
@@ -278,7 +282,11 @@ function FriendsPage() {
                   className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-card sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={40} />
+                    <UserAvatar
+                      name={displayName(r.other?.username, r.other?.id)}
+                      seed={r.other?.id}
+                      size={40}
+                    />
                     <div>
                       <div className="text-sm font-semibold">
                         {displayName(r.other?.username, r.other?.id)}
@@ -342,7 +350,11 @@ function FriendsPage() {
                   className="flex items-center justify-between rounded-xl border border-border bg-card/60 p-3"
                 >
                   <div className="flex items-center gap-3">
-                    <UserAvatar name={displayName(r.other?.username, r.other?.id)} size={32} />
+                    <UserAvatar
+                      name={displayName(r.other?.username, r.other?.id)}
+                      seed={r.other?.id}
+                      size={32}
+                    />
                     <span className="text-sm">{displayName(r.other?.username, r.other?.id)}</span>
                     <span className="text-xs text-muted-foreground">Väntar…</span>
                   </div>

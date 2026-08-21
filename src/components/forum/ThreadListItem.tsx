@@ -22,7 +22,12 @@ export function ThreadListItem({
         params={{ kategori: thread.categorySlug, trad: `${thread.id}-${thread.slug}` }}
         className="flex gap-3 p-4 sm:gap-4 sm:p-5"
       >
-        <UserAvatar name={displayAuthor(thread.author?.username)} size={38} className="mt-0.5" />
+        <UserAvatar
+          name={displayAuthor(thread.author?.username)}
+          seed={thread.author?.id}
+          size={38}
+          className="mt-0.5"
+        />
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
