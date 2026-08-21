@@ -23,6 +23,7 @@ import { LogOut, Trophy, Timer as TimerIcon } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
 import { CropView, type Crop } from "@/components/question/CropView";
+import { ProvFigure } from "@/components/prov/ProvFigure";
 import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { sounds } from "@/lib/sounds";
 import { updateStreak } from "@/lib/streak";
@@ -1063,7 +1064,11 @@ function QuestionCard({
         </h2>
       )}
       {currentQ.image_url && (
-        <div className="mb-5 overflow-hidden rounded-xl border border-border">
+        <div
+          className={
+            currentQ.stem ? "mb-5 overflow-hidden rounded-xl border border-border" : "mb-5"
+          }
+        >
           {currentQ.stem ? (
             <CropView
               src={currentQ.image_url}
@@ -1073,11 +1078,17 @@ function QuestionCard({
               className="w-full"
             />
           ) : (
-            <img
+            /* Zoombar figur. Ett DTK-diagram är ~1 500 px brett i original och
+               renderas på ~300 px i en telefon — texten i det går inte att
+               läsa, och en vanlig <img> ger ingen väg att förstora den.
+               `ProvFigure` (lightbox med zoomsteg och panorering) har använts
+               av gamla prov hela tiden; duellen renderade en död bild.
+               Utsnitten (`stem`) rörs inte: de är smala remsor som skalas UPP
+               på en telefon och redan är läsbara. */
+            <ProvFigure
               src={currentQ.image_url}
               alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
-              decoding="async"
-              className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
+              label={bildUppgift ? "Uppgift ur provhäftet" : "Figur till frågan"}
             />
           )}
         </div>
@@ -1111,8 +1122,20 @@ function QuestionCard({
                   klipps då ut ur den. Annars är det text — och en
                   alternativtext som bara är sin egen bokstav skrivs inte ut,
                   den står redan i brickan till vänster. */}
+              {/* `min-w-0 flex-1` är inte kosmetika, det är vad som gör
+                  alternativet synligt alls. Knappen är en flex-container, och
+                  `CropView` renderar en `display: block`-ruta vars enda
+                  storleksregel är `aspect-ratio` — den har alltså ingen egen
+                  bredd att växa ur. Ett flex-item med `flex: 0 1 auto` vars
+                  innehåll saknar intrinsisk bredd löses till `width: 0`, så
+                  utsnittet blev 0×0 och matteduellens fyra knappar stod tomma.
+                  Mätt i Chrome: 0 px före, 616 px med `flex: 1 1 0%`.
+                  `train.tsx` och `ProvQuestionCard.tsx` har haft raden hela
+                  tiden — det var matchsidan som glidit isär. */}
               {currentQ.optionCrops && currentQ.image_url ? (
-                <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                <span
+                  className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
+                >
                   <CropView
                     src={currentQ.image_url}
                     crop={currentQ.optionCrops[i]}
@@ -1122,7 +1145,9 @@ function QuestionCard({
                 </span>
               ) : (
                 optionHasOwnText(opt, i) && (
-                  <span className={`leading-relaxed ${isMath ? "text-base" : "text-sm"}`}>
+                  <span
+                    className={`min-w-0 flex-1 leading-relaxed ${isMath ? "text-base" : "text-sm"}`}
+                  >
                     {isMath ? <MathText>{opt}</MathText> : isOrd ? ordText(opt) : opt}
                   </span>
                 )

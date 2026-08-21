@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { MathText } from "@/components/MathTextLazy";
 import { CropView, type Crop } from "@/components/question/CropView";
+import { ProvFigure } from "@/components/prov/ProvFigure";
 import { parseStem, parseOptionCrops, type ExamStem } from "@/components/question/examCrops";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import { useHighlighter } from "@/hooks/useHighlighter";
@@ -666,7 +667,11 @@ function TrainPage() {
               </h2>
             )}
             {currentQ.image_url && (
-              <div className="mb-5 overflow-hidden rounded-xl border border-border">
+              <div
+                className={
+                  currentQ.stem ? "mb-5 overflow-hidden rounded-xl border border-border" : "mb-5"
+                }
+              >
                 {currentQ.stem ? (
                   <CropView
                     src={currentQ.image_url}
@@ -676,11 +681,17 @@ function TrainPage() {
                     className="w-full"
                   />
                 ) : (
-                  <img
+                  /* Zoombar figur. Ett DTK-diagram är ~1 500 px brett i
+                     original och renderas på ~300 px i en telefon — texten i
+                     det går inte att läsa, och en vanlig <img> ger ingen väg
+                     att förstora. `ProvFigure` (lightbox med zoomsteg och
+                     panorering) har använts av gamla prov hela tiden; träningen
+                     och duellen renderade en död bild. Utsnitten (`stem`) rörs
+                     inte: de är smala remsor som skalas UPP på en telefon. */
+                  <ProvFigure
                     src={currentQ.image_url}
                     alt={bildUppgift ? `Uppgift ${current + 1} ur provhäftet` : "Figur till frågan"}
-                    decoding="async"
-                    className="mx-auto max-h-[55vh] w-auto max-w-full object-contain"
+                    label={bildUppgift ? "Uppgift ur provhäftet" : "Figur till frågan"}
                   />
                 )}
               </div>

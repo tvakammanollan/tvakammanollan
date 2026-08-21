@@ -47,6 +47,9 @@ import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
+import { cropStyle, isCrop, type Crop } from "@/lib/option-crop";
+import { useImageSize } from "@/hooks/useImageSize";
+import { ProvFigure } from "@/components/prov/ProvFigure";
 import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 import { AnswerContext } from "@/components/AnswerContext";
@@ -106,6 +109,41 @@ interface QuestionRow {
   passage_text: string | null;
   explanation: string | null;
   image_url: string | null;
+}
+
+/**
+ * Ett svarsalternativ som ligger som utsnitt i uppgiftsbilden.
+ *
+ * Genomgången listade alternativen som bara sina bokstäver — fyra tomma rader
+ * med en bock på en av dem. På en matteuppgift står alternativen i BILDEN, så
+ * raderna sa ingenting alls om vad man valt eller vad som var rätt; rutan
+ * längre ned (`AnswerContext`) visade bara det egna och det rätta svaret, och
+ * de två övriga gick inte att se.
+ *
+ * Måtten hämtas ur bilden (`useImageSize`) i stället för ur `image_caption`:
+ * genomgången läser inte det fältet, och ett utsnitt utan källbildens
+ * proportion får fel höjd — se `cropStyle`.
+ */
+function OptionCrop({ imageUrl, crop }: { imageUrl: string; crop: Crop }) {
+  const size = useImageSize(imageUrl);
+  return (
+    <span
+      role="img"
+      aria-label="Svarsalternativ ur provhäftet"
+      className="mt-0.5 block min-w-0 flex-1 rounded"
+      /* Ingen fast höjd. `cropStyle` sätter `aspect-ratio`, och en fast höjd
+         gör då bredden till höjd × proportion — ett brett, lågt alternativ
+         blev 1 009 px brett i ett fönster på 375 px och kapades av
+         accordionens `overflow: hidden`, så bara vänsterkanten syntes.
+         Bredden styr i stället, precis som `CropView` gör i duellen, och
+         höjden följer av proportionen. */
+      style={{
+        maxWidth: "100%",
+        ...cropStyle(imageUrl, crop, size),
+        ...(size ? {} : { minHeight: "1.25rem" }),
+      }}
+    />
+  );
 }
 
 function formatDuration(startIso: string, endIso: string | null): string {
@@ -756,7 +794,13 @@ function ResultPage() {
                   precis blev klar.
                 </p>
               )}
-              <ol className="grid gap-3 pb-2">
+              {/* `grid-cols-1` (= minmax(0, 1fr)) på BÅDA nivåerna. En naken
+                  `grid` sätter kolumnen efter innehållets max-content-bredd, och
+                  ett alternativutsnitt har `aspect-ratio` — alltså en
+                  max-content-bredd på höjd × proportion. Utan klämningen blev
+                  varje fråga 1 117 px bred i ett fönster på 375 px och kapades
+                  av accordionens `overflow: hidden`. */}
+              <ol className="grid grid-cols-1 gap-3 pb-2">
                 {questions.map((q, i) => {
                   const a = myCorrectByQ.get(q.id);
                   const correct = a?.is_correct ?? false;
@@ -865,21 +909,28 @@ function ResultPage() {
                         // och gjorde en enkel uppgift till en skärm av suddig
                         // text. `w-auto` + maxhöjd låter bilden ta sin egen
                         // storlek och krympa på små skärmar.
-                        <div className="mt-2 flex justify-center rounded-lg border border-border bg-white p-2">
-                          <img
+                        <div className="mt-2">
+                          {/* Zoombar, som i duellen och i gamla prov. Ett DTK-diagram
+                              är ~1 500 px brett i original; på en telefon renderas det
+                              på ~300 px och texten i det går inte att läsa. */}
+                          <ProvFigure
                             src={q.image_url}
                             alt={
                               isImageQuestion(q)
                                 ? `Uppgift ${i + 1} ur provhäftet`
                                 : "Figur till frågan"
                             }
-                            loading="lazy"
-                            decoding="async"
-                            className="max-h-[50vh] w-auto max-w-full object-contain"
+                            label={
+                              isImageQuestion(q) ? "Uppgift ur provhäftet" : "Figur till frågan"
+                            }
                           />
                         </div>
                       )}
-                      <ul className="mt-2 grid gap-1">
+                      {/* `grid-cols-1` (= minmax(0, 1fr)) och inte bara `grid`: ett utsnitt har
+                          `aspect-ratio`, alltså en max-content-bredd på höjd × proportion. En
+                          naken `grid` sätter kolumnen efter det och raden blev 1 117 px bred i
+                          ett fönster på 375 px, kapad av accordionens `overflow: hidden`. */}
+                      <ul className="mt-2 grid grid-cols-1 gap-1">
                         {q.options.map((opt) => {
                           const isCorrect = opt.id === q.correct_answer;
                           const isPicked = a?.selected_answer === opt.id;
@@ -898,7 +949,7 @@ function ResultPage() {
                               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded bg-background text-[11px] font-semibold">
                                 {opt.id}
                               </span>
-                              {optionHasOwnText(opt, q.options.indexOf(opt)) && (
+                              {optionHasOwnText(opt, q.options.indexOf(opt)) ? (
                                 <span className={`leading-relaxed ${isMath ? "font-mono" : ""}`}>
                                   {isMath ? (
                                     <MathText>{opt.text}</MathText>
@@ -908,6 +959,11 @@ function ResultPage() {
                                     opt.text
                                   )}
                                 </span>
+                              ) : (
+                                q.image_url &&
+                                isCrop(opt.crop) && (
+                                  <OptionCrop imageUrl={q.image_url} crop={opt.crop} />
+                                )
                               )}
                               {isCorrect && (
                                 <Check className="ml-auto h-4 w-4 text-[var(--success)]" />

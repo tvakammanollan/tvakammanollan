@@ -1,5 +1,6 @@
 import { ChevronDown, Maximize2, X, ZoomIn, ZoomOut } from "lucide-react";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useDismissible } from "@/hooks/useDismissible";
 
 /**
@@ -91,57 +92,67 @@ export function ProvFigure({
         )}
       </figure>
 
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col bg-black/90"
-          role="dialog"
-          aria-modal="true"
-          aria-label={alt}
-        >
-          <div className="flex items-center justify-end gap-2 p-3">
-            <button
-              type="button"
-              onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
-              disabled={zoom <= 1}
-              aria-label="Zooma ut"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
-            >
-              <ZoomOut className="h-5 w-5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
-              disabled={zoom >= 4}
-              aria-label="Zooma in"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
-            >
-              <ZoomIn className="h-5 w-5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Stäng figuren"
-              className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20"
-            >
-              <X className="h-5 w-5" aria-hidden />
-            </button>
-          </div>
-          {/* Ytan runt bilden stänger; bilden själv gör det inte, så att man
+      {/* Lightboxen renderas i en PORTAL till <body>, inte där den står.
+          `position: fixed` mäts mot närmaste förfader med `transform`,
+          `filter`, `backdrop-filter` eller `perspective` — inte mot fönstret —
+          och frågekorten i duellen och träningen har `backdrop-blur-sm`.
+          Utan portalen blev "helskärm" alltså kortets storlek: mätt till
+          341×550 px i ett fönster på 375×812, med kontrollerna inne i kortet
+          och diagrammet lika litet som förut. */}
+      {open &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex flex-col bg-black/90"
+            role="dialog"
+            aria-modal="true"
+            aria-label={alt}
+          >
+            <div className="flex items-center justify-end gap-2 p-3">
+              <button
+                type="button"
+                onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
+                disabled={zoom <= 1}
+                aria-label="Zooma ut"
+                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+              >
+                <ZoomOut className="h-5 w-5" aria-hidden />
+              </button>
+              <button
+                type="button"
+                onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
+                disabled={zoom >= 4}
+                aria-label="Zooma in"
+                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+              >
+                <ZoomIn className="h-5 w-5" aria-hidden />
+              </button>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Stäng figuren"
+                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20"
+              >
+                <X className="h-5 w-5" aria-hidden />
+              </button>
+            </div>
+            {/* Ytan runt bilden stänger; bilden själv gör det inte, så att man
               kan panorera i inzoomat läge utan att tappa bort sig. */}
-          <div className="flex-1 overflow-auto p-4" onClick={() => setOpen(false)}>
-            <img
-              src={src}
-              alt={alt}
-              onClick={(e) => e.stopPropagation()}
-              className="exam-figure mx-auto"
-              style={{
-                width: `${zoom * 100}%`,
-                maxWidth: zoom === 1 ? "min(100%, 900px)" : "none",
-              }}
-            />
-          </div>
-        </div>
-      )}
+            <div className="flex-1 overflow-auto p-4" onClick={() => setOpen(false)}>
+              <img
+                src={src}
+                alt={alt}
+                onClick={(e) => e.stopPropagation()}
+                className="exam-figure mx-auto"
+                style={{
+                  width: `${zoom * 100}%`,
+                  maxWidth: zoom === 1 ? "min(100%, 900px)" : "none",
+                }}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
