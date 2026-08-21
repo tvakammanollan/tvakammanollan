@@ -12,7 +12,7 @@ import {
 import { NextStep } from "@/components/layout/NextStep";
 import { ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
-import { formatDecimal, formatPercent } from "@/lib/sv-format";
+import { formatDecimal, formatPercent, antal } from "@/lib/sv-format";
 import { HP_TOTAL_QUESTIONS, normeringForPart } from "@/lib/normering";
 import { acceptedAnswers, findExam, isCorrect } from "@/lib/prov-data";
 import { summariseExam } from "@/lib/prov-results";
@@ -73,6 +73,11 @@ export function ProvResult({
     .map((q, i) => ({ q, i }))
     .filter(({ q }) => !isCorrect(q, answers[q.nr]));
   const alla = data.questions.map((q, i) => ({ q, i }));
+  // Provets egen ordning. `i` är indexet i `data.questions` och måste följa med
+  // orört — det är det `onReview` öppnar. Sorteringen är ett skyddsnät: arkivet
+  // levererar redan uppgifterna i nummerordning, och om det någon gång inte gör
+  // det ska genomgången ändå stämma med häftet.
+  const iOrdning = [...alla].sort((a, b) => a.q.nr - b.q.nr);
 
   return (
     <div className="space-y-5">
@@ -163,46 +168,32 @@ export function ProvResult({
           att den som svarat rätt på en uppgift genom att gissa aldrig fick veta
           det — och att en uppgift man var osäker på men råkade pricka inte gick
           att hitta tillbaka till. Nu står alla fyrtio: ditt svar, rätt svar och
-          om det blev rätt. Fel först, eftersom det är där genomgången börjar. */}
+          om det blev rätt.
+
+          EN lista, i provets egen nummerordning. Uppgifterna låg i två grupper
+          ("Att gå igenom" och "Rätt"), var och en internt sorterad. Följden var
+          att numren hoppade — 3, 7, 9, 14 … och sedan 1, 2, 4, 5 — och den som
+          letade efter uppgift 12 fick söka i två listor beroende på om det
+          blivit rätt eller fel. Det läste som att uppgifter saknades. Vad som
+          är rätt och fel syns på varje rad (`ReviewRow`), så grupperingen bar
+          ingen information som raden inte redan har. */}
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
         <h2 className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
           Genomgång ({alla.length} uppgifter)
         </h2>
         <p className="mb-3 text-xs text-[var(--text-tertiary)]">
-          Klicka på en uppgift för att se den med alternativen och facit.
+          {wrong.length > 0
+            ? `${antal(wrong.length, "uppgift", "uppgifter")} att gå igenom. Klicka på en uppgift för att se den med alternativen och facit.`
+            : "Allt rätt. Klicka på en uppgift för att se den med alternativen och facit."}
         </p>
 
-        {wrong.length > 0 && (
-          <>
-            <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--danger)]">
-              Att gå igenom ({wrong.length})
-            </h3>
-            <ul className="space-y-2">
-              {wrong.map(({ q, i }) => (
-                <li key={q.nr}>
-                  <ReviewRow q={q} answer={answers[q.nr]} onClick={() => onReview(i)} />
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {alla.length > wrong.length && (
-          <>
-            <h3 className="mb-2 mt-5 text-[11px] font-semibold uppercase tracking-wider text-[var(--success)]">
-              Rätt ({alla.length - wrong.length})
-            </h3>
-            <ul className="space-y-2">
-              {alla
-                .filter(({ q }) => isCorrect(q, answers[q.nr]))
-                .map(({ q, i }) => (
-                  <li key={q.nr}>
-                    <ReviewRow q={q} answer={answers[q.nr]} onClick={() => onReview(i)} />
-                  </li>
-                ))}
-            </ul>
-          </>
-        )}
+        <ul className="space-y-2">
+          {iOrdning.map(({ q, i }) => (
+            <li key={q.nr}>
+              <ReviewRow q={q} answer={answers[q.nr]} onClick={() => onReview(i)} />
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Nästa provpass är det uppenbara nästa steget, men låg sist — under
