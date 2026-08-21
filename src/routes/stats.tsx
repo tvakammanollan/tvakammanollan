@@ -344,12 +344,12 @@ function StatsPage() {
           <StatCard
             icon={<BookA className="h-4 w-4" />}
             label="Snitt verbal"
-            value={verbalAvg !== null ? `${verbalAvg.toFixed(1)}/8` : "—"}
+            value={verbalAvg !== null ? `${verbalAvg.toFixed(1)}/8` : "–"}
           />
           <StatCard
             icon={<Sigma className="h-4 w-4" />}
             label="Snitt matte"
-            value={mathAvg !== null ? `${mathAvg.toFixed(1)}/8` : "—"}
+            value={mathAvg !== null ? `${mathAvg.toFixed(1)}/8` : "–"}
           />
           <StatCard
             icon={<Star className="h-4 w-4" />}
@@ -667,7 +667,7 @@ function StatsPage() {
                           </td>
                           <td className="px-2 py-2 text-right tabular-nums">
                             {delta == null ? (
-                              "—"
+                              "–"
                             ) : (
                               <span
                                 className={

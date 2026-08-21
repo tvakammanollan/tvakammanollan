@@ -34,7 +34,7 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Ord på ${label} – ordlista för högskoleprovet`, "· Tvåkommanollan"),
+        title: fitTitle(`Ord på ${label} · ordlista för högskoleprovet`, "· Tvåkommanollan"),
         description:
           `${formatInt(count)} ord på ${label} från ORD-delprovet, med betydelse och den uppgift de kom ur. ` +
           `Bland dem: ${sample}.`,

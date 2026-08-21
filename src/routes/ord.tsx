@@ -332,7 +332,7 @@ function OrdPracticePage() {
         });
       } catch (err) {
         console.error("startSession failed", err);
-        alert("Kunde inte ladda frågor – försök igen om en stund.");
+        alert("Kunde inte ladda frågor. Försök igen om en stund.");
       } finally {
         setLoading(false);
       }
@@ -494,7 +494,7 @@ function OrdPracticePage() {
                 <p className="text-sm text-[var(--cream)]">
                   <strong className="font-semibold">{formatInt(failedCount)} ord</strong> att
                   repetera
-                  {dueCount > 0 && <> — {formatInt(dueCount)} är klara nu</>}
+                  {dueCount > 0 && <>, varav {formatInt(dueCount)} klara nu</>}
                 </p>
                 <button
                   type="button"
@@ -772,7 +772,7 @@ function OrdPracticePage() {
                       <div className="flex-1">
                         <div className="font-semibold">{ordText(a.question.question_text)}</div>
                         <div className="mt-0.5 text-xs text-muted-foreground">
-                          Rätt svar: <strong>{correctOpt ? ordText(correctOpt.text) : "—"}</strong>
+                          Rätt svar: <strong>{correctOpt ? ordText(correctOpt.text) : "–"}</strong>
                         </div>
                       </div>
                       {a.isCorrect ? (

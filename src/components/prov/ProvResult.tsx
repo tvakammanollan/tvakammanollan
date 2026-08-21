@@ -277,7 +277,7 @@ function ReviewRow({
         <span className="mt-0.5 block text-xs text-[var(--text-tertiary)]">
           Du svarade{" "}
           <strong className={rätt ? "text-[var(--success)]" : "text-[var(--destructive)]"}>
-            {answer ?? "—"}
+            {answer ?? "–"}
           </strong>{" "}
           · rätt svar <strong className="text-[var(--cream)]">{facit.join(" eller ")}</strong>
           {q.utgar ? " · uppgiften ströks av UHR" : ""}

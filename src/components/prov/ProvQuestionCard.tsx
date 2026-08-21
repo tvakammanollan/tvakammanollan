@@ -96,9 +96,9 @@ export function ProvQuestionCard({
 
       {question.figureMissing && (
         <p className="mt-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-xs leading-relaxed text-[var(--text-tertiary)]">
-          UHR publicerade aldrig den här uppgiftens bild — vårprovet 2012:s kvantitativa del lades
-          bara ut som webbsidor, och de bilderna finns inte kvar. Svarsalternativen stod i bilden och
-          går därför inte att visa.
+          UHR publicerade aldrig den här uppgiftens bild. Vårprovet 2012:s kvantitativa del lades
+          bara ut som webbsidor, och de bilderna finns inte kvar. Svarsalternativen stod i bilden
+          och går därför inte att visa.
         </p>
       )}
 

@@ -9,7 +9,7 @@
  */
 export type RankTier = {
   name: string;
-  /** Kort namn utan undertitel — "Guld" i stället för "Guld – Aspirant". */
+  /** Kort namn utan undertitel — "Guld" i stället för "Guld · Aspirant". */
   shortName: string;
   tier: string;
   minElo: number;
@@ -58,7 +58,7 @@ export const TIER_ACCENT = {
 export const RANK_TIERS: RankTier[] = [
   {
     tier: "brons",
-    name: "Brons – Nybörjare",
+    name: "Brons · Nybörjare",
     shortName: "Brons",
     minElo: 600,
     maxElo: 999,
@@ -68,7 +68,7 @@ export const RANK_TIERS: RankTier[] = [
   },
   {
     tier: "silver",
-    name: "Silver – Utmanare",
+    name: "Silver · Utmanare",
     shortName: "Silver",
     minElo: 1000,
     maxElo: 1199,
@@ -78,7 +78,7 @@ export const RANK_TIERS: RankTier[] = [
   },
   {
     tier: "guld",
-    name: "Guld – Aspirant",
+    name: "Guld · Aspirant",
     shortName: "Guld",
     minElo: 1200,
     maxElo: 1399,
@@ -88,7 +88,7 @@ export const RANK_TIERS: RankTier[] = [
   },
   {
     tier: "platina",
-    name: "Platina – Mästare",
+    name: "Platina · Mästare",
     shortName: "Platina",
     minElo: 1400,
     maxElo: 1599,
@@ -98,7 +98,7 @@ export const RANK_TIERS: RankTier[] = [
   },
   {
     tier: "diamant",
-    name: "Diamant – Elit",
+    name: "Diamant · Elit",
     shortName: "Diamant",
     minElo: 1600,
     maxElo: 9999,

@@ -12,7 +12,7 @@
 const SV = "sv-SE";
 
 export function formatInt(n: number | null | undefined): string {
-  if (n == null || !Number.isFinite(n)) return "—";
+  if (n == null || !Number.isFinite(n)) return "–";
   return n.toLocaleString(SV);
 }
 
@@ -29,7 +29,7 @@ export function antal(n: number, singular: string, plural: string): string {
 }
 
 export function formatDecimal(n: number | null | undefined, fractionDigits = 1): string {
-  if (n == null || !Number.isFinite(n)) return "—";
+  if (n == null || !Number.isFinite(n)) return "–";
   return n.toLocaleString(SV, {
     minimumFractionDigits: fractionDigits,
     maximumFractionDigits: fractionDigits,
@@ -44,7 +44,7 @@ export function formatDecimal(n: number | null | undefined, fractionDigits = 1):
  * ett systemfel, inte som ett pris.
  */
 export function formatMoney(minorUnits: number | null | undefined, currency = "SEK"): string {
-  if (minorUnits == null || !Number.isFinite(minorUnits)) return "—";
+  if (minorUnits == null || !Number.isFinite(minorUnits)) return "–";
   const major = minorUnits / 100;
   const decimals = minorUnits % 100 === 0 ? 0 : 2;
   return major.toLocaleString(SV, {
@@ -56,12 +56,12 @@ export function formatMoney(minorUnits: number | null | undefined, currency = "S
 }
 
 export function formatPercent(ratio: number | null | undefined): string {
-  if (ratio == null || !Number.isFinite(ratio)) return "—";
+  if (ratio == null || !Number.isFinite(ratio)) return "–";
   return `${Math.round(ratio * 100)} %`;
 }
 
 export function formatPercentInt(value: number | null | undefined): string {
-  if (value == null || !Number.isFinite(value)) return "—";
+  if (value == null || !Number.isFinite(value)) return "–";
   return `${value} %`;
 }
 

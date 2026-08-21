@@ -170,7 +170,7 @@ function FriendsPage() {
       const r = await inviteFn({ data: { friend_id: friendId, match_type: type } });
       const r2 = r as { match_id: string };
       sounds.matchFound();
-      toast.success("Inbjudan skickad – väntar på din vän");
+      toast.success("Inbjudan skickad. Väntar på din vän.");
       navigate({ to: "/match/$matchId", params: { matchId: r2.match_id } });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Kunde inte bjuda in");

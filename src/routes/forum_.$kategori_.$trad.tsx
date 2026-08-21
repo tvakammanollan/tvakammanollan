@@ -71,7 +71,7 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
     const { thread, category, posts, page, total, perPage } = loaderData;
     const base = threadPath(category.slug, thread.id, thread.slug);
     const path = page > 1 ? `${base}?sida=${page}` : base;
-    const suffix = page > 1 ? ` – sida ${page}` : "";
+    const suffix = page > 1 ? ` · sida ${page}` : "";
     const first = posts[0];
     const description = first
       ? excerpt(first.body, 155)
@@ -158,7 +158,7 @@ function qaPageSchema({
       answerCount: Math.max(0, total - 1),
       author: authorSchema(thread.author?.username),
       url: `https://tvakommanollan.se${base}`,
-      about: { "@type": "Thing", name: `Högskoleprovet – ${category.name}` },
+      about: { "@type": "Thing", name: `Högskoleprovet: ${category.name}` },
       ...(answer ? { acceptedAnswer: answerSchema(answer, base) } : {}),
       ...(suggested.length > 0
         ? { suggestedAnswer: suggested.map((p) => answerSchema(p, base)) }
@@ -191,7 +191,7 @@ function discussionSchema({
     inLanguage: "sv-SE",
     author: authorSchema(thread.author?.username),
     isPartOf: { "@id": "https://tvakommanollan.se/#website" },
-    about: { "@type": "Thing", name: `Högskoleprovet – ${category.name}` },
+    about: { "@type": "Thing", name: `Högskoleprovet: ${category.name}` },
     interactionStatistic: {
       "@type": "InteractionCounter",
       interactionType: "https://schema.org/CommentAction",

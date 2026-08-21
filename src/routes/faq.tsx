@@ -76,7 +76,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad är coachning på Tvåkommanollan?",
-    a: "Ett studieupplägg byggt efter din nivå och tiden du har kvar till provet, av någon som själv fått 1,95 på högskoleprovet. Det är sajtens enda betaltjänst — priset står i kassan — och direkt efter köpet väljer du en tid för samtalet. All träning på sajten är och förblir gratis.",
+    a: "Ett studieupplägg byggt efter din nivå och tiden du har kvar till provet, av någon som själv fått 1,95 på högskoleprovet. Det är sajtens enda betaltjänst, och priset står i kassan. Direkt efter köpet väljer du en tid för samtalet. All träning på sajten är och förblir gratis.",
   },
 ];
 

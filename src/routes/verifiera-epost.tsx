@@ -33,8 +33,8 @@ export const Route = createFileRoute("/verifiera-epost")({
 
 const FEL: Record<NonNullable<VerifyResult["reason"]>, string> = {
   okand:
-    "Länken känns inte igen. Den kan höra till en adress som sedan bytts ut — begär ett nytt mejl inifrån appen.",
-  utgangen: "Länken har gått ut. Den gäller i ett dygn — begär ett nytt mejl inifrån appen.",
+    "Länken känns inte igen. Den kan höra till en adress som sedan bytts ut. Begär ett nytt mejl inifrån appen.",
+  utgangen: "Länken har gått ut. Den gäller i ett dygn, så begär ett nytt mejl inifrån appen.",
   anvand: "Den här länken är redan använd. Din adress är alltså bekräftad sedan tidigare.",
 };
 
@@ -87,7 +87,7 @@ function VerifyPage() {
             Adressen är bekräftad.
           </h1>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Tack! Nu kan du också skriva i forumet. Ditt konto har fungerat hela tiden — det här var
+            Tack! Nu kan du också skriva i forumet. Ditt konto har fungerat hela tiden. Det här var
             bara sista pusselbiten.
           </p>
           <Button asChild>

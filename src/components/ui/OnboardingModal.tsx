@@ -243,7 +243,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                 Du är redo!
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Din ELO börjar på 1000 – Silver-rankingen.
+                Din ELO börjar på 1000, i Silver-rankingen.
               </p>
               <div className="mt-6 flex justify-center">
                 <RankBadge elo={1000} size="lg" showName />

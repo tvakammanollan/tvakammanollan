@@ -64,7 +64,7 @@ function layout({ heading, paragraphs, cta, footer }: LayoutInput): string {
   </div>
   <p style="max-width:520px;margin:16px auto 0;font-size:12px;line-height:1.6;color:#6b5648;text-align:center;">
     ${footer ? `${esc(footer)}<br>` : ""}${BRAND} · <a href="${SITE}" style="color:#6b5648;">tvakommanollan.se</a><br>
-    Svara på det här mejlet om du undrar något — det går till en riktig inkorg.
+    Svara på det här mejlet om du undrar något. Det går till en riktig inkorg.
   </p>
 </div>`;
 }
@@ -76,7 +76,7 @@ function textLayout(
 ): string {
   const parts = [heading, "", ...lines];
   if (cta) parts.push("", `${cta.label}: ${cta.url}`);
-  parts.push("", `${BRAND} — ${SITE}`, "Svara på det här mejlet om du undrar något.");
+  parts.push("", `${BRAND} · ${SITE}`, "Svara på det här mejlet om du undrar något.");
   return parts.join("\n");
 }
 
@@ -90,7 +90,7 @@ export function verifyEmailTemplate(input: { url: string; username?: string | nu
       heading: "Bekräfta din e-postadress",
       paragraphs: [
         esc(hej),
-        "Du är redan inloggad och kan spela på en gång — det här är bara för att vi ska veta att adressen är din. Det behövs bland annat för att kunna skriva i forumet och för att du ska kunna återställa lösenordet.",
+        "Du är redan inloggad och kan spela på en gång. Det här är bara för att vi ska veta att adressen är din. Det behövs bland annat för att kunna skriva i forumet och för att du ska kunna återställa lösenordet.",
         "Länken gäller i 24 timmar.",
       ],
       cta: { label: "Bekräfta adressen", url: input.url },
@@ -101,7 +101,7 @@ export function verifyEmailTemplate(input: { url: string; username?: string | nu
       [
         hej,
         "",
-        "Du är redan inloggad och kan spela på en gång — det här är bara för att vi ska veta att adressen är din.",
+        "Du är redan inloggad och kan spela på en gång. Det här är bara för att vi ska veta att adressen är din.",
         "Länken gäller i 24 timmar.",
         "",
         "Har du inte skapat något konto hos oss? Strunta i det här mejlet.",
@@ -133,8 +133,8 @@ export function coachingConfirmationTemplate(input: CoachingConfirmationInput): 
 
   return {
     subject: input.scheduledLabel
-      ? `Kvitto och bokad tid · Studieupplägg · ${BRAND}`
-      : `Kvitto · Studieupplägg — välj din tid · ${BRAND}`,
+      ? `Kvitto för Studieupplägg · bokad tid · ${BRAND}`
+      : `Kvitto för Studieupplägg · välj din tid · ${BRAND}`,
     html: layout({
       heading: input.scheduledLabel ? "Tack! Din tid är bokad." : "Tack! Välj din tid.",
       paragraphs,
@@ -169,10 +169,10 @@ export function leadNotificationTemplate(input: {
   message: string | null;
 }): EmailBody {
   const rader = [
-    `Namn: ${input.name ?? "—"}`,
+    `Namn: ${input.name ?? "–"}`,
     `Telefon: ${input.phone}`,
     ...input.answers,
-    `Källa: ${input.source ?? "—"}`,
+    `Källa: ${input.source ?? "–"}`,
     input.message ? `Meddelande: ${input.message}` : null,
   ].filter((r): r is string => r !== null);
 
@@ -198,7 +198,7 @@ export function bugReportTemplate(input: {
 }): EmailBody {
   const rader = [
     `Från: ${input.username ?? "okänd"}${input.email ? ` (${input.email})` : ""}`,
-    `Sida: ${input.page ?? "—"}`,
+    `Sida: ${input.page ?? "–"}`,
     "",
     input.message,
   ];

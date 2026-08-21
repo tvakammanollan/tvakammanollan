@@ -109,7 +109,7 @@ interface QuestionRow {
 }
 
 function formatDuration(startIso: string, endIso: string | null): string {
-  if (!endIso) return "—";
+  if (!endIso) return "–";
   const ms = Math.max(0, new Date(endIso).getTime() - new Date(startIso).getTime());
   const s = Math.floor(ms / 1000);
   const mm = String(Math.floor(s / 60)).padStart(2, "0");
@@ -448,8 +448,8 @@ function ResultPage() {
   const Icon = won ? Trophy : Frown;
   const subtext = decidedOnTime
     ? won
-      ? "Lika många rätt – du lämnade in först."
-      : "Lika många rätt – motståndaren lämnade in först."
+      ? "Lika många rätt. Du lämnade in först."
+      : "Lika många rätt. Motståndaren lämnade in först."
     : won
       ? "Snyggt jobbat. Spela igen och fortsätt klättra."
       : "Bra kämpa! Varje match gör dig bättre.";
@@ -471,7 +471,7 @@ function ResultPage() {
         toast.success(
           r2.already
             ? "Du har redan en revansch på väg till motståndaren."
-            : `Revansch skickad – väntar på ${opponentName}.`,
+            : `Revansch skickad. Väntar på ${opponentName}.`,
         );
         navigate({ to: "/match/$matchId", params: { matchId: r2.match_id } });
       } else {
@@ -499,7 +499,7 @@ function ResultPage() {
         await navigator.share({ title: "Tvåkommanollan", text, url });
       } else {
         await navigator.clipboard.writeText(`${text}\nSpela gratis: ${url}`);
-        toast.success("Resultatet kopierat – klistra in var du vill!");
+        toast.success("Resultatet kopierat! Klistra in var du vill.");
       }
     } catch {
       /* användaren avbröt delningen */

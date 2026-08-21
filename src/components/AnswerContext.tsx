@@ -59,7 +59,7 @@ function Rad({
           color: rätt ? "var(--success-ink)" : "var(--danger-ink)",
         }}
       >
-        {option?.id ?? "—"}
+        {option?.id ?? "–"}
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: färg }}>
@@ -136,7 +136,7 @@ export function AnswerContext({
         />
       )}
       <Rad
-        etikett={prickade ? "Ditt svar — rätt" : "Rätt svar"}
+        etikett={prickade ? "Ditt svar (rätt)" : "Rätt svar"}
         option={rättOpt}
         imageUrl={imageUrl}
         rätt

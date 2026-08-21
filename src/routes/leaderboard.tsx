@@ -592,7 +592,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       <td className="px-4 py-4 text-right">
         <span className="inline-flex items-center justify-end gap-1.5">
           <span className="text-sm font-semibold tabular-nums text-white">
-            {wr === null ? "—" : `${wr}%`}
+            {wr === null ? "–" : `${wr}%`}
           </span>
           {wr !== null && wr >= 50 && (
             <span
@@ -644,7 +644,7 @@ function OrdBoard() {
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
       <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-4 py-2 text-xs text-white/55">
-        <span>{updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "—"}</span>
+        <span>{updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "–"}</span>
         <button
           onClick={() => void load()}
           className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-white/55 hover:bg-white/[0.05] hover:text-white"

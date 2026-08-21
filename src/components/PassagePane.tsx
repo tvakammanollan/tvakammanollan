@@ -65,7 +65,7 @@ export function PassagePane({
           <span className="inline-flex items-center gap-2">
             <FileText className="h-4 w-4 text-[#ae2f26]" aria-hidden />
             {headerLabel}
-            <span className="font-normal text-muted-foreground">– tryck för att läsa</span>
+            <span className="font-normal text-muted-foreground">(tryck för att läsa)</span>
           </span>
           <ChevronDown
             className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}

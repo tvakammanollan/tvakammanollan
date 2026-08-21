@@ -23,7 +23,7 @@ export const Route = createFileRoute("/ordlista")({
       meta: pageMeta({
         path: "/ordlista",
         title: fitTitle(
-          "Ordlista för högskoleprovet – alla ord med förklaring",
+          "Ordlista för högskoleprovet · alla ord med förklaring",
           "· Tvåkommanollan",
         ),
         description:
@@ -78,7 +78,7 @@ function OrdlistaIndexPage() {
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           {formatInt(total)} ord som förekommit på ORD-delprovet. Varje ord har sin betydelse, en
-          exempelmening, närliggande ord — och uppgiften det faktiskt kom ur, med facit. Gratis och
+          exempelmening, närliggande ord och uppgiften det faktiskt kom ur, med facit. Gratis och
           utan konto.
         </p>
         <div className="mt-5">

@@ -111,7 +111,7 @@ export function hpEventJsonLd(
     // är tre anonyma noder som Google får para ihop själv.
     "@id": `${ORIGIN}${PATH}#${entry.date}`,
     url: `${ORIGIN}${PATH}`,
-    name: `Högskoleprovet – ${entry.label}`,
+    name: `Högskoleprovet ${entry.session} ${entry.date.slice(0, 4)}`,
     startDate: hpDateTime(entry.date, HP_DAY_START),
     endDate: hpDateTime(entry.date, HP_DAY_END),
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",

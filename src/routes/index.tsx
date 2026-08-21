@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: pageMeta({
       path: "/",
-      title: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov",
+      title: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
       description:
         "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK, gratis.",
       ogDescription:

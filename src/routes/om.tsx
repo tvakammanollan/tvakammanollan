@@ -86,9 +86,9 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser och ingen betalspärr
-            — allt pluggmaterial är gratis. Det enda som kostar pengar är personlig coachning, som
-            är helt frivillig. Du betalar aldrig med din uppmärksamhet.
+            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser och ingen betalspärr.
+            Allt pluggmaterial är gratis. Det enda som kostar pengar är personlig coachning, som är
+            helt frivillig. Du betalar aldrig med din uppmärksamhet.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
@@ -143,7 +143,7 @@ function OmPage() {
               <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
                 Gamla prov 2012–2026
               </Link>
-              : alla 30 provtillfällen, 120 provpass och 4 800 uppgifter — skriv hela provpass med
+              : alla 30 provtillfällen, 120 provpass och 4 800 uppgifter. Skriv hela provpass med
               facit och normering
             </li>
             <li>
@@ -167,7 +167,7 @@ function OmPage() {
               info@tvakommanollan.se
             </a>
             . Har du hittat en bugg eller har ett önskemål? Använd gärna knappen &quot;Rapportera
-            bugg&quot; längst ner på sidan — då följer det med vilken sida du var på, vilket gör att
+            bugg&quot; längst ner på sidan. Då följer det med vilken sida du var på, vilket gör att
             vi kan börja leta direkt.
           </p>
 

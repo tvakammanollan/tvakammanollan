@@ -108,7 +108,7 @@ export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text
               <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#2f6b3c]/15 text-[#2f6b3c]">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <DialogTitle className="text-center">Tack — rapporten är skickad</DialogTitle>
+              <DialogTitle className="text-center">Tack! Rapporten är skickad</DialogTitle>
               <DialogDescription className="text-center">
                 Den ligger nu hos oss tillsammans med vilken sida du var på, så vi kan börja leta
                 direkt.
@@ -129,7 +129,7 @@ export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text
               <DialogTitle>Rapportera bugg</DialogTitle>
               <DialogDescription>
                 Tvåkommanollan byggs fortfarande, så en del går sönder. Beskriv vad som hände och
-                vad du väntade dig — det räcker långt.
+                vad du väntade dig. Det räcker långt.
               </DialogDescription>
             </DialogHeader>
             <Textarea

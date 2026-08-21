@@ -454,7 +454,7 @@ function MatchPage() {
             oppForceStartedRef.current = true;
             setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
-            toast.info(`Motståndaren är klar – du har ${OPPONENT_GRACE_SECONDS} sekunder kvar!`);
+            toast.info(`Motståndaren är klar! Du har ${OPPONENT_GRACE_SECONDS} sekunder kvar.`);
           }
         },
       )
@@ -592,7 +592,7 @@ function MatchPage() {
         // Wait for opponent (private match)
         setWaitingForOpp(true);
       }
-      if (auto) toast.info("Tiden är slut – matchen lämnades in automatiskt.");
+      if (auto) toast.info("Tiden är slut. Matchen lämnades in automatiskt.");
     } catch (e) {
       console.error(e);
       toast.error("Kunde inte lämna in matchen");
@@ -775,7 +775,7 @@ function MatchPage() {
             role="status"
             aria-live="polite"
           >
-            Anslutningen bröts – försöker återansluta…
+            Anslutningen bröts. Försöker återansluta…
           </m.div>
         ) : null}
         <m.span

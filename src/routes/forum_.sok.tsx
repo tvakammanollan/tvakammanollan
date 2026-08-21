@@ -39,7 +39,7 @@ export const Route = createFileRoute("/forum_/sok")({
         path: "/forum/sok",
         title,
         description:
-          "Sök bland frågor och svar om högskoleprovet — XYZ, KVA, NOG, DTK, ORD, LÄS, MEK och ELF.",
+          "Sök bland frågor och svar om högskoleprovet: XYZ, KVA, NOG, DTK, ORD, LÄS, MEK och ELF.",
         noindex: true,
       }),
       links: pageLinks("/forum/sok"),
@@ -118,7 +118,7 @@ function ForumSearchPage() {
 
       {!data ? (
         <p className="mt-8 text-sm text-[var(--text-tertiary)]">
-          Skriv minst två tecken. Söket letar i både rubriker och inlägg — rubrikträffar väger
+          Skriv minst två tecken. Söket letar i både rubriker och inlägg. Rubrikträffar väger
           tyngre.
         </p>
       ) : data.hits.length === 0 ? (

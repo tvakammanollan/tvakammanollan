@@ -116,7 +116,7 @@ export function ResumeMatchBanner() {
       <span className="text-[var(--cream)]">
         ⏳ Du har en pågående{" "}
         {saved.matchType === "math" ? "matte-" : saved.matchType === "verbal" ? "verbal-" : ""}
-        match – vill du fortsätta?
+        match. Vill du fortsätta?
       </span>
       <div className="flex shrink-0 items-center gap-2">
         <Button asChild size="sm" className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">

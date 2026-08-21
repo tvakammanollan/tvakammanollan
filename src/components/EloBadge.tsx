@@ -33,7 +33,7 @@ export function EloBadge({ elo, label, size = "md", className }: Props) {
         className,
       )}
       style={{ backgroundColor: rank.soft, borderColor: rank.line, color: rank.accent }}
-      title={`${rank.name} · ${elo} ELO`}
+      title={`${rank.name}, ${elo} ELO`}
     >
       <span
         className="h-1.5 w-1.5 shrink-0 rounded-full"

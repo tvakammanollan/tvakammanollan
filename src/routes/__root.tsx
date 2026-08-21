@@ -142,20 +142,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // `pt-safe`/`pb-safe` (se styles.css), annars hamnar det under notchen
       // eller hemindikatorn.
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov" },
+      { title: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "description",
         content:
-          "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK – gratis.",
+          "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna gratis på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
       },
       {
         property: "og:title",
-        content: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
       },
       {
         property: "og:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
@@ -168,12 +168,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Tvåkommanollan – Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
       },
       {
         name: "twitter:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov – helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-4.png" },
       { name: "theme-color", content: "#fbf6ec" },

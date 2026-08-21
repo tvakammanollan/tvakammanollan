@@ -32,7 +32,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poangraknare",
-      title: fitTitle("Högskoleprovet poängräknare – räkna ut din poäng", "· Tvåkommanollan"),
+      title: fitTitle("Högskoleprovet poängräknare: räkna ut din poäng", "· Tvåkommanollan"),
       description:
         "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
       ogTitle: "Högskoleprovet poängräknare",
@@ -230,7 +230,7 @@ function SliderRow({
         max={80}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        aria-label={`${label} – antal rätt av 80`}
+        aria-label={`${label}, antal rätt av 80`}
         className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10"
         style={{ accentColor: "#ae2f26" }}
       />

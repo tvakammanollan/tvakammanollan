@@ -55,12 +55,12 @@ export const Route = createFileRoute("/ordlista_/$ord")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`${word} – vad betyder det?`, "· Ordlista", "· Tvåkommanollan"),
+        title: fitTitle(`Vad betyder ${word}?`, "· Ordlista", "· Tvåkommanollan"),
         description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
         ogTitle: `Vad betyder ${word}?`,
         ogDescription:
           trimToWord(question?.correctText ?? sense, 140) ||
-          `${word} — förklaring, exempel och HP-uppgiften ordet kom ur.`,
+          `${word}: förklaring, exempel och HP-uppgiften ordet kom ur.`,
       }),
       links: pageLinks(path),
       scripts: [
@@ -276,7 +276,7 @@ function OrdlistaEntryPage() {
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           {word} är ett av {formatInt(total)} ord ur tidigare högskoleprov. I ordträningen kommer de
-          tillbaka med växande mellanrum tills de sitter — gratis, utan konto.
+          tillbaka med växande mellanrum tills de sitter. Gratis, utan konto.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link

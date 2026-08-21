@@ -20,7 +20,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       title: fitTitle("Högskoleprovet poäng, normering & antagning", "· Tvåkommanollan"),
       description:
         "Vad högskoleprovets poäng 0,00–2,00 betyder, hur normeringen från råpoäng går till och hur resultatet används vid antagning. Plus urvalsgrupperna.",
-      ogTitle: "Högskoleprovet poäng & antagning – så funkar det",
+      ogTitle: "Högskoleprovet poäng & antagning: så funkar det",
       ogDescription:
         "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på Tvåkommanollan.",
     }),
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Article",
-        headline: "Högskoleprovet poäng, normering och antagning – så funkar det",
+        headline: "Högskoleprovet poäng, normering och antagning: så funkar det",
         description:
           "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,00–2,00 går till och hur resultatet används vid antagning till högskola och universitet.",
         inLanguage: "sv-SE",
@@ -86,7 +86,7 @@ function PoangPage() {
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Resultatet är ett normerat värde mellan 0,00 och 2,00, i steg om 0,05. Medelresultatet
             brukar ligga kring 0,9–1,0. Poängen baseras på hur många rätt du har jämfört med alla
-            andra som skrev samma prov – felaktiga svar ger inga minuspoäng, så det lönar sig alltid
+            andra som skrev samma prov. Felaktiga svar ger inga minuspoäng, så det lönar sig alltid
             att gissa.
           </p>
         </section>
@@ -102,7 +102,7 @@ function PoangPage() {
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Högskoleprovet ger inte ett enkelt procentresultat. Du kan maximalt få{" "}
-            <strong className="text-white/80">160 råpoäng</strong> – ett per uppgift. UHR räknar
+            <strong className="text-white/80">160 råpoäng</strong>, ett per uppgift. UHR räknar
             sedan ut hur råpoängen fördelar sig bland alla provdeltagare och fastställer
             normgränser, som justeras ungefär 2–5 råpoäng per tillfälle för att kompensera för att
             proven är olika svåra. Samma antal rätt kan därför ge olika betyg beroende på vilket
@@ -139,7 +139,7 @@ function PoangPage() {
             av UHR efter provets genomförande.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-white/65">
-            Verbal och kvantitativ del väger lika tungt – 80 uppgifter var – och du får ett samlat
+            Verbal och kvantitativ del väger lika tungt (80 uppgifter var) och du får ett samlat
             betyg, inget separat delbetyg. Fördelningen syns däremot i ditt resultatintyg, och den
             säger vilken del som ger mest att förbättra.
           </p>
@@ -175,12 +175,12 @@ function PoangPage() {
             </li>
             <li className="flex gap-2.5">
               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
-              Ditt resultat är giltigt i <strong className="text-white/80">åtta år</strong> – du kan
-              skriva flera gånger och ditt bästa resultat används.
+              Ditt resultat är giltigt i <strong className="text-white/80">åtta år</strong>. Du kan
+              skriva flera gånger, och ditt bästa resultat används.
             </li>
             <li className="flex gap-2.5">
               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7a5236]" />
-              HP kan bara <strong className="text-white/80">hjälpa</strong> dig – ett svagt prov
+              HP kan bara <strong className="text-white/80">hjälpa</strong> dig. Ett svagt prov
               räknas aldrig emot dina betyg.
             </li>
           </ul>
@@ -241,7 +241,7 @@ function PoangPage() {
           className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Höj din poäng – öva gratis
+          Öva gratis och höj din poäng
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
           Det säkraste sättet att klättra är att öva på riktiga frågor. Träna delprov, plugga ord

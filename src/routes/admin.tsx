@@ -274,7 +274,7 @@ function ManageTab() {
               rows.map((r) => (
                 <tr key={r.id} className="border-t border-border">
                   <td className="px-3 py-2 font-medium">{r.category}</td>
-                  <td className="px-3 py-2 tabular-nums">{r.difficulty ?? "—"}</td>
+                  <td className="px-3 py-2 tabular-nums">{r.difficulty ?? "–"}</td>
                   <td className="px-3 py-2">
                     {(r.question_text ?? "").slice(0, 60)}
                     {(r.question_text?.length ?? 0) > 60 ? "…" : ""}
@@ -497,9 +497,9 @@ function ReportsTab() {
               rows.map((r) => (
                 <tr key={r.id} className="border-t border-border">
                   <td className="px-3 py-2">{(r.questions?.question_text ?? "").slice(0, 50)}…</td>
-                  <td className="px-3 py-2">{r.questions?.category ?? "—"}</td>
+                  <td className="px-3 py-2">{r.questions?.category ?? "–"}</td>
                   <td className="px-3 py-2">{r.reason}</td>
-                  <td className="px-3 py-2 text-muted-foreground">{r.comment ?? "—"}</td>
+                  <td className="px-3 py-2 text-muted-foreground">{r.comment ?? "–"}</td>
                   <td className="px-3 py-2 text-muted-foreground">
                     {formatDate(r.created_at, {
                       year: "numeric",
@@ -888,7 +888,7 @@ function OrdAuditTab() {
                     <tr key={i} className="border-t border-border">
                       <td className="px-3 py-1.5 font-medium">{r.word}</td>
                       <td className="px-3 py-1.5 tabular-nums">
-                        {r.from && r.to ? `${r.from} → ${r.to}` : "—"}
+                        {r.from && r.to ? `${r.from} → ${r.to}` : "–"}
                       </td>
                       <td className={`px-3 py-1.5 font-semibold ${statusColor(r.status)}`}>
                         {r.status}

@@ -22,7 +22,7 @@ describe("hpEventJsonLd — Googles obligatoriska fält", () => {
   const e = hpEventJsonLd(HOST_2026, new Date("2026-08-20T10:00:00Z"));
 
   it("har name, startDate och location", () => {
-    expect(e.name).toBe("Högskoleprovet – HP Höst 2026");
+    expect(e.name).toBe("Högskoleprovet höst 2026");
     expect(e.startDate).toBe("2026-10-18T08:00:00+02:00");
     expect(e.location).toMatchObject({ "@type": "Place" });
   });

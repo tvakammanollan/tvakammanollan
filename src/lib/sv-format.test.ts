@@ -95,10 +95,10 @@ describe("procentformatering", () => {
   });
 
   it("ger tankstreck för saknade värden i stället för NaN", () => {
-    expect(formatPercent(null)).toBe("—");
-    expect(formatPercent(undefined)).toBe("—");
-    expect(formatPercent(Number.NaN)).toBe("—");
-    expect(formatPercentInt(null)).toBe("—");
+    expect(formatPercent(null)).toBe("–");
+    expect(formatPercent(undefined)).toBe("–");
+    expect(formatPercent(Number.NaN)).toBe("–");
+    expect(formatPercentInt(null)).toBe("–");
   });
 });
 

@@ -27,7 +27,7 @@ const DELPROV: Record<string, Delprov> = {
   ord: {
     code: "ORD",
     name: "Ordförståelse",
-    h1: "Öva ORD – ordförståelse inför högskoleprovet",
+    h1: "Öva ORD: ordförståelse inför högskoleprovet",
     intro:
       "ORD testar din ordförståelse: du ska hitta synonymen eller den närmaste betydelsen till ett ord. Det är ofta det delprov där man snabbast höjer sitt resultat genom att plugga ord. Här övar du på riktiga ORD-frågor från tidigare högskoleprov, med facit.",
     practiceTo: "/ord",
@@ -36,7 +36,7 @@ const DELPROV: Record<string, Delprov> = {
   mek: {
     code: "MEK",
     name: "Meningskomplettering",
-    h1: "Öva MEK – meningskomplettering inför högskoleprovet",
+    h1: "Öva MEK: meningskomplettering inför högskoleprovet",
     intro:
       "I MEK fyller du i de ord som saknas i en mening så att den blir språkligt och innehållsmässigt korrekt. Det belönar både ordförråd och språkkänsla. Öva på riktiga MEK-frågor med facit nedan.",
     practiceTo: "/train",
@@ -45,7 +45,7 @@ const DELPROV: Record<string, Delprov> = {
   las: {
     code: "LÄS",
     name: "Läsförståelse",
-    h1: "Öva LÄS – läsförståelse inför högskoleprovet",
+    h1: "Öva LÄS: läsförståelse inför högskoleprovet",
     intro:
       "LÄS mäter hur väl du förstår och drar slutsatser ur längre svenska texter. Nyckeln är att läsa aktivt och alltid hitta belägg för svaret i texten. Här tränar du på riktiga LÄS-uppgifter med facit.",
     practiceTo: "/train",
@@ -54,7 +54,7 @@ const DELPROV: Record<string, Delprov> = {
   elf: {
     code: "ELF",
     name: "Engelsk läsförståelse",
-    h1: "Öva ELF – engelsk läsförståelse inför högskoleprovet",
+    h1: "Öva ELF: engelsk läsförståelse inför högskoleprovet",
     intro:
       "ELF testar din förståelse av engelska texter. Bra engelska och ett strategiskt lässätt ger snabba poäng. Öva på riktiga ELF-frågor från gamla prov med facit.",
     practiceTo: "/train",
@@ -63,7 +63,7 @@ const DELPROV: Record<string, Delprov> = {
   xyz: {
     code: "XYZ",
     name: "Matematisk problemlösning",
-    h1: "Öva XYZ – matematisk problemlösning inför högskoleprovet",
+    h1: "Öva XYZ: matematisk problemlösning inför högskoleprovet",
     intro:
       "XYZ är matematisk problemlösning där du löser uppgifter och väljer rätt svarsalternativ. Träning på många uppgiftstyper bygger både snabbhet och säkerhet. Öva på riktiga XYZ-uppgifter med facit.",
     practiceTo: "/train",
@@ -72,25 +72,25 @@ const DELPROV: Record<string, Delprov> = {
   kva: {
     code: "KVA",
     name: "Kvantitativa jämförelser",
-    h1: "Öva KVA – kvantitativa jämförelser inför högskoleprovet",
+    h1: "Öva KVA: kvantitativa jämförelser inför högskoleprovet",
     intro:
-      "KVA ber dig avgöra vilken av två storheter som är störst – eller om det inte går att avgöra. Det handlar om att tänka smart snarare än att räkna ut allt. Öva på riktiga KVA-uppgifter med facit.",
+      "KVA ber dig avgöra vilken av två storheter som är störst, eller om det inte går att avgöra. Det handlar om att tänka smart snarare än att räkna ut allt. Öva på riktiga KVA-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna KVA utan tidspress",
   },
   nog: {
     code: "NOG",
     name: "Kvantitativa resonemang",
-    h1: "Öva NOG – kvantitativa resonemang inför högskoleprovet",
+    h1: "Öva NOG: kvantitativa resonemang inför högskoleprovet",
     intro:
-      "NOG testar om den givna informationen räcker för att lösa ett problem. Du tränar på att avgöra exakt vad som behövs – inte att räkna ut svaret. Öva på riktiga NOG-uppgifter med facit.",
+      "NOG testar om den givna informationen räcker för att lösa ett problem. Du tränar på att avgöra exakt vad som behövs, inte att räkna ut svaret. Öva på riktiga NOG-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna NOG utan tidspress",
   },
   dtk: {
     code: "DTK",
     name: "Diagram, tabeller och kartor",
-    h1: "Öva DTK – diagram, tabeller och kartor inför högskoleprovet",
+    h1: "Öva DTK: diagram, tabeller och kartor inför högskoleprovet",
     intro:
       "DTK mäter hur snabbt och rätt du läser av data ur diagram, tabeller och kartor. Det är ett tidspressat delprov där vana avgör. Öva på riktiga DTK-uppgifter med facit.",
     practiceTo: "/train",
@@ -115,9 +115,9 @@ export const Route = createFileRoute("/ova/$delprov")({
         path,
         // slice(0, 150) kapade mitt i ett ord: Google visade "Öva på riktiga
         // DTK-uppg Gratis och utan inloggning." på alla åtta sidorna.
-        title: fitTitle(`Öva ${cfg.code} (${cfg.name}) – frågor med facit`, "· Tvåkommanollan"),
+        title: fitTitle(`Öva ${cfg.code} (${cfg.name}): frågor med facit`, "· Tvåkommanollan"),
         description: describeWithin(cfg.intro, "Gratis och utan inloggning."),
-        ogTitle: `Öva ${cfg.code} – ${cfg.name}`,
+        ogTitle: `Öva ${cfg.code} (${cfg.name})`,
         ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,
       }),
       links: pageLinks(path),

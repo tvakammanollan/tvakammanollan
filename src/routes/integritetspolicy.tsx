@@ -71,7 +71,7 @@ function IntegritetspolicyPage() {
               kontoregistrering, för inloggning och återställning av lösenord. Vi skickar ett mejl
               med en länk för att bekräfta att adressen är din, och sparar då länkens engångsnyckel
               tills den använts eller gått ut (ett dygn). Du är inloggad och kan använda sajten
-              direkt — bekräftelsen behövs bara för att skriva i forumet.
+              direkt. Bekräftelsen behövs bara för att skriva i forumet.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Användarnamn:</strong> självvalt, visas på
@@ -89,7 +89,7 @@ function IntegritetspolicyPage() {
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Buggrapporter:</strong> texten du skriver,
-              vilken sida du var på, din webbläsarversion och — om du fyller i den — en e-postadress
+              vilken sida du var på, din webbläsarversion och (om du fyller i den) en e-postadress
               vi kan svara på.
             </li>
             <li>
@@ -140,8 +140,8 @@ function IntegritetspolicyPage() {
             har skapat konto för, och den coachning du eventuellt köpt) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
             missbrukshantering och produktförbättring). Ditt telefonnummer behandlas med stöd av
-            ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong> — som du lämnar genom
-            att skicka in formuläret — och du kan när som helst be oss radera det genom att mejla
+            ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong>, som du lämnar genom
+            att skicka in formuläret, och du kan när som helst be oss radera det genom att mejla
             adressen ovan. Användningsdata för analys behandlas enbart med stöd av ditt{" "}
             <strong style={{ color: "var(--cream)" }}>samtycke:</strong> inget analysskript laddas
             innan du sagt ja, och du kan ta tillbaka valet när som helst längre ned på den här
@@ -289,8 +289,8 @@ function IntegritetspolicyPage() {
             matchresultat behålls enbart i anonymiserad form, och har du köpt coachning sparas
             uppgifterna om det köpet enligt punkten om köpuppgifter ovan. Har du lämnat ditt
             telefonnummer i det formuläret medan du var inloggad raderas det tillsammans med kontot.
-            Lämnade du numret utan att vara inloggad kan vi inte koppla det till dig automatiskt —
-            mejla oss så tar vi bort det. För övriga rättigheter, kontakta oss på{" "}
+            Lämnade du numret utan att vara inloggad kan vi inte koppla det till dig automatiskt.
+            Mejla oss, så tar vi bort det. För övriga rättigheter, kontakta oss på{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"

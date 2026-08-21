@@ -39,11 +39,11 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         path,
         // Stod som "Högskoleprovet Höstprovet 2025 – …" på alla 30 sidorna:
         // `label` bär redan ordet provet, så prefixet stammade.
-        title: fitTitle(`${exam.label} – alla provpass med facit`, "· Tvåkommanollan"),
+        title: fitTitle(`${exam.label} · alla provpass med facit`, "· Tvåkommanollan"),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
-        ogTitle: `Högskoleprovet ${exam.label} – provpass & facit`,
+        ogTitle: `Högskoleprovet ${exam.label} · provpass & facit`,
         ogDescription: `${formatInt(exam.questions)} uppgifter med rätta svar. Öva gratis på Tvåkommanollan.`,
       }),
       links: pageLinks(path),
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "LearningResource",
-          name: `Högskoleprovet ${exam.label} – provpass med facit`,
+          name: `Högskoleprovet ${exam.label} · provpass med facit`,
           description: `Samtliga ${exam.passes.length} provpass från ${exam.label} med rätta svar.`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",

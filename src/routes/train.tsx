@@ -453,7 +453,7 @@ function TrainPage() {
               ett slumpat pass som ingen bett om. */}
           <SetupCard step="1" title="Vad vill du träna på?">
             <p className="-mt-1 mb-3 text-sm text-white/55">
-              Ett delprov i taget håller ihop passet — du hinner komma in i uppgiftstypen innan den
+              Ett delprov i taget håller ihop passet. Du hinner komma in i uppgiftstypen innan den
               byts ut.
             </p>
             <div className="space-y-4">
@@ -1051,7 +1051,7 @@ function TrackGroup({
           }`}
         >
           <span className="text-sm font-medium text-white/75">{mixLabel}</span>
-          <span className="ml-1.5 text-[11px] text-white/45">— alla fyra blandat</span>
+          <span className="ml-1.5 text-[11px] text-white/45">(alla fyra blandat)</span>
         </button>
       </div>
     </div>

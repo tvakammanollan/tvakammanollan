@@ -35,7 +35,7 @@ export const Route = createFileRoute("/forum_/$kategori")({
     if (!loaderData) return {};
     const { category, page, total, perPage, threads } = loaderData;
     const path = page > 1 ? `/forum/${category.slug}?sida=${page}` : `/forum/${category.slug}`;
-    const suffix = page > 1 ? ` – sida ${page}` : "";
+    const suffix = page > 1 ? ` · sida ${page}` : "";
 
     return {
       meta: pageMeta({

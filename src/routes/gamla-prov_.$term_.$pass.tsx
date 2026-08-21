@@ -34,7 +34,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         // svans som tål att falla bort — Google skriver ofta dit sajtnamnet
         // ändå, härlett ur og:site_name.
         title: fitTitle(
-          `${data.label} provpass ${data.pass} – ${delprov}`,
+          `${data.label} provpass ${data.pass} · ${delprov}`,
           "med facit",
           "· Tvåkommanollan",
         ),
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "Quiz",
-          name: `${data.label} – provpass ${data.pass} (${passKindLabel(data.kind)})`,
+          name: `${data.label} · provpass ${data.pass} (${passKindLabel(data.kind)})`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
           isAccessibleForFree: true,

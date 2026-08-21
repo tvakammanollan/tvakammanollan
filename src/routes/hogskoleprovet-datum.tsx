@@ -26,7 +26,7 @@ import { ArrowRight, CalendarDays, Clock, ScrollText } from "lucide-react";
 const PROVDAGEN: ReadonlyArray<{ tid: string; vad: string }> = [
   { tid: "08.10", vad: "Legitimationskontroll och placering" },
   { tid: "08.30", vad: "Introduktion till provdagen" },
-  { tid: "09.00", vad: "Provpass 1 – därefter fyra pass till, 55 minuter var" },
+  { tid: "09.00", vad: "Provpass 1, därefter fyra pass till på 55 minuter var" },
   { tid: "12.55", vad: "Lunch, drygt en timme" },
   { tid: "16.25", vad: "Sista provpasset slutar" },
   { tid: "16.55", vad: "Information och hemgång" },
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: fitTitle("Högskoleprovet datum 2026 & 2027 – när är nästa prov?", "· Tvåkommanollan"),
+      title: fitTitle("Högskoleprovet datum 2026 & 2027: när är nästa prov?", "· Tvåkommanollan"),
       // Datumen stod handskrivna här och skulle bli fel dagen HP_DATES ändras
       // — samma fel som redan städats bort ur FAQ:n och FAQPage-datan. De
       // härleds nu ur listan, och beskrivningen kortas till det Google visar.
@@ -46,13 +46,13 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
         ).join(" och ")}.`,
         "Nedräkning, anmälningsperiod och provavgift.",
       ),
-      ogTitle: "Högskoleprovet datum – när är nästa prov?",
+      ogTitle: "Högskoleprovet datum: när är nästa prov?",
       ogDescription:
         "Kommande HP-datum, nedräkning och anmälningsinfo. Öva gratis på Tvåkommanollan.",
       ogImage: HP_EVENT_IMAGES[0],
       ogImageWidth: 1200,
       ogImageHeight: 675,
-      ogImageAlt: "Högskoleprovet – provdatum, nedräkning och anmälan",
+      ogImageAlt: "Högskoleprovet: provdatum, nedräkning och anmälan",
     }),
     links: pageLinks("/hogskoleprovet-datum"),
     scripts: [
@@ -141,7 +141,7 @@ function DatumPage() {
           Så ser provdagen ut
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-          Provet består av fem provpass på 55 minuter vardera – fyra räknas, ett är ett
+          Provet består av fem provpass på 55 minuter vardera. Fyra räknas, ett är ett
           utprövningspass som inte ger poäng. Med raster och lunch är du på plats i drygt åtta
           timmar.
         </p>
@@ -178,7 +178,7 @@ function DatumPage() {
           >
             hogskoleprov.nu
           </a>{" "}
-          – inte på antagning.se, som är ansökan till utbildningar. Anmälan är öppen under en kort
+          , inte på antagning.se (som är ansökan till utbildningar). Anmälan är öppen under en kort
           period, ungefär en vecka, ett par månader före provdagen: se datumen i listan ovan. Missar
           du den går det inte att anmäla sig i efterhand.
         </p>
@@ -208,7 +208,7 @@ function DatumPage() {
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
           Ju tidigare du börjar, desto högre resultat. Öva på riktiga frågor från gamla prov, träna
-          ord och tävla mot andra – helt gratis.
+          ord och tävla mot andra. Allt är gratis.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

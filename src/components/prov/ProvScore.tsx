@@ -106,7 +106,7 @@ export function ProvScorePanel({
         {!complete
           ? "Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."
           : result.official
-            ? "Poängen är hämtad ur UHR:s egen normeringstabell för det här provtillfället. Totalpoängen är medelvärdet av delarnas — så räknas provet."
+            ? "Poängen är hämtad ur UHR:s egen normeringstabell för det här provtillfället. Totalpoängen är medelvärdet av delarnas. Så räknas provet."
             : "UHR:s normeringstabell för det här provtillfället finns inte att hämta, så poängen är uppskattad ur en generell tabell. Gränserna sätts efter provdagen och skiljer sig mellan provtillfällen."}
         {result.practice && " Något av passen är skrivet i övningsläge, alltså utan tidspress."}
       </p>

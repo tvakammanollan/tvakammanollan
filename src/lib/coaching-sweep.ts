@@ -70,7 +70,7 @@ export const CANCELED_STATUS = "canceled";
 export const CANCEL_MESSAGES: Record<SweepCancelReason, string> = {
   obetald:
     "Tiden släpptes eftersom köpet av studieupplägget aldrig slutfördes i kassan. " +
-    "Du är varmt välkommen att boka om på tvakommanollan.se — tiden är din så snart betalningen är klar.",
+    "Du är varmt välkommen att boka om på tvakommanollan.se. Tiden är din så snart betalningen är klar.",
   "utanför-köpflödet":
     "Den här tiden går bara att boka i samband med köp av studieupplägget på tvakommanollan.se. " +
     "Gör gärna om bokningen därifrån, så är allt klart på en gång.",

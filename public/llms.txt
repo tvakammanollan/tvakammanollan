@@ -12,13 +12,13 @@ Officiell domän: https://tvakommanollan.se
 - [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, matte och ord.
 - [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
 - [Öva ord](https://tvakommanollan.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition.
-- [Ordlista](https://tvakommanollan.se/ordlista): Uppslagsverk över varje ord som förekommit på ORD-delprovet — 8 760 sidor, en per ord, med betydelse, exempelmening, liknande ord och den HP-uppgift ordet kom ur. Adresser: /ordlista/<ord> (t.ex. /ordlista/viskös) och bokstavsregister på /ordlista/bokstav/<bokstav>.
-- [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 800 uppgifter med facit — 30 provtillfällen × 4 räknade provpass × 40 uppgifter. Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Engelsk läsförståelse (ELF) finns i samtliga 60 verbala provpass. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
+- [Ordlista](https://tvakommanollan.se/ordlista): Uppslagsverk över varje ord som förekommit på ORD-delprovet: 8 760 sidor, en per ord, med betydelse, exempelmening, liknande ord och den HP-uppgift ordet kom ur. Adresser: /ordlista/<ord> (t.ex. /ordlista/viskös) och bokstavsregister på /ordlista/bokstav/<bokstav>.
+- [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 800 uppgifter med facit (30 provtillfällen × 4 räknade provpass × 40 uppgifter). Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Engelsk läsförståelse (ELF) finns i samtliga 60 verbala provpass. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
 - [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google), tar under en minut.
 - [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
 - [Provdatum för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-datum): Nästa provdatum, anmälningsperiod och provavgift, med nedräkning.
 - [Poängräknare](https://tvakommanollan.se/hogskoleprovet-poangraknare): Räkna om råpoäng till normerat resultat 0,00–2,00.
-- [Forum](https://tvakommanollan.se/forum): Öppet diskussionsforum om högskoleprovet — frågor, svar, uppgiftshjälp och plugg. Kategorier: /forum/allmant, /forum/verbal, /forum/kvantitativ, /forum/provdagen, /forum/plugg.
+- [Forum](https://tvakommanollan.se/forum): Öppet diskussionsforum om högskoleprovet: frågor, svar, uppgiftshjälp och plugg. Kategorier: /forum/allmant, /forum/verbal, /forum/kvantitativ, /forum/provdagen, /forum/plugg.
 - [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om Tvåkommanollan: gratis, ELO, riktiga HP-frågor, gästläge och mer.
 - [Guider till HP](https://tvakommanollan.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
 - [Om Tvåkommanollan](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
@@ -95,7 +95,7 @@ Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultate
 - söndag 18 oktober 2026 (höstprovet)
 - lördag 10 april 2027 (vårprovet)
 
-Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. Anmälan görs på hogskoleprov.nu — inte på antagning.se — under en kort period, ungefär en vecka, ett par månader före provdagen: 11–18 augusti 2026 respektive 7–14 januari 2027. Provavgiften är 550 kronor. Senare provdatum publiceras av UHR ungefär ett år i förväg.
+Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. Anmälan görs på hogskoleprov.nu, inte på antagning.se. Perioden är kort, ungefär en vecka, ett par månader före provdagen: 11–18 augusti 2026 respektive 7–14 januari 2027. Provavgiften är 550 kronor. Senare provdatum publiceras av UHR ungefär ett år i förväg.
 
 ## FAQ
 
@@ -103,7 +103,7 @@ Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. 
 En gratis svensk plattform där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
 
 **Kostar det något?**
-All träning är gratis — matcher, gamla prov, ordträning, guider. Inga annonser och ingen betalspärr. Det enda som kostar är ett personligt studieupplägg (coachning), som är helt frivilligt och köps som engångsköp; priset står i kassan.
+All träning är gratis: matcher, gamla prov, ordträning, guider. Inga annonser och ingen betalspärr. Det enda som kostar är ett personligt studieupplägg (coachning), som är helt frivilligt och köps som engångsköp; priset står i kassan.
 
 **Behöver jag konto?**
 Du kan spela som gäst, men då sparas ingen ELO och du syns inte på topplistan. Konto tar 30 sekunder med e-post eller Google.
