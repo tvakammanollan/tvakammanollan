@@ -1532,6 +1532,9 @@ button,
   .bg-white\/10 {
     background-color: rgba(46, 30, 20, 0.1);
   }
+  .bg-white\/12 {
+    background-color: rgba(46, 30, 20, 0.12);
+  }
   .bg-white\/15 {
     background-color: rgba(46, 30, 20, 0.15);
   }
@@ -1712,7 +1715,11 @@ button,
   }
 
   /* Bakgrundstinten var blandad på samma sätt: /5, /10, /15 remappades till
-     cream medan /8 och de godtyckliga ([0.02] osv.) förblev rå vit. */
+     cream medan /8, /12 och de godtyckliga ([0.02] osv.) förblev rå vit —
+     /12 användes bara på en plats (GoogleButtons "eller"-linje på inloggnings-
+     sidan) och renderade där som en 12-procentig VIT linje på en pappersvit
+     botten, alltså osynlig. Mätt: `background-color: oklab(... / 0.12)`
+     (rå vit) i stället för den tonade tinten. */
   .bg-white\/8 {
     background-color: rgba(46, 30, 20, 0.08);
   }

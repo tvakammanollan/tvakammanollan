@@ -108,13 +108,22 @@ export function ProvFigure({
             aria-modal="true"
             aria-label={alt}
           >
+            {/* En LJUS-PÅ-MÖRK ö (se CLAUDE.md): `bg-black/90` är avsiktligt
+                mörk även i det ljusa temat, för att inskannad linjekonst ska
+                synas. `white/N` och `text-white` går annars genom remap-lagret
+                som vänder dem till bläckfärgade toner för den ljusa botten —
+                mätt i webbläsaren: `bg-white/10` blev `rgba(46,30,20,0.1)`
+                (en mörk ruta på svart botten) och `text-white` blev
+                `rgb(46,30,20)` (en nästan osynlig ikon). De tre
+                kontrollknapparna skriver därför explicit vitt, som regeln
+                säger — annars gick zoom- och stängknapparna inte att se. */}
             <div className="flex items-center justify-end gap-2 p-3">
               <button
                 type="button"
                 onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
                 disabled={zoom <= 1}
                 aria-label="Zooma ut"
-                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomOut className="h-5 w-5" aria-hidden />
               </button>
@@ -123,7 +132,7 @@ export function ProvFigure({
                 onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
                 disabled={zoom >= 4}
                 aria-label="Zooma in"
-                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomIn className="h-5 w-5" aria-hidden />
               </button>
@@ -131,7 +140,7 @@ export function ProvFigure({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Stäng figuren"
-                className="rounded-full bg-white/10 p-2 text-white backdrop-blur transition-colors hover:bg-white/20"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)]"
               >
                 <X className="h-5 w-5" aria-hidden />
               </button>
