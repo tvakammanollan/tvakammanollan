@@ -31,12 +31,12 @@ import {
   Swords,
 } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { displayCategory, formatDate } from "@/lib/sv-format";
+import { displayCategory, formatDate, formatTime } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { outcomeFor } from "@/lib/match-outcome";
-import { buildEloSeries, type EloSeries } from "@/lib/elo-series";
+import { buildEloSeries, eloSeriesSpan, eloTickUnit, type EloSeries } from "@/lib/elo-series";
 import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
@@ -237,10 +237,17 @@ function StatsPage() {
       setMathAvg(cntM ? sumM / cntM : null);
 
       // Delprov breakdown + average time per category
+      // `selected_answer` måste med: `submitMatch` skriver en rad för VARJE
+      // fråga i matchen, även de som aldrig besvarades (`selected_answer` null,
+      // `is_correct` false). Räknades de med hamnade obesvarade frågor i
+      // nämnaren som felsvar, så den som lämnade in med fyra av åtta hunna fick
+      // 50 % i stället för sin faktiska träffsäkerhet. Andel rätt ska mäta det
+      // man svarat på; hur mycket man hann är tidspress, en annan sak.
       const { data: ans } = await supabase
         .from("match_answers")
-        .select("is_correct, time_spent_seconds, questions(category)")
+        .select("is_correct, selected_answer, time_spent_seconds, questions(category)")
         .eq("user_id", user.id)
+        .not("selected_answer", "is", null)
         .limit(2000);
       const tally = new Map<
         string,
@@ -307,6 +314,7 @@ function StatsPage() {
     enough: b.total >= 5,
     color: VERBAL_CATS.includes(b.category) ? VERBAL_COLOR : MATH_COLOR,
     total: b.total,
+    correct: b.correct,
   }));
 
   return (
@@ -456,14 +464,22 @@ function StatsPage() {
                   {/* Riktig tidsaxel. Var tidigare matchens ordningsnummer,
                       så två matcher samma kväll låg lika långt isär som två
                       med en månad emellan. */}
+                  {/* Etiketternas upplösning följer seriens spann. De var
+                      alltid ett datum, så tre matcher samma kväll gav fyra
+                      identiska etiketter ("21 aug. 21 aug. 21 aug. 21 aug.")
+                      och axeln sa ingenting. Se `eloTickUnit`. */}
                   <XAxis
                     dataKey="ts"
                     type="number"
                     scale="time"
                     domain={["dataMin", "dataMax"]}
-                    tickFormatter={(v: number) =>
-                      formatDate(new Date(v), { month: "short", day: "numeric" })
-                    }
+                    tickFormatter={(v: number) => {
+                      const enhet = eloTickUnit(eloSeriesSpan(eloSeries.points));
+                      if (enhet === "time") return formatTime(new Date(v));
+                      if (enhet === "month")
+                        return formatDate(new Date(v), { month: "short", year: "numeric" });
+                      return formatDate(new Date(v), { month: "short", day: "numeric" });
+                    }}
                     stroke="rgba(255,255,255,0.42)"
                     fontSize={11}
                     tickLine={false}
@@ -487,7 +503,11 @@ function StatsPage() {
                     }}
                     labelStyle={{ color: "#2e1e14" }}
                     itemStyle={{ color: "#2e1e14" }}
-                    labelFormatter={(v) => formatDate(new Date(Number(v)))}
+                    // Datum OCH klockslag: två matcher samma dag fick annars
+                    // samma rubrik i rutan och gick inte att skilja åt.
+                    labelFormatter={(v) =>
+                      `${formatDate(new Date(Number(v)))} ${formatTime(new Date(Number(v)))}`
+                    }
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, name: any, props: any) => {
                       // Ändringen hör till den del som faktiskt spelades. Utan
@@ -576,8 +596,17 @@ function StatsPage() {
                     itemStyle={{ color: "#2e1e14" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, _name: any, props: any) => {
-                      if (!props?.payload?.enough) return ["Ej nog data", "Andel rätt"];
-                      return [`${value}%`, "Andel rätt"];
+                      const p = props?.payload;
+                      if (!p?.enough) {
+                        // Skilj "inga svar alls" från "för få för att säga något".
+                        return [
+                          p?.total ? `Bara ${p.total} svar än` : "Inga svar än",
+                          "Andel rätt",
+                        ];
+                      }
+                      // Andelen utan antal säger inget om hur säker den är:
+                      // 80 % av 5 frågor och 80 % av 200 är olika påståenden.
+                      return [`${value}% av ${p.total} svar`, "Andel rätt"];
                     }}
                   />
                   <Bar dataKey="pct" radius={[6, 6, 0, 0]}>

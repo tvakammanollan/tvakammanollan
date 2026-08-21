@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildEloSeries, type EloHistoryRow } from "./elo-series";
+import { buildEloSeries, type EloHistoryRow, eloTickUnit, eloSeriesSpan } from "./elo-series";
 
 function rad(
   match_type: string,
@@ -75,5 +75,50 @@ describe("buildEloSeries", () => {
     expect(s.points).toEqual([]);
     expect(s.counts).toEqual({ verbal: 0, math: 0 });
     expect(s.span).toEqual({ verbal: null, math: null });
+  });
+});
+
+describe("eloTickUnit — axelns upplösning följer spannet", () => {
+  const DYGN = 24 * 60 * 60 * 1000;
+
+  it("tre matcher samma kväll ger klockslag, inte fyra likadana datum", () => {
+    // Buggen: etiketterna var alltid ett datum, så en kväll gav
+    // "21 aug. 21 aug. 21 aug. 21 aug." och axeln sa ingenting.
+    expect(eloTickUnit(3 * 60 * 60 * 1000)).toBe("time");
+    expect(eloTickUnit(0)).toBe("time");
+  });
+
+  it("några dagar till några månader ger datum", () => {
+    expect(eloTickUnit(3 * DYGN)).toBe("date");
+    expect(eloTickUnit(90 * DYGN)).toBe("date");
+  });
+
+  it("mer än ett år ger månad och år", () => {
+    expect(eloTickUnit(400 * DYGN)).toBe("month");
+  });
+
+  it("gränserna ligger där de ska", () => {
+    expect(eloTickUnit(1.5 * DYGN)).toBe("time");
+    expect(eloTickUnit(1.5 * DYGN + 1)).toBe("date");
+    expect(eloTickUnit(330 * DYGN)).toBe("date");
+    expect(eloTickUnit(330 * DYGN + 1)).toBe("month");
+  });
+
+  it("ett orimligt spann läses som datum, inte som en krasch", () => {
+    expect(eloTickUnit(NaN)).toBe("date");
+    expect(eloTickUnit(-1)).toBe("date");
+  });
+});
+
+describe("eloSeriesSpan", () => {
+  const p = (ts: number) => ({ ts });
+
+  it("ger avståndet mellan första och sista punkten", () => {
+    expect(eloSeriesSpan([p(1000), p(5000), p(3000)])).toBe(4000);
+  });
+
+  it("en enda punkt eller ingen har inget spann", () => {
+    expect(eloSeriesSpan([p(1000)])).toBe(0);
+    expect(eloSeriesSpan([])).toBe(0);
   });
 });

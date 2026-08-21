@@ -103,3 +103,40 @@ export function buildEloSeries(rows: EloHistoryRow[]): EloSeries {
 
   return { points, counts, span };
 }
+
+/**
+ * Vilken upplösning ska tidsaxeln ha?
+ *
+ * Etiketterna var alltid `{month:"short", day:"numeric"}`, alltså ett datum.
+ * Spelar man tre matcher samma kväll — vilket är det normala — får axeln fyra
+ * identiska etiketter ("21 aug. 21 aug. 21 aug. 21 aug.") och säger ingenting
+ * om när något hände. Kurvan såg trasig ut fast datan var riktig.
+ *
+ * Upplösningen följer därför seriens spann:
+ *  - inom ett och ett halvt dygn → klockslag ("14:32")
+ *  - inom knappt ett år          → datum ("21 aug.")
+ *  - längre                      → månad och år ("aug. 2026")
+ */
+export type EloTickUnit = "time" | "date" | "month";
+
+/** Millisekunder i ett dygn. */
+const DYGN = 24 * 60 * 60 * 1000;
+
+export function eloTickUnit(spanMs: number): EloTickUnit {
+  if (!Number.isFinite(spanMs) || spanMs < 0) return "date";
+  if (spanMs <= 1.5 * DYGN) return "time";
+  if (spanMs <= 330 * DYGN) return "date";
+  return "month";
+}
+
+/** Seriens spann i millisekunder. 0 för tom serie eller en enda punkt. */
+export function eloSeriesSpan(points: Pick<EloSeriesPoint, "ts">[]): number {
+  if (points.length < 2) return 0;
+  let min = Infinity;
+  let max = -Infinity;
+  for (const p of points) {
+    if (p.ts < min) min = p.ts;
+    if (p.ts > max) max = p.ts;
+  }
+  return Number.isFinite(min) && Number.isFinite(max) ? max - min : 0;
+}
