@@ -147,6 +147,10 @@ function CompactFooter() {
           <FooterMiniLink to="/faq">Vanliga frågor</FooterMiniLink>
           <FooterMiniLink to="/kontakt">Kontakt</FooterMiniLink>
           <FooterMiniLink to="/integritetspolicy">Integritetspolicy</FooterMiniLink>
+          {/* Användarvillkoren fanns bara i den fulla footern, alltså bara för
+              utloggade. Inloggade — de som faktiskt ingått avtalet — hade
+              ingen väg till dem alls. */}
+          <FooterMiniLink to="/villkor">Användarvillkor</FooterMiniLink>
         </nav>
         <div className="flex items-center gap-4">
           <BugReportButton variant="text" />

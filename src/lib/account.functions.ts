@@ -11,7 +11,15 @@ import { assertRateLimit } from "./rate-limit.server";
  * så matches/elo-aggregat anonymiseras via users-raden i stället för att
  * raderas. Allt personligt raderas på riktigt:
  *   1. Personliga sidotabeller töms (ordträning, kö, inbjudningar, vänner,
- *      svar, ELO-historik, rapporter).
+ *      svar, ELO-historik, rapporter, provförsök, e-postverifieringar,
+ *      forumprenumerationer/reaktioner/anmälningar, veckoutmaningar och
+ *      ringlistan). `audit_log` anonymiseras i stället: raderna driver den
+ *      publika räknaren på landningssidan, och kopplingen till personen är
+ *      det som ska bort, inte siffran.
+ *
+ *      Kvar med flit: `coaching_requests` (köp — bokföringsgrund, och
+ *      integritetspolicyn säger det uttryckligen) samt forumtrådar och
+ *      forumsvar, som anonymiseras via users-raden precis som matcherna.
  *   2. users-raden anonymiseras (username → "" döljer den från topplistor,
  *      e-post → null) men behålls så matchers FK inte bryts.
  *   3. Auth-användaren hårdraderas (login + e-post försvinner). Om det
@@ -45,6 +53,24 @@ export const deleteAccount = createServerFn({ method: "POST" })
     await supabaseAdmin.from("elo_history").delete().eq("user_id", userId);
     await supabaseAdmin.from("bug_reports").delete().eq("user_id", userId);
     await supabaseAdmin.from("question_reports").delete().eq("reporter_id", userId);
+    // Tillagda efter en inventering av var användardata faktiskt ligger
+    // (2026-08-21). Alla sju bar personuppgifter och överlevde raderingen.
+    await supabaseAdmin.from("prov_attempts").delete().eq("user_id", userId);
+    await supabaseAdmin.from("email_verifications").delete().eq("user_id", userId);
+    await supabaseAdmin.from("forum_subscriptions").delete().eq("user_id", userId);
+    await supabaseAdmin.from("forum_reactions").delete().eq("user_id", userId);
+    await supabaseAdmin.from("forum_reports").delete().eq("reporter_id", userId);
+    await supabaseAdmin.from("weekly_challenge_entries").delete().eq("player_id", userId);
+    // Ringlistan. Bär namn, e-post, telefon och meddelande — och till skillnad
+    // från `coaching_requests` är ett lead inte ett köp, alltså finns ingen
+    // bokföringsgrund att luta sig mot när någon begär radering.
+    await supabaseAdmin.from("coaching_leads").delete().eq("user_id", userId);
+
+    // Användningsloggen ANONYMISERAS i stället för att raderas: raderna driver
+    // den publika räknaren på landningssidan ("N matcher spelade"), och att
+    // radera dem hade skrivit om en siffra som redan visats. Kopplingen till
+    // personen försvinner, vilket är det radering handlar om.
+    await supabaseAdmin.from("audit_log").update({ user_id: null }).eq("user_id", userId);
 
     // 2) Anonymisera users-raden (behålls för matchernas FK; tomt username
     //    filtreras bort från alla topplistor).

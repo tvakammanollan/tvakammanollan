@@ -57,10 +57,25 @@ export function DeleteAccountSection() {
       >
         Radera konto
       </h2>
-      <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-white/55">
-        Raderar din inloggning, e-post, vänner, ordträning och all personlig historik permanent.
-        Matchresultat behålls i anonymiserad form (utan namn). Detta går inte att ångra.
-      </p>
+      {/* Texten måste stämma med `deleteAccount` rad för rad. Den sa tidigare
+          "all personlig historik" medan sju tabeller med personuppgifter
+          faktiskt låg kvar — provförsök, e-postverifieringar, forumets
+          prenumerationer, reaktioner och anmälningar, veckoutmaningar och
+          ringlistan. De raderas nu, och listan nedan speglar koden. */}
+      <div className="mt-1.5 max-w-xl space-y-2 text-sm leading-relaxed text-white/55">
+        <p>
+          <strong className="text-[var(--cream)]">Raderas permanent:</strong> inloggning och e-post,
+          ditt användarnamn, vänner och inbjudningar, ordträning, dina svar och din ELO-historik,
+          provförsök, forumprenumerationer och reaktioner, samt dina uppgifter i kontaktlistan för
+          coachning.
+        </p>
+        <p>
+          <strong className="text-[var(--cream)]">Behålls:</strong> matchresultat och forumsinlägg,
+          men utan ditt namn — motståndarens historik och trådarnas läsbarhet ska överleva. Har du
+          köpt studieupplägget behålls köpuppgifterna, eftersom bokföring kräver det.
+        </p>
+        <p>Detta går inte att ångra.</p>
+      </div>
       <Button
         variant="outline"
         className="mt-4 gap-1.5 border-[#8c1d18]/40 text-[#8c1d18] hover:bg-[#8c1d18]/10 hover:text-[#8c1d18]"
