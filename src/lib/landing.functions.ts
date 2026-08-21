@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { isRankable } from "./username";
+import { GAMLA_PROV_START_ACTION } from "./usage-actions";
 
 export interface RecentMatch {
   id: string;
@@ -23,6 +24,14 @@ export interface TopPlayer {
 }
 
 export interface LandingStats {
+  /**
+   * Genomförd aktivitet: avslutade matcher **plus påbörjade provpass**.
+   *
+   * Ett provpass är 40 uppgifter mot matchens 8, så det räknas som minst en
+   * match spelad — och gamla prov är den yta flest faktiskt använder. Räknades
+   * bara `matches` visade siffran en bråkdel av användningen (780 av allt som
+   * hänt) därför att provflödet inte lämnade något spår på servern alls.
+   */
   totalMatches: number;
   totalPlayers: number;
   /** Best-effort "online now" — players who finished a match in the last 15 min. */
@@ -49,72 +58,90 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
         () => fallback as T,
       );
 
-    const [matchesCount, usersCount, activeAgg, perMinAgg, recent, topVerbalList, topMathList] =
-      await Promise.all([
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("*", { count: "exact", head: true })
-            .eq("status", "finished"),
-          { count: 0 } as { count: number | null },
-        ),
-        safe(supabaseAdmin.from("users").select("*", { count: "exact", head: true }), {
-          count: 0,
-        } as { count: number | null }),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("player1_id,player2_id", { head: false })
-            .gte("created_at", fifteenMinAgo)
-            .eq("status", "finished"),
-          { data: [] } as {
-            data: Array<{ player1_id: string | null; player2_id: string | null }>;
-          },
-        ),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select("*", { count: "exact", head: true })
-            .gte("created_at", oneMinAgo)
-            .eq("status", "finished"),
-          { count: 0 } as { count: number | null },
-        ),
-        safe(
-          supabaseAdmin
-            .from("matches")
-            .select(
-              "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
-            )
-            .eq("status", "finished")
-            .order("created_at", { ascending: false })
-            .limit(10),
-          { data: [] } as { data: never[] },
-        ),
-        // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
-        // tabellen och sållas bort nedan (isRankable). Ingen tröskel på antal
-        // matcher, precis som i fetchLeaderboard sedan 2026-08-18: förhandsvisningen
-        // och topplistan måste lyda samma regel, annars säger de emot varandra.
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("username, elo_verbal")
-            .order("elo_verbal", { ascending: false })
-            .limit(40),
-          { data: [] } as {
-            data: Array<{ username: string | null; elo_verbal: number | null }>;
-          },
-        ),
-        safe(
-          supabaseAdmin
-            .from("users")
-            .select("username, elo_math")
-            .order("elo_math", { ascending: false })
-            .limit(40),
-          { data: [] } as {
-            data: Array<{ username: string | null; elo_math: number | null }>;
-          },
-        ),
-      ]);
+    const [
+      matchesCount,
+      provStartsCount,
+      usersCount,
+      activeAgg,
+      perMinAgg,
+      recent,
+      topVerbalList,
+      topMathList,
+    ] = await Promise.all([
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "finished"),
+        { count: 0 } as { count: number | null },
+      ),
+      // Påbörjade provpass, skrivna av `logProvStart` (utan krav på konto).
+      // Bara framåtriktat: före 2026-08-21 lagrades ingenting om gamla prov
+      // på servern, så historiken finns inte att hämta.
+      safe(
+        supabaseAdmin
+          .from("audit_log")
+          .select("*", { count: "exact", head: true })
+          .eq("action", GAMLA_PROV_START_ACTION),
+        { count: 0 } as { count: number | null },
+      ),
+      safe(supabaseAdmin.from("users").select("*", { count: "exact", head: true }), {
+        count: 0,
+      } as { count: number | null }),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("player1_id,player2_id", { head: false })
+          .gte("created_at", fifteenMinAgo)
+          .eq("status", "finished"),
+        { data: [] } as {
+          data: Array<{ player1_id: string | null; player2_id: string | null }>;
+        },
+      ),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select("*", { count: "exact", head: true })
+          .gte("created_at", oneMinAgo)
+          .eq("status", "finished"),
+        { count: 0 } as { count: number | null },
+      ),
+      safe(
+        supabaseAdmin
+          .from("matches")
+          .select(
+            "id, match_type, is_bot_match, player1_score, player2_score, winner_id, player1_id, player2_id",
+          )
+          .eq("status", "finished")
+          .order("created_at", { ascending: false })
+          .limit(10),
+        { data: [] } as { data: never[] },
+      ),
+      // 40 rader för att få fram fem rankade — anonyma konton är majoriteten av
+      // tabellen och sållas bort nedan (isRankable). Ingen tröskel på antal
+      // matcher, precis som i fetchLeaderboard sedan 2026-08-18: förhandsvisningen
+      // och topplistan måste lyda samma regel, annars säger de emot varandra.
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("username, elo_verbal")
+          .order("elo_verbal", { ascending: false })
+          .limit(40),
+        { data: [] } as {
+          data: Array<{ username: string | null; elo_verbal: number | null }>;
+        },
+      ),
+      safe(
+        supabaseAdmin
+          .from("users")
+          .select("username, elo_math")
+          .order("elo_math", { ascending: false })
+          .limit(40),
+        { data: [] } as {
+          data: Array<{ username: string | null; elo_math: number | null }>;
+        },
+      ),
+    ]);
 
     const activeIds = new Set<string>();
     for (const r of (activeAgg.data ?? []) as Array<{
@@ -176,7 +203,7 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       .slice(0, 8);
 
     return {
-      totalMatches: matchesCount.count ?? 0,
+      totalMatches: (matchesCount.count ?? 0) + (provStartsCount.count ?? 0),
       totalPlayers: usersCount.count ?? 0,
       activePlayers: activeIds.size,
       matchesPerMin: perMinAgg.count ?? 0,

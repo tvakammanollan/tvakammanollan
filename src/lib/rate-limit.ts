@@ -113,6 +113,14 @@ export const limits = {
    */
   provAttempt: { max: 40, windowMs: 60 * 60 * 1000 } as LimitConfig, // 40/h
   /**
+   * Påbörjat provpass. Öppen för utloggade och nyckeln är därför IP, vilket
+   * gör taket rundligt: ett skolnät ligger bakom en adress. Ett provpass tar
+   * 55 minuter att skriva, så det som faktiskt bromsas är någon som anropar
+   * endpointen i en loop — och den är värd att bromsa, eftersom varje rad
+   * räknas in i "matcher spelade" på landningssidan.
+   */
+  provStart: { max: 60, windowMs: 60 * 60 * 1000 } as LimitConfig, // 60/h
+  /**
    * Forum. OBS: detta är bara det billiga första lagret — den riktiga kvoten
    * räknas ur tabellerna inuti forum_create_thread/-post (se migrationen),
    * eftersom limitern här lever per Cloudflare-isolat.

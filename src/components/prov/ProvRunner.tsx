@@ -13,7 +13,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CircularTimer } from "@/components/ui/CircularTimer";
-import { logUsageEvent } from "@/lib/usage.functions";
+import { logProvStart, logUsageEvent } from "@/lib/usage.functions";
 import { fetchProvAttempt, saveProvAttempt } from "@/lib/prov-attempts.functions";
 import { useAuth } from "@/hooks/useAuth";
 import { updateStreak } from "@/lib/streak";
@@ -76,6 +76,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const logUsage = useServerFn(logUsageEvent);
+  const logStart = useServerFn(logProvStart);
   const saveAttempt = useServerFn(saveProvAttempt);
   const loadAttempt = useServerFn(fetchProvAttempt);
   const loggedRef = useRef(false);
@@ -327,6 +328,13 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
       mode: nextMode,
       resumed: false,
     });
+    // Serverspåret. PostHog-händelsen ovan finns bara för den som sagt ja till
+    // analys, och gamla prov fungerar utan konto — utan det här vet servern
+    // ingenting om sajtens mest använda yta. Aldrig inväntad: ett fel får inte
+    // stå mellan någon och ett provpass.
+    void logStart({ data: { term: data.term, provpass: data.pass, mode: nextMode } }).catch(
+      () => {},
+    );
   }
 
   function resume(saved: ProvProgress) {

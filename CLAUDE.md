@@ -810,6 +810,28 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
   användarnamn"**, inte "har inte spelat". Tomma tillståndet pekar därför på
   `/onboarding`, inte på "spela en match" — det senare hjälper inte.
 
+### Landningssidans siffror (2026-08-20)
+
+`getLandingStats` (`landing.functions.ts`) driver "N spelare · N matcher
+spelade" under CTA:n. Alla siffror är riktiga och ska förbli det.
+
+- **`totalMatches` är matcher PLUS påbörjade provpass.** Räknat på bara
+  `matches` visade raden 780 medan gamla prov — 30 provtillfällen, 120 pass,
+  sajtens mest besökta yta — bidrog med noll, eftersom provflödet inte lämnade
+  något spår alls på servern. Etiketten står kvar som "matcher spelade" på
+  begäran; ett provpass är 40 uppgifter mot matchens 8, så det är inte en
+  uppräkning av siffran utan av vad den mäter.
+- **Provdelen är framåtriktad och kan inte fyllas i bakåt.** Före 2026-08-20
+  fanns skrivna provpass bara i besökarens localStorage
+  (`tkn:prov-resultat:v1`) och i PostHog; `prov_attempts` kräver inloggning och
+  hade noll rader. Historiken finns alltså inte att hämta någonstans.
+- **Räkningen ligger i `audit_log` och kräver migrationen ovan.** Utan den
+  avvisas varje `usage:`-rad av CHECK-villkoret, tyst, och siffran står still
+  på antalet matcher.
+- Endpointen är publik och `logProvStart` skriver en rad per klick på
+  "Provläge"/"Övningsläge". Det är en yta för uppblåsning av en publik siffra;
+  `limits.provStart` (60/h per IP) är bromsen, och den är per isolat.
+
 ### Coachning & Stripe (2026-08-17)
 
 Sajtens enda betalprodukt: **Studieupplägg**, köpt via Stripe Checkout från
@@ -1442,6 +1464,17 @@ starta gästläge"**.
   threw in validation and was swallowed by the caller's `.catch()` — `audit_log`
   got nothing and the admin usage view read zero, with no error anywhere. Fixed
   2026-08-17 by declaring `mode`. Any new field must be added on both sides.
+- **Och sedan stoppades samma rader av ett CHECK-villkor** (upptäckt
+  2026-08-20). `audit_log.action` skapades med
+  `CHECK (action IN ('insert','update','delete','admin_action','dispute','rate_limit_hit'))`,
+  alltså släpper den inte in `usage:`-namnrymden alls. Inserten avvisas med
+  23514, felet `console.error`:as (statistik får aldrig störa användarflödet)
+  och tabellen stod på **noll rader totalt** medan admin-vyn läste noll och såg
+  helt normal ut. Två tysta fel i rad på samma väg — det andra osynligt bakom
+  det första. `20260821100000_audit_log_slapper_in_anvandningshandelser.sql`
+  släpper in `action LIKE 'usage:%'` och indexerar kolumnen. **Kontrollera att
+  raden faktiskt landade** när du lägger till en ny `usage:`-händelse; ett 200
+  från serverfunktionen bevisar ingenting, den sväljer felet med flit.
 - **Var PostHog nås står på ett ställe i koden**: `src/lib/analytics-host.ts`.
   Klientens `api_host` och Workerns CSP läser samma `VITE_PUBLIC_POSTHOG_HOST`,
   därför att en CSP som pekar på en annan värd än klienten ringer blockerar
@@ -1481,6 +1514,13 @@ starta gästläge"**.
   `eu-assets.i.posthog.com` only when the matching config is on.
 - Account deletion exists (`src/lib/account.functions.ts` + danger zone on `/stats`): deletes personal data, anonymizes the `users` row (empty username hides it from leaderboards, match FKs survive), hard-deletes the auth user with scramble+ban fallback.
 - Usage analytics go through `logUsageEvent` → `audit_log` with `usage:`-namespaced actions (no new tables needed). Admin dashboard: `/admin` → "Användning".
+- **`logProvStart` är den enda av dem som inte kräver konto.** Gamla prov är
+  sajtens mest använda yta *och* den enda som fungerar helt utan inloggning, så
+  allt som loggas bakom `requireSupabaseAuth` mäter per definition en delmängd.
+  Den går genom `optionalSupabaseAuth` och skriver `user_id: null` för
+  utloggade (kolumnen är nullable). Åtgärderna står i `usage-actions.ts`, inte
+  som strängar på båda sidor — skrivningen och räkningen får inte kunna glida
+  isär utan att något felar.
 - Error messages to clients must be generic Swedish — log the raw DB error server-side (`throwDbError` pattern in `word-practice.functions.ts`).
 
 ### DB migrations

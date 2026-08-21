@@ -15,10 +15,12 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { optionalSupabaseAuth } from "./auth-optional.server";
 import { limits } from "./rate-limit";
-import { assertRateLimit } from "./rate-limit.server";
+import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { GAMLA_PROV_START_ACTION, GAMLA_PROV_SUBMIT_ACTION } from "./usage-actions";
 
-const GAMLA_PROV_ACTION = "usage:gamla_prov_submit";
+const GAMLA_PROV_ACTION = GAMLA_PROV_SUBMIT_ACTION;
 
 export const logUsageEvent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -60,6 +62,50 @@ export const logUsageEvent = createServerFn({ method: "POST" })
     });
     // Best-effort — statistik får aldrig störa användarflödet.
     if (error) console.error("[usage] event insert failed:", error.message);
+    return { ok: true };
+  });
+
+/**
+ * Ett påbörjat provpass.
+ *
+ * Skild från `logUsageEvent` på en punkt som är hela poängen: den här kräver
+ * **inget konto**. Gamla prov skrivs till största delen av utloggade besökare,
+ * och det som bara loggades av inloggade var per definition inte användningen
+ * utan en delmängd av den — `audit_log` stod på noll rader medan provsidorna
+ * var sajtens mest besökta.
+ *
+ * Identiteten läses ur tokenen när den finns och är enbart upplysning; raden
+ * skrivs lika gärna med `user_id: null` (kolumnen är nullable). Ingen
+ * migration behövs — `audit_log` finns sedan tidigare, precis som för
+ * inlämningarna.
+ *
+ * Best-effort rakt igenom: ett fel här får aldrig hindra någon från att skriva
+ * ett prov, så anropssidan ska inte invänta svaret.
+ */
+export const logProvStart = createServerFn({ method: "POST" })
+  .middleware([optionalSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        term: z.string().max(20),
+        provpass: z.number().int().min(1).max(10),
+        mode: z.enum(["prov", "ova"]),
+      })
+      .strict()
+      .parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    // Per IP, inte per användare: endpointen är öppen för utloggade. Rundligt
+    // tilltaget — ett skolnät ligger bakom en adress — men detta är per isolat
+    // och alltså en broms mot hamring, inte en exakt kvot.
+    assertRateLimit(ipKey("prov-start"), limits.provStart);
+    const { error } = await supabaseAdmin.from("audit_log").insert({
+      action: GAMLA_PROV_START_ACTION,
+      table_name: "usage_events",
+      user_id: context.userId,
+      meta: { term: data.term, provpass: data.provpass, mode: data.mode },
+    });
+    if (error) console.error("[usage] prov-start insert failed:", error.message);
     return { ok: true };
   });
 
