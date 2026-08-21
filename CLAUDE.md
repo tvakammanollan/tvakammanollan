@@ -1405,12 +1405,13 @@ starta gästläge"**.
 - De 15 rader som hann skrivas ligger kvar och är giltiga; `isAutoUsername`
   känner igen båda schemana, pinnat i `username.test.ts` och
   `guest-name.test.ts`.
-- **`20260820150000_registrering_overlever_upptaget_namn.sql` är skriven men
-  INTE körd** (2026-08-20). Den gör `handle_new_user` tålig mot ett upptaget
-  namn: önskat namn → `user_<8 hex>` → `user_<hela uuid>`, i den ordningen.
-  Koden är inte beroende av den — den är ett skyddsnät för `/signup`, där två
-  personer kan välja samma namn i samma sekund och i dag får var sin 500 i
-  stället för ett formulärfel. Kör den i Supabase SQL editor.
+- **`20260820150000_registrering_overlever_upptaget_namn.sql` ÄR körd**
+  (verifierat mot produktion 2026-08-21: `pg_proc.prosrc` för
+  `handle_new_user` innehåller loopen). Den gör triggern tålig mot ett upptaget
+  namn: önskat namn → `user_<8 hex>` → `user_<hela uuid>`, i den ordningen, och
+  `RAISE EXCEPTION` om alla tre skulle falla. Koden är inte beroende av den —
+  den är ett skyddsnät för `/signup`, där två personer kan välja samma namn i
+  samma sekund och annars fick var sin 500 i stället för ett formulärfel.
 - **Regexen i `isAutoGuestName` är `user_[0-9a-f]{8,}`, inte `{8}`.** Migrationen
   ovan kan skriva hela UUID:t som namn; låst vid exakt åtta hade de kontona
   visat sitt id i UI:t och rankats på topplistan.

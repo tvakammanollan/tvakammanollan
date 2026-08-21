@@ -31,8 +31,6 @@ import { assertRateLimit, ipKey } from "./rate-limit.server";
 
 const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"] as const;
 
-const MATH = new Set(["XYZ", "KVA", "NOG", "DTK"]);
-
 /** Kolumnerna träningsläget renderar. En enda literal — annars tappar supabase-js radtypen. */
 const COLS =
   "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status";
@@ -53,10 +51,18 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
 
     let query = supabaseAdmin.from("questions").select(COLS).in("category", data.categories);
     if (data.difficulty !== null) query = query.eq("difficulty", data.difficulty);
-    // Matten kommer ur arkivet sedan importen och är alltid "ok". De skrapade
-    // raderna ligger kvar som "retired" för matchhistorikens skull och ska inte
-    // delas ut igen — utan filtret serverar Träna dem som om inget hänt.
-    if (data.categories.some((c) => MATH.has(c))) query = query.eq("clean_status", "ok");
+    // De skrapade matteraderna ligger kvar som "retired" för matchhistorikens
+    // skull och ska inte delas ut igen — utan filtret serverar Träna dem som
+    // om inget hänt.
+    //
+    // Filtret är `neq retired`, INTE `eq ok`: verbala rader står allihop kvar
+    // som "pending" (8 761 ORD, 398 MEK, 336 LÄS, 79 ELF — noll `ok`), så ett
+    // `eq("clean_status","ok")` gäller hela frågan och tömmer varje pass som
+    // blandar verbalt och matte på sin verbala hälft. I dag räddas det bara av
+    // att /train:s UI byter ut hela valet när man byter spår; validatorn tar
+    // emot åtta kategorier i valfri blandning, så buggen är ett UI-klick bort.
+    // Kolumnen är NOT NULL DEFAULT 'pending', alltså finns ingen NULL-lucka.
+    query = query.neq("clean_status", "retired");
 
     const { data: rows, error } = await query.limit(300);
     if (error) {
