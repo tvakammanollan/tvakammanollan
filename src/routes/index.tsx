@@ -22,9 +22,9 @@ export const Route = createFileRoute("/")({
       path: "/",
       title: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
       description:
-        "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK, gratis.",
+        "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna gratis på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
       ogDescription:
-        "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov, helt gratis.",
+        "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
     }),
     links: pageLinks("/"),
   }),
