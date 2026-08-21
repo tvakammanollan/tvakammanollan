@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/kva")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/kva",
-      title: "KVA-guide: kvantitativa jämförelser på HP · Tvåkommanollan",
+      title: "KVA-guide: kvantitativa jämförelser på HP",
       description:
         "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert. Guide med riktiga HP KVA-uppgifter.",
-      ogTitle: "KVA-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | KVA-guiden",
       ogDescription:
         "Kvantitativa jämförelser på HP: snabbteknik, 'kan ej avgöras'-regeln och vanliga fällor.",
     }),

@@ -65,10 +65,10 @@ export const Route = createFileRoute("/train")({
   head: () => ({
     meta: pageMeta({
       path: "/train",
-      title: "Träna HP · alla 8 delprov utan tidspress · Tvåkommanollan",
+      title: "Träna HP · alla 8 delprov utan tidspress",
       description:
         "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
-      ogTitle: "Träna HP utan tidspress · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Träna HP utan tidspress",
       ogDescription:
         "Solo-träning för Högskoleprovet. Välj delprov, svårighet och antal frågor. Ingen klocka, gratis.",
     }),

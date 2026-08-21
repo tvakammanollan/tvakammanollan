@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
@@ -30,7 +31,7 @@ export const Route = createFileRoute("/coachning/tack")({
   validateSearch: z.object({ session_id: z.string().optional() }),
   head: () => ({
     meta: [
-      { title: "Tack för ditt köp · Tvåkommanollan" },
+      { title: pageTitle("Tack för ditt köp") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

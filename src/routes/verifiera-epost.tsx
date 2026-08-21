@@ -24,7 +24,7 @@ export const Route = createFileRoute("/verifiera-epost")({
   head: () => ({
     meta: pageMeta({
       path: "/verifiera-epost",
-      title: "Bekräfta din e-postadress · Tvåkommanollan",
+      title: "Bekräfta din e-postadress",
       description: "Bekräftar e-postadressen till ditt konto på Tvåkommanollan.",
       noindex: true,
     }),

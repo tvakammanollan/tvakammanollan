@@ -8,10 +8,10 @@ export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: pageMeta({
       path: "/integritetspolicy",
-      title: "Integritetspolicy · Tvåkommanollan",
+      title: "Integritetspolicy",
       description:
         "Hur Tvåkommanollan samlar in, använder och skyddar dina personuppgifter enligt GDPR.",
-      ogTitle: "Integritetspolicy · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Integritetspolicy",
       ogDescription: "Hur vi hanterar dina personuppgifter enligt GDPR.",
     }),
     links: pageLinks("/integritetspolicy"),

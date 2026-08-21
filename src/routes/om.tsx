@@ -10,7 +10,7 @@ export const Route = createFileRoute("/om")({
   head: () => ({
     meta: pageMeta({
       path: "/om",
-      title: "Om Tvåkommanollan · varför sajten finns",
+      title: "Om oss · varför sajten finns",
       description:
         "Sveriges enda gratis ELO-rankade plattform för högskoleprovet. Läs om grundaren Niklas (1,95 på HP) och varför all träning är gratis.",
       ogTitle: "Om Tvåkommanollan",

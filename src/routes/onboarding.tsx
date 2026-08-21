@@ -1,4 +1,5 @@
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
 import { m } from "framer-motion";
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
   head: () => ({
     meta: [
-      { title: "Välkommen · Tvåkommanollan" },
+      { title: pageTitle("Välkommen") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

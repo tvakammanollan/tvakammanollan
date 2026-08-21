@@ -7,10 +7,10 @@ export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: pageMeta({
       path: "/villkor",
-      title: "Användarvillkor · Tvåkommanollan",
+      title: "Användarvillkor",
       description:
         "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton, och villkoren för köp av coachning med 14 dagars ångerrätt.",
-      ogTitle: "Användarvillkor · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Användarvillkor",
       ogDescription: "Användarvillkoren för Tvåkommanollan.",
     }),
     links: pageLinks("/villkor"),

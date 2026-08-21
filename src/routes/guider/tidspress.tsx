@@ -12,7 +12,7 @@ export const Route = createFileRoute("/guider/tidspress")({
       title: fitTitle("Tidspress på HP · strategi för varje delprov", "· Tvåkommanollan"),
       description:
         "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
-      ogTitle: "Tidspress på HP · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Tidspress på HP",
       ogDescription:
         "Tidsdisposition för alla 8 delprov, hoppa-strategin och varför du aldrig ska lämna blankt.",
     }),

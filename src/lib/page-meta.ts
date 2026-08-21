@@ -9,21 +9,55 @@
  *   head: () => ({
  *     meta: pageMeta({
  *       path: "/train",
- *       title: "Träna HP · alla 8 delprov utan tidspress · Tvåkommanollan",
+ *       title: "Träna HP · alla 8 delprov utan tidspress",
  *       description: "...",
- *       ogTitle: "Träna HP utan tidspress · Tvåkommanollan",
  *       ogDescription: "...",
  *     }),
  *     links: pageLinks("/train"),
  *   })
+ *
+ * `title` is bara SIDANS del — se `pageTitle()` för varför.
  */
 
 const ORIGIN = "https://tvakommanollan.se";
 
+/**
+ * Namnet, i den form en människa läser den — se namnavsnittet i CLAUDE.md.
+ * Bor här och ingen annanstans: två filer som skriver ut varumärket var sin
+ * väg är precis hur `<title>` blev brand-först på startsidan och brand-sist
+ * på de andra fyrtio, samtidigt som en tidigare version använde tankstreck
+ * ("Tvåkommanollan – Elorankade dueller") på ett par sidor. Se `pageTitle()`.
+ */
+export const SITE_NAME = "Tvåkommanollan";
+
+/**
+ * Titelmallen: `Tvåkommanollan | <sidans egen titel>`.
+ *
+ * Vertikalstreck, inte tankstreck eller kolon — CLAUDE.md:s regel om
+ * tankstreck i text som en människa läser gäller `<title>` precis som allt
+ * annat, och `·` (mittpunkt) hade krockat med sitens egen separator inuti
+ * sidtitlar ("Guider · alla 8 delprov"). Varumärket FÖRST: sökmotorers
+ * träfflistor kapar titeln från höger, så det som riskerar att försvinna ska
+ * vara den del som redan står i domänen och webbplatsnamnet, inte sidans
+ * egen beskrivning.
+ *
+ * `page` ska vara UNDER 43 tecken — "Tvåkommanollan | " är 17, och hela
+ * titeln bör hålla sig under 60 för att inte kapas i en träfflista.
+ */
+export function pageTitle(page: string): string {
+  return `${SITE_NAME} | ${page}`;
+}
+
 export interface PageMetaInput {
   path: string; // e.g. "/train"
+  /** BARA sidans egen del — `Tvåkommanollan | ` läggs på av `pageMeta`. */
   title: string;
   description: string;
+  /**
+   * Delningsrubrik (og:title/twitter:title). Fritt formulerad med flit —
+   * en delning säljer på attraktionskraft, inte på samma mall som
+   * sökträfflistan. Utelämnad ärver den formaterade `title` ovan.
+   */
   ogTitle?: string;
   ogDescription?: string;
   /**
@@ -45,10 +79,13 @@ export interface PageMetaInput {
 
 export function pageMeta(input: PageMetaInput) {
   const url = ORIGIN + input.path;
-  const ogTitle = input.ogTitle ?? input.title;
+  const fullTitle = pageTitle(input.title);
+  // `ogTitle` ärver den FORMATERADE titeln, inte den råa — annars saknar en
+  // delning som inte satt en egen rubrik varumärket helt.
+  const ogTitle = input.ogTitle ?? fullTitle;
   const ogDescription = input.ogDescription ?? input.description;
   const meta: Array<Record<string, string>> = [
-    { title: input.title },
+    { title: fullTitle },
     { name: "description", content: input.description },
     { property: "og:title", content: ogTitle },
     { property: "og:description", content: ogDescription },

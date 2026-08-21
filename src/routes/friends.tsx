@@ -34,10 +34,10 @@ export const Route = createFileRoute("/friends")({
   head: () => ({
     meta: pageMeta({
       path: "/friends",
-      title: "Vänner · utmana dina kompisar i HP · Tvåkommanollan",
+      title: "Vänner · utmana dina kompisar i HP",
       description:
         "Lägg till vänner på Tvåkommanollan och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
-      ogTitle: "Vänner · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Vänner",
       ogDescription: "Bjud in dina kompisar till en privat HP-battle och slåss om ELO.",
       noindex: true,
     }),

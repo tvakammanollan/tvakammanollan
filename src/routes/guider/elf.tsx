@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/elf")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/elf",
-      title: "ELF-guide: engelsk läsförståelse på HP · Tvåkommanollan",
+      title: "ELF-guide: engelsk läsförståelse på HP",
       description:
         "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen. Med riktiga HP-frågor från Tvåkommanollan.",
-      ogTitle: "ELF-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | ELF-guiden",
       ogDescription:
         "Engelsk läsförståelse på HP: akademiskt ordförråd, strategi och skillnader mot LÄS.",
     }),

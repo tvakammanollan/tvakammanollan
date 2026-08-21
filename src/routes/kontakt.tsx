@@ -8,10 +8,10 @@ export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: pageMeta({
       path: "/kontakt",
-      title: "Kontakt · Tvåkommanollan",
+      title: "Kontakt",
       description:
         "Hör av dig till Tvåkommanollan. E-post, buggrapporter och feedback. Vi svarar oftast inom 1 vardag.",
-      ogTitle: "Kontakt · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Kontakt",
       ogDescription: "Hör av dig. E-post, buggrapporter och feedback.",
     }),
     links: pageLinks("/kontakt"),

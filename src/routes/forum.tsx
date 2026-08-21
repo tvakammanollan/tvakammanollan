@@ -35,7 +35,7 @@ export const Route = createFileRoute("/forum")({
         title: fitTitle("Forum om högskoleprovet · frågor och svar", "· Tvåkommanollan"),
         description:
           "Ställ frågor om högskoleprovet och få svar av andra som pluggar: uppgifter i KVA, XYZ, NOG och DTK, anmälan, normering och resultat. Gratis att läsa.",
-        ogTitle: "Forum om högskoleprovet · Tvåkommanollan",
+        ogTitle: "Tvåkommanollan | Forum om högskoleprovet",
         ogDescription:
           "Frågor och svar om högskoleprovet: uppgifter, plugg, anmälan och normering.",
       }),

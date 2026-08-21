@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { m } from "framer-motion";
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/matchmaking")({
   component: MatchmakingPage,
   head: () => ({
     meta: [
-      { title: "Hitta match · Tvåkommanollan" },
+      { title: pageTitle("Hitta match") },
       {
         name: "description",
         content:

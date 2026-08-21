@@ -12,7 +12,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
       title: fitTitle("Hur får man bra resultat på HP? · Komplett guide", "· Tvåkommanollan"),
       description:
         "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat. Från 1.0 till 2.0 med rätt strategi.",
-      ogTitle: "Bra resultat på HP · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Bra resultat på HP",
       ogDescription:
         "Studieplan 6–8 veckor, kartläggning av delprov och mentala tips för provdagen. Från 1.0 till 2.0.",
     }),

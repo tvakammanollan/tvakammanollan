@@ -68,10 +68,10 @@ export const Route = createFileRoute("/leaderboard")({
   head: () => ({
     meta: pageMeta({
       path: "/leaderboard",
-      title: "Topplista · Tvåkommanollan ELO-ranking",
+      title: "Topplista · ELO-ranking",
       description:
         "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
-      ogTitle: "Topplista · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Topplista",
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
     links: pageLinks("/leaderboard"),

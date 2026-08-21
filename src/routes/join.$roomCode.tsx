@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/join/$roomCode")({
   component: JoinPage,
   head: () => ({
     meta: [
-      { title: "Gå med i match · Tvåkommanollan" },
+      { title: pageTitle("Gå med i match") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

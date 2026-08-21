@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import {
   FilePenLine,
   Plus,
@@ -46,7 +47,7 @@ import { formatDate } from "@/lib/sv-format";
 export const Route = createFileRoute("/admin")({
   component: AdminPage,
   head: () => ({
-    meta: [{ title: "Admin · Tvåkommanollan" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [{ title: pageTitle("Admin") }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 

@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { m } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -59,7 +60,7 @@ export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
   head: () => ({
     meta: [
-      { title: "Resultat · Tvåkommanollan" },
+      { title: pageTitle("Resultat") },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

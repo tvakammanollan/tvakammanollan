@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/mek")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/mek",
-      title: "MEK-guide: meningskomplettering på HP · Tvåkommanollan",
+      title: "MEK-guide: meningskomplettering på HP",
       description:
         "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från Tvåkommanollan med 10 000+ HP-frågor.",
-      ogTitle: "MEK-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | MEK-guiden",
       ogDescription:
         "Meningskomplettering på HP: strategi, logikord och hur du undviker distraktorer.",
     }),

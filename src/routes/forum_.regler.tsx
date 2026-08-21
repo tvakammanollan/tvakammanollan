@@ -16,10 +16,10 @@ export const Route = createFileRoute("/forum_/regler")({
   head: () => ({
     meta: pageMeta({
       path: "/forum/regler",
-      title: "Forumregler · Tvåkommanollan",
+      title: "Forumregler",
       description:
         "Reglerna för Tvåkommanollans forum: vem som driver det, vad som lagras, vad som inte får publiceras och hur du rapporterar ett inlägg.",
-      ogTitle: "Forumregler · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Forumregler",
       ogDescription: "Regler, tillhandahållare och hur du rapporterar ett inlägg.",
     }),
     links: pageLinks("/forum/regler"),

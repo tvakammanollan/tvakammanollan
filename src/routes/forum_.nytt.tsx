@@ -36,7 +36,7 @@ export const Route = createFileRoute("/forum_/nytt")({
   head: () => ({
     meta: pageMeta({
       path: "/forum/nytt",
-      title: "Ny tråd · Tvåkommanollans forum",
+      title: "Ny tråd",
       description: "Starta en ny tråd i forumet om högskoleprovet.",
       noindex: true,
     }),

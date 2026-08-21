@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,7 +53,7 @@ import {
 export const Route = createFileRoute("/match/$matchId")({
   component: MatchPage,
   head: () => ({
-    meta: [{ title: "Match · Tvåkommanollan" }, { name: "robots", content: "noindex, nofollow" }],
+    meta: [{ title: pageTitle("Match") }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 

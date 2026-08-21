@@ -143,7 +143,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // `pt-safe`/`pb-safe` (se styles.css), annars hamnar det under notchen
       // eller hemindikatorn.
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov" },
+      { title: "Gratis ELO-rankade HP-dueller & övningsprov" },
       {
         name: "description",
         content:

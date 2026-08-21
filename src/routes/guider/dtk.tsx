@@ -12,7 +12,7 @@ export const Route = createFileRoute("/guider/dtk")({
       title: fitTitle("DTK-guide: diagram, tabeller och kartor på HP", "· Tvåkommanollan"),
       description:
         "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet. DTK-guide med strategi och vanliga misstag.",
-      ogTitle: "DTK-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | DTK-guiden",
       ogDescription:
         "Diagram, tabeller och kartor på HP: läs axlarna först, frågetyper och vanliga skalmisstag.",
     }),

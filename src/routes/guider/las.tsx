@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/las")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/las",
-      title: "LÄS-guide: svensk läsförståelse på HP · Tvåkommanollan",
+      title: "LÄS-guide: svensk läsförståelse på HP",
       description:
         "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering. Konkreta tips för läsförståelse på HP. Fungerar för både LÄS och ELF.",
-      ogTitle: "LÄS-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | LÄS-guiden",
       ogDescription:
         "Svensk läsförståelse på HP: lästeknik, tre frågetyper och hur du disponerar 5 min per text.",
     }),

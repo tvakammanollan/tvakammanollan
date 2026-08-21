@@ -85,10 +85,10 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: pageMeta({
       path: "/faq",
-      title: "Vanliga frågor om Tvåkommanollan · FAQ",
+      title: "Vanliga frågor · FAQ",
       description:
         "Svar på vanliga frågor: är Tvåkommanollan gratis, hur fungerar ELO, är frågorna riktiga, behöver jag konto.",
-      ogTitle: "Vanliga frågor · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | Vanliga frågor",
       ogDescription:
         "Allt du undrar om Tvåkommanollan: gratis, ELO-ranking, riktiga HP-frågor, gästläge.",
     }),

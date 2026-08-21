@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/ord",
-      title: "ORD-guide: ordkunskap på Högskoleprovet · Tvåkommanollan",
+      title: "ORD-guide: ordkunskap på Högskoleprovet",
       description:
         "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",
-      ogTitle: "ORD-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | ORD-guiden",
       ogDescription:
         "Synonymer, antonymer och ordförrådsbygge för Högskoleprovet. Strategi och tips.",
     }),

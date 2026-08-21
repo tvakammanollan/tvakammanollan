@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/xyz")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/xyz",
-      title: "XYZ-guide: matematisk problemlösning på HP · Tvåkommanollan",
+      title: "XYZ-guide: matematisk problemlösning på HP",
       description:
         "Lär dig lösa XYZ-uppgifter snabbare med rätt metod. Algebra, geometri, sannolikhet och kombinatorik förklaras steg för steg.",
-      ogTitle: "XYZ-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | XYZ-guiden",
       ogDescription:
         "Matematisk problemlösning på HP: strategi, eliminering och de vanligaste uppgiftstyperna.",
     }),

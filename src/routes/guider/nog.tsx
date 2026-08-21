@@ -8,10 +8,10 @@ export const Route = createFileRoute("/guider/nog")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/nog",
-      title: "NOG-guide: kvantitativa resonemang på HP · Tvåkommanollan",
+      title: "NOG-guide: kvantitativa resonemang på HP",
       description:
         "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information. Strategi och vanliga fällor förklaras.",
-      ogTitle: "NOG-guiden · Tvåkommanollan",
+      ogTitle: "Tvåkommanollan | NOG-guiden",
       ogDescription:
         "NOG på HP: de fem svarsalternativen, arbetsordning och varför du inte behöver lösa uppgiften.",
     }),
