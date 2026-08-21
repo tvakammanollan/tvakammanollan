@@ -107,7 +107,24 @@ export function Navbar() {
             >
               2,0
             </span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400" />
+            {/* Discord-stilen: pricken ska ligga PÅ den röda cirkelns kant, inte
+                mot rutans hörn. Märket är `rounded-xl` på en 36×36-ruta, men
+                temats `--radius-xl` är satt så stort att CSS klampar formen
+                till en perfekt cirkel (radie 18 px) — synligt bara vid mätning,
+                inte i klassnamnet. Rutans matematiska HÖRN ligger däremot
+                ~12,7 px utanför den synliga kanten i varje led, så `-bottom-0.5
+                -right-0.5` (2 px utanför hörnet) lämnade ett gap på omkring
+                11 px till cirkeln — pricken "svävade" i tomrummet.
+                Beräkning: cirkelns kant vid 45° = radie + radie·cos45° ≈
+                30,73 px från rutans övre vänstra hörn i varje led; för en 8 px
+                prick blir det `bottom/right: 1,27px` för att lägga prickens
+                CENTRUM exakt på kanten. Mätt i webbläsaren: 18,01 px från
+                badgens centrum mot en radie på 18 — pricken ligger nu på
+                linjen, inte i luften. */}
+            <span
+              className="absolute h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400"
+              style={{ bottom: "1.27px", right: "1.27px" }}
+            />
           </span>
           <span
             aria-hidden
