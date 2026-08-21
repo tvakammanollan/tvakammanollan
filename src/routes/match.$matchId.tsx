@@ -35,7 +35,9 @@ import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 import {
   MATCH_TOTAL_SECONDS,
   OPPONENT_GRACE_SECONDS,
+  matchIsLive,
   matchStartKey,
+  resolveMatchAnchor,
   secondsLeftFrom,
 } from "@/lib/match-clock";
 
@@ -107,7 +109,10 @@ function MatchPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [waitingForOpp, setWaitingForOpp] = useState(false);
   const [oppSecondsLeft, setOppSecondsLeft] = useState(30);
-  const [oppProgress, setOppProgress] = useState(0);
+  // Antal frågor motståndaren BESVARAT — inte en andel och inte en position.
+  // Låg tidigare som `oppProgress` (0–1) och räknades tillbaka till ett antal
+  // vid rendering, vilket är hur "8 frågor" kunde stå bredvid ett enda svar.
+  const [oppAnswered, setOppAnswered] = useState(0);
   const [reconnecting, setReconnecting] = useState(false);
   // Alla reconnect-försök uttömda — visa explicit läge i stället för tyst väntan.
   const [connectionLost, setConnectionLost] = useState(false);
@@ -131,9 +136,21 @@ function MatchPage() {
     setQuestionStartTime(new Date());
   }, [current]);
 
-  // Persist active match progress to sessionStorage so we can resume after reload.
+  // En avslutad match har ingen speltid kvar att räkna ned. Utan den här
+  // vägen renderades den som ett spelbart bräde med noll sekunder på klockan,
+  // vilket lämnade in den på nytt vid varje besök — `submitMatch` svarar
+  // `alreadyFinished`, som saknar `ok`, så sidan fastnade i "Du har lämnat in"
+  // i stället för att visa resultatet.
   useEffect(() => {
-    if (!match || questions.length === 0) return;
+    if (!match || match.status !== "finished" || waitingForOpp) return;
+    navigate({ to: "/result/$matchId", params: { matchId } });
+  }, [match, matchId, navigate, waitingForOpp]);
+
+  // Persist active match progress to sessionStorage so we can resume after reload.
+  // Samma grind som klockan: en match som inte är spelbar ska inte heller
+  // erbjudas som "pågående match" i banderollen.
+  useEffect(() => {
+    if (!match || !matchIsLive(match.status) || questions.length === 0) return;
     try {
       sessionStorage.setItem(
         "active_match",
@@ -288,7 +305,12 @@ function MatchPage() {
   const [oppForceCountdown, setOppForceCountdown] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!match || questions.length === 0) return;
+    // Klockan kräver TVÅ saker: att frågorna finns OCH att servern säger att
+    // matchen är spelbar. Bara frågorna räckte förut, och det var buggen:
+    // `acceptMatchInvite`/`joinMatch` skriver `match_questions` före
+    // statusuppdateringen, så inbjudarens flik hittade åtta frågor på en match
+    // som ännu stod som `waiting` och började räkna ned där. Se `matchIsLive`.
+    if (!match || !matchIsLive(match.status) || questions.length === 0) return;
     // Klockan startar när spelaren faktiskt får se första frågan, inte när
     // matchraden skapades. Mellan de två ligger gästinloggning, onboarding och
     // laddning av frågorna — tid som spelaren aldrig kunde använda men som åt
@@ -304,13 +326,21 @@ function MatchPage() {
     // den kunde min klocka och min redovisade tid skilja sig åt med minuter.
     // Det lokala ankaret finns kvar som reserv för äldre matcher (started_at
     // är NULL där) och för de sekunder som går innan raden är läst.
+    // Reglerna är rena och testade i `match-clock.ts` — de låg tidigare inline
+    // här, i en komponent på 1 100 rader, och gick alltså inte att pröva.
     const anchorKey = matchStartKey(matchId);
-    const serverStart = match.started_at ? new Date(match.started_at).getTime() : 0;
-    let anchor = serverStart || Number(sessionStorage.getItem(anchorKey)) || 0;
-    if (!anchor) {
-      anchor = matchStartedAt?.getTime() ?? Date.now();
+    let stored: string | null = null;
+    try {
+      stored = sessionStorage.getItem(anchorKey);
+    } catch {
+      /* private mode */
     }
-    if (!serverStart) {
+    const { anchor, persist } = resolveMatchAnchor({
+      startedAt: match.started_at ?? matchStartedAt?.toISOString() ?? null,
+      stored,
+      now: Date.now(),
+    });
+    if (persist) {
       try {
         sessionStorage.setItem(anchorKey, String(anchor));
       } catch {
@@ -374,7 +404,7 @@ function MatchPage() {
       const elapsed = Math.floor((Date.now() - start) / 1000);
       let answered = 0;
       for (const t of cumulative) if (elapsed >= t) answered++;
-      setOppProgress(answered / 8);
+      setOppAnswered(answered);
     }, 1000);
     return () => clearInterval(id);
   }, [match, matchId]);
@@ -389,10 +419,21 @@ function MatchPage() {
         config: { broadcast: { self: false } },
       })
       .on("broadcast", { event: "progress" }, (payload) => {
-        const p = payload.payload as { user_id: string; index: number; total: number };
-        if (p.user_id === oppId) {
-          setOppProgress(Math.min(1, (p.index + 1) / Math.max(1, p.total)));
-        }
+        // `answered` är antalet BESVARADE frågor. Fältet hette `index` och bar
+        // motståndarens position i häftet, som räknades upp med ett och
+        // visades som "1/8" innan hen svarat på något alls — och som "8/8" så
+        // fort hen bläddrat till sista frågan, oavsett hur många svar som
+        // lagts. `index` läses fortfarande som reserv för en motpart som kör
+        // en äldre flik: en position är fel siffra, men den är inte noll.
+        const p = payload.payload as {
+          user_id: string;
+          answered?: number;
+          index?: number;
+          total: number;
+        };
+        if (p.user_id !== oppId) return;
+        const answered = p.answered ?? (p.index != null ? p.index + 1 : 0);
+        setOppAnswered(Math.max(0, Math.min(p.total, answered)));
       })
       .on(
         "postgres_changes",
@@ -425,15 +466,18 @@ function MatchPage() {
     };
   }, [match, matchId, user]);
 
-  // Broadcasta egen progress när frågan ändras — via den delade kanalen (ingen ny prenumeration).
+  // Broadcasta egen progress när ett svar läggs — via den delade kanalen (ingen
+  // ny prenumeration). Beroendet är `answers.size`, inte `current`: det som
+  // ska visas är hur många frågor som är besvarade, och att bläddra fram och
+  // tillbaka i häftet besvarar ingenting.
   useEffect(() => {
     if (!match || match.is_bot_match || !user || questions.length === 0) return;
     void progressChannelRef.current?.send({
       type: "broadcast",
       event: "progress",
-      payload: { user_id: user.id, index: current, total: questions.length },
+      payload: { user_id: user.id, answered: answers.size, total: questions.length },
     });
-  }, [match, user, current, questions.length]);
+  }, [match, user, answers.size, questions.length]);
 
   // 30s forced countdown when opponent submitted
   useEffect(() => {
@@ -646,8 +690,11 @@ function MatchPage() {
     return !prev || prev.passage_id !== currentQ.passage_id;
   }, [currentQ, current, questions]);
 
-  // Invite sender waits here while the invited player hasn't accepted yet
-  if (match && match.status === "waiting" && !match.player2_id) {
+  // Invite sender waits here while the invited player hasn't accepted yet.
+  // Villkoret var `!match.player2_id`, vilket släppte igenom en halvskriven
+  // rad (player2 satt, status ännu `waiting`) till det spelbara brädet — med
+  // en klocka som räknade ned på en match som inte hade börjat.
+  if (match && !matchIsLive(match.status) && match.status !== "finished") {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <m.span
@@ -789,20 +836,24 @@ function MatchPage() {
           <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
           <TimerSoundToggle />
         </div>
-        {/* Dual progress bars: own + opponent (proportional, jumps per question) */}
+        {/* Två staplar, EN betydelse: antal besvarade frågor. Den vänstra visade
+            tidigare vilken fråga man stod på och den högra motståndarens
+            besvarade — alltså två olika tal bredvid varandra, där "Du 4/8" mot
+            "Motst. 1/8" kunde betyda att man låg efter. Frågenumret står i
+            stället på kortet nedanför, där det hör hemma. */}
         <div className="mx-auto max-w-3xl px-4 pt-2 pb-2">
           <div className="grid grid-cols-2 gap-3">
             <div>
               <div className="flex items-center justify-between text-[11px]">
                 <span className="font-medium text-foreground">Du</span>
                 <span className="tabular-nums text-muted-foreground">
-                  {current + 1}/{questions.length}
+                  {answers.size}/{questions.length}
                 </span>
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-[#ae2f26] transition-all duration-500 ease-out"
-                  style={{ width: `${((current + 1) / questions.length) * 100}%` }}
+                  style={{ width: `${(answers.size / Math.max(1, questions.length)) * 100}%` }}
                 />
               </div>
             </div>
@@ -812,13 +863,15 @@ function MatchPage() {
                   {opponentName || "Okänd spelare"}
                 </span>
                 <span className="tabular-nums text-muted-foreground">
-                  {Math.round(oppProgress * questions.length)}/{questions.length}
+                  {Math.min(oppAnswered, questions.length)}/{questions.length}
                 </span>
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-[#7a5236] transition-all duration-700 ease-out"
-                  style={{ width: `${oppProgress * 100}%` }}
+                  style={{
+                    width: `${(Math.min(oppAnswered, questions.length) / Math.max(1, questions.length)) * 100}%`,
+                  }}
                 />
               </div>
             </div>
@@ -891,18 +944,24 @@ function MatchPage() {
       )}
 
       {/* Bottom bar */}
-      <footer className="sticky bottom-0 z-20 border-t border-border bg-background/95 px-4 py-3 backdrop-blur">
+      {/* `pb-safe` i stället för `pb-3`: knappen är appens mest tryckta, och
+          utan den låg den i hemindikatorns gestområde. */}
+      <footer className="sticky bottom-0 z-20 border-t border-border bg-background/95 px-4 pt-3 pb-safe backdrop-blur">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
+          {/* Tryckytorna i bottenlisten är minst 44×44. "Avbryt" var 55×16 px
+              — mindre än en fingertopp, och granne med den knapp som avslutar
+              matchen. Höjden kommer från padding, inte från en fast höjd, så
+              texten fortfarande styr bredden. */}
           <Link
             to="/"
-            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+            className="-ml-2 inline-flex min-h-[44px] items-center gap-1 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
             <LogOut className="h-3.5 w-3.5" /> Avbryt
           </Link>
           <Button
             onClick={() => setConfirmOpen(true)}
             disabled={submitting}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="min-h-[44px] bg-primary text-primary-foreground hover:bg-primary/90"
           >
             Lämna in svar
           </Button>
@@ -980,10 +1039,14 @@ function QuestionCard({
       className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
-      {/* Delprovet, inte frågenumret — det står i progressbaren ovanför. */}
+      {/* Frågenumret står här, inte i stapeln ovanför — den mäter besvarade
+          frågor, inte var i häftet man befinner sig. */}
       <div className="mb-2 flex flex-wrap items-center gap-2">
         <span className="text-xs font-semibold tracking-wide text-[#ae2f26]">
           {displayCategory(currentQ.category)}
+        </span>
+        <span className="text-xs text-muted-foreground tabular-nums">
+          Fråga {current + 1} av {total}
         </span>
         {currentQ.withdrawn && <WithdrawnBadge />}
       </div>
@@ -1074,23 +1137,26 @@ function QuestionCard({
           tumme. Bottenlisten behåller sin knapp för den som vill lämna in
           tidigare, men den som svarat klart ska inte behöva leta efter
           vägen ut. */}
+      {/* `min-h-[44px]` på alla tre: knapparna trycks en gång per fråga på en
+          telefon, och `Button`s standardhöjd är 36 px. */}
       <div className="mt-5 flex items-center justify-between">
         <Button
           variant="ghost"
+          className="min-h-[44px]"
           disabled={current === 0}
           onClick={() => setCurrent((i) => Math.max(0, i - 1))}
         >
           Föregående
         </Button>
         {current < total - 1 ? (
-          <Button disabled={!choice} onClick={() => void goNext()}>
+          <Button className="min-h-[44px]" disabled={!choice} onClick={() => void goNext()}>
             Nästa fråga
           </Button>
         ) : (
           <Button
             disabled={submitting}
             onClick={onSubmit}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="min-h-[44px] bg-primary text-primary-foreground hover:bg-primary/90"
           >
             Lämna in svar
           </Button>

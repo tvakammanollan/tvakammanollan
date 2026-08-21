@@ -10,7 +10,7 @@ import { createMatch, finalizeMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
 import { NextStep } from "@/components/layout/NextStep";
-import { displayCategory, formatDecimal, ordText } from "@/lib/sv-format";
+import { antal, displayCategory, formatDecimal, ordText } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   Accordion,
@@ -21,7 +21,6 @@ import {
 import {
   Trophy,
   Frown,
-  Minus,
   Check,
   X,
   ChevronDown,
@@ -342,12 +341,12 @@ function ResultPage() {
   }, [match, user]);
 
   // Resultatvyn — funnelns sista steg. Ligger som egen effekt före den tidiga
-  // returen nedan, eftersom won/draw räknas ut först efter den och hooks inte
+  // returen nedan, eftersom utfallet räknas ut först efter den och hooks inte
   // får hamna bakom ett villkor.
   useEffect(() => {
     if (!match || !user || resultLoggedRef.current) return;
     // Bara färdigräknade matcher räknas — annars hade varje väntande omgång
-    // loggats som "draw" och tratten blivit obrukbar.
+    // loggats som ett utfall och tratten blivit obrukbar.
     const outcome = outcomeFor(user.id, match);
     if (!outcome) return;
     resultLoggedRef.current = true;
@@ -362,6 +361,12 @@ function ResultPage() {
     // så en omladdning av resultatsidan räknar inte en gång till.
     recordMatchFinished();
   }, [match, user, eloChange]);
+
+  // Ett svar är ett svar bara om ett alternativ faktiskt valdes.
+  const oppAnsweredCount = useMemo(
+    () => oppAnswers.filter((a) => a.selected_answer != null).length,
+    [oppAnswers],
+  );
 
   const myCorrectByQ = useMemo(() => {
     const m = new Map<string, AnswerRow>();
@@ -427,20 +432,24 @@ function ResultPage() {
   const questionTotal = questions.length || 8;
 
   // Serverns beslut, inte en jämförelse i webbläsaren. Se `match-outcome.ts`.
+  // Oavgjort finns inte: vid lika poäng vinner den som lämnade in först.
   const outcome = outcomeFor(user!.id, match);
   const won = outcome === "win";
-  const draw = outcome === "draw";
+  // Lika poäng betyder att tiden avgjorde. Det ska stå i rutan — annars ser
+  // "6–6, du vann" ut som ett fel, och den som förlorade på sekunder får ingen
+  // förklaring alls.
+  const decidedOnTime = myScore === oppScore;
 
   // Banner styles
-  const bannerClass = draw
-    ? "bg-white/[0.04] text-[var(--cream)] border-white/12"
-    : won
-      ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[var(--cream)] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174,47,38,0.4)]"
-      : "bg-white/[0.03] text-[var(--cream)] border-white/12";
-  const verdict = draw ? "Oavgjort!" : won ? "Du vann!" : "Du förlorade";
-  const Icon = draw ? Minus : won ? Trophy : Frown;
-  const subtext = draw
-    ? "Tätt och jämnt."
+  const bannerClass = won
+    ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[var(--cream)] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174,47,38,0.4)]"
+    : "bg-white/[0.03] text-[var(--cream)] border-white/12";
+  const verdict = won ? "Du vann!" : "Du förlorade";
+  const Icon = won ? Trophy : Frown;
+  const subtext = decidedOnTime
+    ? won
+      ? "Lika många rätt – du lämnade in först."
+      : "Lika många rätt – motståndaren lämnade in först."
     : won
       ? "Snyggt jobbat. Spela igen och fortsätt klättra."
       : "Bra kämpa! Varje match gör dig bättre.";
@@ -478,15 +487,11 @@ function ResultPage() {
 
   const shareResult = async () => {
     trackEvent("result_share_clicked", {
-      outcome: draw ? "draw" : won ? "win" : "loss",
+      outcome: won ? "win" : "loss",
       match_type: match.match_type as "verbal" | "math",
     });
     const elo = eloChange != null ? ` · ELO ${eloChange >= 0 ? "+" : ""}${eloChange}` : "";
-    const verb = draw
-      ? `spelade oavgjort ${myScore}–${oppScore}`
-      : won
-        ? `vann ${myScore}–${oppScore}`
-        : `förlorade ${myScore}–${oppScore}`;
+    const verb = won ? `vann ${myScore}–${oppScore}` : `förlorade ${myScore}–${oppScore}`;
     const text = `Jag ${verb} mot ${opponentName} på Tvåkommanollan${elo}! 🏆`;
     const url = "https://tvakommanollan.se";
     try {
@@ -620,7 +625,7 @@ function ResultPage() {
             score={oppScore}
             total={questionTotal}
             duration={oppDuration}
-            highlight={!won && !draw}
+            highlight={!won}
           />
         </div>
 
@@ -939,9 +944,15 @@ function ResultPage() {
       </section>
 
       {/* Hidden but available for future: opponent answers */}
-      {oppAnswers.length > 0 && (
+      {/* Antalet BESVARADE frågor, inte antalet rader.
+          `submitMatch` skriver en rad för varje fråga i matchen, även de som
+          aldrig besvarades (`selected_answer = null`) — det är med flit, så att
+          serverns rättning har allt den behöver. Men det gjorde att raden här
+          alltid stod på åtta: "Motståndaren svarade på 8 frågor" bredvid en
+          motståndare som hunnit med en. */}
+      {oppAnsweredCount > 0 && (
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Motståndaren svarade på {oppAnswers.length} frågor.
+          Motståndaren svarade på {antal(oppAnsweredCount, "fråga", "frågor")}.
         </p>
       )}
     </div>

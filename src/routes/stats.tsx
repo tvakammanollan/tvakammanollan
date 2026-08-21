@@ -97,6 +97,10 @@ interface MatchHistRow {
   bot_elo: number | null;
   created_at: string;
   status: string;
+  // Behövs för tiebreaken: vid lika poäng vinner den som lämnade in först.
+  // Se `decideWinnerSide` i `match-outcome.ts`.
+  player1_submitted_at: string | null;
+  player2_submitted_at: string | null;
 }
 
 interface AnswerStat {
@@ -626,11 +630,10 @@ function StatsPage() {
                       const myScore = isP1 ? (m.player1_score ?? 0) : (m.player2_score ?? 0);
                       const oppScore = isP1 ? (m.player2_score ?? 0) : (m.player1_score ?? 0);
                       // winner_id ensamt duger inte: en FÖRLORAD botmatch har
-                      // winner_id = player2_id, som är NULL för bottar — och
-                      // lästes därför som oavgjort. Se `match-outcome.ts`.
+                      // winner_id = player2_id, som är NULL för bottar. Samma
+                      // funktion som servern räknade med. Se `match-outcome.ts`.
                       const outcome = outcomeFor(user!.id, m);
                       const won = outcome === "win";
-                      const draw = outcome === "draw";
                       const oppId = isP1 ? m.player2_id : m.player1_id;
                       const oppLabel = m.is_bot_match
                         ? getBotName(m.bot_elo ?? 1000, m.id)
@@ -639,11 +642,12 @@ function StatsPage() {
                           // motpartens historik.
                           (oppId && opponentNames.get(oppId)) || "Okänd spelare";
                       const delta = eloByMatch.get(m.id);
-                      const rowBg = draw
-                        ? "bg-background"
-                        : won
-                          ? "bg-emerald-500/10"
-                          : "bg-rose-500/10";
+                      const rowBg =
+                        outcome === null
+                          ? "bg-background"
+                          : won
+                            ? "bg-emerald-500/10"
+                            : "bg-rose-500/10";
                       return (
                         <tr key={m.id} className={`border-b border-border/60 ${rowBg}`}>
                           <td className="px-2 py-2 text-muted-foreground">
@@ -656,13 +660,7 @@ function StatsPage() {
                           <td className="px-2 py-2 capitalize">{m.match_type}</td>
                           <td className="px-2 py-2">{oppLabel}</td>
                           <td className="px-2 py-2 font-medium">
-                            {outcome === null
-                              ? "Pågår"
-                              : draw
-                                ? "Oavgjort"
-                                : won
-                                  ? "Vinst"
-                                  : "Förlust"}
+                            {outcome === null ? "Pågår" : won ? "Vinst" : "Förlust"}
                           </td>
                           <td className="px-2 py-2 text-right tabular-nums">
                             {myScore}–{oppScore}

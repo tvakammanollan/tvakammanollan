@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { initials } from "./elo";
-import { calcNewElo, kFactor } from "./match.server";
+import { applyEloFloor, calcNewElo, kFactor } from "./match.server";
 import { getRankForElo } from "@/types";
 
 describe("kFactor (gränser)", () => {
@@ -13,7 +13,7 @@ describe("kFactor (gränser)", () => {
 });
 
 describe("calcNewElo", () => {
-  it("lika motstånd: vinst +48, förlust −48, oavgjort ±0 (K=96)", () => {
+  it("lika motstånd: vinst +48, förlust −48, halvpoäng ±0 (K=96)", () => {
     expect(calcNewElo(1000, 1000, 1)).toBe(1048);
     expect(calcNewElo(1000, 1000, 0)).toBe(952);
     expect(calcNewElo(1000, 1000, 0.5)).toBe(1000);
@@ -27,6 +27,29 @@ describe("calcNewElo", () => {
     const vsEqual = calcNewElo(1000, 1000, 1) - 1000;
     const vsStronger = calcNewElo(1000, 1400, 1) - 1000;
     expect(vsStronger).toBeGreaterThan(vsEqual);
+  });
+});
+
+describe("applyEloFloor — snabb inlämning ger ingen vinst, men kostar alltid", () => {
+  it("en förlust dras i sin helhet även när matchen gick orimligt fort", () => {
+    // Buggen: golvet hoppade över HELA ELO-uträkningen, så en förlorad
+    // snabbmatch var gratis — och matchen fick varken vinnare eller
+    // ELO-historik. Se `processMatchResultServer`.
+    const förlust = calcNewElo(1000, 1000, 0); // 952
+    expect(applyEloFloor(1000, förlust, true)).toBe(952);
+    expect(applyEloFloor(1000, förlust, false)).toBe(952);
+  });
+
+  it("en vinst klampas till ±0 när matchen gick orimligt fort", () => {
+    const vinst = calcNewElo(1000, 1000, 1); // 1048
+    expect(applyEloFloor(1000, vinst, true)).toBe(1000);
+    expect(applyEloFloor(1000, vinst, false)).toBe(1048);
+  });
+
+  it("klampen kan aldrig höja någons ELO", () => {
+    for (const gammal of [600, 1000, 1500, 2000])
+      for (const ny of [600, 900, 1000, 1100, 2200])
+        expect(applyEloFloor(gammal, ny, true)).toBeLessThanOrEqual(gammal);
   });
 });
 

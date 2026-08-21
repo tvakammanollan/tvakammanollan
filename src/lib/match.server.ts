@@ -1,6 +1,7 @@
 // Server-only helpers for match flow. Imported by *.functions.ts only.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { isImplausiblyFast } from "./match-abuse";
+import { decideWinnerSide } from "./match-outcome";
 import type { Database } from "@/integrations/supabase/types";
 
 type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
@@ -332,6 +333,24 @@ export function calcNewElo(oldElo: number, oppElo: number, result: 0 | 0.5 | 1):
   return Math.max(600, Math.round(next));
 }
 
+/**
+ * Spärren mot ELO-odling, uttryckt som en klamp i stället för ett hopp över.
+ *
+ * En match som lämnats in orimligt fort (`isImplausiblyFast`) får inte HÖJA
+ * någons ELO — det var hela poängen med tidsgolvet, och den delen står kvar.
+ * Men den ska sänka: en förlust kostar lika mycket vare sig den tog tio
+ * sekunder eller fem minuter. Att hoppa över uträkningen helt gjorde både att
+ * förlusten blev gratis och att matchen saknade vinnare, ELO-historik och
+ * siffra på resultatskärmen.
+ *
+ * Följden är medvetet asymmetrisk: den som klickar igenom åtta frågor på tio
+ * sekunder kan bara förlora på det. Det är det enda som gör odling
+ * meningslös utan att straffa den som råkar spela snabbt.
+ */
+export function applyEloFloor(oldElo: number, newElo: number, noGain: boolean): number {
+  return noGain ? Math.min(oldElo, newElo) : newElo;
+}
+
 // ---------- Process result ----------
 
 /**
@@ -435,10 +454,21 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
   }
 
   // Tidsgolv: en match som lämnats in snabbare än två sekunder per fråga är
-  // inte spelad, den är skriptad. Den får avslutas — spelaren ska se sitt
-  // resultat — men den ger varken ELO eller statistik. Mäts från `created_at`,
+  // inte spelad, den är skriptad. Mäts från `started_at` (annars `created_at`),
   // vilket för privata rum alltid är *före* spelstart och därför aldrig kan
   // slå fel där. Se `match-abuse.ts`.
+  //
+  // Golvet stoppade tidigare HELA uträkningen: `status = finished` och
+  // returnera. Följden var att en match som lämnats in snabbt inte gav någon
+  // ELO alls, ingen `winner_id` och ingen rad i `elo_history` — spelaren såg
+  // "0" i ELO-ändring och en resultatskärm som inte kunde tala om vem som
+  // vann. En riktig spelare som klickar fort straffades alltså som en bot,
+  // och en förlust kostade ingenting.
+  //
+  // Nu gäller golvet bara ELO-VINSTEN. En förlust dras alltid, i sin helhet.
+  // Det är den asymmetri som gör odling meningslös — man kan inte klicka sig
+  // uppåt — utan att en snabb match blir gratis att förlora. Se `noEloGain`
+  // nedan, som är där klampen faktiskt sitter.
   const { count: questionCount } = await supabaseAdmin
     .from("match_questions")
     .select("id", { count: "exact", head: true })
@@ -446,29 +476,24 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
   const elapsedSeconds =
     (Math.min(p1Sub, p2Sub) - new Date(match.started_at ?? match.created_at).getTime()) / 1000;
 
-  if (isImplausiblyFast(elapsedSeconds, questionCount ?? 0)) {
-    console.warn("[match] för snabb inlämning, ingen ELO", {
+  const noEloGain = isImplausiblyFast(elapsedSeconds, questionCount ?? 0);
+  if (noEloGain) {
+    console.warn("[match] för snabb inlämning — matchen avgörs, men ger ingen ELO-vinst", {
       matchId,
       player1: match.player1_id,
       elapsedSeconds,
       questionCount,
       isBot: match.is_bot_match,
     });
-    await supabaseAdmin.from("matches").update({ status: "finished" }).eq("id", matchId);
-    return { ok: true, skippedElo: "too_fast" as const };
   }
 
-  // Determine result (from p1 perspective)
-  // Equal scores = real draw. Time is NOT used as a tiebreaker
-  // (avoids the "showed as draw but I lost ELO" bug).
-  void p1Sub;
-  void p2Sub;
-  let r1: 0 | 0.5 | 1;
-  if (p1Score > p2Score) r1 = 1;
-  else if (p1Score < p2Score) r1 = 0;
-  else r1 = 0.5;
-
-  const r2: 0 | 0.5 | 1 = r1 === 1 ? 0 : r1 === 0 ? 1 : 0.5;
+  // Vem vann — EN funktion, delad med klienten. Oavgjort finns inte: vid lika
+  // poäng vinner den som lämnade in först. Regeln och dess motivering står i
+  // `match-outcome.ts`; ha den inte i två exemplar, det var så resultatskärmen
+  // och historiken kunde säga olika saker om samma match.
+  const winnerSide = decideWinnerSide(match);
+  const r1: 0 | 1 = winnerSide === 1 ? 1 : 0;
+  const r2: 0 | 1 = winnerSide === 1 ? 0 : 1;
   const matchType = match.match_type as MatchType;
   const eloField = matchType === "verbal" ? "elo_verbal" : "elo_math";
   const peakField = matchType === "verbal" ? "elo_verbal_peak" : "elo_math_peak";
@@ -501,7 +526,7 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
     p2EloOld = p2Any[eloField] ?? 1000;
   }
 
-  const p1NewElo = calcNewElo(p1Elo, p2EloOld, r1);
+  const p1NewElo = applyEloFloor(p1Elo, calcNewElo(p1Elo, p2EloOld, r1), noEloGain);
   const p1Change = p1NewElo - p1Elo;
 
   const p1Update: Record<string, number> = {
@@ -512,10 +537,23 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
     losses: (p1Any.losses ?? 0) + (r1 === 0 ? 1 : 0),
   };
 
-  await supabaseAdmin
+  // Felet kontrolleras. Skrivningen var tidigare ett naket `await` utan
+  // felkontroll: gick den fel märktes det ingenstans — matchen markerades
+  // ändå som `finished`, resultatsidan visade en ELO-ändring som aldrig
+  // hamnade i `users`, och skillnaden syntes först som ett omöjligt tal på
+  // topplistan veckor senare.
+  const { error: p1Err } = await supabaseAdmin
     .from("users")
     .update(p1Update as UsersUpdate)
     .eq("id", match.player1_id);
+  if (p1Err) {
+    console.error("[match] kunde inte skriva ELO för player1", {
+      matchId,
+      userId: match.player1_id,
+      message: p1Err.message,
+    });
+    throw p1Err;
+  }
 
   // insert + ignorera dubblett (23505) – fungerar både med och utan unika indexet,
   // så ingen deploy-ordning krävs mot migrationen.
@@ -534,7 +572,7 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
   if (!match.is_bot_match && p2Any && match.player2_id) {
     const p2Old = p2Any[eloField] ?? 1000;
     const p2Peak = p2Any[peakField] ?? 1000;
-    const p2NewElo = calcNewElo(p2Old, p1Elo, r2);
+    const p2NewElo = applyEloFloor(p2Old, calcNewElo(p2Old, p1Elo, r2), noEloGain);
     const p2Change = p2NewElo - p2Old;
 
     const p2Update: Record<string, number> = {
@@ -545,10 +583,18 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
       losses: (p2Any.losses ?? 0) + (r2 === 0 ? 1 : 0),
     };
 
-    await supabaseAdmin
+    const { error: p2Err } = await supabaseAdmin
       .from("users")
       .update(p2Update as UsersUpdate)
       .eq("id", match.player2_id);
+    if (p2Err) {
+      console.error("[match] kunde inte skriva ELO för player2", {
+        matchId,
+        userId: match.player2_id,
+        message: p2Err.message,
+      });
+      throw p2Err;
+    }
 
     const { error: ehErr2 } = await supabaseAdmin.from("elo_history").insert({
       user_id: match.player2_id,
@@ -561,12 +607,18 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
     if (ehErr2 && ehErr2.code !== "23505") throw ehErr2;
   }
 
-  const winnerId = r1 === 1 ? match.player1_id : r1 === 0 ? match.player2_id : null;
+  // NULL bara när boten vann: en bot har inget konto och därmed inget id.
+  // Klienten läser då `decideWinnerSide` och kommer fram till samma svar.
+  const winnerId = winnerSide === 1 ? match.player1_id : match.player2_id;
 
-  await supabaseAdmin
+  const { error: finishErr } = await supabaseAdmin
     .from("matches")
     .update({ winner_id: winnerId, status: "finished" })
     .eq("id", matchId);
+  if (finishErr) {
+    console.error("[match] kunde inte avsluta matchen", { matchId, message: finishErr.message });
+    throw finishErr;
+  }
 
-  return { ok: true };
+  return { ok: true, noEloGain };
 }

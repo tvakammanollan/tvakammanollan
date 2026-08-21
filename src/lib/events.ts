@@ -18,7 +18,10 @@ import { track } from "./telemetry";
 
 export type MatchType = "verbal" | "math";
 export type MatchMode = "bot" | "private" | "ranked";
-export type MatchOutcome = "win" | "loss" | "draw";
+// Oavgjort finns inte längre: vid lika poäng vinner den som lämnade in först
+// (`decideWinnerSide` i `match-outcome.ts`). Gamla "draw"-händelser ligger kvar
+// i PostHog och är korrekta för sin tid — nya kan inte uppstå.
+export type MatchOutcome = "win" | "loss";
 export type TrainingTrack = "verbal" | "math";
 /** Ytan köpet startade från — samma värden som serverfunktionen validerar. */
 export type CoachingSource = "dashboard" | "landing" | "popup";
