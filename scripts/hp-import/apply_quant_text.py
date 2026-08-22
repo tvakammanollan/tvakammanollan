@@ -579,6 +579,48 @@ PATCH: dict[str, dict[int, dict]] = {
         25: {"text": "Vilket värde har $x + y$?\n\n(1) $\\frac{x+y}{2} + 3 = 10$\n(2) $y = 6x$",
              "alternatives": STD_NOG},
     },
+    # Uteslutna: 5 (rektangel PQ), 8 (grafer f/g/h), 10 (figur av sträckor
+    # och cirkelbågar), 16 (linjer L1/L2 i diagram), 18 (rektangel med
+    # trianglar), 25 (linjer med vinklar u/v/w).
+    "2025ht-4": {
+        1: {"text": "En vara kostar 250 kronor. Hur mycket kostar varan om priset höjs med "
+                     "12 procent?", "alternatives": ["262 kronor", "268 kronor", "274 kronor", "280 kronor"]},
+        2: {"text": "Vad är medelvärdet av de fem minsta heltalen som är större än 10?",
+            "alternatives": ["12", "12,5", "13", "13,5"]},
+        3: {"text": "$\\frac{x}{8} = \\frac{1}{3}$\n\nVilket värde har $x$?",
+            "alternatives": ["$\\frac{1}{24}$", "$\\frac{3}{8}$", "$\\frac{8}{3}$", "24"]},
+        4: {"text": "$f(x) = 7x^2 - 7$\n\nFör vilket av följande värden på $x$ gäller att "
+                     "$f(x) = 7$?", "alternatives": ["1", "$\\sqrt{2}$", "2", "$\\sqrt{7}$"]},
+        6: {"text": "$3x \\cdot \\sqrt{2} = \\sqrt{72}$\n\nVad är $x$?", "alternatives": ["2", "4", "6", "12"]},
+        7: {"text": "I början av ett experiment består en population av $n$ bakterier. Efter "
+                     "en vecka har populationen fördubblats. Populationen fortsätter sedan att "
+                     "fördubblas varje vecka. Hur många bakterier finns det i populationen "
+                     "efter tio veckor?",
+            "alternatives": ["$2 \\cdot n^{10}$", "$2 \\cdot 10^n$", "$n \\cdot 2^{10}$", "$n \\cdot 10^2$"]},
+        9: {"text": "Vad är $\\frac{\\frac{2}{7}}{\\frac{4}{9} - \\frac{3}{7}}$?",
+            "alternatives": ["$\\frac{1}{7}$", "$\\frac{4}{7}$", "14", "18"]},
+        11: {"text": "Vilket svarsalternativ är lika med $(2{,}5 \\cdot 10^{-11}) \\cdot (4 \\cdot 10^{-18})$?",
+             "alternatives": ["$10^{-28}$", "$10^{28}$", "$10^{-30}$", "$10^{30}$"]},
+        12: {"text": "$xy \\neq -1$\n\nVilket svarsalternativ motsvarar uttrycket "
+                      "$\\frac{x^2y^2+xy}{xy+1}$?", "alternatives": ["$xy$", "$xy+1$", "$x^2y^2$", "$x^2y^2+1$"]},
+        13: {"text": "Erik, Johanna och Mikael fyller år på samma dag. När Erik var 14 år var "
+                      "Johanna 7 år. När Johanna var 10 år var Mikael 15 år.\nKvantitet I: "
+                      "Eriks ålder när Mikael var 18 år\nKvantitet II: 20 år", "alternatives": STD_KVA},
+        14: {"text": "$0 < a < 1$\nKvantitet I: $\\frac{1}{a}$\nKvantitet II: $a$",
+             "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{5}{4} - \\frac{4}{5}$\nKvantitet II: "
+                      "$\\frac{4}{3} - \\frac{3}{4}$", "alternatives": STD_KVA},
+        17: {"text": "$0 < x < y < 1$\nKvantitet I: $xy$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        19: {"text": "$x > 0$\n$y = 5x + 3$\n$z = 2y - 10x$\nKvantitet I: $x$\nKvantitet II: $z$",
+             "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: Medianen av tio tal med medelvärdet 0\nKvantitet II: "
+                      "Medianen av tio tal med medelvärdet 100", "alternatives": STD_KVA},
+        21: {"text": "Förhållandet mellan vinklarna i en triangel är 1:2:4.\nKvantitet I: "
+                      "Triangelns största vinkel\nKvantitet II: $90°$", "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: $\\left(1+\\frac{1}{2}\\right)\\left(1-\\frac{1}{3}\\right)"
+                      "\\left(1+\\frac{1}{4}\\right)\\left(1-\\frac{1}{5}\\right)$\n"
+                      "Kvantitet II: $1$", "alternatives": STD_KVA},
+    },
 }
 
 
