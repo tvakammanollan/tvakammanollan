@@ -1127,6 +1127,60 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$y \\neq 0$\n$\\frac{2x}{3y} = 7$\nKvantitet I: $y$\nKvantitet II: "
                       "$\\frac{2}{21}x$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 6 (trianglar med vinklar), 17 (linjer i diagram). NOG 24
+    # hade redan ren text.
+    "2022ht-4": {
+        1: {"text": "Vilket svarsalternativ är lika med $\\frac{1}{3} + \\frac{3}{4} + \\frac{5}{12}$?",
+            "alternatives": ["$\\frac{9}{4}$", "$\\frac{9}{6}$", "$\\frac{9}{12}$", "$\\frac{9}{19}$"]},
+        2: {"text": "$L_1$: $y = 2x - 4$\n$L_2$: $y = x - 1$\n\nLinjerna $L_1$ och $L_2$ skär "
+                     "varandra i punkten P. Vilka koordinater har punkten P?",
+            "alternatives": ["$(-4, -1)$", "$(1, 0)$", "$(2, -4)$", "$(3, 2)$"]},
+        3: {"text": "$\\frac{45x}{7} = 5x + 10$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{7}{8}$", "$\\frac{7}{4}$", "5", "7"]},
+        4: {"text": "Vad är 7 procent av 15?", "alternatives": ["1", "1,05", "1,1", "1,15"]},
+        5: {"text": "Vad är differensen mellan medianen och medelvärdet av de sex talen "
+                     "$-1$, 1, 2, 4, 5 och 7?", "alternatives": ["0", "1", "2", "3"]},
+        7: {"text": "Vilket svarsalternativ är en funktion som uppfyller att $f(1) > f(0)$?",
+            "alternatives": ["$f(x) = 2$", "$f(x) = x - 2$", "$f(x) = x^2 - 2x + 1$", "$f(x) = -2x + 2$"]},
+        8: {"text": "Vilket svarsalternativ motsvarar uttrycket $(a+b)(c+d)(e+f)$?",
+            "alternatives": ["$ac + ad + bc + bd + e + f$", "$ac + ad + bc + bd + ae + af + be + bf$",
+                              "$ace + bdf$", "$ace + acf + ade + adf + bce + bcf + bde + bdf$"]},
+        9: {"text": "Arean av en cirkel är 27 cm$^2$. Vilket av svarsalternativen är det "
+                     "bästa närmevärdet för cirkelns diameter?",
+            "alternatives": ["1,5 cm", "4,5 cm", "6 cm", "9 cm"]},
+        10: {"text": "Vilket värde har $x$ om $\\frac{1}{3} - x = \\frac{1}{2} - \\frac{1}{3}$?",
+             "alternatives": ["$-\\frac{1}{2}$", "$-\\frac{1}{6}$", "$\\frac{1}{6}$", "$\\frac{1}{2}$"]},
+        11: {"text": "För en viss sorts garn gäller att ett nystan med 130 meter garn väger "
+                      "50 gram. Emma använder 430 gram av garnet för att sticka en tröja. "
+                      "Vilket svarsalternativ är ett uttryck för att beräkna hur många meter "
+                      "garn Emma använder till tröjan?",
+             "alternatives": ["$\\frac{50}{130} \\cdot 430$", "$\\frac{50}{430} \\cdot 130$",
+                               "$\\frac{130}{50} \\cdot 430$", "$\\frac{430}{130} \\cdot 50$"]},
+        12: {"text": "Vilket svarsalternativ motsvarar $4 \\cdot 2^x$?",
+             "alternatives": ["$2^{x+2}$", "$2^{2x}$", "$4^{x-1}$", "$8^x$"]},
+        13: {"text": "$2(x+3) = 3(x+4)$\nKvantitet I: $x$\nKvantitet II: $0$", "alternatives": STD_KVA},
+        14: {"text": "Två vanliga sexsidiga tärningar kastas slumpmässigt en gång.\nKvantitet "
+                      "I: Sannolikheten att summan av det tärningarna visar är 10\nKvantitet "
+                      "II: Sannolikheten att summan av det tärningarna visar är 4", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{5}{6} + \\frac{5}{6}$\nKvantitet II: "
+                      "$\\frac{5}{6} \\cdot \\frac{5}{6}$", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: Arean av en triangel med basen $b$ och höjden $h_1$\n"
+                      "Kvantitet II: Arean av en triangel med basen $b-1$ och höjden $h_2$",
+             "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: En fjärdedel av arean av en cirkel med radien 1 cm\n"
+                      "Kvantitet II: Tre fjärdedelar av arean av en kvadrat med sidan 1 cm",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: $\\sqrt{7} + \\sqrt{3}$\nKvantitet II: $\\sqrt{10}$",
+             "alternatives": STD_KVA},
+        20: {"text": "$x$ och $y$ är positiva heltal sådana att $xy = 36$.\nKvantitet I: "
+                      "$x + y$\nKvantitet II: $18$", "alternatives": STD_KVA},
+        21: {"text": "Kvantitet I: Antalet minuter som det tar att färdas 40 km med "
+                      "hastigheten 100 km/h\nKvantitet II: Antalet minuter som det tar att "
+                      "färdas 40 km med hastigheten 40 m/s", "alternatives": STD_KVA},
+        22: {"text": "$x > 2$\n$\\frac{125}{\\sqrt{x-2}} = 25$\nKvantitet I: $x - 2$\n"
+                      "Kvantitet II: $25$", "alternatives": STD_KVA},
+        24: {"text": "Är $x < 0$?\n\n(1) $4x = -8$\n(2) $x^5 < 0$", "alternatives": STD_NOG},
+    },
 }
 
 
