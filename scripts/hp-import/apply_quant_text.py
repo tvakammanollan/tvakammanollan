@@ -721,6 +721,56 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$\\frac{x}{y} = -1$\nKvantitet I: $x - y$\nKvantitet II: $0$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 5 (avståndsdiagram P/Q/R/S/T), 11 (geometrisk figur med
+    # trianglar), 19 (figur med vinklar x/y/120°/100°). Fråga 6:s tomma
+    # koordinatsystem är bara ett räknehjälpmedel.
+    "2024ht-4": {
+        1: {"text": "Medelvärdet av de fem talen 1, 2, 5, 7 och $x$ är 7. Vad är $x$?",
+            "alternatives": ["13", "14", "18", "20"]},
+        2: {"text": "Elsa samlar på klistermärken. Hon börjar med 10 klistermärken och utökar "
+                     "sin samling med tre klistermärken varje dag. $K$ är antalet "
+                     "klistermärken som Elsa har, och $t$ är antalet dagar som gått sedan hon "
+                     "började samla. Vilket svarsalternativ anger $K$ som en funktion av $t$?",
+            "alternatives": ["$K(t) = 3t + 10$", "$K(t) = 3(t + 10)$", "$K(t) = 10t + 3$", "$K(t) = 10(t + 3)$"]},
+        3: {"text": "Vilket värde har uttrycket $\\frac{\\frac{2}{x}}{\\frac{1}{x} + "
+                     "\\frac{x}{x-1}}$ om $x = 2$?",
+            "alternatives": ["–2", "$\\frac{2}{5}$", "1", "$\\frac{5}{2}$"]},
+        4: {"text": "$a + 2b = b$\n\nVilket svarsalternativ motsvarar $a - b$?",
+            "alternatives": ["0", "$-b$", "$-2b$", "$-3b$"]},
+        6: {"text": "Vilket av svarsalternativen är en punkt som ligger mellan de båda "
+                     "linjerna $y = x + 2$ och $y = x - 2$?",
+            "alternatives": ["$(3, -3)$", "$(3, 0)$", "$(0, -3)$", "$(3, 3)$"]},
+        7: {"text": "En kvadrat har lika stor area som en cirkel med radien 2 cm. Vilken "
+                     "sidlängd har kvadraten?",
+            "alternatives": ["$\\sqrt{2\\pi}$ cm", "$2\\sqrt{\\pi}$ cm", "$\\pi\\sqrt{2}$ cm", "$2\\pi$ cm"]},
+        8: {"text": "Vilket av svarsalternativen är lika med uttrycket "
+                     "$xy + x(b-y) + y(a-x) + (a-x)(b-y)$?",
+            "alternatives": ["$ab$", "$xy + ay + bx$", "$ab + xy$", "$ab + bx + ay - 2xy$"]},
+        9: {"text": "Vilket svarsalternativ är lika med uttrycket $10 \\cdot \\frac{3-x}{15} + "
+                     "\\frac{5x}{3}$?", "alternatives": ["$2 - x$", "$2 + x$", "$2 + 8x$", "$\\frac{10+8x}{5}$"]},
+        10: {"text": "Vilket svarsalternativ är lika med $(2\\sqrt{3} + 3\\sqrt{3})(4\\sqrt{3} - \\sqrt{3})$?",
+             "alternatives": ["15", "$15\\sqrt{3}$", "45", "135"]},
+        12: {"text": "Vilket svarsalternativ är lika med 20 procent av $10^{10}$?",
+             "alternatives": ["$2^{10}$", "$2 \\cdot 10^9$", "$10^2$", "$20^9$"]},
+        13: {"text": "Kvantitet I: $\\frac{1}{2} - \\frac{1}{3}$\nKvantitet II: "
+                      "$\\frac{2}{3} - \\frac{1}{2}$", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: Höjden i en triangel med basen 5 cm och arean 20 cm$^2$\n"
+                      "Kvantitet II: Höjden i en rektangel med basen 2 cm och arean 17 cm$^2$",
+             "alternatives": STD_KVA},
+        15: {"text": "$x + 2{,}8 = 5x - 6$\nKvantitet I: $x$\nKvantitet II: $2$", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: 125 % av 4\nKvantitet II: 80 % av 6", "alternatives": STD_KVA},
+        17: {"text": "$f(x) = x^2 + 2x - 2$\nKvantitet I: $f(-2)$\nKvantitet II: $f(0)$",
+             "alternatives": STD_KVA},
+        18: {"text": "$\\left(47^{\\frac{x}{2}}\\right)^{\\frac{2}{3}} = 47^{\\frac{y}{3}}$\n"
+                      "Kvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        20: {"text": "$a \\neq b$\nKvantitet I: $\\frac{(a-b)^2}{a-b}$\nKvantitet II: "
+                      "$\\frac{(b-a)^2}{-(a-b)}$", "alternatives": STD_KVA},
+        21: {"text": "Karin kör bil med en hastighet som ligger mellan 80 km/h och 100 km/h.\n"
+                      "Kvantitet I: Den tid det tar för Karin att köra 120 km\nKvantitet II: "
+                      "85 minuter", "alternatives": STD_KVA},
+        22: {"text": "Medelvärdet av $x$ och $y$ är lika med 1. Medelvärdet av $x$ och 4 är "
+                      "lika med $y$.\nKvantitet I: $x$\nKvantitet II: $0$", "alternatives": STD_KVA},
+    },
 }
 
 
