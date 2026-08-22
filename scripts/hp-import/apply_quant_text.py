@@ -1081,6 +1081,52 @@ PATCH: dict[str, dict[int, dict]] = {
         21: {"text": "$x$ är 75 procent av 80.\n8 är $y$ procent av 12.\nKvantitet I: $x$\n"
                       "Kvantitet II: $y$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 4 (fyra grafer SOM svarsalternativ), 7 (likformiga
+    # trianglar), 10 (cirklar i rektangel), 17 (parallella linjer).
+    "2022ht-1": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $(4-3)(x+2y)$?",
+            "alternatives": ["$1 + x + 2y$", "$4 - 3x + 2y$", "$x + 2y$", "$4x - 6y$"]},
+        2: {"text": "Vad är $3^3 - 2^3$?", "alternatives": ["1", "3", "6", "19"]},
+        3: {"text": "$0{,}4x + 0{,}2 = 0{,}6x + 1{,}8$\n\nVilket värde har $x$?",
+            "alternatives": ["–10", "–8", "1,6", "2"]},
+        5: {"text": "I burk A finns det 50 enfärgade kulor: 10 svarta och 40 vita. I burk B "
+                     "finns det 90 kulor. Sannolikheten är 2/3 att en slumpmässigt plockad "
+                     "kula ur burk B är svart. Kulorna i burk A och burk B hälls över i en "
+                     "tom påse. Vad är sannolikheten att en slumpmässigt plockad kula ur "
+                     "påsen är svart?", "alternatives": ["$\\frac{2}{7}$", "$\\frac{1}{2}$", "$\\frac{7}{10}$", "$\\frac{5}{7}$"]},
+        6: {"text": "$f(x) = 5(x^3+x) - 10(x^2+1)$\n\nVilket svarsalternativ är lika med $f(2)$?",
+            "alternatives": ["0", "3", "20", "100"]},
+        8: {"text": "Albert står i en kö. Antalet personer som står före honom i kön är tre "
+                     "gånger så stort som antalet personer som står efter honom i kön. Vilket "
+                     "svarsalternativ kan vara det totala antalet personer i kön?",
+            "alternatives": ["26", "27", "28", "29"]},
+        9: {"text": "Vilket svarsalternativ motsvarar uttrycket $(x+7)^2 - (x-7)^2$?",
+            "alternatives": ["$28x$", "$49x$", "$x^2$", "$x^2 - 7x + 49$"]},
+        11: {"text": "$\\frac{1}{x} = -\\frac{2}{3}$\n\nVad är $x^3$?",
+             "alternatives": ["$-\\frac{27}{8}$", "$-\\frac{8}{27}$", "$\\frac{8}{27}$", "$\\frac{27}{8}$"]},
+        12: {"text": "$x = \\frac{\\pi}{\\sqrt{2}}$\n\nI vilket intervall ligger $x$?",
+             "alternatives": ["$x < 1$", "$1 \\leq x < 1{,}5$", "$1{,}5 \\leq x < 2$", "$x \\geq 2$"]},
+        13: {"text": "$\\frac{8}{10} = \\frac{x}{16}$\nKvantitet I: $x$\nKvantitet II: $10$",
+             "alternatives": STD_KVA},
+        14: {"text": "Almas ålder är hälften av Ellas och Lenas sammanlagda ålder.\n"
+                      "Kvantitet I: Almas ålder\nKvantitet II: Ellas ålder", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: 30 procent av 40\nKvantitet II: 40 procent av 30",
+             "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: Medelvärdet av mätserien 1, 3, 7\nKvantitet II: "
+                      "Medelvärdet av mätserien 1, 1, 3, 7, 7", "alternatives": STD_KVA},
+        18: {"text": "$x \\neq 0$\n$x^2 = -5x$\nKvantitet I: $x$\nKvantitet II: $0$",
+             "alternatives": STD_KVA},
+        19: {"text": "Arean av en rektangel är 50 cm$^2$. Rektangelns bredd är 5 cm.\n"
+                      "Kvantitet I: Längden av rektangelns diagonal\nKvantitet II: 11 cm",
+             "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: $\\frac{3^2}{7^2}$\nKvantitet II: $\\frac{7^{-2}}{3^{-2}}$",
+             "alternatives": STD_KVA},
+        21: {"text": "Linjen L går genom punkten $(-10, -1)$ och har positiv lutning.\n"
+                      "Kvantitet I: $y$-koordinaten för den punkt där L skär $y$-axeln\n"
+                      "Kvantitet II: $0$", "alternatives": STD_KVA},
+        22: {"text": "$y \\neq 0$\n$\\frac{2x}{3y} = 7$\nKvantitet I: $y$\nKvantitet II: "
+                      "$\\frac{2}{21}x$", "alternatives": STD_KVA},
+    },
 }
 
 
