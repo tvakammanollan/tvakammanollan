@@ -530,6 +530,55 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$y \\neq 0$\n$\\frac{x+3y}{y} = 2$\nKvantitet I: $x$\nKvantitet II: $y$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 2 (parallella linjer), 5 (rektangel/triangel), 21
+    # (rätvinklig triangel). Fråga 8:s tomma koordinatsystem är bara ett
+    # räknehjälpmedel utan egen information — texten står redan kvar.
+    "2025ht-1": {
+        1: {"text": "$x + \\frac{1}{4} = \\frac{1}{8}$\n\nVilket värde har $x$?",
+            "alternatives": ["$-\\frac{3}{8}$", "$-\\frac{1}{8}$", "$\\frac{1}{4}$", "$\\frac{1}{2}$"]},
+        3: {"text": "Vilket svarsalternativ motsvarar uttrycket $(3x+y)(x-y)$?",
+            "alternatives": ["$3x^2 - 2xy - y^2$", "$3x^2 + xy - y^2$", "$3x^2 - y^2$", "$3x^2 + 2xy - y^2$"]},
+        4: {"text": "$f(x) = 4x + 1$\n$g(x) = 2 \\cdot f(x) - 1$\n\nVad är $g(3)$?",
+            "alternatives": ["5", "13", "24", "25"]},
+        6: {"text": "Vad är 45 % av $\\frac{2}{9}$?",
+            "alternatives": ["$\\frac{1}{9}$", "$\\frac{1}{10}$", "$\\frac{1}{11}$", "$\\frac{1}{12}$"]},
+        7: {"text": "Hur lång tid tar det att färdas 18 km med hastigheten 20 m/s?",
+            "alternatives": ["15 minuter", "18 minuter", "36 minuter", "54 minuter"]},
+        8: {"text": "För linjen L med ekvationen $y = kx + m$ gäller att $k$ är negativt. "
+                     "Linjen L skär $y$-axeln i punkten $(0, -4)$. Tillsammans med $x$-axeln "
+                     "och $y$-axeln avgränsar L en triangel med arean 2 areaenheter. Vilket "
+                     "svarsalternativ anger skärningspunkten mellan linjen L och $x$-axeln?",
+            "alternatives": ["$\\left(-\\frac{1}{2}, 0\\right)$", "$(-1, 0)$", "$(-2, 0)$", "$(-4, 0)$"]},
+        9: {"text": "$a \\neq 0$\n$b \\neq 0$\n\nVilket svarsalternativ motsvarar uttrycket "
+                     "$\\frac{b}{a} + \\frac{1}{b}$?",
+            "alternatives": ["$\\frac{b+1}{ab}$", "$\\frac{b+1}{a+b}$", "$\\frac{1}{a}$", "$\\frac{b^2+a}{ab}$"]},
+        10: {"text": "Vilket av följande svarsalternativ är närmast värdet av "
+                      "$\\sqrt{\\frac{44 \\cdot 4100}{200}}$?", "alternatives": ["10", "20", "30", "40"]},
+        11: {"text": "Vera bildar ett tvåsiffrigt tal $x$ genom att göra två slumpmässiga kast "
+                      "med en vanlig sexsidig tärning. Resultatet av det första kastet blir "
+                      "tiotalssiffran i $x$, och resultatet av det andra kastet blir "
+                      "entalssiffran i $x$. Hur stor är sannolikheten att $x$ är större än 40?",
+             "alternatives": ["$\\frac{1}{4}$", "$\\frac{1}{3}$", "$\\frac{1}{2}$", "$\\frac{2}{3}$"]},
+        12: {"text": "Vad är $2 \\cdot 3^{-1} + 3 \\cdot 3^{-2}$?",
+             "alternatives": ["$5 \\cdot 3^{-1}$", "$\\frac{11}{54}$", "$5 \\cdot 3^{-3}$", "1"]},
+        13: {"text": "Kvantitet I: 25 procent av $\\sqrt{16}$\nKvantitet II: $\\sqrt{4}$",
+             "alternatives": STD_KVA},
+        14: {"text": "$f(x) = -\\frac{x}{2} + 5$\n$g(x) = \\frac{x}{2} - 1$\n\nKvantitet I: "
+                      "$f(-2)$\nKvantitet II: $g(14)$", "alternatives": STD_KVA},
+        16: {"text": "$2 = \\frac{194}{x}$\n$3 = 100 - y$\n\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+        17: {"text": "$y > 0$\nKvantitet I: $x - y$\nKvantitet II: $3x - 2y$", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: $\\frac{1}{2} + \\frac{2}{5} + \\frac{3}{7}$\nKvantitet II: "
+                      "$\\frac{93}{71}$", "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: Kvoten mellan omkretsen av en cirkel och cirkelns diameter\n"
+                      "Kvantitet II: $2\\sqrt{2}$", "alternatives": STD_KVA},
+        20: {"text": "$x > 0$\n$y < 0$\nKvantitet I: $x^3y^4$\nKvantitet II: $x^4y^3$",
+             "alternatives": STD_KVA},
+        22: {"text": "Produkten av tre primtal är 42.\nKvantitet I: Medianen av de tre "
+                      "primtalen\nKvantitet II: 3", "alternatives": STD_KVA},
+        25: {"text": "Vilket värde har $x + y$?\n\n(1) $\\frac{x+y}{2} + 3 = 10$\n(2) $y = 6x$",
+             "alternatives": STD_NOG},
+    },
 }
 
 
