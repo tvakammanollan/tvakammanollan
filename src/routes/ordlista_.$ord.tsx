@@ -55,7 +55,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Vad betyder ${word}?`, "· Ordlista", "· Tvåkommanollan"),
+        title: fitTitle(`Vad betyder ${word}?`, "· Ordlista"),
         description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
         ogTitle: `Vad betyder ${word}?`,
         ogDescription:

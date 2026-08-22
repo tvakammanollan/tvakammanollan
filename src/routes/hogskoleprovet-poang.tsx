@@ -17,7 +17,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poang",
-      title: fitTitle("Högskoleprovet poäng, normering & antagning", "· Tvåkommanollan"),
+      title: fitTitle("Högskoleprovet poäng, normering & antagning"),
       description:
         "Vad högskoleprovets poäng 0,00–2,00 betyder, hur normeringen från råpoäng går till och hur resultatet används vid antagning. Plus urvalsgrupperna.",
       ogTitle: "Högskoleprovet poäng & antagning: så funkar det",

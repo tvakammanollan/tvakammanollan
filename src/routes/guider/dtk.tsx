@@ -9,7 +9,7 @@ export const Route = createFileRoute("/guider/dtk")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/dtk",
-      title: fitTitle("DTK-guide: diagram, tabeller och kartor på HP", "· Tvåkommanollan"),
+      title: fitTitle("DTK-guide: diagram, tabeller och kartor på HP"),
       description:
         "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet. DTK-guide med strategi och vanliga misstag.",
       ogTitle: "Tvåkommanollan | DTK-guiden",

@@ -32,7 +32,7 @@ export const Route = createFileRoute("/forum")({
     return {
       meta: pageMeta({
         path: "/forum",
-        title: fitTitle("Forum om högskoleprovet · frågor och svar", "· Tvåkommanollan"),
+        title: fitTitle("Forum om högskoleprovet · frågor och svar"),
         description:
           "Ställ frågor om högskoleprovet och få svar av andra som pluggar: uppgifter i KVA, XYZ, NOG och DTK, anmälan, normering och resultat. Gratis att läsa.",
         ogTitle: "Tvåkommanollan | Forum om högskoleprovet",

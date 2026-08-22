@@ -36,7 +36,7 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: fitTitle("Högskoleprovet datum 2026 & 2027: när är nästa prov?", "· Tvåkommanollan"),
+      title: fitTitle("Högskoleprovet datum 2026 & 2027: när är nästa prov?"),
       // Datumen stod handskrivna här och skulle bli fel dagen HP_DATES ändras
       // — samma fel som redan städats bort ur FAQ:n och FAQPage-datan. De
       // härleds nu ur listan, och beskrivningen kortas till det Google visar.

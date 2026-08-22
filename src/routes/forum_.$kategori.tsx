@@ -40,7 +40,7 @@ export const Route = createFileRoute("/forum_/$kategori")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`${category.name} · forum om högskoleprovet${suffix}`, "· Tvåkommanollan"),
+        title: fitTitle(`${category.name} · forum om högskoleprovet${suffix}`),
         // Kategoribeskrivningen är olika lång per kategori och sprack på de
         // längsta — därför en budget i stället för en fast mening.
         description: describeWithin(

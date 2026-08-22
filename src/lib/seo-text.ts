@@ -74,9 +74,19 @@ export function describeWithin(body: string, tail: string, max = DESCRIPTION_MAX
  * ordning när utrymmet tar slut.
  *
  * Skriv svansarna i stigande umbärlighet: `fitTitle(kärnan, "med facit",
- * "· Tvåkommanollan")` behåller "med facit" och offrar varumärket när båda
- * inte får plats. Varumärket är det som tål att förloras — Google skriver
- * ofta dit sajtnamnet ändå, härlett ur og:site_name och WebSite-datan.
+ * "· delprovet")` behåller "med facit" och offrar den sista svansen när alla
+ * inte får plats.
+ *
+ * **Lägg aldrig till `"· Tvåkommanollan"` som svans här.** Resultatet går
+ * (nästan alltid) rakt in i `pageMeta({ title })`, och `pageTitle()` i
+ * `page-meta.ts` sätter redan `"Tvåkommanollan | "` framför — en svans med
+ * varumärket dubblerar det till "Tvåkommanollan | … · Tvåkommanollan" så fort
+ * kärnan är kort nog för att svansen får plats (hände på riktigt på två
+ * sidor, båda flaggade för för lång titel). När den inte fick plats försvann
+ * bufferten i tysthet i stället, och togs då från kärnans egen budget —
+ * `TITLE_MAX` räknar inte med de 17 tecken `pageMeta` lägger på efteråt.
+ * Varumärket behöver ingen svans: Google skriver ofta dit sajtnamnet ändå,
+ * härlett ur og:site_name och WebSite-datan.
  */
 export function fitTitle(head: string, ...tails: string[]): string {
   let title = head.trim();

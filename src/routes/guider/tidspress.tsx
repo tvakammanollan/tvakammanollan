@@ -9,7 +9,7 @@ export const Route = createFileRoute("/guider/tidspress")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/tidspress",
-      title: fitTitle("Tidspress på HP · strategi för varje delprov", "· Tvåkommanollan"),
+      title: fitTitle("Tidspress på HP · strategi för varje delprov"),
       description:
         "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
       ogTitle: "Tvåkommanollan | Tidspress på HP",

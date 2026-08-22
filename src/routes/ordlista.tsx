@@ -22,10 +22,7 @@ export const Route = createFileRoute("/ordlista")({
     return {
       meta: pageMeta({
         path: "/ordlista",
-        title: fitTitle(
-          "Ordlista för högskoleprovet · alla ord med förklaring",
-          "· Tvåkommanollan",
-        ),
+        title: fitTitle("Ordlista för högskoleprovet · alla ord med förklaring"),
         description:
           `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
           `exempelmening, liknande ord och uppgiften ordet kom ur. Sök på bokstav och plugga gratis.`,
