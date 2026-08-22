@@ -4,6 +4,11 @@ import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovShort, type ProvQuestion } from "@/types/gamla-prov";
 import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "./ProvFigure";
+import { MathText } from "@/components/MathTextLazy";
+
+// XYZ, KVA och NOG skrivs om till text (se scripts/hp-import/apply_quant_text.py) —
+// DTK är avsiktligt undantaget, dess uppgifter kräver ett diagram att läsa ur.
+const MATH_DELPROV = new Set(["XYZ", "KVA", "NOG"]);
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -45,6 +50,7 @@ export function ProvQuestionCard({
 }) {
   const correct = acceptedAnswers(question);
   const isOrd = question.delprov === "ORD";
+  const isMath = MATH_DELPROV.has(question.delprov);
   const letters = LETTERS.slice(0, altCount(question));
   // Beskärningarna används bara när allt de behöver finns. Halva uppsättningar
   // ska falla tillbaka på hela utsnittet, inte visa några knappar med innehåll
@@ -89,8 +95,14 @@ export function ProvQuestionCard({
       </header>
 
       {question.text && !question.image && (
-        <p className="text-[15px] font-medium leading-relaxed text-[var(--cream)]">
-          {isOrd ? ordText(question.text) : question.text}
+        <p className="whitespace-pre-wrap text-[15px] font-medium leading-relaxed text-[var(--cream)]">
+          {isMath ? (
+            <MathText>{question.text}</MathText>
+          ) : isOrd ? (
+            ordText(question.text)
+          ) : (
+            question.text
+          )}
         </p>
       )}
 
@@ -170,7 +182,11 @@ export function ProvQuestionCard({
               >
                 {letter}
               </span>
-              {text && <span className="leading-relaxed">{isOrd ? ordText(text) : text}</span>}
+              {text && (
+                <span className="leading-relaxed">
+                  {isMath ? <MathText>{text}</MathText> : isOrd ? ordText(text) : text}
+                </span>
+              )}
               {crop && (
                 <CropView
                   src={question.image!}
