@@ -868,6 +868,56 @@ PATCH: dict[str, dict[int, dict]] = {
         28: {"text": "Vilket av talen $x$, $y$, $z$ och $w$ är störst?\n\n(1) $x + y = w$\n"
                       "(2) $\\frac{x+y}{2} = z$", "alternatives": STD_NOG},
     },
+    # Uteslutna: 8 (fyra grafer SOM svarsalternativ), 28 (linje med
+    # punktordning A/B/M/C — ordningen syns bara i figuren).
+    "2023ht-2": {
+        1: {"text": "Vad är $\\frac{2}{3} + \\frac{4}{7} - \\frac{5}{21}$?",
+            "alternatives": ["$-\\frac{1}{11}$", "$\\frac{1}{7}$", "1", "3"]},
+        2: {"text": "Hur stor är den största vinkeln i en triangel där förhållandet mellan "
+                     "vinklarna är 1:2:6?", "alternatives": ["60°", "90°", "120°", "135°"]},
+        3: {"text": "$x^3 + bx - 4 = 0$\n\nOm $x = -2$, vad är då $b$?", "alternatives": ["–6", "–2", "0", "2"]},
+        4: {"text": "$f(x) = \\frac{3x}{4} - \\frac{1}{2}$\n\nFör vilket värde på $x$ gäller "
+                     "att $f(x) = 0$?", "alternatives": ["$\\frac{3}{8}$", "$\\frac{2}{3}$", "$\\frac{3}{2}$", "$\\frac{8}{3}$"]},
+        5: {"text": "$x + \\frac{3}{5} = \\frac{5}{8}$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{2}{3}$", "$\\frac{3}{8}$", "$\\frac{2}{13}$", "$\\frac{1}{40}$"]},
+        6: {"text": "Medelvärdet av $x$ och $y$ är lika med 16. Medelvärdet av 20 och $z$ är "
+                     "lika med 30. Vad är $x + y + z$?", "alternatives": ["42", "56", "62", "72"]},
+        7: {"text": "Vilket svarsalternativ motsvarar uttrycket $-5x(7-3y)$?",
+            "alternatives": ["$-35x - 3y$", "$-(35x-15)y$", "$(15y-35)x$", "$15x(y+7)$"]},
+        9: {"text": "10 % av $x$ är lika med 8 % av $y$. Om $x$ är lika med 20, vad är då $y$?",
+            "alternatives": ["16", "18", "22", "25"]},
+        10: {"text": "En rektangel har lika stor area som en kvadrat. Kvadratens sidlängd är "
+                      "$s$. Rektangelns korta sida är $0{,}7s$. Vilket svarsalternativ anger "
+                      "ett uttryck som är lika med rektangelns långa sida?",
+             "alternatives": ["$s + 0{,}3$", "$s + 0{,}7s$", "$\\frac{s}{0{,}7}$", "$1{,}3s$"]},
+        11: {"text": "$p$ är ett primtal sådant att $4 < p < 10$. $m$ är ett positivt heltal "
+                      "sådant att $m < p$. Vilket svarsalternativ är med säkerhet korrekt?",
+             "alternatives": ["$\\frac{p}{m}$ är ett heltal", "$\\frac{36m}{p}$ är ett heltal",
+                               "$\\frac{m}{p}$ är ett heltal", "$\\frac{35m}{p}$ är ett heltal"]},
+        12: {"text": "Annica, Bianca och Cecilia är systrar. Vid tidpunkten T var systrarnas "
+                      "genomsnittliga ålder 24 år. Tre år efter T var Biancas och Cecilias "
+                      "genomsnittliga ålder 25 år. Hur gammal var Annica tre år efter T?",
+             "alternatives": ["25 år", "27 år", "29 år", "31 år"]},
+        13: {"text": "$x \\neq 0$\nKvantitet I: $(2x)^2$\nKvantitet II: $2x^2$", "alternatives": STD_KVA},
+        14: {"text": "$f(x) = x^2 - 3x + 2$\nKvantitet I: $f(-1)$\nKvantitet II: $f(3)$",
+             "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{5^5}{5^3}$\nKvantitet II: $\\frac{5^{28}}{5^{26}}$",
+             "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: Arean av en rektangel med sidorna $6x$ cm respektive "
+                      "$0{,}5x$ cm\nKvantitet II: Arean av en cirkel med radien $x$ cm",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $3\\sqrt{6}$\nKvantitet II: $6\\sqrt{3}$", "alternatives": STD_KVA},
+        18: {"text": "$x^2 = 25$\n$y = x - 2$\nKvantitet I: $y$\nKvantitet II: $\\sqrt{16}$",
+             "alternatives": STD_KVA},
+        19: {"text": "För 6 år sedan var Elsas ålder en tredjedel av vad den är idag.\n"
+                      "Kvantitet I: Elsas ålder om 6 år\nKvantitet II: 18 år", "alternatives": STD_KVA},
+        20: {"text": "$\\frac{x}{y} = -1$\nKvantitet I: $x + y$\nKvantitet II: $0$",
+             "alternatives": STD_KVA},
+        21: {"text": "Produkten av två positiva heltal är 12.\nKvantitet I: Medelvärdet av de "
+                      "två talen\nKvantitet II: 4", "alternatives": STD_KVA},
+        22: {"text": "Triangeln ABC är likbent.\nKvantitet I: Summan av vinkeln A och vinkeln B\n"
+                      "Kvantitet II: $90°$", "alternatives": STD_KVA},
+    },
 }
 
 
