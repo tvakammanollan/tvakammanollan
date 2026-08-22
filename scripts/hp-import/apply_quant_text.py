@@ -355,6 +355,83 @@ PATCH: dict[str, dict[int, dict]] = {
                       "den var en vecka tidigare.\n(2) Under vintern blir isen 1 cm tjockare "
                       "varje vecka.", "alternatives": STD_NOG},
     },
+    # Uteslutna: 1 (triangel), 20 (triangel). 10 hoppas också över — själva
+    # källbilden (10.webp) är avskuren överst och visar bara en del av
+    # täljaren, så uttrycket går inte att läsa av tillförlitligt.
+    "2013vt-4": {
+        2: {"text": "Medelvärdet av tre på varandra följande heltal är 947. Vad är summan av "
+                     "det minsta och det största talet?",
+            "alternatives": ["1 884", "1 886", "1 894", "1 896"]},
+        3: {"text": "På fyra dagar sålde en affär varor för $x$, $y$, $w$ respektive $z$ "
+                     "kronor.\n\nOm $x > y > w > z$, vilket av svarsförslagen kan då vara korrekt?",
+            "alternatives": ["$y = x + z$", "$x = y + w$", "$w = y + z$", "$z = x + y$"]},
+        4: {"text": "Vad är $b$ då $\\frac{x}{y} = \\frac{5a}{3b}$?",
+            "alternatives": ["$\\frac{5ax}{y}$", "$\\frac{5ax}{3y}$", "$\\frac{5ay}{x}$", "$\\frac{5ay}{3x}$"]},
+        5: {"text": "Bestäm koordinaterna för mittpunkten på sträckan som har $(-3,-2)$ och "
+                     "$(7,4)$ som ändpunkter.",
+            "alternatives": ["$(2, 1)$", "$(2, 3)$", "$(5, 1)$", "$(5, 3)$"]},
+        6: {"text": "Vilket av följande tal ligger närmast 1?",
+            "alternatives": ["$\\frac{4}{5}$", "$\\frac{5}{4}$", "$\\frac{7}{9}$", "$\\frac{9}{7}$"]},
+        7: {"text": "Vad är $t$, om $(t-1)^t = 81$?", "alternatives": ["3", "4", "6", "9"]},
+        8: {"text": "Ett tal i följden 55, 150, 435, 1 290, … bildas genom att föregående tal "
+                     "multipliceras med heltalet $x$ och den erhållna produkten subtraheras med "
+                     "heltalet $y$. Vad är summan av $x$ och $y$?", "alternatives": ["12", "15", "18", "21"]},
+        9: {"text": "Vad gäller för $x$ om $x > x^2$?",
+            "alternatives": ["$x < -1$", "$-1 < x < 0$", "$0 < x < 1$", "$x > 1$"]},
+        11: {"text": "$x > 0$\n\nVad är $x$ om $x^2 = 0,5$?",
+             "alternatives": ["0,25", "0,75", "$\\sqrt{2}$", "$\\frac{1}{\\sqrt{2}}$"]},
+        12: {"text": "En mindre kvadrat med sidan $x$ cm är inritad i en större kvadrat. Sidan i "
+                      "den större kvadraten är $y$ cm längre än sidan i den mindre. Hur stor är "
+                      "skillnaden mellan kvadraternas areor?",
+             "alternatives": ["$(2xy + x^2)$ cm$^2$", "$(2xy + y^2)$ cm$^2$",
+                               "$(y^2 - 2xy)$ cm$^2$", "$(y^2 - x^2)$ cm$^2$"]},
+        13: {"text": "$x = -2$\nKvantitet I: $x \\cdot x$\nKvantitet II: $x + x$", "alternatives": STD_KVA},
+        14: {"text": "Anna är idag 4 år äldre än Bea var för 2 år sedan.\nKvantitet I: Annas "
+                      "ålder för 2 år sedan\nKvantitet II: Beas ålder idag", "alternatives": STD_KVA},
+        15: {"text": "$a < b$\nKvantitet I: $a^2 - b^2$\nKvantitet II: $(a+b)(a-b)$",
+             "alternatives": STD_KVA},
+        16: {"text": "I triangeln ABC har sidorna AB och BC båda längden 7 cm. Höjden från "
+                      "basen AC är 4 cm.\nKvantitet I: Längden av sidan AC\nKvantitet II: 12 cm",
+             "alternatives": STD_KVA},
+        17: {"text": "$\\frac{1}{y} < 0$\nKvantitet I: $0$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        18: {"text": "Funktionen $f$ ges av $f(x) = 3x + 1$\nKvantitet I: $f(a) - f(a+1)$\n"
+                      "Kvantitet II: $3$", "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: Medelvärdet av $(3x + 4y + z + 38)$ och $(x + y + z + 94)$\n"
+                      "Kvantitet II: Medelvärdet av $(4x + 2z + 94)$ och $(5y + 51)$",
+             "alternatives": STD_KVA},
+        21: {"text": "$a > 0$, $b > 0$ och $c < 0$\n$a = b + c$\nKvantitet I: $a$\n"
+                      "Kvantitet II: $b$", "alternatives": STD_KVA},
+        22: {"text": "$n \\geq 0$\n$m \\geq 0$\n$n$ och $m$ är heltal.\nKvantitet I: $(n+1)^m$\n"
+                      "Kvantitet II: $m^{(n+1)}$", "alternatives": STD_KVA},
+        23: {"text": "Vattendjupet i en brunn är 480 cm. Hur djup är hela brunnen?\n\n"
+                      "(1) En niondel av brunnens hela djup är ovanför vattenytan.\n"
+                      "(2) Förhållandet mellan vattendjupet och den del av brunnen som är "
+                      "ovanför vattenytan är 8:1.", "alternatives": STD_NOG},
+        24: {"text": "En skola köper in en kartong äpplen och en kartong päron, sammanlagt "
+                      "tvåhundra frukter, som skolbarnen ska äta till mellanmål. Tyvärr visar "
+                      "det sig att en del av frukterna är ruttna. Hur många frukter är ruttna?"
+                      "\n\n(1) 1/6 av päronen och 1/8 av äpplena är ruttna.\n(2) Femton procent "
+                      "av frukterna är ruttna.", "alternatives": STD_NOG},
+        25: {"text": "Arne, Karin, Muhammed och Elisabeth spelar kort. De sitter vid varsin sida "
+                      "av ett kvadratiskt bord. Vem av dem vinner?\n\n(1) Karin sitter till "
+                      "höger om vinnaren och mittemot Elisabeth. Muhammed sitter mellan Karin "
+                      "och Elisabeth.\n(2) Arne sitter mittemot Muhammed. Vinnaren sitter till "
+                      "höger om Elisabeth.", "alternatives": STD_NOG},
+        26: {"text": "Från hemmet till skolan kan Olov ta antingen gångvägen eller en hälften så "
+                      "lång genväg. Hur lång är genvägen?\n\n(1) Genvägen är 410 meter kortare "
+                      "än gångvägen.\n(2) Om Olov tar genvägen till skolan och gångvägen hem "
+                      "från skolan har han gått sammanlagt 1 230 meter.", "alternatives": STD_NOG},
+        27: {"text": "Några vänner ska köpa en present tillsammans. Hur mycket kostar "
+                      "presenten?\n\n(1) Om var och en bidrar med 140 kr så fattas det 40 kr.\n"
+                      "(2) Om var och en bidrar med 160 kr så blir det 60 kr över.",
+             "alternatives": STD_NOG},
+        28: {"text": "Leila odlar enbart morötter, rädisor och palsternackor i sitt "
+                      "trädgårdsland. Hur många rädisor har Leila i sitt trädgårdsland?\n\n"
+                      "(1) Antalet rädisor är lika med summan av antalet morötter och "
+                      "palsternackor.\n(2) Det finns dubbelt så många palsternackor som "
+                      "morötter i trädgårdslandet. Om man avlägsnar 100 rädisor så finns det "
+                      "lika många rädisor som morötter i trädgårdslandet.", "alternatives": STD_NOG},
+    },
 }
 
 
