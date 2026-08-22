@@ -1181,6 +1181,227 @@ PATCH: dict[str, dict[int, dict]] = {
                       "Kvantitet II: $25$", "alternatives": STD_KVA},
         24: {"text": "Är $x < 0$?\n\n(1) $4x = -8$\n(2) $x^5 < 0$", "alternatives": STD_NOG},
     },
+    # Uteslutna: 5 (fyrhörning med sned sida), 13 (rektangel+triangel),
+    # 14 (två räta linjer i koordinatsystem), 18 (kvadrat ABCD).
+    "2022vta-3": {
+        1: {"text": "Vad är $4(6(7-2)+5)$?", "alternatives": ["125", "140", "165", "171"]},
+        2: {"text": "$f(x) = \\frac{2x+7}{3x+c}$\n\nVilket värde har konstanten $c$ om "
+                     "$f(2) = 1$?", "alternatives": ["$\\frac{3}{2}$", "5", "6", "21"]},
+        3: {"text": "Vilket svarsalternativ är lika med $\\frac{1}{4} + \\frac{2}{16} + "
+                     "\\frac{3}{32}$?",
+            "alternatives": ["$\\frac{6}{32}$", "$\\frac{11}{32}$", "$\\frac{15}{32}$",
+                              "$\\frac{6}{52}$"]},
+        4: {"text": "Vilket av svarsalternativen motsvarar $(3x-3y)(y-x)$?",
+            "alternatives": ["$2x-2y$", "$2x-3y^2$", "$3(x^2-y^2)$", "$6xy-3x^2-3y^2$"]},
+        6: {"text": "Talet $2^{25}$ är jämnt delbart med ett av svarsalternativen. Vilket?",
+            "alternatives": ["16", "24", "25", "50"]},
+        7: {"text": "Grafen till funktionen $f$ är en rät linje. Dessutom gäller att "
+                     "$f(2)=4$ och $f(3)=1$. Vilket svarsalternativ anger $f(x)$?",
+            "alternatives": ["$f(x)=3x+7$", "$f(x)=3x+10$", "$f(x)=-3x+7$", "$f(x)=-3x+10$"]},
+        8: {"text": "$\\frac{x}{3}+\\frac{x}{4}=x-2$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{14}{5}$", "$\\frac{24}{10}$", "$\\frac{19}{4}$",
+                              "$\\frac{24}{5}$"]},
+        9: {"text": "Stina har två olika rabattkuponger som gäller i en viss butik. Den "
+                     "första kupongen ger 10 % rabatt. Den andra kupongen ger 8 % rabatt "
+                     "och sedan ett ytterligare avdrag på 40 kr. Vid vilket ordinarie pris "
+                     "ger de två olika kupongerna samma rabatterade pris?",
+            "alternatives": ["400 kr", "500 kr", "2 000 kr", "4 000 kr"]},
+        10: {"text": "$10^{2x}=36$\n\nVad är $10^{-2x}$?",
+             "alternatives": ["$-\\frac{1}{36}$", "$\\frac{1}{36}$", "$\\frac{1}{6}$",
+                               "$\\frac{100}{36}$"]},
+        11: {"text": "I en låda finns det endast enfärgade röda och svarta kulor. Kalle "
+                      "plockar slumpmässigt kulor ur lådan, en i taget, och lägger tillbaka "
+                      "dem efter varje plockad kula. Sannolikheten att få två svarta kulor "
+                      "efter varandra är då 16/49. Vad är sannolikheten att Kalle plockar "
+                      "en röd kula?", "alternatives": ["3/7", "25/49", "5/7", "40/49"]},
+        12: {"text": "En cirkelskiva med radien 24 cm delas först i fyra lika stora bitar. "
+                      "Varje bit delas därefter i tre lika stora bitar, vilka i sin tur "
+                      "slutligen delas i två lika stora bitar. Vad är arean av en av "
+                      "bitarna efter den sista delningen?",
+             "alternatives": ["$12\\pi$ cm²", "$24\\pi$ cm²", "$48\\pi$ cm²", "$64\\pi$ cm²"]},
+        15: {"text": "Kvantitet I: $\\frac{24}{6}$\nKvantitet II: $\\frac{3}{12} \\cdot 16$",
+             "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: Medelvärdet av mätserien 1, 1, 5, 5\nKvantitet II: "
+                      "Hälften av medelvärdet av mätserien 2, 4, 8, 10",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $\\left(\\frac{2}{\\sqrt{3}}\\right)^2$\nKvantitet II: "
+                      "$\\sqrt{\\frac{16}{\\pi^2}}$", "alternatives": STD_KVA},
+        19: {"text": "Anna, Beda och Clara har tillsammans 66 karameller. Beda har 19 "
+                      "karameller och Clara har mer än en tredjedel av karamellerna.\n"
+                      "Kvantitet I: Antalet karameller som Anna har\nKvantitet II: 24",
+             "alternatives": STD_KVA},
+        20: {"text": "$x \\neq 0$\nKvantitet I: $\\frac{x^2}{2x} - \\frac{2x}{4}$\n"
+                      "Kvantitet II: $\\frac{2x}{x} - \\frac{x}{2x}$",
+             "alternatives": STD_KVA},
+        21: {"text": "$x \\geq 0$\nKvantitet I: $\\sqrt{x}$\nKvantitet II: $\\frac{x}{2}$",
+             "alternatives": STD_KVA},
+        22: {"text": "Peter reser i 2 timmar med hastigheten 5 m/s. Mattias reser i 3 "
+                      "timmar med hastigheten 12 km/h.\nKvantitet I: Sträckan som Peter "
+                      "reser\nKvantitet II: Sträckan som Mattias reser",
+             "alternatives": STD_KVA},
+    },
+    # Uteslutna: 2 (triangel med vinklar), 22 (rektangel R).
+    "2022vta-5": {
+        1: {"text": "$x - 7 = 3(x+1)$\n\nVilket värde har $x$?",
+            "alternatives": ["–5", "–4", "2", "$\\frac{5}{2}$"]},
+        3: {"text": "Vad är medelvärdet av $8^2$ och $4^2$?",
+            "alternatives": ["$2 \\cdot 4^2$", "$6^2$", "$2^3 \\cdot 5$", "$2^2 \\cdot 12$"]},
+        4: {"text": "$f(x) = 3x - 1$\n$g(x) = -2f(x) + 4$\n\nVilket svarsalternativ är "
+                     "lika med $g(1)$?", "alternatives": ["0", "2", "4", "6"]},
+        5: {"text": "Vad är $\\frac{\\frac{2}{5} - \\frac{1}{4}}{\\frac{1}{3} + \\frac{1}{6}}$?",
+            "alternatives": ["$\\frac{2}{9}$", "$\\frac{3}{10}$", "$\\frac{9}{2}$",
+                              "$\\frac{10}{3}$"]},
+        6: {"text": "Vilket svarsalternativ är lika med ett heltal?",
+            "alternatives": ["$51\\sqrt{51}$", "$\\sqrt{51}(\\sqrt{51}+51)$",
+                              "$\\sqrt{51}+\\sqrt{51}$", "$(\\sqrt{51}+\\sqrt{51})^2$"]},
+        7: {"text": "$f(x) = a \\cdot 3^x$\nOm $a$ väljs så att $f(1) = 3$, vilket värde "
+                     "har då $f(0)$?", "alternatives": ["0", "$\\frac{1}{3}$", "1", "3"]},
+        8: {"text": "$xyz \\neq 0$\n\nVilket svarsalternativ motsvarar "
+                     "$\\frac{x^4y^2z^3}{(x^2yz^2)^2}$?",
+            "alternatives": ["$\\frac{1}{yz}$", "1", "$\\frac{1}{y}$", "$\\frac{1}{z}$"]},
+        9: {"text": "60 % av $x$ är lika med 40 % av $y$. Hur många procent av $x$ är $y$?",
+            "alternatives": ["20 %", "66 %", "100 %", "150 %"]},
+        10: {"text": "Arean av en kvadrat är $100$ cm². Vilket svarsalternativ är "
+                      "närmast längden av kvadratens diagonal?",
+             "alternatives": ["10 cm", "12 cm", "14 cm", "16 cm"]},
+        11: {"text": "$z = x + y = 5$\n\nVad är $\\sqrt{xz+yz}$?",
+             "alternatives": ["$\\sqrt{5}$", "5", "$5\\sqrt{5}$", "25"]},
+        12: {"text": "Summan av de 30 första udda positiva heltalen är $u$. Summan av de "
+                      "30 första jämna positiva heltalen är $j$. Vad är $u - j$?",
+             "alternatives": ["–30", "–1", "0", "30"]},
+        13: {"text": "Kvantitet I: $\\frac{707}{70}$\nKvantitet II: $\\frac{808}{80}$",
+             "alternatives": STD_KVA},
+        14: {"text": "De fyra punkterna A, B, C och D är placerade i samma "
+                      "koordinatsystem.\n$A = (0,0)$\n$B = (4,3)$\n$C = (8,0)$\n"
+                      "$D = (8,1)$\n\nKvantitet I: Den sammanlagda längden av sträckorna "
+                      "AB och BC\nKvantitet II: Längden av sträckan AD",
+             "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Volymen av en cylinder med höjden 5 cm och radien 2 cm\n"
+                      "Kvantitet II: Volymen av en cylinder med höjden 2 cm och radien 5 cm",
+             "alternatives": STD_KVA},
+        16: {"text": "$\\frac{x}{3} - \\frac{1}{5} = \\frac{1}{3} + \\frac{1}{5}$\n\n"
+                      "Kvantitet I: $x$\nKvantitet II: 2", "alternatives": STD_KVA},
+        17: {"text": "$3 < p < 5$\nKvantitet I: $p^3$\nKvantitet II: $42p$",
+             "alternatives": STD_KVA},
+        18: {"text": "En påse innehåller endast 9 enfärgade kulor: 5 röda och 4 blå. "
+                      "Albin plockar slumpmässigt två kulor ur påsen. Han plockar dem en "
+                      "och en utan att lägga tillbaka dem.\nKvantitet I: Sannolikheten att "
+                      "Albin först plockar en röd kula och sedan en blå kula\nKvantitet II: "
+                      "Sannolikheten att Albin först plockar en röd kula och sedan "
+                      "ytterligare en röd kula", "alternatives": STD_KVA},
+        19: {"text": "$36^{\\frac{1}{3}} = 6^{2x}$\n\nKvantitet I: $x$\nKvantitet II: "
+                      "$\\frac{2}{5}$", "alternatives": STD_KVA},
+        20: {"text": "Summan av fem på varandra följande heltal är 15.\nKvantitet I: "
+                      "Skillnaden mellan det största och det minsta talet\nKvantitet II: 5",
+             "alternatives": STD_KVA},
+        21: {"text": "$n$ är ett heltal sådant att $-10 \\leq n \\leq 10$.\nKvantitet I: "
+                      "$10^n$\nKvantitet II: $n^{10}$", "alternatives": STD_KVA},
+    },
+    # Uteslutna: 2 (linje inritad i koordinatsystem), 4 (cirkel+triangel),
+    # 14 (fyra korsande linjer med vinklar), 18 (sexhörning ABCDEF).
+    "2022vtb-1": {
+        1: {"text": "$5(3-x) = (4+x) \\cdot 2$\n\nVilket värde har $x$?",
+            "alternatives": ["0", "1", "$\\frac{7}{2}$", "$\\frac{11}{3}$"]},
+        3: {"text": "Vad är $\\frac{4}{9} \\cdot \\frac{1}{3} - \\frac{1}{3} + \\frac{4}{9}$?",
+            "alternatives": ["$\\frac{4}{9}$", "$\\frac{7}{27}$", "$\\frac{7}{33}$",
+                              "$\\frac{16}{81}$"]},
+        5: {"text": "I vilket av följande intervall ligger $x$ om $x = \\sqrt{\\sqrt{4}}$?",
+            "alternatives": ["$1{,}2 < x \\leq 1{,}6$", "$1{,}6 < x \\leq 2{,}0$",
+                              "$2{,}0 < x \\leq 4{,}0$", "$4{,}0 < x \\leq 6{,}0$"]},
+        6: {"text": "Vad är medelvärdet av $\\frac{1}{3}$ och $\\frac{1}{5}$?",
+            "alternatives": ["$\\frac{1}{8}$", "$\\frac{10}{75}$", "$\\frac{1}{4}$",
+                              "$\\frac{4}{15}$"]},
+        7: {"text": "En kvadrat har lika stor area som en rektangel med basen $x$ cm och "
+                     "höjden $3x/4$ cm. Vilket svarsalternativ motsvarar kvadratens "
+                     "sidlängd?",
+            "alternatives": ["$\\sqrt{\\frac{3}{2}}x$ cm", "$\\frac{3x}{2}$ cm",
+                              "$\\frac{\\sqrt{3}x}{2}$ cm", "$\\frac{9x}{16}$ cm"]},
+        8: {"text": "$xy^2 = 18$\n$xy = 3$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{1}{2}$", "$\\frac{3}{2}$", "2", "$\\sqrt{6}$"]},
+        9: {"text": "Vilket svarsalternativ är lika med $5 \\cdot 5^0 \\cdot 5^{-2} + 5$?",
+            "alternatives": ["5", "5,2", "6", "10"]},
+        10: {"text": "$x \\neq 0$\n\nVilket svarsalternativ motsvarar uttrycket "
+                      "$\\frac{\\frac{x-3}{x}}{\\frac{1}{x}} + 3$?",
+             "alternatives": ["0", "1", "$x$", "$\\frac{x}{x^2}$"]},
+        11: {"text": "Ekvationen för linjen L kan skrivas $y = \\frac{2}{3}x + \\frac{4}{3}$. "
+                      "Linjen L går genom punkten (1, 2). Vilket svarsalternativ anger en "
+                      "punkt på L?",
+             "alternatives": ["(–2, 0)", "(0, 1)", "(2, 3)", "(3, 3)"]},
+        12: {"text": "Det tar 11 sekunder för Oscar att springa $y$ meter. Hur många "
+                      "sekunder tar det för honom att springa $x$ meter med samma "
+                      "medelhastighet?",
+             "alternatives": ["$\\frac{x}{11y}$", "$\\frac{y}{11x}$", "$\\frac{11x}{y}$",
+                               "$\\frac{11y}{x}$"]},
+        13: {"text": "Kvantitet I: 4 % av 200\nKvantitet II: En fjärdedel av 20",
+             "alternatives": STD_KVA},
+        15: {"text": "$f(x) = 10 - 3x$\nKvantitet I: $f(2) - f(5)$\nKvantitet II: "
+                      "$f(0) - f(4)$", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $\\frac{1}{5} + \\frac{1}{10} + \\frac{1}{15}$\n"
+                      "Kvantitet II: $\\frac{1}{3}$", "alternatives": STD_KVA},
+        17: {"text": "$\\frac{x}{16} = \\frac{3}{12x}$\n\nKvantitet I: $x$\nKvantitet II: 4",
+             "alternatives": STD_KVA},
+        19: {"text": "$x < 0$\n$y < 1$\nKvantitet I: $x^2$\nKvantitet II: $x^2y$",
+             "alternatives": STD_KVA},
+        20: {"text": "En burk innehåller endast enfärgade röda och svarta kulor. Antalet "
+                      "svarta kulor är fem gånger så stort som antalet röda kulor.\n"
+                      "Kvantitet I: Sannolikheten att en slumpmässigt vald kula ur burken "
+                      "är röd\nKvantitet II: 1/5", "alternatives": STD_KVA},
+        21: {"text": "$x$ och $y$ är heltal sådana att\n$16 < x < 25$\n$16 < y < 25$\n"
+                      "$x$ är inte jämnt delbart med vare sig 3 eller 5.\n$y$ är jämnt "
+                      "delbart med 2.\nKvantitet I: Antalet olika tal som $x$ kan vara\n"
+                      "Kvantitet II: Antalet olika tal som $y$ kan vara",
+             "alternatives": STD_KVA},
+        22: {"text": "$\\sqrt{5} \\cdot \\sqrt{9} = 45^x$\n\nKvantitet I: $x$\nKvantitet II: 0,5",
+             "alternatives": STD_KVA},
+    },
+    # Uteslutna: 4 (fyra grafer SOM svarsalternativ), 6 (triangel med vinklar),
+    # 11 (kvadrater+kvartscirklar), 21 (två räta linjer i koordinatsystem).
+    "2022vtb-4": {
+        1: {"text": "Vad är $(1{,}7 \\cdot 10^5) \\cdot (3{,}3 \\cdot 10^3)$?",
+            "alternatives": ["$3{,}21 \\cdot 10^8$", "$5{,}61 \\cdot 10^8$",
+                              "$3{,}21 \\cdot 10^{15}$", "$5{,}61 \\cdot 10^{15}$"]},
+        2: {"text": "Medelvärdet av $x$ och $y$ är 3. Medelvärdet av $y$ och 1 är 5. "
+                     "Vilket värde har $x$?", "alternatives": ["–5", "–3", "0", "15"]},
+        3: {"text": "$x > 1$\n\nVilket svarsalternativ motsvarar $(x^7)^{y+2}$?",
+            "alternatives": ["$x^{y+9}$", "$x^{7y+2}$", "$x^{7y+14}$", "$x^{y+49}$"]},
+        5: {"text": "$a \\neq 0$, $b \\neq 0$, $x \\neq 0$, $y \\neq 0$\n\nVilket "
+                     "svarsalternativ är med säkerhet lika med $b$ om $\\frac{6x}{y} = "
+                     "\\frac{3a}{2b}$?",
+            "alternatives": ["$\\frac{y}{2}$", "$\\frac{ay}{4x}$", "$\\frac{4ay}{x}$",
+                              "$\\frac{9ay}{x}$"]},
+        7: {"text": "$x \\neq 0$\n$y \\neq 0$\n$\\frac{x^2}{y} + 2 = 2 - (-x)$\n\nVilket "
+                     "svarsalternativ är med säkerhet korrekt?",
+            "alternatives": ["$x+y=2$", "$x<y$", "$x=y$", "$x>y$"]},
+        8: {"text": "Kalle är pappa till tre pojkar och en flicka. Idag är pojkarnas "
+                     "sammanlagda ålder lika med flickans ålder. Vad är differensen "
+                     "mellan pojkarnas sammanlagda ålder och flickans ålder om tre år?",
+            "alternatives": ["0 år", "3 år", "6 år", "9 år"]},
+        9: {"text": "Hur många procent är 14,4 av 36?", "alternatives": ["35", "40", "45", "50"]},
+        10: {"text": "Punkten $(a, a)$ ligger på linjen $y = \\frac{1}{2}x + 2$. Vilket "
+                      "värde har $a$?", "alternatives": ["0", "$\\frac{1}{2}$", "2", "4"]},
+        12: {"text": "$xy = 1$\n\nVilket värde har uttrycket $(x+y)^2 - (x-y)^2$?",
+             "alternatives": ["0", "1", "2", "4"]},
+        13: {"text": "Kvantitet I: 80 000 cm\nKvantitet II: 8 km", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $\\frac{1}{5} - \\frac{5}{20}$\nKvantitet II: 0",
+             "alternatives": STD_KVA},
+        15: {"text": "En mätserie består av de fem positiva heltalen 4, 2, $a$, 7 och 3.\n"
+                      "Kvantitet I: Mätseriens median\nKvantitet II: 3", "alternatives": STD_KVA},
+        16: {"text": "$-7(3-2x) = 21$\n\nKvantitet I: $x$\nKvantitet II: 3",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: Längden av den tredje sidan i en triangel där summan "
+                      "av de två andra sidorna är 17 cm\nKvantitet II: 15 cm",
+             "alternatives": STD_KVA},
+        18: {"text": "$x + \\frac{1}{2} = y + \\frac{3}{5}$\n\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+        19: {"text": "$x < y$\nKvantitet I: $x + y$\nKvantitet II: $x - y$",
+             "alternatives": STD_KVA},
+        20: {"text": "Fyra cirklar har radierna 5 cm, 10 cm, 15 cm respektive 20 cm.\n"
+                      "Kvantitet I: Den sammanlagda arean av den största och den minsta "
+                      "cirkeln\nKvantitet II: Den sammanlagda arean av de två "
+                      "mellanstora cirklarna", "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: Summan av primtalsfaktorerna i heltalet 21\nKvantitet "
+                      "II: Summan av primtalsfaktorerna i heltalet 30", "alternatives": STD_KVA},
+    },
 }
 
 
