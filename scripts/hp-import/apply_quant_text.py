@@ -918,6 +918,59 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "Triangeln ABC är likbent.\nKvantitet I: Summan av vinkeln A och vinkeln B\n"
                       "Kvantitet II: $90°$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 2 (parallella linjer), 8 (rätvinkliga trianglar), 16
+    # (vinklar x/y i figur). Fråga 11:s tomma koordinatsystem är bara ett
+    # räknehjälpmedel.
+    "2023ht-4": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $\\frac{2(x+4)}{2} + 8$?",
+            "alternatives": ["$x + 10$", "$x + 12$", "$x + 16$", "$2x + 10$"]},
+        3: {"text": "$3(x-4) = 2(x+2)$\n\nVad är $x$?", "alternatives": ["–8", "–2", "6", "16"]},
+        4: {"text": "Medelvärdet av fyra på varandra följande heltal är 4,5. Vad är medianen?",
+            "alternatives": ["4", "4,5", "5", "5,5"]},
+        5: {"text": "Linjerna $y = kx + 3$ och $y = 2x - 1$ skär varandra när $x = 1$. Vilket "
+                     "värde har $k$?", "alternatives": ["–2", "–1", "1", "2"]},
+        6: {"text": "En bil körde 1 000 meter på 50 sekunder. Vilken medelhastighet hade bilen?",
+            "alternatives": ["70 km/h", "72 km/h", "74 km/h", "76 km/h"]},
+        7: {"text": "Vilket svarsalternativ är lika med $\\frac{1}{\\frac{2}{5} - \\frac{5}{6}}$?",
+            "alternatives": ["$-\\frac{30}{13}$", "$-\\frac{11}{3}$", "$\\frac{1}{3}$", "$\\frac{13}{10}$"]},
+        9: {"text": "$x - y = 0$\n\nVilket svarsalternativ är med säkerhet lika med $xy$?",
+            "alternatives": ["0", "1", "$x$", "$y^2$"]},
+        10: {"text": "$n$ är ett heltal sådant att $x^n < 0$ då $x$ är ett negativt tal. "
+                      "Vilket svarsalternativ är med säkerhet korrekt?",
+             "alternatives": ["$n$ är ett negativt tal.", "$n$ är ett positivt tal.",
+                               "$n$ är ett udda tal.", "$n$ är ett jämnt tal."]},
+        11: {"text": "En myra förflyttar sig i ett koordinatsystem. Myran startar i origo. Den "
+                      "rör sig först 5 längdenheter i $x$-axelns positiva riktning och därefter "
+                      "6 längdenheter i $y$-axelns positiva riktning. Slutligen rör sig myran "
+                      "3 längdenheter i $x$-axelns positiva riktning. Hur långt från origo "
+                      "ligger myrans slutpunkt?",
+             "alternatives": ["8 längdenheter", "10 längdenheter", "12 längdenheter", "14 längdenheter"]},
+        12: {"text": "Vilket svarsalternativ är lika med $\\sqrt{12} + \\sqrt{48}$?",
+             "alternatives": ["10", "11", "$6\\sqrt{3}$", "$\\sqrt{60}$"]},
+        13: {"text": "$x > 0$\nKvantitet I: $\\sqrt{x} \\cdot \\sqrt{x}$\nKvantitet II: $x$",
+             "alternatives": STD_KVA},
+        14: {"text": "Två vanliga sexsidiga tärningar kastas slumpmässigt en gång.\nKvantitet "
+                      "I: Sannolikheten att få en fyra och en femma\nKvantitet II: "
+                      "Sannolikheten att få summan 3", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{5}{13} - \\frac{4}{15}$\nKvantitet II: "
+                      "$\\frac{4}{15} - \\frac{5}{13}$", "alternatives": STD_KVA},
+        17: {"text": "$x > 0$\n$y > 0$\n$z > 0$\n$x^2 + y^2 = z^2$\nKvantitet I: $y$\n"
+                      "Kvantitet II: $z$", "alternatives": STD_KVA},
+        18: {"text": "Det ordinarie priset på en vara är 20 % lägre i butik A än i butik B.\n"
+                      "Kvantitet I: Priset på varan i butik A om de sänker priset med 5 %\n"
+                      "Kvantitet II: Priset på varan i butik B om de sänker priset med 25 %",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: Arean av en cirkel med radien 5 cm\nKvantitet II: 75 cm$^2$",
+             "alternatives": STD_KVA},
+        20: {"text": "$z > 1$\n$xy = z$\nKvantitet I: $x$\nKvantitet II: $\\frac{z}{y}$",
+             "alternatives": STD_KVA},
+        21: {"text": "Linjen $L_1$ går genom punkterna $(2, 1)$ och $(-3, 7)$. Linjen $L_2$ är "
+                      "vinkelrät mot $L_1$.\nKvantitet I: Riktningskoefficienten för linjen "
+                      "$L_1$\nKvantitet II: Riktningskoefficienten för linjen $L_2$",
+             "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: $2 \\cdot 10^x$\nKvantitet II: $(2 \\cdot 10)^x$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
