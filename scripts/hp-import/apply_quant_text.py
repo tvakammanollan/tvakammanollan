@@ -771,6 +771,52 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "Medelvärdet av $x$ och $y$ är lika med 1. Medelvärdet av $x$ och 4 är "
                       "lika med $y$.\nKvantitet I: $x$\nKvantitet II: $0$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 1 (triangel+kvadrat), 3 (fyra grafer SOM svarsalternativ),
+    # 6 (triangel med vinklar), 7 (koordinatsystem med punkter P/Q/R/S),
+    # 17 (regelbunden femhörning).
+    "2024vt-2": {
+        2: {"text": "$x$ och $y$ uppfyller sambandet $2x + 3xy - 4y = 10$. Vilket värde har "
+                     "$x$ om $y = -2$?", "alternatives": ["–18", "$-\\frac{9}{2}$", "–2", "$-\\frac{1}{2}$"]},
+        4: {"text": "60 % av $x$ är 39. Vad är $x$?", "alternatives": ["60", "65", "72", "78"]},
+        5: {"text": "Vilket svarsalternativ motsvarar $a(b+c) - b(a+c) + c(b-a)$?",
+            "alternatives": ["0", "$ab - bc - ac$", "$2(ab+ac+bc)$", "$2c + bc - a$"]},
+        8: {"text": "En stängd låda med innermåtten 50 cm × 54 cm × 72 cm innehåller klossar "
+                     "med måtten 5 cm × 6 cm × 9 cm. Hur många klossar kan det som mest finnas "
+                     "i lådan?", "alternatives": ["270", "500", "650", "720"]},
+        9: {"text": "$xy \\neq 0$\n\nVilket svarsalternativ motsvarar "
+                     "$\\frac{2xy(3xy+15y)}{6xy^2}$?", "alternatives": ["$x+5$", "$3x+15$", "$x+15y$", "$\\frac{2x^2y+5}{2xy}$"]},
+        10: {"text": "För heltalen $x$, $y$ och $z$ gäller att $xyz = 12$ och att $0 < x < y < z$. "
+                      "Vilket är det största möjliga värdet på $z - x$?", "alternatives": ["1", "3", "5", "6"]},
+        11: {"text": "Laila har sex enfärgade kulor och tre lådor: A, B och C. I låda A finns "
+                      "det två röda och en vit kula. I låda B finns det en röd och två vita "
+                      "kulor. Låda C är tom. Laila plockar slumpmässigt en kula ur låda A och "
+                      "en kula ur låda B och lägger dem i låda C. Hur stor är sannolikheten "
+                      "att alla tre lådorna innehåller en röd och en vit kula?",
+             "alternatives": ["$\\frac{1}{3}$", "$\\frac{2}{3}$", "$\\frac{1}{9}$", "$\\frac{4}{9}$"]},
+        12: {"text": "Vilket svarsalternativ är lika med $2(2^5 + 2^5)$?",
+             "alternatives": ["$2^6$", "$2^7$", "$2^{11}$", "$2^{12}$"]},
+        13: {"text": "$x - 5 = y + 5$\n$y = 0$\nKvantitet I: $x$\nKvantitet II: $0$",
+             "alternatives": STD_KVA},
+        14: {"text": "J är det nionde jämna talet efter 15 och U är det sjunde udda talet "
+                      "efter 18.\nKvantitet I: $J - U$\nKvantitet II: $0$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Medelvärdet av $\\frac{1}{10}$ och $\\frac{1}{5}$\n"
+                      "Kvantitet II: $\\frac{1}{7}$", "alternatives": STD_KVA},
+        16: {"text": "$a \\leq -1$\n$b < 0$\nKvantitet I: $\\frac{a}{b}$\nKvantitet II: $1$",
+             "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: 50 procent av ett tal större än 1000\nKvantitet II: 75 "
+                      "procent av ett tal mindre än 800", "alternatives": STD_KVA},
+        19: {"text": "$\\frac{3}{2} + \\frac{x}{3} = 1$\nKvantitet I: $x$\nKvantitet II: "
+                      "$-\\frac{1}{6}$", "alternatives": STD_KVA},
+        20: {"text": "Linjen $L_1$ går genom punkterna $(-1, 3)$ och $(1, 2)$. Linjen $L_2$ är "
+                      "vinkelrät mot $L_1$ och går genom origo.\nKvantitet I: "
+                      "Riktningskoefficienten för $L_1$\nKvantitet II: Riktningskoefficienten "
+                      "för $L_2$", "alternatives": STD_KVA},
+        21: {"text": "Den rätvinkliga triangeln T har sidlängderna 3 cm, 4 cm och 5 cm. T har "
+                      "samma omkrets som kvadraten K.\nKvantitet I: Arean av T\nKvantitet II: "
+                      "Arean av K", "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: $(x^4+1)(x^3-x)$\nKvantitet II: $(x^5+x)(x^2-1)$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
