@@ -632,7 +632,14 @@ export default {
     if (mergedPath || canonicalHost) {
       return new Response(null, {
         status: 301,
-        headers: { location: canonicalHost + (mergedPath ?? url.pathname) + url.search },
+        headers: {
+          location: canonicalHost + (mergedPath ?? url.pathname) + url.search,
+          // withSecurityHeaders() gäller bara text/html, och den här 301:an
+          // har ingen body alls — den träffas aldrig av den. Utan HSTS här
+          // saknar just www.tvakommanollan.se (första hoppet i domänflytten)
+          // huvudet en webbläsare bygger sin HTTPS-pinning på.
+          "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        },
       });
     }
 

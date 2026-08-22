@@ -145,7 +145,7 @@ function VillkorPage() {
             inom fristen, så betalar vi tillbaka hela beloppet inom 14 dagar från att meddelandet
             kom fram, med samma betalsätt som du använde. Du kan också använda{" "}
             <a
-              href="https://www.konsumentverket.se/for-foretag/konsumentratt-for-foretagare/blanketter-och-mallar/"
+              href="https://publikationer.konsumentverket.se/mallar-och-blanketter/angerblankett"
               className="underline"
               style={{ color: "var(--amber)" }}
               target="_blank"
