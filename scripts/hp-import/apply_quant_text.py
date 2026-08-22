@@ -1028,6 +1028,59 @@ PATCH: dict[str, dict[int, dict]] = {
                       "Längden av sidan AC\nKvantitet II: Längden av sidan AB", "alternatives": STD_KVA},
         22: {"text": "$0 < a < 1$\nKvantitet I: $a^{-1}$\nKvantitet II: $1$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 4 (regelbunden femhörning), 7 (rätvinklig triangel), 22
+    # (två rätvinkliga trianglar). Fråga 2:s tabell är ren text.
+    "2023vt-4": {
+        1: {"text": "$5(x-4) = 2(8+x)$\n\nVad är $x$?", "alternatives": ["$\\frac{4}{3}$", "5", "$\\frac{36}{7}$", "12"]},
+        2: {"text": "Sixten har en påse med enfärgade kulor i fem olika färger: blå, grön, "
+                     "röd, svart och vit. Antalet kulor av varje färg visas i tabellen:\n\n"
+                     "blå: 50\ngrön: 63\nröd: 36\nsvart: 56\nvit: 45\n\nEn av färgerna "
+                     "förekommer på exakt 18 % av kulorna, vilken?",
+            "alternatives": ["grön", "röd", "svart", "vit"]},
+        3: {"text": "Vilket svarsalternativ motsvarar uttrycket $x^2 - 6x + 5$?",
+            "alternatives": ["$(x-2)(x-3)$", "$(x-1)(x-5)$", "$(x+3)(x-2)$", "$(x+5)(x-1)$"]},
+        5: {"text": "Vad är $\\left(\\frac{1}{2}+\\frac{2}{5}\\right)\\left(\\frac{1}{2}-\\frac{2}{5}\\right)$?",
+            "alternatives": ["$\\frac{1}{7}$", "$\\frac{1}{10}$", "$\\frac{3}{100}$", "$\\frac{9}{100}$"]},
+        6: {"text": "$xy + k = k$\n$y \\neq 0$\n\nVilket svarsalternativ är med säkerhet korrekt?",
+            "alternatives": ["$x > y$", "$x = 0$", "$x - y = 0$", "$xy = -1$"]},
+        8: {"text": "Vilket svarsalternativ är en ekvation för en linje som går genom "
+                     "punkten $(5, 13)$?",
+            "alternatives": ["$y = -5x + 12$", "$y = -3x + 25$", "$y = 3x - 2$", "$y = 5x - 13$"]},
+        9: {"text": "För de tre positiva heltalen $x$, $y$ och $z$ gäller att $x < y < z$. "
+                     "Medelvärdet av talen är 7 och medianen är 9. Vilket är det största "
+                     "möjliga värdet på $x$?", "alternatives": ["1", "2", "3", "4"]},
+        10: {"text": "Eva har en tunna som är fylld till en femtedel med vatten. Eva vattnar "
+                      "sin trädgård och fyller sin vattenkanna från tunnan. Vattenkannan "
+                      "rymmer 5 liter och då Eva vattnar använder hon tre fulla kannor. När "
+                      "Eva har vattnat klart är tunnan fylld till en åttondel. Vilken volym "
+                      "har tunnan?", "alternatives": ["45 liter", "120 liter", "200 liter", "225 liter"]},
+        11: {"text": "$f(x) = \\frac{x}{5} - 1$\n$g(x) = 5 \\cdot f(x) + 4$\n\nVad är $g(2)$?",
+             "alternatives": ["1", "3", "5", "14"]},
+        12: {"text": "Vilket svarsalternativ är lika med $2^2(5+7)^2$?",
+             "alternatives": ["$24^2$", "$10^2 + 14^2$", "$24^4$", "$10^4 + 14^4$"]},
+        13: {"text": "$f(x) = 83 - 9x$\nKvantitet I: Värdet av $x$ då $f(x)$ är lika med noll\n"
+                      "Kvantitet II: $9{,}5$", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $\\frac{1}{2} \\cdot \\frac{3}{4}$\nKvantitet II: "
+                      "$\\frac{\\frac{1}{2}}{\\frac{3}{4}}$", "alternatives": STD_KVA},
+        15: {"text": "Hampus har sju mynt. Vart och ett av mynten är antingen en femkrona "
+                      "eller en tiokrona. Hampus vill köpa en leksak som kostar 105 kronor. "
+                      "För att kunna köpa leksaken lånar han mellanskillnaden av sin mamma.\n"
+                      "Kvantitet I: Beloppet som Hampus lånar av sin mamma\nKvantitet II: "
+                      "60 kronor", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $\\frac{3x-1}{4}$\nKvantitet II: $0{,}75x - 0{,}25$",
+             "alternatives": STD_KVA},
+        17: {"text": "En vanlig sexsidig tärning kastas slumpmässigt fem gånger.\nKvantitet I: "
+                      "Medianen av de fem utfallen\nKvantitet II: Det näst största värdet av "
+                      "de fem utfallen", "alternatives": STD_KVA},
+        18: {"text": "$x > 4$\nKvantitet I: $\\sqrt{x}$\nKvantitet II: $\\frac{x}{2}$",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: 75 % av arean av en cirkel med radien 4 cm\nKvantitet II: "
+                      "Arean av en cirkel med radien 3 cm", "alternatives": STD_KVA},
+        20: {"text": "$2^{x-1} = 32$\nKvantitet I: $x$\nKvantitet II: $5 \\cdot x^0$",
+             "alternatives": STD_KVA},
+        21: {"text": "$x$ är 75 procent av 80.\n8 är $y$ procent av 12.\nKvantitet I: $x$\n"
+                      "Kvantitet II: $y$", "alternatives": STD_KVA},
+    },
 }
 
 
