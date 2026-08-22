@@ -220,41 +220,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // certifierad samtyckesplattform (CMP) FÖRE skriptet laddas för EU-
       // användare, (2) CSP-uppdatering, (3) uppdaterad integritetspolicy.
       // ads.txt ligger kvar i public/ inför den dagen.
-      // Schema.org WebApplication
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          "@id": "https://tvakommanollan.se/#webapp",
-          name: "Tvåkommanollan",
-          alternateName: "Tvakommanollan",
-          url: "https://tvakommanollan.se",
-          description:
-            "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
-          applicationCategory: "EducationalApplication",
-          applicationSubCategory: "TestPreparation",
-          operatingSystem: "Web",
-          offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
-          inLanguage: "sv-SE",
-          isAccessibleForFree: true,
-          audience: {
-            "@type": "EducationalAudience",
-            educationalRole: "student",
-            audienceType: "Gymnasieelev och högskolesökande i Sverige",
-          },
-          featureList: [
-            "Realtidsmatcher mot vänner",
-            "ELO-ranking med tiers från Brons till Diamant",
-            "Övningsmatcher utan tidsbegränsning",
-            "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
-            "10 000+ HP-ord i databasen",
-            "Personlig coachning av en 1,95-spelare",
-          ],
-          publisher: { "@id": "https://tvakommanollan.se/#org" },
-          creator: { "@id": "https://tvakommanollan.se/#niklas" },
-        }),
-      },
+      // OBS: Schema.org WebApplication låg här förr och renderades på sajtens
+      // alla sidor. Semrush/Google flaggade den som ogiltig "Software App"-
+      // markup på 83 sidor: typen kräver aggregateRating/review för att vara
+      // rich-result-berättigad, och de fälten kan bara fyllas i ärligt där
+      // recensionerna faktiskt syns — OMDOMEN-karusellen finns bara på
+      // startsidan. Samma resonemang som FAQPage ovan. Schemat ligger nu i
+      // `index.tsx`, med riktiga betyg/citat ur OMDOMEN. Lägg inte tillbaka
+      // den här utan att också lägga tillbaka påhittade recensioner.
       // Schema.org EducationalOrganization
       {
         type: "application/ld+json",
@@ -355,7 +328,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/train">Träna HP</a>
           <a href="/ord">Öva ord</a>
           <a href="/ordlista">Ordlista för högskoleprovet</a>
-          <a href="/matchmaking">Hitta match</a>
+          <a href="/matchmaking?type=verbal">Hitta match</a>
           <a href="/friends">Vänner</a>
           <a href="/signup">Skapa konto</a>
           <a href="/login">Logga in</a>

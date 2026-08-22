@@ -798,7 +798,12 @@ function OrdPracticePage() {
               onPrimary={() => void startSession(target)}
               primaryIcon={<RotateCcw className="h-4 w-4" />}
               forward={[
-                { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+                {
+                  label: "Spela en match",
+                  icon: Swords,
+                  to: "/matchmaking",
+                  search: { type: "verbal" },
+                },
                 { label: "Träna delprov", icon: Target, to: "/train" },
                 { label: "Välj annan längd", icon: SlidersHorizontal, onClick: backToSetup },
               ]}

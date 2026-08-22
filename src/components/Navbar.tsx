@@ -144,7 +144,9 @@ export function Navbar() {
                   dashboardens sekundärrad, footern och snabbmenyn. */}
               {/* Duellen är sajtens kärna men saknades helt i navbaren —
                   den nåddes bara via ett kort på startsidan. */}
-              <NavLink to="/matchmaking">Duell</NavLink>
+              <NavLink to="/matchmaking" search={{ type: "verbal" }}>
+                Duell
+              </NavLink>
               <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
@@ -233,15 +235,19 @@ function NavLink({
   to,
   children,
   hideOnMobile,
+  search,
 }: {
   to: string;
   children: React.ReactNode;
   hideOnMobile?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  search?: any;
 }) {
   return (
     <Link
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       to={to as any}
+      search={search}
       data-cursor="link"
       className={`nav-link group relative inline-block px-2 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
         hideOnMobile ? "hidden sm:inline-block" : ""
@@ -430,7 +436,12 @@ function MobileMenu({
           <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
           </MobileNavLink>
-          <MobileNavLink to="/matchmaking" onClick={close} icon={Swords}>
+          <MobileNavLink
+            to="/matchmaking"
+            search={{ type: "verbal" }}
+            onClick={close}
+            icon={Swords}
+          >
             Duell
           </MobileNavLink>
           <MobileNavLink to="/ord" onClick={close} icon={Type}>
@@ -489,16 +500,20 @@ function MobileNavLink({
   icon: Icon,
   children,
   onClick,
+  search,
 }: {
   to: string;
   icon: LucideIcon;
   children: React.ReactNode;
   onClick?: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  search?: any;
 }) {
   return (
     <Link
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       to={to as any}
+      search={search}
       onClick={onClick}
       className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-colors hover:bg-white/[0.04]"
       style={{ color: "var(--cream)" }}

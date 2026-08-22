@@ -37,14 +37,14 @@ import { rankedName } from "@/lib/username";
  */
 
 const DELPROV = [
-  { kod: "ORD", namn: "Ordförståelse", del: "Verbal" },
-  { kod: "LÄS", namn: "Svensk läsförståelse", del: "Verbal" },
-  { kod: "MEK", namn: "Meningskomplettering", del: "Verbal" },
-  { kod: "ELF", namn: "Engelsk läsförståelse", del: "Verbal" },
-  { kod: "XYZ", namn: "Matematisk problemlösning", del: "Kvantitativ" },
-  { kod: "KVA", namn: "Kvantitativa jämförelser", del: "Kvantitativ" },
-  { kod: "NOG", namn: "Kvantitativa resonemang", del: "Kvantitativ" },
-  { kod: "DTK", namn: "Diagram, tabeller, kartor", del: "Kvantitativ" },
+  { kod: "ORD", slug: "ord", namn: "Ordförståelse", del: "Verbal" },
+  { kod: "LÄS", slug: "las", namn: "Svensk läsförståelse", del: "Verbal" },
+  { kod: "MEK", slug: "mek", namn: "Meningskomplettering", del: "Verbal" },
+  { kod: "ELF", slug: "elf", namn: "Engelsk läsförståelse", del: "Verbal" },
+  { kod: "XYZ", slug: "xyz", namn: "Matematisk problemlösning", del: "Kvantitativ" },
+  { kod: "KVA", slug: "kva", namn: "Kvantitativa jämförelser", del: "Kvantitativ" },
+  { kod: "NOG", slug: "nog", namn: "Kvantitativa resonemang", del: "Kvantitativ" },
+  { kod: "DTK", slug: "dtk", namn: "Diagram, tabeller, kartor", del: "Kvantitativ" },
 ];
 
 /**
@@ -55,7 +55,7 @@ const DELPROV = [
  * alla utom Liang, och en explicit femma på varje rad hade bara gjort
  * det lättare att missa den som inte är det.
  */
-const OMDOMEN = [
+export const OMDOMEN = [
   {
     citat:
       "Det är ett gott tecken när det känns roligt och engagerande att plugga inför högskoleprovet.",
@@ -84,7 +84,7 @@ const OMDOMEN = [
 const OMDOME_FARG = ["#ae2f26", "#2f6b3c", "#7a5236"];
 
 /** Snittet av OMDOMEN, inte en siffra någon valt. Just nu 4,8. */
-const SNITTBETYG = OMDOMEN.reduce((summa, o) => summa + (o.betyg ?? 5), 0) / OMDOMEN.length;
+export const SNITTBETYG = OMDOMEN.reduce((summa, o) => summa + (o.betyg ?? 5), 0) / OMDOMEN.length;
 
 /**
  * Stjärnor med delfyllnad. Snittet är inte längre ett jämnt tal, och fem
@@ -344,7 +344,7 @@ export function HeroLanding() {
                 >
                   <Link
                     to="/ova/$delprov"
-                    params={{ delprov: d.kod.toLowerCase() }}
+                    params={{ delprov: d.slug }}
                     className="block rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.05]"
                   >
                     <div className="font-display text-[24px] tracking-tight">{d.kod}</div>

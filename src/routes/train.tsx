@@ -990,7 +990,12 @@ function TrainPage() {
           primaryLabel="Träna igen"
           onPrimary={restartSame}
           forward={[
-            { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+            {
+              label: "Spela en match",
+              icon: Swords,
+              to: "/matchmaking",
+              search: { type: "verbal" },
+            },
             { label: "Plugga ord", icon: BookOpen, to: "/ord" },
             {
               label: "Ändra inställningar",

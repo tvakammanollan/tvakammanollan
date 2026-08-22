@@ -220,7 +220,12 @@ export function ProvResult({
           forward={[
             { label: "Gå igenom alla uppgifter", icon: ListChecks, onClick: () => onReview(0) },
             { label: "Alla gamla prov", icon: FileText, to: "/gamla-prov" },
-            { label: "Spela en match", icon: Swords, to: "/matchmaking" },
+            {
+              label: "Spela en match",
+              icon: Swords,
+              to: "/matchmaking",
+              search: { type: "verbal" },
+            },
           ]}
         />
       )}
