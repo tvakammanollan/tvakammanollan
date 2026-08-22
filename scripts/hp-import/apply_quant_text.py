@@ -1730,6 +1730,121 @@ PATCH: dict[str, dict[int, dict]] = {
                       "Kvantitet II: Den positiva lösningen till ekvationen $(x+3)(x-2)=0$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 3 (parallella linjer med vinklar), 7 (linje inritad i
+    # koordinatsystem UTAN given ekvation), 15 (fyrhörning ABCE), 21 (punkter
+    # (a,b)/(c,d) vars kvadrant bara syns i figuren).
+    "2020ht-3": {
+        1: {"text": "Vilket värde har $x$ om $5x+66=\\frac{y}{2}$ och $y=12x$?",
+            "alternatives": ["6", "33", "66", "$\\frac{132}{7}$"]},
+        2: {"text": "6 likadana maskiner kan sammanlagt producera 150 enheter per "
+                     "minut. Hur många enheter kan 10 sådana maskiner producera på 4 "
+                     "minuter?", "alternatives": ["360", "1 000", "6 000", "36 000"]},
+        4: {"text": "$f(x) = 3x+1$\n\nVilket svarsalternativ motsvarar $f\\left(\\frac{1}{3}\\right)$?",
+            "alternatives": ["$\\frac{1}{3}$", "$\\frac{2}{3}$", "$\\frac{4}{3}$", "$\\frac{6}{3}$"]},
+        5: {"text": "$a \\neq 0$\n\nVilket svarsalternativ motsvarar med säkerhet "
+                     "$\\frac{a-b}{a} + \\frac{b}{a}$?",
+            "alternatives": ["$\\frac{1}{2}$", "1", "$b$", "$a$"]},
+        6: {"text": "En triangel med basen 4 cm har lika stor area som en kvadrat med "
+                     "sidan 6 cm. Hur stor är triangelns höjd?",
+            "alternatives": ["3 cm", "6 cm", "9 cm", "18 cm"]},
+        8: {"text": "Medelvärdet av $x$ och $6x$ är lika med $y$. Vad är $x$?",
+            "alternatives": ["$\\frac{7y}{2}$", "$\\frac{2y}{7}$", "$\\frac{xy}{7}$",
+                              "$\\frac{6x}{7y}$"]},
+        9: {"text": "$x > 0$\n\nHur många procent av $x$ är $\\frac{3x}{30}+\\frac{4x}{40}$?",
+            "alternatives": ["7", "10", "20", "24"]},
+        10: {"text": "Vad är $(2^4+1)(2^2+1)(2^2-1)$?",
+             "alternatives": ["$2^8-1$", "$2^8+1$", "$2^{16}-1$", "$2^{16}+1$"]},
+        11: {"text": "$x < 0$\n\nVilket värde har $x$ om $(x-7)^2 = 144$?",
+             "alternatives": ["–19", "–12", "–7", "–5"]},
+        12: {"text": "Vad är $1^{-1}+1^0+1^1$?", "alternatives": ["0", "1", "2", "3"]},
+        13: {"text": "Kvantitet I: $\\frac{3}{7}+\\frac{5}{8}$\nKvantitet II: 1",
+             "alternatives": STD_KVA},
+        14: {"text": "Tre vanliga sexsidiga tärningar kastas slumpmässigt en gång.\n"
+                      "Kvantitet I: Sannolikheten att få tre femmor\nKvantitet II: "
+                      "Sannolikheten att summan av det tärningarna visar är 15",
+             "alternatives": STD_KVA},
+        16: {"text": "$-7(x+3)=21$\n\nKvantitet I: $x$\nKvantitet II: 0", "alternatives": STD_KVA},
+        17: {"text": "3 teskedar motsvarar 1 matsked.\n5 kryddmått motsvarar 1 tesked.\n"
+                      "Kvantitet I: 8 kryddmått och 1 matsked\nKvantitet II: 2 teskedar "
+                      "och 10 kryddmått", "alternatives": STD_KVA},
+        18: {"text": "$x < y < z$\nKvantitet I: $\\frac{x+z}{2}$\nKvantitet II: "
+                      "$\\frac{x+y+z}{3}$", "alternatives": STD_KVA},
+        19: {"text": "Omkretsen av en cirkel är $25\\pi$ cm.\nKvantitet I: Cirkelns "
+                      "radie\nKvantitet II: 10 cm", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: $27^{\\frac{1}{3}}$\nKvantitet II: 9", "alternatives": STD_KVA},
+        22: {"text": "$x > 0$\nKvantitet I: $\\frac{x}{2}$\nKvantitet II: $\\left(\\frac{x}{4}\\right)^2$",
+             "alternatives": STD_KVA},
+    },
+    # Uteslutna: 2 (parabel inritad i koordinatsystem). NOG 24/25/27/28 har
+    # egna figurer och rörs inte.
+    "2020ht-5": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $3(2x+5)+2(7-3x)$?",
+            "alternatives": ["29", "$17-x$", "$3x+19$", "$12x+29$"]},
+        3: {"text": "Arean av en cirkel är 27 cm². Vilket av svarsalternativen är det "
+                     "bästa närmevärdet för längden av cirkelns radie?",
+            "alternatives": ["1,5 cm", "3 cm", "6 cm", "9 cm"]},
+        4: {"text": "Om $a$ % av $x$ är $y$, hur mycket är $2a$ % av $0{,}5x$?",
+            "alternatives": ["$0{,}5y$", "$y$", "$2y$", "$4y$"]},
+        5: {"text": "En mätserie består av 5 mätvärden. Vilket av svarsalternativen är "
+                     "med säkerhet korrekt?",
+            "alternatives": ["Om mätseriens medelvärde är ett heltal, så är alla "
+                              "mätvärdena heltal.",
+                              "Om mätseriens median är ett heltal, så är alla "
+                              "mätvärdena heltal.",
+                              "Om alla mätvärdena är heltal, så är mätseriens "
+                              "medelvärde ett heltal.",
+                              "Om alla mätvärdena är heltal, så är mätseriens median "
+                              "ett heltal."]},
+        6: {"text": "$a$ och $b$ är positiva tal. Vilket svarsalternativ är lösningen "
+                     "till ekvationen $ax+bx=1$?",
+            "alternatives": ["$x=1-(a+b)$", "$x=\\frac{1}{ab}$", "$x=a+b$",
+                              "$x=\\frac{1}{a+b}$"]},
+        7: {"text": "Jaana gör ett halsband med enfärgade pärlor i sju olika färger. "
+                     "Hon använder lika många pärlor av varje färg. Vilket "
+                     "svarsalternativ är ett möjligt antal pärlor i det färdiga "
+                     "halsbandet?", "alternatives": ["241", "245", "247", "249"]},
+        8: {"text": "Vilket svarsalternativ är störst?",
+            "alternatives": ["$\\frac{10^2 \\cdot 10^{-5}}{10^{-3}}$",
+                              "$\\frac{10^{-3} \\cdot 10^{-5}}{10^2}$",
+                              "$\\frac{10^2 \\cdot 10^{-3}}{10^{-5}}$",
+                              "$\\frac{10^{-5}}{10^2 \\cdot 10^{-3}}$"]},
+        9: {"text": "Arean av en kvadrat med sidlängden 10 cm är dubbelt så stor som "
+                     "arean av en kvadrat med sidlängden $x$ cm. Vilket värde har $x$?",
+            "alternatives": ["$\\sqrt{10}$", "$\\sqrt{20}$", "$\\sqrt{25}$", "$\\sqrt{50}$"]},
+        10: {"text": "Vad är $\\frac{7}{20} - \\frac{3}{2} \\cdot \\frac{1}{5}$?",
+             "alternatives": ["$-\\frac{23}{100}$", "$\\frac{1}{20}$", "$\\frac{3}{10}$",
+                               "$\\frac{4}{10}$"]},
+        11: {"text": "$f(x) = \\frac{x}{4} - \\frac{3}{2}$\n\nVilka koordinater har den "
+                      "punkt där grafen till $f(x)$ skär $x$-axeln?",
+             "alternatives": ["$(0, -\\frac{3}{2})$", "(0, 6)", "$(-\\frac{3}{2}, 0)$", "(6, 0)"]},
+        12: {"text": "Vilket svarsalternativ är ett möjligt värde på $a$ om $a^{-2}=16$?",
+             "alternatives": ["–4", "$\\frac{1}{256}$", "$\\frac{1}{4}$", "256"]},
+        13: {"text": "$x$, $y$ och $z$ är positiva tal.\n$x$ procent av $y$ är lika med "
+                      "73.\n$x$ procent av $z$ är lika med 37.\nKvantitet I: $y$\n"
+                      "Kvantitet II: $z$", "alternatives": STD_KVA},
+        14: {"text": "T är en triangel.\nKvantitet I: Omkretsen av T dividerad med 3\n"
+                      "Kvantitet II: Medelvärdet av sidlängderna för T", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{\\frac{1}{6}}{\\frac{6}{1}}$\nKvantitet II: "
+                      "$\\frac{\\frac{6}{1}}{\\frac{1}{6}}$", "alternatives": STD_KVA},
+        16: {"text": "Albin är dubbelt så gammal som Edvin och Levi är tillsammans.\n"
+                      "Kvantitet I: Albins ålder\nKvantitet II: Tre gånger Edvins ålder",
+             "alternatives": STD_KVA},
+        17: {"text": "$x > 1$\n$x^{y+1}=1$\n\nKvantitet I: $y$\nKvantitet II: 0",
+             "alternatives": STD_KVA},
+        18: {"text": "Kvadraterna $K_1$ och $K_2$ överlappar varandra så att 25 procent "
+                      "av arean av $K_1$ täcks av $K_2$, medan 20 procent av arean av "
+                      "$K_2$ täcks av $K_1$.\nKvantitet I: Arean av $K_1$\nKvantitet II: "
+                      "Arean av $K_2$", "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: $3{,}13(\\pi+3{,}15)$\nKvantitet II: $3{,}15(3{,}13+\\pi)$",
+             "alternatives": STD_KVA},
+        20: {"text": "$x \\neq 0$\n$y \\neq 0$\n$x+y=0$\n\nKvantitet I: $x^2+y^2$\n"
+                      "Kvantitet II: $x^2+y^2+2xy$", "alternatives": STD_KVA},
+        21: {"text": "Grafen till funktionen $f$ är en rät linje genom origo.\n$a > 0$\n\n"
+                      "Kvantitet I: $f(a)$\nKvantitet II: $f(-a)$", "alternatives": STD_KVA},
+        22: {"text": "En mätserie består av värdena $-5$, $x$, $y$, 3. Seriens "
+                      "medelvärde är $-1$.\nKvantitet I: $x+y$\nKvantitet II: $-1$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
