@@ -432,6 +432,104 @@ PATCH: dict[str, dict[int, dict]] = {
                       "morötter i trädgårdslandet. Om man avlägsnar 100 rädisor så finns det "
                       "lika många rädisor som morötter i trädgårdslandet.", "alternatives": STD_NOG},
     },
+    # Uteslutna: 9 (fyra koordinatgrafer SOM svarsalternativ — kan inte
+    # textas), 14 (rätvinklig triangel). NOG (23-28) hade redan ren text i
+    # det här passet, alltså inget att göra där.
+    "2026vt-3": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $(x+3)(x-5)$?",
+            "alternatives": ["$x^2 - 15$", "$x^2 - 2$", "$x^2 - 2x - 15$", "$x^2 - 2x - 8$"]},
+        2: {"text": "$f(x) = \\frac{1}{5}x + \\frac{3}{5}$\n\nVilket svarsalternativ är lika "
+                     "med $f\\left(\\frac{5}{3}\\right)$?",
+            "alternatives": ["$\\frac{3}{15}$", "$\\frac{1}{2}$", "$\\frac{14}{15}$", "1"]},
+        3: {"text": "Hur många trubbiga vinklar kan en triangel som mest ha?",
+            "alternatives": ["0", "1", "2", "3"]},
+        4: {"text": "Varje månad sparar Nils 1/5 av sin lön. Resten av lönen spenderar han. "
+                     "Vad är kvoten mellan det Nils sparar och det han spenderar under en månad?",
+            "alternatives": ["1/6", "1/5", "1/4", "1/3"]},
+        5: {"text": "$\\frac{8}{15} \\cdot x = \\frac{2}{3}$\n\nVilket värde har $x$?",
+            "alternatives": ["$\\frac{45}{16}$", "$\\frac{5}{4}$", "$\\frac{16}{45}$", "$\\frac{4}{5}$"]},
+        6: {"text": "I en låda finns det tjugo bollar. Dessa är numrerade med heltalen 1–20. "
+                     "Siri plockar två bollar ur lådan utan att lägga tillbaka dem. Den ena "
+                     "bollen har nummer 11 och den andra bollen har nummer 18. Siri plockar "
+                     "slumpmässigt en tredje boll ur lådan. Hur stor är sannolikheten att "
+                     "numret på den tredje bollen är större än 11 och mindre än 18?",
+            "alternatives": ["$\\frac{1}{3}$", "$\\frac{2}{5}$", "$\\frac{4}{9}$", "$\\frac{3}{10}$"]},
+        7: {"text": "Vad är tiotalssiffran i $44 \\cdot 625$?", "alternatives": ["0", "2", "4", "8"]},
+        8: {"text": "$2^3 \\cdot 8^2 = 2^x$\n\nVilket värde har $x$?", "alternatives": ["6", "9", "15", "18"]},
+        10: {"text": "Vad är 150 % av 50 % av 60?", "alternatives": ["45", "60", "75", "90"]},
+        11: {"text": "En cylinder har volymen 16 cm$^3$ och höjden 1 cm. Vilket svarsalternativ "
+                      "ligger närmast cylinderns radie?",
+             "alternatives": ["2 cm", "4 cm", "5 cm", "$\\sqrt{5}$ cm"]},
+        12: {"text": "Vilket svarsalternativ motsvarar $\\frac{2\\sqrt{3}}{3\\sqrt{2}}$?",
+             "alternatives": ["1", "$\\frac{\\sqrt{3}}{6}$", "$\\sqrt{\\frac{2}{3}}$", "$\\sqrt{\\frac{3}{2}}$"]},
+        13: {"text": "$x > 4$\nKvantitet I: $\\frac{1}{x}$\nKvantitet II: $\\frac{1}{4}$",
+             "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Ett femsiffrigt tal som skrivs med endast sexor och sjuor\n"
+                      "Kvantitet II: Ett femsiffrigt tal som skrivs med endast sexor och åttor",
+             "alternatives": STD_KVA},
+        16: {"text": "$x^2 = 4$\nKvantitet I: $(-2)^{x+2}$\nKvantitet II: $(-2)^{x+3}$",
+             "alternatives": STD_KVA},
+        17: {"text": "$x > 0$\n$y > 0$\nKvantitet I: Medelvärdet av $x$ och $y$\nKvantitet II: "
+                      "Medelvärdet av $2x$ och $\\frac{y}{2}$", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: Summan av fyra olika ensiffriga jämna positiva heltal\n"
+                      "Kvantitet II: Summan av tre olika ensiffriga udda positiva heltal",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: $\\frac{1}{3} - \\frac{1}{2}$\nKvantitet II: "
+                      "$\\frac{1}{2} \\cdot \\left(-\\frac{1}{3}\\right)$", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: Omkretsen av en cirkel med radien 5 cm\nKvantitet II: "
+                      "Omkretsen av en rektangel med sidlängderna 5,5 cm och 10 cm",
+             "alternatives": STD_KVA},
+        21: {"text": "$-1 < x < 0 < y < 1$\nKvantitet I: $\\frac{x}{y}$\nKvantitet II: $\\frac{y}{x}$",
+             "alternatives": STD_KVA},
+        22: {"text": "För funktionen $f(x) = kx + m$ gäller att $m > 0$ och att $f(a) = 0$ för "
+                      "något $a > 0$.\nKvantitet I: $k$\nKvantitet II: $0$", "alternatives": STD_KVA},
+    },
+    # Uteslutna: 4 (graf i figuren), 6 (parallella linjer/vinklar), 10
+    # (kvadrat med triangel), 15 (avståndslinje A-B-C-D), 18 (triangel).
+    # NOG (23-28) hade redan ren text i det här passet.
+    "2026vt-5": {
+        1: {"text": "$3(x-4) = 5(x+2)$\n\nVad är $x$?", "alternatives": ["–11", "–3", "1", "3"]},
+        2: {"text": "Melvin löste ekvationen $-6(x-2) = 4x+4$ felaktigt. Han genomförde "
+                     "uträkningen i följande fyra steg:\n\n$-6(x-2) = 4x+4$\n"
+                     "Steg 1 → $-6x-12 = 4x+4$\nSteg 2 → $-6x = 4x+16$\nSteg 3 → $-10x = 16$\n"
+                     "Steg 4 → $x = -1{,}6$\n\nI vilket steg uppstod felet?",
+            "alternatives": ["Steg 1", "Steg 2", "Steg 3", "Steg 4"]},
+        3: {"text": "Vad är medelvärdet av $\\frac{1}{2}$ och $\\frac{5}{7}$?",
+            "alternatives": ["$\\frac{15}{28}$", "$\\frac{4}{7}$", "$\\frac{17}{28}$", "$\\frac{9}{14}$"]},
+        5: {"text": "Vad är $\\frac{\\frac{1}{4}+\\frac{1}{5}}{\\frac{1}{6}}$?",
+            "alternatives": ["$\\frac{1}{27}$", "$\\frac{2}{3}$", "$\\frac{3}{2}$", "$\\frac{27}{10}$"]},
+        7: {"text": "Vad är $0,08 \\cdot 0,03$?", "alternatives": ["0,00024", "0,0024", "0,024", "0,24"]},
+        8: {"text": "Vilket svarsalternativ motsvarar uttrycket $-28xyz + 20xy$?",
+            "alternatives": ["$-8z$", "$-2xy(14z+10)$", "$4xy(5-7z)$", "$20xy(1-8z)$"]},
+        9: {"text": "En funktion $f$ ges av $f(x) = kx + m$, där $m = 7$ och $f(10) = 3$. "
+                     "Vad är $f(20)$?", "alternatives": ["–43", "–1", "6", "15"]},
+        11: {"text": "Vilket svarsalternativ är lika med $3(4 \\cdot 3^4 - 3^4)$?",
+             "alternatives": ["12", "$3^5$", "$4 \\cdot 3^5$", "$3^6$"]},
+        12: {"text": "För vilket svarsalternativ gäller med säkerhet att $a^2b - ab^2 > 0$?",
+             "alternatives": ["$a < 0, b > 0$", "$a > 0, b < 0$", "$a < 0, b < 0$", "$a > 0, b > 0$"]},
+        13: {"text": "Två vanliga sexsidiga tärningar kastas slumpmässigt en gång.\n"
+                      "Kvantitet I: Sannolikheten att summan av det tärningarna visar är 3, om "
+                      "den ena tärningen visar en tvåa\nKvantitet II: Sannolikheten att summan "
+                      "av det tärningarna visar är 7, om den ena tärningen visar en tvåa",
+             "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $\\frac{1}{3} \\cdot \\sqrt{27}$\nKvantitet II: $3$",
+             "alternatives": STD_KVA},
+        16: {"text": "För de positiva talen $x$ och $y$ gäller att 150 procent av $x$ är lika "
+                      "med 50 procent av $y$.\nKvantitet I: $3x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+        17: {"text": "$y < 0$\nKvantitet I: $-2y$\nKvantitet II: $-(2y)$", "alternatives": STD_KVA},
+        19: {"text": "$L_1$, $L_2$ och $L_3$ är räta linjer.\n$L_1$: $y = 2x + 1$\n"
+                      "$L_2$: $y = -x + 4$\n$L_3$: $y = x$\n\nKvantitet I: $x$-koordinaten för "
+                      "skärningspunkten mellan $L_1$ och $L_3$\nKvantitet II: $x$-koordinaten "
+                      "för skärningspunkten mellan $L_2$ och $L_3$", "alternatives": STD_KVA},
+        20: {"text": "$x$ är ett heltal större än 1.\nKvantitet I: $\\frac{x}{\\frac{1}{x+1}}$\n"
+                      "Kvantitet II: $\\frac{x+1}{x}$", "alternatives": STD_KVA},
+        21: {"text": "Den rätvinkliga triangeln T har sidlängderna 3 cm, 4 cm och 5 cm. T har "
+                      "lika stor area som kvadraten K.\nKvantitet I: Omkretsen av T\n"
+                      "Kvantitet II: Omkretsen av K", "alternatives": STD_KVA},
+        22: {"text": "$y \\neq 0$\n$\\frac{x+3y}{y} = 2$\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
