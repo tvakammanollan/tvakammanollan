@@ -817,6 +817,57 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "Kvantitet I: $(x^4+1)(x^3-x)$\nKvantitet II: $(x^5+x)(x^2-1)$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 2 (linje i diagram), 8 (kvadrat med cirkel), 14 (sexhörning
+    # med skuggad triangel), 20 (kvadrat mellan parallella linjer), 24
+    # (triangel med vinklar u/v/w). NOG 23/25/26/27 hade redan ren text.
+    "2024vt-5": {
+        1: {"text": "$4x + 13 = 8x - 31$\n\nVad är $x$?", "alternatives": ["–4,5", "1,5", "4,5", "11"]},
+        3: {"text": "Vad är $\\frac{1}{3} - \\left(\\frac{1}{2} + \\frac{1}{6}\\right)$?",
+            "alternatives": ["$-\\frac{2}{3}$", "$-\\frac{1}{3}$", "0", "$\\frac{1}{3}$"]},
+        4: {"text": "Medelvärdet av 17, 21 och 44 är lika med medelvärdet av 63, 73 och $x$. "
+                     "Vilket värde har $x$?", "alternatives": ["–54", "–27", "0", "71"]},
+        5: {"text": "Vägen mellan Julias hem och Annas hem är 12 km lång. De startar hemifrån "
+                     "samtidigt för att mötas längs vägen. Julia springer med konstant "
+                     "hastighet och det tar henne 12 minuter att springa 2 km. Anna går med "
+                     "konstant hastighet och det tar henne 24 minuter att gå 2 km. Hur lång "
+                     "tid tar det innan de möts?",
+            "alternatives": ["36 minuter", "42 minuter", "48 minuter", "72 minuter"]},
+        6: {"text": "Vilket av svarsalternativen är lika med 7?",
+            "alternatives": ["$\\sqrt{29} + \\sqrt{20}$", "$7^1 - 7^0$", "$\\frac{14}{7} + \\frac{49}{14}$",
+                              "$\\left(\\frac{7}{\\sqrt{7}}\\right)^2$"]},
+        7: {"text": "Vilket svarsalternativ är lika med 18 procent av $\\frac{2}{5}$?",
+            "alternatives": ["$\\frac{1}{45}$", "$\\frac{4}{45}$", "$\\frac{9}{125}$", "$\\frac{9}{250}$"]},
+        9: {"text": "Vilket svarsalternativ är en ekvation för en linje som går genom "
+                     "punkten $(3, 1)$?",
+            "alternatives": ["$y = -x + 4$", "$y = x + 2$", "$y = 2x + 1$", "$y = 3x + 1$"]},
+        10: {"text": "$a$, $b$ och $c$ är positiva tal sådana att $\\frac{a}{b} = \\frac{b}{c}$ "
+                      "och $c = 2a$. Vad är $b$ uttryckt i $a$?",
+             "alternatives": ["$b = a\\sqrt{2}$", "$b = \\frac{a}{\\sqrt{2}}$", "$b = 2\\sqrt{a}$", "$b = \\frac{\\sqrt{a}}{2}$"]},
+        11: {"text": "$x \\cdot 10^4 - 2x \\cdot 10^3 = 3{,}2 \\cdot 10^4$\n\nVilket värde har $x$?",
+             "alternatives": ["4", "4,8", "5,6", "6,4"]},
+        12: {"text": "Kvadraterna $K_1$ och $K_2$ överlappar varandra så att 25 procent av "
+                      "arean av $K_1$ täcks av 20 procent av arean av $K_2$. Kvadraten $K_1$ "
+                      "har sidlängden 2 cm. Vilken sidlängd har $K_2$?",
+             "alternatives": ["1,6 cm", "$\\sqrt{3}$ cm", "$\\sqrt{5}$ cm", "2,5 cm"]},
+        13: {"text": "$3x > y$\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        15: {"text": "$2(x-4) = \\frac{1}{2}$\nKvantitet I: $x$\nKvantitet II: $5$",
+             "alternatives": STD_KVA},
+        16: {"text": "$f(x) = 4x + 8$\n$g(x) = 2x + 4$\n$a > 0$\nKvantitet I: $f(a)$\n"
+                      "Kvantitet II: $g(2a)$", "alternatives": STD_KVA},
+        17: {"text": "En mätserie består av tio heltal mellan 1 och 50. Mätseriens median är "
+                      "25.\nKvantitet I: Mätseriens median om det största och det minsta "
+                      "mätvärdet tas bort\nKvantitet II: 25", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: $4 \\cdot 10^{-2}$\nKvantitet II: $\\frac{1}{400}$",
+             "alternatives": STD_KVA},
+        19: {"text": "$-1 < x < 0$\n$0 < y < 1$\nKvantitet I: $\\frac{y}{x}$\nKvantitet II: "
+                      "$\\frac{x}{y}$", "alternatives": STD_KVA},
+        21: {"text": "$x < 0$\nKvantitet I: $(x+4)(x-2)$\nKvantitet II: $(x-4)(x+2)$",
+             "alternatives": STD_KVA},
+        22: {"text": "Priset på en vara stiger med 20 % per år.\nKvantitet I: Den tid det tar "
+                      "tills priset har fördubblats\nKvantitet II: 5 år", "alternatives": STD_KVA},
+        28: {"text": "Vilket av talen $x$, $y$, $z$ och $w$ är störst?\n\n(1) $x + y = w$\n"
+                      "(2) $\\frac{x+y}{2} = z$", "alternatives": STD_NOG},
+    },
 }
 
 
