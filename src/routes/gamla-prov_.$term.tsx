@@ -39,7 +39,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         path,
         // Stod som "Högskoleprovet Höstprovet 2025 – …" på alla 30 sidorna:
         // `label` bär redan ordet provet, så prefixet stammade.
-        title: fitTitle(`${exam.label} · alla provpass med facit`, "· Tvåkommanollan"),
+        title: fitTitle(`${exam.label} · alla provpass med facit`),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
@@ -77,6 +77,9 @@ function ExamTermPage() {
   const { exam, facit } = Route.useLoaderData();
   const { newer, older } = examNeighbours(exam.term);
   const others = allExams().filter((e) => e.term !== exam.term);
+  const verbalCount = exam.passes.filter((p) => p.kind === "verbal").length;
+  const kvantCount = exam.passes.filter((p) => p.kind === "kvant").length;
+  const delprov = [...new Set(exam.passes.flatMap((p) => p.delprov))];
 
   // Skrivna provpass ligger i webbläsaren, inte hos oss — sidan är
   // serverrenderad och identisk för alla, det här lägger sig ovanpå.
@@ -108,6 +111,11 @@ function ExamTermPage() {
           Provdagen var {formatDateLong(exam.date)}. Här finns alla {formatInt(exam.questions)}{" "}
           uppgifter från provets {exam.passes.length} räknade provpass, med facit. Välj ett pass för
           att skriva det på tid med automatisk rättning, eller läs rätta svaren längre ned.
+        </p>
+        <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
+          {verbalCount} {verbalCount === 1 ? "pass är verbalt" : "pass är verbala"} och {kvantCount}{" "}
+          {kvantCount === 1 ? "är kvantitativt" : "är kvantitativa"}, och tillsammans täcker de{" "}
+          {delprov.map(delprovFull).join(", ")}.
         </p>
       </header>
 

@@ -271,6 +271,9 @@ export type OrdLetterPage = {
   letter: string;
   words: { slug: string; word: string }[];
   count: number;
+  /** Grannbokstäverna med minst ett ord, så registret ligger i en kedja precis som uppslagen. */
+  prev: { letter: string; count: number } | null;
+  next: { letter: string; count: number } | null;
 };
 
 /** Ett bokstavsregister. */
@@ -278,10 +281,18 @@ export async function fetchOrdLetter(letter: string): Promise<OrdLetterPage | nu
   const index = await getOrdIndex();
   const slugs = index.byLetter.get(letter);
   if (!slugs) return null;
+
+  const letters = [...index.byLetter.entries()]
+    .map(([l, s]) => ({ letter: l, count: s.length }))
+    .filter((l) => l.count > 0);
+  const pos = letters.findIndex((l) => l.letter === letter);
+
   return {
     letter,
     words: slugs.map((s) => ({ slug: s, word: ordText(index.bySlug.get(s) ?? s) })),
     count: slugs.length,
+    prev: pos > 0 ? letters[pos - 1] : null,
+    next: pos >= 0 && pos < letters.length - 1 ? letters[pos + 1] : null,
   };
 }
 

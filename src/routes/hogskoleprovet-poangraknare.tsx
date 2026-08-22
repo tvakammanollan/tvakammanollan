@@ -32,7 +32,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poangraknare",
-      title: fitTitle("Högskoleprovet poängräknare: räkna ut din poäng", "· Tvåkommanollan"),
+      title: fitTitle("Högskoleprovet poängräknare: räkna ut din poäng"),
       description:
         "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
       ogTitle: "Högskoleprovet poängräknare",
@@ -166,6 +166,31 @@ function PoangraknarePage() {
         högskolerådet normerar varje prov för sig, så de exakta gränserna varierar mellan olika
         provtillfällen. Använd siffran som en fingervisning.
       </p>
+
+      <section className="mt-10">
+        <h2
+          className="text-[18px] font-bold text-[var(--cream)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Så räknas poängen ut
+        </h2>
+        <p className="mt-2 text-[15px] leading-relaxed text-white/60">
+          Normeringen är inte linjär. UHR omvandlar antalet rätt till en normerad poäng mellan 0,00
+          och 2,00 utifrån hur alla som skrev just det provtillfället faktiskt presterade — inte
+          efter en fast mall. Det gör att samma antal rätt kan ge olika poäng på olika
+          provtillfällen, och att ett par rätt extra i mitten av skalan ofta ger mer poäng än samma
+          antal nära toppen eller botten.
+        </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-white/60">
+          Räknaren ovan använder en generell tabell byggd på flera arkiverade provtillfällen, så den
+          ger en bra fingervisning men aldrig ditt exakta facit. Vill du se hur normeringen slog för
+          ett riktigt prov, med rätta svar på varje uppgift, finns{" "}
+          <Link to="/gamla-prov" className="text-[var(--amber)] underline underline-offset-2">
+            alla arkiverade provtillfällen
+          </Link>{" "}
+          att skriva gratis.
+        </p>
+      </section>
 
       {/* CTA */}
       <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">

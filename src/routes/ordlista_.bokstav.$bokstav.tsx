@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaLetter } from "@/lib/ordlista.functions";
@@ -34,7 +35,7 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Ord på ${label} · ordlista för högskoleprovet`, "· Tvåkommanollan"),
+        title: fitTitle(`Ord på ${label} · ordlista för högskoleprovet`),
         description:
           `${formatInt(count)} ord på ${label} från ORD-delprovet, med betydelse och den uppgift de kom ur. ` +
           `Bland dem: ${sample}.`,
@@ -63,8 +64,11 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
 });
 
 function OrdlistaLetterPage() {
-  const { letter, words, count } = Route.useLoaderData();
+  const { letter, words, count, prev, next } = Route.useLoaderData();
   const label = ordLetterLabel(letter);
+  // Samma urval som möter besökaren i meta-beskrivningen, men här synligt i
+  // brödtexten — annars fanns exemplen bara i en tagg ingen läsare ser.
+  const sample = words.slice(0, 6);
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
@@ -88,8 +92,21 @@ function OrdlistaLetterPage() {
           HP-ord på {label}
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
-          {formatInt(count)} ord som förekommit på ORD-delprovet. Klicka på ett ord för betydelse,
-          exempelmening och uppgiften det kom ur.
+          {formatInt(count)} ord som förekommit på ORD-delprovet, hämtade ur tidigare högskoleprovs
+          ORD-uppgifter. Bland dem{" "}
+          {sample.map((w, i) => (
+            <span key={w.slug}>
+              {i > 0 && (i === sample.length - 1 ? " och " : ", ")}
+              <Link
+                to="/ordlista/$ord"
+                params={{ ord: w.slug }}
+                className="text-[var(--amber)] underline underline-offset-2"
+              >
+                {w.word}
+              </Link>
+            </span>
+          ))}
+          . Klicka på ett ord för betydelse, exempelmening och uppgiften det kom ur.
         </p>
       </header>
 
@@ -107,7 +124,37 @@ function OrdlistaLetterPage() {
         ))}
       </ul>
 
-      <p className="mt-10 text-sm text-white/45">
+      <nav
+        className="mt-8 flex items-center justify-between border-t border-white/10 pt-5 text-sm"
+        aria-label="Bokstavsnavigering"
+      >
+        {prev ? (
+          <Link
+            to="/ordlista/bokstav/$bokstav"
+            params={{ bokstav: prev.letter }}
+            className="inline-flex items-center gap-1.5 text-white/60 transition hover:text-[var(--amber)]"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+            {ordLetterLabel(prev.letter)} ({formatInt(prev.count)} ord)
+          </Link>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <Link
+            to="/ordlista/bokstav/$bokstav"
+            params={{ bokstav: next.letter }}
+            className="inline-flex items-center gap-1.5 text-white/60 transition hover:text-[var(--amber)]"
+          >
+            {ordLetterLabel(next.letter)} ({formatInt(next.count)} ord)
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+          </Link>
+        ) : (
+          <span />
+        )}
+      </nav>
+
+      <p className="mt-6 text-sm text-white/45">
         <Link to="/ordlista" className="text-[var(--amber)] underline underline-offset-2">
           Tillbaka till ordlistan
         </Link>{" "}

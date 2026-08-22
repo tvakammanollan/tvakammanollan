@@ -21,6 +21,15 @@ type Delprov = {
   intro: string;
   practiceTo: "/ord" | "/train";
   practiceLabel: string;
+  /**
+   * Extra strategiavsnitt, utöver `intro`. Frivilligt fält — bara ORD, XYZ
+   * och KVA hade det, eftersom deras exempeluppgifter är bildutsnitt (XYZ,
+   * KVA) eller korta ord+alternativ (ORD): sidan hade långt mindre text än
+   * LÄS/ELF/NOG som har hela textstycken i sina exempel, och flaggades för
+   * lågt ordantal. Lägg till fler vid behov, men skriv riktig strategi —
+   * inte utfyllnad.
+   */
+  tips?: string;
 };
 
 const DELPROV: Record<string, Delprov> = {
@@ -32,6 +41,7 @@ const DELPROV: Record<string, Delprov> = {
       "ORD testar din ordförståelse: du ska hitta synonymen eller den närmaste betydelsen till ett ord. Det är ofta det delprov där man snabbast höjer sitt resultat genom att plugga ord. Här övar du på riktiga ORD-frågor från tidigare högskoleprov, med facit.",
     practiceTo: "/ord",
     practiceLabel: "Öva 10 000+ ord nu",
+    tips: 'Känner du inte igen ordet, leta efter ett bekant förled eller efterled — många HP-ord är sammansatta eller släkt med vardagsord ("hemställa" hör ihop med "ställa hem/fram ett önskemål"). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart — inget avdrag för fel svar.',
   },
   mek: {
     code: "MEK",
@@ -68,6 +78,7 @@ const DELPROV: Record<string, Delprov> = {
       "XYZ är matematisk problemlösning där du löser uppgifter och väljer rätt svarsalternativ. Träning på många uppgiftstyper bygger både snabbhet och säkerhet. Öva på riktiga XYZ-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna XYZ utan tidspress",
+    tips: "Räkna baklänges från svarsalternativen när uträkningen låser sig — på flervalsfrågor är det ofta snabbare att testa vilket alternativ som stämmer än att lösa ekvationen från grunden. Runda av grovt först för att se vilken storleksordning svaret borde ligga i, det räcker för att stryka två-tre orimliga alternativ direkt. Och rita: en skiss av en geometriuppgift avslöjar ofta genvägen som algebran gömmer.",
   },
   kva: {
     code: "KVA",
@@ -77,6 +88,7 @@ const DELPROV: Record<string, Delprov> = {
       "KVA ber dig avgöra vilken av två storheter som är störst, eller om det inte går att avgöra. Det handlar om att tänka smart snarare än att räkna ut allt. Öva på riktiga KVA-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna KVA utan tidspress",
+    tips: 'Räkna aldrig ut båda storheterna fullständigt om du kan slippa — förkorta det som är lika i båda leden först, så jämför du bara det som skiljer. Sätt in enkla testvärden (0, 1, ett negativt tal) när uppgiften innehåller en variabel: svaret "går inte att avgöra" är rätt så fort två testvärden ger olika resultat. Var extra vaksam på negativa tal och bråk, det är där jämförelser oftast vänds fel.',
   },
   nog: {
     code: "NOG",
@@ -115,7 +127,7 @@ export const Route = createFileRoute("/ova/$delprov")({
         path,
         // slice(0, 150) kapade mitt i ett ord: Google visade "Öva på riktiga
         // DTK-uppg Gratis och utan inloggning." på alla åtta sidorna.
-        title: fitTitle(`Öva ${cfg.code} (${cfg.name}): frågor med facit`, "· Tvåkommanollan"),
+        title: fitTitle(`Öva ${cfg.code} (${cfg.name}): frågor med facit`),
         description: describeWithin(cfg.intro, "Gratis och utan inloggning."),
         ogTitle: `Öva ${cfg.code} (${cfg.name})`,
         ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,
@@ -195,6 +207,18 @@ function OvaDelprovPage() {
           </Link>
         </div>
       </header>
+
+      {cfg.tips && (
+        <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+          <h2
+            className="text-[16px] font-bold text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Strategi för {cfg.code}
+          </h2>
+          <p className="mt-2 text-[15px] leading-relaxed text-white/60">{cfg.tips}</p>
+        </section>
+      )}
 
       {/* Exempelfrågor */}
       {examples.length > 0 && (
