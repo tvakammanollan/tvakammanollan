@@ -7,6 +7,7 @@ import {
   optionRenderable,
   questionFaults,
   questionIsPlayable,
+  questionIsServable,
   type ValidatableQuestion,
 } from "./question-validity";
 
@@ -247,5 +248,79 @@ describe("questionFaults", () => {
     expect(fel).toContain("saknar_facit");
     expect(fel).toContain("för_få_alternativ");
     expect(fel).toContain("alternativ_utan_innehåll");
+  });
+});
+
+describe("questionIsServable", () => {
+  it("en textuppgift utan bild är alltid servable när den är felfri", () => {
+    expect(questionIsServable(bra())).toBe(true);
+  });
+
+  it("XYZ/KVA/NOG vars bild legitimt innehåller alternativen är servable trots alternativ_endast_i_delad_bild", () => {
+    // Samma rad som testet ovan ("markeras som reservläge, inte som
+    // trasigt") — men här kontrolleras spärren som faktiskt avgör om
+    // duellen/träningen serverar frågan, inte bara felkoden.
+    const reserv = bild({
+      options: [
+        { id: "A", text: "A" },
+        { id: "B", text: "B" },
+        { id: "C", text: "C" },
+        { id: "D", text: "D" },
+      ],
+      image_caption: null,
+    });
+    expect(questionFaults(reserv)).toContain("alternativ_endast_i_delad_bild");
+    expect(questionIsServable(reserv)).toBe(true);
+  });
+
+  it("DTK utan egen alternativbild är INTE servable — image_url är ett delat diagram utan svaren", () => {
+    const dtkDeladBild = bra({
+      category: "DTK",
+      image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+      image_caption: null,
+      options: [
+        { id: "A", text: "A" },
+        { id: "B", text: "B" },
+        { id: "C", text: "C" },
+        { id: "D", text: "D" },
+      ],
+    });
+    expect(questionIsServable(dtkDeladBild)).toBe(false);
+  });
+
+  it("DTK med egen alternativbild är servable, med eller utan per-bokstav-koordinater", () => {
+    const medKoordinater = bra({
+      category: "DTK",
+      image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+      image_caption: JSON.stringify({
+        optionsImage: "/prov-bilder/2013ht/p3/29.webp",
+        optionsAspect: 2.28,
+      }),
+      options: [
+        { id: "A", text: "A", crop: [0.15, 0.53, 1, 0.63] },
+        { id: "B", text: "B", crop: [0.15, 0.63, 1, 0.73] },
+        { id: "C", text: "C", crop: [0.15, 0.73, 1, 0.84] },
+        { id: "D", text: "D", crop: [0.15, 0.84, 1, 1] },
+      ],
+    });
+    expect(questionIsServable(medKoordinater)).toBe(true);
+
+    const utanKoordinater = bra({
+      category: "DTK",
+      image_url: "/prov-bilder/2013ht/p3/diagram-1.webp",
+      image_caption: JSON.stringify({ optionsImage: "/prov-bilder/2013ht/p3/31.webp" }),
+      options: [
+        { id: "A", text: "A" },
+        { id: "B", text: "B" },
+        { id: "C", text: "C" },
+        { id: "D", text: "D" },
+      ],
+    });
+    expect(questionIsServable(utanKoordinater)).toBe(true);
+  });
+
+  it("hårda fel (saknat facit, för få alternativ) blockerar oavsett kategori", () => {
+    expect(questionIsServable(bra({ correct_answer: null }))).toBe(false);
+    expect(questionIsServable(bra({ options: ["a", "b", "c"] }))).toBe(false);
   });
 });

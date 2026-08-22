@@ -2,6 +2,7 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { isImplausiblyFast } from "./match-abuse";
 import { decideWinnerSide } from "./match-outcome";
+import { questionIsServable } from "./question-validity";
 import type { Database } from "@/integrations/supabase/types";
 
 type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
@@ -36,7 +37,7 @@ async function pickRandom(
   let q = supabaseAdmin
     .from("questions")
     .select(
-      "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status",
+      "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status, correct_answer, image_url, image_caption",
     )
     .eq("category", category)
     .is("passage_id", null)
@@ -44,7 +45,29 @@ async function pickRandom(
   if (isMath) q = q.eq("clean_status", "ok");
   const { data, error } = await q;
   if (error) throw error;
-  const all = data ?? [];
+  let all = data ?? [];
+  // `clean_status="ok"` betyder att textutvinningen lyckades, inte att
+  // uppgiften faktiskt går att visa — en beskärning kan sakna sin
+  // bildproportion eller vara halvfärdig (se `question-validity.ts`) och
+  // renderar då fel skuren eller helt tom. Filtrerat mot samma regel som
+  // renderingen faktiskt använder: `useCleaned` här matchar exakt logiken i
+  // `match.$matchId.tsx` (crops nollas när den städade texten används).
+  if (isMath) {
+    all = all.filter((row) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = row as any;
+      const useCleaned = !!r.cleaned_question_text;
+      return questionIsServable({
+        id: r.id,
+        category: r.category,
+        question_text: useCleaned ? r.cleaned_question_text : r.question_text,
+        options: useCleaned ? r.cleaned_options : r.options,
+        correct_answer: r.correct_answer,
+        image_url: useCleaned ? null : r.image_url,
+        image_caption: useCleaned ? null : r.image_caption,
+      });
+    });
+  }
   // Try with full exclusion first; if not enough, allow recently-seen as fallback.
   let filtered = all.filter((row) => !excludeIds.has(row.id));
   if (filtered.length < count) {

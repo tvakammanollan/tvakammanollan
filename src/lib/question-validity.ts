@@ -231,3 +231,34 @@ export function questionFaults(q: ValidatableQuestion): QuestionFault[] {
 export function questionIsPlayable(q: ValidatableQuestion): boolean {
   return questionFaults(q).length === 0;
 }
+
+/**
+ * Går uppgiften att SERVERA live, i duell eller träning?
+ *
+ * Snävare urval än `questionIsPlayable`. `alternativ_endast_i_delad_bild`
+ * flaggas där konservativt — kommentaren på felkoden ovan säger uttryckligen
+ * att skillnaden "kräver arkivet" — vilket gör den rätt för granskningsrapporten
+ * (plocka ut rader en människa bör titta på) men fel som spärr: den skulle
+ * blockera fullt spelbara XYZ/KVA-uppgifter där hela bilden legitimt
+ * innehåller alternativen (verifierat mot skarpa data 2026-08-21, t.ex.
+ * uppgift 2019ht/p1/7, som renderar perfekt via `ProvFigure` +
+ * bokstavsknapparna).
+ *
+ * Här är kategorin känd vid urvalet, och det räcker för att skilja de två
+ * fallen bakom samma felkod:
+ *  - XYZ/KVA/NOG: `image_url` (utan crops) ÄR per design ofta hela den
+ *    fotograferade uppgiften, med alternativen redan i bilden — den avsedda
+ *    reservvägen, inte ett fel.
+ *  - DTK: `image_url` är alltid ett delat diagramuppslag som ALDRIG bär
+ *    alternativen. Reservvägen fungerar bara när raden har en egen
+ *    `optionsImage` att falla tillbaka på (se `hasOwnOptionsImage`) — annars
+ *    finns ingenstans att läsa svaren, och uppgiften ska inte serveras.
+ * Alla andra fel blockerar oavsett kategori.
+ */
+export function questionIsServable(q: ValidatableQuestion): boolean {
+  return questionFaults(q).every((f) => {
+    if (f !== "alternativ_endast_i_delad_bild") return false;
+    if (q.category !== "DTK") return true;
+    return hasOwnOptionsImage(q.image_caption);
+  });
+}

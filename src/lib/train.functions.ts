@@ -3,6 +3,9 @@ import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { questionIsServable } from "./question-validity";
+
+const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
 
 /**
  * Frågor till träningsläget.
@@ -70,9 +73,41 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
       throw new Error("Något gick fel. Försök igen om en stund.");
     }
 
+    // `clean_status != "retired"` betyder att textutvinningen inte är utgången,
+    // inte att uppgiften faktiskt går att visa — en matteuppgifts beskärning
+    // kan sakna sin bildproportion eller vara halvfärdig (se
+    // `question-validity.ts`) och renderar då fel skuren eller helt tom.
+    // `useCleaned` här matchar exakt logiken i `train.tsx`, så det som
+    // kontrolleras är det som faktiskt renderas.
+    const playable = (rows ?? []).filter((row) => {
+      const r = row as {
+        id: string;
+        category: string;
+        question_text: string | null;
+        options: unknown;
+        cleaned_options: unknown;
+        correct_answer: string | null;
+        image_url: string | null;
+        image_caption: unknown;
+        clean_status: string;
+        cleaned_question_text: string | null;
+      };
+      if (!MATH_CATEGORIES.has(r.category)) return true;
+      const useCleaned = r.clean_status === "ok" && !!r.cleaned_question_text;
+      return questionIsServable({
+        id: r.id,
+        category: r.category,
+        question_text: useCleaned ? r.cleaned_question_text : r.question_text,
+        options: useCleaned ? r.cleaned_options : r.options,
+        correct_answer: r.correct_answer,
+        image_url: useCleaned ? null : r.image_url,
+        image_caption: useCleaned ? null : r.image_caption,
+      });
+    });
+
     // Blandningen sker här och inte i klienten: urvalet är hela skyddet, och
     // ett urval som klienten gör själv är inget urval.
-    const pool = [...(rows ?? [])].sort(() => Math.random() - 0.5).slice(0, data.count);
+    const pool = [...playable].sort(() => Math.random() - 0.5).slice(0, data.count);
 
     // Passet hålls ihop. Ett flerkategoripass levererades tidigare helt
     // slumpat, så en ORD-fråga följdes av en LÄS-text följd av en MEK-mening —
