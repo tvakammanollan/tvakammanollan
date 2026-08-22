@@ -1617,6 +1617,119 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$x$ och $y$ är positiva tal.\n$\\frac{1}{x} - \\frac{1}{y} = 1$\n\n"
                       "Kvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 2 (fyra grafer SOM svarsalternativ), 5 (triangel med
+    # vinklar), 16 (rektangel+triangel), 21 (femhörning+triangel).
+    # NOG 26 har egen figur och rörs inte.
+    "2021vtb-2": {
+        1: {"text": "Vilket värde har $x$ om $\\frac{x}{3}+\\frac{1}{4}=\\frac{11}{12}$?",
+            "alternatives": ["2", "$\\frac{5}{2}$", "$\\frac{9}{4}$", "11"]},
+        3: {"text": "Vilket heltal är närmast $\\sqrt{65}+\\sqrt{35}$?",
+            "alternatives": ["10", "12", "14", "16"]},
+        4: {"text": "Vilket svarsalternativ motsvarar $\\frac{\\frac{3}{5}}{2-\\frac{11}{10}}$?",
+            "alternatives": ["$-\\frac{2}{3}$", "$-\\frac{3}{50}$", "$\\frac{27}{50}$", "$\\frac{2}{3}$"]},
+        6: {"text": "Vilket svarsalternativ motsvarar $x^2+x-12$?",
+            "alternatives": ["$(x-3)(x-4)$", "$(x-3)(x+4)$", "$(x+3)(x-4)$", "$(x+3)(x+4)$"]},
+        7: {"text": "$x > 0$\n\nVad är $(x^2)^{\\frac{5}{7}}$?",
+            "alternatives": ["$x^{\\frac{5}{14}}$", "$x^{\\frac{10}{7}}$", "$x^{\\frac{10}{14}}$",
+                              "$x^{\\frac{25}{49}}$"]},
+        8: {"text": "Vilket är det största primtalet som är mindre än 100?",
+            "alternatives": ["91", "93", "97", "99"]},
+        9: {"text": "Linjerna som ges av $y=-2x+2$ och $y=2x+4$ skär varandra i en "
+                     "punkt. Vilken $x$-koordinat har punkten?",
+            "alternatives": ["–2", "–1", "$-\\frac{1}{2}$", "0"]},
+        10: {"text": "Det finns två kvadrater, en gul och en röd. Sidan i den gula "
+                      "kvadraten är 6 cm längre än sidan i den röda kvadraten. Den gula "
+                      "kvadratens area är 48 cm² större än den röda kvadratens area. "
+                      "Hur stor area har den röda kvadraten?",
+             "alternatives": ["1 cm²", "16 cm²", "25 cm²", "36 cm²"]},
+        11: {"text": "Medelvikten av fyra lådor är 5,5 kg och medianvikten är 5 kg. Vad "
+                      "är den lägsta möjliga vikten för den tyngsta lådan?",
+             "alternatives": ["5,5 kg", "6 kg", "6,5 kg", "7 kg"]},
+        12: {"text": "En bil kör med hastigheten $x$ m/s. Vilket svarsalternativ "
+                      "motsvarar denna hastighet uttryckt i km/h?",
+             "alternatives": ["$\\frac{x}{6}$", "$9x$", "$\\frac{18x}{5}$", "$36x$"]},
+        13: {"text": "$x > -7$\n$y > 7$\n\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: 1 m³\nKvantitet II: 999 dm³", "alternatives": STD_KVA},
+        15: {"text": "På en arbetsplats finns det 80 anställda, varav 60 arbetar i "
+                      "verkstaden och 20 arbetar på kontoret. 30 av de anställda cyklar "
+                      "till arbetet.\nKvantitet I: Antalet anställda som både arbetar i "
+                      "verkstaden och cyklar till arbetet\nKvantitet II: 20",
+             "alternatives": STD_KVA},
+        17: {"text": "$x > 0$\nKvantitet I: En fjärdedel av en femtedel av $x$\n"
+                      "Kvantitet II: En femtedel av en fjärdedel av $x$", "alternatives": STD_KVA},
+        18: {"text": "$f(x) = 3 \\cdot 2^x$\n\nKvantitet I: $4 \\cdot f(2)$\nKvantitet II: $f(4)$",
+             "alternatives": STD_KVA},
+        19: {"text": "$x > 0$\nKvantitet I: $\\frac{1}{x+1} - \\frac{1}{x}$\nKvantitet II: "
+                      "$\\frac{1}{x} - \\frac{1}{x+1}$", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: Sannolikheten att slumpmässigt plocka upp en blå "
+                      "kula ur en påse som endast innehåller enfärgade kulor: 5 blå och "
+                      "15 vita\nKvantitet II: Sannolikheten att slumpmässigt plocka upp "
+                      "en röd kula ur en påse som endast innehåller enfärgade kulor: 4 "
+                      "röda och 14 vita", "alternatives": STD_KVA},
+        22: {"text": "$x^2y^3 > 0$\n$xy < 0$\n\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+    },
+    # Uteslutna: 10 (två kvadrater+triangel). NOG 26/27 har egna figurer och
+    # rörs inte. 12 och 20 har en inritad linje, men ekvationen/punkterna
+    # står redan fullt ut i texten så bilden ger ingen extra information.
+    "2021vtb-5": {
+        1: {"text": "$4(x-2) = -2(x+4)$\n\nVad är $x$?", "alternatives": ["0", "1", "2", "8"]},
+        2: {"text": "Talen 13, 14, 26 och $x$ har medelvärdet 16. Vilket värde har $x$?",
+            "alternatives": ["11", "13", "16", "17"]},
+        3: {"text": "Vad är $\\frac{1}{3}\\left(\\frac{1}{2}+\\frac{1}{6}\\right)$?",
+            "alternatives": ["$\\frac{1}{6}$", "$\\frac{2}{6}$", "$\\frac{1}{9}$", "$\\frac{2}{9}$"]},
+        4: {"text": "$f(x) = 4x-4$\n$g(x) = -3f(x)-12$\n\nVilket värde har $g(2)$?",
+            "alternatives": ["–24", "–18", "–12", "0"]},
+        5: {"text": "40 % av $x$ är 54. Vilket värde har $x$?",
+            "alternatives": ["90", "125", "135", "216"]},
+        6: {"text": "$x$, $y$, $z$ och $w$ är fyra på varandra följande heltal sådana "
+                     "att $x<y<z<w$. Vad är $(z+w)-(x+y)$?",
+            "alternatives": ["–4", "–2", "2", "4"]},
+        7: {"text": "$a \\neq 0$\n\nVilket svarsalternativ motsvarar uttrycket "
+                     "$\\frac{a^5 \\cdot a^{-3}}{a^{-8} \\cdot a^2}$?",
+            "alternatives": ["$a^{-4}$", "$a^{-2}$", "$a^4$", "$a^8$"]},
+        8: {"text": "$\\frac{4}{x} = \\frac{5}{6}$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{4 \\cdot 6}{5}$", "$\\frac{4 \\cdot 5}{6}$",
+                              "$\\frac{6}{4 \\cdot 5}$", "$\\frac{5}{4 \\cdot 6}$"]},
+        9: {"text": "Innermåtten för en cylinderformad marmeladburk är sådana att "
+                     "höjden är 5 cm och radien är 2 cm. Vilket är det minsta antalet "
+                     "sådana burkar som behövs för att rymma 0,6 liter marmelad?",
+            "alternatives": ["5", "10", "15", "20"]},
+        11: {"text": "Vad är $\\sqrt{36 \\cdot 10^{36}}$?",
+             "alternatives": ["$18 \\cdot 10^{18}$", "$6 \\cdot 10^{18}$",
+                               "$18 \\cdot 10^6$", "$6 \\cdot 10^6$"]},
+        12: {"text": "Linjen L: $y = \\frac{1}{2}x$ delar koordinatsystemet i en övre "
+                      "och en undre halva. Vilket svarsalternativ anger en punkt som "
+                      "ligger i den undre halvan?",
+             "alternatives": ["(–23, 23)", "(23, 0)", "(–23, 0)", "(0, 23)"]},
+        13: {"text": "Kvantitet I: 25 promille av 40 000\nKvantitet II: 1 600",
+             "alternatives": STD_KVA},
+        14: {"text": "En påse innehåller endast enfärgade kulor: röda och blå. Fyra "
+                      "kulor ska slumpmässigt plockas ur påsen, utan återläggning. "
+                      "Oavsett vilka fyra kulor som plockas ur påsen, så är minst en av "
+                      "de plockade kulorna röd.\nKvantitet I: Antalet kulor i påsen\n"
+                      "Kvantitet II: 5", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Två gånger arean av en kvadrat med sidan $x$\n"
+                      "Kvantitet II: Tre fjärdedelar av arean av en cirkel med radien $x$",
+             "alternatives": STD_KVA},
+        16: {"text": "$2y-4x=3$\n\nKvantitet I: $y$\nKvantitet II: $1{,}5+2x$",
+             "alternatives": STD_KVA},
+        17: {"text": "Medelvärdet av två tal är 35. Ett av talen är $x$.\nKvantitet I: "
+                      "$x$\nKvantitet II: $70-x$", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: $\\frac{3}{8} \\cdot \\frac{6}{11}$\nKvantitet II: "
+                      "$\\frac{\\frac{3}{8}}{\\frac{11}{6}}$", "alternatives": STD_KVA},
+        19: {"text": "$x$ är ett jämnt positivt heltal.\nKvantitet I: $(-7)^x$\n"
+                      "Kvantitet II: $(-7)^{x+1}$", "alternatives": STD_KVA},
+        20: {"text": "Linjen L går genom origo och punkten $(-3, 3)$. Punkten "
+                      "$(x_1, y_1)$ ligger också på linjen L.\nKvantitet I: $x_1+y_1$\n"
+                      "Kvantitet II: 0", "alternatives": STD_KVA},
+        21: {"text": "Vinklarna i en triangel förhåller sig som 1:5:9.\nKvantitet I: "
+                      "Triangelns minsta vinkel\nKvantitet II: 15°", "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: Den positiva lösningen till ekvationen $(x-3)(x+2)=0$\n"
+                      "Kvantitet II: Den positiva lösningen till ekvationen $(x+3)(x-2)=0$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
