@@ -971,6 +971,63 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "Kvantitet I: $2 \\cdot 10^x$\nKvantitet II: $(2 \\cdot 10)^x$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 2 (triangel med vinklar), 11 (fyra grafer SOM
+    # svarsalternativ). Fråga 15:s tomma koordinatsystem är bara ett
+    # räknehjälpmedel — hörnens koordinater står redan i texten.
+    "2023vt-2": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $(3x-2x)(y-z)$?",
+            "alternatives": ["$x + y - z$", "$3x - 2xy - z$", "$xy - xz$", "$3xy + 2xz$"]},
+        3: {"text": "$\\frac{4x}{7} = \\frac{1}{14}$\n\nVilket värde har $x$?",
+            "alternatives": ["$\\frac{1}{8}$", "$\\frac{1}{7}$", "$\\frac{1}{4}$", "$\\frac{1}{2}$"]},
+        4: {"text": "För $f(x) = kx + m$ gäller att $f(4) - f(2) = 6$. Vilket värde har $k$?",
+            "alternatives": ["$\\frac{3}{2}$", "2", "3", "4"]},
+        5: {"text": "Albert har tio tomma lådor som är numrerade med heltalen 1–10. Först "
+                     "lägger Albert en kula i varje låda vars nummer är jämnt delbart med 1. "
+                     "Sedan lägger han två kulor i varje låda vars nummer är jämnt delbart "
+                     "med 2, och så vidare ända upp till 10. Albert lägger alltså $k$ stycken "
+                     "kulor i varje låda vars nummer är jämnt delbart med $k$ för varje heltal "
+                     "$k$ från 1 till 10. Hur många kulor ligger det i lådan som har nummer 8 "
+                     "när Albert är klar?", "alternatives": ["7", "9", "11", "15"]},
+        6: {"text": "$x + y = 10$\n\nMedelvärdet av $y$ och 0 är lika med 5. Vilket värde har $x$?",
+            "alternatives": ["–5", "0", "5", "10"]},
+        7: {"text": "Ett lekland har ett bollhav med 21 000 enfärgade bollar i två olika "
+                     "färger: gul och röd. På tre gula bollar går det sju röda bollar. Hur "
+                     "många gula bollar finns det i bollhavet?",
+            "alternatives": ["6 300", "7 000", "7 300", "9 000"]},
+        8: {"text": "Vilket av svarsalternativen är närmast $2\\sqrt{22}$?",
+            "alternatives": ["7", "9", "11", "22"]},
+        9: {"text": "Vad är differensen mellan $(x+2)^2$ och $x^2$?",
+            "alternatives": ["2", "4", "$2x+4$", "$4x+4$"]},
+        10: {"text": "Areorna av kvadraterna $K_1$ och $K_2$ förhåller sig som 1:4. Arean av "
+                      "$K_1$ är 9 cm$^2$. Vilken sidlängd har $K_2$?",
+             "alternatives": ["3 cm", "6 cm", "9 cm", "12 cm"]},
+        12: {"text": "Vilket svarsalternativ motsvarar uttrycket $\\frac{1}{x} + \\frac{1}{y} + \\frac{1}{z}$?",
+             "alternatives": ["$\\frac{3}{x+y+z}$", "$\\frac{xy+xz+yz}{x+y+z}$",
+                               "$\\frac{x+y+z}{xyz}$", "$\\frac{xy+xz+yz}{xyz}$"]},
+        13: {"text": "$x < 0$\nKvantitet I: $x^3 + y^2$\nKvantitet II: $x^2 + z^3$",
+             "alternatives": STD_KVA},
+        14: {"text": "De två bilarna A och B kör 50 km vardera. För bil A räcker en liter "
+                      "bensin till att köra 20 km, och för bil B räcker en liter bensin till "
+                      "att köra 25 km.\nKvantitet I: Mängden bensin som bil A förbrukar\n"
+                      "Kvantitet II: Mängden bensin som bil B förbrukar", "alternatives": STD_KVA},
+        15: {"text": "Hörnen i fyrhörningen ABCD har koordinaterna:\n$A = (1, 1)$\n"
+                      "$B = (1, 5)$\n$C = (-2, 1)$\n$D = (-2, -3)$\n\nKvantitet I: Arean av "
+                      "fyrhörningen ABCD\nKvantitet II: 20 areaenheter", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $\\frac{1}{3} + \\frac{1}{12}$\nKvantitet II: "
+                      "$\\frac{1}{4} + \\frac{1}{6}$", "alternatives": STD_KVA},
+        17: {"text": "$\\frac{1}{x} + \\frac{1}{x} + \\frac{1}{x} = 15$\nKvantitet I: $x$\n"
+                      "Kvantitet II: $\\frac{1}{5}$", "alternatives": STD_KVA},
+        18: {"text": "I en parallellogram gäller att en av vinklarna är $11x$ och en annan av "
+                      "vinklarna är $4x$.\nKvantitet I: $x$\nKvantitet II: $15°$",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: $\\frac{10^3}{10^2}$\nKvantitet II: $\\frac{10^{-2}}{10^{-3}}$",
+             "alternatives": STD_KVA},
+        20: {"text": "Medelvärdet av de tre talen $x$, $y$ och $z$ är lika med $x$.\n"
+                      "Kvantitet I: $2x$\nKvantitet II: $y + z$", "alternatives": STD_KVA},
+        21: {"text": "I triangeln ABC är sidan AB dubbelt så lång som sidan BC.\nKvantitet I: "
+                      "Längden av sidan AC\nKvantitet II: Längden av sidan AB", "alternatives": STD_KVA},
+        22: {"text": "$0 < a < 1$\nKvantitet I: $a^{-1}$\nKvantitet II: $1$", "alternatives": STD_KVA},
+    },
 }
 
 
