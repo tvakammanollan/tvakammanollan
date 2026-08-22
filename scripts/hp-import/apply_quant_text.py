@@ -275,6 +275,86 @@ PATCH: dict[str, dict[int, dict]] = {
                       "träd.\n(2) Det skulle ta 10 timmar för A att ensam plantera de 120 träden.",
              "alternatives": STD_NOG},
     },
+    # Uteslutna (egen figur): 2 (sträcka med punkter), 3 (parallelltrapets),
+    # 19 (parallella linjer med trianglar).
+    "2013vt-2": {
+        1: {"text": "Vad är $5 + 4 \\cdot 3 - 20/10$?", "alternatives": ["–0,3", "0,7", "15", "25"]},
+        4: {"text": "Kurvan $y = x^2 + x - 6$ skär $x$-axeln i två punkter. Vilka $x$-värden "
+                     "har dessa punkter?",
+            "alternatives": ["$x = 3$ och $x = 2$", "$x = 3$ och $x = -2$",
+                              "$x = -3$ och $x = 2$", "$x = -3$ och $x = -2$"]},
+        5: {"text": "Vid beräkning av $\\left(\\frac{4}{5} - \\frac{3}{4}\\right) + "
+                     "\\left(\\frac{2}{3} + \\frac{1}{2}\\right)$ erhålls ett bråk av positiva "
+                     "heltal. Vilken är den minsta nämnare som bråket kan ha?",
+            "alternatives": ["6", "20", "60", "72"]},
+        6: {"text": "$\\frac{x(y-z)}{y(x+y+z)} = \\frac{1}{3}$\n\nOm $x = 4$ och $y = 3$, vad "
+                     "är då $z$?", "alternatives": ["1", "2", "3", "4"]},
+        7: {"text": "Om Lotta var 28 år för $x$ år sedan, hur gammal var hon för 12 år sedan?",
+            "alternatives": ["$(16 + x)$ år", "$(16 - x)$ år", "$(40 + x)$ år", "$(40 - x)$ år"]},
+        8: {"text": "Vad är $(3x-1)2x - x(3x-2)$?",
+            "alternatives": ["$3x^2$", "$3x^2 - 4x$", "$9x^2$", "$9x^2 - 4x$"]},
+        9: {"text": "$a$, $b$ och $c$ är tre på varandra följande heltal så att $a < b < c$.\n\n"
+                     "Vad är $\\frac{(a-b)}{(b-c)} \\cdot (a-c)$?", "alternatives": ["–2", "–1", "1", "2"]},
+        10: {"text": "$x \\neq 0$\n\nVad är $\\frac{x^n}{y^n}$ om $x - y = 0$ och $n$ är jämnt "
+                      "delbart med 2?", "alternatives": ["–1", "0", "1", "2"]},
+        11: {"text": "40 personer deltar i ett prov med 6 frågor.\n\nAntal poäng: 0, 1, 2, 3, 4, "
+                      "5, 6\nAntal personer: 5, 12, 3, 10, 4, 4, 2\n\nVad är medianpoängen?",
+             "alternatives": ["2", "2,5", "3", "4"]},
+        12: {"text": "Arean av en cirkel är 16 cm$^2$ större än arean av en kvadrat med sidan "
+                      "3 cm. Vad är cirkelns radie?",
+             "alternatives": ["$\\frac{5}{\\pi}$ cm", "$\\frac{5}{\\sqrt{\\pi}}$ cm",
+                               "$\\frac{\\sqrt{5}}{\\pi}$ cm", "$\\sqrt{\\frac{5}{\\pi}}$ cm"]},
+        13: {"text": "Kvantitet I: $15 \\cdot 36 + 15 \\cdot 64$\nKvantitet II: 1 501",
+             "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: Diagonalen i rektangeln ABCD\nKvantitet II: Halva omkretsen "
+                      "i rektangeln ABCD", "alternatives": STD_KVA},
+        15: {"text": "I en låda finns endast blå, röda och gula bollar. 1/3 av bollarna är blå "
+                      "och 1/6 av bollarna är röda. En boll dras slumpmässigt.\nKvantitet I: "
+                      "Sannolikheten att den dragna bollen är gul\nKvantitet II: Sannolikheten "
+                      "att den dragna bollen är blå eller röd", "alternatives": STD_KVA},
+        16: {"text": "$8x + 4 = 10$\nKvantitet I: $4x + 2$\nKvantitet II: $8 - \\frac{10}{4}$",
+             "alternatives": STD_KVA},
+        17: {"text": "$a < b$\nKvantitet I: Avståndet mellan origo $(0,0)$ och $(a,b)$\n"
+                      "Kvantitet II: Avståndet mellan origo $(0,0)$ och $(b,a)$", "alternatives": STD_KVA},
+        18: {"text": "$x > 0$\nKvantitet I: $\\frac{x^{-2}}{2}$\nKvantitet II: "
+                      "$\\left(\\frac{x}{2}\\right)^{-2}$", "alternatives": STD_KVA},
+        20: {"text": "$k$, $m$ och $n$ är heltal. $0 < k < m < n$.\nKvantitet I: $\\frac{m}{n}$\n"
+                      "Kvantitet II: $\\frac{k}{m}$", "alternatives": STD_KVA},
+        21: {"text": "$x > 0$\nKvantitet I: $x^{\\frac{1}{4}}$\nKvantitet II: $\\sqrt{\\sqrt{x}}$",
+             "alternatives": STD_KVA},
+        22: {"text": "$x$ och $y$ är positiva heltal.\n$5x + 10y = 270\\,580$\nKvantitet I: "
+                      "Största möjliga värdet på $x$\nKvantitet II: Största möjliga värdet på $y$",
+             "alternatives": STD_KVA},
+        23: {"text": "Vid en förskoleavdelning för barn i åldrarna 1-3 år finns 12 barn. Vilken "
+                      "är medelåldern bland flickorna på avdelningen?\n\n(1) Medelåldern på "
+                      "barnen som går på avdelningen är två år.\n(2) Två tredjedelar av barnen "
+                      "på avdelningen är flickor.", "alternatives": STD_NOG},
+        24: {"text": "Arvid, Benjamin och Clara startar samtidigt från startplatsen. De går med "
+                      "konstanta hastigheter runt en bana som är 400 meter lång. Efter hur lång "
+                      "tid passerar de samtidigt startplatsen första gången?\n\n(1) Clara går "
+                      "dubbelt så fort som Arvid, och medelvärdet av Arvids och Claras "
+                      "hastigheter är lika med Benjamins hastighet.\n(2) Arvids hastighet är "
+                      "2 km/h, Benjamins är 3 km/h och Claras är 4 km/h.", "alternatives": STD_NOG},
+        25: {"text": "På en cykelparkering finns enbart herrcyklar, damcyklar och barncyklar. "
+                      "Hur många barncyklar finns det på parkeringen?\n\n(1) Det finns totalt "
+                      "210 cyklar på parkeringen och av dem är 4/7 herrcyklar och 48 är "
+                      "damcyklar.\n(2) Det finns 48 damcyklar och 120 herrcyklar. 20 procent av "
+                      "det totala antalet cyklar på parkeringen är barncyklar.", "alternatives": STD_NOG},
+        26: {"text": "Isabella, Anna, Katja, Olga och Fatima bor i samma tvåvåningshus. Olga bor "
+                      "inte på samma våning som Katja och Fatima. Isabella bor på den övre "
+                      "våningen. På vilken våning bor respektive kvinna?\n\n(1) Det bor minst "
+                      "två kvinnor på varje våning.\n(2) Anna bor på en annan våning än Isabella "
+                      "och Katja.", "alternatives": STD_NOG},
+        27: {"text": "En spelkula kastas slumpmässigt och landar på ett cirkulärt plant bord. På "
+                      "bordet finns en triangelformad duk vars hörn tangerar bordets kanter. Vad "
+                      "är sannolikheten att spelkulan landar utanför duken?\n\n(1) Bordets radie "
+                      "är 20 cm och dukens area är 400 cm$^2$.\n(2) Dukens hypotenusa har samma "
+                      "längd som bordets diameter.", "alternatives": STD_NOG},
+        28: {"text": "En vinterlördag åker Gunilla skridskor på en frusen sjö. Hur tjock är isen "
+                      "på sjön den lördagen?\n\n(1) Isen är 25 procent tjockare den lördagen än "
+                      "den var en vecka tidigare.\n(2) Under vintern blir isen 1 cm tjockare "
+                      "varje vecka.", "alternatives": STD_NOG},
+    },
 }
 
 
