@@ -669,6 +669,58 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$x$ och $y$ är positiva heltal. När $x$ divideras med $y$ blir kvoten 1 "
                       "och resten 1.\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 4 (tre linjer med vinklar), 6 (fyra grafer SOM
+    # svarsalternativ), 18 (fyrhörning ABCD), 21 (rektangel med halvcirkel),
+    # 25 (triangel med vinklar u/v/w).
+    "2024ht-1": {
+        1: {"text": "$12x - 54 = 6x + 18$\n\nVad är $x$?", "alternatives": ["–6", "–2", "4", "12"]},
+        2: {"text": "$\\sqrt{3}\\,x = 6$\n\nVilket värde har $x$?",
+            "alternatives": ["$\\sqrt{2}$", "$3\\sqrt{2}$", "$2\\sqrt{3}$", "4"]},
+        3: {"text": "$x > 0$\n\nHur många procent av $x$ är $\\frac{x}{15} + \\frac{x}{30}$?",
+            "alternatives": ["4,5", "10", "15", "22,5"]},
+        5: {"text": "Vilket svarsalternativ är korrekt?",
+            "alternatives": ["$\\frac{3}{4} < \\frac{7}{8} < \\frac{25}{32}$",
+                              "$\\frac{3}{4} < \\frac{13}{16} < \\frac{25}{32}$",
+                              "$\\frac{3}{4} < \\frac{7}{8} < \\frac{13}{16}$",
+                              "$\\frac{3}{4} < \\frac{25}{32} < \\frac{13}{16}$"]},
+        7: {"text": "En kvadrat har sidan $s$ cm och diagonalen $d$ cm. Om $2s^2 + d^2 = 64$, "
+                     "vilket värde har då $s$?", "alternatives": ["2", "4", "8", "16"]},
+        8: {"text": "Vilket svarsalternativ motsvarar $\\frac{3(x+y) - 5(y-x)}{2}$?",
+            "alternatives": ["$x - 2y$", "$4x - 4y$", "$4x - y$", "$8x - 2y$"]},
+        9: {"text": "$x - y = 7$\n\nVilket av svarsalternativen är med säkerhet korrekt?",
+            "alternatives": ["Om $x$ är negativt, så är $y$ negativt.",
+                              "Om $x$ är positivt, så är $y$ positivt.",
+                              "Om $y$ är negativt, så är $x$ positivt.",
+                              "Om $y$ är positivt, så är $x$ negativt."]},
+        10: {"text": "Punkten $(a, 2a)$ ligger på linjen som ges av ekvationen $y = 3x - 60$. "
+                      "Vilket värde har $a$?", "alternatives": ["12", "15", "30", "60"]},
+        11: {"text": "Ritva har sex bollar som hon fördelar slumpmässigt i tre tomma lådor. "
+                      "Hur stor är sannolikheten att exakt en låda innehåller ett udda antal "
+                      "bollar när Ritva är klar?",
+             "alternatives": ["0", "$\\frac{1}{3}$", "$\\frac{2}{3}$", "1"]},
+        12: {"text": "Vilken av följande produkter är lika med $8^x$, för något heltal $x$?",
+             "alternatives": ["$16 \\cdot 16$", "$16 \\cdot 32$", "$32 \\cdot 32$", "$32 \\cdot 64$"]},
+        13: {"text": "Kvantitet I: $\\sqrt{5} + 1$\nKvantitet II: $\\sqrt{6}$", "alternatives": STD_KVA},
+        14: {"text": "$\\frac{x}{4} + \\frac{1}{2} = \\frac{5}{8}$\nKvantitet I: $x$\n"
+                      "Kvantitet II: $2$", "alternatives": STD_KVA},
+        15: {"text": "$0 < x < y$\nKvantitet I: $x + 2y$\nKvantitet II: $2x + y$",
+             "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $\\left(\\frac{3}{5} - \\frac{4}{7}\\right) \\cdot 32$\n"
+                      "Kvantitet II: $1$", "alternatives": STD_KVA},
+        17: {"text": "Kalle har $x$ kulor och Pelle har $y$ kulor. Olle har inga kulor. Kalle "
+                      "ger hälften av sina kulor till Olle. Pelle ger också hälften av sina "
+                      "kulor till Olle.\nKvantitet I: Det sammanlagda antalet kulor som Olle "
+                      "får av Kalle och Pelle\nKvantitet II: Medelvärdet av antalet kulor som "
+                      "Kalle och Pelle hade innan de gav kulor till Olle", "alternatives": STD_KVA},
+        19: {"text": "Linjen L ges av ekvationen $y = -\\frac{x}{2} + 4$.\nKvantitet I: "
+                      "$x$-koordinaten för den punkt där L skär $x$-axeln\nKvantitet II: "
+                      "$y$-koordinaten för den punkt där L skär $y$-axeln", "alternatives": STD_KVA},
+        20: {"text": "En mätserie består av sex positiva heltal. De fyra största mätvärdena är "
+                      "större än 12. De fyra minsta mätvärdena är mindre än 15.\nKvantitet I: "
+                      "Mätseriens median\nKvantitet II: $13{,}5$", "alternatives": STD_KVA},
+        22: {"text": "$\\frac{x}{y} = -1$\nKvantitet I: $x - y$\nKvantitet II: $0$",
+             "alternatives": STD_KVA},
+    },
 }
 
 
