@@ -41,6 +41,7 @@ import { Route as OvaDelprovRouteImport } from './routes/ova.$delprov'
 import { Route as OrdlistaOrdRouteImport } from './routes/ordlista_.$ord'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
+import { Route as HogskoleprovetPoangProgramRouteImport } from './routes/hogskoleprovet-poang_.$program'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
 import { Route as GuiderTidspressRouteImport } from './routes/guider/tidspress'
 import { Route as GuiderOrdRouteImport } from './routes/guider/ord'
@@ -225,6 +226,12 @@ const JoinRoomCodeRoute = JoinRoomCodeRouteImport.update({
   path: '/join/$roomCode',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HogskoleprovetPoangProgramRoute =
+  HogskoleprovetPoangProgramRouteImport.update({
+    id: '/hogskoleprovet-poang_/$program',
+    path: '/hogskoleprovet-poang/$program',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GuiderXyzRoute = GuiderXyzRouteImport.update({
   id: '/guider/xyz',
   path: '/guider/xyz',
@@ -384,6 +391,7 @@ export interface FileRoutesByFullPath {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/ordlista/$ord': typeof OrdlistaOrdRoute
@@ -440,6 +448,7 @@ export interface FileRoutesByTo {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/ordlista/$ord': typeof OrdlistaOrdRoute
@@ -497,6 +506,7 @@ export interface FileRoutesById {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-poang_/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
   '/ordlista_/$ord': typeof OrdlistaOrdRoute
@@ -555,6 +565,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-poang/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/ordlista/$ord'
@@ -611,6 +622,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-poang/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/ordlista/$ord'
@@ -667,6 +679,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-poang_/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
     | '/ordlista_/$ord'
@@ -724,6 +737,7 @@ export interface RootRouteChildren {
   GuiderOrdRoute: typeof GuiderOrdRoute
   GuiderTidspressRoute: typeof GuiderTidspressRoute
   GuiderXyzRoute: typeof GuiderXyzRoute
+  HogskoleprovetPoangProgramRoute: typeof HogskoleprovetPoangProgramRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
   OrdlistaOrdRoute: typeof OrdlistaOrdRoute
@@ -962,6 +976,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinRoomCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hogskoleprovet-poang_/$program': {
+      id: '/hogskoleprovet-poang_/$program'
+      path: '/hogskoleprovet-poang/$program'
+      fullPath: '/hogskoleprovet-poang/$program'
+      preLoaderRoute: typeof HogskoleprovetPoangProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guider/xyz': {
       id: '/guider/xyz'
       path: '/guider/xyz'
@@ -1165,6 +1186,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderOrdRoute: GuiderOrdRoute,
   GuiderTidspressRoute: GuiderTidspressRoute,
   GuiderXyzRoute: GuiderXyzRoute,
+  HogskoleprovetPoangProgramRoute: HogskoleprovetPoangProgramRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
   OrdlistaOrdRoute: OrdlistaOrdRoute,

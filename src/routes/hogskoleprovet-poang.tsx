@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { ArrowRight, Calculator, GraduationCap, Scale, TrendingUp } from "lucide-react";
+import { PROGRAM_LIST } from "./hogskoleprovet-poang_.$program";
 
 /* =====================================================================
    SEO: "högskoleprovet poäng / antagning" — hög sökvolym ("vad krävs på
@@ -232,6 +233,33 @@ function PoangPage() {
             </a>
             .
           </p>
+        </section>
+
+        {/* Per-program poänggränser */}
+        <section>
+          <h2
+            className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            <GraduationCap className="h-5 w-5 text-[#ae2f26]" />
+            HP-poäng för specifika program
+          </h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-white/65">
+            Exakta antagningspoäng i högskoleprovsgruppen, lärosäte för lärosäte, hämtade direkt ur
+            UHR:s antagningsstatistik:
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {PROGRAM_LIST.map((p) => (
+              <Link
+                key={p.slug}
+                to="/hogskoleprovet-poang/$program"
+                params={{ program: p.slug }}
+                className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#ae2f26]/50 hover:text-[var(--cream)]"
+              >
+                {p.name}
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
 

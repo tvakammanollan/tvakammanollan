@@ -19,7 +19,6 @@ länk i en delad komponent syns på alla sidor som länkar dit) — se
 | Problem | Sidor som berörs | Effekt | Insats | Föreslagen åtgärd |
 |---|---|---|---|---|
 | Google har avvecklat "Practice problems"-strukturerad data (jan 2026) | — | — | — | **Gör ingenting.** Video-prompten som låg till grund för den här rundan föreslog att lägga till `Quiz`/`PracticeProblem`-schema på `/ova/*`. Verifierat mot developers.google.com: funktionen är helt borttagen ur Sök, Rich Results Test och dokumentationen. Implementera inte. |
-| Pengar-sidor per program (`/hogskoleprovet-poang/lakarprogrammet` m.fl.) | Ny sidtyp, 8–12 sidor | Hög | L | **Kartlagt, ej byggt** — kräver riktiga antagningspoäng från antagning.se med årtal och källa per program. Se avsnittet "Föreslagen innehållsarkitektur" nedan. Vänta på din prioritering av vilka 8–12 program och bekräftelse på att vi får skrapa/citera antagning.se:s siffror med källhänvisning. |
 | Ordlista i tema/svårighetsgrad, inte bara bokstav | `/ordlista/*` | Medel | M | Föreslaget, ej byggt. Kräver en svårighetsgrads-taggning av orden (finns inte i datan idag) — antingen en enkel heuristik (ordlängd + frekvens i arkivet) eller manuell kuratering av en första lista ("Svåra ord högskoleprovet"). |
 | Sökordskluster per guide | De 8 delprovsguiderna | Medel | M | Föreslaget, ej byggt. Kräver riktig sökordsdata (Search Console, se "Efter deploy" nedan) snarare än gissade svenska fraser — annars optimerar vi mot fel frågor. |
 | Publiceringskadens (3–5 sidor/vecka, 6–8 v. före toppar) | Alla nya sidor | Låg (process, ej kod) | S | Antaget som arbetssätt framåt, inget att bygga. |
@@ -61,31 +60,44 @@ länk i en delad komponent syns på alla sidor som länkar dit) — se
 - **Cloudflares AI-bot-block i `robots.txt` avstängt** (din åtgärd i
   Cloudflare-dashboarden) — troligen den enskilt viktigaste orsaken till
   att inget AI-svarsverktyg citerat sajten.
+- **Poänggränser per program byggda** (`/hogskoleprovet-poang/<program>`,
+  `src/routes/hogskoleprovet-poang_.$program.tsx`), sju sidor: läkare,
+  civilekonom (Handelshögskolan), teknisk fysik, psykolog, jurist,
+  tandläkare, sjuksköterska. Se avsnittet nedan för källor och datum —
+  detta ersätter den tidigare "kartlagt, ej byggt"-raden.
+
+## Poänggränser per program — källor och underhåll
+
+Byggda 2026-08-22, all data hämtad **live** ur UHR:s antagningsstatistik-
+verktyg (uhr.se/studier-och-antagning/antagningsstatistik, urval 2, HT 2026)
+via en riktig webbläsarsession — inte skrapad från tredje part, inte
+gissad. Civilekonomprogrammet är undantaget: Handelshögskolan i Stockholm
+har egen antagningsstatistik-sida med historik sedan 2020, citerad direkt
+dit i stället för UHR.
+
+**Så uppdaterar du siffrorna nästa antagningsomgång:**
+
+1. Gå till `https://www.uhr.se/studier-och-antagning/antagningsstatistik/`,
+   välj rätt termin (`HT`/`VT` + år) i dropdownen och sök på programmets
+   namn — sökrutan fyller URL:en `?astasearchperiod=HTxx&astasearchfor=...`
+   som går att länka direkt till.
+2. Läs raden för urvalsgrupp **Högskoleprov (HP)** ("Poängen som visas är
+   den lägsta som en antagen person hade i urvalsgruppen").
+3. Uppdatera motsvarande `schools`-rad och `verifiedAt` i
+   `hogskoleprovet-poang_.$program.tsx`. Lägg aldrig in ett tal du inte
+   själv läst av på det sättet.
+
+**Kända luckor, inte fel:** Umeå universitet saknas på jurist- och
+läkarsidorna (dess program dök inte upp under samma sökterm som gav träff
+för övriga lärosäten — värt att undersöka med en egen sökning om sidan ska
+kompletteras). Sjuksköterskeprogrammet visar fem exempel av ~25 möjliga
+studieorter, valda för att visa spridningen (0,45–1,10) snarare än att vara
+en fullständig lista.
 
 ## Föreslagen innehållsarkitektur (kartläggning, ej byggt)
 
 Enligt Fas 4 i den ursprungliga prompten — det här är förslag som väntar på
 ditt godkännande, inte kod som redan finns.
-
-### Poänggränser per program — de riktiga "money pages"
-
-`/hogskoleprovet-poang/<program>` för de 8–12 största/mest sökta
-programmen (läkare, psykolog, jurist, civilingenjör, sjuksköterska,
-tandläkare, ekonomi, veterinär är rimliga kandidater — bekräfta listan
-innan byggstart). Varje sida behöver:
-
-- Faktiskt antagningspoäng (BI/BII/HP) per lärosäte, med **årtal och
-  källänk till antagning.se** — aldrig ett eget snitt eller en gissning.
-- Egen `describeWithin`-beskrivning och `LearningResource`/`FAQPage`-schema
-  där relevant, byggd på samma mönster som `/hogskoleprovet-poang` redan
-  använder.
-- Länk in till `/gamla-prov` och relevant `/guider/*`.
-
-Risker att flagga innan byggstart: antagningsstatistik ändras varje
-antagningsomgång (vår/höst) — sidorna behöver ett tydligt "uppdaterat
-[datum]" och en process för att hållas aktuella, annars blir de snabbt
-den typ av inaktuell siffra CLAUDE.md varnar för på andra ställen i
-kodbasen.
 
 ### Ordlista i teman
 
