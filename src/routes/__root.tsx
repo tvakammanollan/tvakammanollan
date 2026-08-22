@@ -192,6 +192,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
+      // Preload de två snitt som faktiskt syns i första målningen på varje
+      // sida — kroppstexten (Instrument Sans) och alla rubriker (Young
+      // Serif). Utan preload upptäcker webbläsaren dem först när CSS:en
+      // hunnit parsas till @font-face-reglerna, vilket lägger till en hel
+      // request-omgång innan text i rätt snitt kan målas (font-display: swap
+      // gör texten synlig direkt, men i fallback-snittet till dess). De tre
+      // andra vikterna (bold/italic/mono) syns bara längre ner eller mer
+      // sällan och preloadas inte.
+      {
+        rel: "preload",
+        href: "/fonts/InstrumentSans-Regular.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "/fonts/YoungSerif-Regular.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       // canonical sätts per route (annars duplicerar TanStack länken på alla sidor)
       // OBS: här låg hreflang sv-SE + x-default, båda hårdkodade till "/".
       // Roten renderar på varje sida, så varje undersida sa åt Google att dess
