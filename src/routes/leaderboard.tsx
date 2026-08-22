@@ -65,6 +65,16 @@ function TableSkeleton() {
 
 export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
+  // SSR:ar bara standardfliken (verbal, "alltid") — Radix Tabs monterar aldrig
+  // en inaktiv TabsContent, så matte och ord hämtas fortfarande bara klient-
+  // sida precis som förut. Utan den här var sidan tom utan JS: hela listan
+  // kom ur en useQuery vars queryFn bara körs i webbläsaren.
+  loader: async () => {
+    const rows = await fetchLeaderboard({ data: { match_type: "verbal", limit: 200 } }).catch(
+      () => [],
+    );
+    return { initialVerbalRows: filterLeaderboard(rows as LbRow[]) };
+  },
   head: () => ({
     meta: pageMeta({
       path: "/leaderboard",
@@ -97,6 +107,7 @@ export const Route = createFileRoute("/leaderboard")({
 
 function LeaderboardPage() {
   const { user } = useAuth();
+  const { initialVerbalRows } = Route.useLoaderData();
   const [tab, setTab] = useState<"verbal" | "math" | "ord">("verbal");
 
   return (
@@ -130,7 +141,12 @@ function LeaderboardPage() {
             </TabsList>
 
             <TabsContent value="verbal">
-              <Board matchType="verbal" currentUserId={user?.id} isGuest={!!user?.is_anonymous} />
+              <Board
+                matchType="verbal"
+                currentUserId={user?.id}
+                isGuest={!!user?.is_anonymous}
+                initialRows={initialVerbalRows}
+              />
             </TabsContent>
             <TabsContent value="math">
               <Board matchType="math" currentUserId={user?.id} isGuest={!!user?.is_anonymous} />
@@ -175,10 +191,13 @@ function Board({
   matchType,
   currentUserId,
   isGuest,
+  initialRows,
 }: {
   matchType: MatchType;
   currentUserId: string | undefined;
   isGuest: boolean;
+  /** Bara satt för standardfliken (verbal) — se loader ovan. */
+  initialRows?: LbRow[];
 }) {
   const fetchLb = useServerFn(fetchLeaderboard);
   const fetchWeekly = useServerFn(fetchWeeklyLeaderboard);
@@ -204,6 +223,7 @@ function Board({
       return filterLeaderboard(rowsData as LbRow[]);
     },
     staleTime: 60_000,
+    initialData: initialRows,
   });
   const error =
     queryError instanceof Error ? queryError.message : queryError ? "Kunde inte ladda" : null;
