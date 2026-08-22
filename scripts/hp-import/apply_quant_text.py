@@ -621,6 +621,54 @@ PATCH: dict[str, dict[int, dict]] = {
                       "\\left(1+\\frac{1}{4}\\right)\\left(1-\\frac{1}{5}\\right)$\n"
                       "Kvantitet II: $1$", "alternatives": STD_KVA},
     },
+    # Uteslutna: 9 (fyra grafer SOM svarsalternativ), 12 (cirklar i
+    # triangel), 17 (två figurer, triangel + kvadrat), 21 (triangel med
+    # parallell sträcka DE).
+    "2025vt-3": {
+        1: {"text": "$4x + 16 = 6x - 8$\n\nVad är $x$?", "alternatives": ["–12", "–4", "4", "12"]},
+        2: {"text": "Ett rätblock är 2 meter långt, 2 decimeter brett och 2 millimeter högt. "
+                     "Hur stor är volymen av rätblocket?",
+            "alternatives": ["8 cm$^3$", "80 cm$^3$", "800 cm$^3$", "8 000 cm$^3$"]},
+        3: {"text": "$3^{2x} = 27$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{2}{3}$", "$\\frac{3}{2}$", "2", "3"]},
+        4: {"text": "Arne är 7 år äldre än Bertil. Tillsammans är Arne och Bertil 33 år. Arnes "
+                     "ålder är $x$ år och Bertils ålder är $y$ år. Vad är produkten $xy$?",
+            "alternatives": ["228", "231", "260", "266"]},
+        5: {"text": "Vad är $\\frac{\\frac{6}{25}}{\\frac{36}{5}}$?",
+            "alternatives": ["$\\frac{1}{30}$", "$\\frac{5}{6}$", "$\\frac{125}{216}$", "$\\frac{216}{125}$"]},
+        6: {"text": "$x$ är ett heltal. Vilket svarsalternativ är ett möjligt värde på $x(x+1)$?",
+            "alternatives": ["37", "42", "54", "81"]},
+        7: {"text": "$a \\neq 0$\n\nFör vilket svarsalternativ gäller med säkerhet att $f(a) = a$?",
+            "alternatives": ["$f(x) = \\frac{x}{a} + a$", "$f(x) = 2x - a$", "$f(x) = ax$",
+                              "$f(x) = -ax + a^3$"]},
+        8: {"text": "Vad är $\\frac{2{,}1 \\cdot 10^6}{3 \\cdot 10^4}$?",
+            "alternatives": ["7", "70", "700", "7 000"]},
+        10: {"text": "$b \\neq 0$\n\nVilket svarsalternativ är lika med uttrycket "
+                      "$\\frac{a+b}{b} + \\frac{b-a}{b}$?",
+             "alternatives": ["0", "1", "2", "$\\frac{2a}{b}$"]},
+        11: {"text": "Mätserien 3, 5, 6, 6, 8 utökas med ett slumpmässigt valt ensiffrigt "
+                      "positivt heltal. Hur stor är sannolikheten att mätseriens median blir "
+                      "större?", "alternatives": ["0", "$\\frac{1}{3}$", "$\\frac{1}{2}$", "1"]},
+        13: {"text": "Kvantitet I: 4 procent av 40\nKvantitet II: 5 procent av 35",
+             "alternatives": STD_KVA},
+        14: {"text": "$x > y$\n$y < z$\nKvantitet I: $x$\nKvantitet II: $z$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Riktningskoefficienten för den räta linje som går genom "
+                      "punkterna $(0,0)$ och $(-1,-3)$\nKvantitet II: Riktningskoefficienten "
+                      "för den räta linje som går genom punkterna $(0,0)$ och $(1,3)$",
+             "alternatives": STD_KVA},
+        16: {"text": "$x - y = \\frac{1}{3}$\n$x = -\\frac{1}{3}$\nKvantitet I: $y$\n"
+                      "Kvantitet II: $2x$", "alternatives": STD_KVA},
+        18: {"text": "$x \\neq 0$\nKvantitet I: $\\frac{y}{x^2}$\nKvantitet II: $\\frac{y^2}{x}$",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: Medelvärdet av $\\frac{5}{7}$, $\\frac{5}{2}$ och "
+                      "$\\frac{5}{6}$\nKvantitet II: $1$", "alternatives": STD_KVA},
+        20: {"text": "Adam och David tog varsin cykeltur. Adam cyklade 45 km med "
+                      "medelhastigheten 27 km/h. David cyklade 40 km med medelhastigheten "
+                      "25 km/h.\nKvantitet I: Den tid som Adams cykeltur tog\nKvantitet II: "
+                      "Den tid som Davids cykeltur tog", "alternatives": STD_KVA},
+        22: {"text": "$x$ och $y$ är positiva heltal. När $x$ divideras med $y$ blir kvoten 1 "
+                      "och resten 1.\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+    },
 }
 
 
