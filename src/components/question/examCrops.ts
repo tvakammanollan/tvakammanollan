@@ -117,5 +117,33 @@ export function parseOptionCrops(options: unknown): Crop[] | null {
     if (!isCrop(crop)) return null;
     out.push(crop);
   }
-  return out;
+  return out.map((crop, i) => clampOversizedTail(crop, out, i));
+}
+
+// Importen satte ibland sista alternativets nedre kant till hela bildens
+// botten (`y1=1`) i stället för där svaret faktiskt tar slut — verifierat mot
+// skarpa data 2026-08-22 på 19 uppgifter (XYZ/KVA/NOG/DTK), där det sista
+// alternativet blev 2–20 gånger högre än sina syskon: en stor, nästan tom
+// knapp med texten hopklämd högst upp, exakt det som ser "beskuret" och
+// oproffsigt ut. Klampat här i renderingslagret i stället för i databasen —
+// samma data, bara en tak på hur hög RUTAN får bli när den ändå slutar precis
+// vid bildkanten och sticker ut ur mönstret sina syskon sätter.
+const OVERSIZED_TAIL_Y1 = 0.98;
+const OVERSIZED_RATIO = 1.8;
+const CLAMP_MARGIN = 1.3;
+
+function clampOversizedTail(crop: Crop, siblings: Crop[], index: number): Crop {
+  const [x0, y0, x1, y1] = crop;
+  if (y1 < OVERSIZED_TAIL_Y1 || siblings.length < 2) return crop;
+  const otherDys = siblings.filter((_, i) => i !== index).map((c) => c[3] - c[1]);
+  const med = median(otherDys);
+  const dy = y1 - y0;
+  if (med <= 0 || dy < med * OVERSIZED_RATIO) return crop;
+  return [x0, y0, x1, Math.min(y1, y0 + med * CLAMP_MARGIN)];
+}
+
+function median(nums: number[]): number {
+  const sorted = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }

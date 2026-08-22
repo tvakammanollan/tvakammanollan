@@ -114,4 +114,47 @@ describe("parseOptionCrops (regression: gäller lika för optionsImage-formen)",
     ];
     expect(parseOptionCrops(options)).toBeNull();
   });
+
+  it("klampar ett sista alternativ som sträcker sig till bildkanten och är mycket högre än sina syskon", () => {
+    // Regressionstest mot skarpa data (2026-08-22, 19 uppgifter XYZ/KVA/NOG/DTK):
+    // importen satte sista alternativets y1 till hela bildens botten i stället
+    // för där svaret faktiskt tar slut. Exempel: 2017ht/p5/7.webp, uppgift
+    // "Hur många biljetter...", där D ("5600") fick dy=0,712 mot syskonens 0,041
+    // (17× högre) — en enorm, nästan tom knapp med "5600" hopklämt högst upp.
+    const options = [
+      { id: "A", text: "A", crop: [0.12, 0.288, 1, 0.329] },
+      { id: "B", text: "B", crop: [0.12, 0.329, 1, 0.37] },
+      { id: "C", text: "C", crop: [0.12, 0.37, 1, 0.411] },
+      { id: "D", text: "D", crop: [0.122, 0.4106, 1, 1] },
+    ];
+    const crops = parseOptionCrops(options)!;
+    expect(crops[0]).toEqual([0.12, 0.288, 1, 0.329]);
+    expect(crops[1]).toEqual([0.12, 0.329, 1, 0.37]);
+    expect(crops[2]).toEqual([0.12, 0.37, 1, 0.411]);
+    // Klampad till syskonens medianhöjd (0,041) × 1,3 marginal, inte längre
+    // ända ner till bildkanten.
+    const [x0, y0, x1, y1] = crops[3];
+    expect([x0, y0, x1]).toEqual([0.122, 0.4106, 1]);
+    expect(y1).toBeCloseTo(0.4106 + 0.041 * 1.3, 5);
+    expect(y1).toBeLessThan(1);
+  });
+
+  it("rör inte alternativ som redan är i linje med sina syskon, även om sista når bildkanten", () => {
+    const options = [
+      { id: "A", text: "A", crop: [0.12, 0.1, 1, 0.3] },
+      { id: "B", text: "B", crop: [0.12, 0.3, 1, 0.5] },
+      { id: "C", text: "C", crop: [0.12, 0.5, 1, 0.7] },
+      { id: "D", text: "D", crop: [0.12, 0.7, 1, 1] },
+    ];
+    expect(parseOptionCrops(options)).toEqual(options.map((o) => o.crop));
+  });
+
+  it("rör inte ett sista alternativ som inte når bildkanten, hur högt det än är", () => {
+    const options = [
+      { id: "A", text: "A", crop: [0.12, 0.1, 1, 0.15] },
+      { id: "B", text: "B", crop: [0.12, 0.15, 1, 0.2] },
+      { id: "C", text: "C", crop: [0.12, 0.2, 1, 0.6] }, // legitimt hög, men slutar inte vid kanten
+    ];
+    expect(parseOptionCrops(options)).toEqual(options.map((o) => o.crop));
+  });
 });
