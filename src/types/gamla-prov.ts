@@ -176,6 +176,8 @@ export interface ProvExample {
   alternatives?: string[];
   image?: string;
   altCount?: number;
+  /** Bredd/höjd på `image`, så den kan reservera utrymme innan den laddat. */
+  imageAspect?: number;
   /** Början av lästexten, för LÄS och ELF. */
   passage?: string;
   /** Diagrammet uppgiften hör till, för DTK. */

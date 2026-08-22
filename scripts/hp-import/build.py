@@ -417,7 +417,7 @@ def write_examples(index: list[dict]) -> None:
                     "nr": q["nr"],
                     "answer": q["answer"],
                 }
-                for field in ("text", "alternatives", "image", "altCount"):
+                for field in ("text", "alternatives", "image", "altCount", "imageAspect"):
                     if q.get(field) is not None:
                         item[field] = q[field]
                 if q.get("figure") is not None:

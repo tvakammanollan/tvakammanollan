@@ -3,6 +3,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ordText } from "@/lib/sv-format";
 import { provExamples } from "@/lib/prov-data";
+import { MathText } from "@/components/MathTextLazy";
 import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
 
 /* =====================================================================
@@ -13,6 +14,11 @@ import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
    ===================================================================== */
 
 const ALT_LABELS = ["A", "B", "C", "D", "E"];
+
+// XYZ, KVA och NOG skrivs successivt om från bildutsnitt till text (se
+// scripts/hp-import/apply_quant_text.py) och kan innehålla LaTeX ($…$) —
+// samma delprovsmängd som ProvQuestionCard.tsx använder för samma sak.
+const MATH_DELPROV = new Set(["XYZ", "KVA", "NOG"]);
 
 type Delprov = {
   code: string;
@@ -247,7 +253,13 @@ function OvaDelprovPage() {
                 )}
                 {q.text && !q.image && (
                   <p className="mt-2 text-[15px] font-medium leading-relaxed text-[var(--cream)]">
-                    {cfg.code === "ORD" ? ordText(q.text) : q.text}
+                    {cfg.code === "ORD" ? (
+                      ordText(q.text)
+                    ) : MATH_DELPROV.has(cfg.code) ? (
+                      <MathText>{q.text}</MathText>
+                    ) : (
+                      q.text
+                    )}
                   </p>
                 )}
                 {q.figure && (
@@ -266,6 +278,7 @@ function OvaDelprovPage() {
                     loading="lazy"
                     decoding="async"
                     className="exam-figure mt-3 w-full rounded-lg border border-white/10"
+                    style={q.imageAspect ? { aspectRatio: String(q.imageAspect) } : undefined}
                   />
                 )}
                 {q.alternatives && (
@@ -291,7 +304,13 @@ function OvaDelprovPage() {
                             {ALT_LABELS[ai]}
                           </span>
                           <span className="leading-relaxed">
-                            {cfg.code === "ORD" ? ordText(text) : text}
+                            {cfg.code === "ORD" ? (
+                              ordText(text)
+                            ) : MATH_DELPROV.has(cfg.code) ? (
+                              <MathText>{text}</MathText>
+                            ) : (
+                              text
+                            )}
                           </span>
                         </li>
                       );
