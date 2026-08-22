@@ -2082,6 +2082,163 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "$x > 0$\nKvantitet I: $\\sqrt{x}+\\sqrt{x}$\nKvantitet II: $\\sqrt{2x}$",
              "alternatives": STD_KVA},
     },
+    # Uteslutna: 3 (linje inritad i koordinatsystem UTAN given ekvation),
+    # 6 (kvadratmönster som bild), 8 (triangel med höjd), 14 (två trianglar
+    # med vinklar), 17 (rektangel med skuggat kryss).
+    # NOG 23-28 hade bara garblad text och är renskrivna här (samma metod).
+    "2018ht-2": {
+        1: {"text": "Vilket uttryck betecknar produkten av 14 och summan av 46 och 35?",
+            "alternatives": ["$14 \\cdot 46+35$", "$\\frac{14}{46+35}$", "$14 \\cdot (46+35)$",
+                              "$14^{(46+35)}$"]},
+        2: {"text": "Vad är 0,2 % av 50?", "alternatives": ["0,01", "0,1", "1", "10"]},
+        4: {"text": "$x \\cdot (y+1) = (x+1) \\cdot y$\n\nVilket svarsalternativ är korrekt?",
+            "alternatives": ["$x=y+1$", "$x=-y$", "$x=y$", "$x=\\frac{1}{y}$"]},
+        5: {"text": "För funktionen $f$ gäller att $f(x)=x^2$ och $0 \\leq x \\leq 3$. "
+                     "Vilken värdemängd har funktionen?",
+            "alternatives": ["$-9 \\leq f(x) \\leq 9$", "$-3 \\leq f(x) \\leq 3$",
+                              "$0 \\leq f(x) \\leq 3$", "$0 \\leq f(x) \\leq 9$"]},
+        7: {"text": "$\\frac{16}{9}x-\\frac{2}{3}=\\frac{2}{3}$\n\nVad är $x$?",
+            "alternatives": ["0", "$\\frac{1}{2}$", "$\\frac{3}{4}$", "$\\frac{4}{3}$"]},
+        9: {"text": "$a$ och $b$ är två på varandra följande heltal. Hur stor är "
+                     "sannolikheten att $a+b$ är jämnt delbart med 2?",
+            "alternatives": ["0", "0,25", "0,5", "1"]},
+        10: {"text": "En rektangel med längden 2 dm och bredden 5 cm utgör basytan av "
+                      "ett rätblock som har höjden 3 m. Vilken volym har rätblocket?",
+             "alternatives": ["30 cm³", "30 dm³", "300 cm³", "300 dm³"]},
+        11: {"text": "Vilket svarsalternativ ger alla lösningar till olikheten "
+                      "$3x-8<2x+4$?",
+             "alternatives": ["$x<12$", "$x>12$", "$x<-4$", "$x>-4$"]},
+        12: {"text": "Vilket svarsalternativ är ett heltal?",
+             "alternatives": ["$\\sqrt{72}+\\sqrt{9}$", "$\\sqrt{72}-\\sqrt{8}$",
+                               "$\\sqrt{72} \\cdot \\sqrt{9}$", "$\\frac{\\sqrt{72}}{\\sqrt{8}}$"]},
+        13: {"text": "$x > 1$\nKvantitet I: $x^5$\nKvantitet II: $x^4$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{1}{28}+\\frac{1}{14}+\\frac{1}{7}+\\frac{1}{4}+"
+                      "\\frac{1}{2}$\nKvantitet II: $\\frac{55}{56}$", "alternatives": STD_KVA},
+        16: {"text": "$3(x-1)=18$\n$6(y-x)=18$\n\nKvantitet I: $x$\nKvantitet II: $y$",
+             "alternatives": STD_KVA},
+        18: {"text": "$x$, $y$, $z$ och $w$ är fyra positiva tal sådana att $x<y<z<w$.\n"
+                      "Medianen av $x$, $y$ och $z$ är 7.\nMedianen av $y$, $z$ och $w$ "
+                      "är 13.\nKvantitet I: Medianen av $y$ och $z$\nKvantitet II: 11",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: $\\sqrt{\\frac{5}{9}}$\nKvantitet II: $\\frac{2}{3}$",
+             "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: 21 % av 2482\nKvantitet II: 42 % av 1241", "alternatives": STD_KVA},
+        21: {"text": "För funktionen $f$ gäller att $f(x)=4x+15$ och $a>0$.\nKvantitet "
+                      "I: $f(-a)-f(a)$\nKvantitet II: 0", "alternatives": STD_KVA},
+        22: {"text": "David är 8 år äldre än Frida. Edvin är 11 år.\nKvantitet I: "
+                      "Summan av Edvins ålder och Fridas ålder\nKvantitet II: Davids ålder",
+             "alternatives": STD_KVA},
+        23: {"text": "På ett bord ligger två blyertspennor, en gul och en brun. Hur "
+                      "många centimeter längre är den gula pennan än den bruna?\n\n"
+                      "(1) Pennornas sammanlagda längd är 21 cm.\n(2) Den gula pennan "
+                      "är 15 cm lång. Den bruna pennan är 0,4 gånger så lång som den "
+                      "gula pennan.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        24: {"text": "Vilket värde har $x$?\n\n(1) $x+y=26$\n(2) $3x+2y=39$ och "
+                      "$y=39$\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "En affär säljer strömbrytare styckvis. Om man köper färre än tio "
+                      "så gäller ett visst pris, och om man köper tio eller fler så får "
+                      "man 8 % rabatt på det totala priset. Hur mycket kostar det att "
+                      "köpa 16 strömbrytare vid ett och samma tillfälle?\n\n(1) Det "
+                      "kostar 479,20 kr att köpa 8 strömbrytare.\n(2) Om man köper 10 "
+                      "strömbrytare så får man 47,92 kr i rabatt.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "I ett stall finns det tre boxar bredvid varandra med en häst i "
+                      "vardera boxen: en hingst, ett sto och ett föl. Hästarna har "
+                      "varsin färg: brun, svart och vit. I mitten står stoet. Vilken "
+                      "färg har fölet?\n\n(1) Hingsten är svart och står bredvid den "
+                      "bruna hästen.\n(2) Stoet, som står till höger om hingsten, är "
+                      "inte vitt.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        27: {"text": "Eva köper en lott i ett lotteri. Hur stor är sannolikheten att "
+                      "lotten är en vinstlott?\n\n(1) Andelen nitlotter är 80 procent.\n"
+                      "(2) Det finns 250 lotter i lotteriet.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Utanför en skolbyggnad finns det en cykelparkering med ett antal "
+                      "cyklar. Hur många cyklar finns det på parkeringen?\n\n(1) 19 av "
+                      "cyklarna har pakethållare och 13 av cyklarna har fotbroms.\n"
+                      "(2) 11 cyklar har varken pakethållare eller fotbroms.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+    },
+    # Uteslutna: 2 (punkter i koordinatsystem utan angivna koordinater),
+    # 4 (parallella linjer med vinklar), 12 (linjer+cirkel med skuggad yta),
+    # 20 (triangel med vinklar). NOG 23-28 hade bara garblad text.
+    "2018ht-4": {
+        1: {"text": "Vilket av svarsalternativen motsvarar uttrycket $x^2 \\cdot x "
+                     "\\cdot x^4$?", "alternatives": ["$x^6$", "$x^7$", "$x^8$", "$x^{16}$"]},
+        3: {"text": "$1 < a < b < c$\n\nVilket av svarsalternativen är större än 1?",
+            "alternatives": ["$\\frac{b+c}{a}$", "$\\frac{a+b}{b+c}$", "$\\frac{b-a}{c-a}$",
+                              "$\\frac{a \\cdot b}{b \\cdot c}$"]},
+        5: {"text": "Vad är $\\frac{\\frac{4}{9}}{\\frac{8}{3}}$?",
+            "alternatives": ["$\\frac{1}{6}$", "$\\frac{27}{32}$", "$\\frac{32}{27}$", "6"]},
+        6: {"text": "De sex talen 5, 15, 17, 23, $x$ och $y$ har medelvärdet 11. Vad "
+                     "är medelvärdet av talen $x$ och $y$?", "alternatives": ["1", "3", "6", "9"]},
+        7: {"text": "Vilket av svarsalternativen motsvarar förhållandet 6:7?",
+            "alternatives": ["36:49", "67:76", "120:140", "330:390"]},
+        8: {"text": "Vilket av svarsalternativen motsvarar uttrycket $x-(y+x)-y$?",
+            "alternatives": ["$2x-2y$", "$2x$", "$-2y$", "0"]},
+        9: {"text": "Summan av tre på varandra följande heltal är 96. Vad är "
+                     "produkten av det minsta och det största talet?",
+            "alternatives": ["992", "1023", "1056", "1096"]},
+        10: {"text": "$f(x) = 3x+m$ där $m$ är en konstant.\n\nVad är $f(a+1)-f(a)$?",
+             "alternatives": ["1", "$a$", "$m$", "3"]},
+        11: {"text": "Vad är $\\frac{1{,}2 \\cdot 10^{16} - 4 \\cdot 10^{15}}{2 \\cdot 10^{13}}$?",
+             "alternatives": ["$-1{,}4 \\cdot 10^{14}$", "$-1{,}4 \\cdot 10^2$", "40", "$4 \\cdot 10^2$"]},
+        13: {"text": "$(23^7)^x = 12167$\n$(23^y)^7 = 13000$\n\nKvantitet I: $x$\n"
+                      "Kvantitet II: $y$", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: Medelvärdet av fem positiva och fem negativa heltal\n"
+                      "Kvantitet II: 0", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Omkretsen av en cirkel med diametern 1 cm\n"
+                      "Kvantitet II: Omkretsen av en liksidig triangel med sidan 1 cm",
+             "alternatives": STD_KVA},
+        16: {"text": "$x$ och $y$ är två på varandra följande heltal sådana att $x<y$.\n"
+                      "Kvantitet I: $2x$\nKvantitet II: Summan av $x$ och $y$",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: 0,00541 km\nKvantitet II: $5{,}41 \\cdot 10^3$ mm",
+             "alternatives": STD_KVA},
+        18: {"text": "$x$ och $y$ är positiva heltal.\n$\\frac{3x}{4y}=5$\n\nKvantitet "
+                      "I: 20\nKvantitet II: $x$", "alternatives": STD_KVA},
+        19: {"text": "$A=(x_1,y_1)$\n$B=(x_2,y_2)$\n$x_1<x_2$\nPunkterna A och B "
+                      "ligger på linjen $y=-3x+\\frac{1}{3}$.\n\nKvantitet I: $y_1$\n"
+                      "Kvantitet II: $y_2$", "alternatives": STD_KVA},
+        21: {"text": "Kvantitet I: $\\frac{1}{3}+\\frac{1}{24}$\nKvantitet II: "
+                      "$\\frac{1}{4}+\\frac{1}{8}$", "alternatives": STD_KVA},
+        22: {"text": "Ett badkar rymmer 200 liter.\nKvantitet I: Tiden det tar att "
+                      "fylla badkaret till $\\frac{4}{5}$ om man fyller på med den "
+                      "konstanta hastigheten 15 liter per minut\nKvantitet II: Tiden "
+                      "det tar att fylla badkaret till $\\frac{2}{3}$ om man fyller på "
+                      "med den konstanta hastigheten 10 liter per minut",
+             "alternatives": STD_KVA},
+        23: {"text": "Tre askar — en blå, en vit och en röd — innehåller olika saker. "
+                      "En ask innehåller gem, en innehåller häftstift och en "
+                      "innehåller nålar. Vilken färg har asken som innehåller gem?\n\n"
+                      "(1) Häftstiften är i den blå eller den röda asken.\n(2) Nålarna "
+                      "är i den röda eller den vita asken.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "På ett fartyg fanns det 2500 personer under en resa. Var och en "
+                      "av personerna på fartyget var antingen passagerare eller "
+                      "sjöman. Hur stor andel av sjömännen var sjösjuka under resan?\n\n"
+                      "(1) Sju av sjömännen var sjösjuka under resan.\n(2) Det fanns "
+                      "nio gånger så många passagerare som sjömän på fartyget.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        25: {"text": "$x<0$\n$b \\neq 0$\n\nVilket värde har $x$?\n\n(1) $x^2=9$\n"
+                      "(2) $x^2+5x+b=0$\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        26: {"text": "De tre siffrorna 5, 6 och 7 står skrivna på rad på ett papper. "
+                      "Vilket tresiffrigt tal bildar siffrorna?\n\n(1) Siffran 7 står "
+                      "först.\n(2) Talet är större än 758.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "I en låda finns det 72 enfärgade bollar, röda och blå. Var och "
+                      "en av bollarna är antingen stor eller liten. Hur stor andel av "
+                      "bollarna är stora?\n\n(1) 1/3 av de blå bollarna är stora.\n"
+                      "(2) 1/2 av de röda bollarna är små.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Arean av en rätvinklig triangel är 50 cm². Hur stora är "
+                      "triangelns vinklar?\n\n(1) Triangeln är likbent.\n(2) Minst en "
+                      "av triangelns vinklar är 45°.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+    },
 }
 
 
