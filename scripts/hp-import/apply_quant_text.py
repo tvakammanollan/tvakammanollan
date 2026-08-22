@@ -1402,6 +1402,221 @@ PATCH: dict[str, dict[int, dict]] = {
         22: {"text": "Kvantitet I: Summan av primtalsfaktorerna i heltalet 21\nKvantitet "
                       "II: Summan av primtalsfaktorerna i heltalet 30", "alternatives": STD_KVA},
     },
+    # Uteslutna: 5 (fyra linjer med vinklar), 7 (graf med parabel+linje),
+    # 10 (rektangel av kvadrater), 12 (rektangel i koordinatsystem).
+    # NOG 24 och 27 har egna figurer och rörs inte; 23/25/26/28 hade redan text.
+    "2021ht-1": {
+        1: {"text": "Vilket värde har $x$ om $\\frac{1}{2}+\\frac{1}{3}+x=1$?",
+            "alternatives": ["$\\frac{1}{6}$", "$\\frac{1}{5}$", "$\\frac{1}{4}$",
+                              "$\\frac{1}{3}$"]},
+        2: {"text": "En blombukett består av endast vita och röda rosor. Antalet röda "
+                     "rosor är tre gånger så stort som antalet vita rosor. Vilket "
+                     "svarsalternativ kan motsvara antalet rosor i blombuketten?",
+            "alternatives": ["25", "26", "27", "28"]},
+        3: {"text": "Vad är $5+3 \\cdot 5-4+8 \\cdot 2$?", "alternatives": ["0", "16", "32", "88"]},
+        4: {"text": "Vilket svarsalternativ motsvarar ekvationen $y=4x-5$?",
+            "alternatives": ["$x=y+\\frac{5}{4}$", "$x=\\frac{y}{4}+5$",
+                              "$x=\\frac{5-y}{4}$", "$x=\\frac{y+5}{4}$"]},
+        6: {"text": "Vilket svarsalternativ är lika med $3x(2-5y)$?",
+            "alternatives": ["$6x-5y$", "$(6x-15)y$", "$-5x(2+3y)$", "$-(15y-6)x$"]},
+        8: {"text": "I en påse finns det 28 enfärgade kulor: 10 röda, 7 vita och 11 "
+                     "svarta. Om man drar en kula slumpmässigt, hur stor är då "
+                     "sannolikheten att den inte är vit?",
+            "alternatives": ["$\\frac{1}{3}$", "$\\frac{1}{4}$", "$\\frac{2}{3}$",
+                              "$\\frac{3}{4}$"]},
+        9: {"text": "Vilket svarsalternativ är lika med $\\frac{0{,}36}{3 \\cdot 0{,}024}$?",
+            "alternatives": ["0,05", "0,5", "5", "50"]},
+        11: {"text": "$5x^2+3x=0$\n\nVilket av svarsalternativen är ett möjligt värde på $x$?",
+             "alternatives": ["$-\\frac{3}{5}$", "$\\sqrt{\\frac{3}{5}}$", "$-\\frac{5}{3}$",
+                               "$\\sqrt{\\frac{5}{3}}$"]},
+        13: {"text": "Medelvärdet av de tre talen $x$, $y$ och $z$ är 12. Summan av $y$ "
+                      "och $z$ är 30.\nKvantitet I: $x$\nKvantitet II: 9",
+             "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $1+\\frac{1}{4}$\nKvantitet II: $\\frac{10}{8}$",
+             "alternatives": STD_KVA},
+        15: {"text": "$x > 0$\n$y < 0$\n$z > 0$\n$w < 0$\nKvantitet I: $x^2+y^2$\n"
+                      "Kvantitet II: $z^2+w^2$", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: Arean av en rektangel med sidorna 12 cm och 25 cm\n"
+                      "Kvantitet II: Arean av en rätvinklig triangel med kateterna 8 cm "
+                      "och 64 cm", "alternatives": STD_KVA},
+        17: {"text": "$2(2x+4) = 2x+4$\n\nKvantitet I: $x$\nKvantitet II: 0",
+             "alternatives": STD_KVA},
+        18: {"text": "$f(x) = x^2-2x-3$\n\nKvantitet I: $f(3)$\nKvantitet II: $f(-1)$",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: 70 procent av 105\nKvantitet II: 73", "alternatives": STD_KVA},
+        20: {"text": "$F(n)$ definieras som summan av alla positiva heltal mindre än $n$.\n"
+                      "$G(n)$ definieras som summan av alla jämna positiva heltal mindre "
+                      "än $n$.\nKvantitet I: $F(5)$\nKvantitet II: $\\frac{G(11)}{2}$",
+             "alternatives": STD_KVA},
+        21: {"text": "Kvantitet I: Kvoten mellan en cirkels omkrets och dess diameter\n"
+                      "Kvantitet II: Kvoten mellan en kvadrats omkrets och dess sidlängd",
+             "alternatives": STD_KVA},
+        22: {"text": "$x > 1$\nKvantitet I: $x^{7+\\frac{2}{3}}$\nKvantitet II: "
+                      "$(x^{23})^{\\frac{1}{3}}$", "alternatives": STD_KVA},
+    },
+    # Uteslutna: 3 (fyrhörning med rätvinklar), 7 (fyra grafer SOM
+    # svarsalternativ), 14 (cirkel med vinkel v), 19 (parallella linjer L1/L2).
+    "2021ht-4": {
+        1: {"text": "$2x+9=x-7$\n\nVilket värde har $x$?",
+            "alternatives": ["–16", "$-\\frac{2}{3}$", "$\\frac{2}{3}$", "16"]},
+        2: {"text": "Vad är $\\frac{1}{8}+\\frac{3}{4}+\\frac{1}{2}$?",
+            "alternatives": ["$\\frac{13}{12}$", "$\\frac{9}{8}$", "$\\frac{11}{8}$",
+                              "$\\frac{5}{14}$"]},
+        4: {"text": "Grafen till funktionen $f$ är en rät linje som går genom origo, "
+                     "och $f(8) = -6$. Vilket svarsalternativ anger $f(x)$?",
+            "alternatives": ["$f(x)=8x-6$", "$f(x)=-6x+8$", "$f(x)=-\\frac{4}{3}x$",
+                              "$f(x)=-\\frac{3}{4}x$"]},
+        5: {"text": "Vilket är det ursprungliga priset på en vara om en rabatt på 8 "
+                     "procent gör varan 640 kronor billigare?",
+            "alternatives": ["5 120 kronor", "7 360 kronor", "7 680 kronor", "8 000 kronor"]},
+        6: {"text": "Ida målar ett plank med konstant hastighet. Efter 4,5 timmar har "
+                     "hon målat 3/7 av planket. Hur lång tid tar det för Ida att måla "
+                     "resten av planket?",
+            "alternatives": ["5 timmar", "5,5 timmar", "6 timmar", "6,5 timmar"]},
+        8: {"text": "$x=-3$\n$y=-2$\n$z=-1$\n\nVilket svarsalternativ har det minsta värdet?",
+            "alternatives": ["$x^2yz^2$", "$x^2y^2z$", "$xy^2z^2$", "$xy^3z$"]},
+        9: {"text": "Vilket svarsalternativ är med säkerhet lika med medelvärdet av de "
+                     "fem talen 14, 11, 13, $x$ och 22?",
+            "alternatives": ["$\\frac{15+x}{2}$", "$\\frac{60}{5}+x$", "$60+x$",
+                              "$12+\\frac{x}{5}$"]},
+        10: {"text": "För vilket värde på $x$ gäller att två tredjedelar av $x$ är lika "
+                      "med $\\frac{4}{7}$?",
+             "alternatives": ["$x=\\frac{2}{3} \\cdot \\frac{4}{7}$",
+                               "$x=\\frac{2}{3} \\cdot \\frac{7}{4}$",
+                               "$x=\\frac{3}{2} \\cdot \\frac{4}{7}$",
+                               "$x=\\frac{3}{2} \\cdot \\frac{7}{4}$"]},
+        11: {"text": "En cylinder har volymen 63 liter och diametern 4 dm. Vilket "
+                      "svarsalternativ är närmast cylinderns höjd?",
+             "alternatives": ["4 dm", "5 dm", "10 dm", "16 dm"]},
+        12: {"text": "$8 \\cdot 2^m = 4^0$\n\nVad är $m$?",
+             "alternatives": ["–3", "–2", "–1", "0"]},
+        13: {"text": "$3\\left(\\frac{2}{x} - \\frac{1}{6}\\right) = \\frac{3}{2}$\n\n"
+                      "Kvantitet I: $x$\nKvantitet II: $\\frac{1}{3}$", "alternatives": STD_KVA},
+        15: {"text": "En grupp med enbart kvinnor och män består av totalt 100 personer. "
+                      "Var och en av personerna är antingen högerhänt eller vänsterhänt. "
+                      "75 % av kvinnorna är högerhänta. 12 kvinnor är vänsterhänta.\n"
+                      "Kvantitet I: Antalet kvinnor i gruppen\nKvantitet II: Antalet män "
+                      "i gruppen", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $\\sqrt{23}$\nKvantitet II: $\\sqrt{9}+\\sqrt{5}$",
+             "alternatives": STD_KVA},
+        17: {"text": "$y > 0$\n$\\frac{x}{y} = 5$\n\nKvantitet I: $y$\nKvantitet II: 20 "
+                      "procent av $x$", "alternatives": STD_KVA},
+        18: {"text": "Linjen $L_1$ har ekvationen $y = 3x - 1$\nLinjen $L_2$ har "
+                      "ekvationen $y = 5x + 3$\n\nKvantitet I: $x$-koordinaten för "
+                      "skärningspunkten mellan $L_1$ och $L_2$\nKvantitet II: 0",
+             "alternatives": STD_KVA},
+        20: {"text": "$x$ och $y$ är två på varandra följande positiva heltal sådana att "
+                      "$y^2 - x^2 = 9$.\nKvantitet I: $y$\nKvantitet II: 6",
+             "alternatives": STD_KVA},
+        21: {"text": "I Minnas smyckeskrin finns det halsband, armband och ringar. "
+                      "Armbanden är dubbelt så många som ringarna. Halsbanden är 3 fler "
+                      "än ringarna och 2 färre än armbanden.\nKvantitet I: Antalet "
+                      "halsband i Minnas smyckeskrin\nKvantitet II: 8",
+             "alternatives": STD_KVA},
+        22: {"text": "En mätserie består av tio mätvärden. Vart och ett av mätvärdena är "
+                      "ett heltal mellan 1 och 50. Mätseriens median är 25.\nKvantitet I: "
+                      "Mätseriens median om det största mätvärdet tas bort\nKvantitet II: 25",
+             "alternatives": STD_KVA},
+    },
+    # Uteslutna: 4 (femhörning), 7 (kvadrat med vinklar), 10 (fyra grafer SOM
+    # svarsalternativ). NOG 27/28 har egna figurer och rörs inte.
+    "2021vta-3": {
+        1: {"text": "$2(x-6) = 4(2-x)$\n\nVilket värde har $x$?",
+            "alternatives": ["2", "$\\frac{10}{3}$", "$\\frac{14}{3}$", "5"]},
+        2: {"text": "$f(x) = 3x^2 - 12$\n\nVilket svarsalternativ anger ett $x$-värde för "
+                     "vilket $f(x) = 0$?", "alternatives": ["0", "2", "4", "12"]},
+        3: {"text": "Vad är 20 procent av $\\frac{1}{5}$?",
+            "alternatives": ["$\\frac{5}{20}$", "$\\frac{1}{20}$", "$\\frac{1}{25}$",
+                              "$\\frac{1}{100}$"]},
+        5: {"text": "Vad är medianen av alla heltal från och med 1 till och med 10?",
+            "alternatives": ["4,5", "5", "5,5", "6"]},
+        6: {"text": "$2^x \\cdot 4^y = 16$\n\nVad är $x+2y$?", "alternatives": ["2", "4", "6", "8"]},
+        8: {"text": "Vad är $\\frac{\\frac{3}{4}+\\frac{4}{3}}{\\frac{12}{5}}$?",
+            "alternatives": ["5", "$\\frac{5}{12}$", "$\\frac{49}{60}$", "$\\frac{125}{144}$"]},
+        9: {"text": "Vilket svarsalternativ motsvarar uttrycket $(a+b)(a^2-ab+b^2)$?",
+            "alternatives": ["$a^2-2ab+b^2$", "$a^3+2a^2b+2ab^2+b^3$", "$a^3+2ab^2+b^3$",
+                              "$a^3+b^3$"]},
+        11: {"text": "$x$ och $y$ är positiva tal. Om $x$ var 25 % större och $y$ var 25 "
+                      "% mindre så skulle talen vara lika stora. Hur förhåller sig $x$ "
+                      "till $y$?",
+             "alternatives": ["$x=\\frac{y}{2}$", "$x=\\frac{3y}{5}$", "$x=\\frac{2y}{3}$",
+                               "$x=\\frac{4y}{5}$"]},
+        12: {"text": "$x$ är ett heltal större än 0. Vilket är det minsta värde som $x$ "
+                      "kan ha för att $75x$ ska vara kvadraten på ett heltal?",
+             "alternatives": ["3", "5", "25", "75"]},
+        13: {"text": "$f(x) = -4x+2$\n\nKvantitet I: $f\\left(-\\frac{1}{2}\\right)$\n"
+                      "Kvantitet II: 0", "alternatives": STD_KVA},
+        14: {"text": "$x > 0$\nKvantitet I: $(\\sqrt{x})^{\\sqrt{9}+1}$\nKvantitet II: "
+                      "$(\\sqrt{x})^4$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $0{,}97^{97}$\nKvantitet II: $1{,}07^7$",
+             "alternatives": STD_KVA},
+        16: {"text": "I triangeln T är alla vinklar olika stora.\nKvantitet I: Den minsta "
+                      "vinkeln i triangeln T\nKvantitet II: 75°", "alternatives": STD_KVA},
+        17: {"text": "I en burk finns det 190 kulor som är numrerade med heltalen 1, 2, "
+                      "3, …, 189, 190. En kula plockas slumpmässigt ur burken.\n"
+                      "Kvantitet I: Sannolikheten att numret på kulan är ett tvåsiffrigt "
+                      "heltal\nKvantitet II: 50 %", "alternatives": STD_KVA},
+        18: {"text": "Linjen A går genom punkterna (1, 2) och (2, 3). Linjen B är "
+                      "vinkelrät mot linjen A.\nKvantitet I: Riktningskoefficienten för "
+                      "linjen A\nKvantitet II: Riktningskoefficienten för linjen B",
+             "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: 159 liter\nKvantitet II: 15 900 cm³", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: Produkten av ett tresiffrigt positivt heltal och ett "
+                      "tvåsiffrigt positivt heltal\nKvantitet II: Ett fyrsiffrigt "
+                      "positivt heltal", "alternatives": STD_KVA},
+        21: {"text": "Arean av en cirkel är $\\pi^3$ cm².\nKvantitet I: Cirkelns radie\n"
+                      "Kvantitet II: $\\pi$ cm", "alternatives": STD_KVA},
+        22: {"text": "$x > 0$\n$y > 0$\n$\\sqrt{\\frac{x}{y}} = \\frac{x}{y}$\n\n"
+                      "Kvantitet I: 2\nKvantitet II: $\\frac{2y}{x}$", "alternatives": STD_KVA},
+    },
+    # Uteslutna: 2 (triangel med vinklar), 12 (fyrhörning med rätvinklar),
+    # 16 (linje inritad i koordinatsystem), 18 (två rätvinkliga trianglar),
+    # 21 (triangel med vinklar). NOG 25 har egen figur och rörs inte.
+    "2021vta-5": {
+        1: {"text": "Vilket svarsalternativ är lika med uttrycket $a(a+a)$?",
+            "alternatives": ["$3a$", "$a^2+a$", "$2a^2$", "$a^3$"]},
+        3: {"text": "Två butiker säljer äpplen. I butik A kostar äpplena 5 kr/st. I "
+                     "butik B är styckepriset 20 procent lägre än i butik A. Hur många "
+                     "fler äpplen kan man köpa för 100 kr i butik B jämfört med i "
+                     "butik A?", "alternatives": ["4", "5", "10", "20"]},
+        4: {"text": "Antag att $2(p+150) = 400$. Vilket värde har uttrycket $4p-200$?",
+            "alternatives": ["0", "300", "900", "1 200"]},
+        5: {"text": "$P = (-1, 0)$\n$M = (3, 3)$\nM är mittpunkten på sträckan PQ. "
+                     "Vilka koordinater har punkten Q?",
+            "alternatives": ["(–5, –3)", "(1, 1,5)", "(5, 6)", "(7, 6)"]},
+        6: {"text": "Vilket svarsalternativ är störst?",
+            "alternatives": ["$\\sqrt{50}$", "$2\\sqrt{25}$", "$5\\sqrt{10}$", "$10\\sqrt{5}$"]},
+        7: {"text": "Vilket värde har $x$ om $\\frac{1}{x+1} + \\frac{1}{x+1} = 3$?",
+            "alternatives": ["$-\\frac{2}{3}$", "$-\\frac{1}{3}$", "$\\frac{1}{3}$", "$\\frac{2}{3}$"]},
+        8: {"text": "Vad är $3 \\cdot 10^5 + 3 \\cdot 10^5$?",
+            "alternatives": ["$6 \\cdot 10^5$", "$3 \\cdot 10^6$", "$3 \\cdot 10^{10}$",
+                              "$6 \\cdot 10^{10}$"]},
+        9: {"text": "Vad är medelvärdet av de tre talen $\\frac{1}{2}$, $\\frac{1}{4}$ "
+                     "och $\\frac{1}{8}$?",
+            "alternatives": ["$\\frac{1}{4}$", "$\\frac{3}{8}$", "$\\frac{1}{14}$",
+                              "$\\frac{7}{24}$"]},
+        10: {"text": "$f(x) = 8x+1$\n\nVad är ett möjligt värde på $f(x)$ om $x$ är ett "
+                      "heltal?", "alternatives": ["–31", "–17", "15", "32"]},
+        11: {"text": "Vilket svarsalternativ ligger närmast $\\frac{254}{13}$?",
+             "alternatives": ["18", "19", "20", "21"]},
+        13: {"text": "$a+8=b+4$\n\nKvantitet I: $a$\nKvantitet II: $b$", "alternatives": STD_KVA},
+        14: {"text": "Charlie har 8 eller 9 lådor med kritor. Varje låda innehåller 5, "
+                      "6 eller 7 kritor.\nKvantitet I: Antalet kritor som Charlie har\n"
+                      "Kvantitet II: 58", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{4-3{,}14}{3}$\nKvantitet II: $\\frac{1}{4}$",
+             "alternatives": STD_KVA},
+        17: {"text": "Oscar går $x$ km på $y/3$ timmar.\nPeter går $6x$ km på $2y$ timmar.\n"
+                      "Kvantitet I: Oscars medelhastighet\nKvantitet II: Peters "
+                      "medelhastighet", "alternatives": STD_KVA},
+        19: {"text": "Medelvärdet av de fyra talen 10, 15, 25 och $x$ är 12.\nKvantitet I: "
+                      "$x$\nKvantitet II: 0", "alternatives": STD_KVA},
+        20: {"text": "$f(x) = 2x+\\frac{1}{5}$\n$g(x) = \\frac{1}{2}x+5$\n\nKvantitet I: "
+                      "$x$-värdet för den punkt där grafen till $f$ skär $x$-axeln\n"
+                      "Kvantitet II: $x$-värdet för den punkt där grafen till $g$ skär "
+                      "$x$-axeln", "alternatives": STD_KVA},
+        22: {"text": "$x$ och $y$ är positiva tal.\n$\\frac{1}{x} - \\frac{1}{y} = 1$\n\n"
+                      "Kvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+    },
 }
 
 
