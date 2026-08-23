@@ -2239,6 +2239,184 @@ PATCH: dict[str, dict[int, dict]] = {
                       "av triangelns vinklar är 45°.\n\nTillräcklig information för "
                       "lösningen erhålls", "alternatives": STD_NOG},
     },
+    # Uteslutna: 8 (fyrhörning med rätvinklar), 11 (två likformiga
+    # parallellogram, motsvarigheten a↔c/b↔d syns bara i figuren),
+    # 19 (fyrhörning+korsande linjer med vinklar). NOG 23-28 hade bara
+    # garblad text.
+    "2018vt-1": {
+        1: {"text": "Vilket svarsalternativ motsvarar $\\frac{12a^2b^3}{4b^2c}$?",
+            "alternatives": ["$\\frac{12a^2}{4c}$", "$\\frac{3a^2}{bc}$", "$3a^2c$",
+                              "$\\frac{3a^2b}{c}$"]},
+        2: {"text": "Vilket svarsalternativ är korrekt?",
+            "alternatives": ["$\\frac{1}{2}<\\frac{2}{5}<\\frac{3}{4}$",
+                              "$\\frac{2}{5}<\\frac{1}{2}<\\frac{3}{4}$",
+                              "$\\frac{3}{4}<\\frac{5}{6}<\\frac{7}{11}$",
+                              "$\\frac{3}{5}<\\frac{1}{2}<\\frac{3}{4}$"]},
+        3: {"text": "$f(x)=x^2$\n$g(x)=x^2 \\cdot f(x)$\n$h(x)=x^2 \\cdot g(x)$\n\n"
+                     "Vilket svarsalternativ motsvarar $h(x)$?",
+            "alternatives": ["$x^2$", "$3x^2$", "$x^6$", "$x^8$"]},
+        4: {"text": "Vilket av svarsalternativen är närmast $\\pi$?",
+            "alternatives": ["$\\frac{28}{7}$", "3", "$\\frac{28}{8}$", "$\\frac{22}{7}$"]},
+        5: {"text": "Vad är $\\frac{x}{5}-\\frac{x}{3}-\\frac{x}{2}$?",
+            "alternatives": ["0", "$-x$", "$\\frac{x+5}{x}$", "$-\\frac{19x}{30}$"]},
+        6: {"text": "Vilken av linjerna nedan går genom punkten (1, 3)?",
+            "alternatives": ["$y=-x+4$", "$y=-5x+2$", "$y=3x+1$", "$y=x-2$"]},
+        7: {"text": "På en fotbollsmatch finns det exakt fyra gånger så många "
+                     "supportrar för hemmalaget som för bortalaget. Ingen person är "
+                     "supporter av båda lagen. Vilket svarsalternativ kan motsvara "
+                     "antalet supportrar på matchen?", "alternatives": ["203", "214", "245", "262"]},
+        9: {"text": "$\\frac{9x-13}{2}=1$\n\nVad är $x$?",
+            "alternatives": ["$\\frac{11}{9}$", "$\\frac{14}{9}$", "$\\frac{5}{3}$", "$\\frac{14}{3}$"]},
+        10: {"text": "Medianen av 77 på varandra följande heltal är 35. Vad är "
+                      "medelvärdet?", "alternatives": ["35", "36", "37", "38,5"]},
+        12: {"text": "$a$, $b$ och $c$ är tre på varandra följande heltal sådana att "
+                      "$a<b<c$. Vilket svarsalternativ är $3a^2+c^2$ med säkerhet "
+                      "jämnt delbart med?", "alternatives": ["3", "4", "5", "6"]},
+        13: {"text": "Omkretsen av den regelbundna femhörningen ABCDE är 75 cm.\n"
+                      "Kvantitet I: 15 cm\nKvantitet II: Avståndet från punkten A till "
+                      "punkten D", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $\\left(\\frac{7}{9}\\right)^2$\nKvantitet II: "
+                      "$\\frac{50}{80}$", "alternatives": STD_KVA},
+        15: {"text": "$f(x)=-5x+20$\n\nKvantitet I: $\\frac{f(0)}{f(-1)}$\nKvantitet "
+                      "II: $\\frac{f(-1)}{f(0)}$", "alternatives": STD_KVA},
+        16: {"text": "$0<x<y<1$\n\nKvantitet I: $y(1-x)$\nKvantitet II: $x(1-y)$",
+             "alternatives": STD_KVA},
+        17: {"text": "$a$ och $b$ är positiva heltal större än 1 som uppfyller att "
+                      "$a^b=16$.\n\nKvantitet I: $b^a$\nKvantitet II: 16", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: Resultatet då ett negativt tal subtraheras från "
+                      "noll\nKvantitet II: Resultatet då ett positivt tal subtraheras "
+                      "från noll", "alternatives": STD_KVA},
+        20: {"text": "$y \\neq 0$\n$\\frac{2x}{3y}=4$\n\nKvantitet I: $x-6y$\n"
+                      "Kvantitet II: 3", "alternatives": STD_KVA},
+        21: {"text": "$m$ och $n$ är två på varandra följande heltal sådana att även "
+                      "$m-1$ och $n+1$ är två på varandra följande heltal.\n"
+                      "Kvantitet I: $m$\nKvantitet II: $n$", "alternatives": STD_KVA},
+        22: {"text": "$1 \\leq x \\leq 4$\n$2 \\leq y \\leq 6$\n$4 \\leq z \\leq 8$\n\n"
+                      "Kvantitet I: Medelvärdet av $x$ och $y$\nKvantitet II: "
+                      "Medelvärdet av $y$ och $z$", "alternatives": STD_KVA},
+        23: {"text": "Hampus, Lena, Moa och Rickard är lärare. De undervisar alla i "
+                      "olika ämnen och varje lärare undervisar i endast ett ämne. "
+                      "Vilket ämne undervisar Moa i?\n\n(1) Hampus eller Lena "
+                      "undervisar i naturkunskap. Moa eller Rickard undervisar i "
+                      "fysik.\n(2) Hampus eller Rickard undervisar i engelska. Lena "
+                      "eller Moa undervisar i samhällskunskap.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "Ett tyg säljs som metervara från en rulle. Hur många meter tyg "
+                      "finns det på rullen?\n\n(1) Om affären säljer en femtedel av "
+                      "tyget på rullen och därefter en fjärdedel av återstoden av "
+                      "tyget så finns 60 procent av tyget kvar på rullen.\n(2) Om "
+                      "affären säljer hälften av tyget på rullen och därefter en "
+                      "femtedel av återstoden av tyget så finns åtta meter tyg kvar "
+                      "på rullen.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "Helena och Krister står 2,5 km från varandra efter samma raka "
+                      "väg. De startar samtidigt och cyklar mot varandra, var och en "
+                      "med sin egen konstanta hastighet. Med vilken hastighet cyklar "
+                      "Helena?\n\n(1) Helena möter Krister efter 6 minuter.\n(2) "
+                      "Kristers hastighet är 15 km/h.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "400 kvinnor och män fick frågan: Vad läser du oftast — "
+                      "kvällstidningen eller morgontidningen? 140 personer svarade "
+                      "kvällstidningen och resten svarade morgontidningen. Hur många "
+                      "män tillfrågades?\n\n(1) 60 kvinnor svarade att de oftast läste "
+                      "kvällstidningen.\n(2) Det var lika många män som kvinnor som "
+                      "svarade att de oftast läste morgontidningen.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "En klass ska utökas med 12 barn. Kan man därefter dela in "
+                      "klassen i grupper om 8 barn?\n\n(1) Om klassen istället utökas "
+                      "med 4 barn så kan man dela in barnen i grupper om 8 barn.\n(2) "
+                      "Innan klassen utökas är det inte möjligt att dela in barnen i "
+                      "grupper om 8 barn.\n\nTillräcklig information för lösningen "
+                      "erhålls", "alternatives": STD_NOG},
+        28: {"text": "$a>0$\n$b>0$\n$k=\\frac{a}{b}$\n\nVilket värde har $k$?\n\n"
+                      "(1) $a-b=0$\n(2) $\\frac{b}{a}=\\frac{a}{b}$\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+    },
+    # Uteslutna: 4 (fyrhörning/drake med diagonaler), 8 (fyra grafer SOM
+    # svarsalternativ), 10 (rutnät med skuggad del), 18 (två grafer). NOG
+    # 23-28 hade bara garblad text.
+    "2018vt-4": {
+        1: {"text": "Vad är $\\frac{5}{2}-\\frac{8}{5}$?", "alternatives": ["–0,3", "0,9", "1,2", "1,7"]},
+        2: {"text": "12, $a$, 17, 13 och 20 är fem positiva heltal som har "
+                     "medelvärdet 16. Vad är $a$?", "alternatives": ["16", "18", "20", "22"]},
+        3: {"text": "Vilket uttryck motsvarar ett heltal?",
+            "alternatives": ["$(\\sqrt{7}+\\sqrt{7})^2$", "$7\\sqrt{7}$", "$\\sqrt{7}+\\sqrt{7}$",
+                              "$\\sqrt{7}+\\sqrt{\\frac{7}{7}}$"]},
+        5: {"text": "Vilket av svarsalternativen är lika med uttrycket $2(-r+3s)$?",
+            "alternatives": ["$3s-r+2$", "$-2r+3s$", "$2(s-r)+s$", "$-6\\left(\\frac{r}{3}-s\\right)$"]},
+        6: {"text": "Linjen $y=5x+10$ skär $x$-axeln i punkten $(x_1,0)$ och "
+                     "$y$-axeln i punkten $(0,y_1)$. Vad är $x_1+y_1$?",
+            "alternatives": ["5", "6", "8", "15"]},
+        7: {"text": "$\\frac{\\frac{3}{2}}{\\frac{6}{x}}=2$\n\nVad är $x$?",
+            "alternatives": ["4", "6", "8", "9"]},
+        9: {"text": "Vid ett möte skakade alla hand med varandra en gång. Det blev "
+                     "totalt 15 handskakningar. Hur många personer deltog i mötet?",
+            "alternatives": ["5", "6", "7", "8"]},
+        11: {"text": "$p>0$\n$p \\neq r$\n$r=\\frac{k+p}{k}-1$\n\nVad är $k$?",
+             "alternatives": ["$k=1$", "$k=\\frac{p-1}{r-1}$", "$k=\\frac{p}{r+2}$", "$k=\\frac{p}{r}$"]},
+        12: {"text": "Vilket svarsalternativ har samma värde som $5^{-2}-(-2)^{-1}$?",
+             "alternatives": ["$\\frac{27}{50}$", "$7^{-3}$", "$\\frac{2}{27}$", "27"]},
+        13: {"text": "De tre vinklarna i en triangel är $u$, $v$ och $w$.\nKvantitet "
+                      "I: $u+v$\nKvantitet II: $w$", "alternatives": STD_KVA},
+        14: {"text": "$30<3x-6<63$\n\nKvantitet I: $x$\nKvantitet II: 10", "alternatives": STD_KVA},
+        15: {"text": "En affär har 75 % rabatt på byxor och 70 % rabatt på tröjor. "
+                      "Ordinarie pris för de röda byxorna är 299 kr. Ordinarie pris "
+                      "för den gula tröjan är 199 kr.\nKvantitet I: Det rabatterade "
+                      "priset för de röda byxorna\nKvantitet II: Det rabatterade "
+                      "priset för den gula tröjan", "alternatives": STD_KVA},
+        16: {"text": "$x^3<0$\n\nKvantitet I: $x^7$\nKvantitet II: $3x^4$", "alternatives": STD_KVA},
+        17: {"text": "Samuel har en påse med endast röda, gröna och blå enfärgade "
+                      "kulor. 2/5 av kulorna är röda och 3/10 av kulorna är gröna. "
+                      "Samuel plockar slumpmässigt upp en kula ur påsen.\nKvantitet I: "
+                      "Sannolikheten att kulan är blå\nKvantitet II: Sannolikheten "
+                      "att kulan är röd", "alternatives": STD_KVA},
+        19: {"text": "Radien i cirkeln C är $x$. Höjden i triangeln T är $2x$ och "
+                      "basen är $3x$.\nKvantitet I: Arean av cirkeln C\nKvantitet II: "
+                      "Arean av triangeln T", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: $\\frac{5}{3}-\\frac{3}{2}$\nKvantitet II: "
+                      "$\\frac{1}{7}+\\frac{1}{42}$", "alternatives": STD_KVA},
+        21: {"text": "$x>0$\nKvantitet I: $\\frac{7x}{8}$\nKvantitet II: 88 % av $x$",
+             "alternatives": STD_KVA},
+        22: {"text": "$\\sqrt{5} \\cdot \\sqrt{9}=45^x$\n\nKvantitet I: 0,5\nKvantitet "
+                      "II: $x$", "alternatives": STD_KVA},
+        23: {"text": "Två löpare springer ett antal varv runt samma motionsslinga. "
+                      "Båda löparna startar samtidigt från samma plats. De springer "
+                      "åt samma håll, var och en med sin egen konstanta hastighet. "
+                      "Efter hur lång tid blir den långsammare löparen varvad av den "
+                      "snabbare löparen?\n\n(1) Slingan är 800 meter lång och det tar "
+                      "den långsammare löparen 6 minuter att springa ett varv runt "
+                      "slingan.\n(2) Efter 9 minuter har den långsammare löparen "
+                      "sprungit ett och ett halvt varv runt slingan, vilket är 1200 "
+                      "meter. Samtidigt har den snabbare löparen sprungit 2000 "
+                      "meter.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        24: {"text": "I en låda finns det fyra olika sorters spik: nubb, "
+                      "kopparspik, pappspik och dyckert. Hur många spikar finns det "
+                      "i lådan?\n\n(1) I lådan finns det 24 kopparspikar, vilket är "
+                      "50 procent mer än antalet dyckertar.\n(2) Dyckert och "
+                      "kopparspik utgör tillsammans 50 procent av antalet spikar i "
+                      "lådan.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "Vad är 15 procent av $y$?\n\n(1) $y$ är 60 procent av 900.\n"
+                      "(2) 5 procent av $y$ är 27.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "Var och en av Mimmis tröjor är antingen färgglad eller svart. "
+                      "Varje tröja är dessutom antingen långärmad eller kortärmad. "
+                      "Mimmi har 14 långärmade tröjor. Hur många tröjor har Mimmi?\n\n"
+                      "(1) Hälften av de färgglada tröjorna är långärmade.\n(2) Sex "
+                      "av de svarta tröjorna är inte långärmade.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "Tre enfärgade klossar — en röd, en grön och en blå — är "
+                      "staplade på varandra. Vilken färg har den översta klossen?\n\n"
+                      "(1) Den blå klossen är inte underst. Den gröna klossen är "
+                      "inte överst.\n(2) Den röda klossen är inte i mitten. Den blå "
+                      "klossen är under den röda klossen.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Bland talen 28, 32, 42, 56, 72, 78 väljs ett ut, vilket?\n\n"
+                      "(1) Talet är jämnt delbart med 3.\n(2) Talet är en "
+                      "heltalsmultipel av 4.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+    },
 }
 
 
