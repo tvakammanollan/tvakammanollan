@@ -2594,6 +2594,200 @@ PATCH: dict[str, dict[int, dict]] = {
                       "(2) $a+c=9$\n\nTillräcklig information för lösningen erhålls",
              "alternatives": STD_NOG},
     },
+    # Uteslutna: 3 (parallella linjer med sträckor), 6 (fyra grafer SOM
+    # svarsalternativ).
+    "2017vt-1": {
+        1: {"text": "Vad är $\\frac{5{,}1 \\cdot 10^8}{1{,}7 \\cdot 10^4}$?",
+            "alternatives": ["$3 \\cdot 10^2$", "$3 \\cdot 10^3$", "$3 \\cdot 10^4$", "$3 \\cdot 10^{12}$"]},
+        2: {"text": "Tobias äter yoghurt till frukost. Fördelningen av energin i "
+                     "Tobias yoghurt är:\nFett 13,5 kcal\nProtein 46,5 kcal\n"
+                     "Kolhydrat 120 kcal\n\nHur många procent av energin kommer "
+                     "från fett?", "alternatives": ["7,5 %", "10 %", "13,5 %", "67 %"]},
+        4: {"text": "$3x-15=21-5x$\n\nVad är $x$?", "alternatives": ["–18", "0,75", "4", "4,5"]},
+        5: {"text": "En rektangel R har basen $(1+a)$ och höjden $(a-1)$. Vilket "
+                     "uttryck gäller för arean av rektangeln R?",
+            "alternatives": ["$a^2$", "$a^2-1$", "$a^2+2a-1$", "0"]},
+        7: {"text": "Vilket svarsförslag är lika med uttrycket $2(x-2y)-x(x+3y)+3y(x-y)$?",
+            "alternatives": ["$-x^2+3xy+2x$", "$-x^2-3y^2+2x-4y$", "$-x^2-3y^2+6xy+2x-4y$",
+                              "$-x^2-3y^2+6xy+2x+4y$"]},
+        8: {"text": "Vad är $\\sqrt{0{,}25}$?", "alternatives": ["0,05", "0,125", "0,5", "2"]},
+        9: {"text": "$k \\neq 0$\n$m \\neq 0$\n$0<a<1$\n\nHur förändras grafen till "
+                     "den linjära funktionen $f(x)=kx+m$ om högerledet multipliceras "
+                     "med talet $a$?",
+            "alternatives": ["Grafens skärningspunkt med $y$-axeln hamnar närmare "
+                              "origo. Linjens lutning blir mindre brant.",
+                              "Grafens skärningspunkt med $y$-axeln hamnar närmare "
+                              "origo. Linjens lutning blir brantare.",
+                              "Grafens skärningspunkt med $y$-axeln hamnar längre "
+                              "från origo. Linjens lutning blir mindre brant.",
+                              "Grafens skärningspunkt med $y$-axeln hamnar längre "
+                              "från origo. Linjens lutning blir brantare."]},
+        10: {"text": "Vad är medelvärdet av alla primtal $p$ sådana att $27<p<36$?",
+             "alternatives": ["29", "30", "31", "32"]},
+        11: {"text": "Vad är sannolikheten att man vid två på varandra följande "
+                      "kast med en vanlig sexsidig tärning inte slår någon sexa?",
+             "alternatives": ["$\\frac{1}{36}$", "$\\frac{25}{36}$", "$\\frac{31}{36}$", "$\\frac{35}{36}$"]},
+        12: {"text": "$x>1$\n\nVilket alternativ anger värden på $m$ och $n$ så att "
+                      "$x^m \\cdot x^n = (x^m)^n$ gäller?",
+             "alternatives": ["$m=\\frac{1}{2}$, $n=2$", "$m=1$, $n=1$",
+                               "$m=\\frac{1}{2}$, $n=-\\frac{1}{2}$", "$m=2$, $n=2$"]},
+        13: {"text": "Mia går $x$ kilometer på $y/2$ timmar. Pia går $2x$ "
+                      "kilometer på $y$ timmar.\nKvantitet I: Mias medelhastighet\n"
+                      "Kvantitet II: Pias medelhastighet", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $2x^2+4$\nKvantitet II: $(x+1)^2+(x-1)^2$",
+             "alternatives": STD_KVA},
+        15: {"text": "Triangeln ABC har sidorna $4x$ (AB), $3x$ (BC) och $5x$ (AC), "
+                      "med rät vinkel vid B.\nKvantitet I: 10 m²\nKvantitet II: "
+                      "Arean av triangeln ABC", "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: $7\\sqrt{35}$\nKvantitet II: $6\\sqrt{50}$",
+             "alternatives": STD_KVA},
+        17: {"text": "Produkten av två positiva heltal är 10.\nKvantitet I: "
+                      "Medelvärdet av de två talen\nKvantitet II: $\\frac{10}{3}$",
+             "alternatives": STD_KVA},
+        18: {"text": "$2x-y-3=y$\n\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        19: {"text": "Kvantitet I: 2208\nKvantitet II: $47^2$", "alternatives": STD_KVA},
+        20: {"text": "$f(x)=10x^2-100x$\n\nKvantitet I: $f(10)$\nKvantitet II: $f(0)$",
+             "alternatives": STD_KVA},
+        21: {"text": "Tre cirklar med diametern $d$ ryms precis staplade på varandra "
+                      "i en rektangel med bredden $b=d$ och höjden $h$.\nKvantitet I: "
+                      "Rektangelns höjd $h$\nKvantitet II: Omkretsen för en av "
+                      "cirklarna", "alternatives": STD_KVA},
+        22: {"text": "Kvantitet I: Värdet av $x$ då $\\frac{1+x}{0{,}1}=-1$\n"
+                      "Kvantitet II: Värdet av $y$ då $\\frac{0{,}1-0{,}2}{y+1}=1$",
+             "alternatives": STD_KVA},
+        23: {"text": "Lisa har en spelning på en musikfestival. Hur lång tid är "
+                      "avsatt för Lisas spelning?\n\n(1) Om Lisa skulle överskrida "
+                      "den avsatta tiden med tre minuter så skulle tiden för Lisas "
+                      "spelning öka med 1/4 av den avsatta tiden.\n(2) Om Lisa "
+                      "avslutar sin spelning tre minuter tidigare än den avsatta "
+                      "tiden så förkortas tiden för spelningen med 25 procent.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "På en restaurangmeny finns fem olika maträtter. Alla rätter "
+                      "kostar olika mycket. Den billigaste kostar 110 kr och den "
+                      "dyraste kostar 180 kr. Vad kostar de två dyraste rätterna "
+                      "tillsammans?\n\n(1) Medianpriset för alla fem rätterna är "
+                      "135 kr.\n(2) De tre dyraste rätterna kostar tillsammans 490 "
+                      "kr.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "En svampkorg är fylld med enbart kantareller och "
+                      "champinjoner. Det finns sammanlagt 30 svampar i korgen. Hur "
+                      "många kantareller finns det i korgen?\n\n(1) Om man "
+                      "slumpmässigt tar upp svampar ur korgen måste man ta upp "
+                      "minst 12 svampar för att säkert få minst en kantarell.\n(2) "
+                      "Om man slumpmässigt tar upp svampar ur korgen måste man ta "
+                      "upp minst 20 svampar för att säkert få minst en "
+                      "champinjon.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        26: {"text": "En triangel är inskriven i en cirkel. Hur stora är "
+                      "triangelns vinklar?\n\n(1) Triangeln är likbent och "
+                      "rätvinklig.\n(2) Minst en av triangelns vinklar är 45°.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "Markus har tvättat endast tröjor och skjortor. Hälften av "
+                      "dessa plagg tillhör Markus och hälften tillhör Jonas. Hur "
+                      "många skjortor har Markus tvättat?\n\n(1) Totalt har Markus "
+                      "tvättat 36 plagg. Av dessa plagg är 16 tröjor, varav 10 "
+                      "tillhör Jonas.\n(2) 12 skjortor och 6 tröjor tillhör "
+                      "Markus.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        28: {"text": "De tre siffrorna 3, 4 och 9 står skrivna i en viss ordning på "
+                      "en rad. Vilket tresiffrigt tal bildar siffrorna?\n\n(1) 3 "
+                      "eller 9 står i mitten. 3 står någonstans till vänster om "
+                      "4.\n(2) 4 står inte först. 4 eller 9 står sist.\n\n"
+                      "Tillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+    },
+    # Uteslutna: 2 (parallella linjer med vinklar), 14 (triangel med
+    # vinklar), 19 (kvadrat ABDE med diagonaler).
+    "2017vt-4": {
+        1: {"text": "$\\frac{4x}{12}+\\frac{5x}{3}=8$\n\nVad är $x$?",
+            "alternatives": ["3", "4", "5", "$\\frac{40}{3}$"]},
+        3: {"text": "Talen 7, 13, 18, 20 och $x$ har medelvärdet 15. Vad är $x$?",
+            "alternatives": ["13", "15", "17", "19"]},
+        4: {"text": "$x$ och $y$ är positiva heltal sådana att $x \\leq 6$ och "
+                     "$y \\leq 3$. Vilket är det största möjliga primtal som "
+                     "$2x+y$ kan vara?", "alternatives": ["11", "13", "17", "19"]},
+        5: {"text": "De tre punkterna A, B och C bildar triangeln ABC i ett "
+                     "koordinatsystem.\n$A=(1,-4)$\n$B=(4,2)$\n$C=(-1,2)$\n\nVad är "
+                     "arean av triangeln ABC?",
+            "alternatives": ["8 areaenheter", "10 areaenheter", "15 areaenheter", "30 areaenheter"]},
+        6: {"text": "Om $a^2=7$ vad är då $(3a)^2$?", "alternatives": ["21", "42", "63", "147"]},
+        7: {"text": "A och B är två positiva heltal som är mindre än tio.\n"
+                     "$P=7 \\cdot 1000+A \\cdot 100+4 \\cdot 10+B \\cdot 1$\n"
+                     "$Q=4 \\cdot 1000+A \\cdot 100+8 \\cdot 10+B \\cdot 1$\n\n"
+                     "Vad är differensen mellan P och Q?",
+            "alternatives": ["2 060", "2 960", "3 040", "3 940"]},
+        8: {"text": "Vad är $\\frac{\\sqrt{3}}{3}$?",
+            "alternatives": ["$\\frac{1}{\\sqrt{3}}$", "1", "$\\sqrt{3}$", "3"]},
+        9: {"text": "$x$, $y$, $z$ och $w$ är negativa tal. Vilket alternativ är "
+                     "med säkerhet korrekt om $zw>xy$?",
+            "alternatives": ["$w>x$", "$-z>-y$", "$xz>yw$", "$-xy>-zw$"]},
+        10: {"text": "$f(x)=2 \\cdot 5^x$\n\nVad är $f(1)-f(0)$?", "alternatives": ["5", "8", "9", "10"]},
+        11: {"text": "$x \\neq -1$\n\nVilket av uttrycken motsvarar "
+                      "$\\frac{1}{2x+2}-\\frac{2}{6x+6}$?",
+             "alternatives": ["$-\\frac{1}{4x+4}$", "$-\\frac{1}{2x+2}$", "$\\frac{1}{4x+4}$",
+                               "$\\frac{1}{6x+6}$"]},
+        12: {"text": "Kvadraten ABCD har hörnen på en cirkel med radien 5 cm. Hur "
+                      "stor andel av cirkelns yta täcks av kvadratens yta?",
+             "alternatives": ["$\\frac{2}{3}$", "$\\frac{2}{\\pi}$", "$\\frac{3}{\\pi}$", "$\\frac{\\pi}{5}$"]},
+        13: {"text": "Kvantitet I: $\\frac{10}{3}$\nKvantitet II: $\\frac{3 \\cdot 5 \\cdot 26}{13 \\cdot 15}$",
+             "alternatives": STD_KVA},
+        15: {"text": "$x$ är ett slumpmässigt valt tal från mängden $\\{3,5,7,11,13\\}$.\n"
+                      "Kvantitet I: Sannolikheten att 6 är jämnt delbart med $x$\n"
+                      "Kvantitet II: Sannolikheten att 39 är jämnt delbart med $x$",
+             "alternatives": STD_KVA},
+        16: {"text": "$x^2=4$\n\nKvantitet I: $x^4$\nKvantitet II: $(x+x)(x+x)$",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $\\frac{1}{5}+\\frac{1}{5}$\nKvantitet II: "
+                      "$\\frac{1}{3}+\\frac{1}{15}$", "alternatives": STD_KVA},
+        18: {"text": "$x_1>x_2$\n$f(x)=5-10x$\n\nKvantitet I: $f(x_1)$\nKvantitet "
+                      "II: $f(x_2)$", "alternatives": STD_KVA},
+        20: {"text": "Av 39 pennor i en låda är 2/3 bläckpennor. 19 av pennorna i "
+                      "lådan är trasiga.\nKvantitet I: Antalet trasiga bläckpennor\n"
+                      "Kvantitet II: 6", "alternatives": STD_KVA},
+        21: {"text": "$x$, $y$ och $z$ är tre på varandra följande heltal sådana "
+                      "att $x<y<z$ och $xyz=0$.\nKvantitet I: $z$\nKvantitet II: 1",
+             "alternatives": STD_KVA},
+        22: {"text": "$x>y$\n$xz>yz$\n\nKvantitet I: $z$\nKvantitet II: 0",
+             "alternatives": STD_KVA},
+        23: {"text": "På en bondgård finns 63 djur: hästar, kor och grisar. Hur "
+                      "många kor finns det på bondgården?\n\n(1) Det finns dubbelt "
+                      "så många grisar som hästar och kor tillsammans.\n(2) Antalet "
+                      "hästar på bondgården är hälften av antalet kor.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "Albert och Ida ska tillsammans klippa gräset på en "
+                      "fotbollsplan. De arbetar samtidigt och utan rast med varsin "
+                      "gräsklippare. De arbetar alltid med sina egna konstanta "
+                      "hastigheter. Hur lång tid tar det för dem att klippa gräset "
+                      "på fotbollsplanen?\n\n(1) Ensam skulle Albert klippa hela "
+                      "fotbollsplanen 0,5 timmar långsammare än Ida.\n(2) Ensam "
+                      "skulle Ida klippa hela fotbollsplanen 0,5 timmar snabbare "
+                      "än Albert.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "Vad är summan av $x$, $y$ och $z$?\n\n(1) $x$, $y$ och $z$ "
+                      "förhåller sig som 3:5:7.\n(2) $z-x=28$\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "En bofink, en domherre, en gråsparv och en talgoxe sitter på "
+                      "rad på en telefonledning. Bofinken sitter inte längst till "
+                      "höger. Vilken fågel sitter längst till vänster?\n\n(1) "
+                      "Talgoxen sitter närmast till vänster om bofinken. Gråsparven "
+                      "sitter inte bredvid domherren.\n(2) Talgoxen sitter inte "
+                      "bredvid gråsparven. Domherren sitter inte bredvid "
+                      "bofinken.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        27: {"text": "I en klass med flickor och pojkar gavs på ett prov endast "
+                      "betygen godkänt eller underkänt.\n$x$ = Det totala antalet "
+                      "flickor, både godkända och underkända\n$y$ = Det totala "
+                      "antalet godkända elever, både flickor och pojkar\n\nVad är "
+                      "$\\frac{x}{y}$?\n\n(1) Det fanns lika många pojkar som "
+                      "flickor i klassen.\n(2) Av klassens 24 elever fick hälften "
+                      "godkänt och av klassens 12 flickor fick hälften underkänt.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Anders skriver $n$ stycken tal på en lapp. Är produkten av "
+                      "de $n$ talen negativ?\n\n(1) Alla talen är negativa och $n$ "
+                      "är ett udda tal.\n(2) Om två tal vars produkt är positiv "
+                      "stryks, så är produkten av de övriga talen negativ.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+    },
 }
 
 
