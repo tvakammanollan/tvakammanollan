@@ -2788,6 +2788,180 @@ PATCH: dict[str, dict[int, dict]] = {
                       "stryks, så är produkten av de övriga talen negativ.\n\n"
                       "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
     },
+    # Uteslutna: 10 (rektangel+F/E-linje), 12 (parabel avläst ur graf),
+    # 15 (triangel med vinklar).
+    "2016ht-3": {
+        1: {"text": "Vilket svarsalternativ motsvarar uttrycket $3xy^2+2x^2y$?",
+            "alternatives": ["$xy(3y+2x)$", "$5x^3y^3$", "$x(3y^2+2x^2)$", "$5xy(y+x)$"]},
+        2: {"text": "För fyrhörningen ABCD gäller att summan av vinkeln A och "
+                     "vinkeln C är 210°. Vilket av följande alternativ är med "
+                     "säkerhet korrekt?",
+            "alternatives": ["Vinkeln A är större än 90°.", "Vinkeln B och vinkeln "
+                              "D är lika stora.", "Summan av vinkeln B och vinkeln "
+                              "D är 150°.", "Fyrhörningen ABCD är en rektangel."]},
+        3: {"text": "Vilket av svarsförslagen är en punkt som ligger mellan de "
+                     "båda linjerna $y=x+3$ och $y=x-3$?",
+            "alternatives": ["(0, 0)", "(4, 0)", "(0, –4)", "(4, –4)"]},
+        4: {"text": "Vad är $x-y$ då $11x-11y=42$?",
+            "alternatives": ["$-\\frac{42}{11}$", "$-\\frac{11}{42}$", "$\\frac{11}{42}$", "$\\frac{42}{11}$"]},
+        5: {"text": "Målarna A och B ska måla ett plank. A och B målar var och en "
+                     "med sin egen konstanta hastighet. Om A målar planket ensam "
+                     "tar det sex timmar, och om B målar planket ensam tar det "
+                     "fyra timmar. A börjar måla och arbetar i två timmar. Om B "
+                     "tar över där A slutat, hur länge måste då B arbeta innan "
+                     "hela planket är målat?",
+            "alternatives": ["80 minuter", "120 minuter", "160 minuter", "200 minuter"]},
+        6: {"text": "Vilket svarsalternativ är lika med $\\frac{3}{5}$?",
+            "alternatives": ["$\\frac{1}{2}+\\frac{1}{6}$", "$\\frac{1}{2}+\\frac{1}{10}$",
+                              "$\\frac{1}{3}+\\frac{1}{15}$", "$\\frac{1}{4}+\\frac{1}{6}$"]},
+        7: {"text": "$4=\\frac{3}{12}-5x$\n\nVad är $x$?",
+            "alternatives": ["$-\\frac{3}{4}$", "$-\\frac{3}{5}$", "$-\\frac{4}{5}$", "$-\\frac{7}{20}$"]},
+        8: {"text": "I en grupp på 10 personer är medelåldern 18 år. Två personer "
+                     "lämnar gruppen, vilket gör att medelåldern sjunker till 10 "
+                     "år. En av personerna som lämnar gruppen är 80 år. Hur gammal "
+                     "är den andra personen som lämnar gruppen?",
+            "alternatives": ["14 år", "16 år", "18 år", "20 år"]},
+        9: {"text": "Vad är $6-5 \\cdot (8-3) - \\left(\\frac{12}{4}-2\\right)$?",
+            "alternatives": ["–24", "–20", "0", "4"]},
+        11: {"text": "Vad är $(2\\sqrt{2})^2$?", "alternatives": ["2", "4", "8", "16"]},
+        13: {"text": "$-7(x+1)=-8x$\n\nKvantitet I: $x$\nKvantitet II: 0", "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $12^2$\nKvantitet II: $\\frac{9^2}{3^2} \\cdot 4$",
+             "alternatives": STD_KVA},
+        16: {"text": "Medelvärdet av $x$, $y$ och $z$ är $w/3$. Medelvärdet av $y$, "
+                      "$z$ och $w$ är $x/3$.\nKvantitet I: $y$\nKvantitet II: $z$",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $9 \\cdot 8-7 \\cdot 4$\nKvantitet II: $(9 \\cdot 2-7) \\cdot 4$",
+             "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: $2 \\cdot \\left(1+\\frac{1}{2}+\\frac{1}{4}+"
+                      "\\frac{1}{8}+\\frac{1}{16}+\\frac{1}{32}+\\frac{1}{64}\\right)$\n"
+                      "Kvantitet II: $2^2$", "alternatives": STD_KVA},
+        19: {"text": "$x \\neq 0$\n$x-y=y-x$\n\nKvantitet I: $\\frac{2x+y}{3x}$\n"
+                      "Kvantitet II: $\\frac{2y+x}{3y}$", "alternatives": STD_KVA},
+        20: {"text": "Kvantitet I: Längsta sidan på en rektangel med arean 40 cm²\n"
+                      "Kvantitet II: Längsta sidan på en triangel med arean 20 cm²",
+             "alternatives": STD_KVA},
+        21: {"text": "Linjerna $y=2x-10$ och $y=-\\frac{x}{3}+11$ skär varandra i "
+                      "punkten $P=(a,b)$.\nKvantitet I: $a$\nKvantitet II: $b$",
+             "alternatives": STD_KVA},
+        22: {"text": "Talet $53_{tio}$ kan skrivas som $203_{fem}$ med basen fem "
+                      "och $110101_{två}$ med basen två.\nKvantitet I: $210_{fem}$\n"
+                      "Kvantitet II: $110111_{två}$", "alternatives": STD_KVA},
+        23: {"text": "I ett rakt cykelställ står fyra enfärgade cyklar. Cyklarna "
+                      "har olika färg och tillhör olika personer. Ellas cykel står "
+                      "längst till höger. Vilken färg har Ellas cykel?\n\n(1) Den "
+                      "röda cykeln står bredvid den gröna cykeln. Den vita cykeln "
+                      "står bredvid den röda cykeln.\n(2) Den blå cykeln står "
+                      "närmast till vänster om den vita cykeln.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "På en låg- och mellanstadieskola finns det flickor och "
+                      "pojkar. Flickorna är 39 fler än pojkarna. Hur många elever "
+                      "finns det på skolan?\n\n(1) Det finns 53 fler elever på "
+                      "lågstadiet än på mellanstadiet.\n(2) På lågstadiet finns "
+                      "det lika många pojkar som på mellanstadiet.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        25: {"text": "Är $xy<25$?\n\n(1) $y^2=400$\n(2) $0{,}5<x<1$\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "Vilken area har rektangeln ABCD?\n\n(1) Diagonalen AC är 10 "
+                      "cm.\n(2) Längden av sidan BC är tre fjärdedelar av längden "
+                      "av sidan AB.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        27: {"text": "$x>0$\nVilket värde har $x$?\n\n(1) $3x-7=5$\n(2) $x^2+x=5x$\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Signe har en sexsidig bilderbok med bilder på sex olika "
+                      "djur. Boken har en framsida, en baksida och två uppslag. "
+                      "Det är en bild på ett djur på varje sida i boken. På bokens "
+                      "framsida är det en hund. På vilken sida är katten?\n\n(1) "
+                      "Katten är på samma uppslag som räven. Fåret är närmare "
+                      "framsidan än vad katten är.\n(2) Fåret är på samma uppslag "
+                      "som geten. Katten är närmare baksidan än vad geten är. "
+                      "Både räven och älgen är längre bak i boken än vad katten "
+                      "är.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+    },
+    # Uteslutna: 2 (linje inritad i koordinatsystem UTAN given ekvation),
+    # 6 (två linjer med vinklar), 9 (kvadrat+cirkelsektor), 14 (fyra
+    # rektanglar i pinwheel-mönster).
+    "2016ht-5": {
+        1: {"text": "$13-x=-24$\n\nVad är $x$?", "alternatives": ["–37", "–11", "11", "37"]},
+        3: {"text": "Kalle har 18 burkar med 35 kulor i varje burk. Hur många fler "
+                     "burkar behövs om det istället ska vara 30 kulor i varje "
+                     "burk?", "alternatives": ["2", "3", "4", "5"]},
+        4: {"text": "Vilket svarsalternativ motsvarar uttrycket $\\frac{7x^2+91x}{7x}$?",
+            "alternatives": ["$x-13$", "$7x^2-13$", "$x+13$", "$7x^2+13$"]},
+        5: {"text": "Vad är $4000000 \\cdot 0{,}0000025$?",
+            "alternatives": ["$10^1$", "$10^2$", "$10^3$", "$10^4$"]},
+        7: {"text": "Om $x$ och $y$ är heltal sådana att $x<0<y$, vad är då med "
+                     "säkerhet korrekt?",
+            "alternatives": ["$\\frac{x}{y}<0$", "$x^6<y^6$", "$x+y=0$", "$0<\\frac{y}{x}$"]},
+        8: {"text": "Vilket svarsalternativ motsvarar uttrycket $(x-y)\\left(\\frac{1}{x}+\\frac{1}{y}\\right)$?",
+            "alternatives": ["$\\frac{x-y}{xy}$", "$\\frac{x-y}{x+y}$", "$\\frac{x^2-y^2}{xy}$",
+                              "$\\frac{x}{y}-\\frac{y}{x}+2$"]},
+        10: {"text": "Vad är $(-4)^{-1}+(-2)^{-2}+(-1)^0-3^2$?", "alternatives": ["–9,5", "–8", "2", "10"]},
+        11: {"text": "$y \\neq 0$\nMedelvärdet av de fyra talen 1, $2x$, 5 och 2 är "
+                      "$\\frac{y}{2}$. Vad är $x$?",
+             "alternatives": ["$\\frac{y}{4}-4$", "$\\frac{y}{2}-4$", "$y-4$", "$2y-4$"]},
+        12: {"text": "$f(x)=\\frac{x+4}{x-4}$\n\nVilket svarsförslag är störst?",
+             "alternatives": ["$f(-5)$", "$f(-2)$", "$f(0)$", "$f(3)$"]},
+        13: {"text": "$x^2=16$\n$y=\\sqrt{\\frac{500}{20}}$\n\nKvantitet I: $x$\n"
+                      "Kvantitet II: $y$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $\\frac{7{,}56}{7}$\nKvantitet II: $\\frac{98{,}1}{90}$",
+             "alternatives": STD_KVA},
+        16: {"text": "$f(x)=3 \\cdot 4^x$\n\nKvantitet I: $f(0)-f(-1)$\nKvantitet "
+                      "II: $f(1)-f(0)$", "alternatives": STD_KVA},
+        17: {"text": "$V_k=4^3$\n$V_s=\\frac{4 \\cdot \\pi \\cdot 3^3}{3}$\n\n"
+                      "Kvantitet I: $V_k$\nKvantitet II: $\\frac{V_s}{2}$",
+             "alternatives": STD_KVA},
+        18: {"text": "$x>0$\nKvantitet I: $x+\\frac{1}{x+1}$\nKvantitet II: $x+\\frac{1}{x}$",
+             "alternatives": STD_KVA},
+        19: {"text": "P, Q och R är tre positiva heltal sådana att $P<Q<R$.\n"
+                      "Kvantitet I: Medelvärdet av P, Q och R\nKvantitet II: "
+                      "Medianen av P, Q och R", "alternatives": STD_KVA},
+        20: {"text": "$y>0$\n$x^2-y=7y-x^2$\n\nKvantitet I: $x$\nKvantitet II: $2y$",
+             "alternatives": STD_KVA},
+        21: {"text": "För $n$ cirklar med radien $r$ och en cirkel med radien R "
+                      "gäller att $R=nr$.\nKvantitet I: Summan av omkretsarna av "
+                      "de $n$ cirklarna med radien $r$\nKvantitet II: Omkretsen "
+                      "för cirkeln med radien R", "alternatives": STD_KVA},
+        22: {"text": "En syskonskara består av ett antal pojkar och flickor. Varje "
+                      "pojke har lika många bröder som systrar. Varje flicka har "
+                      "dubbelt så många bröder som systrar.\nKvantitet I: 2 gånger "
+                      "antalet pojkar i syskonskaran\nKvantitet II: 3 gånger "
+                      "antalet flickor i syskonskaran", "alternatives": STD_KVA},
+        23: {"text": "Anna har tre enfärgade kaffekoppar i olika storlekar och "
+                      "färger. En kopp är röd, en är grön och en är blå. Vilken "
+                      "färg har den minsta koppen?\n\n(1) Den näst minsta koppen "
+                      "är varken grön eller blå.\n(2) Den största koppen är "
+                      "varken röd eller blå.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "Eva och Torsten har varit ute och plockat svamp. Hur många "
+                      "olika sorters svamp har de plockat tillsammans?\n\n(1) Eva "
+                      "har plockat sex olika sorters svamp och Torsten har "
+                      "plockat fyra olika sorters svamp.\n(2) Två tredjedelar av "
+                      "de svampsorter som Eva har plockat har Torsten inte "
+                      "plockat. Hälften av de svampsorter som Torsten har "
+                      "plockat har Eva inte plockat.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        25: {"text": "Kristian samlar på idolbilder. När Kristian fyllde år fick "
+                      "han 9 nya idolbilder i gåva. Hur många idolbilder hade "
+                      "Kristian efter gåvan?\n\n(1) Innan Kristian fick gåvan "
+                      "hade han 1/11 färre idolbilder än vad han hade efter "
+                      "gåvan.\n(2) Idolbilderna Kristian fick i gåva motsvarade "
+                      "1/10 av Kristians idolbilder före gåvan.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "Stämmer det att $(x+y)$ är lika med $2x$?\n\n(1) $x=y$\n"
+                      "(2) $x=6$\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        27: {"text": "ABCD är en rektangel. E är en punkt på sidan BC. Om BC är 4 "
+                      "cm, vad är då arean av triangeln AED?\n\n(1) CD är "
+                      "$\\frac{19}{8}$ av AD.\n(2) BE = EC\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "I två lådor finns det 67 bollar, 11 gröna och resten röda. "
+                      "I låda A finns det 7 gröna bollar. Hur många röda bollar "
+                      "finns det i låda B?\n\n(1) I låda A finns det tre gånger "
+                      "så många röda bollar som gröna bollar.\n(2) I låda B "
+                      "finns det 11 bollar fler än i låda A.\n\nTillräcklig "
+                      "information för lösningen erhålls", "alternatives": STD_NOG},
+    },
 }
 
 
