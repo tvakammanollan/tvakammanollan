@@ -2417,6 +2417,183 @@ PATCH: dict[str, dict[int, dict]] = {
                       "heltalsmultipel av 4.\n\nTillräcklig information för "
                       "lösningen erhålls", "alternatives": STD_NOG},
     },
+    # Uteslutna: 12 (triangel med parallell linje och vinklar), 19
+    # (fyrhörning ABCD).
+    "2017ht-3": {
+        1: {"text": "$x$ och $y$ är positiva heltal sådana att $0<x<y<10$. Hur "
+                     "många olika värden kan $x$ anta?", "alternatives": ["1", "2", "8", "9"]},
+        2: {"text": "Vad är medelvärdet av 1/2 och 1/6?",
+            "alternatives": ["1/3", "1/4", "1/5", "1/8"]},
+        3: {"text": "Kalle blandar 25 drinkar på 9 minuter. Jakob blandar 25 drinkar "
+                     "på 18 minuter. Hur lång tid tar det för Kalle och Jakob att "
+                     "tillsammans blanda 75 drinkar om de börjar samtidigt?",
+            "alternatives": ["12 minuter", "15 minuter", "18 minuter", "21 minuter"]},
+        4: {"text": "$K_1$ och $K_2$ är två kvadrater med areorna 25 cm² respektive "
+                     "64 cm². En sida i $K_1$ och en sida i $K_2$ utgör kateterna i "
+                     "en rätvinklig triangel. Hur stor är triangelns area?",
+            "alternatives": ["15 cm²", "20 cm²", "35 cm²", "40 cm²"]},
+        5: {"text": "Vilket svarsförslag motsvarar $(x^3)^2$?",
+            "alternatives": ["$x^5$", "$x^6$", "$x^8$", "$x^9$"]},
+        6: {"text": "$35x+60=47x-24$\n\nVad är $x$?", "alternatives": ["–7", "–3", "3", "7"]},
+        7: {"text": "Hur många liter är $4{,}7 \\cdot 10^2$ m³?",
+            "alternatives": ["$4{,}7 \\cdot 10^5$ liter", "$4{,}7 \\cdot 10^6$ liter",
+                              "$4{,}7 \\cdot 10^8$ liter", "$4{,}7 \\cdot 10^{12}$ liter"]},
+        8: {"text": "För vilket värde på $k$ skär inte linjerna $y=kx+6$ och "
+                     "$y=2x+3$ varandra?", "alternatives": ["–2", "0", "1", "2"]},
+        9: {"text": "Vad är $\\frac{2 \\cdot \\frac{1}{3}}{4 \\cdot \\frac{5}{6}}$?",
+            "alternatives": ["$\\frac{1}{5}$", "$\\frac{2}{5}$", "$\\frac{5}{18}$", "$\\frac{5}{36}$"]},
+        10: {"text": "$(a+b)^2=25$\n$(a-b)^2=121$\n\nVilket värde har $ab$?",
+             "alternatives": ["–55", "–24", "24", "55"]},
+        11: {"text": "Vad är $\\left(\\frac{x}{4}+\\frac{1}{2}\\right)\\left(\\frac{x}{4}-\\frac{1}{2}\\right)$?",
+             "alternatives": ["$\\frac{1}{4}\\left(\\frac{x^2}{4}+1\\right)$",
+                               "$\\frac{1}{4}(x^2-4)$",
+                               "$\\frac{1}{4}\\left(\\frac{x^2}{4}-x+1\\right)$",
+                               "$\\frac{1}{4}\\left(\\frac{x^2}{4}-1\\right)$"]},
+        13: {"text": "Kvantitet I: $4 \\cdot 6-5 \\cdot 3$\nKvantitet II: "
+                      "$4 \\cdot (6-5) \\cdot 3$", "alternatives": STD_KVA},
+        14: {"text": "Eva satsar på fyra fält på ett lyckohjul med 20 fält. "
+                      "Lyckohjulet snurras en gång. Endast ett fält ger vinst och "
+                      "alla fält har lika stor chans att ge vinst.\nKvantitet I: "
+                      "Sannolikheten att Eva får vinst\nKvantitet II: $\\frac{1}{4}$",
+             "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: Volymen av en cylinder där basytans radie är 3 "
+                      "cm och höjden är 3 cm\nKvantitet II: $30\\pi$ cm³",
+             "alternatives": STD_KVA},
+        16: {"text": "$x \\geq 0$\nKvantitet I: $\\sqrt{(x+3)^2}$\nKvantitet II: $x+3$",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $\\sqrt{8}+\\sqrt{27}$\nKvantitet II: $5\\sqrt{2}$",
+             "alternatives": STD_KVA},
+        18: {"text": "$\\frac{x}{3}-\\frac{y}{3}<\\frac{372}{12}$\n\nKvantitet I: $x$\n"
+                      "Kvantitet II: $y$", "alternatives": STD_KVA},
+        20: {"text": "Julia är 5 år äldre än Rut. För 3 år sedan var Julia dubbelt "
+                      "så gammal som Rut.\nKvantitet I: Ruts nuvarande ålder\n"
+                      "Kvantitet II: 8 år", "alternatives": STD_KVA},
+        21: {"text": "$x^2=y^2$\n\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        22: {"text": "$f(x)=3x+2$ och $g(z)=2z+3$\n\nKvantitet I: $x$, då $f(x)=0$\n"
+                      "Kvantitet II: $z$, då $g(z)=0$", "alternatives": STD_KVA},
+        23: {"text": "En affär säljer hushållsost och prästost. En bit hushållsost "
+                      "som väger 488 gram kostar 19 kronor och 52 öre. Hur mycket "
+                      "kostar en bit prästost som väger lika mycket?\n\n(1) "
+                      "Prästosten kostar 49 kr mer per kg än hushållsosten.\n(2) "
+                      "Prästosten kostar 89 kr/kg.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        24: {"text": "Tre alarm ringer med olika tidsintervall. Ett av dem ringer "
+                      "var tredje timme. Klockan 18.00 ringer de tre alarmen "
+                      "samtidigt. Vid vilken tidpunkt ringer de tre alarmen "
+                      "samtidigt nästa gång?\n\n(1) Ett av alarmen ringer varje "
+                      "halvtimme.\n(2) Ett av alarmen har 2,5 timmar mellan "
+                      "ringningarna.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        25: {"text": "ABCD är en rektangel. Om rektangelns bas och höjd ökar med 5 "
+                      "cm vardera, vad blir då kvoten mellan höjden och basen?\n\n"
+                      "(1) Efter ökningen skulle omkretsen av rektangeln vara 20 cm "
+                      "längre.\n(2) Före ökningen är höjden 6 cm och kvoten mellan "
+                      "höjden och basen är $\\frac{3}{4}$.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "Vilket är det positiva tvåsiffriga talet?\n\n(1) Summan av "
+                      "talets siffror är 6.\n(2) Talet är jämnt delbart med 7.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "Stina har sex stenar som är märkta A, B, C, D, E respektive "
+                      "F. Vilka två stenar väger mest?\n\n(1) F väger mer än A, som "
+                      "i sin tur väger mer än D.\n(2) Den sammanlagda vikten av A, D "
+                      "och F är större än vikten av C, men mindre än både vikten av "
+                      "B och vikten av E.\n\nTillräcklig information för lösningen "
+                      "erhålls", "alternatives": STD_NOG},
+        28: {"text": "$x$, $y$, $z$, 5 och 7 är positiva heltal där $x<y<z<5$. Vad "
+                      "är medelvärdet av de fem talen?\n\n(1) Produkten $xyz$ är "
+                      "jämnt delbar med 6.\n(2) Två av talen $x$, $y$ och $z$ är "
+                      "primtal.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+    },
+    # Uteslutna: 2 (två räta linjer skär en tredje, vinklar), 22 (fyrhörning
+    # ABCD med vinklar).
+    "2017ht-5": {
+        1: {"text": "75 % av $x$ är 48. Vad är $x$?", "alternatives": ["64", "68", "72", "80"]},
+        3: {"text": "Om $a \\diamond b$ definieras som $ab-a+b$, vad är då $3 \\diamond 4$?",
+            "alternatives": ["11", "12", "13", "14"]},
+        4: {"text": "Vad är $\\frac{3}{4}+\\frac{1}{2}+\\frac{6}{5}$?",
+            "alternatives": ["$\\frac{18}{40}$", "$\\frac{49}{20}$", "$\\frac{10}{11}$", "$\\frac{23}{10}$"]},
+        5: {"text": "I triangeln ABC, med sidan $a$ mitt emot hörnet A, sidan $b$ "
+                     "mitt emot hörnet B och sidan $c$ mitt emot hörnet C, vilket "
+                     "svarsförslag är korrekt?",
+            "alternatives": ["$c>a-b$ och $c<a+b$", "$c>a-b$ och $c>a+b$",
+                              "$c<a-b$ och $c<a+b$", "$c<a-b$ och $c>a+b$"]},
+        6: {"text": "$x$ är summan av tre på varandra följande heltal. Vad är ett "
+                     "möjligt värde på $x$?", "alternatives": ["45", "53", "62", "79"]},
+        7: {"text": "Första dagen på en festival såldes 350 biljetter. Varje dag "
+                     "därefter såldes dubbelt så många biljetter som dagen innan. "
+                     "Hur många biljetter såldes sammanlagt under festivalens fyra "
+                     "dagar?", "alternatives": ["2800", "4900", "5250", "5600"]},
+        8: {"text": "Vad blir $\\frac{\\frac{x_1}{y_1}}{\\frac{x_2}{y_2}}$ om "
+                     "$x_1=2x_2$ och $y_1=2y_2$?",
+            "alternatives": ["$\\frac{x_1}{y_1}$", "$\\frac{x_2^2}{y_2^2}$", "1", "2"]},
+        9: {"text": "Vårt vanliga talsystem har basen tio. I ett talsystem med "
+                     "basen åtta använder man siffrorna 0 till 7, men i stället för "
+                     "8 skriver man 10 och istället för 9 skriver man 11 och så "
+                     "vidare. Om ett tal i basen åtta skrivs som 50, vilket tal "
+                     "motsvarar det då i vårt vanliga talsystem?",
+            "alternatives": ["32", "40", "50", "62"]},
+        10: {"text": "Vad är $x$ om $3^{-3x+4}=\\frac{1}{9}$?", "alternatives": ["1", "2", "3", "4"]},
+        11: {"text": "Vad blir $g(2)-h(2)$ då $g(z)=2(z-1)$ och $h(z)=3(1-z)$?",
+             "alternatives": ["–1", "1", "3", "5"]},
+        12: {"text": "Anders skriver fem olika positiva heltal på en lapp. Han har "
+                      "valt talen så att medelvärdet är 13 och medianen är 15. "
+                      "Vilket är det största tal som kan stå på hans lapp?",
+             "alternatives": ["17", "28", "31", "33"]},
+        13: {"text": "$x-y=y-x$\n\nKvantitet I: $x$\nKvantitet II: $y$", "alternatives": STD_KVA},
+        14: {"text": "En tärning kastades tio gånger och visade följande värden: "
+                      "1, 1, 2, 3, 4, 4, 5, 6, 6, 6\nKvantitet I: Medelvärdet\n"
+                      "Kvantitet II: Medianen", "alternatives": STD_KVA},
+        15: {"text": "$r=\\frac{R}{3}$\n$R$ är radien i en stor cirkel och $r$ är "
+                      "radien i tre mindre cirklar.\nKvantitet I: Omkretsen av den "
+                      "stora cirkeln\nKvantitet II: Summan av omkretsarna av de tre "
+                      "mindre cirklarna", "alternatives": STD_KVA},
+        16: {"text": "$f(x)=kx+m$\n\nKvantitet I: $f(0)$\nKvantitet II: $f(1)$",
+             "alternatives": STD_KVA},
+        17: {"text": "Kvantitet I: $\\frac{1}{2}+\\frac{1}{4}+\\frac{1}{8}+\\frac{1}{16}$\n"
+                      "Kvantitet II: $\\frac{14}{15}$", "alternatives": STD_KVA},
+        18: {"text": "$x>0$\n$y>0$\n\nKvantitet I: $\\frac{x}{y}$\nKvantitet II: $x \\cdot y$",
+             "alternatives": STD_KVA},
+        19: {"text": "I en låda finns det 60 enfärgade lappar i färgerna röd, blå "
+                      "och grön. Mer än 1/3 av lapparna är röda och 17 är gröna.\n"
+                      "Kvantitet I: Antalet blå lappar\nKvantitet II: 23",
+             "alternatives": STD_KVA},
+        20: {"text": "$\\frac{x}{y}=-1$\n\nKvantitet I: $x^3+y^3$\nKvantitet II: $x^2+y^2$",
+             "alternatives": STD_KVA},
+        21: {"text": "Kvantitet I: $\\frac{17}{4}$\nKvantitet II: $\\sqrt{17}$",
+             "alternatives": STD_KVA},
+        23: {"text": "Fyra punkter, A–D, ligger längs en linje i ordningen "
+                      "A-B-C-D. Avståndet mellan B och C är 7 längdenheter. Hur "
+                      "långt är avståndet mellan A och D?\n\n(1) Avståndet mellan A "
+                      "och C är 24 längdenheter.\n(2) Avståndet mellan B och D är "
+                      "20 längdenheter.\n\nTillräcklig information för lösningen "
+                      "erhålls", "alternatives": STD_NOG},
+        24: {"text": "Adam, Erik och Hans plockade hallon i en gemensam hink för "
+                      "att baka en paj. Hur många gram hallon användes till pajen?\n\n"
+                      "(1) Adam plockade 1/3 av hallonen i hinken och Hans plockade "
+                      "3/7 av hallonen i hinken.\n(2) Då pajen var klar fanns det "
+                      "850 gram hallon över i hinken.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        25: {"text": "I ett kontorsförråd finns det en vit och en grå kartong med "
+                      "800 respektive 1200 gem. Gemen finns i två olika storlekar. "
+                      "Hur många små gem finns det i den vita kartongen?\n\n(1) "
+                      "Andelen stora gem i vardera kartongen är 43 procent.\n(2) I "
+                      "de två kartongerna finns det totalt 1140 små gem.\n\n"
+                      "Tillräcklig information för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "Anna och Bea startade samtidigt och båda cyklade 30 km med "
+                      "konstant hastighet. Vilken medelhastighet hade Anna?\n\n(1) "
+                      "Anna kom fram 30 minuter före Bea.\n(2) När Anna kom fram "
+                      "hade Bea 7,5 km kvar att cykla.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "$x$, $y$ och $z$ är positiva heltal. Är $x+y+z$ ett jämnt "
+                      "tal?\n\n(1) $x-y-z$ är ett udda tal.\n(2) $xyz$ är ett udda "
+                      "tal.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        28: {"text": "$a$, $b$, $c$ och $d$ är olika heltal större än 0 sådana att "
+                      "$b+c=a+d$. Vilket värde har talet $d$?\n\n(1) $b+d=13$\n"
+                      "(2) $a+c=9$\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+    },
 }
 
 
