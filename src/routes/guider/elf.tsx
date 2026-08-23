@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/elf")({
   component: ElfGuidePage,
@@ -55,6 +56,8 @@ function ElfGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="elf" code="ELF" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad är ELF?
@@ -65,7 +68,16 @@ function ElfGuidePage() {
           samhällsdebatt. Texterna är på engelska och frågorna är formulerade på engelska, men de
           alternativa svaren är noggrant valda för att testa exakt läsförståelse, inte allmänna
           kunskaper om ämnet. ELF ger lika stort utslag på slutbetyget som LÄS, men bedöms separat i
-          det verbala delprovspasset.
+          det verbala delprovspasset. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/las")({
   component: LasGuidePage,
@@ -95,6 +96,8 @@ function LasGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="las" code="LÄS" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad testar LÄS?
@@ -104,7 +107,17 @@ function LasGuidePage() {
           20 uppgifter. Texterna är hämtade från vetenskap, samhällsdebatt och kultur och är ofta
           komplexa med ett akademiskt eller resonerande språk. Frågorna testar inte om du kan
           memorera texten utan om du kan navigera i den: hitta information, dra slutsatser och
-          förstå vad författaren menar och anser.
+          förstå vad författaren menar och anser. Läs mer om högskoleprovets uppbyggnad i sin helhet
+          på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

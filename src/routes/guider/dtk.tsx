@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/dtk")({
   component: DtkGuidePage,
@@ -56,6 +57,8 @@ function DtkGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="dtk" code="DTK" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad testar DTK?
@@ -65,11 +68,20 @@ function DtkGuidePage() {
           cirkeldiagram, kombinerat diagram, tabell eller karta, följt av 3–5 frågor om den figuren.
           Totalt 12 uppgifter per provpass, kopplade till 3–4 olika figurer. DTK tar vanligtvis
           längst tid av de kvantitativa delprovens moment eftersom du måste orientera dig i varje ny
-          figur.
+          figur. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Läs axlarna och titeln EERST
+          Läs axlarna och titeln FÖRST
         </h2>
         <p>
           Innan du läser en enda fråga: orientera dig i figuren. Kontrollera alltid dessa fyra

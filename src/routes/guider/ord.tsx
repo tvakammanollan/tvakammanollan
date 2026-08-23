@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/ord")({
   component: OrdGuidePage,
@@ -55,6 +56,8 @@ function OrdGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="ord" code="ORD" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad testar ORD?
@@ -65,6 +68,16 @@ function OrdGuidePage() {
           synonym eller antonym. Orden hämtas från ett brett spektrum av svenska texter:
           facklitteratur, skönlitteratur och akademiska sammanhang. Det innebär att du möter allt
           från vardagliga men subtila ord till ovanliga termer från medicin, juridik och filosofi.
+          Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -124,7 +137,7 @@ function OrdGuidePage() {
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vanliga ordkategorier på HP
         </h2>
-        <p>Certain thematic clusters återkommer på prov efter prov. Prioritera dessa:</p>
+        <p>Vissa temakluster återkommer på prov efter prov. Prioritera dessa:</p>
         <ul className="list-disc space-y-1 pl-6">
           <li>Känslo- och karaktärsord (arrogant, ödmjuk, svekfull, nitisk)</li>
           <li>Vetenskapliga och akademiska termer (empirisk, deduktiv, syntes)</li>

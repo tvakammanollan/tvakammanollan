@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/xyz")({
   component: XyzGuidePage,
@@ -55,6 +56,8 @@ function XyzGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="xyz" code="XYZ" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad testar XYZ?
@@ -64,7 +67,17 @@ function XyzGuidePage() {
           problemlösning på gymnasienivå: du får ett problem formulerat i text eller med en figur
           och ska välja rätt svar bland fyra alternativ. Ingen formelsamling tillåts och inga
           hjälpmedel. Matematik på HP testar inte avancerad kalkyl. Det testar om du kan tillämpa
-          grundläggande matematik snabbt och säkert.
+          grundläggande matematik snabbt och säkert. Läs mer om högskoleprovets uppbyggnad i sin
+          helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

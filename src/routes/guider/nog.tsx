@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/nog")({
   component: NogGuidePage,
@@ -55,6 +56,8 @@ function NogGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="nog" code="NOG" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad är NOG?
@@ -87,6 +90,18 @@ function NogGuidePage() {
             räcker, ens tillsammans
           </li>
         </ul>
+        <p className="text-sm">
+          Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
+        </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Arbetsordning

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/mek")({
   component: MekGuidePage,
@@ -55,6 +56,8 @@ function MekGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="mek" code="MEK" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad är MEK?
@@ -64,7 +67,17 @@ function MekGuidePage() {
           streck. Din uppgift är att välja de ord eller fraser från alternativen som passar bäst i
           meningens sammanhang. Delprovet testar din förmåga att förstå textens logiska flöde,
           ordets grammatiska roll och hela meningens semantiska helhet. En mening kan ha flera ord
-          som grammatiskt fungerar, men bara ett som passar logiken och tonen.
+          som grammatiskt fungerar, men bara ett som passar logiken och tonen. Läs mer om
+          högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

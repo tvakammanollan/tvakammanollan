@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/kva")({
   component: KvaGuidePage,
@@ -55,6 +56,8 @@ function KvaGuidePage() {
         </h1>
       </header>
 
+      <GuideTopCta delprov="kva" code="KVA" />
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad är KVA?
@@ -64,7 +67,16 @@ function KvaGuidePage() {
           fyra möjliga svar: A är större än B, B är större än A, de är lika, eller relationen kan
           inte avgöras med given information. Delprovet innehåller 10 uppgifter per provpass.
           Poängen per uppgift är densamma som övriga delprov, men rätt strategi gör att du kan svara
-          på KVA-uppgifter snabbare än på XYZ.
+          på KVA-uppgifter snabbare än på XYZ. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          <a
+            href="https://www.studera.nu/hogskoleprov/om/intro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            studera.nu
+          </a>
+          .
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
