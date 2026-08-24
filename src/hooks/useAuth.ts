@@ -21,6 +21,55 @@ export interface Profile {
   current_streak?: number;
   longest_streak?: number;
   last_active_date?: string | null;
+  /**
+   * Antal rankade matcher per gren, räknade i `elo_history` — inte kolumner i
+   * `users`. `undefined` betyder att räkningen inte kom med (se
+   * `fetchProfileRow`), inte noll matcher.
+   */
+  matches_verbal?: number;
+  matches_math?: number;
+}
+
+/**
+ * `*` plus antalet rankade matcher per gren. Räkningen bäddas in i profil-
+ * frågan i stället för att hämtas separat med flit: useAuth har ingen delad
+ * cache utan körs i ett trettiotal komponenter, så varje extra anrop hade
+ * blivit ett anrop per monterad komponent.
+ */
+const PROFILE_SELECT = "*, matches_verbal:elo_history(count), matches_math:elo_history(count)";
+
+type ProfileRow = Record<string, unknown>;
+
+async function fetchProfileRow(userId: string): Promise<ProfileRow | null> {
+  const withCounts = await supabase
+    .from("users")
+    .select(PROFILE_SELECT)
+    .eq("id", userId)
+    .eq("matches_verbal.match_type", "verbal")
+    .eq("matches_math.match_type", "math")
+    .maybeSingle();
+  if (!withCounts.error) return withCounts.data as ProfileRow | null;
+
+  // Skulle inbäddningen falla (RLS, PostgREST-version) får den inte ta med sig
+  // inloggningen i fallet — utan räkning visas högsta ELO:t som förut.
+  const plain = await supabase.from("users").select("*").eq("id", userId).maybeSingle();
+  return plain.data as ProfileRow | null;
+}
+
+/** PostgREST svarar `[{ count: n }]` per inbäddad räkning; platta ut till ett tal. */
+function embeddedCount(value: unknown): number | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const first = value[0] as { count?: number } | undefined;
+  return typeof first?.count === "number" ? first.count : 0;
+}
+
+function toProfile(row: ProfileRow | null): Profile | null {
+  if (!row) return null;
+  return {
+    ...(row as unknown as Profile),
+    matches_verbal: embeddedCount(row.matches_verbal),
+    matches_math: embeddedCount(row.matches_math),
+  };
 }
 
 export function isGuestUser(user: User | null | undefined): boolean {
@@ -145,9 +194,9 @@ export function useAuthState(): AuthValue {
     if (!user) return;
     let cancelled = false;
     (async () => {
-      const { data } = await supabase.from("users").select("*").eq("id", user.id).maybeSingle();
+      const row = await fetchProfileRow(user.id);
       if (!cancelled) {
-        setProfile((data as Profile) ?? null);
+        setProfile(toProfile(row));
         setProfileLoadedFor(user.id);
       }
     })();

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { EloBadge } from "@/components/EloBadge";
+import { displayElo, type EloHeadline } from "@/lib/elo";
 import { UserAvatar } from "@/components/UserAvatar";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -41,6 +42,15 @@ import {
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { displayName } from "@/lib/guest-name";
 
+type EloTrack = EloHeadline["track"];
+
+/** V eller M på märket — utelämnas när grenen inte säger något (båda lika). */
+function trackLabel(track: EloTrack): string | undefined {
+  if (track === "verbal") return "V";
+  if (track === "math") return "M";
+  return undefined;
+}
+
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
@@ -51,16 +61,15 @@ export function Navbar() {
     navigate({ to: "/" });
   };
 
-  // Två delar, två ELO — och ingen av dem är "mitt ELO".
-  //
-  // Här stod `Math.max(elo_verbal, elo_math)`, vilket gav fel tal i precis det
-  // läge man tittar på siffran: efter en förlorad verbal match visade
-  // navbaren mattens orörda 1000 medan resultatsidan och dashboarden visade
-  // 963. Det såg ut som att ELO:t "ibland stämmer inte" — det stämde aldrig,
-  // det råkade bara sammanfalla när båda delarna låg lika. Samma fel rättades
-  // på dashboarden tidigare; navbaren lämnades kvar.
-  const eloVerbal = profile?.elo_verbal ?? 1000;
-  const eloMath = profile?.elo_math ?? 1000;
+  // Ett ELO, inte två. Här stod först `Math.max(elo_verbal, elo_math)` (som
+  // visade mattens orörda 1000 efter en förlorad verbal match), sedan båda
+  // grenarna bredvid varandra — ärligt, men två tal att tolka i en rad man
+  // läser i förbifarten. Nu visas den högsta av de grenar man faktiskt
+  // spelat, med V eller M utsatt så att talet aldrig blir anonymt. Regeln
+  // och varför den räknar matcher i stället för att titta på ELO:t bor i
+  // `displayElo`. Ändrat på begäran 2026-08-24 — gå inte tillbaka till två
+  // märken utan att fråga.
+  const headline: EloHeadline = profile ? displayElo(profile) : { elo: 1000, track: null };
 
   // Scroll-aware: glaset tätnar och lyfter när man scrollar. Helt
   // transparent i toppläget har provats och gjorde att raden flöt ihop
@@ -158,8 +167,8 @@ export function Navbar() {
               {profile && (
                 <AccountMenu
                   profile={profile}
-                  eloVerbal={eloVerbal}
-                  eloMath={eloMath}
+                  elo={headline.elo}
+                  track={headline.track}
                   onSignOut={handleSignOut}
                 />
               )}
@@ -200,8 +209,8 @@ export function Navbar() {
               )}
               <MobileMenu
                 profile={profile}
-                eloVerbal={eloVerbal}
-                eloMath={eloMath}
+                elo={headline.elo}
+                track={headline.track}
                 onSignOut={handleSignOut}
               />
             </>
@@ -271,13 +280,13 @@ function NavLink({
 /* ─────────── ACCOUNT MENU — allt sekundärt bakom avataren ─────────── */
 function AccountMenu({
   profile,
-  eloVerbal,
-  eloMath,
+  elo,
+  track,
   onSignOut,
 }: {
   profile: NonNullable<ReturnType<typeof useAuth>["profile"]>;
-  eloVerbal: number;
-  eloMath: number;
+  elo: number;
+  track: EloTrack;
   onSignOut: () => Promise<void>;
 }) {
   return (
@@ -305,10 +314,7 @@ function AccountMenu({
           >
             {displayName(profile.username, profile.id)}
           </span>
-          <span className="flex items-center gap-1">
-            <EloBadge elo={eloVerbal} label="V" size="sm" />
-            <EloBadge elo={eloMath} label="M" size="sm" />
-          </span>
+          <EloBadge elo={elo} label={trackLabel(track)} size="sm" />
           <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
         </button>
       </DropdownMenuTrigger>
@@ -362,13 +368,13 @@ function AccountMenuLink({
 /* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
 function MobileMenu({
   profile,
-  eloVerbal,
-  eloMath,
+  elo,
+  track,
   onSignOut,
 }: {
   profile: ReturnType<typeof useAuth>["profile"];
-  eloVerbal: number;
-  eloMath: number;
+  elo: number;
+  track: EloTrack;
   onSignOut: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
@@ -422,10 +428,7 @@ function MobileMenu({
                   {displayName(profile.username, profile.id)}
                 </div>
                 <div className="mt-0.5">
-                  <span className="flex items-center gap-1">
-                    <EloBadge elo={eloVerbal} label="V" size="sm" />
-                    <EloBadge elo={eloMath} label="M" size="sm" />
-                  </span>
+                  <EloBadge elo={elo} label={trackLabel(track)} size="sm" />
                 </div>
               </div>
             </div>

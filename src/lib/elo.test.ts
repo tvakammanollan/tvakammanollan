@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { initials } from "./elo";
+import { displayElo, initials } from "./elo";
 import { applyEloFloor, calcNewElo, kFactor } from "./match.server";
 import { getRankForElo } from "@/types";
 
@@ -89,5 +89,41 @@ describe("initials", () => {
   it("hoppar över mellanslag och skiljetecken", () => {
     expect(initials("Gäst kantarell")).toBe("GÄ");
     expect(initials("lina_p")).toBe("LI");
+  });
+});
+
+describe("displayElo (talet i navbaren)", () => {
+  it("bara verbal spelad: visar verbal, inte den orörda 1000:an i matte", () => {
+    expect(
+      displayElo({ elo_verbal: 963, elo_math: 1000, matches_verbal: 1, matches_math: 0 }),
+    ).toEqual({ elo: 963, track: "verbal" });
+  });
+
+  it("bara matte spelad: visar matte", () => {
+    expect(
+      displayElo({ elo_verbal: 1000, elo_math: 954, matches_verbal: 0, matches_math: 1 }),
+    ).toEqual({ elo: 954, track: "math" });
+  });
+
+  it("båda spelade: högsta vinner och grenen följer med", () => {
+    expect(
+      displayElo({ elo_verbal: 1236, elo_math: 1449, matches_verbal: 27, matches_math: 48 }),
+    ).toEqual({ elo: 1449, track: "math" });
+  });
+
+  it("oavgjort ger ±0 — räkningen, inte ELO:t, avgör att grenen är spelad", () => {
+    expect(
+      displayElo({ elo_verbal: 1000, elo_math: 952, matches_verbal: 1, matches_math: 1 }),
+    ).toEqual({ elo: 1000, track: "verbal" });
+  });
+
+  it("lika i båda: ingen etikett, för grenen säger inget", () => {
+    expect(
+      displayElo({ elo_verbal: 1000, elo_math: 1000, matches_verbal: 0, matches_math: 0 }),
+    ).toEqual({ elo: 1000, track: null });
+  });
+
+  it("utan räkning faller den tillbaka på högsta av de två", () => {
+    expect(displayElo({ elo_verbal: 963, elo_math: 1000 })).toEqual({ elo: 1000, track: "math" });
   });
 });
