@@ -409,6 +409,34 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   - `clean-math-questions` är borttagen. Den bad en LLM rekonstruera skräpet och
     **hittade på**: alternativ B `31x` blev `$\frac{31x}{27}$`. Den kunde inte
     heller återskapa ett DTK-diagram som aldrig fanns i indata.
+  - **`import-prov-questions.ts` går inte att köra om rakt av längre.** Steg 1
+    raderar blint alla rader med `exam_term` satt innan det infogar de nya —
+    säkert bara innan någon match spelats med en arkivfråga. Sedan
+    2026-08-2x pekar `match_questions.question_id` (ON DELETE RESTRICT) på
+    288+ arkivrader, så en omkörning stoppas av databasen på just det steget.
+  - **XYZ/KVA/NOG skrivs om provpass för provpass från bildutsnitt till text
+    i `src/data/prov/`** (se avsnittet om gamla prov ovan), men den ändringen
+    når aldrig `questions` av sig själv — tabellen är en frusen ögonblicksbild
+    från importtillfället. `scripts/sync-prov-clean-status.ts` (torrkörning
+    som standard, `--apply` för att skriva) synkar i stället **på plats**,
+    matchat på `exam_term`+`provpass_num`+`q_num`: text-uppgifter får
+    `clean_status="ok"`, uppgifter som fortfarande är bildutsnitt får
+    `"pending"` och filtreras då bort av `match.server.ts`s
+    `eq("clean_status","ok")` — samma spärr som redan fanns, bara påslagen
+    per uppgift i stället för blint `"ok"` på alla. DTK rörs aldrig; den
+    kategorin är och förblir bilduppgifter med flit. **Kör om det här
+    skriptet efter varje ny omgång konverterade provpass** så att duellerna
+    börjar visa dem. Träningsläget (`train.functions.ts`) använder en annan
+    spärr (`clean_status != "retired"`) och påverkas inte.
+  - **Samma unika index på `lower(question_text)` gäller här också.** Flera
+    XYZ/KVA-uppgifter över olika provpass delar exakt samma standardstam
+    ("Vilket svarsalternativ är störst?"), vilket kraschade den första
+    körningen (23505) halvvägs igenom. Skriptet dedupar nu likadant som
+    `import-prov-questions.ts` gör, plus en riktad reträtt om en kollision
+    ändå slinker igenom mot en rad utanför XYZ/KVA/NOG (skedde en gång, mot
+    en rad skriptet inte rör). Det gör körningen idempotent: avbryts den
+    halvvägs (som den gjorde första gången) plockar nästa körning bara upp
+    resten, ingen skada skedd.
 - **`build.py` går inte att köra om — arkivet blir fattigare.** Den raderar allt i
   `src/data/prov/` och bygger från cachen, men cachen går inte att återskapa:
   ELF-häftena från flera terminer finns inte kvar hos UHR utan har hämtats för
