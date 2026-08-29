@@ -11,17 +11,18 @@ import { stopCoachingPrompts } from "@/lib/coaching-prompt";
 import { CoachingScheduler } from "@/components/CoachingScheduler";
 
 /**
- * Kvittosidan efter Stripe Checkout — och det är HÄR tiden väljs.
+ * Kvittosidan efter betalningen.
  *
  * Bokföringen görs egentligen av webhooken — den kommer även om webbläsaren
  * stängs mitt i betalningen. Den här sidan bekräftar mot Stripe en gång till
  * så att köparen ser sitt kvitto direkt, även om webhooken är sen. Båda
  * vägarna är idempotenta.
  *
- * Tidsväljaren låg tidigare FÖRE kassan. Den flyttades hit 2026-08-19 därför
- * att en Calendly-bokning binder tiden i samma sekund den görs medan Checkout
- * går att stänga: en tid kunde alltså tas i anspråk utan att någon betalade.
- * Se `startPaidCoachingBooking`.
+ * Tiden är normalt redan vald när man landar här: sedan 2026-08-29 väljs den
+ * i CoachingModal, före betalningen, med kassan inbäddad i samma ruta.
+ * `CoachingScheduler` nedan visar då bara den bokade tiden. Den kan fortfarande
+ * öppna en väljare, och det är reservvägen för köp som blivit betalda utan tid
+ * (Calendly nere när modalen öppnades). Se `startPaidCoachingBooking`.
  *
  * noindex: sidan finns bara för den som just betalat, och session-id:t i
  * URL:en har inget i ett sökindex att göra.
@@ -100,9 +101,10 @@ function TackPage() {
             ) : null}{" "}
             från Stripe.
           </p>
-          {/* Tidsvalet. Komponenten sköter själv fallen "redan bokad",
-              "Calendly är inte påslaget" och "något gick fel" — och den
-              öppnar aldrig en väljare utan en betald session bakom sig. */}
+          {/* Tiden. Komponenten sköter själv fallen "redan bokad" (normalfallet
+              nu när tiden väljs före betalningen), "Calendly är inte påslaget"
+              och "något gick fel" — och den öppnar aldrig en väljare utan en
+              betald session bakom sig. */}
           {sessionId && <CoachingScheduler sessionId={sessionId} />}
           <Link
             to="/"

@@ -64,6 +64,30 @@ export function stripeConfigured(): boolean {
   return stripeSecretKey() !== null;
 }
 
+/**
+ * Den publicerbara nyckeln (`pk_live_…`), som krävs för att rendera kassan
+ * INNE i sidan (`ui_mode: "embedded"`).
+ *
+ * Den är inte hemlig — den är avsedd att stå i klienten — men den ligger ändå
+ * i miljön och inte i koden, och skickas ut via `fetchCoachingOffer` i stället
+ * för att bakas in vid bygget. Skälet är att ett byte av Stripe-konto annars
+ * kräver en ny build i stället för en ny deploy, och att en `VITE_`-variabel
+ * som saknas vid bygget inte går att laga i efterhand.
+ *
+ * Saknas den faller köpet tillbaka på Stripes egen kassasida (redirect). Formen
+ * kontrolleras: en hemlig nyckel som råkat hamna här skulle annars skickas rakt
+ * ut till varje besökare.
+ */
+export function stripePublishableKey(): string | null {
+  const key = process.env.STRIPE_PUBLISHABLE_KEY?.trim();
+  if (!key) return null;
+  if (!key.startsWith("pk_")) {
+    console.error("[stripe] STRIPE_PUBLISHABLE_KEY ser inte ut som en pk_-nyckel — ignoreras");
+    return null;
+  }
+  return key;
+}
+
 async function stripeRequest<T>(
   method: "GET" | "POST",
   path: string,
@@ -142,6 +166,12 @@ export interface StripeCustomField {
 export interface StripeCheckoutSession {
   id: string;
   url: string | null;
+  /**
+   * Satt bara när sessionen skapats med `ui_mode: "embedded"`. Den är
+   * kassans identitet i webbläsaren och lämnas ut till klienten med flit —
+   * den går inte att göra något annat med än att rendera just den kassan.
+   */
+  client_secret?: string | null;
   status: "open" | "complete" | "expired";
   payment_status: "paid" | "unpaid" | "no_payment_required";
   amount_total: number | null;

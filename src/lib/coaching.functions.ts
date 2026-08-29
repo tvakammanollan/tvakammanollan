@@ -1,28 +1,44 @@
 /**
- * Coachning — pris, kassa, bekräftelse och tidsbokning.
+ * Coachning — pris, tidsbokning, kassa och bekräftelse.
  *
- * Flödet (ändrat 2026-08-19): knappen (startsidan, landningssidan eller
- * nudgen) → `startCoachingCheckout` skapar en rad i `coaching_requests` och
- * skickar köparen till Stripe Checkout → tillbaka till `/coachning/tack`, där
- * `confirmCoachingCheckout` bekräftar mot Stripe → **först då** visas Calendlys
- * tidsväljare, via `startPaidCoachingBooking`, och `completeCoachingBooking`
- * skriver den valda tiden på den redan betalda raden.
+ * Flödet (2026-08-29): knappen (startsidan, landningssidan eller nudgen) →
+ * `startCoachingBooking` skapar en rad i `coaching_requests` och ger tillbaka
+ * en Calendly-länk → köparen väljer en tid i iframen → `completeCoachingBooking`
+ * läser tiden ur Calendly, skriver den på raden och öppnar kassan → betalningen
+ * sker i en Stripe-iframe i samma modal → `/coachning/tack` kvitterar.
  *
- * ORDNINGEN ÄR HELA POÄNGEN. Tidigare valdes tiden före betalningen, med
- * motiveringen att den som har en tid i kalendern slutför köpet oftare. Priset
- * för det var att en bokning kunde bli stående obetald — Calendly binder tiden
- * i samma sekund den bokas, medan Checkout går att stänga — och att den publika
- * bokningslänken låg i sidkällan och gick att använda helt utan att passera
- * kassan. Nu kan ingen tid tas i anspråk utan ett betalt köp bakom sig.
+ * ORDNINGEN ÄR VALD MEDVETET, OCH DEN HAR ÄNDRATS TVÅ GÅNGER. Tid-före-kassa
+ * var det ursprungliga läget (den som redan har en tid i kalendern slutför
+ * köpet oftare), men kostade att en tid kunde bli stående obetald: Calendly
+ * binder tiden i samma sekund den bokas, medan en kassa som ligger på en annan
+ * domän går att stänga. 2026-08-19 vändes ordningen därför till betala-först.
+ * Nu är den vänd tillbaka, med tre skillnader mot den gamla versionen:
  *
- * Webhooken i `src/server.ts` är den som egentligen bokför köpet och skickar
- * bekräftelsemejlet; tacksidan är reserven när webhooken är sen. Båda går
- * genom `markCoachingPaid()`, som är idempotent.
+ *   1. Kassan är INBÄDDAD (`ui_mode: "embedded"`) när `STRIPE_PUBLISHABLE_KEY`
+ *      finns. Köparen lämnar aldrig sidan, så steget "tid vald → betald" är ett
+ *      klick i samma modal i stället för ett domänbyte.
+ *   2. Kassan går ut efter `CHECKOUT_TTL_MIN`, och städaren
+ *      (`coaching-sweep.server.ts`) avbokar tiden när fönstret stängt.
+ *      `checkout.session.expired` släpper den direkt.
+ *   3. Bokningslänken är engångsgenererad per försök, så den publika
+ *      Calendly-sluggen ligger inte i sidkällan.
  *
- * Utan Calendly konfigurerat hoppas bokningssteget över och tacksidan säger
- * "vi hör av oss" i stället. Samma princip som att kortet visar kontaktvägen
- * när Stripe saknas: en tjänst som inte svarar får ta bort sitt eget steg, inte
- * köpet.
+ * Baksidan finns kvar och ska tas på allvar: den som bokar och stänger modalen
+ * har en tid gratis tills städaren river den. `COACHING_SWEEP` måste vara "on"
+ * i drift — utan den är det här flödet en gratisbokningsautomat.
+ *
+ * `attachPaidCoachingBooking` är reservvägen på tacksidan: har ett köp av något
+ * skäl blivit betalt utan tid (Calendly nere, kassan öppnad direkt) får köparen
+ * välja där i stället. Den kräver en betald session och kan därför inte
+ * användas för att komma runt ordningen.
+ *
+ * Webhooken i `src/server.ts` bokför köpet och skickar bekräftelsemejlet;
+ * tacksidan är reserven när webhooken är sen. Båda går genom
+ * `markCoachingPaid()`, som är idempotent.
+ *
+ * Utan Calendly konfigurerat hoppas bokningssteget över och kassan öppnas
+ * direkt. Samma princip som att kortet visar kontaktvägen när Stripe saknas:
+ * en tjänst som inte svarar får ta bort sitt eget steg, inte köpet.
  *
  * Priset ligger aldrig i koden. Det läses ur Stripe, så en ändring i
  * dashboarden syns i appen utan deploy — och kan aldrig råka visa fel belopp
@@ -40,9 +56,12 @@ import {
   resolveCoachingPrice,
   retrieveCheckoutSession,
   stripeConfigured,
+  stripePublishableKey,
+  type StripeCheckoutSession,
 } from "./stripe.server";
 import {
   buildCoachingCheckoutParams,
+  checkoutExpiresAt,
   isCoachingSession,
   markCoachingPaid,
   sendCoachingConfirmation,
@@ -68,6 +87,15 @@ export interface CoachingOffer {
   productName: string | null;
   /** true = köparen får välja en tid innan kassan öppnas. */
   schedulingEnabled: boolean;
+  /**
+   * Stripes publicerbara nyckel, eller null när den inte är satt i miljön.
+   *
+   * Den skickas hit i stället för att bakas in i klientbundeln, eftersom en
+   * `VITE_`-variabel bara går att sätta vid bygget: ett Stripe-konto som byts
+   * hade då krävt en ny build i stället för en ny deploy. Är den null renderas
+   * kassan inte i sidan utan webbläsaren skickas till Stripe som förut.
+   */
+  publishableKey: string | null;
 }
 
 const OFFER_UNAVAILABLE: CoachingOffer = {
@@ -78,6 +106,7 @@ const OFFER_UNAVAILABLE: CoachingOffer = {
   intervalCount: 1,
   productName: null,
   schedulingEnabled: false,
+  publishableKey: null,
 };
 
 /** Absolut URL till sajten, hämtad ur begäran så att lokal utveckling funkar. */
@@ -115,6 +144,7 @@ export const fetchCoachingOffer = createServerFn({ method: "GET" }).handler(
         intervalCount: price.intervalCount,
         productName: price.productName,
         schedulingEnabled: calendlyConfigured(),
+        publishableKey: stripePublishableKey(),
       };
     } catch (e) {
       console.error("[coaching] kunde inte läsa priset:", e instanceof Error ? e.message : e);
@@ -123,6 +153,118 @@ export const fetchCoachingOffer = createServerFn({ method: "GET" }).handler(
   },
 );
 
+/**
+ * Kassan så som klienten behöver se den.
+ *
+ * Exakt ett av de två fälten är satt: `clientSecret` när kassan renderas inne
+ * i sidan, `url` när webbläsaren ska skickas till Stripe. Att båda finns i
+ * samma typ är avsiktligt — anropsstället ska inte behöva veta vilket läge som
+ * är påslaget, bara rendera det som kom tillbaka.
+ */
+export interface CoachingCheckoutHandle {
+  clientSecret: string | null;
+  url: string | null;
+  sessionId: string;
+  /**
+   * Tiden som redan bokats, när köpet gick via tidsvalet. Följer med hit så
+   * att kassan kan skriva ut vad som faktiskt är reserverat — utan den raden
+   * ser betalsteget likadant ut vare sig en tid är tagen eller inte.
+   */
+  scheduledAt: string | null;
+}
+
+const CHECKOUT_ERROR = "Kunde inte öppna kassan just nu. Försök igen om en stund.";
+
+/**
+ * Skapar Checkout-sessionen och knyter den till raden.
+ *
+ * Ligger samlad här därför att båda vägarna in i kassan (med och utan bokad
+ * tid) måste skriva `stripe_session_id` på raden: utan den kan städaren inte
+ * koppla ihop en utgången kassa med tiden den höll, och `checkout.session.expired`
+ * har inget att släppa.
+ */
+async function openCheckout(input: {
+  requestId: string;
+  userId: string | null;
+  source: string;
+  email?: string;
+  scheduledAt?: string | null;
+  focusAnswered?: boolean;
+  /** Sätt när en tid är bokad — kassan måste då gå ut före städarens frist. */
+  expiring: boolean;
+}): Promise<CoachingCheckoutHandle> {
+  const price = await resolveCoachingPrice();
+  const params = (uiMode: "hosted" | "embedded") =>
+    buildCoachingCheckoutParams({
+      priceId: price.priceId,
+      recurring: price.recurring,
+      requestId: input.requestId,
+      userId: input.userId,
+      source: input.source,
+      email: input.email,
+      origin: siteOrigin(),
+      scheduledAt: input.scheduledAt ?? null,
+      focusAnswered: input.focusAnswered,
+      uiMode,
+      // Tiden är tagen i kalendern och städaren släpper den efter fristen —
+      // då får kassan inte gå att betala efteråt. Se CHECKOUT_TTL_MIN.
+      ...(input.expiring ? { expiresAt: checkoutExpiresAt(new Date()) } : {}),
+    });
+
+  let embedded = stripePublishableKey() !== null;
+  let session: StripeCheckoutSession | null = null;
+
+  if (embedded) {
+    try {
+      session = await createCheckoutSession(params("embedded"));
+    } catch (e) {
+      // `ui_mode` bytte namn mellan API-versioner (se EMBEDDED_UI_MODE) och vi
+      // pinnar ingen version. Ett kontobyte eller en versionsrullning ska inte
+      // kunna stoppa ett köp — då blir det den hostade kassan i stället, som
+      // fungerade i månader före det här.
+      console.error("[coaching] inbäddad kassa gick inte att skapa, faller tillbaka:", e);
+      embedded = false;
+    }
+  }
+  if (!session) {
+    try {
+      session = await createCheckoutSession(params("hosted"));
+    } catch (e) {
+      console.error("[coaching] Stripe vägrade skapa kassan:", e);
+      throw new Error(CHECKOUT_ERROR);
+    }
+  }
+
+  const clientSecret = embedded ? (session.client_secret ?? null) : null;
+  const url = embedded ? null : session.url;
+  if (!clientSecret && !url) {
+    // Inbäddat läge utan client_secret betyder att `ui_mode` inte togs emot —
+    // en tyst konfigurationsmiss som annars visar sig som en tom modal.
+    console.error(
+      `[coaching] session ${session.id} kom tillbaka utan ${embedded ? "client_secret" : "url"}`,
+    );
+    throw new Error(CHECKOUT_ERROR);
+  }
+
+  const { error } = await supabaseAdmin
+    .from("coaching_requests")
+    .update({ stripe_session_id: session.id })
+    .eq("id", input.requestId);
+  // Loggas men stoppar inte köpet: betalningen hittar tillbaka via metadatan
+  // ändå. Det som går förlorat är städarens koppling, inte pengarna.
+  if (error) {
+    console.error("[coaching] kunde inte skriva session-id på raden:", error.message);
+  }
+
+  return { clientSecret, url, sessionId: session.id, scheduledAt: input.scheduledAt ?? null };
+}
+
+/**
+ * Kassan utan föregående tidsval.
+ *
+ * Används när Calendly inte är påslaget här. Med tidsbokning igång går köpet
+ * i stället genom `startCoachingBooking` → `completeCoachingBooking`.
+ */
 export const startCoachingCheckout = createServerFn({ method: "POST" })
   .middleware([optionalSupabaseAuth])
   .inputValidator((input: unknown) =>
@@ -135,15 +277,12 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
       })
       .parse(input ?? {}),
   )
-  .handler(async ({ data, context }): Promise<{ url: string }> => {
+  .handler(async ({ data, context }): Promise<CoachingCheckoutHandle> => {
     const { userId } = context;
     assertRateLimit(
       userId ? `coaching-checkout:${userId}` : ipKey("coaching-checkout"),
       limits.coachingCheckout,
     );
-
-    const price = await resolveCoachingPrice();
-    const origin = siteOrigin();
 
     // Raden först: finns den innan kassan öppnas kan webhooken alltid hitta
     // tillbaka till rätt köp, även om svaret nedan aldrig når webbläsaren.
@@ -160,42 +299,223 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
 
     if (error || !row) {
       console.error("[coaching] kunde inte skapa förfrågan:", error?.message);
-      throw new Error("Kunde inte öppna kassan just nu. Försök igen om en stund.");
+      throw new Error(CHECKOUT_ERROR);
     }
 
-    const session = await createCheckoutSession(
-      buildCoachingCheckoutParams({
-        priceId: price.priceId,
-        recurring: price.recurring,
-        requestId: row.id,
-        userId,
-        source: data.source,
-        email: data.email,
-        origin,
-      }),
-    );
-
-    if (!session.url) {
-      console.error("[coaching] Stripe gav ingen kassa-URL för session", session.id);
-      throw new Error("Kunde inte öppna kassan just nu. Försök igen om en stund.");
-    }
-
-    await supabaseAdmin
-      .from("coaching_requests")
-      .update({ stripe_session_id: session.id })
-      .eq("id", row.id);
-
-    return { url: session.url };
+    return openCheckout({
+      requestId: row.id,
+      userId,
+      source: data.source,
+      email: data.email,
+      // Ingen tid är bokad, alltså finns inget i kalendern som måste släppas.
+      expiring: false,
+    });
   });
 
-/* ============ Tidsbokning (Calendly) — EFTER betalningen ============ */
+/* ============ Tidsbokning (Calendly) — FÖRE betalningen ============ */
 
 const BOOKING_ERROR = "Kunde inte öppna tidsvalet just nu. Försök igen om en stund.";
+
+export interface CoachingBookingOpen {
+  /** Länken iframen laddar. null = tidsbokning är inte påslagen här. */
+  schedulingUrl: string | null;
+  /** Raden köpet hör till. Skickas tillbaka in i `completeCoachingBooking`. */
+  requestId: string | null;
+}
+
+/**
+ * Öppnar tidsvalet, innan något är betalt.
+ *
+ * Raden skapas redan här, före tidsvalet, eftersom dess id är det som följer
+ * med som `utm_content` in i Calendly och kommer tillbaka på bokningen. Det är
+ * den kopplingen som gör att en bokning kan knytas till rätt köp utan att lita
+ * på något klienten säger. Priset för det är rader som blir kvar med status
+ * 'booking' när någon ångrar sig i väljaren; de är avsiktligt inte med i
+ * `coaching_obetalda_bokningar`, som bara listar riktiga bokningar.
+ *
+ * Att inte vara konfigurerat är ett giltigt svar och inte ett fel: modalen
+ * faller då tillbaka på att gå direkt till kassan.
+ */
+export const startCoachingBooking = createServerFn({ method: "POST" })
+  .middleware([optionalSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+        email: z.string().email().max(200).optional(),
+        /** Förifyller namnfältet i Calendly. Verifieras aldrig som identitet. */
+        name: z.string().trim().min(1).max(100).optional(),
+      })
+      .parse(input ?? {}),
+  )
+  .handler(async ({ data, context }): Promise<CoachingBookingOpen> => {
+    const { userId } = context;
+    assertRateLimit(
+      userId ? `coaching-booking:${userId}` : ipKey("coaching-booking"),
+      limits.coachingBooking,
+    );
+
+    const eventUrl = calendlyEventUrl();
+    if (!eventUrl || !calendlyConfigured()) return { schedulingUrl: null, requestId: null };
+
+    const { data: row, error } = await supabaseAdmin
+      .from("coaching_requests")
+      .insert({
+        user_id: userId,
+        email: data.email ?? null,
+        name: data.name ?? null,
+        status: "booking",
+        source: data.source,
+      })
+      .select("id")
+      .single();
+
+    if (error || !row) {
+      console.error("[coaching] kunde inte skapa förfrågan för bokning:", error?.message);
+      throw new Error(BOOKING_ERROR);
+    }
+
+    // Engångslänk när Calendly ger oss en, annars den publika. Skälet är att
+    // den publika slugen annars ligger i iframens `src` på varje sidvisning och
+    // går att spara undan och boka på när som helst, utan att passera kassan.
+    // Att falla tillbaka är rätt: en Calendly-hicka ska ta bort skyddet, inte
+    // köpet — och städaren river ändå det som bokas utan betalning.
+    const singleUse = await createSingleUseSchedulingLink();
+
+    return {
+      schedulingUrl: buildSchedulingUrl({
+        eventUrl: singleUse ?? eventUrl,
+        embedDomain: new URL(siteOrigin()).host,
+        requestId: row.id,
+        name: data.name,
+        email: data.email,
+      }),
+      requestId: row.id,
+    };
+  });
+
+/**
+ * Tar emot den valda tiden och öppnar kassan.
+ *
+ * Webbläsaren får bara URI:er av Calendly när bokningen är gjord — själva tiden
+ * måste hämtas server-side. Att göra det här, i stället för att lita på en tid
+ * som klienten skickar, är också det som gör att `scheduled_at` inte går att
+ * sätta till vad som helst.
+ *
+ * Kassan som öppnas här går ut efter `CHECKOUT_TTL_MIN`, som är kortare än
+ * städarens frist. Utan det kunde en övergiven kassa betalas efter att tiden
+ * redan släppts, och köparen stå med en betald rad utan tid i kalendern.
+ */
+export const completeCoachingBooking = createServerFn({ method: "POST" })
+  .middleware([optionalSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        requestId: z.string().uuid(),
+        /** Invitee-URI:n ur Calendlys `event_scheduled`. Formvalideras i calendly.server. */
+        inviteeUri: z.string().url().max(300),
+        source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }): Promise<CoachingCheckoutHandle> => {
+    const { userId } = context;
+    assertRateLimit(
+      userId ? `coaching-checkout:${userId}` : ipKey("coaching-checkout"),
+      limits.coachingCheckout,
+    );
+
+    const { data: row, error: rowError } = await supabaseAdmin
+      .from("coaching_requests")
+      .select("id,user_id,paid_at,email,name")
+      .eq("id", data.requestId)
+      .maybeSingle();
+
+    if (rowError) {
+      console.error("[coaching] kunde inte slå upp bokningsraden:", rowError.message);
+      throw new Error(CHECKOUT_ERROR);
+    }
+    if (!row) throw new Error(CHECKOUT_ERROR);
+    // supabaseAdmin kringgår RLS, så det här är enda ägarkontrollen. Den slår
+    // bara när båda sidor är kända: raden kan ha skapats utloggad och köpet
+    // slutföras efter inloggning, vilket är ett giltigt fall.
+    if (row.user_id && userId && row.user_id !== userId) {
+      console.error(`[coaching] rad ${row.id} tillhör en annan användare än ${userId}`);
+      throw new Error(CHECKOUT_ERROR);
+    }
+    if (row.paid_at) throw new Error("Det här köpet är redan betalt.");
+
+    const booking = await fetchCalendlyBooking(data.inviteeUri);
+    // Bokningen ska vara den vi själva skickade köparen till. Saknas märkningen
+    // helt (Calendly kan sluta skicka tracking) släpps den igenom med en logg —
+    // en felkopplad bokning är illa, men att blockera alla köp är värre.
+    if (booking.utmContent && booking.utmContent !== data.requestId) {
+      console.error(
+        `[coaching] bokning ${booking.inviteeUri} bär utm_content ${booking.utmContent}, väntade ${data.requestId}`,
+      );
+      throw new Error(CHECKOUT_ERROR);
+    }
+    if (!booking.utmContent) {
+      console.warn(`[coaching] bokning ${booking.inviteeUri} saknar utm_content`);
+    }
+    // En avbokad tid är ingen tid. Utan kontrollen kan någon återanvända en
+    // gammal, avbokad bokning för att ta sig till kassan med ett `scheduled_at`
+    // som inte finns i kalendern.
+    if (booking.status !== "active") {
+      console.error(`[coaching] bokning ${booking.inviteeUri} har status ${booking.status}`);
+      throw new Error(CHECKOUT_ERROR);
+    }
+
+    const goal = formatCalendlyAnswers(booking.answers);
+
+    const { error: updateError } = await supabaseAdmin
+      .from("coaching_requests")
+      .update({
+        status: "checkout",
+        scheduled_at: booking.startTime,
+        calendly_event_uri: booking.eventUri,
+        calendly_invitee_uri: booking.inviteeUri,
+        calendly_cancel_url: booking.cancelUrl,
+        calendly_reschedule_url: booking.rescheduleUrl,
+        // Skriv aldrig över något som redan står i raden med tomt.
+        ...(booking.email ? { email: booking.email } : {}),
+        ...(booking.name ? { name: booking.name } : {}),
+        ...(goal ? { goal } : {}),
+      })
+      .eq("id", row.id);
+
+    if (updateError) {
+      // 23505 = invitee-URI:n är redan knuten till en annan rad. Bokningen
+      // finns, men den hör till ett annat köp — alltså inte det här.
+      console.error("[coaching] kunde inte skriva bokningen:", updateError.message);
+      throw new Error(CHECKOUT_ERROR);
+    }
+
+    return openCheckout({
+      requestId: row.id,
+      userId,
+      source: data.source,
+      email: booking.email ?? row.email ?? undefined,
+      scheduledAt: booking.startTime,
+      focusAnswered: booking.answers.length > 0,
+      expiring: true,
+    });
+  });
+
+/* ====== Tidsbokning EFTER betalningen — reserv på tacksidan ====== */
+
+/*
+ * Normalvägen är tidsvalet ovan, före kassan. Det här är reserven för de köp
+ * som ändå blir betalda utan tid: Calendly kan ha varit nere när modalen
+ * öppnades, och då gick köpet rakt till kassan. Den kräver en betald session
+ * och kan därför inte användas för att komma runt ordningen — den lagar bara
+ * utfallet där en betalande köpare annars inte har någon tid alls.
+ */
 
 export interface CoachingBookingStart {
   /** Länken iframen laddar. null = ingen tid att välja (se `reason`). */
   schedulingUrl: string | null;
-  /** Raden köpet hör till. Skickas tillbaka in i `completeCoachingBooking`. */
+  /** Raden köpet hör till. Skickas tillbaka in i `attachPaidCoachingBooking`. */
   requestId: string | null;
   /** Redan bokad tid (ISO), om köparen laddar om tacksidan efter att ha valt. */
   scheduledAt: string | null;
@@ -289,17 +609,17 @@ export const startPaidCoachingBooking = createServerFn({ method: "POST" })
   });
 
 /**
- * Skriver den valda tiden på ett betalt köp.
+ * Skriver den valda tiden på ett REDAN BETALT köp (reservvägen på tacksidan).
  *
- * Kräver att raden faktiskt är betald — det är den kontrollen som gör att
- * ordningen inte går att kringgå genom att anropa endpointen direkt.
+ * Kräver att raden faktiskt är betald. Normalvägen skriver tiden i
+ * `completeCoachingBooking`, före betalningen.
  *
  * Tiden hämtas server-side ur Calendlys API och aldrig ur klientens
  * postMessage: nyttolasten där innehåller bara URI:er, och `fetchCalendlyBooking`
  * låser formen på URI:n innan den används i ett anrop med vårt Bearer-token
  * (utan det är den en SSRF som läcker tokenet, tyst).
  */
-export const completeCoachingBooking = createServerFn({ method: "POST" })
+export const attachPaidCoachingBooking = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z
       .object({

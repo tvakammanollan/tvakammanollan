@@ -75,18 +75,30 @@ export interface CheckoutParamsInput {
    * bokad — se `CHECKOUT_TTL_MIN`.
    */
   expiresAt?: number;
+  /**
+   * Var kassan renderas.
+   *
+   * `"embedded"` betyder att Stripe ritar formuläret i en iframe INNE i vår
+   * modal och att sessionen svarar med `client_secret` i stället för `url`.
+   * Köparen lämnar då aldrig sidan, vilket är hela skälet till att tidsvalet
+   * åter kan ligga före betalningen: det som gjorde ordningen dyr var att en
+   * bokad tid blev kvar när någon stängde fliken hos Stripe.
+   *
+   * `"hosted"` är reservvägen (redirect till checkout.stripe.com) och används
+   * när `STRIPE_PUBLISHABLE_KEY` saknas — utan den går kassan inte att rita i
+   * klienten.
+   */
+  uiMode?: "hosted" | "embedded";
 }
 
 /**
  * Hur länge kassan lever när en tid redan är bokad.
  *
- * OANVÄND SEDAN 2026-08-19, men medvetet kvar. Ordningen är nu betala först,
- * boka sedan, så det finns ingen tid att gå ut på när kassan öppnas. Skulle
- * ordningen någonsin vändas tillbaka är den här — och testet som pinnar att
- * den är kortare än städarens `UNPAID_GRACE_MS` — det som hindrar att en
- * övergiven kassa betalas ett dygn senare, efter att tiden redan släppts, så
- * att köparen står med en betald rad och ingenting i kalendern. Stripe kräver
- * minst 30 minuter.
+ * ANVÄND IGEN SEDAN 2026-08-29, då tidsvalet flyttades tillbaka före
+ * betalningen. Den hindrar att en övergiven kassa betalas ett dygn senare,
+ * efter att städaren redan släppt tiden, så att köparen står med en betald rad
+ * och ingenting i kalendern. Måste därför förbli KORTARE än städarens
+ * `UNPAID_GRACE_MS`; testet pinnar olikheten. Stripe kräver minst 30 minuter.
  */
 export const CHECKOUT_TTL_MIN = 35;
 
@@ -104,12 +116,39 @@ export function checkoutExpiresAt(now: Date): number {
  * webhooken inte hittar tillbaka till köpet. Testet i coaching.server.test.ts
  * pinnar formen.
  */
+/**
+ * Värdet på `ui_mode` för en inbäddad kassa.
+ *
+ * Hette `embedded` fram till en nyare API-version och heter `embedded_page`
+ * sedan dess. Vi pinnar medvetet ingen API-version (se `stripe.server.ts`), så
+ * kontots version avgör vilket namn som gäller — och fel namn ger 400 med
+ * exakt beskedet "The ui_mode value `X` is no longer supported. Use `Y`
+ * instead." Verifierat mot det skarpa kontot 2026-08-29: `embedded_page`.
+ *
+ * Skulle kontot någon gång rulla tillbaka faller `openCheckout` över på den
+ * hostade kassan i stället för att blockera köpet, så en felaktig konstant
+ * här kostar bekvämlighet, inte försäljning.
+ */
+export const EMBEDDED_UI_MODE = "embedded_page";
+
 export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
+  const embedded = input.uiMode === "embedded";
   return {
     mode: input.recurring ? "subscription" : "payment",
     line_items: [{ price: input.priceId, quantity: 1 }],
-    success_url: `${input.origin}/coachning/tack?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${input.origin}/?coachning=avbruten`,
+    // Inbäddad kassa tar `return_url` och avvisar success/cancel; den hostade
+    // tvärtom. Att skicka fel par ger 400 från Stripe, alltså inget tyst fel,
+    // men det är enda skillnaden mellan lägena som inte syns i UI:t. Därför
+    // står den samlad här och inte utspridd i anropen.
+    ...(embedded
+      ? {
+          ui_mode: EMBEDDED_UI_MODE,
+          return_url: `${input.origin}/coachning/tack?session_id={CHECKOUT_SESSION_ID}`,
+        }
+      : {
+          success_url: `${input.origin}/coachning/tack?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${input.origin}/?coachning=avbruten`,
+        }),
     locale: "sv",
     client_reference_id: input.requestId,
     allow_promotion_codes: true,

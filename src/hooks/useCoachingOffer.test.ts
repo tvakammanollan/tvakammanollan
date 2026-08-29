@@ -10,6 +10,7 @@ const bas: CoachingOffer = {
   intervalCount: 1,
   schedulingEnabled: false,
   productName: "Studieupplägg",
+  publishableKey: null,
 };
 
 describe("coachingTermsLabel", () => {

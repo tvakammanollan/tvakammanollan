@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CalendarCheck2, CalendarClock, Loader2 } from "lucide-react";
 import {
-  completeCoachingBooking,
+  attachPaidCoachingBooking,
   startPaidCoachingBooking,
   type CoachingBookingStart,
 } from "@/lib/coaching.functions";
@@ -12,7 +12,12 @@ import { trackEvent } from "@/lib/events";
 import { trackError } from "@/lib/telemetry";
 
 /* =====================================================================
-   Tidsvalet — på tacksidan, efter betalningen.
+   Tidsvalet på tacksidan — RESERVEN, inte normalvägen.
+
+   Tiden väljs numera i CoachingModal, före betalningen. Den här komponenten
+   finns för de köp som ändå blir betalda utan tid: Calendly kan ha varit
+   nere när modalen öppnades, och då gick köpet rakt till kassan. Har raden
+   redan en tid visar den bara den, vilket är vad de allra flesta ser här.
 
    Calendly bäddas in som en vanlig iframe, utan deras widget.js: det enda
    scriptet gör är att lyssna på postMessage, vilket vi gör själva nedan.
@@ -29,7 +34,7 @@ type Läge = "laddar" | "valj" | "bokad" | "av" | "fel";
 
 export function CoachingScheduler({ sessionId }: { sessionId: string }) {
   const startFn = useServerFn(startPaidCoachingBooking);
-  const completeFn = useServerFn(completeCoachingBooking);
+  const completeFn = useServerFn(attachPaidCoachingBooking);
 
   const [läge, setLäge] = useState<Läge>("laddar");
   const [start, setStart] = useState<CoachingBookingStart | null>(null);

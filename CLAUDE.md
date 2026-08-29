@@ -957,10 +957,36 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
   `fetchCoachingOffer` kastar aldrig: utan `STRIPE_SECRET_KEY` (eller när Stripe
   är nere) visas kontaktvägen i stället för en köpknapp. Startsidan får inte gå
   sönder för att en betalleverantör inte svarar.
-- **Redirect-kassan kräver ingen ändring i CSP:n.** Inga kortuppgifter, ingen
-  `js.stripe.com`, inget iframe — bara en `window.location` till
-  `checkout.stripe.com`. Den publika nyckeln (`pk_live_…`) behövs alltså inte
-  alls i klienten; lägg inte in den "för säkerhets skull".
+- **Kassan är INBÄDDAD sedan 2026-08-29** (`ui_mode`, `client_secret`,
+  `StripeCheckoutEmbed.tsx`). Det var tidigare en ren redirect till
+  `checkout.stripe.com`, och den vägen finns kvar som reserv — men den är inte
+  längre normalfallet, så tre saker som stod här förut gäller inte längre:
+  - **Den publicerbara nyckeln behövs nu i klienten.**
+    `STRIPE_PUBLISHABLE_KEY` (pk_live_…) ligger i `wrangler.jsonc` och skickas
+    ut via `fetchCoachingOffer`, inte som en `VITE_`-variabel: en sådan går
+    bara att sätta vid bygget, och ett kontobyte hade då krävt en ny build i
+    stället för en ny deploy. **Är den tom bäddas kassan inte in** utan köparen
+    skickas till Stripe som förut. Det är ett giltigt läge, men inte det man
+    vill ha: hela poängen med att tiden väljs före betalningen är att köparen
+    inte lämnar sidan däremellan.
+  - **CSP:n måste släppa fram Stripe.** `script-src https://js.stripe.com`,
+    `connect-src https://api.stripe.com https://m.stripe.network` och fyra
+    värdnamn i `frame-src` (js, checkout, hooks, m.stripe.network). Faller ett
+    bort syns det som en tom eller halv kassa plus en rad i konsolen — inget
+    kastas.
+  - **`ui_mode` heter `embedded_page`, inte `embedded`.** Namnet byttes mellan
+    API-versioner och vi pinnar ingen version, så kontots version avgör.
+    Verifierat mot skarpa kontot 2026-08-29; fel värde ger 400 med exakt
+    beskedet vilket värde som gäller. Konstanten heter `EMBEDDED_UI_MODE`, och
+    `openCheckout` faller tillbaka på den hostade kassan om sessionen inte går
+    att skapa — ett versionsbyte får kosta bekvämlighet, inte försäljning.
+  - **Klient-API:t heter `createEmbeddedCheckoutPage`** och laddas från
+    `https://js.stripe.com/dahlia/stripe.js`. `/v3/` är föregångaren och saknar
+    den funktionen; `initEmbeddedCheckout` är det gamla namnet och anropas som
+    reserv. Scriptet får inte buntas eller speglas — Stripe kräver att det
+    hämtas från deras domän, och PCI-efterlevnaden hänger på det.
+  - Inga kortuppgifter passerar vår kod i något av lägena. Kassan är Stripes
+    egen iframe.
 - **Webhooken bokför, tacksidan är reserv.** `/api/stripe/webhook` ligger i
   `src/server.ts` (som `/api/health`): signaturen måste räknas på den **råa**
   bodyn, och en route-fil hade parsat den först. `/coachning/tack` bekräftar
@@ -1026,20 +1052,36 @@ coaching_purchase_completed  betalt (en gång per köp, från tacksidan)
 
 ### Tidsbokning i coachningen (Calendly, 2026-08-18)
 
-Köparen väljer en tid **innan** kassan öppnas. Modalen har två steg:
-erbjudandet, och Calendlys tidsväljare i en iframe. `startCoachingBooking`
-skapar raden och länken, `completeCoachingBooking` läser den bokade tiden ur
-Calendlys API, skriver den på raden och skapar först då Stripe-sessionen.
+Köparen väljer en tid **innan** kassan öppnas. Modalen har tre steg:
+erbjudandet, Calendlys tidsväljare i en iframe och Stripes kassa i en annan.
+`startCoachingBooking` skapar raden och länken, `completeCoachingBooking` läser
+den bokade tiden ur Calendlys API, skriver den på raden och skapar först då
+Stripe-sessionen. **Ingen av de tre lämnar sidan.**
 
-- **Ordningen har en känd baksida, och sedan 2026-08-19 städas den maskinellt.**
-  En Calendly-bokning är ett åtagande i samma sekund den görs, medan Checkout
+- **Ordningen har vänts två gånger. Läs det här innan du vänder den en tredje.**
+  En Calendly-bokning är ett åtagande i samma sekund den görs, medan en kassa
   går att överge — så en tid kan bli stående obetald, och det hände på riktigt
-  2026-08-18 (någon bokade, stängde kassan och hade en timme gratis). Ordningen
-  står kvar: den som redan har en tid i kalendern slutför köpet oftare än den
-  som ska höra av sig sen. Det som ändrats är att tiden nu släpps av sig själv,
-  se **Städaren** nedan. Vyn `coaching_obetalda_bokningar` listar det som ändå
-  blir kvar (`paid_at IS NULL AND scheduled_at IS NOT NULL AND canceled_at IS
-  NULL`) och avbokas för hand via `calendly_cancel_url`.
+  2026-08-18 (någon bokade, stängde kassan och hade en timme gratis).
+  - **2026-08-19** vändes ordningen till betala-först, och tidsvalet flyttades
+    till `/coachning/tack` bakom en betald session.
+  - **2026-08-29** vändes den tillbaka, med kassan **inbäddad** i samma modal.
+    Det som gjorde tid-först dyrt var att kassan låg på ett annat värdnamn: den
+    som stängde fliken hos Stripe lämnade en bokad, obetald tid efter sig. Med
+    kassan i samma ruta är avståndet mellan "tiden är vald" och "det är betalt"
+    ett klick. Skälet att välja tid först är oförändrat: den som redan har en
+    tid i kalendern slutför köpet oftare än den som ska höra av sig sen.
+  - **Baksidan finns kvar i det lilla** och `COACHING_SWEEP` måste därför vara
+    `"on"` i drift — utan städaren är det här flödet en gratisbokningsautomat.
+    Kassan går dessutom ut efter `CHECKOUT_TTL_MIN` (35 min, kortare än
+    städarens `UNPAID_GRACE_MS`, pinnat i test) och `checkout.session.expired`
+    släpper tiden direkt.
+  - `startPaidCoachingBooking` / `attachPaidCoachingBooking` på tacksidan är
+    **reserven**, inte normalvägen: den fångar köp som ändå blivit betalda utan
+    tid (Calendly nere när modalen öppnades). Den kräver en betald session och
+    går alltså inte att använda för att kringgå ordningen.
+  - Vyn `coaching_obetalda_bokningar` listar det som ändå blir kvar
+    (`paid_at IS NULL AND scheduled_at IS NOT NULL AND canceled_at IS NULL`)
+    och avbokas för hand via `calendly_cancel_url`.
 - **`utm_content` är hela kopplingen mellan bokning och köp.** Raden i
   `coaching_requests` skapas före tidsvalet just för att dess id ska kunna
   följa med in i Calendly-länken och komma tillbaka i invitee-resursens

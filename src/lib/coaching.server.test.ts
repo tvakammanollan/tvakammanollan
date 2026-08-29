@@ -1,6 +1,9 @@
 import { describe, it, expect } from "vitest";
 import {
   buildCoachingCheckoutParams,
+  CHECKOUT_TTL_MIN,
+  EMBEDDED_UI_MODE,
+  checkoutExpiresAt,
   COACHING_FIELD_FOCUS,
   COACHING_FIELD_TIMING,
   isCoachingSession,
@@ -114,6 +117,37 @@ describe("isCoachingSession", () => {
   });
 });
 
+describe("buildCoachingCheckoutParams i inbäddat läge", () => {
+  const inbäddad = { ...bas, uiMode: "embedded" as const };
+
+  it("byter success/cancel mot return_url — Stripe avvisar annars sessionen", () => {
+    const p = buildCoachingCheckoutParams(inbäddad) as unknown as Record<string, string>;
+    expect(p.ui_mode).toBe(EMBEDDED_UI_MODE);
+    expect(p.return_url).toBe(
+      "https://tvakommanollan.se/coachning/tack?session_id={CHECKOUT_SESSION_ID}",
+    );
+    expect(p.success_url).toBeUndefined();
+    expect(p.cancel_url).toBeUndefined();
+  });
+
+  it("hostat läge är fortfarande standard och rör inte ui_mode", () => {
+    const p = buildCoachingCheckoutParams(bas) as unknown as Record<string, string>;
+    expect(p.ui_mode).toBeUndefined();
+    expect(p.return_url).toBeUndefined();
+    expect(p.success_url).toBeDefined();
+  });
+
+  it("bär samma köp-id och metadata som den hostade kassan", () => {
+    const p = buildCoachingCheckoutParams(inbäddad) as {
+      client_reference_id: string;
+      metadata: Record<string, string>;
+    };
+    expect(p.client_reference_id).toBe(bas.requestId);
+    expect(p.metadata.coaching_request_id).toBe(bas.requestId);
+    expect(p.metadata.product).toBe("coaching");
+  });
+});
+
 describe("buildCoachingCheckoutParams med bokad tid", () => {
   const bokat = { ...bas, scheduledAt: "2026-09-01T12:00:00.000000Z" };
 
@@ -139,5 +173,16 @@ describe("buildCoachingCheckoutParams med bokad tid", () => {
   it("utan bokning står metadata-nyckeln inte med alls", () => {
     const p = buildCoachingCheckoutParams(bas) as { metadata: Record<string, string> };
     expect(p.metadata.scheduled_at).toBeUndefined();
+  });
+
+  it("sätter expires_at bara när det skickas med", () => {
+    const utgång = checkoutExpiresAt(new Date("2026-09-01T10:00:00Z"));
+    const p = buildCoachingCheckoutParams({ ...bokat, expiresAt: utgång }) as {
+      expires_at?: number;
+    };
+    expect(p.expires_at).toBe(utgång);
+    expect((buildCoachingCheckoutParams(bokat) as { expires_at?: number }).expires_at).toBe(
+      undefined,
+    );
   });
 });

@@ -94,15 +94,23 @@ function withSecurityHeaders(response: Response): Response {
     "Content-Security-Policy",
     [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.lovable.app https://*.r2.dev ${posthog.script.join(" ")}`,
+      // js.stripe.com måste laddas från Stripes egen domän — de tillåter inte
+      // att v3 speglas eller buntas, och kassan i coachningsmodalen är ritad av
+      // det scriptet. Det är enda externa script-källan utöver analysen.
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.lovable.app https://*.r2.dev ${posthog.script.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
-      `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.lovable.app ${posthog.connect.join(" ")}`,
-      // Calendly-iframen i coachningsmodalen. Bara ramen öppnas — deras
-      // widget.js behövs inte, vi lyssnar själva på postMessage, så script-src
-      // står kvar orörd.
-      "frame-src https://calendly.com",
+      `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://m.stripe.network https://*.lovable.app ${posthog.connect.join(" ")}`,
+      // Coachningsmodalens två iframes: Calendlys tidsväljare och Stripes kassa.
+      //
+      // Calendly behöver bara ramen — deras widget.js används inte, vi lyssnar
+      // själva på postMessage. Stripe behöver fyra värdnamn: js.stripe.com
+      // (kassans ram), checkout.stripe.com (kassans innehåll), hooks.stripe.com
+      // (3D Secure-steget hos banken) och m.stripe.network (bedrägerikollen som
+      // v3 injicerar själv). Faller ett av dem bort syns det bara som en tom
+      // eller halv kassa, plus en rad i konsolen — inget kastas.
+      "frame-src https://calendly.com https://js.stripe.com https://checkout.stripe.com https://hooks.stripe.com https://m.stripe.network",
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
