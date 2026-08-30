@@ -73,12 +73,12 @@ function TackPage() {
     <div className="mx-auto max-w-lg px-4 py-20 text-center sm:py-28">
       {laddar ? (
         <div aria-busy="true">
-          <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#ae2f26]" />
+          <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
           <p className="mt-4 text-sm text-white/60">Bekräftar din betalning…</p>
         </div>
       ) : receipt?.paid ? (
         <>
-          <CheckCircle2 className="mx-auto h-14 w-14 text-[#2f6b3c]" />
+          <CheckCircle2 className="mx-auto h-14 w-14 text-success" />
           <h1
             className="mt-5 text-[30px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -108,14 +108,14 @@ function TackPage() {
           {sessionId && <CoachingScheduler sessionId={sessionId} />}
           <Link
             to="/"
-            className="mt-8 inline-flex items-center justify-center rounded-xl bg-[#ae2f26] px-7 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="mt-8 inline-flex items-center justify-center rounded-xl bg-primary px-7 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-110"
           >
             Tillbaka till träningen
           </Link>
         </>
       ) : (
         <>
-          <Mail className="mx-auto h-12 w-12 text-[#7a5236]" />
+          <Mail className="mx-auto h-12 w-12 text-bark" />
           <h1
             className="mt-5 text-[26px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}

@@ -38,8 +38,8 @@ type AsButton = CommonProps & {
 type CTAProps = AsLink | AsAnchor | AsButton;
 
 const primaryClass =
-  "inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-[#ae2f26] px-7 text-[15px] font-semibold text-[#2e1e14] " +
-  "shadow-[0_0_28px_rgba(174,47,38,0.28)] transition-all hover:bg-[#ae2f26]/90 hover:shadow-[0_0_36px_rgba(174,47,38,0.40)] " +
+  "inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-primary px-7 text-[15px] font-semibold text-foreground " +
+  "shadow-[0_0_28px_rgba(174,47,38,0.28)] transition-all hover:bg-primary/90 hover:shadow-[0_0_36px_rgba(174,47,38,0.40)] " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 
 const secondaryClass =

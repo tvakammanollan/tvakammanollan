@@ -147,7 +147,7 @@ function OrdlistaEntryPage() {
           svar på frågan. Ordbokens rad står under, kort och källhänvisad:
           hela artikeln hör hemma hos den som äger den, och länken går dit. */}
       <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-        <h2 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#ae2f26]">
+        <h2 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
           <BookOpen className="h-3.5 w-3.5" />
           Vad betyder {word}?
         </h2>
@@ -194,7 +194,7 @@ function OrdlistaEntryPage() {
                   <Link
                     to="/ordlista/$ord"
                     params={{ ord: r.slug }}
-                    className="inline-block rounded-full border border-white/12 px-3 py-1 text-sm text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+                    className="inline-block rounded-full border border-white/12 px-3 py-1 text-sm text-[var(--cream)] transition hover:border-primary/50"
                   >
                     {r.word}
                   </Link>
@@ -281,14 +281,14 @@ function OrdlistaEntryPage() {
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link
             to="/ord"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Träna ORD gratis
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/guider/ord"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             ORD-guide & strategi
           </Link>

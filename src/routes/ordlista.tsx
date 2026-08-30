@@ -81,7 +81,7 @@ function OrdlistaIndexPage() {
         <div className="mt-5">
           <Link
             to="/ord"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Träna orden i stället
             <ArrowRight className="h-4 w-4" />
@@ -103,7 +103,7 @@ function OrdlistaIndexPage() {
               <Link
                 to="/ordlista/bokstav/$bokstav"
                 params={{ bokstav: letter }}
-                className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-2 py-3 backdrop-blur-sm transition hover:border-[#ae2f26]/50"
+                className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-2 py-3 backdrop-blur-sm transition hover:border-primary/50"
               >
                 <span
                   className="text-[20px] font-bold text-[var(--cream)]"

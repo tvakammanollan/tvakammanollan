@@ -293,7 +293,7 @@ function ProgramPage() {
           className="flex items-center gap-2 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <GraduationCap className="h-5 w-5 text-[#ae2f26]" />
+          <GraduationCap className="h-5 w-5 text-primary" />
           HP-poäng, {cfg.term}
         </h2>
         <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -313,7 +313,7 @@ function ProgramPage() {
                   <span className="text-xs text-white/40">BI {formatDecimal(r.bi, 2)}</span>
                 )}
                 <span
-                  className="text-[20px] font-bold tabular-nums text-[#ae2f26]"
+                  className="text-[20px] font-bold tabular-nums text-primary"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {formatDecimal(r.hp, 2)}
@@ -339,7 +339,7 @@ function ProgramPage() {
         {cfg.note && <p className="mt-4 text-[14px] leading-relaxed text-white/55">{cfg.note}</p>}
       </section>
 
-      <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
+      <section className="mt-10 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">
         <h2
           className="text-[20px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -353,14 +353,14 @@ function ProgramPage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/hogskoleprovet-poangraknare"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Räkna ut din poäng
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             Öva på gamla prov
           </Link>
@@ -383,7 +383,7 @@ function ProgramPage() {
                   key={slug}
                   to="/hogskoleprovet-poang/$program"
                   params={{ program: slug }}
-                  className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#ae2f26]/50 hover:text-[var(--cream)]"
+                  className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-primary/50 hover:text-[var(--cream)]"
                 >
                   {p.name}
                 </Link>
@@ -391,7 +391,7 @@ function ProgramPage() {
             })}
             <Link
               to="/hogskoleprovet-poang"
-              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#ae2f26]/50 hover:text-[var(--cream)]"
+              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-primary/50 hover:text-[var(--cream)]"
             >
               Alla program
             </Link>

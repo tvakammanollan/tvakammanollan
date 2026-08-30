@@ -63,7 +63,7 @@ export function PassagePane({
           className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-white/[0.03]"
         >
           <span className="inline-flex items-center gap-2">
-            <FileText className="h-4 w-4 text-[#ae2f26]" aria-hidden />
+            <FileText className="h-4 w-4 text-primary" aria-hidden />
             {headerLabel}
             <span className="font-normal text-muted-foreground">(tryck för att läsa)</span>
           </span>
@@ -89,7 +89,7 @@ export function PassagePane({
     >
       <div className="mb-3 flex items-center justify-between gap-2">
         <h3 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-          <FileText className="h-3.5 w-3.5 text-[#ae2f26]" aria-hidden />
+          <FileText className="h-3.5 w-3.5 text-primary" aria-hidden />
           {headerLabel}
         </h3>
         <HighlighterToggle highlighter={highlighter} />

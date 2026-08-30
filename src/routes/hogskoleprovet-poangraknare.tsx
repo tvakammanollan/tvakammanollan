@@ -123,7 +123,7 @@ function PoangraknarePage() {
               </p>
               <div className="mt-1 flex items-baseline gap-2">
                 <span
-                  className="text-[56px] font-bold leading-none tabular-nums text-[#ae2f26]"
+                  className="text-[56px] font-bold leading-none tabular-nums text-primary"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {sv(score)}
@@ -131,7 +131,7 @@ function PoangraknarePage() {
                 <span className="text-lg text-white/40">/ 2,00</span>
               </div>
             </div>
-            <span className="rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-xs font-semibold text-[#ae2f26]">
+            <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
               {label}
             </span>
           </div>
@@ -140,11 +140,11 @@ function PoangraknarePage() {
           <div className="mt-5">
             <div className="relative h-2.5 w-full rounded-full bg-white/8">
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#8f2620] to-[#ae2f26]"
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-deep to-primary"
                 style={{ width: `${pct}%` }}
               />
               <div
-                className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#fbf6ec] bg-[#f5c089]"
+                className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-primary"
                 style={{ left: `${pct}%` }}
               />
             </div>
@@ -193,7 +193,7 @@ function PoangraknarePage() {
       </section>
 
       {/* CTA */}
-      <section className="mt-10 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
+      <section className="mt-10 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">
         <h2
           className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[22px]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -206,14 +206,14 @@ function PoangraknarePage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/hogskoleprovet-poang"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             Vad krävs för olika utbildningar?
           </Link>
@@ -242,7 +242,7 @@ function SliderRow({
           <span className="ml-2 text-xs text-white/40">{hint}</span>
         </div>
         <span
-          className="text-[18px] font-bold tabular-nums text-[#ae2f26]"
+          className="text-[18px] font-bold tabular-nums text-primary"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {value}

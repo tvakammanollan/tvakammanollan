@@ -132,7 +132,7 @@ export function CoachingScheduler({ sessionId }: { sessionId: string }) {
   if (läge === "laddar") {
     return (
       <div className="mt-8 rounded-2xl border border-[rgba(46,30,20,0.16)] p-8" aria-busy="true">
-        <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#ae2f26]" />
+        <Loader2 className="mx-auto h-6 w-6 animate-spin text-primary" />
         <p className="mt-3 text-sm text-white/60">Hämtar lediga tider…</p>
       </div>
     );
@@ -140,8 +140,8 @@ export function CoachingScheduler({ sessionId }: { sessionId: string }) {
 
   if (läge === "bokad") {
     return (
-      <div className="mt-8 rounded-2xl border border-[#2f6b3c]/30 bg-[#2f6b3c]/[0.07] p-6 text-left">
-        <p className="flex items-center gap-2 text-sm font-semibold text-[#2f6b3c]">
+      <div className="mt-8 rounded-2xl border border-success/30 bg-success/[0.07] p-6 text-left">
+        <p className="flex items-center gap-2 text-sm font-semibold text-success">
           <CalendarCheck2 className="h-4 w-4" aria-hidden />
           Din tid är bokad
         </p>
@@ -182,7 +182,7 @@ export function CoachingScheduler({ sessionId }: { sessionId: string }) {
   return (
     <div className="mt-8 text-left">
       <p className="flex items-center gap-2 text-sm font-semibold text-[var(--cream)]">
-        <CalendarClock className="h-4 w-4 text-[#ae2f26]" aria-hidden />
+        <CalendarClock className="h-4 w-4 text-primary" aria-hidden />
         Välj en tid som passar dig
       </p>
       <iframe

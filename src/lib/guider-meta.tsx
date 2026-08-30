@@ -113,7 +113,7 @@ export function RelatedGuides({
         <Link
           to="/ova/$delprov"
           params={{ delprov: ovaSlug }}
-          className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-4 transition-colors hover:border-[#ae2f26]/50 hover:bg-[#ae2f26]/[0.1]"
+          className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-4 transition-colors hover:border-primary/50 hover:bg-primary/[0.1]"
         >
           <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
             Redo att öva? Kör riktiga {ovaSlug.toUpperCase()}-frågor med facit →
@@ -139,7 +139,7 @@ export function RelatedGuides({
             key={g.path}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             to={g.path as any}
-            className="group block rounded-2xl border p-4 transition-all hover:border-[#ae2f26]/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
+            className="group block rounded-2xl border p-4 transition-all hover:border-primary/50 hover:shadow-[0_0_16px_rgba(174,47,38,0.12)]"
             style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
           >
             <div className="text-sm font-semibold" style={{ color: "var(--cream)" }}>

@@ -133,7 +133,7 @@ function DefinitionBody({ definition }: { definition: string | null | undefined 
       )}
 
       {examples.length > 0 && (
-        <div className="mt-2.5 space-y-0.5 border-l-2 border-[#7a5236]/30 pl-2.5">
+        <div className="mt-2.5 space-y-0.5 border-l-2 border-bark/30 pl-2.5">
           {examples.map((e, i) => (
             <p key={i} className="italic text-white/70">
               {e}
@@ -189,7 +189,7 @@ function DefinitionBlock({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 text-xs font-medium text-[#7a5236] underline-offset-4 transition-colors hover:text-[#8ec9ce] hover:underline"
+        className="inline-flex items-center gap-1 text-xs font-medium text-bark underline-offset-4 transition-colors hover:text-primary hover:underline"
       >
         <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
         {open ? "Dölj förklaring" : `Vad betyder "${ordText(word)}"?`}
@@ -199,8 +199,8 @@ function DefinitionBlock({
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <div className="mt-2 rounded-lg border-l-4 border-[#ae2f26]/60 bg-[#ae2f26]/[0.07] p-3">
-            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#ae2f26]">
+          <div className="mt-2 rounded-lg border-l-4 border-primary/60 bg-primary/[0.07] p-3">
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
               <BookOpen className="h-3.5 w-3.5" />
               {definitionSourceLabel(source)}
             </div>
@@ -569,7 +569,7 @@ function OrdPracticePage() {
                   <SetupRow title="Din ord-bank">
                     <div className="flex items-baseline gap-2">
                       <span
-                        className="text-2xl font-bold tabular-nums text-[#ae2f26]"
+                        className="text-2xl font-bold tabular-nums text-primary"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {formatInt(progress.correctCount)}
@@ -580,7 +580,7 @@ function OrdPracticePage() {
                     </div>
                     <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#ae2f26] to-[#7a5236] transition-all duration-700"
+                        className="h-full rounded-full bg-gradient-to-r from-primary to-bark transition-all duration-700"
                         style={{
                           width: `${Math.min(
                             100,
@@ -599,7 +599,7 @@ function OrdPracticePage() {
                           progress.correctCount >= progress.totalCount ||
                           progress.correctCount === 0
                         }
-                        className="h-5 w-5 rounded border-border accent-[#ae2f26] disabled:opacity-40"
+                        className="h-5 w-5 rounded border-border accent-primary disabled:opacity-40"
                       />
                     </label>
                   </SetupRow>
@@ -623,7 +623,7 @@ function OrdPracticePage() {
             </div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#ae2f26] transition-all duration-300"
+                className="h-full bg-primary transition-all duration-300"
                 style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
               />
             </div>
@@ -655,7 +655,7 @@ function OrdPracticePage() {
                       "flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all";
                     if (!showState) {
                       cls +=
-                        " border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10 cursor-pointer";
+                        " border-white/10 bg-white/[0.02] hover:border-primary/60 hover:bg-primary/10 cursor-pointer";
                     } else if (isCorrect) {
                       cls +=
                         " border-2 border-[var(--success-line)] bg-[var(--success-soft)] text-foreground";
@@ -736,7 +736,7 @@ function OrdPracticePage() {
         {phase === "summary" && (
           <section className="rounded-2xl border border-border bg-white p-6 shadow-card sm:p-8">
             <div className="flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[#ae2f26]">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/15 text-primary">
                 <Trophy className="h-8 w-8" />
               </div>
               <h2
@@ -863,8 +863,8 @@ function OptionButton({
       aria-pressed={active}
       className={`rounded-lg border px-3 py-2 text-center text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ${
         active
-          ? "border-[#ae2f26] bg-[#ae2f26]/15 text-[#ae2f26]"
-          : "border-white/10 bg-white/[0.02] text-white/80 hover:border-[#ae2f26]/60 hover:text-[var(--cream)]"
+          ? "border-primary bg-primary/15 text-primary"
+          : "border-white/10 bg-white/[0.02] text-white/80 hover:border-primary/60 hover:text-[var(--cream)]"
       }`}
     >
       <div>{children}</div>

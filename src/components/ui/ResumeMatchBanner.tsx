@@ -112,14 +112,14 @@ export function ResumeMatchBanner() {
   };
 
   return (
-    <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.08] px-4 py-3 text-sm backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
+    <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-primary/30 bg-primary/[0.08] px-4 py-3 text-sm backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
       <span className="text-[var(--cream)]">
         ⏳ Du har en pågående{" "}
         {saved.matchType === "math" ? "matte-" : saved.matchType === "verbal" ? "verbal-" : ""}
         match. Vill du fortsätta?
       </span>
       <div className="flex shrink-0 items-center gap-2">
-        <Button asChild size="sm" className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">
+        <Button asChild size="sm" className="bg-primary text-on-brand hover:bg-primary-deep">
           <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
             Fortsätt matchen
           </Link>

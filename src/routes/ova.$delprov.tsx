@@ -197,7 +197,7 @@ function OvaDelprovPage() {
             to={cfg.practiceTo}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             {cfg.practiceLabel}
             <ArrowRight className="h-4 w-4" />
@@ -206,7 +206,7 @@ function OvaDelprovPage() {
             to={`/guider/${delprov}` as string}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             <ScrollText className="h-4 w-4" />
             {cfg.code}-guide & strategi
@@ -335,7 +335,7 @@ function OvaDelprovPage() {
             to={cfg.practiceTo}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#ae2f26] hover:underline"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
           >
             <BookOpen className="h-4 w-4" />
             {cfg.practiceLabel}
@@ -378,7 +378,7 @@ function OvaDelprovPage() {
               key={s}
               to="/ova/$delprov"
               params={{ delprov: s }}
-              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[#ae2f26]/50 hover:text-[var(--cream)]"
+              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-primary/50 hover:text-[var(--cream)]"
             >
               {DELPROV[s].code}
             </Link>

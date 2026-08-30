@@ -110,7 +110,7 @@ function ForumSearchPage() {
         </div>
         <button
           type="submit"
-          className="shrink-0 rounded-xl bg-[var(--amber)] px-5 py-2.5 text-sm font-semibold text-[#170d05] transition-opacity hover:opacity-90"
+          className="shrink-0 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition-opacity hover:opacity-90"
         >
           Sök
         </button>

@@ -547,8 +547,8 @@ function TrainPage() {
                         onClick={() => setConfig((c) => ({ ...c, count: n }))}
                         className={`rounded-xl border px-3 py-3 text-center font-medium transition ${
                           config.count === n
-                            ? "border-[#ae2f26] bg-[#ae2f26]/10 text-[#ae2f26]"
-                            : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-white/15 bg-white/[0.03] text-white/80 hover:border-primary/60"
                         }`}
                       >
                         {n} frågor
@@ -646,7 +646,7 @@ function TrainPage() {
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-[#ae2f26] transition-all duration-500 ease-out"
+                className="h-full bg-primary transition-all duration-500 ease-out"
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -677,7 +677,7 @@ function TrainPage() {
             style={{ boxShadow: "var(--shadow-md)" }}
           >
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold tracking-wide text-[#ae2f26]">
+              <span className="text-xs font-semibold tracking-wide text-primary">
                 {displayCategory(currentQ.category)} · Fråga {current + 1}
               </span>
               {currentQ.withdrawn && <WithdrawnBadge />}
@@ -750,7 +750,7 @@ function TrainPage() {
                 // rätt svar solid amber — exakt samma ton som "valt", så efter
                 // rättning gick de två lägena inte att skilja åt.
                 let cls =
-                  "border border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10";
+                  "border border-white/10 bg-white/[0.02] hover:border-primary/60 hover:bg-primary/10";
                 if (isCorrectOpt) {
                   cls =
                     "border-2 border-[var(--success-line)] bg-[var(--success-soft)] text-foreground";
@@ -758,7 +758,7 @@ function TrainPage() {
                   cls =
                     "border-2 border-[var(--danger-line)] bg-[var(--danger-soft)] text-foreground";
                 } else if (isSelected) {
-                  cls = "border-2 border-[#ae2f26] bg-[#ae2f26]/15";
+                  cls = "border-2 border-primary bg-primary/15";
                 }
                 return (
                   <button
@@ -766,16 +766,16 @@ function TrainPage() {
                     type="button"
                     disabled={revealed}
                     onClick={() => handleSelect(letter)}
-                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae2f26] focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
+                    className={`flex min-h-[52px] items-start gap-3 rounded-xl px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-default ${cls}`}
                   >
                     <span
                       className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold ${
                         isCorrectOpt
                           ? "bg-[var(--success)] text-[var(--success-ink)]"
                           : isWrongPick
-                            ? "bg-[var(--danger)] text-[#fff1f0]"
+                            ? "bg-[var(--danger)] text-danger-ink"
                             : isSelected
-                              ? "bg-[#ae2f26] text-[#fff8f5]"
+                              ? "bg-primary text-on-brand"
                               : "bg-white/10 text-foreground"
                       }`}
                     >
@@ -866,7 +866,7 @@ function TrainPage() {
               {revealed ? (
                 <Button
                   onClick={() => goNext(false)}
-                  className="w-full bg-[#ae2f26] py-5 text-base text-[#fff8f5] hover:bg-[#8f2620]"
+                  className="w-full bg-primary py-5 text-base text-on-brand hover:bg-primary-deep"
                 >
                   {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -945,7 +945,7 @@ function TrainPage() {
         <GlassCard className="mt-8 p-8">
           <div className="text-center">
             <div
-              className="text-6xl font-bold tabular-nums text-[#ae2f26]"
+              className="text-6xl font-bold tabular-nums text-primary"
               style={{ fontFamily: "var(--font-mono, 'DM Mono', monospace)" }}
             >
               {correct}
@@ -972,11 +972,11 @@ function TrainPage() {
                     <span className="tabular-nums text-white/85">
                       {v.c}/{v.t}{" "}
                       {v.c === v.t ? (
-                        <Check className="ml-1 inline h-4 w-4 text-[#ae2f26]" />
+                        <Check className="ml-1 inline h-4 w-4 text-primary" />
                       ) : v.c === 0 ? (
-                        <XIcon className="ml-1 inline h-4 w-4 text-[#8c1d18]" />
+                        <XIcon className="ml-1 inline h-4 w-4 text-destructive" />
                       ) : (
-                        <AlertTriangle className="ml-1 inline h-4 w-4 text-[#ae2f26]/70" />
+                        <AlertTriangle className="ml-1 inline h-4 w-4 text-primary/70" />
                       )}
                     </span>
                   </div>
@@ -1027,7 +1027,7 @@ function SetupCard({
   return (
     <GlassCard className="p-5">
       <div className="mb-3 flex items-center gap-3">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[12px] font-bold text-[#ae2f26]">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-[12px] font-bold text-primary">
           {step}
         </span>
         <h2 className="text-[15px] font-semibold text-white">{title}</h2>
@@ -1091,8 +1091,8 @@ function TrackGroup({
               onClick={() => onPick(track, [sub])}
               className={`rounded-xl border px-3.5 py-3 text-left transition ${
                 valt
-                  ? "border-[#ae2f26] bg-[#ae2f26]/10"
-                  : "border-white/12 bg-white/[0.02] hover:border-[#ae2f26]/50"
+                  ? "border-primary bg-primary/10"
+                  : "border-white/12 bg-white/[0.02] hover:border-primary/50"
               }`}
             >
               <span className="block text-sm font-semibold text-[var(--cream)]">
@@ -1110,8 +1110,8 @@ function TrackGroup({
           onClick={() => onPick(track, subs)}
           className={`col-span-2 rounded-xl border px-3.5 py-2.5 text-left transition ${
             mixValt
-              ? "border-[#ae2f26] bg-[#ae2f26]/10"
-              : "border-dashed border-white/15 bg-transparent hover:border-[#ae2f26]/50"
+              ? "border-primary bg-primary/10"
+              : "border-dashed border-white/15 bg-transparent hover:border-primary/50"
           }`}
         >
           <span className="text-sm font-medium text-white/75">{mixLabel}</span>
@@ -1137,8 +1137,8 @@ function DifficultyBtn({
       onClick={onClick}
       className={`min-w-[48px] rounded-lg border px-3 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#ae2f26] bg-[#ae2f26] text-[#fff8f5]"
-          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-[#ae2f26]/60"
+          ? "border-primary bg-primary text-on-brand"
+          : "border-white/15 bg-white/[0.03] text-white/80 hover:border-primary/60"
       }`}
     >
       {label}

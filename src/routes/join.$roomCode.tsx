@@ -47,11 +47,11 @@ function JoinPage() {
   if (error) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-5 px-6 text-center">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-[#8c1d18]/30 bg-[#8c1d18]/10 text-[#8c1d18]">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-destructive/30 bg-destructive/10 text-destructive">
           <AlertTriangle className="h-7 w-7" />
         </span>
         <div>
-          <p className="eyebrow text-[#7a5236]">Privat rum</p>
+          <p className="eyebrow text-bark">Privat rum</p>
           <h1
             className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -61,7 +61,7 @@ function JoinPage() {
           <p className="mt-2 text-sm text-white/65">{error}</p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <Button asChild className="bg-[#ae2f26] text-[#fff8f5] hover:bg-[#8f2620]">
+          <Button asChild className="bg-primary text-on-brand hover:bg-primary-deep">
             <Link to="/">Till start</Link>
           </Button>
           <Button asChild variant="outline">
@@ -75,14 +75,14 @@ function JoinPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-6 text-center">
       <m.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
         animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         <Users className="h-7 w-7" />
       </m.span>
       <div>
-        <p className="eyebrow text-[#7a5236]">Privat rum</p>
+        <p className="eyebrow text-bark">Privat rum</p>
         <h1
           className="mt-1 text-[28px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -90,7 +90,7 @@ function JoinPage() {
           Ansluter…
         </h1>
         <p className="mt-1.5 text-sm text-white/65">
-          Rum-kod: <span className="font-mono font-semibold text-[#ae2f26]">{roomCode}</span>
+          Rum-kod: <span className="font-mono font-semibold text-primary">{roomCode}</span>
         </p>
       </div>
     </div>

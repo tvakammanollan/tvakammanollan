@@ -50,7 +50,7 @@ export function DeleteAccountSection() {
   };
 
   return (
-    <section className="mt-10 rounded-2xl border border-[#8c1d18]/25 bg-[#8c1d18]/[0.04] p-5 sm:p-6">
+    <section className="mt-10 rounded-2xl border border-destructive/25 bg-destructive/[0.04] p-5 sm:p-6">
       <h2
         className="text-base font-semibold text-[var(--cream)]"
         style={{ fontFamily: "var(--font-display)" }}
@@ -78,7 +78,7 @@ export function DeleteAccountSection() {
       </div>
       <Button
         variant="outline"
-        className="mt-4 gap-1.5 border-[#8c1d18]/40 text-[#8c1d18] hover:bg-[#8c1d18]/10 hover:text-[#8c1d18]"
+        className="mt-4 gap-1.5 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive"
         onClick={() => {
           setConfirmText("");
           setOpen(true);

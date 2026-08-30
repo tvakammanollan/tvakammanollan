@@ -88,12 +88,12 @@ export function EmailVerificationNotice() {
 
   return (
     <div
-      className="border-b border-[#7a5236]/25 bg-[#7a5236]/[0.07] px-4 py-2.5"
+      className="border-b border-bark/25 bg-bark/[0.07] px-4 py-2.5"
       role="status"
       aria-live="polite"
     >
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-3 gap-y-1.5 text-sm">
-        <Mail className="h-4 w-4 shrink-0 text-[#7a5236]" aria-hidden />
+        <Mail className="h-4 w-4 shrink-0 text-bark" aria-hidden />
         <span className="min-w-0 flex-1 text-[var(--cream)]">
           Bekräfta <strong>{status.email}</strong> när du får en stund. Allt fungerar under tiden.
         </span>
@@ -101,7 +101,7 @@ export function EmailVerificationNotice() {
           type="button"
           onClick={() => void resend()}
           disabled={sending}
-          className="shrink-0 rounded-full border border-[#7a5236]/40 px-3 py-1 text-xs font-semibold text-[#7a5236] transition-colors hover:bg-[#7a5236]/10 disabled:opacity-60"
+          className="shrink-0 rounded-full border border-bark/40 px-3 py-1 text-xs font-semibold text-bark transition-colors hover:bg-bark/10 disabled:opacity-60"
         >
           {sending ? "Skickar…" : "Skicka mejlet igen"}
         </button>
@@ -109,7 +109,7 @@ export function EmailVerificationNotice() {
           type="button"
           onClick={close}
           aria-label="Dölj påminnelsen"
-          className="shrink-0 rounded-full p-1 text-[#7a5236] transition-colors hover:bg-[#7a5236]/10"
+          className="shrink-0 rounded-full p-1 text-bark transition-colors hover:bg-bark/10"
         >
           <X className="h-4 w-4" aria-hidden />
         </button>

@@ -93,7 +93,7 @@ function ForumHomePage() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <Link
             to="/forum/nytt"
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[#fbf6ec] transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-xl bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-background transition-opacity hover:opacity-90"
           >
             <Plus className="h-4 w-4" aria-hidden />
             Ny tråd

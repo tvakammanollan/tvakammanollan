@@ -173,7 +173,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             <div>
               <section>
                 <div
-                  className="relative overflow-hidden rounded-2xl border border-[#ae2f26]/30 p-5 backdrop-blur-sm sm:p-6"
+                  className="relative overflow-hidden rounded-2xl border border-primary/30 p-5 backdrop-blur-sm sm:p-6"
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(174,47,38,0.07) 0%, rgba(255,255,255,0.9) 55%)",
@@ -181,11 +181,11 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 >
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#ae2f26]/10 blur-3xl"
+                    className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"
                   />
 
                   <div className="relative flex items-start justify-between gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
                       <Swords className="h-5 w-5" />
                     </span>
                     <RankBadge elo={activeElo} size="sm" />
@@ -225,7 +225,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   <button
                     type="button"
                     onClick={() => setMatchOpen(true)}
-                    className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-5 py-3.5 text-[15px] font-semibold text-[#fff8f5] transition hover:brightness-110 sm:w-auto sm:px-8"
+                    className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-110 sm:w-auto sm:px-8"
                   >
                     Spela {matchType === "verbal" ? "verbal" : "matte"}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -284,10 +284,10 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
 /* =================== GUEST BANNER =================== */
 function GuestBanner() {
   return (
-    <div className="border-b border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] px-4 py-3">
+    <div className="border-b border-primary/20 bg-primary/[0.06] px-4 py-3">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 text-sm text-[var(--cream)]">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
             <Sparkles className="h-3.5 w-3.5" />
           </span>
           <span>
@@ -296,7 +296,7 @@ function GuestBanner() {
         </div>
         <Link
           to="/signup"
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#ae2f26] px-4 py-1.5 text-xs font-semibold text-[#fff8f5] transition hover:brightness-110"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-on-brand transition hover:brightness-110"
         >
           Skapa konto
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
@@ -327,7 +327,7 @@ function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; stre
       </span>
 
       {streak > 0 && (
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2f6b3c] tabular-nums">
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-success tabular-nums">
           <Flame className="h-3.5 w-3.5" />
           {streak} dagar
         </span>
@@ -381,7 +381,7 @@ function SubjectPill({
       onClick={onClick}
       className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
         active
-          ? "bg-[#7a5236]/15 text-[#7a5236]"
+          ? "bg-bark/15 text-bark"
           : "text-white/50 hover:bg-white/[0.04] hover:text-[var(--cream)]"
       }`}
     >
@@ -431,7 +431,7 @@ function ActionCard({
     <>
       {badge ? (
         <span
-          className="pointer-events-none absolute right-0 top-0 rounded-bl-xl px-2.5 py-1 text-[11px] font-bold tracking-wide text-[#fff8f5]"
+          className="pointer-events-none absolute right-0 top-0 rounded-bl-xl px-2.5 py-1 text-[11px] font-bold tracking-wide text-on-brand"
           style={{ background: "#ae2f26" }}
         >
           {badge}

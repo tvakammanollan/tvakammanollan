@@ -38,6 +38,7 @@ import { updateStreak } from "@/lib/streak";
 import { PassagePane } from "@/components/PassagePane";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
+import { WaitingForOpponent } from "@/components/match/WaitingForOpponent";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
@@ -715,42 +716,17 @@ function MatchPage() {
     return !prev || prev.passage_id !== currentQ.passage_id;
   }, [currentQ, current, questions]);
 
-  // Invite sender waits here while the invited player hasn't accepted yet.
-  // Villkoret var `!match.player2_id`, vilket släppte igenom en halvskriven
-  // rad (player2 satt, status ännu `waiting`) till det spelbara brädet — med
-  // en klocka som räknade ned på en match som inte hade börjat.
+  // Väntar på att den inbjudne ska acceptera. Villkoret var `!match.player2_id`,
+  // vilket släppte igenom en halvskriven rad (player2 satt, status ännu
+  // `waiting`) till det spelbara brädet — med en klocka som räknade ned på en
+  // match som inte hade börjat. Se `matchIsLive`.
+  //
+  // Skärmen låg tidigare inline här och var en återvändsgränd utan knappar;
+  // den bor nu i `WaitingForOpponent`, som också säger vem man väntar på och
+  // vad som händer när inbjudan går ut.
   if (match && !matchIsLive(match.status) && match.status !== "finished") {
     return (
-      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-        <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-          animate={{ scale: [1, 1.08, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Trophy className="h-7 w-7" />
-        </m.span>
-        <div>
-          <p className="eyebrow text-[#ae2f26]">Väntar</p>
-          <h1
-            className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Inbjudan skickad.
-          </h1>
-        </div>
-        <p className="text-white/65">
-          Matchen startar automatiskt när din vän accepterar inbjudan.
-        </p>
-        <m.div
-          className="flex gap-1.5"
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {[0, 1, 2].map((i) => (
-            <span key={i} className="h-2 w-2 rounded-full bg-[#ae2f26]" />
-          ))}
-        </m.div>
-      </div>
+      <WaitingForOpponent matchId={match.id} isMine={!!user && match.player1_id === user.id} />
     );
   }
 
@@ -758,7 +734,7 @@ function MatchPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
         <m.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -804,14 +780,14 @@ function MatchPage() {
           </m.div>
         ) : null}
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-[#ae2f26]">Klart</p>
+          <p className="eyebrow text-primary">Klart</p>
           <h1
             className="mt-1 text-[34px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -828,7 +804,7 @@ function MatchPage() {
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
           <m.div
-            className="h-full bg-gradient-to-r from-[#ae2f26] to-[#f5c089]"
+            className="h-full bg-primary"
             animate={{
               width: `${Math.max(0, oppSecondsLeft / OPPONENT_GRACE_SECONDS) * 100}%`,
             }}
@@ -877,7 +853,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#ae2f26] transition-all duration-500 ease-out"
+                  className="h-full bg-primary transition-all duration-500 ease-out"
                   style={{ width: `${(answers.size / Math.max(1, questions.length)) * 100}%` }}
                 />
               </div>
@@ -893,7 +869,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-[#7a5236] transition-all duration-700 ease-out"
+                  className="h-full bg-bark transition-all duration-700 ease-out"
                   style={{
                     width: `${(Math.min(oppAnswered, questions.length) / Math.max(1, questions.length)) * 100}%`,
                   }}
@@ -1078,7 +1054,7 @@ function QuestionCard({
       {/* Frågenumret står här, inte i stapeln ovanför — den mäter besvarade
           frågor, inte var i häftet man befinner sig. */}
       <div className="mb-2 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold tracking-wide text-[#ae2f26]">
+        <span className="text-xs font-semibold tracking-wide text-primary">
           {displayCategory(currentQ.category)}
         </span>
         <span className="text-xs text-muted-foreground tabular-nums">
@@ -1153,15 +1129,15 @@ function QuestionCard({
               aria-checked={isSelected}
               aria-label={`Alternativ ${letter}: ${opt}`}
               onClick={() => selectAnswer(currentQ.id, letter)}
-              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae2f26] focus-visible:ring-offset-2 ${
+              className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-[#ae2f26] bg-[#ae2f26]/15 text-foreground"
-                  : "border border-white/10 bg-white/[0.02] hover:border-[#ae2f26]/60 hover:bg-[#ae2f26]/10"
+                  ? "border-2 border-primary bg-primary/15 text-foreground"
+                  : "border border-white/10 bg-white/[0.02] hover:border-primary/60 hover:bg-primary/10"
               }`}
             >
               <span
                 className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
-                  isSelected ? "bg-[#ae2f26] text-[#fff8f5]" : "bg-white/10 text-foreground"
+                  isSelected ? "bg-primary text-on-brand" : "bg-white/10 text-foreground"
                 }`}
               >
                 {letter}

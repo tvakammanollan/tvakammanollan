@@ -125,7 +125,7 @@ export function AnswerContext({
   const prickade = !!selected && selected === correct;
 
   return (
-    <div className="mt-3 space-y-3 rounded-lg border-l-4 border-[#7a5236] bg-[#f0ede8] p-3">
+    <div className="mt-3 space-y-3 rounded-lg border-l-4 border-bark bg-secondary p-3">
       {!prickade && (
         <Rad
           etikett={selected ? "Ditt svar" : "Du svarade inte"}

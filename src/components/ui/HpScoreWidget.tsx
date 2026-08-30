@@ -35,7 +35,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
           fontFamily: "var(--font-mono)",
         }}
       >
-        <Gauge className="h-3.5 w-3.5 text-[#ae2f26]" aria-hidden />
+        <Gauge className="h-3.5 w-3.5 text-primary" aria-hidden />
         <span className="tabular-nums">HP {sv(combined)}</span>
       </button>
     );
@@ -58,7 +58,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/45">
           Trolig HP-poäng
         </p>
-        <span className="rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#ae2f26]">
+        <span className="rounded-full border border-primary/25 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
           {label}
         </span>
       </div>
@@ -66,7 +66,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       {/* Main score */}
       <div className="mt-3 flex items-baseline gap-2">
         <span
-          className="text-[60px] font-bold leading-none tabular-nums text-[#ae2f26]"
+          className="text-[60px] font-bold leading-none tabular-nums text-primary"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {sv(combined)}
@@ -78,12 +78,12 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       <div className="mt-5">
         <div className="relative h-2.5 w-full rounded-full bg-white/8">
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#8f2620] to-[#ae2f26]"
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-deep to-primary"
             style={{ width: `${pct}%` }}
           />
           {/* marker */}
           <div
-            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#fbf6ec] bg-[#f5c089] shadow"
+            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-primary shadow"
             style={{ left: `${pct}%` }}
           />
         </div>

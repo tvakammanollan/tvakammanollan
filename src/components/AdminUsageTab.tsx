@@ -48,7 +48,7 @@ export function AdminUsageTab() {
     };
   }, [fetchViews]);
 
-  if (error) return <p className="p-6 text-sm text-[#8c1d18]">{error}</p>;
+  if (error) return <p className="p-6 text-sm text-destructive">{error}</p>;
   if (!stats) return <div className="skeleton-shimmer h-64 rounded-2xl" aria-busy="true" />;
 
   const hours = Math.floor(stats.activeAnswerTimeS / 3600);
@@ -165,7 +165,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
           {views.daily.map((d) => (
             <div
               key={d.day}
-              className="flex-1 rounded-t bg-[#ae2f26]/70 transition-colors hover:bg-[#ae2f26]"
+              className="flex-1 rounded-t bg-primary/70 transition-colors hover:bg-primary"
               style={{ height: `${Math.max((d.views / peak) * 100, 2)}%` }}
               title={`${d.day}: ${formatInt(d.views)} visningar`}
             />

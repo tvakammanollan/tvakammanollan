@@ -164,7 +164,7 @@ export function StripeCheckoutEmbed({
     <div className="relative">
       {laddar && (
         <div className="py-12 text-center" aria-busy="true">
-          <Loader2 className="mx-auto h-7 w-7 animate-spin text-[#ae2f26]" />
+          <Loader2 className="mx-auto h-7 w-7 animate-spin text-primary" />
           <p className="mt-4 text-sm text-white/60">Öppnar kassan…</p>
         </div>
       )}

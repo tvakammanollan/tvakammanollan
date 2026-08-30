@@ -103,10 +103,7 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
   if (!wotd) {
     if (!failed) {
       return (
-        <div
-          className="rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5"
-          aria-busy="true"
-        >
+        <div className="rounded-2xl border border-bark/20 bg-bark/[0.05] p-5" aria-busy="true">
           <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
           <div className="skeleton-shimmer mt-3 h-8 w-2/3 rounded-lg" />
           <div className="skeleton-shimmer mt-2.5 h-4 w-full rounded" />
@@ -119,7 +116,7 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
         to="/ord"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         params={{} as any}
-        className="group block rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5 transition-colors hover:border-[#7a5236]/40"
+        className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40"
       >
         <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
         <div
@@ -132,7 +129,7 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
           Dagens ord kunde inte hämtas just nu. Gå till ordträningen så plockar den upp där du
           slutade.
         </p>
-        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#7a5236]">
+        <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-bark">
           <BookOpen className="h-3.5 w-3.5" />
           Öva ord
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
@@ -146,11 +143,11 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
       to="/ord"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       params={{} as any}
-      className="group block rounded-2xl border border-[#7a5236]/20 bg-[#7a5236]/[0.05] p-5 transition-colors hover:border-[#7a5236]/40 hover:bg-[#7a5236]/[0.08]"
+      className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40 hover:bg-bark/[0.08]"
     >
       <div className="flex items-center justify-between gap-3">
         <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
-        <span className="inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-[#7a5236]">
+        <span className="inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-bark">
           <BookOpen className="h-3.5 w-3.5" />
           Öva fler
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />

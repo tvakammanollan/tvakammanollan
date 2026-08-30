@@ -72,7 +72,7 @@ function VerifyPage() {
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center gap-5 px-6 text-center">
       {state === "laddar" && (
         <>
-          <Loader2 className="h-9 w-9 animate-spin text-[#ae2f26]" aria-hidden />
+          <Loader2 className="h-9 w-9 animate-spin text-primary" aria-hidden />
           <p className="text-sm text-muted-foreground">Bekräftar din adress…</p>
         </>
       )}

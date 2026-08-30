@@ -116,7 +116,7 @@ export function AdminLeadsTab() {
             onClick={() => setStatus(s.value)}
             className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
               status === s.value
-                ? "bg-[#2f6b3c] text-[var(--success-ink)]"
+                ? "bg-success text-[var(--success-ink)]"
                 : "border border-white/12 text-white/60 hover:text-[var(--cream)]"
             }`}
           >
@@ -137,14 +137,14 @@ export function AdminLeadsTab() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Sök namn, nummer eller e-post"
             aria-label="Sök i ringlistan"
-            className="w-full rounded-full border border-white/12 bg-white py-2 pl-9 pr-3 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#7a5236]"
+            className="w-full rounded-full border border-white/12 bg-white py-2 pl-9 pr-3 text-sm text-[var(--cream)] outline-none transition-colors focus:border-bark"
           />
         </label>
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as Sort)}
           aria-label="Sortering"
-          className="rounded-full border border-white/12 bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none focus:border-[#7a5236]"
+          className="rounded-full border border-white/12 bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none focus:border-bark"
         >
           {SORTERINGAR.map((s) => (
             <option key={s.value} value={s.value}>
@@ -156,7 +156,7 @@ export function AdminLeadsTab() {
           type="button"
           onClick={exportera}
           disabled={leads.length === 0}
-          className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-3.5 py-2 text-xs font-semibold text-white/70 transition-colors hover:border-[#7a5236]/50 hover:text-[var(--cream)] disabled:opacity-40"
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-3.5 py-2 text-xs font-semibold text-white/70 transition-colors hover:border-bark/50 hover:text-[var(--cream)] disabled:opacity-40"
         >
           <Download className="h-3.5 w-3.5" aria-hidden />
           Exportera CSV ({leads.length})
@@ -266,7 +266,7 @@ function LeadRow({ lead, onChanged }: { lead: CoachingLead; onChanged: () => voi
         rows={2}
         maxLength={1000}
         placeholder="Anteckning från samtalet"
-        className="mt-3 w-full rounded-lg border border-input bg-white px-3 py-2 text-[13px] text-[var(--cream)] outline-none transition-colors focus:border-[#7a5236]"
+        className="mt-3 w-full rounded-lg border border-input bg-white px-3 py-2 text-[13px] text-[var(--cream)] outline-none transition-colors focus:border-bark"
       />
 
       <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -278,7 +278,7 @@ function LeadRow({ lead, onChanged }: { lead: CoachingLead; onChanged: () => voi
               type="button"
               disabled={saving}
               onClick={() => setStatus(s)}
-              className="rounded-full border border-white/12 px-3 py-1 text-xs text-white/70 transition-colors hover:border-[#7a5236]/50 hover:text-[var(--cream)] disabled:opacity-50"
+              className="rounded-full border border-white/12 px-3 py-1 text-xs text-white/70 transition-colors hover:border-bark/50 hover:text-[var(--cream)] disabled:opacity-50"
             >
               {STATUSAR.find((x) => x.value === s)?.label}
             </button>

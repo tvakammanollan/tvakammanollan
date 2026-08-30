@@ -383,7 +383,7 @@ function StatsPage() {
         <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
               style={{ fontFamily: "var(--font-display)" }}
             >
               ELO över tid
@@ -549,7 +549,7 @@ function StatsPage() {
         <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Delprov-prestation
@@ -624,7 +624,7 @@ function StatsPage() {
         <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-[#ae2f26]"
+              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Matchhistorik

@@ -165,6 +165,13 @@ export const inviteFriendToMatch = createServerFn({ method: "POST" })
  * Begär revansch efter en avslutad PvP-match: skapar en ny väntande match
  * och skickar en inbjudan till samma motståndare. Motståndaren ser inbjudan
  * via notisklockan / FriendInviteListener och accepterar precis som vanligt.
+ *
+ * INBJUDAN LEVER I 30 MINUTER (`expires_at`-default på tabellen) och det är
+ * med flit: matchen är fem minuter lång och realtidsspelad, så en inbjudan
+ * som accepteras i morgon ger ett bräde ingen sitter vid. Följden är att
+ * revansch bara fungerar mot någon som är online ungefär nu — och det MÅSTE
+ * synas i UI:t, annars ser en obesvarad inbjudan ut som en trasig funktion.
+ * Se väntskärmen i `match.$matchId.tsx` och `cancelMatchInvite` nedan.
  */
 export const requestRematch = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -291,5 +298,63 @@ export const declineMatchInvite = createServerFn({ method: "POST" })
       .from("match_invites")
       .update({ status: "declined" })
       .eq("id", data.invite_id);
+    return { ok: true };
+  });
+
+/**
+ * Avbryter en inbjudan man själv skickat, och river den väntande matchen.
+ *
+ * Fanns inte fram till 2026-08-29, och det var hela problemet med revansch:
+ * den som klickade skickades till en väntskärm utan väg ut. Accepterade inte
+ * motståndaren — vilket är normalfallet, eftersom inbjudan bara når den som
+ * är online just då — stod skärmen kvar och sa "matchen startar automatiskt"
+ * i evighet. I produktion syns det som väntande matcher som aldrig blev
+ * något och inbjudningar som står kvar som `pending` långt efter att de gått
+ * ut (21 av 22 vid mätningen).
+ *
+ * Matchraden RADERAS i stället för att få en status: `matches.status` tillåter
+ * bara `waiting|active|finished`, och att skriva `finished` på en match som
+ * aldrig spelades hade lagt en spökmatch i historiken och i statistiken.
+ * Raden är säker att ta bort just för att den är `waiting` — frågorna skrivs
+ * först när någon accepterar, så det finns inga `match_questions` som pekar
+ * på den.
+ *
+ * Idempotent: en redan avbruten inbjudan svarar `ok` i stället för att kasta.
+ * Den som dubbelklickar ska inte mötas av ett felmeddelande.
+ */
+export const cancelMatchInvite = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ match_id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    assertRateLimit(`matchInvite:${userId}`, limits.matchInvite);
+
+    const { data: match } = await supabaseAdmin
+      .from("matches")
+      .select("id, status, player1_id")
+      .eq("id", data.match_id)
+      .maybeSingle();
+
+    // Redan borttagen av ett tidigare klick.
+    if (!match) return { ok: true };
+    // supabaseAdmin kringgår RLS, så det här är enda ägarkontrollen.
+    if (match.player1_id !== userId) throw new Error("Inte din inbjudan");
+    // Har motståndaren hunnit acceptera är matchen igång och ska spelas, inte
+    // rivas. Att radera den hade tagit bort brädet under fötterna på någon
+    // annan som redan svarar på frågorna.
+    if (match.status !== "waiting") return { ok: true, started: true };
+
+    await supabaseAdmin
+      .from("match_invites")
+      .update({ status: "expired" })
+      .eq("match_id", data.match_id)
+      .eq("from_user", userId)
+      .eq("status", "pending");
+
+    const { error } = await supabaseAdmin.from("matches").delete().eq("id", data.match_id);
+    if (error) {
+      console.error("[match] kunde inte riva avbruten match:", error.message);
+      throw new Error("Kunde inte avbryta inbjudan");
+    }
     return { ok: true };
   });

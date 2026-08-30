@@ -262,24 +262,24 @@ function MatchmakingPage() {
       <div className="relative flex h-32 w-32 items-center justify-center">
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/40"
+          className="absolute inset-0 rounded-full border-2 border-primary/40"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/30"
+          className="absolute inset-0 rounded-full border-2 border-primary/30"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
           aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-[#ae2f26]/20"
+          className="absolute inset-0 rounded-full border-2 border-primary/20"
           animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
           transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
         />
         <m.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -292,7 +292,7 @@ function MatchmakingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="eyebrow text-[#ae2f26]">Realtid</p>
+        <p className="eyebrow text-primary">Realtid</p>
         <h1
           className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -301,7 +301,7 @@ function MatchmakingPage() {
             "Motståndare hittad!"
           ) : (
             <>
-              Söker <span className="display-italic font-medium text-[#ae2f26]">motståndare…</span>
+              Söker <span className="display-italic font-medium text-primary">motståndare…</span>
             </>
           )}
         </h1>
@@ -331,7 +331,7 @@ function MatchmakingPage() {
           </div>
         )}
         <div
-          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-[#ae2f26]"
+          className="mt-4 text-[28px] font-bold leading-none tabular-nums text-primary"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {mm}:{ss}

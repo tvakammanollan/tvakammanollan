@@ -2962,6 +2962,91 @@ PATCH: dict[str, dict[int, dict]] = {
                       "finns det 11 bollar fler än i låda A.\n\nTillräcklig "
                       "information för lösningen erhålls", "alternatives": STD_NOG},
     },
+    # Uteslutna: 3 (tre rektanglar i specifikt mönster), 8 (stolpdiagram).
+    "2016vt-3": {
+        1: {"text": "Vilket av svarsalternativen motsvarar uttrycket $ax+by+bx+ay$?",
+            "alternatives": ["$(a+b)(x+y)$", "$a^2xy+b^2xy$", "$2(ab+xy)$", "$2axy+2bxy$"]},
+        2: {"text": "I en klass finns det pojkar och flickor. Antalet pojkar är "
+                     "dubbelt så stort som antalet flickor. Vilket svarsalternativ "
+                     "kan inte motsvara antalet elever i klassen?",
+            "alternatives": ["18", "21", "25", "33"]},
+        4: {"text": "Vad är $1002^3$?",
+            "alternatives": ["1 005 008 004", "1 006 012 008", "1 007 016 012", "3 000 000 006"]},
+        5: {"text": "$f(x) = x^2+2x-5$\n$g(x) = x^2-x+1$\n\nVad är $x$ om $f(x)=g(x)$?",
+            "alternatives": ["–1", "$-\\frac{2}{5}$", "2", "6"]},
+        6: {"text": "Vilket svarsalternativ motsvarar $(x^6)^4$?",
+            "alternatives": ["$x^{10}$", "$x^{24}$", "$x^{64}$", "$x^{1296}$"]},
+        7: {"text": "Vad är $x$ om $0=-2(x-5)+3(-x+10)$?", "alternatives": ["–20", "–4", "4", "8"]},
+        9: {"text": "Vad är $\\frac{1}{\\frac{1}{3}-\\frac{3}{4}}$?",
+            "alternatives": ["$\\frac{1}{4}$", "$\\frac{4}{3}$", "$-\\frac{7}{2}$", "$-\\frac{12}{5}$"]},
+        10: {"text": "$0<x<1<y$\n\nVilket svarsalternativ är med säkerhet korrekt?",
+             "alternatives": ["$0<xy<x$", "$0<xy<1$", "$x<xy<1$", "$x<xy<y$"]},
+        11: {"text": "Triangeln ABC är inskriven i en cirkel. Cirkelns medelpunkt M "
+                      "ligger på sidan AB. Arean för triangeln ACM är 5 cm². Vilken "
+                      "area har triangeln ABC?", "alternatives": ["5 cm²", "10 cm²", "12 cm²", "14 cm²"]},
+        12: {"text": "$x+y=a$\n$x+3y=b$\n\nVad är $x-y$?",
+             "alternatives": ["$2a-b$", "$3b+a$", "$3a-b$", "$2b+a$"]},
+        13: {"text": "Punkten E ligger någonstans på sidan BC i kvadraten ABCD.\n"
+                      "Kvantitet I: Den sammanlagda arean av triangeln ABE och "
+                      "triangeln CDE\nKvantitet II: Arean av triangeln ADE",
+             "alternatives": STD_KVA},
+        14: {"text": "Kvantitet I: $\\frac{1}{3}+\\frac{5}{6}$\nKvantitet II: "
+                      "$\\frac{4}{5}+\\frac{4}{10}$", "alternatives": STD_KVA},
+        15: {"text": "Kvantitet I: $(a+b+2)(a+b-2)$\nKvantitet II: $(a+b)^2+4$",
+             "alternatives": STD_KVA},
+        16: {"text": "Kvantitet I: 6,3 timmar\nKvantitet II: $120\\pi$ minuter",
+             "alternatives": STD_KVA},
+        17: {"text": "Medelvärdet av tre tal är 9. Ett av talen är 2.\nKvantitet I: "
+                      "Det största av de tre talen\nKvantitet II: 16", "alternatives": STD_KVA},
+        18: {"text": "Kvantitet I: $2\\sqrt{3}$\nKvantitet II: $\\frac{\\sqrt{9}}{\\sqrt{3}}+2$",
+             "alternatives": STD_KVA},
+        19: {"text": "Grafen till $y=2x+1$ är en rät linje.\nKvantitet I: $x$-värdet "
+                      "för den punkt där linjen skär $x$-axeln\nKvantitet II: "
+                      "$y$-värdet för den punkt där linjen skär $y$-axeln",
+             "alternatives": STD_KVA},
+        20: {"text": "$x \\cdot y=312$\n$y<24$\n\nKvantitet I: 24\nKvantitet II: $x$",
+             "alternatives": STD_KVA},
+        21: {"text": "Kvantitet I: Arean av en halvcirkel med radien 4 cm\n"
+                      "Kvantitet II: Arean av en rektangel med sidlängderna 8 cm "
+                      "och 3 cm", "alternatives": STD_KVA},
+        22: {"text": "$x>0$\n$y \\neq 0$\n\nKvantitet I: $x$\nKvantitet II: $(x^y)^{\\frac{1}{y}}$",
+             "alternatives": STD_KVA},
+        23: {"text": "Stina skulle köpa en mikrovågsugn och hon hade två modeller "
+                      "att välja bland. Hur stor var skillnaden mellan ugnarnas "
+                      "ordinarie pris?\n\n(1) På den ena ugnen lämnades 35 % rabatt "
+                      "och man sparade då 595 kr jämfört med ordinarie pris. På den "
+                      "andra ugnen lämnades 45 % rabatt och man sparade då 945 kr "
+                      "jämfört med ordinarie pris.\n(2) Efter att man lämnat 35 % "
+                      "respektive 45 % rabatt på ugnarna var prisskillnaden mellan "
+                      "dem 50 kr.\n\nTillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+        24: {"text": "Sex vikter med massorna 1, 2, 3, 4, 5 respektive 6 gram "
+                      "ligger i tre askar med två vikter i varje ask. Vilka vikter "
+                      "finns i den tredje asken?\n\n(1) Den totala massan i den "
+                      "första asken är 9 gram.\n(2) Den totala massan i den andra "
+                      "asken är 8 gram.\n\nTillräcklig information för lösningen "
+                      "erhålls", "alternatives": STD_NOG},
+        25: {"text": "Hur många personer står i kön?\n\n(1) Om ytterligare 5 "
+                      "personer ställer sig i kön kommer den att bestå av fler än "
+                      "20 personer.\n(2) Om 4 personer lämnar kön kommer den att "
+                      "bestå av färre än 13 personer.\n\nTillräcklig information "
+                      "för lösningen erhålls", "alternatives": STD_NOG},
+        26: {"text": "En bil och en motorcykel körde längs en raksträcka. Hur "
+                      "lång var raksträckan?\n\n(1) Skillnaden i körtid mellan "
+                      "fordonen var 90 sekunder för hela raksträckan.\n(2) "
+                      "Motorcykelns medelhastighet för hela raksträckan var 10 "
+                      "m/s lägre än bilens.\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        27: {"text": "$x$ och $y$ är två positiva tal. Hur många procent av $y$ "
+                      "är $x$?\n\n(1) $x=\\frac{3}{8}$ och $x>y$\n(2) "
+                      "$\\frac{x}{y}=12{,}5$\n\nTillräcklig information för "
+                      "lösningen erhålls", "alternatives": STD_NOG},
+        28: {"text": "Kalle är 24 år äldre än Lisa. Hur gammal är Lisa?\n\n(1) För "
+                      "två år sedan var Kalle fyra gånger så gammal som Lisa.\n(2) "
+                      "Om 14 år är Kalle dubbelt så gammal som Lisa.\n\n"
+                      "Tillräcklig information för lösningen erhålls",
+             "alternatives": STD_NOG},
+    },
 }
 
 

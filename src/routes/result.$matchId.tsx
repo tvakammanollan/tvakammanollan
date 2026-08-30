@@ -448,14 +448,14 @@ function ResultPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ae2f26] to-[#8f2620] text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-[#ae2f26]">Nästan klart</p>
+          <p className="eyebrow text-primary">Nästan klart</p>
           <h1
             className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -502,7 +502,7 @@ function ResultPage() {
 
   // Banner styles
   const bannerClass = won
-    ? "bg-gradient-to-br from-[#f3e9d8] via-[#fbf6ec] to-[#ffffff] text-[var(--cream)] border-[#ae2f26]/40 shadow-[0_20px_60px_-15px_rgba(174,47,38,0.4)]"
+    ? "bg-gradient-to-br from-secondary via-background to-card text-[var(--cream)] border-primary/40 shadow-[0_20px_60px_-15px_rgba(174,47,38,0.4)]"
     : "bg-white/[0.03] text-[var(--cream)] border-white/12";
   const verdict = won ? "Du vann!" : "Du förlorade";
   const Icon = won ? Trophy : Frown;
@@ -605,7 +605,7 @@ function ResultPage() {
             damping: 16,
           }}
         >
-          <Icon className={`mx-auto h-14 w-14 ${won ? "text-[#ae2f26]" : ""}`} />
+          <Icon className={`mx-auto h-14 w-14 ${won ? "text-primary" : ""}`} />
         </m.div>
         <h1
           className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
@@ -627,10 +627,10 @@ function ResultPage() {
       {user?.is_anonymous && (
         <Reveal
           delay={0.2}
-          className="mt-5 overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.06] p-6 sm:p-8"
+          className="mt-5 overflow-hidden rounded-3xl border border-primary/30 bg-primary/[0.06] p-6 sm:p-8"
         >
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/10 text-[#ae2f26]">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-primary/25 bg-primary/10 text-primary">
               <Trophy className="h-7 w-7" />
             </span>
             <div className="flex-1">
@@ -648,7 +648,7 @@ function ResultPage() {
             </div>
             <Button
               asChild
-              className="shrink-0 bg-[#ae2f26] px-6 text-base font-semibold text-[#fff8f5] shadow-md hover:bg-[#8f2620]"
+              className="shrink-0 bg-primary px-6 text-base font-semibold text-on-brand shadow-md hover:bg-primary-deep"
             >
               <Link to="/signup">
                 Skapa konto
@@ -713,7 +713,7 @@ function ResultPage() {
         {/* Streak — förstärk vanan i det heta ögonblicket */}
         {!user?.is_anonymous && (profile?.current_streak ?? 0) > 0 && (
           <div className="mt-3 flex justify-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-sm font-semibold text-[#ae2f26] tabular-nums">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-sm font-semibold text-primary tabular-nums">
               <Flame className="h-3.5 w-3.5" />
               {profile!.current_streak} dagar i rad
               {(profile!.current_streak ?? 0) >= 3 &&
@@ -730,13 +730,13 @@ function ResultPage() {
             const total = questions.length;
             const norm = normeringForAccuracy(correctCount, total);
             return (
-              <div className="mt-5 rounded-xl border border-[#ae2f26]/30 bg-[#ae2f26]/[0.06] p-4 text-center">
-                <div className="text-[11px] font-semibold tracking-wide text-[#ae2f26]">
+              <div className="mt-5 rounded-xl border border-primary/30 bg-primary/[0.06] p-4 text-center">
+                <div className="text-[11px] font-semibold tracking-wide text-primary">
                   Trolig normering
                 </div>
                 <div className="mt-1 flex items-baseline justify-center gap-2">
                   <span
-                    className="text-4xl font-bold tabular-nums text-[#ae2f26] sm:text-5xl"
+                    className="text-4xl font-bold tabular-nums text-primary sm:text-5xl"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {formatDecimal(norm, 2)}
@@ -758,7 +758,7 @@ function ResultPage() {
       <Button
         onClick={shareResult}
         variant="outline"
-        className="mt-5 w-full gap-1.5 border-[#ae2f26]/40 text-[#ae2f26] hover:bg-[#ae2f26]/10"
+        className="mt-5 w-full gap-1.5 border-primary/40 text-primary hover:bg-primary/10"
       >
         <Share2 className="h-4 w-4" />
         Dela resultat
@@ -848,7 +848,7 @@ function ResultPage() {
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
                               a.time_spent_seconds > 180
-                                ? "bg-[#ae2f26]/15 text-[#ae2f26]"
+                                ? "bg-primary/15 text-primary"
                                 : "bg-muted text-muted-foreground"
                             }`}
                           >

@@ -124,9 +124,9 @@ function LeaderboardPage() {
 
       <div className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
         {user?.is_anonymous && (
-          <p className="mb-4 rounded-xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.06] px-4 py-2.5 text-sm text-white/70">
+          <p className="mb-4 rounded-xl border border-primary/20 bg-primary/[0.06] px-4 py-2.5 text-sm text-white/70">
             Du spelar som gäst. Din ELO sparas inte.{" "}
-            <Link to="/signup" className="font-semibold text-[#ae2f26] hover:underline">
+            <Link to="/signup" className="font-semibold text-primary hover:underline">
               Skapa konto
             </Link>{" "}
             för att ta en plats på listan.
@@ -177,7 +177,7 @@ function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) =
           type="button"
           onClick={() => onChange(o.value)}
           className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-            scope === o.value ? "bg-[#ae2f26] text-[#2e1e14]" : "text-white/55 hover:text-white"
+            scope === o.value ? "bg-primary text-foreground" : "text-white/55 hover:text-white"
           }`}
         >
           {o.label}
@@ -369,7 +369,7 @@ function AllTimeTable({
 
   if ((loading && rows.length === 0) || (friendsOnly && friendIds === null))
     return <TableSkeleton />;
-  if (error) return <div className="p-8 text-center text-sm text-[#8c1d18]">{error}</div>;
+  if (error) return <div className="p-8 text-center text-sm text-destructive">{error}</div>;
   if (friendsOnly && top.length === 0)
     return (
       <div className="border-t border-border">
@@ -480,7 +480,7 @@ function WeeklyTable({
                 key={r.user_id}
                 className={`border-t border-white/8 transition-colors ${
                   isMe
-                    ? "bg-[#ae2f26]/10 font-semibold ring-1 ring-[#ae2f26]/40"
+                    ? "bg-primary/10 font-semibold ring-1 ring-primary/40"
                     : "hover:bg-white/[0.03]"
                 }`}
               >
@@ -491,7 +491,7 @@ function WeeklyTable({
                   <span className="inline-flex items-center gap-2 text-white">
                     {rankedName(r.username)}
                     {isMe && (
-                      <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
+                      <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
                         Du
                       </span>
                     )}
@@ -525,14 +525,14 @@ function WeeklyTable({
                   Din placering: #{me.rank}
                 </td>
               </tr>
-              <tr className="border-t border-white/8 bg-[#ae2f26]/10 font-semibold ring-1 ring-[#ae2f26]/40">
+              <tr className="border-t border-white/8 bg-primary/10 font-semibold ring-1 ring-primary/40">
                 <td className="px-4 py-3.5 tabular-nums">
                   <PodiumRank rank={me.rank} />
                 </td>
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
                     {displayName(me.username)}
-                    <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
                       Du
                     </span>
                   </span>
@@ -570,9 +570,9 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   const wr = r.games_played > 0 ? Math.round((r.wins / r.games_played) * 100) : null;
   const isPodium = r.rank <= 3;
   const rowBg = isMe
-    ? "bg-[#ae2f26]/10 ring-1 ring-[#ae2f26]/40"
+    ? "bg-primary/10 ring-1 ring-primary/40"
     : r.rank === 1
-      ? "bg-[#ae2f26]/[0.04]"
+      ? "bg-primary/[0.04]"
       : "";
   return (
     <m.tr
@@ -590,7 +590,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           <span className="text-[15px] font-medium text-white">{rankedName(r.username)}</span>
           {isMe && (
-            <span className="rounded-full bg-[#ae2f26] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#2e1e14]">
+            <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
               Du
             </span>
           )}
@@ -599,7 +599,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       <td className="px-4 py-4 text-right">
         <span
           className={`text-[18px] font-bold tabular-nums ${
-            isPodium ? "text-[#ae2f26]" : "text-white"
+            isPodium ? "text-primary" : "text-white"
           }`}
           style={{ fontFamily: "var(--font-display)" }}
         >
@@ -677,7 +677,7 @@ function OrdBoard() {
       {loading && top.length === 0 ? (
         <TableSkeleton />
       ) : error ? (
-        <div className="p-8 text-center text-sm text-[#8c1d18]">{error}</div>
+        <div className="p-8 text-center text-sm text-destructive">{error}</div>
       ) : top.length === 0 ? (
         <EmptyState
           icon={BookA}
@@ -722,9 +722,9 @@ function OrdBoard() {
 
 function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
   const tintBg = isMe
-    ? "bg-[#ae2f26]/10 ring-1 ring-[#ae2f26]/40"
+    ? "bg-primary/10 ring-1 ring-primary/40"
     : r.rank === 1
-      ? "bg-[#ae2f26]/[0.04]"
+      ? "bg-primary/[0.04]"
       : "";
   return (
     <tr
@@ -739,13 +739,13 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {rankedName(r.username)}
           {isMe && (
-            <span className="rounded-full bg-[#ae2f26] px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-[#2e1e14]">
+            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-foreground">
               Du
             </span>
           )}
         </span>
       </td>
-      <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-[#ae2f26]">
+      <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-primary">
         {r.correct_count}
       </td>
       <td className="hidden px-3 py-2.5 text-right tabular-nums text-white/70 sm:table-cell">

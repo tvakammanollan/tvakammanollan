@@ -48,10 +48,10 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
       aria-label="Ny rank"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ae2f26]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
           Ny rank
         </p>
         <h2
@@ -72,7 +72,7 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
 
         <Button
           onClick={onClose}
-          className="mt-7 w-full bg-[#ae2f26] font-semibold text-[#fff8f5] hover:bg-[#ae2f26]/90"
+          className="mt-7 w-full bg-primary font-semibold text-on-brand hover:bg-primary/90"
         >
           Fortsätt
         </Button>

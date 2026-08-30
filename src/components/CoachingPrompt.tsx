@@ -141,10 +141,10 @@ export function CoachingPrompt() {
                 "linear-gradient(165deg, rgba(174,47,38,0.10) 0%, rgba(174,47,38,0.035) 48%, rgba(174,47,38,0) 100%)",
             }}
           >
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[#ae2f26]">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
               <GraduationCap className="h-6 w-6" aria-hidden />
             </div>
-            <p className="mt-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#2f6b3c]">
+            <p className="mt-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-success">
               Personlig coachning
             </p>
             <DialogTitle
@@ -174,7 +174,7 @@ export function CoachingPrompt() {
                   : "Vi hör av oss inom 24 timmar efter köpet",
               ].map((rad) => (
                 <li key={rad} className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#2f6b3c]" aria-hidden />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
                   <span>{rad}</span>
                 </li>
               ))}
@@ -184,12 +184,12 @@ export function CoachingPrompt() {
                 konfigurerat). Då blir knappen ett "läs mer" i stället för ett
                 belopp vi inte kan stå för — modalen visar kontaktvägen. */}
             {villkor && (
-              <p className="mt-5 text-center text-[13px] font-medium text-[#2f6b3c]">{villkor}</p>
+              <p className="mt-5 text-center text-[13px] font-medium text-success">{villkor}</p>
             )}
 
             <Button
               onClick={boka}
-              className={`w-full bg-[#ae2f26] py-6 text-[15px] text-[#fff8f5] hover:bg-[#8f2620] ${villkor ? "mt-2.5" : "mt-6"}`}
+              className={`w-full bg-primary py-6 text-[15px] text-on-brand hover:bg-primary-deep ${villkor ? "mt-2.5" : "mt-6"}`}
             >
               {pris ? `Kom igång för ${pris}` : "Läs mer om coachning"}
             </Button>

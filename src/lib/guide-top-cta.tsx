@@ -16,7 +16,7 @@ export function GuideTopCta({ delprov, code }: { delprov: string; code: string }
     <Link
       to="/ova/$delprov"
       params={{ delprov }}
-      className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-4 transition-colors hover:border-[#ae2f26]/50 hover:bg-[#ae2f26]/[0.1]"
+      className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-4 transition-colors hover:border-primary/50 hover:bg-primary/[0.1]"
     >
       <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
         Öva riktiga {code}-frågor med facit

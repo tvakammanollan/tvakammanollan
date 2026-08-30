@@ -100,13 +100,13 @@ function Stjarnor({ betyg = 5 }: { betyg?: number }) {
         const fyllnad = Math.max(0, Math.min(1, betyg - i));
         return (
           <span key={i} className="relative inline-flex h-3.5 w-3.5" aria-hidden>
-            <Star className="h-3.5 w-3.5 text-[#ae2f26]" />
+            <Star className="h-3.5 w-3.5 text-primary" />
             {fyllnad > 0 ? (
               <span
                 className="absolute inset-y-0 left-0 overflow-hidden"
                 style={{ width: `${fyllnad * 100}%` }}
               >
-                <Star className="h-3.5 w-3.5 fill-[#ae2f26] text-[#ae2f26]" />
+                <Star className="h-3.5 w-3.5 fill-primary text-primary" />
               </span>
             ) : null}
           </span>
@@ -186,7 +186,7 @@ export function HeroLanding() {
           <Link
             to="/matchmaking"
             search={{ type: "verbal" }}
-            className="group inline-flex h-[54px] items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-8 text-[15px] font-semibold text-[#fff8f5] transition-all hover:bg-[#8f2620] hover:shadow-[0_10px_30px_-12px_rgba(174,47,38,0.7)]"
+            className="group inline-flex h-[54px] items-center justify-center gap-2 rounded-xl bg-primary px-8 text-[15px] font-semibold text-on-brand transition-all hover:bg-primary-deep hover:shadow-[0_10px_30px_-12px_rgba(174,47,38,0.7)]"
           >
             Starta en duell
             <ArrowRight
@@ -307,13 +307,13 @@ export function HeroLanding() {
                 transition={{ type: "spring", stiffness: 300, damping: 24 }}
                 className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6"
               >
-                <Icon className="h-6 w-6 text-[#ae2f26]" aria-hidden />
+                <Icon className="h-6 w-6 text-primary" aria-hidden />
                 <h3 className="mt-5 text-[20px] tracking-tight">{t}</h3>
                 <p className="mt-2.5 flex-1 text-[15px] leading-relaxed text-white/65">{s}</p>
                 <Link
                   to={to}
                   {...(search ? { search } : {})}
-                  className="group mt-6 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+                  className="group mt-6 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-primary hover:underline"
                 >
                   {cta}
                   <ArrowRight
@@ -430,7 +430,7 @@ export function HeroLanding() {
                 <button
                   type="button"
                   onClick={() => setCoachingOpen(true)}
-                  className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-[#fff8f5] transition-all hover:brightness-110"
+                  className="group inline-flex h-[52px] items-center justify-center gap-2 rounded-xl px-7 text-[15px] font-semibold text-on-brand transition-all hover:brightness-110"
                   style={{ background: "#2f6b3c" }}
                 >
                   {coachingPris ? `Kom igång för ${coachingPris}` : "Läs mer om coachning"}
@@ -478,7 +478,7 @@ export function HeroLanding() {
                     </blockquote>
                     <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-4">
                       <span
-                        className="flex h-9 w-9 items-center justify-center rounded-full font-display text-[15px] text-[#fff8f5]"
+                        className="flex h-9 w-9 items-center justify-center rounded-full font-display text-[15px] text-on-brand"
                         style={{ background: OMDOME_FARG[o.namn.charCodeAt(0) % 3] }}
                       >
                         {o.namn[0]}
@@ -575,7 +575,7 @@ export function HeroLanding() {
             <div className="mt-6 text-center">
               <Link
                 to="/leaderboard"
-                className="group inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-[#ae2f26] hover:underline"
+                className="group inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-primary hover:underline"
               >
                 Hela topplistan
                 <ArrowRight
@@ -606,7 +606,7 @@ export function HeroLanding() {
             <Link
               to="/matchmaking"
               search={{ type: "verbal" }}
-              className="group mt-9 inline-flex h-[54px] items-center justify-center gap-2 rounded-xl bg-[#ae2f26] px-9 text-[15px] font-semibold text-[#fff8f5] transition-all hover:bg-[#8f2620] hover:shadow-[0_10px_30px_-12px_rgba(174,47,38,0.7)]"
+              className="group mt-9 inline-flex h-[54px] items-center justify-center gap-2 rounded-xl bg-primary px-9 text-[15px] font-semibold text-on-brand transition-all hover:bg-primary-deep hover:shadow-[0_10px_30px_-12px_rgba(174,47,38,0.7)]"
             >
               Starta en duell
               <ArrowRight

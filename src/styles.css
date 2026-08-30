@@ -91,6 +91,17 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-primary-deep: var(--amber-deep);
+  --color-bark: var(--teal);
+  --color-on-brand: var(--on-brand);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-line: var(--success-line);
+  --color-success-ink: var(--success-ink);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-line: var(--danger-line);
+  --color-danger-ink: var(--danger-ink);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);
   --color-destructive: var(--destructive);
@@ -109,7 +120,11 @@
    aurora gradient (cyan → indigo → fuchsia → amber).
    ================================================================ */
 :root {
-  --radius: 1.25rem;
+  /* Basradie. Var 1.25rem (20px), vilket gjorde rounded-md på en 36px
+     knapp till nästan en tablett och kort till 28px. 0.75rem ger
+     sm 8 / md 10 / lg 12 / xl 16 / 2xl 20 och hela appen blir konsekvent
+     med en rad, i stället för att 300 rounded-* klassas om för hand. */
+  --radius: 0.75rem;
 
   /* Surfaces — pure clean white with whisper of warmth */
   --background: #fbf6ec;
@@ -905,6 +920,9 @@
   --danger-soft: rgba(211, 47, 47, 0.11);
   --danger-line: rgba(211, 47, 47, 0.4);
   --danger-ink: #fff1f0;
+  /* Text på SOLID äpple/bark/löv. Fanns bara som hårdkodad hex på 40
+     ställen; --destructive-foreground har samma värde men fel namn. */
+  --on-brand: #fff8f5;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */

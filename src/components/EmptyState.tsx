@@ -26,8 +26,8 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="mx-auto flex max-w-sm flex-col items-center px-4 py-12 text-center">
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/10">
-        <Icon className="h-6 w-6 text-[#ae2f26]" aria-hidden />
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/25 bg-primary/10">
+        <Icon className="h-6 w-6 text-primary" aria-hidden />
       </div>
       <h3
         className="text-lg font-bold text-foreground"

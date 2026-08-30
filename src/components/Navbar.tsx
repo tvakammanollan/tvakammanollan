@@ -111,7 +111,7 @@ export function Navbar() {
           >
             {/* Samma märke som faviconen och delningsbilden: talet 2,0. */}
             <span
-              className="relative text-[15px] font-black leading-none tracking-[-0.08em] text-[#fff8f5]"
+              className="relative text-[15px] font-black leading-none tracking-[-0.08em] text-on-brand"
               style={{ fontFamily: "var(--font-display)" }}
             >
               2,0
@@ -131,13 +131,13 @@ export function Navbar() {
                 badgens centrum mot en radie på 18 — pricken ligger nu på
                 linjen, inte i luften. */}
             <span
-              className="absolute h-2 w-2 rounded-full border border-[#fbf6ec] bg-emerald-400"
+              className="absolute h-2 w-2 rounded-full border border-background bg-emerald-400"
               style={{ bottom: "1.27px", right: "1.27px" }}
             />
           </span>
           <span
             aria-hidden
-            className="hidden text-[17px] font-bold leading-none tracking-[-0.02em] text-[var(--cream)] transition-colors group-hover:text-[#ae2f26] sm:inline"
+            className="hidden text-[17px] font-bold leading-none tracking-[-0.02em] text-[var(--cream)] transition-colors group-hover:text-primary sm:inline"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Tvåkommanollan
@@ -185,7 +185,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1.5 bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_20px_rgba(174,47,38,0.35)] hover:shadow-[0_0_30px_rgba(174,47,38,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
+                className="gap-1.5 bg-primary text-on-brand font-semibold shadow-[0_0_20px_rgba(174,47,38,0.35)] hover:shadow-[0_0_30px_rgba(174,47,38,0.5)] hover:from-amber-300 hover:to-orange-400 transition-shadow"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -223,7 +223,7 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1 px-3 text-xs bg-[#ae2f26] text-[#fff8f5] font-semibold shadow-[0_0_16px_rgba(174,47,38,0.35)]"
+                className="gap-1 px-3 text-xs bg-primary text-on-brand font-semibold shadow-[0_0_16px_rgba(174,47,38,0.35)]"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3 w-3 animate-spin" />

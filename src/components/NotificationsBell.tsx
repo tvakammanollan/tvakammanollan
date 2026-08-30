@@ -236,8 +236,8 @@ export function NotificationsBell({ userId }: { userId: string }) {
           <Bell className="h-[18px] w-[18px]" />
           {count > 0 && (
             <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ae2f26] opacity-60" />
-              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#ae2f26] px-1 text-[10px] font-bold tabular-nums text-[#fff8f5] shadow-sm">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
+              <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold tabular-nums text-on-brand shadow-sm">
                 {count > 9 ? "9+" : count}
               </span>
             </span>
@@ -274,7 +274,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                     }}
                     className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-white/[0.03]"
                   >
-                    <span className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-[#f2a65a]/15 text-[#f2a65a]">
+                    <span className="inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                       <MessageSquare className="h-4 w-4" />
                     </span>
                     <span className="min-w-0 flex-1">
@@ -324,7 +324,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                           onClick={() =>
                             n.kind === "invite" ? onAcceptInvite(n) : onAcceptFriend(n.id)
                           }
-                          className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ae2f26] text-[#fff8f5] transition hover:brightness-110"
+                          className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-on-brand transition hover:brightness-110"
                         >
                           <Check className="h-4 w-4" />
                         </button>

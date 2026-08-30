@@ -400,7 +400,7 @@ function StatsTab() {
             return (
               <tr
                 key={r.category}
-                className={`border-t border-border ${missing > 0 ? "bg-[#ae2f26]/10" : ""}`}
+                className={`border-t border-border ${missing > 0 ? "bg-primary/10" : ""}`}
               >
                 <td className="px-3 py-2 font-medium">{r.category}</td>
                 <td className="px-3 py-2 text-right tabular-nums">{r.total}</td>

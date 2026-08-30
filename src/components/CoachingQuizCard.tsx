@@ -138,7 +138,7 @@ export function CoachingQuizCard() {
   return (
     <div
       ref={seen}
-      className="rounded-2xl border border-[#2f6b3c]/25 bg-[#2f6b3c]/[0.06] p-5"
+      className="rounded-2xl border border-success/25 bg-success/[0.06] p-5"
       aria-live="polite"
     >
       <div className="flex items-center gap-2">
@@ -161,7 +161,7 @@ export function CoachingQuizCard() {
           <button
             type="button"
             onClick={start}
-            className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#2f6b3c] px-4 py-2.5 text-sm font-semibold text-[#e7f0e3] transition hover:brightness-110"
+            className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-success px-4 py-2.5 text-sm font-semibold text-success-ink transition hover:brightness-110"
           >
             Ta reda på det
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -189,7 +189,7 @@ export function CoachingQuizCard() {
           <ul className="mt-2.5 space-y-1.5">
             {outcome.lines.map((line) => (
               <li key={line} className="flex gap-2 text-[13px] leading-relaxed text-white/70">
-                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#2f6b3c]" aria-hidden />
+                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-success" aria-hidden />
                 <span>{line}</span>
               </li>
             ))}
@@ -210,7 +210,7 @@ export function CoachingQuizCard() {
             onChange={(e) => setName(e.target.value)}
             autoComplete="given-name"
             maxLength={80}
-            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-success"
           />
 
           <label htmlFor="lead-telefon" className="mt-3 block text-xs font-medium text-white/70">
@@ -231,7 +231,7 @@ export function CoachingQuizCard() {
             required
             aria-invalid={!!error}
             aria-describedby={error ? "lead-fel" : undefined}
-            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-success"
           />
 
           <label htmlFor="lead-epost" className="mt-3 block text-xs font-medium text-white/70">
@@ -249,7 +249,7 @@ export function CoachingQuizCard() {
             autoComplete="email"
             placeholder="du@exempel.se"
             maxLength={200}
-            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-success"
           />
 
           <label htmlFor="lead-meddelande" className="mt-3 block text-xs font-medium text-white/70">
@@ -262,7 +262,7 @@ export function CoachingQuizCard() {
             rows={2}
             maxLength={1000}
             placeholder="T.ex. när du skriver provet, eller vad du fastnar på"
-            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-[#2f6b3c]"
+            className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-success"
           />
 
           {/* Ingen kryssruta. Samtycket är själva inskicket: texten står före
@@ -297,7 +297,7 @@ export function CoachingQuizCard() {
             type="submit"
             disabled={pending}
             aria-busy={pending}
-            className="mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#2f6b3c] px-4 py-2.5 text-sm font-semibold text-[#e7f0e3] transition hover:brightness-110 disabled:opacity-60"
+            className="mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-success px-4 py-2.5 text-sm font-semibold text-success-ink transition hover:brightness-110 disabled:opacity-60"
           >
             {pending ? (
               <>
@@ -316,7 +316,7 @@ export function CoachingQuizCard() {
 
       {phase === "done" && (
         <m.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-2">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2f6b3c]/15 text-[#2f6b3c]">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/15 text-success">
             <Sparkles className="h-5 w-5" />
           </span>
           <h3
@@ -373,8 +373,8 @@ function QuestionStep({
               onClick={() => onPick(index, opt.value)}
               className={`w-full rounded-lg border px-3 py-2.5 text-left text-[13px] leading-snug transition-colors ${
                 active
-                  ? "border-[#2f6b3c] bg-[#2f6b3c]/12 font-medium text-[var(--cream)]"
-                  : "border-white/12 bg-white/[0.03] text-white/75 hover:border-[#2f6b3c]/50 hover:text-[var(--cream)]"
+                  ? "border-success bg-success/12 font-medium text-[var(--cream)]"
+                  : "border-white/12 bg-white/[0.03] text-white/75 hover:border-success/50 hover:text-[var(--cream)]"
               }`}
             >
               {opt.label}

@@ -50,10 +50,10 @@ export function AchievementCelebration({
       aria-label="Ny utmärkelse"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-[#ae2f26]/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
+        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ae2f26]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
           {many ? `${items.length} nya utmärkelser` : "Ny utmärkelse"}
         </p>
         <h2
@@ -67,9 +67,9 @@ export function AchievementCelebration({
           {items.map((a) => (
             <li
               key={a.id}
-              className="flex items-center gap-3 rounded-2xl border border-[#ae2f26]/20 bg-[#ae2f26]/[0.07] p-3 text-left"
+              className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-primary/[0.07] p-3 text-left"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#ae2f26]/12 ring-1 ring-[#ae2f26]/40">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/12 ring-1 ring-primary/40">
                 <AchievementIcon
                   id={a.id}
                   className="h-6 w-6"
@@ -86,7 +86,7 @@ export function AchievementCelebration({
 
         <Button
           onClick={onClose}
-          className="mt-6 w-full bg-[#ae2f26] font-semibold text-[#fff8f5] hover:bg-[#ae2f26]/90"
+          className="mt-6 w-full bg-primary font-semibold text-on-brand hover:bg-primary/90"
         >
           Fortsätt
         </Button>

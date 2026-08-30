@@ -305,6 +305,37 @@ skarpa data: en `waiting`-rad med frågor gav löpande klocka och
 - En `finished` match skickas till resultatsidan i stället för att renderas som
   ett spelbart bräde med noll på klockan.
 
+#### Revansch och inbjudningar når bara den som är online (2026-08-29)
+
+`requestRematch` och `inviteFriendToMatch` skapar en `waiting`-match plus en
+rad i `match_invites` med **30 minuters `expires_at`** (default på tabellen).
+Motståndaren ser den via `FriendInviteListener` (realtime, alltså bara med
+appen öppen just då) eller notisklockan, som filtrerar på `expires_at`. Går
+tiden ut försvinner inbjudan tyst ur klockan, raden står kvar som `pending`,
+och matchen står kvar som `waiting` för alltid.
+
+- **Fönstret är kort med flit.** En match är fem minuter och spelas live; en
+  inbjudan som accepteras i morgon ger ett bräde ingen sitter vid. Förläng det
+  inte utan att först lösa vad som händer när den som bjöd in inte är där.
+- **Väntskärmen var buggen, inte mekaniken.** Revansch fungerade — 40 av 50
+  RV-matcher är färdigspelade — men den som klickade landade på en skärm som
+  sa "matchen startar automatiskt när din vän accepterar" och inget mer: inga
+  knappar, ingen nedräkning, ingen ändring när inbjudan gick ut. Den ser
+  likadan ut efter en halvtimme som efter en sekund, vilket är precis så en
+  fungerande funktion känns trasig. `WaitingForOpponent` säger nu vem man
+  väntar på, hur länge inbjudan gäller, att man får lämna sidan, och vad som
+  hände när tiden gick ut.
+- **`cancelMatchInvite` raderar matchraden, den markerar den inte.**
+  `matches.status` tillåter bara `waiting|active|finished`, och `finished` på
+  en match som aldrig spelades hade lagt en spökmatch i historiken och
+  statistiken. Raden är säker att ta bort bara för att den är `waiting` —
+  `match_questions` skrivs först när någon accepterar. Hann motståndaren
+  acceptera svarar funktionen `started: true` och rör ingenting.
+- **Ingenting städar utgångna inbjudningar.** De står kvar som `pending` (21
+  av 22 vid mätningen 2026-08-29). Det är kosmetiskt — allt som läser dem
+  filtrerar på `expires_at` — men räkna inte `status='pending'` som "väntande
+  inbjudningar" i någon statistik, det talet är nästan bara skräp.
+
 #### Oavgjort finns inte (2026-08-21)
 
 Vid lika poäng vinner **den som lämnade in först**. Regeln bor i

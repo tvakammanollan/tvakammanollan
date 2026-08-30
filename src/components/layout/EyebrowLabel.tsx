@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
 type Tone = "teal" | "amber" | "leaf" | "muted";
 
 const toneClass: Record<Tone, string> = {
-  teal: "text-[#7a5236]",
-  amber: "text-[#ae2f26]",
-  leaf: "text-[#2f6b3c]",
+  teal: "text-bark",
+  amber: "text-primary",
+  leaf: "text-success",
   muted: "text-white/60",
 };
 

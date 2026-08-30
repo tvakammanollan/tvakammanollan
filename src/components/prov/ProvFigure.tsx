@@ -123,7 +123,7 @@ export function ProvFigure({
                 onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
                 disabled={zoom <= 1}
                 aria-label="Zooma ut"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomOut className="h-5 w-5" aria-hidden />
               </button>
@@ -132,7 +132,7 @@ export function ProvFigure({
                 onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
                 disabled={zoom >= 4}
                 aria-label="Zooma in"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomIn className="h-5 w-5" aria-hidden />
               </button>
@@ -140,7 +140,7 @@ export function ProvFigure({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Stäng figuren"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-[#fff8f5] backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)]"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)]"
               >
                 <X className="h-5 w-5" aria-hidden />
               </button>

@@ -104,7 +104,7 @@ function DatumPage() {
           className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <CalendarDays className="h-5 w-5 text-[#ae2f26]" />
+          <CalendarDays className="h-5 w-5 text-primary" />
           Kommande provdatum
         </h2>
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -119,7 +119,7 @@ function DatumPage() {
                   {hasRegistrationWindow(d) && <> · Anmälan {registrationPeriodText(d)}</>}
                 </div>
               </div>
-              <span className="shrink-0 rounded-full border border-[#ae2f26]/25 bg-[#ae2f26]/10 px-3 py-1 text-xs font-semibold text-[#ae2f26]">
+              <span className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                 {d.label}
               </span>
             </li>
@@ -137,7 +137,7 @@ function DatumPage() {
           className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Clock className="h-5 w-5 text-[#ae2f26]" />
+          <Clock className="h-5 w-5 text-primary" />
           Så ser provdagen ut
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
@@ -148,7 +148,7 @@ function DatumPage() {
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
           {PROVDAGEN.map((rad) => (
             <li key={rad.tid} className="flex items-baseline gap-4 px-5 py-3">
-              <span className="w-14 shrink-0 text-sm font-semibold tabular-nums text-[#ae2f26]">
+              <span className="w-14 shrink-0 text-sm font-semibold tabular-nums text-primary">
                 {rad.tid}
               </span>
               <span className="text-[15px] text-white/70">{rad.vad}</span>
@@ -174,7 +174,7 @@ function DatumPage() {
             href={HP_REGISTRATION_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-[#ae2f26] hover:underline"
+            className="font-medium text-primary hover:underline"
           >
             hogskoleprov.nu
           </a>{" "}
@@ -190,7 +190,7 @@ function DatumPage() {
             href="https://www.studera.nu/hogskoleprov/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-[#ae2f26] hover:underline"
+            className="font-medium text-primary hover:underline"
           >
             UHR (studera.nu)
           </a>
@@ -199,7 +199,7 @@ function DatumPage() {
       </section>
 
       {/* CTA: börja plugga */}
-      <section className="mt-12 rounded-2xl border border-[#ae2f26]/25 bg-[#ae2f26]/[0.06] p-6 sm:p-8">
+      <section className="mt-12 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">
         <h2
           className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -213,7 +213,7 @@ function DatumPage() {
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link
             to="/gamla-prov"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#ae2f26] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
             <ArrowRight className="h-4 w-4" />
@@ -222,13 +222,13 @@ function DatumPage() {
             to="/ord"
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             params={{} as any}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             Träna ord
           </Link>
           <Link
             to="/guider"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-[#ae2f26]/50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             <ScrollText className="h-4 w-4" />
             Guider per delprov

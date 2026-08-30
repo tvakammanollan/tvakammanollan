@@ -311,7 +311,7 @@ export function CoachingModal({
         {steg === "erbjudande" ? (
           <>
             <DialogHeader>
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-[#ae2f26]/15 text-[#ae2f26]">
+              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
                 <GraduationCap className="h-6 w-6" />
               </div>
               <DialogTitle className="text-center text-xl">
@@ -333,7 +333,7 @@ export function CoachingModal({
                   : "Vi hör av oss inom 24 timmar efter köpet",
               ].map((rad) => (
                 <li key={rad} className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#2f6b3c]" aria-hidden />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
                   <span>{rad}</span>
                 </li>
               ))}
@@ -355,14 +355,14 @@ export function CoachingModal({
                     vid att allt är månadsvis. Raden härleds ur priset i Stripe
                     och uteblir om det någonsin blir återkommande. */}
                 {termsLabel && (
-                  <p className="mt-1.5 text-center text-[13px] font-medium text-[#2f6b3c]">
+                  <p className="mt-1.5 text-center text-[13px] font-medium text-success">
                     {termsLabel}
                   </p>
                 )}
                 <Button
                   onClick={() => void (offer.schedulingEnabled ? öppnaTidsval() : köpDirekt())}
                   disabled={arbetar}
-                  className="mt-3 min-h-[44px] w-full bg-[#ae2f26] py-6 text-[15px] text-[#fff8f5] hover:bg-[#8f2620]"
+                  className="mt-3 min-h-[44px] w-full bg-primary py-6 text-[15px] text-on-brand hover:bg-primary-deep"
                 >
                   {arbetar && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {arbetar
@@ -386,7 +386,7 @@ export function CoachingModal({
                 <Link
                   to="/kontakt"
                   onClick={() => onOpenChange(false)}
-                  className="mt-3 inline-flex items-center justify-center rounded-xl bg-[#2f6b3c] px-5 py-2.5 text-sm font-semibold text-[#fff8f5] transition hover:brightness-110"
+                  className="mt-3 inline-flex items-center justify-center rounded-xl bg-success px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
                 >
                   Hör av dig så löser vi det
                 </Link>
@@ -397,7 +397,7 @@ export function CoachingModal({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-lg">
-                <CalendarClock className="h-5 w-5 text-[#ae2f26]" aria-hidden />
+                <CalendarClock className="h-5 w-5 text-primary" aria-hidden />
                 Välj en tid
               </DialogTitle>
               <DialogDescription>
@@ -424,13 +424,13 @@ export function CoachingModal({
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2 text-lg">
-                <Lock className="h-5 w-5 text-[#ae2f26]" aria-hidden />
+                <Lock className="h-5 w-5 text-primary" aria-hidden />
                 Betala
               </DialogTitle>
               <DialogDescription>
                 {bokadTid ? (
                   <span className="flex items-center gap-1.5">
-                    <CalendarCheck2 className="h-4 w-4 shrink-0 text-[#2f6b3c]" aria-hidden />
+                    <CalendarCheck2 className="h-4 w-4 shrink-0 text-success" aria-hidden />
                     Din tid {formatDateLong(bokadTid)} kl {formatTime(bokadTid)} är reserverad medan
                     du betalar.
                   </span>
@@ -457,7 +457,7 @@ export function CoachingModal({
                       hanteradBokning.current = null;
                       void slutför(inviteeUri);
                     }}
-                    className="mt-5 min-h-[44px] bg-[#ae2f26] px-6 py-5 text-[15px] text-[#fff8f5] hover:bg-[#8f2620]"
+                    className="mt-5 min-h-[44px] bg-primary px-6 py-5 text-[15px] text-on-brand hover:bg-primary-deep"
                   >
                     Försök igen
                   </Button>
@@ -478,7 +478,7 @@ export function CoachingModal({
               />
             ) : (
               <div className="py-12 text-center" aria-busy="true">
-                <Loader2 className="mx-auto h-7 w-7 animate-spin text-[#ae2f26]" />
+                <Loader2 className="mx-auto h-7 w-7 animate-spin text-primary" />
                 <p className="mt-4 text-sm text-white/60">
                   {requestId ? "Tiden är bokad, öppnar kassan…" : "Öppnar kassan…"}
                 </p>
