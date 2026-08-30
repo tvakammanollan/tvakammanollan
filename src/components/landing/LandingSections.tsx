@@ -41,18 +41,25 @@ const BEVIS = [
 export function BevisRemsan() {
   return (
     <section className="border-b border-white/10 bg-secondary" aria-label="Innehållet i siffror">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-5 px-4 py-6 sm:grid-cols-3 lg:grid-cols-6">
-        {BEVIS.map((b, i) => (
-          <div
-            key={b.k}
-            className={`px-4 ${i % 2 === 0 ? "border-l-0 pl-0" : "border-l border-white/10"} sm:border-l sm:border-white/10 sm:pl-4 ${i % 3 === 0 ? "sm:border-l-0 sm:pl-0" : ""} lg:border-l lg:border-white/10 lg:pl-4 ${i === 0 ? "lg:border-l-0 lg:pl-0" : ""}`}
-          >
-            <div className="font-mono text-[24px] font-medium leading-none tabular-nums tracking-tight sm:text-[28px]">
-              {b.v}
+      {/* Skiljelinjerna är GAPEN, inte kantlinjer per cell.
+          Rutnätet har 1px gap och linjefärg som botten; cellerna har
+          sektionens egen botten och täcker allt utom gapen. Första
+          versionen räknade i stället ut kantlinjer ur `index` med en kedja
+          nästlade ternärer (`i % 2`, `i % 3`, `i === 0`) eftersom "först på
+          raden" är olika vid 2, 3 och 6 kolumner. Den var oläsbar och hade
+          gett fel linjer i samma sekund någon la till ett sjunde tal.
+          Så här stämmer det vid varje brytpunkt utan att någon räknar. */}
+      <div className="mx-auto max-w-6xl px-4 py-6">
+        <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-3 lg:grid-cols-6">
+          {BEVIS.map((b) => (
+            <div key={b.k} className="bg-secondary px-4 py-3">
+              <div className="font-mono text-[24px] font-medium leading-none tabular-nums tracking-tight sm:text-[28px]">
+                {b.v}
+              </div>
+              <div className="mt-2 text-[12.5px] leading-tight text-white/70">{b.k}</div>
             </div>
-            <div className="mt-2 text-[12.5px] leading-tight text-white/70">{b.k}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -63,16 +70,30 @@ export function BevisRemsan() {
 /**
  * Signaturen: provets egen skala 0,6–2,0 som en linjal.
  *
- * Markörernas flaggor klamras inom linjen medan stjälken fortsätter peka
- * på sitt riktiga värde. Utan klampningen sticker den högra flaggan ut ur
- * viewporten på telefon och ger hela sidan en sidoscroll. De två ligger på
- * var sin våning (olika stjälkhöjd) eftersom de annars lägger sig ovanpå
- * varandra så fort linjen blir smalare än flaggorna.
+ * ALLT SOM SITTER PÅ LINJEN ÄR CENTRERAT PÅ SIN POSITION, alltså sticker
+ * det ut med halva sin bredd i ändarna. Första versionen löste det med
+ * `overflow-hidden` på behållaren, vilket inte flyttar in något utan bara
+ * KLIPPER det: `0,6` kapades 12px och `2,0` 10px på varje skärmbredd,
+ * desktop inkluderad, och den högra markören 16px till vid 380px.
+ *
+ * Lösningen är sidopadding på behållaren i stället för klippning. Linjen
+ * blir 16px kortare i vardera änden, vilket är precis det utrymme en
+ * centrerad ändpunktsetikett behöver (halva "0,6" är ~12px).
+ *
+ * Av samma skäl bär markörerna bara sitt VÄRDE på linjen (~30px breda,
+ * ryms överallt) medan orden står i teckenförklaringen under. Det tog
+ * också bort behovet av två stjälkhöjder: "1,15" och "1,75" ligger 35
+ * procentenheter isär och kan inte kollidera.
  */
+const MARKORER = [
+  { pos: 43, ton: "apple" as const, varde: 1.15, ord: "Efter tolv matcher" },
+  { pos: 78, ton: "bark" as const, varde: 1.75, ord: "Högst på sajten" },
+];
+
 function Linjal() {
   const streck = Array.from({ length: 15 }, (_, i) => 0.6 + i * 0.1);
   return (
-    <div className="relative pb-10 pt-[104px]">
+    <div className="relative px-4 pb-10 pt-16">
       <div className="relative h-[2px] bg-foreground">
         {streck.map((v) => {
           const stor = Math.round(v * 10) % 2 === 0;
@@ -90,62 +111,74 @@ function Linjal() {
             </span>
           );
         })}
-        <Markor pos={78} ton="bark" hog etikett="Högst på sajten · 1,75" />
-        <Markor pos={43} ton="apple" etikett="Efter tolv matcher · 1,15" />
+        {MARKORER.map((m) => (
+          <Markor key={m.ord} pos={m.pos} ton={m.ton} varde={m.varde} />
+        ))}
       </div>
     </div>
   );
 }
 
-function Markor({
-  pos,
-  etikett,
-  ton,
-  hog = false,
-}: {
-  pos: number;
-  etikett: string;
-  ton: "apple" | "bark";
-  hog?: boolean;
-}) {
+function Markor({ pos, varde, ton }: { pos: number; varde: number; ton: "apple" | "bark" }) {
   const farg = ton === "apple" ? "bg-primary" : "bg-bark";
   return (
     <span
       className="absolute bottom-[calc(100%+6px)] -translate-x-1/2 whitespace-nowrap text-center"
-      style={{ left: `${pos}%`, maxWidth: "min(100%, 15rem)" }}
+      style={{ left: `${pos}%` }}
     >
       <span
-        className={`inline-block rounded-sm px-2.5 py-1 font-mono text-[12.5px] font-medium text-on-brand ${farg}`}
+        className={`inline-block rounded-sm px-2 py-1 font-mono text-[12.5px] font-medium tabular-nums text-on-brand ${farg}`}
       >
-        {etikett}
+        {formatDecimal(varde, 2)}
       </span>
-      <span className={`mx-auto block w-[2px] ${farg} ${hog ? "h-[54px]" : "h-[18px]"}`} />
+      <span className={`mx-auto block h-[18px] w-[2px] ${farg}`} />
     </span>
+  );
+}
+
+/** Orden till markörerna. På linjen får bara siffran plats. */
+function Teckenforklaring() {
+  return (
+    <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+      {MARKORER.map((m) => (
+        <span key={m.ord} className="inline-flex items-center gap-2 text-[14px] text-white/70">
+          <span
+            className={`h-2.5 w-2.5 shrink-0 rounded-sm ${m.ton === "apple" ? "bg-primary" : "bg-bark"}`}
+            aria-hidden
+          />
+          {m.ord}
+          <b className="font-mono font-medium tabular-nums text-foreground">
+            {formatDecimal(m.varde, 2)}
+          </b>
+        </span>
+      ))}
+    </div>
   );
 }
 
 export function EloSkalan() {
   return (
     <section id="skalan" className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-          <Reveal>
-            <h2 className="max-w-[16ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-              Du får veta var du står nu, inte på provdagen.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Rättar du ett prov själv får du veta vad du kunde den dagen. Din ELO mäts mot andra
-              som pluggar samma sak, flyttas efter varje match, och går att läsa av direkt på
-              provets egen skala.
-            </p>
-          </Reveal>
-        </div>
+      {/* Sidans tes får mest luft och en egen rubriksättning: bred,
+          enspaltig, större. De andra sektionerna ska inte se ut så här. */}
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
+        <Reveal>
+          <h2 className="max-w-[20ch] text-[34px] leading-[1.05] tracking-[-0.04em] sm:text-[52px]">
+            Du får veta var du står nu, inte på provdagen.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-white/70">
+            Rättar du ett prov själv får du veta vad du kunde den dagen. Din ELO mäts mot andra som
+            pluggar samma sak, flyttas efter varje match, och går att läsa av direkt på provets egen
+            skala.
+          </p>
+        </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="overflow-hidden">
+          <div>
             <Linjal />
+            <Teckenforklaring />
           </div>
         </Reveal>
 
@@ -168,6 +201,24 @@ export function EloSkalan() {
   );
 }
 
+/**
+ * Kompakt rubrik för de datatunga sektionerna.
+ *
+ * Delproven och topplistan är tabeller. En 42px-rubrik med en egen
+ * lede-spalt bredvid ger dem samma tyngd som sidans tes, vilket är fel
+ * viktning och dessutom gjorde att fem sektioner i rad såg identiska ut.
+ * Här ligger rubrik och lede på samma baslinje, mindre och tätare, så att
+ * datan under är det som väger.
+ */
+function TatRubrik({ titel, lede }: { titel: string; lede: string }) {
+  return (
+    <div className="mb-6 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-b border-white/10 pb-4">
+      <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">{titel}</h2>
+      <p className="max-w-[52ch] text-[15px] leading-relaxed text-white/70">{lede}</p>
+    </div>
+  );
+}
+
 /* -------------------------------------------------------------- delproven */
 
 const DELPROV = [
@@ -184,20 +235,11 @@ const DELPROV = [
 export function Delproven() {
   return (
     <section id="delprov" className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-          <Reveal>
-            <h2 className="max-w-[16ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-              Åtta delprov, samma bank som provet.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Träna ett i taget, eller kör ett helt provpass med klockan igång. Varje uppgift kommer
-              ur ett publicerat prov och har sitt eget facit.
-            </p>
-          </Reveal>
-        </div>
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <TatRubrik
+          titel="Åtta delprov, samma bank som provet."
+          lede="Träna ett i taget, eller kör ett helt provpass med klockan igång. Varje uppgift kommer ur ett publicerat prov och har sitt eget facit."
+        />
 
         <Reveal delay={0.1}>
           <div className="overflow-x-auto">
@@ -308,7 +350,10 @@ const ARKIVFAKTA = [
 
 export function Arkivet() {
   return (
-    <section id="arkivet" className="border-b border-white/10">
+    // Arkivet ligger på nedsänkt yta. Det är sidans enda sektion som byter
+    // botten, och den bryter den vertikala rytmen mitt på sidan utan att
+    // layouten behöver bli en annan.
+    <section id="arkivet" className="border-b border-white/10 bg-secondary">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
           <Reveal>
@@ -326,7 +371,7 @@ export function Arkivet() {
         </div>
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-16">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div className="flex flex-wrap gap-1.5">
               {TERMINER.map((t) => (
                 <Link
@@ -372,23 +417,19 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
 
   return (
     <section id="topplistan" className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-          <Reveal>
-            <h2 className="text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-              Högst just nu.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Verbal ELO, uppdaterad i samma sekund en match tar slut. Du matchas mot någon nära din
-              egen nivå, inte mot den som ligger överst.
-            </p>
-          </Reveal>
-        </div>
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <TatRubrik
+          titel="Högst just nu."
+          lede="Verbal ELO, uppdaterad i samma sekund en match tar slut. Du matchas mot någon nära din egen nivå, inte mot den som ligger överst."
+        />
 
+        {/* `min-w-0` på grid-itemet är inte kosmetik: ett grid-item har
+            `min-width: auto` och kan därför inte krympa under sitt innehåll.
+            Tabellen har `min-w-[420px]`, så utan detta växte den scrollande
+            behållaren till 420px i en 380px viewport i stället för att
+            scrolla, och gav hela sidan 56px sidoscroll. */}
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-16">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[420px]">
                 <thead>

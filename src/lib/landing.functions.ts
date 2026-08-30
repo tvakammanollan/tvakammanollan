@@ -4,6 +4,10 @@ import { isRankable } from "./username";
 import { GAMLA_PROV_START_ACTION } from "./usage-actions";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { limits } from "./rate-limit";
+import { dugligaDemofragor, valjDemofragor, type DemoQuestion } from "./landing-demo";
+
+// Återexporteras: komponenterna importerar typen härifrån sedan tidigare.
+export type { DemoQuestion };
 
 export interface RecentMatch {
   id: string;
@@ -221,13 +225,6 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
   },
 );
 
-/** En ORD-uppgift att faktiskt svara på i hjälten. */
-export interface DemoQuestion {
-  ord: string;
-  alternativ: { id: string; text: string }[];
-  ratt: string;
-}
-
 /**
  * Frågorna i hjälten är riktiga, inte påhittade.
  *
@@ -262,30 +259,11 @@ export const fetchLandingDemoQuestions = createServerFn({ method: "GET" }).handl
       .limit(400);
     if (error || !data) return demoCache?.fragor ?? [];
 
-    const dugliga = data.filter((r) => {
-      const o = r.options as { id: string; text: string }[] | null;
-      const ord = r.question_text as string;
-      return (
-        Array.isArray(o) &&
-        o.length === 5 &&
-        o.every((x) => x?.text && x.text.length <= 34) &&
-        // affix som "karne-" och "mort-" säger inget om produkten
-        !/^-|-$/.test(ord) &&
-        ord.length <= 24
-      );
-    });
-
-    // Roteras per timme så sidan inte visar samma ord för evigt, men
-    // deterministiskt inom timmen så SSR och hydrering är överens.
-    const seed = Math.floor(Date.now() / DEMO_TTL_MS);
-    const fragor = Array.from({ length: Math.min(4, dugliga.length) }, (_, i) => {
-      const r = dugliga[(seed * 7 + i * 53) % dugliga.length];
-      return {
-        ord: r.question_text as string,
-        alternativ: r.options as { id: string; text: string }[],
-        ratt: r.correct_answer as string,
-      };
-    });
+    // Urvalet är rent och testat i `landing-demo.ts`. Fröet roterar per
+    // timme så sidan inte visar samma ord för evigt, men är konstant inom
+    // timmen så att SSR och hydrering är överens om vilken fråga som visas.
+    const dugliga = dugligaDemofragor(data as never);
+    const fragor = valjDemofragor(dugliga, Math.floor(Date.now() / DEMO_TTL_MS));
 
     demoCache = { vid: Date.now(), fragor };
     return fragor;
