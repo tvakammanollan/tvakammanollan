@@ -276,7 +276,7 @@ export function LandingHero({
             // Databasen svarade inte. Hellre ingen ruta än en tom ruta.
             <div className="rounded-xl border border-white/10 bg-card p-6">
               <p className="text-[15px] text-white/70">
-                Åtta delprov, 8 761 ord och 30 hela prov med facit. Börja var du vill.
+                Åtta delprov, 10 000+ ord och 30 hela prov med facit. Börja var du vill.
               </p>
               <Link
                 to="/ord"

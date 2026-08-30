@@ -11,20 +11,26 @@ import { OMDOMEN, SNITTBETYG } from "@/data/omdomen";
 /**
  * Landningssidans sektioner nedanför hjälten.
  *
- * Varje siffra här är kontrollerad mot databasen och provarkivet
- * 2026-08-30. Skriv aldrig ett tal här som inte går att räkna fram:
- * ordbanken 8 761 (questions där category='ORD'), arkivet 4 800
- * (src/data/prov, 30 × 160), 120 provpass, 8 delprov.
+ * Siffrorna är kontrollerade mot databasen och provarkivet 2026-08-30:
+ * arkivet 4 800 (src/data/prov, 30 × 160), 120 provpass, 8 delprov.
+ *
+ * ORDBANKEN ÄR 8 761 RADER i databasen (questions där category='ORD',
+ * alla med definition). Sidan skriver ändå "10 000+", vilket är Niklas
+ * beslut 2026-08-30 och gäller hela sajten: /ord, dashboarden, guiderna,
+ * FAQ:n, llms.txt och JSON-LD i index.tsx säger alla 10 000+ sedan
+ * tidigare. Landningen var den enda ytan som sa något annat. Ändra inte
+ * tillbaka till 8 761 här utan att ändra alla de andra samtidigt, annars
+ * säger sajten två olika saker om samma sak.
  *
  * Observera skillnaden mellan ordbanken och arkivets ORD-del: arkivet har
- * 600 ORD-uppgifter som en del av sina 4 800, medan ordbanken är 8 761
- * fristående uppslag. Att skriva 8 761 i delprovstabellen vore alltså fel.
+ * 600 ORD-uppgifter som en del av sina 4 800. Att skriva ordbankens tal i
+ * delprovstabellen vore alltså fel oavsett vilket tal som används.
  */
 
 /* ---------------------------------------------------------------- remsan */
 
 const BEVIS = [
-  { v: "8 761", k: "ord med förklaring" },
+  { v: "10 000+", k: "ord med förklaring" },
   { v: "4 800", k: "uppgifter i arkivet" },
   { v: "30", k: "provtillfällen" },
   { v: "120", k: "provpass med facit" },
@@ -248,8 +254,8 @@ export function Delproven() {
         </Reveal>
 
         <p className="mt-5 max-w-[62ch] text-[13.5px] text-white/55">
-          Ordträningen har utöver arkivets 600 en egen bank på {formatInt(8761)} uppslag, varje ord
-          med förklaring, exempelmening och de uppgifter det kommit ur.{" "}
+          Ordträningen har utöver arkivets 600 en egen bank på 10 000+ uppslag, varje ord med
+          förklaring, exempelmening och de uppgifter det kommit ur.{" "}
           <Link to="/ordlista" className="font-bold text-primary hover:underline">
             Bläddra i ordlistan
           </Link>
@@ -480,23 +486,43 @@ export function Omdomen() {
           </Reveal>
         </div>
 
-        {/* Ingen karusell. Sex citat, tätt, alla synliga på en gång. */}
-        <div className="gap-x-9 sm:columns-2">
+        {/* Tre i taget, resten genom att skrolla i sidled.
+            Ordningen i OMDOMEN är inte godtycklig: Aron, Gustav och Niklas
+            står först därför att de är de tre som har ett resultat att peka
+            på (2,0, 1,9 och 1,95), och det är dem förstaintrycket ska bäras
+            av. De övriga tre är korta och når man med en swipe.
+
+            Native scroll med snap, inte en karusell med pilar och prickar.
+            Skälet är att karusellmaskineriet vägde mer än innehållet: sex
+            citat varav två är ett ord långa behöver ingen kontrollpanel.
+            Behållaren har egen overflow-x så sidan aldrig scrollar i sidled. */}
+        <div
+          className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 [scrollbar-width:thin]"
+          role="group"
+          aria-label="Omdömen, skrolla i sidled för fler"
+        >
           {OMDOMEN.map((o, i) => (
-            <Reveal key={o.namn} delay={(i % 3) * 0.05}>
-              <figure className="mb-6 break-inside-avoid border-b border-white/8 pb-6">
-                <blockquote className="text-[16.5px] leading-relaxed">{o.citat}</blockquote>
-                <figcaption className="mt-3 text-[13.5px] text-white/70">
-                  <b className="font-bold text-foreground">{o.namn}</b>
-                  {[o.roll, o.alder, o.resultat ? `${o.resultat} på provet` : null]
-                    .filter(Boolean)
-                    .map((d) => `, ${d}`)
-                    .join("")}
-                </figcaption>
-              </figure>
-            </Reveal>
+            <figure
+              key={o.namn}
+              className="flex shrink-0 snap-start basis-[86%] flex-col rounded-xl border border-white/10 bg-card p-6 sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)]"
+            >
+              <Stjarnor betyg={o.betyg ?? 5} />
+              <blockquote className="mt-4 flex-1 text-[16.5px] leading-relaxed">
+                {o.citat}
+              </blockquote>
+              <figcaption className="mt-5 border-t border-white/8 pt-4 text-[13.5px] text-white/70">
+                <b className="font-bold text-foreground">{o.namn}</b>
+                {[o.roll, o.alder, o.resultat ? `${o.resultat} på provet` : null]
+                  .filter(Boolean)
+                  .map((d) => `, ${d}`)
+                  .join("")}
+              </figcaption>
+            </figure>
           ))}
         </div>
+        <p className="mt-4 text-[13px] text-white/55">
+          Skrolla i sidled för de {OMDOMEN.length - 3} övriga.
+        </p>
       </div>
     </section>
   );
