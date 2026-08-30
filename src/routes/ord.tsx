@@ -200,7 +200,10 @@ function DefinitionBlock({
       >
         <div className="overflow-hidden">
           <div className="mt-2 rounded-lg border-l-4 border-primary/60 bg-primary/[0.07] p-3">
-            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+            {/* Ingen versalisering: definitionSourceLabel() skriver ut
+                kvalifikationer med ordet i (`– om "sälla"`), och ORD-ord står
+                gement överallt annars — ordText() ser till det. */}
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-primary">
               <BookOpen className="h-3.5 w-3.5" />
               {definitionSourceLabel(source)}
             </div>

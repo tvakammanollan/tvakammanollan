@@ -748,6 +748,16 @@ Tre adresser: `/ordlista` (nav), `/ordlista/bokstav/<b>` (register) och
   pekar sitemapen på en rad och länkarna på en annan beroende på svarsordning.
 - **Visningsformen går genom `ordText()`.** 953 rader står versalt i databasen
   ("VAKANT", "VALÖR"); en rubrik som skriker läses som ett fel.
+- **Och då får `uppercase` i CSS inte lägga tillbaka det.** Uppslagssidan hade
+  etiketten "Vad betyder {ord}?" satt som versaliserad eyebrow, alltså
+  "VAD BETYDER SKRODERA?" en rad under h1:ans "skrodera" — samma ord i två
+  skepnader på samma skärm, och `ordText()` såg helt korrekt ut i koden.
+  Regeln är: **ett ORD-ord renderas aldrig inuti ett element med `uppercase`.**
+  Det gäller också källraden, eftersom `definitionSourceLabel()` skriver ut
+  kvalifikationer som bär ordet (`– om "sälla"`, `rättstavat "sälla"`, 54
+  rader) — därför är den gemen både på `/ordlista/<ord>` och i `/ord`.
+  Kvar i versaler är bara etiketter som inte är ord ur beståndet
+  (ordklassen i `/ord`, delprovsbrickorna).
 - **Länkvägarna är tre, och de behövs alla.** Ordbokens JFR-ord räcker bara till
   var sjätte sida (15,5 %), så alternativen i uppgiften länkas också när de
   själva är uppslag, och varje sida bär grannarna i bokstavsordning. Kedjan är

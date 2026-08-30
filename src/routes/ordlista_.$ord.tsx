@@ -147,8 +147,16 @@ function OrdlistaEntryPage() {
           svar på frågan. Ordbokens rad står under, kort och källhänvisad:
           hela artikeln hör hemma hos den som äger den, och länken går dit. */}
       <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-        <h2 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
-          <BookOpen className="h-3.5 w-3.5" />
+        {/* Rubriken bär uppslagsordet och får därför INTE versaliseras.
+            `ordText()` skriver ordet gement i datalagret av just det skälet,
+            och ett `uppercase` i CSS lägger tillbaka precis det den tog bort:
+            "VAD BETYDER SKRODERA?" en rad under h1:ans "skrodera". Den följer
+            i stället sidans övriga sektionsrubriker. */}
+        <h2
+          className="flex items-center gap-1.5 text-[18px] font-bold text-[var(--cream)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          <BookOpen className="h-4 w-4 text-primary" />
           Vad betyder {word}?
         </h2>
 
@@ -163,7 +171,10 @@ function OrdlistaEntryPage() {
           <p className="mt-3 text-[15px] leading-[1.7] text-white/70">&rdquo;{sense}&rdquo;</p>
         )}
 
-        <p className="mt-4 text-[11px] uppercase tracking-wide text-white/45">
+        {/* Källraden är också gemen: `definitionSourceLabel()` skriver ut
+            kvalifikationer med ordet i (`– om "sälla"`, `rättstavat "sälla"`,
+            54 rader), och versaler hade skrikit ut ordet där också. */}
+        <p className="mt-4 text-[11px] tracking-wide text-white/45">
           {sourceUrl ? (
             <a
               href={sourceUrl}
