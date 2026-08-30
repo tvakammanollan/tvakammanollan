@@ -1,10 +1,12 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useAuth, useHasStoredSession } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
-import { HeroLanding, OMDOMEN, SNITTBETYG } from "@/components/HeroLanding";
+import { HeroLanding } from "@/components/HeroLanding";
+import { OMDOMEN, SNITTBETYG } from "@/data/omdomen";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { pageMeta, pageLinks, jsonLdScript } from "@/lib/page-meta";
 import { fetchWordOfTheDay } from "@/lib/word-practice.functions";
+import { getLandingStats, fetchLandingDemoQuestions } from "@/lib/landing.functions";
 
 export const Route = createFileRoute("/")({
   // Dagens ord hämtas i loadern och inte i kortet. Skälet är laddningsordning:
@@ -15,7 +17,21 @@ export const Route = createFileRoute("/")({
   //
   // Kostnaden är noll extra databasanrop i praktiken: serverfunktionen cachar
   // dygnets ord per isolat, eftersom svaret ändå är samma för alla till midnatt.
-  loader: async () => ({ wotd: await fetchWordOfTheDay().catch(() => null) }),
+  //
+  // Statistiken och demofrågorna hämtades tidigare i en effekt inne i
+  // HeroLanding. Följden var att topplistan renderades bakom
+  // `stats && stats.topPlayers.length > 0` och alltså ALDRIG fanns i den
+  // serverrenderade HTML:en — en crawler såg aldrig sektionen. Här SSR:as
+  // de, precis som dagens ord, och alla tre är oberoende så de hämtas
+  // parallellt. Var och en faller till null utan att fälla sidan.
+  loader: async () => {
+    const [wotd, stats, fragor] = await Promise.all([
+      fetchWordOfTheDay().catch(() => null),
+      getLandingStats().catch(() => null),
+      fetchLandingDemoQuestions().catch(() => []),
+    ]);
+    return { wotd, stats, fragor };
+  },
   component: Index,
   head: () => ({
     meta: pageMeta({
@@ -122,7 +138,7 @@ function DashboardSkeleton() {
 
 function Index() {
   const { user, profile, loading } = useAuth();
-  const { wotd } = Route.useLoaderData();
+  const { wotd, stats, fragor } = Route.useLoaderData();
   // Synkront svar på "är någon inloggad här?" — se `useHasStoredSession`.
   const harSession = useHasStoredSession();
 
@@ -135,9 +151,10 @@ function Index() {
   // så en inloggad besökare mötte marknadsföringssidan → skelett → dashboard,
   // tre olika layouter i rad. SSR:en påverkas inte: `useHasStoredSession` ger
   // `false` på servern.
-  if (loading && !user) return harSession ? <DashboardSkeleton /> : <HeroLanding />;
+  if (loading && !user)
+    return harSession ? <DashboardSkeleton /> : <HeroLanding fragor={fragor} stats={stats} />;
 
-  if (!user) return <HeroLanding />;
+  if (!user) return <HeroLanding fragor={fragor} stats={stats} />;
 
   // Got user but profile still loading — show a soft skeleton instead of plain
   // text so the dashboard frame is visible immediately.

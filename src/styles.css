@@ -27,10 +27,17 @@
    (kräver `fonttools` + `brotli`); de okomprimerade TTF:erna ligger kvar i
    commit 189d203 och behöver inte versionshanteras vidare.
    ================================================================ */
+/* Displaysnittet var Young Serif, en displayserif använd som rubriksnitt.
+   Kombinationen cremevit + högkontrastserif + terrakotta är precis den look
+   AI-genererad design hamnar i som standard, och den gjorde sajten svår att
+   skilja från vilken mall som helst. Familjen Grotesk är svensk (Letters
+   from Sweden), OFL, och en grotesk — vilket också gör täta tabeller och
+   siffror trovärdiga på ett sätt en serif inte gör.
+   Variabel, 400–700, latin-subset: 18,8 kB för hela viktomfånget. */
 @font-face {
-  font-family: "Young Serif";
-  src: url("/fonts/YoungSerif-Regular.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Familjen Grotesk";
+  src: url("/fonts/FamiljenGrotesk-Variable.woff2") format("woff2-variations");
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
@@ -64,7 +71,7 @@
 }
 
 @theme inline {
-  --font-display: "Young Serif", ui-serif, Georgia, serif;
+  --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
 

@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { isRankable } from "./username";
 import { GAMLA_PROV_START_ACTION } from "./usage-actions";
+import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { limits } from "./rate-limit";
 
 export interface RecentMatch {
   id: string;
@@ -47,6 +49,8 @@ export interface LandingStats {
 
 export const getLandingStats = createServerFn({ method: "GET" }).handler(
   async (): Promise<LandingStats> => {
+    // Publik endpoint utan auth, anropad vid varje SSR av startsidan.
+    assertRateLimit(ipKey("landingstats"), limits.publicRead);
     const fifteenMinAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
     const oneMinAgo = new Date(Date.now() - 60 * 1000).toISOString();
 
@@ -214,5 +218,76 @@ export const getLandingStats = createServerFn({ method: "GET" }).handler(
       })),
       topPlayers,
     };
+  },
+);
+
+/** En ORD-uppgift att faktiskt svara på i hjälten. */
+export interface DemoQuestion {
+  ord: string;
+  alternativ: { id: string; text: string }[];
+  ratt: string;
+}
+
+/**
+ * Frågorna i hjälten är riktiga, inte påhittade.
+ *
+ * Hämtas i route-loadern och inte i klienten, av tre skäl: de ska ligga i
+ * den serverrenderade HTML:en så att en crawler ser en riktig uppgift,
+ * provdatan får aldrig dras in i landningsbundlen (`import.meta.glob` ger
+ * en chunk per provpass), och `fetchWordBatch` läser upp till 10 000 rader
+ * vilket är orimligt vid varje sidladdning.
+ *
+ * Cachat per isolat i en timme. Svaret är detsamma för alla besökare, så
+ * det finns ingen anledning att fråga databasen mer än en gång per isolat.
+ */
+let demoCache: { vid: number; fragor: DemoQuestion[] } | null = null;
+const DEMO_TTL_MS = 60 * 60 * 1000;
+
+export const fetchLandingDemoQuestions = createServerFn({ method: "GET" }).handler(
+  async (): Promise<DemoQuestion[]> => {
+    assertRateLimit(ipKey("landingdemo"), limits.publicRead);
+    if (demoCache && Date.now() - demoCache.vid < DEMO_TTL_MS) return demoCache.fragor;
+
+    // ORD är enda kategorin som renderar som ren text. XYZ och KVA lagras
+    // som bildutsnitt och hör inte hemma i ett hjältekort.
+    const { data, error } = await supabaseAdmin
+      .from("questions")
+      .select("question_text,options,correct_answer")
+      .eq("category", "ORD")
+      // clean_status="ok" gäller matteimporten och sätts ALDRIG på ORD —
+      // noll av 8 761 rader har det värdet, så det filtret gav tom lista.
+      // Träningsläget använder samma spärr som här: allt utom pensionerat.
+      .neq("clean_status", "retired")
+      .not("definition", "is", null)
+      .limit(400);
+    if (error || !data) return demoCache?.fragor ?? [];
+
+    const dugliga = data.filter((r) => {
+      const o = r.options as { id: string; text: string }[] | null;
+      const ord = r.question_text as string;
+      return (
+        Array.isArray(o) &&
+        o.length === 5 &&
+        o.every((x) => x?.text && x.text.length <= 34) &&
+        // affix som "karne-" och "mort-" säger inget om produkten
+        !/^-|-$/.test(ord) &&
+        ord.length <= 24
+      );
+    });
+
+    // Roteras per timme så sidan inte visar samma ord för evigt, men
+    // deterministiskt inom timmen så SSR och hydrering är överens.
+    const seed = Math.floor(Date.now() / DEMO_TTL_MS);
+    const fragor = Array.from({ length: Math.min(4, dugliga.length) }, (_, i) => {
+      const r = dugliga[(seed * 7 + i * 53) % dugliga.length];
+      return {
+        ord: r.question_text as string,
+        alternativ: r.options as { id: string; text: string }[],
+        ratt: r.correct_answer as string,
+      };
+    });
+
+    demoCache = { vid: Date.now(), fragor };
+    return fragor;
   },
 );

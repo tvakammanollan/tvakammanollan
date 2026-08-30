@@ -39,7 +39,7 @@ type CTAProps = AsLink | AsAnchor | AsButton;
 
 const primaryClass =
   "inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-primary px-7 text-[15px] font-semibold text-foreground " +
-  "shadow-[0_0_28px_rgba(174,47,38,0.28)] transition-all hover:bg-primary/90 hover:shadow-[0_0_36px_rgba(174,47,38,0.40)] " +
+  " transition-all hover:bg-primary/90 " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 
 const secondaryClass =
