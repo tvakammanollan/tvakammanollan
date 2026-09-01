@@ -6,6 +6,8 @@
  * produktbeslut som förtjänar att kunna läsas och tvistas om för sig.
  */
 
+import { ordText } from "./sv-format";
+
 export interface DemoQuestion {
   ord: string;
   alternativ: { id: string; text: string }[];
@@ -34,20 +36,26 @@ export const ANTAL_ALTERNATIV = 5;
  * ingenting om produkten för någon som ser sajten för första gången.
  */
 export function dugligaDemofragor(rader: RaOrdrad[]): DemoQuestion[] {
-  return rader
-    .filter((r) => {
-      const alt = r.options as { id: string; text: string }[] | null;
-      const ord = r.question_text;
-      if (typeof ord !== "string" || ord.length === 0 || ord.length > MAX_ORDLANGD) return false;
-      if (/^-|-$/.test(ord)) return false;
-      if (!Array.isArray(alt) || alt.length !== ANTAL_ALTERNATIV) return false;
-      return alt.every((a) => typeof a?.text === "string" && a.text.length <= MAX_ALTERNATIVLANGD);
-    })
-    .map((r) => ({
-      ord: r.question_text,
-      alternativ: r.options as { id: string; text: string }[],
-      ratt: r.correct_answer,
-    }));
+  return rader.flatMap((r): DemoQuestion[] => {
+    const alt = r.options as { id: string; text: string }[] | null;
+    if (typeof r.question_text !== "string") return [];
+    if (!Array.isArray(alt) || alt.length !== ANTAL_ALTERNATIV) return [];
+    if (!alt.every((a) => typeof a?.text === "string")) return [];
+
+    // Gement FÖRST, längdmätning sedan. 953 av 8 761 rader står versalt i
+    // databasen ("VAKANT", "VALÖR") och en versal rubrik i hjältens
+    // displaystorlek läser som ett annat, större typsnitt än gemena ord
+    // på samma plats. Se ordText() — normaliseringen sker vid rendering
+    // överallt annars, och hjälten var enda ytan som saknade den.
+    const ord = ordText(r.question_text);
+    const alternativ = alt.map((a) => ({ id: a.id, text: ordText(a.text) }));
+
+    if (ord.length === 0 || ord.length > MAX_ORDLANGD) return [];
+    if (/^-|-$/.test(ord)) return [];
+    if (alternativ.some((a) => a.text.length > MAX_ALTERNATIVLANGD)) return [];
+
+    return [{ ord, alternativ, ratt: r.correct_answer }];
+  });
 }
 
 /**

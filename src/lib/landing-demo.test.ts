@@ -36,6 +36,22 @@ describe("dugligaDemofragor", () => {
     expect(dugligaDemofragor([rad({ question_text: "-ism" })])).toHaveLength(0);
   });
 
+  // 953 av 8 761 ORD-rader står versalt i databasen. I hjältens
+  // displaystorlek läser ett sådant ord som ett annat, större typsnitt än
+  // de gemena orden bredvid — alltså "vissa ord har stor font".
+  it("skriver ord och alternativ gement, som resten av sajten", () => {
+    const ut = dugligaDemofragor([rad({ question_text: "  VAKANT ", options: femAlt("OBESATT") })]);
+    expect(ut[0].ord).toBe("vakant");
+    expect(ut[0].alternativ.map((a) => a.text)).toEqual(Array(5).fill("obesatt"));
+  });
+
+  // Längden mäts på den normaliserade texten, inte på råraden: annars
+  // sållas ett ord bort för mellanslag som ändå aldrig renderas.
+  it("mäter längden efter normaliseringen", () => {
+    const ord = "x".repeat(MAX_ORDLANGD);
+    expect(dugligaDemofragor([rad({ question_text: `  ${ord}  ` })])).toHaveLength(1);
+  });
+
   it("kräver exakt fem alternativ", () => {
     expect(dugligaDemofragor([rad({ options: femAlt().slice(0, 4) })])).toHaveLength(0);
     expect(
