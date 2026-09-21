@@ -43,7 +43,7 @@
     // tvakommanollan.se — sätt den FÖRST när tvakommanollan.se har en
     // Worker-route och svarar 200, annars 301:as hela sajten till ett
     // värdnamn som ger 522. Se src/lib/canonical-host.ts.
-    "CANONICAL_REDIRECT": "on",
+    "CANONICAL_REDIRECT": "off",
 
     // E-post (Resend). RESEND_API_KEY är en krypterad Secret — de tre nedan är
     // bara adresser och hör hemma här.
