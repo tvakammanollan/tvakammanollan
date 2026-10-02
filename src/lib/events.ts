@@ -226,6 +226,10 @@ export interface ProductEvents {
      `sessions` är räkningen som tröskade fram rutan. Den ska stå på 3 i
      praktiken; gör den inte det är det sessionsräkningen som är fel, inte
      rabatten, och det går bara att upptäcka om talet följer med. */
+  /** Påminnelserna om Hela Ordlistan (ord-promo.ts). `answered` är null för utloggade. */
+  ord_promo_shown: { shown_count: number; answered: number | null };
+  ord_promo_clicked: { shown_count: number };
+  ord_promo_dismissed: { shown_count: number };
   coaching_discount_shown: { sessions: number };
   /** Klick på knappen. Kvoten mot `shown` säger om rabatten faktiskt biter. */
   coaching_discount_clicked: { sessions: number };

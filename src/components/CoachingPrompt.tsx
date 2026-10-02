@@ -1,5 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { useRouterState } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { supabase } from "@/integrations/supabase/client";
+import { OrdPromoDialog } from "@/components/OrdPromoDialog";
+import { getOrdAccess } from "@/lib/ord-paywall.functions";
+import {
+  countOrdPromoPageview,
+  isOrdPromoPath,
+  markOrdPromoClicked,
+  markOrdPromoShown,
+  ordPromoDue,
+  readOrdPromoState,
+  stopOrdPromo,
+} from "@/lib/ord-promo";
 import { Check, GraduationCap } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -25,7 +38,7 @@ import {
 /* =====================================================================
    DE AUTOMATISKA RUTORNA — erbjudandet om ett studieupplägg, av sig självt.
 
-   Två rutor, en ägare. Den här komponenten bestämmer vilken som får skärmen,
+   Tre rutor, en ägare (den tredje, ordpåminnelsen, kommer ofta: se ord-promo.ts). Den här komponenten bestämmer vilken som får skärmen,
    och det är hela skälet till att de bor ihop: de har samma regler för när de
    INTE får komma upp, och två komponenter som var för sig satte en timer på
    2,6 sekunder hade kunnat öppna sig i samma bildruta.
@@ -57,7 +70,7 @@ import {
 const SHOW_DELAY_MS = 2600;
 
 /** Vilken av rutorna som står uppe. null = ingen. */
-type Variant = "nudge" | "rabatt";
+type Variant = "nudge" | "rabatt" | "ord";
 
 /**
  * Är någon annan overlay uppe? Alla handrullade overlayer i appen sätter
@@ -86,6 +99,16 @@ export function CoachingPrompt() {
    */
   const [modalMonterad, setModalMonterad] = useState(false);
   const trigger = useRef<PromptTrigger>("pageviews");
+  const navigate = useNavigate();
+  const fetchAccess = useServerFn(getOrdAccess);
+  // I en ref så att effekten nedan inte startar om sin timer om funktionen byter identitet.
+  const fetchAccessRef = useRef(fetchAccess);
+  fetchAccessRef.current = fetchAccess;
+  const [ordInfo, setOrdInfo] = useState<{
+    answered: number | null;
+    amount: number | null;
+    currency: string;
+  }>({ answered: null, amount: null, currency: "SEK" });
   /** Sessionsräkningen vid visningen, så att klick och stängning bär samma tal. */
   const sessioner = useRef(0);
 
@@ -109,6 +132,7 @@ export function CoachingPrompt() {
     // håller sessionen vid liv. Utan den räknas den som läser en guide i
     // fyrtio minuter och klickar vidare som två besök.
     recordSessionActivity();
+    countOrdPromoPageview();
   }, [path]);
 
   // Rutorna och modalen ligger i roten och överlever därför en navigering, till
@@ -126,7 +150,10 @@ export function CoachingPrompt() {
     if (!isPromptablePath(path)) return;
     // Billig förkontroll så att en vanlig navigering inte sätter en timer i
     // onödan. Det riktiga beslutet tas om nedan, när timern går.
-    if (!discountDue(readDiscountState()) && !promptTrigger(readPromptState())) return;
+    const ordAktuell = isOrdPromoPath(path) && ordPromoDue(readOrdPromoState());
+    if (!ordAktuell && !discountDue(readDiscountState()) && !promptTrigger(readPromptState())) {
+      return;
+    }
 
     const id = window.setTimeout(() => {
       if (annanOverlayÖppen()) return;
@@ -146,12 +173,45 @@ export function CoachingPrompt() {
       }
 
       const utlösare = promptTrigger(readPromptState());
-      if (!utlösare) return;
-      trigger.current = utlösare;
-      recordPromptShown();
-      setModalMonterad(true);
-      setVariant("nudge");
-      trackEvent("coaching_prompt_shown", { trigger: utlösare });
+      if (utlösare) {
+        trigger.current = utlösare;
+        recordPromptShown();
+        setModalMonterad(true);
+        setVariant("nudge");
+        trackEvent("coaching_prompt_shown", { trigger: utlösare });
+        return;
+      }
+
+      // Ordpåminnelsen sist: den är den vanligaste, så de två andra går före
+      // och den tar nästa lucka. Den som köpt ser den aldrig, och ägandet
+      // avgörs av servern, inte av något webbläsaren minns.
+      if (!isOrdPromoPath(path) || !ordPromoDue(readOrdPromoState())) return;
+      void (async () => {
+        let answered: number | null = null;
+        let amount: number | null = null;
+        let currency = "SEK";
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          try {
+            const a = await fetchAccessRef.current({});
+            if (a.owned) {
+              stopOrdPromo();
+              return;
+            }
+            answered = a.answered;
+            amount = a.amount;
+            currency = a.currency;
+          } catch {
+            /* utan svar visas den generella varianten */
+          }
+        }
+        // Tiden har gått under väntan: något annat kan ha tagit skärmen.
+        if (annanOverlayÖppen()) return;
+        const state = markOrdPromoShown();
+        setOrdInfo({ answered, amount, currency });
+        setVariant("ord");
+        trackEvent("ord_promo_shown", { shown_count: state.shownCount, answered });
+      })();
     }, SHOW_DELAY_MS);
     return () => window.clearTimeout(id);
   }, [path, variant, modalÖppen]);
@@ -166,6 +226,19 @@ export function CoachingPrompt() {
     if (v) return;
     setVariant(null);
     trackEvent("coaching_discount_dismissed", { sessions: sessioner.current });
+  };
+
+  const stängOrd = (v: boolean) => {
+    if (v) return;
+    setVariant(null);
+    trackEvent("ord_promo_dismissed", { shown_count: readOrdPromoState().shownCount });
+  };
+
+  const gåTillOrd = () => {
+    markOrdPromoClicked();
+    trackEvent("ord_promo_clicked", { shown_count: readOrdPromoState().shownCount });
+    setVariant(null);
+    void navigate({ to: "/ord" });
   };
 
   const köpNudge = () => {
@@ -259,6 +332,15 @@ export function CoachingPrompt() {
         open={variant === "rabatt"}
         onOpenChange={stängRabatt}
         onBuy={köpRabatt}
+      />
+
+      <OrdPromoDialog
+        open={variant === "ord"}
+        onOpenChange={stängOrd}
+        onGo={gåTillOrd}
+        answered={ordInfo.answered}
+        amount={ordInfo.amount}
+        currency={ordInfo.currency}
       />
 
       {modalMonterad && (

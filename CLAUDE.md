@@ -1421,6 +1421,15 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
 - Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
   bekräftar mot Stripe som reserv för webhooken.
 
+- **Ordpåminnelsen är den tredje automatiska rutan** (`ord-promo.ts`,
+  `OrdPromoDialog`, ägd av `CoachingPrompt`). Den kommer MED FLIT ofta: första
+  gången efter 3 sidvisningar, sedan var 4:e sidvisning och tidigast 2 h efter
+  senaste visningen; efter 4 visningar utan klick vilar den ett dygn. Den går
+  efter rabatten och coachningsnudgen, visas aldrig på `/ord` och aldrig för
+  den som köpt (ägandet avgörs av `getOrdAccess`, inte av webbläsaren). Knappen
+  går till `/ord`, där kassan redan finns. Ändra frekvensen i konstanterna i
+  `ord-promo.ts`; testet pinnar dem.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.
