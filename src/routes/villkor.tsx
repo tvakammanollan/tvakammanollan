@@ -41,8 +41,8 @@ function VillkorPage() {
           <p>
             Genom att använda Tvåkommanollan godkänner du dessa villkor. Tjänsten drivs av{" "}
             <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
-            All träning på sajten är gratis. Det enda som kostar är personlig coachning, som du
-            köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
+            Det mesta på sajten är gratis. Det som kostar är Hela Ordlistan och personlig coachning,
+            som du köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -58,8 +58,9 @@ function VillkorPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              All träning på Tvåkommanollan är gratis att använda. Coachning är en betaltjänst med
-              egna villkor, se avsnittet om köp nedan.
+              Träningen på Tvåkommanollan är gratis att använda, förutom ordträningen efter de
+              första 40 orden. Den kräver köpet Hela Ordlistan. Coachning är en egen betaltjänst.
+              Båda har egna villkor, se avsnitten om köp nedan.
             </li>
             <li>Du måste vara minst 13 år för att skapa konto.</li>
             <li>
@@ -103,10 +104,42 @@ function VillkorPage() {
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
+            Köp av Hela Ordlistan
+          </h2>
+          <p>
+            Hela Ordlistan är ett engångsköp som ger ditt konto obegränsad ordträning, utöver de 40
+            ord som är gratis. Du betalar en gång, det finns ingen prenumeration och inga
+            förnyelser. Avtalet ingås mellan dig och Niklas Pellkvist när du slutför betalningen i
+            kassan. Köpet knyts till det konto du var inloggad med, och gästkonton kan inte köpa.
+            Priset som visas i kassan är det du betalar, och betalningen hanteras av Stripe.
+          </p>
+          <p>
+            Åtkomsten gäller så länge Tvåkommanollan finns kvar och ditt konto inte stängts av
+            enligt dessa villkor. Läggs tjänsten ned betalar vi tillbaka köpet.
+          </p>
+          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
+            Ångerrätt
+          </h3>
+          <p>
+            Hela Ordlistan är digitalt innehåll som blir tillgängligt direkt efter betalningen.
+            Genom att slutföra köpet går du uttryckligen med på att leveransen börjar direkt och
+            godkänner att ångerrätten då faller bort. Är något fel, eller fungerar inte åtkomsten,
+            hör av dig till{" "}
+            <a
+              href="mailto:info@tvakommanollan.se?subject=Hela%20Ordlistan"
+              className="underline"
+              style={{ color: "var(--amber)" }}
+            >
+              info@tvakommanollan.se
+            </a>{" "}
+            så rättar vi det eller betalar tillbaka.
+          </p>
+
+          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Köp av coachning
           </h2>
           <p>
-            Coachning (studieupplägg) är den enda betaltjänsten på Tvåkommanollan. Avtalet ingås
+            Coachning (studieupplägg) är en av två betaltjänster på Tvåkommanollan. Avtalet ingås
             mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha
             ett konto för att köpa.
           </p>
