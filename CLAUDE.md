@@ -1070,6 +1070,21 @@ coaching_time_selected    en ledig tid klickades
 coaching_time_booked      bokningen bekräftades
 coaching_checkout_started skickades till Stripe      (+ is_guest)
 coaching_purchase_completed  betalt (en gång per köp, från tacksidan)
+coaching_checkout_exited  modalen stängdes           (+ step, seconds, booked)
+```
+
+Kvalificeringen ("ring mig") är en egen kedja bredvid, med samma `source`:
+
+```
+coaching_quiz_viewed      boxen syntes på skärmen
+coaching_quiz_started     "Ta reda på det" trycktes   ← detta är en entry
+coaching_quiz_answered    ett svar lades              (+ step 1|2, value)
+coaching_quiz_qualified   sammanfattningen visades
+coaching_form_started     första tecknet i ett fält   (+ field)
+coaching_lead_blocked     klientvalideringen stoppade (+ reason)
+coaching_lead_submitted   leadet kom in               (+ fields, seconds)
+coaching_lead_failed      servern avvisade            (+ reason)
+coaching_quiz_exited      lämnade utan att skicka     (+ stage, step, fields, seconds)
 ```
 
 - **Visningen är nämnaren.** Utan `coaching_card_viewed` betyder ett lågt antal
@@ -1090,6 +1105,42 @@ coaching_purchase_completed  betalt (en gång per köp, från tacksidan)
   om den. En popup-öppning hoppar över erbjudandesteget (`autoStart`), men
   `coaching_offer_opened` fyras ändå — den betyder "modalen öppnades", inte
   "erbjudandet lästes".
+
+**Avhoppen mäts också, sedan 2026-08-30.** Fram till dess mätte båda kedjorna
+bara det som gick *framåt*, alltså syntes ett avhopp bara som ett steg som
+saknades — och "stängde direkt på priset" ser i den bilden exakt likadant ut som
+"satt i kassan och ändrade sig", fast de två kräver motsatta åtgärder. "Hur
+många fyllde i formuläret alls" gick inte att svara på över huvud taget.
+
+- **`src/lib/coaching-funnel.ts` äger språket för hur långt någon kom**: fasen
+  som ett jämförbart **tal** (`step`) och som en grupperbar **sträng**
+  (`stage`). Ren och testad av samma skäl som `coaching-quiz.ts` — namnen
+  ligger i PostHog för alltid, och ett stadium som byter innebörd gör
+  historiken osann i efterhand. `Phase` i `CoachingQuizCard` är numera en alias
+  för modulens `QuizPhase` just för att de två inte ska kunna glida isär.
+- **Formuläret delas i tre stadier** och det är hela poängen med `stage`:
+  `form_untouched` (läste sammanfattningen, rörde inget), `form_partial`
+  (skrev något, men inte numret) och `form_ready` (hade ett nummer skrivet och
+  skickade ändå inte). Den sista är den dyraste gruppen på sajten: ett
+  knapptryck skiljer den från ett samtal.
+- **`coaching_quiz_exited` fyras aldrig för den som bara såg kortet.**
+  `coaching_quiz_viewed` utan `coaching_quiz_started` efter sig beskriver redan
+  den personen; att fyra en avhoppshändelse där hade lagt en händelse på varje
+  dashboardbesök för noll ny information.
+- **Vid analys: `via: "pagehide"` fyras också när mobilen byter app.** Den som
+  kommer tillbaka och skickar in får då både `exited` och `lead_submitted`.
+  Tratten påverkas inte (inskicket kommer senare), men ett stadiediagram måste
+  sålla bort dem som även har `coaching_lead_submitted`.
+- **`coaching_lead_blocked` är inte `coaching_lead_failed`.** Den första
+  betyder att knappen trycktes men att ingenting lämnade webbläsaren
+  (klientvalidering); den andra att servern avvisade. De hade helt olika
+  åtgärder och gick tidigare båda omätta respektive omärkta.
+- **`flushTelemetry()` finns för att avhoppshändelser annars försvinner.**
+  `track()` batchar i två sekunder, och de sekunderna finns inte när fliken är
+  på väg bort — allt som låg i kön dog med sidan. `installBrowserTelemetry`
+  tömmer nu kön på `pagehide` och på `visibilitychange → hidden` (mobilens
+  hemknapp, där pagehide inte alltid hinner), vilket räddar de sista
+  händelserna i *varje* flöde, inte bara det här.
 
 ### Tidsbokning i coachningen (Calendly, 2026-08-18)
 
@@ -1286,6 +1337,90 @@ landningssidan — det finns fortfarande bara en väg till Stripe.
   (`pageviews` / `matches`). Källan in i Stripe-raden är `source: "popup"` —
   tillagd i alla tre zod-enumen i `coaching.functions.ts`.
 
+### Lojalitetsrabatten (2026-08-30)
+
+Vid **tredje sessionen** på sajten kommer en ruta upp och ger 20 % på
+studieupplägget med koden `TVAKOMMANOLLAN`. Räkningen bor i
+`src/lib/coaching-discount.ts`, rutan i `CoachingDiscountDialog`, och koden
+renderas av `DiscountCodeChip` på två ytor: i rutan och i kassasteget i
+`CoachingModal`.
+
+- **`CoachingPrompt` äger BÅDA de automatiska rutorna.** Nudgen och rabatten
+  har identiska regler för när de inte får komma upp (`isPromptablePath`,
+  `annanOverlayÖppen`, 2,6 sekunders fördröjning), och två komponenter som var
+  för sig satte samma timer hade kunnat öppna sig i samma bildruta. Rabatten
+  går före nudgen när båda är tröskade; nudgen står kvar tröskad till nästa
+  tillåtna sida. Lägg inte en tredje automatisk ruta någon annanstans.
+- **Sessionen räknas på 30 minuters inaktivitet**, samma fönster som PostHog
+  och GA använder — talet ska betyda samma sak här som i mätningen.
+  `recordSessionActivity()` måste därför anropas vid **varje** sidvisning, inte
+  bara vid sidladdning: utan det räknas den som läser en guide i fyrtio minuter
+  och klickar vidare som två besök, och tre sessioner blir något man når under
+  ett enda besök.
+- **Ett oläsbart `lastSeen` läses som NY session, en framtida som PÅGÅENDE.**
+  Asymmetrin är medveten och tvärtemot `coaching-sweep.ts`: där är den farliga
+  handlingen att avboka någons möte, här är den farliga utgången att funktionen
+  tystnar utan att något felar. En skev klocka ska däremot inte kunna räkna upp
+  sig fram till rabatten.
+- **Koden är INTE en hemlighet.** Den ligger i Stripe som en aktiv promotion
+  code (`promo_1U5hjP…` → kupong `7325Xhy6`, 20 % forever) utan utgångsdatum
+  och utan `max_redemptions`, och `allow_promotion_codes: true` står redan i
+  `buildCoachingCheckoutParams` för alla. Räkningen här styr alltså vem som får
+  **se** erbjudandet, inte vem som kan lösa in det. Ska rabatten begränsas på
+  riktigt görs det i Stripe, inte i den här modulen.
+- **Ingen påhittad utgång i texten.** Rutan säger "koden ligger kvar i kassan"
+  därför att den gör det. En uppdiktad deadline hade varit en osanning som
+  dessutom syns direkt för den som provar koden dagen efter.
+- **Priset räknas ur beloppet Stripe svarade med**, aldrig ur en siffra i
+  koden: `discountedAmount()` + `coachingDiscountedPriceLabel()`. Avrundningen
+  speglar Stripes egen. Verifierat mot skarpa kontot 2026-08-30: en session med
+  koden pålagd går 35 000 → 28 000 öre, alltså exakt de 280 kr rutan visar.
+- **Tidssteget måste visa rabatterat pris när koden är upplåst.** Ordinarie
+  pris där, rakt efter att rutan lovat ett lägre, läses som att rabatten
+  försvann. Samma sak gäller varje ny yta som skriver ut priset.
+- **`discountUnlocked` är skilt från `discountDue` med flit.** Rutan visas en
+  gång, men koden ska gå att hitta igen: den som stänger och köper en vecka
+  senare från startsidan ska inte behöva minnas en sträng. Därför står den i
+  kassan så länge köpet inte är gjort.
+- **Koden matas in för hand i Stripes eget formulär.** Vi sätter medvetet inte
+  `discounts: [...]` på sessionen — det fältet är ömsesidigt uteslutande med
+  `allow_promotion_codes`, och en ogiltig kupong där ger 400 på hela sessionen,
+  alltså ett uteblivet köp i stället för en utebliven rabatt. Ska den
+  auto-appliceras måste uppslaget ske server-side med fallback till
+  `allow_promotion_codes` när något är fel.
+- **Kopieringsknappen har en reserv.** `clipboard-write` går att neka (osäker
+  kontext, företagspolicy, inbäddade webbläsare) och `writeText` kastar då.
+  Utan reserven gjorde knappen ingenting alls i de lägena, vilket läser som en
+  trasig knapp och räknas som en dead click i PostHog. Den markerar nu koden i
+  stället, så att Cmd+C fungerar.
+- **Köpet tystar den permanent.** `/coachning/tack` anropar
+  `stopCoachingDiscount()` bredvid `stopCoachingPrompts()`, vid varje bekräftat
+  köp och inte bara det första.
+- Nyckeln är `tkn-coaching-rabatt`, versionerad som de andra. Mätning:
+  `coaching_discount_{shown,clicked,dismissed}` med `sessions`, plus
+  `coaching_discount_copied` med `source`. `sessions` ska stå på 3 i praktiken;
+  gör den inte det är det sessionsräkningen som är fel.
+
+### Hela Ordlistan: paywallen på ORD (2026-10-02)
+
+De första 40 orden är gratis, sedan krävs ett engångsköp (50 kr, Stripe-produkten
+"Hela Ordlistan", `STRIPE_ORD_PRICE_ID` i `wrangler.jsonc`). Reglerna bor i
+`src/lib/ord-paywall.ts` (ren, testad), databasdelen i `ord-paywall.server.ts`,
+kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
+
+- **Grinden sitter i `fetchWordBatch`**, inte i UI:t: räkningen är
+  `ord_practice_stats.total_count` (svar, inte rätta) och batchen kapas vid
+  gränsen. Utloggade får max 10 ord per anrop; läckan är känd och accepterad.
+- **`hasOrdAccess` släpper igenom vid databasfel** (och alltså innan migrationen
+  `20261002100000_ordlistan_kop.sql` körts). Medvetet: hellre några gratisord än
+  en betalande utelåst.
+- **Webhooken delar endpoint med coachningen.** Ordsessioner har
+  `metadata.product = "ord_access"` och `metadata.user_id` (satt av servern ur
+  token) och bokförs i `ord_purchases`; allt annat går vidare till coachningen.
+- **Gästkonton kan inte köpa** (köpet hade försvunnit med kontot).
+- Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
+  bekräftar mot Stripe som reserv för webhooken.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.
@@ -1438,6 +1573,88 @@ vilket är den allvarligare halvan av det som rättades.
   skärmen, alltså svarsalternativ D och E plus hela inlämningslisten, medan
   klockan tickade. Att skjuta upp frågan är dessutom integritetsmässigt säkert
   — utan svar laddas ingen analys.
+
+### Designsystemet efter ombyggnaden (2026-08-30)
+
+Tre ändringar som rör **varje skärm**, gjorda i samma omgång som
+landningssidan byggdes om. Läs det här innan du rör paletten, radien eller
+knapparna.
+
+- **Displaysnittet är Familjen Grotesk**, inte Young Serif. Svensk grotesk
+  från Letters from Sweden, OFL, variabel 400–700, latin-subset på 18,8 kB
+  i `public/fonts/FamiljenGrotesk-Variable.woff2`. Bytet gjordes för att
+  cremevit + högkontrastserif + terrakotta är exakt den look AI-genererad
+  design hamnar i som standard. Young Serifs filer är borttagna.
+  - **`CyclingTitle`s klippmask var kalibrerad mot Young Serifs bläckhöjd.**
+    Marginalen var 2,7 px. Familjen Grotesk har kortare ascender och ryms
+    med 43,7 px uppåt och 28,6 px nedåt. Byter du snitt igen: mät om, med
+    canvas `actualBoundingBoxAscent/Descent` mot klippboxens höjd, och kom
+    ihåg att `LÄS.` är värsta fallet uppåt och `Läsning.` nedåt.
+- **`--radius` är `0.75rem` (12px), var `1.25rem` (20px).** Hela skalan
+  härleds ur den: sm 8, md 10, lg 12, xl 16, 2xl 20. Med 20px var
+  `rounded-md` på en 36px knapp nästan en tablett och kort låg på 28px.
+  Att ändra basvärdet rättar alla ~300 `rounded-*` konsekvent i stället för
+  att någon klassar om dem för hand. `rounded-full` rörs inte: brickor och
+  avatarer ska förbli tabletter.
+- **Hårdkodad hex i klassnamn finns inte längre.** 467 klasser i 62 filer
+  ersattes med tokens; `bg-[#ae2f26]` ensamt var kopierad 112 gånger.
+  Bytet är pixelidentiskt eftersom `--primary` är `var(--amber)` är
+  `#ae2f26`.
+  - **Löv, bark, fel och den mörka äpplerödan saknade Tailwind-namn.** De
+    är tillagda i `@theme inline` som `--color-bark`, `--color-success{,-soft,-line,-ink}`,
+    `--color-danger{,-soft,-line,-ink}`, `--color-primary-deep` och
+    `--color-on-brand`. **Lägger du en ny färg i `:root` måste den också in
+    i `@theme inline`, annars finns klassen inte** och Tailwind genererar
+    ingen regel — texten blir osynlig utan att något felar.
+  - `--on-brand` (`#fff8f5`) är text på SOLID äpple/bark/löv. Den hette
+    inget alls förut utan låg som hårdkodad hex på 40 ställen.
+- **`Button`s storlekar är 44 / 40 / 48 / 44 px** (default/sm/lg/icon), var
+  36 / 32 / 40 / 36. Ingen nådde 44, vilket är varför matchflödet,
+  resultatskärmen och coachningsmodalen satte `min-h-[44px]` för hand på
+  varje knapp. `sm` ligger kvar under gränsen med flit, för täta ytor.
+  Navbaren använder `sm` för att inte bli hög; footerns textlänkar är
+  fortfarande ~20px och är inte åtgärdade.
+- Fyra gamla mörka-tema-färger låg kvar och var kontrastbuggar:
+  `hover:text-[#8ec9ce]` på `/ord` (1,71:1), notisbrickan (1,88:1),
+  forumsökets knapptext (2,95:1) och HP-markören (1,53:1). Hittar du fler
+  `#f2a65a`, `#8ec9ce`, `#f5c089` eller `#170d05` är de från det mörka
+  temat och nästan säkert osynliga på creme.
+
+### Landningssidan (2026-08-30)
+
+`HeroLanding` komponerar sektioner ur `src/components/landing/`. Hjälten är
+en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
+
+- **`clean_status="ok"` sätts ALDRIG på ORD.** Noll av 8 761 rader har det
+  värdet; det är matteimportens begrepp. Rätt spärr för ORD är
+  träningslägets, `!= "retired"`. Det första försöket filtrerade på `"ok"`
+  och gav tom lista, vilket bara syntes som att hjälten visade sitt
+  reservkort.
+- **Allt som positioneras på skalan är centrerat på sin position och
+  sticker alltså ut med halva sin bredd i ändarna.** Första versionen la
+  `overflow-hidden` på behållaren, vilket inte flyttar in något utan
+  KLIPPER: `0,6` kapades 12 px och `2,0` 10 px **på varje skärmbredd**,
+  desktop inkluderad. Lösningen är sidopadding på behållaren, inte
+  klippning, och att markörerna bär sitt värde på linjen medan orden står i
+  teckenförklaringen under. Lägger du något nytt på linjen: mät dess
+  bounding box mot behållarens, klipp aldrig.
+- **Statistiken och demofrågorna hämtas i loadern, inte i en effekt.**
+  Topplistan låg tidigare bakom `stats && stats.topPlayers.length > 0` med
+  `stats` hämtat i `useEffect`, alltså fanns sektionen aldrig i
+  serverrenderad HTML och ingen crawler såg den.
+- **Urvalslogiken är ren och testad** i `src/lib/landing-demo.ts`. Fröet
+  roterar per timme men är konstant inom timmen, annars blir det
+  hydreringsmiss i sidans mest synliga element. Det första urvalet räknade
+  `(frö * 7 + i * 53) % n` och gav fyra identiska frågor när `n` var 53.
+- **`OMDOMEN` och `SNITTBETYG` bor i `src/data/omdomen.ts`**, inte i
+  vykomponenten, eftersom `index.tsx` bygger JSON-LD av dem. Ändras listan
+  ändras `aggregateRating` automatiskt. Lägg aldrig till ett citat ingen sagt.
+- **Ordantalet skrivs `10 000+`, inte 8 761.** Databasen har 8 761
+  ORD-rader med definition och ingen annan kategori har någon, men
+  `10 000+` står på nio andra ytor sedan tidigare (`/ord` i titel,
+  description, JSON-LD och eyebrow, dashboarden, guiderna,
+  `ova.$delprov`, FAQ:n, `llms.txt`). Niklas beslut 2026-08-30 är att
+  sajten ska säga en sak. Ändras det måste alla tio ändras ihop.
 
 ### Key conventions
 
@@ -1671,7 +1888,27 @@ starta gästläge"**.
 - `/integritetspolicy` must stay **factually true**. Since 2026-08-15 it documents PostHog analytics behind explicit consent — update it whenever what we collect changes.
 - **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`tkn-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
 - Empty `VITE_PUBLIC_POSTHOG_KEY` = analytics off and no banner. `VITE_` vars are inlined **at build time**, so they must be in `.env`; the `wrangler.jsonc` copy alone does nothing for the client bundle.
-- Ads are still out: they need a certified IAB TCF CMP, which our own banner is not. AdSense was removed for exactly this reason (see comment in `__root.tsx`).
+- **AdSense-taggen är tillbaka sedan 2026-09-01** (Niklas beslut). Den ligger
+  som ett rått `<script async>` direkt i `<head>` i `RootShell`
+  (`__root.tsx`) — **inte** i route:ns `scripts`-array, eftersom TanStacks
+  `<Scripts />` renderar den arrayen i `<body>` och Google vill ha taggen i
+  huvudet. Pub-id:t är `ca-pub-1685910213641675`, samma som i
+  `public/ads.txt`.
+  - **CSP:n måste släppa fram Google på tre direktiv** (`src/server.ts`:
+    `ADS_SCRIPT`, `ADS_CONNECT`, `ADS_FRAME`). Faller ett bort blir
+    annonsytan tom med en rad i konsolen — ingenting kastar. Det var CSP:n
+    som blockerade skriptet förra gången det låg inne.
+  - **Det finns fortfarande inga annonsplatser** (`<ins class="adsbygoogle">`)
+    i koden. Det här är verifieringstaggen; ingen annons renderas förrän en
+    plats läggs in.
+  - **Två saker är medvetet OGJORDA och båda är GDPR-skulder.** (1) Ingen
+    Google-certifierad IAB TCF-CMP: vår egen samtyckesbanner gäller PostHog
+    och duger inte, så skriptet laddas för alla utan samtycke och Google
+    visar antingen inga eller bara icke-personaliserade annonser för
+    EU-trafik. (2) `/integritetspolicy` beskriver inte att Google sätter
+    cookies. Sätts en annonsplats in måste båda vara lösta först.
+  - `Permissions-Policy: browsing-topics=()` står kvar och stänger av Topics
+    API. Det bryter inte annonserna, bara målgruppsanpassningen.
 - **Product events go through `trackEvent()` in `src/lib/events.ts`** — a typed
   catalogue, not free-form strings. It wraps `track({type:"metric"})`, which
   auto-forwards to PostHog; only `metric` forwards, errors stay in
@@ -1711,6 +1948,15 @@ starta gästläge"**.
   `.output/server/_ssr/index.mjs`), så det är `.env` som avgör; `process.env`
   är en reserv som optimeras bort i ett normalt bygge. Håll kopian i
   `wrangler.jsonc` i synk ändå.
+- **PostHogs API nås med en PAT ur `.env.local`**, `POSTHOG_PERSONAL_API_KEY`
+  (projekt **250469**, EU-hosten `https://eu.posthog.com/api`). Den är en
+  *personlig* nyckel för läsning och skrivning av insikter, alltså något helt
+  annat än `VITE_PUBLIC_POSTHOG_KEY`, som är den publika ingest-nyckeln och hör
+  hemma i `.env`. Blanda aldrig ihop dem: PAT:en får inte committas (`.env` är
+  spårad, `.env.local` är det inte) och ska inte till klienten.
+  Tratten ligger som dashboard **923575** ("Studieupplägget — tratten"), sex
+  insikter, uppbyggd av `scripts`-lösa engångsskript mot `/api/projects/250469/`
+  — se avsnittet om tratten nedan för vad var och en svarar på.
 - **Managed reverse proxy (PostHog → Settings → Managed reverse proxy)** är inte
   påslagen ännu. Den finns för att ad-blockerare blockerar `eu.i.posthog.com` på
   värdnamnet; en egen underdomän går förbi filtren. Gratis på PostHog Cloud.

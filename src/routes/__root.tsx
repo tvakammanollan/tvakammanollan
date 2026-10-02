@@ -235,13 +235,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // enbart renderblockerande dödvikt.
     ],
     scripts: [
-      // OBS: AdSense-skriptet borttaget (2026-07). Det fanns inga annonsplatser
-      // i koden, CSP:n blockerade skriptet, OCH integritetspolicyn lovar "inga
-      // spårningscookies" — att ladda Googles tracker utan samtycke bryter mot
-      // GDPR/ePrivacy. Vill du visa annonser i framtiden krävs: (1) en Google-
-      // certifierad samtyckesplattform (CMP) FÖRE skriptet laddas för EU-
-      // användare, (2) CSP-uppdatering, (3) uppdaterad integritetspolicy.
-      // ads.txt ligger kvar i public/ inför den dagen.
+      // OBS: AdSense-skriptet ligger INTE här. Den här arrayen renderas av
+      // <Scripts /> i <body>, och verifieringstaggen ska stå i <head> — se
+      // RootShell längre ner, där den ligger som ett rått <script>.
       // OBS: Schema.org WebApplication låg här förr och renderades på sajtens
       // alla sidor. Semrush/Google flaggade den som ogiltig "Software App"-
       // markup på 83 sidor: typen kräver aggregateRating/review för att vara
@@ -329,6 +325,29 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="sv">
       <head>
         <HeadContent />
+        {/* Google AdSense. Ligger som ett rått <script> i <head> och inte i
+            route:ns `scripts`-array, eftersom TanStacks <Scripts /> renderar
+            den arrayen i <body> — Googles verifiering och deras egen
+            dokumentation vill ha taggen i <head>. `async` gör den
+            icke-renderblockerande.
+
+            OBS: skriptet laddas för ALLA besökare, utan samtycke. Det är ett
+            medvetet val av Niklas 2026-09-01, men det är samma sak som togs
+            bort 2026-07 av tre skäl, varav två fortfarande gäller:
+            (1) EU-besökare kräver en Google-certifierad CMP (IAB TCF) före
+                skriptet laddas — vår egen samtyckesbanner är inte det, den
+                gäller PostHog. Utan CMP visar Google antingen inga annonser
+                alls för EU-trafik eller icke-personaliserade sådana.
+            (2) /integritetspolicy måste beskriva att Google sätter cookies.
+            (3) CSP:n blockerade skriptet — det är åtgärdat, se src/server.ts.
+            Det finns fortfarande inga annonsplatser (<ins class="adsbygoogle">)
+            i koden; det här är verifieringstaggen. public/ads.txt är redan
+            ifylld med samma pub-id. */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1685910213641675"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         {children}

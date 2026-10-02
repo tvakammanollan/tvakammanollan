@@ -106,6 +106,18 @@ export function trackError(error: unknown, context: Record<string, unknown> = {}
   });
 }
 
+/**
+ * Tömmer kön nu i stället för att vänta ut de två sekunderna.
+ *
+ * Behövs för allt som avfyras när sidan är på väg bort: en händelse som ligger
+ * i `pending` när fliken stängs försvinner med den, och det är precis de
+ * händelserna som beskriver ett avhopp. `flush` använder sendBeacon, som är
+ * byggd för att överleva navigering.
+ */
+export function flushTelemetry() {
+  void flush();
+}
+
 /** Install global error listeners on the browser. */
 export function installBrowserTelemetry() {
   if (!isBrowser) return;
@@ -114,5 +126,15 @@ export function installBrowserTelemetry() {
   });
   window.addEventListener("unhandledrejection", (ev) => {
     trackError(ev.reason, { from: "unhandledrejection" });
+  });
+  // Allt som ligger och väntar när sidan lämnas. Utan det tappades varje
+  // händelse som avfyrades under de sista två sekunderna av ett besök —
+  // tystast av allt för de sista händelserna i ett flöde, alltså avhoppen.
+  // `pagehide` och inte `unload`: den senare kör inte alls i bfcache-lägen och
+  // är utfasad i Safari. `visibilitychange` täcker mobilens hemknapp, där
+  // pagehide inte alltid hinner.
+  window.addEventListener("pagehide", flushTelemetry);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushTelemetry();
   });
 }

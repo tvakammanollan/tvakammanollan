@@ -107,6 +107,33 @@ export type Database = {
         }
         Relationships: []
       }
+      ord_purchases: {
+        Row: {
+          amount_total: number | null
+          currency: string | null
+          paid_at: string
+          stripe_payment_intent: string | null
+          stripe_session_id: string
+          user_id: string
+        }
+        Insert: {
+          amount_total?: number | null
+          currency?: string | null
+          paid_at?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id: string
+          user_id: string
+        }
+        Update: {
+          amount_total?: number | null
+          currency?: string | null
+          paid_at?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       coaching_requests: {
         Row: {
           amount_total: number | null

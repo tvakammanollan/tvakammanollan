@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { fetchCoachingOffer, type CoachingOffer } from "@/lib/coaching.functions";
 import { formatMoney } from "@/lib/sv-format";
+import { discountedAmount } from "@/lib/coaching-discount";
 
 /**
  * Priset på coachningen, hämtat ur Stripe.
@@ -78,13 +79,31 @@ export function coachingTermsLabel(offer: CoachingOffer | null): string | null {
   return offer.interval ? null : "Engångsköp · Ingen bindningstid";
 }
 
+/** " / månad" när priset är återkommande, annars tomt. */
+function periodSuffix(offer: CoachingOffer): string {
+  if (!offer.interval) return "";
+  const singular = { day: "dag", week: "vecka", month: "månad", year: "år" }[offer.interval];
+  const plural = { day: "dagar", week: "veckor", month: "månader", year: "år" }[offer.interval];
+  return ` / ${offer.intervalCount === 1 ? singular : `${offer.intervalCount} ${plural}`}`;
+}
+
 /** "1 495 kr" eller "249 kr / månad". null när priset inte gick att läsa. */
 export function coachingPriceLabel(offer: CoachingOffer | null): string | null {
   if (!offer?.available || offer.amount === null) return null;
-  const belopp = formatMoney(offer.amount, offer.currency);
-  if (!offer.interval) return belopp;
-  const singular = { day: "dag", week: "vecka", month: "månad", year: "år" }[offer.interval];
-  const plural = { day: "dagar", week: "veckor", month: "månader", year: "år" }[offer.interval];
-  const period = offer.intervalCount === 1 ? singular : `${offer.intervalCount} ${plural}`;
-  return `${belopp} / ${period}`;
+  return `${formatMoney(offer.amount, offer.currency)}${periodSuffix(offer)}`;
+}
+
+/**
+ * Samma pris med lojalitetsrabatten pådragen.
+ *
+ * Räknas ur beloppet Stripe svarade med, aldrig ur en siffra i koden — annars
+ * kan rutan visa en annan summa än den kassan drar, vilket är precis det fel
+ * `resolveCoachingPrice` finns för att undvika. Avrundningen speglar Stripes
+ * egen, så talet här är talet i kassan.
+ */
+export function coachingDiscountedPriceLabel(offer: CoachingOffer | null): string | null {
+  if (!offer?.available || offer.amount === null) return null;
+  const rabatterat = discountedAmount(offer.amount);
+  if (rabatterat === null) return null;
+  return `${formatMoney(rabatterat, offer.currency)}${periodSuffix(offer)}`;
 }

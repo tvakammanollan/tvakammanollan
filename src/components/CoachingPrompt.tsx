@@ -4,6 +4,7 @@ import { Check, GraduationCap } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CoachingModal } from "@/components/CoachingModal";
+import { CoachingDiscountDialog } from "@/components/CoachingDiscountDialog";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { trackEvent } from "@/lib/events";
 import {
@@ -14,28 +15,38 @@ import {
   recordPromptShown,
   type PromptTrigger,
 } from "@/lib/coaching-prompt";
+import {
+  discountDue,
+  readDiscountState,
+  recordDiscountShown,
+  recordSessionActivity,
+} from "@/lib/coaching-discount";
 
 /* =====================================================================
-   NUDGEN — erbjudandet om ett studieupplägg, av sig självt.
+   DE AUTOMATISKA RUTORNA — erbjudandet om ett studieupplägg, av sig självt.
 
-   Kommer upp var sjunde sidvisning eller varannan avslutade match (se
-   coaching-prompt.ts, som äger räkningen och trösklarna). Just nu bara EN
-   gång per webbläsare: `MAX_PROMPTS` där är spärren, allt annat är redan
-   byggt återkommande.
+   Två rutor, en ägare. Den här komponenten bestämmer vilken som får skärmen,
+   och det är hela skälet till att de bor ihop: de har samma regler för när de
+   INTE får komma upp, och två komponenter som var för sig satte en timer på
+   2,6 sekunder hade kunnat öppna sig i samma bildruta.
 
-   Två regler gör skillnaden mellan en nudge och en pop-up-annons:
+   1. NUDGEN — var sjunde sidvisning eller varannan avslutade match (se
+      coaching-prompt.ts, som äger räkningen). En gång per webbläsare.
+   2. RABATTEN — vid tredje sessionen på sajten (se coaching-discount.ts).
+      Också en gång, och den går FÖRE nudgen när båda är tröskade: den är det
+      starkare erbjudandet, och nudgen står kvar tröskad till nästa sida.
 
-   1. Aldrig mitt i något. `isPromptablePath` håller den borta från matcher,
+   Två regler gör skillnaden mellan en nudge och en pop-up-annons, och de
+   gäller båda rutorna:
+
+   a. Aldrig mitt i något. `isPromptablePath` håller dem borta från matcher,
       provpass, träningspass och kassan.
-   2. Aldrig ovanpå något annat. Utmärkelser, rank-up, matchmakern och
-      samtyckesbannern äger skärmen när de är uppe — då hoppas visningen
-      över helt och räknarna står kvar, så nudgen kommer vid nästa
-      navigering i stället.
+   b. Aldrig ovanpå något annat. Utmärkelser, rank-up, matchmakern och
+      samtyckesbannern äger skärmen när de är uppe — då hoppas visningen över
+      helt och räknarna står kvar, så rutan kommer vid nästa navigering.
 
    Knappen går rakt till kassan via CoachingModal (`autoStart`) — samma köpväg
-   som kortet på startsidan, ingen andra kodväg till Stripe. Nudgen har redan
-   visat pris och argument, så erbjudandesteget vore att säga samma sak en
-   gång till. Tiden väljs efter betalningen, på tacksidan.
+   som kortet på startsidan, ingen andra kodväg till Stripe.
    ===================================================================== */
 
 /**
@@ -44,6 +55,9 @@ import {
  * rank-up-modal fram före den här.
  */
 const SHOW_DELAY_MS = 2600;
+
+/** Vilken av rutorna som står uppe. null = ingen. */
+type Variant = "nudge" | "rabatt";
 
 /**
  * Är någon annan overlay uppe? Alla handrullade overlayer i appen sätter
@@ -63,76 +77,112 @@ const ÖPPNINGSRAD: Record<PromptTrigger, string> = {
 export function CoachingPrompt() {
   const path = useRouterState({ select: (s) => s.location.pathname });
 
-  const [öppen, setÖppen] = useState(false);
+  const [variant, setVariant] = useState<Variant | null>(null);
   const [modalÖppen, setModalÖppen] = useState(false);
   /**
    * Modalen drar in `useAuth` (en auth-lyssnare och en profil-query per
-   * mount). Den monteras därför först när nudgen faktiskt visats, inte på
+   * mount). Den monteras därför först när en ruta faktiskt visats, inte på
    * varje sidladdning för alla.
    */
   const [modalMonterad, setModalMonterad] = useState(false);
   const trigger = useRef<PromptTrigger>("pageviews");
+  /** Sessionsräkningen vid visningen, så att klick och stängning bär samma tal. */
+  const sessioner = useRef(0);
 
-  // Priset hämtas först när rutan ska upp — annars hade varje sidladdning i
-  // appen kostat ett anrop till en endpoint som bara nudgen behöver.
-  const { offer } = useCoachingOffer(öppen);
+  // Priset hämtas först när nudgen ska upp — annars hade varje sidladdning i
+  // appen kostat ett anrop till en endpoint som bara rutorna behöver.
+  // Rabattrutan hämtar sitt eget, ur samma modulcache, alltså inget extra anrop.
+  const { offer } = useCoachingOffer(variant === "nudge");
   const pris = coachingPriceLabel(offer);
   const villkor = coachingTermsLabel(offer);
   const tidsbokning = !!offer?.available && offer.schedulingEnabled;
 
-  // Sidvisningarna. Refen gör att en omrendering på samma path inte räknas en
-  // gång till — och att React 19:s dubbelkörning i dev inte gör det heller.
+  // Sidvisningarna och sessionen. Refen gör att en omrendering på samma path
+  // inte räknas en gång till — och att React 19:s dubbelkörning i dev inte
+  // heller gör det.
   const räknadPath = useRef<string | null>(null);
   useEffect(() => {
     if (räknadPath.current === path) return;
     räknadPath.current = path;
     recordPageview();
+    // Måste ske vid VARJE sidvisning, inte bara vid första: det är den som
+    // håller sessionen vid liv. Utan den räknas den som läser en guide i
+    // fyrtio minuter och klickar vidare som två besök.
+    recordSessionActivity();
   }, [path]);
 
-  // Nudgen och modalen ligger i roten och överlever därför en navigering, till
+  // Rutorna och modalen ligger i roten och överlever därför en navigering, till
   // skillnad från kortens egna instanser som försvinner med sin sida. Backar
-  // användaren ut ur rutan ska den inte bli kvar liggande över nästa sida.
+  // användaren ut ur en ruta ska den inte bli kvar liggande över nästa sida.
   useEffect(() => {
-    setÖppen(false);
+    setVariant(null);
     setModalÖppen(false);
   }, [path]);
 
   // Beslutet. Ligger efter räkningen ovan (effekter körs i deklarationsordning)
   // och läser därför ett läge som redan innehåller den här sidvisningen.
   useEffect(() => {
-    if (öppen || modalÖppen) return;
+    if (variant || modalÖppen) return;
     if (!isPromptablePath(path)) return;
-    const utlösare = promptTrigger(readPromptState());
-    if (!utlösare) return;
+    // Billig förkontroll så att en vanlig navigering inte sätter en timer i
+    // onödan. Det riktiga beslutet tas om nedan, när timern går.
+    if (!discountDue(readDiscountState()) && !promptTrigger(readPromptState())) return;
 
     const id = window.setTimeout(() => {
       if (annanOverlayÖppen()) return;
+
+      // Rabatten först. Läses om här och inte ovan, eftersom en annan flik kan
+      // ha hunnit visa den under de 2,6 sekunderna.
+      const rabatt = readDiscountState();
+      if (discountDue(rabatt)) {
+        sessioner.current = rabatt.sessions;
+        // Bokförs vid visning, inte vid stängning: stänger användaren fliken
+        // mitt i ska rutan inte ligga kvar tröskad till nästa besök.
+        recordDiscountShown();
+        setModalMonterad(true);
+        setVariant("rabatt");
+        trackEvent("coaching_discount_shown", { sessions: rabatt.sessions });
+        return;
+      }
+
+      const utlösare = promptTrigger(readPromptState());
+      if (!utlösare) return;
       trigger.current = utlösare;
-      // Bokförs vid visning, inte vid stängning: stänger användaren fliken
-      // mitt i ska nudgen inte ligga kvar tröskad till nästa besök.
       recordPromptShown();
       setModalMonterad(true);
-      setÖppen(true);
+      setVariant("nudge");
       trackEvent("coaching_prompt_shown", { trigger: utlösare });
     }, SHOW_DELAY_MS);
     return () => window.clearTimeout(id);
-  }, [path, öppen, modalÖppen]);
+  }, [path, variant, modalÖppen]);
 
-  const stäng = (v: boolean) => {
+  const stängNudge = (v: boolean) => {
     if (v) return;
-    setÖppen(false);
+    setVariant(null);
     trackEvent("coaching_prompt_dismissed", { trigger: trigger.current });
   };
 
-  const boka = () => {
+  const stängRabatt = (v: boolean) => {
+    if (v) return;
+    setVariant(null);
+    trackEvent("coaching_discount_dismissed", { sessions: sessioner.current });
+  };
+
+  const köpNudge = () => {
     trackEvent("coaching_prompt_clicked", { trigger: trigger.current });
-    setÖppen(false);
+    setVariant(null);
+    setModalÖppen(true);
+  };
+
+  const köpRabatt = () => {
+    trackEvent("coaching_discount_clicked", { sessions: sessioner.current });
+    setVariant(null);
     setModalÖppen(true);
   };
 
   return (
     <>
-      <Dialog open={öppen} onOpenChange={stäng}>
+      <Dialog open={variant === "nudge"} onOpenChange={stängNudge}>
         <DialogContent className="max-w-[calc(100vw-2rem)] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[440px]">
           <div
             className="px-6 pb-5 pt-8 text-center"
@@ -188,7 +238,7 @@ export function CoachingPrompt() {
             )}
 
             <Button
-              onClick={boka}
+              onClick={köpNudge}
               className={`w-full bg-primary py-6 text-[15px] text-on-brand hover:bg-primary-deep ${villkor ? "mt-2.5" : "mt-6"}`}
             >
               {pris ? `Kom igång för ${pris}` : "Läs mer om coachning"}
@@ -196,7 +246,7 @@ export function CoachingPrompt() {
 
             <button
               type="button"
-              onClick={() => stäng(false)}
+              onClick={() => stängNudge(false)}
               className="mx-auto mt-3 block text-[13px] text-white/50 underline-offset-4 transition hover:text-[var(--cream)] hover:underline"
             >
               Inte nu
@@ -204,6 +254,12 @@ export function CoachingPrompt() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <CoachingDiscountDialog
+        open={variant === "rabatt"}
+        onOpenChange={stängRabatt}
+        onBuy={köpRabatt}
+      />
 
       {modalMonterad && (
         <CoachingModal open={modalÖppen} onOpenChange={setModalÖppen} source="popup" autoStart />

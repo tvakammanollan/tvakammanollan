@@ -8,6 +8,7 @@ import { confirmCoachingCheckout, type CoachingReceipt } from "@/lib/coaching.fu
 import { formatMoney } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
 import { stopCoachingPrompts } from "@/lib/coaching-prompt";
+import { stopCoachingDiscount } from "@/lib/coaching-discount";
 import { CoachingScheduler } from "@/components/CoachingScheduler";
 
 /**
@@ -56,10 +57,14 @@ function TackPage() {
         if (r.paid && r.firstConfirmation) {
           trackEvent("coaching_purchase_completed", { amount: r.amount, currency: r.currency });
         }
-        // Den som köpt ska aldrig se nudgen igen. Läggs vid varje bekräftat
-        // köp och inte bara det första: firstConfirmation är falskt vid en
-        // omladdning, och räkningen sitter i webbläsaren.
-        if (r.paid) stopCoachingPrompts();
+        // Den som köpt ska aldrig se nudgen eller rabatterbjudandet igen.
+        // Läggs vid varje bekräftat köp och inte bara det första:
+        // firstConfirmation är falskt vid en omladdning, och räkningen sitter i
+        // webbläsaren.
+        if (r.paid) {
+          stopCoachingPrompts();
+          stopCoachingDiscount();
+        }
       })
       .catch(() => alive && setFailed(true));
     return () => {

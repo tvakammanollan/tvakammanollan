@@ -77,6 +77,8 @@ export const limits = {
    * även till utloggade besökare.
    */
   coachingCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
+  /** Öppna kassan för Hela Ordlistan. Per användare, och en kassa räcker länge. */
+  ordCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
   /** Prisuppslaget bakom coachningskortet — cachat i isolatet, men publikt. */
   coachingOffer: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
   /**

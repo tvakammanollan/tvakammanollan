@@ -6,6 +6,9 @@ import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { isRankable } from "./username";
 import { LEADERBOARD_SIZE } from "./leaderboard.functions";
+import { optionalSupabaseAuth } from "./auth-optional.server";
+import { cappedBatchSize, ordAccess } from "./ord-paywall";
+import { hasOrdAccess } from "./ord-paywall.server";
 
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
@@ -24,6 +27,7 @@ export type WordQuestion = {
 };
 
 export const fetchWordBatch = createServerFn({ method: "GET" })
+  .middleware([optionalSupabaseAuth])
   .inputValidator(
     (data: {
       count?: number;
@@ -42,10 +46,33 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         })
         .parse(data ?? {}),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     // Publik + tung query (upp till 10k rader) — hamringsskydd per IP.
     assertRateLimit(ipKey("wordbatch"), limits.wordBatch);
     const supabase = supabaseAdmin;
+
+    // Paywallen: de första 40 orden är gratis, sedan krävs köpet. Räkningen
+    // ligger i databasen och kan alltså inte nollas från webbläsaren.
+    // Utloggade har inget konto att räkna på och får bara en liten bit i taget
+    // (se ord-paywall.ts); den som vill gå vidare behöver ett konto ändå för
+    // att köpet ska ha något att knytas till.
+    let count = data.count;
+    if (context.userId) {
+      const [owned, stats] = await Promise.all([
+        hasOrdAccess(context.userId),
+        supabase
+          .from("ord_practice_stats")
+          .select("total_count")
+          .eq("user_id", context.userId)
+          .maybeSingle(),
+      ]);
+      const access = ordAccess(stats.data?.total_count ?? 0, owned);
+      count = cappedBatchSize(data.count, access);
+      if (count === 0) return { questions: [] as WordQuestion[], locked: true as const };
+    } else {
+      count = Math.min(count, 10);
+    }
+    const locked = false as const;
     const excludeIds = new Set(data.exclude);
     if (data.excludeCorrectForUserId) {
       const { data: correctRows } = await supabase
@@ -72,7 +99,8 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
     }
     return {
-      questions: filtered.slice(0, data.count) as unknown as WordQuestion[],
+      questions: filtered.slice(0, count) as unknown as WordQuestion[],
+      locked,
     };
   });
 

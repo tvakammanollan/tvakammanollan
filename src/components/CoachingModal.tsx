@@ -26,11 +26,19 @@ import {
   startCoachingCheckout,
   type CoachingCheckoutHandle,
 } from "@/lib/coaching.functions";
-import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
+import {
+  useCoachingOffer,
+  coachingPriceLabel,
+  coachingDiscountedPriceLabel,
+  coachingTermsLabel,
+} from "@/hooks/useCoachingOffer";
+import { DISCOUNT_PERCENT, discountUnlocked, readDiscountState } from "@/lib/coaching-discount";
 import { trackEvent, type CoachingSource } from "@/lib/events";
-import { trackError } from "@/lib/telemetry";
+import { flushTelemetry, trackError } from "@/lib/telemetry";
+import { checkoutStepIndex, elapsedSeconds } from "@/lib/coaching-funnel";
 import { CALENDLY_ORIGIN, readCalendlyMessage } from "@/lib/calendly-embed";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
+import { DiscountCodeChip } from "@/components/DiscountCodeChip";
 import { formatDateLong, formatTime } from "@/lib/sv-format";
 
 /* =====================================================================
@@ -88,6 +96,18 @@ export function CoachingModal({
   const [kassaFel, setKassaFel] = useState<string | null>(null);
   /** Sparad för att kunna försöka igen — tiden är redan bokad hos Calendly. */
   const [inviteeUri, setInviteeUri] = useState<string | null>(null);
+  /**
+   * Har besökaren låst upp lojalitetsrabatten? Då ska koden stå framme i
+   * kassan, oavsett var modalen öppnades ifrån: den som fick den i rutan och
+   * köper en vecka senare från startsidan ska inte behöva minnas en sträng.
+   *
+   * Läses vid öppning och inte i renderingen — localStorage under första
+   * renderingen ger en hydreringsmiss på en serverrenderad sida.
+   */
+  const [rabattUpplåst, setRabattUpplåst] = useState(false);
+  useEffect(() => {
+    if (open) setRabattUpplåst(discountUnlocked(readDiscountState()));
+  }, [open]);
 
   /**
    * Calendly skickar ibland samma `event_scheduled` mer än en gång. Utan
@@ -114,10 +134,43 @@ export function CoachingModal({
     trackEvent("coaching_offer_opened", { source, available: offer?.available ?? false });
   }, [open, loadingOffer, offer, source]);
 
+  /* Var i modalen personen stod när den stängdes.
+
+     Köpvägen mätte tidigare bara steg framåt, så ett avbrutet köp syntes bara
+     som ett steg som saknades — och "stängde direkt på priset" ser då exakt
+     likadant ut som "satt i kassan och ändrade sig", fast de två kräver
+     motsatta åtgärder. Refar därför att stängningseffekten körs efter att
+     `steg` redan nollställts om den läser state. */
+  const öppnadAt = useRef(0);
+  const stegRef = useRef<Steg>("erbjudande");
+  stegRef.current = steg;
+  const bokadRef = useRef(false);
+  bokadRef.current = !!bokadTid || hanteradBokning.current !== null;
+
+  useEffect(() => {
+    if (!open) return;
+    öppnadAt.current = Date.now();
+  }, [open]);
+
   // Nollställ när modalen stängs, annars öppnas den nästa gång mitt i ett
   // halvfärdigt steg med en kassa som hör till ett annat köp.
   useEffect(() => {
     if (open) return;
+    // Bara en stängning som följer på en öppning. Effekten kör också vid
+    // montering, då modalen aldrig varit uppe och det inte finns något avhopp.
+    if (öppnadAt.current > 0) {
+      trackEvent("coaching_checkout_exited", {
+        source,
+        step: stegRef.current,
+        step_index: checkoutStepIndex(stegRef.current),
+        seconds: elapsedSeconds(öppnadAt.current),
+        // En bokad tid utan betalning är det utfall som kostar oss något:
+        // städaren måste riva den. Se coaching-sweep.ts.
+        booked: bokadRef.current,
+      });
+      flushTelemetry();
+      öppnadAt.current = 0;
+    }
     setSteg("erbjudande");
     setSchedulingUrl(null);
     setRequestId(null);
@@ -128,7 +181,7 @@ export function CoachingModal({
     setArbetar(false);
     hanteradBokning.current = null;
     rapporterad.current = { öppning: false, kalender: false, tidsval: false };
-  }, [open]);
+  }, [open, source]);
 
   /**
    * Tar emot kassan från servern.
@@ -294,6 +347,7 @@ export function CoachingModal({
   }, [steg, schedulingUrl, source]);
 
   const priceLabel = coachingPriceLabel(offer);
+  const rabattPris = coachingDiscountedPriceLabel(offer);
   const termsLabel = coachingTermsLabel(offer);
   const brett = steg !== "erbjudande";
 
@@ -401,8 +455,15 @@ export function CoachingModal({
                 Välj en tid
               </DialogTitle>
               <DialogDescription>
-                {priceLabel ? `Studieupplägg, ${priceLabel}. ` : ""}
-                Betalningen sker i nästa steg, här i rutan.
+                {/* Ordinarie pris här, rakt efter att rabattrutan lovat ett lägre,
+                    läses som att rabatten försvann. Den som låst upp koden får
+                    därför se sitt pris och en påminnelse om var den matas in. */}
+                {priceLabel
+                  ? `Studieupplägg, ${rabattUpplåst && rabattPris ? rabattPris : priceLabel}. `
+                  : ""}
+                {rabattUpplåst && rabattPris
+                  ? "Du lägger in din rabattkod i nästa steg, där du betalar."
+                  : "Betalningen sker i nästa steg, här i rutan."}
               </DialogDescription>
             </DialogHeader>
 
@@ -471,11 +532,25 @@ export function CoachingModal({
                 </p>
               </div>
             ) : kassa?.clientSecret && offer?.publishableKey ? (
-              <StripeCheckoutEmbed
-                clientSecret={kassa.clientSecret}
-                publishableKey={offer.publishableKey}
-                onError={setKassaFel}
-              />
+              <>
+                {/* Koden matas in i Stripes eget formulär, alltså kan vi inte fylla
+                    den åt köparen. Att den står direkt ovanför med en kopieringsknapp
+                    är skillnaden mellan att komma ihåg en sträng och att klistra in den. */}
+                {rabattUpplåst && (
+                  <div className="mb-4 rounded-xl border border-primary/25 bg-primary/[0.05] p-3.5">
+                    <p className="mb-2.5 text-[13px] leading-relaxed text-white/70">
+                      Din rabatt på {DISCOUNT_PERCENT} procent. Kopiera koden och klistra in den där
+                      Stripe frågar efter kampanjkod.
+                    </p>
+                    <DiscountCodeChip source={source} />
+                  </div>
+                )}
+                <StripeCheckoutEmbed
+                  clientSecret={kassa.clientSecret}
+                  publishableKey={offer.publishableKey}
+                  onError={setKassaFel}
+                />
+              </>
             ) : (
               <div className="py-12 text-center" aria-busy="true">
                 <Loader2 className="mx-auto h-7 w-7 animate-spin text-primary" />

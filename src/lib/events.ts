@@ -15,6 +15,7 @@
  * - Aldrig PII: inga mejladresser, inga användarnamn, ingen inläggstext.
  */
 import { track } from "./telemetry";
+import type { CheckoutStep, LeadBlockReason, LeadField, QuizStage } from "./coaching-funnel";
 
 export type MatchType = "verbal" | "math";
 export type MatchMode = "bot" | "private" | "ranked";
@@ -98,6 +99,9 @@ export interface ProductEvents {
     source_filter: string;
     difficulty_count: number;
   };
+  ord_paywall_shown: { answered: number };
+  ord_paywall_checkout_started: { embedded: boolean };
+  ord_purchase_completed: { via: "return" };
   ord_session_completed: {
     answered: number;
     correct: number;
@@ -126,6 +130,19 @@ export interface ProductEvents {
   coaching_offer_opened: { source: CoachingSource; available: boolean };
   coaching_checkout_started: { source: CoachingSource; is_guest: boolean };
   coaching_checkout_failed: { source: CoachingSource };
+  /** Modalen stängdes. Fyras vid VARJE stängning, även den som skedde efter ett
+      klick vidare till Stripe: `step` säger var personen stod, och utan den är
+      "stängde på erbjudandet" omöjligt att skilja från "stängde i kassan" —
+      båda ser i en tratt ut som ett steg som saknas. `seconds` skiljer den som
+      klickade fel från den som läste och tvekade. */
+  coaching_checkout_exited: {
+    source: CoachingSource;
+    step: CheckoutStep;
+    step_index: number;
+    seconds: number;
+    /** En tid var bokad i Calendly när rutan stängdes, dvs. städaren får jobb. */
+    booked: boolean;
+  };
   /** Tidsväljaren begärdes. `scheduling: false` = Calendly är inte påslaget. */
   coaching_booking_opened: { source: CoachingSource; scheduling: boolean };
   /** Calendlys väljare renderade inne i iframen. Öppningar utan den här är
@@ -150,16 +167,71 @@ export interface ProductEvents {
   coaching_quiz_answered: { source: CoachingSource; step: number; value: string };
   /** Sammanfattningen visades, dvs. båda frågorna är besvarade. */
   coaching_quiz_qualified: { source: CoachingSource };
-  /** Numret skickades in. Detta är leadet. */
-  coaching_lead_submitted: { source: CoachingSource; is_guest: boolean };
-  /** Servern avvisade inskicket — nästan alltid ett nummer som inte validerar.
-      Sticker den här upp är det formulärets fält som är problemet, inte viljan. */
-  coaching_lead_failed: { source: CoachingSource };
+  /** Första tecknet i något av kontaktfälten, en gång per ifyllnad.
+      Det är svaret på "hur många fyllde i det alls": klyftan från `qualified`
+      hit är "läste sammanfattningen och stängde", klyftan härifrån till
+      `lead_submitted` är "började skriva och skickade ändå inte". */
+  coaching_form_started: { source: CoachingSource; field: LeadField };
+  /** Klientvalideringen stoppade inskicket. Fyras vid varje försök, inte en
+      gång per person: samma fel tre gånger i rad är en annan historia än ett
+      fel som rättades direkt. Detta är INTE ett serverfel — knappen trycktes,
+      men inget lämnade webbläsaren. */
+  coaching_lead_blocked: { source: CoachingSource; reason: LeadBlockReason };
+  /** Numret skickades in. Detta är leadet. `fields` visar vad personen orkade
+      fylla i utöver numret, `seconds` hur lång vägen dit var. */
+  coaching_lead_submitted: {
+    source: CoachingSource;
+    is_guest: boolean;
+    fields: string;
+    field_count: number;
+    seconds: number;
+  };
+  /** Servern avvisade inskicket. `reason` skiljer kvoten (någon försöker om och
+      om igen) från allt annat — numret är redan validerat i klienten, så ett
+      serverfel här betyder att något är trasigt, inte att fältet var fel. */
+  coaching_lead_failed: { source: CoachingSource; reason: "rate_limit" | "server" };
+  /** Personen lämnade kvalificeringen utan att skicka in.
+      Fyras EN gång per påbörjad ifyllnad, aldrig för den som bara såg kortet
+      (`coaching_quiz_viewed` utan `coaching_quiz_started` täcker redan det, och
+      allt annat hade lagt en händelse på varje dashboardbesök).
+      `stage` är avsedd som breakdown: den delar upp formuläret i orört,
+      påbörjat och färdigskrivet-men-oskickat. Se coaching-funnel.ts.
+
+      OBS vid analys: `via: "pagehide"` fyras också när mobilen byter app, och
+      den som kommer tillbaka och skickar in får då BÅDA händelserna. Tratten
+      `quiz_started → lead_submitted` påverkas inte (inskicket kommer senare),
+      men ett stadiediagram måste sålla bort personer som även har
+      `coaching_lead_submitted`, annars räknas de som avhopp de inte gjorde. */
+  coaching_quiz_exited: {
+    source: CoachingSource;
+    stage: QuizStage;
+    step: number;
+    /** Antal besvarade frågor, 0-2. */
+    answered: number;
+    /** Ifyllda fält i kanonisk ordning (`"name,phone"`), aldrig deras värden. */
+    fields: string;
+    field_count: number;
+    seconds: number;
+    /** Hur avhoppet upptäcktes. `pagehide` = stängd flik eller navigering bort. */
+    via: "pagehide" | "unmount";
+  };
   /** Nudgen kom upp av sig själv. `trigger` skiljer sidbläddraren från spelaren. */
   coaching_prompt_shown: { trigger: CoachingPromptTrigger };
   /** Klick på nudgens knapp. Kvoten mot `shown` är hela dess existensberättigande. */
   coaching_prompt_clicked: { trigger: CoachingPromptTrigger };
   coaching_prompt_dismissed: { trigger: CoachingPromptTrigger };
+
+  /* Lojalitetsrabatten — 20 % vid tredje sessionen. Se coaching-discount.ts.
+
+     `sessions` är räkningen som tröskade fram rutan. Den ska stå på 3 i
+     praktiken; gör den inte det är det sessionsräkningen som är fel, inte
+     rabatten, och det går bara att upptäcka om talet följer med. */
+  coaching_discount_shown: { sessions: number };
+  /** Klick på knappen. Kvoten mot `shown` säger om rabatten faktiskt biter. */
+  coaching_discount_clicked: { sessions: number };
+  coaching_discount_dismissed: { sessions: number };
+  /** Koden kopierades. Utan den syns bara "öppnade kassan", inte "tog koden med sig". */
+  coaching_discount_copied: { source: CoachingSource };
 
   /* ── Forum ───────────────────────────────────────────────────────────── */
   forum_thread_created: {

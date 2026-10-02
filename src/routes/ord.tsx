@@ -11,6 +11,12 @@ import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
+import { OrdPaywall } from "@/components/OrdPaywall";
+import {
+  confirmOrdCheckout,
+  getOrdAccess,
+  type OrdAccessInfo,
+} from "@/lib/ord-paywall.functions";
 
 import {
   ArrowRight,
@@ -224,6 +230,9 @@ function OrdPracticePage() {
   const fetchFailedCount = useServerFn(getFailedWordCount);
   const fetchFailedList = useServerFn(getFailedWordsList);
   const recordAnswer = useServerFn(recordOrdAnswer);
+  const fetchAccess = useServerFn(getOrdAccess);
+  const confirmPurchase = useServerFn(confirmOrdCheckout);
+  const [access, setAccess] = useState<OrdAccessInfo | null>(null);
   // Varna bara en gång per session om svars-sparandet strular.
   const recordWarnedRef = useRef(false);
 
@@ -263,7 +272,33 @@ function OrdPracticePage() {
     void fetchProgress({})
       .then((p) => setProgress(p))
       .catch(() => setProgress(null));
-  }, [fetchProgress]);
+    void fetchAccess({})
+      .then((a) => setAccess(a))
+      .catch(() => setAccess(null));
+  }, [fetchProgress, fetchAccess]);
+
+  // Tillbaka från kassan (`?kop=klart&session_id=…`): bekräfta mot Stripe som
+  // reserv för webhooken, så att upplåsningen syns direkt.
+  const confirmedRef = useRef(false);
+  useEffect(() => {
+    if (authLoading || !user || confirmedRef.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+    if (params.get("kop") !== "klart" || !sessionId) return;
+    confirmedRef.current = true;
+    void confirmPurchase({ data: { sessionId } })
+      .then((r) => {
+        if (r.owned) {
+          trackEvent("ord_purchase_completed", { via: "return" });
+          toast.success("Hela ordlistan är upplåst. Lycka till!");
+        }
+        loadProgress();
+      })
+      .catch(() => toast.warning("Vi kunde inte bekräfta köpet ännu. Ladda om sidan om en stund."))
+      .finally(() => {
+        window.history.replaceState(null, "", window.location.pathname);
+      });
+  }, [authLoading, user, confirmPurchase, loadProgress]);
 
   // Antalen per filter kräver ingen inloggning — de kan hämtas direkt.
   useEffect(() => {
@@ -321,6 +356,11 @@ function OrdPracticePage() {
             },
           });
           questions = res.questions;
+          if (res.locked) {
+            // Kvoten tog slut under tiden (annan flik, eller sidan var gammal).
+            loadProgress();
+            return;
+          }
         }
         setBatch(questions);
         setIdx(0);
@@ -340,7 +380,7 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch, fetchFailedBatch, excludeCorrect, progress, sourceFilter, difficulties],
+    [fetchBatch, fetchFailedBatch, excludeCorrect, progress, sourceFilter, difficulties, loadProgress],
   );
 
   const current = batch[idx];
@@ -439,7 +479,7 @@ function OrdPracticePage() {
           eyebrow="10 000+ ord"
           title="Öva"
           cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
-          subtitle="Spaced repetition. Ingen tidspress. Helt gratis."
+          subtitle="Spaced repetition. Ingen tidspress. De första 40 orden är gratis."
           align="center"
           variant="compact"
         />
@@ -457,7 +497,8 @@ function OrdPracticePage() {
                 källfilter, tre svårighetsknappar, en kryssruta, en lägestoggle
                 och hela listan över felade ord. Starta direkt — den som vill
                 styra öppnar Anpassa, precis som på /train. */}
-            <GlassCard className="p-6 text-center sm:p-8">
+            {access?.locked && <OrdPaywall access={access} />}
+            <GlassCard className={`p-6 text-center sm:p-8 ${access?.locked ? "hidden" : ""}`}>
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
                 Ditt pass
               </p>
@@ -471,6 +512,12 @@ function OrdPracticePage() {
               >
                 {loading ? "Förbereder…" : `Öva ${target} ord`}
               </PrimaryCTA>
+              {access && access.freeRemaining !== null && !access.locked && (
+                <p className="mt-3 text-xs text-white/55">
+                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan kostar hela listan ett
+                  engångsköp.
+                </p>
+              )}
 
               <button
                 type="button"

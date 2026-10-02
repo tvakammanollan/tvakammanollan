@@ -207,10 +207,11 @@ export interface CoachingPrice {
  * slår igenom inom några minuter utan deploy.
  */
 const PRICE_TTL_MS = 10 * 60 * 1000;
-let priceCache: { at: number; value: CoachingPrice } | null = null;
+const priceCache = new Map<string, { at: number; value: CoachingPrice }>();
 
 /** Default-namnet matchar produkten i Stripe. Kan bytas via env. */
 const DEFAULT_PRODUCT_NAME = "Coachning Studieupplägg";
+const DEFAULT_ORD_PRODUCT_NAME = "Hela Ordlistan";
 
 function toCoachingPrice(price: StripePrice, fallbackName: string): CoachingPrice {
   if (price.unit_amount === null) {
@@ -231,19 +232,20 @@ function toCoachingPrice(price: StripePrice, fallbackName: string): CoachingPric
 }
 
 /**
- * Hittar priset på coachningsprodukten.
+ * Hittar priset på en produkt.
  *
- * I första hand `STRIPE_COACHING_PRICE_ID` (exakt, tål namnbyten). Saknas den
- * letas produkten upp på namn och dess `default_price` används — det gör att
- * integrationen fungerar så fort den hemliga nyckeln finns, utan ett extra
- * konfigurationssteg.
+ * I första hand ett exakt pris-id (tål namnbyten). Saknas det letas produkten
+ * upp på namn och dess `default_price` används — det gör att integrationen
+ * fungerar så fort den hemliga nyckeln finns, utan ett extra konfigurationssteg.
  */
-export async function resolveCoachingPrice(): Promise<CoachingPrice> {
+async function resolvePrice(
+  cacheKey: string,
+  priceId: string | undefined,
+  wanted: string,
+): Promise<CoachingPrice> {
   const now = Date.now();
-  if (priceCache && now - priceCache.at < PRICE_TTL_MS) return priceCache.value;
-
-  const wanted = (process.env.STRIPE_COACHING_PRODUCT_NAME || DEFAULT_PRODUCT_NAME).trim();
-  const priceId = process.env.STRIPE_COACHING_PRICE_ID?.trim();
+  const hit = priceCache.get(cacheKey);
+  if (hit && now - hit.at < PRICE_TTL_MS) return hit.value;
 
   let resolved: CoachingPrice;
   if (priceId) {
@@ -260,9 +262,7 @@ export async function resolveCoachingPrice(): Promise<CoachingPrice> {
     const norm = (s: string) => s.trim().toLowerCase();
     const product = list.data.find((p) => norm(p.name) === norm(wanted));
     if (!product) {
-      console.error(
-        `[stripe] hittade ingen aktiv produkt som heter "${wanted}". Sätt STRIPE_COACHING_PRICE_ID.`,
-      );
+      console.error(`[stripe] hittade ingen aktiv produkt som heter "${wanted}". Sätt pris-id.`);
       throw new Error(GENERIC_ERROR);
     }
     const dp = product.default_price;
@@ -273,13 +273,30 @@ export async function resolveCoachingPrice(): Promise<CoachingPrice> {
     resolved = toCoachingPrice(dp, product.name);
   }
 
-  priceCache = { at: now, value: resolved };
+  priceCache.set(cacheKey, { at: now, value: resolved });
   return resolved;
+}
+
+export function resolveCoachingPrice(): Promise<CoachingPrice> {
+  return resolvePrice(
+    "coaching",
+    process.env.STRIPE_COACHING_PRICE_ID?.trim() || undefined,
+    (process.env.STRIPE_COACHING_PRODUCT_NAME || DEFAULT_PRODUCT_NAME).trim(),
+  );
+}
+
+/** Priset på "Hela Ordlistan". `STRIPE_ORD_PRICE_ID` om satt, annars produktnamnet. */
+export function resolveOrdPrice(): Promise<CoachingPrice> {
+  return resolvePrice(
+    "ord",
+    process.env.STRIPE_ORD_PRICE_ID?.trim() || undefined,
+    (process.env.STRIPE_ORD_PRODUCT_NAME || DEFAULT_ORD_PRODUCT_NAME).trim(),
+  );
 }
 
 /** Bara för tester — tvingar nästa anrop att gå till Stripe igen. */
 export function clearCoachingPriceCache(): void {
-  priceCache = null;
+  priceCache.clear();
 }
 
 /* ===================== Checkout ===================== */

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
@@ -7,6 +7,19 @@ import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { useAuth } from "@/hooks/useAuth";
 import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
+import { flushTelemetry } from "@/lib/telemetry";
+import {
+  elapsedSeconds,
+  fieldList,
+  filledLeadFields,
+  furthestQuizPhase,
+  leadFailureReason,
+  quizPhaseStep,
+  quizStage,
+  type LeadBlockReason,
+  type LeadField,
+  type QuizPhase,
+} from "@/lib/coaching-funnel";
 import { submitCoachingLead } from "@/lib/coaching-leads.functions";
 import { QUIZ_STEPS, quizComplete, quizOutcome, type QuizAnswers } from "@/lib/coaching-quiz";
 import { formatPhone, normalizePhone } from "@/lib/phone";
@@ -27,7 +40,10 @@ import { formatPhone, normalizePhone } from "@/lib/phone";
    staplat i en kolumn och testat i den bredden.
    ===================================================================== */
 
-type Phase = "teaser" | "q1" | "q2" | "form" | "done";
+/* Faserna bor i coaching-funnel.ts tillsammans med mätningen av dem: de två
+   får inte kunna glida isär, eftersom stadiet i PostHog är namngivet efter
+   fasen och en tyst omdöpning gör historiken osann i efterhand. */
+type Phase = QuizPhase;
 
 const SOURCE = "dashboard" as const;
 
@@ -56,8 +72,78 @@ export function CoachingQuizCard() {
   const outcome = useMemo(() => quizOutcome(answers), [answers]);
   const phoneRef = useRef<HTMLInputElement>(null);
 
+  /* ── Mätning av avhopp ───────────────────────────────────────────────
+     Tratten mätte tidigare bara det som gick framåt, så den som läste
+     sammanfattningen och stängde fliken lämnade inget spår alls: i PostHog
+     såg det ut som ett steg som saknades, vilket är samma bild som "hann
+     aldrig dit". Refar och inte state, eftersom lyssnaren nedan registreras
+     en gång och annars hade läst värdena från första renderingen. */
+  const startedAt = useRef(0);
+  /** Längsta faser personen nådde. "Tillbaka" i steg 2 får inte skriva ner den. */
+  const furthest = useRef<Phase>("teaser");
+  /** Sant så snart något kontaktfält fått innehåll — grinden för form_started. */
+  const touchedForm = useRef(false);
+  /** Avhoppet rapporteras en gång. pagehide och unmount kan båda inträffa. */
+  const exitReported = useRef(false);
+  /** Färskt tillstånd åt lyssnaren, uppdaterat vid varje rendering. */
+  const snapshot = useRef({ phase, answers, name, phone, email, message });
+  snapshot.current = { phase, answers, name, phone, email, message };
+
+  furthest.current = furthestQuizPhase(furthest.current, phase);
+
+  const reportExit = useCallback((via: "pagehide" | "unmount") => {
+    if (exitReported.current) return;
+    const nadde = furthest.current;
+    // Den som bara såg kortet beskrivs redan av `coaching_quiz_viewed` utan
+    // något `coaching_quiz_started` efter sig. Att fyra här också hade lagt en
+    // händelse på varje dashboardbesök, för noll ny information.
+    // Och den som skickade in är inget avhopp.
+    if (nadde === "teaser" || nadde === "done") return;
+    exitReported.current = true;
+    const { answers: svar, name: n, phone: t, email: e, message: msg } = snapshot.current;
+    const fields = filledLeadFields({ name: n, phone: t, email: e, message: msg });
+    trackEvent("coaching_quiz_exited", {
+      source: SOURCE,
+      stage: quizStage(nadde, fields),
+      step: quizPhaseStep(nadde),
+      answered: QUIZ_STEPS.filter((step) => svar[step.id]).length,
+      fields: fieldList(fields),
+      field_count: fields.length,
+      seconds: elapsedSeconds(startedAt.current || Date.now()),
+      via,
+    });
+    // Kön töms annars först efter två sekunder, och de finns inte när fliken
+    // är på väg bort. Se flushTelemetry.
+    flushTelemetry();
+  }, []);
+
+  useEffect(() => {
+    const påPagehide = () => reportExit("pagehide");
+    window.addEventListener("pagehide", påPagehide);
+    return () => {
+      window.removeEventListener("pagehide", påPagehide);
+      // Avmontering är också ett avhopp: navigering inom appen stänger aldrig
+      // sidan, så utan den här grenen syns bara den som stänger hela fliken.
+      reportExit("unmount");
+    };
+  }, [reportExit]);
+
+  /**
+   * Första tecknet i ett kontaktfält. Grinden är "fältet har innehåll", inte
+   * "fältet fick fokus": ett fokus säger bara att markören råkade hamna där,
+   * medan ett tecken är ett beslut. Klyftan från `qualified` hit är alltså
+   * "läste och stängde", och klyftan härifrån till inskicket är "började
+   * skriva och skickade ändå inte".
+   */
+  const noteFieldInput = (field: LeadField, value: string) => {
+    if (touchedForm.current || value.trim().length === 0) return;
+    touchedForm.current = true;
+    trackEvent("coaching_form_started", { source: SOURCE, field });
+  };
+
   const start = () => {
     setPhase("q1");
+    startedAt.current = Date.now();
     trackEvent("coaching_quiz_started", { source: SOURCE });
   };
 
@@ -86,23 +172,32 @@ export function CoachingQuizCard() {
     e.preventDefault();
     setError(null);
 
+    // Knappen trycktes men inget lämnade webbläsaren. Det är ett eget utfall:
+    // viljan fanns, fältet stoppade den. Utan händelsen ser det i tratten
+    // likadant ut som att personen aldrig försökte.
+    const blocked = (reason: LeadBlockReason) =>
+      trackEvent("coaching_lead_blocked", { source: SOURCE, reason });
+
     // Samma validering som servern kör, men här för att svaret ska komma
     // direkt. Servern är den som räknas — den här är bekvämlighet.
     const parsed = normalizePhone(phone);
     if (!parsed.ok) {
       setError(parsed.error ?? "Numret ser inte ut att stämma.");
       phoneRef.current?.focus();
+      blocked("phone");
       return;
     }
     // Frivilligt fält, men ett ifyllt fält ska vara rätt ifyllt: en felstavad
     // adress är sämre än ingen, eftersom den ser ut som en väg att nå någon.
     if (email.trim() && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email.trim())) {
       setError("E-postadressen ser inte ut att stämma.");
+      blocked("email");
       return;
     }
     if (!quizComplete(answers)) {
       setError("Svara på båda frågorna först.");
       setPhase("q1");
+      blocked("incomplete");
       return;
     }
 
@@ -120,16 +215,22 @@ export function CoachingQuizCard() {
       });
       setSavedPhone(res.phone);
       setPhase("done");
+      const fields = filledLeadFields({ name, phone, email, message });
       trackEvent("coaching_lead_submitted", {
         source: SOURCE,
         is_guest: !!user?.is_anonymous,
+        // Vilka fält, aldrig vad som stod i dem. Poängen är att kunna jämföra
+        // de som konverterade med de som hoppade av i `coaching_quiz_exited`.
+        fields: fieldList(fields),
+        field_count: fields.length,
+        seconds: elapsedSeconds(startedAt.current || Date.now()),
       });
     } catch (err) {
       // Serverns felmeddelanden är skrivna för att visas (fel nummer,
       // rate limit). Är det något annat får användaren den generiska texten.
       const msg = err instanceof Error ? err.message : "";
       setError(msg && msg.length < 160 ? msg : "Det gick inte att skicka just nu. Försök igen.");
-      trackEvent("coaching_lead_failed", { source: SOURCE });
+      trackEvent("coaching_lead_failed", { source: SOURCE, reason: leadFailureReason(msg) });
     } finally {
       setPending(false);
     }
@@ -207,7 +308,10 @@ export function CoachingQuizCard() {
             id="lead-namn"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              noteFieldInput("name", e.target.value);
+            }}
             autoComplete="given-name"
             maxLength={80}
             className="mt-1 w-full rounded-lg border border-input bg-white px-3 py-2 text-sm text-[var(--cream)] outline-none transition-colors focus:border-success"
@@ -224,6 +328,7 @@ export function CoachingQuizCard() {
             value={phone}
             onChange={(e) => {
               setPhone(e.target.value);
+              noteFieldInput("phone", e.target.value);
               if (error) setError(null);
             }}
             autoComplete="tel"
@@ -244,6 +349,7 @@ export function CoachingQuizCard() {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              noteFieldInput("email", e.target.value);
               if (error) setError(null);
             }}
             autoComplete="email"
@@ -258,7 +364,10 @@ export function CoachingQuizCard() {
           <textarea
             id="lead-meddelande"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              noteFieldInput("message", e.target.value);
+            }}
             rows={2}
             maxLength={1000}
             placeholder="T.ex. när du skriver provet, eller vad du fastnar på"
