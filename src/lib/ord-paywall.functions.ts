@@ -116,14 +116,6 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
       locale: "sv",
       client_reference_id: userId,
       allow_promotion_codes: true,
-      // Digitalt innehåll som levereras direkt: ångerrätten får bara falla bort
-      // om köparen uttryckligen går med på det, så texten står vid köpknappen.
-      custom_text: {
-        submit: {
-          message:
-            "Genom att köpa får du åtkomst direkt och går med på att ångerrätten då faller bort. Se tvakommanollan.se/villkor.",
-        },
-      },
       metadata: { product: ORD_PRODUCT_TAG, user_id: userId },
       payment_intent_data: { metadata: { product: ORD_PRODUCT_TAG, user_id: userId } },
     } satisfies Record<string, StripeParam>;

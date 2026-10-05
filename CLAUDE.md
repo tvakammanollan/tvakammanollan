@@ -1417,6 +1417,12 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
 - **Webhooken delar endpoint med coachningen.** Ordsessioner har
   `metadata.product = "ord_access"` och `metadata.user_id` (satt av servern ur
   token) och bokförs i `ord_purchases`; allt annat går vidare till coachningen.
+- **`custom_text` får inte användas i kassan.** Kontot har Managed Payments
+  påslaget, och Stripe avvisar då hela sessionen ("custom_text cannot be used
+  with Managed Payments"), både inbäddad och hostad. Det stoppade ordköpet
+  2026-10-02 till 10-05: båda vägarna föll, så köparen fick bara "Kunde inte
+  öppna kassan". Testa nya sessionsparametrar med ett riktigt `curl` mot
+  `/v1/checkout/sessions` innan push; typkontrollen ser dem inte.
 - **Gästkonton kan inte köpa** (köpet hade försvunnit med kontot).
 - Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
   bekräftar mot Stripe som reserv för webhooken.
