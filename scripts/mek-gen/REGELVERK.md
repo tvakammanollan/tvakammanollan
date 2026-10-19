@@ -66,9 +66,8 @@ HT2011; det enda tillfälle som saknas är HT2011 (inget facit finns).
   distraktorerna. MEK-nyckeln är oftast ett **allmänt akademiskt ord**, inte ett
   sällsynt ORD-ord.
 - Ämnena spänner över medicin, natur/miljö, samhälle/juridik, kultur/litteratur,
-  språk/skola, ekonomi, historia, teknik, psykologi och filosofi. Min
-  nyckelordsräkning är för grov för att ge kvoter, därför är en riktig
-  annotering steg 0 nedan.
+  språk/skola, ekonomi, historia, teknik, psykologi och filosofi. Fördelningen
+  per uppgift står i Del G.
 
 ### A4. Distraktortyper (genomläsning av ~45 uppgifter)
 1. **Formlockare**: samma prefix eller morfologi som nyckeln.
@@ -91,8 +90,11 @@ avslöjar aldrig facit.
 
 ### A5. Kända skräpfel i arkivtexten
 Ligaturfel från PDF-extraktionen (`forsk ning`, `fl ickor`, `arbets platsens`,
-`defi nition`) i minst 6 uppgifter, och luckor skrivna som `____` (äldre) eller
-`_____` (nyare). Normaliseras innan arkivet används som exempel, annars lär sig
+`defi nition`) i minst 6 uppgifter, ligaturer som försvunnit helt (`fnnas`,
+`fngerat`, `geografsk`, `fltreras`, alla i 2018ht-5), och luckor skrivna som
+`____` (äldre) eller `_____` (nyare). Mellanslagsfelen lagas av
+`normalizeArchiveItem`; de försvunna bokstäverna går inte att laga utan ordlista
+och står kvar. Normaliseras innan arkivet används som exempel, annars lär sig
 generatorn felen.
 
 ## Del B. UHR:s ramar (primärkällor)
@@ -133,8 +135,9 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
 
 ### C2. Texten
 1. MÅSTE: sakprosa i HP-register: nyhet, debatt, recension, populärvetenskap,
-   akademisk text, myndighetstext, kulturhistoria. Ingen skönlitteratur, ingen
-   dialog, inget tilltal till läsaren utöver det arkivet har.
+   akademisk text, myndighetstext, kulturhistoria. Skönlitterär prosa högst 2 %
+   (arkivet: 9 av 600, deckar- och romanutdrag). Ingen dialog som bär
+   uppgiften, inget tilltal till läsaren utöver det arkivet har.
 2. MÅSTE: texten är sann. Varje faktapåstående finns i källan.
 3. MÅSTE: tidlös. Inget "i år", "nyligen", "just nu"; årtal skrivs ut.
 4. MÅSTE: uppgiften går att lösa ur **texten och språket**, inte ur
@@ -145,7 +148,10 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
 6. MÅSTE: korrekt svenska enligt Språkrådet: ”citattecken”, kort tankstreck,
    inga engelska em-streck. Sajtens regel om tankstreck gäller förklaringarna
    (som besökare läser som sajtens egen text), inte provtexten som imiterar HP.
-7. BÖR: ämnesmix enligt steg 0-annoteringen, inget ämne över 15 % av banken.
+7. BÖR: ämnes- och genremix enligt arkivet (Del G), inget ämne över 15 % av
+   banken. Genren styr i praktiken källnivån (C7): `myn` 14 % kan citeras,
+   `pop`+`aka` 49 % kommer ur CC BY/BY-SA eller egen prosa, `nyh`+`deb`+`rec`
+   34 % blir nästan alltid egen prosa (nivå D).
 
 ### C3. Var ett ord lyfts ut
 1. MÅSTE: luckan är ett **innehållsord** (substantiv, verb, adjektiv, adverb)
@@ -167,7 +173,11 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
    gärna i olika satser (arkivet: 16 av 480 mellanrum är 1–2 ord).
 5. BÖR: luckan i textens senare halva (som arkivet); aldrig först i texten mer än
    undantagsvis.
-6. BÖR: nyckelns ordklass och svårighet enligt steg 0-fördelningen. Nyckeln är
+6. BÖR: nyckelns ordklass och ledtrådstyp enligt arkivet (Del G): substantiv
+   39 %, adjektiv 25 %, verb 20 %, fast uttryck 11 %, adverb 4 %. Ledtråden är
+   i 40 % av luckorna en **kollokation**, alltså vad ordet brukar stå ihop med;
+   en generator som bara bygger på definitioner och kontraster missar den
+   vanligaste typen. Nyckeln är
    ett ord en stark läsare känner till; svårigheten ligger i att skilja det från
    distraktorerna, inte i att ordet är obskyrt.
 7. MÅSTE: samma nyckellemma högst 2 gånger i hela banken, samma distraktorlemma
@@ -181,19 +191,27 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
    ett skäl som går att formulera.
 3. MÅSTE: varje ord finns i SAOL/svenska.se i angiven form (inga påhittade ord,
    inga felböjningar). Anglicismer bara om de står i SAOL (arkivet har `backlash`).
-4. MÅSTE: minst två olika distraktortyper ur A4 per uppgift.
-5. BÖR: banken fördelar typerna ungefär som arkivet (mäts i steg 0).
+4. BÖR: distraktortyperna fördelas som i arkivet (Del G). **Ett homogent set
+   är ett UHR-mönster, inte ett fel**: i 57 % av enluckorna delar alla tre
+   distraktorer en typ (`anvisa / anpassa / anordna / anknyta`, fyra medicinska
+   instrument). Det första utkastet krävde två olika typer per uppgift; den
+   regeln hade underkänt 112 av UHR:s 240 enluckor och är struken.
+5. MÅSTE: valens är en giltig skiljelinje. `vittnar om` mot `intygar`,
+   `antyder` (2023ht-5/22) och `kan ___ till frågan` är legitima sätt att
+   fälla en distraktor, men då ska alla fyra fortfarande vara verb som annars
+   passar.
 6. MÅSTE: inget alternativ pekas ut av form ensam: inte det enda latinska, inte det
    enda långa sammansatta, inte det enda med annat register (om inte registret är
    själva ledtråden i texten).
 
 ### C5. Flerluckor (2–3)
 1. MÅSTE: varje distraktor faller på **minst en** lucka, med ett skäl.
-2. MÅSTE: minst hälften av distraktorerna har **minst en lucka som passar** (delpassning,
-   A4 typ 6), annars är det tre enluckor i rad.
-3. MÅSTE: distraktorerna får inte alla falla på samma lucka; då är de andra
-   luckorna dekor och uppgiften en enlucka. (Hypotes ur arkivet, verifieras i
-   steg 0.)
+2. BÖR: delpassning (A4 typ 6) i minst två av tre distraktorer i ≥ 50 % av
+   flerluckorna och i ingen distraktor alls i ≤ 15 % (arkivet: 53 % resp. 14 %).
+   Utan delpassning är uppgiften flera enluckor i rad.
+3. BÖR: högst 3 % av flerluckorna har alla tre distraktorer fällda av samma
+   enda lucka, och högst 6 % har en lucka som inte fäller någon distraktor
+   (arkivet: 9 resp. 21 av 360). Det är dekorluckor; UHR har dem men sällan.
 4. MÅSTE: luckorna hänger ihop semantiskt (treluckan om tango: `Silhuetten –
    pose – klichéer`), de är inte tre oberoende ordfrågor i samma stycke.
 
@@ -344,18 +362,54 @@ granskning. `question_reports` på en genererad uppgift läses först.
 - Ordningen i CLAUDE.md före varje commit: tsc → eslint (ändrade filer) → test →
   build → SSR-rökprov.
 
+## Del G. Arkivets fördelningar (steg 0, annoterat 2026-10-19)
+
+Alla 600 uppgifter annoterade för hand i sessionen (ingen API-nyckel fanns), i
+`scripts/mek-gen/arkiv-annotering.json`. Schemat står i filens rubrik nedan.
+Annoteringen är en persons bedömning: kategorierna är tydliga men gränsfallen
+(`kol` mot `sam`, `ny` mot `fa`) är omdömen. **Niklas stickprovar 50 rader
+innan siffrorna används som kvoter.**
+
+| | Fördelning |
+|---|---|
+| Ämne | medicin 13 %, kultur 11 %, samhälle 11 %, historia 9 %, biologi 9 %, litteratur 8 %, utbildning 8 %, ekonomi 7 %, juridik 5 %, filosofi/religion 4 %, miljö/geografi 4 %, psykologi 4 %, språk 3 %, teknik 3 %, fysik/kemi 1 % |
+| Genre | populärvetenskap 31 %, akademisk 18 %, nyhet 14 %, debatt 14 %, myndighet 14 %, recension 6 %, skönlitteratur 2 % |
+| Ordklass (per lucka) | substantiv 39 %, adjektiv 25 %, verb 20 %, fast uttryck 11 %, adverb 4 %, funktionsord 1 % |
+| Ledtråd (per lucka) | kollokation 40 %, helhetsbetydelse 18 %, definition 17 %, kontrast 13 %, parallellism 7 %, orsak 3 %, upprepning 2 % |
+| Distraktorer, enluckor | närsynonym/fel nyans 40 %, formlockare 25 %, samma fält 19 %, fint men irrelevant 14 %, fel polaritet 9 % |
+| Distraktorer, 2 luckor | delpassning 45 %, närsynonym 33 %, form 19 %, polaritet 9 %, fält 7 % |
+| Distraktorer, 3 luckor | delpassning 69 %, närsynonym 22 %, form 8 %, fält 7 %, polaritet 4 % |
+| Luckor som fäller en distraktor | 2-luckor i snitt 1,55 av 2; 3-luckor 2,08 av 3 |
+| Bedömd svårighet (1–3) | 13 / 56 / 31 % (en grov uppskattning av ordets ovanlighet, inte ett p-värde) |
+
+Lärdomar som inte syntes före annoteringen:
+- **Enluckornas ledtråd är definition eller kollokation i två fall av tre**
+  (33 % + 34 %). Flerluckornas är kollokation och helhetsbetydelse.
+- **Treluckor är nästan aldrig formlockare** (8 %); de bygger på delpassning.
+  En generator som återanvänder enluckornas lockartyper i treluckor får fel
+  karaktär på dem.
+- **Förkunskap smyger in.** `skörbjugg` som vitaminbrist (2023vt-3/23) går att
+  lösa bara om man vet vad skörbjugg är. Även UHR gör det; vi ska inte (C2.4).
+
+Schema per rad: `id` (`<term>-<pass>/<nr>`), `luckor`, `amne` (med, kul, sam,
+his, bio, lit, utb, eko, jur, fil, mil, psy, spr, tek, nat), `genre` (pop, aka,
+nyh, deb, myn, rec, sko), `ordklass[]` (s, a, v, adv, utr, fu), `ledtrad[]`
+(kol, sam, def, kon, par, ors, upp), `svarighet` (1–3) och `distraktorer` med
+`typer[]` (fo, fa, ny, po, fi, de) och `faller_pa[]` (luckorna som fäller den).
+
 ## Kalibrering mot arkivet (2026-10-19)
 
-Tre regler i första utkastet underkände riktiga UHR-uppgifter och mjukades
-upp: längdgränserna (C1.5), funktionsord i luckan (C3.1) och nyckeln i texten
-(C3.3), plus luckavståndet (C3.4). Principen: en MÅSTE-regel som arkivet bryter
+Sju regler i första utkastet underkände riktiga UHR-uppgifter och mjukades
+upp. Formatkollen: längdgränserna (C1.5), funktionsord i luckan (C3.1), nyckeln
+i texten (C3.3) och luckavståndet (C3.4). Annoteringen: skönlitteratur (C2.1),
+två distraktortyper per uppgift (C4.4) och delpassning/dekorluckor (C5.2–3). Principen: en MÅSTE-regel som arkivet bryter
 mot är fel regel. Strängare än UHR får vi bara vara där det skyddar mot något
 UHR inte behöver skydda sig mot (källor, tidsord, typografi).
 
 ## Öppet
 
 - Juristens svar på tabellen i C7 innan publicering.
-- Ämnes-, ordklass- och distraktorkvoterna fylls i efter steg 0.
+- Niklas stickprov av 50 annoterade rader innan Del G används som kvoter.
 
 Källor: [studera.nu, anvisningar verbal del](https://www.studera.nu/globalassets/05-hogskoleprovet/anvisningar-verbal-del-ordinarie-prov-webb.pdf) ·
 [Umeå univ. BVM nr 72](https://www.umu.se/globalassets/organisation/fakulteter/samfak/institutionen-for-tillampad-utbildningsvetenskap/hogskoleprovet/publikationer/bvm-nr-72.pdf) ·
