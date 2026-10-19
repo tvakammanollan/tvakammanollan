@@ -53,6 +53,7 @@ export const deleteAccount = createServerFn({ method: "POST" })
     await supabaseAdmin.from("elo_history").delete().eq("user_id", userId);
     await supabaseAdmin.from("bug_reports").delete().eq("user_id", userId);
     await supabaseAdmin.from("question_reports").delete().eq("reporter_id", userId);
+    await supabaseAdmin.from("question_votes").delete().eq("user_id", userId);
     // Tillagda efter en inventering av var användardata faktiskt ligger
     // (2026-08-21). Alla sju bar personuppgifter och överlevde raderingen.
     await supabaseAdmin.from("prov_attempts").delete().eq("user_id", userId);

@@ -230,6 +230,10 @@ export interface ProductEvents {
   ord_promo_shown: { shown_count: number; answered: number | null };
   ord_promo_clicked: { shown_count: number };
   ord_promo_dismissed: { shown_count: number };
+  /** Rutan om preliminärt facit (facit-promo.ts), en gång per prov. `term` = `2026ht`. */
+  facit_promo_shown: { term: string };
+  facit_promo_clicked: { term: string };
+  facit_promo_dismissed: { term: string };
   coaching_discount_shown: { sessions: number };
   /** Klick på knappen. Kvoten mot `shown` säger om rabatten faktiskt biter. */
   coaching_discount_clicked: { sessions: number };
@@ -257,6 +261,12 @@ export interface ProductEvents {
   forum_search: { term: string; term_length: number; hits: number };
   forum_best_answer_set: { cleared: boolean };
   forum_reaction: { kind: string; added: boolean };
+
+  /* ── Röstning på frågor ───────────────────────────────────────────────
+     `vote` 0 betyder att rösten togs tillbaka. `surface` skiljer träningen
+     från resultatskärmen: där har man svarat under tidspress, och en
+     nedröst därifrån kan lika gärna betyda "jag svarade fel". */
+  question_voted: { category: string; vote: -1 | 0 | 1; surface: "train" | "result" };
 }
 
 /** `[[uppgift:2024ht/3/12]]` — samma form som forum-markdown.ts letar efter. */

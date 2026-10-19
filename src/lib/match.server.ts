@@ -1,5 +1,7 @@
 // Server-only helpers for match flow. Imported by *.functions.ts only.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { voteWeight, weightedShuffle } from "./question-votes";
+import { loadVoteStats } from "./question-votes.server";
 import { isImplausiblyFast } from "./match-abuse";
 import { decideWinnerSide } from "./match-outcome";
 import { questionIsServable } from "./question-validity";
@@ -99,8 +101,12 @@ async function pickRandom(
       difficulty: r.difficulty,
     } as SelectedQuestion;
   });
-  shuffle(pool);
-  return pool.slice(0, count);
+  // Rösterna styr dragningen: frågor många med säkerhet ogillar faller bort,
+  // de många gillar dras oftare (`question-votes.ts`). Utan röster, eller om
+  // röstvyn inte går att läsa, är vikten 1 för alla och det här är en vanlig
+  // blandning.
+  const votes = await loadVoteStats();
+  return weightedShuffle(pool, (q) => voteWeight(votes.get(q.id))).slice(0, count);
 }
 
 async function pickPassage(

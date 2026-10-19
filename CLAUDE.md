@@ -1436,6 +1436,34 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
   går till `/ord`, där kassan redan finns. Ändra frekvensen i konstanterna i
   `ord-promo.ts`; testet pinnar dem.
 
+### Röstning på frågor (2026-10-19)
+
+Tumme upp/ned efter svaret, i `/train` och på resultatsidan
+(`QuestionVoteButtons`). Rösterna styr **urvalet**, inte en topplista: bra
+frågor dras oftare, frågor många med säkerhet ogillar slutar delas ut. Det är
+sållningen för de 2 000 genererade MEK-uppgifterna (`scripts/mek-gen/`), men
+gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
+`-.server.ts`, skrivning i `-.functions.ts`, tabell och vy i
+`20261019120000_fragerostning.sql`.
+
+- **Wilsonintervallet, inte andelen.** En fråga begravs först vid ≥ 8 viktade
+  röster och när övre gränsen för andelen upp-röster är under 40 %; den lyfts
+  vid ≥ 5 och undre gräns över 60 %. 1 upp och 0 ned är 100 % och betyder
+  ingenting.
+- **Gäster väger hälften** (`is_guest`, satt av servern ur tokenen). Gästkonton
+  går att skapa i obegränsat antal, och det farliga utfallet är att någon
+  begraver bra frågor med engångskonton. Att stänga ute gästerna hade tappat de
+  flesta rösterna.
+- **Viktad blandning, inte sortering** (`weightedShuffle`). Sorterat på röster
+  hade samma tjugo frågor kommit först i varje pass.
+- **Röstsummorna läses i en egen fråga och felet blir "inga röster".** Ligger
+  de som kolumner i urvalsfrågan fäller en saknad vy varje match och varje
+  träningspass. Verifierat 2026-10-19 utan migrationen: passet fungerar,
+  tummen säger "Rösten kunde inte sparas" och rullar tillbaka.
+- Ingenting raderas. En begravd fråga kommer tillbaka om rösterna vänder.
+  Ingen RLS-policy på tabellen; allt går genom serverfunktionen, annars går
+  gästvikten och kvoterna att kringgå.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.

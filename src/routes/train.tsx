@@ -52,6 +52,7 @@ import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { AnswerContext } from "@/components/AnswerContext";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
+import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { displayCategory, ordText } from "@/lib/sv-format";
@@ -850,7 +851,13 @@ function TrainPage() {
                 <ExplanationBlock explanation={currentQ.explanation} />
                 {user && (
                   <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
-                    <span>Felaktig fråga?</span>
+                    <span>Bra fråga?</span>
+                    <QuestionVoteButtons
+                      questionId={currentQ.id}
+                      category={currentQ.category}
+                      surface="train"
+                    />
+                    <span className="ml-2">Felaktig fråga?</span>
                     <ReportQuestionButton
                       questionId={currentQ.id}
                       userId={user.id}

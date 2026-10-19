@@ -31,7 +31,7 @@ function IntegritetspolicyPage() {
         align="center"
         eyebrow="Juridik"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-08-20"
+        subtitle="Senast uppdaterad: 2026-10-19"
         variant="compact"
       />
       <article
@@ -86,6 +86,12 @@ function IntegritetspolicyPage() {
               inloggad och lämnar in ett gammalt prov sparar vi vilka svar du lade och hur många
               rätt du fick, så att du kan gå igenom rättningen i efterhand. Är du utloggad stannar
               allt i din egen webbläsare och når aldrig oss.
+            </li>
+            <li>
+              <strong style={{ color: "var(--cream)" }}>Röster på frågor:</strong> om du trycker
+              tumme upp eller ned på en fråga sparar vi rösten, vilket konto som lade den och om
+              kontot är ett gästkonto. Rösterna avgör vilka frågor som visas oftare och vilka som
+              tas bort ur urvalet. Andra användare ser aldrig hur du röstat.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Buggrapporter:</strong> texten du skriver,

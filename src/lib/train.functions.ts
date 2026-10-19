@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { questionIsServable } from "./question-validity";
+import { voteWeight, weightedShuffle } from "./question-votes";
+import { loadVoteStats } from "./question-votes.server";
 
 const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
 
@@ -107,7 +109,10 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
 
     // Blandningen sker här och inte i klienten: urvalet är hela skyddet, och
     // ett urval som klienten gör själv är inget urval.
-    const pool = [...playable].sort(() => Math.random() - 0.5).slice(0, data.count);
+    // Rösterna väger in (`question-votes.ts`): begravda frågor faller bort,
+    // lyfta dras oftare. Utan läsbara röster är det en vanlig blandning.
+    const votes = await loadVoteStats();
+    const pool = weightedShuffle(playable, (r) => voteWeight(votes.get(r.id))).slice(0, data.count);
 
     // Passet hålls ihop. Ett flerkategoripass levererades tidigare helt
     // slumpat, så en ORD-fråga följdes av en LÄS-text följd av en MEK-mening —

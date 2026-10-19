@@ -41,6 +41,7 @@ import { recordMatchFinished } from "@/lib/coaching-prompt";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
+import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
 import { RankUpModal } from "@/components/ui/RankUpModal";
 import { getRankForElo, type RankTier } from "@/types";
 import { getBotName } from "@/lib/bot";
@@ -880,11 +881,18 @@ function ResultPage() {
                           )}
                         </span>
                         {user && (
-                          <ReportQuestionButton
-                            questionId={q.id}
-                            userId={user.id}
-                            questionText={q.question_text}
-                          />
+                          <>
+                            <QuestionVoteButtons
+                              questionId={q.id}
+                              category={q.category}
+                              surface="result"
+                            />
+                            <ReportQuestionButton
+                              questionId={q.id}
+                              userId={user.id}
+                              questionText={q.question_text}
+                            />
+                          </>
                         )}
                       </div>
 

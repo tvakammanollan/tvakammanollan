@@ -969,6 +969,48 @@ export type Database = {
         }
         Relationships: []
       }
+      question_votes: {
+        Row: {
+          created_at: string
+          is_guest: boolean
+          question_id: string
+          updated_at: string
+          user_id: string
+          vote: number
+        }
+        Insert: {
+          created_at?: string
+          is_guest?: boolean
+          question_id: string
+          updated_at?: string
+          user_id: string
+          vote: number
+        }
+        Update: {
+          created_at?: string
+          is_guest?: boolean
+          question_id?: string
+          updated_at?: string
+          user_id?: string
+          vote?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_votes_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "question_votes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       question_reports: {
         Row: {
           comment: string | null
@@ -1402,6 +1444,16 @@ export type Database = {
       }
     }
     Views: {
+      question_vote_stats: {
+        Row: {
+          down: number | null
+          guest_down: number | null
+          guest_up: number | null
+          question_id: string | null
+          up: number | null
+        }
+        Relationships: []
+      }
       health_check: {
         Row: {
           checked_at: string | null

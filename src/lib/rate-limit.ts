@@ -135,4 +135,11 @@ export const limits = {
   forumSubscribe: { max: 60, windowMs: 60 * 60 * 1000 } as LimitConfig, // 60/h
   /** Sök — tyngre än en vanlig läsning (två GIN-uppslag + union), per IP. */
   forumSearch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
+  /**
+   * Röst på en fråga. Per användare: ett träningspass är 20–60 frågor, så den
+   * som röstar på allt hinner ändå långt. Per IP finns ett andra tak, eftersom
+   * gästkonton går att skapa i mängd och varje konto annars får eget tak.
+   */
+  questionVote: { max: 150, windowMs: 60 * 60 * 1000 } as LimitConfig, // 150/h
+  questionVoteIp: { max: 400, windowMs: 60 * 60 * 1000 } as LimitConfig, // 400/h
 };
