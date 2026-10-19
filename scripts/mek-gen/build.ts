@@ -50,7 +50,11 @@ export interface BuiltItem extends MekItem {
   genre: string;
   explanation: string;
   source: { title: string; url: string };
-  meta: { ordklass: string[]; ledtrad: string[]; distraktorer: Record<string, { typer: string[]; faller_pa: number[] }> };
+  meta: {
+    ordklass: string[];
+    ledtrad: string[];
+    distraktorer: Record<string, { typer: string[]; faller_pa: number[] }>;
+  };
 }
 
 /** Deterministisk slump, så att en omkörning ger samma bokstäver. */
@@ -97,7 +101,9 @@ export function buildItems(src: SrcItem[], seed: number): BuiltItem[] {
       explanation: s.explanation,
       source: {
         title: s.source.title,
-        url: s.source.url ?? `https://sv.wikipedia.org/wiki/${encodeURIComponent(s.source.title.replace(/ /g, "_"))}`,
+        url:
+          s.source.url ??
+          `https://sv.wikipedia.org/wiki/${encodeURIComponent(s.source.title.replace(/ /g, "_"))}`,
       },
       meta: { ordklass: s.ordklass, ledtrad: s.ledtrad, distraktorer },
     };
@@ -111,7 +117,10 @@ function loadArchive(): MekItem[] {
     const d = JSON.parse(readFileSync(join(dir, f), "utf8"));
     if (!Array.isArray(d.questions)) continue;
     for (const q of d.questions) {
-      if (q.delprov === "MEK") out.push(normalizeArchiveItem({ text: q.text, alternatives: q.alternatives, answer: q.answer }));
+      if (q.delprov === "MEK")
+        out.push(
+          normalizeArchiveItem({ text: q.text, alternatives: q.alternatives, answer: q.answer }),
+        );
     }
   }
   return out;
@@ -138,7 +147,8 @@ if (import.meta.main) {
     ids.add(item.id);
     const lens = [s.dtyp.length, s.faller.length, s.distractors.length];
     if (lens.some((l) => l !== 3)) problems.push(`metadata ofullständig (${lens.join("/")})`);
-    if (s.ordklass.length !== s.key.length || s.ledtrad.length !== s.key.length) problems.push("ordklass/ledtrad per lucka saknas");
+    if (s.ordklass.length !== s.key.length || s.ledtrad.length !== s.key.length)
+      problems.push("ordklass/ledtrad per lucka saknas");
     if (!s.explanation || s.explanation.length < 40) problems.push("förklaring saknas");
     if (/\s[–—]\s/.test(s.explanation)) problems.push("tankstreck i förklaringen");
     for (const f of mekFaults(item)) if (FAULT_LEVEL[f] !== "varning") problems.push(f);
@@ -166,7 +176,9 @@ if (import.meta.main) {
     .flatMap((f) => JSON.parse(readFileSync(join(dirname(file), f), "utf8")) as BuiltItem[]);
   const r = bankReport(all);
   console.log(`\n${built.length} i batchen, ${rejected} underkända → ${outFile}`);
-  console.log(`Banken (${r.total}): luckor ${r.gaps[1]}/${r.gaps[2]}/${r.gaps[3]}, facit A${r.answers.A} B${r.answers.B} C${r.answers.C} D${r.answers.D}, facit längst ${[1, 2, 3].map((g) => (r.keyLongestShare[g as 1 | 2 | 3] * 100).toFixed(0) + "%").join("/")}, medianord ${r.medianWords[1]}/${r.medianWords[2]}/${r.medianWords[3]}`);
+  console.log(
+    `Banken (${r.total}): luckor ${r.gaps[1]}/${r.gaps[2]}/${r.gaps[3]}, facit A${r.answers.A} B${r.answers.B} C${r.answers.C} D${r.answers.D}, facit längst ${[1, 2, 3].map((g) => (r.keyLongestShare[g as 1 | 2 | 3] * 100).toFixed(0) + "%").join("/")}, medianord ${r.medianWords[1]}/${r.medianWords[2]}/${r.medianWords[3]}`,
+  );
   if (r.problems.length) console.log(`Avsteg: ${r.problems.join("; ")}`);
   process.exit(rejected > 0 ? 1 : 0);
 }

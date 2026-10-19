@@ -59,8 +59,12 @@ const FUNCTION_WORDS = new Set(
 const TIME_WORDS =
   /\b(i år|i fjol|nyligen|just nu|förra året|nästa år|i dag|idag|i höstas|i våras|i somras|i vintras|i sommar|i vinter|i höst|i vår|häromåret|häromdagen|denna vecka|den här veckan)\b/i;
 
-/** Ligaturfel ur PDF-extraktion: `fl ickor`, `defi nition`, `fi skar`. */
-const LIGATURE_RE = /\b(\p{L}*f[il]) (?=\p{Ll})/gu;
+/**
+ * Ligaturfel ur PDF-extraktion: `fl ickor`, `defi nition`, `fi skar`.
+ * Fragmentet före mellanslaget är högst fem bokstäver; annars slås hela ord
+ * som slutar på -fi ihop med nästa (`fotografi är` blev `fotografiär`).
+ */
+const LIGATURE_RE = /\b(\p{L}{0,3}f[il]) (?=\p{Ll})/gu;
 
 export type FaultLevel = "format" | "strikt" | "varning";
 

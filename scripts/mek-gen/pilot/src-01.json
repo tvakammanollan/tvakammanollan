@@ -12,24 +12,25 @@
 ],
 "distractors": [
 [
-"avstannar"
+"generaliseras"
 ],
 [
-"omprövas"
+"koncentreras"
 ],
 [
-"kartläggs"
+"stabiliseras"
 ]
 ],
 "dtyp": [
 [
+"fo"
+],
+[
+"fo"
+],
+[
+"fo",
 "po"
-],
-[
-"fi"
-],
-[
-"fi"
 ]
 ],
 "faller": [
@@ -49,7 +50,7 @@
 "ledtrad": [
 "ors"
 ],
-"explanation": "Rätt svar är accelereras. Felaktig användning är en orsak som driver på utvecklingen, och kraftigt förstärker det. Avstannar säger motsatsen, och att utvecklingen omprövas eller kartläggs har inget med användningen av antibiotika att göra."
+"explanation": "Rätt svar är accelereras. Felaktig användning är en orsak som driver på utvecklingen, och kraftigt förstärker det. Stabiliseras säger motsatsen, och att utvecklingen generaliseras eller koncentreras har inget med hur snabbt resistens uppstår att göra."
 },
 {
 "id": "p01-02",
@@ -58,30 +59,31 @@
 "source": {
 "title": "Sömn"
 },
-"text": "Under sömnen sjunker ämnesomsättningen i nästan hela kroppen. Hjärnan är ett undantag: under REM-sömnen är den till och med mer _____ än när vi är vakna.",
+"text": "Under sömnen sjunker ämnesomsättningen i nästan hela kroppen. Hjärnan är ett undantag: under REM-sömnen är den ungefär lika _____ som när vi är vakna.",
 "key": [
 "energikrävande"
 ],
 "distractors": [
 [
-"vilsam"
+"energisnål"
 ],
 [
-"förutsägbar"
+"lättväckt"
 ],
 [
-"sårbar"
+"ljuskänslig"
 ]
 ],
 "dtyp": [
 [
+"fo",
 "po"
 ],
 [
 "fi"
 ],
 [
-"ny"
+"fi"
 ]
 ],
 "faller": [
@@ -101,7 +103,7 @@
 "ledtrad": [
 "kon"
 ],
-"explanation": "Rätt svar är energikrävande. Ämnesomsättningen sjunker i kroppen, och hjärnan är undantaget, alltså förbrukar den mer energi. Vilsam säger motsatsen, och förutsägbar och sårbar har ingen koppling till ämnesomsättning."
+"explanation": "Rätt svar är energikrävande. Ämnesomsättningen sjunker i kroppen, och hjärnan är undantaget, alltså förbrukar den fortfarande mycket energi. Energisnål går emot att hjärnan är ett undantag, och lättväckt och ljuskänslig har ingen koppling till ämnesomsättning."
 },
 {
 "id": "p01-03",
@@ -116,24 +118,24 @@
 ],
 "distractors": [
 [
-"behandlas"
-],
-[
 "förenas"
 ],
 [
-"belastas"
+"förstärkas"
+],
+[
+"förmedlas"
 ]
 ],
 "dtyp": [
 [
-"fi"
+"fo"
 ],
 [
 "fo"
 ],
 [
-"fi"
+"fo"
 ]
 ],
 "faller": [
@@ -153,7 +155,7 @@
 "ledtrad": [
 "def"
 ],
-"explanation": "Rätt svar är förväxlas. Bisatsen som är något helt annat visar att det handlar om att blanda ihop två saker. En sjukdom behandlas eller belastas inte med en annan sjukdom, och förenas betyder att något slås samman."
+"explanation": "Rätt svar är förväxlas. Bisatsen som är något helt annat visar att det handlar om att blanda ihop två saker. Förenas, förstärkas och förmedlas ger ingen rimlig mening om två sjukdomar."
 },
 {
 "id": "p01-04",
@@ -376,23 +378,26 @@
 ],
 "distractors": [
 [
-"nödvändigt"
+"förnämt"
 ],
 [
-"lönsamt"
+"förväntat"
 ],
 [
-"modernt"
+"fördelaktigt"
 ]
 ],
 "dtyp": [
 [
+"fo",
+"ny"
+],
+[
+"fo",
 "po"
 ],
 [
-"fi"
-],
-[
+"fo",
 "po"
 ]
 ],
@@ -413,7 +418,7 @@
 "ledtrad": [
 "kon"
 ],
-"explanation": "Rätt svar är förlegat. I stället visar att arkitekterna tog avstånd från de klassiska förebilderna. Nödvändigt och modernt säger motsatsen, och lönsamt handlar om pengar, inte om hur man värderar en stil."
+"explanation": "Rätt svar är förlegat. I stället visar att arkitekterna tog avstånd från de klassiska förebilderna. Förväntat och fördelaktigt säger motsatsen, och förnämt hade varit ett gillande omdöme."
 },
 {
 "id": "p01-09",

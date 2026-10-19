@@ -16,7 +16,9 @@ import { sourceFile } from "./fetch-sources";
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
 const CACHE = join(new URL(".", import.meta.url).pathname, "out", "saol-cache.json");
-const cache: Record<string, boolean> = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, "utf8")) : {};
+const cache: Record<string, boolean> = existsSync(CACHE)
+  ? JSON.parse(readFileSync(CACHE, "utf8"))
+  : {};
 
 async function inSaol(word: string): Promise<boolean> {
   const w = word.toLowerCase();
@@ -70,17 +72,44 @@ for (const it of items) {
     }
   }
 }
+/**
+ * En sammansättning vars båda led finns i SAOL (med eller utan fogmorfemet
+ * -s-) godtas, men listas för granskning: kontrollen kan inte skilja ett
+ * etablerat ord som `beskattningsunderlag` från ett påhitt som
+ * `rättighetsgrundlagarna`, och ett påhittat fackord pekar ut sig självt som
+ * fel svar.
+ */
+async function compoundParts(word: string): Promise<[string, string] | null> {
+  const w = word.toLowerCase();
+  for (let i = w.length - 3; i >= 3; i--) {
+    const left = w.slice(0, i);
+    const right = w.slice(i);
+    if (!(await inSaol(right))) continue;
+    if (await inSaol(left)) return [left, right];
+    if (left.endsWith("s") && (await inSaol(left.slice(0, -1)))) return [left, right];
+  }
+  return null;
+}
+
 const misses: string[] = [];
+const compounds: string[] = [];
 for (const w of words) {
   // Bindestrecksord (EKG-undersökning) kollas på sista ledet.
   const probe = w.includes("-") ? w.split("-").pop()! : w;
   if (await inSaol(probe)) continue;
   const where = items.filter((it) => it.alternatives.some((a) => a.includes(w))).map((it) => it.id);
-  if (!inOwnSource(w, where)) misses.push(w);
+  if (inOwnSource(w, where)) continue;
+  const parts = await compoundParts(probe);
+  if (parts) compounds.push(`${w} (${parts.join(" + ")}; ${where.join(", ")})`);
+  else misses.push(w);
   await new Promise((r) => setTimeout(r, 60));
 }
 writeFileSync(CACHE, JSON.stringify(cache));
 console.log(`${words.size} ord, ${misses.length} saknas i SAOL/SO`);
+if (compounds.length) {
+  console.log(`${compounds.length} sammansättningar godtagna, granska att de är etablerade ord:`);
+  for (const c of compounds) console.log(`  ${c}`);
+}
 for (const m of misses) {
   const where = items.filter((it) => it.alternatives.some((a) => a.includes(m))).map((it) => it.id);
   console.log(`  ${m}  (${where.join(", ")})`);

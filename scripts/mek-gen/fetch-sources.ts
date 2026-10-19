@@ -34,7 +34,9 @@ async function fetchExtract(title: string): Promise<{ title: string; text: strin
   const page = Object.values(data.query?.pages ?? {})[0];
   if (!page || page.missing !== undefined || !page.extract) return null;
   // Brödtexten fram till litteraturlistorna räcker; resten är referenser.
-  const text = page.extract.split(/\n==\s*(Referenser|Källor|Externa länkar|Se även|Noter)\s*==/)[0];
+  const text = page.extract.split(
+    /\n==\s*(Referenser|Källor|Externa länkar|Se även|Noter)\s*==/,
+  )[0];
   return { title: page.title ?? title, text: text.slice(0, 12000) };
 }
 
@@ -58,7 +60,10 @@ if (import.meta.main) {
       saknas++;
       continue;
     }
-    writeFileSync(file, `${got.title}\nhttps://sv.wikipedia.org/wiki/${encodeURIComponent(got.title.replace(/ /g, "_"))}\n\n${got.text}`);
+    writeFileSync(
+      file,
+      `${got.title}\nhttps://sv.wikipedia.org/wiki/${encodeURIComponent(got.title.replace(/ /g, "_"))}\n\n${got.text}`,
+    );
     await new Promise((r) => setTimeout(r, 150));
   }
   console.log(`${titles.length} titlar, ${saknas} saknas`);

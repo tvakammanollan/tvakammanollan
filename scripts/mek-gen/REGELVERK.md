@@ -200,6 +200,13 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
    `antyder` (2023ht-5/22) och `kan ___ till frågan` är legitima sätt att
    fälla en distraktor, men då ska alla fyra fortfarande vara verb som annars
    passar.
+8. MÅSTE: enluckornas distraktorer ser lika rimliga ut som facit utan text:
+   samma ordfamilj eller samma sakfält, samma register och samma grad av
+   fackmässighet. Batch 2 visade baksidan av regel 7: när distraktorerna gjordes
+   spridda och udda (`renat`, `uppvärmt`, `korrekturläsa`) blev facit det enda
+   normala ordet, och 76 % av enluckorna gick att gissa utan text. Med
+   familjer som `förenklad / föråldrad / förskönad / förstorad` sjönk det till
+   65 %, mot arkivets 58 %. Det är så UHR bygger sina homogena set (Del G).
 7. MÅSTE: inga synonympar bland distraktorerna. Två distraktorer som betyder
    samma sak tar ut varandra (båda kan inte vara rätt), och då pekar facit ut
    sig självt. Det var den vanligaste orsaken till att pilotens enluckor gick
@@ -312,8 +319,8 @@ distinkta luckor, lemmaläcka, kvoter, SAOL, likhet mot arkivet/DB/banken,
 (a) med text: facit valt ≥ 5/5, med motivering som pekar på texten;
 (b) utan text: andelen rätt får inte ligga över arkivets nivå per luckantal
 (se nedan). Ett per-uppgiftskrav på ≤ 35 % går inte att uppfylla: **UHR:s egna
-uppgifter gissas rätt utan text i 62 % av fallen** (31 av 50 i ett stickprov,
-2026-10-19; enluckor 9/20, tvåluckor 14/20, treluckor 8/10). En stark
+uppgifter gissas rätt utan text i ungefär 60 % av fallen** (2026-10-19:
+enluckor 46 av 80, alltså 58 %; tvåluckor 14 av 20; treluckor 8 av 10). En stark
 språkmodell ser vilka facitord som hänger ihop. Kravet är därför att batchens
 andel inte överstiger arkivets med mer än 10 procentenheter, och att varje
 uppgift där facit gissas med "stark" signal granskas för hand;

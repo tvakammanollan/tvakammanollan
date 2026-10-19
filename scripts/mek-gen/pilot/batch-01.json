@@ -6,12 +6,12 @@
   "text": "Redan när Alexander Fleming upptäckte penicillinet 1928 såg han att bakterier kunde bli motståndskraftiga mot det. Att resistens uppstår är i sig ett naturligt fenomen, men utvecklingen _____ kraftigt när antibiotika används i onödan eller på fel sätt.",
   "alternatives": [
    "accelereras",
-   "avstannar",
-   "omprövas",
-   "kartläggs"
+   "generaliseras",
+   "koncentreras",
+   "stabiliseras"
   ],
   "answer": "A",
-  "explanation": "Rätt svar är accelereras. Felaktig användning är en orsak som driver på utvecklingen, och kraftigt förstärker det. Avstannar säger motsatsen, och att utvecklingen omprövas eller kartläggs har inget med användningen av antibiotika att göra.",
+  "explanation": "Rätt svar är accelereras. Felaktig användning är en orsak som driver på utvecklingen, och kraftigt förstärker det. Stabiliseras säger motsatsen, och att utvecklingen generaliseras eller koncentreras har inget med hur snabbt resistens uppstår att göra.",
   "source": {
    "title": "Antibiotikaresistens",
    "url": "https://sv.wikipedia.org/wiki/Antibiotikaresistens"
@@ -26,7 +26,7 @@
    "distraktorer": {
     "B": {
      "typer": [
-      "po"
+      "fo"
      ],
      "faller_pa": [
       1
@@ -34,7 +34,7 @@
     },
     "C": {
      "typer": [
-      "fi"
+      "fo"
      ],
      "faller_pa": [
       1
@@ -42,7 +42,8 @@
     },
     "D": {
      "typer": [
-      "fi"
+      "fo",
+      "po"
      ],
      "faller_pa": [
       1
@@ -55,15 +56,15 @@
   "id": "p01-02",
   "amne": "med",
   "genre": "pop",
-  "text": "Under sömnen sjunker ämnesomsättningen i nästan hela kroppen. Hjärnan är ett undantag: under REM-sömnen är den till och med mer _____ än när vi är vakna.",
+  "text": "Under sömnen sjunker ämnesomsättningen i nästan hela kroppen. Hjärnan är ett undantag: under REM-sömnen är den ungefär lika _____ som när vi är vakna.",
   "alternatives": [
-   "vilsam",
+   "energisnål",
    "energikrävande",
-   "förutsägbar",
-   "sårbar"
+   "lättväckt",
+   "ljuskänslig"
   ],
   "answer": "B",
-  "explanation": "Rätt svar är energikrävande. Ämnesomsättningen sjunker i kroppen, och hjärnan är undantaget, alltså förbrukar den mer energi. Vilsam säger motsatsen, och förutsägbar och sårbar har ingen koppling till ämnesomsättning.",
+  "explanation": "Rätt svar är energikrävande. Ämnesomsättningen sjunker i kroppen, och hjärnan är undantaget, alltså förbrukar den fortfarande mycket energi. Energisnål går emot att hjärnan är ett undantag, och lättväckt och ljuskänslig har ingen koppling till ämnesomsättning.",
   "source": {
    "title": "Sömn",
    "url": "https://sv.wikipedia.org/wiki/S%C3%B6mn"
@@ -78,6 +79,7 @@
    "distraktorer": {
     "A": {
      "typer": [
+      "fo",
       "po"
      ],
      "faller_pa": [
@@ -94,7 +96,7 @@
     },
     "D": {
      "typer": [
-      "ny"
+      "fi"
      ],
      "faller_pa": [
       1
@@ -109,13 +111,13 @@
   "genre": "pop",
   "text": "Celiaki är en autoimmun sjukdom där kroppen bildar antikroppar mot ett protein i gluten, och reaktionen skadar slemhinnan i tunntarmen. Sjukdomen ska inte _____ med spannmålsallergi, som är något helt annat.",
   "alternatives": [
-   "behandlas",
    "förenas",
-   "belastas",
+   "förstärkas",
+   "förmedlas",
    "förväxlas"
   ],
   "answer": "D",
-  "explanation": "Rätt svar är förväxlas. Bisatsen som är något helt annat visar att det handlar om att blanda ihop två saker. En sjukdom behandlas eller belastas inte med en annan sjukdom, och förenas betyder att något slås samman.",
+  "explanation": "Rätt svar är förväxlas. Bisatsen som är något helt annat visar att det handlar om att blanda ihop två saker. Förenas, förstärkas och förmedlas ger ingen rimlig mening om två sjukdomar.",
   "source": {
    "title": "Celiaki",
    "url": "https://sv.wikipedia.org/wiki/Celiaki"
@@ -130,7 +132,7 @@
    "distraktorer": {
     "A": {
      "typer": [
-      "fi"
+      "fo"
      ],
      "faller_pa": [
       1
@@ -146,7 +148,7 @@
     },
     "C": {
      "typer": [
-      "fi"
+      "fo"
      ],
      "faller_pa": [
       1
@@ -369,13 +371,13 @@
   "genre": "pop",
   "text": "Funktionalismens arkitekter ansåg att det var _____ att smycka fasader med klassiska förebilder. Husen skulle i stället utformas helt utifrån sin funktion, med släta och ljusa väggar, platta tak och enkla geometriska volymer.",
   "alternatives": [
-   "nödvändigt",
-   "lönsamt",
-   "modernt",
+   "förnämt",
+   "förväntat",
+   "fördelaktigt",
    "förlegat"
   ],
   "answer": "D",
-  "explanation": "Rätt svar är förlegat. I stället visar att arkitekterna tog avstånd från de klassiska förebilderna. Nödvändigt och modernt säger motsatsen, och lönsamt handlar om pengar, inte om hur man värderar en stil.",
+  "explanation": "Rätt svar är förlegat. I stället visar att arkitekterna tog avstånd från de klassiska förebilderna. Förväntat och fördelaktigt säger motsatsen, och förnämt hade varit ett gillande omdöme.",
   "source": {
    "title": "Funktionalism (arkitektur)",
    "url": "https://sv.wikipedia.org/wiki/Funktionalism_(arkitektur)"
@@ -390,7 +392,8 @@
    "distraktorer": {
     "A": {
      "typer": [
-      "po"
+      "fo",
+      "ny"
      ],
      "faller_pa": [
       1
@@ -398,7 +401,8 @@
     },
     "B": {
      "typer": [
-      "fi"
+      "fo",
+      "po"
      ],
      "faller_pa": [
       1
@@ -406,6 +410,7 @@
     },
     "C": {
      "typer": [
+      "fo",
       "po"
      ],
      "faller_pa": [

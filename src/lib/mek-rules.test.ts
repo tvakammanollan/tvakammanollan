@@ -84,6 +84,12 @@ describe("arkivet som facit", () => {
     expect(bankReport(items).echoShare).toBeLessThanOrEqual(0.03);
   });
 
+  it("slår inte ihop hela ord som slutar på -fi eller -fl", () => {
+    expect(normalizeArchiveText("Ordet fotografi är grekiskt och filosofi likaså")).toBe(
+      "Ordet fotografi är grekiskt och filosofi likaså",
+    );
+  });
+
   it("lagar ligaturfelen", () => {
     expect(normalizeArchiveText("nya böckers fl ickor och defi nition")).toBe(
       "nya böckers flickor och definition",
