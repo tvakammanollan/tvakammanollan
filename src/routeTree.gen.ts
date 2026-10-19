@@ -27,6 +27,7 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as HogskoleprovetPoangraknareRouteImport } from './routes/hogskoleprovet-poangraknare'
 import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet-poang'
+import { Route as HogskoleprovetFacitRouteImport } from './routes/hogskoleprovet-facit'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
@@ -154,6 +155,11 @@ const HogskoleprovetPoangraknareRoute =
 const HogskoleprovetPoangRoute = HogskoleprovetPoangRouteImport.update({
   id: '/hogskoleprovet-poang',
   path: '/hogskoleprovet-poang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetFacitRoute = HogskoleprovetFacitRouteImport.update({
+  id: '/hogskoleprovet-facit',
+  path: '/hogskoleprovet-facit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HogskoleprovetDatumRoute = HogskoleprovetDatumRouteImport.update({
@@ -355,6 +361,7 @@ export interface FileRoutesByFullPath {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -412,6 +419,7 @@ export interface FileRoutesByTo {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -470,6 +478,7 @@ export interface FileRoutesById {
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
+  '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -529,6 +538,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-facit'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -586,6 +596,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-facit'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -643,6 +654,7 @@ export interface FileRouteTypes {
     | '/friends'
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
+    | '/hogskoleprovet-facit'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -701,6 +713,7 @@ export interface RootRouteChildren {
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
+  HogskoleprovetFacitRoute: typeof HogskoleprovetFacitRoute
   HogskoleprovetPoangRoute: typeof HogskoleprovetPoangRoute
   HogskoleprovetPoangraknareRoute: typeof HogskoleprovetPoangraknareRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
@@ -876,6 +889,13 @@ declare module '@tanstack/react-router' {
       path: '/hogskoleprovet-poang'
       fullPath: '/hogskoleprovet-poang'
       preLoaderRoute: typeof HogskoleprovetPoangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-facit': {
+      id: '/hogskoleprovet-facit'
+      path: '/hogskoleprovet-facit'
+      fullPath: '/hogskoleprovet-facit'
+      preLoaderRoute: typeof HogskoleprovetFacitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hogskoleprovet-datum': {
@@ -1149,6 +1169,7 @@ const rootRouteChildren: RootRouteChildren = {
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
+  HogskoleprovetFacitRoute: HogskoleprovetFacitRoute,
   HogskoleprovetPoangRoute: HogskoleprovetPoangRoute,
   HogskoleprovetPoangraknareRoute: HogskoleprovetPoangraknareRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,

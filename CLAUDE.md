@@ -1464,6 +1464,30 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
   Ingen RLS-policy på tabellen; allt går genom serverfunktionen, annars går
   gästvikten och kvoterna att kringgå.
 
+### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
+
+Facit, trolig normering och Niklas egna tankar efter varje provdag. Sidan och
+popupen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
+
+- **Nästa prov: byt objektet, inte sidan.** Ny `term` gör att popupen visas en
+  gång till för alla (`facit-promo.ts` minns vilket facit den visat, inte bara
+  att den visat något). Adressen är medvetet terminslös så att länkar och
+  ranking från ett prov följer med till nästa. Uppdatera `updated`,
+  `promoUntil`, `lastmod` i sitemapen och raden i `llms.txt` (statisk).
+- **Intervjun visar bara besvarade frågor.** En tom `svar` döljer frågan, så
+  listan kan stå kvar som ett formulär att fylla i. **Skriv aldrig ett svar
+  Niklas inte gett**; det är hans röst, under hans namn, på en indexerad sida.
+- **`troligGrans` är Niklas bedömning, inte UHR:s**, och texten säger det på
+  varje yta. `null` tar bort avsnittet.
+- **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
+  dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
+  alternativ). Det fångar de flesta felskrivningar.
+- **Popupen är den fjärde automatiska rutan och går före de andra** (ägd av
+  `CoachingPrompt`, som de övriga). Den är färskvara med eget slutdatum.
+- **Rutorna försöker igen när samtyckesfrågan besvaras.** Bannern är en
+  overlay och blockerar dem, så utan omförsöket såg en ny besökare från en
+  sökträff aldrig någon ruta på sin första sida. Det gäller alla fyra rutor.
+
 ### Streak
 
 Daily activity streak lives on `users.current_streak` / `longest_streak` / `last_active_date`. Update via `updateStreak()` in `src/lib/streak.ts` — increments at most once per calendar day.

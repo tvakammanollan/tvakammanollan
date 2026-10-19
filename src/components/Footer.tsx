@@ -15,6 +15,7 @@ const PRODUCT = [
 
 const COMPANY = [
   { label: "Provdatum", to: "/hogskoleprovet-datum" },
+  { label: "Facit & normering", to: "/hogskoleprovet-facit" },
   { label: "Poäng & antagning", to: "/hogskoleprovet-poang" },
   { label: "Om oss", to: "/om" },
   { label: "Vanliga frågor", to: "/faq" },

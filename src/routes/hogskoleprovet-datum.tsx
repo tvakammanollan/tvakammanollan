@@ -9,6 +9,7 @@ import {
   hpEvents,
   registrationPeriodText,
 } from "@/lib/hp-event";
+import { FACIT } from "@/lib/preliminart-facit";
 import { ArrowRight, CalendarDays, Clock, ScrollText } from "lucide-react";
 
 /* =====================================================================
@@ -92,6 +93,17 @@ function DatumPage() {
           ser ut.
         </p>
       </header>
+
+      <Link
+        to="/hogskoleprovet-facit"
+        className="mx-auto mt-6 flex max-w-xl items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] px-5 py-4 transition hover:border-primary/50"
+      >
+        <span className="text-[15px] text-[var(--cream)]">
+          <strong>Skrev du {FACIT.label.toLowerCase()}?</strong>{" "}
+          <span className="text-white/60">Preliminärt facit och trolig normering.</span>
+        </span>
+        <ArrowRight className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+      </Link>
 
       {/* Nedräkning till nästa prov */}
       <div className="mt-6">
