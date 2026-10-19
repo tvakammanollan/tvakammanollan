@@ -1,0 +1,2969 @@
+[
+{
+"id": "p05-01",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Cancer"
+},
+"text": "Cancer är inte en sjukdom utan omkring 200 olika, och det de har gemensamt är att celler börjar dela sig onormalt och kan sprida sig i kroppen. En tumör behöver ändå inte vara cancer, eftersom det också finns _____ tumörer som stannar där de uppstått.",
+"key": [
+"godartade"
+],
+"distractors": [
+[
+"elakartade"
+],
+[
+"svårartade"
+],
+[
+"egenartade"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo",
+"po"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är godartade. Tumörer som inte sprider sig är inte cancer, och det är det som skiljer godartade från elakartade. Elakartade och svårartade säger motsatsen, och egenartade säger inget om spridningen."
+},
+{
+"id": "p05-02",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Hjärnskakning"
+},
+"text": "Hjärnan omges av en vätska som dämpar stötar och lättare slag. Vid ett hårt slag mot huvudet kan hjärnan ändå _____ mot skallbenets insida, och följden kan bli huvudvärk, yrsel och tillfälliga minnesluckor.",
+"key": [
+"studsa"
+],
+"distractors": [
+[
+"stelna"
+],
+[
+"strama"
+],
+[
+"sträva"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är studsa. Ändå visar att vätskan inte räcker vid ett hårt slag, så hjärnan slår emot skallen. Att stelna, strama eller sträva mot skallbenet beskriver inte vad ett slag gör."
+},
+{
+"id": "p05-03",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Typ 1-diabetes"
+},
+"text": "Vid typ 1-diabetes kan bukspottkörteln inte längre bilda tillräckligt med insulin, eftersom en autoimmun process har _____ de celler som tillverkar hormonet.",
+"key": [
+"förstört"
+],
+"distractors": [
+[
+"förstärkt"
+],
+[
+"förnyat"
+],
+[
+"förflyttat"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo",
+"po"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är förstört. Eftersom förklarar varför insulinet inte räcker, och det gör det om cellerna som tillverkar det har gått förlorade. Förstärkt och förnyat säger motsatsen, och förflyttade celler slutar inte tillverka hormon."
+},
+{
+"id": "p05-04",
+"amne": "med",
+"genre": "nyh",
+"source": {
+"title": "Mässling"
+},
+"text": "Mässling smittar så lätt att ungefär nio av tio som inte är skyddade blir sjuka om de kommer nära en smittad. Sjukdomen var förr vanlig i Sverige, men tack vare den allmänna vaccinationen har den blivit _____.",
+"key": [
+"ovanlig"
+],
+"distractors": [
+[
+"ofarlig"
+],
+[
+"obotlig"
+],
+[
+"omärklig"
+]
+],
+"dtyp": [
+[
+"fo",
+"ny"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är ovanlig. Förr vanlig ställs mot vad sjukdomen är numera, och vaccination gör att färre smittas. Den har inte blivit ofarlig för den som ändå smittas, inte obotlig och inte omärklig."
+},
+{
+"id": "p05-05",
+"amne": "kul",
+"genre": "rec",
+"source": {
+"title": "Expressionism"
+},
+"text": "Namnet expressionism kommer av latinets expressio, uttryck. Inom riktningen ska ett konstverk inte bara avbilda världen utan också _____ konstnärens egna känslor och inre föreställningar.",
+"key": [
+"uttrycka"
+],
+"distractors": [
+[
+"utesluta"
+],
+[
+"utmana"
+],
+[
+"utnyttja"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är uttrycka. Namnet betyder uttryck, och inte bara avbilda utan också visar att konstnärens inre ska komma fram i verket. Att utesluta, utmana eller utnyttja sina känslor är något annat."
+},
+{
+"id": "p05-06",
+"amne": "kul",
+"genre": "aka",
+"source": {
+"title": "Dadaism"
+},
+"text": "Dadaismen var en riktning inom modernismen som blomstrade mellan 1916 och 1923. Varifrån namnet kommer är höljt i dunkel, och just ordets _____ mångtydighet kom att bli en symbol för rörelsen.",
+"key": [
+"irrationella"
+],
+"distractors": [
+[
+"rationella"
+],
+[
+"traditionella"
+],
+[
+"konventionella"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo",
+"po"
+],
+[
+"fo",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är irrationella. Ett namn vars ursprung är höljt i dunkel och har många tolkningar saknar förnuftig förklaring. Rationella, traditionella och konventionella går emot en rörelse som ville bryta med det invanda."
+},
+{
+"id": "p05-07",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Mosaik"
+},
+"text": "En mosaik är en bild som byggs upp av små bitar av sten, glas eller porslin. De allra äldsta mosaikerna är golv med abstrakta mönster av kiselstenar, och de fyllde troligen samma _____ som mattor.",
+"key": [
+"funktion"
+],
+"distractors": [
+[
+"tradition"
+],
+[
+"position"
+],
+[
+"ambition"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är funktion. Att fylla en funktion är det fasta uttrycket för att göra nytta, och ett golv som liknar en matta gör samma nytta som den. Man fyller ingen tradition, position eller ambition."
+},
+{
+"id": "p05-08",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Monarki"
+},
+"text": "Ordet monarki betyder ungefär att en enda härskar, efter två grekiska ord. Monarken är oftast statschef livet ut, medan en republik i regel väljer sin statschef för en viss _____.",
+"key": [
+"ämbetsperiod"
+],
+"distractors": [
+[
+"övergångsperiod"
+],
+[
+"provperiod"
+],
+[
+"uppsägningsperiod"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är ämbetsperiod. Medan ställer livstid mot en begränsad tid i ämbetet. En övergångsperiod, provperiod eller uppsägningsperiod är inte den tid en vald statschef sitter."
+},
+{
+"id": "p05-09",
+"amne": "sam",
+"genre": "deb",
+"source": {
+"title": "Byråkrati"
+},
+"text": "Ordet byråkrati bildades i mitten av 1700-talet av byrå, kontor, och krati, styre. Det var från början _____, och i vardagligt tal används det fortfarande om administrativa system som uppfattas som tröga.",
+"key": [
+"nedsättande"
+],
+"distractors": [
+[
+"berömmande"
+],
+[
+"förklarande"
+],
+[
+"förmildrande"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo"
+],
+[
+"fo",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"par"
+],
+"explanation": "Rätt svar är nedsättande. Fortfarande om system som uppfattas som tröga visar att ordet har varit negativt hela tiden. Berömmande och förmildrande säger motsatsen, och förklarande säger inget om tonen."
+},
+{
+"id": "p05-10",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Kolonialism"
+},
+"text": "Kolonialism innebär att en stat erövrar och behärskar främmande områden, ofta i andra världsdelar. Därtill kommer ofta _____ av områdets tillgångar och att kolonisatörernas språk och religion förs in.",
+"key": [
+"exploatering"
+],
+"distractors": [
+[
+"exkludering"
+],
+[
+"examinering"
+],
+[
+"exponering"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är exploatering. En erövrare som behärskar ett område utnyttjar dess tillgångar för egen vinning. Exkludering, examinering och exponering av tillgångar ger ingen rimlig mening."
+},
+{
+"id": "p05-11",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Svampar"
+},
+"text": "Svamparna bildar ett eget rike vid sidan av djuren och växterna. Till skillnad från växterna har svampar inget klorofyll, och till skillnad från djuren _____ de sin föda i stället för att äta den.",
+"key": [
+"absorberar"
+],
+"distractors": [
+[
+"producerar"
+],
+[
+"reserverar"
+],
+[
+"sorterar"
+]
+],
+"dtyp": [
+[
+"fo",
+"fa"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är absorberar. I stället för att äta tar svamparna upp näringen direkt. Producerar är vad växter gör med klorofyll, som svamparna just saknar, och att reservera eller sortera sin föda skiljer dem inte från djuren."
+},
+{
+"id": "p05-12",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Fjärilar"
+},
+"text": "Fjärilarna kännetecknas av två par vingar som till större eller mindre del är täckta av små fjäll. Hos nästan alla arter är munnen byggd för att suga, ofta med en _____ snabel.",
+"key": [
+"hoprullad"
+],
+"distractors": [
+[
+"tandad"
+],
+[
+"behårad"
+],
+[
+"tudelad"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är hoprullad. En sugande snabel är ett rör som kan rullas ihop när den inte används. Tänder hör till mundelar som tuggar, och en behårad eller tudelad snabel säger inget om att den suger."
+},
+{
+"id": "p05-13",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Blåval"
+},
+"text": "Blåvalen är världens största och _____ djur. Den kan nå en längd på mer än 30 meter, och som mest har en blåval vägts till nästan 177 ton.",
+"key": [
+"tyngsta"
+],
+"distractors": [
+[
+"tystaste"
+],
+[
+"tåligaste"
+],
+[
+"trögaste"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"par"
+],
+"explanation": "Rätt svar är tyngsta. Nästa mening anger både längd och vikt, och 177 ton är vikten. Inget i texten handlar om hur tyst, tålig eller trög valen är."
+},
+{
+"id": "p05-14",
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Epos"
+},
+"text": "Ett epos är en lång berättelse på vers, där realistiska inslag blandas med mytiska. Upprepningar av ord, verser och hela situationer är vanliga, och de fanns från början för att göra det lättare för sångaren att _____ texten.",
+"key": [
+"memorera"
+],
+"distractors": [
+[
+"dramatisera"
+],
+[
+"analysera"
+],
+[
+"censurera"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är memorera. Upprepningar gör en lång text lättare att komma ihåg för den som framför den utantill. Att dramatisera, analysera eller censurera en text blir inte lättare av upprepningar."
+},
+{
+"id": "p05-15",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Dyslexi"
+},
+"text": "Dyslexi är en varaktig funktionsnedsättning som ger svårigheter att läsa och skriva. Orsaken är en störning i språkliga funktioner, och den har ingenting med _____ att göra.",
+"key": [
+"intelligens"
+],
+"distractors": [
+[
+"intonation"
+],
+[
+"inspiration"
+],
+[
+"integration"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är intelligens. Meningen avfärdar en vanlig missuppfattning, att den som har svårt att läsa skulle vara mindre begåvad. Intonation, inspiration och integration är inget man brukar förväxla med läsförmåga."
+},
+{
+"id": "p05-16",
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Studieförbund"
+},
+"text": "Studieförbunden arbetar med folkbildning, framför allt genom studiecirklar. De hör ofta till en folkrörelse och har huvudmän som _____ deras ideologi.",
+"key": [
+"delar"
+],
+"distractors": [
+[
+"dementerar"
+],
+[
+"debatterar"
+],
+[
+"delegerar"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är delar. Huvudmän i samma folkrörelse står för samma idéer, alltså delar de ideologin. Att dementera den är motsatsen, och man debatterar eller delegerar inte en ideologi man hör hemma i."
+},
+{
+"id": "p05-17",
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Konjunktur"
+},
+"text": "När industrin har fullt upp och arbetslösheten är låg råder högkonjunktur. Tiden mellan två toppar kallas en konjunkturcykel, och en sådan _____ vanligen mellan tre och åtta år.",
+"key": [
+"varar"
+],
+"distractors": [
+[
+"väntar"
+],
+[
+"vandrar"
+],
+[
+"vållar"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är varar. En cykel är en tidsperiod, och mellan tre och åtta år anger hur länge den håller på. En cykel väntar, vandrar eller vållar inte ett antal år."
+},
+{
+"id": "p05-18",
+"amne": "jur",
+"genre": "aka",
+"source": {
+"title": "Jury"
+},
+"text": "Juryn är en nämnd som utses särskilt, som ska vara _____ och som ska fatta beslut i ett eller flera ärenden. Juryer växte fram i medeltidens England och är ett kännetecken för rättssystem som bygger på engelsk rätt.",
+"key": [
+"opartisk"
+],
+"distractors": [
+[
+"oberäknelig"
+],
+[
+"obegränsad"
+],
+[
+"ofrivillig"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är opartisk. En nämnd som ska fatta beslut i domstol måste vara rättvis och inte ta parti. En oberäknelig jury vore ett problem, och obegränsad och ofrivillig säger inget om hur den ska döma."
+},
+{
+"id": "p05-19",
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Empati"
+},
+"text": "Med empati menas att man kan sätta sig in i och förstå en annan människa, och begreppet ligger nära inlevelse och medkänsla. Forskarna är ändå överens om att det är ett _____ fenomen, som inte låter sig definieras på något enkelt sätt.",
+"key": [
+"komplext"
+],
+"distractors": [
+[
+"kompakt"
+],
+[
+"konstant"
+],
+[
+"konkret"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är komplext. Något som inte låter sig definieras enkelt är sammansatt och svårt att fånga. Konkret säger tvärtom att det är lätt att ta på, och kompakt och konstant förklarar inte varför definitionen är svår."
+},
+{
+"id": "p05-20",
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Boktryckarkonst"
+},
+"text": "I boktryckarkonsten förs text och bild över till papper med hjälp av en press och _____ typer, som kan sättas samman på nytt för varje sida. De äldsta tryckta böckerna kallas inkunabler.",
+"key": [
+"löstagbara"
+],
+"distractors": [
+[
+"oläsbara"
+],
+[
+"försumbara"
+],
+[
+"formbara"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är löstagbara. Typer som kan sättas samman på nytt för varje sida måste gå att ta loss. Oläsbara typer går inte att trycka med, och försumbara och formbara förklarar inte att de kan flyttas."
+},
+{
+"id": "p05-21",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Sömnapné"
+},
+"text": "Sömnapné är andningsuppehåll under sömnen, och för att räknas som apné ska uppehållet vara längre än tio sekunder. Den obstruktiva formen beror på att de övre luftvägarna _____, medan den centrala uppstår när hjärnan inte skickar ut några _____ till andningsmusklerna.",
+"key": [
+"blockeras",
+"signaler"
+],
+"distractors": [
+[
+"vidgas",
+"syre"
+],
+[
+"täpps till",
+"blodkärl"
+],
+[
+"torkar ut",
+"impulser"
+]
+],
+"dtyp": [
+[
+"po",
+"fi"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"sam",
+"kol"
+],
+"explanation": "Rätt svar är blockeras och signaler. Andningen stannar om luften inte kommer fram, och täpps till betyder samma sak. Hjärnan styr musklerna genom signaler, och impulser ligger nära. Vidgade luftvägar ger inget uppehåll, och luftvägar som torkar ut stoppar inte andningen."
+},
+{
+"id": "p05-22",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Blodgrupp"
+},
+"text": "Innan en patient får blod måste man kontrollera att det är _____ med patientens eget blod, eftersom allvarliga komplikationer annars kan bli följden. Blodgrupperna A, B och 0 _____ år 1901 av Karl Landsteiner, som långt senare fick Nobelpriset för det.",
+"key": [
+"kompatibelt",
+"upptäcktes"
+],
+"distractors": [
+[
+"oförenligt",
+"beskrevs"
+],
+[
+"förenligt",
+"utrotades"
+],
+[
+"blandat",
+"glömdes"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"ors",
+"sam"
+],
+"explanation": "Rätt svar är kompatibelt och upptäcktes. Komplikationer uppstår om blodet inte passar ihop med patientens, och förenligt betyder samma sak. Ett Nobelpris ges för en upptäckt, och beskrevs ligger nära. Oförenligt säger motsatsen, och blodgrupper kan varken utrotas eller glömmas bort år 1901, när de först blev kända."
+},
+{
+"id": "p05-23",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Ryggskott"
+},
+"text": "Akut ländryggssmärta, ofta kallad ryggskott, är besvär som har varat i högst sex veckor. Ungefär fyra av fem vuxna drabbas någon gång, och även om besvären oftast går över av sig själva får tre av fyra _____. Ryggproblem hör också till de vanligaste orsakerna till _____ i Sverige.",
+"key": [
+"återfall",
+"sjukfrånvaro"
+],
+"distractors": [
+[
+"bestående skador",
+"arbetslöshet"
+],
+[
+"nya besvär",
+"övervikt"
+],
+[
+"immunitet",
+"sjukskrivningar"
+]
+],
+"dtyp": [
+[
+"ny"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är återfall och sjukfrånvaro. Även om besvären går över kan de komma tillbaka, och nya besvär betyder ungefär samma sak. Ryggproblem gör att människor stannar hemma från jobbet, och sjukskrivningar ligger nära. Immunitet går emot att besvären återkommer, och bestående skador stämmer inte med att de oftast går över."
+},
+{
+"id": "p05-24",
+"amne": "kul",
+"genre": "deb",
+"source": {
+"title": "Punk"
+},
+"text": "Punken växte fram i mitten av 1970-talet som en protest mot allt _____, från musik till kläder och frisyrer. Man gjorde allt själv, och det skulle synas att det var hemmagjort; mer än de flesta subkulturer ville punken _____ samhället.",
+"key": [
+"kommersiellt",
+"provocera"
+],
+"distractors": [
+[
+"hemmagjort",
+"behaga"
+],
+[
+"kapitalistiskt",
+"lugna"
+],
+[
+"konstnärligt",
+"chocka"
+]
+],
+"dtyp": [
+[
+"po",
+"fo"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är kommersiellt och provocera. En rörelse som gör allt själv protesterar mot det som säljs, och kapitalistiskt ligger nära. Punken ville väcka anstöt, och chocka betyder ungefär samma sak. Hemmagjort var just punkens ideal, och behaga och lugna går emot protesten."
+},
+{
+"id": "p05-25",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Symfoniorkester"
+},
+"text": "Ingen orkester är större än symfoniorkestern, som har mellan 60 och 150 musiker. Orkestern spelar _____ efter noter och leds av en dirigent, och dess traditionella framtoning gör att den ofta förknippas med den _____ bilden av klassisk musik.",
+"key": [
+"akustiskt",
+"stereotypa"
+],
+"distractors": [
+[
+"elektroniskt",
+"nyskapande"
+],
+[
+"utantill",
+"schablonmässiga"
+],
+[
+"oförstärkt",
+"motsägelsefulla"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+2
+]
+],
+"ordklass": [
+"adv",
+"a"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är akustiskt och stereotypa. En orkester med traditionell framtoning spelar på instrument utan förstärkning, och oförstärkt betyder samma sak. Efter noter går emot utantill. Den traditionella bilden är den förenklade och schablonmässiga. Nyskapande går emot traditionell, och bilden är inte motsägelsefull."
+},
+{
+"id": "p05-26",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Socialism"
+},
+"text": "Socialismen har som mål ekonomisk jämlikhet och social rättvisa, och i socialistiska system ägs de viktigaste produktionsmedlen _____. Som ekonomiskt system är socialismen ett alternativ till kapitalismen, som den kritiserar för hur makt och resurser _____.",
+"key": [
+"gemensamt",
+"fördelas"
+],
+"distractors": [
+[
+"privat",
+"produceras"
+],
+[
+"kollektivt",
+"förbrukas"
+],
+[
+"utomlands",
+"sprids"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"adv",
+"v"
+],
+"ledtrad": [
+"def",
+"sam"
+],
+"explanation": "Rätt svar är gemensamt och fördelas. Jämlikhet nås genom att produktionsmedlen ägs av alla, och kollektivt betyder samma sak. Kritiken gäller vem som får makt och resurser. Privat ägande är kapitalismens kännetecken, och förbrukas eller produceras är inte det kritiken gäller."
+},
+{
+"id": "p05-27",
+"amne": "sam",
+"genre": "deb",
+"source": {
+"title": "Konservatism"
+},
+"text": "Konservatismen vill bevara traditionella samhällsinstitutioner som familjen, kyrkan och monarkin, och den sätter värde på det som har gamla _____. Som modern ideologi växte den fram i _____ mot den franska revolutionen.",
+"key": [
+"anor",
+"motstånd"
+],
+"distractors": [
+[
+"brister",
+"samförstånd"
+],
+[
+"rötter",
+"beundran"
+],
+[
+"skulder",
+"opposition"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är anor och motstånd. Det som har gamla anor har funnits länge, och rötter ligger nära. En ideologi som vill bevara det gamla vänder sig mot en revolution, och opposition betyder samma sak. Beundran och samförstånd går emot ordet mot."
+},
+{
+"id": "p05-28",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Antikens Grekland"
+},
+"text": "Antikens Grekland var inget enhetligt rike utan en mängd småstater, som ofta _____ med varandra men som ändå hölls samman av en gemensam kultur. En stor del av västerlandets filosofi, vetenskap och politiska institutioner har sina _____ där.",
+"key": [
+"stred",
+"rötter"
+],
+"distractors": [
+[
+"handlade",
+"slut"
+],
+[
+"krigade",
+"motstånd"
+],
+[
+"samarbetade",
+"upphov"
+]
+],
+"dtyp": [
+[
+"ny",
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är stred och rötter. Men samtidigt förenades ställer något som splittrade mot det som förenade, och krigade betyder samma sak. Att ha sina rötter i något är att komma därifrån, och upphov ligger nära. Samarbetade och handlade ger ingen kontrast mot förenades."
+},
+{
+"id": "p05-29",
+"amne": "his",
+"genre": "nyh",
+"source": {
+"title": "Regalskeppet Vasa"
+},
+"text": "Örlogsfartyget Vasa _____ och sjönk redan på sin första resa, i inloppet till Stockholm sommaren 1628. Efter några misslyckade bärgningsförsök föll skeppet i glömska, tills Anders Franzén 1956 lyckades _____ dess position, och 1961 lyftes det ur vattnet.",
+"key": [
+"kantrade",
+"fastställa"
+],
+"distractors": [
+[
+"grundstötte",
+"förlora"
+],
+[
+"välte",
+"glömma"
+],
+[
+"torpederades",
+"lokalisera"
+]
+],
+"dtyp": [
+[
+"de",
+"ny"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är kantrade och fastställa. Ett skepp som välter och sjunker kantrar. Lyckades och föll i glömska visar att Franzén fann det som var bortglömt, och lokalisera betyder samma sak. Torpeder fanns inte 1628. Förlora och glömma går emot lyckades."
+},
+{
+"id": "p05-30",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Laga skifte"
+},
+"text": "Laga skifte var en jordreform som beslutades 1827, och den skulle fullborda de jordreformer som hade _____ genom storskiftet och enskiftet. Om bara en av byns delägare begärde skifte, så skulle det _____.",
+"key": [
+"påbörjats",
+"genomföras"
+],
+"distractors": [
+[
+"avslutats",
+"stoppas"
+],
+[
+"inletts",
+"överklagas"
+],
+[
+"misslyckats",
+"verkställas"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är påbörjats och genomföras. Det man fullbordar är något som redan satts igång, och inletts betyder samma sak. En begäran från en delägare räckte för att skiftet skulle bli av, och verkställas ligger nära. Avslutats går emot fullborda, och en reform fullbordar inte något som misslyckats."
+},
+{
+"id": "p05-31",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Myror"
+},
+"text": "Myror är små sociala insekter som lever i välorganiserade _____ med upp till flera miljoner individer. Sammantaget har myrorna beräknats utgöra 15 till 20 procent av all _____ hos landlevande djur.",
+"key": [
+"kolonier",
+"biomassa"
+],
+"distractors": [
+[
+"hjordar",
+"vikt"
+],
+[
+"samhällen",
+"föda"
+],
+[
+"reden",
+"energi"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"de",
+"fi"
+],
+[
+"ny",
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är kolonier och biomassa. Sociala insekter lever i kolonier, och samhällen betyder samma sak. En andel av alla landlevande djur mäts som biomassa, och vikt ligger nära, men insekter lever inte i hjordar. Myror utgör ingen andel av all föda eller energi."
+},
+{
+"id": "p05-32",
+"amne": "lit",
+"genre": "rec",
+"source": {
+"title": "Nils Holgerssons underbara resa genom Sverige"
+},
+"text": "Selma Lagerlöfs bok om Nils Holgersson skrevs från början som en _____ i geografi för skolbarn. Trots det har boken nått långt utanför skolan och räknas som en _____ klassiker inom svensk barnlitteratur.",
+"key": [
+"läsebok",
+"tidlös"
+],
+"distractors": [
+[
+"avhandling",
+"föråldrad"
+],
+[
+"lärobok",
+"bortglömd"
+],
+[
+"kartbok",
+"odödlig"
+]
+],
+"dtyp": [
+[
+"fa",
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"fa"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är läsebok och tidlös. En bok i geografi för skolbarn är en läsebok, och lärobok ligger nära. Trots det ställer skolboken mot en klassiker som lever kvar, och odödlig betyder ungefär samma sak. En kartbok är ingen berättelse, och föråldrad och bortglömd går emot klassiker."
+},
+{
+"id": "p05-33",
+"amne": "lit",
+"genre": "deb",
+"source": {
+"title": "Pippi Långstrump"
+},
+"text": "Pippi Långstrump är starkast i världen, sätter sig upp mot vuxna och är på det hela taget _____. När de första böckerna gavs ut uppfattades hon därför av en del som _____, men hon har blivit en av Astrid Lindgrens mest kända figurer.",
+"key": [
+"ouppfostrad",
+"kontroversiell"
+],
+"distractors": [
+[
+"väluppfostrad",
+"mönstergill"
+],
+[
+"obstinat",
+"banal"
+],
+[
+"blyg",
+"omstridd"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"a"
+],
+"ledtrad": [
+"par",
+"ors"
+],
+"explanation": "Rätt svar är ouppfostrad och kontroversiell. Ett barn som sätter sig upp mot vuxna beter sig inte som man förväntar sig, och obstinat ligger nära. Därför visar att hennes beteende väckte protester, och omstridd betyder samma sak. Blyg går emot att hon sätter sig upp mot vuxna, och banal och mönstergill går emot därför."
+},
+{
+"id": "p05-34",
+"amne": "spr",
+"genre": "aka",
+"source": {
+"title": "Ironi"
+},
+"text": "Vid ironi står en ytlig mening i ett underförstått förhållande till en _____ mening, och de två står oftast i någon form av motsats till varandra. Därför finns det alltid en risk för _____, om mottagaren tolkar det som sägs bokstavligt.",
+"key": [
+"dold",
+"missförstånd"
+],
+"distractors": [
+[
+"tydlig",
+"samförstånd"
+],
+[
+"underförstådd",
+"förolämpningar"
+],
+[
+"bokstavlig",
+"feltolkningar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är dold och missförstånd. Den ytliga meningen ställs mot en som inte sägs ut, och underförstådd betyder ungefär samma sak. Den som tolkar bokstavligt missar den dolda meningen och missförstår, och feltolkningar ligger nära. Bokstavlig är just den ytliga meningen, och tydlig går emot underförstått."
+},
+{
+"id": "p05-35",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Gymnasieskola"
+},
+"text": "Gymnasieskolan är en _____ och frivillig utbildning för unga som har avslutat grundskolan. Många program är förberedande inför högskolan, men det finns också yrkesprogram, och även där har eleverna rätt att läsa in grundläggande _____ för högskolan.",
+"key": [
+"avgiftsfri",
+"behörighet"
+],
+"distractors": [
+[
+"obligatorisk",
+"antagning"
+],
+[
+"kostnadsfri",
+"examen"
+],
+[
+"privat",
+"kompetens"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"par",
+"kol"
+],
+"explanation": "Rätt svar är avgiftsfri och behörighet. Kostnadsfri betyder samma sak som avgiftsfri, men obligatorisk går emot frivillig och den allmänna gymnasieskolan är inte privat. Det man läser in för att få söka till högskolan är behörighet. En examen eller antagning läser man inte in."
+},
+{
+"id": "p05-36",
+"amne": "eko",
+"genre": "nyh",
+"source": {
+"title": "Fackförening"
+},
+"text": "En fackförening samlar arbetstagare och _____ deras intressen gentemot arbetsgivarna, i frågor som lön, arbetstider och arbetsmiljö. När medlemmarna håller ihop och slutar konkurrera med varandra får facket en starkare _____.",
+"key": [
+"företräder",
+"förhandlingsposition"
+],
+"distractors": [
+[
+"motarbetar",
+"ekonomi"
+],
+[
+"bevakar",
+"ledning"
+],
+[
+"förhandlar",
+"ställning"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"def",
+"ors"
+],
+"explanation": "Rätt svar är företräder och förhandlingsposition. Facket för medlemmarnas talan, och bevakar ligger nära. Att hålla ihop ger en starkare ställning i förhandlingarna med arbetsgivaren. Ställning fungerar också, men man förhandlar inte någons intressen, man förhandlar om dem. Motarbetar säger motsatsen."
+},
+{
+"id": "p05-37",
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Aktiebolag"
+},
+"text": "I ett aktiebolag kan delägarna köpa och sälja sina andelar, och de behöver därför inte själva vara _____ i bolaget. För att bilda bolaget krävs ett visst insatskapital, och varje ägares _____ framgår av ett aktiebevis.",
+"key": [
+"aktiva",
+"andel"
+],
+"distractors": [
+[
+"anställda",
+"skuld"
+],
+[
+"passiva",
+"lön"
+],
+[
+"skuldsatta",
+"innehav"
+]
+],
+"dtyp": [
+[
+"de",
+"ny"
+],
+[
+"po"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+2
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är aktiva och andel. Den som kan sälja sin andel behöver inte arbeta i bolaget. Anställda ligger nära, men ett aktiebevis visar hur stor del man äger, och innehav betyder ungefär samma sak. Skuldsatta har inget med saken att göra, och passiva säger det motsatta om vad ägaren måste vara."
+},
+{
+"id": "p05-38",
+"amne": "eko",
+"genre": "myn",
+"source": {
+"title": "Mervärdesskatt"
+},
+"text": "Mervärdesskatt, eller moms, är en skatt som till sist betalas av konsumenten. Även företagen betalar moms, men de får _____ den moms de själva betalat mot den moms de tar ut. En fördel med systemet anses vara att det _____ risken för skattefusk.",
+"key": [
+"kvitta",
+"minskar"
+],
+"distractors": [
+[
+"dubblera",
+"ökar"
+],
+[
+"räkna av",
+"skapar"
+],
+[
+"redovisa",
+"begränsar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"sam"
+],
+"explanation": "Rätt svar är kvitta och minskar. Att kvitta något mot något annat är att räkna det ena från det andra, och räkna av ligger nära. En fördel med att alla led betalar är att fusket blir svårare, och begränsar betyder ungefär samma sak. Man redovisar inte moms mot annan moms, och en fördel ökar inte risken för fusk."
+},
+{
+"id": "p05-39",
+"amne": "jur",
+"genre": "aka",
+"source": {
+"title": "Rättssäkerhet"
+},
+"text": "I ett rättssäkert samhälle finns en rättsordning som _____ den enskilda mot övergrepp från både samhället och andra människor. Den bygger på principer som att alla är lika inför lagen och att den som är anklagad ska betraktas som _____ tills motsatsen är bevisad.",
+"key": [
+"skyddar",
+"oskyldig"
+],
+"distractors": [
+[
+"utsätter",
+"skyldig"
+],
+[
+"värnar",
+"misstänkt"
+],
+[
+"övervakar",
+"icke skyldig"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är skyddar och oskyldig. Att skydda någon mot övergrepp är vad en rättsordning gör, och värnar betyder samma sak. Tills motsatsen är bevisad visar att man utgår från att den anklagade inte har gjort det, och icke skyldig betyder samma sak. Misstänkt säger inget om den principen, och en rättsordning övervakar inte någon mot övergrepp."
+},
+{
+"id": "p05-40",
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Inlärd hjälplöshet"
+},
+"text": "Inlärd hjälplöshet är ett tillstånd av _____ som uppstår när en individ gång på gång utsätts för följder som den inte kan förutse eller påverka. Termen myntades 1967 av Martin Seligman efter försök på djur, som till slut blev så _____ att de hellre svalt än tryckte på någon knapp.",
+"key": [
+"vanmakt",
+"apatiska"
+],
+"distractors": [
+[
+"allmakt",
+"aggressiva"
+],
+[
+"maktlöshet",
+"nyfikna"
+],
+[
+"ilska",
+"likgiltiga"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"def"
+],
+"explanation": "Rätt svar är vanmakt och apatiska. Den som aldrig kan påverka följderna känner sig maktlös, och maktlöshet betyder samma sak. Djur som hellre svälter än försöker har gett upp, och likgiltiga ligger nära. Allmakt säger motsatsen, och ilska, aggressivitet och nyfikenhet stämmer inte med att djuren slutade försöka."
+},
+{
+"id": "p05-41",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Sveriges kristnande"
+},
+"text": "Sveriges kristnande var en process som pågick i flera _____. Ansgar grundade en församling i Birka 829, men den _____ efter några decennier. Erik Segersäll sägs ha varit den förste kungen som döptes, men han vände sedan tillbaka till _____, och först hans son Olof Skötkonung blev en bestående kristen kung.",
+"key": [
+"århundraden",
+"upphörde",
+"asatron"
+],
+"distractors": [
+[
+"decennier",
+"växte sig stark",
+"kristendomen"
+],
+[
+"generationer",
+"försvann",
+"islam"
+],
+[
+"veckor",
+"blomstrade",
+"hedendomen"
+]
+],
+"dtyp": [
+[
+"ny",
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v",
+"s"
+],
+"ledtrad": [
+"sam",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är århundraden, upphörde och asatron. Från 829 till Olof Skötkonung gick det mer än hundra år. Men efter några decennier visar att församlingen inte levde kvar, och försvann betyder samma sak. Att återgå till något är att gå tillbaka till den gamla tron. Hedendomen ligger nära, men det alternativet faller tidigare, och islam var inte den tro han kom ifrån."
+},
+{
+"id": "p05-42",
+"amne": "utb",
+"genre": "aka",
+"source": {
+"title": "Pedagogik"
+},
+"text": "Pedagogik är en vetenskap som rör uppfostran, undervisning och utbildning, och i Sverige växte den fram som eget ämne ur _____ i början av 1900-talet. Ämnet har nära _____ till psykologin men också till sociologi och neurovetenskap, och det bedriver forskning i samarbete med flera _____.",
+"key": [
+"filosofin",
+"band",
+"professionsfält"
+],
+"distractors": [
+[
+"medicinen",
+"avstånd",
+"myndigheter"
+],
+[
+"sociologin",
+"kopplingar",
+"yrkesområden"
+],
+[
+"psykologin",
+"motsättningar",
+"fakulteter"
+]
+],
+"dtyp": [
+[
+"fa",
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s",
+"s"
+],
+"ledtrad": [
+"sam",
+"kol",
+"sam"
+],
+"explanation": "Rätt svar är filosofin, band och professionsfält. Psykologin och sociologin kan inte ha varit ursprunget, eftersom de nämns som andra ämnen som pedagogiken har band till. Nära band och nära kopplingar betyder samma sak, men motsättningar och avstånd går emot ordet nära. Medicinen nämns inte alls bland de närliggande ämnena."
+},
+{
+"id": "p05-43",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Rättegång"
+},
+"text": "Den del av rättsprocessen som _____ inför domstol kallas rättegång, och i vardagligt tal menar man oftast huvudförhandlingen i ett brottmål. Om målet är omfattande kan en _____ förhandling hållas först. Ett överklagande räknas i regel inte som en rättegång, eftersom prövningen då oftast begränsas till de _____ som lades fram i första instans.",
+"key": [
+"äger rum",
+"förberedande",
+"bevis"
+],
+"distractors": [
+[
+"avbryts",
+"avslutande",
+"vittnesmål"
+],
+[
+"sker",
+"inledande",
+"rykten"
+],
+[
+"förbereds",
+"hemlig",
+"argument"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"def",
+"kol"
+],
+"explanation": "Rätt svar är äger rum, förberedande och bevis. Rättegången är den del som sker i domstolen, och sker betyder samma sak. En förhandling som hålls först förbereder den stora, och inledande ligger nära. Det som prövas i första instans är bevisen. Rykten prövas inte i domstol, och en avslutande förhandling hålls inte först."
+},
+{
+"id": "p05-44",
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Aristoteles"
+},
+"text": "Aristoteles kom som artonåring till Platons akademi och blev kvar där i nästan tjugo år. Hans skrifter _____ alltifrån fysik och biologi till logik, etik och poetik, och de utgör västerlandets första _____ framställning av filosofin. Efter Platons död blev han lärare åt den unge Alexander den store, på _____ av dennes far Filip II.",
+"key": [
+"spänner över",
+"heltäckande",
+"begäran"
+],
+"distractors": [
+[
+"utesluter",
+"fragmentariska",
+"uppdrag"
+],
+[
+"behandlar",
+"lättillgängliga",
+"befallning"
+],
+[
+"förnekar",
+"genomgripande",
+"inrådan"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"utr",
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är spänner över, heltäckande och begäran. Alltifrån fysik till poetik beskriver ett stort område, och behandlar fungerar också. En framställning som täcker så mycket är heltäckande, och genomgripande ligger nära. Filip II bad honom bli lärare. Förnekar och utesluter går emot uppräkningen, och lättillgängliga och fragmentariska passar inte."
+},
+{
+"id": "p05-45",
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Fri vilja"
+},
+"text": "Fri vilja innebär att människan kan välja utan att valet styrs av slumpen eller av yttre orsaker, alltså att beslutet hade kunnat bli _____. Tanken står i skarp motsättning till _____, och när ett mekanistiskt tänkande vann insteg i vetenskapen kom den att _____.",
+"key": [
+"annorlunda",
+"determinismen",
+"ifrågasättas"
+],
+"distractors": [
+[
+"likadana",
+"existentialismen",
+"försvaras"
+],
+[
+"andra",
+"fatalismen",
+"bekräftas"
+],
+[
+"slumpmässiga",
+"ödestron",
+"angripas"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"adv",
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är annorlunda, determinismen och ifrågasättas. Ett fritt beslut är ett som kunde ha fattats på ett annat sätt. Läran att allt bestäms av tidigare orsaker står i motsats till fri vilja och hör ihop med ett mekanistiskt tänkande, och fatalismen ligger nära. Ett mekanistiskt tänkande gör att den fria viljan blir svår att tro på, alltså ifrågasätts den, inte bekräftas. Slumpmässiga beslut är just det som uteslöts."
+},
+{
+"id": "p05-46",
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Regnskog"
+},
+"text": "En regnskog får minst 1 500 millimeter nederbörd om året, spridd över större delen av året. Den tropiska regnskogen täcker bara omkring sju procent av jordens landyta men _____ ungefär varannan art av växter och djur, och troligen finns miljontals arter som ännu inte har _____. Ändå _____ regnskogarna hela tiden i storlek.",
+"key": [
+"rymmer",
+"upptäckts",
+"minskar"
+],
+"distractors": [
+[
+"hotar",
+"beskrivits",
+"växer"
+],
+[
+"saknar",
+"utrotats",
+"ökar"
+],
+[
+"hyser",
+"namngivits",
+"varierar"
+]
+],
+"dtyp": [
+[
+"de",
+"fi"
+],
+[
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+3
+],
+[
+1,
+2,
+3
+],
+[
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är rymmer, upptäckts och minskar. Men ställer den lilla ytan mot att halva artrikedomen finns där, och hyser betyder samma sak. Arter som ännu inte är kända har inte upptäckts. Ändå ställer artrikedomen mot att skogarna krymper, och varierar eller växer ger ingen sådan kontrast."
+},
+{
+"id": "p05-47",
+"amne": "mil",
+"genre": "aka",
+"source": {
+"title": "Monsun"
+},
+"text": "Monsunen är en vind som återkommer med årstiderna och beror på temperaturskillnader mellan hav och land. Sommarmonsunen blåser in från havet över ett _____ landområde och ger mycket regn, medan vintermonsunen blåser från land mot havet när landmassan har _____. I tropiska Asien är monsunen så _____ att årstiderna ofta delas in i en regnperiod och en torrperiod.",
+"key": [
+"uppvärmt",
+"kylts av",
+"avgörande"
+],
+"distractors": [
+[
+"nedkylt",
+"värmts upp",
+"obetydlig"
+],
+[
+"upphettat",
+"frusit",
+"betydelsefull"
+],
+[
+"uttorkat",
+"svalnat av",
+"oförutsägbar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2
+],
+[
+1,
+3
+]
+],
+"ordklass": [
+"a",
+"utr",
+"a"
+],
+"ledtrad": [
+"kon",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är uppvärmt, kylts av och avgörande. Vinden går från det svalare havet mot det varmare landet på sommaren, och tvärtom på vintern, när landet har svalnat. Upphettat och svalnat ligger nära, men land fryser inte i tropikerna. En vind som delar in hela året i två perioder är avgörande för klimatet. Oförutsägbar går emot att den återkommer med årstiderna."
+},
+{
+"id": "p05-48",
+"amne": "spr",
+"genre": "myn",
+"source": {
+"title": "Meänkieli"
+},
+"text": "Meänkieli, som betyder vårt språk, är sedan år 2000 ett officiellt _____ i Sverige och talas bland annat av tornedalingar. Historiskt har språket räknats till finskan, men när gränsen drogs längs Torne älv 1809 började språken _____, och ett eget skriftspråk har bidragit till att meänkieli fått ställning som ett eget _____ språk.",
+"key": [
+"minoritetsspråk",
+"glida isär",
+"inhemskt"
+],
+"distractors": [
+[
+"nationalspråk",
+"närma sig varandra",
+"främmande"
+],
+[
+"majoritetsspråk",
+"skiljas åt",
+"lokalt"
+],
+[
+"skolspråk",
+"blandas",
+"utdött"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"utr",
+"a"
+],
+"ledtrad": [
+"sam",
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är minoritetsspråk, glida isär och inhemskt. Ett språk som talas av en folkgrupp i landet har ställning som minoritetsspråk, inte som majoritetsspråk eller nationalspråk. Men ställer det gamla, att språket räknades till finskan, mot att språken började skilja sig åt. Ett språk med eget skriftspråk som talas här är inhemskt, inte främmande eller utdött."
+},
+{
+"id": "p05-49",
+"amne": "spr",
+"genre": "aka",
+"source": {
+"title": "Svenska dialekter"
+},
+"text": "De traditionella svenska dialekterna har utvecklats ur fornöstnordiskan och kallas också folkmål eller _____. Språkvetare skiljer mellan fyra nivåer, från lokal dialekt till neutralt standardspråk, men i dagligt tal kallas också det _____ standardspråket ofta för dialekt. I Skåne, Blekinge och Halland, som förr hörde till Danmark, talar man historiskt också om _____ dialekter.",
+"key": [
+"bygdemål",
+"regionala",
+"östdanska"
+],
+"distractors": [
+[
+"skriftspråk",
+"nationella",
+"norska"
+],
+[
+"sockenmål",
+"neutrala",
+"danska"
+],
+[
+"slangord",
+"utjämnade",
+"östsvenska"
+]
+],
+"dtyp": [
+[
+"po",
+"fa"
+],
+[
+"de",
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"a",
+"s"
+],
+"ledtrad": [
+"par",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är bygdemål, regionala och östdanska. Folkmål och bygdemål är äldre namn för samma sak, och sockenmål ligger nära. Det standardspråk som ändå kallas dialekt är det som har drag från en region, inte det neutrala. Områden som hörde till Danmark talade dialekter som räknas till danskan. Skriftspråk och slangord är inte traditionella dialekter."
+},
+{
+"id": "p05-50",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Barnkonventionen"
+},
+"text": "Barnkonventionen antogs av FN:s generalförsamling 1989 och har _____ av 196 länder. Den slår fast en _____ definition av barnets rättigheter, som är tänkt att gälla överallt, vilken kultur eller religion ett land än har. I Sverige blev konventionen _____ lag efter ett beslut i riksdagen 2018.",
+"key": [
+"ratificerats",
+"universell",
+"svensk"
+],
+"distractors": [
+[
+"förkastats",
+"lokal",
+"europeisk"
+],
+[
+"godkänts",
+"snäv",
+"kommunal"
+],
+[
+"skrivits",
+"allmängiltig",
+"tillfällig"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1,
+3
+]
+],
+"ordklass": [
+"v",
+"a",
+"a"
+],
+"ledtrad": [
+"kol",
+"def",
+"kol"
+],
+"explanation": "Rätt svar är ratificerats, universell och svensk. När ett land formellt godkänner en konvention ratificerar det den, och godkänts betyder ungefär samma sak. Något som ska gälla i alla samhällen är universellt, och allmängiltig ligger nära. Ett beslut i riksdagen gör konventionen till svensk lag, inte till kommunal eller tillfällig."
+}
+]
