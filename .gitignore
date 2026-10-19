@@ -50,6 +50,9 @@ scripts/.ord-defs/
 # Nedladdade provhäften från studera.nu (importpipeline, se scripts/hp-import/).
 .hp-cache/
 
+# Mellanresultat från MEK-generatorn (se scripts/mek-gen/REGELVERK.md).
+scripts/mek-gen/out/
+
 # genererade typsnitt åt scripts/build-og-image.py
 .og-cache/
 # Python-bytecode från scripts/hp-import
