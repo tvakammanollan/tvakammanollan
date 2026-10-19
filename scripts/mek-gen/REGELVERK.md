@@ -124,8 +124,8 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
    som i nyare prov (`ett _____ , av`) eller utan; välj en form och håll den.
 3. MÅSTE: flerluckealternativ skrivs `ord1 – ord2 – ord3`, luckornas ordning.
 4. MÅSTE: varje lucka har 4 olika värden; i flerluckor varierar alla luckor.
-5. MÅSTE: 1 lucka 12–55 ord, 2 luckor 20–65, 3 luckor 28–77. BÖR: medianer nära
-   28 / 37 / 45.
+5. MÅSTE: 1 lucka 12–61 ord, 2 luckor 15–67, 3 luckor 21–77 (arkivets spann).
+   BÖR: medianer nära 28 / 37 / 45.
 6. MÅSTE: 1–5 meningar. BÖR: 1–2 meningar i ~80 %.
 7. BÖR: banken 40/40/20; facit A/B/C/D 25 % ±2 per 100; aldrig samma facit 4 i
    rad i en batch.
@@ -150,15 +150,21 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
 ### C3. Var ett ord lyfts ut
 1. MÅSTE: luckan är ett **innehållsord** (substantiv, verb, adjektiv, adverb)
    eller ett **fast uttryck** (partikelverb, prepositionsfras, idiom, latinsk
-   fras). Aldrig ensam preposition, konjunktion, pronomen, artikel, egennamn eller
-   siffra.
+   fras). Aldrig egennamn eller siffra. Ensam preposition eller konjunktion
+   (`När/Eftersom/Medan`, `med/genom/kring`) bara i flerluckor, högst en per
+   uppgift och bara när valet ändrar textens logik; arkivet har det i 5 av 600.
+   Aldrig i enluckor.
 2. MÅSTE: kontexten **avgör** ordet. Minst en av: definition/apposition (`det vill
    säga ensamlevande`), kontrast (`men`, `utan`, `snarare`), orsak/följd
    (`eftersom`, `därför`), uppräkning/parallellism, kollokation (`epidemier som
    grasserade`), stilregister. Ledtrådstypen sparas per lucka.
-3. MÅSTE: texten innehåller inte nyckeln eller en avledning av den någon
-   annanstans (nyckel `periodicitet` + `periodiskt` i texten = läcka).
-4. MÅSTE: i flerluckor står luckorna minst 3 ord isär och gärna i olika satser.
+3. BÖR: texten innehåller inte nyckeln eller en avledning av den någon
+   annanstans. UHR gör det ibland **med flit**, som parallellism ("kan förklara
+   … kan _____ … kan förklara") eller syftning (`vinden` står två meningar
+   före luckan): 12 av 600. Tillåtet som ledtråd, max 3 % av banken, och
+   ledtrådstypen ska då vara `upprepning`. Oavsiktlig läcka är ett fel.
+4. MÅSTE: i flerluckor står luckorna minst 1 ord isär. BÖR: minst 3 ord och
+   gärna i olika satser (arkivet: 16 av 480 mellanrum är 1–2 ord).
 5. BÖR: luckan i textens senare halva (som arkivet); aldrig först i texten mer än
    undantagsvis.
 6. BÖR: nyckelns ordklass och svårighet enligt steg 0-fördelningen. Nyckeln är
@@ -238,7 +244,7 @@ fel nog (C4.2).
 | Inget riktigt rätt svar | Blindlösning (låg enighet) |
 | Facit gissbart utan text | Lösning **utan** text: facit får inte väljas oftare än ~35 % |
 | Grammatik avslöjar facit | Böjningskontroll + lösning utan text |
-| Nyckeln läcker i texten | Lemmakontroll mot texten |
+| Nyckeln läcker i texten | Lemmakontroll mot texten (varning + bankkvot, se C3.3) |
 | Påhittat eller felböjt ord | SAOL/svenska.se-uppslag (återanvänd `scripts/scrape-ord-definitions.ts`) |
 | Faktafel | Faktakontroll mot sparad källtext |
 | Kräver förkunskap | Lösningsmotiveringen ska peka på texten |
@@ -337,6 +343,14 @@ granskning. `question_reports` på en genererad uppgift läses först.
   enligt CLAUDE.md: en MEK-uppgift i `/train` visar etiketten och källraden.
 - Ordningen i CLAUDE.md före varje commit: tsc → eslint (ändrade filer) → test →
   build → SSR-rökprov.
+
+## Kalibrering mot arkivet (2026-10-19)
+
+Tre regler i första utkastet underkände riktiga UHR-uppgifter och mjukades
+upp: längdgränserna (C1.5), funktionsord i luckan (C3.1) och nyckeln i texten
+(C3.3), plus luckavståndet (C3.4). Principen: en MÅSTE-regel som arkivet bryter
+mot är fel regel. Strängare än UHR får vi bara vara där det skyddar mot något
+UHR inte behöver skydda sig mot (källor, tidsord, typografi).
 
 ## Öppet
 
