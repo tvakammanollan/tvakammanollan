@@ -1,0 +1,2965 @@
+[
+{
+"id": "p01-01",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Antibiotikaresistens"
+},
+"text": "Redan när Alexander Fleming upptäckte penicillinet 1928 såg han att bakterier kunde bli motståndskraftiga mot det. Att resistens uppstår är i sig ett naturligt fenomen, men utvecklingen _____ kraftigt när antibiotika används i onödan eller på fel sätt.",
+"key": [
+"accelereras"
+],
+"distractors": [
+[
+"avstannar"
+],
+[
+"omprövas"
+],
+[
+"kartläggs"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fi"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är accelereras. Felaktig användning är en orsak som driver på utvecklingen, och kraftigt förstärker det. Avstannar säger motsatsen, och att utvecklingen omprövas eller kartläggs har inget med användningen av antibiotika att göra."
+},
+{
+"id": "p01-02",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Sömn"
+},
+"text": "Under sömnen sjunker ämnesomsättningen i nästan hela kroppen. Hjärnan är ett undantag: under REM-sömnen är den till och med mer _____ än när vi är vakna.",
+"key": [
+"energikrävande"
+],
+"distractors": [
+[
+"vilsam"
+],
+[
+"förutsägbar"
+],
+[
+"sårbar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fi"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är energikrävande. Ämnesomsättningen sjunker i kroppen, och hjärnan är undantaget, alltså förbrukar den mer energi. Vilsam säger motsatsen, och förutsägbar och sårbar har ingen koppling till ämnesomsättning."
+},
+{
+"id": "p01-03",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Celiaki"
+},
+"text": "Celiaki är en autoimmun sjukdom där kroppen bildar antikroppar mot ett protein i gluten, och reaktionen skadar slemhinnan i tunntarmen. Sjukdomen ska inte _____ med spannmålsallergi, som är något helt annat.",
+"key": [
+"förväxlas"
+],
+"distractors": [
+[
+"behandlas"
+],
+[
+"förenas"
+],
+[
+"belastas"
+]
+],
+"dtyp": [
+[
+"fi"
+],
+[
+"fo"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är förväxlas. Bisatsen som är något helt annat visar att det handlar om att blanda ihop två saker. En sjukdom behandlas eller belastas inte med en annan sjukdom, och förenas betyder att något slås samman."
+},
+{
+"id": "p01-04",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Vaccination"
+},
+"text": "Långt innan Edward Jenner tog fram sitt vaccin mot smittkoppor användes i Kina en metod som kallas variolisation. Friska barn smittades medvetet med en låg dos, för att de sedan skulle vara _____ mot sjukdomen.",
+"key": [
+"immuna"
+],
+"distractors": [
+[
+"allergiska"
+],
+[
+"försvarslösa"
+],
+[
+"vaksamma"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"po"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är immuna. Syftet med att smitta med en låg dos är att ge skydd. Allergiska beskriver en annan reaktion från immunförsvaret, försvarslösa är motsatsen, och vaksamma kan man vara mot en fara men inte bli av en smitta."
+},
+{
+"id": "p01-05",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Migrän"
+},
+"text": "Ordet migrän kommer från grekiskans hemikrania, som betyder halva huvudet. Namnet är träffande, eftersom huvudvärken vid migrän oftast är _____ och dessutom pulserande.",
+"key": [
+"ensidig"
+],
+"distractors": [
+[
+"ihållande"
+],
+[
+"diffus"
+],
+[
+"lindrig"
+]
+],
+"dtyp": [
+[
+"ny"
+],
+[
+"po"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är ensidig. Namnet betyder halva huvudet, och eftersom visar att huvudvärken motsvarar namnet. Ihållande och lindrig beskriver värken men har inget med halva huvudet att göra, och diffus är snarast motsatsen."
+},
+{
+"id": "p01-06",
+"amne": "med",
+"genre": "aka",
+"source": {
+"title": "Placeboeffekt"
+},
+"text": "Placeboeffekten styrs framför allt av patientens _____. En patient som tror att preparatet är dyrt upplever i regel en starkare effekt än en som tror att det är billigt, fastän preparatet saknar verksamt ämne i båda fallen.",
+"key": [
+"förväntningar"
+],
+"distractors": [
+[
+"erfarenheter"
+],
+[
+"farhågor"
+],
+[
+"förutsättningar"
+]
+],
+"dtyp": [
+[
+"ny"
+],
+[
+"po"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är förväntningar. Exemplet med det dyra läkemedlet handlar om vad patienten tror ska hända. Erfarenheter gäller det som redan hänt, farhågor är negativa och skulle ge motsatt effekt, och förutsättningar är för allmänt."
+},
+{
+"id": "p01-07",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Tinnitus"
+},
+"text": "Den som har tinnitus hör ljud som saknar yttre källa, till exempel pipande eller brus. Besvären har jämförts med fantomsmärta, och den vanligaste _____ är att hörseln har skadats av buller eller starka ljud.",
+"key": [
+"orsaken"
+],
+"distractors": [
+[
+"följden"
+],
+[
+"behandlingen"
+],
+[
+"diagnosen"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"sam"
+],
+"explanation": "Rätt svar är orsaken. En bullerskada är något som ligger bakom besvären. Följden vänder på sambandet, och en skadad hörsel är varken en behandling eller en diagnos."
+},
+{
+"id": "p01-08",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Funktionalism (arkitektur)"
+},
+"text": "Funktionalismens arkitekter ansåg att det var _____ att smycka fasader med klassiska förebilder. Husen skulle i stället utformas helt utifrån sin funktion, med släta och ljusa väggar, platta tak och enkla geometriska volymer.",
+"key": [
+"förlegat"
+],
+"distractors": [
+[
+"nödvändigt"
+],
+[
+"lönsamt"
+],
+[
+"modernt"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fi"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är förlegat. I stället visar att arkitekterna tog avstånd från de klassiska förebilderna. Nödvändigt och modernt säger motsatsen, och lönsamt handlar om pengar, inte om hur man värderar en stil."
+},
+{
+"id": "p01-09",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Jazz"
+},
+"text": "Jazzen uppstod i södra USA mot slutet av 1800-talet. Den känns igen på bland annat _____, alltså att musikerna skapar delar av musiken i stunden, och på synkoper och sväng.",
+"key": [
+"improvisation"
+],
+"distractors": [
+[
+"imitation"
+],
+[
+"intonation"
+],
+[
+"instrumentering"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är improvisation. Förklaringen efter alltså, att musiken skapas i stunden, är en definition av ordet. Imitation, intonation och instrumentering är musikaliska begrepp som liknar det i form men betyder något annat."
+},
+{
+"id": "p01-10",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Allemansrätten"
+},
+"text": "Allemansrätten ger var och en rätt att röra sig över annans mark och plocka svamp och bär. I Sverige bygger reglerna främst på _____, alltså på hävd och praxis snarare än på uttryckliga lagparagrafer.",
+"key": [
+"sedvanerätt"
+],
+"distractors": [
+[
+"naturrätt"
+],
+[
+"förköpsrätt"
+],
+[
+"äganderätt"
+]
+],
+"dtyp": [
+[
+"fo",
+"fa"
+],
+[
+"fo"
+],
+[
+"fo",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är sedvanerätt. Förklaringen efter alltså, hävd och praxis, beskriver rätt som vuxit fram genom bruk. Naturrätt bygger på förnuft och moral, förköpsrätt gäller köp av fastighet, och äganderätten är det allemansrätten begränsar."
+},
+{
+"id": "p01-11",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Offentlighetsprincipen"
+},
+"text": "Sverige har haft offentlighetsprincipen sedan 1766. Den innebär att vem som helst får läsa allmänna handlingar, så länge handlingarna inte är _____.",
+"key": [
+"sekretessbelagda"
+],
+"distractors": [
+[
+"arkiverade"
+],
+[
+"diarieförda"
+],
+[
+"undertecknade"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är sekretessbelagda. Så länge inte anger ett undantag från rätten att läsa, och sekretess är det som begränsar den. Att en handling är arkiverad, diarieförd eller undertecknad hindrar ingen från att läsa den."
+},
+{
+"id": "p01-12",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Hansan"
+},
+"text": "Hansan var ett förbund av främst nordtyska städer som under flera hundra år hade ett _____ på en stor del av handeln kring Nordsjön och Östersjön, inte sällan med väpnat våld.",
+"key": [
+"monopol"
+],
+"distractors": [
+[
+"embargo"
+],
+[
+"protektorat"
+],
+[
+"mandat"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är monopol. Att ha monopol på handel betyder att ensam kontrollera den, och väpnat våld visar hur det upprätthölls. Ett embargo stoppar handel, ett protektorat är ett skyddsområde och ett mandat är ett uppdrag."
+},
+{
+"id": "p01-13",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Digerdöden"
+},
+"text": "Digerdöden nådde Europa 1347 och dödade i genomsnitt var tredje människa. Pesten hade spridit sig västerut från Kina längs de handelsvägar som _____ öst och väst.",
+"key": [
+"förband"
+],
+"distractors": [
+[
+"åtskilde"
+],
+[
+"omringade"
+],
+[
+"befolkade"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är förband. Handelsvägar knyter samman platser, och det är därför smittan kunde färdas längs dem. Åtskilde är motsatsen, och vägar varken omringar eller befolkar öst och väst."
+},
+{
+"id": "p01-14",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Fotosyntes"
+},
+"text": "Vid fotosyntesen tar växter upp koldioxid och vatten och använder solljusets energi för att bilda syre och druvsocker. Processen sker i bladens kloroplaster, som tros ha sitt _____ i cyanobakterier som en gång levde i symbios med cellen.",
+"key": [
+"ursprung"
+],
+"distractors": [
+[
+"utlopp"
+],
+[
+"underlag"
+],
+[
+"uppehåll"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo",
+"ny"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är ursprung. Att ha sitt ursprung i något är det fasta uttrycket för var något kommer ifrån, och en gång visar att det handlar om härkomst. Utlopp, underlag och uppehåll börjar likadant men passar inte i uttrycket."
+},
+{
+"id": "p01-15",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Mykorrhiza"
+},
+"text": "Mykorrhiza är ett samliv mellan svampar och växtrötter. Svamptrådarna gör det lättare för växten att få i sig vatten och näring och får i gengäld socker från växten, så båda parter _____ på arrangemanget.",
+"key": [
+"vinner"
+],
+"distractors": [
+[
+"förlorar"
+],
+[
+"parasiterar"
+],
+[
+"sparar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är vinner. I gengäld visar att båda får något, alltså tjänar båda på samlivet. Förlorar säger motsatsen, parasiterar betyder att bara den ena gynnas, och sparar på betyder att man är snål med något."
+},
+{
+"id": "p01-16",
+"amne": "lit",
+"genre": "nyh",
+"source": {
+"title": "Astrid Lindgren"
+},
+"text": "Astrid Lindgrens böcker har översatts till över hundra språk och sålts i mer än 160 miljoner exemplar. Många av dem har också _____, flera med Olle Hellbom som regissör och Georg Riedel som kompositör.",
+"key": [
+"filmatiserats"
+],
+"distractors": [
+[
+"illustrerats"
+],
+[
+"censurerats"
+],
+[
+"förkortats"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fi"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är filmatiserats. En regissör och en kompositör hör till film, inte till bilder i en bok, till censur eller till förkortade utgåvor."
+},
+{
+"id": "p01-17",
+"amne": "eko",
+"genre": "myn",
+"source": {
+"title": "Kollektivavtal"
+},
+"text": "Ett kollektivavtal anger en _____ för lön och andra anställningsvillkor. Ingenting hindrar alltså en arbetsgivare från att betala mer än vad avtalet säger, och det är också det vanliga.",
+"key": [
+"lägstanivå"
+],
+"distractors": [
+[
+"högstanivå"
+],
+[
+"genomsnittsnivå"
+],
+[
+"tidsplan"
+]
+],
+"dtyp": [
+[
+"po",
+"fo"
+],
+[
+"fo"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är lägstanivå. Att arbetsgivaren alltid får betala mer följer bara om avtalet sätter ett golv. En högstanivå hade förbjudit det, ett genomsnitt säger inget om enskilda löner, och en tidsplan rör inte lönens storlek."
+},
+{
+"id": "p01-18",
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Inflation"
+},
+"text": "Inflation är en allmän ökning av prisnivån i en ekonomi och mäts i regel med ett prisindex. Motsatsen, när den allmänna prisnivån i stället sjunker, kallas _____.",
+"key": [
+"deflation"
+],
+"distractors": [
+[
+"devalvering"
+],
+[
+"recession"
+],
+[
+"stagflation"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fo",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är deflation, som är termen för sjunkande prisnivå. Devalvering är en sänkning av valutans värde, recession är en nedgång i ekonomin, och stagflation är stigande priser i kombination med svag tillväxt."
+},
+{
+"id": "p01-19",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Nämndeman"
+},
+"text": "Nämndemän är lekmän som dömer i domstol tillsammans med lagfarna domare. Uppdraget ska vara _____, även om de flesta nämndemän rekryteras genom de politiska partierna.",
+"key": [
+"opolitiskt"
+],
+"distractors": [
+[
+"tidsbegränsat"
+],
+[
+"offentligt"
+],
+[
+"frivilligt"
+]
+],
+"dtyp": [
+[
+"ny"
+],
+[
+"ny"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är opolitiskt. Även om ställer ordet mot att nämndemännen kommer från partierna, och bara opolitiskt står i motsats till det. Att uppdraget är tidsbegränsat, offentligt eller frivilligt krockar inte med partitillhörigheten."
+},
+{
+"id": "p01-20",
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Prokrastinering"
+},
+"text": "Prokrastinering är mer än att skjuta upp saker i allmänhet. Det handlar om att vanemässigt _____ uppgifter och beslut man har planerat, trots att man vet att det kan få negativa följder.",
+"key": [
+"förhala"
+],
+"distractors": [
+[
+"fullfölja"
+],
+[
+"delegera"
+],
+[
+"prioritera"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är förhala, som betyder att dra ut på något. Trots att man vet om följderna visar att det är något skadligt man gör. Att fullfölja och prioritera är motsatsen, och att delegera är att låta någon annan göra det."
+},
+{
+"id": "p01-21",
+"amne": "kul",
+"genre": "nyh",
+"source": {
+"title": "Folkdräkt"
+},
+"text": "Folkdräkten räknas som högtidsklädsel och är ett fullgott _____ till frack, även vid en nobelmiddag. Den som bär en bygdedräkt blir samtidigt en sorts _____ för bygden, och därför förväntas man veta hur dräkten bärs och vårdas.",
+"key": [
+"alternativ",
+"representant"
+],
+"distractors": [
+[
+"tillägg",
+"företrädare"
+],
+[
+"motsats",
+"främling"
+],
+[
+"tillbehör",
+"åskådare"
+]
+],
+"dtyp": [
+[
+"de",
+"ny"
+],
+[
+"po"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är alternativ och representant. Ett fullgott alternativ till frack betyder att dräkten kan bäras i stället för den. Ett tillägg eller tillbehör bärs tillsammans med frack, och en motsats passar inte heller. Andra ledet följs av därför: den som bär dräkten företräder bygden och måste kunna dess regler."
+},
+{
+"id": "p01-22",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Nyckelharpa"
+},
+"text": "Nyckelharpan är ett _____ med tangenter som trycks mot strängarna för att bestämma tonhöjden. Den spelas med stråke, och den karakteristiska klangen kommer från de _____ som löper under spelsträngarna.",
+"key": [
+"stråkinstrument",
+"resonanssträngar"
+],
+"distractors": [
+[
+"slaginstrument",
+"basgångar"
+],
+[
+"knäppinstrument",
+"stämskruvar"
+],
+[
+"tangentinstrument",
+"klaffar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"de",
+"fa"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1,
+2
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"def",
+"def"
+],
+"explanation": "Rätt svar är stråkinstrument och resonanssträngar. Att instrumentet spelas med stråke avgör första luckan, och det som löper under spelsträngarna är strängar. Stämskruvar och klaffar löper inte under strängarna, och klaffar hör till blåsinstrument."
+},
+{
+"id": "p01-23",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Folkhemmet"
+},
+"text": "Per Albin Hansson lanserade begreppet folkhemmet 1928 som en bild av ett samhälle präglat av _____ och jämlikhet. Många av välfärdsreformerna under de följande decennierna genomfördes också genom uppgörelser över _____.",
+"key": [
+"samförstånd",
+"partigränserna"
+],
+"distractors": [
+[
+"konkurrens",
+"landsgränserna"
+],
+[
+"disciplin",
+"nationsgränserna"
+],
+[
+"tradition",
+"klassgränserna"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"par",
+"sam"
+],
+"explanation": "Rätt svar är samförstånd och partigränserna. Samförstånd hör ihop med jämlikhet i bilden av ett hem för hela folket, och uppgörelser över partigränserna är vad samförstånd betyder i politiken. Konkurrens och disciplin går emot bilden av ett hem, och reformerna förhandlades inte fram mellan länder. Klassgränserna kunde fungera i andra ledet, men tradition faller på det första."
+},
+{
+"id": "p01-24",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Kommunalt självstyre"
+},
+"text": "Tanken bakom det kommunala självstyret är att beslut ska fattas så _____ som möjligt, nära dem som berörs. Kommunen ska därför sköta de gemensamma angelägenheter som _____ just den egna orten och dess invånare.",
+"key": [
+"lokalt",
+"angår"
+],
+"distractors": [
+[
+"centralt",
+"berör"
+],
+[
+"enhälligt",
+"överskrider"
+],
+[
+"skyndsamt",
+"undantar"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"adv",
+"v"
+],
+"ledtrad": [
+"def",
+"sam"
+],
+"explanation": "Rätt svar är lokalt och angår. Nära dem som berörs förklarar att besluten ska fattas lokalt, och centralt är motsatsen. Angelägenheter som angår orten är sådana som rör den. Överskrider och undantar ger ingen mening, och skyndsamt har inget stöd i texten."
+},
+{
+"id": "p01-25",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Urbanisering"
+},
+"text": "Urbanisering betecknar en folkförflyttning från landsbygd till städer, och _____ kallas ruralisering. I svensk statistik mäts urbaniseringen med hjälp av tätorter, som sedan 1960 definieras som _____ bebyggelse med minst 200 invånare.",
+"key": [
+"motsatsen",
+"sammanhängande"
+],
+"distractors": [
+[
+"följden",
+"utspridd"
+],
+[
+"synonymen",
+"sammanhållen"
+],
+[
+"förutsättningen",
+"planlagd"
+]
+],
+"dtyp": [
+[
+"ny"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kon",
+"def"
+],
+"explanation": "Rätt svar är motsatsen och sammanhängande. Ruralisering är en förflyttning från städer till landsbygd, alltså urbaniseringens motsats. En tätort är per definition sammanhängande bebyggelse, och utspridd säger motsatsen. Sammanhållen och planlagd kunde passa i andra ledet, men alternativen faller på det första."
+},
+{
+"id": "p01-26",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Stockholms blodbad"
+},
+"text": "Stockholms blodbad i november 1520 inleddes direkt efter Kristian II:s _____ till svensk kung. Med hänvisning till kyrkans lag anklagades anhängare till Sten Sture den yngre för kätteri, och uppemot hundra personer _____ under de följande dagarna.",
+"key": [
+"kröning",
+"avrättades"
+],
+"distractors": [
+[
+"abdikation",
+"benådades"
+],
+[
+"tronföljd",
+"landsförvisades"
+],
+[
+"födelse",
+"arresterades"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"fi"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är kröning och avrättades. Man blir krönt till kung, inte abdikerar, föds eller får tronföljd till kung. Andra luckan avgörs av ordet blodbad. Att benådas är motsatsen, och arresteringar eller landsförvisningar är inget blodbad."
+},
+{
+"id": "p01-27",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Emigrationen till Amerika"
+},
+"text": "Mellan mitten av 1800-talet och början av 1920-talet emigrerade omkring 1,5 miljoner svenskar, främst till USA. En viktig _____ var att befolkningen växte snabbare än jordbruket kunde försörja, samtidigt som inkomsterna i Amerika var _____.",
+"key": [
+"drivkraft",
+"högre"
+],
+"distractors": [
+[
+"följd",
+"lägre"
+],
+[
+"hämsko",
+"generösare"
+],
+[
+"förklaring",
+"jämförbara"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"sam",
+"kon"
+],
+"explanation": "Rätt svar är drivkraft och högre. Befolkningsökningen förklarar varför människor lämnade landet, så den drev på utvandringen. En hämsko hade hållit dem kvar och en följd kommer efteråt. Förklaring passar i första ledet, men jämförbara inkomster hade inte lockat någon att resa över Atlanten."
+},
+{
+"id": "p01-28",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Industriella revolutionen"
+},
+"text": "Den industriella revolutionen tog sin början inom den brittiska _____, där de första fabrikerna växte fram kring bomullen i Lancashire. Billigt kol blev snart en central energikälla och _____ därmed gruvdrift, ångkraft och järnframställning.",
+"key": [
+"textilindustrin",
+"knöt samman"
+],
+"distractors": [
+[
+"stålindustrin",
+"ersatte"
+],
+[
+"skeppsbyggnaden",
+"förenklade"
+],
+[
+"jordbruksnäringen",
+"band ihop"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"de",
+"fa"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"utr"
+],
+"ledtrad": [
+"def",
+"sam"
+],
+"explanation": "Rätt svar är textilindustrin och knöt samman. Bomull är råvara för textilier, så första luckan avgörs av Lancashire och bomullen. Kolet användes i alla tre verksamheterna och förenade dem. Band ihop betyder samma sak, men jordbruket har inget med bomullsfabrikerna att göra."
+},
+{
+"id": "p01-29",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Älg"
+},
+"text": "Till skillnad från de flesta hjortdjur lever älgen till största delen _____. Den rör sig oftast långsamt och _____, men när den känner sig hotad kan den bli både mycket snabb och aggressiv.",
+"key": [
+"ensam",
+"sävligt"
+],
+"distractors": [
+[
+"i flock",
+"lojt"
+],
+[
+"nattaktivt",
+"rastlöst"
+],
+[
+"i hjord",
+"trögt"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"po"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"adv",
+"adv"
+],
+"ledtrad": [
+"kon",
+"par"
+],
+"explanation": "Rätt svar är ensam och sävligt. Till skillnad från de flesta hjortdjur, som lever i grupp, betyder att älgen lever för sig själv, och i flock eller i hjord säger motsatsen. Sävligt hör ihop med långsamt och står i kontrast till mycket snabb. Rastlöst går emot det."
+},
+{
+"id": "p01-30",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Honungsbi"
+},
+"text": "Honungsbiet är ett _____ bi, och ett samhälle består av en drottning, några hundra drönare och tiotusentals arbetsbin. Bina kan dessutom meddela varandra var det finns rika _____, och på så vis samordna insamlingen av nektar och pollen.",
+"key": [
+"socialt",
+"näringskällor"
+],
+"distractors": [
+[
+"solitärt",
+"betesmarker"
+],
+[
+"parasitiskt",
+"fyndigheter"
+],
+[
+"aggressivt",
+"förråd"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är socialt och näringskällor. Ett bi som lever i samhällen kallas socialt, och solitärt betyder ensamlevande. Det bina samlar är nektar och pollen, alltså föda. Fyndigheter och förråd passar inte. Betesmarker fungerar nästan, men alternativet faller på första ledet."
+},
+{
+"id": "p01-31",
+"amne": "lit",
+"genre": "nyh",
+"source": {
+"title": "Selma Lagerlöf"
+},
+"text": "Selma Lagerlöf debuterade 1891 med Gösta Berlings saga. Hennes författarskap har sina _____ i en värmländsk tradition av _____ sagor, berättelser som gick från mun till mun långt innan någon skrev ned dem.",
+"key": [
+"rötter",
+"muntliga"
+],
+"distractors": [
+[
+"grenar",
+"folkliga"
+],
+[
+"brister",
+"tryckta"
+],
+[
+"förebilder",
+"skrivna"
+]
+],
+"dtyp": [
+[
+"de",
+"ny"
+],
+[
+"po"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är rötter och muntliga. Att ha sina rötter i en tradition är det fasta uttrycket för var något kommer ifrån. Från mun till mun förklarar att sagorna var muntliga. Tryckta och skrivna går emot det, och folkliga sagor passar men grenar gör det inte."
+},
+{
+"id": "p01-32",
+"amne": "lit",
+"genre": "rec",
+"source": {
+"title": "August Strindberg"
+},
+"text": "Strindberg var under fyra decennier en av de mest _____ gestalterna i svenskt kulturliv och ofta indragen i strider med andra. Internationellt är han främst känd som dramatiker, men i Sverige betraktas han också som en _____ av själva språket.",
+"key": [
+"omdiskuterade",
+"förnyare"
+],
+"distractors": [
+[
+"tillbakadragna",
+"förvaltare"
+],
+[
+"hyllade",
+"vårdare"
+],
+[
+"bortglömda",
+"nydanare"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"par",
+"kon"
+],
+"explanation": "Rätt svar är omdiskuterade och förnyare. Att han ofta var indragen i strider stämmer med omdiskuterad, inte med tillbakadragen. Andra ledet säger att han förändrade språket. En förvaltare eller vårdare bevarar det, och bortglömd går emot att han är känd över hela världen."
+},
+{
+"id": "p01-33",
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Kriminallitteratur"
+},
+"text": "I en deckare är brottet berättelsens nav, och den skyldiges identitet förblir länge ett _____ för läsaren. Gränsen mot närliggande genrer som thrillern och den psykologiska romanen är dock långt ifrån _____.",
+"key": [
+"mysterium",
+"skarp"
+],
+"distractors": [
+[
+"avslöjande",
+"suddig"
+],
+[
+"hinder",
+"självklar"
+],
+[
+"gåta",
+"flytande"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är mysterium och skarp. Att identiteten länge är okänd betyder att den är ett mysterium, och gåta betyder samma sak. Långt ifrån skarp säger att genrerna går in i varandra. Suddig och flytande vänder på betydelsen, och identiteten är inget hinder för läsaren."
+},
+{
+"id": "p01-34",
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Folkhögskola"
+},
+"text": "Den första folkhögskolan grundades i Danmark 1844. Grundtvig, som räknas som skolformens fader, ville att bönder och andra vanliga människor skulle få högre bildning. Han trodde på personlig undervisning och satte _____ före läroböckerna. Idén fick snabbt _____ i hela Norden.",
+"key": [
+"det levande ordet",
+"fäste"
+],
+"distractors": [
+[
+"det skrivna ordet",
+"spridning"
+],
+[
+"examinationen",
+"motstånd"
+],
+[
+"disciplinen",
+"genomslag"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"utr",
+"s"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är det levande ordet och fäste. Personlig undervisning ställs mot läroböckerna, och det som sätts före böckerna är det talade ordet. Det skrivna ordet är motsatsen. Spridning och genomslag passar i andra ledet, men alternativen faller på första."
+},
+{
+"id": "p01-35",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Läroplan"
+},
+"text": "En läroplan anger utbildningens värdegrund, mål och riktlinjer och _____ därmed det uppdrag som skolans personal har. Vad eleverna faktiskt lär sig avgörs ändå också av hur planen _____ i undervisningen, genom lärarnas val av innehåll och arbetssätt.",
+"key": [
+"definierar",
+"omsätts"
+],
+"distractors": [
+[
+"begränsar",
+"tillämpas"
+],
+[
+"ifrågasätter",
+"granskas"
+],
+[
+"förenklar",
+"betygsätts"
+]
+],
+"dtyp": [
+[
+"de",
+"ny"
+],
+[
+"ny"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"def",
+"sam"
+],
+"explanation": "Rätt svar är definierar och omsätts. Mål och riktlinjer är det som slår fast vad uppdraget är. Att planen omsätts i undervisningen betyder att den görs till praktik, vilket lärarnas val beskriver. Tillämpas passar också där, men en läroplan begränsar inte uppdraget, den anger det."
+},
+{
+"id": "p01-36",
+"amne": "utb",
+"genre": "deb",
+"source": {
+"title": "Folkbildning"
+},
+"text": "Folkbildning brukar beskrivas som det _____ bildningsarbetet, som bedrivs utanför den akademiska och yrkesinriktade utbildningen. Syftet är att medborgarna demokratiskt och på lika villkor ska kunna _____ ny kunskap och nya värderingar.",
+"key": [
+"fria",
+"tillägna sig"
+],
+"distractors": [
+[
+"obligatoriska",
+"ta till sig"
+],
+[
+"statliga",
+"avstå från"
+],
+[
+"formella",
+"granska"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"ny",
+"po"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1,
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"utr"
+],
+"ledtrad": [
+"kon",
+"sam"
+],
+"explanation": "Rätt svar är fria och tillägna sig. Utanför den akademiska och yrkesinriktade utbildningen visar att bildningsarbetet är fritt, inte obligatoriskt eller formellt. Syftet är att människor ska ta del av kunskap. Ta till sig betyder samma sak, men obligatoriska går emot texten."
+},
+{
+"id": "p01-37",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Distansutbildning"
+},
+"text": "I skollagen skiljs mellan två former av undervisning där elev och lärare inte är på samma plats. Vid _____ är de åtskilda i både tid och rum, medan de vid fjärrundervisning deltar _____ fast från olika platser.",
+"key": [
+"distansundervisning",
+"samtidigt"
+],
+"distractors": [
+[
+"klassundervisning",
+"växelvis"
+],
+[
+"korrespondensundervisning",
+"var för sig"
+],
+[
+"lärarledd undervisning",
+"synkront"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"adv"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är distansundervisning och samtidigt. Medan ställer de två formerna mot varandra. Den första sker åtskilt i tid, alltså deltar man vid den andra samtidigt. Synkront betyder samma sak, men lärarledd undervisning anger inte avståndet. Klassundervisning sker inte på olika platser."
+},
+{
+"id": "p01-38",
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Globalisering"
+},
+"text": "Globalisering är den process genom vilken världens länder knyts allt närmare varandra, ekonomiskt, politiskt och kulturellt. Politiskt innebär den att makt _____ från nationell nivå till mellanstatliga organ, medan de nationella ekonomierna allt mer _____.",
+"key": [
+"förskjuts",
+"flätas samman"
+],
+"distractors": [
+[
+"återförs",
+"isoleras"
+],
+[
+"förskingras",
+"vävs ihop"
+],
+[
+"förstärks",
+"konkurrerar"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"fo"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"def",
+"sam"
+],
+"explanation": "Rätt svar är förskjuts och flätas samman. Makt som går från nationell nivå till mellanstatliga organ flyttas, och länder som knyts närmare varandra får ekonomier som flätas samman. Vävs ihop betyder samma sak, men makt förskingras inte. Återförs och isoleras går emot texten."
+},
+{
+"id": "p01-39",
+"amne": "eko",
+"genre": "nyh",
+"source": {
+"title": "Bolåneränta"
+},
+"text": "Sedan april 2026 får ett nytt bolån uppgå till högst 90 procent av vad bostaden är värd, och resten måste köparen _____ med egen insats. Gränsen låg tidigare på 85 procent och har alltså _____ med fem procentenheter.",
+"key": [
+"finansiera",
+"höjts"
+],
+"distractors": [
+[
+"amortera",
+"sänkts"
+],
+[
+"låna",
+"justerats"
+],
+[
+"deklarera",
+"halverats"
+]
+],
+"dtyp": [
+[
+"ny",
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"fa",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"sam"
+],
+"explanation": "Rätt svar är finansiera och höjts. Den del av priset som lånet inte täcker måste köparen betala med egna pengar, och man lånar inte med egen insats. Från 85 till 90 procent är en höjning. Justerats stämmer i och för sig men faller på första ledet, och sänkts och halverats går emot siffrorna."
+},
+{
+"id": "p01-40",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Yttrandefrihet"
+},
+"text": "Yttrandefriheten rör förhållandet mellan staten och den enskilda, inte förhållandet mellan enskilda personer. Även i demokratier är den dock inte _____, och de flesta länder har till exempel förbjudit hot om våld och _____.",
+"key": [
+"obegränsad",
+"förtal"
+],
+"distractors": [
+[
+"grundlagsskyddad",
+"kritik"
+],
+[
+"absolut",
+"satir"
+],
+[
+"respekterad",
+"ärekränkning"
+]
+],
+"dtyp": [
+[
+"ny",
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"par"
+],
+"explanation": "Rätt svar är obegränsad och förtal. Exemplen på förbud visar att friheten har gränser. Absolut betyder samma sak, men satir är inget som de flesta länder förbjuder. Ärekränkning ligger nära förtal, men yttrandefriheten kan vara respekterad även i länder med sådana förbud."
+},
+{
+"id": "p01-41",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Preskription"
+},
+"text": "Preskription innebär att en rättslig följd _____ när en viss tid har gått. För brott betyder det att åklagaren måste väcka _____ inom en bestämd frist, och hur lång fristen är beror på hur _____ brottet är.",
+"key": [
+"upphör att gälla",
+"åtal",
+"allvarligt"
+],
+"distractors": [
+[
+"träder i kraft",
+"talan",
+"ovanligt"
+],
+[
+"skärps",
+"anmälan",
+"vanligt"
+],
+[
+"prövas",
+"ärende",
+"grovt"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+3
+],
+[
+1,
+2,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kol",
+"sam"
+],
+"explanation": "Rätt svar är upphör att gälla, åtal och allvarligt. Preskription betyder att möjligheten att straffa går förlorad, så följden upphör. En åklagare väcker åtal. Talan fungerar också men hör till tvistemål, och ett ärende eller en anmälan väcker man inte. Grovt passar i sista ledet, men prövas är fel i det första."
+},
+{
+"id": "p01-42",
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Stoicism"
+},
+"text": "Zenon från Kition grundade stoicismen kring år 300 f.Kr., och skolan fick sitt namn efter den öppna _____ i Aten där stoikerna höll till. Till skillnad från de mer slutna filosofiska skolorna kunde de därför nå en _____ publik. Det högsta målet var dygden, som de såg som den enda _____ till ett bestående själsligt välbefinnande.",
+"key": [
+"pelarhall",
+"bredare",
+"vägen"
+],
+"distractors": [
+[
+"akademi",
+"smalare",
+"genvägen"
+],
+[
+"borg",
+"trognare",
+"nyckeln"
+],
+[
+"helgedom",
+"större",
+"motsatsen"
+]
+],
+"dtyp": [
+[
+"po",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"de",
+"fa"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1
+],
+[
+1,
+3
+]
+],
+"ordklass": [
+"s",
+"a",
+"s"
+],
+"ledtrad": [
+"sam",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är pelarhall, bredare och vägen. En öppen pelarhall är en offentlig plats, och ordet öppna leder dit, vilket förklarar varför de nådde fler än de slutna skolorna. Smalare går emot till skillnad från. En akademi, borg eller helgedom är inte offentliga platser på samma sätt. Nyckeln fungerar i sista ledet och större i det andra, men båda alternativen faller på första."
+},
+{
+"id": "p01-43",
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Utilitarism"
+},
+"text": "Enligt utilitarismen är den rätta handlingen den som ger de bästa _____, det vill säga mest lycka och minst lidande. Läran sammanfattas ofta, något _____, som att man ska sträva efter så mycket lycka som möjligt för så många som möjligt. Bland dess grundare brukar man _____ Jeremy Bentham och John Stuart Mill.",
+"key": [
+"konsekvenserna",
+"förenklat",
+"nämna"
+],
+"distractors": [
+[
+"avsikterna",
+"träffande",
+"räkna upp"
+],
+[
+"resultaten",
+"överdrivet",
+"bortse från"
+],
+[
+"motiven",
+"felaktigt",
+"framhålla"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"po"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"adv",
+"v"
+],
+"ledtrad": [
+"def",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är konsekvenserna, förenklat och nämna. Mest lycka och minst lidande är utfall, alltså konsekvenser och inte avsikter eller motiv. Något förenklat säger att sammanfattningen inte är hela sanningen. Resultaten passar i första ledet, men man bortser inte från lärans egna grundare."
+},
+{
+"id": "p01-44",
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Golfströmmen"
+},
+"text": "Golfströmmen är en varm _____ som från Mexikanska golfen och Floridasundet rör sig norrut genom Atlanten. Den har avgörande betydelse för det _____ klimatet i Västeuropa: i januari är norska kusten i genomsnitt 30 grader varmare än det kanadensiska inlandet på samma _____.",
+"key": [
+"havsström",
+"milda",
+"breddgrad"
+],
+"distractors": [
+[
+"luftmassa",
+"fuktiga",
+"längdgrad"
+],
+[
+"tidvattenvåg",
+"kärva",
+"höjd"
+],
+[
+"havsvind",
+"instabila",
+"latitud"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa",
+"po"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+1,
+2,
+3
+],
+[
+2
+]
+],
+"ordklass": [
+"s",
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"def",
+"kol"
+],
+"explanation": "Rätt svar är havsström, milda och breddgrad. Strömmen rör sig genom Atlanten, alltså är den en havsström. Att kusten är så mycket varmare förklarar varför klimatet är milt. Det som jämförs är platser lika långt norrut, alltså på samma breddgrad, och latitud betyder samma sak. Instabila stöds däremot inte av texten."
+},
+{
+"id": "p01-45",
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Postglacial landhöjning"
+},
+"text": "Under den senaste istiden pressades jordskorpan ned av ett upp till tre kilometer tjockt istäcke. När isen smälte började landet åter _____, och eftersom jordmanteln är mycket _____ pågår processen fortfarande. I Ångermanland ligger marken nästan 300 meter högre än när den var som mest _____.",
+"key": [
+"resa sig",
+"trögflytande",
+"nedtryckt"
+],
+"distractors": [
+[
+"sjunka undan",
+"lättflytande",
+"uppskjutet"
+],
+[
+"spricka",
+"seg",
+"isolerat"
+],
+[
+"vittra",
+"porös",
+"översvämmat"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"ny",
+"fi"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"utr",
+"a",
+"a"
+],
+"ledtrad": [
+"kon",
+"ors",
+"upp"
+],
+"explanation": "Rätt svar är resa sig, trögflytande och nedtryckt. När trycket från isen försvinner stiger landet, vilket sista meningen bekräftar. Att processen fortfarande pågår förklaras av att manteln flyter långsamt. Seg betyder ungefär samma sak, men jordskorpan spricker inte. Landet var som mest nedtryckt när isen var tjockast."
+},
+{
+"id": "p01-46",
+"amne": "psy",
+"genre": "aka",
+"source": {
+"title": "Kognitiv dissonans"
+},
+"text": "Kognitiv dissonans är det obehag som uppstår när man samtidigt har två _____ föreställningar. Enligt teorin strävar människan efter att _____ obehaget, till exempel genom att ändra sina åsikter eller bortförklara sina handlingar. Ett klassiskt exempel är räven i fabeln som inte når druvorna och därför _____ att de ändå var sura.",
+"key": [
+"motsägelsefulla",
+"minska",
+"intalar sig"
+],
+"distractors": [
+[
+"samstämmiga",
+"förstärka",
+"försäkrar sig om"
+],
+[
+"oförenliga",
+"bevara",
+"inser"
+],
+[
+"omedvetna",
+"uttrycka",
+"erkänner"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2,
+3
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"v",
+"utr"
+],
+"ledtrad": [
+"def",
+"sam",
+"def"
+],
+"explanation": "Rätt svar är motsägelsefulla, minska och intalar sig. Obehaget uppstår när föreställningarna går emot varandra, och oförenliga betyder samma sak. Exemplen visar att man vill bli av med obehaget, inte bevara eller förstärka det. Räven inser inget, utan övertygar sig själv om något som gör förlusten lättare."
+},
+{
+"id": "p01-47",
+"amne": "spr",
+"genre": "aka",
+"source": {
+"title": "Dialekt"
+},
+"text": "En dialekt har regional bas, till skillnad från en sociolekt, som är knuten till en _____ grupp. Gränsen för ett enskilt dialektdrags utbredning kallas isogloss, och där flera sådana gränser _____ kan man tala om ett dialektområde. Skarpa gränser finns dock inte, utan förändringarna _____ gradvis över ett dialektkontinuum.",
+"key": [
+"social",
+"sammanfaller",
+"ackumuleras"
+],
+"distractors": [
+[
+"geografisk",
+"korsar varandra",
+"avtar"
+],
+[
+"tillfällig",
+"går isär",
+"staplas"
+],
+[
+"språklig",
+"möts",
+"upphör"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+3
+],
+[
+1,
+2
+],
+[
+1,
+3
+]
+],
+"ordklass": [
+"a",
+"v",
+"v"
+],
+"ledtrad": [
+"kon",
+"def",
+"kon"
+],
+"explanation": "Rätt svar är social, sammanfaller och ackumuleras. En sociolekt hör till en social grupp, medan geografisk är det som gäller för dialekten. Ett område uppstår där gränserna faller i samma linje, inte där de går isär. Att inga skarpa gränser finns betyder att skillnaderna läggs på varandra, inte att de upphör eller avtar."
+},
+{
+"id": "p01-48",
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Lånord"
+},
+"text": "Svenskan har i alla tider _____ sitt ordförråd med ord från andra språk. De flesta sådana ord anpassas med tiden till svenskt uttal, stavning och _____ och kallas då lånord. Ett ord kan dessutom ha _____ av flera språk på vägen, till exempel från grekiskan via latinet och franskan.",
+"key": [
+"utökat",
+"böjning",
+"förmedlats"
+],
+"distractors": [
+[
+"rensat",
+"betoning",
+"förvanskats"
+],
+[
+"berikat",
+"syntax",
+"undanträngts"
+],
+[
+"översatt",
+"intonation",
+"lånats ut"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"ny"
+]
+],
+"faller": [
+[
+1
+],
+[
+2,
+3
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"s",
+"v"
+],
+"ledtrad": [
+"sam",
+"par",
+"def"
+],
+"explanation": "Rätt svar är utökat, böjning och förmedlats. Att ta in ord från andra språk ökar ordförrådet, och berikat betyder samma sak. Uttal, stavning och böjning är de tre sätt ett ord anpassas på, och syntax gäller meningar. Exemplet visar att ordet förts vidare av flera språk. Det har inte trängts undan eller lånats ut."
+},
+{
+"id": "p01-49",
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Ångmaskin"
+},
+"text": "I en ångmaskin omvandlas värmeenergi till mekaniskt arbete. Till skillnad från förbränningsmotorn arbetar den med _____ förbränning: bränslet eldas i en panna, och ångan leds till en cylinder där den _____ en kolv fram och tillbaka. Numera drivs kolvångmaskiner nästan bara av _____ skäl, till exempel i bevarade ångbåtar.",
+"key": [
+"yttre",
+"pressar",
+"kulturhistoriska"
+],
+"distractors": [
+[
+"inre",
+"suger",
+"ekonomiska"
+],
+[
+"ofullständig",
+"driver",
+"miljömässiga"
+],
+[
+"kontinuerlig",
+"kyler",
+"nostalgiska"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+1,
+3
+],
+[
+2
+]
+],
+"ordklass": [
+"a",
+"v",
+"a"
+],
+"ledtrad": [
+"kon",
+"def",
+"def"
+],
+"explanation": "Rätt svar är yttre, pressar och kulturhistoriska. Bränslet eldas utanför cylindern, och förbränningsmotorn som den ställs mot har inre förbränning. Ångan trycker kolven, och driver passar också, men ofullständig förbränning är fel. Bevarade ångbåtar visar att skälet är kulturhistoriskt. Ekonomiska eller miljömässiga skäl talar inte för ångmaskinen. Kontinuerlig förbränning stämmer i sak, men ångan kyler inte kolven."
+},
+{
+"id": "p01-50",
+"amne": "kul",
+"genre": "rec",
+"source": {
+"title": "Impressionism (måleri)"
+},
+"text": "Impressionisterna bröt med det äldre måleriet, där man strävat efter fina toningar och små detaljer. De målade i stället med grova och _____ penseldrag, och skuggor återgav de gärna med _____ i stället för att bara mörka ned ytan, så att en skugga kunde bli blå mot en ljust gul yta. Själva benämningen _____ från en tavla som Claude Monet målade 1872.",
+"key": [
+"synliga",
+"komplementfärger",
+"härrör"
+],
+"distractors": [
+[
+"osynliga",
+"svärta",
+"härstammar"
+],
+[
+"lätta",
+"pasteller",
+"kommer"
+],
+[
+"tydliga",
+"gråskalor",
+"avviker"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"de",
+"ny"
+],
+[
+"de",
+"ny"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+1,
+2
+],
+[
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"s",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är synliga, komplementfärger och härrör. Grova penseldrag ställs mot fina toningar och syns alltså, medan osynliga och lätta går emot grova. Skuggorna målades inte genom att mörka ytan, vilket svärta och gråskalor gör. Härstammar och kommer fungerar i sista ledet, och tydliga i det första, men alla tre alternativen faller på andra luckan."
+}
+]

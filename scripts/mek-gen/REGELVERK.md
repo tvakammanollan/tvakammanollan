@@ -200,6 +200,11 @@ Reglerna gäller varje uppgift. **MÅSTE** är hårda (avvisas automatiskt),
    `antyder` (2023ht-5/22) och `kan ___ till frågan` är legitima sätt att
    fälla en distraktor, men då ska alla fyra fortfarande vara verb som annars
    passar.
+7. MÅSTE: inga synonympar bland distraktorerna. Två distraktorer som betyder
+   samma sak tar ut varandra (båda kan inte vara rätt), och då pekar facit ut
+   sig självt. Det var den vanligaste orsaken till att pilotens enluckor gick
+   att gissa utan text: `allergiska`/`överkänsliga`, `förenas`/`förlikas`/
+   `försonas`, `nödvändigt`/`angeläget` (batch 1, 2026-10-19).
 6. MÅSTE: inget alternativ pekas ut av form ensam: inte det enda latinska, inte det
    enda långa sammansatta, inte det enda med annat register (om inte registret är
    själva ledtråden i texten).
@@ -305,7 +310,13 @@ distinkta luckor, lemmaläcka, kvoter, SAOL, likhet mot arkivet/DB/banken,
 
 **Steg 5: blindlösning.** En annan modell, utan facit, 5 körningar:
 (a) med text: facit valt ≥ 5/5, med motivering som pekar på texten;
-(b) utan text: facit ≤ 2/5 (annars gissbart på formen);
+(b) utan text: andelen rätt får inte ligga över arkivets nivå per luckantal
+(se nedan). Ett per-uppgiftskrav på ≤ 35 % går inte att uppfylla: **UHR:s egna
+uppgifter gissas rätt utan text i 62 % av fallen** (31 av 50 i ett stickprov,
+2026-10-19; enluckor 9/20, tvåluckor 14/20, treluckor 8/10). En stark
+språkmodell ser vilka facitord som hänger ihop. Kravet är därför att batchens
+andel inte överstiger arkivets med mer än 10 procentenheter, och att varje
+uppgift där facit gissas med "stark" signal granskas för hand;
 (c) motpart: "argumentera för att B också är rätt" ska misslyckas;
 (d) per distraktor: vilken lucka fäller den (C5).
 
