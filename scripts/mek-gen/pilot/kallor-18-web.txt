@@ -1,0 +1,20 @@
+# Batch 18: webbkällor (url | titel | utgivare)
+https://www.1177.se/liv--halsa/stresshantering-och-somn/stress/ | 1177 Stress | 1177
+https://www.1177.se/liv--halsa/stresshantering-och-somn/stress-hos-barn/ | 1177 Stress hos barn | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/sorg-nar-nagon-har-dott/ | 1177 Sorg | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/avslappning-genom-andning/ | 1177 Avslappning genom andning | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/att-leva-med-oro-for-klimatet/ | 1177 Oro för klimatet | 1177
+https://www.1177.se/liv--halsa/reserad-och-vaccinationer/vaccinationer/ | 1177 Vaccinationer | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/vad-ar-psykisk-ohalsa/ | 1177 Vad är psykisk ohälsa | 1177
+https://www.naturvardsverket.se/amnesomraden/biologisk-mangfald/ | Naturvårdsverket Biologisk mångfald | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/klimatanpassning/ | Naturvårdsverket Klimatanpassning | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/luft/ | Naturvårdsverket Luft | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/miljofororeningar/ | Naturvårdsverket Miljöföroreningar | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/samhallsplanering/ | Naturvårdsverket Samhällsplanering | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/fororenade-omraden/ | Naturvårdsverket Förorenade områden | Naturvårdsverket
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-historia/ | Riksdagen Riksdagens historia | Sveriges riksdag
+https://www.riksdagen.se/sv/ledamoter-och-partier/partierna-i-riksdagen/ | Riksdagen Partierna i riksdagen | Sveriges riksdag
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/arbetet-i-riksdagen/talmannen/ | Riksdagen Talmannen | Sveriges riksdag
+https://www.isof.se/folkminnen/amnesomraden/mat-och-dryck | Isof Mat och dryck | Isof
+https://www.isof.se/folkminnen/amnesomraden/nationella-minoriteters-kultur | Isof Nationella minoriteters kultur | Isof
+https://www.isof.se/folkminnen/amnesomraden/vardagsliv-nu-och-da | Isof Vardagsliv nu och då | Isof
