@@ -1,0 +1,24 @@
+# Batch 16: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/beroende-och-skadligt-bruk/alkoholberoende/ | 1177 Alkoholberoende | 1177
+https://www.1177.se/sjukdomar--besvar/beroende-och-skadligt-bruk/hasardspelsyndrom--spelberoende/ | 1177 Spelberoende | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/matallergi/ | 1177 Matallergi | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/komjolksallergi/ | 1177 Komjölksallergi | 1177
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/mejeriprodukter/ | Livsmedelsverket Mejeriprodukter | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/kott-och-chark/ | Livsmedelsverket Kött och chark | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/lask-sotsaker-och-snacks/ | Livsmedelsverket Läsk, sötsaker och snacks | Livsmedelsverket
+https://www.isof.se/svenskt-teckensprak/lar-dig-mer-om-svenskt-teckensprak | Isof Svenskt teckenspråk | Isof
+https://www.isof.se/flersprakighet/lar-dig-mer-om-flersprakighet | Isof Flerspråkighet | Isof
+https://www.isof.se/folkminnen/kunskapsbanker-och-webbutstallningar/lar-dig-mer-om-traditioner | Isof Traditioner | Isof
+https://www.isof.se/folkminnen/amnesomraden/folktro-och-forestallningsvarldar/lar-dig-mer-om-vardagsmagi | Isof Vardagsmagi | Isof
+https://www.nordiskamuseet.se/utforska/livet-i-norden/midsommarfirande-och-traditioner/ | Nordiska museet Midsommarfirande | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/folkhemmet/ | Nordiska museet Folkhemmet | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/maran-och-mardrommar/ | Nordiska museet Maran och mardrömmar | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/banersmycket/ | Nordiska museet Banérsmycket | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/samiska-ballingskor/ | Nordiska museet Samiska bällingskor | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/martin-perssons-resedagbok/ | Nordiska museet Emigranten Martins dagbok | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/sofi-ronnqvists-dagbok/ | Nordiska museet Prästdottern Sofis dagbok | Nordiska museet
+https://www.nordiskamuseet.se/om-museet/hazelius-museets-grundare/ | Nordiska museet Paret Hazelius | Nordiska museet
+https://www.riksdagen.se/sv/aktuellt/fran-kungamakt-till-folkstyre/ | Riksdagen Från kungamakt till folkstyre | Riksdagen
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-uppgifter/beslutar-om-lagar/fran-forslag-till-lag/ | Riksdagen Från förslag till lag | Riksdagen
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-uppgifter/paverkar-utrikespolitiken/ | Riksdagen Påverkar utrikespolitiken | Riksdagen
+# (redan använd) https://www.riksdagen.se/sv/ledamoter-och-partier/sa-arbetar-partierna/ | Riksdagen Så arbetar partierna | Riksdagen
