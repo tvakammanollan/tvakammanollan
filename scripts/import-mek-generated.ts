@@ -18,6 +18,7 @@
  *   bun run scripts/import-mek-generated.ts --apply
  */
 
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -121,8 +122,23 @@ function toRow(b: BatchItem) {
   };
 }
 
+// Bara batchfiler som är incheckade och orörda sedan commit. build.ts skriver
+// batchfilen även när uppgifter underkänns, så ett utkast som ligger i mappen
+// är inte klart. 2026-10-20 följde ett sådant utkast (batch 16, 18 underkända)
+// med en körning och fick raderas ur produktion efteråt.
+function committed(f: string): boolean {
+  const path = join(PILOT, f);
+  const tracked = spawnSync("git", ["ls-files", "--error-unmatch", path], { stdio: "ignore" });
+  const clean = spawnSync("git", ["diff", "--quiet", "HEAD", "--", path], { stdio: "ignore" });
+  return tracked.status === 0 && clean.status === 0;
+}
 const files = readdirSync(PILOT)
   .filter((f) => /^batch-\d+\.json$/.test(f))
+  .filter((f) => {
+    if (committed(f)) return true;
+    console.log(`hoppar över ${f}: inte incheckad, eller ändrad sedan commit`);
+    return false;
+  })
   .sort();
 const items: BatchItem[] = files.flatMap((f) => JSON.parse(readFileSync(join(PILOT, f), "utf8")));
 
@@ -162,11 +178,14 @@ if (process.argv.includes("--update-sources")) {
   let n = 0;
   for (const b of items) {
     if (!seen.has(b.text.toLowerCase())) continue;
-    const res = await rest(`questions?question_text=eq.${encodeURIComponent(b.text)}&category=eq.MEK`, {
-      method: "PATCH",
-      headers: { Prefer: "return=minimal" },
-      body: JSON.stringify({ source: sourceLine(b) }),
-    });
+    const res = await rest(
+      `questions?question_text=eq.${encodeURIComponent(b.text)}&category=eq.MEK`,
+      {
+        method: "PATCH",
+        headers: { Prefer: "return=minimal" },
+        body: JSON.stringify({ source: sourceLine(b) }),
+      },
+    );
     if (!res.ok) {
       console.error(`källrad ${b.id} misslyckades: ${res.status} ${await res.text()}`);
       process.exit(1);
