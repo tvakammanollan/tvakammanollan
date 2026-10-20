@@ -85,11 +85,15 @@ function isWikipedia(b: BatchItem): boolean {
   return (b.source.publisher ?? "Wikipedia") === "Wikipedia";
 }
 
-/** `Utgivare: Titel (licens) url`; licensen anges bara för Wikipedia. */
+/**
+ * `Utgivare: Titel (licens) url`; licensen anges bara för Wikipedia.
+ * Webbkällornas titlar bär utgivaren som prefix (`1177 Högt blodtryck`) för
+ * att filnamnen i `out/sources/` ska vara unika; prefixet skrivs inte ut.
+ */
 function sourceLine(b: BatchItem): string {
-  return isWikipedia(b)
-    ? `Wikipedia: ${b.source.title} (CC BY-SA 4.0) ${b.source.url}`
-    : `${b.source.publisher}: ${b.source.title} ${b.source.url}`;
+  if (isWikipedia(b)) return `Wikipedia: ${b.source.title} (CC BY-SA 4.0) ${b.source.url}`;
+  const title = b.source.title.replace(/^\S+ /, "");
+  return `${b.source.publisher}: ${title} ${b.source.url}`;
 }
 
 function toRow(b: BatchItem) {
@@ -151,6 +155,27 @@ console.log(`${files.length} batchfiler, ${items.length} uppgifter`);
 console.log(`finns redan: ${dup.length}${dup.length ? ` (${dup.join(", ")})` : ""}`);
 console.log(`att infoga: ${fresh.length}`);
 if (fresh[0]) console.log("exempelrad:", JSON.stringify(toRow(fresh[0]), null, 2));
+
+// `--update-sources`: skriv om källraden på rader som redan finns, matchat på
+// uppgiftstexten. För när formatet för källraden ändras efter en import.
+if (process.argv.includes("--update-sources")) {
+  let n = 0;
+  for (const b of items) {
+    if (!seen.has(b.text.toLowerCase())) continue;
+    const res = await rest(`questions?question_text=eq.${encodeURIComponent(b.text)}&category=eq.MEK`, {
+      method: "PATCH",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ source: sourceLine(b) }),
+    });
+    if (!res.ok) {
+      console.error(`källrad ${b.id} misslyckades: ${res.status} ${await res.text()}`);
+      process.exit(1);
+    }
+    n++;
+  }
+  console.log(`källrad uppdaterad på ${n} rader`);
+  process.exit(0);
+}
 
 if (!APPLY) {
   console.log("\nTorrkörning. Kör med --apply för att skriva.");
