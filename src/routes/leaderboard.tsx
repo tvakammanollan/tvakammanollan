@@ -8,10 +8,19 @@ import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { RefreshCw, Users, Medal, CalendarDays, BookA } from "lucide-react";
+import {
+  RefreshCw,
+  Users,
+  Medal,
+  CalendarDays,
+  BookA,
+  Puzzle,
+  type LucideIcon,
+} from "lucide-react";
 import { formatTime } from "@/lib/sv-format";
 import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
+import { fetchMekLeaderboard } from "@/lib/mek-leaderboard.functions";
 import {
   LEADERBOARD_SIZE,
   fetchLeaderboard,
@@ -66,7 +75,7 @@ function TableSkeleton() {
 export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
   // SSR:ar bara standardfliken (verbal, "alltid") — Radix Tabs monterar aldrig
-  // en inaktiv TabsContent, så matte och ord hämtas fortfarande bara klient-
+  // en inaktiv TabsContent, så matte, ord och MEK hämtas fortfarande bara klient-
   // sida precis som förut. Utan den här var sidan tom utan JS: hela listan
   // kom ur en useQuery vars queryFn bara körs i webbläsaren.
   loader: async () => {
@@ -80,7 +89,7 @@ export const Route = createFileRoute("/leaderboard")({
       path: "/leaderboard",
       title: "Topplista · ELO-ranking",
       description:
-        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal, matte och ord. Uppdateras live efter varje match. Helt gratis.",
+        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal och matte, plus topplistor för ord och MEK. Uppdateras live efter varje match. Helt gratis.",
       ogTitle: "Tvåkommanollan | Topplista",
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
@@ -95,7 +104,7 @@ export const Route = createFileRoute("/leaderboard")({
         "@type": "CollectionPage",
         name: "Topplista · Tvåkommanollan",
         description:
-          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte och ord. Uppdateras live efter varje match.",
+          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte, ord och MEK. Uppdateras live efter varje match.",
         url: "https://tvakommanollan.se/leaderboard",
         inLanguage: "sv-SE",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -108,7 +117,7 @@ export const Route = createFileRoute("/leaderboard")({
 function LeaderboardPage() {
   const { user } = useAuth();
   const { initialVerbalRows } = Route.useLoaderData();
-  const [tab, setTab] = useState<"verbal" | "math" | "ord">("verbal");
+  const [tab, setTab] = useState<"verbal" | "math" | "ord" | "mek">("verbal");
 
   return (
     <div className="min-h-screen">
@@ -134,10 +143,11 @@ function LeaderboardPage() {
         )}
         <Reveal delay={0.2}>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-            <TabsList className="grid w-full max-w-md grid-cols-3">
+            <TabsList className="grid w-full max-w-md grid-cols-4">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
               <TabsTrigger value="math">Matte</TabsTrigger>
               <TabsTrigger value="ord">Ord</TabsTrigger>
+              <TabsTrigger value="mek">MEK</TabsTrigger>
             </TabsList>
 
             <TabsContent value="verbal">
@@ -153,6 +163,9 @@ function LeaderboardPage() {
             </TabsContent>
             <TabsContent value="ord">
               <OrdBoard />
+            </TabsContent>
+            <TabsContent value="mek">
+              <MekBoard />
             </TabsContent>
           </Tabs>
         </Reveal>
@@ -626,10 +639,60 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   );
 }
 
-// ---------- Ord leaderboard ----------
+// ---------- Ord- och MEK-listorna ----------
+
+type PracticeBoardResult = { top: OrdLeaderboardRow[]; me: OrdLeaderboardRow | null };
 
 function OrdBoard() {
-  const fetchLb = useServerFn(fetchOrdLeaderboard);
+  const fetchOrd = useServerFn(fetchOrdLeaderboard);
+  const { user } = useAuth();
+  const fetchLb = useCallback(
+    () => fetchOrd({ data: user ? { user_id: user.id } : {} }),
+    [fetchOrd, user],
+  );
+  return (
+    <PracticeBoard
+      fetchLb={fetchLb}
+      emptyIcon={BookA}
+      emptyTitle="Inga ord övade ännu"
+      emptySubtitle="Ord-listan rankar efter antal rätta ord. Öva en runda så hamnar du på den."
+      emptyCtaLabel="Öva ord"
+      emptyCtaHref="/ord"
+    />
+  );
+}
+
+function MekBoard() {
+  const fetchMek = useServerFn(fetchMekLeaderboard);
+  // Den egna raden läses ur tokenen i servern, inte ur ett skickat id.
+  const fetchLb = useCallback(() => fetchMek(), [fetchMek]);
+  return (
+    <PracticeBoard
+      fetchLb={fetchLb}
+      emptyIcon={Puzzle}
+      emptyTitle="Inga MEK-uppgifter lösta ännu"
+      emptySubtitle="MEK-listan rankar efter antal rätta MEK-uppgifter i övningen. Kör ett pass så hamnar du på den."
+      emptyCtaLabel="Öva MEK"
+      emptyCtaHref="/mek-ovning"
+    />
+  );
+}
+
+function PracticeBoard({
+  fetchLb,
+  emptyIcon,
+  emptyTitle,
+  emptySubtitle,
+  emptyCtaLabel,
+  emptyCtaHref,
+}: {
+  fetchLb: () => Promise<PracticeBoardResult>;
+  emptyIcon: LucideIcon;
+  emptyTitle: string;
+  emptySubtitle: string;
+  emptyCtaLabel: string;
+  emptyCtaHref: string;
+}) {
   const { user } = useAuth();
   const [top, setTop] = useState<OrdLeaderboardRow[]>([]);
   const [me, setMe] = useState<OrdLeaderboardRow | null>(null);
@@ -641,7 +704,7 @@ function OrdBoard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetchLb({ data: user ? { user_id: user.id } : {} });
+      const res = await fetchLb();
       setTop(filterLeaderboard(res.top));
       setMe(res.me);
       setUpdatedAt(Date.now());
@@ -650,11 +713,13 @@ function OrdBoard() {
     } finally {
       setLoading(false);
     }
-  }, [fetchLb, user]);
+  }, [fetchLb]);
 
+  // `user?.id` med: MEK-listan läser identiteten ur tokenen, så den måste
+  // hämtas om när någon loggar in eller ut.
   useEffect(() => {
     void load();
-  }, [load]);
+  }, [load, user?.id]);
 
   const meInTop = me && top.some((r) => r.user_id === me.user_id);
   // Gästkonton rankas inte alls, så en egen rad vore en placering de inte
@@ -680,11 +745,11 @@ function OrdBoard() {
         <div className="p-8 text-center text-sm text-destructive">{error}</div>
       ) : top.length === 0 ? (
         <EmptyState
-          icon={BookA}
-          title="Inga ord övade ännu"
-          subtitle="Ord-listan rankar efter antal rätta ord. Öva en runda så hamnar du på den."
-          ctaLabel="Öva ord"
-          ctaHref="/ord"
+          icon={emptyIcon}
+          title={emptyTitle}
+          subtitle={emptySubtitle}
+          ctaLabel={emptyCtaLabel}
+          ctaHref={emptyCtaHref}
         />
       ) : (
         <div className="overflow-x-auto">

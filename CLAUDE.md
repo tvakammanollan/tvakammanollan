@@ -908,6 +908,18 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
 `fetchWeeklyLeaderboard` (`leaderboard.functions.ts`) och `fetchOrdLeaderboard`
 (`word-practice.functions.ts`).
 
+- **MEK-fliken (2026-10-20)** är `fetchMekLeaderboard`
+  (`mek-leaderboard.functions.ts`): besvarade MEK-uppgifter i träningsläget
+  (samma urval som gratisgränsen), rangordnat på rätta som ordlistan. MEK har
+  ingen aggregerad tabell, så svaren läses sidvis ur `match_answers` och
+  summeras i `mek-leaderboard.ts`, cachat en minut per isolat. Det håller i
+  tiotusental svar; därefter behövs en tabell som `ord_practice_stats`. Den
+  egna raden läses ur tokenen (`optionalSupabaseAuth`), inte ur ett skickat id.
+- **Radix-flikarna går inte att klicka på i headless Chrome** utan
+  `Emulation.setFocusEmulationEnabled`: fönstret saknar fokus, flikarna
+  aktiveras aldrig och det ser ut som att fliken är trasig. Gäller skarpa
+  sajten likadant.
+
 - **Anonyma konton rankas inte** (2026-08-17). `isRankable()` i
   `src/lib/username.ts` är enda definitionen — den täcker både auto-namnen
   `user_<8 hex>` som `handle_new_user()` sätter och tomma namn. Samma funktion
