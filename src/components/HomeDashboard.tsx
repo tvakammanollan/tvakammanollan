@@ -9,10 +9,6 @@ import { RankBadge } from "@/components/ui/RankBadge";
 import { RankIcon } from "@/components/ui/RankIcon";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
-import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
-import { fetchMekStats } from "@/lib/train.functions";
-import { formatInt } from "@/lib/sv-format";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { CoachingQuizCard } from "@/components/CoachingQuizCard";
@@ -47,14 +43,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
-  // Antalet MEK-uppgifter på kortet räknas på servern. Innan det landat står
-  // texten utan siffra, ingen platshållare som hoppar till ett tal.
-  const mekStatsFn = useServerFn(fetchMekStats);
-  const { data: mekStats } = useQuery({
-    queryKey: ["mek-stats"],
-    queryFn: () => mekStatsFn(),
-    staleTime: 60 * 60 * 1000,
-  });
 
   if (!user || !profile) {
     return (
@@ -260,9 +248,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   badge="BETA"
                   icon={<PenLine className="h-5 w-5" />}
                   title="MEK-övning"
-                  subtitle={`${
-                    mekStats ? `${formatInt(mekStats.total)} uppgifter` : "Uppgifter"
-                  } ur gamla prov och Tvåkommanollans egna. Du röstar fram de bästa, och de visas oftare.`}
+                  subtitle="2 000 uppgifter ur gamla prov och Tvåkommanollans egna. Du röstar fram de bästa, och de visas oftare."
                   cta="Öva MEK"
                 />
               </div>

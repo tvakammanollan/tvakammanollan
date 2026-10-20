@@ -1506,8 +1506,10 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   aldrig med. Lägg aldrig tillbaka en oordnad `limit` på urvalet.
 - **Startsidans tredje kort är MEK-övningen**, inte coachningen. Coachningen
   ligger överst i avatarmenyn och i mobilmenyn (`CoachingMenuItem`,
-  `source: "navbar"`). Antalet uppgifter på kortet räknas av
-  `fetchMekStats`; skriv aldrig in det för hand.
+  `source: "navbar"`). Kortet säger "2 000 uppgifter" på Niklas
+  uttryckliga begäran (2026-10-20), fast banken då hade ~1 000; målet är
+  2 000 och batcherna fortsätter. `fetchMekStats` räknar den verkliga
+  siffran om den ska tillbaka på kortet.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
