@@ -1,0 +1,10 @@
+# Batch 20: webbkällor (url | titel | utgivare)
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/stoppa-blodning/ | 1177 Stoppa blödning | 1177
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/nar-nagon-satter-i-halsen/ | 1177 När någon sätter i halsen | 1177
+https://www.1177.se/olyckor--skador/brannskador-och-koldskador/solskador-pa-huden/ | 1177 Solskador på huden | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/myggbett-och-knottbett/ | 1177 Myggbett och knottbett | 1177
+https://www.1177.se/olyckor--skador/sar-och-blamarken/blamarken/ | 1177 Blåmärken | 1177
+https://www.1177.se/olyckor--skador/sar-och-blamarken/trycksar/ | 1177 Trycksår | 1177
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/elolyckor/ | 1177 Elolyckor | 1177
+https://www.smhi.se/tema/havsmiljo-i-kust-och-hav | SMHI Havsmiljö i kust och hav | SMHI
+https://www.smhi.se/tema/sjoar-och-vattendrag | SMHI Sjöar och vattendrag | SMHI
