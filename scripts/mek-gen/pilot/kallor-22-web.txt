@@ -1,0 +1,8 @@
+# Batch 22: webbkällor (url | titel | utgivare)
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/algforgiftning/ | 1177 Algförgiftning | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/brand-av-bjornloka-eller-jatteloka/ | 1177 Brand av björnloka | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/brand-av-manet/ | 1177 Brand av manet | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/loppbett/ | 1177 Loppbett | 1177
+https://www.1177.se/olyckor--skador/skador-pa-huvud-och-ogon/skrap-eller-fratande-amne-i-ogat/ | 1177 Skräp i ögat | 1177
+https://www.1177.se/olyckor--skador/skador-pa-huvud-och-ogon/nar-barn-slar-i-huvudet/ | 1177 När barn slår i huvudet | 1177
+https://www.1177.se/olyckor--skador/sar-och-blamarken/behandling-av-sma-sar/ | 1177 Små sår | 1177
