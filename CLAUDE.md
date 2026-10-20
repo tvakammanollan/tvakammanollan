@@ -1490,6 +1490,19 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   42–72 %.
 - **Sållningen efter publicering är rösterna** (avsnittet nedan) plus
   p-värde och felrapporter per uppgift.
+- **`/train` filtrerar på källa och på klarade frågor** (2026-10-20).
+  `mekOrigin` (`all`/`archive`/`tkn`, bara för MEK) och `excludeCorrect`
+  (allt användaren svarat rätt på i `match_answers`, träning och match,
+  identiteten ur tokenen via `optionalSupabaseAuth`). `?delprov=MEK&kalla=tkn`
+  förväljer båda; startsidans MEK-kort länkar dit.
+- **Urvalet i `/train` görs i två steg: id först, rader sedan.** Det hämtade
+  tidigare hela rader med `.limit(300)` utan ordning, alltså i praktiken de
+  300 äldsta. MEK har 698 rader, så de nyare (alla egna uppgifter) kom nästan
+  aldrig med. Lägg aldrig tillbaka en oordnad `limit` på urvalet.
+- **Startsidans tredje kort är MEK-övningen**, inte coachningen. Coachningen
+  ligger överst i avatarmenyn och i mobilmenyn (`CoachingMenuItem`,
+  `source: "navbar"`). Antalet uppgifter på kortet räknas av
+  `fetchMekStats`; skriv aldrig in det för hand.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 

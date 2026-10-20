@@ -102,3 +102,22 @@ export function weightedShuffle<T>(
     .sort((a, b) => b.key - a.key)
     .map((x) => x.item);
 }
+
+/**
+ * Siffrorna bredvid tummarna medan man klickar.
+ *
+ * Servern svarar med totalen inklusive den röst användaren hade när sidan
+ * laddades (`stored`). När användaren byter eller tar tillbaka rösten
+ * (`current`) räknas den gamla bort och den nya in, utan att vänta på ett
+ * nytt anrop. Aldrig under noll, ifall totalen och den egna rösten lästes i
+ * otakt.
+ */
+export function displayedVoteCounts(
+  server: { up: number; down: number },
+  stored: -1 | 0 | 1,
+  current: -1 | 0 | 1,
+): { up: number; down: number } {
+  const up = server.up - (stored === 1 ? 1 : 0) + (current === 1 ? 1 : 0);
+  const down = server.down - (stored === -1 ? 1 : 0) + (current === -1 ? 1 : 0);
+  return { up: Math.max(0, up), down: Math.max(0, down) };
+}

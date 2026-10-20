@@ -6,6 +6,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
 import { fetchTrainingBatch } from "@/lib/train.functions";
+import { MEK_ORIGINS, type MekOrigin } from "@/lib/question-origin";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { GlassCard } from "@/components/layout/GlassCard";
@@ -62,8 +64,20 @@ import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
 import { Spinner } from "@/components/ui/Spinner";
 
+/**
+ * `?delprov=MEK` förväljer ett delprov, så att en länk (startsidans
+ * MEK-kort) kan gå rakt till ett färdigt val. `kalla` väljer var
+ * MEK-uppgifterna kommer ifrån. Okända värden ignoreras i stället för att
+ * fälla sidan.
+ */
+const trainSearchSchema = z.object({
+  delprov: z.enum(["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"]).optional().catch(undefined),
+  kalla: z.enum(MEK_ORIGINS).optional().catch(undefined),
+});
+
 export const Route = createFileRoute("/train")({
   component: TrainPage,
+  validateSearch: (search) => trainSearchSchema.parse(search),
   head: () => ({
     meta: pageMeta({
       path: "/train",
@@ -153,9 +167,19 @@ interface TrainConfig {
   subs: string[];
   difficulty: number | null; // null = all
   count: number;
+  /** Bara MEK: arkivets uppgifter, Tvåkommanollans egna, eller båda. */
+  mekOrigin: MekOrigin;
+  /** Hoppa över frågor användaren redan svarat rätt på. */
+  excludeCorrect: boolean;
 }
 
 type Phase = "setup" | "loading" | "session" | "result";
+
+const MEK_ORIGIN_LABEL: Record<MekOrigin, string> = {
+  all: "Alla",
+  archive: "Gamla prov",
+  tkn: "Tvåkommanollans egna (beta)",
+};
 
 function TrainPage() {
   const { user, loading: authLoading } = useAuth();
@@ -168,11 +192,22 @@ function TrainPage() {
   // är den största kategorin började det nästan alltid med ord. Det läste som
   // "Träna skickar mig till ord och ger sedan slumpfrågor", vilket det i
   // praktiken gjorde. Nu är valet första steget och passet hålls ihop.
-  const [config, setConfig] = useState<TrainConfig>({
-    track: "verbal",
-    subs: [],
-    difficulty: null,
-    count: 10,
+  //
+  // Undantaget är en länk som uttryckligen ber om ett delprov (`?delprov=`).
+  // Då har valet redan gjorts, på sidan man kom ifrån.
+  const search = Route.useSearch();
+  const [config, setConfig] = useState<TrainConfig>(() => {
+    const förval = search.delprov;
+    const track: Track =
+      förval && (MATH_SUBS as readonly string[]).includes(förval) ? "math" : "verbal";
+    return {
+      track,
+      subs: förval ? [förval] : [],
+      difficulty: null,
+      count: 10,
+      mekOrigin: search.kalla ?? "all",
+      excludeCorrect: false,
+    };
   });
   const [questions, setQuestions] = useState<TrainQuestion[]>([]);
   const [current, setCurrent] = useState(0);
@@ -222,15 +257,19 @@ function TrainPage() {
     // Facit ligger i tabellen och får inte gå att slå upp på id härifrån —
     // se kommentaren i train.functions.ts. Servern väljer och blandar.
     let data: Array<Record<string, unknown>> | null = null;
+    let exhausted = false;
     try {
       const res = await getTrainingBatch({
         data: {
           categories: config.subs,
           difficulty: config.difficulty,
           count: config.count,
+          mekOrigin: config.subs.includes("MEK") ? config.mekOrigin : "all",
+          excludeCorrect: config.excludeCorrect,
         },
       });
       data = res.questions as Array<Record<string, unknown>>;
+      exhausted = res.exhausted;
     } catch (e) {
       console.error("[train] question fetch threw", e);
       toast.error("Kunde inte hämta frågor", {
@@ -241,9 +280,10 @@ function TrainPage() {
     }
     if (!data || data.length === 0) {
       // Mer hjälpsam feedback — användaren har troligen filtrerat för hårt
-      toast.error("Inga frågor matchade dina filter", {
-        description:
-          config.difficulty !== null
+      toast.error(exhausted ? "Du har klarat alla frågor i urvalet" : "Inga frågor matchade dina filter", {
+        description: exhausted
+          ? "Slå av \"Dölj frågor jag redan klarat\" eller välj ett annat urval."
+          : config.difficulty !== null
             ? "Prova att välja 'Alla' svårighetsgrader, eller välj fler delprov."
             : "Prova att välja fler delprov eller en annan match-typ.",
       });
@@ -354,7 +394,12 @@ function TrainPage() {
           ? "alla delprov"
           : config.subs.map((s) => displayCategory(s)).join(", ");
     const diff = config.difficulty === null ? "alla nivåer" : `nivå ${config.difficulty}`;
-    return `${config.track === "verbal" ? "Svenska" : "Matte"} · ${subs} · ${diff} · ${config.count} frågor`;
+    const källa =
+      config.subs.includes("MEK") && config.mekOrigin !== "all"
+        ? ` · ${MEK_ORIGIN_LABEL[config.mekOrigin].toLowerCase()}`
+        : "";
+    const dölj = config.excludeCorrect ? " · utan frågor du klarat" : "";
+    return `${config.track === "verbal" ? "Svenska" : "Matte"} · ${subs}${källa} · ${diff} · ${config.count} frågor${dölj}`;
   })();
 
   const currentQ = questions[current];
@@ -515,7 +560,40 @@ function TrainPage() {
           {config.subs.length > 0 && (
             <>
               <div className="mt-5">
-                <SetupCard step="2" title="Svårighetsgrad">
+                <SetupCard step="2" title="Urval">
+                  {config.subs.includes("MEK") && (
+                    <div className="mb-3">
+                      <p className="mb-2 text-xs font-medium text-muted-foreground">
+                        MEK-uppgifter från
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {MEK_ORIGINS.map((o) => (
+                          <DifficultyBtn
+                            key={o}
+                            active={config.mekOrigin === o}
+                            label={MEK_ORIGIN_LABEL[o]}
+                            onClick={() => setConfig((c) => ({ ...c, mekOrigin: o }))}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <label className="flex cursor-pointer items-center justify-between gap-3 rounded-lg bg-white/5 px-3 py-2.5">
+                    <span className="text-sm font-medium">Dölj frågor jag redan klarat</span>
+                    <input
+                      type="checkbox"
+                      checked={config.excludeCorrect}
+                      onChange={(e) =>
+                        setConfig((c) => ({ ...c, excludeCorrect: e.target.checked }))
+                      }
+                      className="h-5 w-5 rounded border-border accent-primary"
+                    />
+                  </label>
+                </SetupCard>
+              </div>
+
+              <div className="mt-5">
+                <SetupCard step="3" title="Svårighetsgrad">
                   <div className="flex flex-wrap gap-2">
                     <DifficultyBtn
                       active={config.difficulty === null}
@@ -545,7 +623,7 @@ function TrainPage() {
               </div>
 
               <div className="mt-5">
-                <SetupCard step="3" title="Antal frågor">
+                <SetupCard step="4" title="Antal frågor">
                   <div className="grid grid-cols-3 gap-2">
                     {[5, 10, 20].map((n) => (
                       <button
@@ -857,20 +935,23 @@ function TrainPage() {
                 <ExplanationBlock explanation={currentQ.explanation} />
                 <QuestionOriginNote tags={currentQ.tags} source={currentQ.source} />
                 {user && (
-                  <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
-                    <span>Bra fråga?</span>
-                    <QuestionVoteButtons
-                      questionId={currentQ.id}
-                      category={currentQ.category}
-                      surface="train"
-                    />
-                    <span className="ml-2">Felaktig fråga?</span>
-                    <ReportQuestionButton
-                      questionId={currentQ.id}
-                      userId={user.id}
-                      questionText={currentQ.question_text}
-                    />
-                  </div>
+                  <>
+                    <div className="mt-4">
+                      <QuestionVoteButtons
+                        questionId={currentQ.id}
+                        category={currentQ.category}
+                        surface="train"
+                      />
+                    </div>
+                    <div className="mt-2 flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                      <span>Felaktig fråga?</span>
+                      <ReportQuestionButton
+                        questionId={currentQ.id}
+                        userId={user.id}
+                        questionText={currentQ.question_text}
+                      />
+                    </div>
+                  </>
                 )}
               </>
             )}

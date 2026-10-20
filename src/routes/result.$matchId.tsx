@@ -899,6 +899,7 @@ function ResultPage() {
                               questionId={q.id}
                               category={q.category}
                               surface="result"
+                              size="compact"
                             />
                             <ReportQuestionButton
                               questionId={q.id}

@@ -13,6 +13,13 @@
 
 export const GENERATED_TAG = "tkn-genererad";
 
+/**
+ * Urvalet i `/train`: arkivets MEK-uppgifter, Tvåkommanollans egna, eller
+ * båda. Gäller bara MEK; andra delprov har bara en källa.
+ */
+export const MEK_ORIGINS = ["all", "archive", "tkn"] as const;
+export type MekOrigin = (typeof MEK_ORIGINS)[number];
+
 export interface QuestionOrigin {
   label: string;
   sourceTitle: string | null;

@@ -62,7 +62,7 @@ const submitSchema = z.object({
     .or(z.literal("")),
   message: z.string().trim().max(1000).optional(),
   answers: answersSchema,
-  source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+  source: z.enum(["dashboard", "landing", "popup", "navbar"]).default("dashboard"),
 });
 
 export interface SubmitLeadResult {

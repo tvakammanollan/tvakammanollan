@@ -61,27 +61,56 @@ export const voteQuestion = createServerFn({ method: "POST" })
     return { vote: data.vote };
   });
 
-/** Den inloggades egna röster på en lista frågor, så att knapparna visar läget. */
-export const fetchMyQuestionVotes = createServerFn({ method: "POST" })
+/**
+ * Den inloggades egna röster plus totalen per fråga, så att knapparna visar
+ * både läget och hur andra röstat.
+ *
+ * Totalen läses rakt ur vyn och inte ur urvalets cache (`loadVoteStats`, fem
+ * minuter): den som just röstat ska se sin röst i siffran. Siffrorna är råa
+ * antal, gäster inräknade; gästvikten gäller urvalet, inte vad som visas.
+ */
+export const fetchQuestionVotes = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { questionIds: string[] }) =>
     z.object({ questionIds: z.array(z.string().uuid()).max(100) }).parse(data),
   )
-  .handler(async ({ data, context }): Promise<Record<string, -1 | 1>> => {
-    assertRateLimit(ipKey("question-vote-read"), limits.publicRead);
-    if (data.questionIds.length === 0) return {};
-    const { data: rows, error } = await supabaseAdmin
-      .from("question_votes")
-      .select("question_id, vote")
-      .eq("user_id", context.userId)
-      .in("question_id", data.questionIds);
-    // Utan tabell (migrationen ej körd) eller vid fel: inga röster. Knapparna
-    // visas ändå, och en röst som inte går att spara säger ifrån själv.
-    if (error) {
-      console.error("[question-votes] egna röster:", error.message);
-      return {};
-    }
-    const out: Record<string, -1 | 1> = {};
-    for (const r of rows ?? []) out[r.question_id] = r.vote === -1 ? -1 : 1;
-    return out;
-  });
+  .handler(
+    async ({
+      data,
+      context,
+    }): Promise<{
+      mine: Record<string, -1 | 1>;
+      counts: Record<string, { up: number; down: number }>;
+    }> => {
+      assertRateLimit(ipKey("question-vote-read"), limits.publicRead);
+      const out = {
+        mine: {} as Record<string, -1 | 1>,
+        counts: {} as Record<string, { up: number; down: number }>,
+      };
+      if (data.questionIds.length === 0) return out;
+      const [own, stats] = await Promise.all([
+        supabaseAdmin
+          .from("question_votes")
+          .select("question_id, vote")
+          .eq("user_id", context.userId)
+          .in("question_id", data.questionIds),
+        supabaseAdmin
+          .from("question_vote_stats")
+          .select("question_id, up, down, guest_up, guest_down")
+          .in("question_id", data.questionIds),
+      ]);
+      // Vid fel: inga röster och nollor. Knapparna visas ändå, och en röst som
+      // inte går att spara säger ifrån själv.
+      if (own.error) console.error("[question-votes] egna röster:", own.error.message);
+      if (stats.error) console.error("[question-votes] summor:", stats.error.message);
+      for (const r of own.data ?? []) out.mine[r.question_id] = r.vote === -1 ? -1 : 1;
+      for (const r of stats.data ?? []) {
+        if (!r.question_id) continue;
+        out.counts[r.question_id] = {
+          up: (r.up ?? 0) + (r.guest_up ?? 0),
+          down: (r.down ?? 0) + (r.guest_down ?? 0),
+        };
+      }
+      return out;
+    },
+  );

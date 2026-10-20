@@ -271,7 +271,7 @@ export const startCoachingCheckout = createServerFn({ method: "POST" })
     z
       .object({
         /** Vilken yta köpet startade från — enda fria fältet, och det är uppräkneligt. */
-        source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+        source: z.enum(["dashboard", "landing", "popup", "navbar"]).default("dashboard"),
         /** Förifyller mejlfältet i kassan. Verifieras aldrig som identitet. */
         email: z.string().email().max(200).optional(),
       })
@@ -341,7 +341,7 @@ export const startCoachingBooking = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z
       .object({
-        source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+        source: z.enum(["dashboard", "landing", "popup", "navbar"]).default("dashboard"),
         email: z.string().email().max(200).optional(),
         /** Förifyller namnfältet i Calendly. Verifieras aldrig som identitet. */
         name: z.string().trim().min(1).max(100).optional(),
@@ -414,7 +414,7 @@ export const completeCoachingBooking = createServerFn({ method: "POST" })
         requestId: z.string().uuid(),
         /** Invitee-URI:n ur Calendlys `event_scheduled`. Formvalideras i calendly.server. */
         inviteeUri: z.string().url().max(300),
-        source: z.enum(["dashboard", "landing", "popup"]).default("dashboard"),
+        source: z.enum(["dashboard", "landing", "popup", "navbar"]).default("dashboard"),
       })
       .parse(input),
   )

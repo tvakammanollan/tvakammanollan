@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  displayedVoteCounts,
   EMPTY_TALLY,
   FAVOURED_WEIGHT,
   voteStatus,
@@ -84,5 +85,20 @@ describe("weightedShuffle", () => {
     // P(tung först) = 2.5 / 3.5 ≈ 0.71
     expect(tungFörst / 2000).toBeGreaterThan(0.65);
     expect(tungFörst / 2000).toBeLessThan(0.77);
+  });
+});
+
+describe("displayedVoteCounts", () => {
+  it("räknar in en ny röst", () => {
+    expect(displayedVoteCounts({ up: 4, down: 1 }, 0, 1)).toEqual({ up: 5, down: 1 });
+  });
+  it("flyttar en bytt röst från upp till ned", () => {
+    expect(displayedVoteCounts({ up: 4, down: 1 }, 1, -1)).toEqual({ up: 3, down: 2 });
+  });
+  it("tar bort en återtagen röst", () => {
+    expect(displayedVoteCounts({ up: 4, down: 1 }, -1, 0)).toEqual({ up: 4, down: 0 });
+  });
+  it("går aldrig under noll", () => {
+    expect(displayedVoteCounts({ up: 0, down: 0 }, 1, 0)).toEqual({ up: 0, down: 0 });
   });
 });

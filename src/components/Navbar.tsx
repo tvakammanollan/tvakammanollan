@@ -37,10 +37,13 @@ import {
   ChevronDown,
   Settings,
   Swords,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { displayName } from "@/lib/guest-name";
+import { CoachingModal } from "@/components/CoachingModal";
+import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
 
 type EloTrack = EloHeadline["track"];
 
@@ -55,6 +58,15 @@ export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
+  // Coachningen ligger i menyn sedan startsidans kort gav plats åt
+  // MEK-övningen. Modalen monteras först vid första klicket: den drar in en
+  // auth-lyssnare och en profil-query, och navbaren finns på varje sida.
+  const [coachingOpen, setCoachingOpen] = useState(false);
+  const [coachingMounted, setCoachingMounted] = useState(false);
+  const openCoaching = () => {
+    setCoachingMounted(true);
+    setCoachingOpen(true);
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -170,6 +182,7 @@ export function Navbar() {
                   elo={headline.elo}
                   track={headline.track}
                   onSignOut={handleSignOut}
+                  onCoaching={openCoaching}
                 />
               )}
             </>
@@ -212,6 +225,7 @@ export function Navbar() {
                 elo={headline.elo}
                 track={headline.track}
                 onSignOut={handleSignOut}
+                onCoaching={openCoaching}
               />
             </>
           ) : (
@@ -236,6 +250,11 @@ export function Navbar() {
           )}
         </div>
       </div>
+      {coachingMounted && (
+        <SafeBoundary label="navbar-coaching">
+          <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="navbar" />
+        </SafeBoundary>
+      )}
     </header>
   );
 }
@@ -283,11 +302,13 @@ function AccountMenu({
   elo,
   track,
   onSignOut,
+  onCoaching,
 }: {
   profile: NonNullable<ReturnType<typeof useAuth>["profile"]>;
   elo: number;
   track: EloTrack;
   onSignOut: () => Promise<void>;
+  onCoaching: () => void;
 }) {
   return (
     <DropdownMenu>
@@ -318,7 +339,11 @@ function AccountMenu({
           <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-52">
+      <DropdownMenuContent align="end" className="w-60">
+        <DropdownMenuItem onSelect={onCoaching} className="p-0 focus:bg-transparent">
+          <CoachingMenuItem />
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <AccountMenuLink to="/stats" icon={BarChart3}>
           Statistik
         </AccountMenuLink>
@@ -365,17 +390,42 @@ function AccountMenuLink({
   );
 }
 
+/**
+ * Coachningen i menyn: en grön ruta, inte en rad bland de andra. Priset
+ * hämtas när menyn öppnas (rutan monteras först då), ur samma delade anrop
+ * som korten använder; utan pris står bara rubriken.
+ */
+function CoachingMenuItem() {
+  const { offer } = useCoachingOffer();
+  const pris = coachingPriceLabel(offer);
+  return (
+    <span className="flex w-full items-center gap-3 rounded-xl border border-success-line bg-success-soft px-3 py-2.5 transition-colors hover:border-success">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-success text-on-brand">
+        <Sparkles className="h-4 w-4" aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm font-bold text-success">Coachning</span>
+        <span className="block text-xs text-muted-foreground">
+          Personligt studieupplägg{pris ? ` · ${pris}` : ""}
+        </span>
+      </span>
+    </span>
+  );
+}
+
 /* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
 function MobileMenu({
   profile,
   elo,
   track,
   onSignOut,
+  onCoaching,
 }: {
   profile: ReturnType<typeof useAuth>["profile"];
   elo: number;
   track: EloTrack;
   onSignOut: () => Promise<void>;
+  onCoaching: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -436,6 +486,16 @@ function MobileMenu({
         </SheetHeader>
 
         <nav className="flex flex-col px-2 py-3">
+          <button
+            type="button"
+            onClick={() => {
+              close();
+              onCoaching();
+            }}
+            className="mx-2 mb-2 text-left"
+          >
+            <CoachingMenuItem />
+          </button>
           <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
           </MobileNavLink>

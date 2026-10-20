@@ -9,10 +9,10 @@ import { RankBadge } from "@/components/ui/RankBadge";
 import { RankIcon } from "@/components/ui/RankIcon";
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
-import { CoachingModal } from "@/components/CoachingModal";
-import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
-import { useImpression } from "@/hooks/useImpression";
-import { trackEvent } from "@/lib/events";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMekStats } from "@/lib/train.functions";
+import { formatInt } from "@/lib/sv-format";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { CoachingQuizCard } from "@/components/CoachingQuizCard";
@@ -20,13 +20,15 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
-import { BookOpen, Sparkles, Flame, ArrowRight, Swords, ClipboardCheck } from "lucide-react";
+import { BookOpen, PenLine, Sparkles, Flame, ArrowRight, Swords, ClipboardCheck } from "lucide-react";
+import { trackEvent } from "@/lib/events";
 
 /* =====================================================================
    HOME DASHBOARD — tre val, inget mer.
 
    Skärmen svarar på en enda fråga: "vad gör jag nu?". Svaret är spela en
-   match, plugga ord, eller boka coachning. Allt som är uppföljning
+   match, plugga ord, eller öva MEK. Coachningen ligger i menyn (navbaren)
+   sedan 2026-10-20, då MEK-övningen tog dess kort. Allt som är uppföljning
    (ELO-kurva, achievements, HP-estimat) bor på /stats; allt som är
    navigering bor i navbaren. Läggs något tillbaka här måste det tjäna
    sin plats mot de tre.
@@ -37,17 +39,14 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
-  const [coachingOpen, setCoachingOpen] = useState(false);
-  // Priset på coachningskortet läses ur Stripe. Hämtas här (inte i modalen)
-  // eftersom kortet visar det innan någon klickat — anropet delas via cachen.
-  const coachingErbjudande = useCoachingOffer().offer;
-  const coachingPris = coachingPriceLabel(coachingErbjudande);
-  const coachingVillkor = coachingTermsLabel(coachingErbjudande);
-  // Kortet ligger under matchkortet och är ofta utanför bild vid inläsning.
-  // Utan den här är antalet öppnade erbjudanden ett tal utan nämnare.
-  const coachningSedd = useImpression(() =>
-    trackEvent("coaching_card_viewed", { source: "dashboard" }),
-  );
+  // Antalet MEK-uppgifter på kortet räknas på servern. Innan det landat står
+  // texten utan siffra, ingen platshållare som hoppar till ett tal.
+  const mekStatsFn = useServerFn(fetchMekStats);
+  const { data: mekStats } = useQuery({
+    queryKey: ["mek-stats"],
+    queryFn: () => mekStatsFn(),
+    staleTime: 60 * 60 * 1000,
+  });
 
   if (!user || !profile) {
     return (
@@ -237,7 +236,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               </section>
             </div>
 
-            {/* ---------- 2. Plugga ord   3. Coachning ---------- */}
+            {/* ---------- 2. Plugga ord   3. MEK-övning ---------- */}
             <div>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <ActionCard
@@ -247,22 +246,18 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   title="Plugga ord"
                   subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
                 />
-                {/* Wrappern bär bara visningsmätningen — h-full så att kortet
-                    fyller radhöjden precis som när det låg direkt i gridet. */}
-                <div ref={coachningSedd} className="h-full">
-                  <ActionCard
-                    onClick={() => setCoachingOpen(true)}
-                    tone="leaf"
-                    icon={<Sparkles className="h-5 w-5" />}
-                    title="Coachning"
-                    subtitle={`Ett studieupplägg byggt av någon som själv fått 1,95+.${
-                      coachingVillkor ? ` ${coachingVillkor}.` : ""
-                    }`}
-                    // Priset kommer ur Stripe. Innan det landat står "Öppna" kvar —
-                    // ingen platshållare som hoppar till en siffra.
-                    cta={coachingPris ?? undefined}
-                  />
-                </div>
+                <ActionCard
+                  to="/train"
+                  search={{ delprov: "MEK" }}
+                  tone="amber"
+                  badge="BETA"
+                  icon={<PenLine className="h-5 w-5" />}
+                  title="MEK-övning"
+                  subtitle={`${
+                    mekStats ? `${formatInt(mekStats.total)} uppgifter` : "Uppgifter"
+                  } ur gamla prov och Tvåkommanollans egna. Du röstar fram de bästa, och de visas oftare.`}
+                  cta="Öva MEK"
+                />
               </div>
             </div>
           </div>
@@ -270,7 +265,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
       </m.div>
 
       <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
-      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="dashboard" />
       <OnboardingModal
         open={!isGuest && profile.onboarding_completed === false && !onboardingDismissed}
         onClose={() => setOnboardingDismissed(true)}
@@ -398,6 +392,7 @@ function SubjectPill({
    (`onClick`) — så ord och coachning väger exakt lika mycket. */
 function ActionCard({
   to,
+  search,
   onClick,
   tone,
   icon,
@@ -407,6 +402,8 @@ function ActionCard({
   cta = "Öppna",
 }: {
   to?: string;
+  /** Sökparametrar till `to`, t.ex. `{ delprov: "MEK" }` för ett förval i /train. */
+  search?: Record<string, string>;
   onClick?: () => void;
   tone: "teal" | "amber" | "leaf";
   /** Liten flagga i övre högra hörnet, t.ex. en rabatt. */
@@ -473,6 +470,8 @@ function ActionCard({
         to={to}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         params={{} as any}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        search={search as any}
         className={className}
         style={cardStyle}
       >

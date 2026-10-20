@@ -25,7 +25,7 @@ export type MatchMode = "bot" | "private" | "ranked";
 export type MatchOutcome = "win" | "loss";
 export type TrainingTrack = "verbal" | "math";
 /** Ytan köpet startade från — samma värden som serverfunktionen validerar. */
-export type CoachingSource = "dashboard" | "landing" | "popup";
+export type CoachingSource = "dashboard" | "landing" | "popup" | "navbar";
 /** Vad som tröskade fram nudgen. Speglar PromptTrigger i coaching-prompt.ts. */
 export type CoachingPromptTrigger = "pageviews" | "matches";
 
