@@ -1,0 +1,2872 @@
+[
+ {
+  "id": "p11-01",
+  "amne": "med",
+  "genre": "pop",
+  "text": "Bröstcancer drabbar framför allt kvinnor, men även män kan få sjukdomen. Kvinnor drabbas omkring hundra gånger oftare, men för män är utsikterna ofta sämre, eftersom tumören hos dem i regel _____ i ett senare skede.",
+  "alternatives": [
+   "läker",
+   "upptäcks",
+   "försvinner",
+   "krymper"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är upptäcks. Sämre utsikter förklaras av att sjukdomen hittas sent, när den hunnit växa. En tumör som läker, försvinner eller krymper i ett senare skede ger inte sämre utsikter.",
+  "source": {
+   "title": "Bröstcancer",
+   "url": "https://sv.wikipedia.org/wiki/Br%C3%B6stcancer",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-02",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Kvinnor får urinvägsinfektion oftare än män, och hälften av alla kvinnor får minst en någon gång i livet. Hos unga kvinnor räcker symtomen ofta för en diagnos, medan det är svårare hos äldre, vars symtom ofta är mer _____.",
+  "alternatives": [
+   "otydliga",
+   "tydliga",
+   "smärtsamma",
+   "kortvariga"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är otydliga. Medan ställer de unga, där symtomen räcker för diagnos, mot de äldre, där det är svårare, alltså för att symtomen säger mindre. Tydliga säger motsatsen, och smärtsamma eller kortvariga symtom gör inte diagnosen svårare.",
+  "source": {
+   "title": "Cystit",
+   "url": "https://sv.wikipedia.org/wiki/Cystit",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-03",
+  "amne": "med",
+  "genre": "pop",
+  "text": "En hörapparat förstärker ljud åt den som har nedsatt hörsel och innehåller både mikrofon, förstärkare och högtalare. Den provas ut av en audionom och är alltså _____, anpassad efter användarens hörsel, öra och önskemål.",
+  "alternatives": [
+   "personlig",
+   "opersonlig",
+   "standardiserad",
+   "valfri"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är personlig. Alltså och anpassad efter användaren förklarar ordet: apparaten är gjord för just en person. Opersonlig och standardiserad säger motsatsen, och valfri har inget med anpassningen att göra.",
+  "source": {
+   "title": "Hörapparat",
+   "url": "https://sv.wikipedia.org/wiki/H%C3%B6rapparat",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-04",
+  "amne": "med",
+  "genre": "aka",
+  "text": "Vitaminer är ämnen som kroppen behöver i små mängder men inte själv kan tillverka i tillräcklig mängd, så de måste komma från maten. De fettlösliga kan _____ i kroppsfettet, medan överskottet av de vattenlösliga försvinner med urinen.",
+  "alternatives": [
+   "lagras",
+   "förbrännas",
+   "tillverkas",
+   "rensas ut"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är lagras. Medan ställer de fettlösliga mot de vattenlösliga, som lämnar kroppen, så de fettlösliga måste stanna kvar. Tillverkas strider mot att kroppen inte kan göra dem, rensas ut är vad de vattenlösliga gör, och förbrännas förklarar inte skillnaden.",
+  "source": {
+   "title": "Vitamin",
+   "url": "https://sv.wikipedia.org/wiki/Vitamin",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-05",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Folkdanser är traditionella danser som hör till en viss trakt eller social grupp och dansas nästan alltid till folkmusik. Trots att de är traditionsbundna _____ de med tiden, och en dans som polska kan se mycket olika ut på olika håll.",
+  "alternatives": [
+   "bevaras",
+   "förbjuds",
+   "förändras",
+   "upprepas"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är förändras. Trots att ställer traditionen mot att dansen ändå blir olika på olika håll. Bevaras är vad man väntar sig av en tradition och ger ingen kontrast, och förbjuds eller upprepas förklarar inte de stora skillnaderna.",
+  "source": {
+   "title": "Folkdans",
+   "url": "https://sv.wikipedia.org/wiki/Folkdans",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-06",
+  "amne": "kul",
+  "genre": "aka",
+  "text": "När järnugnar av typen sättugn kom in i rika hem på 1500-talet var de ett tecken på hög _____. På landsbygden var de länge betydligt ovanligare än i städerna.",
+  "alternatives": [
+   "status",
+   "ålder",
+   "risk",
+   "fattigdom"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är status. Något som först finns i förmögna hem visar att ägaren har det gott ställt. Fattigdom säger motsatsen, och hög ålder eller risk hör inte ihop med att ugnen fanns i rika hem.",
+  "source": {
+   "title": "Sättugn",
+   "url": "https://sv.wikipedia.org/wiki/S%C3%A4ttugn",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-07",
+  "amne": "sam",
+  "genre": "aka",
+  "text": "En stat kan ge människor som förföljs skydd i form av asyl. Alla har som mänsklig rättighet möjlighet att söka asyl, men varje land bestämmer självt på vilka grunder asyl ska _____.",
+  "alternatives": [
+   "beviljas",
+   "sökas",
+   "överklagas",
+   "säljas"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är beviljas. Men ställer rätten att söka mot landets beslut om vem som faktiskt får skydd. Sökas får alla göra, och överklagas eller säljas är inte vad landet bestämmer grunderna för.",
+  "source": {
+   "title": "Asyl",
+   "url": "https://sv.wikipedia.org/wiki/Asyl",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-08",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Barnarbete, alltså arbete som hindrar barn från att gå i skolan eller skadar dem, motverkas genom lagar världen över. Det var vanligast under industrialismens genombrott, när barn slet långa dagar i smutsiga och _____ fabriker.",
+  "alternatives": [
+   "osäkra",
+   "trygga",
+   "moderna",
+   "tysta"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är osäkra. Uppräkningen med smutsiga och långa dagar beskriver dåliga och farliga förhållanden. Trygga säger motsatsen, och moderna eller tysta fabriker hör inte ihop med de svåra förhållandena.",
+  "source": {
+   "title": "Barnarbete",
+   "url": "https://sv.wikipedia.org/wiki/Barnarbete",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "upp"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-09",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Nya Sverige var en svensk koloni vid Nordamerikas östkust, som grundades 1638 och var i svensk ägo i sjutton år. När Nederländerna hade erövrat området valde merparten av kolonisterna, både svenskar och finnar, att _____, och minnet av kolonin lever därför kvar i trakten.",
+  "alternatives": [
+   "återvända hem",
+   "fly västerut",
+   "göra uppror",
+   "stanna kvar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är stanna kvar. Därför knyter det levande minnet i trakten till att kolonisterna blev kvar där. Att återvända hem eller fly västerut hade tagit dem därifrån, och ett uppror förklarar inte att minnet lever kvar.",
+  "source": {
+   "title": "Nya Sverige",
+   "url": "https://sv.wikipedia.org/wiki/Nya_Sverige",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-10",
+  "amne": "his",
+  "genre": "aka",
+  "text": "Pest orsakas av en bakterie som upptäcktes 1894. Förr gick det inte att hålla isär olika infektionssjukdomar lika säkert som nu, så när källorna talar om pest kan det i själva verket ha rört sig om nästan vilken _____ farsot som helst.",
+  "alternatives": [
+   "ofarlig",
+   "nyupptäckt",
+   "dödlig",
+   "medfödd"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är dödlig. Pest var namnet på de svåra epidemier som tog många liv, så det som kallades pest var en farsot som dödade. En ofarlig farsot hade inte kallats pest, en nyupptäckt passar inte äldre tider, och en farsot är inte medfödd.",
+  "source": {
+   "title": "Pest",
+   "url": "https://sv.wikipedia.org/wiki/Pest",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-11",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Ingen kråkfågel har så stor utbredning som korpen. Unga korpar håller ofta ihop i små flockar, men som vuxna bildar de par för _____ och försvarar tillsammans ett revir.",
+  "alternatives": [
+   "dagen",
+   "livet",
+   "stunden",
+   "flykten"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är livet. Men ställer ungdomens flockar mot ett varaktigt parförhållande, och ett par som tillsammans försvarar ett revir håller ihop länge. Par för dagen eller stunden är tillfälliga, och flykten ger ingen mening här.",
+  "source": {
+   "title": "Korp",
+   "url": "https://sv.wikipedia.org/wiki/Korp",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-12",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Tallen var det första stora barrträdet som nådde Skandinavien, för omkring 9 500 år sedan. Där den växer bra blir stammen hög, rak och _____ ända upp till den lilla kronan av grova grenar.",
+  "alternatives": [
+   "kvistrik",
+   "ihålig",
+   "kvistfri",
+   "krokig"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är kvistfri. Om kronan sitter högt upp har stammen inga grenar längre ned. Kvistrik säger motsatsen, krokig strider mot rak, och ihålig passar inte med ett träd som växer bra.",
+  "source": {
+   "title": "Tall",
+   "url": "https://sv.wikipedia.org/wiki/Tall",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "fo"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-13",
+  "amne": "lit",
+  "genre": "aka",
+  "text": "Psalmer är sånger som sjungs i gudstjänster. Ordet kommer från grekiskan och anknyter till att spela på stränginstrument, och sedan reformationen har psalmerna oftast getts ut _____ i psalmböcker.",
+  "alternatives": [
+   "spridda",
+   "enstaka",
+   "samlade",
+   "hemliga"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är samlade. En psalmbok är en samling, så psalmerna ges ut tillsammans. Spridda och enstaka säger motsatsen, och en psalm som sjungs i gudstjänsten ges inte ut hemlig.",
+  "source": {
+   "title": "Psalm",
+   "url": "https://sv.wikipedia.org/wiki/Psalm",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-14",
+  "amne": "utb",
+  "genre": "myn",
+  "text": "Läsåret är den tid då skolorna har verksamhet och en årskurs pågår. I Sverige omfattar det minst 178 skoldagar i grundskolan, börjar i augusti och slutar i juni, men de exakta datumen bestäms _____ i varje kommun.",
+  "alternatives": [
+   "centralt",
+   "slumpvis",
+   "lokalt",
+   "retroaktivt"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är lokalt. Men och i varje kommun ställer de gemensamma reglerna mot datum som bestäms på plats. Centralt säger motsatsen, och slumpvis eller retroaktivt bestäms inga skoldatum.",
+  "source": {
+   "title": "Läsår",
+   "url": "https://sv.wikipedia.org/wiki/L%C3%A4s%C3%A5r",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-15",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "I många grundskolor och gymnasier har eleverna en egen förening, ett elevråd. Syftet är att göra skoltiden mer _____ för medlemmarna, som alla är elever på samma skola.",
+  "alternatives": [
+   "givande",
+   "krävande",
+   "kortvarig",
+   "ensidig"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är givande. En förening för elever vill göra deras tid i skolan bättre och mer meningsfull. Krävande och ensidig vore försämringar, och kortvarig är inget en förening kan eller vill göra skoltiden.",
+  "source": {
+   "title": "Elevråd",
+   "url": "https://sv.wikipedia.org/wiki/Elevr%C3%A5d",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-16",
+  "amne": "eko",
+  "genre": "aka",
+  "text": "Penningtvätt innebär att pengar som tjänats på brott förs vidare så att de ser ut att vara _____ förtjänade. Verksamheten är både riskabel och dyr, men i regel nödvändig om brottslingen ska kunna använda pengarna utan att väcka misstankar.",
+  "alternatives": [
+   "olagligt",
+   "snabbt",
+   "orättvist",
+   "lagligt"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är lagligt. Pengarna från brott ska se ut som om de tjänats på ärligt sätt, annars väcker de misstankar. Olagligt är vad de redan är, och snabbt eller orättvist förtjänade pengar döljer inte brottet.",
+  "source": {
+   "title": "Penningtvätt",
+   "url": "https://sv.wikipedia.org/wiki/Penningtv%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-17",
+  "amne": "jur",
+  "genre": "myn",
+  "text": "Två personer blir inte sambor automatiskt bara för att de flyttar ihop. Lagen kräver att de lever under _____ förhållanden, och därför räknas till exempel rumskamrater i regel inte som sambor.",
+  "alternatives": [
+   "ekonomiska",
+   "ordnade",
+   "äktenskapsliknande",
+   "trånga"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är äktenskapsliknande. Rumskamrater bor också tillsammans, så det som skiljer sambor från dem är att de lever som ett par. Ekonomiska, ordnade och trånga förhållanden kan rumskamrater också ha.",
+  "source": {
+   "title": "Sambo",
+   "url": "https://sv.wikipedia.org/wiki/Sambo",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-18",
+  "amne": "fil",
+  "genre": "aka",
+  "text": "Kunskapsteorin är läran om kunskap. Enligt den traditionella synen vet en person något om tre villkor är _____: att det är sant, att personen tror på det och att den har goda skäl för sin tro.",
+  "alternatives": [
+   "okända",
+   "brutna",
+   "frivilliga",
+   "uppfyllda"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är uppfyllda. Villkor som ska gälla för att man ska veta något måste vara uppfyllda. Brutna säger motsatsen, och okända eller frivilliga villkor kan inte avgöra vad som är kunskap.",
+  "source": {
+   "title": "Kunskapsteori",
+   "url": "https://sv.wikipedia.org/wiki/Kunskapsteori",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-19",
+  "amne": "psy",
+  "genre": "aka",
+  "text": "Inom beteendevetenskapen används identitet och självbild som synonymer. Enligt ett konstruktivistiskt synsätt skapas identiteten _____ i samspel med omgivningen, och den formas alltså under hela livet.",
+  "alternatives": [
+   "en gång för alla",
+   "fortlöpande",
+   "slumpmässigt",
+   "i hemlighet"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är fortlöpande. Under hela livet förklarar att identiteten hela tiden skapas på nytt. En gång för alla säger motsatsen, och slumpmässigt eller i hemlighet passar inte med samspelet med omgivningen.",
+  "source": {
+   "title": "Självbild",
+   "url": "https://sv.wikipedia.org/wiki/Sj%C3%A4lvbild",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-20",
+  "amne": "spr",
+  "genre": "sko",
+  "text": "Skiljetecken som punkt, komma och kolon används för att _____ skriven text genom att skilja meningar, satser och ord från varandra.",
+  "alternatives": [
+   "förkorta",
+   "strukturera",
+   "översätta",
+   "förlänga"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är strukturera. Att skilja meningar och satser åt ger texten ordning. Skiljetecken förkortar, översätter eller förlänger inte en text.",
+  "source": {
+   "title": "Interpunktion",
+   "url": "https://sv.wikipedia.org/wiki/Interpunktion",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-21",
+  "amne": "med",
+  "genre": "pop",
+  "text": "Hjärt-lungräddning är en första hjälpen-åtgärd med bröstkompressioner och ofta inblåsningar, som ska hålla igång blodcirkulationen och andningen hos den som drabbats av _____. Den rekommenderas när personen är _____ och inte andas normalt.",
+  "alternatives": [
+   "hjärtstopp – medveten",
+   "andnöd – andfådd",
+   "chock – vaken",
+   "hjärtstillestånd – medvetslös"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är hjärtstillestånd och medvetslös. Bröstkompressioner som ska hålla igång cirkulationen behövs när hjärtat slutat slå, och hjärtstopp betyder samma sak. Den som inte andas normalt och behöver hjälpen har förlorat medvetandet. Andnöd och chock kräver ingen hjärt-lungräddning så länge hjärtat slår, och den som är medveten, andfådd eller vaken behöver den inte.",
+  "source": {
+   "title": "Hjärt-lungräddning",
+   "url": "https://sv.wikipedia.org/wiki/Hj%C3%A4rt-lungr%C3%A4ddning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-22",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Vid en blodtransfusion får en patient blod från en givare. Behandlingen kan vara akut _____ vid stora blödningar, och i Sverige _____ det donerade blodet i olika beståndsdelar, som plasma och blodplättar, efter vad patienten behöver.",
+  "alternatives": [
+   "livsavgörande – blandas",
+   "livshotande – fördelas",
+   "onödig – späds ut",
+   "livräddande – delas upp"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är livräddande och delas upp. Vid stora blödningar kan blod från en givare rädda patientens liv, och livsavgörande passar också. Olika beståndsdelar efter behov betyder att blodet skiljs åt, och fördelas säger nästan detsamma. Livshotande och onödig strider mot att behandlingen hjälper, och blod som blandas eller späds ut blir inte till olika beståndsdelar.",
+  "source": {
+   "title": "Blodtransfusion",
+   "url": "https://sv.wikipedia.org/wiki/Blodtransfusion",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-23",
+  "amne": "kul",
+  "genre": "aka",
+  "text": "Johann Sebastian Bach räknas som en av barockens största tonsättare och som kontrapunktens främste _____. Hans många verk för kyrkoårets högtider har gjort honom till en central gestalt i den protestantiska _____.",
+  "alternatives": [
+   "företrädare – operan",
+   "kritiker – gudstjänstmusiken",
+   "mästare – kyrkomusiken",
+   "elev – teatern"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är mästare och kyrkomusiken. En av de största tonsättarna är främst i sitt fält, och företrädare passar också. Verk för kyrkoårets högtider hör till kyrkans musik, och gudstjänstmusiken säger samma sak. En kritiker eller elev är inte främst i ett fält, och opera och teater är inte musik för kyrkoåret.",
+  "source": {
+   "title": "Johann Sebastian Bach",
+   "url": "https://sv.wikipedia.org/wiki/Johann_Sebastian_Bach",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-24",
+  "amne": "kul",
+  "genre": "aka",
+  "text": "En glasmålning är en bild på glas, målad med genomskinliga eller ogenomskinliga färger som bränns fast. För att nå full verkan måste den _____ av dagsljus, och därför har glasmålningar främst använts i _____.",
+  "alternatives": [
+   "genomlysas – fönster",
+   "belysas – källare",
+   "skyddas – fönsteröppningar",
+   "täckas – golv"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är genomlysas och fönster. En bild på glas får sin färgverkan när ljuset strålar igenom den, och belysas ligger nära. Därför sitter den där dagsljuset kommer in, i fönster eller fönsteröppningar. Skyddas och täckas av dagsljus är motsatsen, och i källare eller golv når inget dagsljus igenom glaset.",
+  "source": {
+   "title": "Glasmålning",
+   "url": "https://sv.wikipedia.org/wiki/Glasm%C3%A5lning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-25",
+  "amne": "sam",
+  "genre": "aka",
+  "text": "Allmän rösträtt betyder att alla vuxna medborgare får rösta i de allmänna valen, och allmän och lika rösträtt att varje röst _____ lika mycket. Rösträtten anses inte vara allmän om man måste ha gjort värnplikt eller klarat ett särskilt _____ för att få rösta.",
+  "alternatives": [
+   "räknas – lönekrav",
+   "väger – kunskapsprov",
+   "kostar – test",
+   "varierar – val"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är väger och kunskapsprov. Lika rösträtt innebär att alla röster har samma värde, och räknas lika mycket säger samma sak. Något man måste klara för att få rösta är ett prov eller test. En röst kostar inget och varierar inte enligt lika rösträtt, ett lönekrav klarar man inte, och ett val är inte ett villkor för att få rösta.",
+  "source": {
+   "title": "Allmän rösträtt",
+   "url": "https://sv.wikipedia.org/wiki/Allm%C3%A4n_r%C3%B6str%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-26",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Fastighetsskatten tas ut på innehavet av en fastighet, och ett motiv är att den ger staten intäkter från en skattebas som inte kan _____ över landsgränserna. Skatten kan också påverka huspriserna: en _____ kan till exempel leda till att priserna stiger.",
+  "alternatives": [
+   "flyttas – sänkning",
+   "förflyttas – höjning",
+   "beskattas – nedsättning",
+   "ärvas – fördubbling"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är flyttas och sänkning. En fastighet ligger där den ligger och kan inte tas med till ett annat land, och förflyttas betyder samma sak. Om skatten blir lägre blir det billigare att äga ett hus och priserna kan stiga, och nedsättning säger detsamma. Beskattas och ärvas har inget med landsgränser att göra, och en höjd eller fördubblad skatt gör inte husen dyrare att köpa.",
+  "source": {
+   "title": "Fastighetsskatt",
+   "url": "https://sv.wikipedia.org/wiki/Fastighetsskatt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-27",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Skånska kriget utkämpades mellan 1675 och 1679, och Danmark ville framför allt _____ de skånska landskap som tidigare förlorats till Sverige. Sverige försökte samtidigt _____ sina nya områden och sin ställning som stormakt kring Östersjön.",
+  "alternatives": [
+   "återerövra – förlora",
+   "sälja – värna",
+   "avstå – överge",
+   "återta – försvara"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är återta och försvara. Landskap som förlorats vill man få tillbaka, och återerövra betyder samma sak. Samtidigt ställer Sveriges mål mot Danmarks, så Sverige ville behålla områdena, och värna säger detsamma. Sälja och avstå är motsatsen till att vilja ha tillbaka, och förlora eller överge strider mot att Sverige försökte hålla sin ställning.",
+  "source": {
+   "title": "Skånska kriget",
+   "url": "https://sv.wikipedia.org/wiki/Sk%C3%A5nska_kriget",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-28",
+  "amne": "his",
+  "genre": "aka",
+  "text": "Från 1500-talet till slutet av 1700-talet dominerade merkantilismen det ekonomiska tänkandet i Europa. Enligt den bygger ett lands välstånd på ett _____ i utrikeshandeln, och staten skulle därför främja exporten och _____ importen.",
+  "alternatives": [
+   "plus – öka",
+   "underskott – dämpa",
+   "förbud – gynna",
+   "överskott – hålla nere"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är överskott och hålla nere. Ett land blir rikt om det säljer mer än det köper, och plus betyder samma sak. Om exporten ska främjas för att få ett överskott måste importen hållas nere, och dämpa säger detsamma. Underskott och förbud ger inget välstånd, och att öka eller gynna importen strider mot målet.",
+  "source": {
+   "title": "Merkantilism",
+   "url": "https://sv.wikipedia.org/wiki/Merkantilism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-29",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Bävrarna är en familj vattenlevande gnagare som bara omfattar två nu levande arter, den europeiska och den amerikanska bävern. Fossil visar att familjen en gång var betydligt mer _____, med många utdöda arter och _____, bland annat en jättebäver.",
+  "alternatives": [
+   "mångformig – fiender",
+   "ensidig – former",
+   "artrik – släkten",
+   "farlig – bon"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är artrik och släkten. Många utdöda arter jämfört med de två som finns kvar betyder att familjen var rik på arter, och mångformig passar också. Arter och släkten är grupper inom en familj, och former säger nästan detsamma. Ensidig strider mot många fler arter, farlig följer inte av fossilen, och fiender eller bon är inga grupper som en familj omfattar.",
+  "source": {
+   "title": "Bävrar",
+   "url": "https://sv.wikipedia.org/wiki/B%C3%A4vrar",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-30",
+  "amne": "lit",
+  "genre": "aka",
+  "text": "Visan är en enkel sång ur vardagen, oftast berättande eller lyrisk, men begreppet är _____ och saknar en klar definition. I den nordiska vistraditionen ligger tyngdpunkten på en rimmad text som _____ med musiken.",
+  "alternatives": [
+   "oklart – tävlar",
+   "entydigt – samspelar",
+   "mångtydigt – samverkar",
+   "nytt – krockar"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är mångtydigt och samverkar. Ett begrepp utan klar definition kan betyda flera saker, och oklart passar också. En text som har tyngdpunkt i en sång arbetar ihop med musiken, och samspelar betyder samma sak. Entydigt strider mot att definitionen saknas, nytt passar inte med en tradition, och tävlar eller krockar är motsatsen till samverkan.",
+  "source": {
+   "title": "Visa",
+   "url": "https://sv.wikipedia.org/wiki/Visa",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-31",
+  "amne": "lit",
+  "genre": "aka",
+  "text": "En komedi är ett skådespel eller en film som vill väcka glädje och locka till _____. Historiskt sett är komedin motsatsen till tragedin, och handlingen för personerna från ett sämre till ett _____ tillstånd.",
+  "alternatives": [
+   "munterhet – sämre",
+   "gråt – gladare",
+   "skratt – bättre",
+   "eftertanke – värre"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är skratt och bättre. Ett verk som vill väcka glädje vill få publiken att skratta, och munterhet passar också. Motsatsen till tragedin, där det går illa, är en handling som slutar väl, från sämre till bättre, och gladare ligger nära. Gråt och eftertanke är inte vad en komedi vill locka till, och sämre eller värre är tragedins väg.",
+  "source": {
+   "title": "Komedi",
+   "url": "https://sv.wikipedia.org/wiki/Komedi",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-32",
+  "amne": "utb",
+  "genre": "aka",
+  "text": "En mentor är en erfaren person som står en mindre erfaren nära och fungerar som _____. Ordet kommer från Homeros Odyssén, där gudinnan Athena tar gestalt som Odysseus gamle vän Mentor för att _____ hans son Telemachos, och därför har ordet kommit att betyda en pålitlig rådgivare.",
+  "alternatives": [
+   "vägledare – uppmuntra",
+   "rådgivare – lura",
+   "konkurrent – stötta",
+   "kritiker – straffa"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är vägledare och uppmuntra. En erfaren person som står en oerfaren nära visar vägen, och rådgivare betyder samma sak. Att ordet kommit att betyda en pålitlig rådgivare förutsätter att Mentor hjälpte sonen, och stötta säger detsamma. En konkurrent eller kritiker vägleder inte, och den som lurar eller straffar blir ingen pålitlig rådgivare.",
+  "source": {
+   "title": "Mentorskap",
+   "url": "https://sv.wikipedia.org/wiki/Mentorskap",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-33",
+  "amne": "eko",
+  "genre": "aka",
+  "text": "Avskrivning används i bokföringen för att fördela kostnaden för en tillgång över _____ år, eftersom den bidrar till intäkterna under lång tid. Det är därför viktigt att skilja på utgifter och kostnader: en kostnad uppstår när en resurs _____, inte när den köps in.",
+  "alternatives": [
+   "många – lagras",
+   "flera – förbrukas",
+   "enstaka – används",
+   "inga – beställs"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är flera och förbrukas. En tillgång som ger intäkter under lång tid ska belasta flera år, och många passar också. Inte när den köps in ställs mot när resursen tas i bruk och nöts ut, och används ligger nära. Enstaka och inga år strider mot lång tid, och lagras eller beställs är inte när kostnaden uppstår.",
+  "source": {
+   "title": "Avskrivning",
+   "url": "https://sv.wikipedia.org/wiki/Avskrivning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-34",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "En bank är ett företag som framför allt skapar nya pengar i form av _____ och som dessutom sköter in- och utlåning och betalningar. Bankerna _____ med varandra precis som andra företag, och en del är specialiserade på vissa områden.",
+  "alternatives": [
+   "lån – gifter sig",
+   "aktier – tävlar",
+   "gåvor – leker",
+   "krediter – konkurrerar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är krediter och konkurrerar. En bank skapar pengar genom att låna ut, alltså i form av krediter eller lån. Precis som andra företag möter bankerna varandra på en marknad, och tävlar betyder nästan samma sak. Aktier och gåvor är inte pengar banken skapar, och företag gifter sig inte eller leker med varandra.",
+  "source": {
+   "title": "Bank",
+   "url": "https://sv.wikipedia.org/wiki/Bank",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-35",
+  "amne": "jur",
+  "genre": "aka",
+  "text": "Konsumenträtten består av lagar som skyddar konsumenter och som i regel är _____, alltså gäller oavsett vad parterna har avtalat. Undantaget är när en avvikelse är till konsumentens _____, och lagarna finns eftersom konsumenten anses vara den svagare parten.",
+  "alternatives": [
+   "bindande – nackdel",
+   "frivilliga – förmån",
+   "valfria – kostnad",
+   "tvingande – fördel"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är tvingande och fördel. Alltså förklarar ordet: lagar som gäller vad parterna än har avtalat, och bindande passar också. Undantaget måste vara en avvikelse som gynnar konsumenten, eftersom lagarna finns för att skydda den svagare parten, och förmån säger samma sak. Frivilliga och valfria strider mot förklaringen, och en avvikelse till konsumentens nackdel eller kostnad är just det lagarna skyddar mot.",
+  "source": {
+   "title": "Konsumentskydd",
+   "url": "https://sv.wikipedia.org/wiki/Konsumentskydd",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-36",
+  "amne": "fil",
+  "genre": "aka",
+  "text": "Etiken studerar frågor om moral, till exempel vad som gör en handling god. De normativa lärorna delas ofta in i tre grupper, och den första av dem menar att det är handlingens _____ som avgör om den är rätt, medan den andra utgår från _____ principer, som man inte får bryta mot ens för att nå goda följder.",
+  "alternatives": [
+   "konsekvenser – absoluta",
+   "följder – relativa",
+   "datum – ovillkorliga",
+   "längd – förhandlingsbara"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är konsekvenser och absoluta. Medan ställer den första gruppen mot en som utgår från principer, så den första ser till vad handlingen leder till, och följder betyder samma sak. Principer som inte får brytas ens för goda följders skull gäller utan undantag, och ovillkorliga säger detsamma. En handlings datum eller längd avgör inte om den är rätt, och relativa eller förhandlingsbara principer kan brytas.",
+  "source": {
+   "title": "Moralfilosofi",
+   "url": "https://sv.wikipedia.org/wiki/Moralfilosofi",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-37",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Ett sjöslag är en strid där beväpnade fartyg möts, oftast på öppet hav men ibland på sjöar och floder. Redan under antiken _____ tekniken i Medelhavet, bland annat genom fartyg som drevs fram av flera rader _____.",
+  "alternatives": [
+   "förfinades – hästar",
+   "tappades bort – roddare",
+   "övergavs – passagerare",
+   "utvecklades – åror"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är utvecklades och åror. Bland annat genom nya fartyg visar att sjöstridskonsten gick framåt, och förfinades betyder samma sak. Antikens krigsfartyg drevs fram av rader av åror, och rader av roddare säger samma sak. Glömdes och övergavs strider mot att nya fartyg byggdes, och hästar eller passagerare driver inte ett fartyg.",
+  "source": {
+   "title": "Sjöslag",
+   "url": "https://sv.wikipedia.org/wiki/Sj%C3%B6slag",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-38",
+  "amne": "psy",
+  "genre": "aka",
+  "text": "Vid klassisk betingning lär sig en organism att koppla ihop två stimuli. Ivan Pavlov visade det med hundar som fick höra en klocksignal _____ de fick mat, och efter ett tag började hundarna _____ redan när de hörde signalen.",
+  "alternatives": [
+   "precis när – sova",
+   "samtidigt som – dregla",
+   "långt efter – salivera",
+   "aldrig när – somna"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är samtidigt som och dregla. För att två stimuli ska kopplas ihop måste de komma tillsammans, och precis när fungerar också. Att hundarna lärt sig att signalen betyder mat syns på att de reagerar som inför mat, alltså dreglar eller saliverar. Långt efter och aldrig när ger ingen koppling, och att sova eller somna är ingen reaktion på mat.",
+  "source": {
+   "title": "Inlärning",
+   "url": "https://sv.wikipedia.org/wiki/Inl%C3%A4rning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-39",
+  "amne": "spr",
+  "genre": "sko",
+  "text": "Ordbildning är läran om hur ord hänger ihop till formen. Orden älska, älskare och älskarinna har en gemensam del, och för varje steg läggs ett _____ till, vilket kallas avledning. Nya ord kan också bildas genom _____, där två ord förenas, som i järnväg.",
+  "alternatives": [
+   "ändelse – förkortning",
+   "affix – sammansättning",
+   "ord – hopskrivning",
+   "tecken – översättning"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är affix och sammansättning. Vid avledning läggs en ordbit till stammen, ett affix, och ändelse passar här också. Två ord som förenas till ett, som järn och väg, bildar en sammansättning, och hopskrivning ligger nära. Ett helt ord läggs inte till vid avledning, ett tecken är ingen ordbit, och förkortning eller översättning förenar inte två ord.",
+  "source": {
+   "title": "Ordbildning",
+   "url": "https://sv.wikipedia.org/wiki/Ordbildning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-40",
+  "amne": "tek",
+  "genre": "pop",
+  "text": "En kompass används för att bestämma riktning och är ett av de viktigaste instrumenten för _____. De första kompasserna byggdes i Kina, och i Europa beskrivs från slutet av 1100-talet enkla varianter där en bit _____ järn flöt på ett strå i en vattenskål.",
+  "alternatives": [
+   "navigering – magnetiskt",
+   "navigation – glödande",
+   "tidmätning – magnetiserat",
+   "vägning – smält"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är navigering och magnetiskt. Ett instrument som bestämmer riktning används för att hitta vägen, och navigation betyder samma sak. En kompass pekar ut riktningen med en magnet, så järnet måste vara magnetiskt eller magnetiserat. Tidmätning och vägning har inget med riktning att göra, och glödande eller smält järn pekar inte ut något väderstreck.",
+  "source": {
+   "title": "Kompass",
+   "url": "https://sv.wikipedia.org/wiki/Kompass",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-41",
+  "amne": "med",
+  "genre": "pop",
+  "text": "Vid en transplantation tas organ eller vävnad från en människa och sätts in i en annan för att _____ mottagarens skadade organ med ett som fungerar. Donatorn kan vara levande eller _____. Den första organtransplantationen i Sverige, en njure, gjordes 1964, och på 1980-talet _____ även lever- och hjärttransplantationer.",
+  "alternatives": [
+   "kyla – anonym – upphörde",
+   "ersätta – avliden – följde",
+   "byta ut – frisk – avbröts",
+   "förstöra – död – tillkom"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är ersätta, avliden och följde. Ett skadat organ byts mot ett fungerande, och byta ut betyder samma sak. Eller ställer den levande donatorn mot en som inte lever, alltså en avliden eller död. Efter den första njuren kom fler slags transplantationer, och tillkom säger detsamma. Skydda och förstöra är inte vad en transplantation gör, anonym och frisk är ingen motsats till levande, och upphörde eller avbröts strider mot att även lever och hjärta kom till.",
+  "source": {
+   "title": "Transplantation",
+   "url": "https://sv.wikipedia.org/wiki/Transplantation",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-42",
+  "amne": "kul",
+  "genre": "aka",
+  "text": "Operetten är musikteater där sång blandas med talad dialog, ofta med dans och påkostade _____. Formen var som mest populär under 1870- och 1880-talen, och efter andra världskriget _____ musikalen i stället den lättare musikteatern. Formen föddes i Paris kring 1850, där kompositören Hervé visade små enaktare med burlesker, parodier och _____.",
+  "alternatives": [
+   "körer – avvecklade – psalmer",
+   "finaler – dominerade – satirer",
+   "pauser – präglade – tragedier",
+   "kostnader – hånade – skämt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är finaler, dominerade och satirer. Påkostade scener med dans och sång avslutar akterna, och körer passar också. I stället visar att musikalen tog över operettens plats, och präglade säger nästan detsamma. Burlesker och parodier räknas upp tillsammans med satirer och skämt, allt sådant som får publiken att skratta. Pauser och kostnader är inte vad föreställningen bjuder på, avvecklade och hånade strider mot att musikalen tog över, och psalmer eller tragedier hör inte till burleskerna.",
+  "source": {
+   "title": "Operett",
+   "url": "https://sv.wikipedia.org/wiki/Operett",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon",
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-43",
+  "amne": "sam",
+  "genre": "aka",
+  "text": "Familjepolitik gäller politiska frågor som rör hur familjer bildas, består och _____. I västerländsk familjepolitik står ofta en konservativ hållning, som vill värna _____ kärnfamiljer, mot en liberal, som betonar individens frihet att själv _____ hur familjen ska se ut.",
+  "alternatives": [
+   "upplöses – varaktiga – välja",
+   "firas – kortvariga – avskaffa",
+   "splittras – moderna – betala",
+   "beskattas – bestående – avgöra"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är upplöses, varaktiga och välja. Uppräkningen följer en familjs liv från början till slut, och splittras passar också. En konservativ hållning vill bevara kärnfamiljen, alltså värna familjer som håller, och bestående betyder samma sak. Den liberala hållningen betonar att var och en själv får bestämma, och avgöra säger detsamma. Firas och beskattas hör inte till en familjs livslopp, kortvariga och moderna är inte vad en konservativ värnar, och avskaffa eller betala är inte en frihet.",
+  "source": {
+   "title": "Familjepolitik",
+   "url": "https://sv.wikipedia.org/wiki/Familjepolitik",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "upp",
+    "kon",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-44",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Vasatiden kallas den period då Vasaätten satt på Sveriges tron, från Gustav Vasa 1523 till drottning Kristinas abdikation 1654. Genom det befrielsekrig som förde Gustav Vasa till makten _____ Sverige Kalmarunionen, och tiden präglades sedan av reformationen, krig och uppror och av att makten _____ hos kungen. Många slott från perioden är _____ av medeltida borgar.",
+  "alternatives": [
+   "gick med i – spreds – kopior",
+   "bröt sig ur – delades – ruiner",
+   "lämnade – samlades – ombyggnader",
+   "grundade – koncentrerades – tillbyggnader"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är lämnade, samlades och ombyggnader. Ett befrielsekrig gör ett land fritt från en union, och bröt sig ur säger samma sak. Reformation och centralisering innebar att makten koncentrerades hos kungen. Slott som bygger på medeltida borgar är ombyggnader eller tillbyggnader. Gick med i och grundade strider mot befrielsekriget, spreds och delades är motsatsen till centralisering, och kopior eller ruiner beskriver inte slott som byggts av borgar.",
+  "source": {
+   "title": "Vasatiden",
+   "url": "https://sv.wikipedia.org/wiki/Vasatiden",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "ors",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-45",
+  "amne": "bio",
+  "genre": "aka",
+  "text": "Insekterna är den artrikaste gruppen bland landdjuren. Det vetenskapliga namnet kommer från latin och betyder ungefär _____, eftersom kroppen är indelad i tre delar. Den som _____ insekter kallas entomolog, och forskarna har länge varit _____ om huruvida urinsekterna ska räknas som insekter.",
+  "alternatives": [
+   "hel – föder upp – ense",
+   "uppdelad – studerar – oeniga",
+   "sexdelad – forskar på – osams",
+   "ledad – äter – säkra"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är uppdelad, studerar och oeniga. Ett namn som syftar på att kroppen är indelad i tre delar betyder uppdelad. En entomolog är en forskare, alltså någon som studerar eller forskar på insekter. Huruvida visar att frågan är olöst, så forskarna har varit oeniga eller osams. Hel strider mot tre delar och sexdelad mot tre, föder upp och äter gör ingen till forskare, och ense eller säkra passar inte med en olöst fråga.",
+  "source": {
+   "title": "Insekter",
+   "url": "https://sv.wikipedia.org/wiki/Insekter",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "ors",
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-46",
+  "amne": "lit",
+  "genre": "aka",
+  "text": "Ända sedan antiken har tragedin varit en av västerlandets viktigaste dramatiska genrer. Den är komedins _____, eftersom den nästan alltid slutar olyckligt. I sin klassiska form skildrar den en betydande människas _____, som leder till psykisk eller fysisk undergång, och genren växte troligen fram ur _____ till guden Dionysos.",
+  "alternatives": [
+   "förebild – lycka – lekar",
+   "motsats – lidande – riter",
+   "motpol – framgång – krig",
+   "kopia – plåga – ceremonier"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är motsats, lidande och riter. Ett olyckligt slut ställer tragedin mot komedin, och motpol betyder samma sak. Det som leder till undergång är ett lidande, och plåga ligger nära. Drama som växer fram till en guds ära har sitt ursprung i riter eller ceremonier. Förebild och kopia passar inte med ett motsatt slut, lycka och framgång leder inte till undergång, och lekar eller krig hyllar ingen gud.",
+  "source": {
+   "title": "Tragedi",
+   "url": "https://sv.wikipedia.org/wiki/Tragedi",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "ors",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-47",
+  "amne": "utb",
+  "genre": "myn",
+  "text": "Ett skolbibliotek är en ordnad samling medier och information som ska vara en _____ resurs för elever och lärare. Enligt riktlinjer från IFLA och Unesco är skolbibliotekarien en _____ bibliotekarie med pedagogisk utbildning, som arbetar tillsammans med lärarna och skolans ledning. Sedan 2011 _____ skollagen att alla elever har ett skolbibliotek att gå till.",
+  "alternatives": [
+   "kommersiell – outbildad – motarbetar",
+   "undervisande – självlärd – föreslår",
+   "privat – utbildad – föreskriver",
+   "pedagogisk – fackutbildad – kräver"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är pedagogisk, fackutbildad och kräver. Ett bibliotek för elever och lärare ska stödja undervisningen, och undervisande ligger nära. En bibliotekarie med ytterligare pedagogisk utbildning har först en utbildning i sitt fack, och utbildad passar också. En lag ställer krav, och föreskriver betyder samma sak. Kommersiell och privat är inte skolans resurs, outbildad och självlärd strider mot utbildningskravet, och en lag motarbetar eller föreslår inte tillgång till något.",
+  "source": {
+   "title": "Skolbibliotek",
+   "url": "https://sv.wikipedia.org/wiki/Skolbibliotek",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "upp",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-48",
+  "amne": "eko",
+  "genre": "aka",
+  "text": "En investeringsfond är en samling värdepapper som ägs _____ av många andelsägare. Den som sätter in pengar överlåter åt en förvaltare att bestämma hur de ska _____, och om fonden äger aktier i 70 bolag blir andelsägarna _____ ägare i alla dessa bolag.",
+  "alternatives": [
+   "ensamt – lånas ut – direkt",
+   "tillsammans – spenderas – formellt",
+   "gemensamt – placeras – indirekt",
+   "hemligt – investeras – delvis"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är gemensamt, placeras och indirekt. Många ägare som delar på samlingen äger den tillsammans. En förvaltare bestämmer var pengarna ska investeras, alltså placeras. Andelsägarna äger fonden, som i sin tur äger aktierna, så de äger bolagen genom fonden, indirekt eller delvis. Ensamt och hemligt passar inte med många andelsägare, lånas ut och spenderas är inte vad en fond gör, och direkt eller formellt ägare stämmer inte med att det är fonden som äger aktierna.",
+  "source": {
+   "title": "Investeringsfond",
+   "url": "https://sv.wikipedia.org/wiki/Investeringsfond",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "v",
+    "adv"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-49",
+  "amne": "jur",
+  "genre": "aka",
+  "text": "Arbetsrätten är de lagar som styr relationen mellan arbetsgivaren och den som är _____ hos denne. I den anglosaxiska modellen, som Storbritannien och Irland står för, bygger reglerna mer på _____ än på lagstiftning, och kollektivavtal är där inte juridiskt _____.",
+  "alternatives": [
+   "kund – riksdagsbeslut – giltiga",
+   "arbetstagare – lotteri – förbjudna",
+   "leverantör – rättspraxis – tillåtna",
+   "anställd – domstolspraxis – bindande"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är anställd, domstolspraxis och bindande. Arbetsrätten gäller arbetsgivaren och den som arbetar åt denne, och arbetstagare betyder samma sak. Mer än på lagstiftning pekar på något annat än lagar, nämligen domstolarnas tidigare avgöranden, och rättspraxis säger detsamma. Avtal som inte är juridiskt bindande eller giltiga kan inte drivas i domstol. Kund och leverantör är man inte hos den som anställer, riksdagsbeslut är lagstiftning och lotteri ingen rättskälla, och förbjudna eller tillåtna säger inget om avtalens rättsliga kraft.",
+  "source": {
+   "title": "Arbetsrätt",
+   "url": "https://sv.wikipedia.org/wiki/Arbetsr%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p11-50",
+  "amne": "mil",
+  "genre": "myn",
+  "text": "Flygvapnet är den del av Försvarsmakten som med flygplan och helikoptrar ska sköta luftförsvaret, göra _____ mot mål på land och till sjöss och samla in underrättelser. Den första militära flygningen i Sverige gjordes 1912 från isen utanför Stockholm, och under de första åren var flygets viktigaste uppgift _____. Sedan 1942 har Saab varit den främsta _____ av stridsflygplan.",
+  "alternatives": [
+   "reklam – underhållning – köparen",
+   "attacker – spaning – leverantören",
+   "anfall – postutdelning – konkurrenten",
+   "reparationer – rekognoscering – tillverkaren"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är attacker, spaning och leverantören. Ett flygvapen som ska slå mot mål på land och till sjöss gör anfall eller attacker. Att samla in underrättelser genom att flyga över ett område är spaning, och rekognoscering betyder samma sak. Ett företag som förser flygvapnet med plan är dess leverantör eller tillverkare. Reklam och reparationer görs inte mot mål, underhållning och postutdelning är inga militära uppgifter, och köparen eller konkurrenten levererar inga plan.",
+  "source": {
+   "title": "Svenska flygvapnet",
+   "url": "https://sv.wikipedia.org/wiki/Svenska_flygvapnet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ }
+]
