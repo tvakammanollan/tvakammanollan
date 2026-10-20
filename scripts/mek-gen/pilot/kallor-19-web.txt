@@ -1,0 +1,16 @@
+# Batch 19: webbkällor (url | titel | utgivare)
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/hjart-lungraddning-hlr/ | 1177 Hjärt-lungräddning | 1177
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/varmeslag/ | 1177 Värmeslag | 1177
+https://www.1177.se/olyckor--skador/brannskador-och-koldskador/koldskador/ | 1177 Köldskador | 1177
+https://www.1177.se/olyckor--skador/brannskador-och-koldskador/brannskador/ | 1177 Brännskador | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/huggormsbett/ | 1177 Huggormsbett | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/fastingbett/ | 1177 Fästingbett | 1177
+https://www.1177.se/olyckor--skador/sar-och-blamarken/skavsar/ | 1177 Skavsår | 1177
+https://www.nordiskamuseet.se/utforska/livet-i-norden/dromtydning-och-karleksmagi/ | Nordiska museet Drömtydning och kärleksmagi | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/folktro-om-midsommarnattens-magi/ | Nordiska museet Folktro om midsommar | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/resedagbok-fran-vintern-1586/ | Nordiska museet Resedagbok 1586 | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/minnestavla-over-pojke/ | Nordiska museet Minnestavla över pojke | Nordiska museet
+https://www.naturvardsverket.se/amnesomraden/klimatforandringar/ | Naturvårdsverket Klimatförändringar | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/mark-och-vattenanvandning/ | Naturvårdsverket Mark- och vattenanvändning | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/vindkraft/ | Naturvårdsverket Vindkraft | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/utslappshandel/ | Naturvårdsverket Utsläppshandel | Naturvårdsverket
