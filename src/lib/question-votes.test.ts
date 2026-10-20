@@ -63,6 +63,29 @@ describe("voteWeight", () => {
     expect(voteWeight(t({ down: 12 }))).toBe(0);
     expect(voteWeight(t({ up: 12 }))).toBe(FAVOURED_WEIGHT);
   });
+
+  it("följer nettorösterna kontinuerligt, med tak", () => {
+    expect(voteWeight(t({ up: 2 }))).toBeCloseTo(2);
+    expect(voteWeight(t({ up: 4 }))).toBeCloseTo(4);
+    expect(voteWeight(t({ up: 5, down: 1 }))).toBeCloseTo(4);
+    expect(voteWeight(t({ down: 2 }))).toBeCloseTo(0.5);
+    expect(voteWeight(t({ up: 40 }))).toBe(16);
+    // Gäster väger hälften: fyra gästtummar är som två vanliga.
+    expect(voteWeight(t({ guestUp: 4 }))).toBeCloseTo(2);
+  });
+
+  it("gör att en gillad fråga oftast kommer före en ny", () => {
+    let först = 0;
+    for (let i = 0; i < 4000; i++) {
+      const order = weightedShuffle(["gillad", "ny"], (x) =>
+        voteWeight(x === "gillad" ? t({ up: 6 }) : undefined),
+      );
+      if (order[0] === "gillad") först++;
+    }
+    // Vikt 8 mot 1 ger 8/9 ≈ 0,89.
+    expect(först / 4000).toBeGreaterThan(0.85);
+    expect(först / 4000).toBeLessThan(0.93);
+  });
 });
 
 describe("weightedShuffle", () => {

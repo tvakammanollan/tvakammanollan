@@ -1446,10 +1446,12 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
 `-.server.ts`, skrivning i `-.functions.ts`, tabell och vy i
 `20261019120000_fragerostning.sql`.
 
-- **Wilsonintervallet, inte andelen.** En fråga begravs först vid ≥ 8 viktade
-  röster och när övre gränsen för andelen upp-röster är under 40 %; den lyfts
-  vid ≥ 5 och undre gräns över 60 %. 1 upp och 0 ned är 100 % och betyder
-  ingenting.
+- **Vikten följer nettorösterna, begravningen följer Wilson.** Dragningsvikten
+  är `2^(netto/2)` med netto = upp − ned (gäster till hälften), klampat till
+  ±8, alltså 1/16 till 16 gånger en orörd fråga (ändrat 2026-10-20 på Niklas
+  begäran: kopplingen till antalet likes ska vara stark). En fråga begravs
+  helt först vid ≥ 8 viktade röster och när Wilsonintervallets övre gräns för
+  andelen upp-röster är under 40 %.
 - **Gäster väger hälften** (`is_guest`, satt av servern ur tokenen). Gästkonton
   går att skapa i obegränsat antal, och det farliga utfallet är att någon
   begraver bra frågor med engångskonton. Att stänga ute gästerna hade tappat de

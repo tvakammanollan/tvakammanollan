@@ -43,8 +43,15 @@ export const MIN_VOTES_TO_FAVOUR = 5;
 export const BURY_BELOW = 0.4;
 /** Lyfts när det med 95 % säkerhet är fler än 60 % som gillar frågan. */
 export const FAVOUR_ABOVE = 0.6;
-/** Hur mycket oftare en lyft fråga dras än en vanlig. */
-export const FAVOURED_WEIGHT = 2.5;
+/**
+ * Vikten följer nettorösterna (upp minus ned, gäster till hälften): varje
+ * nettoröst multiplicerar vikten med √2, så +2 ger dubbel chans, +4 fyrdubbel
+ * och taket +8 sexton gånger. Nedröster drar ned vikten på samma sätt.
+ * Taket finns för att några få röster inte ska kunna låta en fråga ta över.
+ */
+export const NET_VOTE_CAP = 8;
+/** Högsta vikt en fråga kan få, vid `NET_VOTE_CAP` nettoröster. */
+export const FAVOURED_WEIGHT = Math.pow(2, NET_VOTE_CAP / 2);
 
 export type VoteStatus = "buried" | "neutral" | "favoured";
 
@@ -76,10 +83,19 @@ export function voteStatus(t: VoteTally): VoteStatus {
   return "neutral";
 }
 
-/** Dragningsvikt: 0 = delas inte ut, 1 = vanlig, `FAVOURED_WEIGHT` = lyft. */
+/**
+ * Dragningsvikt. 0 betyder att frågan inte delas ut (med säkerhet ogillad,
+ * se `voteStatus`); annars `2^(netto/2)`, från 1/16 till 16, där en fråga
+ * utan röster har 1. Tillsammans med `weightedShuffle` blir sannolikheten att
+ * en fråga kommer tidigt starkt kopplad till hur många som gillar den, utan
+ * att samma frågor alltid kommer först.
+ */
 export function voteWeight(t: VoteTally | undefined): number {
-  const s = voteStatus(t ?? EMPTY_TALLY);
-  return s === "buried" ? 0 : s === "favoured" ? FAVOURED_WEIGHT : 1;
+  const tally = t ?? EMPTY_TALLY;
+  if (voteStatus(tally) === "buried") return 0;
+  const { up, down } = weighted(tally);
+  const net = Math.max(-NET_VOTE_CAP, Math.min(NET_VOTE_CAP, up - down));
+  return Math.pow(2, net / 2);
 }
 
 /**
