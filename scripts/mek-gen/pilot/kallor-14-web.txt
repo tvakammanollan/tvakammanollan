@@ -1,0 +1,24 @@
+# Batch 14: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/celiaki/ | 1177 Celiaki | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/laktosintolerans/ | 1177 Laktosintolerans | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/kvalsterallergi/ | 1177 Kvalsterallergi | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/nickelallergi/ | 1177 Nickelallergi | 1177
+https://www.1177.se/sjukdomar--besvar/diabetes/diabetes-typ-2/ | 1177 Diabetes typ 2 | 1177
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/salt/ | Livsmedelsverket Salt | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/Fullkorn/ | Livsmedelsverket Fullkorn | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/bonor-arter-och-linser/ | Livsmedelsverket Bönor, ärter och linser | Livsmedelsverket
+https://www.isof.se/svenska-spraket/klarsprak/lar-dig-mer-om-klarsprak | Isof Klarspråk | Isof
+https://www.isof.se/svenska-spraket/facksprak-och-terminologi/lar-dig-mer-om-facksprak-och-terminologi | Isof Fackspråk och terminologi | Isof
+https://www.isof.se/dialekter/lar-dig-mer-om-svenska-dialekter | Isof Svenska dialekter | Isof
+https://www.isof.se/folkminnen/amnesomraden/folklig-sang-musik-och-dans/lar-dig-mer-om-folklig-sang-och-musik | Isof Folklig sång och musik | Isof
+https://www.isof.se/folkminnen/amnesomraden/slojd-och-hantverk/lar-dig-mer-om-textilt-slojdande | Isof Textilt slöjdande | Isof
+https://www.isof.se/folkminnen/amnesomraden/mat-och-dryck/lar-dig-mer-om-traditionell-matkultur | Isof Traditionell matkultur | Isof
+https://www.isof.se/folkminnen/amnesomraden/folktro-och-forestallningsvarldar/lar-dig-mer-om-vasen-i-folktron | Isof Väsen i folktron | Isof
+https://www.isof.se/folkminnen/amnesomraden/folktro-och-forestallningsvarldar/lar-dig-mer-om-folklig-lakekonst | Isof Folklig läkekonst | Isof
+https://www.isof.se/nationella-minoritetssprak/lar-dig-mer-om-nationella-minoritetssprak | Isof Nationella minoritetsspråk | Isof
+https://www.isof.se/flersprakighet/sprakpolitik/lar-dig-mer-om-sprakpolitik | Isof Språkpolitik | Isof
+https://www.isof.se/namn/ortnamn/lar-dig-mer-om-ortnamn-i-sverige | Isof Ortnamn i Sverige | Isof
+https://www.isof.se/folkminnen/kunskapsbanker-och-webbutstallningar/lar-dig-mer-om-immateriellt-kulturarv | Isof Immateriellt kulturarv | Isof
+https://www.havochvatten.se/arter-och-livsmiljoer/invasiva-frammande-arter.html | HaV Invasiva främmande arter | Havs- och vattenmyndigheten
+https://www.nordiskamuseet.se/utforska/hogtider/ | Nordiska museet Högtider | Nordiska museet
+https://www.nordiskamuseet.se/om-museet/nordiska-museets-historia/ | Nordiska museet Museets historia | Nordiska museet

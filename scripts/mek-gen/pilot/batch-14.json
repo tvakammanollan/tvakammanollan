@@ -1,0 +1,2895 @@
+[
+ {
+  "id": "p14-01",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Den som har celiaki tål inte gluten, ett protein i sädesslagen vete, råg och korn, och sjukdomen kallas därför också glutenintolerans. Vanliga tecken på den är besvär från magen, trötthet och oönskad _____.",
+  "alternatives": [
+   "viktuppgång",
+   "aptit",
+   "viktnedgång",
+   "tillväxt"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är viktnedgång. En tarm som inte tål det man äter tar upp mindre näring, och den som drabbas går ned i vikt. Viktuppgång säger motsatsen, och aptit eller tillväxt är inget man brukar kalla oönskat i en lista över sjukdomstecken.",
+  "source": {
+   "title": "1177 Celiaki",
+   "url": "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/celiaki/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-02",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Husdammskvalster trivs där det är fuktigt och varmt och finns därför framför allt i sängen. Det förklarar varför den som är allergisk mot dem ofta har mest besvär i _____.",
+  "alternatives": [
+   "köket",
+   "sovrummet",
+   "trädgården",
+   "bilen"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är sovrummet. Om kvalstren sitter i sängen är det där besvären blir värst. Köket, trädgården och bilen är inte där sängen står.",
+  "source": {
+   "title": "1177 Kvalsterallergi",
+   "url": "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/kvalsterallergi/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-03",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Typ 2-diabetes kommer oftast i vuxen ålder och utvecklas långsamt, så symtomen kan vara svåra att upptäcka. Sjukdomen går att påverka själv: motion och fysisk aktivitet _____ blodsockret, och effekten märks direkt.",
+  "alternatives": [
+   "höjer",
+   "sänker",
+   "mäter",
+   "sprider"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är sänker. Vid diabetes är blodsockret för högt, och den som kan påverka sjukdomen själv gör det genom att få ned det. Höjer säger motsatsen, och att mäta eller sprida blodsocker är inget träning gör.",
+  "source": {
+   "title": "1177 Diabetes typ 2",
+   "url": "https://www.1177.se/sjukdomar--besvar/diabetes/diabetes-typ-2/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-04",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Ideellt arbete görs utan vinstsyfte och för ett allmännyttigt ändamål, ofta inom idrottsföreningar, fackföreningar eller hjälporganisationer. Det är vanligen _____, eller ger bara en symbolisk ersättning.",
+  "alternatives": [
+   "obetalt",
+   "välbetalt",
+   "obligatoriskt",
+   "skattefritt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är obetalt. Eller bara en symbolisk ersättning visar att arbetet i övrigt inte ger några pengar. Välbetalt säger motsatsen, obligatoriskt strider mot att det görs av engagemang, och skattefritt säger inget om att ersättningen saknas.",
+  "source": {
+   "title": "Ideellt arbete",
+   "url": "https://sv.wikipedia.org/wiki/Ideellt_arbete",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-05",
+  "amne": "spr",
+  "genre": "myn",
+  "text": "Fackspråk är det språk som används när man kommunicerar inom ett visst ämnesområde, och dess egna ord och uttryck kallas termer. I vardagligt språk används term och begrepp ofta som synonymer, men inom terminologiläran _____ man mellan dem.",
+  "alternatives": [
+   "växlar",
+   "skiljer",
+   "väljer",
+   "medlar"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är skiljer. Men ställer vardagsspråket, där orden betyder samma sak, mot fackspråket, där de hålls isär. Växlar man mellan dem behandlas de just som synonymer, och att välja eller medla mellan två ord är inte motsatsen till att blanda ihop dem.",
+  "source": {
+   "title": "Isof Fackspråk och terminologi",
+   "url": "https://www.isof.se/svenska-spraket/facksprak-och-terminologi/lar-dig-mer-om-facksprak-och-terminologi",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-06",
+  "amne": "kul",
+  "genre": "myn",
+  "text": "Folktrons väsen hör hemma i sin tids föreställningsvärld, och många av dem har motsvarigheter över hela världen. En del, som källargubben, tycks ha _____ främst för att hålla barnen i schack.",
+  "alternatives": [
+   "utrotats",
+   "uppfunnits",
+   "dyrkats",
+   "avbildats"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är uppfunnits. Ett väsen som finns för att hålla ordning på barnen har hittats på av vuxna i just det syftet. Utrotats, dyrkats och avbildats förklarar inte hur väsendet skulle få barnen att lyda.",
+  "source": {
+   "title": "Isof Väsen i folktron",
+   "url": "https://www.isof.se/folkminnen/amnesomraden/folktro-och-forestallningsvarldar/lar-dig-mer-om-vasen-i-folktron",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-07",
+  "amne": "kul",
+  "genre": "myn",
+  "text": "Med immateriellt kulturarv menas sedvänjor och kunnande som människor lär varandra, alltså ett arv som finns överallt men inte går att _____. Unesco antog en konvention om att trygga det 2003, och Sverige anslöt sig 2011.",
+  "alternatives": [
+   "ta på",
+   "ärva",
+   "lära sig",
+   "dela"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ta på. Immateriellt betyder att arvet inte är något fysiskt, och men ställer det mot att det ändå finns överallt. Ärva, lära sig och dela strider alla mot att det förs vidare mellan människor.",
+  "source": {
+   "title": "Isof Immateriellt kulturarv",
+   "url": "https://www.isof.se/folkminnen/kunskapsbanker-och-webbutstallningar/lar-dig-mer-om-immateriellt-kulturarv",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-08",
+  "amne": "his",
+  "genre": "myn",
+  "text": "Ortnamn betecknar platser i landskapet: städer, byar, sjöar och mycket annat. Ett ortnamn tillhör ingen enskild utan får brukas av alla, och i stora delar av Sverige _____ namnen om samisk, finsk och meänkielisk bosättning.",
+  "alternatives": [
+   "vittnar",
+   "tiger",
+   "ljuger",
+   "tvivlar"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är vittnar. Namn som skapats av samer, finnar och tornedalingar berättar att de bott där. Tiger säger motsatsen, och ett namn kan inte ljuga eller tvivla.",
+  "source": {
+   "title": "Isof Ortnamn i Sverige",
+   "url": "https://www.isof.se/namn/ortnamn/lar-dig-mer-om-ortnamn-i-sverige",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-09",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Inom skråväsendet var stadens hantverkare organiserade i yrkesvisa sammanslutningar med privilegier som gav dem ett slags monopol, och bara den som var medlem fick utöva yrket. I Sverige, där systemet funnits sedan slutet av 1400-talet, _____ det 1846, då en ny fabriks- och hantverksordning trädde i kraft.",
+  "alternatives": [
+   "infördes",
+   "uppfanns",
+   "avskaffades",
+   "exporterades"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är avskaffades. Ett system som funnits sedan 1400-talet och ersätts av en ny ordning upphör. Infördes och uppfanns strider mot att det redan funnits i flera hundra år, och exporterades har inget med en ny ordning i Sverige att göra.",
+  "source": {
+   "title": "Skråväsende",
+   "url": "https://sv.wikipedia.org/wiki/Skr%C3%A5v%C3%A4sende",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-10",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Tallen nådde Skandinavien runt 7500 före Kristus, före alla andra stora barrträd. Under goda förhållanden blir stammen hög och rak och är _____ långt upp, eftersom grenarna sitter samlade i kronan.",
+  "alternatives": [
+   "ihålig",
+   "lövrik",
+   "krokig",
+   "kvistfri"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är kvistfri. Sitter grenarna samlade högst upp är stammen fri från kvistar längre ned. Ihålig och lövrik förklaras inte av var grenarna sitter, och krokig strider mot att stammen är rak.",
+  "source": {
+   "title": "Tall",
+   "url": "https://sv.wikipedia.org/wiki/Tall",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-11",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Sjöstjärnor har oftast fem armar, och om en av dem går förlorad växer en ny ut. Djuren kan inte reglera sin saltbalans och är därför _____ till saltvatten; i bräckt vatten eller sötvatten klarar de sig inte.",
+  "alternatives": [
+   "hänvisade",
+   "okänsliga",
+   "främmande",
+   "skadliga"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är hänvisade. Djur som inte klarar annat vatten är bundna till saltvatten. Okänsliga och främmande säger motsatsen, och skadliga till saltvatten ger ingen mening.",
+  "source": {
+   "title": "Sjöstjärnor",
+   "url": "https://sv.wikipedia.org/wiki/Sj%C3%B6stj%C3%A4rnor",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-12",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Aforismen är en kort och _____ iakttagelse, gärna formulerad som en lärosats. Ett välkänt exempel är att det inte finns något dåligt väder, bara dåliga kläder.",
+  "alternatives": [
+   "kärnfull",
+   "utförlig",
+   "vetenskaplig",
+   "tvetydig"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är kärnfull. En kort lärosats säger mycket med få ord, som i exemplet om vädret. Utförlig strider mot att den är kort, vetenskaplig passar inte exemplet, och tvetydig strider mot att den uttrycker en tydlig lärdom.",
+  "source": {
+   "title": "Aforism",
+   "url": "https://sv.wikipedia.org/wiki/Aforism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "upp"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-13",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "En lärobok ska förmedla kunskap om ett ämne, och syftet är främst att informera snarare än att _____, som skönlitteraturen gör.",
+  "alternatives": [
+   "undervisa",
+   "granska",
+   "provocera",
+   "underhålla"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är underhålla. Snarare än ställer informationen mot något annat, och det skönlitteraturen gör är att roa läsaren. Undervisa är just vad läroboken gör, och skönlitteraturens syfte är inte att granska eller provocera.",
+  "source": {
+   "title": "Lärobok",
+   "url": "https://sv.wikipedia.org/wiki/L%C3%A4robok",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-14",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Kontanter är fysiska pengar i form av sedlar och mynt. De ges oftast ut av en centralbank, med staten som _____ för deras värde, men historiskt har även privata banker gett ut sådana pengar.",
+  "alternatives": [
+   "garant",
+   "köpare",
+   "konkurrent",
+   "mottagare"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är garant. Den som står för pengarnas värde garanterar det. Köpare, konkurrent och mottagare är inte roller som innebär att man ansvarar för ett värde.",
+  "source": {
+   "title": "Kontanter",
+   "url": "https://sv.wikipedia.org/wiki/Kontanter",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-15",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Den som har fått en fullmakt har rätt att företräda någon annan, och de avtal som fullmaktstagaren ingår blir i regel _____ för huvudmannen. Undantaget är när ombudet överskrider de ramar som fullmakten sätter.",
+  "alternatives": [
+   "ogiltiga",
+   "skattepliktiga",
+   "bindande",
+   "kostsamma"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är bindande. Att företräda någon innebär att den personen blir förpliktad av avtalen, och undantaget gäller bara när ramarna överskrids. Ogiltiga är just vad avtalen blir i undantaget, och skattepliktiga eller kostsamma har inget med fullmaktens verkan att göra.",
+  "source": {
+   "title": "Fullmakt",
+   "url": "https://sv.wikipedia.org/wiki/Fullmakt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-16",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Fatalismen hävdar att upplevelsen av fri vilja är en illusion, eftersom vårt öde redan är _____. Läran räknas ibland till determinismen, men långt ifrån alla deterministiska teorier förnekar att våra val påverkar framtiden.",
+  "alternatives": [
+   "oskrivet",
+   "förhandlingsbart",
+   "bortglömt",
+   "bestämt"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är bestämt. Den fria viljan är en illusion om allt redan är avgjort. Oskrivet och förhandlingsbart säger motsatsen, och ett bortglömt öde förklarar inte varför viljan inte skulle vara fri.",
+  "source": {
+   "title": "Fatalism",
+   "url": "https://sv.wikipedia.org/wiki/Fatalism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-17",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Ett vapenstillestånd avbryter striderna mellan krigförande parter, men det är inte detsamma som fred. Ofta dröjer det länge innan parterna enas om ett fredsavtal, och ibland _____ något sådant aldrig, som efter Koreakriget 1953.",
+  "alternatives": [
+   "bryts",
+   "undertecknas",
+   "efterfrågas",
+   "ifrågasätts"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är undertecknas. Ett fredsavtal som dröjer kan i värsta fall aldrig bli av, som i Korea. Ett avtal som aldrig slutits kan inte brytas eller ifrågasättas, och att det aldrig efterfrågas passar inte med att parterna försöker enas.",
+  "source": {
+   "title": "Vapenstillestånd",
+   "url": "https://sv.wikipedia.org/wiki/Vapenstillest%C3%A5nd",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-18",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Bekräftelsebias är tendensen att omedvetet lägga märke till sådant som stöder ens egna uppfattningar. Även forskare drabbas, och filosofen Karl Popper menade därför att de borde ägna mer tid åt att försöka _____ sina teorier än åt att bekräfta dem.",
+  "alternatives": [
+   "publicera",
+   "försvara",
+   "motbevisa",
+   "belöna"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är motbevisa. Än åt att bekräfta dem ställer det Popper förordar mot att bekräfta, alltså ska forskaren leta efter fel. Försvara är snarare att bekräfta, och publicera eller belöna sina teorier är ingen motvikt mot tendensen.",
+  "source": {
+   "title": "Bekräftelsebias",
+   "url": "https://sv.wikipedia.org/wiki/Bekr%C3%A4ftelsebias",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-19",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "I många svenska kommuner kan den som är folkbokförd där lämna ett medborgarförslag till kommunfullmäktige. Syftet är att öka det politiska deltagandet mellan valen, och därför får även barn och andra som _____ rösträtt lämna förslag.",
+  "alternatives": [
+   "utövar",
+   "missbrukar",
+   "förtjänar",
+   "saknar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är saknar. Även barn och andra visar att förslagen öppnar en väg för dem som inte kan rösta. Utövar säger motsatsen, och att missbruka eller förtjäna rösträtt är inte det som skiljer barnen ut.",
+  "source": {
+   "title": "Medborgarförslag",
+   "url": "https://sv.wikipedia.org/wiki/Medborgarf%C3%B6rslag",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-20",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Hemtjänsten, som i Sverige främst ordnas av kommunerna, ger människor stöd hemma, så att de kan _____ där. Den arbetar ofta sida vid sida med hemsjukvården.",
+  "alternatives": [
+   "flytta in",
+   "arbeta",
+   "festa",
+   "bo kvar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är bo kvar. Hjälp i det egna hemmet gör att man inte behöver lämna det. Flytta in passar inte, eftersom man redan bor där, och hemtjänsten finns inte för att någon ska kunna arbeta eller festa hemma.",
+  "source": {
+   "title": "Hemtjänst",
+   "url": "https://sv.wikipedia.org/wiki/Hemtj%C3%A4nst",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-21",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Vid laktosintolerans har tarmen svårt att bryta ned mjölksocker, eftersom det finns för lite laktas, det enzym som behövs. Besvären kan komma direkt eller först efter några timmar, och samma symtom kan ha många andra orsaker, så de är inte _____ för just laktosintolerans. Hos barn under sex år är tillståndet mycket _____.",
+  "alternatives": [
+   "typiska – vanligt",
+   "specifika – ovanligt",
+   "ofarliga – sällsynt",
+   "botade – naturligt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är specifika och ovanligt. Symtom som har många orsaker pekar inte ut en enda sjukdom, och typiska ligger nära. Hos små barn förekommer tillståndet knappt, och sällsynt betyder samma sak. Ofarliga och botade följer inte av att symtomen har andra orsaker, och vanligt eller naturligt säger inget om att det är ovanligt hos de minsta.",
+  "source": {
+   "title": "1177 Laktosintolerans",
+   "url": "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/laktosintolerans/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-22",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Nickel finns i många vardagsföremål, till exempel smycken, glasögonbågar och klockor. Allergin är en kontaktallergi, vilket innebär att eksemet uppstår där huden _____ metallen, och lindriga besvär kan man ofta behandla själv med _____ kortisonkräm.",
+  "alternatives": [
+   "vidrör – receptbelagd",
+   "saknar – vanlig",
+   "värmer – parfymerad",
+   "rör vid – receptfri"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är rör vid och receptfri. En kontaktallergi ger besvär där huden kommer i kontakt med metallen, och vidrör betyder samma sak. Den som behandlar sig själv köper kräm utan recept, och vanlig kräm fungerar också. Receptbelagd kräm kräver läkare, saknar och värmer beskriver ingen kontakt, och en parfymerad kräm är inget man behandlar eksem med.",
+  "source": {
+   "title": "1177 Nickelallergi",
+   "url": "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/nickelallergi/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-23",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Hur salt något smakar är en fråga om _____: den som äter mycket salt behöver mer för att känna smaken. Men smaklökarna ställer om på några veckor, så den som minskar saltet lite i taget märker snart ingen _____.",
+  "alternatives": [
+   "tillvänjning – skärpa",
+   "gener – förändring",
+   "ålder – sälta",
+   "vana – skillnad"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är vana och skillnad. Kolonet förklarar att smaken beror på hur mycket salt man brukar äta, och tillvänjning ligger nära. När smaklökarna ställt om smakar maten som förut, och förändring säger samma sak. Gener och ålder förklaras inte av hur mycket man äter, och skärpa eller sälta är inte det man slutar märka.",
+  "source": {
+   "title": "Livsmedelsverket Salt",
+   "url": "https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/salt/",
+   "publisher": "Livsmedelsverket"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-24",
+  "amne": "spr",
+  "genre": "myn",
+  "text": "En dialekt följer med en människa genom livet men _____ sig också efter både personlighet och situation. Svenskans dialekter har en lång historia, från en tid av splittring till den utjämning som har gjort dem allt mer _____ varandra.",
+  "alternatives": [
+   "formar – olika",
+   "anpassar – lika",
+   "sträcker – besläktade med",
+   "skyndar – främmande för"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är anpassar och lika. Men ställer det som följer med genom livet mot det som ändras efter situationen, och formar sig fungerar också. Utjämning gör dialekterna mindre olika, och besläktade med passar också. Sträcker och skyndar sig efter något ger ingen mening här, och olika eller främmande för varandra säger motsatsen till utjämning.",
+  "source": {
+   "title": "Isof Svenska dialekter",
+   "url": "https://www.isof.se/dialekter/lar-dig-mer-om-svenska-dialekter",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-25",
+  "amne": "kul",
+  "genre": "myn",
+  "text": "Flera av musiktraditionerna har uråldriga anor, men själva ordet folkmusik är förhållandevis _____. På fäbodarna växte en egen tradition fram av vallåtar, lockrop och kulning, alltså sång och rop som användes för att _____ boskapen.",
+  "alternatives": [
+   "ungt – skrämma",
+   "gammalt – locka hem",
+   "nytt – kalla på",
+   "omstritt – mjölka"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är nytt och kalla på. Men ställer de gamla traditionerna mot ett begrepp som inte är lika gammalt, och ungt ligger nära. Lockrop används för att få djuren att komma, och locka hem fungerar också. Gammalt strider mot kontrasten, omstritt är ingen motsats till gamla, och man skrämmer eller mjölkar inte boskapen med rop.",
+  "source": {
+   "title": "Isof Folklig sång och musik",
+   "url": "https://www.isof.se/folkminnen/amnesomraden/folklig-sang-musik-och-dans/lar-dig-mer-om-folklig-sang-och-musik",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "utr"
+   ],
+   "ledtrad": [
+    "kon",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-26",
+  "amne": "kul",
+  "genre": "myn",
+  "text": "Nordiska museet har sedan slutet av 1800-talet samlat in kunskap om hur människor i Norden firar sina högtider. Museet _____ vardagens och festens traditioner, och arbetet vilar både på forskning och på de stora _____ av föremål och arkivmaterial.",
+  "alternatives": [
+   "skildrar – skulderna",
+   "dokumenterar – samlingarna",
+   "förlöjligar – förråden",
+   "säljer – bristerna"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är dokumenterar och samlingarna. Ett museum som samlar in kunskap beskriver och bevarar traditionerna, och skildrar passar också. Föremål och arkivmaterial som arbetet vilar på är museets samlingar, och förråden fungerar också. Förlöjligar och säljer är inget ett museum gör med traditioner, och skulder eller brister av föremål är inget arbetet kan vila på.",
+  "source": {
+   "title": "Nordiska museet Högtider",
+   "url": "https://www.nordiskamuseet.se/utforska/hogtider/",
+   "publisher": "Nordiska museet"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-27",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Sveriges fem nationella minoritetsspråk är samiska, finska, meänkieli, romska och jiddisch. Medlemmar av nationella minoriteter har rätt att _____ sin kultur och använda sitt språk, och arbetet med att få ett hotat språk att leva vidare kallas språklig _____.",
+  "alternatives": [
+   "leva ut – assimilering",
+   "utöva – revitalisering",
+   "överge – förnyelse",
+   "exportera – standardisering"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är utöva och revitalisering. Rätten att använda sitt språk hör ihop med rätten att leva med sin kultur, och leva ut ligger nära. Att ge ett språk nytt liv kallas revitalisering, och förnyelse betyder ungefär detsamma. Överge och exportera är inga rättigheter man skyddas för, och assimilering eller standardisering får inte ett hotat språk att leva vidare.",
+  "source": {
+   "title": "Isof Nationella minoritetsspråk",
+   "url": "https://www.isof.se/nationella-minoritetssprak/lar-dig-mer-om-nationella-minoritetssprak",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-28",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Under åren 1668 till 1676 drabbades Sverige av en _____ som ledde till en lång rad häxprocesser och omkring 280 människors död. Det var fler än hälften av alla som avrättades för trolldom i landet, och berättelser om barn som förts till djävulen _____ från kyrka till kyrka.",
+  "alternatives": [
+   "kollektiv panik – tystades",
+   "hungersnöd – vandrade",
+   "masshysteri – spreds",
+   "revolution – bannlystes"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är masshysteri och spreds. Häxprocesser som drabbar ett helt land på några år följer av en våg av rädsla, och kollektiv panik ligger nära. Berättelser som går från kyrka till kyrka sprids, och vandrade säger samma sak. En hungersnöd eller revolution leder inte till häxprocesser, och berättelser som tystades eller bannlystes färdas inte från kyrka till kyrka.",
+  "source": {
+   "title": "Det stora oväsendet",
+   "url": "https://sv.wikipedia.org/wiki/Det_stora_ov%C3%A4sendet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-29",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Blåmesen är lätt att känna igen på sin blå och gula fjäderdräkt. Den äter helst insekter och spindlar och är mycket _____ när den letar föda: den kan hålla sig fast allra längst ut på grenarna och till och med hänga upp och ned. Om bohål konkurrerar den framför allt med den betydligt _____ talgoxen.",
+  "alternatives": [
+   "vig – mindre",
+   "klumpig – kraftigare",
+   "kräsen – tystare",
+   "skicklig – större"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är skicklig och större. Kolonet förklarar hur duktig den är, eftersom den kan hänga längst ut på grenarna, och vig fungerar också. Talgoxen är en större fågel, och kraftigare passar också. Klumpig säger motsatsen, kräsen förklaras inte av kolonet, och mindre eller tystare säger inget om varför talgoxen vinner konkurrensen.",
+  "source": {
+   "title": "Blåmes",
+   "url": "https://sv.wikipedia.org/wiki/Bl%C3%A5mes",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-30",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Kantarellen har ett så _____ utseende och en så tydlig smak att den nästan inte går att förväxla med någon giftig svamp, och den hör därför till de populäraste matsvamparna bland amatörer. Den går bra att torka, men inte i ugn, eftersom svampen då ofta blir _____ och besk.",
+  "alternatives": [
+   "säreget – krispig",
+   "alldagligt – hård",
+   "giftigt – söt",
+   "karakteristiskt – seg"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är karakteristiskt och seg. En svamp som inte går att förväxla med andra ser ut som ingen annan, och säreget betyder samma sak. Men inte i ugn visar att ugnen förstör svampen, och hård fungerar också. Alldagligt och giftigt strider mot att den är lätt att känna igen och populär, och krispig eller söt är inga fel.",
+  "source": {
+   "title": "Kantarell",
+   "url": "https://sv.wikipedia.org/wiki/Kantarell",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "ors",
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-31",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Ett kåseri är en kort och underhållande text i en tidning, och ordet kommer av franskans ord för att samtala. Tonen är lätt och talspråklig, och poängen är att även stora och _____ ämnen kan behandlas på ett _____ sätt.",
+  "alternatives": [
+   "tunga – högtidligt",
+   "allvarliga – lättsamt",
+   "triviala – lekfullt",
+   "tekniska – juridiskt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är allvarliga och lättsamt. Även visar att det överraskande är att tunga ämnen får en lätt behandling, och tunga passar också. Den lätta tonen är lättsam, och lekfullt säger samma sak. Triviala strider mot stora, tekniska ämnen säger inget om allvaret, och högtidligt eller juridiskt strider mot den lätta tonen.",
+  "source": {
+   "title": "Kåseri",
+   "url": "https://sv.wikipedia.org/wiki/K%C3%A5seri",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "upp",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-32",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En prosadikt är ett kort stycke prosa med poetiska drag som rytm och allitteration. Genren slog igenom med Baudelaires små prosadikter från 1869, och formen kan vara svår att _____ mot annan kortprosa, som vinjetter och _____ aforismer.",
+  "alternatives": [
+   "avgränsa – utbyggda",
+   "dra gränsen – rimmade",
+   "datera – utvidgade",
+   "tonsätta – engelska"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är avgränsa och utbyggda. En form som liknar annan kortprosa är svår att dra en gräns mot, och dra gränsen fungerar också. En aforism som förväxlas med ett prosastycke har blivit längre än vanligt, och utvidgade betyder samma sak. Datera och tonsätta har inget med gränsdragning att göra, och rimmade eller engelska aforismer liknar inte ett stycke prosa.",
+  "source": {
+   "title": "Prosadikt",
+   "url": "https://sv.wikipedia.org/wiki/Prosadikt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "upp"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-33",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Ett skolbibliotek är en ordnad samling av medier och information som ska fungera som en _____ resurs för elever och lärare. Enligt riktlinjer från Unesco och bibliotekens internationella förbund bör skolbibliotekarien vara fackutbildad och dessutom ha _____ utbildning.",
+  "alternatives": [
+   "gemensam – pedagogisk",
+   "delad – militär",
+   "exklusiv – didaktisk",
+   "hemlig – medicinsk"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är gemensam och pedagogisk. En resurs för både elever och lärare delas av alla, och delad ligger nära. En bibliotekarie i skolan behöver utbildning i undervisning, och didaktisk passar också. Exklusiv och hemlig strider mot att resursen är till för alla, och militär eller medicinsk utbildning hör inte till ett skolbibliotek.",
+  "source": {
+   "title": "Skolbibliotek",
+   "url": "https://sv.wikipedia.org/wiki/Skolbibliotek",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-34",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "En finansbubbla uppstår när priset på tillgångar som aktier eller bostäder blir högre än deras verkliga värde, eftersom köparna har _____ förväntningar på framtida inkomster. För att bubblan ska fortsätta växa krävs ett ständigt tillflöde av nytt kapital, och när det avtar _____ den.",
+  "alternatives": [
+   "överdrivna – expanderar",
+   "försiktiga – brister",
+   "orealistiska – spricker",
+   "juridiska – tystnar"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är orealistiska och spricker. Priser över det verkliga värdet förklaras av att köparna räknar med för mycket, och överdrivna fungerar också. En bubbla som inte längre får nytt kapital går sönder, och brister säger samma sak. Försiktiga förväntningar driver inte upp priserna, juridiska förväntningar ger ingen mening, och att bubblan expanderar eller tystnar är inte vad som händer när kapitalet uteblir.",
+  "source": {
+   "title": "Ekonomisk bubbla",
+   "url": "https://sv.wikipedia.org/wiki/Ekonomisk_bubbla",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-35",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Hyra är den ersättning någon betalar för att få _____ egendom som tillhör en annan, till exempel en lägenhet, en bil eller en cykel. Att hyra i stället för att äga har blivit vanligare, bland annat för att det är _____ att hitta och boka via nätet.",
+  "alternatives": [
+   "nyttja – svårare",
+   "äga – smidigare",
+   "förstöra – dyrare",
+   "använda – lättare"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är använda och lättare. Den som hyr får bruka något som en annan äger, och nyttja betyder samma sak. Att hyrandet ökat förklaras av att det blivit enklare att boka, och smidigare passar också. Äga strider mot att egendomen tillhör en annan, förstöra ger ingen mening, och svårare eller dyrare förklarar inte varför fler hyr.",
+  "source": {
+   "title": "Hyra",
+   "url": "https://sv.wikipedia.org/wiki/Hyra",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-36",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Den som hittar något som någon annan har tappat är inte skyldig att ta hand om det. Gör man det måste man däremot _____ fyndet till polisen eller till ägaren så snart som möjligt, och den som låter bli kan dömas till _____ eller fängelse.",
+  "alternatives": [
+   "rapportera – hittelön",
+   "anmäla – böter",
+   "posta – dagsböter",
+   "skänka – belöning"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är anmäla och böter. Däremot ställer friheten att låta bli mot skyldigheten när man väl tagit hand om fyndet, och rapportera fungerar också. Den som döms till något eller fängelse får ett straff, och dagsböter är ett sådant. Att posta eller skänka fyndet till polisen ger ingen mening, och hittelön eller belöning är inget man döms till.",
+  "source": {
+   "title": "Hittegods",
+   "url": "https://sv.wikipedia.org/wiki/Hittegods",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-37",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Agnosticismen förnekar att det går att få kunskap om tillvarons yttersta grunder, och framför allt om huruvida Gud finns. Ordet _____ av Thomas Henry Huxley, och han blev med tiden mer _____ med att tala om det ovetbara, eftersom han ansåg att vad andra visste låg utanför hans bedömning.",
+  "alternatives": [
+   "skapades – frikostig",
+   "censurerades – återhållsam",
+   "översattes – slarvig",
+   "myntades – försiktig"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är myntades och försiktig. Ett ord som en person är först med att använda har myntats av honom, och skapades fungerar också. Den som anser att andras kunskap ligger utanför hans bedömning blir mindre benägen att uttala sig, alltså mer återhållsam. Censurerades och översattes passar inte ett nytt ord, och frikostig eller slarvig säger motsatsen till att han höll igen.",
+  "source": {
+   "title": "Agnosticism",
+   "url": "https://sv.wikipedia.org/wiki/Agnosticism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-38",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Vid en belägring innesluts en fientlig fästning eller stad, antingen för att förbereda en stormning eller för att tvinga försvararna att _____. Stadens tillgång till mat, vatten och vapen stryps, samtidigt som angriparna försöker _____ murarna med murbräckor och belägringstorn.",
+  "alternatives": [
+   "ge upp – bygga",
+   "fly – rasera",
+   "kapitulera – bryta ned",
+   "anfalla – måla"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är kapitulera och bryta ned. En stad som stängs inne och svälts ut ska förmås att ge sig, och ge upp betyder samma sak. Murbräckor används för att slå sönder murar, och rasera fungerar också. Den som är innesluten kan inte fly, att anfalla är inget angriparen vill tvinga fram, och man bygger eller målar inte fiendens murar med murbräckor.",
+  "source": {
+   "title": "Belägring",
+   "url": "https://sv.wikipedia.org/wiki/Bel%C3%A4gring",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "utr"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-39",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Självförtroende är tilltron till den egna förmågan att prestera, i arbetet, i skolan eller bland andra människor. Det kan _____ från dag till dag och stärkas av bekräftelse utifrån, och det blandas ofta ihop med självkänsla, som är ett _____ begrepp.",
+  "alternatives": [
+   "variera – närliggande",
+   "växla – identiskt",
+   "försvinna – besläktat",
+   "ärvas – motsatt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är variera och närliggande. Något som ändras från dag till dag varierar, och växla fungerar också. Begrepp som blandas ihop ligger nära varandra utan att vara samma sak, och besläktat passar också. Ett självförtroende som försvinner från dag till dag stämmer inte med att det kan stärkas, ärvas har inget med dagsform att göra, och identiska eller motsatta begrepp blandas inte ihop.",
+  "source": {
+   "title": "Självförtroende",
+   "url": "https://sv.wikipedia.org/wiki/Sj%C3%A4lvf%C3%B6rtroende",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-40",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Distansarbete innebär att man arbetar utanför arbetsgivarens lokaler, oftast hemma, med kontakt via telefon och dator. Att jobba hemifrån någon enstaka dag är _____ på kontor, medan mer regelbundet distansarbete brukar kräva en _____ med arbetsgivaren.",
+  "alternatives": [
+   "vanligt – överenskommelse",
+   "brukligt – konflikt",
+   "otänkbart – uppgörelse",
+   "olagligt – tävling"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är vanligt och överenskommelse. Medan ställer den enstaka dagen, som är vardag på kontor, mot regelbundet distansarbete, och brukligt säger samma sak. Det som krävs är att man kommer överens med arbetsgivaren, och uppgörelse fungerar också. Otänkbart och olagligt strider mot kontrasten, och en konflikt eller tävling är inget man behöver för att arbeta hemma.",
+  "source": {
+   "title": "Distansarbete",
+   "url": "https://sv.wikipedia.org/wiki/Distansarbete",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-41",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Den som vill äta mer fullkorn kan börja med att byta till fullkornsbröd, och knäckebröd är ett särskilt bra val, eftersom det oftast är _____ gjort på fullkorn. Den som tycker att det blir för mycket kan _____ hälften fullkorn och hälften vita sorter. Ris är dock ett undantag: fullkornsris innehåller ofta mer arsenik än vitt ris, och därför är det klokt att _____ med andra sädesslag.",
+  "alternatives": [
+   "delvis – kombinera – sluta",
+   "uteslutande – sluta äta – växla",
+   "helt – blanda – variera",
+   "sällan – väga – fasta"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är helt, blanda och variera. Knäckebröd är ett särskilt bra val för att det är gjort på enbart fullkorn, och uteslutande säger samma sak. Hälften av varje är en blandning, och kombinera fungerar också. Är fullkornsris inte alltid bäst ska man växla mellan det och andra sädesslag. Delvis och sällan förklarar inte varför knäckebrödet är särskilt bra, att sluta äta eller väga hälften fullkorn ger ingen mening, och att sluta eller fasta med andra sädesslag är inget råd om ris.",
+  "source": {
+   "title": "Livsmedelsverket Fullkorn",
+   "url": "https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/Fullkorn/",
+   "publisher": "Livsmedelsverket"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "po",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "de",
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-42",
+  "amne": "kul",
+  "genre": "myn",
+  "text": "Lin har odlats över hela landet och hade stort värde ända tills bomullen _____. Bland djurens fibrer har fårullen använts mest i våra trakter, medan tagel och hår från andra djur användes när garnet skulle vara särskilt _____. Under många hundra år var vadmal det _____ tyget för vanligt folk.",
+  "alternatives": [
+   "tog över – tåligt – dyraste",
+   "slog igenom – vattenavstötande – dominerande",
+   "försvann ur handeln – vattenavvisande – vanligaste",
+   "blommade – mjukt – ovanligaste"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är slog igenom, vattenavstötande och dominerande. Linet förlorade sitt värde när bomullen kom, och tog över fungerar också. Tagel och hår ger ett garn som stöter bort vatten, och vattenavvisande betyder samma sak. Vadmal var under hundratals år det tyg som de flesta bar, alltså det vanligaste. Försvann ur handeln och blommade förklarar inte att linet tappade sitt värde, mjukt är inte vad tagel ger, och det dyraste eller ovanligaste tyget var inte det vanligt folk använde.",
+  "source": {
+   "title": "Isof Textilt slöjdande",
+   "url": "https://www.isof.se/folkminnen/amnesomraden/slojd-och-hantverk/lar-dig-mer-om-textilt-slojdande",
+   "publisher": "Isof"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-43",
+  "amne": "his",
+  "genre": "myn",
+  "text": "Nordiska museet grundades av Artur och Sofi Hazelius, som ville rädda föremål ur ett bondesamhälle som höll på att _____. Det första föremålet, en hemvävd kjol från Dalarna, _____ 1872, och redan året därpå kunde samlingen visas för publik i en _____ lokal i Stockholm.",
+  "alternatives": [
+   "förändras – köptes in – ägd",
+   "växa – inhandlades – förhyrd",
+   "försvinna – förvärvades – inhyrd",
+   "blomstra – skänktes bort – nyrenoverad"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är försvinna, förvärvades och inhyrd. Föremål behöver räddas när den värld de hör till är på väg bort, och förändras fungerar också. Det första föremålet i samlingen skaffades av museet, och köptes in säger samma sak. En samling som visas redan året efter grundandet ryms i en lokal man hyr, och förhyrd betyder detsamma. Växa och blomstra är inga skäl att rädda något, ett föremål som skänktes bort hamnar inte i samlingen, och en ägd eller nyrenoverad lokal hinner ett nytt museum knappast skaffa på ett år.",
+  "source": {
+   "title": "Nordiska museet Museets historia",
+   "url": "https://www.nordiskamuseet.se/om-museet/nordiska-museets-historia/",
+   "publisher": "Nordiska museet"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-44",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Under frihetstiden, åren 1719 till 1772, låg makten i Sverige till stor del hos _____, där hattarna och mössorna drev var sin politik. Utrikespolitiskt var landet kraftigt _____, och två misslyckade krig visade att stormaktstiden var förbi. Inom vetenskap och kultur gjordes däremot stora _____, med Linné och Bellman som främsta exempel.",
+  "alternatives": [
+   "riksdagen – försvagat – framsteg",
+   "ständerna – stärkt – landvinningar",
+   "kungen – maktlöst – bakslag",
+   "kyrkan – expansivt – förluster"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är riksdagen, försvagat och framsteg. Hattarna och mössorna var partier i riksdagen, och ständerna fungerar också. Misslyckade krig och en förlorad stormaktsställning visar att landet var svagt, och maktlöst ligger nära. Däremot ställer vetenskapen och kulturen mot det svaga läget, alltså gick de framåt, och landvinningar betyder samma sak. Kungen och kyrkan var inte där partierna verkade, stärkt och expansivt strider mot de misslyckade krigen, och bakslag eller förluster strider mot däremot.",
+  "source": {
+   "title": "Frihetstiden",
+   "url": "https://sv.wikipedia.org/wiki/Frihetstiden",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      3
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-45",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En självbiografi är en levnadsteckning där författaren _____ sitt eget liv. Den brukar omfatta hela livet, medan memoarer lägger _____ vid yttre, ofta historiska händelser som skribenten har varit med om. Sådana skrifter var _____ under antiken och medeltiden, men Augustinus Bekännelser brukar räknas som världens äldsta självbiografi.",
+  "alternatives": [
+   "berättar om – tyngdpunkten – vanliga",
+   "skildrar – tonvikten – ovanliga",
+   "förtiger – vikt – fåtaliga",
+   "uppfinner – skulden – obligatoriska"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är skildrar, tonvikten och ovanliga. I en självbiografi beskriver författaren sitt eget liv, och berättar om fungerar också. Medan ställer helheten mot memoarernas fokus på yttre händelser, och tyngdpunkten säger samma sak. Men visar att det trots allt finns tidiga exempel på något som var sällsynt, och fåtaliga passar också. Förtiger och uppfinner strider mot att det är en levnadsteckning, skulden lägger man inte vid händelser, och vanliga eller obligatoriska strider mot men.",
+  "source": {
+   "title": "Memoarer",
+   "url": "https://sv.wikipedia.org/wiki/Memoarer",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kon",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-46",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "En examen kan vara ett skriftligt eller muntligt _____ som prövar kunskaperna från en hel utbildning, men ordet kan också syfta på det _____ man får när utbildningen är klar. I Sverige regleras de akademiska examina vid statliga lärosäten i högskoleförordningen, och privata lärosäten behöver regeringens _____ för att få utfärda dem.",
+  "alternatives": [
+   "examensprov – diplom – förbud",
+   "intagningsprov – intyg – godkännande",
+   "slutprov – bevis – medgivande",
+   "lotteri – stipendium – kritik"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är slutprov, bevis och medgivande. Ett prov som prövar kunskaperna från en hel utbildning kommer i slutet, och examensprov fungerar också. Det man får när utbildningen är klar är ett bevis på den, och intyg och diplom säger samma sak. För att få utfärda examina behöver ett privat lärosäte regeringens medgivande, och godkännande fungerar också. Intagningsprov kommer före utbildningen, ett lotteri eller stipendium är inget som prövar kunskaper eller visar att man är klar, och förbud eller kritik ger ingen rätt att utfärda något.",
+  "source": {
+   "title": "Examen",
+   "url": "https://sv.wikipedia.org/wiki/Examen",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-47",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "En mentor är en _____ person som står en nykomling nära och fungerar som vägledare. Ordet kommer från Homeros Odyssé, där gudinnan Athena tar gestalt av Odysseus vän Mentor för att _____ hans son, och mentorn kan leda med allt ifrån lösa tyglar till mycket _____ ramar.",
+  "alternatives": [
+   "erfaren – uppmuntra – fasta",
+   "rutinerad – stödja – lösa",
+   "oerfaren – heja på – strikta",
+   "okunnig – straffa – mjuka"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är erfaren, uppmuntra och fasta. Den som vägleder en nykomling vet mer än denne, och rutinerad betyder samma sak. Athena kommer för att ge sonen mod, och heja på och stödja fungerar också. Allt ifrån lösa tyglar till ställer det fria mot det styrda, alltså fasta eller strikta ramar. Oerfaren och okunnig strider mot att mentorn vägleder, straffa är inte att vägleda, och lösa eller mjuka ramar är ingen motsats till lösa tyglar.",
+  "source": {
+   "title": "Mentorskap",
+   "url": "https://sv.wikipedia.org/wiki/Mentorskap",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-48",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Kundlojalitet beskriver hur en kund över tid förhåller sig till ett visst varumärke eller en viss butik. Den kan mätas i hur länge och hur _____ kunden handlar, hur mycket pengar hon spenderar och hur stor _____ av sina inköp hon gör hos samma leverantör, och sådana mått används ofta som grund för lojalitetsprogram som _____ trogna kunder.",
+  "alternatives": [
+   "ofta – del – belönar",
+   "regelbundet – andel – bestraffar",
+   "billigt – procent – premierar",
+   "tyst – skuld – ignorerar"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ofta, del och belönar. Uppräkningen gäller hur trogen kunden är, alltså hur länge och hur ofta hon kommer, och regelbundet fungerar också. Det som mäts är hur stor del av inköpen som görs hos samma leverantör, och andel eller procent passar också. Ett lojalitetsprogram ger något tillbaka till trogna kunder, och premierar betyder samma sak. Billigt och tyst säger inget om lojalitet, skuld är inget mått på inköp, och bestraffar eller ignorerar strider mot ett program för trogna kunder.",
+  "source": {
+   "title": "Kundlojalitet",
+   "url": "https://sv.wikipedia.org/wiki/Kundlojalitet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "upp",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-49",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Konsumentlagarna innehåller skyddsregler som i regel är _____, alltså gäller de oavsett vad parterna har avtalat, om inte en avvikelse är till konsumentens _____. Lagarna finns för att skydda konsumenten, som anses vara den _____ parten och oftast kan mindre juridik än företaget.",
+  "alternatives": [
+   "ovillkorliga – förmån – överlägsna",
+   "valfria – nackdel – sårbara",
+   "muntliga – bekostnad – mäktigare",
+   "tvingande – fördel – underlägsna"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är tvingande, fördel och underlägsna. Alltså förklarar att reglerna gäller oavsett avtal, och ovillkorliga säger ungefär samma sak. Ett undantag som är till konsumentens förmån hotar inte skyddet. Den som behöver skyddas och kan mindre juridik är den svagare parten, och sårbara fungerar också. Valfria och muntliga regler gäller inte oavsett avtal, en avvikelse till konsumentens nackdel eller bekostnad är just vad lagen hindrar, och överlägsna eller mäktigare strider mot att konsumenten behöver skydd.",
+  "source": {
+   "title": "Ångerrätt",
+   "url": "https://sv.wikipedia.org/wiki/%C3%85ngerr%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "po",
+      "de"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "po",
+      "po"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p14-50",
+  "amne": "tek",
+  "genre": "pop",
+  "text": "En mikrovågsugn tinar och tillagar mat med hjälp av ett högfrekvent elektromagnetiskt fält som _____ vattnet och andra molekyler i den. Den uppfanns av ingenjören Percy Spencer, och de första ugnarna som tillverkades för försäljning 1947 var _____: de var nästan två meter höga och vägde 340 kilo. Någon försäljningssuccé blev det inte förrän på 1970-talet, då ugnen blev _____ i amerikanska kök.",
+  "alternatives": [
+   "hettar upp – enorma – sällsynt",
+   "kyler – klumpiga – vardaglig",
+   "värmer – otympliga – vanlig",
+   "isolerar – nätta – olaglig"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är värmer, otympliga och vanlig. En ugn som tinar och tillagar mat gör det genom att värma den, och hettar upp betyder samma sak. Kolonet förklarar att ugnarna var stora och tunga, och klumpiga eller enorma passar också. En försäljningssuccé innebär att ugnen fanns i många kök, och vardaglig fungerar också. Kyler och isolerar beskriver inte hur maten tillagas, nätta strider mot vikten, och sällsynt eller olaglig strider mot att det blev en succé.",
+  "source": {
+   "title": "Mikrovågsugn",
+   "url": "https://sv.wikipedia.org/wiki/Mikrov%C3%A5gsugn",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "ors",
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "po"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "po",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "po",
+      "po",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ }
+]
