@@ -7,7 +7,10 @@ import { questionIsServable } from "./question-validity";
 import { voteWeight, weightedShuffle } from "./question-votes";
 import { loadVoteStats } from "./question-votes.server";
 import { optionalSupabaseAuth } from "./auth-optional.server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { GENERATED_TAG, MEK_ORIGINS, type MekOrigin } from "./question-origin";
+import { mekAccess, type OrdAccess } from "./ord-paywall";
+import { countMekTrainingAnswers, hasOrdAccess } from "./ord-paywall.server";
 
 const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
 
@@ -42,6 +45,12 @@ const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"] as c
 const COLS =
   "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status, tags, source";
 
+/**
+ * MEK per anrop för den som inte är inloggad alls. Deras svar sparas inte och
+ * går alltså inte att räkna; samma kända och accepterade läcka som i ORD.
+ */
+const ANON_MEK_PER_BATCH = 10;
+
 /** Hur många id som läses per delprov innan urvalet görs. PostgREST:s radtak. */
 const ID_WINDOW = 1000;
 
@@ -69,6 +78,30 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     // Tung query och publik — hamringsskydd per IP, samma tak som ordbatchen.
     assertRateLimit(ipKey("trainbatch"), limits.wordBatch);
 
+    // MEK-paywallen (`ord-paywall.ts`): 40 gratis träningssvar, sedan krävs
+    // samma köp som för ordlistan. Grinden sitter här och inte i UI:t, annars
+    // är den kosmetika. Är MEK slut tas delprovet bort ur passet; de andra
+    // delproven i ett blandat pass delas ut som vanligt.
+    let mek: OrdAccess | null = null;
+    let mekCap = Number.POSITIVE_INFINITY;
+    if (data.categories.includes("MEK")) {
+      if (context.userId) {
+        const [owned, answered] = await Promise.all([
+          hasOrdAccess(context.userId),
+          countMekTrainingAnswers(context.userId),
+        ]);
+        mek = mekAccess(answered, owned);
+        if (mek.freeRemaining !== null) mekCap = mek.freeRemaining;
+      } else {
+        mekCap = ANON_MEK_PER_BATCH;
+      }
+    }
+    const mekLocked = mek?.locked ?? false;
+    const categories = mekCap > 0 ? data.categories : data.categories.filter((c) => c !== "MEK");
+    if (categories.length === 0) {
+      return { questions: [], exhausted: false, mekLocked, mekAccess: mek };
+    }
+
     // Urvalet görs i två steg: först id:n per delprov, sedan hela raderna för
     // just de id som lottats fram. Tidigare hämtades hela rader med
     // `.limit(300)` och utan ordning, vilket i praktiken gav de 300 äldsta
@@ -77,7 +110,7 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     // Ett id-fönster på upp till 1 000 rader per delprov täcker hela MEK och
     // läggs på en slumpad plats i de större delproven (ORD).
     const idsByCategory = await Promise.all(
-      data.categories.map(async (category) => {
+      categories.map(async (category) => {
         const filtered = () => {
           let q = supabaseAdmin
             .from("questions")
@@ -146,7 +179,9 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
       0,
       data.count * 3,
     );
-    if (chosen.length === 0) return { questions: [], exhausted: solved.size > 0 };
+    if (chosen.length === 0) {
+      return { questions: [], exhausted: solved.size > 0, mekLocked, mekAccess: mek };
+    }
 
     const { data: fetched, error } = await supabaseAdmin
       .from("questions")
@@ -157,9 +192,7 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
       throw new Error("Något gick fel. Försök igen om en stund.");
     }
     const order = new Map(chosen.map((id, i) => [id, i]));
-    const rows = (fetched ?? []).sort(
-      (a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0),
-    );
+    const rows = (fetched ?? []).sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
 
     // `clean_status != "retired"` betyder att textutvinningen inte är utgången,
     // inte att uppgiften faktiskt går att visa — en matteuppgifts beskärning
@@ -194,7 +227,15 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     });
 
     // Redan blandat och viktat i id-steget; här behålls bara ordningen.
-    const pool = playable.slice(0, data.count);
+    let mekLeft = mekCap;
+    const pool = playable
+      .filter((row) => {
+        if ((row as { category: string }).category !== "MEK") return true;
+        if (mekLeft <= 0) return false;
+        mekLeft -= 1;
+        return true;
+      })
+      .slice(0, data.count);
 
     // Passet hålls ihop. Ett flerkategoripass levererades tidigare helt
     // slumpat, så en ORD-fråga följdes av en LÄS-text följd av en MEK-mening —
@@ -228,7 +269,59 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
       })
       .map((x) => x.row);
 
-    return { questions: sorted, exhausted: false };
+    return { questions: sorted, exhausted: false, mekLocked, mekAccess: mek };
+  });
+
+/**
+ * Sparar ett svar i träningsläget.
+ *
+ * Gjordes tidigare från webbläsaren (`supabase.from("match_answers").insert`)
+ * utan att svaret lästes, och i produktionen nekades varenda rad: tabellen
+ * hade noll träningssvar 2026-10-20 trots att passen spelades. Ingenting
+ * syntes, eftersom felet aldrig kontrollerades. Det är också svaren
+ * MEK-paywallen räknar, så en skrivning som klienten själv gör hade gått att
+ * hoppa över för att träna gratis.
+ *
+ * Rätt eller fel avgörs här ur `correct_answer`, aldrig ur klienten.
+ */
+export const recordTrainingAnswer = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        questionId: z.string().uuid(),
+        selected: z.enum(["A", "B", "C", "D", "E"]).nullable(),
+        timeSpentSeconds: z.number().int().min(0).max(1800),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }): Promise<{ ok: boolean }> => {
+    const { userId } = context;
+    assertRateLimit(`training-answer:${userId}`, limits.trainingAnswer);
+    const { data: q, error: qErr } = await supabaseAdmin
+      .from("questions")
+      .select("correct_answer, difficulty")
+      .eq("id", data.questionId)
+      .maybeSingle();
+    if (qErr || !q) {
+      console.error("[train] svar på okänd fråga:", qErr?.message ?? data.questionId);
+      return { ok: false };
+    }
+    const { error } = await supabaseAdmin.from("match_answers").insert({
+      match_id: null,
+      user_id: userId,
+      question_id: data.questionId,
+      selected_answer: data.selected,
+      is_correct: data.selected !== null && data.selected === q.correct_answer,
+      is_training: true,
+      difficulty: q.difficulty,
+      time_spent_seconds: data.timeSpentSeconds,
+    });
+    if (error) {
+      console.error("[train] kunde inte spara träningssvar:", error.message);
+      return { ok: false };
+    }
+    return { ok: true };
   });
 
 /**

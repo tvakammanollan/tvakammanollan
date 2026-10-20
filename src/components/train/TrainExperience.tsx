@@ -1,10 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
-import { fetchTrainingBatch } from "@/lib/train.functions";
+import { fetchTrainingBatch, recordTrainingAnswer } from "@/lib/train.functions";
+import { confirmOrdCheckout, getMekAccess, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
+import { OrdPaywall } from "@/components/OrdPaywall";
 import { MEK_ORIGINS, type MekOrigin } from "@/lib/question-origin";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
@@ -56,7 +57,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
-import { displayCategory, ordText } from "@/lib/sv-format";
+import { displayCategory, formatInt, ordText } from "@/lib/sv-format";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
@@ -140,6 +141,7 @@ export function TrainExperience({
 }) {
   const { user, loading: authLoading } = useAuth();
   const getTrainingBatch = useServerFn(fetchTrainingBatch);
+  const saveAnswer = useServerFn(recordTrainingAnswer);
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("setup");
   // Inget förvalt delprov. Startvyn hade tidigare "alla verbala delprov"
@@ -193,6 +195,44 @@ export function TrainExperience({
     if (!user) navigate({ to: "/login" });
   }, [authLoading, user, navigate]);
 
+  // MEK-paywallen (`ord-paywall.ts`). Servern är grinden; det här är bara vad
+  // startvyn visar: gratisuppgifter kvar, eller köprutan när de är slut.
+  const fetchMekAccess = useServerFn(getMekAccess);
+  const confirmPurchase = useServerFn(confirmOrdCheckout);
+  const [mekAccessInfo, setMekAccessInfo] = useState<OrdAccessInfo | null>(null);
+  const loadMekAccess = useCallback(() => {
+    void fetchMekAccess({})
+      .then((a) => setMekAccessInfo(a))
+      .catch(() => setMekAccessInfo(null));
+  }, [fetchMekAccess]);
+  useEffect(() => {
+    if (authLoading || !user) return;
+    loadMekAccess();
+  }, [authLoading, user, loadMekAccess]);
+
+  // Tillbaka från kassan (`?kop=klart&session_id=…`): bekräfta mot Stripe som
+  // reserv för webhooken, samma som /ord.
+  const confirmedRef = useRef(false);
+  useEffect(() => {
+    if (authLoading || !user || confirmedRef.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+    if (params.get("kop") !== "klart" || !sessionId) return;
+    confirmedRef.current = true;
+    void confirmPurchase({ data: { sessionId } })
+      .then((r) => {
+        if (r.owned) {
+          trackEvent("mek_purchase_completed", { via: "return" });
+          toast.success("Ordlistan och MEK är upplåsta. Lycka till!");
+        }
+        loadMekAccess();
+      })
+      .catch(() => toast.warning("Vi kunde inte bekräfta köpet ännu. Ladda om sidan om en stund."))
+      .finally(() => {
+        window.history.replaceState(null, "", window.location.pathname);
+      });
+  }, [authLoading, user, confirmPurchase, loadMekAccess]);
+
   /**
    * Ett val = ett pass. Antingen ett delprov, eller hela den verbala
    * respektive kvantitativa delen blandat — men det senare är då ett aktivt
@@ -225,6 +265,16 @@ export function TrainExperience({
       });
       data = res.questions as Array<Record<string, unknown>>;
       exhausted = res.exhausted;
+      if (res.mekLocked) {
+        // Kvoten tog slut (annan flik, eller sidan var gammal). Startvyn
+        // visar köprutan när åtkomsten är omläst.
+        loadMekAccess();
+        if (data.length === 0) {
+          setPhase("setup");
+          return;
+        }
+        toast.info("MEK är inte med i passet: gratisuppgifterna är slut.");
+      }
     } catch (e) {
       console.error("[train] question fetch threw", e);
       toast.error("Kunde inte hämta frågor", {
@@ -379,18 +429,11 @@ export function TrainExperience({
         isCorrect,
       },
     ]);
-    // Persist (best-effort, don't block UI)
+    // Sparas via servern (se `recordTrainingAnswer`), utan att blockera UI:t.
     if (user) {
-      void supabase.from("match_answers").insert({
-        match_id: null,
-        user_id: user.id,
-        question_id: currentQ.id,
-        selected_answer: letter,
-        is_correct: isCorrect,
-        is_training: true,
-        difficulty: currentQ.difficulty,
-        time_spent_seconds: questionSeconds(),
-      });
+      void saveAnswer({
+        data: { questionId: currentQ.id, selected: letter, timeSpentSeconds: questionSeconds() },
+      }).catch((e) => console.error("[train] svaret sparades inte", e));
     }
   };
 
@@ -407,16 +450,9 @@ export function TrainExperience({
       },
     ]);
     if (user) {
-      void supabase.from("match_answers").insert({
-        match_id: null,
-        user_id: user.id,
-        question_id: currentQ.id,
-        selected_answer: null,
-        is_correct: false,
-        is_training: true,
-        difficulty: currentQ.difficulty,
-        time_spent_seconds: questionSeconds(),
-      });
+      void saveAnswer({
+        data: { questionId: currentQ.id, selected: null, timeSpentSeconds: questionSeconds() },
+      }).catch((e) => console.error("[train] svaret sparades inte", e));
     }
     goNext(true);
   };
@@ -432,6 +468,7 @@ export function TrainExperience({
       // flushas och listan är komplett. Ett överhoppat svar är aldrig rätt.
       const answered = results.length + (skipping ? 1 : 0);
       const correct = results.filter((r) => r.isCorrect).length;
+      if (config.subs.includes("MEK")) loadMekAccess();
       trackEvent("training_completed", {
         track: config.track,
         answered,
@@ -468,6 +505,11 @@ export function TrainExperience({
   );
 
   // ============ SETUP ============
+  // Köprutan visas när MEK är valt och gratisuppgifterna är slut. Är MEK det
+  // enda valet döljs startknappen helt; ett blandat pass kör de andra delproven.
+  const mekLåst = !!mekAccessInfo?.locked && config.subs.includes("MEK");
+  const baraMek = config.subs.length > 0 && config.subs.every((c) => c === "MEK");
+
   if (phase === "setup") {
     return (
       <div className="min-h-screen">
@@ -642,11 +684,38 @@ export function TrainExperience({
                 </SetupCard>
               </div>
 
-              <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+              {mekLåst && mekAccessInfo && (
+                <div className="mt-5">
+                  <OrdPaywall
+                    access={mekAccessInfo}
+                    subject="mek"
+                    returnTo={mode === "mek" ? "/mek-ovning" : "/train"}
+                  />
+                </div>
+              )}
+
+              <div
+                className={`mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6 ${
+                  mekLåst && baraMek ? "hidden" : ""
+                }`}
+              >
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
                   Ditt pass
                 </p>
                 <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
+                {mekLåst ? (
+                  <p className="mt-1.5 text-sm text-white/60">
+                    MEK hoppas över: gratisuppgifterna är slut.
+                  </p>
+                ) : (
+                  config.subs.includes("MEK") &&
+                  mekAccessInfo &&
+                  mekAccessInfo.freeRemaining !== null && (
+                    <p className="mt-1.5 text-sm text-white/60">
+                      {formatInt(mekAccessInfo.freeRemaining)} gratis MEK-uppgifter kvar
+                    </p>
+                  )
+                )}
                 <PrimaryCTA
                   onClick={startTraining}
                   className="mt-4 w-full"

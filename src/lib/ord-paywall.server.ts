@@ -29,6 +29,25 @@ export async function hasOrdAccess(userId: string): Promise<boolean> {
 }
 
 /**
+ * Antalet MEK-svar i träningsläget (inte i matcher: duellerna är gratis).
+ * Svar räknas, inte rätta, se `ord-paywall.ts`. Vid fel: 0, alltså hellre
+ * några gratisuppgifter för mycket än en spärr som slår till av misstag.
+ */
+export async function countMekTrainingAnswers(userId: string): Promise<number> {
+  const { count, error } = await supabaseAdmin
+    .from("match_answers")
+    .select("id, questions!inner(category)", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .eq("is_training", true)
+    .eq("questions.category", "MEK");
+  if (error) {
+    console.error("[ord-paywall] kunde inte räkna MEK-svar:", error.message);
+    return 0;
+  }
+  return count ?? 0;
+}
+
+/**
  * Skriver in köpet. Returnerar true bara för den som faktiskt skapade raden.
  * Köpet knyts till `metadata.user_id`, som vi själva satte när kassan öppnades.
  */

@@ -1401,10 +1401,31 @@ renderas av `DiscountCodeChip` på två ytor: i rutan och i kassasteget i
   `coaching_discount_copied` med `source`. `sessions` ska stå på 3 i praktiken;
   gör den inte det är det sessionsräkningen som är fel.
 
-### Hela Ordlistan: paywallen på ORD (2026-10-02)
+### Hela Ordlistan + MEK: paywallen på ORD och MEK (2026-10-02, MEK 2026-10-20)
 
-De första 40 orden är gratis, sedan krävs ett engångsköp (50 kr, Stripe-produkten
-"Hela Ordlistan", `STRIPE_ORD_PRICE_ID` i `wrangler.jsonc`). Reglerna bor i
+De första 40 orden och de första 40 MEK-uppgifterna i träningsläget är
+gratis, sedan krävs ett engångsköp (150 kr sedan 2026-10-20, 50 kr innan;
+Stripe-produkten "Hela Ordlistan + MEK", `STRIPE_ORD_PRICE_ID` i
+`wrangler.jsonc`). **Ett köp låser upp båda**, och grindarna läser samma
+`ord_purchases`, så alla som köpte ordlistan för 50 kr fick MEK utan att
+något migrerades.
+
+- **MEK-grinden sitter i `fetchTrainingBatch`** och räknar MEK-svar i
+  `match_answers` (`is_training`, joinat mot `questions.category`) via
+  `countMekTrainingAnswers`. Dueller och gamla prov räknas inte och spärras
+  inte. Är kvoten slut tas MEK bort ur passet (`mekLocked`); ett blandat pass
+  kör övriga delprov. Startvyn i `TrainExperience` visar `OrdPaywall` med
+  `subject="mek"`.
+- **Träningssvaren sparas via `recordTrainingAnswer`**, inte från
+  webbläsaren. Den gamla klientskrivningen nekades i produktionen utan att
+  felet lästes: tabellen hade **noll** träningssvar 2026-10-20. Det bröt
+  också "Dölj frågor jag redan klarat" och tidsstatistiken för träning, tyst.
+  Rätt/fel räknas i servern. Flytta inte tillbaka skrivningen till klienten;
+  då går MEK-spärren att kringgå genom att blockera anropet.
+- **Taggen heter fortfarande `ord_access`**, även för MEK-köp. Byts den
+  känner webhooken inte igen kassor som redan är öppna.
+- Kassan tar `returnTo` (`/ord`, `/mek-ovning`, `/train`), och båda sidorna
+  bekräftar köpet med `confirmOrdCheckout` vid `?kop=klart`. Reglerna bor i
 `src/lib/ord-paywall.ts` (ren, testad), databasdelen i `ord-paywall.server.ts`,
 kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
 

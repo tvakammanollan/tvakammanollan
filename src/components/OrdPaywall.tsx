@@ -6,19 +6,33 @@ import { GlassCard } from "@/components/layout/GlassCard";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
 import { startOrdCheckout, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
-import { FREE_ORD_LIMIT } from "@/lib/ord-paywall";
+import {
+  FREE_MEK_LIMIT,
+  FREE_ORD_LIMIT,
+  type PaywallReturnPath,
+  type PaywallSubject,
+} from "@/lib/ord-paywall";
 import { formatMoney } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
 import { trackError } from "@/lib/telemetry";
 
 /**
- * Rutan som ersätter "Öva"-knappen när de fria orden är slut.
+ * Rutan som ersätter "Öva"-knappen när de fria orden eller MEK-uppgifterna är
+ * slut. Samma köp låser upp båda, så bara rubriken skiljer sig.
  *
  * Kassan renderas inne i rutan när den publicerbara nyckeln finns, annars
- * skickas köparen till Stripe och kommer tillbaka till /ord. Båda vägarna
+ * skickas köparen till Stripe och kommer tillbaka till `returnTo`. Båda vägarna
  * landar på `?kop=klart`, där sidan bekräftar köpet.
  */
-export function OrdPaywall({ access }: { access: OrdAccessInfo }) {
+export function OrdPaywall({
+  access,
+  subject = "ord",
+  returnTo = "/ord",
+}: {
+  access: OrdAccessInfo;
+  subject?: PaywallSubject;
+  returnTo?: PaywallReturnPath;
+}) {
   const startCheckout = useServerFn(startOrdCheckout);
   const [busy, setBusy] = useState(false);
   const [secret, setSecret] = useState<string | null>(null);
@@ -28,8 +42,10 @@ export function OrdPaywall({ access }: { access: OrdAccessInfo }) {
   useEffect(() => {
     if (shown.current) return;
     shown.current = true;
-    trackEvent("ord_paywall_shown", { answered: access.answered });
-  }, [access.answered]);
+    trackEvent(subject === "mek" ? "mek_paywall_shown" : "ord_paywall_shown", {
+      answered: access.answered,
+    });
+  }, [access.answered, subject]);
 
   const price = access.amount !== null ? formatMoney(access.amount, access.currency) : null;
 
@@ -37,8 +53,11 @@ export function OrdPaywall({ access }: { access: OrdAccessInfo }) {
     setBusy(true);
     setError(null);
     try {
-      const handle = await startCheckout({});
-      trackEvent("ord_paywall_checkout_started", { embedded: handle.clientSecret !== null });
+      const handle = await startCheckout({ data: { returnTo } });
+      trackEvent(
+        subject === "mek" ? "mek_paywall_checkout_started" : "ord_paywall_checkout_started",
+        { embedded: handle.clientSecret !== null },
+      );
       if (handle.alreadyOwned) {
         window.location.reload();
         return;
@@ -60,11 +79,13 @@ export function OrdPaywall({ access }: { access: OrdAccessInfo }) {
           <Lock className="h-5 w-5" aria-hidden />
         </span>
         <h2 className="mt-4 text-xl font-semibold text-[var(--cream)]">
-          Du har klarat de {FREE_ORD_LIMIT} gratis orden
+          {subject === "mek"
+            ? `Du har klarat de ${FREE_MEK_LIMIT} gratis MEK-uppgifterna`
+            : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Lås upp hela ordlistan med ett engångsköp{price ? ` på ${price}` : ""}. Inga
-          prenumerationer, och den är din för alltid.
+          Lås upp hela ordlistan och all MEK-övning med ett engångsköp
+          {price ? ` på ${price}` : ""}. Inga prenumerationer, och det är ditt för alltid.
         </p>
       </div>
 
@@ -101,7 +122,7 @@ export function OrdPaywall({ access }: { access: OrdAccessInfo }) {
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
             ) : price ? (
-              `Lås upp hela ordlistan · ${price}`
+              `Lås upp ordlistan och MEK · ${price}`
             ) : (
               "Köp är inte tillgängligt just nu"
             )}

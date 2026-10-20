@@ -142,4 +142,6 @@ export const limits = {
    */
   questionVote: { max: 150, windowMs: 60 * 60 * 1000 } as LimitConfig, // 150/h
   questionVoteIp: { max: 400, windowMs: 60 * 60 * 1000 } as LimitConfig, // 400/h
+  /** Ett sparat träningssvar. Den som svarar snabbt hinner kanske 300 i timmen. */
+  trainingAnswer: { max: 600, windowMs: 60 * 60 * 1000 } as LimitConfig, // 600/h
 };

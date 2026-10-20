@@ -1,5 +1,27 @@
 import { describe, expect, it } from "vitest";
-import { FREE_ORD_LIMIT, cappedBatchSize, ordAccess } from "./ord-paywall";
+import {
+  FREE_MEK_LIMIT,
+  FREE_ORD_LIMIT,
+  cappedBatchSize,
+  mekAccess,
+  ordAccess,
+} from "./ord-paywall";
+
+describe("mekAccess", () => {
+  it("släpper igenom de första 40 MEK-uppgifterna och låser sedan", () => {
+    expect(FREE_MEK_LIMIT).toBe(40);
+    expect(mekAccess(39, false)).toMatchObject({ locked: false, freeRemaining: 1 });
+    expect(mekAccess(40, false)).toMatchObject({ locked: true, freeRemaining: 0 });
+  });
+
+  it("ordlisteköpet låser upp MEK", () => {
+    expect(mekAccess(300, true)).toMatchObject({ locked: false, freeRemaining: null });
+  });
+
+  it("kapar en MEK-batch vid gratisgränsen", () => {
+    expect(cappedBatchSize(20, mekAccess(32, false))).toBe(8);
+  });
+});
 
 describe("ordAccess", () => {
   it("släpper igenom de första 40 orden", () => {

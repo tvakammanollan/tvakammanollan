@@ -5,8 +5,19 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
-import { ORD_PRODUCT_TAG, ordAccess, type OrdAccess } from "./ord-paywall";
-import { hasOrdAccess, isOrdSession, markOrdPaid } from "./ord-paywall.server";
+import {
+  ORD_PRODUCT_TAG,
+  PAYWALL_RETURN_PATHS,
+  mekAccess,
+  ordAccess,
+  type OrdAccess,
+} from "./ord-paywall";
+import {
+  countMekTrainingAnswers,
+  hasOrdAccess,
+  isOrdSession,
+  markOrdPaid,
+} from "./ord-paywall.server";
 import {
   createCheckoutSession,
   resolveOrdPrice,
@@ -41,6 +52,28 @@ export interface OrdAccessInfo extends OrdAccess {
   isAnonymous: boolean;
 }
 
+/** Priset och kassans nyckel till en åtkomst. Den som köpt slipper Stripe-anropet. */
+async function withPrice(access: OrdAccess, claims: unknown): Promise<OrdAccessInfo> {
+  let amount: number | null = null;
+  let currency = "SEK";
+  if (!access.owned && stripeConfigured()) {
+    try {
+      const price = await resolveOrdPrice();
+      amount = price.amount;
+      currency = price.currency.toUpperCase();
+    } catch (e) {
+      console.error("[ord-paywall] kunde inte läsa priset:", e instanceof Error ? e.message : e);
+    }
+  }
+  return {
+    ...access,
+    amount,
+    currency,
+    publishableKey: stripePublishableKey(),
+    isAnonymous: (claims as { is_anonymous?: boolean } | undefined)?.is_anonymous === true,
+  };
+}
+
 /** Var står användaren: antal svar, köpt eller inte, och vad köpet kostar. */
 export const getOrdAccess = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -54,27 +87,19 @@ export const getOrdAccess = createServerFn({ method: "GET" })
         .eq("user_id", userId)
         .maybeSingle(),
     ]);
-    const access = ordAccess(stats.data?.total_count ?? 0, owned);
+    return withPrice(ordAccess(stats.data?.total_count ?? 0, owned), claims);
+  });
 
-    let amount: number | null = null;
-    let currency = "SEK";
-    // Priset behövs bara när kassan kan bli aktuell; den som köpt slipper anropet.
-    if (!owned && stripeConfigured()) {
-      try {
-        const price = await resolveOrdPrice();
-        amount = price.amount;
-        currency = price.currency.toUpperCase();
-      } catch (e) {
-        console.error("[ord-paywall] kunde inte läsa priset:", e instanceof Error ? e.message : e);
-      }
-    }
-    return {
-      ...access,
-      amount,
-      currency,
-      publishableKey: stripePublishableKey(),
-      isAnonymous: (claims as { is_anonymous?: boolean } | undefined)?.is_anonymous === true,
-    };
+/** Samma sak för MEK-träningen. Köpet är detsamma, räkningen är MEK-svar. */
+export const getMekAccess = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<OrdAccessInfo> => {
+    const { userId, claims } = context;
+    const [owned, answered] = await Promise.all([
+      hasOrdAccess(userId),
+      countMekTrainingAnswers(userId),
+    ]);
+    return withPrice(mekAccess(answered, owned), claims);
   });
 
 export interface OrdCheckoutHandle {
@@ -84,7 +109,8 @@ export interface OrdCheckoutHandle {
 }
 
 /**
- * Öppnar kassan för Hela Ordlistan.
+ * Öppnar kassan för Hela Ordlistan + MEK. `returnTo` är sidan köpet gjordes
+ * från; där bekräftas det när köparen kommer tillbaka.
  *
  * Köpet knyts till användaren via `metadata.user_id`, satt här i servern ur
  * den verifierade tokenen och aldrig ur klienten. Webhooken läser det värdet
@@ -92,7 +118,12 @@ export interface OrdCheckoutHandle {
  */
 export const startOrdCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<OrdCheckoutHandle> => {
+  .inputValidator((input: unknown) =>
+    z
+      .object({ returnTo: z.enum(PAYWALL_RETURN_PATHS).optional().default("/ord") })
+      .parse(input ?? {}),
+  )
+  .handler(async ({ data, context }): Promise<OrdCheckoutHandle> => {
     const { userId, claims } = context;
     assertRateLimit(`ord-checkout:${userId}`, limits.ordCheckout);
 
@@ -109,7 +140,7 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
       throw new Error(CHECKOUT_ERROR);
     });
     const origin = siteOrigin();
-    const returnUrl = `${origin}/ord?kop=klart&session_id={CHECKOUT_SESSION_ID}`;
+    const returnUrl = `${origin}${data.returnTo}?kop=klart&session_id={CHECKOUT_SESSION_ID}`;
     const base = {
       mode: "payment",
       line_items: [{ price: price.priceId, quantity: 1 }],
@@ -141,7 +172,7 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
       const s = await createCheckoutSession({
         ...base,
         success_url: returnUrl,
-        cancel_url: `${origin}/ord`,
+        cancel_url: `${origin}${data.returnTo}`,
       });
       if (!s.url) throw new Error("session utan url");
       return { clientSecret: null, url: s.url, alreadyOwned: false };
@@ -152,7 +183,7 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
   });
 
 /**
- * Bekräftar köpet när köparen kommer tillbaka till /ord. Reserv för webhooken:
+ * Bekräftar köpet när köparen kommer tillbaka till /ord eller MEK-övningen. Reserv för webhooken:
  * sessionen måste vara betald, vara ordlistans och höra till just den här
  * användaren, annars sker ingenting.
  */

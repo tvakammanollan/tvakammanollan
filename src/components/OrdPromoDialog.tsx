@@ -5,7 +5,7 @@ import { FREE_ORD_LIMIT } from "@/lib/ord-paywall";
 import { formatInt, formatMoney } from "@/lib/sv-format";
 
 /**
- * Påminnelsen om Hela Ordlistan. Ren presentation: `CoachingPrompt` äger
+ * Påminnelsen om Hela Ordlistan (köpet låser även upp MEK-övningen). Ren presentation: `CoachingPrompt` äger
  * beslutet att visa den, `ord-promo.ts` räkningen. Knappen går till /ord, där
  * kassan redan finns, så det finns fortfarande bara en väg in i Stripe.
  */
@@ -73,6 +73,7 @@ export function OrdPromoDialog({
             {[
               "Över 10 000 ord ur riktiga högskoleprov",
               "Repetition som tar de ord du missar igen",
+              "All MEK-övning ingår i samma köp",
               price
                 ? `${price} en gång, ingen prenumeration`
                 : "Ett engångsköp, ingen prenumeration",
