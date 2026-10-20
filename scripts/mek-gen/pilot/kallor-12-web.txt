@@ -1,0 +1,39 @@
+# Batch 12: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/hjarta-och-blodkarl/blodtryck/hogt-blodtryck/ | 1177 Högt blodtryck | 1177
+https://www.1177.se/sjukdomar--besvar/hjarta-och-blodkarl/blodtryck/lagt-blodtryck/ | 1177 Lågt blodtryck | 1177
+https://www.1177.se/sjukdomar--besvar/hjarta-och-blodkarl/hjartrytm/formaksflimmer/ | 1177 Förmaksflimmer | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/klada-utslag-och-eksem/atopiskt-eksem--bojveckseksem/ | 1177 Atopiskt eksem | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/bolder-knolar-och-akne/akne/ | 1177 Akne | 1177
+https://www.1177.se/sjukdomar--besvar/mage-och-tarm/magsjuka-och-krakningar/magsjuka--diarre-och-krakningar/ | 1177 Magsjuka | 1177
+https://www.1177.se/sjukdomar--besvar/hjarta-och-blodkarl/hjartrytm/hjartklappning/ | 1177 Hjärtklappning | 1177
+https://www.1177.se/sjukdomar--besvar/psykiska-sjukdomar-och-besvar/depression/ | 1177 Depression | 1177
+https://www.1177.se/sjukdomar--besvar/psykiska-sjukdomar-och-besvar/angest/ | 1177 Ångest | 1177
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-uppgifter/ | Riksdagen Riksdagens uppgifter | Sveriges riksdag
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/arbetet-i-riksdagen/ | Riksdagen Arbetet i riksdagen | Sveriges riksdag
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/utskotten-och-eu-namnden/ | Riksdagen Utskotten och EU-nämnden | Sveriges riksdag
+https://www.riksdagen.se/sv/ledamoter-och-partier/sa-arbetar-partierna/ | Riksdagen Så arbetar partierna | Sveriges riksdag
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/demokrati/ | Riksdagen Demokrati | Sveriges riksdag
+https://www.riksbank.se/sv/penningpolitik/inflationsmalet/vad-ar-inflation/ | Riksbanken Vad är inflation | Riksbanken
+https://www.riksbank.se/sv/penningpolitik/inflationsmalet/hur-mats-inflation/ | Riksbanken Hur mäts inflation | Riksbanken
+https://www.riksbank.se/sv/penningpolitik/vad-ar-penningpolitik/vad-ar-styrrantan/ | Riksbanken Vad är styrräntan | Riksbanken
+https://www.riksbank.se/sv/penningpolitik/vad-ar-penningpolitik/sa-paverkar-penningpolitiken-inflationen/ | Riksbanken Så påverkar penningpolitiken inflationen | Riksbanken
+https://historiska.se/utforska-historien/kunskapsbank/ganggrifter-monumentala-stenaldersgravar/ | Historiska Gånggrifter | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/bildstenar-och-hallristningar/ | Historiska Bildstenar och hällristningar | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/de-aldsta-metallerna/ | Historiska De äldsta metallerna | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/romarrikets-inflytande/ | Historiska Romarrikets inflytande | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/intro-till-jarnalder/ | Historiska Yngre järnålder | Historiska museet
+https://www.nrm.se/fakta-om-naturen/ekosystem | NRM Ekosystem | Naturhistoriska riksmuseet
+https://www.nrm.se/fakta-om-naturen/evolution | NRM Evolution | Naturhistoriska riksmuseet
+https://www.naturvardsverket.se/amnesomraden/invasiva-frammande-arter/ | Naturvårdsverket Invasiva främmande arter | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/pollinering/ | Naturvårdsverket Pollinering | Naturvårdsverket
+https://www.isof.se/svenska-spraket/lar-dig-mer-om-svenska-spraket/svenskans-historia | Isof Svenskans historia | Institutet för språk och folkminnen
+https://www.isof.se/svenska-spraket/lar-dig-mer-om-svenska-spraket/spar-av-andra-sprak-i-svenskan | Isof Spår av andra språk i svenskan | Institutet för språk och folkminnen
+https://www.isof.se/svenska-spraket/klarsprak | Isof Klarspråk | Institutet för språk och folkminnen
+https://www.domstol.se/om-sveriges-domstolar/namndeman----ett-fortroendeuppdrag/ | Domstol Nämndeman | Sveriges Domstolar
+https://www.domstol.se/amnen/brott-och-straff/straff-och-pafoljder/pafoljder-for-unga/ | Domstol Påföljder för unga | Sveriges Domstolar
+https://www.domstol.se/amnen/hyra-bostadsratt-och-arrende/hyra-av-bostad-och-lokal/hyra-i-andra-hand/ | Domstol Hyra i andra hand | Sveriges Domstolar
+https://www.studera.nu/att-valja-utbildning/distansstudier/studera-pa-distans/ | Studera.nu Studera på distans | Universitets- och högskolerådet
+https://www.studera.nu/att-valja-utbildning/arbetsmarknad/etableringsgrad/ | Studera.nu Får jag jobb efter utbildningen | Universitets- och högskolerådet
+https://www.studera.nu/att-valja-utbildning/smart-studieval/undersok-utbildningens-kvalitet/ | Studera.nu Utbildningens kvalitet | Universitets- och högskolerådet
+https://www.vasamuseet.se/sv/utforska/Vasas-historia/korta-fakta-om-vasa/ | Vasamuseet Korta fakta om Vasa | Vasamuseet
+https://www.raa.se/hitta-information/runor/ | RAÄ Runor | Riksantikvarieämbetet

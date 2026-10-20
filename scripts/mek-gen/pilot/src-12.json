@@ -1,0 +1,2982 @@
+[
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Högt blodtryck"
+},
+"text": "Ett för högt blodtryck ger sällan några besvär, men ibland en lätt huvudvärk eller trötthet. Eftersom sådana besvär också kan ha helt andra orsaker är det enda säkra sättet att få veta att _____ trycket.",
+"key": [
+"mäta"
+],
+"distractors": [
+[
+"sänka"
+],
+[
+"höja"
+],
+[
+"gissa"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är mäta. Om symtomen inte säger något säkert måste trycket kontrolleras med en mätning. Att sänka eller höja trycket ger ingen kunskap om det, och att gissa är motsatsen till att få veta säkert.",
+"id": "p12-01"
+},
+{
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "1177 Lågt blodtryck"
+},
+"text": "Blodtrycket är inte detsamma hela tiden utan skiftar under dygnet och genom livet. Det stiger vid fysisk ansträngning och när man är stressad eller upprörd, och det _____ när man slappnar av och vilar.",
+"key": [
+"sjunker"
+],
+"distractors": [
+[
+"stiger"
+],
+[
+"stabiliseras"
+],
+[
+"fördubblas"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är sjunker. Och ställer ansträngning och stress, då trycket stiger, mot vila, då det alltså går ned. Stiger och fördubblas säger motsatsen, och stabiliseras beskriver ingen förändring i motsatt riktning.",
+"id": "p12-02"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Akne"
+},
+"text": "Akne är vanligast i tonåren, eftersom hormonförändringarna i puberteten får talgkörtlarna att bilda mer talg. Hos de allra flesta _____ besvären när puberteten är över, men en del får akne först som vuxna.",
+"key": [
+"avtar"
+],
+"distractors": [
+[
+"blossar upp"
+],
+[
+"börjar"
+],
+[
+"sprids"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är avtar. Men en del får akne först som vuxna ställs mot det vanliga, alltså att besvären går över efter puberteten. Förvärras och börjar säger motsatsen, och sprids passar inte med att orsaken försvinner.",
+"id": "p12-03"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Magsjuka"
+},
+"text": "Magsjukan kommer ofta plötsligt men brukar gå över efter ett par dagar. Det viktigaste är att dricka mer än vanligt, eftersom för lite vätska kan leda till _____, och äldre och barn är särskilt känsliga.",
+"key": [
+"uttorkning"
+],
+"distractors": [
+[
+"övervikt"
+],
+[
+"feber"
+],
+[
+"förstoppning"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är uttorkning. För lite vätska torkar ut kroppen, och det är därför man ska dricka mer. Övervikt och förstoppning är inte följder av vätskebrist vid magsjuka, och feber orsakas inte av att man dricker för lite.",
+"id": "p12-04"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Vävning"
+},
+"text": "Vävning är en av de äldsta textila teknikerna. Den går ut på att två trådsystem, varp och inslag, _____ i rät vinkel mot varandra så att det bildas ett tyg.",
+"key": [
+"flätas samman"
+],
+"distractors": [
+[
+"klipps isär"
+],
+[
+"färgas om"
+],
+[
+"rullas upp"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är flätas samman. Ett tyg bildas när trådarna korsar och griper i varandra. Klipps isär är motsatsen, och att färga om eller rulla upp trådar ger inget tyg.",
+"id": "p12-05"
+},
+{
+"amne": "kul",
+"genre": "aka",
+"source": {
+"title": "Dans"
+},
+"text": "I grunden är dans rörelser av kroppen, som ofta följer en rytm eller ett musikstycke. Hos många folk har dansen varit en viktig del av den religiösa _____, och redan under stenåldern dansade man i samband med riter.",
+"key": [
+"kulten"
+],
+"distractors": [
+[
+"kritiken"
+],
+[
+"reformen"
+],
+[
+"censuren"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är kulten. Riter och religiösa handlingar utgör en kult, och därför hör dansen till den. Religiös kritik, reform eller censur är inget som dans är en del av.",
+"id": "p12-06"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Riksdagen Riksdagens uppgifter"
+},
+"text": "Riksdagen stiftar lagarna och bestämmer över statsbudgeten, alltså vad staten tar in och lägger ut. Riksdagen ska dessutom _____ hur regeringen och statens myndigheter arbetar.",
+"key": [
+"kontrollera"
+],
+"distractors": [
+[
+"bestämma"
+],
+[
+"dölja"
+],
+[
+"förenkla"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är kontrollera. Att granska hur regeringen sköter sig är riksdagens kontrollmakt. Riksdagen bestämmer inte hur regeringen arbetar i detalj, och att dölja eller förenkla arbetet är ingen uppgift.",
+"id": "p12-07"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Riksdagen Demokrati"
+},
+"text": "Demokrati betyder ungefär folkstyre. Tanken är att invånarna ska kunna _____ styret av sitt land, till exempel genom regelbundna val.",
+"key": [
+"påverka"
+],
+"distractors": [
+[
+"förutse"
+],
+[
+"undvika"
+],
+[
+"glömma bort"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är påverka. Folkstyre innebär att invånarna får vara med och bestämma, och val är ett sätt att göra det. Att förutse eller glömma bort hur landet styrs är inte folkstyre, och undvika är motsatsen.",
+"id": "p12-08"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Historiska Gånggrifter"
+},
+"text": "En gånggrift är en grav byggd av stora stenblock som är resta i två rader som leder in till ett gravrum, och graven har sedan _____ av en hög av sten och jord. Flest sådana gravar i landet finns i Falbygden i Västergötland.",
+"key": [
+"täckts över"
+],
+"distractors": [
+[
+"grävts ut"
+],
+[
+"rivits ned"
+],
+[
+"målats om"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är täckts över. En hög av sten och jord läggs över gravrummet och omsluter det. Utgrävning och rivning är motsatsen till att bygga upp en hög, och en hög av jord målar man inte om.",
+"id": "p12-09"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Vasamuseet Korta fakta om Vasa"
+},
+"text": "Regalskeppet Vasa sjönk efter en seglats på bara omkring 20 minuter. Skeppet var _____: det var något för högt och smalt och hade för lite av skrovet under vattnet i förhållande till det som stack upp.",
+"key": [
+"instabilt"
+],
+"distractors": [
+[
+"sjödugligt"
+],
+[
+"överlastat"
+],
+[
+"rangligt"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är instabilt. Kolonet förklarar: ett skepp som är för högt och smalt och har för lite av skrovet under vattnet kränger lätt. Sjödugligt säger motsatsen, överlastat stämmer inte med beskrivningen av formen, och rangligt syftar på dåligt hopsatt, inte på form.",
+"id": "p12-10"
+},
+{
+"amne": "bio",
+"genre": "aka",
+"source": {
+"title": "NRM Ekosystem"
+},
+"text": "Med ekosystem menas de levande varelserna i ett område tillsammans med deras omgivning, och området kan vara en stubbe lika väl som hela planeten. Djur, växter, svampar och mikroorganismer i ett ekosystem är _____ av varandra och påverkar varandra.",
+"key": [
+"beroende"
+],
+"distractors": [
+[
+"oberoende"
+],
+[
+"rädda"
+],
+[
+"okunniga"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är beroende. Och påverkar varandra hör ihop med att arterna behöver varandra för att leva. Oberoende säger motsatsen, och rädda eller okunniga beskriver inget förhållande mellan arterna i ett ekosystem.",
+"id": "p12-11"
+},
+{
+"amne": "bio",
+"genre": "myn",
+"source": {
+"title": "Naturvårdsverket Pollinering"
+},
+"text": "De flesta växter behöver hjälp av djur för att föra pollen mellan blommorna, och här i landet sköts det mest av insekter som vildbin, fjärilar och blomflugor. Pollinatörerna är hotade, och studier visar att de har _____, både som individer och som arter.",
+"key": [
+"minskat"
+],
+"distractors": [
+[
+"ökat"
+],
+[
+"förändrats"
+],
+[
+"spritts"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är minskat. Att pollinatörerna är hotade visar att de blivit färre. Ökat säger motsatsen, och förändrats eller spritts i antal ger ingen mening.",
+"id": "p12-12"
+},
+{
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Rim"
+},
+"text": "Rim innebär att ljud upprepas i ord som står nära varandra. Det används framför allt i verskonsten men också i slagord och reklam, eftersom budskapet då blir lättare att _____.",
+"key": [
+"komma ihåg"
+],
+"distractors": [
+[
+"skriva ned"
+],
+[
+"översätta"
+],
+[
+"stava"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är komma ihåg. Slagord och reklam vill fastna i minnet, och upprepade ljud hjälper till med det. Glömma säger motsatsen, och att skriva ned eller översätta blir inte lättare av rim.",
+"id": "p12-13"
+},
+{
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Studera.nu Studera på distans"
+},
+"text": "De flesta svenska lärosäten erbjuder distanskurser. En del distansutbildningar är helt webbaserade, medan andra har _____ träffar på plats eller över nätet, och det är lärosätet som bestämmer hur många de ska vara.",
+"key": [
+"obligatoriska"
+],
+"distractors": [
+[
+"digitala"
+],
+[
+"hemliga"
+],
+[
+"avgiftsfria"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är obligatoriska. Medan ställer de helt webbaserade utbildningarna mot sådana där man måste träffas, och lärosätet bestämmer hur många träffar som krävs. Frivilliga träffar bestämmer inte lärosätet antalet av på samma sätt, och hemliga eller avgiftsfria träffar är ingen motsats till helt webbaserat.",
+"id": "p12-14"
+},
+{
+"amne": "utb",
+"genre": "aka",
+"source": {
+"title": "Studievägledare"
+},
+"text": "En studie- och yrkesvägledare hjälper människor att välja utbildning och arbete. Arbetet blir mer omfattande när skolan och arbetslivet _____, och vägledaren kan arbeta i allt från grundskola till högskola.",
+"key": [
+"utvecklas"
+],
+"distractors": [
+[
+"stagnerar"
+],
+[
+"försvinner"
+],
+[
+"isoleras"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är utvecklas. Uppgifterna växer i takt med något som också växer och förändras. Stagnerar och försvinner skulle snarare minska behovet av vägledning, och isoleras ger ingen mening.",
+"id": "p12-15"
+},
+{
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Riksbanken Vad är inflation"
+},
+"text": "Inflation innebär att den allmänna prisnivån stiger, så att man får färre varor för samma mängd pengar. Om bara några enstaka varor blir dyrare, till exempel för att de är särskilt _____ just då, är det däremot inte inflation.",
+"key": [
+"efterfrågade"
+],
+"distractors": [
+[
+"billiga"
+],
+[
+"omoderna"
+],
+[
+"onyttiga"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är efterfrågade. En vara blir dyrare när många vill köpa den. Billiga är motsatsen, en sällsynt vara behöver inte bli efterfrågad just då, och onyttiga varor blir inte dyrare för det.",
+"id": "p12-16"
+},
+{
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Domstol Hyra i andra hand"
+},
+"text": "Den som låter någon annan bo självständigt i sin lägenhet hyr ut den i andra hand. För det behövs hyresvärdens _____, och får man inte det kan man vända sig till hyresnämnden.",
+"key": [
+"tillstånd"
+],
+"distractors": [
+[
+"förbud"
+],
+[
+"böter"
+],
+[
+"nyckel"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är tillstånd. Det man måste få av hyresvärden och kan begära hos hyresnämnden om värden säger nej är ett godkännande. Förbud och böter är motsatsen, och en nyckel söker man inte hos hyresnämnden.",
+"id": "p12-17"
+},
+{
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Logik"
+},
+"text": "I vid mening studerar logiken vad det är som gör en argumentation hållbar. Den studerar slutledningar utifrån deras form och inte deras _____, och den går tillbaka på Aristoteles studier av syllogismer.",
+"key": [
+"innehåll"
+],
+"distractors": [
+[
+"längd"
+],
+[
+"ursprung"
+],
+[
+"giltighet"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är innehåll. Och inte ställer form mot dess motsats, vad resonemanget handlar om. Längd och ursprung är inte motsatsen till form, och giltighet är just vad logiken undersöker.",
+"id": "p12-18"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "1177 Ångest"
+},
+"text": "Ångest är oro som sätter sig i kroppen. Den kan vara mycket obehaglig och skrämmande men är inte _____, och det finns både hjälp att få och mycket man kan göra själv.",
+"key": [
+"skadlig"
+],
+"distractors": [
+[
+"smärtsam"
+],
+[
+"verklig"
+],
+[
+"ovanlig"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är skadlig. Men ställer hur skrämmande ångesten känns mot att den inte är skadlig. Smärtsam och verklig är ångest, så de passar inte med men inte, och ovanlig ger ingen motsats till obehaglig.",
+"id": "p12-19"
+},
+{
+"amne": "spr",
+"genre": "aka",
+"source": {
+"title": "Isof Spår av andra språk i svenskan"
+},
+"text": "Svenskan påverkas av de språk den möter, och vår _____ till de språken påverkar hur vi tar emot lånord. Förr ansågs exempelvis formerna temata och kolleger vara de enda korrekta, eftersom formerna förknippades med de klassiska språken och med bildning.",
+"key": [
+"attityd"
+],
+"distractors": [
+[
+"skam"
+],
+[
+"skuld"
+],
+[
+"grammatik"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är attityd. Exemplet visar att det var synen på språken, förknippade med bildning, som styrde vilka former man godtog. Avstånd och skuld till ett språk ger ingen mening, och grammatiken är inte något vi har till andra språk.",
+"id": "p12-20"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Förmaksflimmer"
+},
+"text": "Vid förmaksflimmer slår hjärtat oregelbundet. En del har det hela tiden, vilket kallas permanent förmaksflimmer, medan andra får det i _____. Somliga märker inget eller bara _____ besvär och upptäcker det av en slump, till exempel vid en undersökning för något annat.",
+"key": [
+"attacker",
+"otydliga"
+],
+"distractors": [
+[
+"anfall",
+"kraftiga"
+],
+[
+"arv",
+"vaga"
+],
+[
+"kärlen",
+"plågsamma"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är attacker och otydliga. Medan ställer det ständiga flimret mot ett som kommer och går, och anfall betyder samma sak. Den som upptäcker det av en slump har haft små eller inga besvär, och vaga säger detsamma. Arv och kärlen är inget man får flimmer i, och kraftiga eller plågsamma besvär märker man.",
+"id": "p12-21"
+},
+{
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "1177 Atopiskt eksem"
+},
+"text": "Atopiskt eksem börjar ofta före två års ålder. Hos skolbarn sitter besvären ofta i vecken där lederna _____, och därför kallas sjukdomen också böjveckseksem. Eksemet består av torra hudpartier som ofta _____.",
+"key": [
+"böjs",
+"kliar"
+],
+"distractors": [
+[
+"viks",
+"läker"
+],
+[
+"sträcks",
+"svider"
+],
+[
+"växer",
+"glänser"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är böjs och kliar. Namnet böjveckseksem kommer av att besvären sitter där kroppen böjer sig, och viks fungerar också. Torra hudpartier i ett eksem besvärar genom att klia, och svider ligger nära. Sträcks och växer förklarar inte namnet, och läker eller glänser är inga besvär.",
+"id": "p12-22"
+},
+{
+"amne": "kul",
+"genre": "aka",
+"source": {
+"title": "Nationalromantik"
+},
+"text": "Nationalromantiken, som blomstrade från 1800-talet till en bit in på 1900-talet, var nationalismens uttryck inom _____. Natur och landsbygd _____, och i Sverige skapades både Skansen och Nationalmuseum under perioden.",
+"key": [
+"konsten",
+"hyllades"
+],
+"distractors": [
+[
+"kulturen",
+"föraktades"
+],
+[
+"ekonomin",
+"prisades"
+],
+[
+"armén",
+"övergavs"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är konsten och hyllades. En konstnärlig rörelse är nationalismens uttryck i konsten, och kulturen passar också. En romantik som skapar Skansen och Nationalmuseum lyfter fram det egna landets natur och landsbygd, och prisades betyder samma sak. Ekonomin och armén har inga konstnärliga rörelser, och föraktades eller övergavs strider mot romantiken.",
+"id": "p12-23"
+},
+{
+"amne": "kul",
+"genre": "myn",
+"source": {
+"title": "RAÄ Runor"
+},
+"text": "Över 4 000 svenska runinskrifter är kända, och de äldsta är från 200-talet. De hör till de äldsta _____ originaldokumenten i landet, och sedan 2020 går det att söka bland dem i en _____ tjänst.",
+"key": [
+"bevarade",
+"digital"
+],
+"distractors": [
+[
+"kvarvarande",
+"tryckt"
+],
+[
+"förstörda",
+"webbaserad"
+],
+[
+"översatta",
+"muntlig"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"a"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är bevarade och digital. Inskrifter som finns kvar sedan 200-talet är bevarade dokument, och kvarvarande betyder samma sak. En tjänst som man söker i är en databas på nätet, och webbaserad säger detsamma. Förstörda och översatta dokument är inte originalen som finns kvar, och i en tryckt eller muntlig tjänst kan man inte söka.",
+"id": "p12-24"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Riksdagen Arbetet i riksdagen"
+},
+"text": "Riksdagen har 349 ledamöter som väljs vart fjärde år, och den som vill bli ledamot behöver ha rösträtt och vara _____ av ett parti. Mycket av arbetet sker i partigrupperna och i de 15 utskotten, där ledamöterna _____ alla beslut som riksdagen sedan fattar.",
+"key": [
+"nominerad",
+"bereder"
+],
+"distractors": [
+[
+"utsedd",
+"verkställer"
+],
+[
+"anställd",
+"förbereder"
+],
+[
+"utesluten",
+"ogiltigförklarar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"po",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är nominerad och bereder. Partiet sätter upp sina kandidater till valet, och utsedd passar också. Beslut som riksdagen sedan fattar har först arbetats fram i utskotten, och förbereder betyder samma sak. Man blir inte anställd eller utesluten för att kunna bli ledamot, och beslut som ännu inte fattats kan inte verkställas eller ogiltigförklaras.",
+"id": "p12-25"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Riksdagen Så arbetar partierna"
+},
+"text": "Ledamöter från samma parti bildar tillsammans en partigrupp, och grupperna har en stark _____ i riksdagsarbetet. I gruppen går man igenom de stora frågorna innan ledamöterna bestämmer sig, och gruppledaren ansvarar bland annat för att _____ det löpande arbetet.",
+"key": [
+"position",
+"samordna"
+],
+"distractors": [
+[
+"inflytande",
+"försvåra"
+],
+[
+"svaghet",
+"leda"
+],
+[
+"tystnad",
+"avbryta"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är position och samordna. Grupper där alla viktiga frågor avgörs har stor betydelse, och inflytande ligger nära. En gruppledare håller ihop gruppens arbete, och leda ligger nära. En stark svaghet eller tystnad ger ingen mening, och en ledare försvårar eller avbryter inte arbetet.",
+"id": "p12-26"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Historiska Bildstenar och hällristningar"
+},
+"text": "Långt innan det fanns skrift i Norden högg människor in bilder i berg och stenar. De flesta av dessa förhistoriska hällristningar är från _____, och de ligger ofta nära vatten, längre norrut vid älvarnas _____.",
+"key": [
+"bronsåldern",
+"forsar"
+],
+"distractors": [
+[
+"förhistorisk tid",
+"broar"
+],
+[
+"medeltiden",
+"strömmar"
+],
+[
+"1800-talet",
+"hamnar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är bronsåldern och forsar. Bilderna höggs in innan det fanns skrift, alltså under förhistorisk tid, och de flesta är från bronsåldern. Vid en älv ligger platser nära vattnet där det strömmar och forsar. Medeltiden och 1800-talet är inte förhistorisk tid, och broar eller hamnar fanns inte på förhistoriska platser vid älvarna.",
+"id": "p12-27"
+},
+{
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Historiska De äldsta metallerna"
+},
+"text": "Sveriges äldsta fynd av metall är från omkring 4000–3300 f.Kr. och visar hur tidiga samhällen _____ och påverkades av det nya materialet. Det är framför allt kopparföremål som yxor, knivar och pärlor, men något eget metallhantverk i landet är inte _____ förrän i slutet av stenåldern.",
+"key": [
+"använde",
+"belagt"
+],
+"distractors": [
+[
+"brukade",
+"förbjudet"
+],
+[
+"undvek",
+"påvisat"
+],
+[
+"glömde",
+"efterfrågat"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är använde och belagt. Föremålen visar hur människor tog materialet i bruk, och brukade betyder samma sak. Men ställer de tidiga föremålen mot att det inte finns bevis för eget hantverk förrän senare, och påvisat säger detsamma. Undvek och glömde strider mot att föremålen användes, och ett hantverk är inte förbjudet eller efterfrågat förrän något.",
+"id": "p12-28"
+},
+{
+"amne": "bio",
+"genre": "aka",
+"source": {
+"title": "NRM Evolution"
+},
+"text": "Evolutionen beskriver hur levande varelser förändras över generationer, bland annat genom naturligt urval och genetisk drift. En art kan bara förändras om det finns en _____ av egenskaper som kan _____, så att vissa av dem kan väljas ut.",
+"key": [
+"variation",
+"ärvas"
+],
+"distractors": [
+[
+"mångfald",
+"läras ut"
+],
+[
+"brist",
+"nedärvas"
+],
+[
+"likhet",
+"glömmas"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är variation och ärvas. Om vissa egenskaper ska kunna väljas ut måste det finnas skillnader att välja mellan, och mångfald passar också. Evolution kräver att egenskaperna förs vidare till nästa generation, och nedärvas betyder samma sak. Brist och likhet ger inget att välja mellan, och egenskaper som lärs ut eller glöms förs inte vidare genom arv.",
+"id": "p12-29"
+},
+{
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Prosa"
+},
+"text": "Prosa är text som inte är bunden av metriska regler, och den kallas därför också _____ form. Den kan vara både sakprosa och skönlitteratur, och om den blir rytmisk i sin meningsbyggnad närmar den sig _____.",
+"key": [
+"obunden",
+"poesin"
+],
+"distractors": [
+[
+"fri",
+"journalistiken"
+],
+[
+"bunden",
+"lyriken"
+],
+[
+"dold",
+"vetenskapen"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är obunden och poesin. Text som inte är bunden av regler för versmått är i obunden form, och fri ligger nära. Rytm är det som kännetecknar vers, så rytmisk prosa närmar sig poesin eller lyriken. Bunden är motsatsen, dold ger ingen mening, och journalistik eller vetenskap blir inte rytmisk.",
+"id": "p12-30"
+},
+{
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Ungdomslitteratur"
+},
+"text": "Ungdomslitteraturen riktar sig främst till läsare mellan 13 och 19 år, medan böcker för yngre läsare oftast kallas _____. Utgivningen har ökat kraftigt, bland annat eftersom fler _____ har börjat läsa ungdomsböcker.",
+"key": [
+"barnlitteratur",
+"vuxna"
+],
+"distractors": [
+[
+"barnböcker",
+"författare"
+],
+[
+"vuxenlitteratur",
+"äldre"
+],
+[
+"facklitteratur",
+"förlag"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är barnlitteratur och vuxna. Böcker för läsare yngre än tonåringar är barnlitteratur, och barnböcker betyder samma sak. Om fler utanför målgruppen läser böckerna ökar utgivningen, och äldre läsare passar också. Vuxenlitteratur och facklitteratur är inte böcker för de yngsta, och författare eller förlag läser inte böckerna som publik.",
+"id": "p12-31"
+},
+{
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Studera.nu Får jag jobb efter utbildningen"
+},
+"text": "Etableringsgraden visar hur stor del av de examinerade som har _____ ett tag efter examen, och måttet visar därmed hur väl utbildningen _____ arbetsmarknadens behov.",
+"key": [
+"fått jobb",
+"motsvarar"
+],
+"distractors": [
+[
+"börjat arbeta",
+"ignorerar"
+],
+[
+"fått betyg",
+"svarar mot"
+],
+[
+"skaffat barn",
+"skapar"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är fått jobb och motsvarar. Att etablera sig efter en utbildning betyder att få arbete, och börjat arbeta säger samma sak. Om många får arbete passar utbildningen det arbetsmarknaden efterfrågar, och svarar mot betyder detsamma. Betyg och barn har inget med etablering på arbetsmarknaden att göra, och en utbildning som ignorerar eller skapar behoven mäts inte på det sättet.",
+"id": "p12-32"
+},
+{
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Riksbanken Hur mäts inflation"
+},
+"text": "Inflationen mäts vanligen genom att man med ett prisindex räknar ut hur prisnivån har _____ under en tolvmånadersperiod. Riksbankens mål är att inflationen ska vara två procent per år, mätt med ett index där effekten av ändrade boräntor har _____.",
+"key": [
+"förändrats",
+"räknats bort"
+],
+"distractors": [
+[
+"ändrats",
+"fördubblats"
+],
+[
+"bevarats",
+"exkluderats"
+],
+[
+"glömts",
+"lagts till"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är förändrats och räknats bort. Inflation är hur mycket priserna har rört sig, och ändrats betyder samma sak. Ett index utan effekten av boräntor har tagit bort den delen, och exkluderats säger detsamma. Bevarats och glömts mäter ingen förändring, och fördubblats eller lagts till stämmer inte med ett index där effekten inte räknas med.",
+"id": "p12-33"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Riksbanken Vad är styrräntan"
+},
+"text": "Styrräntan är Riksbankens viktigaste verktyg. När den höjs blir det dyrare att låna, människor och företag handlar mindre och inflationen _____. När den i stället sänks handlar man mer, och inflationen _____.",
+"key": [
+"dämpas",
+"ökar"
+],
+"distractors": [
+[
+"avtar",
+"sjunker"
+],
+[
+"stiger",
+"tar fart"
+],
+[
+"fördubblas",
+"stannar av"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"ors",
+"kon"
+],
+"explanation": "Rätt svar är dämpas och ökar. Om folk handlar mindre stiger priserna långsammare, och avtar säger samma sak. I stället ställer sänkningen mot höjningen, så när man handlar mer går inflationen upp, och tar fart betyder detsamma. Stiger och fördubblas strider mot att man handlar mindre, och sjunker eller stannar av strider mot att man handlar mer.",
+"id": "p12-34"
+},
+{
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Villkorlig dom"
+},
+"text": "Den som får villkorlig dom får en _____ på två år, då hen inte får begå nya brott. Den används när det inte bedöms räcka med _____, och i Sverige infördes den 1906.",
+"key": [
+"prövotid",
+"böter"
+],
+"distractors": [
+[
+"provtid",
+"fängelse"
+],
+[
+"semester",
+"dagsböter"
+],
+[
+"belöning",
+"livstid"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är prövotid och böter. En tid då den dömde ska visa att hen inte begår nya brott är en prövotid, och provtid betyder samma sak. Villkorlig dom är strängare än det lindrigaste straffet, så den används när böter eller dagsböter inte räcker. Semester och belöning är inga påföljder, och fängelse eller livstid är strängare straff än villkorlig dom.",
+"id": "p12-35"
+},
+{
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Fenomenologi"
+},
+"text": "Fenomenologin är läran om fenomen, alltså om hur saker _____ för oss. Den undersöker särskilt förhållandet mellan varseblivningen och det som varseblivs, och enligt den går det inte att veta hur tingen är i sig själva, eftersom all kunskap _____ genom erfarenheten.",
+"key": [
+"framträder",
+"förmedlas"
+],
+"distractors": [
+[
+"visar sig",
+"förhindras"
+],
+[
+"säljs",
+"kommer"
+],
+[
+"kostar",
+"raderas"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"def",
+"ors"
+],
+"explanation": "Rätt svar är framträder och förmedlas. Fenomen är det som visar sig, alltså hur saker framträder för oss. Eftersom kunskapen alltid går via erfarenheten kan man inte nå tinget i sig, och kommer genom passar också. Saker säljs eller kostar inte för oss i filosofisk mening, och kunskap som förhindras eller raderas kan inte vara all kunskap.",
+"id": "p12-36"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Kamouflage"
+},
+"text": "Med kamouflage kan man _____ sig i omgivningen, både för att undgå upptäckt och för att förvirra en fiende. I naturen har vissa djur, som kameleonter, ett _____ kamouflage som kan byta färg vid behov.",
+"key": [
+"dölja",
+"aktivt"
+],
+"distractors": [
+[
+"gömma",
+"passivt"
+],
+[
+"visa",
+"föränderligt"
+],
+[
+"värma",
+"målat"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"def",
+"def"
+],
+"explanation": "Rätt svar är dölja och aktivt. Att inte bli upptäckt kräver att man smälter in i omgivningen, och gömma betyder samma sak. Ett kamouflage som kan byta färg när det behövs är aktivt, och föränderligt säger detsamma. Visa och värma sig är motsatsen respektive irrelevant, och passivt eller målat kamouflage byter inte färg.",
+"id": "p12-37"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "1177 Depression"
+},
+"text": "Alla är ledsna ibland, men den som är djupt nedstämd under en _____ tid kan ha fått en depression. Det är bra att söka hjälp tidigt, eftersom de allra flesta mår bättre efter bara några veckor av _____.",
+"key": [
+"längre",
+"behandling"
+],
+"distractors": [
+[
+"lång",
+"väntan"
+],
+[
+"kort",
+"terapi"
+],
+[
+"bestämd",
+"ensamhet"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är längre och behandling. Men ställer vanlig nedstämdhet mot en som håller i sig, och lång passar också. Att söka hjälp tidigt lönar sig om hjälpen gör en bättre, och terapi är en form av behandling. Kort tid är det naturliga, bestämd tid ger ingen mening, och väntan eller ensamhet gör ingen bättre.",
+"id": "p12-38"
+},
+{
+"amne": "spr",
+"genre": "aka",
+"source": {
+"title": "Isof Svenskans historia"
+},
+"text": "Svenska kan urskiljas som eget språk från omkring år 800. Den äldsta formen kallas runsvenska, och trots att runstenarnas inskrifter ofta är _____ ger de kunskap om dåtidens grammatik och ordförråd. Med kristnandet kom sedan ord från latin och grekiska för kyrkans värld, som mässa, kloster och _____.",
+"key": [
+"kortfattade",
+"biskop"
+],
+"distractors": [
+[
+"korta",
+"sten"
+],
+[
+"långa",
+"präst"
+],
+[
+"färgglada",
+"skepp"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"upp"
+],
+"explanation": "Rätt svar är kortfattade och biskop. Trots att visar att inskrifterna har en brist men ändå ger kunskap, och korta passar också. Ord för kyrkans värld är ord som mässa, kloster och biskop, och präst hör dit också. Långa inskrifter vore ingen brist, färgglada säger inget om innehållet, och sten och skepp är inte ord för kyrkans värld.",
+"id": "p12-39"
+},
+{
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Ånglok"
+},
+"text": "Ett ånglok är ett lokomotiv som drivs av en ångmaskin, och det var den första loktypen som var _____ i praktiken. I industriländerna används ånglok inte längre kommersiellt, men på många håll finns de kvar vid _____, där de drar tåg för turister och entusiaster.",
+"key": [
+"användbar",
+"museijärnvägar"
+],
+"distractors": [
+[
+"duglig",
+"motorvägar"
+],
+[
+"farlig",
+"veteranbanor"
+],
+[
+"dyr",
+"flygplatser"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är användbar och museijärnvägar. Den första loktyp som fungerade i praktiken var ångloket, och duglig passar också. Men ställer att de inte används kommersiellt mot där de finns kvar, på banor för turister och entusiaster, alltså museijärnvägar eller veteranbanor. Farlig och dyr i praktiken säger inget om att ångloket var först, och ett lok drar inga tåg på motorvägar eller flygplatser.",
+"id": "p12-40"
+},
+{
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "1177 Hjärtklappning"
+},
+"text": "Hos vuxna slår hjärtat vanligen 50 till 100 slag i minuten. Vid fysisk ansträngning slår det _____, och det kan också göra det om man blir rädd eller stressad, en reaktion som hör till kroppens _____ och inte är skadlig. Ibland kommer ett extra slag tätt efter det förra, och nästa vanliga slag blir då lite _____, och man upplever det som att hjärtat gör ett skutt.",
+"key": [
+"fortare",
+"försvarssystem",
+"kraftigare"
+],
+"distractors": [
+[
+"långsammare",
+"matsmältning",
+"svagare"
+],
+[
+"snabbare",
+"sömn",
+"tystare"
+],
+[
+"lugnare",
+"stressreaktioner",
+"starkare"
+]
+],
+"dtyp": [
+[
+"po",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"adv",
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är fortare, försvarssystem och kraftigare. Vid ansträngning, rädsla och stress ökar pulsen, och snabbare betyder samma sak. En ofarlig reaktion på rädsla hör till kroppens sätt att skydda sig, och stressreaktioner passar också. Ett slag som kommer efter en paus blir starkare, och därför känns det som ett skutt. Långsammare och lugnare strider mot ansträngningen, matsmältning och sömn har inget med rädsla att göra, och svagare eller tystare slag känns inte som ett skutt.",
+"id": "p12-41"
+},
+{
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Serieroman"
+},
+"text": "Med serieroman menas en längre serieberättelse i _____. Begreppet kommer dels från Frankrike, där det ställs mot det mindre _____ seriealbumet, dels från USA, där det i stället ställs mot serieberättelser i _____.",
+"key": [
+"bokform",
+"omfångsrika",
+"tidningsform"
+],
+"distractors": [
+[
+"tidningsform",
+"kostsamma",
+"bokform"
+],
+[
+"bokformat",
+"kända",
+"filmform"
+],
+[
+"radioform",
+"tjocka",
+"häftesform"
+]
+],
+"dtyp": [
+[
+"po",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är bokform, omfångsrika och tidningsform. En längre serie som ges ut som roman kommer som bok, och bokformat betyder samma sak. Det mindre albumet står i motsats till den längre romanen, alltså är det mindre omfångsrikt, och tjocka passar också. I USA ställs boken mot serier som kommer ut som tidningar eller häften. Tidningsform och radioform är inte romanens form, kostsamma och kända säger inget om längden, och bokform eller filmform är ingen motsats till en bok.",
+"id": "p12-42"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Riksdagen Utskotten och EU-nämnden"
+},
+"text": "I riksdagens utskott _____ ledamöterna de beslut som sedan fattas i kammaren, och i EU-nämnden _____ regeringen sin EU-politik hos riksdagen. Utskotten och nämnden fungerar som en riksdag i miniatyr: ett större parti har fler _____ än ett mindre.",
+"key": [
+"bereder",
+"förankrar",
+"platser"
+],
+"distractors": [
+[
+"verkställer",
+"döljer",
+"väljare"
+],
+[
+"förbereder",
+"avvisar",
+"ledare"
+],
+[
+"överklagar",
+"stämmer av",
+"mandat"
+]
+],
+"dtyp": [
+[
+"fa",
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol",
+"def"
+],
+"explanation": "Rätt svar är bereder, förankrar och platser. Beslut som fattas senare i kammaren arbetas först fram i utskotten, och förbereder betyder samma sak. Regeringen söker stöd för sin EU-politik i nämnden, och stämmer av ligger nära. En riksdag i miniatyr fördelar platserna efter partiernas storlek, och mandat säger detsamma. Beslut som inte fattats verkställs eller överklagas inte, att dölja eller avvisa sin politik är inte vad nämnden är till för, och väljare eller ledare fördelas inte i utskotten.",
+"id": "p12-43"
+},
+{
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Historiska Romarrikets inflytande"
+},
+"text": "Romarriket stod på sin höjdpunkt under århundradena efter Kristi födelse, och till Skandinavien kom stora mängder romerska _____, framför allt pärlor och dryckeskärl av brons och glas. Även idéer tog sig över gränsen: i Skandinavien användes till exempel ett romerskt _____ när man vägde upp guld, och det byggde på det romerska _____.",
+"key": [
+"importföremål",
+"viktsystem",
+"pundet"
+],
+"distractors": [
+[
+"soldater",
+"kalendersystem",
+"året"
+],
+[
+"handelsvaror",
+"rättssystem",
+"lagen"
+],
+[
+"krigare",
+"måttsystem",
+"vikten"
+]
+],
+"dtyp": [
+[
+"fa",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"s",
+"s"
+],
+"ledtrad": [
+"upp",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är importföremål, viktsystem och pundet. Pärlor och kärl är föremål som förts in från Romarriket, och handelsvaror passar också. Det man använder när man väger upp guld är ett system för vikter, och måttsystem ligger nära. Ett viktsystem bygger på en viktenhet, det romerska pundet. Soldater och krigare är inga pärlor eller kärl, kalender och rättssystem väger inget, och året eller lagen är inga vikter.",
+"id": "p12-44"
+},
+{
+"amne": "bio",
+"genre": "myn",
+"source": {
+"title": "Naturvårdsverket Invasiva främmande arter"
+},
+"text": "Invasiva främmande arter har genom människans försorg _____ från sina ursprungliga livsmiljöer och sprider sig sedan snabbt och gör allvarlig skada. De räknas till de största hoten mot den biologiska mångfalden, och Sverige arbetar i första hand _____, så att arterna inte kommer in i landet. Arter som ändå tar sig in ska hittas tidigt och _____.",
+"key": [
+"flyttats",
+"i förväg",
+"bekämpas"
+],
+"distractors": [
+[
+"utrotats",
+"i efterhand",
+"skyddas"
+],
+[
+"förts",
+"symboliskt",
+"välkomnas"
+],
+[
+"flytt",
+"på förhand",
+"utrotas"
+]
+],
+"dtyp": [
+[
+"po",
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"adv",
+"v"
+],
+"ledtrad": [
+"def",
+"def",
+"kon"
+],
+"explanation": "Rätt svar är flyttats, i förväg och bekämpas. Med människans hjälp betyder att arterna har tagits till en ny plats, och förts säger samma sak. Så att arterna inte kommer in visar att arbetet sker innan problemet uppstår, alltså i förväg eller på förhand. Arter som gör allvarlig skada måste tas bort, och utrotas fungerar också. Utrotats och flytt stämmer inte med människans hjälp, i efterhand och symboliskt strider mot syftet, och skyddas eller välkomnas är motsatsen till vad man gör med skadliga arter.",
+"id": "p12-45"
+},
+{
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Studera.nu Utbildningens kvalitet"
+},
+"text": "Universitetskanslersämbetet utvärderar kvaliteten på högskoleutbildningar, så att studenterna kan vara _____ på att utbildningen håller måttet. Granskningarna gäller ett _____ av utbildningar runt om i landet och utgår från hur väl de ger studenterna förutsättningar att nå sina examensmål. De ska också bidra till lärosätenas eget arbete med att _____ kvaliteten.",
+"key": [
+"säkra",
+"urval",
+"utveckla"
+],
+"distractors": [
+[
+"osäkra",
+"fåtal",
+"försämra"
+],
+[
+"trygga",
+"register",
+"dölja"
+],
+[
+"ovetande",
+"axplock",
+"förbättra"
+]
+],
+"dtyp": [
+[
+"po",
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"s",
+"v"
+],
+"ledtrad": [
+"ors",
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är säkra, urval och utveckla. En granskning ska göra studenterna trygga med att utbildningen är bra. Utbildningar runt om i landet som väljs ut för granskning är ett urval, och axplock betyder samma sak. Lärosätenas eget arbete går ut på att göra kvaliteten bättre, och förbättra säger detsamma. Osäkra och ovetande är motsatsen till granskningens syfte, ett fåtal av eller ett register av utbildningar granskas inte, och att försämra eller dölja kvaliteten är inget en granskning bidrar till.",
+"id": "p12-46"
+},
+{
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Riksbanken Så påverkar penningpolitiken inflationen"
+},
+"text": "Riksbankens främsta sätt att styra inflationen är att ändra styrräntan. Om inflationen ligger under målet på två procent kan banken _____ styrräntan, så att det blir mer fart i ekonomin och kronan blir _____. På samma sätt kan räntan höjas om inflationen behöver _____.",
+"key": [
+"sänka",
+"mindre värd",
+"dämpas"
+],
+"distractors": [
+[
+"höja",
+"starkare",
+"öka"
+],
+[
+"halvera",
+"dyrare",
+"stiga"
+],
+[
+"frysa",
+"billigare",
+"bromsas"
+]
+],
+"dtyp": [
+[
+"po",
+"po"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"a",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är sänka, mindre värd och dämpas. En inflation under målet ska upp, och en lägre ränta ökar aktiviteten, så räntan sänks, och halvera innebär också en sänkning. En lägre ränta gör kronan mindre värd, alltså mindre värd eller billigare. Höjningen är motsatsen och används när inflationen ska ned, alltså bromsas. Höja och frysa ökar inte aktiviteten, starkare och dyrare krona följer av högre ränta, och öka eller stiga är motsatsen till vad en höjning gör.",
+"id": "p12-47"
+},
+{
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Domstol Påföljder för unga"
+},
+"text": "Den som har fyllt 15 år är _____ och kan dömas för brott, och vid mycket allvarliga brott gäller det redan från 14 år. Mellan 14 och 18 år får man i vissa fall ett _____ straff än vuxna, och ju äldre man blir, desto mer liknar straffen vuxnas. Begår ett barn brott innan det kan dömas är det i stället _____ som beslutar om lämpliga åtgärder.",
+"key": [
+"straffmyndig",
+"lindrigare",
+"socialtjänsten"
+],
+"distractors": [
+[
+"myndig",
+"strängare",
+"polisen"
+],
+[
+"åtalbar",
+"längre",
+"skolan"
+],
+[
+"vuxen",
+"mildare",
+"kommunen"
+]
+],
+"dtyp": [
+[
+"po",
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är straffmyndig, lindrigare och socialtjänsten. Den som kan dömas för brott har nått åldern för straffmyndighet, och åtalbar ligger nära. Ju äldre desto mer lika vuxnas visar att unga får mildare straff. När ett barn inte kan dömas ansvarar kommunens socialtjänst för åtgärderna. Myndig och vuxen blir man först vid 18, strängare och längre strider mot att straffen närmar sig vuxnas med åldern, och polisen eller skolan beslutar inte om sådana åtgärder.",
+"id": "p12-48"
+},
+{
+"amne": "mil",
+"genre": "aka",
+"source": {
+"title": "Artilleri"
+},
+"text": "Artilleri är ett samlingsnamn för tyngre eld- och kastvapen, som kallas _____. Förr talade man om sjöartilleri i flottan och landartilleri i _____, och de soldater som sköter en pjäs kallas kanonservis, eftersom de _____ den.",
+"key": [
+"pjäser",
+"armén",
+"betjänar"
+],
+"distractors": [
+[
+"kulor",
+"flygvapnet",
+"bär"
+],
+[
+"kanoner",
+"kustbevakningen",
+"säljer"
+],
+[
+"gevär",
+"landstridskrafterna",
+"sköter"
+]
+],
+"dtyp": [
+[
+"fa",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"s",
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kon",
+"def"
+],
+"explanation": "Rätt svar är pjäser, armén och betjänar. Ett artillerivapen kallas pjäs, och kanoner fungerar också. Landartilleriet ställs mot flottans, alltså hör det till armén eller landstridskrafterna. Servis betyder att man tjänar, så manskapet betjänar eller sköter pjäsen. Kulor och gevär är inte tunga vapen, flygvapnet och kustbevakningen står inte för landartilleriet, och man bär eller säljer inte en pjäs man sköter.",
+"id": "p12-49"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Historiska Yngre järnålder"
+},
+"text": "Järnåldern sträcker sig ungefär från 500 f.Kr. till 1100 e.Kr., och dess sista del kallas vikingatiden. Under perioden började människor _____ järn ur myrmalm och rödjord, och jordbruk, handel och nya _____ från Romarriket påverkade livet. Svärd, sporrar och pärlor som hittats ger en bild av krigarna, av förbindelserna med Romarriket och av hur folk levde och _____.",
+"key": [
+"framställa",
+"idéer",
+"begravdes"
+],
+"distractors": [
+[
+"köpa",
+"kejsare",
+"åldrades"
+],
+[
+"utvinna",
+"stjärnor",
+"ärvdes"
+],
+[
+"smida",
+"tankar",
+"jordades"
+]
+],
+"dtyp": [
+[
+"fa",
+"fa"
+],
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2,
+3
+],
+[
+2,
+3
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"upp",
+"kol"
+],
+"explanation": "Rätt svar är framställa, idéer och begravdes. Järn ur myrmalm måste tas fram genom att malmen bearbetas, och utvinna betyder samma sak. Från Romarriket kom inte bara varor utan också nya sätt att tänka, idéer eller tankar. Fynd av svärd och pärlor kommer ofta från gravar och berättar om hur människor jordades eller begravdes. Köpa och smida järn ur malm ger ingen mening, kejsare och stjärnor påverkade inte livet på det sättet, och åldrades eller ärvdes syns inte i föremålen.",
+"id": "p12-50"
+}
+]

@@ -1,0 +1,36 @@
+# Batch 13: webbkällor (url | titel | utgivare)
+https://www.livsmedelsverket.se/livsmedel-och-innehall/naringsamne/protein/ | Livsmedelsverket Protein | Livsmedelsverket
+https://www.livsmedelsverket.se/livsmedel-och-innehall/naringsamne/fibrer/ | Livsmedelsverket Fibrer | Livsmedelsverket
+https://www.livsmedelsverket.se/livsmedel-och-innehall/naringsamne/kolhydrater/socker/ | Livsmedelsverket Socker | Livsmedelsverket
+https://www.livsmedelsverket.se/livsmedel-och-innehall/naringsamne/fett/mattat-fett/ | Livsmedelsverket Mättat fett | Livsmedelsverket
+https://www.1177.se/sjukdomar--besvar/ogon/ogonbesvar/torra-ogon/ | 1177 Torra ögon | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/ogonbesvar/vagel-i-ogat/ | 1177 Vagel i ögat | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/ | 1177 Pollenallergi | 1177
+https://www.smhi.se/kunskapsbanken/meteorologi/vind | SMHI Vind | SMHI
+https://www.smhi.se/kunskapsbanken/klimat/klimatet-i-sveriges-landskap | SMHI Klimatet i Sveriges landskap | SMHI
+https://www.smhi.se/kunskapsbanken/meteorologi/arstider/host | SMHI Höst | SMHI
+https://www.smhi.se/kunskapsbanken/klimat/klimateffekter-i-sjoar-och-vattendrag | SMHI Klimateffekter i sjöar | SMHI
+https://www.riksbank.se/sv/betalningar--kontanter/sa-betalar-svenskarna/betalningsrapport-2026/utvecklingen-pa-betalningsmarknaden/svenska-folkets-betalningsvanor/ | Riksbanken Betalningsvanor | Riksbanken
+https://www.riksbank.se/sv/betalningar--kontanter/sa-betalar-svenskarna/betalningsrapport-2026/sammanfattning-och-rekommendationer/alla-maste-kunna-betala/ | Riksbanken Alla måste kunna betala | Riksbanken
+https://www.riksbank.se/sv/betalningar--kontanter/sa-betalar-svenskarna/betalningsrapport-2026/riksbankens-ansvar-for-betalningar/riksbankens-roll-pa-betalningsmarknaden-/ | Riksbanken Roll på betalningsmarknaden | Riksbanken
+https://www.konsumentverket.se/ekonomi/budgetkalkylen-att-gora-en-budget/ | Konsumentverket Så gör du en budget | Konsumentverket
+https://www.konsumentverket.se/omrade/konsumentratt/ | Konsumentverket Konsumenträtt | Konsumentverket
+https://www.konsumentverket.se/omrade/produktsakerhet/ | Konsumentverket Produktsäkerhet | Konsumentverket
+https://www.domstol.se/amnen/familj/skilsmassa-och-bodelning/ | Domstol Skilsmässa och bodelning | Sveriges Domstolar
+https://www.domstol.se/amnen/rattshjalp/ | Domstol Rättshjälp | Sveriges Domstolar
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/sa-fungerar-eu/ | Riksdagen Så fungerar EU | Sveriges riksdag
+https://www.riksdagen.se/sv/ledamoter-och-partier/sa-arbetar-ledamoterna/ | Riksdagen Så arbetar ledamöterna | Sveriges riksdag
+https://www.naturvardsverket.se/amnesomraden/allemansratten/ | Naturvårdsverket Allemansrätten | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/buller/ | Naturvårdsverket Buller | Naturvårdsverket
+https://historiska.se/utforska-historien/kunskapsbank/intro-till-stenaldern/ | Historiska Intro till stenåldern | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/barumskvinnan/ | Historiska Barumskvinnan | Historiska museet
+https://historiska.se/utforska-historien/kunskapsbank/design-under-stenaldern-keramikkonsten/ | Historiska Keramikkonsten | Historiska museet
+https://www.vasamuseet.se/sv/utforska/Vasas-historia/ | Vasamuseet Vasas historia | Vasamuseet
+https://www.isof.se/svenska-spraket/lar-dig-mer-om-svenska-spraket/ett-sprak-i-forandring | Isof Ett språk i förändring | Institutet för språk och folkminnen
+https://www.isof.se/svenska-spraket/lar-dig-mer-om-svenska-spraket/standardsvenska | Isof Standardsvenska | Institutet för språk och folkminnen
+https://www.isof.se/svenska-spraket/lar-dig-mer-om-svenska-spraket/vem-bestammer-over-svenskan | Isof Vem bestämmer över svenskan | Institutet för språk och folkminnen
+https://www.studera.nu/att-valja-utbildning/smart-studieval/tips-infor-studievalet/ | Studera.nu Tips inför studievalet | Universitets- och högskolerådet
+https://www.studera.nu/att-valja-utbildning/arbetsmarknad/omstallningsstudiestod/ | Studera.nu Omställningsstudiestöd | Universitets- och högskolerådet
+https://www.studera.nu/att-valja-utbildning/arbetsmarknad/komplettera-utlandsk-utbildning/ | Studera.nu Komplettera utländsk utbildning | Universitets- och högskolerådet
+https://www.nrm.se/fakta-om-naturen/fossil | NRM Fossil | Naturhistoriska riksmuseet
+https://www.nrm.se/fakta-om-naturen/rymden/solen | NRM Solen | Naturhistoriska riksmuseet
