@@ -38,7 +38,7 @@ const CATEGORIES = ["ORD", "MEK", "LAS", "ELF", "XYZ", "KVA", "NOG", "DTK"] as c
 
 /** Kolumnerna träningsläget renderar. En enda literal — annars tappar supabase-js radtypen. */
 const COLS =
-  "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status";
+  "id, category, question_text, options, passage_id, passage_text, image_url, image_caption, correct_answer, explanation, difficulty, cleaned_question_text, cleaned_options, clean_status, tags, source";
 
 export const fetchTrainingBatch = createServerFn({ method: "GET" })
   .inputValidator((data: { categories: string[]; difficulty?: number | null; count?: number }) =>

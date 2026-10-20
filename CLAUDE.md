@@ -1464,6 +1464,33 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
   Ingen RLS-policy på tabellen; allt går genom serverfunktionen, annars går
   gästvikten och kvoterna att kringgå.
 
+### Egna MEK-uppgifter (2026-10-20)
+
+Tvåkommanollan skriver egna MEK-uppgifter, 300 i piloten och målet 2 000.
+Regelverket och pipelinen ligger i `scripts/mek-gen/` (`REGELVERK.md` först),
+reglerna som går att testa i `src/lib/mek-rules.ts`.
+
+- **Varje uppgift är egen prosa ur en Wikipedia-artikels fakta**, aldrig ett
+  citat. `build.ts` underkänner sex ord i följd gemensamma med källan och åtta
+  med arkivet. Källan skrivs ändå ut, både för läsaren och för CC BY-SA.
+- **De märks i databasen och i UI:t.** Taggen `tkn-genererad` (plus `mek-v1`,
+  ämne, genre och batch-id) och `source` på formen
+  `Wikipedia: <titel> (CC BY-SA 4.0) <url>`. `questionOrigin()` läser dem och
+  `QuestionOriginNote` skriver "Tvåkommanollans egen uppgift" med källa under
+  förklaringen i `/train` och på resultatsidan. Ändras formatet på `source`
+  måste mönstret i `question-origin.ts` med, annars försvinner källraden tyst
+  medan etiketten står kvar.
+- **Importen:** `bun run scripts/import-mek-generated.ts` (torrkörning),
+  `--apply` för att skriva. Idempotent på `lower(question_text)`, och den
+  vägrar köra om någon batch fäller format- eller strikta regler.
+  `exam_term` lämnas tomt (se gamla-prov-importen).
+- **Varje batch blindprövas innan den committas**: en granskare löser med text
+  (ska bli 100 %), en annan gissar utan text (ska ligga på eller under
+  arkivets ~60 %). `blind.py prep|score`. Piloten låg på 100 % respektive
+  42–72 %.
+- **Sållningen efter publicering är rösterna** (avsnittet nedan) plus
+  p-värde och felrapporter per uppgift.
+
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
 Facit, trolig normering och Niklas egna tankar efter varje provdag. Sidan och

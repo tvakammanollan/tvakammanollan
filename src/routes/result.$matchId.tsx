@@ -40,6 +40,7 @@ import { trackEvent } from "@/lib/events";
 import { recordMatchFinished } from "@/lib/coaching-prompt";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { QuestionOriginNote } from "@/components/QuestionOriginNote";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
 import { RankUpModal } from "@/components/ui/RankUpModal";
@@ -111,6 +112,9 @@ interface QuestionRow {
   passage_id: string | null;
   passage_text: string | null;
   explanation: string | null;
+  /** `tags` och `source` avgör om etiketten för egna uppgifter visas. */
+  tags: string[] | null;
+  source: string | null;
   image_url: string | null;
   /** DTK: alternativen i en EGEN bild, skild från `image_url` (diagrammet). */
   optionsImage: OptionsImage | null;
@@ -306,6 +310,8 @@ function ResultPage() {
             passage_text: (q.passage_text as string) ?? null,
             explanation: (q.explanation as string) ?? null,
             image_url: (q.image_url as string) ?? null,
+            tags: null,
+            source: null,
             optionsImage: null,
           } as QuestionRow;
         })
@@ -319,7 +325,7 @@ function ResultPage() {
       if (qs.length > 0) {
         const { data: bilder } = await supabase
           .from("questions")
-          .select("id, image_url, image_caption")
+          .select("id, image_url, image_caption, tags, source")
           .in(
             "id",
             qs.map((q) => q.id),
@@ -328,7 +334,12 @@ function ResultPage() {
           const byId = new Map(
             bilder.map((b) => [
               b.id as string,
-              { image_url: b.image_url as string | null, image_caption: b.image_caption },
+              {
+                image_url: b.image_url as string | null,
+                image_caption: b.image_caption,
+                tags: b.tags,
+                source: b.source,
+              },
             ]),
           );
           for (const q of qs) {
@@ -337,6 +348,8 @@ function ResultPage() {
             // DTK: alternativen kan ligga i en EGEN bild, skild från
             // `image_url` (diagrammet). Se `examCrops.ts`.
             q.optionsImage = parseOptionsImage(b?.image_caption);
+            q.tags = b?.tags ?? null;
+            q.source = b?.source ?? null;
           }
         }
       }
@@ -1057,6 +1070,7 @@ function ResultPage() {
                         />
                       )}
                       <ExplanationBlock explanation={q.explanation} />
+                      <QuestionOriginNote tags={q.tags} source={q.source} />
                     </li>
                   );
                 })}

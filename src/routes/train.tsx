@@ -50,6 +50,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
+import { QuestionOriginNote } from "@/components/QuestionOriginNote";
 import { AnswerContext } from "@/components/AnswerContext";
 import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
@@ -136,6 +137,9 @@ interface TrainQuestion {
   image_url: string | null;
   correct_answer: string;
   explanation: string | null;
+  /** `tags` och `source` avgör om etiketten för egna uppgifter visas. */
+  tags: string[] | null;
+  source: string | null;
   difficulty: number | null;
   /** Bilduppgifter ur arkivet: var stammen och alternativen sitter i bilden. */
   stem: ExamStem | null;
@@ -312,6 +316,8 @@ function TrainPage() {
         optionCrops: stem || optionsImage?.aspect ? parseOptionCrops(row.options) : null,
         correct_answer: row.correct_answer,
         explanation: row.explanation,
+        tags: row.tags ?? null,
+        source: row.source ?? null,
         difficulty: row.difficulty,
       };
     });
@@ -849,6 +855,7 @@ function TrainPage() {
                     />
                   )}
                 <ExplanationBlock explanation={currentQ.explanation} />
+                <QuestionOriginNote tags={currentQ.tags} source={currentQ.source} />
                 {user && (
                   <div className="mt-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
                     <span>Bra fråga?</span>
