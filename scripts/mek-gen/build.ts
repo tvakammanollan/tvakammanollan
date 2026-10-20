@@ -28,6 +28,7 @@ import {
   type MekItem,
 } from "../../src/lib/mek-rules";
 import { sourceFile } from "./fetch-sources";
+import { readWebMeta } from "./fetch-web";
 
 export interface SrcItem {
   id: string;
@@ -41,7 +42,8 @@ export interface SrcItem {
   ordklass: string[];
   ledtrad: string[];
   explanation: string;
-  source: { title: string; url?: string };
+  /** Utan `url` slås källan upp bland webbkällorna (`fetch-web.ts`), annars antas Wikipedia. */
+  source: { title: string; url?: string; publisher?: string };
 }
 
 export interface BuiltItem extends MekItem {
@@ -49,7 +51,7 @@ export interface BuiltItem extends MekItem {
   amne: string;
   genre: string;
   explanation: string;
-  source: { title: string; url: string };
+  source: { title: string; url: string; publisher: string };
   meta: {
     ordklass: string[];
     ledtrad: string[];
@@ -81,6 +83,7 @@ export function balancedAnswers(n: number, seed: number): string[] {
 }
 
 export function buildItems(src: SrcItem[], seed: number): BuiltItem[] {
+  const web = readWebMeta();
   const answers = balancedAnswers(src.length, seed);
   return src.map((s, i) => {
     const k = LETTERS.indexOf(answers[i] as (typeof LETTERS)[number]);
@@ -103,7 +106,9 @@ export function buildItems(src: SrcItem[], seed: number): BuiltItem[] {
         title: s.source.title,
         url:
           s.source.url ??
+          web[s.source.title]?.url ??
           `https://sv.wikipedia.org/wiki/${encodeURIComponent(s.source.title.replace(/ /g, "_"))}`,
+        publisher: s.source.publisher ?? web[s.source.title]?.publisher ?? "Wikipedia",
       },
       meta: { ordklass: s.ordklass, ledtrad: s.ledtrad, distraktorer },
     };

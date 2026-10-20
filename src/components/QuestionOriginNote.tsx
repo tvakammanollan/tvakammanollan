@@ -19,7 +19,7 @@ export function QuestionOriginNote({ tags, source }: Props) {
       <span className="font-medium text-foreground">{origin.label}</span>
       {origin.sourceUrl && (
         <span>
-          <span aria-hidden>· </span>Fakta ur Wikipedia:{" "}
+          <span aria-hidden>· </span>Fakta ur {origin.publisher}:{" "}
           <a
             href={origin.sourceUrl}
             target="_blank"
@@ -27,8 +27,8 @@ export function QuestionOriginNote({ tags, source }: Props) {
             className="underline underline-offset-2 hover:text-foreground"
           >
             {origin.sourceTitle}
-          </a>{" "}
-          ({origin.license}).
+          </a>
+          {origin.license ? ` (${origin.license})` : ""}.
         </span>
       )}
     </p>

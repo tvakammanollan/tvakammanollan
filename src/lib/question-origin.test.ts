@@ -10,6 +10,7 @@ describe("questionOrigin", () => {
       ),
     ).toEqual({
       label: "Tvåkommanollans egen uppgift",
+      publisher: "Wikipedia",
       sourceTitle: "Gikt",
       sourceUrl: "https://sv.wikipedia.org/wiki/Gikt",
       license: "CC BY-SA 4.0",
@@ -23,6 +24,17 @@ describe("questionOrigin", () => {
     );
     expect(o?.sourceTitle).toBe("Funktionalism (arkitektur)");
     expect(o?.sourceUrl).toBe("https://sv.wikipedia.org/wiki/Funktionalism_(arkitektur)");
+  });
+
+  it("läser källor utanför Wikipedia, utan licens", () => {
+    const o = questionOrigin(
+      ["tkn-genererad"],
+      "1177: Influensa https://www.1177.se/sjukdomar--besvar/influensa/",
+    );
+    expect(o?.publisher).toBe("1177");
+    expect(o?.sourceTitle).toBe("Influensa");
+    expect(o?.license).toBeNull();
+    expect(o?.sourceUrl).toBe("https://www.1177.se/sjukdomar--besvar/influensa/");
   });
 
   it("visar etiketten även när källraden saknas eller är okänd", () => {

@@ -3,7 +3,7 @@
  *
  * Tvåkommanollans egna MEK-uppgifter (`scripts/mek-gen/`, importerade av
  * `scripts/import-mek-generated.ts`) bär taggen `tkn-genererad` och en
- * källrad i `source`: `Wikipedia: <titel> (CC BY-SA 4.0) <url>`. Etiketten
+ * källrad i `source` (se `SOURCE_PATTERN`). Etiketten
  * ska synas där uppgiften visas, så att ingen tar vår uppgift för en ur ett
  * riktigt högskoleprov, och källraden krävs av Wikipedias licens.
  *
@@ -22,12 +22,19 @@ export type MekOrigin = (typeof MEK_ORIGINS)[number];
 
 export interface QuestionOrigin {
   label: string;
+  publisher: string | null;
   sourceTitle: string | null;
   sourceUrl: string | null;
   license: string | null;
 }
 
-const SOURCE_PATTERN = /^Wikipedia: (.+?) \(([^)]+)\) (https:\/\/sv\.wikipedia\.org\/\S+)$/;
+/**
+ * `Utgivare: Titel (licens) url`, där licensen bara står för Wikipedia
+ * (`Wikipedia: Gikt (CC BY-SA 4.0) https://sv.wikipedia.org/wiki/Gikt`,
+ * `1177: Influensa https://www.1177.se/...`). Utgivaren får inte innehålla
+ * kolon; titeln får innehålla parenteser.
+ */
+const SOURCE_PATTERN = /^([^:]+): (.+?)(?: \(([^()]*(?:CC|licens)[^()]*)\))? (https?:\/\/\S+)$/;
 
 export function questionOrigin(
   tags: readonly string[] | null | undefined,
@@ -37,8 +44,9 @@ export function questionOrigin(
   const m = source ? SOURCE_PATTERN.exec(source.trim()) : null;
   return {
     label: "Tvåkommanollans egen uppgift",
-    sourceTitle: m ? m[1] : null,
-    sourceUrl: m ? m[3] : null,
-    license: m ? m[2] : null,
+    publisher: m ? m[1].trim() : null,
+    sourceTitle: m ? m[2] : null,
+    sourceUrl: m ? m[4] : null,
+    license: m ? (m[3] ?? null) : null,
   };
 }

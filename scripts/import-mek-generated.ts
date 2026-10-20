@@ -36,7 +36,7 @@ interface BatchItem {
   alternatives: string[];
   answer: string;
   explanation: string;
-  source: { title: string; url: string };
+  source: { title: string; url: string; publisher?: string };
 }
 
 function env(name: string): string {
@@ -81,6 +81,17 @@ async function existingTexts(): Promise<Set<string>> {
   }
 }
 
+function isWikipedia(b: BatchItem): boolean {
+  return (b.source.publisher ?? "Wikipedia") === "Wikipedia";
+}
+
+/** `Utgivare: Titel (licens) url`; licensen anges bara för Wikipedia. */
+function sourceLine(b: BatchItem): string {
+  return isWikipedia(b)
+    ? `Wikipedia: ${b.source.title} (CC BY-SA 4.0) ${b.source.url}`
+    : `${b.source.publisher}: ${b.source.title} ${b.source.url}`;
+}
+
 function toRow(b: BatchItem) {
   return {
     category: "MEK",
@@ -89,11 +100,18 @@ function toRow(b: BatchItem) {
     options: b.alternatives.map((text, i) => ({ id: "ABCD"[i], text })),
     correct_answer: b.answer,
     explanation: b.explanation,
-    // Texten är egen prosa ur artikelns fakta. Källan skrivs ändå ut, både för
-    // läsarens skull och för att Wikipedia-licensen (CC BY-SA) ska vara uppfylld
-    // om någon formulering ligger nära.
-    source: `Wikipedia: ${b.source.title} (CC BY-SA 4.0) ${b.source.url}`,
-    tags: ["tkn-genererad", "mek-v1", b.amne, b.genre, "wikipedia-cc-by-sa", b.id],
+    // Texten är egen prosa ur källans fakta. Källan skrivs ändå ut, för
+    // läsarens skull och, för Wikipedia, för att CC BY-SA ska vara uppfylld om
+    // någon formulering ligger nära. Formatet läses av `question-origin.ts`.
+    source: sourceLine(b),
+    tags: [
+      "tkn-genererad",
+      "mek-v1",
+      b.amne,
+      b.genre,
+      isWikipedia(b) ? "wikipedia-cc-by-sa" : "egen-text-ur-fakta",
+      b.id,
+    ],
     clean_status: "ok",
     difficulty: null,
   };
