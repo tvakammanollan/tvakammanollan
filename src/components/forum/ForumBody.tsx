@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode } from "react";
 import { MathText } from "@/components/MathTextLazy";
-import { parseBlocks, type Block, type Inline } from "@/lib/forum-markdown";
+import { isInternalHref, parseBlocks, type Block, type Inline } from "@/lib/forum-markdown";
 
 /**
  * Renderar ett foruminlägg.
@@ -124,8 +124,9 @@ function InlineNode({ node }: { node: Inline }): ReactNode {
       return (
         <a
           href={node.href}
-          target="_blank"
-          rel="nofollow ugc noopener noreferrer"
+          {...(isInternalHref(node.href)
+            ? {}
+            : { target: "_blank", rel: "nofollow ugc noopener noreferrer" })}
           className="break-words text-[var(--teal)] underline decoration-[var(--teal)]/40 underline-offset-2 transition-colors hover:decoration-[var(--teal)]"
         >
           {node.text}

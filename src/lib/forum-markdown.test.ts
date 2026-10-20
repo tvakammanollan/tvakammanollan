@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { parseInline, parseBlocks, hasMath, type Inline, type Block } from "./forum-markdown";
+import {
+  parseInline,
+  parseBlocks,
+  hasMath,
+  isInternalHref,
+  type Inline,
+  type Block,
+} from "./forum-markdown";
 
 /** Platta ut ett träd till text, för att slippa jämföra hela strukturer. */
 function inlineText(nodes: Inline[]): string {
@@ -46,6 +53,32 @@ describe("parseInline", () => {
       text: "https://tvakommanollan.se/gamla-prov",
     });
     expect(inlineText(nodes)).toContain(".");
+  });
+
+  it("tar [text](url) som namngiven länk till den egna sajten", () => {
+    const nodes = parseInline("Läs [NOG-guiden](https://tvakommanollan.se/guider/nog).");
+    expect(nodes).toEqual([
+      { kind: "text", text: "Läs " },
+      { kind: "link", href: "https://tvakommanollan.se/guider/nog", text: "NOG-guiden" },
+      { kind: "text", text: "." },
+    ]);
+  });
+
+  it("låter inte en namngiven länk dölja en främmande adress", () => {
+    const nodes = parseInline("[https://bank.se](https://ond.example/logga-in)");
+    expect(nodes).toEqual([
+      { kind: "text", text: "https://bank.se (" },
+      { kind: "link", href: "https://ond.example/logga-in", text: "https://ond.example/logga-in" },
+      { kind: "text", text: ")" },
+    ]);
+  });
+
+  it("räknar bara den egna värden som intern", () => {
+    expect(isInternalHref("https://tvakommanollan.se/ord")).toBe(true);
+    expect(isInternalHref("https://www.tvakommanollan.se/")).toBe(true);
+    expect(isInternalHref("https://tvakommanollan.se.ond.example/")).toBe(false);
+    expect(isInternalHref("http://tvakommanollan.se/")).toBe(false);
+    expect(isInternalHref("inte en url")).toBe(false);
   });
 
   it("normaliserar www-länkar till https", () => {

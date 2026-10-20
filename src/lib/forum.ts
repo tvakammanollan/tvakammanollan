@@ -117,6 +117,7 @@ export function stripMarkup(body: string): string {
   return body
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/`([^`]*)`/g, "$1")
+    .replace(/\[([^\]\n]+)\]\(https?:\/\/[^\s()]+\)/g, "$1")
     .replace(/^\s*>+\s?/gm, "")
     .replace(/^\s*[-*]\s+/gm, "")
     .replace(/\*\*([^*]+)\*\*/g, "$1")

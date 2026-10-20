@@ -900,7 +900,19 @@ route-loaders och aldrig hämtas i klienten.
     att indexera, vilket är hela poängen med forumet.
 - **Kvar (fas 3):** publika profiler `/u/$username`, bilduppladdning,
   "obesvarade frågor"-vy, veckomejl, edge-cache för utloggade, meta-kategori.
-  Och **seedning** — forumet har noll trådar, så sitemapen är tom.
+- **Starttrådarna (2026-10-20)** står i `scripts/forum-seed/trader.ts` och
+  publiceras med `bun run scripts/seed-forum.ts` (`--apply` för att skriva,
+  idempotent på rubrik). De skrivs **från grundarens konto (`niklas`)**, med
+  frågan som första inlägg och svaret som andra, så att tråden kommer med i
+  sitemapen. Skapa aldrig påhittade användare eller uppdiktade samtal för att
+  fylla forumet: det vilseleder besökarna och är precis det Google räknar som
+  spam. Datum och avgift i texterna måste ses över för hand när `hp-dates.ts`
+  ändras.
+- **`[text](url)` fungerar bara mot den egna sajten** (`isInternalHref` i
+  `forum-markdown.ts`). Mot en främmande adress kan texten ljuga om vart
+  länken går, så där skrivs texten ut och adressen autolänkas. Interna länkar
+  renderas utan `nofollow` och i samma flik, så att forumet för länkkraft
+  vidare till guiderna och proven.
 
 ### Topplistan
 

@@ -87,6 +87,9 @@ describe("stripMarkup och excerpt", () => {
     expect(stripMarkup("- ett\n- två")).toBe("ett två");
     expect(stripMarkup("Svaret är $x^2$")).toBe("Svaret är x^2");
     expect(stripMarkup("före\n```\nkod\n```\nefter")).toBe("före efter");
+    expect(stripMarkup("Läs [guiden](https://tvakommanollan.se/guider/nog) först")).toBe(
+      "Läs guiden först",
+    );
   });
 
   it("bryter utdrag på ordgräns", () => {

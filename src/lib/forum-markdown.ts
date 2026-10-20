@@ -7,11 +7,14 @@
  * HTML-producerande markdown-motor.
  *
  * Stöd: **fet**, *kursiv*, `kod`, ```kodblock```, > citat, punkt- och
- * nummerlistor, $matte$ (KaTeX) och autolänkade URL:er.
+ * nummerlistor, $matte$ (KaTeX), autolänkade URL:er och [text](url) för
+ * länkar till den egna sajten.
  *
  * Matte är inte valfritt här: halva forumet kommer handla om KVA och XYZ, och
  * ett HP-forum där man inte kan skriva ett bråk är inte användbart.
  */
+
+import { CANONICAL_HOST } from "./canonical-host";
 
 export type Inline =
   | { kind: "text"; text: string }
@@ -37,8 +40,27 @@ export type Block =
 // Fetstilens innehåll är "tecken som inte är stjärna, eller en ensam stjärna" —
 // inte `.+?`. Med lazy matchning äter `**fet *och kursiv* slut**` bara fram till
 // den första `**`, och den inre kursiven blir kvar som råa stjärnor.
+//
+// [text](url) prövas före fetstilen, så att en länk vars text innehåller
+// stjärnor inte klyvs, och före autolänken, som annars äter URL:en inuti.
 const INLINE_RE =
-  /(`[^`\n]+`)|(\$[^$\n]{1,200}\$)|(\*\*\*[^*\n]+\*\*\*)|(\*\*(?:[^*\n]|\*(?!\*))+\*\*)|(\*[^*\n]+\*)|((?:https?:\/\/|www\.)[^\s<>[\]()]+)/g;
+  /(`[^`\n]+`)|(\$[^$\n]{1,200}\$)|(\[[^\]\n]{1,200}\]\(https?:\/\/[^\s<>()]+\))|(\*\*\*[^*\n]+\*\*\*)|(\*\*(?:[^*\n]|\*(?!\*))+\*\*)|(\*[^*\n]+\*)|((?:https?:\/\/|www\.)[^\s<>[\]()]+)/g;
+
+const OWN_HOSTS = new Set([CANONICAL_HOST, `www.${CANONICAL_HOST}`]);
+
+/**
+ * Pekar länken på den egna sajten? Sådana länkar renderas utan `nofollow`
+ * och i samma flik: de är interna länkar, och att forumet för länkkraft vidare
+ * till guiderna och proven är en del av poängen med det.
+ */
+export function isInternalHref(href: string): boolean {
+  try {
+    const u = new URL(href);
+    return u.protocol === "https:" && OWN_HOSTS.has(u.hostname);
+  } catch {
+    return false;
+  }
+}
 
 /** Skiljetecken som nästan alltid hör till meningen, inte till URL:en. */
 function trimUrlTail(url: string): { url: string; tail: string } {
@@ -73,17 +95,31 @@ export function parseInline(source: string): Inline[] {
       if (text) out.push({ kind: "math", text });
       else pushText(out, m[2]);
     } else if (m[3]) {
+      // Namngivna länkar bara till den egna sajten. Mot en främmande adress
+      // kan texten ljuga om vart länken går ("https://bank.se" som pekar
+      // någon annanstans); där blir texten text och adressen autolänkas.
+      const close = m[3].indexOf("](");
+      const text = m[3].slice(1, close);
+      const href = m[3].slice(close + 2, -1);
+      if (isInternalHref(href)) {
+        out.push({ kind: "link", href, text });
+      } else {
+        pushText(out, `${text} (`);
+        out.push({ kind: "link", href, text: href });
+        pushText(out, ")");
+      }
+    } else if (m[4]) {
       // ***både och*** — vanligt nog att förtjäna ett eget fall.
       out.push({
         kind: "bold",
-        children: [{ kind: "italic", children: parseInline(m[3].slice(3, -3)) }],
+        children: [{ kind: "italic", children: parseInline(m[4].slice(3, -3)) }],
       });
-    } else if (m[4]) {
-      out.push({ kind: "bold", children: parseInline(m[4].slice(2, -2)) });
     } else if (m[5]) {
-      out.push({ kind: "italic", children: parseInline(m[5].slice(1, -1)) });
+      out.push({ kind: "bold", children: parseInline(m[5].slice(2, -2)) });
     } else if (m[6]) {
-      const { url, tail } = trimUrlTail(m[6]);
+      out.push({ kind: "italic", children: parseInline(m[6].slice(1, -1)) });
+    } else if (m[7]) {
+      const { url, tail } = trimUrlTail(m[7]);
       if (url) {
         out.push({
           kind: "link",
