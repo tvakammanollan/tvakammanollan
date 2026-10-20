@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  ACCESS_MONTHS,
   FREE_MEK_LIMIT,
+  TIME_LIMITED_FROM,
+  accessExpiresAt,
+  purchaseIsActive,
   FREE_ORD_LIMIT,
   cappedBatchSize,
   mekAccess,
@@ -52,5 +56,28 @@ describe("cappedBatchSize", () => {
 
   it("rör inte batchen för den som köpt", () => {
     expect(cappedBatchSize(20, ordAccess(900, true))).toBe(20);
+  });
+});
+
+describe("köpets giltighet", () => {
+  it("gäller i sex månader", () => {
+    expect(ACCESS_MONTHS).toBe(6);
+    expect(accessExpiresAt("2026-11-15T10:00:00Z")?.toISOString()).toBe("2027-05-15T10:00:00.000Z");
+  });
+
+  it("släpper vid utgången, inte före", () => {
+    const paid = "2026-11-15T10:00:00Z";
+    expect(purchaseIsActive(paid, Date.parse("2027-05-15T09:59:59Z"))).toBe(true);
+    expect(purchaseIsActive(paid, Date.parse("2027-05-15T10:00:00Z"))).toBe(false);
+  });
+
+  it("köp från tiden då kassan lovade 'för alltid' går aldrig ut", () => {
+    expect(new Date(TIME_LIMITED_FROM).toISOString()).toBe("2026-10-21T00:00:00.000Z");
+    expect(accessExpiresAt("2026-10-15T13:13:01Z")).toBeNull();
+    expect(purchaseIsActive("2026-10-15T13:13:01Z", Date.parse("2030-01-01"))).toBe(true);
+  });
+
+  it("ett oläsbart datum låser inte ute någon", () => {
+    expect(purchaseIsActive("inte ett datum", Date.parse("2030-01-01"))).toBe(true);
   });
 });

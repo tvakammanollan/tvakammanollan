@@ -7,6 +7,7 @@ import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
 import { startOrdCheckout, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
 import {
+  ACCESS_MONTHS,
   FREE_MEK_LIMIT,
   FREE_ORD_LIMIT,
   type PaywallReturnPath,
@@ -84,8 +85,8 @@ export function OrdPaywall({
             : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Lås upp hela ordlistan och all MEK-övning med ett engångsköp
-          {price ? ` på ${price}` : ""}. Inga prenumerationer, och det är ditt för alltid.
+          Lås upp hela ordlistan och all MEK-övning i {ACCESS_MONTHS} månader
+          {price ? ` för ${price}` : ""}. Du betalar en gång, och ingenting förnyas automatiskt.
         </p>
       </div>
 

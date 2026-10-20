@@ -12,6 +12,7 @@ import { GlassCard } from "@/components/layout/GlassCard";
 import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { OrdPaywall } from "@/components/OrdPaywall";
+import { ACCESS_MONTHS } from "@/lib/ord-paywall";
 import {
   confirmOrdCheckout,
   getOrdAccess,
@@ -514,8 +515,8 @@ function OrdPracticePage() {
               </PrimaryCTA>
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
-                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan kostar hela listan ett
-                  engångsköp.
+                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan låser ett köp upp hela
+                  listan i {ACCESS_MONTHS} månader.
                 </p>
               )}
 

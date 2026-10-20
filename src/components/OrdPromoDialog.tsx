@@ -1,7 +1,7 @@
 import { BookOpen, Check } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FREE_ORD_LIMIT } from "@/lib/ord-paywall";
+import { ACCESS_MONTHS, FREE_ORD_LIMIT } from "@/lib/ord-paywall";
 import { formatInt, formatMoney } from "@/lib/sv-format";
 
 /**
@@ -37,7 +37,7 @@ export function OrdPromoDialog({
 
   const body =
     remaining === 0
-      ? "Resten av listan väntar. Lås upp den en gång och öva obegränsat, för alltid."
+      ? `Resten av listan väntar. Lås upp den och öva obegränsat i ${ACCESS_MONTHS} månader.`
       : "Ordförståelse är den delen av provet som går att plugga mest på. Med hela listan tränar du på över 10 000 riktiga ORD-frågor, med förklaring till varje ord.";
 
   return (
@@ -75,8 +75,8 @@ export function OrdPromoDialog({
               "Repetition som tar de ord du missar igen",
               "All MEK-övning ingår i samma köp",
               price
-                ? `${price} en gång, ingen prenumeration`
-                : "Ett engångsköp, ingen prenumeration",
+                ? `${price} för ${ACCESS_MONTHS} månader, ingen prenumeration`
+                : `${ACCESS_MONTHS} månaders tillgång, ingen prenumeration`,
             ].map((rad) => (
               <li key={rad} className="flex items-start gap-2.5">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />

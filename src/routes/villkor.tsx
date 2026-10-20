@@ -30,7 +30,7 @@ function VillkorPage() {
         align="center"
         eyebrow="Juridik"
         title="Användarvillkor"
-        subtitle="Senast uppdaterad: 2026-08-20"
+        subtitle="Senast uppdaterad: 2026-10-20"
         variant="compact"
       />
       <article
@@ -107,15 +107,19 @@ function VillkorPage() {
             Köp av Hela Ordlistan
           </h2>
           <p>
-            Hela Ordlistan är ett engångsköp som ger ditt konto obegränsad ordträning, utöver de 40
-            ord som är gratis. Du betalar en gång, det finns ingen prenumeration och inga
-            förnyelser. Avtalet ingås mellan dig och Niklas Pellkvist när du slutför betalningen i
-            kassan. Köpet knyts till det konto du var inloggad med, och gästkonton kan inte köpa.
-            Priset som visas i kassan är det du betalar, och betalningen hanteras av Stripe.
+            Hela Ordlistan ger ditt konto obegränsad ordträning och MEK-övning i sex månader från
+            betalningen, utöver de 40 ord och 40 MEK-uppgifter som är gratis. Du betalar en gång,
+            det finns ingen prenumeration och köpet förnyas inte automatiskt. Vill du fortsätta
+            efter sex månader köper du igen. Avtalet ingås mellan dig och Niklas Pellkvist när du
+            slutför betalningen i kassan. Köpet knyts till det konto du var inloggad med, och
+            gästkonton kan inte köpa. Priset som visas i kassan är det du betalar, och betalningen
+            hanteras av Stripe.
           </p>
           <p>
-            Åtkomsten gäller så länge Tvåkommanollan finns kvar och ditt konto inte stängts av
-            enligt dessa villkor. Läggs tjänsten ned betalar vi tillbaka köpet.
+            Åtkomsten gäller i sex månader, förutsatt att ditt konto inte stängts av enligt dessa
+            villkor. Köp gjorda före den 21 oktober 2026 gäller utan tidsgräns, så länge
+            Tvåkommanollan finns kvar. Läggs tjänsten ned medan ett köp gäller betalar vi tillbaka
+            köpet.
           </p>
           <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ångerrätt

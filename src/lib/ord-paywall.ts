@@ -1,6 +1,7 @@
 /**
  * Övningspaywallen: de första 40 orden och de första 40 MEK-uppgifterna är
- * gratis, resten kostar ett engångsköp. Samma köp ("Hela Ordlistan + MEK")
+ * gratis, resten kostar ett köp som gäller i sex månader (köp gjorda före
+ * `TIME_LIMITED_FROM` gäller för alltid). Samma köp ("Hela Ordlistan + MEK")
  * låser upp båda, så den som köpte ordlistan innan MEK låstes fick MEK på
  * köpet.
  *
@@ -23,6 +24,34 @@ export const FREE_MEK_LIMIT = 40;
  * öppna, och `ord_purchases` är fortfarande tabellen köpen bokförs i.
  */
 export const ORD_PRODUCT_TAG = "ord_access";
+
+/** Så många månader ett köp gäller. Ändras den här ändras texten på alla ytor. */
+export const ACCESS_MONTHS = 6;
+
+/**
+ * Köp gjorda före den här tidpunkten gäller för alltid. Kassan lovade "det är
+ * ditt för alltid" fram till dess, och det löftet står kvar för dem som
+ * betalade på det. Flytta den inte bakåt.
+ */
+export const TIME_LIMITED_FROM = Date.parse("2026-10-21T00:00:00Z");
+
+/**
+ * När ett köp slutar gälla, eller null om det gäller för alltid. Ett oläsbart
+ * `paid_at` läses som för alltid: hellre en gratis förlängning än att en
+ * betalande blir utelåst för att ett datum inte gick att tolka.
+ */
+export function accessExpiresAt(paidAt: string): Date | null {
+  const paid = Date.parse(paidAt);
+  if (!Number.isFinite(paid) || paid < TIME_LIMITED_FROM) return null;
+  const end = new Date(paid);
+  end.setUTCMonth(end.getUTCMonth() + ACCESS_MONTHS);
+  return end;
+}
+
+export function purchaseIsActive(paidAt: string, now: number = Date.now()): boolean {
+  const end = accessExpiresAt(paidAt);
+  return end === null || now < end.getTime();
+}
 
 export type PaywallSubject = "ord" | "mek";
 

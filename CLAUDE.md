@@ -1447,6 +1447,13 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
   öppna kassan". Testa nya sessionsparametrar med ett riktigt `curl` mot
   `/v1/checkout/sessions` innan push; typkontrollen ser dem inte.
 - **Gästkonton kan inte köpa** (köpet hade försvunnit med kontot).
+- **Köpet gäller i sex månader sedan 2026-10-21** (`ACCESS_MONTHS`,
+  `purchaseIsActive` i `ord-paywall.ts`, räknat från `paid_at`). Köp före
+  `TIME_LIMITED_FROM` gäller för alltid: kassan lovade "det är ditt för alltid"
+  fram till dess (tre köp). Flytta aldrig den gränsen bakåt. Inget förnyas
+  automatiskt; den som köper igen krockar med sin gamla rad (`user_id` är
+  primärnyckel) och `markOrdPaid` skriver då över den med ny `paid_at`.
+  Utan det hade andra köpet dragit pengar utan att låsa upp något.
 - Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
   bekräftar mot Stripe som reserv för webhooken.
 
