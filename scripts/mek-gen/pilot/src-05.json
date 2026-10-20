@@ -2354,7 +2354,7 @@
 "source": {
 "title": "Pedagogik"
 },
-"text": "Pedagogik är en vetenskap som rör uppfostran, undervisning och utbildning, och i Sverige växte den fram som eget ämne ur _____ i början av 1900-talet. Ämnet har nära _____ till psykologin men också till sociologi och neurovetenskap, och det bedriver forskning i samarbete med flera _____.",
+"text": "Pedagogik är en vetenskap som rör uppfostran, undervisning och utbildning, och i Sverige växte den fram som eget ämne ur _____ i början av 1900-talet. Ämnet har nära _____ till psykologin men också till sociologi och neurovetenskap, och forskningen bedrivs ofta i samarbete med flera _____.",
 "key": [
 "filosofin",
 "band",
@@ -2369,7 +2369,7 @@
 [
 "sociologin",
 "kopplingar",
-"yrkesområden"
+"motståndare"
 ],
 [
 "psykologin",
@@ -2397,7 +2397,8 @@
 2
 ],
 [
-1
+1,
+3
 ],
 [
 1,
@@ -2414,7 +2415,7 @@
 "kol",
 "sam"
 ],
-"explanation": "Rätt svar är filosofin, band och professionsfält. Psykologin och sociologin kan inte ha varit ursprunget, eftersom de nämns som andra ämnen som pedagogiken har band till. Nära band och nära kopplingar betyder samma sak, men motsättningar och avstånd går emot ordet nära. Medicinen nämns inte alls bland de närliggande ämnena."
+"explanation": "Rätt svar är filosofin, band och professionsfält. Psykologin och sociologin kan inte ha varit ursprunget, eftersom de nämns som andra ämnen som pedagogiken har band till. Nära band och nära kopplingar betyder samma sak, men motsättningar och avstånd går emot ordet nära. Medicinen nämns inte alls bland de närliggande ämnena. Forskning bedrivs inte i samarbete med motståndare."
 },
 {
 "id": "p05-43",
@@ -2558,7 +2559,7 @@
 "source": {
 "title": "Fri vilja"
 },
-"text": "Fri vilja innebär att människan kan välja utan att valet styrs av slumpen eller av yttre orsaker, alltså att beslutet hade kunnat bli _____. Tanken står i skarp motsättning till _____, och när ett mekanistiskt tänkande vann insteg i vetenskapen kom den att _____.",
+"text": "Fri vilja innebär att människan kan välja utan att valet styrs av slumpen eller av yttre orsaker, alltså att beslutet hade kunnat bli _____. Tanken står i skarp motsättning till _____, och när ett mekanistiskt tänkande vann insteg i vetenskapen kom tanken på en fri vilja att _____.",
 "key": [
 "annorlunda",
 "determinismen",

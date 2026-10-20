@@ -1,0 +1,2980 @@
+[
+{
+"id": "p06-01",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Reumatoid artrit"
+},
+"text": "Reumatoid artrit, eller ledgångsreumatism, uppstår när immunförsvaret angriper vävnaden i kroppens egna leder. Inflammationen kan bryta ned både brosk och ben, och för den som röker blir förloppet dessutom ofta _____.",
+"key": [
+"svårare"
+],
+"distractors": [
+[
+"lindrigare"
+],
+[
+"ovanligare"
+],
+[
+"lugnare"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fo"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är svårare. Ordet dessutom lägger ännu en nackdel till en sjukdom som redan bryter ned brosk och ben, så rökningen måste göra förloppet sämre. Lindrigare och lugnare säger motsatsen, och ett förlopp kan inte bli ovanligare för en enskild person."
+},
+{
+"id": "p06-02",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Gikt"
+},
+"text": "Gikt är en ledinflammation som uppstår när halten urinsyra i blodet blir så hög att ämnet _____ i form av kristaller. Kristallerna lägger sig sedan i leder och senor och kan ge plötsliga och mycket smärtsamma anfall.",
+"key": [
+"faller ut"
+],
+"distractors": [
+[
+"löses upp"
+],
+[
+"späds ut"
+],
+[
+"tas upp"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är faller ut. Ett ämne som bildar kristaller när halten blir för hög faller ut ur lösningen. Löses upp och späds ut beskriver det motsatta, att ämnet försvinner i vätskan, och tas upp säger inget om att det bildas kristaller."
+},
+{
+"id": "p06-03",
+"amne": "med",
+"genre": "aka",
+"source": {
+"title": "Glaukom"
+},
+"text": "Länge antogs glaukom, eller grön starr, bero på ett förhöjt tryck i ögat. Senare forskning har dock visat att sambandet inte är så _____ som man trott: sjukdomen kan uppträda vid normalt tryck, och ett högt tryck leder inte alltid till synskador.",
+"key": [
+"enkelt"
+],
+"distractors": [
+[
+"sällsynt"
+],
+[
+"farligt"
+],
+[
+"nytt"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är enkelt. Exemplen efter kolon visar att högt tryck och sjukdom inte alltid hör ihop, alltså är sambandet mer invecklat än man trott. Att sambandet skulle vara sällsynt, farligt eller nytt förklaras inte av exemplen."
+},
+{
+"id": "p06-04",
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "Psoriasis"
+},
+"text": "Psoriasis är en kronisk inflammatorisk sjukdom som främst ger röda och fjällande utslag men som också kan påverka lederna. Sjukdomen är inte _____, så den som har psoriasis behöver inte undvika att träffa andra människor.",
+"key": [
+"smittsam"
+],
+"distractors": [
+[
+"ärftlig"
+],
+[
+"behandlingsbar"
+],
+[
+"ovanlig"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är smittsam. Slutsatsen att man inte behöver undvika andra följer bara om sjukdomen inte kan överföras mellan människor. Att den inte är ärftlig, inte behandlingsbar eller inte ovanlig säger ingenting om kontakten med andra."
+},
+{
+"id": "p06-05",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Gotisk arkitektur"
+},
+"text": "Gotiken växte fram i Frankrike på 1100-talet och skilde sig från den äldre romanska stilen genom sina spetsbågar. Med hjälp av strävpelare kunde murarna göras tunnare, vilket gav plats för stora fönster som fyllde kyrkorummen med _____.",
+"key": [
+"ljus"
+],
+"distractors": [
+[
+"luft"
+],
+[
+"ljud"
+],
+[
+"värme"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fo"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är ljus. Det är ljuset som strömmar in genom stora fönster, och gotiken kallas just ljusets arkitektur. Ljud och värme kommer inte in genom glaset på det sättet, och fönster i en kyrka är inte till för att släppa in luft."
+},
+{
+"id": "p06-06",
+"amne": "kul",
+"genre": "rec",
+"source": {
+"title": "Balett"
+},
+"text": "Baletten bygger på fastställda positioner och rörelser, och målet är att dansaren ska se lätt och elegant ut. Tåspetsdansen förstärker just detta intryck av _____, trots att den kräver stor muskelstyrka av den som dansar.",
+"key": [
+"tyngdlöshet"
+],
+"distractors": [
+[
+"hjälplöshet"
+],
+[
+"rastlöshet"
+],
+[
+"planlöshet"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är tyngdlöshet. Det som förstärker ett lätt och elegant intryck är att dansaren tycks sakna tyngd, och trots att ställer det mot den muskelstyrka som krävs. Hjälplöshet, rastlöshet och planlöshet stämmer inte med ett elegant intryck."
+},
+{
+"id": "p06-07",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Anarkism"
+},
+"text": "Anarkismen strävar efter ett samhälle utan stat, kapitalism och andra hierarkier. I stället för att besluten fattas av en central ledning vill anarkister att samhället organiseras _____, genom direkt demokrati och lokalt självstyre.",
+"key": [
+"underifrån"
+],
+"distractors": [
+[
+"uppifrån"
+],
+[
+"utifrån"
+],
+[
+"inifrån"
+]
+],
+"dtyp": [
+[
+"fo",
+"po"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"adv"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är underifrån. I stället för en central ledning ska makten utgå från människorna själva genom direkt demokrati och lokalt självstyre. Uppifrån är just den centrala ledning som avvisas, och utifrån och inifrån säger inget om hur besluten fattas."
+},
+{
+"id": "p06-08",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Folkräkning"
+},
+"text": "Vid en folkräkning samlar staten in uppgifter om alla som bor inom ett visst område, till exempel ålder, yrke och boende. FN rekommenderar att sådana undersökningar görs _____, helst vart tionde år, så att statistiken går att jämföra över tid.",
+"key": [
+"regelbundet"
+],
+"distractors": [
+[
+"undantagsvis"
+],
+[
+"frivilligt"
+],
+[
+"anonymt"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"adv"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är regelbundet. Helst vart tionde år preciserar ordet, och jämförelser över tid kräver undersökningar med jämna mellanrum. Undantagsvis säger motsatsen, och frivilligt eller anonymt har inget med tidsintervallet att göra."
+},
+{
+"id": "p06-09",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Stenåldern"
+},
+"text": "Stenåldern har fått sitt namn av att de flesta skärande redskap från perioden var gjorda av sten. Människorna använde förstås också trä, skinn och ben, men sådana material är _____ och har därför sällan bevarats till vår tid.",
+"key": [
+"förgängliga"
+],
+"distractors": [
+[
+"förnybara"
+],
+[
+"formbara"
+],
+[
+"förmånliga"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är förgängliga. Därför knyter egenskapen till att materialen sällan har bevarats, och det som är förgängligt bryts ned med tiden. Att trä och skinn är förnybara, formbara eller förmånliga förklarar inte varför de försvunnit."
+},
+{
+"id": "p06-10",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Gustav III"
+},
+"text": "Gustav III kallas ibland teaterkungen för sitt stora kulturintresse, och han grundade både Svenska Akademien och Kungliga Musikaliska Akademien. Samtidigt _____ han sin makt genom en statskupp 1772, då riksrådet fängslades och de gamla partierna upplöstes.",
+"key": [
+"stärkte"
+],
+"distractors": [
+[
+"försvagade"
+],
+[
+"delade"
+],
+[
+"överlät"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är stärkte. En statskupp där riksrådet fängslas och partierna upplöses samlar makten hos kungen. Försvagade, delade och överlät säger alla att kungen gav ifrån sig makt, vilket är motsatsen till vad en kupp gör."
+},
+{
+"id": "p06-11",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Mitokondrie"
+},
+"text": "Mitokondrierna brukar kallas cellens kraftverk, eftersom det är där den största delen av cellens energi framställs. Celler som förbrukar mycket energi, till exempel muskelceller, har därför särskilt _____ mitokondrier.",
+"key": [
+"talrika"
+],
+"distractors": [
+[
+"sällsynta"
+],
+[
+"rörliga"
+],
+[
+"skyddade"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är talrika. Om energin framställs i mitokondrierna behöver celler med stor förbrukning många av dem, och därför markerar sambandet. Sällsynta säger motsatsen, och att mitokondrierna skulle vara rörliga eller skyddade följer inte av energibehovet."
+},
+{
+"id": "p06-12",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Kråkfåglar"
+},
+"text": "Kråkfåglar som kajor, kråkor och korpar finns nästan över hela jorden, med undantag av polartrakterna och södra Sydamerika. De är ofta sociala fåglar med hög intelligens och har länge haft en framträdande roll i myter och _____.",
+"key": [
+"folktro"
+],
+"distractors": [
+[
+"folkmusik"
+],
+[
+"folkmun"
+],
+[
+"folkbildning"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"upp"
+],
+"explanation": "Rätt svar är folktro. Myter och folktro är föreställningar om världen och hör ihop i samma uppräkning. Folkmusik och folkbildning är inte föreställningar som fåglar kan spela en roll i, och folkmun används i uttrycket i folkmun, inte efter en roll i."
+},
+{
+"id": "p06-13",
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Fabel"
+},
+"text": "En fabel är en kort berättelse där djur talar och beter sig som människor för att illustrera en sensmoral. Länge fördes fablerna vidare _____, och först efter hand skrevs de ned, varvid de också förändrades något.",
+"key": [
+"muntligt"
+],
+"distractors": [
+[
+"skriftligt"
+],
+[
+"officiellt"
+],
+[
+"anonymt"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"adv"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är muntligt. Att fablerna först efter hand skrevs ned visar att de dessförinnan berättades. Skriftligt säger motsatsen, och att fablerna fördes vidare officiellt eller anonymt är inte vad som ställs mot nedskrivningen."
+},
+{
+"id": "p06-14",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Förskola"
+},
+"text": "Förskolan har två rötter: föräldrar som behövde någon som tog hand om barnen under arbetsdagen, och barnens behov av att _____ inför den obligatoriska skolan. Den tyske pedagogen Friedrich Fröbel öppnade den första så kallade barnträdgården 1837.",
+"key": [
+"förberedas"
+],
+"distractors": [
+[
+"förskonas"
+],
+[
+"förhöras"
+],
+[
+"försenas"
+]
+],
+"dtyp": [
+[
+"fo"
+],
+[
+"fo"
+],
+[
+"fo"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är förberedas. Inför den obligatoriska skolan pekar på något som ska göra barnen redo för den. Att förskonas från, förhöras inför eller försenas inför skolan är inget behov som en förskola fyller."
+},
+{
+"id": "p06-15",
+"amne": "utb",
+"genre": "deb",
+"source": {
+"title": "Mobbning"
+},
+"text": "Det är lätt att tro att den som mobbar andra gör det av osäkerhet. Forskningen pekar snarare åt motsatt håll: mobbare har ofta gott självförtroende men _____ förmåga att sätta sig in i andras situation, och de behöver en tyst publik för att lyckas.",
+"key": [
+"begränsad"
+],
+"distractors": [
+[
+"utpräglad"
+],
+[
+"medfödd"
+],
+[
+"obegränsad"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fo",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är begränsad. Men ställer det goda självförtroendet mot en brist, nämligen svag inlevelse. Utpräglad och obegränsad förmåga vore inget motsatsförhållande, och att förmågan är medfödd säger inget om hur stor den är."
+},
+{
+"id": "p06-16",
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Deflation"
+},
+"text": "Deflation, alltså att den allmänna prisnivån sjunker, ses vanligen som skadlig för ekonomin. Den som har sparpengar kan visserligen _____ på att priserna faller, men den som har lån får det svårare, eftersom skulden blir tyngre att bära.",
+"key": [
+"tjäna"
+],
+"distractors": [
+[
+"förlora"
+],
+[
+"lita"
+],
+[
+"vänta"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är tjäna. Visserligen och men ställer spararen mot låntagaren, som får det svårare, så spararen måste vinna på de fallande priserna. Förlora säger motsatsen, och att lita på eller vänta på fallande priser är ingen fördel som kan ställas mot låntagarens nackdel."
+},
+{
+"id": "p06-17",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Testamente"
+},
+"text": "Med ett testamente bestämmer en person hur kvarlåtenskapen ska fördelas efter döden. Testamentet går tillbaka på romarnas rättsordning, men i de germanska länderna dröjde det länge innan testamenten _____, eftersom adel och bönder ville behålla egendomen inom släkten.",
+"key": [
+"erkändes"
+],
+"distractors": [
+[
+"avskaffades"
+],
+[
+"missbrukades"
+],
+[
+"ifrågasattes"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"fa"
+],
+[
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är erkändes. Den som vill behålla egendomen inom släkten motsätter sig att den kan testamenteras bort, så det tog lång tid innan testamenten godtogs. Avskaffades och ifrågasattes förutsätter att testamenten redan var accepterade, och missbrukades har inget samband med släktens intresse."
+},
+{
+"id": "p06-18",
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Skepticism"
+},
+"text": "Filosofisk skepticism går tillbaka till antiken och innebär att man betvivlar att säker kunskap alls är möjlig. Även om vi skulle ha kunskap, menar skeptikern, kan vi aldrig med säkerhet _____ sanna föreställningar från falska.",
+"key": [
+"skilja"
+],
+"distractors": [
+[
+"härleda"
+],
+[
+"befria"
+],
+[
+"utesluta"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fi"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är skilja. Man skiljer en sak från en annan, och skeptikerns poäng är att vi inte kan avgöra vilka föreställningar som är sanna. Härleda, befria och utesluta passar inte med från falska och ger ingen mening om kunskap."
+},
+{
+"id": "p06-19",
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Fobi"
+},
+"text": "En fobi är en stark rädsla för ett visst föremål eller en viss situation. För att räknas som fobi ska rädslan vara _____, alltså betydligt kraftigare än vad den verkliga faran motiverar.",
+"key": [
+"överdriven"
+],
+"distractors": [
+[
+"befogad"
+],
+[
+"måttlig"
+],
+[
+"medveten"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är överdriven. Alltså inleder en förklaring av ordet, och en rädsla som är kraftigare än faran motiverar är överdriven. Befogad och måttlig säger motsatsen, och att rädslan är medveten förklaras inte av jämförelsen med faran."
+},
+{
+"id": "p06-20",
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Svordom"
+},
+"text": "Svordomar finns i alla språk och används i alla åldrar och samhällsgrupper. Att orden är _____ i formella sammanhang är själva förutsättningen för deras kraft: utan förbudet skulle de förlora sin laddning.",
+"key": [
+"tabubelagda"
+],
+"distractors": [
+[
+"efterfrågade"
+],
+[
+"accepterade"
+],
+[
+"inlånade"
+]
+],
+"dtyp": [
+[
+"po"
+],
+[
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är tabubelagda. Förbudet efter kolon visar att orden inte får användas i formella sammanhang, och ett tabu är just ett sådant förbud. Efterfrågade och accepterade säger motsatsen, och inlånade har ingenting med förbud att göra."
+},
+{
+"id": "p06-21",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Borrelia"
+},
+"text": "Borreliabakterier ger upphov till två slags sjukdomar. Återfallsfebrarna har varit kända sedan 1800-talet och kan vara mycket _____, medan den andra, lindrigare gruppen främst ger besvär i huden, även om den på sikt också kan _____ leder och nervsystem.",
+"key": [
+"allvarliga",
+"skada"
+],
+"distractors": [
+[
+"ofarliga",
+"angripa"
+],
+[
+"farliga",
+"skydda"
+],
+[
+"vanliga",
+"stärka"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är allvarliga och skada. Medan den andra, lindrigare gruppen ställer de två grupperna mot varandra, så återfallsfebrarna måste vara svåra. Även om visar att den mildare gruppen ändå kan göra skada. Ofarliga bryter kontrasten, och skydda eller stärka leder och nervsystem är inget en sjukdom gör."
+},
+{
+"id": "p06-22",
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "Anemi"
+},
+"text": "Blodbrist, eller anemi, innebär att blodet innehåller för få röda blodkroppar eller för lite hemoglobin och därför får svårare att _____ syre. När tillståndet utvecklas långsamt är symtomen ofta _____, till exempel trötthet och svaghet, medan en plötslig anemi ger tydligare besvär.",
+"key": [
+"transportera",
+"diffusa"
+],
+"distractors": [
+[
+"producera",
+"vaga"
+],
+[
+"bära",
+"akuta"
+],
+[
+"andas",
+"tydliga"
+]
+],
+"dtyp": [
+[
+"fa",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är transportera och diffusa. De röda blodkropparna för syre runt i kroppen, och bära syre betyder samma sak. Medan ställer de långsamma symtomen mot de tydligare vid plötslig anemi, så de måste vara otydliga, och vaga ligger nära. Blodet producerar och andas inte syre, och akuta eller tydliga symtom bryter kontrasten."
+},
+{
+"id": "p06-23",
+"amne": "kul",
+"genre": "aka",
+"source": {
+"title": "Serietidning"
+},
+"text": "Gränsen mellan serietidningar och närliggande publikationer är ofta _____, och olika samlare drar den på olika sätt. En vanlig avgränsning är att en serietidning kommer ut _____ i numrerade nummer, likt en tidskrift, medan enstaka utgåvor räknas som seriealbum.",
+"key": [
+"suddig",
+"periodiskt"
+],
+"distractors": [
+[
+"skarp",
+"regelbundet"
+],
+[
+"flytande",
+"sporadiskt"
+],
+[
+"tydlig",
+"anonymt"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"adv"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är suddig och periodiskt. Att samlare drar gränsen på olika sätt visar att den är oskarp, och en flytande gräns betyder detsamma. Likt en tidskrift och i numrerade nummer pekar på utgivning med jämna mellanrum, vilket regelbundet också uttrycker. Skarp och tydlig bryter mot de olika gränsdragningarna, och sporadiskt eller anonymt stämmer inte med en tidskrift."
+},
+{
+"id": "p06-24",
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Keramik"
+},
+"text": "Konsten att bränna föremål av lera är mycket gammal, men för nomadfolk hade keramik liten _____, eftersom tunga och ömtåliga kärl var svåra att ta med vid flyttningarna. Först när jordbruket växte fram började förvaringskärl tillverkas i större _____.",
+"key": [
+"nytta",
+"omfattning"
+],
+"distractors": [
+[
+"betydelse",
+"hemlighet"
+],
+[
+"brist",
+"skala"
+],
+[
+"konkurrens",
+"avstånd"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är nytta och omfattning. Eftersom kärlen var svåra att ta med kunde nomaderna inte ha mycket glädje av dem, och liten betydelse ligger nära. Tillverkas i större omfattning, eller skala, betyder att produktionen ökade. Liten brist och liten konkurrens förklaras inte av att kärlen var tunga, och i större hemlighet eller avstånd ger ingen mening."
+},
+{
+"id": "p06-25",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Parlamentarism"
+},
+"text": "I ett parlamentariskt system är regeringen beroende av parlamentets stöd. Sverige tillämpar negativ parlamentarism, vilket innebär att en regering kan _____ ända tills mer än hälften av riksdagens ledamöter uttryckligen röstar _____ den.",
+"key": [
+"sitta kvar",
+"emot"
+],
+"distractors": [
+[
+"regera",
+"för"
+],
+[
+"avgå",
+"bort"
+],
+[
+"avsättas",
+"igenom"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"fu"
+],
+"ledtrad": [
+"def",
+"def"
+],
+"explanation": "Rätt svar är sitta kvar och emot. Negativ parlamentarism betyder att regeringen får fortsätta så länge inte en majoritet aktivt säger nej, och regera ligger nära. Att rösta bort regeringen betyder samma sak som att rösta emot den. Röstar för den är det positiva stödet som inte krävs, och en regering avgår eller avsätts inte så länge den har stöd."
+},
+{
+"id": "p06-26",
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Pension"
+},
+"text": "Pension är en ersättning till den som är för gammal eller för sjuk för att arbeta och därför har _____ sin arbetsinkomst. Vissa yrkesgrupper, som dansare och idrottare, går dock i pension vid en betydligt _____ ålder än andra, ofta redan i 40- eller 50-årsåldern.",
+"key": [
+"förlorat",
+"lägre"
+],
+"distractors": [
+[
+"minskat",
+"högre"
+],
+[
+"ökat",
+"yngre"
+],
+[
+"behållit",
+"jämnare"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"def",
+"def"
+],
+"explanation": "Rätt svar är förlorat och lägre. En ersättning behövs när inkomsten försvinner eller blir mindre, så minskat passar också. Redan i 40- eller 50-årsåldern är tidigt, alltså en lägre ålder, och yngre ålder säger samma sak. Ökat och behållit ger ingen anledning till ersättning, och högre eller jämnare ålder stämmer inte med redan."
+},
+{
+"id": "p06-27",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Karl XII"
+},
+"text": "Karl XII förde krig under nästan hela sin tid som kung. Efter tidiga _____, bland annat vid Narva, vände krigslyckan när han gick in i Ryssland, och fälttåget slutade med ett _____ nederlag vid Poltava 1709, varefter hans armé gav upp.",
+"key": [
+"segrar",
+"förkrossande"
+],
+"distractors": [
+[
+"framgångar",
+"lindrigt"
+],
+[
+"förluster",
+"svidande"
+],
+[
+"reträtter",
+"obetydligt"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är segrar och förkrossande. Krigslyckan kan bara vända om det först gått bra, så framgångar fungerar också. Ett nederlag som slutar med att hela armén ger upp är förkrossande, och svidande ligger nära. Förluster och reträtter före vändningen bryter sambandet, och ett lindrigt eller obetydligt nederlag stämmer inte med en armé som kapitulerar."
+},
+{
+"id": "p06-28",
+"amne": "his",
+"genre": "aka",
+"source": {
+"title": "Järnåldern"
+},
+"text": "Järnåldern inleds när människor lär sig utvinna och bearbeta järn, och den börjar därför vid _____ tidpunkter i olika delar av världen. Vapen och verktyg tillverkades nu av järn i stället för brons, medan smycken och spännen _____ gjordes i brons.",
+"key": [
+"skilda",
+"fortfarande"
+],
+"distractors": [
+[
+"samma",
+"sällan"
+],
+[
+"växlande",
+"inte längre"
+],
+[
+"gemensamma",
+"oftast"
+]
+],
+"dtyp": [
+[
+"po",
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"a",
+"adv"
+],
+"ledtrad": [
+"ors",
+"kon"
+],
+"explanation": "Rätt svar är skilda och fortfarande. Eftersom människor på olika håll lärde sig hantera järn vid olika tider börjar epoken inte samtidigt överallt, och växlande säger samma sak. Medan ställer de nya järnvapnen mot smyckena, som alltså höll kvar vid bronsen, vilket oftast också uttrycker. Samma och gemensamma tidpunkter strider mot därför, och sällan eller inte längre tar bort kontrasten."
+},
+{
+"id": "p06-29",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Myggor"
+},
+"text": "Det finns omkring 33 000 arter av myggor, men bara _____ av dem sticker eller biter. Bland stickmyggorna är det dessutom i regel honorna som sticker: de behöver _____ för att kunna utveckla sina ägg.",
+"key": [
+"en bråkdel",
+"protein"
+],
+"distractors": [
+[
+"en minoritet",
+"skugga"
+],
+[
+"de flesta",
+"näring"
+],
+[
+"samtliga",
+"socker"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"s"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är en bråkdel och protein. Men bara ställer det stora antalet arter mot de få som sticker, och en minoritet betyder samma sak. Honan sticker för att få något ur blodet som äggen behöver, alltså protein, och näring passar också. De flesta och samtliga strider mot men bara, och skugga eller socker får myggan inte genom att sticka."
+},
+{
+"id": "p06-30",
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Sonett"
+},
+"text": "Sonetten är en diktform på fjorton rader med ett fast mönster av rim. I den variant som Petrarca gjorde till _____ på 1300-talet följs två strofer på fyra rader av två strofer på tre rader, och rimmen är strängt _____.",
+"key": [
+"förebild",
+"reglerade"
+],
+"distractors": [
+[
+"föredöme",
+"fria"
+],
+[
+"undantag",
+"bundna"
+],
+[
+"motpol",
+"oregelbundna"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"po",
+"po"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är förebild och reglerade. Petrarcas variant blev mönstret för senare diktare, och föredöme betyder samma sak. Ett fast mönster av rim innebär att rimmen följer stränga regler, och bundna rim säger detsamma. Fria och oregelbundna rim strider mot det fasta mönstret, och ett undantag eller en motpol gör man inte en diktform till."
+},
+{
+"id": "p06-31",
+"amne": "lit",
+"genre": "rec",
+"source": {
+"title": "Kalevala"
+},
+"text": "Kalevala brukar kallas Finlands nationalepos, men verket är ingen urgammal helhet. Elias Lönnrot _____ på 1800-talet sånger ur den muntliga traditionen till ett sammanhängande epos, och de verser han skrev själv utgör bara en _____ del av texten.",
+"key": [
+"sammanställde",
+"obetydlig"
+],
+"distractors": [
+[
+"översatte",
+"dominerande"
+],
+[
+"förenade",
+"väsentlig"
+],
+[
+"förkortade",
+"ringa"
+]
+],
+"dtyp": [
+[
+"fa",
+"po"
+],
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+2
+],
+[
+2
+],
+[
+1
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är sammanställde och obetydlig. Att verket inte är en urgammal helhet förklaras av att Lönnrot fogade samman många sånger till ett epos, och förenade säger samma sak. Bara visar att hans egna verser är få, och ringa betyder detsamma. Översatte och förkortade förklarar inte hur helheten uppstod, och en dominerande eller väsentlig del strider mot bara."
+},
+{
+"id": "p06-32",
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Lärling"
+},
+"text": "Under skråväsendet krävdes det ofta att pojken var född inom äktenskapet för att en mästare skulle _____ honom som lärling, och hans förmyndare fick dessutom _____ mästaren en avgift.",
+"key": [
+"anta",
+"betala"
+],
+"distractors": [
+[
+"avskeda",
+"ge"
+],
+[
+"ta emot",
+"kräva"
+],
+[
+"befordra",
+"låna"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är anta och betala. Kravet gällde för att pojken skulle få börja i lära, och ta emot honom betyder samma sak. Förmyndaren gav mästaren pengar, så ge passar också. Avskeda och befordra handlar inte om att börja som lärling, och man kräver eller lånar inte mästaren en avgift."
+},
+{
+"id": "p06-33",
+"amne": "eko",
+"genre": "aka",
+"source": {
+"title": "Oligopol"
+},
+"text": "På en oligopolmarknad finns bara ett _____ säljare. Om de gör upp sinsemellan om priser bildar de en kartell, och Konkurrensverket _____ misstänkta begränsningar av den fria konkurrensen.",
+"key": [
+"fåtal",
+"utreder"
+],
+"distractors": [
+[
+"flertal",
+"granskar"
+],
+[
+"litet antal",
+"uppmuntrar"
+],
+[
+"stort antal",
+"belönar"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"po",
+"po"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är fåtal och utreder. Bara och ordet oligopol pekar på få säljare, och ett litet antal betyder samma sak. En myndighet som ska skydda konkurrensen utreder misstänkta begränsningar, och granskar ligger nära. Flertal och stort antal strider mot bara, och Konkurrensverket uppmuntrar eller belönar inte begränsningar av konkurrensen."
+},
+{
+"id": "p06-34",
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Sparande"
+},
+"text": "I vardagligt tal betyder sparande att lägga undan pengar för senare bruk. Inom nationalekonomin är definitionen mer _____: sparandet är helt enkelt den del av inkomsterna, för hushåll såväl som för stat och kommun, som inte _____.",
+"key": [
+"strikt",
+"konsumeras"
+],
+"distractors": [
+[
+"vag",
+"förbrukas"
+],
+[
+"precis",
+"sparas"
+],
+[
+"personlig",
+"redovisas"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"fi"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kon",
+"def"
+],
+"explanation": "Rätt svar är strikt och konsumeras. Helt enkelt efter kolon visar att den ekonomiska definitionen är snäv och exakt, och precis ligger nära. Sparande är det som blir över när konsumtionen är betald, och förbrukas säger samma sak. Vag och personlig stämmer inte med en exakt definition, och att sparandet är det som inte sparas vore en motsägelse."
+},
+{
+"id": "p06-35",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Åklagare"
+},
+"text": "Åklagaren företräder samhället när ett brott prövas i domstol. I Sverige är det ofta åklagaren som _____ förundersökningen och styr polisernas arbete, och det är också åklagaren som till sist avgör om det finns tillräckliga _____ för att väcka åtal.",
+"key": [
+"leder",
+"skäl"
+],
+"distractors": [
+[
+"överklagar",
+"bevis"
+],
+[
+"håller i",
+"ursäkter"
+],
+[
+"dömer",
+"medel"
+]
+],
+"dtyp": [
+[
+"fa",
+"de"
+],
+[
+"de",
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"sam",
+"kol"
+],
+"explanation": "Rätt svar är leder och skäl. Den som styr polisernas arbete leder förundersökningen, och håller i betyder samma sak. Tillräckliga skäl är det som krävs för åtal, och bevis passar också. En förundersökning överklagas eller döms inte, och ursäkter eller medel avgör inte om åtal ska väckas."
+},
+{
+"id": "p06-36",
+"amne": "fil",
+"genre": "aka",
+"source": {
+"title": "Nihilism"
+},
+"text": "Nihilismen, efter latinets nihil, ingenting, är en filosofisk hållning som _____ att livet har någon objektiv mening. Moraliska nihilister menar på samma sätt att det inte finns några moraliska värden, och därmed ingen grund för att _____ en viss handling framför andra.",
+"key": [
+"förnekar",
+"föredra"
+],
+"distractors": [
+[
+"bekräftar",
+"välja"
+],
+[
+"ifrågasätter",
+"förbjuda"
+],
+[
+"förutsätter",
+"jämföra"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"fa"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är förnekar och föredra. Ordet ingenting och på samma sätt visar att nihilisten säger nej till att livet har mening, och ifrågasätter ligger nära. Utan moraliska värden finns inget skäl att sätta en handling framför en annan, och välja framför fungerar också. Bekräftar och förutsätter säger motsatsen, och man förbjuder eller jämför inte en handling framför andra."
+},
+{
+"id": "p06-37",
+"amne": "mil",
+"genre": "aka",
+"source": {
+"title": "Värnplikt"
+},
+"text": "Det som kännetecknar värnplikt är att tjänstgöringen är _____, med hot om böter eller fängelse för den som vägrar, och att soldaterna alltså inte rekryteras genom _____.",
+"key": [
+"obligatorisk",
+"värvning"
+],
+"distractors": [
+[
+"tvingande",
+"plikt"
+],
+[
+"frivillig",
+"anställning"
+],
+[
+"tillfällig",
+"mönstring"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är obligatorisk och värvning. Hotet om straff visar att tjänsten är tvingande, och tvingande betyder samma sak. Inte rekryteras genom ställer tvånget mot frivillig rekrytering, alltså värvning eller anställning. Frivillig strider mot hotet om straff, och plikt och mönstring är delar av själva värnplikten och kan inte vara det den skiljer sig från."
+},
+{
+"id": "p06-38",
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Intelligens"
+},
+"text": "Intelligens brukar beskrivas som förmågan att resonera, lösa problem och tänka abstrakt. Hur intelligent en person är _____ liksom de flesta personliga egenskaper av både arv och miljö, och för att få ett mätbart värde används _____ test där resultatet jämförs med en normgrupp.",
+"key": [
+"bestäms",
+"standardiserade"
+],
+"distractors": [
+[
+"avgörs",
+"godtyckliga"
+],
+[
+"döljs",
+"normerade"
+],
+[
+"förstärks",
+"frivilliga"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är bestäms och standardiserade. Arv och miljö är det som formar egenskapen, och avgörs betyder samma sak. Ett resultat som ska jämföras med en normgrupp kräver test som är likadana för alla, och normerade test passar också. Döljs och förstärks ger ingen mening med arv och miljö, och godtyckliga eller frivilliga test går inte att jämföra med en normgrupp."
+},
+{
+"id": "p06-39",
+"amne": "spr",
+"genre": "deb",
+"source": {
+"title": "Ungdomsspråk"
+},
+"text": "Vuxna klagar ofta på att ungdomar talar ett helt annat språk än de själva. Det stämmer att unga har egna ord och uttryck, men det är en _____ att det skulle röra sig om ett eget språk. Språkforskaren Ulla-Britt Kotsinas menar att klagomålen snarare beror på att vuxna vid varje generationsskifte har svårt att _____ det nya och kreativa i ungdomarnas språk.",
+"key": [
+"överdrift",
+"upptäcka"
+],
+"distractors": [
+[
+"sanning",
+"se"
+],
+[
+"missuppfattning",
+"undvika"
+],
+[
+"självklarhet",
+"förbjuda"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"fa"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är överdrift och upptäcka. Men ställer de egna orden mot påståendet om ett eget språk, som alltså går för långt, och missuppfattning passar också. Snarare visar att problemet ligger hos de vuxna, som inte märker det nya, och se betyder samma sak. Sanning och självklarhet strider mot men, och svårt att undvika eller förbjuda det nya förklarar inte klagomålen."
+},
+{
+"id": "p06-40",
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Kylskåp"
+},
+"text": "I ett kylskåp cirkulerar ett köldmedium med mycket låg kokpunkt. Inne i skåpet tar mediet upp värme från maten och börjar _____. Kompressorn höjer sedan trycket, och på skåpets baksida _____ mediet värmen till omgivningen innan det åter leds in i skåpet.",
+"key": [
+"koka",
+"avger"
+],
+"distractors": [
+[
+"frysa",
+"släpper ut"
+],
+[
+"förångas",
+"absorberar"
+],
+[
+"kondensera",
+"samlar"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+2
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är koka och avger. Ett ämne med låg kokpunkt som värms upp börjar koka, och förångas betyder samma sak. Till omgivningen visar att värmen lämnar mediet, och släpper ut säger detsamma. Frysa och kondensera är motsatsen till vad som händer när ett ämne värms, och på baksidan tar mediet inte upp eller samlar värmen utan blir av med den."
+},
+{
+"id": "p06-41",
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Blindtarmsinflammation"
+},
+"text": "Vid blindtarmsinflammation sitter smärtan till en början ofta runt naveln, men den _____ sedan nedåt mot bukens högra sida. Den förvärras av rörelser och hosta och _____ ofta av feber och illamående. Om inflammationen inte behandlas kan bihanget _____, vilket i sin tur kan leda till bukhinneinflammation.",
+"key": [
+"vandrar",
+"åtföljs",
+"brista"
+],
+"distractors": [
+[
+"flyttar",
+"lindras",
+"krympa"
+],
+[
+"avtar",
+"följs",
+"spricka"
+],
+[
+"stannar",
+"förväxlas",
+"läka"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+],
+[
+"po",
+"fa"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är vandrar, åtföljs och brista. Men och sedan nedåt visar att smärtan byter plats, och flyttar säger samma sak. Feber och illamående är symtom som kommer tillsammans med smärtan, och följs passar också. Det som leder till bukhinneinflammation är att bihanget går sönder, och spricka betyder detsamma. Avtar och stannar passar inte med nedåt, lindras strider mot förvärras, och ett bihang som krymper eller läker ger ingen bukhinneinflammation."
+},
+{
+"id": "p06-42",
+"amne": "kul",
+"genre": "rec",
+"source": {
+"title": "Musikal"
+},
+"text": "Musikalen brukar beskrivas som en förening av sång, skådespel och dans, men formen har _____ rötter än så. Att förena tal, sång och spektakel på samma scen går att _____ ända till de antika Dionysosfesterna, och den renodlade talteatern har i själva verket alltid levt _____ med mer blandade former av scenkonst.",
+"key": [
+"djupare",
+"spåra",
+"parallellt"
+],
+"distractors": [
+[
+"äldre",
+"glömma",
+"isolerat"
+],
+[
+"nyare",
+"följa",
+"ovetande"
+],
+[
+"grundare",
+"datera",
+"sida vid sida"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v",
+"adv"
+],
+"ledtrad": [
+"kon",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är djupare, spåra och parallellt. Men och de antika festerna visar att formen är äldre än den moderna musikalen, och äldre rötter säger samma sak. Något som går tillbaka ända till antiken går att spåra eller följa dit. Två former som alltid funnits samtidigt har levt parallellt, sida vid sida. Nyare och grundare rötter strider mot antiken, man glömmer inte något ända till en tidpunkt, och isolerat eller ovetande med passar inte grammatiskt."
+},
+{
+"id": "p06-43",
+"amne": "sam",
+"genre": "aka",
+"source": {
+"title": "Polis"
+},
+"text": "Polisen ska _____ allmän ordning och säkerhet och bekämpa brott inom staten. Den är därmed den främsta utövaren av statens våldsmonopol inåt, medan försvarsmakten _____ samma monopol mot yttre fiender. Ordet polis kommer via franskan från grekiskans pólis, som betydde stad eller stat, och är alltså _____ med ord som politik och politiker.",
+"key": [
+"upprätthålla",
+"hävdar",
+"besläktat"
+],
+"distractors": [
+[
+"värna",
+"överlåter",
+"oförenligt"
+],
+[
+"störa",
+"utövar",
+"sammanblandat"
+],
+[
+"utreda",
+"saknar",
+"sammansatt"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"po"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"par",
+"ors"
+],
+"explanation": "Rätt svar är upprätthålla, hävdar och besläktat. Polisen ska se till att ordning och säkerhet består, och värna ligger nära. Medan ställer polisen mot försvarsmakten, som gör samma sak utåt, och utövar passar också. Alltså drar slutsatsen att ord med samma grekiska ursprung är släkt med varandra. Störa och utreda ordning ger ingen mening, överlåter och saknar bryter parallellen, och oförenligt, sammanblandat och sammansatt följer inte av det gemensamma ursprunget."
+},
+{
+"id": "p06-44",
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Svenska Ostindiska Kompaniet"
+},
+"text": "Svenska Ostindiska Companiet bildades 1731 och skickade sina skepp från Göteborg till Östasien, främst Kina. De tidiga expeditionerna gav stora _____, men under 1700-talets sista decennier slutade nästan varje resa med _____, och kompaniet _____ till slut 1813 efter ett beslut på bolagsstämman.",
+"key": [
+"vinster",
+"förlust",
+"upplöstes"
+],
+"distractors": [
+[
+"intäkter",
+"vinst",
+"grundades"
+],
+[
+"förluster",
+"underskott",
+"utvidgades"
+],
+[
+"skulder",
+"framgång",
+"avvecklades"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är vinster, förlust och upplöstes. Men ställer de tidiga resorna mot de sena, så de första måste ha gått bra, och intäkter fungerar också. De sena resorna gick då dåligt, alltså med förlust eller underskott. Ett kompani som till slut går med förlust läggs ned, och avvecklades betyder samma sak. Förluster och skulder bryter kontrasten, vinst och framgång likaså, och kompaniet kan inte ha grundats 1813 när det bildades 1731."
+},
+{
+"id": "p06-45",
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Lax"
+},
+"text": "Atlantlaxen kläcks i sötvatten men tillbringar sina vuxna år främst i havet, där den _____ på sill och tobis. När laxen blivit könsmogen, efter ett till fyra år, _____ den tillbaka till vattendraget där den föddes för att leka. Den kan alltså _____ sig till mycket skiftande salthalter.",
+"key": [
+"livnär sig",
+"vandrar",
+"anpassa"
+],
+"distractors": [
+[
+"lever",
+"stannar",
+"skydda"
+],
+[
+"leker",
+"flyttar",
+"utsätta"
+],
+[
+"vilar",
+"sjunker",
+"ställa om"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fo",
+"de"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är livnär sig, vandrar och anpassa. Sill och tobis är vad laxen äter, och lever på betyder samma sak. Tillbaka till vattendraget visar att laxen förflyttar sig en lång väg, och flyttar passar också. Alltså drar slutsatsen att en fisk som klarar både sött och salt vatten ställer om sig. Leker och vilar på sill ger ingen mening, stannar och sjunker tillbaka passar inte med resan, och man skyddar eller utsätter sig inte till salthalter."
+},
+{
+"id": "p06-46",
+"amne": "lit",
+"genre": "aka",
+"source": {
+"title": "Barnlitteratur"
+},
+"text": "Barnlitteraturen har länge stått nära pedagogiken, även om nyare barnböcker ofta _____ estetiska hänsyn framför uppfostran. Texterna är i regel kortare och enklare än i böcker för vuxna, och slutet är oftast _____, även om det också finns mer problematiserande berättelser. Ju yngre läsaren är, desto större _____ brukar bilderna få.",
+"key": [
+"prioriterar",
+"optimistiskt",
+"utrymme"
+],
+"distractors": [
+[
+"värderar",
+"dystert",
+"motstånd"
+],
+[
+"underordnar",
+"hoppfullt",
+"avstånd"
+],
+[
+"förbjuder",
+"tragiskt",
+"plats"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a",
+"s"
+],
+"ledtrad": [
+"kon",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är prioriterar, optimistiskt och utrymme. Även om ställer de nyare böckerna mot den pedagogiska traditionen, så de sätter estetiken först, och värderar framför passar också. Det andra även om ställer de problematiserande berättelserna mot huvudregeln, som alltså är ett ljust slut, och hoppfullt säger samma sak. Bilderna får mer utrymme eller plats för yngre läsare. Dystert och tragiskt strider mot kontrasten, underordnar och förbjuder framför ger ingen mening, och motstånd eller avstånd är inget bilder får."
+},
+{
+"id": "p06-47",
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Bibliotek"
+},
+"text": "Ordet bibliotek är bildat av grekiskans biblion, bok, och theke, förvaringsrum. De äldsta kända biblioteken var _____ arkiv: i sumeriska stadsstater har arkeologer hittat tempelrum _____ med lertavlor med kilskrift. Ett offentligt bibliotek låter i regel besökarna låna hem böcker och andra medier utan _____ under en begränsad tid.",
+"key": [
+"delvis",
+"fyllda",
+"kostnad"
+],
+"distractors": [
+[
+"snarast",
+"rensade",
+"återlämning"
+],
+[
+"aldrig",
+"fulla",
+"begränsning"
+],
+[
+"knappast",
+"tömda",
+"avgift"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"adv",
+"a",
+"s"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är delvis, fyllda och kostnad. Fynden efter kolon visar att de första biblioteken också var arkiv, och snarast arkiv passar också. Rum där man hittat lertavlor var fyllda eller fulla med dem. Ett offentligt bibliotek lånar ut gratis, alltså utan kostnad eller avgift. Aldrig och knappast strider mot fynden, rensade och tömda rum innehåller inga tavlor, och utan återlämning eller begränsning strider mot den begränsade tiden."
+},
+{
+"id": "p06-48",
+"amne": "eko",
+"genre": "myn",
+"source": {
+"title": "Turism"
+},
+"text": "Enligt Världsturismorganisationen räknas som turism allt resande till platser utanför den vanliga omgivningen, så länge vistelsen är _____ än ett år. Eftersom definitionen även _____ affärsresor och besök i fritidshus har ordet turist alltmer _____ av ordet besökare.",
+"key": [
+"kortare",
+"inkluderar",
+"ersatts"
+],
+"distractors": [
+[
+"längre",
+"inbegriper",
+"förväxlats"
+],
+[
+"kortvarigare",
+"utesluter",
+"skilts"
+],
+[
+"dyrare",
+"förbjuder",
+"trängts undan"
+]
+],
+"dtyp": [
+[
+"po",
+"de"
+],
+[
+"de",
+"po"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+1,
+3
+],
+[
+2,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"ors",
+"ors"
+],
+"explanation": "Rätt svar är kortare, inkluderar och ersatts. En vistelse räknas som turism så länge den inte varar ett år eller mer, och kortvarigare säger samma sak. Eftersom visar att definitionen tar med även resor som inte är nöjesresor, och inbegriper betyder detsamma. Därför har ett bredare ord tagit över efter turist, och trängts undan säger samma sak. Längre och dyrare passar inte med gränsen, utesluter och förbjuder ger ingen anledning till ett nytt ord, och förväxlats och skilts tar inte av."
+},
+{
+"id": "p06-49",
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Hyresrätt"
+},
+"text": "Hyresrätt är en upplåtelseform där en hyresgäst hyr en bostad av en hyresvärd. I Finland får hyresvärden inte säga upp avtalet utan _____ skäl, medan hyresgästen kan _____ ett tillsvidareavtal med högst en månads uppsägningstid. Den som anser att hyran är oskäligt hög kan dessutom begära att domstol _____ den.",
+"key": [
+"godtagbara",
+"avsluta",
+"jämkar"
+],
+"distractors": [
+[
+"giltiga",
+"förlänga",
+"höjer"
+],
+[
+"obefogade",
+"bryta",
+"godkänner"
+],
+[
+"dolda",
+"överlåta",
+"sänker"
+]
+],
+"dtyp": [
+[
+"de",
+"po"
+],
+[
+"fi",
+"de"
+],
+[
+"fa",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är godtagbara, avsluta och jämkar. Hyresvärden behöver ett giltigt skäl för att säga upp, och giltiga betyder samma sak. Medan och uppsägningstiden visar att hyresgästen kan avsluta avtalet lättare, och bryta passar också. En hyra som anses för hög ska domstolen justera, alltså jämka eller sänka. Obefogade och dolda skäl ger ingen mening, förlänga och överlåta har inget med uppsägning att göra, och höjer och godkänner strider mot att hyran är för hög."
+},
+{
+"id": "p06-50",
+"amne": "mil",
+"genre": "aka",
+"source": {
+"title": "Fästning"
+},
+"text": "En fästning är en _____ försvarsanläggning, byggd för att stå kvar under lång tid, som skyddar en plats av strategiskt värde. Den skiljer sig från borgen, som också var en befäst _____. Med artilleriets och flygets utveckling har fästningar i traditionell mening _____ sin militära betydelse, och ordet används inte längre som term inom krigföringen.",
+"key": [
+"permanent",
+"bostad",
+"förlorat"
+],
+"distractors": [
+[
+"varaktig",
+"kyrka",
+"stärkt"
+],
+[
+"provisorisk",
+"boning",
+"behållit"
+],
+[
+"rörlig",
+"marknad",
+"tappat"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"po",
+"de"
+],
+[
+"po",
+"de"
+]
+],
+"faller": [
+[
+2,
+3
+],
+[
+1,
+3
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är permanent, bostad och förlorat. Byggd för att stå kvar under lång tid definierar ordet, och varaktig säger samma sak. Borgen skiljer sig genom att någon också bodde i den, och boning betyder detsamma. Att ordet inte längre används i krigföringen visar att fästningarna mist sin betydelse, och tappat passar också. Provisorisk och rörlig strider mot definitionen, en kyrka eller marknad skiljer inte borgen från fästningen, och stärkt eller behållit strider mot att termen gått ur bruk."
+}
+]
