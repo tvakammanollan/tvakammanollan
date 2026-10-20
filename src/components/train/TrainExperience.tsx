@@ -6,6 +6,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { fetchTrainingBatch, recordTrainingAnswer } from "@/lib/train.functions";
 import { confirmOrdCheckout, getMekAccess, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
 import { OrdPaywall } from "@/components/OrdPaywall";
+import { FREE_MEK_LIMIT } from "@/lib/ord-paywall";
 import { MEK_ORIGINS, type MekOrigin } from "@/lib/question-origin";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
@@ -509,6 +510,22 @@ export function TrainExperience({
   // enda valet döljs startknappen helt; ett blandat pass kör de andra delproven.
   const mekLåst = !!mekAccessInfo?.locked && config.subs.includes("MEK");
   const baraMek = config.subs.length > 0 && config.subs.every((c) => c === "MEK");
+  // Gränsen ska synas innan man når den, inte först när rutan slår igen.
+  const mekGratisSynlig =
+    !mekLåst &&
+    !!mekAccessInfo &&
+    mekAccessInfo.freeRemaining !== null &&
+    (mode === "mek" || config.subs.includes("MEK"));
+  // Under passet: gratis kvar räknat ned med passets egna besvarade MEK.
+  // Överhoppade räknas inte, samma regel som servern.
+  const mekKvarIPasset =
+    mekAccessInfo && mekAccessInfo.freeRemaining !== null && config.subs.includes("MEK")
+      ? Math.max(
+          0,
+          mekAccessInfo.freeRemaining -
+            results.filter((r) => r.category === "MEK" && r.selected !== null).length,
+        )
+      : null;
 
   if (phase === "setup") {
     return (
@@ -534,6 +551,15 @@ export function TrainExperience({
         )}
 
         <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
+          {mekGratisSynlig && mekAccessInfo?.freeRemaining != null && (
+            <p className="mb-4 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm text-white/70">
+              De första {formatInt(FREE_MEK_LIMIT)} MEK-uppgifterna är gratis.{" "}
+              <span className="font-semibold text-[var(--cream)]">
+                Du har {formatInt(mekAccessInfo.freeRemaining)} kvar.
+              </span>{" "}
+              Sedan låser ett engångsköp upp all MEK och hela ordlistan.
+            </p>
+          )}
           {/* STEG 1 — vad. Ligger öppet och inte bakom en "Anpassa"-knapp:
               valet ÄR passet, och ett förvalt "alla delprov" gav i praktiken
               ett slumpat pass som ingen bett om. */}
@@ -703,18 +729,10 @@ export function TrainExperience({
                   Ditt pass
                 </p>
                 <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
-                {mekLåst ? (
+                {mekLåst && (
                   <p className="mt-1.5 text-sm text-white/60">
                     MEK hoppas över: gratisuppgifterna är slut.
                   </p>
-                ) : (
-                  config.subs.includes("MEK") &&
-                  mekAccessInfo &&
-                  mekAccessInfo.freeRemaining !== null && (
-                    <p className="mt-1.5 text-sm text-white/60">
-                      {formatInt(mekAccessInfo.freeRemaining)} gratis MEK-uppgifter kvar
-                    </p>
-                  )
                 )}
                 <PrimaryCTA
                   onClick={startTraining}
@@ -803,6 +821,11 @@ export function TrainExperience({
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
+            {mekKvarIPasset !== null && (
+              <p className="mt-1.5 text-right text-xs text-white/55 tabular-nums">
+                {formatInt(mekKvarIPasset)} av {formatInt(FREE_MEK_LIMIT)} gratis MEK kvar
+              </p>
+            )}
           </div>
         </header>
 

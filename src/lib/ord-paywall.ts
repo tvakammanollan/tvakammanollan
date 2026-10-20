@@ -8,7 +8,7 @@
  * `ord_practice_stats.total_count`, MEK: träningssvar i `match_answers`), inte
  * antalet rätta: ett fel svar är också en uppgift man fått se, och räknades
  * bara rätta kunde en felad uppgift köras om i oändlighet utan att kvoten
- * rörde sig.
+ * rörde sig. Överhoppade MEK-uppgifter räknas inte; de visar inget facit.
  */
 
 /** Så många ord är gratis. Ändras den här ändras allt som visar siffran. */

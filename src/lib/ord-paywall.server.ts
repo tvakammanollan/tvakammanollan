@@ -29,9 +29,11 @@ export async function hasOrdAccess(userId: string): Promise<boolean> {
 }
 
 /**
- * Antalet MEK-svar i träningsläget (inte i matcher: duellerna är gratis).
- * Svar räknas, inte rätta, se `ord-paywall.ts`. Vid fel: 0, alltså hellre
- * några gratisuppgifter för mycket än en spärr som slår till av misstag.
+ * Antalet besvarade MEK-uppgifter i träningsläget (inte i matcher: duellerna
+ * är gratis). Svar räknas, inte rätta, se `ord-paywall.ts`. En överhoppad
+ * uppgift (`selected_answer` null) räknas inte: den visar inget facit, och
+ * gränsen ska betyda "40 besvarade". Vid fel: 0, alltså hellre några
+ * gratisuppgifter för mycket än en spärr som slår till av misstag.
  */
 export async function countMekTrainingAnswers(userId: string): Promise<number> {
   const { count, error } = await supabaseAdmin
@@ -39,6 +41,7 @@ export async function countMekTrainingAnswers(userId: string): Promise<number> {
     .select("id, questions!inner(category)", { count: "exact", head: true })
     .eq("user_id", userId)
     .eq("is_training", true)
+    .not("selected_answer", "is", null)
     .eq("questions.category", "MEK");
   if (error) {
     console.error("[ord-paywall] kunde inte räkna MEK-svar:", error.message);

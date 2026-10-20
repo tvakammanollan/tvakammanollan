@@ -1412,7 +1412,9 @@ något migrerades.
 
 - **MEK-grinden sitter i `fetchTrainingBatch`** och räknar MEK-svar i
   `match_answers` (`is_training`, joinat mot `questions.category`) via
-  `countMekTrainingAnswers`. Dueller och gamla prov räknas inte och spärras
+  `countMekTrainingAnswers`. Det är 40 **besvarade**, inte 40 rätta, och
+  överhoppade räknas inte. Gränsen står i startvyn ("Du har N kvar") och
+  räknas ned i passets sidhuvud, så ingen möts av spärren oförberedd. Dueller och gamla prov räknas inte och spärras
   inte. Är kvoten slut tas MEK bort ur passet (`mekLocked`); ett blandat pass
   kör övriga delprov. Startvyn i `TrainExperience` visar `OrdPaywall` med
   `subject="mek"`.
