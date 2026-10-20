@@ -1,0 +1,28 @@
+# Batch 15: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/palsdjursallergi/ | 1177 Pälsdjursallergi | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/insektsallergi/ | 1177 Insektsallergi | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/mogelallergi/ | 1177 Mögelallergi | 1177
+https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/doftoverkanslighet/ | 1177 Doftöverkänslighet | 1177
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/fisk/ | Livsmedelsverket Fisk och skaldjur | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/notter-och-fron/ | Livsmedelsverket Nötter och frön | Livsmedelsverket
+https://www.livsmedelsverket.se/matvanor-halsa--miljo/kostrad/kostrad-vuxna/gronsaker-frukt-och-bar/ | Livsmedelsverket Grönsaker, frukt och bär | Livsmedelsverket
+https://www.nordiskamuseet.se/utforska/livet-i-norden/sovrummets-historia/ | Nordiska museet Sovrummets historia | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/folkdrakt-och-folklig-draktkultur/ | Nordiska museet Folkdräkt och dräktkultur | Nordiska museet
+https://www.nordiskamuseet.se/utforska/hogtider/dop-och-namngivning/ | Nordiska museet Dop och namngivning | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/spoken-gastar-och-gengangare/ | Nordiska museet Spöken och gengångare | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/alfred-ander-och-giljotinen/ | Nordiska museet Alfred Ander och giljotinen | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/stataren-hulda/ | Nordiska museet Stataren Hulda | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/magiskt-skydd-mot-sjukdom/ | Nordiska museet Magiskt skydd mot sjukdom | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/lordagsgodis/ | Nordiska museet Lördagsgodis | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/arstafruns-dagbok/ | Nordiska museet Årstadagboken | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/kopa-klader-forr/ | Nordiska museet Att beställa ett plagg | Nordiska museet
+https://www.nordiskamuseet.se/utforska/livet-i-norden/talesatt-och-ordsprak/ | Nordiska museet Talesätt och ordspråk | Nordiska museet
+https://www.nordiskamuseet.se/utforska/hogtider/begravning/ | Nordiska museet Död och begravning | Nordiska museet
+# (redan använd) https://www.riksdagen.se/sv/sa-fungerar-riksdagen/utskotten-och-eu-namnden/ | Riksdagen Utskotten och EU-nämnden | Riksdagen
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-uppgifter/kontrollerar-regeringen/ | Riksdagen Kontrollerar regeringen | Riksdagen
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/riksdagens-uppgifter/beslutar-om-statens-budget/ | Riksdagen Statens budget | Riksdagen
+https://www.riksdagen.se/sv/sa-fungerar-riksdagen/arbetet-i-riksdagen/talmannen/talmannens-uppdrag/ | Riksdagen Talmannens uppdrag | Riksdagen
+https://www.riksdagen.se/sv/ledamoter-och-partier/ledamoternas-arvoden-och-villkor/ | Riksdagen Ledamöternas villkor | Riksdagen
+https://www.smhi.se/tema/luftkvalitet | SMHI Luftkvalitet | SMHI
+https://www.isof.se/namn/personnamn/lar-dig-mer-om-personnamn-i-sverige | Isof Personnamn | Isof
+https://www.isof.se/flersprakighet/lar-dig-mer-om-de-nordiska-spraken | Isof De nordiska språken | Isof
