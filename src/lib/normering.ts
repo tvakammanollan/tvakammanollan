@@ -187,3 +187,67 @@ export function normeringForPart(
   if (officiell !== null) return { value: officiell, official: true };
   return { value: normeringFromRatio(total > 0 ? score / total : 0), official: false };
 }
+
+/**
+ * Provtillfällen med officiell tabell för BÅDA delarna, äldst först.
+ * Sorteras på provdatum, inte på nyckel: `2021vta` och `2021vtb` ska ligga i
+ * den ordning de skrevs.
+ */
+export function officialExamTerms(): Array<{ term: string; date: string }> {
+  return Object.entries(OFFICIELL)
+    .filter(([, p]) => p.verbal && p.kvant && p.date)
+    .map(([term, p]) => ({ term, date: p.date as string }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/** Minsta antal rätt som gav minst `value` på provdelen. `null` utan tabell. */
+export function officialMinRawFor(
+  term: string,
+  kind: "verbal" | "kvant",
+  value: number,
+): number | null {
+  const table = OFFICIELL[term]?.[kind];
+  if (!table) return null;
+  const rows = table.filter(([, , v]) => v >= value);
+  return rows.length ? Math.min(...rows.map(([lo]) => lo)) : null;
+}
+
+/** Vad 2,0 krävde på de senaste proven, ur UHR:s officiella tabeller. Nyast först. */
+export function historiskaKrav(
+  antal = 8,
+): Array<{ term: string; label: string; verbal: number; kvant: number }> {
+  const ut: Array<{ term: string; label: string; verbal: number; kvant: number }> = [];
+  for (const { term, date } of officialExamTerms().reverse()) {
+    const verbal = officialMinRawFor(term, "verbal", 2.0);
+    const kvant = officialMinRawFor(term, "kvant", 2.0);
+    if (verbal === null || kvant === null) continue;
+    ut.push({ term, label: termLabel(term, date), verbal, kvant });
+    if (ut.length === antal) break;
+  }
+  return ut;
+}
+
+const MÅNAD = [
+  "jan",
+  "feb",
+  "mars",
+  "april",
+  "maj",
+  "juni",
+  "juli",
+  "aug",
+  "sep",
+  "okt",
+  "nov",
+  "dec",
+];
+
+/** `2025ht` → "Hösten 2025", `2022vtb` → "Våren 2022 (maj)". */
+export function termLabel(term: string, date: string): string {
+  const m = /^(\d{4})(vt|ht)([ab]?)$/.exec(term);
+  if (!m) return term;
+  const bas = `${m[2] === "ht" ? "Hösten" : "Våren"} ${m[1]}`;
+  if (!m[3]) return bas;
+  const månad = MÅNAD[Number(date.slice(5, 7)) - 1];
+  return månad ? `${bas} (${månad})` : bas;
+}

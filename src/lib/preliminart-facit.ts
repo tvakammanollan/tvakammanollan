@@ -1,11 +1,8 @@
 /**
  * Preliminärt facit och trolig normering för det senaste högskoleprovet.
  *
- * Sidan /hogskoleprovet-facit läser allt härifrån, och popupen i
- * `CoachingPrompt` (via `facit-promo.ts`) bestämmer sig på `FACIT.term`. Byt
- * prov genom att byta objektet: ny `term` gör att popupen visas en gång till
- * för alla, eftersom den minns VILKET facit den visat, inte bara att den
- * visat något.
+ * Sidan /hogskoleprovet-facit och den runda "Efter provet"-knappen på
+ * startsidan läser allt härifrån. Byt prov genom att byta objektet.
  *
  * Facit skrivs som strängar på 40 bokstäver per provpass och valideras av
  * testet. En felskriven bokstav här syns inte i någon typkontroll men hamnar
@@ -24,12 +21,6 @@ export interface FacitPass {
   answers: string;
 }
 
-export interface Intervjufraga {
-  fraga: string;
-  /** Tom sträng = inte besvarad än; frågan renderas då inte alls. */
-  svar: string;
-}
-
 export interface PreliminartFacit {
   /** Samma termnyckel som arkivet (`2026ht`). */
   term: string;
@@ -43,17 +34,17 @@ export interface PreliminartFacit {
   updated: string;
   passes: FacitPass[];
   /**
-   * Trolig gräns för 2,0: antal rätt av 80 per provdel. Niklas bedömning,
-   * inte UHR:s. `null` tar bort avsnittet.
+   * Trolig gräns för 2,0: antal rätt av 80 per provdel. Sajtens bedömning,
+   * gjord mot UHR:s tabeller för de senaste proven (se `historiskaKrav` i normering.ts),
+   * inte UHR:s besked. `null` tar bort avsnittet.
    */
   troligGrans: { verbal: number; kvant: number } | null;
   /**
-   * Popupen visas fram till det här datumet. Efter det har UHR publicerat
-   * både facit och normering, och då är en ruta om ett preliminärt facit
-   * ett gammalt besked.
+   * Knappen på startsidan visas fram till och med det här datumet. Efter det
+   * har UHR publicerat både facit och normering, och då är ett preliminärt
+   * facit ett gammalt besked. Sidan själv ligger kvar.
    */
   promoUntil: string;
-  intervju: Intervjufraga[];
 }
 
 /** Antal uppgifter per provpass och per provdel. */
@@ -90,20 +81,6 @@ export const FACIT: PreliminartFacit = {
   ],
   troligGrans: { verbal: 76, kvant: 76 },
   promoUntil: "2026-11-30",
-  // Niklas egna svar. Lägg bara in det han faktiskt sagt: en tom `svar` döljer
-  // frågan, så listan kan stå kvar som ett frågeformulär att fylla i.
-  intervju: [
-    {
-      fraga: "Vad tror du att det krävs för 2,0 den här gången?",
-      svar: "Min gissning är 76 rätt av 80 på båda delarna, alltså både den verbala och den kvantitativa. Det är en bedömning, inte ett besked: UHR sätter normeringen först när alla prov är rättade.",
-    },
-    { fraga: "Hur kändes provet i stort?", svar: "" },
-    { fraga: "Vilken del var svårast?", svar: "" },
-    { fraga: "Var det någon uppgift som stack ut?", svar: "" },
-    { fraga: "Hur var ELF och lästexterna den här gången?", svar: "" },
-    { fraga: "Hur räckte tiden på DTK och NOG?", svar: "" },
-    { fraga: "Vad ska man göra nu om det inte gick som man ville?", svar: "" },
-  ],
 };
 
 /** Delprovet en uppgift hör till. */
@@ -117,11 +94,6 @@ export function passAnswers(p: FacitPass): Letter[] {
     throw new Error(`Provpass ${p.pass}: facit måste vara exakt 40 bokstäver A–E`);
   }
   return p.answers.split("") as Letter[];
-}
-
-/** Bara de besvarade intervjufrågorna, i ordning. */
-export function besvaradeFragor(f: PreliminartFacit): Intervjufraga[] {
-  return f.intervju.filter((q) => q.svar.trim().length > 0);
 }
 
 /**
@@ -149,4 +121,10 @@ export function summaPerDel(
     );
   }
   return ut;
+}
+
+/** Ska "Efter provet"-knappen synas? Sista dagen inräknad, svensk tid. */
+export function facitKnappSynlig(f: PreliminartFacit, now: Date = new Date()): boolean {
+  const slut = Date.parse(`${f.promoUntil}T23:59:59+01:00`);
+  return Number.isFinite(slut) && now.getTime() <= slut;
 }

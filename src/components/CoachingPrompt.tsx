@@ -3,14 +3,6 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { OrdPromoDialog } from "@/components/OrdPromoDialog";
-import { FacitPromoDialog } from "@/components/FacitPromoDialog";
-import { FACIT } from "@/lib/preliminart-facit";
-import {
-  FACIT_PATH,
-  facitPromoDue,
-  markFacitPromoShown,
-  readFacitPromoState,
-} from "@/lib/facit-promo";
 import { getOrdAccess } from "@/lib/ord-paywall.functions";
 import {
   countOrdPromoPageview,
@@ -28,7 +20,6 @@ import { CoachingModal } from "@/components/CoachingModal";
 import { CoachingDiscountDialog } from "@/components/CoachingDiscountDialog";
 import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { trackEvent } from "@/lib/events";
-import { CONSENT_CHANGED_EVENT } from "@/lib/consent";
 import {
   isPromptablePath,
   promptTrigger,
@@ -47,9 +38,7 @@ import {
 /* =====================================================================
    DE AUTOMATISKA RUTORNA — erbjudandet om ett studieupplägg, av sig självt.
 
-   Fyra rutor, en ägare (den tredje, ordpåminnelsen, kommer ofta: se ord-promo.ts;
-   den fjärde, facit, visas en gång per prov veckorna efter provdagen och går
-   före allt annat eftersom den är färskvara: se facit-promo.ts). Den här komponenten bestämmer vilken som får skärmen,
+   Tre rutor, en ägare (den tredje, ordpåminnelsen, kommer ofta: se ord-promo.ts). Den här komponenten bestämmer vilken som får skärmen,
    och det är hela skälet till att de bor ihop: de har samma regler för när de
    INTE får komma upp, och två komponenter som var för sig satte en timer på
    2,6 sekunder hade kunnat öppna sig i samma bildruta.
@@ -81,7 +70,7 @@ import {
 const SHOW_DELAY_MS = 2600;
 
 /** Vilken av rutorna som står uppe. null = ingen. */
-type Variant = "nudge" | "rabatt" | "ord" | "facit";
+type Variant = "nudge" | "rabatt" | "ord";
 
 /**
  * Är någon annan overlay uppe? Alla handrullade overlayer i appen sätter
@@ -154,16 +143,6 @@ export function CoachingPrompt() {
     setModalÖppen(false);
   }, [path]);
 
-  // Samtyckesbannern är en overlay och blockerar rutorna (se annanOverlayÖppen).
-  // Utan omförsök såg en ny besökare från en sökträff aldrig någon ruta på sin
-  // första sida, bara på nästa. När frågan är besvarad försöker vi en gång till.
-  const [samtyckesförsök, setSamtyckesförsök] = useState(0);
-  useEffect(() => {
-    const bump = () => setSamtyckesförsök((n) => n + 1);
-    window.addEventListener(CONSENT_CHANGED_EVENT, bump);
-    return () => window.removeEventListener(CONSENT_CHANGED_EVENT, bump);
-  }, []);
-
   // Beslutet. Ligger efter räkningen ovan (effekter körs i deklarationsordning)
   // och läser därför ett läge som redan innehåller den här sidvisningen.
   useEffect(() => {
@@ -172,29 +151,14 @@ export function CoachingPrompt() {
     // Billig förkontroll så att en vanlig navigering inte sätter en timer i
     // onödan. Det riktiga beslutet tas om nedan, när timern går.
     const ordAktuell = isOrdPromoPath(path) && ordPromoDue(readOrdPromoState());
-    const facitAktuell = facitPromoDue(readFacitPromoState(), FACIT.term, FACIT.promoUntil, path);
-    if (
-      !facitAktuell &&
-      !ordAktuell &&
-      !discountDue(readDiscountState()) &&
-      !promptTrigger(readPromptState())
-    ) {
+    if (!ordAktuell && !discountDue(readDiscountState()) && !promptTrigger(readPromptState())) {
       return;
     }
 
     const id = window.setTimeout(() => {
       if (annanOverlayÖppen()) return;
 
-      // Facit allra först: det är färskvara och har ett eget slutdatum, de
-      // andra rutorna står kvar tröskade till nästa sida.
-      if (facitPromoDue(readFacitPromoState(), FACIT.term, FACIT.promoUntil, path)) {
-        markFacitPromoShown(FACIT.term);
-        setVariant("facit");
-        trackEvent("facit_promo_shown", { term: FACIT.term });
-        return;
-      }
-
-      // Rabatten först av köperbjudandena. Läses om här och inte ovan, eftersom en annan flik kan
+      // Rabatten först. Läses om här och inte ovan, eftersom en annan flik kan
       // ha hunnit visa den under de 2,6 sekunderna.
       const rabatt = readDiscountState();
       if (discountDue(rabatt)) {
@@ -250,7 +214,7 @@ export function CoachingPrompt() {
       })();
     }, SHOW_DELAY_MS);
     return () => window.clearTimeout(id);
-  }, [path, variant, modalÖppen, samtyckesförsök]);
+  }, [path, variant, modalÖppen]);
 
   const stängNudge = (v: boolean) => {
     if (v) return;
@@ -268,18 +232,6 @@ export function CoachingPrompt() {
     if (v) return;
     setVariant(null);
     trackEvent("ord_promo_dismissed", { shown_count: readOrdPromoState().shownCount });
-  };
-
-  const stängFacit = (v: boolean) => {
-    if (v) return;
-    setVariant(null);
-    trackEvent("facit_promo_dismissed", { term: FACIT.term });
-  };
-
-  const gåTillFacit = () => {
-    trackEvent("facit_promo_clicked", { term: FACIT.term });
-    setVariant(null);
-    void navigate({ to: FACIT_PATH });
   };
 
   const gåTillOrd = () => {
@@ -381,8 +333,6 @@ export function CoachingPrompt() {
         onOpenChange={stängRabatt}
         onBuy={köpRabatt}
       />
-
-      <FacitPromoDialog open={variant === "facit"} onOpenChange={stängFacit} onGo={gåTillFacit} />
 
       <OrdPromoDialog
         open={variant === "ord"}

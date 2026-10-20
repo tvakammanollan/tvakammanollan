@@ -230,10 +230,8 @@ export interface ProductEvents {
   ord_promo_shown: { shown_count: number; answered: number | null };
   ord_promo_clicked: { shown_count: number };
   ord_promo_dismissed: { shown_count: number };
-  /** Rutan om preliminärt facit (facit-promo.ts), en gång per prov. `term` = `2026ht`. */
-  facit_promo_shown: { term: string };
-  facit_promo_clicked: { term: string };
-  facit_promo_dismissed: { term: string };
+  /** Den runda "Efter provet"-knappen på startsidan, till /hogskoleprovet-facit. `term` = `2026ht`. */
+  facit_button_clicked: { term: string };
   coaching_discount_shown: { sessions: number };
   /** Klick på knappen. Kvoten mot `shown` säger om rabatten faktiskt biter. */
   coaching_discount_clicked: { sessions: number };

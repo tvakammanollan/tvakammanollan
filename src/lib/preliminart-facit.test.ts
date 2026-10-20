@@ -1,18 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   FACIT,
-  besvaradeFragor,
   delprovFor,
   distansTillGrans,
+  facitKnappSynlig,
   passAnswers,
   summaPerDel,
 } from "./preliminart-facit";
-import {
-  EMPTY_FACIT_PROMO_STATE as E,
-  FACIT_PATH,
-  facitPromoDue,
-  parseFacitPromoState,
-} from "./facit-promo";
+import { historiskaKrav, termLabel } from "./normering";
 
 describe("FACIT", () => {
   it("har fyra provpass, två av varje slag, med 40 giltiga bokstäver", () => {
@@ -63,34 +58,32 @@ describe("summaPerDel och distansTillGrans", () => {
   });
 });
 
-describe("besvaradeFragor", () => {
-  it("döljer obesvarade frågor", () => {
-    expect(besvaradeFragor(FACIT).every((q) => q.svar.trim())).toBe(true);
+describe("historiskaKrav", () => {
+  it("läser UHR:s tabeller, nyast först", () => {
+    const k = historiskaKrav(3);
+    expect(k).toHaveLength(3);
+    expect(k[0]).toEqual({ term: "2026vt", label: "Våren 2026", verbal: 77, kvant: 76 });
+    expect(k[1]).toMatchObject({ term: "2025ht", verbal: 76, kvant: 76 });
+  });
+
+  it("hoppar över prov där en del saknar tabell", () => {
+    expect(historiskaKrav(30).some((k) => k.term === "2025vt")).toBe(false);
+  });
+
+  it("skiljer på vårens två prov", () => {
+    expect(termLabel("2022vtb", "2022-05-07")).toBe("Våren 2022 (maj)");
+    expect(termLabel("2025ht", "2025-10-19")).toBe("Hösten 2025");
   });
 });
 
-describe("facitPromoDue", () => {
-  const term = "2026ht";
-  const until = "2026-11-30";
-  const inne = new Date("2026-10-19T12:00:00Z");
-
-  it("visas en gång per prov", () => {
-    expect(facitPromoDue(E, term, until, "/", inne)).toBe(true);
-    expect(facitPromoDue({ ...E, shownTerm: term }, term, until, "/", inne)).toBe(false);
-    expect(facitPromoDue({ ...E, shownTerm: "2026vt" }, term, until, "/", inne)).toBe(true);
+describe("facitKnappSynlig", () => {
+  it("syns till och med sista dagen", () => {
+    expect(facitKnappSynlig(FACIT, new Date("2026-10-20T12:00:00Z"))).toBe(true);
+    expect(facitKnappSynlig(FACIT, new Date("2026-11-30T20:00:00Z"))).toBe(true);
+    expect(facitKnappSynlig(FACIT, new Date("2026-12-01T00:00:00Z"))).toBe(false);
   });
 
-  it("visas aldrig på facitsidan själv", () => {
-    expect(facitPromoDue(E, term, until, FACIT_PATH, inne)).toBe(false);
-  });
-
-  it("tystnar efter sista dagen", () => {
-    expect(facitPromoDue(E, term, until, "/", new Date("2026-11-30T20:00:00Z"))).toBe(true);
-    expect(facitPromoDue(E, term, until, "/", new Date("2026-12-01T00:00:00Z"))).toBe(false);
-  });
-
-  it("läser trasig lagring som ett rent blad", () => {
-    expect(parseFacitPromoState("{inte json")).toEqual(E);
-    expect(parseFacitPromoState(JSON.stringify({ version: 99, shownTerm: term }))).toEqual(E);
+  it("tystnar vid ett oläsbart datum", () => {
+    expect(facitKnappSynlig({ ...FACIT, promoUntil: "snart" })).toBe(false);
   });
 });

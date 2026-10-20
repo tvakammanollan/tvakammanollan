@@ -4,25 +4,26 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { describeWithin } from "@/lib/seo-text";
 import { hpDateLong, hpDateShort } from "@/lib/hp-dates";
 import { formatInt } from "@/lib/sv-format";
+import { historiskaKrav } from "@/lib/normering";
 import {
   DELPROV,
   FACIT,
   PART_LENGTH,
   PASS_LENGTH,
-  besvaradeFragor,
   distansTillGrans,
   passAnswers,
   summaPerDel,
   type FacitPass,
   type PassKind,
 } from "@/lib/preliminart-facit";
-import { ArrowRight, Calculator, ClipboardCheck, MessageSquareQuote, Target } from "lucide-react";
+import { ArrowRight, Calculator, ClipboardCheck, Target } from "lucide-react";
 
 /* =====================================================================
    SEO: "facit högskoleprovet" och "normering högskoleprovet" är de mest
    sökta HP-frågorna dygnen efter varje provdag. Sidan svarar på båda, och
-   CoachingPrompt visar en ruta hit under veckorna efter provet
-   (facit-promo.ts).
+   startsidans runda "Efter provet"-knapp leder hit under veckorna efter
+   provet (`facitKnappSynlig`). Ingen popup, med flit: Niklas tyckte att
+   rutorna redan var för många.
 
    Allt innehåll kommer ur `FACIT` i preliminart-facit.ts och är statiskt,
    alltså serverrenderat i sin helhet. Nästa prov: byt objektet där, inte
@@ -49,7 +50,7 @@ function faq(): Array<{ q: string; a: string }> {
       ? [
           {
             q: `Vad blir normeringen för ${FACIT.label.toLowerCase()}?`,
-            a: `Ingen vet förrän UHR publicerat den. Vår bedömning är att det krävs ungefär ${g.verbal} rätt av ${PART_LENGTH} på den verbala delen och ${g.kvant} av ${PART_LENGTH} på den kvantitativa för 2,0. Normeringen sätts efter att alla prov rättats och brukar komma tillsammans med resultaten några veckor efter provdagen.`,
+            a: `Ingen vet förrän UHR publicerat den. Vår uppskattning, gjord mot normeringen på de senaste proven, är att det krävs ungefär ${g.verbal} rätt av ${PART_LENGTH} på den verbala delen och ${g.kvant} av ${PART_LENGTH} på den kvantitativa för 2,0. Normeringen sätts efter att alla prov rättats och brukar komma tillsammans med resultaten några veckor efter provdagen.`,
           },
         ]
       : []),
@@ -100,7 +101,7 @@ export const Route = createFileRoute("/hogskoleprovet-facit")({
         dateModified: FACIT.updated,
         inLanguage: "sv-SE",
         mainEntityOfPage: `https://tvakommanollan.se${PATH}`,
-        author: { "@type": "Person", name: "Niklas" },
+        author: { "@type": "Organization", name: "Tvåkommanollan" },
         publisher: {
           "@type": "Organization",
           name: "Tvåkommanollan",
@@ -135,7 +136,9 @@ function H2({ icon: Icon, children }: { icon: typeof Target; children: React.Rea
 
 function FacitPage() {
   const grans = FACIT.troligGrans;
-  const intervju = besvaradeFragor(FACIT);
+  const krav = historiskaKrav(8);
+  const alla = krav.flatMap((k) => [k.verbal, k.kvant]);
+  const spann = alla.length ? { min: Math.min(...alla), max: Math.max(...alla) } : null;
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
@@ -159,9 +162,8 @@ function FacitPage() {
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Högskoleprovet skrevs {hpDateLong(FACIT.date)}. Här är vårt preliminära facit till de fyra
-          provpass som räknas, vad vi tror att det krävs för 2,0, och mina egna tankar om provet.
-          Facit är sammanställt efter provet och kan innehålla fel. Det officiella facit från UHR
-          gäller alltid.
+          provpass som räknas, och vår uppskattning av vad som krävs för 2,0. Facit är sammanställt
+          efter provet och kan innehålla fel. Det officiella facit från UHR gäller alltid.
         </p>
       </header>
 
@@ -188,9 +190,47 @@ function FacitPage() {
             ))}
           </div>
           <p className="mt-4 text-[14px] leading-relaxed text-white/60">
-            Det är min bedömning, inte UHR:s. Normeringen sätts först när alla prov är rättade och
-            kommer tillsammans med resultaten.
+            Uppskattningen bygger på UHR:s officiella normeringstabeller för de senaste proven
+            {spann && (
+              <>
+                , där gränsen för 2,0 har legat mellan {spann.min} och {spann.max} rätt
+              </>
+            )}
+            . Den riktiga normeringen sätts först när alla prov är rättade och kommer tillsammans
+            med resultaten.
           </p>
+          {krav.length > 0 && (
+            <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
+              <table className="w-full text-[14px] tabular-nums">
+                <caption className="sr-only">
+                  Antal rätt som krävdes för 2,0 på tidigare prov
+                </caption>
+                <thead>
+                  <tr className="bg-white/[0.03] text-left text-[12px] text-white/50">
+                    <th className="px-4 py-2 font-semibold">Prov</th>
+                    <th className="px-4 py-2 text-right font-semibold">Verbal</th>
+                    <th className="px-4 py-2 text-right font-semibold">Kvantitativ</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/8">
+                  {krav.map((k) => (
+                    <tr key={k.term}>
+                      <td className="px-4 py-2 text-white/70">{k.label}</td>
+                      <td className="px-4 py-2 text-right text-[var(--cream)]">
+                        {k.verbal}/{PART_LENGTH}
+                      </td>
+                      <td className="px-4 py-2 text-right text-[var(--cream)]">
+                        {k.kvant}/{PART_LENGTH}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="border-t border-white/8 px-4 py-2 text-[12px] text-white/45">
+                Minsta antal rätt för 2,0 enligt UHR:s normeringstabeller.
+              </p>
+            </div>
+          )}
         </section>
       )}
 
@@ -208,23 +248,6 @@ function FacitPage() {
           ))}
         </div>
       </section>
-
-      {intervju.length > 0 && (
-        <section className="mt-12">
-          <H2 icon={MessageSquareQuote}>Efter provet: mina tankar</H2>
-          <p className="mt-2 text-[14px] text-white/55">
-            Niklas, som driver Tvåkommanollan och själv har skrivit 1,95 på provet.
-          </p>
-          <dl className="mt-5 space-y-5">
-            {intervju.map((q) => (
-              <div key={q.fraga} className="border-l-2 border-primary/40 pl-4">
-                <dt className="text-[15px] font-semibold text-[var(--cream)]">{q.fraga}</dt>
-                <dd className="mt-1.5 text-[15px] leading-relaxed text-white/70">{q.svar}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      )}
 
       <section className="mt-12">
         <h2

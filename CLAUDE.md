@@ -1493,27 +1493,29 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
-Facit, trolig normering och Niklas egna tankar efter varje provdag. Sidan och
-popupen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
+Facit och uppskattad trolig normering efter varje provdag. Sidan och
+knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
 
-- **Nästa prov: byt objektet, inte sidan.** Ny `term` gör att popupen visas en
-  gång till för alla (`facit-promo.ts` minns vilket facit den visat, inte bara
-  att den visat något). Adressen är medvetet terminslös så att länkar och
-  ranking från ett prov följer med till nästa. Uppdatera `updated`,
-  `promoUntil`, `lastmod` i sitemapen och raden i `llms.txt` (statisk).
-- **Intervjun visar bara besvarade frågor.** En tom `svar` döljer frågan, så
-  listan kan stå kvar som ett formulär att fylla i. **Skriv aldrig ett svar
-  Niklas inte gett**; det är hans röst, under hans namn, på en indexerad sida.
-- **`troligGrans` är Niklas bedömning, inte UHR:s**, och texten säger det på
-  varje yta. `null` tar bort avsnittet.
+- **Nästa prov: byt objektet, inte sidan.** Adressen är medvetet terminslös
+  så att länkar och ranking från ett prov följer med till nästa. Uppdatera
+  `updated`, `promoUntil`, `lastmod` i sitemapen och raden i `llms.txt`
+  (statisk).
+- **Ingen popup.** Första versionen var en fjärde automatisk ruta i
+  `CoachingPrompt`; Niklas tyckte att rutorna redan störde och den byttes
+  2026-10-20 mot en liten rund knapp, "Efter provet", överst bland valen i
+  `HomeDashboard`. Den syns till och med `promoUntil` (`facitKnappSynlig`).
+  Lägg inte tillbaka en ruta för det här.
+- **`troligGrans` är sajtens uppskattning, inte UHR:s besked**, och texten
+  säger det på varje yta. Den ska gå att försvara mot tabellen bredvid
+  (`historiskaKrav` i `normering.ts`, ur UHR:s riktiga tabeller). `null` tar
+  bort avsnittet. En intervju med Niklas tankar fanns i första versionen och
+  togs bort på hans begäran 2026-10-20.
+- **`historiskaKrav` bor i `normering.ts`, inte i `preliminart-facit.ts`.**
+  Startsidan importerar facitmodulen för knappen, och `normering.json` är
+  42 kB som då hade följt med till alla inloggade.
 - **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
   dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
   alternativ). Det fångar de flesta felskrivningar.
-- **Popupen är den fjärde automatiska rutan och går före de andra** (ägd av
-  `CoachingPrompt`, som de övriga). Den är färskvara med eget slutdatum.
-- **Rutorna försöker igen när samtyckesfrågan besvaras.** Bannern är en
-  overlay och blockerar dem, så utan omförsöket såg en ny besökare från en
-  sökträff aldrig någon ruta på sin första sida. Det gäller alla fyra rutor.
 
 ### Streak
 

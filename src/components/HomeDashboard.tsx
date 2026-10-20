@@ -19,7 +19,8 @@ import { CoachingQuizCard } from "@/components/CoachingQuizCard";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
-import { BookOpen, Sparkles, Flame, ArrowRight, Swords } from "lucide-react";
+import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
+import { BookOpen, Sparkles, Flame, ArrowRight, Swords, ClipboardCheck } from "lucide-react";
 
 /* =====================================================================
    HOME DASHBOARD — tre val, inget mer.
@@ -169,6 +170,8 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           </div>
 
           <div className="order-1 lg:order-2 min-w-0">
+            {facitKnappSynlig(FACIT) && <EfterProvetKnapp />}
+
             {/* ---------- 1. Spela match ---------- */}
             <div>
               <section>
@@ -482,5 +485,37 @@ function ActionCard({
     <button type="button" onClick={onClick} className={className} style={cardStyle}>
       {body}
     </button>
+  );
+}
+
+/**
+ * Liten rund knapp till preliminärt facit, veckorna efter en provdag.
+ *
+ * Med flit inte ett kort till och inte en popup: skärmen ska fortfarande
+ * svara på "vad gör jag nu?" med tre val, och den som undrar över facit
+ * hittar dit själv. Försvinner av sig själv när `promoUntil` passerat.
+ */
+function EfterProvetKnapp() {
+  return (
+    <div className="mb-3 flex">
+      <Link
+        to="/hogskoleprovet-facit"
+        onClick={() => trackEvent("facit_button_clicked", { term: FACIT.term })}
+        className="group inline-flex min-h-[40px] items-center gap-2 rounded-full border border-primary/30 bg-white/80 py-1.5 pl-1.5 pr-4 text-[13.5px] font-semibold text-[var(--cream)] shadow-sm transition hover:border-primary/60"
+      >
+        <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-primary text-on-brand">
+          <ClipboardCheck className="h-3.5 w-3.5" aria-hidden />
+          <span
+            aria-hidden
+            className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-success"
+          />
+        </span>
+        Efter provet: facit och trolig normering
+        <ArrowRight
+          className="h-3.5 w-3.5 text-primary transition-transform group-hover:translate-x-0.5"
+          aria-hidden
+        />
+      </Link>
+    </div>
   );
 }
