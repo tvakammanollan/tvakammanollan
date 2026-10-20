@@ -1,0 +1,8 @@
+# Batch 21: webbkällor (url | titel | utgivare)
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/chock/ | 1177 Chock | 1177
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/forgiftning/ | 1177 Förgiftning | 1177
+https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/drunkningsolyckor/ | 1177 Drunkningsolyckor | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/getingstick-och-bistick/ | 1177 Getingstick och bistick | 1177
+https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/hund--och-kattbett/ | 1177 Hund- och kattbett | 1177
+https://www.1177.se/olyckor--skador/sar-och-blamarken/skrubbsar/ | 1177 Skrubbsår | 1177
+https://www.1177.se/olyckor--skador/skador-pa-huvud-och-ogon/brutet-nasben/ | 1177 Brutet näsben | 1177
