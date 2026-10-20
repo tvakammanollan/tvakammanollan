@@ -20,7 +20,15 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
-import { BookOpen, PenLine, Sparkles, Flame, ArrowRight, Swords, ClipboardCheck } from "lucide-react";
+import {
+  BookOpen,
+  PenLine,
+  Sparkles,
+  Flame,
+  ArrowRight,
+  Swords,
+  ClipboardCheck,
+} from "lucide-react";
 import { trackEvent } from "@/lib/events";
 
 /* =====================================================================
@@ -247,8 +255,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
                 />
                 <ActionCard
-                  to="/train"
-                  search={{ delprov: "MEK" }}
+                  to="/mek-ovning"
                   tone="amber"
                   badge="BETA"
                   icon={<PenLine className="h-5 w-5" />}

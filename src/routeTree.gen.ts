@@ -19,6 +19,7 @@ import { Route as OrdlistaRouteImport } from './routes/ordlista'
 import { Route as OrdRouteImport } from './routes/ord'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as OmRouteImport } from './routes/om'
+import { Route as MekOvningRouteImport } from './routes/mek-ovning'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
@@ -114,6 +115,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
 const OmRoute = OmRouteImport.update({
   id: '/om',
   path: '/om',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MekOvningRoute = MekOvningRouteImport.update({
+  id: '/mek-ovning',
+  path: '/mek-ovning',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -370,6 +376,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
   '/mcp': typeof McpRoute
+  '/mek-ovning': typeof MekOvningRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -428,6 +435,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
   '/mcp': typeof McpRoute
+  '/mek-ovning': typeof MekOvningRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -487,6 +495,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/matchmaking': typeof MatchmakingRoute
   '/mcp': typeof McpRoute
+  '/mek-ovning': typeof MekOvningRoute
   '/om': typeof OmRoute
   '/onboarding': typeof OnboardingRoute
   '/ord': typeof OrdRoute
@@ -547,6 +556,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/matchmaking'
     | '/mcp'
+    | '/mek-ovning'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -605,6 +615,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/matchmaking'
     | '/mcp'
+    | '/mek-ovning'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -663,6 +674,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/matchmaking'
     | '/mcp'
+    | '/mek-ovning'
     | '/om'
     | '/onboarding'
     | '/ord'
@@ -722,6 +734,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MatchmakingRoute: typeof MatchmakingRoute
   McpRoute: typeof McpRoute
+  MekOvningRoute: typeof MekOvningRoute
   OmRoute: typeof OmRoute
   OnboardingRoute: typeof OnboardingRoute
   OrdRoute: typeof OrdRoute
@@ -833,6 +846,13 @@ declare module '@tanstack/react-router' {
       path: '/om'
       fullPath: '/om'
       preLoaderRoute: typeof OmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mek-ovning': {
+      id: '/mek-ovning'
+      path: '/mek-ovning'
+      fullPath: '/mek-ovning'
+      preLoaderRoute: typeof MekOvningRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -1178,6 +1198,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MatchmakingRoute: MatchmakingRoute,
   McpRoute: McpRoute,
+  MekOvningRoute: MekOvningRoute,
   OmRoute: OmRoute,
   OnboardingRoute: OnboardingRoute,
   OrdRoute: OrdRoute,

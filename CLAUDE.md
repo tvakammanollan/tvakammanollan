@@ -1494,7 +1494,12 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   `mekOrigin` (`all`/`archive`/`tkn`, bara för MEK) och `excludeCorrect`
   (allt användaren svarat rätt på i `match_answers`, träning och match,
   identiteten ur tokenen via `optionalSupabaseAuth`). `?delprov=MEK&kalla=tkn`
-  förväljer båda; startsidans MEK-kort länkar dit.
+  förväljer båda.
+- **`/mek-ovning` är MEK-övningens egen sida** och startsidans MEK-kort går
+  dit. Den och `/train` renderar samma `TrainExperience`
+  (`src/components/train/`), med `mode="mek"` låst till MEK och valet av
+  källa som första steg. Ändra passet, rättningen eller röstningen där, inte i
+  en kopia.
 - **Urvalet i `/train` görs i två steg: id först, rader sedan.** Det hämtade
   tidigare hela rader med `.limit(300)` utan ordning, alltså i praktiken de
   300 äldsta. MEK har 698 rader, så de nyare (alla egna uppgifter) kom nästan
