@@ -969,6 +969,32 @@ export type Database = {
         }
         Relationships: []
       }
+      question_vote_baseline: {
+        Row: {
+          created_at: string
+          question_id: string
+          up: number
+        }
+        Insert: {
+          created_at?: string
+          question_id: string
+          up: number
+        }
+        Update: {
+          created_at?: string
+          question_id?: string
+          up?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_vote_baseline_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: true
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       question_votes: {
         Row: {
           created_at: string

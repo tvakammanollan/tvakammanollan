@@ -1462,6 +1462,14 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
   de som kolumner i urvalsfrågan fäller en saknad vy varje match och varje
   träningspass. Verifierat 2026-10-19 utan migrationen: passet fungerar,
   tummen säger "Rösten kunde inte sparas" och rullar tillbaka.
+- **De egna MEK-uppgifterna startar på 0–5 tummar upp** (2026-10-20), satta
+  för hand efter genomläsning av alla 550 (snitt 3, 25 st på 5, 31 st på 1).
+  De ligger i `question_vote_baseline`, inte i `question_votes`, och vyn
+  `question_vote_stats` lägger dem på `up`, så siffrorna och urvalet ser dem
+  utan kodändring. Betygen står i `scripts/mek-gen/baslinje-betyg.json`.
+  Nya batcher får ingen baslinje av sig själva. 5 upp och 0 ned räcker inte
+  för att lyftas (Wilsons undre gräns 0,57 < 0,6); baslinjen syns och skyddar
+  mot begravning, men ändrar inte dragningsvikten.
 - Ingenting raderas. En begravd fråga kommer tillbaka om rösterna vänder.
   Ingen RLS-policy på tabellen; allt går genom serverfunktionen, annars går
   gästvikten och kvoterna att kringgå.
