@@ -1,0 +1,23 @@
+# Batch 17: webbkällor (url | titel | utgivare)
+https://www.1177.se/liv--halsa/psykisk-halsa/att-vara-orolig/ | 1177 Att vara orolig | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/nedstamdhet/ | 1177 Nedstämdhet | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/sjalvkansla/ | 1177 Självkänsla | 1177
+https://www.1177.se/liv--halsa/psykisk-halsa/ensamhet/ | 1177 Ensamhet | 1177
+https://www.1177.se/liv--halsa/stresshantering-och-somn/somnen-ar-viktig-for-din-halsa/ | 1177 Sömnen är viktig | 1177
+https://www.1177.se/liv--halsa/stresshantering-och-somn/trotthet/ | 1177 Trötthet | 1177
+https://www.1177.se/liv--halsa/stresshantering-och-somn/mindfulness/ | 1177 Mindfulness | 1177
+https://www.1177.se/liv--halsa/reserad-och-vaccinationer/allmanna-reserad/ | 1177 Allmänna reseråd | 1177
+https://www.naturvardsverket.se/amnesomraden/cirkular-ekonomi/ | Naturvårdsverket Cirkulär ekonomi | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/friluftsliv/ | Naturvårdsverket Friluftsliv | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/plast/ | Naturvårdsverket Plast | Naturvårdsverket
+# (redan använd) https://www.naturvardsverket.se/amnesomraden/pollinering/ | Naturvårdsverket Pollinering | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/textil/ | Naturvårdsverket Textil | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/vatmark/ | Naturvårdsverket Våtmark | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/skyddad-natur/ | Naturvårdsverket Skyddad natur | Naturvårdsverket
+https://www.naturvardsverket.se/amnesomraden/jakt-och-vilt/ | Naturvårdsverket Jakt och vilt | Naturvårdsverket
+https://www.isof.se/folkminnen/amnesomraden/vardagsliv-nu-och-da/vardagsliv-under-andra-varldskriget | Isof Vardagsliv under andra världskriget | Isof
+https://www.isof.se/folkminnen/amnesomraden/vardagsliv-nu-och-da/sjoregleringen-i-ovre-norrland | Isof Sjöregleringen i Övre Norrland | Isof
+https://www.isof.se/folkminnen/amnesomraden/hogtid-och-fest | Isof Högtid och fest | Isof
+https://www.isof.se/folkminnen/amnesomraden/slojd-och-hantverk | Isof Slöjd och hantverk | Isof
+https://www.isof.se/svenska-spraket/sprakrad-och-skrivregler | Isof Språkråd och skrivregler | Isof
+https://www.isof.se/folkminnen/vanliga-fragor-om-folkminnen | Isof Frågor om folkminnen | Isof
