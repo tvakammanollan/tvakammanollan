@@ -565,4 +565,201 @@ Hur gör ni? Dela gärna det som fungerar för er.`,
 
 På provdagen: ät frukost, var på plats i god tid, och glöm ett pass så fort det är slut. Ett pass som kändes dåligt kan vara utprövningspasset.`,
   },
+
+  /* ── Antagning per program (siffrorna ur hogskoleprovet-poang_.$program.tsx) ── */
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för läkarprogrammet?",
+    question: `Hur högt behöver man ligga på högskoleprovet för att komma in på läkarprogrammet? ${FYLL_PA}`,
+    answer: `Läkarprogrammet hör till de svåraste utbildningarna att komma in på via provet. Antagningspoängen i HP-gruppen till hösten 2026 enligt UHR:s statistik:
+
+- Lunds universitet: **1,80**
+- Karolinska institutet: **1,75**
+- Uppsala universitet: **1,75**
+- Göteborgs universitet: **1,70**
+- Linköpings universitet: **1,65**
+- Örebro universitet: **1,65**
+
+Gränserna flyttar sig något varje termin. Räkna med att behöva ligga på 1,7 eller högre för att ha en bra chans på de flesta orter.
+
+Karolinska antar dessutom en del platser via PIL, ett eget urval med prov och intervjuer. Där är ett starkt provresultat vägen in till nästa steg.
+
+Hela tabellen finns på [poängsidan för läkarprogrammet](https://tvakommanollan.se/hogskoleprovet-poang/lakarprogrammet).`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för psykologprogrammet?",
+    question: `Vad behöver man på högskoleprovet för att komma in på psykologprogrammet? ${FYLL_PA}`,
+    answer: `Psykologprogrammet ges vid elva lärosäten, och kraven skiljer sig mycket mellan orterna. Antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
+
+- Lund: **1,70**
+- Uppsala: **1,65**
+- Göteborg: **1,60**
+- Stockholm: **1,55**
+- Karolinska institutet och Linköping: **1,50**
+- Karlstad, Växjö och Örebro: **1,45**
+- Östersund: **1,30**
+- Luleå: **1,25**
+
+Är du flexibel med orten kan det alltså skilja nästan en halv poäng. Hela listan finns på [poängsidan för psykologprogrammet](https://tvakommanollan.se/hogskoleprovet-poang/psykologprogrammet).`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för juristprogrammet?",
+    question: `Hur högt måste man ligga på högskoleprovet för juristprogrammet? ${FYLL_PA}`,
+    answer: `Juristprogrammet är enligt UHR det program som har flest behöriga sökande i landet. Antagningspoäng i HP-gruppen till hösten 2026:
+
+- Lunds universitet: **1,60**
+- Uppsala universitet: **1,50**
+- Göteborgs universitet: **1,40**
+- Stockholms universitet: **1,40**
+- Karlstads universitet: **1,25**
+- Örebro universitet: **1,25**
+
+Se [poängsidan för juristprogrammet](https://tvakommanollan.se/hogskoleprovet-poang/juristprogrammet) för källor och uppdateringar.`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för Handelshögskolan i Stockholm?",
+    question: `Vad krävs på högskoleprovet för civilekonomprogrammet på Handels? ${FYLL_PA}`,
+    answer: `Handelshögskolan i Stockholm har en HP-kvot som blivit svårare för varje år. Antagningspoängen enligt skolans egen statistik:
+
+- 2026: **1,95**
+- 2025: **1,85**
+- 2024: **1,85**
+- 2023: **1,80**
+- 2022: **1,75**
+- 2021: **1,75**
+
+1,95 betyder i praktiken 2,0 på den ena delen och 1,9 på den andra. Sedan 2025 räknar skolan också in meritpoäng i betygsurvalet, men det påverkar inte HP-kravet.
+
+Mer på [poängsidan för Handelshögskolan](https://tvakommanollan.se/hogskoleprovet-poang/civilekonom).`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för teknisk fysik på KTH och LTH?",
+    question: `Hur högt ligger antagningen till teknisk fysik via högskoleprovet? ${FYLL_PA}`,
+    answer: `Till hösten 2026 låg antagningspoängen i HP-gruppen på **1,80** både på KTH och på Lunds tekniska högskola.
+
+Teknisk fysik är ett av de tyngsta civilingenjörsprogrammen. Det kvantitativa provet är därför extra viktigt att träna på, men kom ihåg att totalpoängen är medelvärdet av båda delarna. Ett svagt verbalt resultat drar ner lika mycket.
+
+Mer på [poängsidan för teknisk fysik](https://tvakommanollan.se/hogskoleprovet-poang/teknisk-fysik).`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för tandläkarprogrammet?",
+    question: `Vad behöver man på högskoleprovet för att komma in på tandläkarprogrammet? ${FYLL_PA}`,
+    answer: `Tandläkarprogrammet ges vid tre lärosäten, och kraven ligger tätt ihop. Antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
+
+- Göteborgs universitet: **1,45**
+- Karolinska institutet (Huddinge): **1,45**
+- Malmö universitet: **1,40**
+
+Mer på [poängsidan för tandläkarprogrammet](https://tvakommanollan.se/hogskoleprovet-poang/tandlakarprogrammet).`,
+  },
+  {
+    category: "provdagen",
+    title: "Vilket HP-resultat krävs för sjuksköterskeprogrammet?",
+    question: `Hur högt måste man ligga på högskoleprovet för att komma in på sjuksköterskeprogrammet? ${FYLL_PA}`,
+    answer: `Det skiljer sig väldigt mycket mellan orterna. Några exempel på antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
+
+- Uppsala universitet, Uppsala: **1,10**
+- Umeå universitet, Umeå: **0,85**
+- Uppsala universitet, Campus Gotland: **0,65**
+- Blekinge tekniska högskola, Karlskrona: **0,50**
+- Umeå universitet, decentraliserat i Skellefteå: **0,45**
+
+Är du flexibel med studieort kan du alltså komma in med ett betydligt lägre resultat. Se [poängsidan för sjuksköterskeprogrammet](https://tvakommanollan.se/hogskoleprovet-poang/sjukskoterskeprogrammet).`,
+  },
+
+  /* ── Fler allmänna frågor ────────────────────────────────────── */
+  {
+    category: "allmant",
+    title: "Kan man skriva högskoleprovet när man går i gymnasiet?",
+    question: `Får man skriva högskoleprovet innan man tagit studenten? ${FYLL_PA}`,
+    answer: `Ja. Det finns ingen åldersgräns och inget krav på att du ska vara klar med gymnasiet. Många skriver provet första gången i tvåan eller trean.
+
+Resultatet gäller i åtta år, så ett prov du skriver i gymnasiet kan användas när du söker senare. Och eftersom bästa resultatet räknas kostar det ingenting att skriva tidigt. Det enda du riskerar är provavgiften.
+
+Tänk på att du fortfarande måste vara **behörig** till utbildningen du söker. Provet ersätter inte behörigheten, det är bara ett sätt att konkurrera om platserna.`,
+  },
+  {
+    category: "allmant",
+    title: "Vilken del av högskoleprovet är lättast att höja sig på?",
+    question: `Om man har begränsat med tid, vilken del ger mest poäng per pluggtimme? ${FYLL_PA}`,
+    answer: `För de flesta är svaret **ORD**. Ordförrådet går att bygga upp på några veckor, och samma ord återkommer från prov till prov.
+
+Efter det brukar **KVA och NOG** ge mycket. Uppgiftstyperna är snäva, och när du kan fällorna går det snabbt. Se trådarna om [KVA](https://tvakommanollan.se/guider/kva) och [NOG](https://tvakommanollan.se/guider/nog).
+
+**LÄS och ELF** tar längst tid att förbättra, eftersom det handlar om läsvana.
+
+Men det bästa svaret är ditt eget: skriv ett [gammalt prov](https://tvakommanollan.se/gamla-prov) på tid och se vilket delprov som har flest fel. Där finns poängen att hämta.`,
+  },
+  {
+    category: "allmant",
+    title: "Hur många ord behöver man kunna till ORD-delen?",
+    question: `Finns det ett ungefärligt antal ord man bör kunna inför högskoleprovet? ${FYLL_PA}`,
+    answer: `Det finns inget fast antal, men det går att få en bild av omfånget. I ordlistan på sajten finns över 8 700 ord som kommit på högskoleprovet genom åren. Ett ord som en gång kommit på provet har en klar chans att komma igen.
+
+Ett rimligt mål är inte att kunna alla, utan att:
+1. Kunna de vanligaste lånorden och förleden (se tråden om förled i verbala delen).
+2. Gå igenom några hundra ord ur gamla prov med repetition.
+3. Läsa mer sakprosa, så att fler ord känns bekanta.
+
+Börja i [ordlistan](https://tvakommanollan.se/ordlista) eller i [ordövningen](https://tvakommanollan.se/ord).`,
+  },
+  {
+    category: "provdagen",
+    title: "Kan man få anpassning på högskoleprovet vid dyslexi eller annan funktionsnedsättning?",
+    question: `Finns det möjlighet till förlängd tid eller andra anpassningar på högskoleprovet? ${FYLL_PA}`,
+    answer: `Ja. Det går att ansöka om anpassat provgenomförande, till exempel vid dyslexi, synnedsättning eller annan funktionsnedsättning. Ansökan görs i samband med anmälan och kräver intyg.
+
+Vilka anpassningar som finns och vad som krävs i ansökan står på hogskoleprov.nu. Läs där i god tid före anmälningsperioden.
+
+Har du själv skrivit med anpassning får du gärna berätta hur det gick till.`,
+  },
+  {
+    category: "plugg",
+    title: "Hur går man igenom ett gammalt prov på bästa sätt?",
+    question: `Jag har gjort ett gammalt högskoleprov. Hur ska jag gå igenom felen för att lära mig mest? ${FYLL_PA}`,
+    answer: `Genomgången är viktigare än själva provet. Ett sätt som fungerar:
+
+1. **Rätta och räkna poängen** per delprov. Sajten gör det åt dig i [gamla prov](https://tvakommanollan.se/gamla-prov).
+2. **Sortera felen** i tre högar: visste inte hur, slarvfel, och hann inte.
+3. **Visste inte hur:** lös uppgiften igen med facit bredvid och skriv upp metoden.
+4. **Slarvfel:** skriv upp exakt vad som gick fel, till exempel "läste fel enhet" eller "glömde negativa tal". Det är ofta samma fel om och om igen.
+5. **Hann inte:** titta på var tiden tog slut och vilken uppgift som åt den.
+
+Gå igenom samma lista innan nästa prov. De flesta upptäcker att två eller tre feltyper står för nästan alla tappade poäng.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "När är svaret D på KVA?",
+    question: `Hur vet man när informationen är otillräcklig på kvantitativa jämförelser? ${FYLL_PA}`,
+    answer: `Svaret är **D** när du kan hitta två tillåtna fall som ger olika svar. Det räcker att visa att det **kan** gå åt båda hållen.
+
+Tecken på att D kan vara rätt:
+- En variabel som inte är bestämd, särskilt om den kan vara negativ eller ett bråk.
+- En kvantitet beskriven som "ett tal som …" i stället för ett bestämt tal.
+- Ett medelvärde eller ett förhållande utan att de enskilda värdena är kända.
+
+Tecken på att D är fel:
+- Båda kvantiteterna är fasta tal. Då kan svaret aldrig vara D.
+- Variabeln försvinner när du förenklar.
+
+Exempel ur riktiga prov finns i genomgångarna här i kategorin, till exempel uppgifterna från vårprovet 2026. Mer i [KVA-guiden](https://tvakommanollan.se/guider/kva).`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Skillnaden mellan C och D på NOG",
+    question: `På NOG blandar jag ihop "(1) tillsammans med (2)" och "(1) och (2) var för sig". Hur ska man tänka? ${FYLL_PA}`,
+    answer: `De betyder nästan motsatta saker:
+
+- **C, (1) tillsammans med (2):** inget av påståendena räcker ensamt, men båda **tillsammans** gör det.
+- **D, (1) och (2) var för sig:** **vart och ett** av påståendena räcker ensamt.
+
+Ordningen att pröva i avgör allt. Pröva först (1) ensamt. Pröva sedan (2) ensamt, och glöm (1) under tiden. Räckte båda är det D. Räckte bara den ena är det A eller B. Först om ingen räckte ensam prövar du dem tillsammans, och då blir det C eller E.
+
+Den vanligaste missen är att svara C fast ett av påståendena räckte ensamt, eftersom man läst båda innan man tänkt efter. Mer i [NOG-guiden](https://tvakommanollan.se/guider/nog).`,
+  },
 ];

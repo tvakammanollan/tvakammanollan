@@ -14,12 +14,14 @@
  *
  *   bun run scripts/seed-forum.ts            # torrkörning
  *   bun run scripts/seed-forum.ts --apply
+ *   bun run scripts/seed-forum.ts --dump     # trådarna som JSON, ingen databas
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { slugifyTitle } from "../src/lib/forum";
-import { SEED_THREADS } from "./forum-seed/trader";
+import { SEED_THREADS, type SeedThread } from "./forum-seed/trader";
+import { GENOMGANGAR } from "./forum-seed/genomgangar";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -36,6 +38,73 @@ function env(name: string): string {
     }
   }
   throw new Error(`${name} saknas i .env.local`);
+}
+
+type ProvQuestion = {
+  nr: number;
+  delprov: string;
+  text?: string;
+  alternatives?: string[];
+  answer: string;
+  image?: string;
+};
+type ProvPass = { label: string; kind: string; questions: ProvQuestion[] };
+
+const VERBAL = new Set(["ORD", "LAS", "LÄS", "MEK", "ELF"]);
+const LETTERS = "ABCDE";
+
+/** Uppgiftstexten med (1), (2) och NOG:s slutfras på egna rader. */
+function quoteLines(text: string): string {
+  return text
+    .replace(/ \((1|2)\) /g, "\n($1) ")
+    .replace(/ Tillräcklig information/g, "\nTillräcklig information")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => `> ${l}`)
+    .join("\n");
+}
+
+/**
+ * En genomgång blir en tråd: frågan är uppgiften citerad ur arkivet, svaret
+ * är lösningen. Stämmer lösningens bokstav inte med facit publiceras ingenting.
+ */
+function genomgangThread(g: (typeof GENOMGANGAR)[number]): SeedThread {
+  const pass = JSON.parse(
+    readFileSync(join(ROOT, "src/data/prov", `${g.term}-${g.pass}.json`), "utf8"),
+  ) as ProvPass;
+  const q = pass.questions.find((x) => x.nr === g.nr);
+  if (!q) throw new Error(`${g.term}-${g.pass} saknar uppgift ${g.nr}`);
+  if (q.image || !q.text) throw new Error(`${g.term}-${g.pass}/${g.nr} är en bilduppgift`);
+  if (q.answer !== g.svar) {
+    throw new Error(`${g.term}-${g.pass}/${g.nr}: lösningen säger ${g.svar}, facit ${q.answer}`);
+  }
+  const delprov = q.delprov === "LAS" ? "LÄS" : q.delprov;
+  const passLink = `https://tvakommanollan.se/gamla-prov/${g.term}/${g.pass}`;
+  const alts = (q.alternatives ?? []).map((a, i) => `- **${LETTERS[i]}** ${a}`).join("\n");
+  const question = [
+    `Uppgift ${g.nr} i provpass ${g.pass} på ${pass.label.toLowerCase()}, delprov ${delprov}. Hela passet finns i [gamla prov](${passLink}).`,
+    quoteLines(q.text),
+    alts ? `Svarsalternativ:\n${alts}` : "",
+    "Lösningen ligger nedanför. Skriv gärna om du löste den på ett annat sätt.",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+  return {
+    category: VERBAL.has(q.delprov) ? "verbal" : "kvantitativ",
+    title: `${pass.label}, provpass ${g.pass}, uppgift ${g.nr} (${delprov}): lösning`,
+    question,
+    answer: g.losning,
+  };
+}
+
+const ALL_THREADS: SeedThread[] = [...SEED_THREADS, ...GENOMGANGAR.map(genomgangThread)];
+
+// --dump skriver ut trådarna som JSON utan att röra databasen, för kontroll
+// av texterna (parser, KaTeX) innan något publiceras.
+if (process.argv.includes("--dump")) {
+  console.log(JSON.stringify(ALL_THREADS));
+  process.exit(0);
 }
 
 const URL_BASE = env("SUPABASE_URL");
@@ -72,7 +141,7 @@ const takenTitle = new Set(existing.map((t) => `${t.category_id}:${t.title.toLow
 const takenSlug = new Set(existing.map((t) => `${t.category_id}:${t.slug}`));
 
 let created = 0;
-for (const t of SEED_THREADS) {
+for (const t of ALL_THREADS) {
   const cid = catId.get(t.category);
   if (!cid) throw new Error(`Okänd kategori ${t.category}`);
   if (t.title.length < 5 || t.title.length > 140) throw new Error(`Rubriklängd: ${t.title}`);

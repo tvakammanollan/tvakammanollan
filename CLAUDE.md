@@ -908,6 +908,12 @@ route-loaders och aldrig hämtas i klienten.
   fylla forumet: det vilseleder besökarna och är precis det Google räknar som
   spam. Datum och avgift i texterna måste ses över för hand när `hp-dates.ts`
   ändras.
+- **Genomgångarna av provuppgifter** (`scripts/forum-seed/genomgangar.ts`,
+  2026-10-21) är en tråd per uppgift. Uppgiftstexten läses ordagrant ur
+  `src/data/prov/` vid publiceringen, och skriptet vägrar om lösningens
+  bokstav inte är facit eller om uppgiften är en bilduppgift. Nya
+  genomgångar: lägg till en post och kör skriptet igen. `--dump` ger
+  trådarna som JSON utan att röra databasen.
 - **`[text](url)` fungerar bara mot den egna sajten** (`isInternalHref` i
   `forum-markdown.ts`). Mot en främmande adress kan texten ljuga om vart
   länken går, så där skrivs texten ut och adressen autolänkas. Interna länkar
