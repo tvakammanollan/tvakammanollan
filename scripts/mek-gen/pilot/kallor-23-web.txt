@@ -1,0 +1,8 @@
+# Batch 23: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/klada-utslag-och-eksem/nasselutslag/ | 1177 Nässelutslag | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/ogonbesvar/ogoninflammation/ | 1177 Ögoninflammation | 1177
+https://www.1177.se/sjukdomar--besvar/infektioner/forkylning-och-influensa/forkylning/ | 1177 Förkylning | 1177
+https://www.1177.se/sjukdomar--besvar/infektioner/forkylning-och-influensa/influensa/ | 1177 Influensa | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/huvudvark-och-migran/spanningshuvudvark/ | 1177 Spänningshuvudvärk | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/larande-forstaelse-och-minne/dyslexi/ | 1177 Dyslexi | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/larande-forstaelse-och-minne/besvar-med-minnet/ | 1177 Besvär med minnet | 1177
