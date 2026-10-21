@@ -215,23 +215,23 @@
   "id": "p26-05",
   "amne": "kul",
   "genre": "pop",
-  "text": "Kroppkakor är bollar av potatisdeg, ungefär stora som tennisbollar, med en inbakad _____ av fläsk och lök.",
+  "text": "Blodpudding görs av bland annat svinblod, mjölk och rågmjöl. Smeten hälls i formar och _____ i ugn i vattenbad, och när den ska ätas skivas den och steks i smör.",
   "alternatives": [
-   "glasyr",
-   "fyllning",
-   "sås",
-   "garnering"
+   "jäser",
+   "gräddas",
+   "fryses",
+   "röks"
   ],
   "answer": "B",
-  "explanation": "Rätt svar är fyllning. Det som är inbakat i en deg sitter inuti, och det är en fyllning. Glasyr, sås och garnering ligger utanpå och bakas inte in.",
+  "explanation": "Rätt svar är gräddas. En smet i formar som sätts i ugnen tillagas av värmen. En ugn får inte smeten att jäsa, och man fryser eller röker inte mat i en ugn med vattenbad.",
   "source": {
-   "title": "Kroppkakor",
-   "url": "https://sv.wikipedia.org/wiki/Kroppkakor",
+   "title": "Blodpudding",
+   "url": "https://sv.wikipedia.org/wiki/Blodpudding",
    "publisher": "Wikipedia"
   },
   "meta": {
    "ordklass": [
-    "s"
+    "v"
    ],
    "ledtrad": [
     "kol"
@@ -321,23 +321,23 @@
   "id": "p26-07",
   "amne": "his",
   "genre": "pop",
-  "text": "Ett gästgiveri var en inrättning längs vägarna där resande kunde få mat och logi och _____ sina trötta hästar mot utvilade. Verksamheten reglerades i en stadga som avskaffades 1933.",
+  "text": "Milstolparna var föregångare till dagens vägmärken. I Sverige användes de mellan 1649 och 1890-talet för att _____ avstånden längs landsvägarna.",
   "alternatives": [
-   "rida in",
-   "sko om",
-   "byta ut",
-   "vattna"
+   "förlänga",
+   "bevaka",
+   "markera",
+   "asfaltera"
   ],
   "answer": "C",
-  "explanation": "Rätt svar är byta ut. Mot utvilade visar att de trötta hästarna lämnades i utbyte mot andra. Att rida in, sko om eller vattna sina hästar mot utvilade ger ingen mening.",
+  "explanation": "Rätt svar är markera. Ett vägmärke visar något för den som färdas, och en milstolpe visade hur långt man hade kommit. En stolpe förlänger eller bevakar inte ett avstånd, och landsvägarna asfalterades inte med milstolpar.",
   "source": {
-   "title": "Gästgiveri",
-   "url": "https://sv.wikipedia.org/wiki/G%C3%A4stgiveri",
+   "title": "Milstolpe",
+   "url": "https://sv.wikipedia.org/wiki/Milstolpe",
    "publisher": "Wikipedia"
   },
   "meta": {
    "ordklass": [
-    "utr"
+    "v"
    ],
    "ledtrad": [
     "kol"
@@ -2373,29 +2373,29 @@
   "id": "p26-43",
   "amne": "sam",
   "genre": "pop",
-  "text": "En koloniträdgård är ett markområde som delas in i lotter som _____ ut till enskilda odlare. Tanken uppstod i 1800-talets _____ städer, där bostadsbristen var stor och tillgången på frukt och grönsaker _____.",
+  "text": "Ett fritidshus är ett hus som man bor i som _____ bostad på semestern och annan ledig tid. Ännu i början av 1900-talet var det en _____ för överklassen att ha ett eget sommarhus, och de flesta som ville bo på landet om sommaren _____ i stället ett hus eller tog in på pensionat.",
   "alternatives": [
-   "arrenderas – överbefolkade – riklig",
-   "rensas – täta – knapp",
-   "hyrs – trånga – bristfällig",
-   "röstas – glesa – god"
+   "provisorisk – förmån – rev",
+   "permanent – ynnest – lånade",
+   "temporär – lyx – hyrde",
+   "officiell – börda – brände"
   ],
   "answer": "C",
-  "explanation": "Rätt svar är hyrs, trånga och bristfällig. Lotter som enskilda får odla på mot betalning hyrs ut, och arrenderas fungerar också. Stor bostadsbrist hör ihop med städer där folk bor tätt, och överbefolkade eller täta säger samma sak. Odlingslotterna skulle ge stadsborna det de saknade, och knapp fungerar också. Lotter rensas eller röstas inte ut till odlare, glesa städer har ingen bostadsbrist, och riklig eller god tillgång på grönsaker hade inte gett skäl att odla.",
+  "explanation": "Rätt svar är temporär, lyx och hyrde. Ett hus för semestern bor man i bara en del av året, och provisorisk fungerar också. Att bara överklassen ägde sommarhus visar att det var något dyrt och ovanligt, och förmån eller ynnest fungerar också. I stället ställer de andra mot dem som ägde, så de fick bo i någon annans hus, och lånade fungerar också. Ett fritidshus är inte en permanent eller officiell bostad, ett eget sommarhus var ingen börda, och den som rev eller brände ett hus kunde inte bo i det.",
   "source": {
-   "title": "Kolonistuga",
-   "url": "https://sv.wikipedia.org/wiki/Kolonistuga",
+   "title": "Sommarstuga",
+   "url": "https://sv.wikipedia.org/wiki/Sommarstuga",
    "publisher": "Wikipedia"
   },
   "meta": {
    "ordklass": [
-    "v",
     "a",
-    "a"
+    "s",
+    "v"
    ],
    "ledtrad": [
     "kol",
-    "ors",
+    "kon",
     "kon"
    ],
    "distraktorer": {

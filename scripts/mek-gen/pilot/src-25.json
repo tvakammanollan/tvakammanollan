@@ -989,23 +989,23 @@
 },
 {
 "amne": "utb",
-"genre": "pop",
+"genre": "myn",
 "source": {
-"title": "Skolbespisning"
+"title": "Skolhälsovård"
 },
-"text": "Sverige, Finland, Estland och Norge skiljer sig från de flesta länder genom att skolmaten i grundskolan är både _____ och reglerad i lag, något som gäller alla elever. På andra håll har eleverna ofta med sig matlåda eller betalar för maten.",
+"text": "I Sverige är skolhälsovården kostnadsfri för eleverna. Den ska följa deras utveckling och hälsa och i första hand vara _____, med hälsokontroller och enkla sjukvårdsinsatser.",
 "key": [
-"gratis"
+"preventiv"
 ],
 "distractors": [
 [
-"näringsrik"
+"akut"
 ],
 [
-"varm"
+"specialiserad"
 ],
 [
-"vegetarisk"
+"kirurgisk"
 ]
 ],
 "dtyp": [
@@ -1034,9 +1034,9 @@
 "a"
 ],
 "ledtrad": [
-"kon"
+"kol"
 ],
-"explanation": "Rätt svar är gratis. Andra länder skiljer sig genom att eleverna betalar, alltså kostar maten inget i de fyra länderna. Näringsrik, varm och vegetarisk står inte i motsats till att eleverna betalar.",
+"explanation": "Rätt svar är preventiv. Hälsokontroller görs för att upptäcka och förhindra problem innan de uppstår, och det är vad preventiv betyder. Enkla sjukvårdsinsatser strider mot specialiserad och kirurgisk vård, och hälsokontroller är inte akuta.",
 "id": "p25-20"
 },
 {
@@ -2355,29 +2355,29 @@
 "amne": "lit",
 "genre": "pop",
 "source": {
-"title": "Självbiografi"
+"title": "Litteraturkritik"
 },
-"text": "I en självbiografi _____ författaren sitt eget liv, oftast från början till slut. En memoar lägger däremot tyngdpunkten på _____ händelser, gärna historiska, som författaren själv har _____.",
+"text": "Litteraturkritik är att granska och _____ litteratur. Till skillnad från litteraturteoretikern, som strävar efter _____, låter kritikern sina egna värderingar synas, och kritiken _____ gärna i essäform.",
 "key": [
-"återberättar",
-"yttre",
-"bevittnat"
+"bedöma",
+"objektivitet",
+"publiceras"
 ],
 "distractors": [
 [
-"återger",
-"samhälleliga",
-"uppfunnit"
+"betygsätta",
+"saklighet",
+"glöms"
 ],
 [
-"förnekar",
-"stora",
-"upplevt"
+"censurera",
+"neutralitet",
+"trycks"
 ],
 [
-"planerar",
-"inre",
-"missat"
+"illustrera",
+"popularitet",
+"tystnar"
 ]
 ],
 "dtyp": [
@@ -2412,15 +2412,15 @@
 ],
 "ordklass": [
 "v",
-"a",
+"s",
 "v"
 ],
 "ledtrad": [
-"kol",
+"par",
 "kon",
 "kol"
 ],
-"explanation": "Rätt svar är återberättar, yttre och bevittnat. En självbiografi är en berättelse om författarens liv, och återger fungerar också. Däremot ställer memoaren mot berättelsen om hela livet, och historiska händelser sker utanför personen, så samhälleliga eller stora fungerar också. Händelser som författaren skriver om har hon sett med egna ögon, och upplevt säger samma sak. Man förnekar eller planerar inte sitt liv i en självbiografi, inre händelser är inte historiska, och en memoar handlar inte om händelser författaren har uppfunnit eller missat.",
+"explanation": "Rätt svar är bedöma, objektivitet och publiceras. En kritiker säger vad litteraturen är värd, och betygsätta fungerar också. Till skillnad från ställer teoretikern mot den som visar sina egna värderingar, alltså vill teoretikern hålla dem borta, och saklighet eller neutralitet säger samma sak. Kritik i essäform är kritik som ges ut, och trycks fungerar också. Att censurera eller illustrera litteratur är inte kritik, popularitet står inte i motsats till egna värderingar, och kritik som glöms eller tystnar har ingen form.",
 "id": "p25-42"
 },
 {
