@@ -1771,28 +1771,28 @@
   "id": "p25-33",
   "amne": "lit",
   "genre": "pop",
-  "text": "Barnlitteraturen har länge stått _____ pedagogiken och uppfostran, men senare tiders barnböcker har i högre grad tagit _____ hänsyn.",
+  "text": "Skräcklitteratur vill skrämma eller _____ läsarna, och länge kom skräcken oftast från något ont och övernaturligt som tränger in i _____.",
   "alternatives": [
-   "i närheten av – moraliska",
-   "nära – estetiska",
-   "fjärran från – konstnärliga",
-   "i vägen för – religiösa"
+   "förskräcka – rymden",
+   "oroa – vardagen",
+   "roa – tillvaron",
+   "trösta – drömmen"
   ],
   "answer": "B",
-  "explanation": "Rätt svar är nära och estetiska. Barnboken har länge haft ett nära samband med uppfostran, och i närheten av fungerar också. Men ställer de senare böckerna mot uppfostran, så hänsynen gäller något annat än nyttan, och konstnärliga säger samma sak. Fjärran från strider mot att böckerna länge hört ihop med uppfostran, i vägen för ger ingen mening, och moraliska eller religiösa hänsyn står inte i motsats till uppfostran.",
+  "explanation": "Rätt svar är oroa och vardagen. Skrämma eller visar att det andra ordet ska ligga nära i betydelse, och förskräcka fungerar också. Något övernaturligt som gör intrång stör det vanliga livet, och tillvaron säger samma sak. Roa och trösta passar inte ihop med skräck, och något som tränger in i rymden eller drömmen är inte ett intrång i det vardagliga.",
   "source": {
-   "title": "Barnbok",
-   "url": "https://sv.wikipedia.org/wiki/Barnbok",
+   "title": "Skräcklitteratur",
+   "url": "https://sv.wikipedia.org/wiki/Skr%C3%A4cklitteratur",
    "publisher": "Wikipedia"
   },
   "meta": {
    "ordklass": [
-    "fu",
-    "a"
+    "v",
+    "s"
    ],
    "ledtrad": [
-    "kol",
-    "kon"
+    "par",
+    "kol"
    ],
    "distraktorer": {
     "A": {
@@ -2182,30 +2182,30 @@
  },
  {
   "id": "p25-40",
-  "amne": "kul",
+  "amne": "tek",
   "genre": "pop",
-  "text": "Vedspisen kom vid mitten av 1800-talet och förändrade matlagningen i hemmen. Den gav mer värme och _____ mycket mindre ved än den öppna härden, men eftersom härdens sken försvann blev _____ snart vanligare.",
+  "text": "Vid smide läggs metallen på ett städ och _____ med hammarslag tills den får den form smeden vill ha. Arbetar man med kall metall blir resultatet mer _____, medan upphettad metall kräver mindre kraft.",
   "alternatives": [
-   "drog – kakelugnar",
-   "förbrukade – lampor",
-   "sparade – fotogenlampor",
-   "sålde – mattor"
+   "formas – ojämnt",
+   "bearbetas – exakt",
+   "kyls – precist",
+   "smälts – färgglatt"
   ],
   "answer": "B",
-  "explanation": "Rätt svar är förbrukade och lampor. Spisen eldades med mindre ved än härden, och drog fungerar också. När ljuset från elden försvann behövdes något annat som lyste, och fotogenlampor fungerar också. Att spisen sparade eller sålde mindre ved ger ingen mening, och kakelugnar eller mattor ersätter inte härdens sken.",
+  "explanation": "Rätt svar är bearbetas och exakt. Hammarslag på ett städ ändrar metallens form, och formas fungerar också. Medan ställer de två arbetssätten mot varandra, så den kalla metallen måste ha en annan fördel än att den kräver mindre kraft, och precist säger samma sak. Metall kyls eller smälts inte med hammarslag, och ojämnt eller färgglatt är ingen fördel som vägs mot kraften.",
   "source": {
-   "title": "Vedspis",
-   "url": "https://sv.wikipedia.org/wiki/Vedspis",
+   "title": "Smide",
+   "url": "https://sv.wikipedia.org/wiki/Smide",
    "publisher": "Wikipedia"
   },
   "meta": {
    "ordklass": [
     "v",
-    "s"
+    "a"
    ],
    "ledtrad": [
     "kol",
-    "ors"
+    "kon"
    ],
    "distraktorer": {
     "A": {

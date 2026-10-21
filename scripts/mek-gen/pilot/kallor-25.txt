@@ -2,7 +2,7 @@
 Köttbullar
 Pytt i panna
 Seriealbum
-Barnbok
+Skräcklitteratur
 Klockstapel
 Ladugård
 Allmoge
@@ -41,5 +41,5 @@ Kanslisvenska
 Fältpräst
 Kompani
 Tröskverk
-Vedspis
+Smide
 Tjäle
