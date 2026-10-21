@@ -1948,7 +1948,7 @@
   "id": "p26-36",
   "amne": "jur",
   "genre": "pop",
-  "text": "Vid ett inbrott tar sig någon in i en annans låsta utrymme och stjäl. Sker det i en bostad räknas det som _____ stöld, eftersom hemmet har ett särskilt skydd, och om ingenting stjäls är brottet i stället _____ eller hemfridsbrott.",
+  "text": "Vid ett inbrott tar sig någon in i en annans låsta utrymme och stjäl. Sker det i en bostad räknas det oftast som _____ stöld, och om ingenting stjäls är brottet i stället _____ eller hemfridsbrott.",
   "alternatives": [
    "allvarlig – snatteri",
    "ringa – intrång",
@@ -1956,7 +1956,7 @@
    "lätt – bedrägeri"
   ],
   "answer": "C",
-  "explanation": "Rätt svar är grov och olaga intrång. Hemmets särskilda skydd gör att en stöld där bedöms strängare, och allvarlig fungerar också. Om ingenting stjäls har gärningsmannen bara tagit sig in, och intrång fungerar också. Ringa och lätt strider mot att bostaden gör brottet värre, och snatteri och bedrägeri förutsätter att något tas.",
+  "explanation": "Rätt svar är grov och olaga intrång. En stöld i någons hem bedöms som ett svårare brott, och allvarlig fungerar också. Om ingenting stjäls har gärningsmannen bara tagit sig in, och intrång fungerar också. Ringa och lätt strider mot att bostaden gör brottet värre, och snatteri och bedrägeri förutsätter att något tas.",
   "source": {
    "title": "Inbrott",
    "url": "https://sv.wikipedia.org/wiki/Inbrott",
