@@ -1,0 +1,7 @@
+# Batch 24: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/huvudvark-och-migran/klusterhuvudvark/ | 1177 Klusterhuvudvärk | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/huvudvark-och-migran/huvudvark-hos-vuxna/ | 1177 Huvudvärk hos vuxna | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/larande-forstaelse-och-minne/dyskalkyli/ | 1177 Dyskalkyli | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/langvarig-trotthet-och-narkolepsi/narkolepsi/ | 1177 Narkolepsi | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/infektioner-i-hjarna-och-nerver/tbe---fastingburen-hjarninflammation/ | 1177 TBE | 1177
+https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/larande-forstaelse-och-minne/downs-syndrom/ | 1177 Downs syndrom | 1177
