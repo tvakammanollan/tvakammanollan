@@ -14,6 +14,8 @@ export type SeedThread = {
   title: string;
   question: string;
   answer: string;
+  /** Terminen ("2026vt") för genomgångar av provuppgifter; gamla prov länkar via den. */
+  provTerm?: string;
 };
 
 const FYLL_PA =

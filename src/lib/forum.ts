@@ -80,6 +80,19 @@ export function threadPath(categorySlug: string, id: number, slug: string): stri
   return `/forum/${categorySlug}/${id}-${slug}`;
 }
 
+/**
+ * Uppgiftsnumret i en genomgångstråds slug, om tråden gäller just det här
+ * provpasset. Slugen byggs av rubriken "Vårprovet 2026, provpass 3, uppgift
+ * 26 (NOG): lösning" (se `scripts/forum-seed/`), och terminen står i
+ * `prov_term`. Det är den kopplingen gamla prov länkar till forumet med.
+ */
+export function provThreadNr(slug: string, pass: number): number | null {
+  const m = /(?:^|-)provpass-(\d+)-uppgift-(\d+)(?:-|$)/.exec(slug);
+  if (!m || Number(m[1]) !== pass) return null;
+  const nr = Number(m[2]);
+  return Number.isSafeInteger(nr) && nr > 0 ? nr : null;
+}
+
 /** Plocka ut id ur "482-hur-loser-man-kva". Returnerar null om det inte finns. */
 export function parseThreadParam(param: string): { id: number; slug: string } | null {
   const m = /^(\d+)(?:-(.*))?$/.exec(param);

@@ -95,6 +95,7 @@ function genomgangThread(g: (typeof GENOMGANGAR)[number]): SeedThread {
     title: `${pass.label}, provpass ${g.pass}, uppgift ${g.nr} (${delprov}): lösning`,
     question,
     answer: g.losning,
+    provTerm: g.term,
   };
 }
 
@@ -134,10 +135,10 @@ if (!author?.is_admin) throw new Error(`Kontot ${AUTHOR_USERNAME} saknas eller �
 const cats = await rest<Array<{ id: number; slug: string }>>("forum_categories?select=id,slug");
 const catId = new Map(cats.map((c) => [c.slug, c.id]));
 
-const existing = await rest<Array<{ category_id: number; title: string; slug: string }>>(
-  "forum_threads?select=category_id,title,slug",
-);
-const takenTitle = new Set(existing.map((t) => `${t.category_id}:${t.title.toLowerCase()}`));
+const existing = await rest<
+  Array<{ id: number; category_id: number; title: string; slug: string; prov_term: string | null }>
+>("forum_threads?select=id,category_id,title,slug,prov_term");
+const byTitle = new Map(existing.map((t) => [`${t.category_id}:${t.title.toLowerCase()}`, t]));
 const takenSlug = new Set(existing.map((t) => `${t.category_id}:${t.slug}`));
 
 let created = 0;
@@ -145,8 +146,20 @@ for (const t of ALL_THREADS) {
   const cid = catId.get(t.category);
   if (!cid) throw new Error(`Okänd kategori ${t.category}`);
   if (t.title.length < 5 || t.title.length > 140) throw new Error(`Rubriklängd: ${t.title}`);
-  if (takenTitle.has(`${cid}:${t.title.toLowerCase()}`)) {
-    console.log(`  finns   ${t.category}/${t.title}`);
+  const found = byTitle.get(`${cid}:${t.title.toLowerCase()}`);
+  if (found) {
+    // Trådar från före kopplingen till gamla prov får terminen i efterhand.
+    if (t.provTerm && found.prov_term !== t.provTerm) {
+      if (APPLY) {
+        await rest(`forum_threads?id=eq.${found.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({ prov_term: t.provTerm }),
+        });
+      }
+      console.log(`  termin  ${t.category}/${found.id} → ${t.provTerm}`);
+    } else {
+      console.log(`  finns   ${t.category}/${t.title}`);
+    }
     continue;
   }
   let slug = slugifyTitle(t.title);
@@ -160,7 +173,13 @@ for (const t of ALL_THREADS) {
   }
   const [thread] = await rest<Array<{ id: number }>>("forum_threads", {
     method: "POST",
-    body: JSON.stringify({ category_id: cid, author_id: author.id, title: t.title, slug }),
+    body: JSON.stringify({
+      category_id: cid,
+      author_id: author.id,
+      title: t.title,
+      slug,
+      prov_term: t.provTerm ?? null,
+    }),
   });
   const now = Date.now();
   await rest("forum_posts", {

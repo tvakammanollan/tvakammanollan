@@ -914,6 +914,18 @@ route-loaders och aldrig hämtas i klienten.
   bokstav inte är facit eller om uppgiften är en bilduppgift. Nya
   genomgångar: lägg till en post och kör skriptet igen. `--dump` ger
   trådarna som JSON utan att röra databasen.
+- **Gamla prov länkar till genomgångarna** (2026-10-23). Trådarna har
+  `prov_term` satt, och `fetchProvThreads` (`forum-prov.functions.ts`) läser
+  uppgiftsnumret ur slugen med `provThreadNr`. Länken står i facitlistan
+  (serverrenderad, alltså synlig för sökmotorer) och på uppgiftskortet efter
+  rättning. Byts rubrikmallen "…, provpass N, uppgift M (…): lösning" slutar
+  kopplingen fungera tyst. Ett forumfel ger inga länkar, aldrig ett trasigt
+  provpass.
+- **robots.txt har EN grupp.** En robot följer bara den mest specifika
+  gruppen som nämner den, så de tidigare egna grupperna för Googlebot och
+  AI-robotarna (bara `Allow: /`) gjorde att spärrarna för `/admin`, `/api/`
+  och forumsöket inte gällde dem. Ny robot läggs till som en `User-agent`-rad
+  i den gruppen.
 - **`[text](url)` fungerar bara mot den egna sajten** (`isInternalHref` i
   `forum-markdown.ts`). Mot en främmande adress kan texten ljuga om vart
   länken går, så där skrivs texten ut och adressen autolänkas. Interna länkar

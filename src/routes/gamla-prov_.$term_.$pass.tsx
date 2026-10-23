@@ -3,6 +3,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ProvRunner } from "@/components/prov/ProvRunner";
 import { findExam, loadPass } from "@/lib/prov-data";
+import { fetchProvThreads } from "@/lib/forum-prov.functions";
 import { formatInt } from "@/lib/sv-format";
 import { delprovFull, passKindLabel } from "@/types/gamla-prov";
 
@@ -20,7 +21,11 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
     if (!data) throw notFound();
     const exam = findExam(params.term);
     const next = exam?.passes.find((p) => p.pass > passNumber)?.pass;
-    return { data, nextPass: next };
+    // Forumet får aldrig kunna fälla ett provpass: fel blir inga länkar.
+    const threads = await fetchProvThreads({ data: { term: data.term, pass: passNumber } }).catch(
+      () => ({}),
+    );
+    return { data, nextPass: next, threads };
   },
   head: ({ loaderData }) => {
     const data = loaderData?.data;
@@ -77,6 +82,13 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
 });
 
 function ProvPassPage() {
-  const { data, nextPass } = Route.useLoaderData();
-  return <ProvRunner key={`${data.term}-${data.pass}`} data={data} nextPass={nextPass} />;
+  const { data, nextPass, threads } = Route.useLoaderData();
+  return (
+    <ProvRunner
+      key={`${data.term}-${data.pass}`}
+      data={data}
+      nextPass={nextPass}
+      threads={threads}
+    />
+  );
 }
