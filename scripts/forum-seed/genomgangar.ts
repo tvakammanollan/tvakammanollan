@@ -6418,4 +6418,415 @@ Tillsammans: $5 + 20 + 35 = 60$ kg. **Svar: C.** Mer i ${NOG}.`,
 
 **Svar: A.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2019, provpass 1 och 4 ─────────────────────────────────────── */
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`Skriv som vanliga tal: $5\,300 - 470 = 4\,830 = 4{,}83 \cdot 10^3$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`40 procent är $\frac{2}{5}$. Bara 5 ger ett heltal: $\frac{2}{5} \cdot 5 = 2$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`$157 + 158 = 315$, som slutar på 5. De andra ger 243, 37 och 31.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`$5x - 5 = 2x + 4$ ger $3x = 9$ och $x = 3$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Multiplicera med 2 och dela med $b$: $h = \frac{2A}{b}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`Fyra gånger så stor area betyder dubbelt så stor radie. $2 \cdot 3 = 6$ cm.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`Det finns $93 - 60 = 33$ jämna tal, och hälften av dem är minst 17. I värsta fall stryker hon alla 60 udda först. $60 + 17 = 77$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`$\sqrt{32xy^2} = \sqrt{16} \cdot \sqrt{y^2} \cdot \sqrt{2x} = 4y\sqrt{2x}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`$x + y + z = 45$ och $y + z + 14 = 51$, så $y + z = 37$ och $x = 8$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`$10^0 = 1$, så I är 5,7.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`I: $\frac{6 + 4 + 3}{12} = \frac{13}{12} = 1 + \frac{1}{12}$. Och $\frac{1}{12} > \frac{1}{13}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`3, 4, 5 är en rätvinklig triangel, så största vinkeln är 90°. En liksidig triangel har bara 60°.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`I: $4a + 4 - 4a + 4 = 8$. II: $4a - 4 + 4 - 4a = 0$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Volymen är $\frac{\pi r^2 h}{3}$. Jämför $r^2 h$: $9 \cdot 4 = 36$ mot $16 \cdot 3 = 48$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`$4^x$ är alltid jämnt när $x \geq 1$, så sannolikheten är 1.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Kvadrera båda: I blir $27 + 23 + 2\sqrt{27 \cdot 23} = 50 + $ något positivt. II blir 50.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Linje A har lutningen $\frac{1}{2}$ och skär $y$-axeln i $\frac{1}{2}$. Linje B har lutningen $-2$, men vi vet inte var den ligger, så dess skärning med $y$-axeln kan vara vad som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`$x = \frac{3y}{4}$, så $\frac{2x}{3} = \frac{y}{2}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Första villkoret ger $2p + L = 5s$. Andra ger $4p + 2L = 10s$, alltså samma sak. Vi kan inte skilja på pennor och linjaler.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 1,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1): Vit ligger på plats 3. Paren grön och röd samt blå och svart fyller platserna 1 och 2 respektive 4 och 5, men vi vet inte hur.
+
+(2): Svart på 5 och grön före röd. Många möjligheter.
+
+Tillsammans: blå ligger på 4, så grön och röd ligger på 1 och 2. Grön först, alltså röd på 2. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$8\,500\,000$ mm $= 8\,500$ m $= 8{,}5$ km.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 3,
+    svar: "D",
+    losning: String.raw`Om täljaren är större än nämnaren är kvoten större än 1.
+
+**Svar: D.** A är fel eftersom $z$ alltid är positivt, och B gäller bara när $x = 1$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`Sture är $x + 3$ år. Summan är $x + x + 3 = 31$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$49 = 7^2$, så $7 + \frac{x}{3} = 2$ och $x = -15$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`65 % är längre än Ida och 32 % längre än Albert. Mellan dem finns ungefär $65 - 32 = 33$ procent.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Hjulen är $16 + 4 = 20$, varav 4 på motorcyklar. $\frac{4}{20} = \frac{1}{5}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`$x = 5$ ger $y = 15 - 5 = 10$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`Med sidorna $\sqrt{2}$ och 1 blir diagonalen $\sqrt{2 + 1} = \sqrt{3}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Multiplicera först: $x = 10^5$. Dela sedan med de små talen: $y = 10^6$ och $z = 10^{10}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$\frac{\frac{7}{2}}{\frac{21}{5}} = \frac{7}{2} \cdot \frac{5}{21} = \frac{5}{6}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Två sidor är tillsammans 180 m, så den andra är $180 - x$. Arean är $x(180 - x)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$\frac{4}{x} = \frac{5}{2}$ ger $x = 1{,}6$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`I: 400 kr, sedan 320 kr. Rabatt 180 kr. II: 400 kr, sedan 300 kr. Rabatt 200 kr.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`$x < -1$ gör $1 - x$ större än 2 och $x - 1$ mindre än $-2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$\sqrt{x} = x$ med $x > 0$ ger $x = 1$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$f(1) = 2$ och $f(-1) = 8$. I är $\frac{1}{4}$ och II är 4.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 19,
+    svar: "C",
+    losning: String.raw`$3 \cdot 3^3 = 3^4$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`Kalle: $\frac{60}{22} < 3$ timmar. Bosse: $\frac{54}{18} = 3$ timmar.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`I: $8x$. II: de två kortare sidorna är tillsammans längre än $5x$, så omkretsen är större än $10x$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Medianen av två tal är deras medelvärde: $x + y = 4$ och $y + z = 18$. $y = 3$ ($x = 1$, $z = 15$) och $y = 8$ ($x = -4$, $z = 10$) fungerar båda.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: kvar är $0{,}8 \cdot 0{,}75 = 0{,}6$ av vattnet, och det är 42 liter. $\frac{42}{0{,}6} = 70$ liter.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: 20 stora, varav 10 vita. Lika många vita är små, så det finns 20 vita och 80 rosa. Sannolikheten är 0,8.
+
+Var för sig saknas antingen antalen eller fördelningen. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Summan är 150. Både 3, 30, 30, 30, 57 (median 30) och 3, 4, 5, 30, 108 (median 5) uppfyller allt.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Marie före Harald före Anna, och Marie inte först. Då är David först: David, Marie, Harald, Anna. Räcker.
+
+(2): Både David, Harald, Marie, Anna och Harald, David, Anna, Marie fungerar. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019ht",
+    pass: 4,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): Kvoten 4 till 1 ger $\frac{4}{5}$ katter. (2): 80 % katter. Var och en räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
