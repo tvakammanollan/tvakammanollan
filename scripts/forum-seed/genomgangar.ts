@@ -5572,4 +5572,417 @@ Tillsammans: $3A - 21 = 543$, alltså $A = 188$ cm. **Svar: C.** Mer i ${NOG}.`,
 
 **Svar: A.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2021 (mars), provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$2x - 12 = 8 - 4x$ ger $6x = 20$ och $x = \frac{10}{3}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`$3x^2 = 12$ ger $x^2 = 4$, alltså $x = 2$ eller $-2$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`20 procent är en femtedel. En femtedel av en femtedel är $\frac{1}{25}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`Tio tal: medianen är medelvärdet av det femte och sjätte, $\frac{5 + 6}{2} = 5{,}5$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$4^y = 2^{2y}$, så $2^{x + 2y} = 16 = 2^4$ och $x + 2y = 4$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Täljaren: $\frac{9}{12} + \frac{16}{12} = \frac{25}{12}$. Dela med $\frac{12}{5}$: $\frac{25}{12} \cdot \frac{5}{12} = \frac{125}{144}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`Multiplicera ut: $a^3 - a^2b + ab^2 + a^2b - ab^2 + b^3 = a^3 + b^3$.
+
+**Svar: D.** Det är formeln för summan av två kuber. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`$1{,}25x = 0{,}75y$ ger $x = \frac{0{,}75}{1{,}25}y = \frac{3}{5}y$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$75 = 3 \cdot 5^2$. För att få en jämn kvadrat behövs en trea till, alltså $x = 3$ och $75 \cdot 3 = 225 = 15^2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$f\left(-\frac{1}{2}\right) = 2 + 2 = 4$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`$\sqrt{9} + 1 = 4$, så båda är $(\sqrt{x})^4$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`Ett tal under 1 upphöjt till ett positivt tal blir mindre än 1, och ett tal över 1 blir större än 1.
+
+**Svar: B.** Inget behöver räknas ut. Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`Vinklarna summerar till 180°, så den minsta är högst 60°, och eftersom alla är olika är den mindre än 60°.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Tvåsiffriga är 10–99, alltså 90 av 190. $\frac{90}{190} < \frac{1}{2}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`Linje A har $k = 1$. Vinkelrät mot den är $k = -1$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`1 liter är 1 000 cm³, så 159 liter är 159 000 cm³.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Produkten kan vara $100 \cdot 10 = 1\,000$ eller $999 \cdot 99 = 98\,901$. Kvantitet II kan vara vilket fyrsiffrigt tal som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`$\pi r^2 = \pi^3$ ger $r^2 = \pi^2$ och $r = \pi$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`Kalla $t = \frac{x}{y} > 0$. $\sqrt{t} = t$ ger $t = 1$, alltså $x = y$ och $\frac{2y}{x} = 2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att Emma kör en femtedel på 2 minuter och halva sträckan på 5, men aldrig hur fort eller hur långt.
+
+**Svar: E.** Allt i uppgiften är andelar och tider. Utan en sträcka eller en hastighet går längden inte att få fram. Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): $28 \cdot 9 = 252$. Räcker.
+
+(2): 56 är 25 procent av det som är kvar, alltså är 224 kvar och 252 från början. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: 70 procent av 1,5 liter är 1,05 liter, alltså 10,5 dl socker som väger $10{,}5 \cdot 90 = 945$ g. Burken väger $1\,250 - 945 = 305$ g.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 3,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(1): 12 av de 24 mörka är inte släta, så 12 mörka är släta. Inget om ljusa.
+
+(2): Lika många ljusa som mörka är släta, men inget antal.
+
+Tillsammans: $12 + 12 = 24$ släta stenar. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$a + a = 2a$, och $a \cdot 2a = 2a^2$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`I A får man $\frac{100}{5} = 20$ äpplen. I B kostar de 4 kr, och man får 25. Fem fler.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`$p + 150 = 200$ ger $p = 50$. $4 \cdot 50 - 200 = 0$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Från P till M är det $+4$ i $x$ och $+3$ i $y$. Lika långt till går man till $(7, 6)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`Skriv alla som en rot: $\sqrt{50}$, $\sqrt{100}$, $\sqrt{250}$ och $\sqrt{500}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`$\frac{2}{x + 1} = 3$ ger $x + 1 = \frac{2}{3}$ och $x = -\frac{1}{3}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`Tre av något plus tre av samma sak är sex av det: $6 \cdot 10^5$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`Åttondelar: $\frac{4 + 2 + 1}{8} = \frac{7}{8}$. Dela med 3: $\frac{7}{24}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`$f(x) - 1$ måste vara delbart med 8. $-31 - 1 = -32 = 8 \cdot (-4)$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`$13 \cdot 20 = 260$, och 254 ligger närmare 260 än $13 \cdot 19 = 247$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$a = b - 4$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Charlie har mellan $8 \cdot 5 = 40$ och $9 \cdot 7 = 63$ kritor.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`$\frac{0{,}86}{3} \approx 0{,}29$, större än 0,25.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Oscar: $\frac{x}{y/3} = \frac{3x}{y}$. Peter: $\frac{6x}{2y} = \frac{3x}{y}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Summan är 48, och $10 + 15 + 25 = 50$. $x = -2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`$f$: $2x + \frac{1}{5} = 0$ ger $x = -\frac{1}{10}$. $g$: $\frac{x}{2} + 5 = 0$ ger $x = -10$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`$\frac{1}{x} = 1 + \frac{1}{y} > \frac{1}{y}$. För positiva tal betyder större invers mindre tal, så $x < y$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: Carl står trea. Dinah står mellan Bea och Carl, och det går bara med Bea först och Dinah tvåa. Alf står sist, och han har gul mössa.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: $F = 3M$ och $F + 9 = 2(M + 9)$. Det ger $M = 9$ och $F = 27$, en skillnad på 18 år.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Tillsammans: Carolina är inte med i höjd, längd eller tresteg, så hon tävlar i stavhopp. Då är Daniella i tresteg. Men om Anton eller Bengt hoppar höjd går inte att avgöra.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): $k + \frac{k}{2} + (k - 2) = 23$ ger $2{,}5k = 25$ och $k = 10$. Räcker.
+
+(2): Gafflar och skedar är 13, så knivarna är 10. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vta",
+    pass: 5,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Med talet 20 tre gånger av fem måste det mittersta talet vara 20. Räcker.
+
+(1) säger bara vad ytterpunkterna är. **Svar: B.** Mer i ${NOG}.`,
+  },
 ];
