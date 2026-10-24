@@ -26,10 +26,12 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as HogskoleprovetResultatRouteImport } from './routes/hogskoleprovet-resultat'
 import { Route as HogskoleprovetPoangraknareRouteImport } from './routes/hogskoleprovet-poangraknare'
 import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet-poang'
 import { Route as HogskoleprovetOrdRouteImport } from './routes/hogskoleprovet-ord'
 import { Route as HogskoleprovetNormeringRouteImport } from './routes/hogskoleprovet-normering'
+import { Route as HogskoleprovetFormlerRouteImport } from './routes/hogskoleprovet-formler'
 import { Route as HogskoleprovetFacitRouteImport } from './routes/hogskoleprovet-facit'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
@@ -156,6 +158,11 @@ const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
   path: '/integritetspolicy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HogskoleprovetResultatRoute = HogskoleprovetResultatRouteImport.update({
+  id: '/hogskoleprovet-resultat',
+  path: '/hogskoleprovet-resultat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HogskoleprovetPoangraknareRoute =
   HogskoleprovetPoangraknareRouteImport.update({
     id: '/hogskoleprovet-poangraknare',
@@ -175,6 +182,11 @@ const HogskoleprovetOrdRoute = HogskoleprovetOrdRouteImport.update({
 const HogskoleprovetNormeringRoute = HogskoleprovetNormeringRouteImport.update({
   id: '/hogskoleprovet-normering',
   path: '/hogskoleprovet-normering',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetFormlerRoute = HogskoleprovetFormlerRouteImport.update({
+  id: '/hogskoleprovet-formler',
+  path: '/hogskoleprovet-formler',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HogskoleprovetFacitRoute = HogskoleprovetFacitRouteImport.update({
@@ -393,10 +405,12 @@ export interface FileRoutesByFullPath {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
   '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
   '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
+  '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -456,10 +470,12 @@ export interface FileRoutesByTo {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
   '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
   '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
+  '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -520,10 +536,12 @@ export interface FileRoutesById {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
   '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
   '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
+  '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
@@ -585,10 +603,12 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-formler'
     | '/hogskoleprovet-normering'
     | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
+    | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -648,10 +668,12 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-formler'
     | '/hogskoleprovet-normering'
     | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
+    | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -711,10 +733,12 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-formler'
     | '/hogskoleprovet-normering'
     | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
+    | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
     | '/kontakt'
     | '/leaderboard'
@@ -775,10 +799,12 @@ export interface RootRouteChildren {
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
   HogskoleprovetFacitRoute: typeof HogskoleprovetFacitRoute
+  HogskoleprovetFormlerRoute: typeof HogskoleprovetFormlerRoute
   HogskoleprovetNormeringRoute: typeof HogskoleprovetNormeringRoute
   HogskoleprovetOrdRoute: typeof HogskoleprovetOrdRoute
   HogskoleprovetPoangRoute: typeof HogskoleprovetPoangRoute
   HogskoleprovetPoangraknareRoute: typeof HogskoleprovetPoangraknareRoute
+  HogskoleprovetResultatRoute: typeof HogskoleprovetResultatRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
@@ -950,6 +976,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntegritetspolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hogskoleprovet-resultat': {
+      id: '/hogskoleprovet-resultat'
+      path: '/hogskoleprovet-resultat'
+      fullPath: '/hogskoleprovet-resultat'
+      preLoaderRoute: typeof HogskoleprovetResultatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hogskoleprovet-poangraknare': {
       id: '/hogskoleprovet-poangraknare'
       path: '/hogskoleprovet-poangraknare'
@@ -976,6 +1009,13 @@ declare module '@tanstack/react-router' {
       path: '/hogskoleprovet-normering'
       fullPath: '/hogskoleprovet-normering'
       preLoaderRoute: typeof HogskoleprovetNormeringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-formler': {
+      id: '/hogskoleprovet-formler'
+      path: '/hogskoleprovet-formler'
+      fullPath: '/hogskoleprovet-formler'
+      preLoaderRoute: typeof HogskoleprovetFormlerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hogskoleprovet-facit': {
@@ -1271,10 +1311,12 @@ const rootRouteChildren: RootRouteChildren = {
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
   HogskoleprovetFacitRoute: HogskoleprovetFacitRoute,
+  HogskoleprovetFormlerRoute: HogskoleprovetFormlerRoute,
   HogskoleprovetNormeringRoute: HogskoleprovetNormeringRoute,
   HogskoleprovetOrdRoute: HogskoleprovetOrdRoute,
   HogskoleprovetPoangRoute: HogskoleprovetPoangRoute,
   HogskoleprovetPoangraknareRoute: HogskoleprovetPoangraknareRoute,
+  HogskoleprovetResultatRoute: HogskoleprovetResultatRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,

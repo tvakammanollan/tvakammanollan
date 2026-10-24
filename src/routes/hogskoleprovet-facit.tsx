@@ -33,6 +33,9 @@ import { ArrowRight, Calculator, ClipboardCheck, Target } from "lucide-react";
 
 const PATH = "/hogskoleprovet-facit";
 const KIND_LABEL: Record<PassKind, string> = { verbal: "verbal", kvant: "kvantitativ" };
+/** "facit" när det är kontrollerat mot UHR:s, annars "preliminärt facit". */
+const OFFICIELLT = FACIT.officielltFacit !== null;
+const FACIT_ORD = OFFICIELLT ? "facit" : "preliminärt facit";
 
 /** Synliga frågor och svar. Samma text går till FAQPage-datan, ordagrant. */
 function faq(): Array<{ q: string; a: string }> {
@@ -40,11 +43,13 @@ function faq(): Array<{ q: string; a: string }> {
   return [
     {
       q: `Var hittar jag facit till högskoleprovet ${FACIT.label.toLowerCase()}?`,
-      a: `Här ovan finns vårt preliminära facit för de fyra provpass som räknas: ${FACIT.passes
+      a: `Här ovan finns ${OFFICIELLT ? "facit" : "vårt preliminära facit"} för de fyra provpass som räknas: ${FACIT.passes
         .map((p) => `provpass ${p.pass} (${KIND_LABEL[p.kind]})`)
-        .join(
-          ", ",
-        )}. Det officiella facit publiceras av UHR på studera.nu, och det är det som gäller om något skiljer sig.`,
+        .join(", ")}. ${
+        OFFICIELLT
+          ? `Det är kontrollerat mot UHR:s officiella facit, som publicerades på studera.nu ${hpDateShort(FACIT.officielltFacit as string)}.`
+          : "Det officiella facit publiceras av UHR på studera.nu, och det är det som gäller om något skiljer sig."
+      }`,
     },
     ...(g
       ? [
@@ -77,14 +82,14 @@ export const Route = createFileRoute("/hogskoleprovet-facit")({
       // En enda mening: describeWithin släpper hela meningar som inte ryms,
       // och normeringen är det folk söker på. Den får inte vara den som faller.
       description: describeWithin(
-        `Preliminärt facit till högskoleprovet ${hpDateShort(FACIT.date)}${
+        `${OFFICIELLT ? "Facit" : "Preliminärt facit"} till högskoleprovet ${hpDateShort(FACIT.date)}${
           FACIT.troligGrans
             ? ` och trolig normering: ${FACIT.troligGrans.verbal}/${PART_LENGTH} verbalt, ${FACIT.troligGrans.kvant}/${PART_LENGTH} kvantitativt för 2,0.`
             : ", alla fyra provpass."
         }`,
         "Räkna dina rätt.",
       ),
-      ogTitle: `Preliminärt facit och trolig normering: ${FACIT.label}`,
+      ogTitle: `${OFFICIELLT ? "Facit" : "Preliminärt facit"} och trolig normering: ${FACIT.label}`,
       ogDescription: "Alla svar på provpass 1, 2, 4 och 5, och vad som troligen krävs för 2,0.",
     }),
     links: pageLinks(PATH),
@@ -96,7 +101,7 @@ export const Route = createFileRoute("/hogskoleprovet-facit")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Article",
-        headline: `Preliminärt facit och trolig normering, ${FACIT.label.toLowerCase()}`,
+        headline: `${OFFICIELLT ? "Facit" : "Preliminärt facit"} och trolig normering, ${FACIT.label.toLowerCase()}`,
         datePublished: FACIT.updated,
         dateModified: FACIT.updated,
         inLanguage: "sv-SE",
@@ -152,7 +157,8 @@ function FacitPage() {
 
       <header className="mt-4">
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-          Preliminärt · uppdaterat {hpDateShort(FACIT.updated)}
+          {OFFICIELLT ? "Kontrollerat mot UHR:s facit" : "Preliminärt"} · uppdaterat{" "}
+          {hpDateShort(FACIT.updated)}
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -161,9 +167,11 @@ function FacitPage() {
           Facit och trolig normering, {FACIT.label.toLowerCase()}
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-          Högskoleprovet skrevs {hpDateLong(FACIT.date)}. Här är vårt preliminära facit till de fyra
-          provpass som räknas, och vår uppskattning av vad som krävs för 2,0. Facit är sammanställt
-          efter provet och kan innehålla fel. Det officiella facit från UHR gäller alltid.
+          Högskoleprovet skrevs {hpDateLong(FACIT.date)}. Här är {FACIT_ORD} till de fyra provpass
+          som räknas, och vår uppskattning av vad som krävs för 2,0.{" "}
+          {OFFICIELLT
+            ? `Facit är kontrollerat mot UHR:s officiella facit från ${hpDateShort(FACIT.officielltFacit as string)}. Normeringen är fortfarande vår uppskattning tills UHR publicerar den.`
+            : "Facit är sammanställt efter provet och kan innehålla fel. Det officiella facit från UHR gäller alltid."}
         </p>
       </header>
 
@@ -241,7 +249,7 @@ function FacitPage() {
       <RaknaRatt />
 
       <section className="mt-12">
-        <H2 icon={ClipboardCheck}>Preliminärt facit</H2>
+        <H2 icon={ClipboardCheck}>{OFFICIELLT ? "Facit" : "Preliminärt facit"}</H2>
         <p className="mt-2 text-[14px] text-white/55">
           Ett av dagens fem pass är ett utprövningspass och räknas inte. Därför finns inget facit
           för provpass 3.
@@ -294,6 +302,12 @@ function FacitPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             Nästa provdatum
+          </Link>
+          <Link
+            to="/hogskoleprovet-resultat"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
+          >
+            När kommer resultatet?
           </Link>
           <Link
             to="/hogskoleprovet-normering"

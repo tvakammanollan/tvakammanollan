@@ -45,6 +45,13 @@ export interface PreliminartFacit {
    * facit ett gammalt besked. Sidan själv ligger kvar.
    */
   promoUntil: string;
+  /**
+   * Datum då UHR publicerade det officiella facit OCH vi kontrollerat att
+   * våra 160 bokstäver är identiska med det. `null` så länge det inte är
+   * gjort; då säger sidan "preliminärt". Sätt det bara efter en riktig
+   * jämförelse rad för rad.
+   */
+  officielltFacit: string | null;
 }
 
 /** Antal uppgifter per provpass och per provdel. */
@@ -72,7 +79,7 @@ export const FACIT: PreliminartFacit = {
   label: "Höstprovet 2026",
   period: "hösten 2026",
   date: "2026-10-18",
-  updated: "2026-10-19",
+  updated: "2026-10-24",
   passes: [
     { pass: 1, kind: "kvant", answers: "DCBCDAACAC" + "BBCACADBDC" + "CBBDCADEDC" + "ACBDACBBBD" },
     { pass: 2, kind: "verbal", answers: "CADCDEECBE" + "BDAACDBCDC" + "ACDAABBCBB" + "BDACBADACC" },
@@ -81,6 +88,9 @@ export const FACIT: PreliminartFacit = {
   ],
   troligGrans: { verbal: 76, kvant: 76 },
   promoUntil: "2026-11-30",
+  // Jämfört 2026-10-24 mot hogskoleprovet-facit-26b.pdf på studera.nu:
+  // alla fyra provpass identiska, inga uppgifter utgår.
+  officielltFacit: "2026-10-21",
 };
 
 /** Delprovet en uppgift hör till. */
