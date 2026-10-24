@@ -3815,4 +3815,455 @@ $1A = 104 - 79 = 25$. **Svar: C.** Mer i ${NOG}.`,
 
 Marie kan vara både längst och kortast. **Svar: E.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2022 (maj), provpass 1 och 4 ──────────────────── */
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$15 - 5x = 8 + 2x$ ger $7 = 7x$ och $x = 1$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Multiplicera först: $\frac{4}{27}$. Skriv allt i tjugosjundelar: $\frac{4}{27} - \frac{9}{27} + \frac{12}{27} = \frac{7}{27}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$\sqrt{4} = 2$, och $\sqrt{2} \approx 1{,}41$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$\frac{1}{3} + \frac{1}{5} = \frac{8}{15}$. Hälften av det är $\frac{4}{15}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`Rektangelns area är $x \cdot \frac{3x}{4} = \frac{3x^2}{4}$. Kvadratens sida är roten ur det: $\frac{\sqrt{3}\,x}{2}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`Dela den första ekvationen med den andra: $\frac{xy^2}{xy} = y = 6$. Då är $x = \frac{3}{6} = \frac{1}{2}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`$5^0 = 1$ och $5^{-2} = \frac{1}{25}$. $5 \cdot \frac{1}{25} = 0{,}2$, plus 5 blir 5,2.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Att dela med $\frac{1}{x}$ är att multiplicera med $x$: $\frac{x - 3}{x} \cdot x = x - 3$. Plus 3 blir $x$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`Sätt in $x = -2$: $\frac{2}{3} \cdot (-2) + \frac{4}{3} = 0$. Det stämmer.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`Hastigheten är $\frac{y}{11}$ meter per sekund. Tiden för $x$ meter är $x \div \frac{y}{11} = \frac{11x}{y}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`4 % av 200 är 8. En fjärdedel av 20 är 5.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`För en linje är $f(a) - f(b) = -3(a - b)$.
+
+I: $-3(2 - 5) = 9$. II: $-3(0 - 4) = 12$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`Nämnaren 30: $\frac{6}{30} + \frac{3}{30} + \frac{2}{30} = \frac{11}{30}$, och $\frac{1}{3} = \frac{10}{30}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Korsmultiplicera: $12x^2 = 48$, alltså $x^2 = 4$ och $x = 2$ eller $x = -2$. Båda är mindre än 4.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$x^2 > 0$ eftersom $x 
+eq 0$. När $y < 1$ är $x^2 y < x^2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`Fem svarta per röd betyder att 1 av 6 kulor är röd. $\frac{1}{6} < \frac{1}{5}$.
+
+**Svar: B.** Fällan är att läsa fem gånger fler som en femtedel. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`$x$: av 17–24 faller 18, 20, 21 och 24 bort (delbara med 3 eller 5). Kvar: 17, 19, 22, 23. Fyra tal.
+
+$y$: 18, 20, 22, 24. Fyra tal.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$\sqrt{5} \cdot \sqrt{9} = \sqrt{45} = 45^{0{,}5}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): 10 vita och 5 röda. Skillnaden 5. Räcker.
+
+(2): 5 röda och 10 vita. Skillnaden 5. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): Fanny är inte först, och Polly är före Betty. Då är Polly först. Räcker.
+
+(2): Polly är före både Betty och Fanny. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: från 17.00 till 18.10 är 70 minuter, och det är två tredjedelar av arbetet. Hela arbetet tar 105 minuter och är klart 18.45.
+
+Var för sig saknas antingen starten eller takten. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Medelvärdet av $3x$ och $3y$ är tre gånger medelvärdet av $x$ och $y$, alltså är det 49. Ja, mindre än 50. Räcker.
+
+(2): Medelvärdet är större än 25, men det kan vara både över och under 50. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`Tillsammans: 40 % stjärna betyder 60 % kryss. Av kryssen är 20 % gröna, så $60 - 20 = 40$ % är röda med kryss.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 1,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Båda tjänar över 25 000, och Annas lön ligger närmare 25 000. Då är Annas lön lägre, och Bertil tjänar mest. Räcker.
+
+(1): Närmare 30 000 kan vara över eller under 30 000. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$1{,}7 \cdot 3{,}3 = 5{,}61$ och $10^5 \cdot 10^3 = 10^8$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`Medelvärdet av $y$ och 1 är 5, så $y = 9$. Då är $x = 6 - 9 = -3$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Potens av potens: multiplicera exponenterna. $7(y + 2) = 7y + 14$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Korsmultiplicera: $12xb = 3ay$, alltså $b = \frac{3ay}{12x} = \frac{ay}{4x}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$2 - (-x) = 2 + x$, så $\frac{x^2}{y} = x$. Dela med $x$: $\frac{x}{y} = 1$, alltså $x = y$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Om tre år har var och en av de tre pojkarna blivit 3 år äldre, alltså har deras summa ökat med 9. Flickan har ökat med 3.
+
+Skillnaden blir 6 år. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`$\frac{14{,}4}{36} = 0{,}4$, alltså 40 procent.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`$a = \frac{a}{2} + 2$ ger $\frac{a}{2} = 2$ och $a = 4$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`$(x + y)^2 - (x - y)^2 = 4xy = 4$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`80 000 cm är 800 m. 8 km är 8 000 m.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`$\frac{5}{20} = \frac{1}{4}$, så I $= \frac{1}{5} - \frac{1}{4} = -\frac{1}{20}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`Utan $a$ är talen 2, 3, 4 och 7. Med $a = 1$ blir medianen 3, med $a = 5$ blir den 4.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`$-21 + 14x = 21$ ger $14x = 42$ och $x = 3$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 17,
+    svar: "D",
+    losning: String.raw`Den tredje sidan måste vara kortare än 17 cm men kan vara allt från nästan 0 upp till nästan 17. Den kan vara både kortare och längre än 15.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`$x = y + \frac{3}{5} - \frac{1}{2} = y + \frac{1}{10}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 19,
+    svar: "D",
+    losning: String.raw`I minus II är $2y$, och tecknet på $y$ är okänt.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`Jämför $r^2$: I $= 25 + 400 = 425$, II $= 100 + 225 = 325$ (gånger $\pi$).
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$21 = 3 \cdot 7$ ger summan 10. $30 = 2 \cdot 3 \cdot 5$ ger summan 10.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Både Alma och Elsa är längre än Freja, men det säger inget om hur de förhåller sig till varandra.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: en tredjedel av pennorna är röda, så två tredjedelar, 20 stycken, är svarta. Totalt 30.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): Bara 56 är delbart med 7 mellan 50 och 60. Räcker.
+
+(2): Bara 56 är delbart med 8 mellan 50 och 60. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Choklad och jordgubb är $\frac{7}{8}$ av kulorna, alltså är 140 kulor $\frac{7}{8}$ av totalen. Totalt 160. Räcker.
+
+(2) säger bara hur mycket choklad som sålts. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`Tillsammans: $xy > xz$ betyder $x(y - z) > 0$. Från (1) är $y < z$, så $y - z < 0$. Då måste $x < 0$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vtb",
+    pass: 4,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Är kvadratens sida $s$ är diagonalen $s\sqrt{2}$, och cirkelns radie $\frac{s\sqrt{2}}{2}$. Cirkelns area blir $\pi \cdot \frac{s^2}{2} \approx 1{,}57s^2$, större än $s^2$. Räcker.
+
+(1): Med radien 1 är cirkeln 3,14. Sidan 1,1 ger en kvadrat på 1,21, sidan 2 ger 4. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
 ];
