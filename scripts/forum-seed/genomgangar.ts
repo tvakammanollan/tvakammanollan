@@ -10989,4 +10989,80 @@ Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar:
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2026, provpass 3 ─────────────────────────────────────── */
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$x^2 - 5x + 3x - 15 = x^2 - 2x - 15$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`$\frac{1}{5} \cdot \frac{5}{3} + \frac{3}{5} = \frac{1}{3} + \frac{3}{5} = \frac{5 + 9}{15} = \frac{14}{15}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Vinkelsumman är 180°. Två trubbiga vinklar skulle ensamma bli mer än 180°.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`Han sparar $\frac{1}{5}$ och spenderar $\frac{4}{5}$. Kvoten är $\frac{1}{4}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`$x = \frac{2}{3} \cdot \frac{15}{8} = \frac{30}{24} = \frac{5}{4}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`$8^2 = (2^3)^2 = 2^6$. $2^3 \cdot 2^6 = 2^9$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2026vt",
+    pass: 3,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`$1{,}5 \cdot 0{,}5 \cdot 60 = 0{,}75 \cdot 60 = 45$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+
+  /* ── Höstprovet 2024, provpass 1 ─────────────────────────────────────── */
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Sortera värdena. Det tredje är större än 12 och det fjärde mindre än 15. Medianen är medelvärdet av dem: 13 och 14 ger 13,5, men 13 och 13 ger 13 och 14 och 14 ger 14.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
 ];
