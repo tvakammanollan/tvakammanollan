@@ -205,7 +205,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Sjuksköterskeprogrammet",
     h1: "Sjuksköterskeprogrammet · HP-poäng, olika orter",
     intro:
-      "Sjuksköterskeprogrammet ges på fler orter än något annat program, inklusive decentraliserade platser. Hösten 2026 hade 40 av dem en gräns i högskoleprovsgruppen, från 1,25 i Lund till 0,05 i Kramfors. Här är alla, med förra årets gräns bredvid.",
+      "Sjuksköterskeprogrammet ges på fler orter än något annat program, inklusive decentraliserade platser. Hösten 2026 hade 40 sjuksköterskeutbildningar en gräns i högskoleprovsgruppen, från 1,25 i Lund till 0,05 i Kramfors. Här är alla, med förra årets gräns bredvid.",
     labelHeader: "Lärosäte / studieort",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.25 },
@@ -425,7 +425,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Socionomprogrammet",
     h1: "Socionomprogrammet · HP-poäng per lärosäte",
     intro:
-      "Socionomprogrammet ges på 26 orter med en gräns i högskoleprovsgruppen, flera av dem på distans. Kravet hösten 2026 var högst på Marie Cederschiöld högskola i Stockholm och i Uppsala. Här är alla, med förra årets gräns bredvid.",
+      "Hösten 2026 hade 26 socionomutbildningar en gräns i högskoleprovsgruppen, flera av dem på distans. Kravet var högst på Marie Cederschiöld högskola i Stockholm och i Uppsala. Här är alla, med förra årets gräns bredvid.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Marie Cederschiöld högskola", sub: "Stockholm", hp: 1.4, prev: 1.1 },
