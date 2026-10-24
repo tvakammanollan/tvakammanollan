@@ -105,9 +105,8 @@ uppdatering: flytta HT 2026 till `prev`, läs in HT 2027 som `hp` och byt
 `term`/`prevTerm`.
 
 **Kända luckor, inte fel:** (Umeå finns sedan 2026-10-24 på både jurist-
-och läkarsidan.) Sjuksköterskeprogrammet visar fem exempel av ~25 möjliga
-studieorter, valda för att visa spridningen (0,45–1,10) snarare än att vara
-en fullständig lista.
+och läkarsidan.) Sjuksköterskeprogrammet visar sedan 2026-10-24 alla 40
+studieorter med en HP-gräns HT 2026 (heltidsutbildningar).
 
 ## Föreslagen innehållsarkitektur (kartläggning, ej byggt)
 
