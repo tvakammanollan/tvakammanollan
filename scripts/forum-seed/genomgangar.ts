@@ -1466,4 +1466,452 @@ Tillsammans: pröva de fyra paren.
 
 Tre par återstår, så vi vet inte vilka tal som togs bort. **Svar: E.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2024, provpass 1 och 4 ──────────────────────── */
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`Samla $x$ på ena sidan: $12x - 6x = 18 + 54$, alltså $6x = 72$ och $x = 12$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`$x = \frac{6}{\sqrt{3}}$. Förläng med $\sqrt{3}$: $\frac{6\sqrt{3}}{3} = 2\sqrt{3}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Skriv båda bråken med nämnaren 30: $\frac{2x}{30} + \frac{x}{30} = \frac{3x}{30} = \frac{x}{10}$.
+
+En tiondel är 10 procent. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Gör om till decimaltal: $\frac{3}{4} = 0{,}75$, $\frac{25}{32} \approx 0{,}78$, $\frac{13}{16} \approx 0{,}81$ och $\frac{7}{8} = 0{,}875$.
+
+Bara D har talen i rätt ordning. **Svar: D.** Alla nämnare är potenser av 2, så du kan också skriva allt som trettiotvåondelar: 24, 25, 26 och 28. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`I en kvadrat är $d^2 = s^2 + s^2 = 2s^2$ (Pythagoras).
+
+Då är $2s^2 + d^2 = 4s^2 = 64$, så $s^2 = 16$ och $s = 4$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Multiplicera ut täljaren: $3x + 3y - 5y + 5x = 8x - 2y$.
+
+Dela med 2: $4x - y$. **Svar: C.** Se upp med tecknet: $-5(y - x)$ blir $-5y + 5x$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`$x - y = 7$ betyder att $x$ alltid är 7 större än $y$, alltså $y = x - 7$.
+
+Om $x$ är negativt är $y$ ännu mindre, alltså också negativt. **Svar: A.**
+
+De andra faller på motexempel: $x = 3$ ger $y = -4$ (B), $y = -3$ ger $x = 4$ men $y = -10$ ger $x = -3$ (C). Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`Sätt in punkten i ekvationen: $2a = 3a - 60$, alltså $a = 60$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`Summan av bollarna i lådorna är 6, ett jämnt tal. En summa av tre heltal är jämn bara om antalet udda termer är jämnt, alltså 0 eller 2.
+
+Exakt en låda med udda antal går därför aldrig. Sannolikheten är 0. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`$8^x = 2^{3x}$, så produkten ska vara 2 upphöjt till en multipel av 3.
+
+- $16 \cdot 16 = 2^8$
+- $16 \cdot 32 = 2^9 = 8^3$
+- $32 \cdot 32 = 2^{10}$
+- $32 \cdot 64 = 2^{11}$
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$\sqrt{5} > 2$, så I är större än 3. $\sqrt{6} < 3$ eftersom $6 < 9$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`$\frac{x}{4} = \frac{5}{8} - \frac{4}{8} = \frac{1}{8}$, alltså $x = \frac{1}{2}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`Ta skillnaden: $(x + 2y) - (2x + y) = y - x$. Eftersom $y > x$ är den positiv.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$\frac{3}{5} - \frac{4}{7} = \frac{21 - 20}{35} = \frac{1}{35}$.
+
+Kvantitet I är $\frac{32}{35}$, som är mindre än 1. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Olle får $\frac{x}{2} + \frac{y}{2} = \frac{x + y}{2}$ kulor.
+
+Medelvärdet av $x$ och $y$ är också $\frac{x + y}{2}$. **Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Skärning med $x$-axeln: $0 = -\frac{x}{2} + 4$ ger $x = 8$.
+
+Skärning med $y$-axeln: $y = 4$ (konstanttermen).
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`$\frac{x}{y} = -1$ betyder $x = -y$, så $x - y = -2y$.
+
+Tecknet beror på $y$: $y = 1$ ger $-2$, $y = -1$ ger $2$. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 23,
+    svar: "A",
+    losning: String.raw`(1): 125 procent av antalet är 100, alltså $1{,}25x = 100$ och $x = 80$. Räcker.
+
+(2): En femtedel är 20 procent. Det gäller för alla samlingar och säger ingenting. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Vi behöver veta hur många vaniljbullar det finns totalt och hur många som inte är i frysen.
+
+(1) ger att 10 vaniljbullar är i skafferiet, men inte hur många det finns totalt. (2) ger att $\frac{1}{4} \cdot 80 = 20$ är vaniljbullar, men inte var de ligger.
+
+Tillsammans: $20 - 10 = 10$ vaniljbullar i frysen. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`Gruppens sammanlagda längd är $5 \cdot 172 = 860$ cm.
+
+(1): Flickorna är tillsammans $4 \cdot 170 = 680$ cm, så pojken är $860 - 680 = 180$ cm. Räcker.
+
+(2): Vi vet inte hur lång den längsta flickan är. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(1): Kaffet är i den svarta eller vita, och chokladen inte i den vita. Är kaffet i den svarta har den vita te; är det i den vita har den vita kaffe. Två möjligheter, räcker inte.
+
+(2): Kaffet är inte i den svarta, och den grå har te. Då är kaffet i den vita. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 1,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`(1) ger alla heltal från 51 till 74. (2) ger 8, 16, 32, 40, 56, 64 och så vidare.
+
+Tillsammans återstår 56 och 64. Två möjliga tal, så $x$ går inte att bestämma. **Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`Medelvärdet 7 för fem tal betyder att summan är $5 \cdot 7 = 35$.
+
+$1 + 2 + 5 + 7 = 15$, så $x = 35 - 15 = 20$. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`Elsa startar med 10 och lägger till 3 per dag. Efter $t$ dagar har hon $10 + 3t$.
+
+**Svar: A.** Kontroll: dag 0 ger 10, dag 1 ger 13. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Sätt in $x = 2$ direkt.
+
+Täljaren: $\frac{2}{2} = 1$. Nämnaren: $\frac{1}{2} + \frac{2}{1} = \frac{5}{2}$.
+
+$1 \div \frac{5}{2} = \frac{2}{5}$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`$a + 2b = b$ ger $a = -b$.
+
+Då är $a - b = -b - b = -2b$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`En punkt ligger mellan linjerna om $x - 2 < y < x + 2$.
+
+För $(3, 3)$: $1 < 3 < 5$. Stämmer. De andra punkterna faller utanför: $(3, -3)$ och $(3, 0)$ ligger under $y = x - 2$, och $(0, -3)$ ligger under den också.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Cirkelns area är $\pi \cdot 2^2 = 4\pi$. Kvadraten har samma area, så $s^2 = 4\pi$.
+
+$s = \sqrt{4\pi} = 2\sqrt{\pi}$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`Multiplicera ut term för term:
+
+$xy + xb - xy + ya - xy + ab - ay - xb + xy$
+
+Allt utom $ab$ tar ut varandra. **Svar: A.** Snabbare: tänk på en rektangel med sidorna $a$ och $b$ delad i fyra delar. Uttrycket är summan av delarnas areor. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Lägg ihop i varje parentes först: $5\sqrt{3} \cdot 3\sqrt{3}$.
+
+$5 \cdot 3 \cdot \sqrt{3} \cdot \sqrt{3} = 15 \cdot 3 = 45$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`20 procent är $0{,}2$, och $0{,}2 \cdot 10^{10} = 2 \cdot 10^9$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`$\frac{1}{2} - \frac{1}{3} = \frac{1}{6}$ och $\frac{2}{3} - \frac{1}{2} = \frac{1}{6}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`Triangelns höjd: $\frac{5 \cdot h}{2} = 20$ ger $h = 8$ cm.
+
+Rektangelns höjd: $2 \cdot h = 17$ ger $h = 8{,}5$ cm.
+
+**Svar: B.** Glöm inte tvåan i triangelformeln. Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`$x + 2{,}8 = 5x - 6$ ger $8{,}8 = 4x$, alltså $x = 2{,}2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`125 % av 4 är 5. 80 % av 6 är 4,8.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$f(-2) = 4 - 4 - 2 = -2$ och $f(0) = -2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 18,
+    svar: "C",
+    losning: String.raw`Vänsterledet är $47^{\frac{x}{2} \cdot \frac{2}{3}} = 47^{\frac{x}{3}}$.
+
+Samma bas, så exponenterna är lika: $\frac{x}{3} = \frac{y}{3}$ och $x = y$. **Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Förenkla båda. I: $\frac{(a-b)^2}{a-b} = a - b$. II: $(b-a)^2 = (a-b)^2$, så II $= \frac{(a-b)^2}{-(a-b)} = -(a - b)$.
+
+Om $a > b$ är I störst, om $a < b$ är II störst. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`Vid 100 km/h tar 120 km $1{,}2$ timmar, alltså 72 minuter. Vid 80 km/h tar det $1{,}5$ timmar, alltså 90 minuter.
+
+85 minuter ligger mellan, så tiden kan vara både kortare och längre. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`Två ekvationer: $x + y = 2$ och $\frac{x + 4}{2} = y$.
+
+Sätt in $y = 2 - x$: $x + 4 = 4 - 2x$, alltså $3x = 0$ och $x = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): Den svarta är mittemellan. Den vita är mindre än den röda, så den vita är minst och den röda störst. Räcker.
+
+(2): Den vita är minst och den svarta mindre än den röda. Den röda är störst. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 24,
+    svar: "A",
+    losning: String.raw`(1): Mössan, 120 kr, är 150 procent av halsduken, så halsduken kostar $\frac{120}{1{,}5} = 80$ kr. Jackan kostar tio gånger så mycket, 800 kr. Räcker.
+
+(2): En relation mellan tre okända priser. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Vi behöver veta hur romanerna fördelar sig mellan hylla och låda.
+
+Tillsammans vet vi att det finns 1 121 romaner och 1 164 faktaböcker, och att 2 253 står i hyllan och 32 ligger i lådan. Men inget säger hur många av de 32 i lådan som är romaner.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Tre olika udda tal där största minus minsta är 4 måste vara tre udda tal i följd: $n$, $n + 2$ och $n + 4$.
+
+Tillsammans vet vi att både 19 och 21 är med. Då kan talen vara 17, 19, 21 (summa 57) eller 19, 21, 23 (summa 63).
+
+**Svar: E.** Ingen av uppgifterna säger vilket tal som är minst. Mer i ${NOG}.`,
+  },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 28,
+    svar: "A",
+    losning: String.raw`(1): Ringen är i den gröna eller den rosa. Av den rosa och den vita är exakt en tom, så ringen är i en av dem. Det enda som stämmer med båda är den rosa. Räcker.
+
+(2): Ringen är i den gröna eller den rosa (högst en av dem är tom). Mer går inte att säga. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
 ];
