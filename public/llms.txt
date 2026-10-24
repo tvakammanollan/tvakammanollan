@@ -12,7 +12,7 @@ Officiell domän: https://tvakommanollan.se
 - Arkiv: 30 högskoleprov (vårprovet 2012 till vårprovet 2026), 120 provpass och 4 800 uppgifter med facit, skrivbara på originaltid med automatisk rättning.
 - Normering: UHR:s officiella normeringstabeller för 30 provtillfällen, en sida per prov. Exempel: för 2,0 krävdes 73–78 rätt av 80 på den verbala delen och 68–77 av 80 på den kvantitativa, beroende på prov.
 - Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
-- HP-poäng per program (urval 2, HT 2026) för 14 utbildningar, hämtade ur UHR:s antagningsstatistik.
+- HP-poäng per program (urval 2, HT 2026) för 19 utbildningar, hämtade ur UHR:s antagningsstatistik.
 - Grundad av Niklas, som fick 1,95 på högskoleprovet.
 
 ## Pages
@@ -65,7 +65,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 ## Strategiguider
 
 - [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
-- HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik och maskinteknik.
+- HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet och systemvetenskap.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 
