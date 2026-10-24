@@ -3361,4 +3361,458 @@ Tillsammans bara 54. **Svar: C.** Mer i ${NOG}.`,
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2022, provpass 1 och 4 ────────────────────────── */
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$4 - 3 = 1$, och $1 \cdot (x + 2y) = x + 2y$.
+
+**Svar: C.** Räkna alltid det som går att räkna först. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`$3^3 = 27$ och $2^3 = 8$. $27 - 8 = 19$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Samla $x$: $0{,}2 - 1{,}8 = 0{,}6x - 0{,}4x$, alltså $-1{,}6 = 0{,}2x$ och $x = -8$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Burk A har 10 svarta. Burk B har $\frac{2}{3} \cdot 90 = 60$ svarta. Totalt 70 svarta av 140 kulor.
+
+$\frac{70}{140} = \frac{1}{2}$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`$f(2) = 5(8 + 2) - 10(4 + 1) = 50 - 50 = 0$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Om $a$ personer står efter Albert står $3a$ före honom. Totalt $3a + a + 1 = 4a + 1$, alltså ett tal som ger resten 1 vid division med 4.
+
+Av alternativen är det bara 29 ($a = 7$). **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Kvadreringsreglerna: $(x^2 + 14x + 49) - (x^2 - 14x + 49) = 28x$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`$x = -\frac{3}{2}$, så $x^3 = -\frac{27}{8}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`$\sqrt{2} \approx 1{,}41$ och $\pi \approx 3{,}14$. $\frac{3{,}14}{1{,}41} \approx 2{,}2$.
+
+**Svar: D.** Det räcker att se att $2 \cdot 1{,}41 = 2{,}82 < 3{,}14$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$x = 16 \cdot \frac{8}{10} = 12{,}8$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Alma är medelvärdet av Ella och Lena. Är Ella äldst är Ella äldre än Alma; är Ella yngst är hon yngre. Är de lika gamla blir alla tre lika.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`$0{,}3 \cdot 40 = 12$ och $0{,}4 \cdot 30 = 12$.
+
+**Svar: C.** $a$ procent av $b$ är alltid lika med $b$ procent av $a$. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`I: $\frac{11}{3} \approx 3{,}67$. II: $\frac{19}{5} = 3{,}8$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$x^2 + 5x = 0$ ger $x(x + 5) = 0$. Eftersom $x 
+eq 0$ är $x = -5$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Längden är $\frac{50}{5} = 10$ cm. Diagonalen är $\sqrt{10^2 + 5^2} = \sqrt{125}$, och $11^2 = 121 < 125$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`$\frac{7^{-2}}{3^{-2}} = \frac{3^2}{7^2}$, eftersom negativa exponenter byter plats på täljare och nämnare.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`Linjen skär $y$-axeln i $-1 + 10k$, där $k > 0$.
+
+Med $k = 0{,}05$ blir det $-0{,}5$, med $k = 1$ blir det 9. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$\frac{2x}{3y} = 7$ ger $2x = 21y$, alltså $y = \frac{2x}{21}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): 18 svarta och $\frac{2}{3} \cdot 18 = 12$ röda. Skillnaden är 6. Räcker.
+
+(1) ger bara totalen. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Tillsammans går flera fördelningar. Andersson på tredje, Cedergren och Dahlman på andra, Berg på första stämmer. Dahlman på tredje, Andersson och Berg på andra, Cedergren på första stämmer också.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(1): Jan börjar 10.25 och är klar 11.05, och då är Frida också klar.
+
+(2): När Jan börjar har Frida vikt 10.
+
+Tillsammans viker Frida sina sista 40 servetter på 40 minuter, alltså en per minut. De första 10 tog 10 minuter, så hon började 10.15. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Tillsammans: $y = 2x$ är ett heltal. Men $x = 1{,}5$ ger $y = 3$, och $x = 2$ ger $y = 4$. $x$ kan vara både heltal och inte.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 1,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): C står mellan A och B, och B mellan C och E. Det ger kedjan A, C, B, E i någon riktning, och D i en ände. Varken D eller E får stå längst till höger, så ordningen blir D, E, B, C, A. Räcker.
+
+(1): D först och A sist, med B mellan C och E. Både D, C, B, E, A och D, E, B, C, A går. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Nämnaren 12: $\frac{4}{12} + \frac{9}{12} + \frac{5}{12} = \frac{18}{12} = \frac{9}{6}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Sätt lika: $2x - 4 = x - 1$ ger $x = 3$ och $y = 2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 3,
+    svar: "D",
+    losning: String.raw`Multiplicera med 7: $45x = 35x + 70$, alltså $x = 7$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`$0{,}07 \cdot 15 = 1{,}05$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`Medianen av sex tal är medelvärdet av det tredje och fjärde: $\frac{2 + 4}{2} = 3$. Medelvärdet är $\frac{18}{6} = 3$.
+
+Skillnaden är 0. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Pröva: B ger $f(1) = -1$ och $f(0) = -2$, och $-1 > -2$.
+
+**Svar: B.** A ger lika, C ger $0 < 1$ och D ger $0 < 2$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Varje term tar en bokstav ur varje parentes, så det blir $2 \cdot 2 \cdot 2 = 8$ termer med tre bokstäver vardera.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`$\pi r^2 = 27$ ger $r^2 \approx \frac{27}{3{,}14} \approx 8{,}6$, så $r \approx 2{,}9$ och diametern blir knappt 6 cm.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`$\frac{1}{2} - \frac{1}{3} = \frac{1}{6}$. Då är $\frac{1}{3} - x = \frac{1}{6}$ och $x = \frac{1}{6}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`Ett gram garn är $\frac{130}{50}$ meter. 430 gram är $\frac{130}{50} \cdot 430$ meter.
+
+**Svar: C.** Kontrollera enheterna: meter per gram gånger gram ger meter. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$4 = 2^2$, så $4 \cdot 2^x = 2^2 \cdot 2^x = 2^{x + 2}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$2x + 6 = 3x + 12$ ger $x = -6$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`Summan 10: (4, 6), (5, 5) och (6, 4). Summan 4: (1, 3), (2, 2) och (3, 1). Tre utfall var.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`I: $\frac{10}{6} > 1$. II: ett tal mindre än 1 gånger sig självt blir mindre än 1.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`Höjderna $h_1$ och $h_2$ kan vara vad som helst, så areorna går inte att jämföra.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`I: $\frac{\pi}{4} \approx 0{,}785$ cm². II: $0{,}75$ cm².
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$\sqrt{7} + \sqrt{3} \approx 2{,}65 + 1{,}73 = 4{,}38$. $\sqrt{10} \approx 3{,}16$.
+
+**Svar: A.** Allmänt gäller $\sqrt{a} + \sqrt{b} > \sqrt{a + b}$ för positiva tal. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Paren med produkten 36: 1 och 36 (summa 37), 2 och 18 (20), 3 och 12 (15), 4 och 9 (13), 6 och 6 (12).
+
+Summan kan vara större och mindre än 18. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`I: 40 km i 100 km/h tar 0,4 h, alltså 24 minuter.
+
+II: 40 m/s är 144 km/h, och 40 km tar då ungefär 17 minuter.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$\sqrt{x - 2} = \frac{125}{25} = 5$, så $x - 2 = 25$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: omkretsen 20 ger att två sidor är $20 - 2 \cdot 7 = 6$ cm tillsammans, alltså 3 cm. Arean är $7 \cdot 3 = 21$ cm².
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): $x = -2$. Ja. Räcker.
+
+(2): En udda potens är negativ bara om talet är negativt. Ja. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: 1A, 1B och 2A har $103 - 24 = 79$ barn. Från (1) är $(1A + 1B) + (1A + 2A) = 51 + 53 = 104$, vilket är de tre klasserna plus 1A en gång till.
+
+$1A = 104 - 79 = 25$. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(1) säger samma sak som frågetexten (80 procent är $\frac{4}{5}$). Räcker inte.
+
+(2): Glas A rymmer $2 \cdot 6 = 12$ cl, så B rymmer $\frac{12}{0{,}8} = 15$ cl. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Kalla skoköpet $s$. Böcker $\frac{s}{5}$ och kläder $\frac{2s}{5}$. Totalt $\frac{8s}{5} = 1\,600$, alltså $s = 1\,000$ kr. Räcker.
+
+(2) är bara en olikhet. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022ht",
+    pass: 4,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Tillsammans: Emma är 173 och alltså i mitten. Om Marie är kortast påverkas inte medianen av att hon blir 5 cm kortare. Om Marie är längst, till exempel 180 cm, gör det inte det heller.
+
+Marie kan vara både längst och kortast. **Svar: E.** Mer i ${NOG}.`,
+  },
 ];
