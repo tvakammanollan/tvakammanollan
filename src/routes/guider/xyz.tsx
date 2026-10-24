@@ -58,6 +58,14 @@ function XyzGuidePage() {
 
       <GuideTopCta delprov="xyz" code="XYZ" />
 
+      <p className="mb-8 text-[14px]">
+        Alla formler som behövs på den kvantitativa delen finns samlade i{" "}
+        <Link to="/hogskoleprovet-formler" className="underline underline-offset-2">
+          formelsamlingen för högskoleprovet
+        </Link>
+        .
+      </p>
+
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vad testar XYZ?
