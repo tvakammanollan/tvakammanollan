@@ -1064,4 +1064,406 @@ Tillsammans: Therese simmade på 50,6 s och Sarah på ungefär 52,4 s, så There
 
 **Svar: A.** Lägg märke till att (1) ger summan direkt, utan att du behöver veta $x$ och $y$ var för sig. Mer i ${NOG}.`,
   },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`(1) säger att 18 paket är mönstrade, alltså är $25 - 18 = 7$ enfärgade. Inget om hårt eller mjukt.
+
+(2) säger att av de enfärgade är 5 hårda och 2 mjuka.
+
+Tillsammans vet vi att 5 enfärgade paket är hårda. Men vi vet inget om hur de 18 mönstrade fördelar sig, så det totala antalet hårda paket går inte att räkna ut.
+
+**Svar: E.** Fråga dig alltid om varje grupp är täckt. Här saknas hela den mönstrade gruppen. Mer i ${NOG}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Tre av fem fick medalj. Pröva om Anki kan sakna medalj när båda påståendena gäller.
+
+Tillsammans vet vi att Ellen inte fick medalj (1). Då ska tre av Anki, Bosse, Cissi och Danne ha medalj.
+
+- Bosse, Cissi och Danne med medalj: minst en av Bosse och Danne har medalj, minst en av Anki och Cissi har medalj, och Ellen saknar medalj. Allt stämmer, och **Anki fick ingen**.
+- Anki, Bosse och Cissi med medalj: stämmer också, och **Anki fick medalj**.
+
+Båda fallen går, så frågan kan inte avgöras. **Svar: E.** Ett motexempel åt vardera hållet räcker för att visa E. Mer i ${NOG}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(1) Varken Göran eller Roger är kassör, alltså är Stig kassör. Sekreteraren är Göran eller Roger, och vi vet inte vem. Räcker inte.
+
+(2) Varken Göran eller Stig är ordförande, alltså är Roger ordförande. Stig är kassör. Då blir Göran sekreterare. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`Kalla antalet i påse B för $b$. Då har påse A $2b$ äpplen och tillsammans $3b$.
+
+(1): $2b - 10 = 3(b - 10)$ ger $2b - 10 = 3b - 30$, alltså $b = 20$. Räcker, totalt 60 äpplen.
+
+(2): $2b - b = 20$ ger $b = 20$. Räcker också.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 4,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Multiplicera båda leden med 8:
+
+$x = \frac{8}{3}$
+
+**Svar: C.** Fällan är A, $\frac{1}{24}$, som man får om man delar med 8 i stället för att multiplicera. Mer i ${XYZ}.`,
+  },
+
+  /* ── Vårprovet 2025, provpass 3 ──────────────────────────────── */
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`Samla $x$ på ena sidan: $16 + 8 = 6x - 4x$, alltså $24 = 2x$ och $x = 12$.
+
+**Svar: D.** Kontroll: $4 \cdot 12 + 16 = 64$ och $6 \cdot 12 - 8 = 64$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Gör om allt till centimeter först.
+
+- 2 m = 200 cm
+- 2 dm = 20 cm
+- 2 mm = 0,2 cm
+
+Volymen är $200 \cdot 20 \cdot 0{,}2 = 800$ cm³. **Svar: C.** Byt alltid enhet innan du multiplicerar, inte efter. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Skriv 27 som en potens av 3: $27 = 3^3$.
+
+Då är $3^{2x} = 3^3$, så $2x = 3$ och $x = \frac{3}{2}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`Två ekvationer: $x - y = 7$ och $x + y = 33$.
+
+Addera dem: $2x = 40$, alltså $x = 20$ och $y = 13$.
+
+$xy = 20 \cdot 13 = 260$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`Att dela med ett bråk är att multiplicera med det inverterade bråket:
+
+$\frac{6}{25} \cdot \frac{5}{36} = \frac{6 \cdot 5}{25 \cdot 36} = \frac{1}{5 \cdot 6} = \frac{1}{30}$
+
+**Svar: A.** Förkorta innan du multiplicerar: 6 går i 36 och 5 går i 25. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$x(x+1)$ är produkten av två heltal i följd. Leta bland alternativen:
+
+- 37 är ett primtal.
+- $42 = 6 \cdot 7$. Det fungerar.
+- 54 ligger mellan $6 \cdot 7 = 42$ och $7 \cdot 8 = 56$.
+- 81 ligger mellan $8 \cdot 9 = 72$ och $9 \cdot 10 = 90$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Sätt in $x = a$ i varje funktion och se vilken som alltid ger $a$.
+
+- A: $\frac{a}{a} + a = 1 + a$. Aldrig $a$.
+- B: $2a - a = a$. Alltid.
+- C: $a \cdot a = a^2$. Bara om $a = 1$.
+- D: $-a^2 + a^3$. Bara för vissa $a$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`Dela siffrorna och tiopotenserna var för sig:
+
+$\frac{2{,}1}{3} \cdot \frac{10^6}{10^4} = 0{,}7 \cdot 10^2 = 70$
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Bråken har samma nämnare, så lägg ihop täljarna:
+
+$\frac{(a + b) + (b - a)}{b} = \frac{2b}{b} = 2$
+
+**Svar: C.** $a$ tar ut sig självt. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`Medianen av 3, 5, 6, 6, 8 är 6. Med sex tal blir medianen medelvärdet av det tredje och fjärde talet.
+
+- Är det nya talet 6 eller större blir mitten 6 och 6. Medianen är kvar på 6.
+- Är det nya talet mindre än 6 flyttas en femma eller lägre in i mitten. Medianen blir 5,5 eller lägre.
+
+Medianen kan alltså aldrig bli större. Sannolikheten är 0. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`- 4 % av 40 är $0{,}04 \cdot 40 = 1{,}6$.
+- 5 % av 35 är $0{,}05 \cdot 35 = 1{,}75$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Både $x$ och $z$ är större än $y$, men det säger inget om hur de förhåller sig till varandra.
+
+Med $y = 0$ kan $x = 1$ och $z = 2$ (II störst) eller $x = 2$ och $z = 1$ (I störst).
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`Riktningskoefficienten är $\frac{\Delta y}{\Delta x}$.
+
+- I: $\frac{-3 - 0}{-1 - 0} = 3$
+- II: $\frac{3 - 0}{1 - 0} = 3$
+
+Punkterna ligger på samma linje, $y = 3x$. **Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`Med $x = -\frac{1}{3}$ ger $x - y = \frac{1}{3}$ att $y = -\frac{1}{3} - \frac{1}{3} = -\frac{2}{3}$.
+
+Kvantitet II är $2x = -\frac{2}{3}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`$y$ har inga villkor alls. Pröva två fall.
+
+- $x = 1$, $y = 1$: I $= 1$, II $= 1$. Lika.
+- $x = 2$, $y = 1$: I $= \frac{1}{4}$, II $= \frac{1}{2}$. II störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Medelvärdet är större än 1 om summan är större än 3.
+
+$\frac{5}{2} = 2{,}5$ ensamt, och $\frac{5}{7} + \frac{5}{6}$ är ungefär $0{,}71 + 0{,}83 = 1{,}54$. Summan blir cirka 4,05.
+
+**Svar: A.** Jämför summan med 3 i stället för att räkna ut medelvärdet. Det sparar en division. Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`Tid är sträcka genom hastighet.
+
+- Adam: $\frac{45}{27} = \frac{5}{3} \approx 1{,}67$ timmar.
+- David: $\frac{40}{25} = 1{,}6$ timmar.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`Kvot 1 och rest 1 betyder $x = 1 \cdot y + 1 = y + 1$.
+
+Då är $x$ alltid ett större än $y$. **Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): Herrcykeln står i mitten. Barncykeln står till vänster om damcykeln, så ordningen är barn, herr, dam. Damcykeln står längst till höger. Räcker.
+
+(2): Barncykeln står längst till vänster, och herrcykeln står till vänster om damcykeln. Ordningen blir barn, herr, dam. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Hastighet är sträcka genom tid, så vi behöver veta något om båda.
+
+(1): Mia går 5 minuter tidigare och kommer fram 10 minuter tidigare, alltså tar Nellies promenad 5 minuter längre. Inget om sträckorna.
+
+(2): Nellie har längre väg. Inget om tiderna.
+
+Tillsammans går Nellie längre **och** längre tid. Det kan ge högre eller lägre hastighet beroende på hur mycket längre vägen är.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`(1) ensam: skor före vantar och mössan inte sist. Många ordningar går, till exempel skor, vantar, mössa, jacka och jacka, skor, mössa, vantar.
+
+(2) ensam: jackan först och skor före mössa. Kvar finns jacka, skor, mössa, vantar och jacka, skor, vantar, mössa med flera.
+
+Tillsammans: jackan först. Skorna ska komma före både vantar och mössa, så skorna blir tvåa. Mössan får inte vara sist, så den blir trea och vantarna sist.
+
+**Svar: C.** Ordningen är jacka, skor, mössa, vantar. Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(1): Camilla har $73 - 21 = 52$ böcker, men vi vet inte hur pärmarna fördelar sig mellan hyllorna. Räcker inte.
+
+(2): Om $b$ är böcker och $p$ pärmar i Camillas hylla är $b + p = 65$ och $b - p = 39$. Subtrahera: $2p = 26$, alltså $p = 13$. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 3,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`Kalla antalet akrobater $a$. Då är clownerna $0{,}6a$.
+
+(1): $2 \cdot 0{,}6a = \frac{a}{2} + 7$ ger $1{,}2a - 0{,}5a = 7$, alltså $a = 10$. Räcker.
+
+(2): $a - 0{,}6a = 4$ ger $0{,}4a = 4$, alltså $a = 10$. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+
+  /* ── Vårprovet 2025, provpass 5 ──────────────────────────────── */
+  {
+    term: "2025vt",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Kalla melonskivorna $m$ och vindruvorna $v$.
+
+(1): $v = 2m$, men vi vet inte $m$. (2): $m + v = 57$, men inte fördelningen.
+
+Tillsammans: $3m = 57$ ger $m = 19$ och $v = 38$. Skillnaden är 19.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 5,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): Alexandra är i köket. Björn är inte i hallen, så han är i vardagsrummet. Kvar för Charlotte är hallen. Räcker.
+
+(2): Björn är i vardagsrummet och Charlotte är inte i köket. Då är hon i hallen. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 5,
+    nr: 25,
+    svar: "A",
+    losning: String.raw`(1): $0{,}5x - 0{,}3x = 0{,}2x = 22$, alltså $x = 110$. Räcker.
+
+(2): $x$ är delbart med 10 och 11, alltså en multipel av 110. Det kan vara 110, 220, 330 och så vidare. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 5,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(1): $\frac{1}{9}$ av 27 barn är 3, som har både senap och ketchup. De är 60 % av senapsbarnen, så 5 barn har senap. Men vi vet inte hur många som har bara ketchup.
+
+(2): 5 har senap och 15 har varken eller. Då har 12 barn minst ett tillbehör, men vi vet inte hur många av senapsbarnen som också har ketchup.
+
+Tillsammans: 3 har båda, så 2 har bara senap. Av de 12 med något tillbehör har då $12 - 2 = 10$ ketchup.
+
+**Svar: C.** Rita gärna ett venndiagram med fyra fält. Mer i ${NOG}.`,
+  },
+  {
+    term: "2025vt",
+    pass: 5,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Serien är $-10, -8, 0, 6, 7$ med median 0 och medelvärde $-1$.
+
+(1): Medianen är kvar på 0 om man tar bort ett tal under 0 och ett över 0. Det ger fyra möjliga par.
+
+(2): Medelvärdet ändras. Det gäller många par.
+
+Tillsammans: pröva de fyra paren.
+
+- Ta bort $-10$ och 6: kvar $-8, 0, 7$, medelvärde $-\frac{1}{3}$. Ändrat.
+- Ta bort $-10$ och 7: kvar $-8, 0, 6$, medelvärde $-\frac{2}{3}$. Ändrat.
+- Ta bort $-8$ och 7: kvar $-10, 0, 6$, medelvärde $-\frac{4}{3}$. Ändrat.
+- Ta bort $-8$ och 6: kvar $-10, 0, 7$, medelvärde $-1$. Oförändrat.
+
+Tre par återstår, så vi vet inte vilka tal som togs bort. **Svar: E.** Mer i ${NOG}.`,
+  },
 ];
