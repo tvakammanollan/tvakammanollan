@@ -9506,4 +9506,240 @@ Var för sig saknas den andra variabeln. **Svar: C.** Mer i ${NOG}.`,
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2016, provpass 3 ─────────────────────────────────────── */
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`Gruppera: $a(x + y) + b(x + y) = (a + b)(x + y)$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Två pojkar per flicka betyder att antalet elever är delbart med 3. 25 är det inte.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`$(1\,000 + 2)^3 = 10^9 + 3 \cdot 10^6 \cdot 2 + 3 \cdot 1\,000 \cdot 4 + 8 = 1\,006\,012\,008$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`$x^2$ tar ut varandra: $2x - 5 = -x + 1$ ger $x = 2$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$6 \cdot 4 = 24$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 7,
+    svar: "D",
+    losning: String.raw`$-2x + 10 - 3x + 30 = 0$ ger $5x = 40$ och $x = 8$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$\frac{1}{3} - \frac{3}{4} = \frac{4 - 9}{12} = -\frac{5}{12}$. Inverterat: $-\frac{12}{5}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`Multiplicera med $y > 1$ gör $x$ större, multiplicera med $x < 1$ gör $y$ mindre. Alltså $x < xy < y$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`M är mittpunkt på AB, så CM delar triangeln i två lika stora delar. $2 \cdot 5 = 10$ cm².
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`Subtrahera: $2y = b - a$. Då är $x - y = a - 2y = 2a - b$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`ADE har basen AD och höjden lika med kvadratens sida, alltså halva kvadraten. Resten är den andra halvan.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`I: $\frac{7}{6} \approx 1{,}17$. II: $1{,}2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`Konjugatregeln: I är $(a + b)^2 - 4$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`I: 378 minuter. II: $120 \cdot 3{,}1416 \approx 377$ minuter.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 17,
+    svar: "D",
+    losning: String.raw`De andra två har summan 25. Det kan vara 9 och 16 (lika) eller 12 och 13 (II störst).
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`II: $\frac{3}{\sqrt{3}} + 2 = \sqrt{3} + 2 \approx 3{,}73$. I: $2\sqrt{3} \approx 3{,}46$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`I: $x = -0{,}5$. II: $y = 1$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`$y = 13$ ger $x = 24$, och negativa $y$ ger negativa $x$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`I: $\frac{16\pi}{2} = 8\pi \approx 25{,}1$ cm². II: 24 cm².
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$(x^y)^{\frac{1}{y}} = x^1$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 23,
+    svar: "A",
+    losning: String.raw`(1): Ordinarie priser $\frac{595}{0{,}35} = 1\,700$ kr och $\frac{945}{0{,}45} = 2\,100$ kr. Räcker.
+
+(2) ger bara skillnaden efter rabatt. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`(1) ger 3 och 6 eller 4 och 5. (2) ger 2 och 6 eller 3 och 5.
+
+Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`(1): fler än 15. (2): färre än 17. Tillsammans: 16.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Vi har en tidsskillnad och en hastighetsskillnad men ingen faktisk hastighet. Flera sträckor passar.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): $x$ är 1 250 procent av $y$. Räcker.
+
+(1) saknar värdet på $y$. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016vt",
+    pass: 3,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): $L + 22 = 4(L - 2)$ ger $L = 10$. (2): $L + 38 = 2(L + 14)$ ger $L = 10$. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
