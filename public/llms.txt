@@ -56,6 +56,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 ## Strategiguider
 
 - [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
+- HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik och maskinteknik.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 

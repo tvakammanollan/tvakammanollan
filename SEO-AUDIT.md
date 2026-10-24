@@ -87,6 +87,14 @@ dit i stället för UHR.
    `hogskoleprovet-poang_.$program.tsx`. Lägg aldrig in ett tal du inte
    själv läst av på det sättet.
 
+**Snabbare väg (2026-10-24):** sökrutan på uhr.se hämtar sina rader ur ett
+JSON-API som går att anropa direkt från en webbläsarflik på uhr.se:
+`/api/antagningsstatistik/searchTotal?searchfor=<sökord>&searchterm=HT26&searchkategori=&pagesize=100&tillfalle=urv2&page=1&utbildningstyp=program`.
+Terminen skrivs `HT26`/`VT27`, inte `HT2026`. Raden för urvalsgrupp HP ligger
+i `urval2.urvalsgrupper` med `urvalsgruppId: "HP"`, och
+`lägstaAntagnaPoäng: "*"` betyder att alla behöriga antogs (ingen gräns att
+visa). Så lades sju program till 2026-10-24 och Umeå på läkarsidan.
+
 **Kända luckor, inte fel:** Umeå universitet saknas på jurist- och
 läkarsidorna (dess program dök inte upp under samma sökterm som gav träff
 för övriga lärosäten — värt att undersöka med en egen sökning om sidan ska
