@@ -21,7 +21,10 @@ export type ProvThreadLink = { kategori: string; trad: string };
 export const fetchProvThreads = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) =>
     z
-      .object({ term: z.string().regex(/^\d{4}(vt|ht)$/), pass: z.number().int().min(1).max(9) })
+      .object({
+        term: z.string().regex(/^\d{4}(vt|ht)[ab]?$/),
+        pass: z.number().int().min(1).max(9),
+      })
       .parse(input),
   )
   .handler(async ({ data }): Promise<Record<number, ProvThreadLink>> => {

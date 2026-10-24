@@ -533,7 +533,7 @@ export const createForumThread = createServerFn({ method: "POST" })
         body: bodySchema,
         provTerm: z
           .string()
-          .regex(/^\d{4}(vt|ht)$/)
+          .regex(/^\d{4}(vt|ht)[ab]?$/)
           .nullable()
           .optional(),
       })

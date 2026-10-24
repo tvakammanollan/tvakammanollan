@@ -213,11 +213,12 @@ export function blockReasonMessage(reason: BlockReason | null): string | null {
   }
 }
 
-/** "2026vt" → "VT 2026" */
+/** "2026vt" → "VT 2026", "2022vtb" → "VT 2022 (B)" — våren 2021 och 2022 hade två prov. */
 export function provTermLabel(term: string): string {
-  const m = /^(\d{4})(vt|ht)$/.exec(term);
+  const m = /^(\d{4})(vt|ht)([ab]?)$/.exec(term);
   if (!m) return term;
-  return `${m[2].toUpperCase()} ${m[1]}`;
+  const base = `${m[2].toUpperCase()} ${m[1]}`;
+  return m[3] ? `${base} (${m[3].toUpperCase()})` : base;
 }
 
 export const REPORT_REASONS = [

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   slugifyTitle,
+  provTermLabel,
   threadPath,
   parseThreadParam,
   parsePage,
@@ -154,5 +155,16 @@ describe("provThreadNr", () => {
   it("ignorerar trådar som inte är genomgångar", () => {
     expect(provThreadNr("hur-loser-man-nog-uppgifter", 3)).toBeNull();
     expect(provThreadNr("provpass-3-uppgift-0", 3)).toBeNull();
+  });
+});
+
+describe("provTermLabel", () => {
+  it("skriver terminen som på provet", () => {
+    expect(provTermLabel("2026vt")).toBe("VT 2026");
+    expect(provTermLabel("2019ht")).toBe("HT 2019");
+  });
+  it("skiljer på vårens två prov 2021 och 2022", () => {
+    expect(provTermLabel("2022vta")).toBe("VT 2022 (A)");
+    expect(provTermLabel("2021vtb")).toBe("VT 2021 (B)");
   });
 });
