@@ -14,7 +14,12 @@ import { z } from "zod";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { isOrdLetter } from "./ord-slug";
-import { fetchOrdEntry, fetchOrdLetter, fetchOrdlistaOverview } from "./ordlista.server";
+import {
+  fetchOrdEntry,
+  fetchOrdLetter,
+  fetchOrdlistaOverview,
+  getOrdIndex,
+} from "./ordlista.server";
 
 export const getOrdlistaEntry = createServerFn({ method: "GET" })
   .inputValidator((data: { slug: string }) =>
@@ -42,3 +47,24 @@ export const getOrdlistaOverview = createServerFn({ method: "GET" }).handler(asy
   assertRateLimit(ipKey("ordlista"), limits.publicRead);
   return fetchOrdlistaOverview();
 });
+
+/**
+ * Vilka av de givna sluggarna som har en egen sida i ordlistan. Används av
+ * sidorna som listar ett provs ORD-ord: arkivets ord och ordlistans bestånd är
+ * inte samma mängd, och en länk till en slug som saknas är en 404 i
+ * sökmotorns ögon. Ett fel ger tom lista, alltså inga länkar, aldrig en
+ * trasig sida.
+ */
+export const getOrdlistaKnownSlugs = createServerFn({ method: "GET" })
+  .inputValidator((data: { slugs: string[] }) =>
+    z.object({ slugs: z.array(z.string().min(1).max(120)).max(200) }).parse(data),
+  )
+  .handler(async ({ data }) => {
+    assertRateLimit(ipKey("ordlista"), limits.publicRead);
+    try {
+      const index = await getOrdIndex();
+      return data.slugs.filter((s) => index.bySlug.has(s));
+    } catch {
+      return [];
+    }
+  });
