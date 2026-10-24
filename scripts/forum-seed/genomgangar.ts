@@ -7677,4 +7677,447 @@ Tillsammans: $\frac{7}{250}$. **Svar: C.** Mer i ${NOG}.`,
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2018, provpass 1 och 4 ─────────────────────────────────────── */
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`Förkorta del för del: $\frac{12}{4} = 3$ och $\frac{b^3}{b^2} = b$. Kvar blir $\frac{3a^2 b}{c}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`Som decimaltal: $0{,}4 < 0{,}5 < 0{,}75$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$g(x) = x^4$ och $h(x) = x^2 \cdot x^4 = x^6$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`$\pi \approx 3{,}1416$ och $\frac{22}{7} \approx 3{,}1429$. De andra är 4, 3 och 3,5.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Gemensam nämnare 30: $\frac{6x - 10x - 15x}{30} = -\frac{19x}{30}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`$-1 + 4 = 3$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`Fyra delar plus en del, så antalet måste vara delbart med 5. Bara 245 är det.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`$9x - 13 = 2$ ger $9x = 15$ och $x = \frac{5}{3}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`På varandra följande heltal ligger symmetriskt kring mitten, så medelvärdet är lika med medianen.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`Skriv $a = b - 1$ och $c = b + 1$: $3(b - 1)^2 + (b + 1)^2 = 4b^2 - 4b + 4 = 4(b^2 - b + 1)$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`Sidan är 15 cm. AD är en diagonal i femhörningen och är längre än sidan.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`I: $\frac{49}{81} \approx 0{,}605$. II: $0{,}625$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`$f(0) = 20$ och $f(-1) = 25$. I är 0,8 och II är 1,25.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`Multiplicera ut: $y - xy$ mot $x - xy$. Eftersom $y > x$ är I störst.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$a^b = 16$ ger $a = 2, b = 4$ eller $a = 4, b = 2$. I båda fallen är $b^a = 16$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`$0 - (-3) = 3$ är positivt, $0 - 3 = -3$ är negativt.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$2x = 12y$ ger $x = 6y$, så I är 0.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`Om $n = m + 1$ skiljer $m - 1$ och $n + 1$ sig med 3. Alltså är $n = m - 1$, och då blir $m - 1$ och $n + 1$ lika med $n$ och $m$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Jämförelsen blir $x$ mot $z$. $x$ är högst 4 och $z$ minst 4, så det kan bli lika eller II störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Tillsammans finns två lösningar. Hampus naturkunskap ger Rickard engelska, Moa fysik och Lena samhällskunskap. Lena naturkunskap ger Moa samhällskunskap, Rickard fysik och Hampus engelska.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): Kvar är $0{,}5 \cdot 0{,}8 = 0{,}4$ av tyget, alltså 8 m. Hela rullen är 20 m. Räcker.
+
+(1) ger bara andelar. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: de närmar sig 2,5 km på en tiondels timme, alltså 25 km/h tillsammans. Helena cyklar $25 - 15 = 10$ km/h.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`260 svarade morgontidningen. Tillsammans: 80 män svarade kvällstidningen och 130 män morgontidningen. $80 + 130 = 210$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Antalet plus 4 är delbart med 8, och lägger man till 8 till blir det fortfarande delbart. Räcker.
+
+(2) säger inget om antalet plus 12. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 1,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): $a = b$ ger $k = 1$. (2): $a^2 = b^2$ och positiva tal ger $a = b$. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$2{,}5 - 1{,}6 = 0{,}9$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`Summan är $5 \cdot 16 = 80$. De kända talen ger 62, så $a = 18$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`$(2\sqrt{7})^2 = 4 \cdot 7 = 28$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`$-6\left(\frac{r}{3} - s\right) = -2r + 6s = 2(-r + 3s)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 6,
+    svar: "C",
+    losning: String.raw`$y = 0$ ger $x_1 = -2$, och $x = 0$ ger $y_1 = 10$. Summan är 8.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$\frac{3}{2} \cdot \frac{x}{6} = \frac{x}{4} = 2$ ger $x = 8$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`$n$ personer ger $\frac{n(n - 1)}{2}$ handskakningar. $\frac{6 \cdot 5}{2} = 15$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$\frac{k + p}{k} = 1 + \frac{p}{k}$, så $r = \frac{p}{k}$ och $k = \frac{p}{r}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$5^{-2} = \frac{1}{25}$ och $(-2)^{-1} = -\frac{1}{2}$. $\frac{1}{25} + \frac{1}{2} = \frac{27}{50}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 13,
+    svar: "D",
+    losning: String.raw`Summan är 180°, men $w$ kan vara både större och mindre än 90°.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`$36 < 3x < 69$ ger $12 < x < 23$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`Byxorna: $0{,}25 \cdot 299 \approx 75$ kr. Tröjan: $0{,}3 \cdot 199 \approx 60$ kr.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$x$ är negativt. Udda exponent ger negativt, jämn ger positivt.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Blå är $1 - \frac{4}{10} - \frac{3}{10} = \frac{3}{10}$, röd $\frac{4}{10}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`I: $\pi x^2$. II: $\frac{3x \cdot 2x}{2} = 3x^2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`I: $\frac{10 - 9}{6} = \frac{1}{6}$. II: $\frac{6 + 1}{42} = \frac{1}{6}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$\frac{7}{8} = 87{,}5$ %.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$\sqrt{5} \cdot \sqrt{9} = \sqrt{45} = 45^{0{,}5}$, så $x = 0{,}5$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 23,
+    svar: "B",
+    losning: String.raw`(2): Ett varv är 800 m. Den snabbare tar in $\frac{800}{9}$ m per minut, och ett helt varv tar då 9 minuter. Räcker.
+
+(1) säger inget om den snabbare. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`(1): 24 kopparspikar och 16 dyckertar. (2): De 40 är hälften.
+
+Tillsammans: 80 spikar. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): $y = 540$. (2): $y = \frac{27}{0{,}05} = 540$. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Vi vet inte hur de 14 långärmade fördelas mellan färgglada och svarta, så totalen går inte att räkna ut.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): Röd är inte i mitten och har blå under sig, så röd ligger överst. Räcker.
+
+(1): Både blå, grön, röd och röd, blå, grön (uppifrån) fungerar. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018vt",
+    pass: 4,
+    nr: 28,
+    svar: "C",
+    losning: String.raw`(1) ger 42, 72 eller 78. (2) ger 28, 32, 56 eller 72.
+
+Tillsammans: 72. **Svar: C.** Mer i ${NOG}.`,
+  },
 ];
