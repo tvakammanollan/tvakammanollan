@@ -829,4 +829,239 @@ $x$ och $y$ har motsatta tecken. Är $y$ positiv är II störst, och är $y$ neg
 
 **Svar: C.** Notera att serien inte står i storleksordning. Sortera alltid innan du letar median.`,
   },
+  /* ── Höstprovet 2025, provpass 1 ─────────────────────────────── */
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Flytta över $\frac{1}{4}$ och skriv båda bråken med nämnaren 8:
+
+$x = \frac{1}{8} - \frac{1}{4} = \frac{1}{8} - \frac{2}{8} = -\frac{1}{8}$
+
+**Svar: B.** Rimlighetskoll: $\frac{1}{8}$ är mindre än $\frac{1}{4}$, så $x$ måste vara negativt. Det stryker C och D direkt. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`Multiplicera ut term för term:
+
+$(3x + y)(x - y) = 3x^2 - 3xy + xy - y^2 = 3x^2 - 2xy - y^2$
+
+**Svar: A.** Snabbkoll med siffror: sätt $x = 1$ och $y = 1$. Då är uttrycket $4 \cdot 0 = 0$, och bara A ger $3 - 2 - 1 = 0$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`Räkna inifrån och ut. Först $f(3) = 4 \cdot 3 + 1 = 13$.
+
+Sedan $g(3) = 2 \cdot f(3) - 1 = 2 \cdot 13 - 1 = 25$.
+
+**Svar: D.** Fällan är B, 13, som är $f(3)$ och inte $g(3)$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`45 % är $0{,}45$, och $0{,}45 \cdot 2 = 0{,}9$. Alltså:
+
+$0{,}45 \cdot \frac{2}{9} = \frac{0{,}9}{9} = 0{,}1 = \frac{1}{10}$
+
+**Svar: B.** Att multiplicera täljaren först och dela sist håller siffrorna små. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Byt till samma enheter. 18 km är 18 000 m.
+
+Tid $= \frac{\text{sträcka}}{\text{hastighet}} = \frac{18\,000}{20} = 900$ sekunder.
+
+900 sekunder är 15 minuter. **Svar: A.** Bra att kunna: 20 m/s är 72 km/h, och 18 km i 72 km/h är en kvarts timme. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`Triangeln har hörn i origo, i $(0, -4)$ och där L skär $x$-axeln, säg i $(a, 0)$.
+
+Höjden längs $y$-axeln är 4, så arean är $\frac{4 \cdot |a|}{2} = 2|a|$. Arean är 2, alltså $|a| = 1$.
+
+Eftersom $k$ är negativt lutar linjen nedåt åt höger. Den går genom $(0, -4)$ och måste därför nå $x$-axeln till **vänster** om origo, alltså $a = -1$.
+
+**Svar: B,** $(-1, 0)$. Rita en snabb skiss. Lutningen avgör tecknet direkt. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`Gemensam nämnare är $ab$. Förläng båda bråken:
+
+$\frac{b}{a} + \frac{1}{b} = \frac{b \cdot b}{ab} + \frac{a}{ab} = \frac{b^2 + a}{ab}$
+
+**Svar: D.** Kontroll med $a = 1$, $b = 2$: uttrycket blir $2 + \frac{1}{2} = 2{,}5$ och D ger $\frac{4 + 1}{2} = 2{,}5$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Förenkla innan du räknar. $\frac{4100}{200} = 20{,}5$, så
+
+$\frac{44 \cdot 4100}{200} = 44 \cdot 20{,}5 = 902$
+
+$\sqrt{902}$ ligger strax över $\sqrt{900} = 30$.
+
+**Svar: C.** Uppgiften frågar efter närmaste värde. Gör om talet till något som ligger nära en jämn kvadrat. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`Talet $x$ är större än 40 om tiotalssiffran är 4, 5 eller 6. Med tiotalssiffran 4 blir talet 41–46, och alla de är större än 40, eftersom entalssiffran aldrig kan bli 0.
+
+Tre av tärningens sex utfall ger alltså ett tal över 40:
+
+$P = \frac{3}{6} = \frac{1}{2}$
+
+**Svar: C.** Fällan är att bara räkna 5 och 6 och få $\frac{1}{3}$ (alternativ B). Tärningen har ingen nolla. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Skriv om de negativa exponenterna som bråk:
+
+$2 \cdot 3^{-1} + 3 \cdot 3^{-2} = \frac{2}{3} + \frac{3}{9} = \frac{2}{3} + \frac{1}{3} = 1$
+
+**Svar: D.** $3^{-1} = \frac{1}{3}$ och $3^{-2} = \frac{1}{9}$. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$\sqrt{16} = 4$, och 25 procent av 4 är 1.
+
+$\sqrt{4} = 2$.
+
+Kvantitet II är större. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`Sätt in värdena.
+
+- $f(-2) = -\frac{-2}{2} + 5 = 1 + 5 = 6$
+- $g(14) = \frac{14}{2} - 1 = 7 - 1 = 6$
+
+De är lika. **Svar: C.** Se upp med minustecknet i $f$: $-\frac{-2}{2}$ är plus ett. Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`Lös båda ekvationerna.
+
+- $2 = \frac{194}{x}$ ger $x = 97$.
+- $3 = 100 - y$ ger $y = 97$.
+
+**Svar: C.** Båda är exakta tal, så D kan aldrig vara rätt här. Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 17,
+    svar: "D",
+    losning: String.raw`Ta skillnaden: $(3x - 2y) - (x - y) = 2x - y$.
+
+Vi vet bara att $y > 0$. Om $x$ är stort blir $2x - y$ positivt och II störst. Om $x$ är negativt blir $2x - y$ negativt och I störst.
+
+**Svar: D.** Exempel: $y = 1$, $x = 5$ ger I $= 4$, II $= 13$. Med $x = -5$ blir I $= -6$, II $= -17$. När $x$ saknar villkor är D nästan alltid svaret. Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`Räkna med decimaler, det räcker.
+
+- $\frac{1}{2} + \frac{2}{5} + \frac{3}{7} \approx 0{,}5 + 0{,}4 + 0{,}43 = 1{,}33$
+- $\frac{93}{71} \approx 1{,}31$ (eftersom $71 \cdot 1{,}3 = 92{,}3$)
+
+Kvantitet I är större. **Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Omkretsen är $\pi d$, så kvoten omkrets genom diameter är $\pi \approx 3{,}14$.
+
+$2\sqrt{2} \approx 2 \cdot 1{,}41 = 2{,}83$.
+
+**Svar: A.** Kvoten är alltid $\pi$, oavsett cirkelns storlek. Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`Titta bara på tecknen.
+
+- $x^3 y^4$: $x^3 > 0$ och $y^4 > 0$ (jämn exponent), så I är positiv.
+- $x^4 y^3$: $x^4 > 0$ men $y^3 < 0$ (udda exponent), så II är negativ.
+
+Ett positivt tal är alltid större än ett negativt. **Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`Primtalsfaktorisera: $42 = 2 \cdot 3 \cdot 7$. Det är det enda sättet att skriva 42 som en produkt av tre primtal.
+
+Medianen av 2, 3 och 7 är 3.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Vi behöver båda simmarnas tider.
+
+(1) ger Sarahs tid: $\frac{100}{1{,}91} \approx 52{,}4$ sekunder. Men vi vet inget om Therese, så (1) räcker inte.
+
+(2) ger Thereses tid, 50,6 sekunder, men inget om Sarah. Räcker inte heller.
+
+Tillsammans: Therese simmade på 50,6 s och Sarah på ungefär 52,4 s, så Therese vann.
+
+**Svar: C.** Du behöver inte räkna exakt. $1{,}91 \cdot 50{,}6 < 100$, så Sarah hade inte hunnit i mål på Thereses tid. Mer i ${NOG}.`,
+  },
+  {
+    term: "2025ht",
+    pass: 1,
+    nr: 25,
+    svar: "A",
+    losning: String.raw`(1): $\frac{x + y}{2} + 3 = 10$ ger $\frac{x+y}{2} = 7$, alltså $x + y = 14$. Räcker.
+
+(2): $y = 6x$ ger $x + y = 7x$, men $x$ är okänt. Räcker inte.
+
+**Svar: A.** Lägg märke till att (1) ger summan direkt, utan att du behöver veta $x$ och $y$ var för sig. Mer i ${NOG}.`,
+  },
 ];
