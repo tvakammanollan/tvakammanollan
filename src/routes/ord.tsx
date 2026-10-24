@@ -53,7 +53,7 @@ export const Route = createFileRoute("/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/ord",
-      title: "Öva ord · 10 000+ HP-ord",
+      title: "ORD högskoleprovet · öva 10 000+ ord",
       description:
         "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress, helt gratis.",
       ogTitle: "Öva ord · 10 000+ HP-ord",

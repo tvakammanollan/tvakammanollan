@@ -7,7 +7,7 @@ export const Route = createFileRoute("/guider/")({
   head: () => ({
     meta: pageMeta({
       path: "/guider",
-      title: "Guider till HP · alla 8 delprov",
+      title: "Guider till högskoleprovet · alla 8 delprov",
       description:
         "Kompletta guider till alla 8 delprov på Högskoleprovet: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK. Plus normering, tidspress och toppresultat.",
       ogTitle: "Tvåkommanollan | Guider till Högskoleprovet",

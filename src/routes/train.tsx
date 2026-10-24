@@ -24,7 +24,7 @@ export const Route = createFileRoute("/train")({
   head: () => ({
     meta: pageMeta({
       path: "/train",
-      title: "Träna HP · alla 8 delprov utan tidspress",
+      title: "Öva högskoleprovet · alla 8 delprov",
       description:
         "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
       ogTitle: "Tvåkommanollan | Träna HP utan tidspress",

@@ -133,7 +133,7 @@ export const Route = createFileRoute("/ova/$delprov")({
         path,
         // slice(0, 150) kapade mitt i ett ord: Google visade "Öva på riktiga
         // DTK-uppg Gratis och utan inloggning." på alla åtta sidorna.
-        title: fitTitle(`Öva ${cfg.code} (${cfg.name}): frågor med facit`),
+        title: fitTitle(`${cfg.code} högskoleprovet: öva ${cfg.name.toLowerCase()}`, "med facit"),
         description: describeWithin(cfg.intro, "Gratis och utan inloggning."),
         ogTitle: `Öva ${cfg.code} (${cfg.name})`,
         ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,
