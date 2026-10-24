@@ -9742,4 +9742,440 @@ Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar:
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2013, provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Multiplikation först: $1 + \frac{1}{6} = \frac{7}{6}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`Bensin per kilometer är densamma: $\frac{19}{350} = \frac{L}{1\,710}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$b$ delar både 22 och 26, så $b = 1$ eller $b = 2$. $b = 2$ ger $11 + 2 + 13 = 26$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`$0{,}06x = 0{,}05y$. Den större procentsatsen måste tas av det mindre talet.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`$x = \frac{81 \cdot 1\,200}{27} = 3 \cdot 1\,200 = 3\,600$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`41, 43 och 47.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`Halverade kanter ger en åttondel av volymen. $\frac{12}{8} = 1{,}5$ dm³.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`$\frac{7}{8} - \frac{6}{8} = \frac{1}{8}$, och hälften är $\frac{1}{16}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`Dela upp: $\frac{1}{xy} - \frac{x}{xy} = \frac{1}{xy} - \frac{1}{y}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Päron $\frac{x}{3}$ och bananer $\frac{x}{27}$. Summan är $\frac{27 + 9 + 1}{27}x = \frac{37}{27}x$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`60 procent kan minst ett språk. $47 + 43 - 60 = 30$ procent kan båda.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Skriv om: I är $69 \cdot 117 - 69$ och II är $69 \cdot 117 - 117$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Villkoret ger $xy = zw$. Jämförelsen gäller $xw$ och $yz$, som inte följer av det.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`$x = 1$ ger I störst, $x = -1$ ger II störst och $x = 0$ ger lika.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Udda exponent på ett negativt tal ger negativt, jämn ger positivt.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 19,
+    svar: "D",
+    losning: String.raw`Längsta sidan ligger mellan 9 och 18 cm. II är 12 cm.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Samma summa kan delas i olika många tal: 6 som $1 + 5$ eller $1 + 2 + 3$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$a = d - 3 = -2d$ ger $d = 1$, så talen är $-2, -1, 0, 1, 2$ och $b = -1$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`Olikheten gäller när $0 < x < 1$, och där är $x^2 < x$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: 2 män har hatt. När en går av återstår 1, så 4 kvinnor har hatt. Totalt 6.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: får utgör $1 - \frac{1}{8} - \frac{1}{4} = \frac{5}{8}$, och det är 5 djur. Totalt 8 djur.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`Tillsammans: Anna är 24 år äldre och 2014 dubbelt så gammal. Karin var 24 år 2014 och 11 år 2001.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`Tillsammans körde de 117 km/h. (1): $2g + 27 = 117$ ger $g = 45$. (2): $2{,}6g = 117$ ger $g = 45$. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 3,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Byxorna står i en ände och har bara tröjorna bredvid sig. Tröjorna är svarta, alltså är strumporna vita. Räcker.
+
+(1) lämnar flera möjligheter. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$\frac{2}{3} \cdot \frac{3}{4} = \frac{1}{2}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Samma täljare ger samma nämnare: $a + x = 2x$, alltså $x = a$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`Olika tecken ger negativ kvot.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`$10^{10} \cdot 4 \cdot 10^{-8} = 4 \cdot 10^2$ cm.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Dra bort $a$ och lägg till $2b$: $3b > 0$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`$3^4 = 81$, och alla exponenter multipliceras med 4.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Multiplicera med 3: $-3x + 21 = 2x - 4$ ger $x = 5$ och $y = 2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`En sida per $m$ minuter ger $\frac{7}{m}$ sidor på 7 minuter.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Vänsterledet är $\frac{x}{5}$ gånger högerledet, så $\frac{x}{5} = 1$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`Pojkar och flickor förhåller sig som 2 till 3. Pojkarna är $\frac{2}{5}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$\frac{7}{4} > \frac{3}{2}$, så I är mer negativt.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`$x = 1$ ger 2, alla andra positiva $x$ ger mer.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`Multiplicera ut II: $ab - 2a^2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`II är $\frac{x^b}{b^b}$, och $b^b > b$ när $b > 1$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 19,
+    svar: "C",
+    losning: String.raw`Båda medelvärdena ligger mitt i talföljden.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`Omkretsen är 6 m, så diametern är $\frac{6}{\pi} \approx 1{,}9$ m.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`Multiplicera ut II: $xy + x^2 + yz + xz$, samma som I.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Den räta vinkeln kan ligga i $(2, 2)$ med $a = 2$ eller i $(2, 4)$ med $a = 4$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Tillsammans: damcyklarna är röd och blå, och de tre herrcyklarna har olika färger. Både svart, grön, röd och svart, grön, blå fungerar.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: värdet ökar till 15 miljoner, och 300 000 kr per skulptur ger 50 skulpturer. 10 nya.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`0,4 procent av 1 kg är 4 g. Tillsammans: nickel 0,5 g och zink 1 g ger koppar 2,5 g.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): Första och tredje kastet är lika, så $T = 33 + \frac{T}{3}$ ger $T = 49{,}5$ m. Räcker.
+
+(1) ger bara förhållanden. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`Tillsammans: gröna har 0,3 och blå 0,1. Röda har 0,6.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013ht",
+    pass: 5,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`Tillsammans planterar de 20 träd per timme.
+
+(1): B tar $\frac{2}{5}$, alltså 8 per timme och 15 timmar. (2): A planterar 12 per timme, B 8. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
