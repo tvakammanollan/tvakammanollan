@@ -36,9 +36,11 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: pageMeta({
       path: "/",
-      title: "Gratis ELO-rankade HP-dueller & övningsprov",
+      // Sökordet först. "HP-dueller" var titeln förut, och ingen söker på det:
+      // folk skriver "högskoleprovet", "öva högskoleprovet", "gamla prov".
+      title: "Öva högskoleprovet gratis · alla gamla prov",
       description:
-        "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna gratis på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
+        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Alla 8 delprov, utan kostnad.",
       ogDescription:
         "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
     }),

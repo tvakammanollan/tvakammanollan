@@ -9,6 +9,7 @@ import {
   Delproven,
   EloSkalan,
   Omdomen,
+  Resurser,
   SlutCta,
   Topplistan,
 } from "@/components/landing/LandingSections";
@@ -74,6 +75,7 @@ export function HeroLanding({
         onOppna={() => setCoachingOpen(true)}
         sektionRef={coachningSedd}
       />
+      <Resurser />
       <SlutCta dagarKvar={dagarKvar} datum={next ? hpDateShort(next.entry.date) : null} />
 
       {/* Köpet kräver inget konto — besökaren som vill ha ett upplägg ska inte

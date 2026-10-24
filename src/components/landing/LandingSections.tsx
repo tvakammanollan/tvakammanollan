@@ -680,3 +680,83 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
     </section>
   );
 }
+
+/* --------------------------------------------------------------- resurser */
+
+/**
+ * Länkar till sajtens informationssidor. Startsidan är sajtens starkaste
+ * sida, och utan det här blocket nådde den varken normeringen, orden per
+ * prov, formlerna, resultatsidan eller programsidorna annat än via
+ * sidfoten. Ingen animation: blocket ska stå färdigt i den serverrenderade
+ * HTML:en.
+ */
+const RESURSER: Array<{ to: string; titel: string; text: string }> = [
+  {
+    to: "/hogskoleprovet-normering",
+    titel: "Normering",
+    text: "Hur många rätt som krävts för 2,0 på varje prov sedan 2012.",
+  },
+  {
+    to: "/hogskoleprovet-facit",
+    titel: "Facit senaste provet",
+    text: "Alla svar, kontrollerade mot UHR, och trolig normering.",
+  },
+  {
+    to: "/hogskoleprovet-resultat",
+    titel: "När kommer resultatet?",
+    text: "Datum, var du hämtar det och hur länge det gäller.",
+  },
+  {
+    to: "/hogskoleprovet-poang",
+    titel: "HP-poäng per program",
+    text: "Vad läkare, jurist, civilingenjör och fler krävde senast.",
+  },
+  {
+    to: "/hogskoleprovet-ord",
+    titel: "Orden på varje prov",
+    text: "Alla ORD-uppgifter från 30 prov, med rätt svar.",
+  },
+  {
+    to: "/hogskoleprovet-formler",
+    titel: "Formler",
+    text: "Allt du behöver till XYZ och KVA, med riktiga uppgifter.",
+  },
+  {
+    to: "/ordlista",
+    titel: "Ordlista",
+    text: "Varje ord som förekommit på provet, med betydelse.",
+  },
+  {
+    to: "/forum",
+    titel: "Forum",
+    text: "Frågor, svar och genomgångar av provuppgifter.",
+  },
+];
+
+export function Resurser() {
+  return (
+    <section id="resurser" className="border-b border-white/10">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+        <h2 className="max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+          Allt om högskoleprovet, på ett ställe.
+        </h2>
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {RESURSER.map((r) => (
+            <li key={r.to}>
+              <Link
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                to={r.to as any}
+                className="block h-full rounded-xl border border-white/10 bg-card p-4 transition-colors hover:border-primary"
+              >
+                <span className="block text-[16px] font-semibold text-[var(--cream)]">
+                  {r.titel}
+                </span>
+                <span className="mt-1 block text-[14px] leading-snug text-white/65">{r.text}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

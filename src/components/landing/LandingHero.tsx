@@ -186,14 +186,22 @@ export function LandingHero({
     <section className="border-b border-white/10">
       <div className="mx-auto grid max-w-6xl items-start gap-10 px-4 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-16">
         <div>
-          <m.h1
+          {/* Sidans h1 bär sökordet. Sloganen under är samma stora rad som
+              förut, men en <p>: "Svara nu. Siffran rör sig direkt." säger
+              ingenting om vad sajten är för en sökmotor, och startsidans h1
+              är den starkaste rubriken sajten har. */}
+          <h1 className="mb-4 text-[13px] font-bold uppercase tracking-[0.16em] text-primary">
+            Öva på högskoleprovet gratis
+          </h1>
+          <m.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="max-w-[11ch] text-[46px] leading-[1.02] tracking-[-0.045em] sm:text-[68px]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Svara nu. Siffran rör sig <span className="text-primary">direkt</span>.
-          </m.h1>
+          </m.p>
 
           <m.p
             initial={{ opacity: 0, y: 14 }}
