@@ -10630,4 +10630,213 @@ Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar:
 
 **Svar: C.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2012, provpass 1 ─────────────────────────────────────── */
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Resten blir $2 + 9 = 11$, och 11 delat med 8 ger resten 3.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Kvinnorna är två femtedelar: $\frac{2}{5} \cdot 30 = 12$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$27 \cdot (27 - 9) = 27 \cdot 18 = 486$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`Dela med $a$ och lägg till 1: $b = \frac{c}{a} + 1$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`Volymen börjar på 19 och minskar med 6 liter per timme.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$\frac{1}{2} + \frac{8}{9} - \frac{2}{3} = \frac{9 + 16 - 12}{18} = \frac{13}{18}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 7,
+    svar: "D",
+    losning: String.raw`Tre gånger längre sida ger $3^3 = 27$ gånger volymen.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`$\frac{0{,}375 + 0{,}065}{2} = \frac{0{,}44}{2} = 0{,}22$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`$\frac{1}{2} + \frac{1}{3} = \frac{5}{6}$, så $x = \frac{6}{5}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`$\frac{1}{12} < \frac{1}{11}$, så A är negativt. De andra är positiva.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`$a = \frac{2}{\frac{3}{c}} = \frac{2c}{3}$, så $c = \frac{3a}{2}$ och $6c = 9a$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Man drar bort ett mindre tal i I.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Ett av talen är 0. $z$ kan vara 0, 1 eller 2.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`Den korta biten är $10 - 3x < x$, så $x > 2{,}5$. Samtidigt $x < \frac{10}{3}$. $x$ kan vara 3 men också något annat.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$a = 6c$ och $b = 3c$. $6c + 3c + c = 10c$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$x = 48$ och $y = \frac{35}{0{,}7} = 50$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 19,
+    svar: "C",
+    losning: String.raw`$x^2$ ger samma värde för 4 och $-4$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`$mn = \frac{3x}{4} \cdot \frac{4x}{3} = x^2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`Summan är 60. Minsta möjliga för de andra: 1, 2, 15 och 16, som ger 34. Största talet blir högst 26.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 24,
+    svar: "A",
+    losning: String.raw`(1): $0{,}9^6 \approx 0{,}53$ och $0{,}9^7 \approx 0{,}48$, så det tar 7 månader. Räcker.
+
+(2) säger inget om takten. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: åldrarna är 150 år från början och 160 efter bytet. $\frac{160}{5} = 32$ år.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Tillsammans: Arvid och Elin är 24 år. Är Arvid dubbelt så gammal som Moa blir båda 12, är han dubbelt så gammal som Elin blir hon 8. Båda fungerar.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012ht",
+    pass: 1,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Kvoten är $\frac{11}{3}$. Räcker.
+
+(1) ger olika kvoter för olika antal. **Svar: B.** Mer i ${NOG}.`,
+  },
 ];
