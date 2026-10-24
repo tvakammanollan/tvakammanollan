@@ -4266,4 +4266,455 @@ Skillnaden blir 6 år. **Svar: C.** Mer i ${XYZ}.`,
 
 **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2022 (mars), provpass 3 och 5 ─────────────────── */
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Inifrån och ut: $7 - 2 = 5$, $6 \cdot 5 + 5 = 35$, $4 \cdot 35 = 140$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`$f(2) = \frac{4 + 7}{6 + c} = 1$, så $6 + c = 11$ och $c = 5$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Skriv allt i trettiotvåondelar: $\frac{8}{32} + \frac{4}{32} + \frac{3}{32} = \frac{15}{32}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`$(3x - 3y)(y - x) = -3(x - y)^2 = -3x^2 + 6xy - 3y^2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`$2^{25}$ har bara tvåor som primtalsfaktorer. Bara 16 $= 2^4$ saknar andra faktorer.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 7,
+    svar: "D",
+    losning: String.raw`Lutningen är $\frac{1 - 4}{3 - 2} = -3$. Med $f(2) = 4$: $4 = -6 + m$, alltså $m = 10$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Multiplicera med 12: $4x + 3x = 12x - 24$, alltså $5x = 24$ och $x = \frac{24}{5}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`Kalla priset $p$. Lika pris: $0{,}90p = 0{,}92p - 40$, alltså $0{,}02p = 40$ och $p = 2\,000$ kr.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`$10^{-2x} = \frac{1}{10^{2x}} = \frac{1}{36}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`Med återläggning är sannolikheten för två svarta $p^2 = \frac{16}{49}$, så $p = \frac{4}{7}$. Röd är då $\frac{3}{7}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`Skivan delas i $4 \cdot 3 \cdot 2 = 24$ lika bitar. Hela arean är $\pi \cdot 24^2 = 576\pi$, och en bit är $\frac{576\pi}{24} = 24\pi$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`$\frac{24}{6} = 4$ och $\frac{3}{12} \cdot 16 = 4$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`I: $\frac{12}{4} = 3$. II: medelvärdet $\frac{24}{4} = 6$, hälften är 3.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`I: $\frac{4}{3} \approx 1{,}33$. II: $\frac{4}{\pi} \approx 1{,}27$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 19,
+    svar: "D",
+    losning: String.raw`Anna har $66 - 19 - C = 47 - C$, där Clara har minst 23. Clara 23 ger Anna 24, Clara 30 ger Anna 17.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`I: $\frac{x}{2} - \frac{x}{2} = 0$. II: $2 - \frac{1}{2} = 1{,}5$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`$x = 1$ ger I $= 1$ och II $= 0{,}5$. $x = 16$ ger I $= 4$ och II $= 8$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`Peter: 5 m/s är 18 km/h, och 2 timmar ger 36 km. Mattias: $12 \cdot 3 = 36$ km.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: Daniel hoppar inte från 5 meter, och Gabriel hoppar lägre än Mikael och alltså inte heller från 5 meter. Kvar blir Mikael.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 24,
+    svar: "A",
+    losning: String.raw`(1): $m + 16 = 2(176 - m)$ ger $3m = 336$ och $m = 112$. Räcker.
+
+(2): $x$ är okänt. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): En tredjedel tar 2 timmar, hela 6 timmar. Räcker.
+
+(2): I normal takt skulle två tredjedelar ta 4 timmar, hela 6 timmar. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): $0{,}8 \cdot 1{,}25 = 1$. Priset är tillbaka där det började, så ändringen är 0 procent. Räcker.
+
+(1) säger bara vad priset var. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Vi vet inte hur många block som är A4 och hur många som är A5, så andelarna går inte att göra om till antal.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 3,
+    nr: 28,
+    svar: "C",
+    losning: String.raw`(1): $x - y > x + y$ ger $-y > y$, alltså $y < 0$.
+
+Tillsammans med $x > 0$ (2) är $x > 0 > y$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$x - 7 = 3x + 3$ ger $-2x = 10$ och $x = -5$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$\frac{64 + 16}{2} = 40 = 2^3 \cdot 5$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`$f(1) = 2$, så $g(1) = -2 \cdot 2 + 4 = 0$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Täljaren: $\frac{8}{20} - \frac{5}{20} = \frac{3}{20}$. Nämnaren: $\frac{2}{6} + \frac{1}{6} = \frac{1}{2}$.
+
+$\frac{3}{20} \div \frac{1}{2} = \frac{3}{10}$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$(\sqrt{51} + \sqrt{51})^2 = (2\sqrt{51})^2 = 4 \cdot 51 = 204$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$f(1) = 3a = 3$ ger $a = 1$. Då är $f(0) = 1 \cdot 3^0 = 1$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Nämnaren är $x^4 y^2 z^4$. Allt förkortas utom en $z$ i nämnaren.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$0{,}6x = 0{,}4y$ ger $y = 1{,}5x$, alltså 150 procent av $x$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Sidan är 10 cm och diagonalen $10\sqrt{2} \approx 14{,}1$ cm.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`$xz + yz = z(x + y) = 5 \cdot 5 = 25$, och $\sqrt{25} = 5$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`Para ihop: $1 - 2$, $3 - 4$, och så vidare. Varje par ger $-1$, och det finns 30 par.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`$\frac{707}{70} = 10{,}1$ och $\frac{808}{80} = 10{,}1$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`AB och BC är båda $\sqrt{4^2 + 3^2} = 5$, alltså 10 tillsammans. AD är $\sqrt{8^2 + 1^2} = \sqrt{65} \approx 8{,}1$.
+
+**Svar: A.** En omväg är alltid längre än den raka vägen. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`I: $\pi \cdot 4 \cdot 5 = 20\pi$. II: $\pi \cdot 25 \cdot 2 = 50\pi$.
+
+**Svar: B.** Radien räknas i kvadrat, så den väger tyngst. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`$\frac{x}{3} = \frac{1}{3} + \frac{2}{5} = \frac{11}{15}$, så $x = \frac{11}{5} = 2{,}2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Dela båda med $p > 0$: jämför $p^2$ med 42. $p^2 < 25$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 18,
+    svar: "C",
+    losning: String.raw`I: $\frac{5}{9} \cdot \frac{4}{8}$. II: $\frac{5}{9} \cdot \frac{4}{8}$. Efter en röd är det 4 röda och 4 blå kvar.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`$36^{\frac{1}{3}} = 6^{\frac{2}{3}}$, så $2x = \frac{2}{3}$ och $x = \frac{1}{3}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`Talen är 1, 2, 3, 4 och 5. Skillnaden är 4.
+
+**Svar: B.** Fem tal i följd skiljer alltid 4. Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`$n = 10$ ger lika, $n = 2$ ger $100$ mot $1\,024$, och $n = 0$ ger 1 mot 0.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): $2 = \frac{n + 2}{12}$ ger $n = 22$. Räcker.
+
+(2): $2 = \frac{n}{11}$ ger $n = 22$. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: vinnaren fick 56 % och förloraren 44 %, alltså skiljer det 12 procentenheter. Det är 1 200 röster, så totalt 10 000.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Tillsammans: Sebastian är 5, Julia 10 och Benjamin 12. Alexandra är yngre än Benjamin men kan vara både äldre och yngre än Sebastian.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): Summan måste vara densamma för alla par, och det går bara om den är 5: nyckel 1 i lås 4, 2 i 3, 3 i 2 och 4 i 1. Räcker.
+
+(1) tillåter många kombinationer. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2022vta",
+    pass: 5,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Efter Bo står nu 36 personer. Av 100 står då $100 - 1 - 36 = 63$ före honom. Räcker.
+
+(1) kräver att vi vet hur många som stod före honom från början. **Svar: B.** Mer i ${NOG}.`,
+  },
 ];
