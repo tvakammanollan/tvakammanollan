@@ -1925,4 +1925,465 @@ Lägg till $\frac{5x}{3}$: $2 - \frac{2x}{3} + \frac{5x}{3} = 2 + \frac{3x}{3} =
 
 **Svar: C.** Kontroll med $x = 3$: uttrycket blir $0 + 5 = 5$, och $2 + 3 = 5$. Mer i ${XYZ}.`,
   },
+
+  /* ── Vårprovet 2024, provpass 2 och 5 ────────────────────────── */
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Sätt in $y = -2$: $2x + 3x(-2) - 4(-2) = 10$, alltså $2x - 6x + 8 = 10$.
+
+Det ger $-4x = 2$ och $x = -\frac{1}{2}$. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`$0{,}6x = 39$ ger $x = \frac{39}{0{,}6} = 65$.
+
+**Svar: B.** Kontroll: 10 % av 65 är 6,5, och sex gånger det är 39. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`Multiplicera ut: $ab + ac - ab - bc + bc - ac$.
+
+Allt tar ut varandra. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Dela varje mått med klossens: $\frac{50}{5} = 10$, $\frac{54}{6} = 9$ och $\frac{72}{9} = 8$. Det går jämnt upp, så lådan fylls helt.
+
+$10 \cdot 9 \cdot 8 = 720$ klossar. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Bryt ut $3y$ ur parentesen: $3xy + 15y = 3y(x + 5)$.
+
+Då är täljaren $2xy \cdot 3y(x + 5) = 6xy^2(x + 5)$, och $6xy^2$ förkortas bort.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Lista alla sätt att skriva 12 som tre olika positiva heltal: $1 \cdot 2 \cdot 6$ och $1 \cdot 3 \cdot 4$.
+
+$z - x$ blir 5 respektive 3. Det största är 5. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Alla tre lådor får en röd och en vit kula precis när Laila tar en röd ur A och en vit ur B. Då blir A och B kvar med en av varje, och C får en av varje.
+
+$P = \frac{2}{3} \cdot \frac{2}{3} = \frac{4}{9}$. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`$2^5 + 2^5 = 2 \cdot 2^5 = 2^6$. Gånger 2 till blir det $2^7$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Med $y = 0$ blir $x - 5 = 5$, alltså $x = 10$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`Jämna tal efter 15: 16, 18, 20 och så vidare. Det nionde är $16 + 8 \cdot 2 = 32$.
+
+Udda tal efter 18: 19, 21 och så vidare. Det sjunde är $19 + 6 \cdot 2 = 31$.
+
+$J - U = 1$. **Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`Medelvärdet av 0,1 och 0,2 är 0,15. $\frac{1}{7} \approx 0{,}143$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`Båda är negativa, så kvoten är positiv. Pröva två fall.
+
+- $a = -1$, $b = -1$: I $= 1$. Lika.
+- $a = -2$, $b = -1$: I $= 2$. I störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`Kvantitet I är större än 500. Kvantitet II är mindre än 600.
+
+Båda kan alltså ligga mellan 500 och 600, och då går de inte att jämföra. Exempel: I $= 510$ och II $= 590$, eller I $= 590$ och II $= 510$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`$\frac{x}{3} = 1 - \frac{3}{2} = -\frac{1}{2}$, alltså $x = -\frac{3}{2}$.
+
+$-\frac{3}{2}$ är mindre än $-\frac{1}{6}$. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$L_1$: $k = \frac{2 - 3}{1 - (-1)} = -\frac{1}{2}$.
+
+Vinkelräta linjer har $k_1 \cdot k_2 = -1$, så $L_2$ har $k = 2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`Triangelns omkrets är 12 cm, så kvadraten har sidan 3 cm och arean 9 cm².
+
+Triangeln är rätvinklig med kateterna 3 och 4, så arean är $\frac{3 \cdot 4}{2} = 6$ cm².
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`Bryt ut $x$ ur båda: $x^3 - x = x(x^2 - 1)$ och $x^5 + x = x(x^4 + 1)$.
+
+Då är båda kvantiteterna $x(x^4 + 1)(x^2 - 1)$. **Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`(1) ger att de två mindre böckerna har $792 - 348 = 444$ sidor tillsammans, men inte fördelningen.
+
+(2) säger att mittenboken har lika många sidor som medelvärdet, men inget antal.
+
+Tillsammans: medelvärdet är $\frac{792}{3} = 264$, så mittenboken har 264 sidor och den minsta $444 - 264 = 180$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att paljetterna är i den svarta asken, och att både pärlorna och limstiften finns i den blå eller den grå asken. Men inget säger vilket som är var.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 26,
+    svar: "D",
+    losning: String.raw`Rundan är lika lång varje gång, så den långsammaste hastigheten hör ihop med den längsta tiden.
+
+(1): $15 \text{ km/h} \cdot \frac{20}{60} \text{ h} = 5$ km. (Snabbast ger samma: $25 \cdot \frac{12}{60} = 5$.) Räcker.
+
+(2): 75 minuter i 20 km/h är $20 \cdot 1{,}25 = 25$ km för fem rundor, alltså 5 km per runda. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`(1) ger 9 stora röda men säger inget om små röda.
+
+(2) ger att 12 monster är stora, varav 9 röda.
+
+Tillsammans: $48 - 12 = 36$ små, varav 13 gröna, alltså 23 små röda. Totalt $23 + 9 = 32$ röda.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 2,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(1): Den svarta står på plats 2 eller 3. Står den på 2 blir ordningen röd, svart, grön, vit. Står den på 3 blir den vit, grön, svart, röd. Två möjligheter.
+
+(2): Röd står längst till vänster. Den vita, flyttad till den svartas plats, ska stå mitt emellan röd (plats 1) och grön. Det går bara om den svarta står på 2 och den gröna på 3. Då står den vita på 4.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`$13 + 31 = 8x - 4x$, alltså $4x = 44$ och $x = 11$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`$\frac{1}{2} + \frac{1}{6} = \frac{3}{6} + \frac{1}{6} = \frac{2}{3}$.
+
+$\frac{1}{3} - \frac{2}{3} = -\frac{1}{3}$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`Lika medelvärde för lika många tal betyder lika summa.
+
+$17 + 21 + 44 = 82$, och $63 + 73 + x = 82$ ger $x = -54$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`Julia springer 2 km på 12 minuter, alltså 10 km/h. Anna går 2 km på 24 minuter, alltså 5 km/h.
+
+Tillsammans närmar de sig varandra med 15 km/h, och 12 km tar $\frac{12}{15} = 0{,}8$ timmar, alltså 48 minuter.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$\frac{7}{\sqrt{7}} = \sqrt{7}$, och $(\sqrt{7})^2 = 7$.
+
+**Svar: D.** Kolla de andra snabbt: $7 - 1 = 6$ (B) och $2 + 3{,}5 = 5{,}5$ (C). Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$0{,}18 \cdot \frac{2}{5} = 0{,}18 \cdot 0{,}4 = 0{,}072$.
+
+$\frac{9}{125} = 0{,}072$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Sätt in $x = 3$ och se vilken linje som ger $y = 1$.
+
+A: $-3 + 4 = 1$. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`$\frac{a}{b} = \frac{b}{c}$ ger $b^2 = ac = a \cdot 2a = 2a^2$.
+
+Eftersom $b > 0$ är $b = a\sqrt{2}$. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`$x \cdot 10\,000 - 2x \cdot 1\,000 = 8\,000x$.
+
+$8\,000x = 32\,000$ ger $x = 4$. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`$K_1$ har arean 4 cm², och 25 procent av den är 1 cm².
+
+Det är 20 procent av $K_2$, så $K_2$ har arean 5 cm² och sidan $\sqrt{5}$ cm.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 13,
+    svar: "D",
+    losning: String.raw`Pröva två fall som uppfyller $3x > y$.
+
+- $x = 1$, $y = 0$: I störst.
+- $x = 1$, $y = 2$: II störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`$x - 4 = \frac{1}{4}$, alltså $x = 4{,}25$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`$f(a) = 4a + 8$ och $g(2a) = 2 \cdot 2a + 4 = 4a + 4$.
+
+I är alltid 4 större. **Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Med tio värden är medianen medelvärdet av det femte och sjätte. Tas det största och minsta bort blir det åtta värden, och medianen blir medelvärdet av samma två värden som förut.
+
+Medianen är fortfarande 25. **Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`$4 \cdot 10^{-2} = 0{,}04$ och $\frac{1}{400} = 0{,}0025$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 19,
+    svar: "D",
+    losning: String.raw`Båda kvantiteterna är negativa. Pröva två fall.
+
+- $x = -0{,}5$, $y = 0{,}5$: båda är $-1$. Lika.
+- $x = -0{,}5$, $y = 0{,}25$: I $= -0{,}5$, II $= -2$. I störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`Multiplicera ut: I $= x^2 + 2x - 8$ och II $= x^2 - 2x - 8$.
+
+I minus II är $4x$, som är negativt när $x < 0$. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`Räkna faktorn år för år: $1{,}2^2 = 1{,}44$, $1{,}2^3 \approx 1{,}73$, $1{,}2^4 \approx 2{,}07$.
+
+Priset har alltså fördubblats på mindre än fyra år. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1) säger att apoteket kommer före biblioteket. (2) säger att cykelhandlaren är i mitten. Var för sig finns flera ordningar.
+
+Tillsammans: apotek, cykelhandlare, bibliotek. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`Kalla volymen $V$.
+
+(1): Det som fattas är $\frac{3}{7}V = 1\,200$, alltså $V = 2\,800$ liter. Räcker.
+
+(2): $\frac{4}{7}V - 200 = \frac{1}{2}V$ ger $\frac{1}{14}V = 200$, alltså $V = 2\,800$ liter. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(1): 150 jämna hus, varav 40 procent, alltså 60, längs öst-västliga gator. Inget om udda hus.
+
+(2): En tredjedel av de udda husen ligger öst-västligt, och där finns lika många jämna som udda. Inget antal.
+
+Tillsammans: 60 udda hus öst-västligt är en tredjedel av alla udda, alltså 180.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): $a + 100 = 3a$ ger $a = 50$. Räcker.
+
+(2): Ett samband mellan Anna och Berit, där båda är okända. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2024vt",
+    pass: 5,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att $w = x + y$ och $z = \frac{w}{2}$. Men talen kan vara negativa.
+
+- $x = 1$, $y = 1$: $w = 2$ är störst.
+- $x = -1$, $y = -1$: $w = -2$, $z = -1$, och $x = -1$. Då är $z$ och $x$ lika stora och större än $w$.
+- $x = 5$, $y = 1$: $w = 6$ är störst.
+- $x = 5$, $y = -1$: $w = 4$, men $x = 5$ är störst.
+
+Olika tal kan vara störst. **Svar: E.** Mer i ${NOG}.`,
+  },
 ];
