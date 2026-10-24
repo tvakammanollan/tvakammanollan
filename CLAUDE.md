@@ -1615,6 +1615,15 @@ knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
 - **`historiskaKrav` bor i `normering.ts`, inte i `preliminart-facit.ts`.**
   Startsidan importerar facitmodulen för knappen, och `normering.json` är
   42 kB som då hade följt med till alla inloggade.
+- **Tre normeringstabeller är inlagda för hand (2026-10-24)** och finns inte
+  i `.hp-cache/normering/`: hösten 2023 (`studera.nu/globalassets/hogskoleprovet/hp-2023-10-22/norm23b_{verb,kvant}.pdf`),
+  hösten 2024 (`.../05-hogskoleprovet/normeringstabeller/normering-ht2024-20-oktober/norm24b_{verb,kvant}.pdf`)
+  och vårens 2025 verbala del (`.../normering-vt2025-5-april/norm25a_verb.pdf`).
+  Varje tabell kontrollerades mot PDF:ens egen summa av provdeltagare
+  (42 101, 49 037, 74 609). **`normering.py` bygger om filen ur cachen och
+  tappar dem**, så lägg PDF:erna i cachen innan den körs igen.
+  Normeringssidorna (`/hogskoleprovet-normering/<termin>`) skapas ur filen
+  automatiskt; lägg bara till adressen i `public/sitemap.xml`.
 - **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
   dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
   alternativ). Det fångar de flesta felskrivningar.
