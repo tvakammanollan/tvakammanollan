@@ -5,6 +5,7 @@ import { describeWithin, fitTitle, trimToWord } from "@/lib/seo-text";
 import { getOrdlistaEntry } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
+import { ordExamTerms } from "@/lib/ord-termer";
 
 /* =====================================================================
    ORDLISTAN — ETT UPPSLAG PER SIDA
@@ -96,6 +97,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
 
 function OrdlistaEntryPage() {
   const entry = Route.useLoaderData();
+  const prov = ordExamTerms(entry.slug);
   const {
     word,
     sense,
@@ -275,6 +277,25 @@ function OrdlistaEntryPage() {
             })}
           </ul>
         </section>
+      )}
+
+      {prov.length > 0 && (
+        <p className="mt-4 text-[14.5px] leading-relaxed text-white/60">
+          {word} förekom på{" "}
+          {prov.map((p, i) => (
+            <span key={p.term}>
+              {i > 0 && (i === prov.length - 1 ? " och " : ", ")}
+              <Link
+                to="/hogskoleprovet-ord/$term"
+                params={{ term: p.term }}
+                className="underline decoration-white/20 underline-offset-2 hover:decoration-[var(--amber)]"
+              >
+                högskoleprovet {p.label.toLowerCase()}
+              </Link>
+            </span>
+          ))}
+          . Där finns alla ORD-uppgifter från samma prov.
+        </p>
       )}
 
       <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
