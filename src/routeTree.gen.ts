@@ -34,6 +34,7 @@ import { Route as HogskoleprovetNormeringRouteImport } from './routes/hogskolepr
 import { Route as HogskoleprovetFormlerRouteImport } from './routes/hogskoleprovet-formler'
 import { Route as HogskoleprovetFacitRouteImport } from './routes/hogskoleprovet-facit'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
+import { Route as HogskoleprovetAntalRattRouteImport } from './routes/hogskoleprovet-antal-ratt'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
 import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as ForumSitemapDotxmlRouteImport } from './routes/forum-sitemap[.]xml'
@@ -50,6 +51,7 @@ import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as HogskoleprovetPoangProgramRouteImport } from './routes/hogskoleprovet-poang_.$program'
 import { Route as HogskoleprovetOrdTermRouteImport } from './routes/hogskoleprovet-ord_.$term'
 import { Route as HogskoleprovetNormeringTermRouteImport } from './routes/hogskoleprovet-normering_.$term'
+import { Route as HogskoleprovetAntalRattNivaRouteImport } from './routes/hogskoleprovet-antal-ratt_.$niva'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
 import { Route as GuiderTidspressRouteImport } from './routes/guider/tidspress'
 import { Route as GuiderOrdRouteImport } from './routes/guider/ord'
@@ -199,6 +201,11 @@ const HogskoleprovetDatumRoute = HogskoleprovetDatumRouteImport.update({
   path: '/hogskoleprovet-datum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HogskoleprovetAntalRattRoute = HogskoleprovetAntalRattRouteImport.update({
+  id: '/hogskoleprovet-antal-ratt',
+  path: '/hogskoleprovet-antal-ratt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GamlaProvRoute = GamlaProvRouteImport.update({
   id: '/gamla-prov',
   path: '/gamla-prov',
@@ -279,6 +286,12 @@ const HogskoleprovetNormeringTermRoute =
   HogskoleprovetNormeringTermRouteImport.update({
     id: '/hogskoleprovet-normering_/$term',
     path: '/hogskoleprovet-normering/$term',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HogskoleprovetAntalRattNivaRoute =
+  HogskoleprovetAntalRattNivaRouteImport.update({
+    id: '/hogskoleprovet-antal-ratt_/$niva',
+    path: '/hogskoleprovet-antal-ratt/$niva',
     getParentRoute: () => rootRouteImport,
   } as any)
 const GuiderXyzRoute = GuiderXyzRouteImport.update({
@@ -403,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-antal-ratt': typeof HogskoleprovetAntalRattRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
@@ -446,6 +460,7 @@ export interface FileRoutesByFullPath {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-antal-ratt/$niva': typeof HogskoleprovetAntalRattNivaRoute
   '/hogskoleprovet-normering/$term': typeof HogskoleprovetNormeringTermRoute
   '/hogskoleprovet-ord/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
@@ -468,6 +483,7 @@ export interface FileRoutesByTo {
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-antal-ratt': typeof HogskoleprovetAntalRattRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
@@ -511,6 +527,7 @@ export interface FileRoutesByTo {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-antal-ratt/$niva': typeof HogskoleprovetAntalRattNivaRoute
   '/hogskoleprovet-normering/$term': typeof HogskoleprovetNormeringTermRoute
   '/hogskoleprovet-ord/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
@@ -534,6 +551,7 @@ export interface FileRoutesById {
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
   '/friends': typeof FriendsRoute
   '/gamla-prov': typeof GamlaProvRoute
+  '/hogskoleprovet-antal-ratt': typeof HogskoleprovetAntalRattRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
   '/hogskoleprovet-formler': typeof HogskoleprovetFormlerRoute
@@ -577,6 +595,7 @@ export interface FileRoutesById {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-antal-ratt_/$niva': typeof HogskoleprovetAntalRattNivaRoute
   '/hogskoleprovet-normering_/$term': typeof HogskoleprovetNormeringTermRoute
   '/hogskoleprovet-ord_/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang_/$program': typeof HogskoleprovetPoangProgramRoute
@@ -601,6 +620,7 @@ export interface FileRouteTypes {
     | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-antal-ratt'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
     | '/hogskoleprovet-formler'
@@ -644,6 +664,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-antal-ratt/$niva'
     | '/hogskoleprovet-normering/$term'
     | '/hogskoleprovet-ord/$term'
     | '/hogskoleprovet-poang/$program'
@@ -666,6 +687,7 @@ export interface FileRouteTypes {
     | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-antal-ratt'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
     | '/hogskoleprovet-formler'
@@ -709,6 +731,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-antal-ratt/$niva'
     | '/hogskoleprovet-normering/$term'
     | '/hogskoleprovet-ord/$term'
     | '/hogskoleprovet-poang/$program'
@@ -731,6 +754,7 @@ export interface FileRouteTypes {
     | '/forum-sitemap.xml'
     | '/friends'
     | '/gamla-prov'
+    | '/hogskoleprovet-antal-ratt'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
     | '/hogskoleprovet-formler'
@@ -774,6 +798,7 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-antal-ratt_/$niva'
     | '/hogskoleprovet-normering_/$term'
     | '/hogskoleprovet-ord_/$term'
     | '/hogskoleprovet-poang_/$program'
@@ -797,6 +822,7 @@ export interface RootRouteChildren {
   ForumSitemapDotxmlRoute: typeof ForumSitemapDotxmlRoute
   FriendsRoute: typeof FriendsRoute
   GamlaProvRoute: typeof GamlaProvRoute
+  HogskoleprovetAntalRattRoute: typeof HogskoleprovetAntalRattRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
   HogskoleprovetFacitRoute: typeof HogskoleprovetFacitRoute
   HogskoleprovetFormlerRoute: typeof HogskoleprovetFormlerRoute
@@ -840,6 +866,7 @@ export interface RootRouteChildren {
   GuiderOrdRoute: typeof GuiderOrdRoute
   GuiderTidspressRoute: typeof GuiderTidspressRoute
   GuiderXyzRoute: typeof GuiderXyzRoute
+  HogskoleprovetAntalRattNivaRoute: typeof HogskoleprovetAntalRattNivaRoute
   HogskoleprovetNormeringTermRoute: typeof HogskoleprovetNormeringTermRoute
   HogskoleprovetOrdTermRoute: typeof HogskoleprovetOrdTermRoute
   HogskoleprovetPoangProgramRoute: typeof HogskoleprovetPoangProgramRoute
@@ -1032,6 +1059,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HogskoleprovetDatumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hogskoleprovet-antal-ratt': {
+      id: '/hogskoleprovet-antal-ratt'
+      path: '/hogskoleprovet-antal-ratt'
+      fullPath: '/hogskoleprovet-antal-ratt'
+      preLoaderRoute: typeof HogskoleprovetAntalRattRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gamla-prov': {
       id: '/gamla-prov'
       path: '/gamla-prov'
@@ -1142,6 +1176,13 @@ declare module '@tanstack/react-router' {
       path: '/hogskoleprovet-normering/$term'
       fullPath: '/hogskoleprovet-normering/$term'
       preLoaderRoute: typeof HogskoleprovetNormeringTermRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-antal-ratt_/$niva': {
+      id: '/hogskoleprovet-antal-ratt_/$niva'
+      path: '/hogskoleprovet-antal-ratt/$niva'
+      fullPath: '/hogskoleprovet-antal-ratt/$niva'
+      preLoaderRoute: typeof HogskoleprovetAntalRattNivaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guider/xyz': {
@@ -1309,6 +1350,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForumSitemapDotxmlRoute: ForumSitemapDotxmlRoute,
   FriendsRoute: FriendsRoute,
   GamlaProvRoute: GamlaProvRoute,
+  HogskoleprovetAntalRattRoute: HogskoleprovetAntalRattRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
   HogskoleprovetFacitRoute: HogskoleprovetFacitRoute,
   HogskoleprovetFormlerRoute: HogskoleprovetFormlerRoute,
@@ -1353,6 +1395,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderOrdRoute: GuiderOrdRoute,
   GuiderTidspressRoute: GuiderTidspressRoute,
   GuiderXyzRoute: GuiderXyzRoute,
+  HogskoleprovetAntalRattNivaRoute: HogskoleprovetAntalRattNivaRoute,
   HogskoleprovetNormeringTermRoute: HogskoleprovetNormeringTermRoute,
   HogskoleprovetOrdTermRoute: HogskoleprovetOrdTermRoute,
   HogskoleprovetPoangProgramRoute: HogskoleprovetPoangProgramRoute,

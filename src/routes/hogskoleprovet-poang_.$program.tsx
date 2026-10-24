@@ -54,7 +54,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     h1: "Läkarprogrammet · HP-poäng per lärosäte",
     intro:
       "Läkarprogrammet finns vid åtta lärosäten i Sverige och hör till de mest sökta utbildningarna i landet. Här är den senaste antagningspoängen i högskoleprovsgruppen (HP) för de största.",
-    note: "Karolinska Institutet antar dessutom en del av sina platser genom PIL (prov- och intervjubaserat urval) — ett separat spår med kognitivt test och intervjuer, där ett starkt högskoleprovsresultat är biljetten in till steg två. PIL ersätter inte HP-kvoten ovan, det är en tredje väg vid sidan av den.",
+    note: "Karolinska Institutet antar dessutom en del av sina platser genom PIL (prov- och intervjubaserat urval), ett separat spår med kognitivt test och intervjuer, där ett starkt högskoleprovsresultat är biljetten in till steg två. PIL ersätter inte HP-kvoten ovan, det är en tredje väg vid sidan av den.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.8 },
@@ -76,7 +76,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Civilekonomprogrammet, Handelshögskolan i Stockholm",
     h1: "Handelshögskolan · HP-poäng för Civilekonomprogrammet",
     intro:
-      "Handelshögskolan i Stockholm (SSE) är en fristående högskola och en av de mest sökta ekonomutbildningarna i landet. Sedan 2025 antas de flesta platserna via gymnasiebetyg med meritpoäng, men en HP-kvot finns kvar — och kravet har stigit varje år.",
+      "Handelshögskolan i Stockholm (SSE) är en fristående högskola och en av de mest sökta ekonomutbildningarna i landet. Sedan 2025 antas de flesta platserna via gymnasiebetyg med meritpoäng, men en HP-kvot finns kvar, och kravet har stigit varje år.",
     note: "Från och med 2025 räknar Handelshögskolan in meritpoäng i betygsurvalet (max meritvärde höjt från 20,0 till 22,5), vilket är varför BI/BII-poängen ovan inte är direkt jämförbara mellan 2024 och 2025. HP-kravet påverkas inte av den ändringen.",
     labelHeader: "Antagningsomgång",
     schools: [
@@ -125,7 +125,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Psykologprogrammet",
     h1: "Psykologprogrammet · HP-poäng per lärosäte",
     intro:
-      "Psykologprogrammet ges vid elva lärosäten i Sverige. Kravet i högskoleprovsgruppen varierar mer mellan orter än för de flesta andra program på den här listan — från 1,25 till 1,70.",
+      "Psykologprogrammet ges vid elva lärosäten i Sverige. Kravet i högskoleprovsgruppen varierar mer mellan orter än för de flesta andra program på den här listan: från 1,25 till 1,70.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.7 },
@@ -190,7 +190,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Sjuksköterskeprogrammet",
     h1: "Sjuksköterskeprogrammet · HP-poäng, olika orter",
     intro:
-      "Sjuksköterskeprogrammet ges på fler orter än något annat program på den här listan, inklusive decentraliserade platser. Kravet skiljer sig mycket mellan campus — betydligt mer än för de mer eftersökta programmen ovan.",
+      "Sjuksköterskeprogrammet ges på fler orter än något annat program på den här listan, inklusive decentraliserade platser. Kravet skiljer sig mycket mellan campus, betydligt mer än för de mer eftersökta programmen ovan.",
     labelHeader: "Lärosäte / studieort",
     schools: [
       { label: "Uppsala universitet", sub: "Uppsala", hp: 1.1 },
@@ -616,7 +616,7 @@ function ProgramPage() {
             {cfg.sourceLabel}
           </a>
           , kontrollerad {cfg.verifiedAt}. Gränserna sätts om varje antagningsomgång och kan både
-          stiga och sjunka — använd talen som en fingervisning, inte ett facit för nästa termin.
+          stiga och sjunka. Använd talen som en fingervisning, inte ett facit för nästa termin.
         </p>
         {cfg.note && <p className="mt-4 text-[14px] leading-relaxed text-white/55">{cfg.note}</p>}
       </section>

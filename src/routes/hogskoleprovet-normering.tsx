@@ -370,6 +370,12 @@ function NormeringHub() {
             Facit senaste provet
           </Link>
           <Link
+            to="/hogskoleprovet-antal-ratt"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
+          >
+            Antal rätt per poäng
+          </Link>
+          <Link
             to="/hogskoleprovet-poang"
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >

@@ -7,6 +7,13 @@ import {
   normeringFromRatio,
   normeringFromRaw,
   officialNormering,
+  ANTAL_RATT_NIVÅER,
+  kravFörNivå,
+  nivåFrånSlug,
+  nivåSlug,
+  normeringTerms,
+  officialMinRawFor,
+  sammanfattaKrav,
 } from "./normering";
 
 describe("normeringFromRaw", () => {
@@ -189,5 +196,36 @@ describe("normeringssidornas helpers", () => {
     const { officialTable } = await import("./normering");
     expect(officialTable("2019ht", "kvant")).toBeNull();
     expect(officialTable("1999ht", "verbal")).toBeNull();
+  });
+});
+
+describe("antal rätt per nivå", () => {
+  it("har sexton nivåer från 0,5 till 2,0", () => {
+    expect(ANTAL_RATT_NIVÅER).toHaveLength(16);
+    expect(ANTAL_RATT_NIVÅER[0]).toBe(0.5);
+    expect(ANTAL_RATT_NIVÅER[15]).toBe(2);
+  });
+  it("översätter mellan nivå och slug", () => {
+    expect(nivåSlug(1.5)).toBe("1-5");
+    expect(nivåFrånSlug("1-5")).toBe(1.5);
+    expect(nivåFrånSlug("2-0")).toBe(2);
+    expect(nivåFrånSlug("0-4")).toBeNull();
+    expect(nivåFrånSlug("1,5")).toBeNull();
+    for (const n of ANTAL_RATT_NIVÅER) expect(nivåFrånSlug(nivåSlug(n))).toBe(n);
+  });
+  it("följer de officiella tabellerna", () => {
+    const rader = kravFörNivå(2.0);
+    expect(rader.length).toBe(normeringTerms().length);
+    for (const r of rader) {
+      if (r.verbal !== null) expect(r.verbal).toBe(officialMinRawFor(r.term, "verbal", 2.0));
+      if (r.kvant !== null) expect(r.kvant).toBe(officialMinRawFor(r.term, "kvant", 2.0));
+    }
+  });
+  it("kräver aldrig fler rätt för en lägre nivå", () => {
+    const hög = sammanfattaKrav(kravFörNivå(2.0), "kvant")!;
+    const låg = sammanfattaKrav(kravFörNivå(1.0), "kvant")!;
+    expect(låg.median).toBeLessThan(hög.median);
+    expect(hög.min).toBeLessThanOrEqual(hög.median);
+    expect(hög.median).toBeLessThanOrEqual(hög.max);
   });
 });

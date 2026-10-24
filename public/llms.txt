@@ -11,6 +11,7 @@ Officiell domän: https://tvakommanollan.se
 - Gratis att använda: alla gamla prov, guider, normering, ordlista och forum kräver varken betalning eller konto. Ordträningen och MEK-träningen är gratis för de första 40 uppgifterna, sedan finns ett engångsköp.
 - Arkiv: 30 högskoleprov (vårprovet 2012 till vårprovet 2026), 120 provpass och 4 800 uppgifter med facit, skrivbara på originaltid med automatisk rättning.
 - Normering: UHR:s officiella normeringstabeller för 30 provtillfällen, en sida per prov. Exempel: för 2,0 krävdes 73–78 rätt av 80 på den verbala delen och 68–77 av 80 på den kvantitativa, beroende på prov.
+- Antal rätt av 80 som krävts (median över 29 prov, verbal/kvantitativ del): 1,0 kräver 48/45, 1,5 kräver 64/61 och 2,0 kräver 76/74. En sida per poäng från 0,5 till 2,0: /hogskoleprovet-antal-ratt/<poäng> (t.ex. /hogskoleprovet-antal-ratt/1-5).
 - Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
 - HP-poäng per program (urval 2, HT 2026) för 19 utbildningar, hämtade ur UHR:s antagningsstatistik.
 - Grundad av Niklas, som fick 1,95 på högskoleprovet.
@@ -25,7 +26,7 @@ Officiell domän: https://tvakommanollan.se
 - [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 800 uppgifter med facit (30 provtillfällen × 4 räknade provpass × 40 uppgifter). Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Engelsk läsförståelse (ELF) finns i samtliga 60 verbala provpass. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
 - [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google), tar under en minut.
 - [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
-- [Facit och trolig normering](https://tvakommanollan.se/hogskoleprovet-facit): Facit till senaste högskoleprovet (höstprovet 18 oktober 2026, provpass 1, 2, 4 och 5), kontrollerat mot UHR:s officiella facit från 21 oktober 2026,, uppskattad trolig normering för 2,0 (76 av 80 rätt på båda delarna, en bedömning gjord mot UHR:s normering för de senaste proven) och en tabell över vad 2,0 krävt tidigare.
+- [Facit och trolig normering](https://tvakommanollan.se/hogskoleprovet-facit): Facit till senaste högskoleprovet (höstprovet 18 oktober 2026, provpass 1, 2, 4 och 5), kontrollerat mot UHR:s officiella facit från 21 oktober 2026, uppskattad trolig normering för 2,0 (76 av 80 rätt på båda delarna, en bedömning gjord mot UHR:s normering för de senaste proven) och en tabell över vad 2,0 krävt tidigare.
 - [Resultatet på högskoleprovet](https://tvakommanollan.se/hogskoleprovet-resultat): När resultatet kommer (höstprovet 2026: 25 november enligt UHR), var man hämtar det, att det gäller i åtta år och att bästa giltiga resultat räknas vid urval.
 - [Formler för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-formler): Formlerna som behövs i XYZ och KVA (bråk, potenser, kvadreringsregler, räta linjer, area, volym, sannolikhet, hastighet), med länkar till riktiga provuppgifter.
 - [Orden på högskoleprovet](https://tvakommanollan.se/hogskoleprovet-ord): Alla ORD-uppgifter från varje högskoleprov sedan 2012 med svarsalternativ och rätt svar, ett prov per sida: /hogskoleprovet-ord/<termin> (t.ex. /hogskoleprovet-ord/2025ht).
@@ -64,6 +65,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 
 ## Strategiguider
 
+- [Antal rätt per poäng](https://tvakommanollan.se/hogskoleprovet-antal-ratt): Hur många rätt som krävts för varje poäng från 0,5 till 2,0 på båda delarna, med lägsta, högsta och median över alla prov sedan 2012. En sida per poäng med gränsen på varje enskilt prov.
 - [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet och systemvetenskap.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.

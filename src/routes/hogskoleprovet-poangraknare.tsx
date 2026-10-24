@@ -176,7 +176,7 @@ function PoangraknarePage() {
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           Normeringen är inte linjär. UHR omvandlar antalet rätt till en normerad poäng mellan 0,00
-          och 2,00 utifrån hur alla som skrev just det provtillfället faktiskt presterade — inte
+          och 2,00 utifrån hur alla som skrev just det provtillfället faktiskt presterade, inte
           efter en fast mall. Det gör att samma antal rätt kan ge olika poäng på olika
           provtillfällen, och att ett par rätt extra i mitten av skalan ofta ger mer poäng än samma
           antal nära toppen eller botten.
@@ -188,7 +188,21 @@ function PoangraknarePage() {
           <Link to="/gamla-prov" className="text-[var(--amber)] underline underline-offset-2">
             alla arkiverade provtillfällen
           </Link>{" "}
-          att skriva gratis.
+          att skriva gratis. Hur många rätt varje poäng har krävt på riktiga prov står i{" "}
+          <Link
+            to="/hogskoleprovet-antal-ratt"
+            className="text-[var(--amber)] underline underline-offset-2"
+          >
+            tabellen över antal rätt per poäng
+          </Link>
+          , och hela tabellen för varje prov på{" "}
+          <Link
+            to="/hogskoleprovet-normering"
+            className="text-[var(--amber)] underline underline-offset-2"
+          >
+            normeringssidan
+          </Link>
+          .
         </p>
       </section>
 

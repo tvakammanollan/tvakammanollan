@@ -697,6 +697,11 @@ const RESURSER: Array<{ to: string; titel: string; text: string }> = [
     text: "Hur många rätt som krävts för 2,0 på varje prov sedan 2012.",
   },
   {
+    to: "/hogskoleprovet-antal-ratt",
+    titel: "Hur många rätt för 1,5?",
+    text: "Antal rätt som krävts för varje poäng från 0,5 till 2,0.",
+  },
+  {
     to: "/hogskoleprovet-facit",
     titel: "Facit senaste provet",
     text: "Alla svar, kontrollerade mot UHR, och trolig normering.",

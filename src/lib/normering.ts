@@ -298,3 +298,78 @@ export function normeringTerms(): Array<{ term: string; date: string; label: str
 export function normeringDate(term: string): string | null {
   return OFFICIELL[term]?.date ?? null;
 }
+
+/* ── Antal rätt per nivå (/hogskoleprovet-antal-ratt) ─────────────── */
+
+/** Nivåerna som har en egen sida: 0,5 till 2,0 i steg om 0,1. */
+export const ANTAL_RATT_NIVÅER: readonly number[] = Array.from(
+  { length: 16 },
+  (_, i) => Math.round((0.5 + i * 0.1) * 10) / 10,
+);
+
+/** 1.5 → "1-5", slugformen i adressen. */
+export function nivåSlug(value: number): string {
+  return value.toFixed(1).replace(".", "-");
+}
+
+/** "1-5" → 1.5, eller `null` om det inte är en nivå med egen sida. */
+export function nivåFrånSlug(slug: string): number | null {
+  const m = /^([0-2])-(\d)$/.exec(slug);
+  if (!m) return null;
+  const v = Number(`${m[1]}.${m[2]}`);
+  return ANTAL_RATT_NIVÅER.includes(v) ? v : null;
+}
+
+/** 1.5 → "1,5". */
+export function nivåText(value: number): string {
+  return value.toFixed(1).replace(".", ",");
+}
+
+export interface NivåKrav {
+  term: string;
+  label: string;
+  date: string;
+  /** Minsta antal rätt för nivån, eller `null` när tabellen för delen saknas. */
+  verbal: number | null;
+  kvant: number | null;
+  /** Delen hade 80 uppgifter (våren 2012 hade 76 verbalt). */
+  verbalFull: boolean;
+  kvantFull: boolean;
+}
+
+/** Vad nivån krävde på varje prov med officiell tabell, nyast först. */
+export function kravFörNivå(value: number): NivåKrav[] {
+  return normeringTerms().map(({ term, label, date }) => ({
+    term,
+    label,
+    date,
+    verbal: officialMinRawFor(term, "verbal", value),
+    kvant: officialMinRawFor(term, "kvant", value),
+    verbalFull: officialPartMax(term, "verbal") === 80,
+    kvantFull: officialPartMax(term, "kvant") === 80,
+  }));
+}
+
+export interface KravSammanfattning {
+  min: number;
+  max: number;
+  /** Medianen, avrundad till heltal uppåt vid två mittvärden. */
+  median: number;
+  antal: number;
+}
+
+/** Spann och median för en provdel, bara prov där delen hade 80 uppgifter. */
+export function sammanfattaKrav(
+  rader: NivåKrav[],
+  kind: "verbal" | "kvant",
+): KravSammanfattning | null {
+  const v = rader
+    .filter((r) => (kind === "verbal" ? r.verbalFull : r.kvantFull))
+    .map((r) => r[kind])
+    .filter((x): x is number => x !== null)
+    .sort((a, b) => a - b);
+  if (!v.length) return null;
+  const mid = Math.floor(v.length / 2);
+  const median = v.length % 2 ? v[mid] : Math.ceil((v[mid - 1] + v[mid]) / 2);
+  return { min: v[0], max: v[v.length - 1], median, antal: v.length };
+}
