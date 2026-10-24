@@ -28,6 +28,8 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as HogskoleprovetPoangraknareRouteImport } from './routes/hogskoleprovet-poangraknare'
 import { Route as HogskoleprovetPoangRouteImport } from './routes/hogskoleprovet-poang'
+import { Route as HogskoleprovetOrdRouteImport } from './routes/hogskoleprovet-ord'
+import { Route as HogskoleprovetNormeringRouteImport } from './routes/hogskoleprovet-normering'
 import { Route as HogskoleprovetFacitRouteImport } from './routes/hogskoleprovet-facit'
 import { Route as HogskoleprovetDatumRouteImport } from './routes/hogskoleprovet-datum'
 import { Route as GamlaProvRouteImport } from './routes/gamla-prov'
@@ -44,6 +46,8 @@ import { Route as OrdlistaOrdRouteImport } from './routes/ordlista_.$ord'
 import { Route as MatchMatchIdRouteImport } from './routes/match.$matchId'
 import { Route as JoinRoomCodeRouteImport } from './routes/join.$roomCode'
 import { Route as HogskoleprovetPoangProgramRouteImport } from './routes/hogskoleprovet-poang_.$program'
+import { Route as HogskoleprovetOrdTermRouteImport } from './routes/hogskoleprovet-ord_.$term'
+import { Route as HogskoleprovetNormeringTermRouteImport } from './routes/hogskoleprovet-normering_.$term'
 import { Route as GuiderXyzRouteImport } from './routes/guider/xyz'
 import { Route as GuiderTidspressRouteImport } from './routes/guider/tidspress'
 import { Route as GuiderOrdRouteImport } from './routes/guider/ord'
@@ -163,6 +167,16 @@ const HogskoleprovetPoangRoute = HogskoleprovetPoangRouteImport.update({
   path: '/hogskoleprovet-poang',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HogskoleprovetOrdRoute = HogskoleprovetOrdRouteImport.update({
+  id: '/hogskoleprovet-ord',
+  path: '/hogskoleprovet-ord',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetNormeringRoute = HogskoleprovetNormeringRouteImport.update({
+  id: '/hogskoleprovet-normering',
+  path: '/hogskoleprovet-normering',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HogskoleprovetFacitRoute = HogskoleprovetFacitRouteImport.update({
   id: '/hogskoleprovet-facit',
   path: '/hogskoleprovet-facit',
@@ -242,6 +256,17 @@ const HogskoleprovetPoangProgramRoute =
   HogskoleprovetPoangProgramRouteImport.update({
     id: '/hogskoleprovet-poang_/$program',
     path: '/hogskoleprovet-poang/$program',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HogskoleprovetOrdTermRoute = HogskoleprovetOrdTermRouteImport.update({
+  id: '/hogskoleprovet-ord_/$term',
+  path: '/hogskoleprovet-ord/$term',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HogskoleprovetNormeringTermRoute =
+  HogskoleprovetNormeringTermRouteImport.update({
+    id: '/hogskoleprovet-normering_/$term',
+    path: '/hogskoleprovet-normering/$term',
     getParentRoute: () => rootRouteImport,
   } as any)
 const GuiderXyzRoute = GuiderXyzRouteImport.update({
@@ -368,6 +393,8 @@ export interface FileRoutesByFullPath {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
+  '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -405,6 +432,8 @@ export interface FileRoutesByFullPath {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-normering/$term': typeof HogskoleprovetNormeringTermRoute
+  '/hogskoleprovet-ord/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -427,6 +456,8 @@ export interface FileRoutesByTo {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
+  '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -464,6 +495,8 @@ export interface FileRoutesByTo {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-normering/$term': typeof HogskoleprovetNormeringTermRoute
+  '/hogskoleprovet-ord/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -487,6 +520,8 @@ export interface FileRoutesById {
   '/gamla-prov': typeof GamlaProvRoute
   '/hogskoleprovet-datum': typeof HogskoleprovetDatumRoute
   '/hogskoleprovet-facit': typeof HogskoleprovetFacitRoute
+  '/hogskoleprovet-normering': typeof HogskoleprovetNormeringRoute
+  '/hogskoleprovet-ord': typeof HogskoleprovetOrdRoute
   '/hogskoleprovet-poang': typeof HogskoleprovetPoangRoute
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
@@ -524,6 +559,8 @@ export interface FileRoutesById {
   '/guider/ord': typeof GuiderOrdRoute
   '/guider/tidspress': typeof GuiderTidspressRoute
   '/guider/xyz': typeof GuiderXyzRoute
+  '/hogskoleprovet-normering_/$term': typeof HogskoleprovetNormeringTermRoute
+  '/hogskoleprovet-ord_/$term': typeof HogskoleprovetOrdTermRoute
   '/hogskoleprovet-poang_/$program': typeof HogskoleprovetPoangProgramRoute
   '/join/$roomCode': typeof JoinRoomCodeRoute
   '/match/$matchId': typeof MatchMatchIdRoute
@@ -548,6 +585,8 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-normering'
+    | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -585,6 +624,8 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-normering/$term'
+    | '/hogskoleprovet-ord/$term'
     | '/hogskoleprovet-poang/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -607,6 +648,8 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-normering'
+    | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -644,6 +687,8 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-normering/$term'
+    | '/hogskoleprovet-ord/$term'
     | '/hogskoleprovet-poang/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -666,6 +711,8 @@ export interface FileRouteTypes {
     | '/gamla-prov'
     | '/hogskoleprovet-datum'
     | '/hogskoleprovet-facit'
+    | '/hogskoleprovet-normering'
+    | '/hogskoleprovet-ord'
     | '/hogskoleprovet-poang'
     | '/hogskoleprovet-poangraknare'
     | '/integritetspolicy'
@@ -703,6 +750,8 @@ export interface FileRouteTypes {
     | '/guider/ord'
     | '/guider/tidspress'
     | '/guider/xyz'
+    | '/hogskoleprovet-normering_/$term'
+    | '/hogskoleprovet-ord_/$term'
     | '/hogskoleprovet-poang_/$program'
     | '/join/$roomCode'
     | '/match/$matchId'
@@ -726,6 +775,8 @@ export interface RootRouteChildren {
   GamlaProvRoute: typeof GamlaProvRoute
   HogskoleprovetDatumRoute: typeof HogskoleprovetDatumRoute
   HogskoleprovetFacitRoute: typeof HogskoleprovetFacitRoute
+  HogskoleprovetNormeringRoute: typeof HogskoleprovetNormeringRoute
+  HogskoleprovetOrdRoute: typeof HogskoleprovetOrdRoute
   HogskoleprovetPoangRoute: typeof HogskoleprovetPoangRoute
   HogskoleprovetPoangraknareRoute: typeof HogskoleprovetPoangraknareRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
@@ -763,6 +814,8 @@ export interface RootRouteChildren {
   GuiderOrdRoute: typeof GuiderOrdRoute
   GuiderTidspressRoute: typeof GuiderTidspressRoute
   GuiderXyzRoute: typeof GuiderXyzRoute
+  HogskoleprovetNormeringTermRoute: typeof HogskoleprovetNormeringTermRoute
+  HogskoleprovetOrdTermRoute: typeof HogskoleprovetOrdTermRoute
   HogskoleprovetPoangProgramRoute: typeof HogskoleprovetPoangProgramRoute
   JoinRoomCodeRoute: typeof JoinRoomCodeRoute
   MatchMatchIdRoute: typeof MatchMatchIdRoute
@@ -911,6 +964,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HogskoleprovetPoangRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hogskoleprovet-ord': {
+      id: '/hogskoleprovet-ord'
+      path: '/hogskoleprovet-ord'
+      fullPath: '/hogskoleprovet-ord'
+      preLoaderRoute: typeof HogskoleprovetOrdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-normering': {
+      id: '/hogskoleprovet-normering'
+      path: '/hogskoleprovet-normering'
+      fullPath: '/hogskoleprovet-normering'
+      preLoaderRoute: typeof HogskoleprovetNormeringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hogskoleprovet-facit': {
       id: '/hogskoleprovet-facit'
       path: '/hogskoleprovet-facit'
@@ -1021,6 +1088,20 @@ declare module '@tanstack/react-router' {
       path: '/hogskoleprovet-poang/$program'
       fullPath: '/hogskoleprovet-poang/$program'
       preLoaderRoute: typeof HogskoleprovetPoangProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-ord_/$term': {
+      id: '/hogskoleprovet-ord_/$term'
+      path: '/hogskoleprovet-ord/$term'
+      fullPath: '/hogskoleprovet-ord/$term'
+      preLoaderRoute: typeof HogskoleprovetOrdTermRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hogskoleprovet-normering_/$term': {
+      id: '/hogskoleprovet-normering_/$term'
+      path: '/hogskoleprovet-normering/$term'
+      fullPath: '/hogskoleprovet-normering/$term'
+      preLoaderRoute: typeof HogskoleprovetNormeringTermRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guider/xyz': {
@@ -1190,6 +1271,8 @@ const rootRouteChildren: RootRouteChildren = {
   GamlaProvRoute: GamlaProvRoute,
   HogskoleprovetDatumRoute: HogskoleprovetDatumRoute,
   HogskoleprovetFacitRoute: HogskoleprovetFacitRoute,
+  HogskoleprovetNormeringRoute: HogskoleprovetNormeringRoute,
+  HogskoleprovetOrdRoute: HogskoleprovetOrdRoute,
   HogskoleprovetPoangRoute: HogskoleprovetPoangRoute,
   HogskoleprovetPoangraknareRoute: HogskoleprovetPoangraknareRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
@@ -1228,6 +1311,8 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderOrdRoute: GuiderOrdRoute,
   GuiderTidspressRoute: GuiderTidspressRoute,
   GuiderXyzRoute: GuiderXyzRoute,
+  HogskoleprovetNormeringTermRoute: HogskoleprovetNormeringTermRoute,
+  HogskoleprovetOrdTermRoute: HogskoleprovetOrdTermRoute,
   HogskoleprovetPoangProgramRoute: HogskoleprovetPoangProgramRoute,
   JoinRoomCodeRoute: JoinRoomCodeRoute,
   MatchMatchIdRoute: MatchMatchIdRoute,
@@ -1245,11 +1330,15 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
+
 import type { startInstance } from './start.ts'
+
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
+
     router: Awaited<ReturnType<typeof getRouter>>
+
     config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

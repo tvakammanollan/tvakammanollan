@@ -8,6 +8,7 @@ import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
 import { passResult, summariseExam, type PassResult } from "@/lib/prov-results";
 import { formatDateLong, formatInt } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type PassSummary } from "@/types/gamla-prov";
+import { normeringDate } from "@/lib/normering";
 
 /* =====================================================================
    Ett provtillfälle: provpassen att skriva, plus hela facit i en tabell.
@@ -145,7 +146,29 @@ function ExamTermPage() {
           Facit
         </h2>
         <p className="mt-1 text-sm text-white/45">
-          Rätt svar för samtliga uppgifter, provpass för provpass.
+          Rätt svar för samtliga uppgifter, provpass för provpass. Alla ORD-ord med svar står också{" "}
+          <Link
+            to="/hogskoleprovet-ord/$term"
+            params={{ term: exam.term }}
+            className="underline underline-offset-2 hover:text-white/70"
+          >
+            samlade på en sida
+          </Link>
+          .
+          {normeringDate(exam.term) && (
+            <>
+              {" "}
+              Vad varje antal rätt gav finns i{" "}
+              <Link
+                to="/hogskoleprovet-normering/$term"
+                params={{ term: exam.term }}
+                className="underline underline-offset-2 hover:text-white/70"
+              >
+                normeringen för {exam.label.toLowerCase()}
+              </Link>
+              .
+            </>
+          )}
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {facit.map((f) => (

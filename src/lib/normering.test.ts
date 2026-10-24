@@ -160,3 +160,34 @@ describe("normeringForPart", () => {
     expect(uppskattad.value).toBeGreaterThan(0);
   });
 });
+
+describe("normeringssidornas helpers", () => {
+  it("normeringTerms är nyast först och har etiketter", async () => {
+    const { normeringTerms } = await import("./normering");
+    const terms = normeringTerms();
+    expect(terms.length).toBeGreaterThan(20);
+    for (let i = 1; i < terms.length; i++) {
+      expect(terms[i - 1].date >= terms[i].date).toBe(true);
+    }
+    expect(terms.find((t) => t.term === "2025ht")?.label).toBe("Hösten 2025");
+  });
+
+  it("officialTable är sammanhängande från 0 till provdelens längd", async () => {
+    const { normeringTerms, officialTable, officialPartMax } = await import("./normering");
+    for (const { term } of normeringTerms()) {
+      for (const kind of ["verbal", "kvant"] as const) {
+        const rows = officialTable(term, kind);
+        if (!rows) continue;
+        expect(rows[0].from).toBe(0);
+        expect(rows[rows.length - 1].to).toBe(officialPartMax(term, kind));
+        for (let i = 1; i < rows.length; i++) expect(rows[i].from).toBe(rows[i - 1].to + 1);
+      }
+    }
+  });
+
+  it("saknad tabell ger null, inte approximationen", async () => {
+    const { officialTable } = await import("./normering");
+    expect(officialTable("2019ht", "kvant")).toBeNull();
+    expect(officialTable("1999ht", "verbal")).toBeNull();
+  });
+});

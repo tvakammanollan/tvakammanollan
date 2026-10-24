@@ -384,7 +384,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/guider/kva">KVA-guide</a>
           <a href="/guider/nog">NOG-guide</a>
           <a href="/guider/dtk">DTK-guide</a>
-          <a href="/hogskoleprovet-poang">HP-poäng och normering</a>
+          <a href="/hogskoleprovet-poang">HP-poäng och antagning</a>
+          <a href="/hogskoleprovet-normering">Normering högskoleprovet</a>
+          <a href="/hogskoleprovet-ord">Orden på högskoleprovet</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
           <a href="/om">Om Tvåkommanollan</a>

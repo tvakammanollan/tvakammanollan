@@ -227,7 +227,11 @@ function FacitPage() {
                 </tbody>
               </table>
               <p className="border-t border-white/8 px-4 py-2 text-[12px] text-white/45">
-                Minsta antal rätt för 2,0 enligt UHR:s normeringstabeller.
+                Minsta antal rätt för 2,0 enligt UHR:s normeringstabeller.{" "}
+                <Link to="/hogskoleprovet-normering" className="underline underline-offset-2">
+                  Alla prov och hela tabellerna
+                </Link>
+                .
               </p>
             </div>
           )}
@@ -290,6 +294,12 @@ function FacitPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             Nästa provdatum
+          </Link>
+          <Link
+            to="/hogskoleprovet-normering"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
+          >
+            Normering tidigare prov
           </Link>
           <Link
             to="/hogskoleprovet-poangraknare"

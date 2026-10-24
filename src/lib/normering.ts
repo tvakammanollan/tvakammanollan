@@ -251,3 +251,50 @@ export function termLabel(term: string, date: string): string {
   const månad = MÅNAD[Number(date.slice(5, 7)) - 1];
   return månad ? `${bas} (${månad})` : bas;
 }
+
+/* ── Normeringssidorna (/hogskoleprovet-normering) ────────────────── */
+
+/** En rad i UHR:s tabell: antal rätt från–till och poängen det gav. */
+export interface NormeringRad {
+  from: number;
+  to: number;
+  value: number;
+}
+
+/**
+ * UHR:s tabell för en provdel, som rader. `null` när tabellen saknas, och då
+ * ska sidan säga det i stället för att visa approximationen: normeringssidorna
+ * finns för att de visar de riktiga gränserna, inte en gissning.
+ */
+export function officialTable(term: string, kind: "verbal" | "kvant"): NormeringRad[] | null {
+  const table = OFFICIELL[term]?.[kind];
+  if (!table || table.length === 0) return null;
+  return table.map(([from, to, value]) => ({ from, to, value }));
+}
+
+/** Antal uppgifter i provdelen enligt tabellen (80, men 76 verbalt våren 2012). */
+export function officialPartMax(term: string, kind: "verbal" | "kvant"): number | null {
+  const table = OFFICIELL[term]?.[kind];
+  return table && table.length ? partMax(table) : null;
+}
+
+/**
+ * Alla provtillfällen med MINST en officiell tabell, nyast först. Två
+ * tillfällen har bara den ena delen (2019ht verbal, 2025vt kvant), och de får
+ * egna sidor ändå: halva tabellen är fortfarande det enda stället den finns.
+ */
+export function normeringTerms(): Array<{ term: string; date: string; label: string }> {
+  return Object.entries(OFFICIELL)
+    .filter(([, p]) => (p.verbal || p.kvant) && p.date)
+    .map(([term, p]) => ({
+      term,
+      date: p.date as string,
+      label: termLabel(term, p.date as string),
+    }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/** Datumet för ett provtillfälle i normeringsdatan, eller `null`. */
+export function normeringDate(term: string): string | null {
+  return OFFICIELL[term]?.date ?? null;
+}

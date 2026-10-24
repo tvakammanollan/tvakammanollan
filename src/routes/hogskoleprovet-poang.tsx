@@ -110,34 +110,15 @@ function PoangPage() {
             prov du skrev.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
-            Historiska riktlinjer för vad som krävts, baserat på offentliggjorda normgränser:
-          </p>
-          <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
-            {[
-              { betyg: "2,00", rapoang: "≈ 155–160 rätt av 160" },
-              { betyg: "1,90", rapoang: "≈ 145–150 rätt av 160" },
-              { betyg: "1,80", rapoang: "≈ 135–142 rätt av 160" },
-              { betyg: "1,70", rapoang: "≈ 125–133 rätt av 160" },
-              { betyg: "1,50", rapoang: "≈ 105–115 rätt av 160" },
-              { betyg: "1,00", rapoang: "≈ 65–75 rätt av 160" },
-            ].map((r) => (
-              <li
-                key={r.betyg}
-                className="flex items-center gap-4 border-b border-white/8 px-5 py-3.5 last:border-b-0"
-              >
-                <span
-                  className="w-20 shrink-0 text-[18px] font-bold tabular-nums text-primary"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {r.betyg}
-                </span>
-                <span className="text-sm text-white/65">{r.rapoang}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-2 text-xs text-white/40">
-            Ungefärliga historiska snitt. De faktiska normgränserna för varje provrunda publiceras
-            av UHR efter provets genomförande.
+            Exakt vad varje antal rätt gav på varje prov sedan 2012 finns samlat ur UHR:s officiella
+            tabeller på{" "}
+            <Link
+              to="/hogskoleprovet-normering"
+              className="font-medium text-primary underline-offset-2 hover:underline"
+            >
+              normeringssidan
+            </Link>
+            , med en egen sida och hela tabellen för varje provtillfälle.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-white/65">
             Verbal och kvantitativ del väger lika tungt (80 uppgifter var) och du får ett samlat
