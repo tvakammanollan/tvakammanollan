@@ -6829,4 +6829,421 @@ Var för sig saknas antingen antalen eller fördelningen. **Svar: C.** Mer i ${N
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2019, provpass 2 och 5 ─────────────────────────────────────── */
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`Udda gånger udda är udda. Summan av två udda tal är jämn, och B och D är också jämna.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Steg 1 och 2 stämmer. I steg 3 blir det $2x = 80$, inte 40.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 3,
+    svar: "D",
+    losning: String.raw`15 procent av 70 är $\frac{15}{100} \cdot 70$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$\frac{2}{\frac{1}{4}} = 8$, och $3 - 8 = -5$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`$\frac{3}{2} \cdot \frac{2}{3} + m = 0$ ger $1 + m = 0$ och $m = -1$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`Lägg ihop de två paren: $3{,}20 + 3{,}30 = 6{,}50$. Det är alla tre plus Alicia en gång till. $6{,}50 - 4{,}80 = 1{,}70$ m.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`$3x = 14 + 4y - 2z$, alltså $x = \frac{1}{3}(14 + 4y - 2z)$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`$\frac{1}{2} + \frac{1}{3} = \frac{5}{6}$. Med $x = 5$ och $y = 6$ blir $xy = 30$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`Samma exponent: $2^4 \cdot 3^4 = (2 \cdot 3)^4 = 6^4$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 13,
+    svar: "D",
+    losning: String.raw`Vi vet inte hur stora månadspengarna är, så vem som köper för mest kan gå åt båda hållen.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`$b = 0$ gör II till 0, och $b = 2$ gör II dubbelt så stor som I.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`$f(0) = -3$ och $f(2) = 4 - 4 - 3 = -3$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`I en parallellogram är de andra vinklarna 57° eller $180° - 57° = 123°$. Båda är mindre än 124°.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`Konjugatregeln: I är $100^2 - 1$ och II är $100^2 - 4$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Talen är 13 till 20. Hälften av 20 är 10, och det minsta är 13.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`Multiplicera ut I: $a^3 + ab^2 + a^2 b + b^3 = a^3 + ab(a + b) + b^3$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$x = \frac{1}{2}$. I är $\frac{1}{16}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$s = 1 + 2 + 3 + 4 + 5 = 15$. Primtalen är 3 och 5, så $p = 15$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1) ger 55 röda och 50 gröna, men inget om de blå. (2) säger att blå och gröna är lika många som röda.
+
+Tillsammans: $55 + 55 = 110$ klossar. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: $H + H + (H - 2) = 16$ ger $H = 6$ och Sam är 4 år.
+
+Var för sig finns flera möjligheter. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 25,
+    svar: "B",
+    losning: String.raw`(2): röda är tre fjärdedelar. Räcker.
+
+(1) säger bara vad som fanns kvar, inte hur många som åts. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Även tillsammans saknas Karins väg till skolan. Samma hastighet hjälper inte om vi inte vet hur långt hon har.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 2,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): $x$ delar 64 och är större än 15, alltså 16, 32 eller 64. Bara 16 ger resten 15 för 63 och 1 för 65. Räcker.
+
+(2) ger oändligt många möjligheter.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$\frac{4x}{9} = \frac{8}{9} - \frac{6}{9} = \frac{2}{9}$, alltså $x = \frac{1}{2}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Röda och vita är $1 + 4 = 5$ av 15 kulor. $\frac{5}{15} = \frac{1}{3}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`$6a^2 + 4ab - 9ab - 6b^2 = 6a^2 - 5ab - 6b^2$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Allt i åttioettondelar: $\frac{27 - 18 + 15 - 7}{81} = \frac{17}{81}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`Medelpunkten ligger mitt emellan A och B. Från A till medelpunkten är steget $(+2, +3)$, och samma steg till ger $B = (0, 4)$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Högerledet är $3x^2 + 6x + 12$. Ta bort $3x^2$ på båda sidor: $8x + 7 = 6x + 12$ ger $x = 2{,}5$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`$(10a + b) + (10b + a) = 11(a + b)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`$x(x^2 + x - 2) = x(x + 2)(x - 1)$. Lösningarna är 0, 1 och $-2$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`$\sqrt{3} \cdot \sqrt{3} = 3$, så täljaren är $(\sqrt{3})^3$. Dela med $\sqrt{3}$: $(\sqrt{3})^2 = 3$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`$5 - x = 5$ ger $x = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`$\sqrt{14} < 4$, så I är mindre än $4 + 6 = 10$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`I: $\sqrt{1^2 + 2^2} = \sqrt{5}$. II: $\sqrt{1^2 + 6^2} = \sqrt{37}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`Sortera. $x$: 13, 15, 20 ger median 15. $y$: 11, 13, 15, 30 ger median 14.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`Entalssiffran växlar: $4, 16, 64, 256$ slutar på 4, 6, 4, 6.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`$y = -1$: $x = 5$ gör I störst, $x = 0$ gör II störst och $x = 1$ ger lika.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`En pump fyller $\frac{7}{14 \cdot 0{,}5} = 1$ m³ per timme. 42 pumpar fyller 42 m³ per timme, och $\frac{63}{42} = 1{,}5$ timmar.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`I är $2\sqrt{x}$ och II är $\sqrt{2} \cdot \sqrt{x}$, och $2 > \sqrt{2}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): De 42 kulorna är 28 % av slutantalet. $\frac{42}{0{,}28} = 150$. Räcker.
+
+(2): $\frac{42}{\frac{7}{25}} = 150$. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Summan är 57. Tillsammans: det tredje talet är $57 - 14 - 27 = 16$, så medianen är 16.
+
+Var för sig: 14, 14, 29 och 14, 20, 23 ger olika medianer. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`(1): 4 trasiga röda, men inget om de blå.
+
+Tillsammans: efter att en röd plockats bort finns 3 trasiga röda, alltså 9 trasiga blå. $4 + 9 = 13$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 26,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att både Frida och Johan är yngre än Anna och David. Vem av Frida och Johan som är yngst framgår inte.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2019vt",
+    pass: 5,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): Den tredje färgen har 5 kulor. I värsta fall tar han alla 7 röda och 5 av den tredje färgen först, sedan en till: 13. Räcker.
+
+(1): 5 svarta, men de andra 10 kan delas 5 och 5 eller 9 och 1, vilket ger olika svar.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
 ];
