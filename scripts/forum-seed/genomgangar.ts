@@ -8596,4 +8596,467 @@ Tillsammans uppfyller både 1, 2, 3 och 2, 3, 4 villkoren, med olika medelvärde
 
 **Svar: E.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2017, provpass 1 och 4 ─────────────────────────────────────── */
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$\frac{5{,}1}{1{,}7} = 3$ och $10^{8 - 4} = 10^4$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`Totalt $13{,}5 + 46{,}5 + 120 = 180$ kcal. $\frac{13{,}5}{180} = 0{,}075$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`$8x = 36$ ger $x = 4{,}5$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Konjugatregeln: $(a + 1)(a - 1) = a^2 - 1$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`$2x - 4y - x^2 - 3xy + 3xy - 3y^2$. De två $xy$-termerna tar ut varandra: $-x^2 - 3y^2 + 2x - 4y$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$0{,}5^2 = 0{,}25$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Både lutningen $k$ och skärningen $m$ multipliceras med ett tal mellan 0 och 1. Båda krymper.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`Primtalen är 29 och 31. Medelvärdet är 30.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`$\frac{5}{6} \cdot \frac{5}{6} = \frac{25}{36}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Vänsterledet är $x^{m + n}$ och högerledet $x^{mn}$. $2 + 2 = 2 \cdot 2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`Mia: $\frac{x}{\frac{y}{2}} = \frac{2x}{y}$. Pia: $\frac{2x}{y}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`II blir $x^2 + 2x + 1 + x^2 - 2x + 1 = 2x^2 + 2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`Arean är $\frac{4x \cdot 3x}{2} = 6x^2$, men $x$ är okänt.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`Kvadrera: I blir $49 \cdot 35 = 1\,715$ och II $36 \cdot 50 = 1\,800$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`Talen är 1 och 10 (medel 5,5) eller 2 och 5 (medel 3,5). Båda är större än $3{,}33$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`$2x - 3 = 2y$ ger $x - y = 1{,}5$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`$47^2 = 50^2 - 2 \cdot 50 \cdot 3 + 9 = 2\,209$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`$f(10) = 1\,000 - 1\,000 = 0$ och $f(0) = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$h = 3d$ och omkretsen är $\pi d$, som är större.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`$1 + x = -0{,}1$ ger $x = -1{,}1$. $y + 1 = -0{,}1$ ger $y = -1{,}1$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): 3 minuter är en fjärdedel av tiden, alltså 12 minuter. (2): 3 minuter är 25 procent, samma sak. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: den tredje dyraste kostar 135 kr, så de två dyraste kostar $490 - 135 = 355$ kr.
+
+Var för sig saknas antingen summan eller mittpriset. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): 11 champinjoner, alltså 19 kantareller. (2): 19 kantareller direkt. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): 45°, 45° och 90°. Räcker.
+
+(2): Till exempel 45°, 60° och 75° fungerar också. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Av 36 plagg är 16 tröjor, alltså 20 skjortor. Räcker.
+
+(2) säger inget om Jonas skjortor. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 1,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`(1) ger 934 och 394. (2) ger 394, 934 och 349.
+
+Tillsammans finns både 394 och 934 kvar. **Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`$\frac{x}{3} + \frac{5x}{3} = 2x = 8$ ger $x = 4$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Summan är 75. De kända talen ger 58, så $x = 17$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`Största värdet är $12 + 3 = 15$, som inte är primtal. 13 går med $x = 6$ och $y = 1$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`B och C har samma $y$, så BC är en vågrät bas med längden 5. Höjden till A är $2 - (-4) = 6$. $\frac{5 \cdot 6}{2} = 15$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 6,
+    svar: "C",
+    losning: String.raw`$(3a)^2 = 9a^2 = 63$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`A och B tar ut varandra: $7\,040 - 4\,080 = 2\,960$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`$\frac{\sqrt{3}}{3} = \frac{\sqrt{3}}{\sqrt{3} \cdot \sqrt{3}} = \frac{1}{\sqrt{3}}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`Multiplicera $zw > xy$ med $-1$: $-zw < -xy$. Det är D.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`$f(1) = 10$ och $f(0) = 2$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$\frac{1}{2(x + 1)} - \frac{1}{3(x + 1)} = \frac{3 - 2}{6(x + 1)} = \frac{1}{6x + 6}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`Kvadratens diagonal är 10 cm, så arean är $\frac{10^2}{2} = 50$ cm². Cirkeln har $25\pi$. $\frac{50}{25\pi} = \frac{2}{\pi}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`II: $\frac{390}{195} = 2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`6 är delbart med 3 (en av fem). 39 är delbart med 3 och 13 (två av fem).
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`I: $4^2 = 16$. II: $(2x)^2 = 4x^2 = 16$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`I: $\frac{6}{15}$. II: $\frac{5 + 1}{15} = \frac{6}{15}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Funktionen har negativ lutning, så större $x$ ger mindre värde.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`26 bläckpennor och 19 trasiga. Minst $26 + 19 - 39 = 6$ trasiga bläckpennor, men det kan vara fler.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`Ett av talen är 0. Tripplarna $-2, -1, 0$ och $-1, 0, 1$ och $0, 1, 2$ ger $z = 0$, 1 eller 2.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`Att multiplicera med $z$ behåller olikhetens riktning bara om $z > 0$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: $3(h + k) = 63$ ger $h + k = 21$. Med $h = \frac{k}{2}$ blir $k = 14$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Båda påståendena säger samma sak, och ingen tid anges för någon av dem.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: $3k, 5k, 7k$ med $7k - 3k = 28$ ger $k = 7$. Summan är $15k = 105$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`Tillsammans: talgoxe och bofink sitter ihop. På plats 1 och 2 tvingas domherre och gråsparv bredvid varandra, och på 3 och 4 hamnar bofinken längst till höger. Kvar blir domherre, talgoxe, bofink, gråsparv.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): 12 flickor och 12 godkända, kvoten är 1. Räcker.
+
+(1) ger inga antal godkända. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017vt",
+    pass: 4,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): Ett udda antal negativa tal ger negativ produkt. Räcker.
+
+(2): Att stryka två tal med positiv produkt ändrar inte tecknet. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
