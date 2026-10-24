@@ -38,6 +38,7 @@ Gjord 2026-08-22 mot befintliga sidor, innan den här rundans fixar.
 guide). Se den commiten för exakt diff.
 
 **Kvarstående gap, inte fixat än:**
+- **Löst 2026-10-24:** alla 8 delprovsguider har nu ett FAQ-block med FAQPage-data (`src/lib/guide-faq.ts`). Texten nedan beskriver läget före det.
 - **Inget FAQ-block på 7 av 8 guider.** `las.tsx` har ett `HowTo`-schema i
   stället, vilket är rimligt för en steg-för-steg-guide, men de andra sju har
   varken FAQ eller HowTo. Att skriva 4–8 riktiga, icke-uppdiktade frågor per
