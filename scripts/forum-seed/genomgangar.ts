@@ -2875,4 +2875,490 @@ Kortärmade barntröjor: $40 - 10 = 30$. Kortärmade totalt: 50. Kortärmade vux
 
 **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2023, provpass 2 och 4 ────────────────────────── */
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Förenkla den första parentesen: $3x - 2x = x$. Då är uttrycket $x(y - z) = xy - xz$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`Multiplicera båda leden med 7: $4x = \frac{7}{14} = \frac{1}{2}$, alltså $x = \frac{1}{8}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`$f(4) - f(2) = (4k + m) - (2k + m) = 2k$. Då är $2k = 6$ och $k = 3$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Låda 8 får $k$ kulor för varje $k$ som delar 8, alltså 1, 2, 4 och 8.
+
+$1 + 2 + 4 + 8 = 15$. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`Medelvärdet av $y$ och 0 är 5, så $y = 10$. Då är $x = 10 - 10 = 0$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Tre gula på sju röda betyder att 3 av 10 bollar är gula.
+
+$\frac{3}{10} \cdot 21\,000 = 6\,300$. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`$2\sqrt{22} = \sqrt{88}$, som ligger mellan $\sqrt{81} = 9$ och $\sqrt{100} = 10$, närmare 9.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$(x + 2)^2 - x^2 = x^2 + 4x + 4 - x^2 = 4x + 4$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`Areorna förhåller sig som 1:4, så $K_2$ har arean $4 \cdot 9 = 36$ cm² och sidan 6 cm.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Gemensam nämnare är $xyz$: $\frac{yz}{xyz} + \frac{xz}{xyz} + \frac{xy}{xyz}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 13,
+    svar: "D",
+    losning: String.raw`$y$ och $z$ har inga villkor alls, så båda kvantiteterna kan göras hur stora eller små som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`Bil A behöver $\frac{50}{20} = 2{,}5$ liter, bil B $\frac{50}{25} = 2$ liter.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`Rita punkterna. AB och CD är båda lodräta och 4 långa, och avståndet mellan dem är 3. Det är en parallellogram med arean $4 \cdot 3 = 12$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`$\frac{1}{3} + \frac{1}{12} = \frac{5}{12}$ och $\frac{1}{4} + \frac{1}{6} = \frac{5}{12}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$\frac{3}{x} = 15$ ger $x = \frac{3}{15} = \frac{1}{5}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`I en parallellogram är motstående vinklar lika och närliggande vinklar har summan 180°. $11x$ och $4x$ kan inte vara lika, så de är närliggande: $15x = 180°$ och $x = 12°$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 19,
+    svar: "C",
+    losning: String.raw`$\frac{10^3}{10^2} = 10$ och $\frac{10^{-2}}{10^{-3}} = 10^{-2 - (-3)} = 10$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`Medelvärdet är $x$, så $x + y + z = 3x$ och $y + z = 2x$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`Kalla BC $= 1$ och AB $= 2$. Triangelolikheten ger att AC ligger mellan 1 och 3. AC kan alltså vara både kortare och längre än AB.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`$a^{-1} = \frac{1}{a}$, och när $0 < a < 1$ är $\frac{1}{a} > 1$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1) ger en kedja i ordningen matematik, kemi, fysik, engelska, men inte var den ligger.
+
+(2) ger biologiboken på plats 5 och engelskaboken mellan fysik och biologi.
+
+Tillsammans ligger kedjan på 1–4, med engelskan närmast biologin: matematik, kemi, fysik, engelska, biologi. Matematikboken har nummer 1.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: $x + y = 1$ ger $x + z = 17$. Med $y = -4$ blir $x = 5$ och $z = 12$.
+
+Var för sig saknas alltid en okänd. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`(1): 15 oljemålningar och 30 litografier. Totalen $45 + a$ ska vara delbar med 5, så antalet akvareller är en multipel av 5.
+
+(2): Fler än 15 och färre än 30 akvareller.
+
+Tillsammans: 20 eller 25. **Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(2): 24 stjärnor, varav 10 stora och 14 små.
+
+(1): Lika många hjärtan som stjärnor ger 24 hjärtan och 48 pepparkakor, varav 24 stora.
+
+Tillsammans: stora hjärtan är $24 - 10 = 14$, alltså små hjärtan $24 - 14 = 10$. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Maria sitter mitt emot Ove, så Nils grannar är Maria och Ove. Den som sitter till höger om Nils har glasögon, och det är inte Ove. Alltså är det Maria. Räcker.
+
+(2): Vi vet att Petra och Nils inte har glasögon, men det kan vara Maria eller Ove. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 2,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`Tank B ökade med 20 procent när 50 liter kom till, så B hade 250 liter från början och 300 efteråt.
+
+(1): A hade $450 - 250 = 200$ liter. Räcker.
+
+(2): Efteråt hade A 150 liter, alltså 200 från början. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`$5x - 20 = 16 + 2x$ ger $3x = 36$ och $x = 12$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Totalt finns $50 + 63 + 36 + 56 + 45 = 250$ kulor. 18 procent av 250 är 45, och det är de vita.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Leta efter två tal med produkten 5 och summan $-6$: $-1$ och $-5$.
+
+$(x - 1)(x - 5)$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Konjugatregeln: $\left(\frac{1}{2}\right)^2 - \left(\frac{2}{5}\right)^2 = \frac{1}{4} - \frac{4}{25} = \frac{25 - 16}{100} = \frac{9}{100}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$xy + k = k$ ger $xy = 0$. Eftersom $y 
+eq 0$ måste $x = 0$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Sätt in $x = 5$ och se vilken som ger 13. C: $3 \cdot 5 - 2 = 13$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`Medelvärdet 7 ger summan 21, och medianen är $y = 9$. Då är $x + z = 12$.
+
+$z > 9$, alltså minst 10, så $x$ är högst 2. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Kalla volymen $V$. Eva tog $3 \cdot 5 = 15$ liter, och tunnan gick från en femtedel till en åttondel:
+
+$\frac{V}{5} - \frac{V}{8} = 15$, alltså $\frac{3V}{40} = 15$ och $V = 200$ liter.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`$f(2) = \frac{2}{5} - 1 = -\frac{3}{5}$. Då är $g(2) = 5 \cdot \left(-\frac{3}{5}\right) + 4 = -3 + 4 = 1$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$2^2 \cdot 12^2 = (2 \cdot 12)^2 = 24^2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$83 - 9x = 0$ ger $x = \frac{83}{9} \approx 9{,}2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`I: $\frac{1}{2} \cdot \frac{3}{4} = \frac{3}{8}$. II: $\frac{1}{2} \cdot \frac{4}{3} = \frac{2}{3}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`Sju mynt på 5 eller 10 kr blir mellan 35 och 70 kr. Hampus lånar då mellan 35 och 70 kr.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`$\frac{3x - 1}{4} = \frac{3x}{4} - \frac{1}{4} = 0{,}75x - 0{,}25$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 17,
+    svar: "D",
+    losning: String.raw`Medianen av fem värden är det tredje största, så det näst största är alltid minst lika stort.
+
+Utfallen 1, 2, 3, 3, 3 ger lika. Utfallen 1, 2, 3, 5, 6 ger II störst. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Vid $x = 4$ är båda 2, och därefter växer $\frac{x}{2}$ snabbare än $\sqrt{x}$. Exempel: $x = 16$ ger 4 mot 8.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`I: $0{,}75 \cdot 16\pi = 12\pi$. II: $9\pi$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`$32 = 2^5$, så $x - 1 = 5$ och $x = 6$. Kvantitet II är $5 \cdot 1 = 5$.
+
+**Svar: A.** Allt utom noll upphöjt till 0 är 1. Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$x = 0{,}75 \cdot 80 = 60$. $y = \frac{8}{12} \cdot 100 \approx 66{,}7$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`(2) säger att vuxna i vattnet plus vuxna på land är lika med barn på land plus vuxna på land. Det betyder att vuxna i vattnet är lika många som barn på land, alltså exakt samma sak som (1).
+
+Inget säger hur många barn som är i vattnet. **Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`(1): Zebran står längst till höger, men vi vet inte ordningen på de andra.
+
+(2): Giraffen står längst till vänster, men vi vet inte ordningen på de andra.
+
+Tillsammans: giraff, antilop, zebra. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`(1) ger 29, 34, 39, 44, 49, 54 eller 59. (2) ger 27, 36, 45 eller 54.
+
+Tillsammans bara 54. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): C är tom och den lilla skatten är inte i B. Då är den lilla i A och den stora i B. Räcker.
+
+(1): B är inte tom och den stora är inte i A. Den stora kan vara i B eller C. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): $n - 3 = \frac{n}{2}$ ger $n = 6$. Räcker.
+
+(1) ger bara ett förhållande, till exempel 3 eller 6 syskon. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023vt",
+    pass: 4,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): $\frac{a + 5 + b + 9}{2} = 10{,}5$ ger $a + b = 7$, så medelvärdet är 3,5. Räcker.
+
+(2): $\frac{a + b - 1 + 3}{3} = 3$ ger $a + b = 7$. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
