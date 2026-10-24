@@ -7246,4 +7246,435 @@ Tillsammans: efter att en röd plockats bort finns 3 trasiga röda, alltså 9 tr
 
 **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2018, provpass 2 och 4 ─────────────────────────────────────── */
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Summan måste stå inom parentes innan den multipliceras: $14 \cdot (46 + 35)$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`0,2 % är 0,002. $0{,}002 \cdot 50 = 0{,}1$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`Multiplicera ut: $xy + x = xy + y$, alltså $x = y$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`$x^2$ växer från $0^2 = 0$ till $3^2 = 9$ på intervallet.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$\frac{16}{9}x = \frac{4}{3}$ ger $x = \frac{4}{3} \cdot \frac{9}{16} = \frac{3}{4}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`Av två på varandra följande heltal är ett jämnt och ett udda. Summan är alltid udda.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`Räkna i dm: $2 \cdot 0{,}5 \cdot 30 = 30$ dm³.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`Dra bort $2x$ och lägg till 8: $x < 12$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`$\frac{\sqrt{72}}{\sqrt{8}} = \sqrt{9} = 3$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$x^5 = x \cdot x^4$, och $x > 1$ gör den större.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`Allt i tjugoåttondelar: $\frac{1 + 2 + 4 + 7 + 14}{28} = 1$, som är större än $\frac{55}{56}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$x - 1 = 6$ ger $x = 7$. $y - x = 3$ ger $y = 10$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Medianen av tre tal är det mittersta. Alltså $y = 7$ och $z = 13$, och medianen av dem är 10.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`I är $\frac{\sqrt{5}}{3}$, och $\sqrt{5} > 2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`Dubbla procenten och halva talet: $42 \cdot 1\,241 = 21 \cdot 2\,482$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$f(-a) - f(a) = -4a - 4a = -8a$, som är negativt.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`I: $11 + F$. II: $F + 8$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 23,
+    svar: "B",
+    losning: String.raw`(2): Den bruna är 6 cm, skillnaden 9 cm. Räcker.
+
+(1) ger bara summan. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): $3x + 78 = 39$ ger $x = -13$. Räcker.
+
+(1) har två okända. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): Styckpriset är 59,90 kr, och 16 stycken kostar $16 \cdot 59{,}90 \cdot 0{,}92$. Räcker.
+
+(2): 8 % av tio stycken är 47,92 kr, så tio kostar 599 kr ordinarie. Samma styckpris. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Hingsten står i en ände bredvid stoet, så stoet är brunt och fölet vitt. Räcker.
+
+(2): Stoet kan vara svart eller brunt, och fölets färg går inte att avgöra.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): 20 procent vinstlotter. Räcker.
+
+(2) säger inget om andelen. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 2,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Vi vet inte hur många som har både pakethållare och fotbroms, så summan går inte att räkna ut.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Lägg ihop exponenterna: $2 + 1 + 4 = 7$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`$b + c$ är större än $a$, så kvoten är större än 1. De andra har mindre täljare än nämnare.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$\frac{4}{9} \cdot \frac{3}{8} = \frac{12}{72} = \frac{1}{6}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`Summan är $6 \cdot 11 = 66$. De kända talen ger 60, så $x + y = 6$ och medelvärdet 3.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`Förkorta med 20: $120:140 = 6:7$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$x - y - x - y = -2y$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`Talen är 31, 32 och 33. $31 \cdot 33 = 32^2 - 1 = 1\,023$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 10,
+    svar: "D",
+    losning: String.raw`$3(a + 1) + m - (3a + m) = 3$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Täljaren: $12 \cdot 10^{15} - 4 \cdot 10^{15} = 8 \cdot 10^{15}$. Dela: $4 \cdot 10^2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$12\,167 = 23^3$, så $7x = 3$. 13 000 är större, så $7y > 3$ och $y > x$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Talen kan vara $1, \ldots$ och $-1, \ldots$ som tar ut varandra, eller ha större positiva tal. Medelvärdet kan bli vad som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`I: $\pi$ cm. II: 3 cm.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$y = x + 1$, så II är $2x + 1$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$0{,}00541$ km $= 5{,}41$ m $= 5\,410$ mm.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`$3x = 20y$. För att $x$ ska bli ett heltal måste $y$ vara delbart med 3. $y = 3$ ger $x = 20$ och $y = 6$ ger $x = 40$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`Linjen lutar nedåt (lutning $-3$), så $y$ minskar när $x$ ökar.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`I: $\frac{8 + 1}{24} = \frac{3}{8}$. II: $\frac{2 + 1}{8} = \frac{3}{8}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`I: $\frac{160}{15} \approx 10{,}7$ minuter. II: $\frac{133{,}3}{10} \approx 13{,}3$ minuter.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Tillsammans finns ändå tre möjligheter, till exempel gem i den vita asken (häftstift blå, nålar röda) eller gem i den röda asken (häftstift blå, nålar vita).
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`(2): 250 sjömän. (1): 7 av dem sjösjuka.
+
+Tillsammans: $\frac{7}{250}$. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 25,
+    svar: "A",
+    losning: String.raw`(1): $x = \pm 3$, och $x < 0$ ger $x = -3$. Räcker.
+
+(2) innehåller den okända $b$. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): Av talen 567, 576, 657, 675, 756 och 765 är bara 765 större än 758. Räcker.
+
+(1): 756 och 765 är kvar. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Utan att veta hur många som är röda och blå kan vi inte väga ihop andelarna.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2018ht",
+    pass: 4,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): En likbent rätvinklig triangel har vinklarna 45°, 45° och 90°. Räcker.
+
+(2): 90° och 45° ger att den tredje också är 45°. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
