@@ -95,6 +95,15 @@ i `urval2.urvalsgrupper` med `urvalsgruppId: "HP"`, och
 `lägstaAntagnaPoäng: "*"` betyder att alla behöriga antogs (ingen gräns att
 visa). Så lades sju program till 2026-10-24 och Umeå på läkarsidan.
 
+**Förra årets gräns (`prev`, 2026-10-24):** varje rad har `prev` = HP-gränsen
+HT 2025 för SAMMA anmälningsalternativ. Raderna paras ihop på
+`utbildningsnyckel` (lärosäte, program, takt, form och ort, utan år) mellan
+`searchterm=HT26` och `HT25`. Sex rader där nyckeln inte var unik lästes av
+för hand. `"alla"` betyder `*` (alla behöriga antogs). Saknas `prev` fanns
+ingen gräns i HP-gruppen HT 2025 eller ingen motsvarande utbildning. Vid nästa
+uppdatering: flytta HT 2026 till `prev`, läs in HT 2027 som `hp` och byt
+`term`/`prevTerm`.
+
 **Kända luckor, inte fel:** Umeå universitet saknas på jurist- och
 läkarsidorna (dess program dök inte upp under samma sökterm som gav träff
 för övriga lärosäten — värt att undersöka med en egen sökning om sidan ska
