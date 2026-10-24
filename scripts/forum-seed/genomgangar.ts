@@ -10178,4 +10178,456 @@ Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar:
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2013, provpass 2 och 4 ─────────────────────────────────────── */
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Multiplikation och division först: $5 + 12 - 2 = 15$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`$x^2 + x - 6 = (x + 3)(x - 2)$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`$\frac{1}{20} + \frac{7}{6} = \frac{3 + 70}{60} = \frac{73}{60}$, som inte går att förkorta.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`$\frac{4(3 - z)}{3(7 + z)} = \frac{1}{3}$ ger $12 - 4z = 7 + z$ och $z = 1$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Hon är $28 + x$ år nu, så för 12 år sedan var hon $16 + x$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`$6x^2 - 2x - 3x^2 + 2x = 3x^2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`$\frac{-1}{-1} \cdot (-2) = -2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`$x = y$, så kvoten är $1^n = 1$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`Medianen är medelvärdet av person 20 och 21. Upp till 2 poäng finns 20 personer, och nummer 21 har 3. $\frac{2 + 3}{2} = 2{,}5$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`Cirkelns area är $9 + 16 = 25$ cm². $r^2 = \frac{25}{\pi}$ ger $r = \frac{5}{\sqrt{\pi}}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`Bryt ut 15: $15 \cdot 100 = 1\,500$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`Diagonalen är kortare än summan av de två sidorna, som är halva omkretsen.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`Gula är $1 - \frac{1}{3} - \frac{1}{6} = \frac{1}{2}$, blå och röda också $\frac{1}{2}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`I är hälften av $8x + 4$, alltså 5. II är 5,5.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Båda avstånden är $\sqrt{a^2 + b^2}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`I: $\frac{1}{2x^2}$. II: $\frac{4}{x^2}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`1, 2, 3 ger $\frac{2}{3}$ mot $\frac{1}{2}$. 1, 2, 100 ger $\frac{1}{50}$ mot $\frac{1}{2}$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`$\sqrt{\sqrt{x}} = \left(x^{\frac{1}{2}}\right)^{\frac{1}{2}} = x^{\frac{1}{4}}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`$x$ kan bli nästan $\frac{270\,580}{5}$, men $y$ bara nästan $\frac{270\,580}{10}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`Vi vet hur många flickor det är och barnens medelålder, men inte pojkarnas medelålder.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): Ett varv tar 12, 8 och 6 minuter. Minsta gemensamma multipel är 24 minuter. Räcker.
+
+(1) ger bara förhållanden. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): 120 herrcyklar och 48 damcyklar ger 42 barncyklar. (2): 168 cyklar är 80 procent, alltså 210 totalt och 42 barncyklar. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): Anna bor nere. Katja bor uppe, och Fatima med henne. Olga bor nere. Räcker.
+
+(1) lämnar flera möjligheter. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Bordet har arean $400\pi$, så sannolikheten är $1 - \frac{1}{\pi}$. Räcker.
+
+(2) ger inga storlekar. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 2,
+    nr: 28,
+    svar: "C",
+    losning: String.raw`Tillsammans: $T = 1{,}25(T - 1)$ ger $T = 5$ cm.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Det minsta och största ligger lika långt från mitten: $2 \cdot 947 = 1\,894$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`Största dagen kan vara summan av två mindre. De andra kräver att en mindre dag är summan av en större.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`Korsmultiplicera: $3bx = 5ay$, alltså $b = \frac{5ay}{3x}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$\left(\frac{-3 + 7}{2}, \frac{-2 + 4}{2}\right) = (2, 1)$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`Avstånden till 1 är $\frac{1}{5}$, $\frac{1}{4}$, $\frac{2}{9}$ och $\frac{2}{7}$. Minst är $\frac{1}{5}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`$3^4 = 81$, alltså $t = 4$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$55x - y = 150$ och $150x - y = 435$. Subtrahera: $95x = 285$, $x = 3$ och $y = 15$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`$x^2 < x$ gäller bara mellan 0 och 1.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$x = \sqrt{\frac{1}{2}} = \frac{1}{\sqrt{2}}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`$(x + y)^2 - x^2 = 2xy + y^2$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`I: 4. II: $-4$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`$A = (B - 2) + 4 = B + 2$, så $A - 2 = B$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`Konjugatregeln: $(a + b)(a - b) = a^2 - b^2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`Halva basen är $\sqrt{49 - 16} = \sqrt{33} < 6$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`$\frac{1}{y} < 0$ betyder att $y$ är negativt.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$f(a) - f(a + 1) = -3$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Jämför summorna: I ger $4x + 5y + 2z + 132$ och II ger $4x + 5y + 2z + 145$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$a = b + c$ med negativt $c$ gör $a$ mindre än $b$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`$n = m = 0$ ger 1 mot 0. $n = 1$ och $m = 2$ ger 4 mot 4.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`(1): Vattnet är åtta niondelar. $\frac{480 \cdot 9}{8} = 540$ cm. (2) säger samma sak. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): 15 procent av 200 är 30. Räcker.
+
+(1) kräver hur många som är päron. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Tillsammans: Karin och Elisabeth sitter mittemot varandra, och vinnaren sitter mellan dem. Arne och Muhammed tar de två andra platserna, men ingenting avgör vem av dem som sitter på vinnarens plats.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 26,
+    svar: "D",
+    losning: String.raw`(1): Skillnaden är lika med genvägen, 410 m. (2): $3 \cdot$ genvägen $= 1\,230$ ger 410 m. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`Tillsammans: $140n + 40 = 160n - 60$ ger $n = 5$ och priset 740 kr.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2013vt",
+    pass: 4,
+    nr: 28,
+    svar: "C",
+    losning: String.raw`Tillsammans: $R = M + 2M = 3M$ och $R - 100 = M$. Det ger $M = 50$ och 150 rädisor.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
 ];
