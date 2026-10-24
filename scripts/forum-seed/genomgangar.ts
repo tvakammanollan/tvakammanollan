@@ -5985,4 +5985,437 @@ Tillsammans: $12 + 12 = 24$ släta stenar. **Svar: C.** Mer i ${NOG}.`,
 
 (1) säger bara vad ytterpunkterna är. **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2020, provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Sätt in $y = 12x$: $5x + 66 = 6x$, alltså $x = 66$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 2,
+    svar: "B",
+    losning: String.raw`En maskin gör $\frac{150}{6} = 25$ enheter per minut. Tio maskiner gör 250 per minut, och på fyra minuter 1 000.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`$f\left(\frac{1}{3}\right) = 1 + 1 = 2 = \frac{6}{3}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Samma nämnare: $\frac{a - b + b}{a} = \frac{a}{a} = 1$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`Kvadratens area är 36 cm². $\frac{4h}{2} = 36$ ger $h = 18$ cm.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`$\frac{x + 6x}{2} = y$ ger $7x = 2y$ och $x = \frac{2y}{7}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`Förkorta: $\frac{3x}{30} = \frac{x}{10}$ och $\frac{4x}{40} = \frac{x}{10}$. Summan är $\frac{x}{5}$, alltså 20 procent.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`Konjugatregeln två gånger: $(2^2 + 1)(2^2 - 1) = 2^4 - 1$, och $(2^4 + 1)(2^4 - 1) = 2^8 - 1$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$x - 7 = 12$ eller $x - 7 = -12$, alltså $x = 19$ eller $x = -5$. Bara $-5$ är negativt.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Ett upphöjt till vad som helst är 1. $1 + 1 + 1 = 3$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$\frac{3}{7} + \frac{5}{8} = \frac{24 + 35}{56} = \frac{59}{56} > 1$.
+
+**Svar: A.** Snabbare: $\frac{5}{8} > \frac{4}{7}$, så summan är större än $\frac{3}{7} + \frac{4}{7} = 1$. Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`Tre femmor är ett av 216 utfall. Summan 15 nås också med till exempel 6, 6, 3 och 6, 5, 4 i olika ordningar, alltså fler utfall.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`Dela med $-7$: $x + 3 = -3$, alltså $x = -6$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`Räkna allt i kryddmått: 1 tesked = 5 och 1 matsked = 15.
+
+I: $8 + 15 = 23$. II: $10 + 10 = 20$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`Multiplicera båda med 6: jämför $3x + 3z$ med $2x + 2y + 2z$, alltså $x + z$ med $2y$.
+
+$x = 1$, $y = 2$, $z = 3$ ger lika. $x = 1$, $y = 2$, $z = 10$ ger I störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$2\pi r = 25\pi$ ger $r = 12{,}5$ cm.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$27^{\frac{1}{3}} = \sqrt[3]{27} = 3$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`$x = 8$ ger 4 mot 4. $x = 4$ ger 2 mot 1. $x = 16$ ger 8 mot 16.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: Cecilia > Alvar > Benjamin > Dessi > Elina. Cecilia är äldst.
+
+Var för sig vet vi inget om de andra två. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: ek + alm = 50 % och ek + lönn = 70 %. Lägger man ihop blir det alla träd plus ekarna en gång till: $120 - 100 = 20$ procent ekar.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Medianen är det fjärde talet. Ingen av uppgifterna säger något om det, bara om de tre minsta och de tre största.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`Tillsammans: Lisa har sett 25 och Thea 30, och 25 har båda sett. Minst en av dem har sett $25 + 30 - 25 = 30$ filmer. Ingen av dem har sett 10.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): Viktor är tillbaka var 72:a sekund och Tomas var 90:e. Första gemensamma gången är efter 360 sekunder, då Viktor simmat 10 längder, alltså 250 m. Räcker.
+
+(2): Viktor hinner 5 vändor medan Tomas hinner 4. De är tillbaka samtidigt första gången efter Viktors femte vända, 250 m. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 3,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Tillsammans: $n$ kan vara $390$ och $m$ kan vara $780$, eller $n = 1\,170$ och $m = 780$. Båda stämmer med villkoren, men ger olika svar.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$6x + 15 + 14 - 6x = 29$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`$r^2 = \frac{27}{\pi} \approx 8{,}6$, så $r \approx 2{,}9$ cm.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`Dubbla procenten och halva talet tar ut varandra: $2a$ % av $0{,}5x$ är $a$ % av $x$, alltså $y$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Med fem värden är medianen ett av värdena själv. Är alla heltal är medianen alltså ett heltal.
+
+**Svar: D.** Mot C: 1, 1, 1, 1 och 2 ger medelvärdet 1,2. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$x(a + b) = 1$ ger $x = \frac{1}{a + b}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Antalet måste vara delbart med 7. $245 = 7 \cdot 35$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Räkna exponenterna: A $= 10^0$, B $= 10^{-10}$, C $= 10^{4}$, D $= 10^{-4}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$2x^2 = 100$ ger $x^2 = 50$ och $x = \sqrt{50}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`$\frac{3}{2} \cdot \frac{1}{5} = \frac{3}{10} = \frac{6}{20}$. $\frac{7}{20} - \frac{6}{20} = \frac{1}{20}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$\frac{x}{4} = \frac{3}{2}$ ger $x = 6$. Punkten är $(6, 0)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`$\frac{1}{a^2} = 16$ ger $a^2 = \frac{1}{16}$ och $a = \pm\frac{1}{4}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Samma procentsats ger 73 av $y$ och 37 av $z$. Då måste $y$ vara störst.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`Omkretsen är summan av de tre sidorna, så omkretsen genom 3 är medelvärdet av dem.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`I: $\frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$. II: $6 \cdot 6 = 36$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`$A = 2E + 2L$ jämfört med $3E$. Det beror på om $2L$ är större än $E$, och det vet vi inte.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Ett tal större än 1 blir 1 bara med exponenten 0. $y + 1 = 0$ ger $y = -1$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Överlappet är detsamma: $0{,}25 K_1 = 0{,}2 K_2$, alltså $K_1 = 0{,}8 K_2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Multiplicera ut. Båda innehåller $3{,}13 \cdot 3{,}15$. Kvar blir $3{,}13\pi$ mot $3{,}15\pi$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`II är $(x + y)^2 = 0$. I är summan av två positiva kvadrater.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`$f(x) = kx$. Är $k > 0$ är I störst, är $k < 0$ är II störst, och $k = 0$ ger lika.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`Summan är $4 \cdot (-1) = -4$. $-5 + 3 = -2$, så $x + y = -2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(2): Huvudet väger 5 kg. (1): Benen väger sju gånger huvudet.
+
+Tillsammans: $5 + 20 + 35 = 60$ kg. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2020ht",
+    pass: 5,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Röd och vit är inte överst. Blå ligger under grå, så den är inte heller överst. Grå ligger överst. Räcker.
+
+(2) säger bara något om den nedersta. Röd och vit ligger då i mitten, men om blå eller grå ligger överst går inte att avgöra. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
 ];
