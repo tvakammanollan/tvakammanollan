@@ -914,6 +914,10 @@ route-loaders och aldrig hämtas i klienten.
   bokstav inte är facit eller om uppgiften är en bilduppgift. Nya
   genomgångar: lägg till en post och kör skriptet igen. `--dump` ger
   trådarna som JSON utan att röra databasen.
+- **Publicera genomgångarna i takt** (2026-10-24): `bun run scripts/seed-forum.ts --apply --limit 50`
+  ungefär en gång i veckan. Det fanns 500 genomgångar i kö; flera hundra trådar
+  från samma konto samma dag ser massproducerat ut för en sökmotor även när
+  varje tråd är unik. Skriptet är idempotent och tar nästa omgång nästa gång.
 - **Gamla prov länkar till genomgångarna** (2026-10-23). Trådarna har
   `prov_term` satt, och `fetchProvThreads` (`forum-prov.functions.ts`) läser
   uppgiftsnumret ur slugen med `provThreadNr`. Länken står i facitlistan

@@ -15,6 +15,12 @@
  *   bun run scripts/seed-forum.ts            # torrkörning
  *   bun run scripts/seed-forum.ts --apply
  *   bun run scripts/seed-forum.ts --dump     # trådarna som JSON, ingen databas
+ *   bun run scripts/seed-forum.ts --apply --limit 50   # högst 50 nya trådar
+ *
+ * --limit finns för att publicera i takt. Flera hundra trådar från samma konto
+ * på en och samma dag ser ut som massproducerat innehåll för en sökmotor, även
+ * när varje tråd är unik. Kör med --limit 50 i veckan; skriptet är idempotent
+ * och tar nästa omgång vid nästa körning.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -26,6 +32,9 @@ import { GENOMGANGAR } from "./forum-seed/genomgangar";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 const APPLY = process.argv.includes("--apply");
+const LIMIT_ARG = process.argv.indexOf("--limit");
+const LIMIT = LIMIT_ARG > -1 ? Number(process.argv[LIMIT_ARG + 1]) : Infinity;
+if (Number.isNaN(LIMIT) || LIMIT < 1) throw new Error("--limit kräver ett positivt tal");
 const AUTHOR_USERNAME = "niklas";
 
 function env(name: string): string {
@@ -142,6 +151,7 @@ const byTitle = new Map(existing.map((t) => [`${t.category_id}:${t.title.toLower
 const takenSlug = new Set(existing.map((t) => `${t.category_id}:${t.slug}`));
 
 let created = 0;
+let waiting = 0;
 for (const t of ALL_THREADS) {
   const cid = catId.get(t.category);
   if (!cid) throw new Error(`Okänd kategori ${t.category}`);
@@ -160,6 +170,10 @@ for (const t of ALL_THREADS) {
     } else {
       console.log(`  finns   ${t.category}/${t.title}`);
     }
+    continue;
+  }
+  if (created >= LIMIT) {
+    waiting++;
     continue;
   }
   let slug = slugifyTitle(t.title);
@@ -204,5 +218,6 @@ for (const t of ALL_THREADS) {
 }
 
 console.log(
-  `\n${created} nya trådar${APPLY ? "" : " (torrkörning, kör med --apply för att skriva)"}`,
+  `\n${created} nya trådar${APPLY ? "" : " (torrkörning, kör med --apply för att skriva)"}` +
+    (waiting ? `, ${waiting} väntar till nästa körning (--limit)` : ""),
 );
