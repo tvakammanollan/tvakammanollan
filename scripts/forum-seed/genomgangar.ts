@@ -2386,4 +2386,493 @@ Tillsammans: 60 udda hus öst-västligt är en tredjedel av alla udda, alltså 1
 
 Olika tal kan vara störst. **Svar: E.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2023, provpass 2 och 4 ────────────────────────── */
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`Gemensam nämnare är 21: $\frac{14}{21} + \frac{12}{21} - \frac{5}{21} = \frac{21}{21} = 1$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Vinklarna är 1, 2 och 6 delar, alltså 9 delar på 180°. En del är 20°.
+
+Den största är $6 \cdot 20° = 120°$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`Sätt in $x = -2$: $-8 - 2b - 4 = 0$, alltså $-2b = 12$ och $b = -6$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`$\frac{3x}{4} = \frac{1}{2}$ ger $3x = 2$ och $x = \frac{2}{3}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`$x = \frac{5}{8} - \frac{3}{5} = \frac{25}{40} - \frac{24}{40} = \frac{1}{40}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`Medelvärdet 16 ger $x + y = 32$. Medelvärdet 30 ger $20 + z = 60$, alltså $z = 40$.
+
+$x + y + z = 72$. **Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`Multiplicera ut: $-35x + 15xy$. Bryt ut $x$: $x(15y - 35)$.
+
+**Svar: C.** Se upp med tecknet: minus gånger minus ger plus. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`10 % av 20 är 2. Då är $0{,}08y = 2$, alltså $y = 25$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Lika area: $0{,}7s \cdot L = s^2$, alltså $L = \frac{s}{0{,}7}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Primtal mellan 4 och 10 är 5 och 7. Talet 35 är delbart med både 5 och 7, så $\frac{35m}{p}$ är alltid ett heltal.
+
+**Svar: D.** Med $p = 7$ och $m = 1$ faller A, B och C. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 12,
+    svar: "D",
+    losning: String.raw`Vid T var summan av åldrarna $3 \cdot 24 = 72$.
+
+Tre år efter T var Bianca och Cecilia tillsammans $2 \cdot 25 = 50$ år, alltså 44 år vid T. Annica var då $72 - 44 = 28$ och tre år senare 31.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$(2x)^2 = 4x^2$, som är större än $2x^2$ när $x 
+eq 0$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`$f(-1) = 1 + 3 + 2 = 6$ och $f(3) = 9 - 9 + 2 = 2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`$\frac{5^5}{5^3} = 5^2$ och $\frac{5^{28}}{5^{26}} = 5^2$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`Rektangeln: $6x \cdot 0{,}5x = 3x^2$. Cirkeln: $\pi x^2$, och $\pi > 3$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`Flytta in faktorn under roten: $3\sqrt{6} = \sqrt{54}$ och $6\sqrt{3} = \sqrt{108}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$x = 5$ eller $x = -5$, så $y = 3$ eller $y = -7$. Båda är mindre än $\sqrt{16} = 4$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Kalla åldern idag $a$: $a - 6 = \frac{a}{3}$ ger $a = 9$.
+
+Om 6 år är Elsa 15. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`$\frac{x}{y} = -1$ betyder $x = -y$, så $x + y = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`Paren med produkten 12: 1 och 12 (medelvärde 6,5), 2 och 6 (4), 3 och 4 (3,5).
+
+Det kan bli större, lika eller mindre. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Vi vet inte vilka två vinklar som är lika. Är $A = B = 50°$ blir summan 100°. Är $A = B = 30°$ blir den 60°.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: komedin visas i salong 1 (2). Skräckfilmen visas i 1 eller 3 (1) och i 2 eller 3 (2), alltså i 3. Dramat blir kvar i 2.
+
+Var för sig finns flera möjligheter. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att minst 43 kulor är röda och att 5 av dem är små. Då är minst 38 stora och röda, men exakt hur många går inte att säga.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`(2): Dubbel hastighet halverar tiden, så halva tiden är 7,5 minuter. Resan tog 15 minuter. Men utan hastigheten vet vi inte sträckan.
+
+(1) ger bara hastigheten.
+
+Tillsammans: 15 km/h i en kvart är 3,75 km. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(1) ger bara förhållandet mellan blå och gröna, inte antalen.
+
+(2): Blå är $\frac{3}{7} \cdot 56 = 24$ och gröna $\frac{5}{14} \cdot 56 = 20$. Röda blir $56 - 44 = 12$. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 2,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Tillsammans: första siffran är dubbelt så stor som den femte, alltså jämn, och den fjärde är dubbelt så stor som den första, alltså högst 4.
+
+- Första siffran 2: talet blir 25 741.
+- Första siffran 4: talet blir 43 782.
+
+Två tal går. **Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 1,
+    svar: "B",
+    losning: String.raw`Förkorta tvåan: $\frac{2(x + 4)}{2} = x + 4$. Plus 8 blir $x + 12$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 3,
+    svar: "D",
+    losning: String.raw`$3x - 12 = 2x + 4$ ger $x = 16$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`Fyra heltal i följd med medelvärdet 4,5 är 3, 4, 5 och 6. Medianen är medelvärdet av 4 och 5, alltså 4,5.
+
+**Svar: B.** För tal i följd är medianen alltid lika med medelvärdet. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`Vid $x = 1$ ger den andra linjen $y = 1$. Då ska $k + 3 = 1$, alltså $k = -2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$\frac{1\,000}{50} = 20$ m/s. Gånger 3,6 blir det 72 km/h.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Räkna nämnaren först: $\frac{2}{5} - \frac{5}{6} = \frac{12}{30} - \frac{25}{30} = -\frac{13}{30}$.
+
+Ett delat med det är $-\frac{30}{13}$. **Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$x - y = 0$ betyder $x = y$, så $xy = y \cdot y = y^2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`Ett negativt tal upphöjt till en udda exponent är negativt, och till en jämn exponent positivt.
+
+$n$ måste alltså vara udda. Det kan vara både positivt och negativt, till exempel 3 eller $-1$. **Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`Myran hamnar i $(5 + 3, 6) = (8, 6)$.
+
+Avståndet till origo är $\sqrt{8^2 + 6^2} = \sqrt{100} = 10$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`$\sqrt{12} = 2\sqrt{3}$ och $\sqrt{48} = 4\sqrt{3}$. Summan är $6\sqrt{3}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`För $x > 0$ är $\sqrt{x} \cdot \sqrt{x} = x$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`En fyra och en femma: (4, 5) eller (5, 4), alltså 2 av 36 utfall.
+
+Summan 3: (1, 2) eller (2, 1), också 2 av 36.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 15,
+    svar: "A",
+    losning: String.raw`$\frac{5}{13} \approx 0{,}38$ är större än $\frac{4}{15} \approx 0{,}27$. Då är I positiv och II samma tal fast negativt.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`$z^2 = x^2 + y^2$ och $x > 0$, så $z^2 > y^2$. Båda är positiva, så $z > y$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 18,
+    svar: "A",
+    losning: String.raw`Säg att varan kostar 100 kr i B. Då kostar den 80 kr i A.
+
+A sänkt 5 %: $0{,}95 \cdot 80 = 76$ kr. B sänkt 25 %: 75 kr.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$\pi \cdot 5^2 = 25\pi \approx 78{,}5$ cm².
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`$xy = z > 1$, så $y 
+eq 0$ och $x = \frac{z}{y}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$L_1$: $k = \frac{7 - 1}{-3 - 2} = -\frac{6}{5}$.
+
+$L_2$ är vinkelrät, så $k = \frac{5}{6}$, som är positivt. **Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`$x$ har inga villkor. Pröva två fall.
+
+- $x = 1$: båda är 20.
+- $x = 2$: I $= 200$, II $= 400$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`20 spelar fotboll och 10 innebandy. Det kan vara samma elever eller olika, så antalet som spelar båda kan vara allt från 0 till 10.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`En punkt bestämmer inte en linje, så var för sig räcker inget.
+
+Tillsammans: linjen genom (4, 6) och (6, 4) är $x + y = 10$, och $5 + 5 = 10$. Ja, den går genom (5, 5).
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): Allt som är delbart med 100 är delbart med 5. Räcker.
+
+(2): Allt som är delbart med 15 är delbart med 5. Räcker.
+
+**Svar: D.** I en ja/nej-fråga räcker det att svaret blir säkert, inte att talet blir bestämt. Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Alen är högre än björken, och rönnen är inte högst. Då är alen högst. Räcker.
+
+(2): Rönnen är lägst, men vi vet inte om alen eller björken är högst. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 27,
+    svar: "C",
+    losning: String.raw`Tillsammans: 10 långärmade barntröjor är 25 procent av barntröjorna (1), så det finns 40 barntröjor och 60 vuxentröjor. De är också 20 procent av de långärmade (2), så det finns 50 långärmade.
+
+Kortärmade barntröjor: $40 - 10 = 30$. Kortärmade totalt: 50. Kortärmade vuxentröjor: $50 - 30 = 20$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2023ht",
+    pass: 4,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(1): Är $y = 7$ blir $x = 14$, men är $x = 7$ blir $y = 3{,}5$. Räcker inte.
+
+(2): $2y + y = 21$ ger $y = 7$. Räcker.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
 ];
