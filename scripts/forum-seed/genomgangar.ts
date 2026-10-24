@@ -4717,4 +4717,417 @@ $\frac{3}{20} \div \frac{1}{2} = \frac{3}{10}$. **Svar: B.** Mer i ${XYZ}.`,
 
 (1) kräver att vi vet hur många som stod före honom från början. **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2021, provpass 1 och 4 ────────────────────────── */
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$\frac{1}{2} + \frac{1}{3} = \frac{5}{6}$, så $x = \frac{1}{6}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 2,
+    svar: "D",
+    losning: String.raw`Med $v$ vita rosor finns $3v$ röda, alltså $4v$ totalt. Bara 28 är delbart med 4.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Multiplikation först: $5 + 15 - 4 + 16 = 32$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`$y + 5 = 4x$, alltså $x = \frac{y + 5}{4}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$3x(2 - 5y) = 6x - 15xy = -(15y - 6)x$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`21 av 28 kulor är inte vita. $\frac{21}{28} = \frac{3}{4}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`Nämnaren är $0{,}072$. $\frac{0{,}36}{0{,}072} = \frac{360}{72} = 5$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 11,
+    svar: "A",
+    losning: String.raw`$x(5x + 3) = 0$ ger $x = 0$ eller $x = -\frac{3}{5}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`Summan är 36, så $x = 36 - 30 = 6$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`$1 + \frac{1}{4} = 1{,}25$ och $\frac{10}{8} = 1{,}25$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`Tecknen spelar ingen roll i kvadraten, och storlekarna är okända. $x = 1$, $y = -1$ ger I $= 2$; $z = 3$, $w = -3$ ger II $= 18$. Eller tvärtom.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 16,
+    svar: "A",
+    losning: String.raw`I: $12 \cdot 25 = 300$ cm². II: $\frac{8 \cdot 64}{2} = 256$ cm².
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 17,
+    svar: "B",
+    losning: String.raw`$4x + 8 = 2x + 4$ ger $x = -2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 18,
+    svar: "C",
+    losning: String.raw`$f(3) = 9 - 6 - 3 = 0$ och $f(-1) = 1 + 2 - 3 = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$0{,}7 \cdot 105 = 73{,}5$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$F(5) = 1 + 2 + 3 + 4 = 10$. $G(11) = 2 + 4 + 6 + 8 + 10 = 30$, och hälften är 15.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`Omkretsen genom diametern är $\pi \approx 3{,}14$. Kvadratens omkrets genom sidan är 4.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`I: $x^{7 + \frac{2}{3}} = x^{\frac{23}{3}}$. II: $(x^{23})^{\frac{1}{3}} = x^{\frac{23}{3}}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1) ger förhållandet $\frac{t}{2} = \frac{b}{3}$, alltså 2 tuschpennor på 3 blyertspennor. (2) ger totalen.
+
+Tillsammans: 2 av 5 pennor är tusch, alltså 6. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: Berit har längre väg (2) men kommer fram först (1). Då springer hon fortare.
+
+Var för sig saknas antingen sträckorna eller tiderna. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): 100 gula är hälften av de svarta, så det finns 200 svarta. Räcker.
+
+(1) ger bara summan av svarta och gula. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 1,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Tillsammans: $y = -100$ och $x = 50$ uppfyller båda, men $x$ är inte mindre än 25. $y = 0$ och $x = 10$ uppfyller också båda, och då är det.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$2x - x = -7 - 9$, alltså $x = -16$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Åttondelar: $\frac{1}{8} + \frac{6}{8} + \frac{4}{8} = \frac{11}{8}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`Genom origo betyder $f(x) = kx$. $8k = -6$ ger $k = -\frac{3}{4}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`8 procent av priset är 640 kr, så priset är $\frac{640}{0{,}08} = 8\,000$ kr.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 6,
+    svar: "C",
+    losning: String.raw`$\frac{3}{7}$ tar 4,5 timmar, alltså tar $\frac{1}{7}$ 1,5 timmar. Resten, $\frac{4}{7}$, tar 6 timmar.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 8,
+    svar: "B",
+    losning: String.raw`Räkna alla: A $= 9 \cdot (-2) \cdot 1 = -18$, B $= 9 \cdot 4 \cdot (-1) = -36$, C $= -3 \cdot 4 \cdot 1 = -12$, D $= -3 \cdot (-8) \cdot (-1) = -24$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 9,
+    svar: "D",
+    losning: String.raw`$14 + 11 + 13 + 22 = 60$. Medelvärdet är $\frac{60 + x}{5} = 12 + \frac{x}{5}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 10,
+    svar: "C",
+    losning: String.raw`$\frac{2}{3}x = \frac{4}{7}$ ger $x = \frac{3}{2} \cdot \frac{4}{7}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`63 liter är 63 dm³, och radien är 2 dm. $\pi \cdot 4 \cdot h = 63$ ger $h \approx \frac{63}{12{,}6} = 5$ dm.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$4^0 = 1$ och $8 = 2^3$. Då är $2^{3 + m} = 1 = 2^0$, alltså $m = -3$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Dela med 3: $\frac{2}{x} - \frac{1}{6} = \frac{1}{2}$, alltså $\frac{2}{x} = \frac{2}{3}$ och $x = 3$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`12 vänsterhänta kvinnor är 25 procent av kvinnorna, så det finns 48 kvinnor och 52 män.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$\sqrt{23} < \sqrt{25} = 5$. $\sqrt{9} + \sqrt{5} = 3 + \sqrt{5} > 3 + 2 = 5$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$x = 5y$, så 20 procent av $x$ är $y$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$3x - 1 = 5x + 3$ ger $x = -2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$y^2 - x^2 = (y - x)(y + x)$. Talen följer på varandra, så $y - x = 1$ och $y + x = 9$. Då är $y = 5$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`Kalla ringarna $r$. Armband $2r$, halsband $r + 3 = 2r - 2$, alltså $r = 5$ och 8 halsband.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Med tio värden är medianen medelvärdet av det femte och sjätte. Tas det största bort blir medianen det femte värdet.
+
+Är femte och sjätte båda 25 blir det 25. Är de 24 och 26 blir det 24. **Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: $x + z = 166$ och $y + w = 182$, totalt 348. Medelvärdet är 87.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 24,
+    svar: "A",
+    losning: String.raw`(1): Från botten: vit, röd, svart. Den svarta är överst. Räcker.
+
+(2): Vit och svart är i var sin ände, men vilken är överst? Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 25,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att Robin hittade 33 kottar och att de två hittade 59 tallkottar, men inte hur tallkottarna fördelade sig.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 26,
+    svar: "B",
+    losning: String.raw`(2): Röd är bättre än gul, gul bättre än svart och svart bättre än vit. Röd studsar bäst. Räcker.
+
+(1): Både gul och röd kan vara bäst. Räcker inte.
+
+**Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021ht",
+    pass: 4,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): $3n + 2$ jämnt ger $3n$ jämnt, alltså $n$ jämnt. Räcker.
+
+(2): $n^2 + 3$ udda ger $n^2$ jämnt, alltså $n$ jämnt. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
