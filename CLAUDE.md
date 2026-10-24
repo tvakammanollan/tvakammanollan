@@ -915,7 +915,9 @@ route-loaders och aldrig hämtas i klienten.
   genomgångar: lägg till en post och kör skriptet igen. `--dump` ger
   trådarna som JSON utan att röra databasen.
 - **Publicera genomgångarna i takt** (2026-10-24): `bun run scripts/seed-forum.ts --apply --limit 50`
-  ungefär en gång i veckan. Det fanns 500 genomgångar i kö; flera hundra trådar
+  ungefär en gång i veckan. Det finns 1 149 genomgångar (2026-10-24): alla
+  kvantitativa textuppgifter 2012–2026 utom de vars arkivtext är trasig (mest
+  2012vt, där formler och svarsalternativ saknas). Flera hundra trådar
   från samma konto samma dag ser massproducerat ut för en sökmotor även när
   varje tråd är unik. Skriptet är idempotent och tar nästa omgång nästa gång.
 - **Gamla prov länkar till genomgångarna** (2026-10-23). Trådarna har
@@ -925,6 +927,9 @@ route-loaders och aldrig hämtas i klienten.
   rättning. Byts rubrikmallen "…, provpass N, uppgift M (…): lösning" slutar
   kopplingen fungera tyst. Ett forumfel ger inga länkar, aldrig ett trasigt
   provpass.
+- **Termformen har ett valfritt a/b** (`/^\d{4}(vt|ht)[ab]?$/`): våren 2021 och
+  2022 hade två prov. En regex utan `[ab]?` (som `fetchProvThreads` hade fram
+  till 2026-10-24) tappar länkarna för de fyra proven utan felmeddelande.
 - **robots.txt har EN grupp.** En robot följer bara den mest specifika
   gruppen som nämner den, så de tidigare egna grupperna för Googlebot och
   AI-robotarna (bara `Allow: /`) gjorde att spärrarna för `/admin`, `/api/`
