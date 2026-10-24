@@ -38,6 +38,7 @@ import {
   Settings,
   Swords,
   Sparkles,
+  MessagesSquare,
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
@@ -170,6 +171,7 @@ export function Navbar() {
               </NavLink>
               <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
+              <NavLink to="/forum">Forum</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
               {!user.is_anonymous && (
                 <SafeBoundary label="notifications-bell">
@@ -188,10 +190,19 @@ export function Navbar() {
             </>
           ) : (
             <>
+              {/* Utloggade är nästan alla som kommer från Google. Utan de här
+                  länkarna var forumet, guiderna och arkivet osynliga för dem
+                  utom via sidfoten. */}
+              <NavLink to="/gamla-prov">Gamla prov</NavLink>
+              <NavLink to="/forum">Forum</NavLink>
+              {/* Mellan md och lg räcker inte bredden till allt. */}
+              <span className="hidden lg:contents">
+                <NavLink to="/guider">Guider</NavLink>
+              </span>
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/login">Logga in</Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild className="hidden lg:inline-flex">
                 <Link to="/signup">Skapa konto</Link>
               </Button>
               <Button
@@ -230,6 +241,9 @@ export function Navbar() {
             </>
           ) : (
             <>
+              <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
+                <Link to="/forum">Forum</Link>
+              </Button>
               <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
                 <Link to="/login">Logga in</Link>
               </Button>
@@ -512,6 +526,9 @@ function MobileMenu({
           </MobileNavLink>
           <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
             Gamla prov
+          </MobileNavLink>
+          <MobileNavLink to="/forum" onClick={close} icon={MessagesSquare}>
+            Forum
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista
