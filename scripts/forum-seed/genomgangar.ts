@@ -8120,4 +8120,480 @@ Tillsammans: 80 spikar. **Svar: C.** Mer i ${NOG}.`,
 
 Tillsammans: 72. **Svar: C.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2017, provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 1,
+    svar: "C",
+    losning: String.raw`$y$ måste vara större än $x$ och högst 9, så $x$ kan vara 1 till 8.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`$\frac{1}{2} = \frac{3}{6}$. Medelvärdet är $\frac{1}{2} \cdot \frac{4}{6} = \frac{1}{3}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`På 18 minuter gör Kalle 50 och Jakob 25 drinkar, alltså 75 tillsammans.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`Sidorna är 5 cm och 8 cm. $\frac{5 \cdot 8}{2} = 20$ cm².
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 5,
+    svar: "B",
+    losning: String.raw`Multiplicera exponenterna: $3 \cdot 2 = 6$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`$84 = 12x$ ger $x = 7$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`1 m³ är 1 000 liter. $470 \cdot 1\,000 = 470\,000 = 4{,}7 \cdot 10^5$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Linjer som aldrig skär varandra är parallella och har samma lutning, $k = 2$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 9,
+    svar: "A",
+    losning: String.raw`$\frac{\frac{2}{3}}{\frac{10}{3}} = \frac{2}{10} = \frac{1}{5}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`Subtrahera kvadreringsreglerna: $(a + b)^2 - (a - b)^2 = 4ab = 25 - 121 = -96$, alltså $ab = -24$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Konjugatregeln: $\frac{x^2}{16} - \frac{1}{4} = \frac{1}{4}\left(\frac{x^2}{4} - 1\right)$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`I: $24 - 15 = 9$. II: $4 \cdot 1 \cdot 3 = 12$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`$\frac{4}{20} = \frac{1}{5}$, som är mindre än $\frac{1}{4}$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`$\pi \cdot 3^2 \cdot 3 = 27\pi$ cm³.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`$x + 3$ är positivt, så roten ur kvadraten är talet självt.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`I: $2\sqrt{2} + 3\sqrt{3} \approx 2{,}83 + 5{,}20 = 8{,}03$. II: $5\sqrt{2} \approx 7{,}07$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`Villkoret ger bara $x - y < 93$. $x$ kan vara både större och mindre än $y$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`$J = R + 5$ och $J - 3 = 2(R - 3)$. Det ger $R + 2 = 2R - 6$ och $R = 8$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 21,
+    svar: "D",
+    losning: String.raw`$x = y = 1$ ger lika, $x = 1$ och $y = -1$ ger I störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`$x = -\frac{2}{3}$ och $z = -\frac{3}{2}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 23,
+    svar: "D",
+    losning: String.raw`Hushållsosten kostar $\frac{19{,}52}{0{,}488} = 40$ kr/kg.
+
+(1): Prästosten kostar 89 kr/kg. Räcker. (2): Samma sak direkt. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: intervallen är 3, 0,5 och 2,5 timmar, alltså 6, 1 och 5 halvtimmar. Minsta gemensamma multipel är 30 halvtimmar, 15 timmar. Nästa gång 09.00.
+
+Var för sig saknas ett intervall. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 25,
+    svar: "B",
+    losning: String.raw`(2): Höjden 6 cm och basen 8 cm. Efter ökningen 11 och 13, kvoten $\frac{11}{13}$. Räcker.
+
+(1) gäller alltid och säger inget nytt. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`(1) ger 15, 24, 33, 42, 51 och 60. Tillsammans: bara 42 är delbart med 7.
+
+(2) ensam ger många tal. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 27,
+    svar: "B",
+    losning: String.raw`(2): B och E väger var för sig mer än A, D och F tillsammans, och de väger i sin tur mer än C. B och E är tyngst. Räcker.
+
+(1) säger inget om B, C och E. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 3,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Möjliga tripplar är 1, 2, 3 och 1, 2, 4 och 1, 3, 4 och 2, 3, 4.
+
+Tillsammans uppfyller både 1, 2, 3 och 2, 3, 4 villkoren, med olika medelvärden.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$\frac{48}{0{,}75} = 64$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$3 \cdot 4 - 3 + 4 = 13$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 4,
+    svar: "B",
+    losning: String.raw`Tjugondelar: $\frac{15 + 10 + 24}{20} = \frac{49}{20}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`Triangelolikheten: en sida är kortare än summan och längre än skillnaden av de andra två.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 6,
+    svar: "A",
+    losning: String.raw`Summan av tre på varandra följande heltal är tre gånger det mittersta, alltså delbar med 3. $45 = 14 + 15 + 16$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 7,
+    svar: "C",
+    losning: String.raw`$350(1 + 2 + 4 + 8) = 350 \cdot 15 = 5\,250$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$\frac{x_1}{y_1} = \frac{2x_2}{2y_2} = \frac{x_2}{y_2}$, så kvoten är 1.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`50 i basen åtta är $5 \cdot 8 + 0 = 40$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`$\frac{1}{9} = 3^{-2}$. $-3x + 4 = -2$ ger $x = 2$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`$g(2) = 2$ och $h(2) = -3$. $2 - (-3) = 5$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`Summan är 65. Gör de andra så små som möjligt: 1, 2, 15 och 16. Kvar blir $65 - 34 = 31$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`$x - y = y - x$ ger $2x = 2y$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`Medelvärdet är $\frac{38}{10} = 3{,}8$. Medianen är $\frac{4 + 4}{2} = 4$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 15,
+    svar: "C",
+    losning: String.raw`II: $3 \cdot 2\pi \cdot \frac{R}{3} = 2\pi R$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`$f(1) - f(0) = k$, och $k$ kan ha vilket tecken som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`I: $\frac{15}{16} = 1 - \frac{1}{16}$. II: $1 - \frac{1}{15}$. Mindre bit fattas i I.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 18,
+    svar: "D",
+    losning: String.raw`$x = y = 1$ ger lika, $x = 1$ och $y = 2$ gör II störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Röda är minst 21, gröna 17. Blå är högst $60 - 21 - 17 = 22$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`$y = -x$, så I blir 0 och II blir $2x^2 > 0$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`$4{,}25^2 \approx 18{,}06 > 17$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: AB = $24 - 7 = 17$ och CD = $20 - 7 = 13$. AD = $17 + 7 + 13 = 37$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Vi vet aldrig hur mycket som fanns i hinken från början, så det som gick åt går inte att räkna ut.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 25,
+    svar: "A",
+    losning: String.raw`(1): 57 % av 800 är små, 456 gem. Räcker.
+
+(2) säger inget om fördelningen mellan kartongerna. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`Tillsammans: Bea kör $\frac{3}{4}$ av Annas hastighet och behöver en tredjedel mer tid. Den extra tredjedelen är 30 minuter, så Anna tog 1,5 timmar. $\frac{30}{1{,}5} = 20$ km/h.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): $x - y - z$ och $x + y + z$ skiljer sig med $2y + 2z$, så de har samma paritet. Summan är udda. Räcker.
+
+(2): Alla tre är udda, och summan av tre udda tal är udda. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2017ht",
+    pass: 5,
+    nr: 28,
+    svar: "E",
+    losning: String.raw`Tillsammans: alla fyra summerar till 22, så $b + c = a + d = 11$. Både $a = 2, b = 4, c = 7, d = 9$ och $a = 3, b = 5, c = 6, d = 8$ fungerar.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
 ];
