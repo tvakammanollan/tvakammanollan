@@ -5130,4 +5130,446 @@ Var för sig saknas antingen sträckorna eller tiderna. **Svar: C.** Mer i ${NOG
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2021 (maj), provpass 2 och 5 ─────────────────────────────────────── */
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$\frac{x}{3} = \frac{11}{12} - \frac{3}{12} = \frac{8}{12} = \frac{2}{3}$, så $x = 2$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`$\sqrt{65}$ är strax över 8 och $\sqrt{35}$ strax under 6. Summan är ungefär 14.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`Nämnaren: $2 - 1{,}1 = 0{,}9$. $\frac{0{,}6}{0{,}9} = \frac{2}{3}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`Två tal med produkten $-12$ och summan 1: $-3$ och 4.
+
+$(x - 3)(x + 4)$. **Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Multiplicera exponenterna: $2 \cdot \frac{5}{7} = \frac{10}{7}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$99 = 9 \cdot 11$, $93 = 3 \cdot 31$ och $91 = 7 \cdot 13$. 97 är ett primtal.
+
+**Svar: C.** 91 är den klassiska fällan. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`$-2x + 2 = 2x + 4$ ger $-4x = 2$ och $x = -\frac{1}{2}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 10,
+    svar: "A",
+    losning: String.raw`Kalla den röda sidan $s$. $(s + 6)^2 - s^2 = 12s + 36 = 48$, alltså $s = 1$ och arean 1 cm².
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Summan är 22, och medianen 5 betyder att de två mittersta väger 10 tillsammans. De två andra väger då 12.
+
+Den lättaste kan väga högst 5 (den får inte vara tyngre än de mittersta), så den tyngsta väger minst 7.
+
+**Svar: D.** Exempel: 5, 5, 5 och 7 kg. Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 12,
+    svar: "C",
+    losning: String.raw`1 m/s är 3,6 km/h, och $3{,}6 = \frac{18}{5}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 13,
+    svar: "D",
+    losning: String.raw`$x$ kan vara både större och mindre än $y$: $x = 0$, $y = 8$ eller $x = 100$, $y = 8$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`1 m³ är 1 000 dm³.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 15,
+    svar: "D",
+    losning: String.raw`Av de 30 cyklisterna kan högst 20 jobba på kontoret, så minst 10 och högst 30 jobbar i verkstaden.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Båda är $\frac{x}{20}$. Ordningen spelar ingen roll vid multiplikation.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 18,
+    svar: "C",
+    losning: String.raw`$f(2) = 3 \cdot 4 = 12$, så I $= 48$. $f(4) = 3 \cdot 16 = 48$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`$\frac{1}{x + 1} < \frac{1}{x}$, så I är negativ och II samma tal fast positivt.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`I: $\frac{5}{20} = 0{,}25$. II: $\frac{4}{18} \approx 0{,}22$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`$x^2 > 0$, så $x^2 y^3 > 0$ ger $y^3 > 0$ och $y > 0$. Då ger $xy < 0$ att $x < 0$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`(1) ger Felix $= A - 13$ och Oskar $= A - 8$, men inte $A$. (2) ger summan $3 \cdot 181 = 543$.
+
+Tillsammans: $3A - 21 = 543$, alltså $A = 188$ cm. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): $0{,}04x = 60$ ger $x = 1\,500$. Räcker.
+
+(2): $3x - 500 = 4\,000$ ger $x = 1\,500$. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 25,
+    svar: "A",
+    losning: String.raw`(1): Kemiboken på plats 2 har matematik och fysik på var sin sida, alltså på 1 och 3. Matematik är inte på 3, så den är på 1. Räcker.
+
+(2) säger inget om matematikboken. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 27,
+    svar: "E",
+    losning: String.raw`Båda påståendena säger att Sophie bor överst. Ingen av dem säger om Ella eller Ylva bor i mitten.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 2,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`(1): Bert springer 1,5 gånger så fort, så sträckorna delas 1,5:1. Bert springer $\frac{1{,}5}{2{,}5} \cdot 3 = 1{,}8$ km. Räcker.
+
+(2): Anton springer $8 \cdot \frac{9}{60} = 1{,}2$ km, så Bert springer 1,8 km. Räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`$4x - 8 = -2x - 8$ ger $6x = 0$ och $x = 0$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`Summan är $4 \cdot 16 = 64$, och $13 + 14 + 26 = 53$. $x = 11$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 3,
+    svar: "D",
+    losning: String.raw`$\frac{1}{2} + \frac{1}{6} = \frac{2}{3}$, och $\frac{1}{3} \cdot \frac{2}{3} = \frac{2}{9}$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 4,
+    svar: "A",
+    losning: String.raw`$f(2) = 4$, så $g(2) = -12 - 12 = -24$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`$0{,}4x = 54$ ger $x = 135$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 6,
+    svar: "D",
+    losning: String.raw`Skriv talen som $x$, $x + 1$, $x + 2$ och $x + 3$. $(2x + 5) - (2x + 1) = 4$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 7,
+    svar: "D",
+    losning: String.raw`Täljaren: $a^{5 - 3} = a^2$. Nämnaren: $a^{-8 + 2} = a^{-6}$. $\frac{a^2}{a^{-6}} = a^8$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 8,
+    svar: "A",
+    losning: String.raw`Korsmultiplicera: $5x = 4 \cdot 6$, alltså $x = \frac{4 \cdot 6}{5}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`En burk rymmer $\pi \cdot 2^2 \cdot 5 = 20\pi \approx 63$ cm³. 0,6 liter är 600 cm³, och $\frac{600}{63} \approx 9{,}5$. Det behövs 10 burkar.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 11,
+    svar: "B",
+    losning: String.raw`$\sqrt{36} = 6$ och $\sqrt{10^{36}} = 10^{18}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 12,
+    svar: "B",
+    losning: String.raw`En punkt ligger under linjen om $y < \frac{x}{2}$. För (23, 0): $0 < 11{,}5$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`25 promille är 2,5 procent. $0{,}025 \cdot 40\,000 = 1\,000$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 14,
+    svar: "D",
+    losning: String.raw`Villkoret säger bara att det finns högst tre blå kulor. Påsen kan innehålla 4 kulor eller 100.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`I: $2x^2$. II: $\frac{3}{4}\pi x^2 \approx 2{,}36x^2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`$2y = 3 + 4x$, alltså $y = 1{,}5 + 2x$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 17,
+    svar: "D",
+    losning: String.raw`Det andra talet är $70 - x$. Vilket av dem som är störst går inte att säga.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 18,
+    svar: "C",
+    losning: String.raw`Att dela med $\frac{11}{6}$ är att multiplicera med $\frac{6}{11}$. Båda är $\frac{18}{88}$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 19,
+    svar: "A",
+    losning: String.raw`$x$ är jämnt, så $(-7)^x > 0$ och $(-7)^{x + 1} < 0$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 20,
+    svar: "C",
+    losning: String.raw`Linjen genom origo och $(-3, 3)$ är $y = -x$. Alla punkter på den har $x + y = 0$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 21,
+    svar: "B",
+    losning: String.raw`$1 + 5 + 9 = 15$ delar på 180°, alltså 12° per del. Den minsta vinkeln är 12°.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`I: $x = 3$. II: $x = 2$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: Cilla är fladdermus och Allan spöke. Varulven är Allan eller Billy, alltså Billy. Då blir Dolly zombie.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Tillsammans vet vi att det finns dubbelt så många vita som svarta knappar och att 15 vita har fyra hål. Men vi vet inte hur många vita som har två hål.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: om hälften av de vita blev gula skulle $0{,}86 \cdot 50 = 43$ vara gula. Det är 7 fler än nu, alltså är hälften av de vita 7. Det finns 14 vita och 36 gula.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2021vtb",
+    pass: 5,
+    nr: 28,
+    svar: "A",
+    losning: String.raw`(1): Fyra ettor utan två i följd bland sju siffror måste stå på plats 1, 3, 5 och 7. Talet är 1 212 121. Räcker.
+
+(2): Varje tvåa följs av en etta, men den fjärde ettan kan stå på flera ställen, till exempel 1 212 121 eller 2 112 121. Räcker inte.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
 ];
