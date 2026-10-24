@@ -17,7 +17,8 @@
     "scrape:ord-old": "bun run scraper/scrape-ord-old.ts",
     "seed:ord-old": "bun run scraper/seed-ord-old.ts",
     "test": "vitest run",
-    "validate:questions": "bun run scripts/validate-questions.ts"
+    "validate:questions": "bun run scripts/validate-questions.ts",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

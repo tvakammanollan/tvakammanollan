@@ -1649,6 +1649,16 @@ head: () => ({
 
 Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured data.
 
+### IndexNow och AI-sökmotorerna (2026-10-24)
+
+`npm run indexnow` (efter varje deploy med nya sidor) skickar alla adresser i
+de tre sitemaparna till IndexNow, som Bing delar med Yandex, Seznam och Naver.
+Bings index är det ChatGPT:s och Copilots webbsök läser, så det här är den
+snabbaste vägen in i AI-svaren. Nyckeln är `public/cf39542cb6ea930dc589d12fac3ab9d9.txt`
+och står även i `scripts/indexnow.mjs`; filen måste vara utrullad innan
+skriptet körs. `llms.txt` har ett avsnitt "Fakta i korthet" med de siffror en
+AI-motor kan citera. Det är statiskt och rättas för hand när fakta ändras.
+
 ### Provdatum och Event-data (2026-08-20)
 
 Search Console rapporterade fyra "mindre allvarliga" Event-varningar på

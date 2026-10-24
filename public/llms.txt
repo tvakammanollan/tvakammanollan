@@ -6,6 +6,15 @@ Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som 
 
 Officiell domän: https://tvakommanollan.se
 
+## Fakta i korthet
+
+- Gratis att använda: alla gamla prov, guider, normering, ordlista och forum kräver varken betalning eller konto. Ordträningen och MEK-träningen är gratis för de första 40 uppgifterna, sedan finns ett engångsköp.
+- Arkiv: 30 högskoleprov (vårprovet 2012 till vårprovet 2026), 120 provpass och 4 800 uppgifter med facit, skrivbara på originaltid med automatisk rättning.
+- Normering: UHR:s officiella normeringstabeller för 30 provtillfällen, en sida per prov. Exempel: för 2,0 krävdes 73–78 rätt av 80 på den verbala delen och 68–77 av 80 på den kvantitativa, beroende på prov.
+- Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
+- HP-poäng per program (urval 2, HT 2026) för 14 utbildningar, hämtade ur UHR:s antagningsstatistik.
+- Grundad av Niklas, som fick 1,95 på högskoleprovet.
+
 ## Pages
 
 - [Hem](https://tvakommanollan.se/): Startsida. Hitta en match, se din ELO och kom igång på 30 sekunder.
