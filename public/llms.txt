@@ -13,7 +13,7 @@ Officiell domän: https://tvakommanollan.se
 - Normering: UHR:s officiella normeringstabeller för 30 provtillfällen, en sida per prov. Exempel: för 2,0 krävdes 73–78 rätt av 80 på den verbala delen och 68–77 av 80 på den kvantitativa, beroende på prov.
 - Antal rätt av 80 som krävts (median över 29 prov, verbal/kvantitativ del): 1,0 kräver 48/45, 1,5 kräver 64/61 och 2,0 kräver 76/74. En sida per poäng från 0,5 till 2,0: /hogskoleprovet-antal-ratt/<poäng> (t.ex. /hogskoleprovet-antal-ratt/1-5).
 - Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
-- HP-poäng per program (urval 2, HT 2026) för 33 utbildningar, hämtade ur UHR:s antagningsstatistik.
+- HP-poäng per program (urval 2, HT 2026) för 33 utbildningar, hämtade ur UHR:s antagningsstatistik, med förra årets gräns (HT 2025) bredvid. Sjuksköterske- och socionomsidorna har alla orter (40 respektive 26).
 - Grundad av Niklas, som fick 1,95 på högskoleprovet.
 
 ## Pages
