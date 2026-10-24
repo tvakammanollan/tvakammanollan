@@ -1914,4 +1914,15 @@ Tillsammans vet vi att både 19 och 21 är med. Då kan talen vara 17, 19, 21 (s
 
 **Svar: A.** Mer i ${NOG}.`,
   },
+  {
+    term: "2024ht",
+    pass: 4,
+    nr: 9,
+    svar: "C",
+    losning: String.raw`Förkorta det första bråket: $10 \cdot \frac{3 - x}{15} = \frac{2(3 - x)}{3} = 2 - \frac{2x}{3}$.
+
+Lägg till $\frac{5x}{3}$: $2 - \frac{2x}{3} + \frac{5x}{3} = 2 + \frac{3x}{3} = 2 + x$.
+
+**Svar: C.** Kontroll med $x = 3$: uttrycket blir $0 + 5 = 5$, och $2 + 3 = 5$. Mer i ${XYZ}.`,
+  },
 ];

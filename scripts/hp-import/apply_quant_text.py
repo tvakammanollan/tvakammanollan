@@ -747,7 +747,7 @@ PATCH: dict[str, dict[int, dict]] = {
                      "$xy + x(b-y) + y(a-x) + (a-x)(b-y)$?",
             "alternatives": ["$ab$", "$xy + ay + bx$", "$ab + xy$", "$ab + bx + ay - 2xy$"]},
         9: {"text": "Vilket svarsalternativ är lika med uttrycket $10 \\cdot \\frac{3-x}{15} + "
-                     "\\frac{5x}{3}$?", "alternatives": ["$2 - x$", "$2 + x$", "$2 + 8x$", "$\\frac{10+8x}{5}$"]},
+                     "\\frac{5x}{3}$?", "alternatives": ["$\\frac{10+8x}{5}$", "$2 - x$", "$2 + x$", "$2 + 8x$"]},  # ordning rättad 2026-10-24 mot provhäftet
         10: {"text": "Vilket svarsalternativ är lika med $(2\\sqrt{3} + 3\\sqrt{3})(4\\sqrt{3} - \\sqrt{3})$?",
              "alternatives": ["15", "$15\\sqrt{3}$", "45", "135"]},
         12: {"text": "Vilket svarsalternativ är lika med 20 procent av $10^{10}$?",
