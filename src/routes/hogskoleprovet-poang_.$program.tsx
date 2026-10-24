@@ -163,7 +163,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Juristprogrammet",
     h1: "Juristprogrammet · HP-poäng per lärosäte",
     intro:
-      "Juristprogrammet är enligt UHR:s egen statistik det program som drar flest behöriga sökande i landet. Det ges vid sex lärosäten, med Lund som mest krävande i HP-kvoten.",
+      "Juristprogrammet är enligt UHR:s egen statistik det program som drar flest behöriga sökande i landet. Det ges vid sju lärosäten, med Lund som mest krävande i HP-kvoten.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.6, prev: 1.55 },
@@ -172,6 +172,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
       { label: "Stockholms universitet", sub: "Stockholm", hp: 1.4, prev: 1.35 },
       { label: "Karlstads universitet", sub: "Karlstad", hp: 1.25, prev: 1.2 },
       { label: "Örebro universitet", sub: "Örebro", hp: 1.25, prev: 1.2 },
+      { label: "Umeå universitet", sub: "Umeå", hp: 1.25, prev: 1.2 },
     ],
     term: "HT 2026",
     prevTerm: "HT 2025",

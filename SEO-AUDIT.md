@@ -104,10 +104,8 @@ ingen gräns i HP-gruppen HT 2025 eller ingen motsvarande utbildning. Vid nästa
 uppdatering: flytta HT 2026 till `prev`, läs in HT 2027 som `hp` och byt
 `term`/`prevTerm`.
 
-**Kända luckor, inte fel:** Umeå universitet saknas på jurist- och
-läkarsidorna (dess program dök inte upp under samma sökterm som gav träff
-för övriga lärosäten — värt att undersöka med en egen sökning om sidan ska
-kompletteras). Sjuksköterskeprogrammet visar fem exempel av ~25 möjliga
+**Kända luckor, inte fel:** (Umeå finns sedan 2026-10-24 på både jurist-
+och läkarsidan.) Sjuksköterskeprogrammet visar fem exempel av ~25 möjliga
 studieorter, valda för att visa spridningen (0,45–1,10) snarare än att vara
 en fullständig lista.
 
