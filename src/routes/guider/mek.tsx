@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/mek")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/guider/mek")({
           url: "https://tvakommanollan.se/guider/mek",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.mek)),
     ],
   }),
 });
@@ -165,6 +167,8 @@ function MekGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.mek} />
 
       <RelatedGuides
         currentPath="/guider/mek"

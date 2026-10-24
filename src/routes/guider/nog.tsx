@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/nog")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/guider/nog")({
           url: "https://tvakommanollan.se/guider/nog",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.nog)),
     ],
   }),
 });
@@ -164,6 +166,8 @@ function NogGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.nog} />
 
       <RelatedGuides
         currentPath="/guider/nog"

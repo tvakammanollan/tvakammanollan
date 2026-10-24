@@ -222,3 +222,44 @@ export function guideArticleJsonLd({
     },
   };
 }
+
+/* ── Vanliga frågor per delprovsguide (2026-10-24) ─────────────────── */
+
+export type GuideFaqItem = { q: string; a: string };
+
+/**
+ * Samma text går till den synliga listan och till FAQPage-datan, ordagrant:
+ * Google kräver att FAQ-innehållet syns på sidan. Lägg därför aldrig till en
+ * fråga bara i JSON-LD.
+ */
+export function guideFaqJsonLd(items: GuideFaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+}
+
+export function GuideFaq({ items }: { items: GuideFaqItem[] }) {
+  return (
+    <section className="mt-12">
+      <h2 className="text-xl font-semibold" style={{ color: "var(--cream)" }}>
+        Vanliga frågor
+      </h2>
+      <dl className="mt-4 space-y-5">
+        {items.map(({ q, a }) => (
+          <div key={q}>
+            <dt className="font-semibold" style={{ color: "var(--cream)" }}>
+              {q}
+            </dt>
+            <dd className="mt-1">{a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}

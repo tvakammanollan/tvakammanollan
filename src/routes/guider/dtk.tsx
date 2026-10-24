@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/dtk")({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/guider/dtk")({
           url: "https://tvakommanollan.se/guider/dtk",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.dtk)),
     ],
   }),
 });
@@ -170,6 +172,8 @@ function DtkGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.dtk} />
 
       <RelatedGuides
         currentPath="/guider/dtk"

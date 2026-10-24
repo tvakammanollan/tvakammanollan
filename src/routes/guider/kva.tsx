@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/kva")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/guider/kva")({
           url: "https://tvakommanollan.se/guider/kva",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.kva)),
     ],
   }),
 });
@@ -71,11 +73,11 @@ function KvaGuidePage() {
           Vad är KVA?
         </h2>
         <p>
-          KVA-delprovet ber dig jämföra två matematiska uttryck: kolumn A och kolumn B. Det finns
-          fyra möjliga svar: A är större än B, B är större än A, de är lika, eller relationen kan
-          inte avgöras med given information. Delprovet innehåller 10 uppgifter per provpass.
-          Poängen per uppgift är densamma som övriga delprov, men rätt strategi gör att du kan svara
-          på KVA-uppgifter snabbare än på XYZ. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          KVA-delprovet ber dig jämföra två storheter: kvantitet I och kvantitet II. Det finns fyra
+          möjliga svar: I är större än II, II är större än I, I är lika med II, eller att
+          informationen är otillräcklig. Delprovet innehåller 10 uppgifter per provpass. Poängen per
+          uppgift är densamma som övriga delprov, men rätt strategi gör att du kan svara på
+          KVA-uppgifter snabbare än på XYZ. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -92,9 +94,9 @@ function KvaGuidePage() {
         </h2>
         <p>
           Det fjärde alternativet, att relationen beror på omständigheterna, är den vanligaste
-          fällan i KVA. Välj "kan ej avgöras" ENDAST om du kan konstruera ett konkret exempel där A
-          &gt; B OCH ett exempel där A &lt; B. Om du bara hittar ett motexempel men inte båda är
-          svaret inte "kan ej avgöras".
+          fällan i KVA. Välj "kan ej avgöras" när du kan konstruera två tillåtna exempel som ger
+          olika svar, till exempel ett där kvantiteterna är lika och ett där I är större. Hittar du
+          bara exempel som alla ger samma relation är svaret inte "kan ej avgöras".
         </p>
         <p>
           Praktisk tumregel: konstruera motexempel aktivt. Prova x = 1, x = −1 och x = 0 för varje
@@ -113,9 +115,9 @@ function KvaGuidePage() {
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Kvadrater och rötter:</strong> om A = x² och B
-            = y² och x, y kan vara negativa går det inte att direkt jämföra rötterna. Ta hänsyn till
-            tecken.
+            <strong style={{ color: "var(--cream)" }}>Kvadrater och rötter:</strong> om I = x² och
+            II = y² och x, y kan vara negativa går det inte att direkt jämföra rötterna. Ta hänsyn
+            till tecken.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Multiplikation med okänt tecken:</strong> om
@@ -162,6 +164,8 @@ function KvaGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.kva} />
 
       <RelatedGuides
         currentPath="/guider/kva"

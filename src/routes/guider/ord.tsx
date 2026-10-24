@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/ord")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/guider/ord")({
           url: "https://tvakommanollan.se/guider/ord",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.ord)),
     ],
   }),
 });
@@ -169,6 +171,8 @@ function OrdGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.ord} />
 
       <RelatedGuides
         currentPath="/guider/ord"

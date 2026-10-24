@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/elf")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/guider/elf")({
           url: "https://tvakommanollan.se/guider/elf",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.elf)),
     ],
   }),
 });
@@ -157,6 +159,8 @@ function ElfGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.elf} />
 
       <RelatedGuides
         currentPath="/guider/elf"

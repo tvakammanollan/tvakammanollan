@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
+import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
 export const Route = createFileRoute("/guider/las")({
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/guider/las")({
           url: "https://tvakommanollan.se/guider/las",
         }),
       ),
+      jsonLdScript(guideFaqJsonLd(GUIDE_FAQ.las)),
       // HowTo schema — Google rich-result eligibility för numrerade steg.
       // Övertaget från /guider/tips-lasforstaelse när den sidan slogs ihop hit.
       jsonLdScript({
@@ -250,6 +252,8 @@ function LasGuidePage() {
           </Link>
         </p>
       </section>
+
+      <GuideFaq items={GUIDE_FAQ.las} />
 
       <RelatedGuides
         currentPath="/guider/las"
