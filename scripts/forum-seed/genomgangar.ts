@@ -10839,4 +10839,154 @@ Tillsammans fungerar bara 4 och 5 med 2 och 6. Tredje asken har 1 och 3. **Svar:
 
 (1) ger olika kvoter för olika antal. **Svar: B.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2012, provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`Alla $x$ ligger över $-110$ och alla $y$ under. $x$ är alltid större.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 20,
+    svar: "B",
+    losning: String.raw`Skriv allt med $s$: $u + s = 2s - 2$ och $2t = 2s + 2$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 22,
+    svar: "A",
+    losning: String.raw`Marias nya lön är $0{,}85 \cdot 1{,}15 = 0{,}9775$ av Pelles. Pelle tjänar mer.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: äldsta $x$, näst äldsta $x - 2$ och yngsta $\frac{x - 2}{2}$. Summan $2{,}5x - 3 = 27$ ger 12, 10 och 5 år.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 24,
+    svar: "B",
+    losning: String.raw`(2): Summan av hastigheterna är $\frac{10}{\frac{5}{12}} = 24$ km/h, så Helena ror 14 km/h. Räcker.
+
+(1) handlar om tid, inte hastighet. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`Ökningen är 5 miljoner totalt.
+
+(1): Första halvan är en tredjedel, cirka 1,67 miljoner. (2): $5 - 3{,}33 = 1{,}67$ miljoner. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): Matchar två hundar sin skål måste även den tredje göra det. Den svarta hunden har den svarta skålen. Räcker.
+
+(2) gäller alltid. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`(1): Sidorna blir $x$, $x + 5$ och $x + 1$. AB är kortast, så vinkeln mitt emot, vinkel C, är minst. Räcker.
+
+(2) ger inget om $y$. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 3,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): $76 = 4 \cdot 16 + 12$, så fyra våningar à 16 och en topp med 12. Fem våningar. Räcker.
+
+(1): 64 bitar kan delas som 4 gånger 16 eller 2 gånger 32. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 14,
+    svar: "C",
+    losning: String.raw`Summan är densamma, $x + y$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`Lägg ihop ekvationerna: $4y = 20$ ger $y = 5$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`I: $\frac{s}{v}$. II: $\frac{s}{4v}$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 23,
+    svar: "E",
+    losning: String.raw`(1) ger att 35 gäster tillkommer i det scenariot, (2) att 7 lämnar i det andra. Inget säger hur många som finns från början.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`(1): Med 3,5 procent per minut går det att räkna ut antalet fördubblingar på 60 minuter. (2): En fördubbling per 20 minuter ger 3. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 26,
+    svar: "D",
+    losning: String.raw`Det finns 20 flickor.
+
+(1): $V - H = 4$ och $V + H = 20$ ger 8 högerhänta. (2): 12 vänsterhänta flickor ger 8 högerhänta. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2012vt",
+    pass: 5,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): 17 streck har 16 mellanrum, så det finns 13 breda och 4 smala. (2): $B - S = 9$ och $B + S = 17$ ger 4 smala. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
