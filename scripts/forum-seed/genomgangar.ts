@@ -9059,4 +9059,451 @@ Tillsammans finns både 394 och 934 kvar. **Svar: E.** Mer i ${NOG}.`,
 
 **Svar: D.** Mer i ${NOG}.`,
   },
+
+  /* ── Höstprovet 2016, provpass 3 och 5 ─────────────────────────────────────── */
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`Bryt ut $xy$: $xy(3y + 2x)$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 2,
+    svar: "C",
+    losning: String.raw`Vinklarna i en fyrhörning är 360° tillsammans. $360 - 210 = 150$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 3,
+    svar: "A",
+    losning: String.raw`För $x = 0$ ligger linjerna på $y = 3$ och $y = -3$. Origo ligger mellan.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 4,
+    svar: "D",
+    losning: String.raw`Bryt ut 11: $11(x - y) = 42$.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 5,
+    svar: "C",
+    losning: String.raw`A hinner en tredjedel på två timmar. B målar en fjärdedel per timme, och två tredjedelar tar $\frac{2}{3} \cdot 4 = \frac{8}{3}$ timmar, 160 minuter.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 6,
+    svar: "B",
+    losning: String.raw`$\frac{5}{10} + \frac{1}{10} = \frac{6}{10} = \frac{3}{5}$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`$5x = \frac{1}{4} - 4 = -\frac{15}{4}$ ger $x = -\frac{3}{4}$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 8,
+    svar: "D",
+    losning: String.raw`Från början är summan 180 år, efteråt $8 \cdot 10 = 80$. De två som gick är 100 år tillsammans, alltså är den andra 20.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`$6 - 25 - 1 = -20$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`$4 \cdot 2 = 8$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 13,
+    svar: "A",
+    losning: String.raw`$-7x - 7 = -8x$ ger $x = 7$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 14,
+    svar: "A",
+    losning: String.raw`II: $\frac{81}{9} \cdot 4 = 36$. I är 144.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 16,
+    svar: "D",
+    losning: String.raw`$x + y + z = w$ och $y + z + w = x$. Lägg ihop: $y + z = 0$. Det kan vara $0$ och $0$ eller $1$ och $-1$.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`I: $72 - 28 = 44$. II: $11 \cdot 4 = 44$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`Parentesen är mindre än 2, så I är mindre än 4.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 19,
+    svar: "C",
+    losning: String.raw`$x = y$, så båda blir $\frac{3x}{3x} = 1$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`Både rektangeln och triangeln kan göras hur långsmala som helst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`$2x - 10 = -\frac{x}{3} + 11$ ger $\frac{7x}{3} = 21$, $a = 9$ och $b = 8$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 22,
+    svar: "C",
+    losning: String.raw`I: $2 \cdot 25 + 1 \cdot 5 = 55$. II: $32 + 16 + 4 + 2 + 1 = 55$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: röd står mellan grön och vit, och blå står direkt till vänster om vit. Enda ordningen är blå, vit, röd, grön. Ellas cykel är grön.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 24,
+    svar: "E",
+    losning: String.raw`Inget påstående ger något antal elever, bara skillnader.
+
+**Svar: E.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`Tillsammans: $y = 20$ ger $xy < 20$ och $y = -20$ ger $xy < 0$. Svaret är ja.
+
+Var för sig saknas den andra variabeln. **Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 26,
+    svar: "C",
+    losning: String.raw`Tillsammans: sidorna förhåller sig som 3 till 4 och diagonalen är 10, så sidorna är 6 och 8. Arean 48 cm².
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 27,
+    svar: "D",
+    losning: String.raw`(1): $x = 4$. (2): $x^2 = 4x$ och $x > 0$ ger $x = 4$. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 3,
+    nr: 28,
+    svar: "B",
+    losning: String.raw`(2): Får och get delar uppslag. Ligger de på det bakre uppslaget kan katten inte ha två djur bakom sig. Alltså ligger de på första uppslaget, och katten på sidan efter med räv och älg bakom. Räcker.
+
+(1) lämnar flera möjligheter. **Svar: B.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 1,
+    svar: "D",
+    losning: String.raw`$13 + 24 = x$, alltså 37.
+
+**Svar: D.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 3,
+    svar: "B",
+    losning: String.raw`$18 \cdot 35 = 630$ kulor. $\frac{630}{30} = 21$ burkar, alltså 3 till.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 4,
+    svar: "C",
+    losning: String.raw`Dela varje term med $7x$: $x + 13$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 5,
+    svar: "A",
+    losning: String.raw`$4 \cdot 10^6 \cdot 2{,}5 \cdot 10^{-6} = 10$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 7,
+    svar: "A",
+    losning: String.raw`Negativt delat med positivt är negativt.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`$\frac{1}{x} + \frac{1}{y} = \frac{x + y}{xy}$. Konjugatregeln ger $\frac{x^2 - y^2}{xy}$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 10,
+    svar: "B",
+    losning: String.raw`$-\frac{1}{4} + \frac{1}{4} + 1 - 9 = -8$.
+
+**Svar: B.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 11,
+    svar: "C",
+    losning: String.raw`$\frac{8 + 2x}{4} = \frac{y}{2}$ ger $8 + 2x = 2y$ och $x = y - 4$.
+
+**Svar: C.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`$f(-5) = \frac{1}{9}$, $f(-2) = -\frac{1}{3}$, $f(0) = -1$ och $f(3) = -7$.
+
+**Svar: A.** Mer i ${XYZ}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 13,
+    svar: "B",
+    losning: String.raw`$x = \pm 4$ och $y = \sqrt{25} = 5$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 15,
+    svar: "B",
+    losning: String.raw`I: 1,08. II: 1,09.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 16,
+    svar: "B",
+    losning: String.raw`$f(-1) = 0{,}75$, $f(0) = 3$, $f(1) = 12$. I är 2,25 och II är 9.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 17,
+    svar: "A",
+    losning: String.raw`I: 64. II: $\frac{36\pi}{2} = 18\pi \approx 56{,}5$.
+
+**Svar: A.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 18,
+    svar: "B",
+    losning: String.raw`$\frac{1}{x + 1} < \frac{1}{x}$ för positiva $x$.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 19,
+    svar: "D",
+    losning: String.raw`1, 2, 3 ger lika. 1, 2, 9 gör medelvärdet störst. 1, 8, 9 gör medianen störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 20,
+    svar: "D",
+    losning: String.raw`$2x^2 = 8y$ ger $x = \pm 2\sqrt{y}$. $y = 1$ och $x = 2$ ger lika, och $x = -2$ gör II störst.
+
+**Svar: D.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 21,
+    svar: "C",
+    losning: String.raw`I: $n \cdot 2\pi r = 2\pi \cdot nr = 2\pi R$.
+
+**Svar: C.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 22,
+    svar: "B",
+    losning: String.raw`Pojkar $p$ och flickor $f$: $p - 1 = f$ och $p = 2(f - 1)$. Det ger $f = 3$ och $p = 4$. I är 8 och II är 9.
+
+**Svar: B.** Mer i ${KVA}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`Tillsammans: näst minsta är röd och största grön. Minsta är blå.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 24,
+    svar: "C",
+    losning: String.raw`Tillsammans: Eva och Torsten har $\frac{6}{3} = 2$ gemensamma sorter. $6 + 4 - 2 = 8$.
+
+**Svar: C.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 25,
+    svar: "D",
+    losning: String.raw`(1): De 9 bilderna är en elftedel av antalet efter gåvan, alltså 99. (2): Före gåvan 90, efter 99. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`(1): $x + x = 2x$. Räcker.
+
+(2) säger inget om $y$. **Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`Triangeln har basen AD = 4 cm och höjden CD, var E än ligger.
+
+(1): CD = 9,5 cm och arean 19 cm². Räcker. (2) ger ingen höjd.
+
+**Svar: A.** Mer i ${NOG}.`,
+  },
+  {
+    term: "2016ht",
+    pass: 5,
+    nr: 28,
+    svar: "D",
+    losning: String.raw`Det finns 56 röda bollar.
+
+(1): A har 21 röda, så B har 35. (2): A har 28 bollar, varav 21 röda, så B har 35. Båda räcker.
+
+**Svar: D.** Mer i ${NOG}.`,
+  },
 ];
