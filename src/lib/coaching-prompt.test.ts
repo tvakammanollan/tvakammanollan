@@ -152,6 +152,7 @@ describe("isPromptablePath", () => {
       "/signup",
       "/onboarding",
       "/coachning/tack",
+      "/pris",
       "/admin",
       "/gamla-prov/2024ht/3",
     ]) {

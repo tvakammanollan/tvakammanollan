@@ -39,6 +39,7 @@ import {
   Swords,
   Sparkles,
   MessagesSquare,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
@@ -173,6 +174,11 @@ export function Navbar() {
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
               <NavLink to="/forum">Forum</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
+              {/* Bredden räcker inte till sex länkar plus klockan och avatarn
+                  mellan md och lg. Mobilmenyn har den alltid. */}
+              <span className="hidden lg:contents">
+                <NavLink to="/pris">Pris</NavLink>
+              </span>
               {!user.is_anonymous && (
                 <SafeBoundary label="notifications-bell">
                   <NotificationsBell userId={user.id} />
@@ -198,6 +204,7 @@ export function Navbar() {
               {/* Mellan md och lg räcker inte bredden till allt. */}
               <span className="hidden lg:contents">
                 <NavLink to="/guider">Guider</NavLink>
+                <NavLink to="/pris">Pris</NavLink>
               </span>
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/login">Logga in</Link>
@@ -532,6 +539,9 @@ function MobileMenu({
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista
+          </MobileNavLink>
+          <MobileNavLink to="/pris" onClick={close} icon={Tag}>
+            Pris
           </MobileNavLink>
           {/* Sekundärt — samma uppsättning som avatarmenyn på desktop.
               Guider och FAQ nås via footern. */}

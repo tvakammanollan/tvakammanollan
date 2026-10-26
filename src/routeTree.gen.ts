@@ -14,6 +14,7 @@ import { Route as VerifieraEpostRouteImport } from './routes/verifiera-epost'
 import { Route as TrainRouteImport } from './routes/train'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as PrisRouteImport } from './routes/pris'
 import { Route as OrdlistaSitemapDotxmlRouteImport } from './routes/ordlista-sitemap[.]xml'
 import { Route as OrdlistaRouteImport } from './routes/ordlista'
 import { Route as OrdRouteImport } from './routes/ord'
@@ -98,6 +99,11 @@ const StatsRoute = StatsRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrisRoute = PrisRouteImport.update({
+  id: '/pris',
+  path: '/pris',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrdlistaSitemapDotxmlRoute = OrdlistaSitemapDotxmlRouteImport.update({
@@ -437,6 +443,7 @@ export interface FileRoutesByFullPath {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -504,6 +511,7 @@ export interface FileRoutesByTo {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -572,6 +580,7 @@ export interface FileRoutesById {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
   '/train': typeof TrainRoute
@@ -641,6 +650,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/pris'
     | '/signup'
     | '/stats'
     | '/train'
@@ -708,6 +718,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/pris'
     | '/signup'
     | '/stats'
     | '/train'
@@ -775,6 +786,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/pris'
     | '/signup'
     | '/stats'
     | '/train'
@@ -843,6 +855,7 @@ export interface RootRouteChildren {
   OrdRoute: typeof OrdRoute
   OrdlistaRoute: typeof OrdlistaRoute
   OrdlistaSitemapDotxmlRoute: typeof OrdlistaSitemapDotxmlRoute
+  PrisRoute: typeof PrisRoute
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
   TrainRoute: typeof TrainRoute
@@ -917,6 +930,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pris': {
+      id: '/pris'
+      path: '/pris'
+      fullPath: '/pris'
+      preLoaderRoute: typeof PrisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ordlista-sitemap.xml': {
@@ -1371,6 +1391,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdRoute: OrdRoute,
   OrdlistaRoute: OrdlistaRoute,
   OrdlistaSitemapDotxmlRoute: OrdlistaSitemapDotxmlRoute,
+  PrisRoute: PrisRoute,
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,
   TrainRoute: TrainRoute,
@@ -1415,15 +1436,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-
 import type { startInstance } from './start.ts'
-
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
-
     router: Awaited<ReturnType<typeof getRouter>>
-
     config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

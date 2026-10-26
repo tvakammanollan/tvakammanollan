@@ -17,6 +17,7 @@ const COMPANY = [
   { label: "Provdatum", to: "/hogskoleprovet-datum" },
   { label: "Facit & normering", to: "/hogskoleprovet-facit" },
   { label: "Poäng & antagning", to: "/hogskoleprovet-poang" },
+  { label: "Pris", to: "/pris" },
   { label: "Om oss", to: "/om" },
   { label: "Vanliga frågor", to: "/faq" },
   { label: "Kontakt", to: "/kontakt" },

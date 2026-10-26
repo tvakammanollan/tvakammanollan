@@ -159,6 +159,11 @@ const BLOCKED_PREFIXES = [
   "/signup",
   "/onboarding",
   "/coachning",
+  // Prissidan förklarar vad som kostar. En upsell ovanpå den, för en annan
+  // produkt med ett annat pris, ger besökaren två olika siffror på samma
+  // skärm och gör sidan opålitlig. Gäller alla tre automatiska rutor
+  // (nudgen, rabatten och ordpåminnelsen), som delar den här funktionen.
+  "/pris",
   "/admin",
 ];
 
