@@ -1,43 +1,43 @@
-import { useState } from "react";
 import type { DemoQuestion, LandingStats } from "@/lib/landing.functions";
 import { getNextHpDate, hpDateShort } from "@/lib/hp-dates";
 import { LandingHero } from "@/components/landing/LandingHero";
 import {
   Arkivet,
   BevisRemsan,
-  Coachningen,
   Delproven,
   EloSkalan,
-  Omdomen,
+  Priset,
+  Produktytorna,
   Resurser,
   SlutCta,
   Topplistan,
 } from "@/components/landing/LandingSections";
-import { CoachingModal } from "@/components/CoachingModal";
-import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
-import { useImpression } from "@/hooks/useImpression";
-import { trackEvent } from "@/lib/events";
 
 /**
  * Landningssidan (utloggad).
  *
- * Ombyggd 2026-08-30. Den gamla följde en klassisk konverterande SaaS-mall
- * (hjälte, förtroenderad, tre feature-kort, siffror i kort, omdömeskarusell)
- * vilket är exakt den form AI-genererad design hamnar i. Den nya öppnar med
- * produkten körd live och bygger vidare på det som faktiskt är unikt: att en
- * siffra rör sig när du svarar, och att den går att läsa av på provets skala.
+ * Ombyggd 2026-10-26 till Podia-systemet. Hjälten är fortfarande en riktig
+ * uppgift man kan svara på, men sidan öppnar nu med de fyra produktytorna
+ * i sina egna färger (`Produktytorna`), så att kopplingen mellan färg och
+ * yta lärs ut redan här och gäller sedan resten av sajten.
  *
  * Allt innehåll SSR:as. Statistiken och demofrågorna hämtas i route-loadern
  * (`index.tsx`) och inte i en effekt, så att en crawler ser hela sidan
  * inklusive topplistan och en riktig uppgift.
  *
- * Tre kopplingar ut ur filen som inte får gå sönder:
- *  - `OMDOMEN`/`SNITTBETYG` bor i `@/data/omdomen` och driver JSON-LD:s
- *    aggregateRating i `index.tsx`. Ändras listan ändras betyget med.
- *  - `coaching_card_viewed` är nämnaren i coachningstratten. Utan den går det
- *    inte att skilja "ingen vill" från "ingen skrollade dit".
- *  - `CoachingModal` med `source="landing"` är enda vägen till Stripe
- *    härifrån, och den ska förbli det.
+ * **Omdömena och studieuppläggets säljsektion är borta (2026-10-26).**
+ * Studieupplägget plockades ur landningen när sajten pivoterade från det,
+ * och omdömena togs bort med det. Tre saker hänger ihop och måste röras
+ * tillsammans om omdömena någonsin kommer tillbaka:
+ *  - `OMDOMEN`/`SNITTBETYG` i `@/data/omdomen` ligger kvar som ren data.
+ *  - JSON-LD:s `aggregateRating`/`review` i `index.tsx` är BORTTAGNA. De
+ *    deklarerar recensioner, och Google kräver att de syns på just den
+ *    sidan. Att låta dem ligga kvar utan sektionen vore ogiltig markup.
+ *  - Stjärnbetyget i hjälten är borta av samma skäl.
+ * Läggs sektionen tillbaka: lägg tillbaka alla tre i samma commit.
+ *
+ * `CoachingModal`, nudgen och rabattrutan lever kvar i roten och navbaren.
+ * De är inte en del av den här sidan och rördes inte.
  */
 export function HeroLanding({
   fragor = [],
@@ -46,15 +46,6 @@ export function HeroLanding({
   fragor?: DemoQuestion[];
   stats?: LandingStats | null;
 }) {
-  const [coachingOpen, setCoachingOpen] = useState(false);
-  const erbjudande = useCoachingOffer().offer;
-
-  // Blocket ligger långt ner på en lång sida och de flesta ser det aldrig.
-  // Skillnaden mellan "vill inte" och "kom inte dit" är hela mätningen.
-  const coachningSedd = useImpression<HTMLElement>(() =>
-    trackEvent("coaching_card_viewed", { source: "landing" }),
-  );
-
   const next = getNextHpDate();
   const dagarKvar = next
     ? Math.max(0, Math.ceil((next.date.getTime() - Date.now()) / 86_400_000))
@@ -63,24 +54,15 @@ export function HeroLanding({
   return (
     <div className="w-full">
       <LandingHero fragor={fragor} stats={stats} />
+      <Produktytorna />
       <BevisRemsan />
       <EloSkalan />
       <Delproven />
       <Arkivet />
       <Topplistan stats={stats} />
-      <Omdomen />
-      <Coachningen
-        pris={coachingPriceLabel(erbjudande)}
-        villkor={coachingTermsLabel(erbjudande)}
-        onOppna={() => setCoachingOpen(true)}
-        sektionRef={coachningSedd}
-      />
+      <Priset />
       <Resurser />
       <SlutCta dagarKvar={dagarKvar} datum={next ? hpDateShort(next.entry.date) : null} />
-
-      {/* Köpet kräver inget konto — besökaren som vill ha ett upplägg ska inte
-          först tvingas registrera sig. Stripe samlar in mejl och telefon. */}
-      <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="landing" />
     </div>
   );
 }

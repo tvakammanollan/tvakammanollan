@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { m } from "framer-motion";
-import { Star } from "lucide-react";
 import type { DemoQuestion, LandingStats } from "@/lib/landing.functions";
-import { formatDecimal, formatInt } from "@/lib/sv-format";
-import { SNITTBETYG } from "@/data/omdomen";
+import { formatInt } from "@/lib/sv-format";
 
 /**
  * Hjälten: en riktig uppgift man kan svara på, inte ett löfte om en.
@@ -17,41 +15,6 @@ import { SNITTBETYG } from "@/data/omdomen";
  * ELO-siffran här är en demonstration av mekaniken, inte ett påstående om
  * besökaren. Den börjar på 1000, samma startvärde som ett riktigt konto.
  */
-
-/** Stjärnor med delfyllnad. Fem hela bredvid "4,8" säger emot siffran. */
-export function Stjarnor({ betyg = 5, storlek = 14 }: { betyg?: number; storlek?: number }) {
-  return (
-    <span
-      className="inline-flex select-none gap-0.5 align-middle"
-      aria-label={`${formatDecimal(betyg, Number.isInteger(betyg) ? 0 : 1)} av 5`}
-    >
-      {[0, 1, 2, 3, 4].map((i) => {
-        const fyllnad = Math.max(0, Math.min(1, betyg - i));
-        return (
-          <span
-            key={i}
-            className="relative inline-flex"
-            style={{ height: storlek, width: storlek }}
-            aria-hidden
-          >
-            <Star className="text-primary" style={{ height: storlek, width: storlek }} />
-            {fyllnad > 0 ? (
-              <span
-                className="absolute inset-y-0 left-0 overflow-hidden"
-                style={{ width: `${fyllnad * 100}%` }}
-              >
-                <Star
-                  className="fill-primary text-primary"
-                  style={{ height: storlek, width: storlek }}
-                />
-              </span>
-            ) : null}
-          </span>
-        );
-      })}
-    </span>
-  );
-}
 
 const START_ELO = 1000;
 
@@ -183,96 +146,103 @@ export function LandingHero({
   stats: LandingStats | null;
 }) {
   return (
-    <section className="border-b border-white/10">
-      <div className="mx-auto grid max-w-6xl items-start gap-10 px-4 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-16">
-        <div>
-          {/* Sidans h1 bär sökordet. Sloganen under är samma stora rad som
-              förut, men en <p>: "Svara nu. Siffran rör sig direkt." säger
-              ingenting om vad sajten är för en sökmotor, och startsidans h1
-              är den starkaste rubriken sajten har. */}
-          <h1 className="mb-4 text-[13px] font-bold uppercase tracking-[0.16em] text-primary">
-            Öva på högskoleprovet gratis
-          </h1>
+    <section className="relative overflow-hidden border-b border-white/10">
+      {/* Dekorformerna är bakgrundsatmosfär, aldrig innehåll: 0,6 till 0,9
+          opacitet, ingen interaktion, och de ligger bakom texten. Fyra
+          färger ur DESIGN.md:s dekoruppsättning (terracotta, Sky, Lavender,
+          Cream). Plum är en kortfyllning och används aldrig som form, för
+          en mörk form bakom Ink-text är oläsbar. Se `lib/produktzon.ts`. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute left-[5%] top-12 h-[148px] w-[168px] opacity-75"
+          style={{
+            background: "var(--terracotta)",
+            borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
+          }}
+        />
+        <div
+          className="absolute right-[6%] top-28 h-[172px] w-[196px] opacity-80"
+          style={{
+            background: "var(--lavender)",
+            borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
+          }}
+        />
+        <div
+          className="absolute bottom-6 left-[12%] h-[96px] w-[104px] opacity-70"
+          style={{ background: "var(--sky)", borderRadius: "63% 37% 47% 53% / 41% 59% 41% 59%" }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
+        {/* Sidans h1 bär sökordet. Sloganen under är den stora raden, men en
+            <p>: "Plugga på de prov som faktiskt har getts" säger ingenting
+            om vad sajten är för en sökmotor, och startsidans h1 är den
+            starkaste rubriken sajten har. */}
+        <h1 className="mb-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--cream)]">
+          Öva på högskoleprovet gratis
+        </h1>
+        <m.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
+          style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
+        >
+          Plugga på de prov som faktiskt har getts.
+        </m.p>
+
+        <m.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.06 }}
+          className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]"
+        >
+          Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
+          ord med förklaring. Och en duell på fem minuter när du vill mäta dig mot någon annan.
+        </m.p>
+
+        <m.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="mt-9 flex flex-wrap items-center justify-center gap-3"
+        >
+          <Link
+            to="/signup"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-7 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
+          >
+            Börja öva gratis
+          </Link>
+          <Link
+            to="/gamla-prov"
+            className="inline-flex min-h-[52px] items-center justify-center px-4 text-[15px] font-semibold text-[var(--cream-3)] transition hover:text-[var(--cream)]"
+          >
+            Se alla gamla prov
+          </Link>
+        </m.div>
+
+        {/* Siffrorna är riktiga och kommer ur getLandingStats, inte ur en
+            konstant. Saknas de visas ingenting, aldrig ett påhittat tal. */}
+        {stats ? (
           <m.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-[11ch] text-[46px] leading-[1.02] tracking-[-0.045em] sm:text-[68px]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Svara nu. Siffran rör sig <span className="text-primary">direkt</span>.
-          </m.p>
-
-          <m.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.06 }}
-            className="mt-6 max-w-[44ch] text-[18px] leading-relaxed text-white/70"
-          >
-            Dueller i realtid på riktiga provfrågor. Din ELO justeras efter varje match, separat för
-            verbal och kvantitativ del, och räknas om till den poäng du faktiskt skriver på provet.
-          </m.p>
-
-          <m.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.12 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
-            <Link
-              to="/matchmaking"
-              search={{ type: "verbal" }}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-md bg-primary px-7 text-[15px] font-bold text-on-brand transition-colors hover:bg-primary-deep"
-            >
-              Starta en duell
-            </Link>
-            <Link
-              to="/gamla-prov"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-md border border-white/25 px-7 text-[15px] font-bold transition-colors hover:bg-white/[0.05]"
-            >
-              Öppna arkivet
-            </Link>
-          </m.div>
-
-          {/* Social proof direkt under CTA:n. Siffrorna är riktiga och
-              kommer ur getLandingStats, inte ur en konstant. */}
-          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-[14px] text-white/70"
+            className="mt-7 text-[13px] text-[var(--cream-3)]"
           >
-            {stats ? (
-              <>
-                <span className="inline-flex items-baseline gap-1.5">
-                  <b className="font-mono text-[16px] font-medium tabular-nums text-foreground">
-                    {formatInt(stats.totalPlayers)}
-                  </b>
-                  spelare
-                </span>
-                <span className="h-[3px] w-[3px] rounded-full bg-white/25" aria-hidden />
-                <span className="inline-flex items-baseline gap-1.5">
-                  <b className="font-mono text-[16px] font-medium tabular-nums text-foreground">
-                    {formatInt(stats.totalMatches)}
-                  </b>
-                  matcher spelade
-                </span>
-                <span className="h-[3px] w-[3px] rounded-full bg-white/25" aria-hidden />
-              </>
-            ) : null}
-            <span className="inline-flex items-center gap-2">
-              <Stjarnor betyg={SNITTBETYG} />
-              <b className="font-mono text-[16px] font-medium tabular-nums text-foreground">
-                {formatDecimal(SNITTBETYG, 1)}
-              </b>
-            </span>
-          </m.div>
+            <b className="font-semibold tabular-nums text-[var(--cream)]">
+              {formatInt(stats.totalPlayers)}
+            </b>{" "}
+            spelare ·{" "}
+            <b className="font-semibold tabular-nums text-[var(--cream)]">
+              {formatInt(stats.totalMatches)}
+            </b>{" "}
+            matcher spelade
+          </m.p>
+        ) : null}
+      </div>
 
-          <p className="mt-4 text-[13.5px] text-white/55">
-            Inget konto behövs. Gratis, hela vägen.
-          </p>
-        </div>
-
+      <div className="relative mx-auto max-w-[720px] px-4 pb-16 sm:pb-24">
         <m.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -282,13 +252,13 @@ export function LandingHero({
             <LevandeFraga fragor={fragor} />
           ) : (
             // Databasen svarade inte. Hellre ingen ruta än en tom ruta.
-            <div className="rounded-xl border border-white/10 bg-card p-6">
-              <p className="text-[15px] text-white/70">
-                Åtta delprov, 10 000+ ord och 30 hela prov med facit. Börja var du vill.
+            <div className="rounded-3xl border border-white/10 bg-card p-6">
+              <p className="text-[15px] text-[var(--cream-3)]">
+                Åtta delprov, 10&nbsp;000+ ord och 30 hela prov med facit. Börja var du vill.
               </p>
               <Link
                 to="/ord"
-                className="mt-4 inline-flex min-h-[44px] items-center text-[14px] font-bold text-primary hover:underline"
+                className="mt-4 inline-flex min-h-[44px] items-center text-[14px] font-semibold text-primary hover:underline"
               >
                 Öva ord
               </Link>

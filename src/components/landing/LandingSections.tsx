@@ -2,11 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { m } from "framer-motion";
 import { Check } from "lucide-react";
 import { Reveal } from "@/components/landing/MotionFX";
-import { Stjarnor } from "@/components/landing/LandingHero";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { rankedName } from "@/lib/username";
-import { OMDOMEN, SNITTBETYG } from "@/data/omdomen";
 
 /**
  * Landningssidans sektioner nedanför hjälten.
@@ -30,7 +28,7 @@ import { OMDOMEN, SNITTBETYG } from "@/data/omdomen";
 /* ---------------------------------------------------------------- remsan */
 
 const BEVIS = [
-  { v: "10 000+", k: "ord med förklaring" },
+  { v: "10\u00a0000+", k: "ord med förklaring" },
   { v: "4 800", k: "uppgifter i arkivet" },
   { v: "30", k: "provtillfällen" },
   { v: "120", k: "provpass med facit" },
@@ -296,7 +294,7 @@ export function Delproven() {
         </Reveal>
 
         <p className="mt-5 max-w-[62ch] text-[13.5px] text-white/55">
-          Ordträningen har utöver arkivets 600 en egen bank på 10 000+ uppslag, varje ord med
+          Ordträningen har utöver arkivets 600 en egen bank på 10&nbsp;000+ uppslag, varje ord med
           förklaring, exempelmening och de uppgifter det kommit ur.{" "}
           <Link to="/ordlista" className="font-bold text-primary hover:underline">
             Bläddra i ordlistan
@@ -410,6 +408,199 @@ export function Arkivet() {
 
 /* ------------------------------------------------------------- topplistan */
 
+/* ----------------------------------------------------------- produktytor */
+
+/**
+ * De fyra sätten att plugga, vart och ett i sin produktytas färg.
+ *
+ * Kopplingen mellan yta och färg är låst i `lib/produktzon.ts` och gäller
+ * hela sajten: ser du Sky är du i arkivet. Den här sektionen är första
+ * gången en besökare möter den, så färgerna här MÅSTE vara samma som på
+ * /gamla-prov, /mek-ovning och /ordlista. Ändra dem där, inte här.
+ *
+ * Zonfärgerna är ytor och aldrig text: ingen av dem klarar 3:1 mot
+ * grundytan. Rubrik och brödtext är Ink eller Graphite, och på Plum vit.
+ */
+const YTOR = [
+  {
+    to: "/gamla-prov",
+    etikett: "Gamla prov",
+    rubrik: "Skriv ett helt provpass under tiden det ska ta.",
+    text: "120 provpass à 40 uppgifter, från vårprovet 2012 till vårprovet 2026. Facit på varje uppgift, normering på varje provdel.",
+    cta: "Öppna arkivet",
+    yta: "bg-sky",
+    etikettFarg: "text-bark",
+    textFarg: "text-bark",
+    rubrikFarg: "text-[var(--cream)]",
+    knapp: "border-2 border-bark text-bark",
+  },
+  {
+    to: "/matchmaking",
+    etikett: "Duellen",
+    rubrik: "En duell är åtta uppgifter på fem minuter.",
+    text: "Verbalt eller kvantitativt, mot en vän eller mot kön. Vid lika poäng vinner den som lämnade in först.",
+    cta: "Starta en duell",
+    yta: "bg-terracotta",
+    etikettFarg: "text-[var(--cream-3)]",
+    textFarg: "text-[var(--cream-3)]",
+    rubrikFarg: "text-[var(--cream)]",
+    knapp: "border-2 border-[var(--cream-3)] text-[var(--cream-3)]",
+  },
+  {
+    to: "/mek-ovning",
+    etikett: "MEK",
+    rubrik: "Vi skriver egna MEK-uppgifter.",
+    text: "Uppgifter vi skriver själva och blindprövar innan de publiceras. Arkivets MEK ligger kvar bredvid.",
+    cta: "Öva på MEK",
+    yta: "bg-plum",
+    etikettFarg: "text-cream-wash",
+    textFarg: "text-[var(--navy-3)]",
+    rubrikFarg: "text-on-brand",
+    knapp: "border-2 border-cream-wash text-cream-wash",
+  },
+  {
+    to: "/ordlista",
+    etikett: "Ordlistan",
+    rubrik: "Alla ord förklarade, med provfrågan de kom från.",
+    text: "Över 10\u00a0000 ord med betydelse, exempelmening, liknande ord och ordklass.",
+    cta: "Slå upp ett ord",
+    yta: "bg-lavender",
+    etikettFarg: "text-[var(--plum)]",
+    textFarg: "text-[var(--plum)]",
+    rubrikFarg: "text-[var(--cream)]",
+    knapp: "border-2 border-[var(--plum)] text-[var(--plum)]",
+  },
+] as const;
+
+export function Produktytorna() {
+  return (
+    <section id="ytorna" className="border-b border-white/10">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+        <Reveal>
+          <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+            Fyra sätt att plugga. Allt på samma konto.
+          </h2>
+        </Reveal>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {YTOR.map((y, i) => (
+            <Reveal key={y.to} delay={i * 0.05} className="min-w-0">
+              <Link
+                to={y.to}
+                className={`flex h-full flex-col rounded-[40px] p-7 transition hover:brightness-[1.03] sm:p-9 ${y.yta}`}
+              >
+                <p
+                  className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${y.etikettFarg}`}
+                >
+                  {y.etikett}
+                </p>
+                <h3 className={`mt-5 text-[24px] leading-tight tracking-[-0.02em] ${y.rubrikFarg}`}>
+                  {y.rubrik}
+                </h3>
+                <p className={`mt-3 text-[15px] leading-relaxed ${y.textFarg}`}>{y.text}</p>
+                <div className="flex-1" />
+                <span
+                  className={`mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg px-6 py-3 text-[15px] font-semibold ${y.knapp}`}
+                >
+                  {y.cta}
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------------------------------------- priset */
+
+/**
+ * Vad som kostar och vad som inte gör det.
+ *
+ * **Siffran måste stämma med Stripe.** Det finns exakt ett aktivt pris för
+ * ordlistan: 150 kr för sex månader. Artboarden föreslår en uppdelning på
+ * en månad för 150 och sex för 350, men den produkten finns inte i Stripe,
+ * och en landningssida som lovar ett pris kassan inte kan ta är värre än
+ * ingen prissektion alls. Skapa priset först, ändra `ACCESS_MONTHS`, och
+ * skriv om det här sedan — i den ordningen.
+ *
+ * Studieupplägget är inte med: vi pivoterar bort från det.
+ */
+export function Priset() {
+  return (
+    <section id="priset" className="border-b border-white/10 bg-secondary">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+        <Reveal>
+          <h2 className="mb-10 max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+            Det mesta är gratis. Hela ordlistan och MEK kostar.
+          </h2>
+        </Reveal>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Reveal className="min-w-0">
+            <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-9">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
+                Konto
+              </p>
+              <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
+              <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
+                {[
+                  "Alla 30 provtillfällen med facit",
+                  "Duellerna, båda provdelarna",
+                  "40 ord och 40 MEK-uppgifter i träningsläget",
+                  "Normering, poängräknare, facit och forum",
+                ].map((rad) => (
+                  <li key={rad} className="flex gap-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                    {rad}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex-1" />
+              <Link
+                to="/signup"
+                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg bg-primary px-6 py-3 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
+              >
+                Skapa konto
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.06} className="min-w-0">
+            <div className="flex h-full flex-col rounded-3xl bg-lavender p-7 sm:p-9">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--plum)]">
+                Hela ordlistan och MEK
+              </p>
+              <p className="mt-4 text-[40px] leading-none tracking-[-0.03em] text-[var(--cream)]">
+                150 kr
+              </p>
+              <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-[var(--plum)]">
+                {[
+                  "Över 10\u00a0000 ord i träningsläget",
+                  "Alla MEK-uppgifter, arkivets och våra egna",
+                  "Ett köp låser upp båda",
+                  "Gäller sex månader, engångsköp",
+                ].map((rad) => (
+                  <li key={rad} className="flex gap-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0" />
+                    {rad}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex-1" />
+              <Link
+                to="/ord"
+                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg border-2 border-[var(--plum)] px-6 py-3 text-[15px] font-semibold text-[var(--plum)]"
+              >
+                Läs mer
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Topplistan({ stats }: { stats: LandingStats | null }) {
   const rader = (stats?.topPlayers ?? []).filter((p) => p.type === "verbal").slice(0, 6);
   if (rader.length === 0) return null;
@@ -498,77 +689,6 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
 
 /* --------------------------------------------------------------- omdömen */
 
-export function Omdomen() {
-  return (
-    <section className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-          <Reveal>
-            <div>
-              <div className="flex items-baseline gap-3">
-                <span className="font-mono text-[40px] font-medium leading-none tabular-nums tracking-tight">
-                  {formatDecimal(SNITTBETYG, 1)}
-                </span>
-                <Stjarnor betyg={SNITTBETYG} storlek={16} />
-                <span className="text-[14px] text-white/70">
-                  av 5, från {OMDOMEN.length} som skrivit provet
-                </span>
-              </div>
-              <h2 className="mt-4 max-w-[16ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-                Vad de säger som redan gjort det.
-              </h2>
-            </div>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Riktiga personer med riktiga resultat. Snittet är uträknat ur listan, inte satt för
-              hand.
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Tre i taget, resten genom att skrolla i sidled.
-            Ordningen i OMDOMEN är inte godtycklig: Aron, Gustav och Niklas
-            står först därför att de är de tre som har ett resultat att peka
-            på (2,0, 1,9 och 1,95), och det är dem förstaintrycket ska bäras
-            av. De övriga tre är korta och når man med en swipe.
-
-            Native scroll med snap, inte en karusell med pilar och prickar.
-            Skälet är att karusellmaskineriet vägde mer än innehållet: sex
-            citat varav två är ett ord långa behöver ingen kontrollpanel.
-            Behållaren har egen overflow-x så sidan aldrig scrollar i sidled. */}
-        <div
-          className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 [scrollbar-width:thin]"
-          role="group"
-          aria-label="Omdömen, skrolla i sidled för fler"
-        >
-          {OMDOMEN.map((o, i) => (
-            <figure
-              key={o.namn}
-              className="flex shrink-0 snap-start basis-[86%] flex-col rounded-xl border border-white/10 bg-card p-6 sm:basis-[calc(50%-10px)] lg:basis-[calc(33.333%-14px)]"
-            >
-              <Stjarnor betyg={o.betyg ?? 5} />
-              <blockquote className="mt-4 flex-1 text-[16.5px] leading-relaxed">
-                {o.citat}
-              </blockquote>
-              <figcaption className="mt-5 border-t border-white/8 pt-4 text-[13.5px] text-white/70">
-                <b className="font-bold text-foreground">{o.namn}</b>
-                {[o.roll, o.alder, o.resultat ? `${o.resultat} på provet` : null]
-                  .filter(Boolean)
-                  .map((d) => `, ${d}`)
-                  .join("")}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <p className="mt-4 text-[13px] text-white/55">
-          Skrolla i sidled för de {OMDOMEN.length - 3} övriga.
-        </p>
-      </div>
-    </section>
-  );
-}
-
 /* -------------------------------------------------------------- coachning */
 
 const COACH_INGAR = [
@@ -576,69 +696,6 @@ const COACH_INGAR = [
   "Vi går igenom dina siffror och var tiondelarna faktiskt ligger.",
   "Du får ett upplägg att följa fram till provdagen.",
 ];
-
-export function Coachningen({
-  pris,
-  villkor,
-  onOppna,
-  sektionRef,
-}: {
-  pris: string | null;
-  villkor: string | null;
-  onOppna: () => void;
-  sektionRef: (el: HTMLElement | null) => void;
-}) {
-  return (
-    <section ref={sektionRef} id="coachning" className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-        <div className="grid items-center gap-8 rounded-xl border border-success-line bg-success-soft p-7 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] lg:gap-14">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-success">
-              Personlig coachning
-            </p>
-            <h2 className="mt-3 max-w-[18ch] text-[26px] leading-tight tracking-[-0.03em] sm:text-[34px]">
-              Träningen tar dig långt. Ett upplägg tar dig hela vägen.
-            </h2>
-            <p className="mt-4 max-w-[52ch] text-[16px] leading-relaxed text-white/70">
-              Allt annat här är gratis och sköter sig självt. Det här är det enda som kostar: en
-              genomgång med någon som själv skrev 1,95, och ett schema byggt efter var du står och
-              hur många veckor du har kvar.
-            </p>
-            <ul className="mt-5 grid gap-2.5">
-              {COACH_INGAR.map((t) => (
-                <li key={t} className="flex items-start gap-2.5 text-[15px]">
-                  <Check className="mt-[3px] h-4 w-4 shrink-0 text-success" aria-hidden />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            {pris ? (
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[42px] font-medium leading-none tabular-nums tracking-tight text-success">
-                  {pris}
-                </span>
-              </div>
-            ) : null}
-            <m.button
-              type="button"
-              onClick={onOppna}
-              whileTap={{ scale: 0.985 }}
-              className="mt-4 inline-flex min-h-[52px] w-full items-center justify-center rounded-md bg-success px-7 text-[15px] font-bold text-success-ink transition-opacity hover:opacity-90"
-            >
-              {pris ? "Boka en tid" : "Läs mer om coachning"}
-            </m.button>
-            <p className="mt-3 text-[13px] text-white/55">
-              {villkor ? `${villkor}. ` : ""}Inget konto behövs. Begränsat antal platser.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ------------------------------------------------------------------ slut */
 

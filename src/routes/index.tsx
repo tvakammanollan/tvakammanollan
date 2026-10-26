@@ -2,7 +2,6 @@ import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useAuth, useHasStoredSession } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
 import { HeroLanding } from "@/components/HeroLanding";
-import { OMDOMEN, SNITTBETYG } from "@/data/omdomen";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { pageMeta, pageLinks, jsonLdScript } from "@/lib/page-meta";
 import { fetchWordOfTheDay } from "@/lib/word-practice.functions";
@@ -47,11 +46,12 @@ export const Route = createFileRoute("/")({
     links: pageLinks("/"),
     scripts: [
       // Schema.org WebApplication. Flyttad hit från roten (2026-08-22) — se
-      // kommentaren i __root.tsx. aggregateRating/review är byggda ur samma
-      // OMDOMEN-karusell som renderas några hundra pixlar ner på den här
-      // sidan (SSR:ar alltid HeroLanding, se useHasStoredSession ovan), inte
-      // påhittade siffror: skriv aldrig ett rakt betyg utan att OMDOMEN
-      // ändras i samma commit.
+      // kommentaren i __root.tsx. aggregateRating/review är BORTTAGNA 2026-10-26
+      // när omdömessektionen togs ur landningen: Google kräver att
+      // recensionerna syns på just den här sidan, och att deklarera dem utan
+      // sektionen vore ogiltig markup. Läggs sektionen tillbaka ska
+      // aggregateRating/review tillbaka i SAMMA commit, byggda ur OMDOMEN och
+      // aldrig som ett rakt betyg. Se kommentaren i HeroLanding.tsx.
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -78,28 +78,9 @@ export const Route = createFileRoute("/")({
           "Övningsmatcher utan tidsbegränsning",
           "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
           "10 000+ HP-ord i databasen",
-          "Personlig coachning av en 1,95-spelare",
         ],
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         creator: { "@id": "https://tvakommanollan.se/#niklas" },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: Number(SNITTBETYG.toFixed(1)),
-          bestRating: 5,
-          worstRating: 1,
-          reviewCount: OMDOMEN.length,
-        },
-        review: OMDOMEN.map((o) => ({
-          "@type": "Review",
-          author: { "@type": "Person", name: o.namn },
-          reviewBody: o.citat,
-          reviewRating: {
-            "@type": "Rating",
-            ratingValue: o.betyg ?? 5,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        })),
       }),
     ],
   }),
