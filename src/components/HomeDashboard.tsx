@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
-import { UserAvatar } from "@/components/UserAvatar";
-import { displayName } from "@/lib/guest-name";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 import { RankBadge } from "@/components/ui/RankBadge";
 import { RankIcon } from "@/components/ui/RankIcon";
@@ -15,6 +13,7 @@ import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
+import { getNextHpDate } from "@/lib/hp-dates";
 import {
   BookOpen,
   PenLine,
@@ -61,13 +60,18 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
   const isGuest = !!user.is_anonymous;
   const activeElo = matchType === "verbal" ? profile.elo_verbal : profile.elo_math;
 
-  const greeting = (() => {
-    const h = new Date().getHours();
-    if (h < 6) return "God natt";
-    if (h < 10) return "God morgon";
-    if (h < 18) return "Hej";
-    return "God kväll";
-  })();
+  // Det som är nytt varje dag är hur lång tid det är kvar, inte vad man heter.
+  // Här stod tidigare "God morgon / Hej / God kväll" följt av användarnamnet:
+  // tre saker om användaren, alla redan kända, och för en gäst ett slumpat
+  // "Gäst rönnbär".
+  const nastaProv = getNextHpDate();
+  const dagarKvar = nastaProv
+    ? Math.max(0, Math.ceil((nastaProv.date.getTime() - Date.now()) / 86_400_000))
+    : null;
+  const eyebrow =
+    nastaProv && dagarKvar !== null
+      ? `${nastaProv.label} · ${dagarKvar} ${dagarKvar === 1 ? "dag" : "dagar"} kvar`
+      : null;
 
   return (
     // Två mycket svaga toningar högst upp, en löv och en bark. De ligger
@@ -82,8 +86,8 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
         backgroundRepeat: "no-repeat",
       }}
     >
-      <ResumeMatchBanner />
       {isGuest && <GuestBanner />}
+      <ResumeMatchBanner />
 
       {/* EN övergång för hela skärmen, inte en per kort.
           Korten låg tidigare i var sitt `Reveal` med olika `delay` (0 / 0,05 /
@@ -102,29 +106,24 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* ---------- Header: namn + en enda statusrad ---------- */}
+        {/* ---------- Header: nedräkning, rubrik och en enda statusrad ---------- */}
         <div>
           <header>
-            <div className="flex items-center gap-3">
-              <UserAvatar
-                name={displayName(profile.username, profile.id)}
-                seed={profile.id}
-                size={44}
-              />
-              <div className="min-w-0">
+            <div className="min-w-0">
+              {eyebrow ? (
                 <EyebrowLabel tone="teal" animate={false}>
-                  {greeting} {displayName(profile.username, profile.id)}
+                  {eyebrow}
                 </EyebrowLabel>
-                {/* Rubriken är en fråga, för det är vad sidan är: ett val
-                    mellan fyra aktiviteter. Här stod tidigare användarens
-                    eget namn, vilket är det enda på skärmen man redan vet. */}
-                <h1
-                  className="display text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Vad vill du göra idag?
-                </h1>
-              </div>
+              ) : null}
+              {/* Rubriken är en fråga, för det är vad sidan är: ett val
+                  mellan fyra aktiviteter. Användarens namn och avatar finns
+                  redan i navbaren. */}
+              <h1
+                className="display mt-2 text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Vad vill du göra idag?
+              </h1>
             </div>
 
             {/* ELO:t följer ämnesvalet i spela-kortet nedanför och visar det
@@ -313,22 +312,17 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
 /* =================== GUEST BANNER =================== */
 function GuestBanner() {
   return (
-    <div className="border-b border-primary/20 bg-primary/[0.06] px-4 py-3">
-      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 text-sm text-[var(--cream)]">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
-            <Sparkles className="h-3.5 w-3.5" />
-          </span>
-          <span>
-            Du spelar som <strong>gäst</strong>. Skapa konto för att spara din ELO.
-          </span>
-        </div>
+    <div className="bg-cream-wash px-4 py-3">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-[var(--cream-3)]">
+          Du spelar som gäst. Skapa ett konto för att spara din ELO.
+        </p>
         <Link
           to="/signup"
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-on-brand transition hover:brightness-110"
+          className="group inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-on-brand transition hover:brightness-125"
         >
           Skapa konto
-          <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
     </div>
@@ -434,12 +428,8 @@ function EfterProvetKnapp() {
         onClick={() => trackEvent("facit_button_clicked", { term: FACIT.term })}
         className="group inline-flex min-h-[40px] items-center gap-2 rounded-full border border-primary/30 bg-white/80 py-1.5 pl-1.5 pr-4 text-[13.5px] font-semibold text-[var(--cream)] shadow-sm transition hover:border-primary/60"
       >
-        <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-primary text-on-brand">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-on-brand">
           <ClipboardCheck className="h-3.5 w-3.5" aria-hidden />
-          <span
-            aria-hidden
-            className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-success"
-          />
         </span>
         Efter provet: facit och trolig normering
         <ArrowRight

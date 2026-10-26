@@ -312,10 +312,6 @@ function Board({
       <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
         <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
           <span className="inline-flex items-center gap-1.5">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
             {scope === "week"
               ? "Senaste 7 dygnen · störst ELO-klättring"
               : scope === "friends"
@@ -628,12 +624,6 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
           <span className="text-sm font-semibold tabular-nums text-white">
             {wr === null ? "–" : `${wr}%`}
           </span>
-          {wr !== null && wr >= 50 && (
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-emerald-400"
-              aria-label="Vinnande win rate"
-            />
-          )}
         </span>
       </td>
     </m.tr>

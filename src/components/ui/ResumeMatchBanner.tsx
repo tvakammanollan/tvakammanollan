@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { Swords } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -111,22 +112,38 @@ export function ResumeMatchBanner() {
     setSaved(null);
   };
 
+  const typ = saved.matchType === "math" ? "Matte" : saved.matchType === "verbal" ? "Verbal" : null;
+
   return (
-    <div className="mb-4 flex flex-col items-start gap-2 rounded-xl border border-primary/30 bg-primary/[0.08] px-4 py-3 text-sm backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
-      <span className="text-[var(--cream)]">
-        ⏳ Du har en pågående{" "}
-        {saved.matchType === "math" ? "matte-" : saved.matchType === "verbal" ? "verbal-" : ""}
-        match. Vill du fortsätta?
-      </span>
-      <div className="flex shrink-0 items-center gap-2">
-        <Button asChild size="sm" className="bg-primary text-on-brand hover:bg-primary-deep">
-          <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
-            Fortsätt matchen
-          </Link>
-        </Button>
-        <Button size="sm" variant="ghost" onClick={cancel} className="text-muted-foreground">
-          Avbryt matchen
-        </Button>
+    <div className="mx-auto max-w-5xl px-4 pt-6">
+      <div className="flex flex-col gap-4 rounded-3xl bg-terracotta px-6 py-5 sm:flex-row sm:items-center">
+        <div className="flex items-center gap-3">
+          <Swords className="h-6 w-6 shrink-0 text-[var(--cream-3)]" aria-hidden />
+          <div>
+            <p className="text-base font-semibold text-[var(--cream)]">Du har en match igång</p>
+            <p className="text-sm text-[var(--cream-3)]">
+              {typ ? `${typ}. ` : ""}Klockan går medan du är borta.
+            </p>
+          </div>
+        </div>
+        <div className="flex-1" />
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            asChild
+            className="min-h-[44px] bg-primary px-5 text-on-brand hover:bg-primary-deep"
+          >
+            <Link to="/match/$matchId" params={{ matchId: saved.matchId }}>
+              Fortsätt
+            </Link>
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={cancel}
+            className="min-h-[44px] text-[var(--cream-3)] hover:bg-black/5"
+          >
+            Avbryt
+          </Button>
+        </div>
       </div>
     </div>
   );

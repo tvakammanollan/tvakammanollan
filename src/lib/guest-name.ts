@@ -15,7 +15,13 @@
 // det upptäcktes, alltså 75 % av försöken). Låt triggern sätta sitt
 // `user_ || left(id, 8)` — unikt per konstruktion — och gör om det här.
 //
-// Orden är hämtade ur lunden: samma bildvärld som resten av sajten.
+// **Visas inte längre (2026-10-26).** Namnet blev "Gäst rönnbär", "Gäst
+// ekorre" och så vidare, vilket läser som en lek och inte som en produkt,
+// och två gäster som mötte varandra fick ändå sällan olika. Visningen är nu
+// bara "Gäst". Orden ligger kvar av ETT skäl: 15 rader i `users.username`
+// skrevs som "Gäst <ord>" 18–20 augusti (se kommentaren nedan), och
+// `isGeneratedGuestName` måste fortsätta känna igen dem, annars börjar de
+// rankas på topplistan. Lägg inte till fler ord och ta inte bort listan.
 
 const ORD = [
   "ekollon",
@@ -41,21 +47,14 @@ const ORD = [
 ];
 
 /**
- * Deterministiskt gästnamn, t.ex. "Gäst ekorre". Samma frö ger alltid
- * samma namn, så en gäst som laddar om sidan heter likadant.
+ * Namnet en gäst visas med: "Gäst". Inget slumpat ord efter.
  *
- * Kollisioner är acceptabla HÄR och bara här: namnet renderas, det lagras
- * aldrig. Skriv det aldrig till `users.username` — kolumnen är UNIQUE och
- * tjugo ord tar slut.
+ * Funktionen tar kvar sin `seed`-parameter så att anropsställena inte
+ * behöver röras, men den används inte längre. Namnet renderas och lagras
+ * aldrig — skriv det aldrig till `users.username`, kolumnen är UNIQUE.
  */
-export function guestName(seed?: string): string {
-  const s = seed ?? Math.random().toString(36).slice(2);
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return `Gäst ${ORD[Math.abs(h) % ORD.length]}`;
+export function guestName(_seed?: string): string {
+  return "Gäst";
 }
 
 /**
@@ -113,5 +112,7 @@ export function isGeneratedGuestName(name: string | null | undefined): boolean {
 export function displayName(username: string | null | undefined, id?: string): string {
   const name = (username ?? "").trim();
   if (!name) return id ? guestName(id) : "Gäst";
-  return isAutoGuestName(name) ? guestName(name) : name;
+  // Både triggerns `user_xxxx` och de 15 gamla "Gäst ekorre"-raderna visas
+  // som ett enda "Gäst". Ett valt namn rörs aldrig.
+  return isGeneratedGuestName(name) ? guestName(name) : name;
 }

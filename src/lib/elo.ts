@@ -3,15 +3,18 @@
    `src/types`. Samma ELO kunde därför visas som två olika rangar samtidigt.
    RANK_TIERS är nu enda källan — se `getRankForElo`. */
 
+// Systemets egna mörka toner: Plum, Deep Teal, Graphite och Ink, alla med
+// vit text över 12:1. Här låg en regnbåge på åtta toner (grön, röd, blå,
+// guld, magenta, turkos, oliv, tegel), vilket gav varje konto en slumpad
+// färg bredvid ELO-pillen. En grön bricka bredvid ett tal läste som en
+// statusprick, och sajten har en bestämd palett som slumpen inte ska
+// kringgå. Fyra toner räcker för att två konton intill varandra oftast
+// ska skilja sig åt, och bokstäverna gör resten.
 const PALETTE = [
-  "oklch(0.55 0.13 155)", // green
-  "oklch(0.55 0.14 30)", // warm red
-  "oklch(0.55 0.13 250)", // blue
-  "oklch(0.60 0.14 80)", // gold
-  "oklch(0.50 0.13 320)", // magenta
-  "oklch(0.55 0.13 200)", // teal
-  "oklch(0.55 0.13 110)", // olive
-  "oklch(0.50 0.13 15)", // brick
+  "#1f1738", // Plum
+  "#10242f", // Deep Teal
+  "#452623", // Graphite
+  "#06040e", // Ink
 ];
 
 export function avatarColor(seed: string): string {
@@ -28,6 +31,9 @@ export function avatarColor(seed: string): string {
  * har en av dem. Siffror är med eftersom användarnamn får innehålla dem.
  */
 export function initials(name: string): string {
+  // Gästens visningsnamn är exakt "Gäst". Två tecken ur det blev "GÄ", som
+  // läses som ett par bokstäver i ett namn och inte som en gäst.
+  if (name.trim() === "Gäst") return "G";
   const clean = name
     .replace(/[^\p{L}\p{N}]/gu, "")
     .slice(0, 2)

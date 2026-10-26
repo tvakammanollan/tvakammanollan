@@ -88,6 +88,8 @@ describe("initials", () => {
 
   it("hoppar över mellanslag och skiljetecken", () => {
     expect(initials("Gäst kantarell")).toBe("GÄ");
+    // Visningsnamnet för en gäst är sedan 2026-10-26 bara "Gäst".
+    expect(initials("Gäst")).toBe("G");
     expect(initials("lina_p")).toBe("LI");
   });
 });

@@ -8,9 +8,17 @@ describe("displayName", () => {
   });
 
   it("byter ut triggerns auto-namn mot ett läsbart", () => {
-    const namn = displayName("user_5e19eb20");
-    expect(namn).not.toContain("user_");
-    expect(namn.startsWith("Gäst ")).toBe(true);
+    expect(displayName("user_5e19eb20")).toBe("Gäst");
+  });
+
+  it("visar de gamla 'Gäst <ord>'-raderna som bara 'Gäst'", () => {
+    // 15 rader skrevs så 18–20 augusti och ligger kvar i databasen.
+    expect(displayName("Gäst ekorre")).toBe("Gäst");
+    expect(displayName("Gäst rönnbär")).toBe("Gäst");
+  });
+
+  it("rör inte den som valt ett namn som börjar på Gäst", () => {
+    expect(displayName("Gäst i huset")).toBe("Gäst i huset");
   });
 
   it("ger SAMMA namn med och utan id — annars spretar ytorna", () => {
@@ -54,7 +62,8 @@ describe("isAutoGuestName", () => {
 describe("isGeneratedGuestName", () => {
   it("täcker båda schemana", () => {
     expect(isGeneratedGuestName("user_5e19eb20")).toBe(true);
-    expect(isGeneratedGuestName(guestName("frö"))).toBe(true);
+    // Det gamla schemat: raderna som skrevs 18–20 augusti.
+    expect(isGeneratedGuestName("Gäst ekorre")).toBe(true);
   });
 
   it("rör inte den som valt ett namn som börjar på Gäst", () => {
@@ -64,18 +73,15 @@ describe("isGeneratedGuestName", () => {
 
 describe("guestName är en visningshjälpare, inte en nyckel", () => {
   // Bakgrunden: namnet skickades en tid med i metadatan vid
-  // signInAnonymously, så triggern skrev in det i users.username — som är
-  // UNIQUE. Listan är tjugo ord lång, så gästläget dog för 75 % av
-  // besökarna med ett 500 från auth. Kollisionerna nedan är alltså inte en
-  // egenhet att leva med, de är skälet till att namnet aldrig får lagras.
-  it("kolliderar med flit — pölen är liten och ändlig", () => {
-    const namn = new Set(Array.from({ length: 500 }, (_, i) => guestName(`frö-${i}`)));
-    expect(namn.size).toBeLessThan(50);
-  });
-
-  it("är deterministiskt per frö", () => {
-    expect(guestName("abc")).toBe(guestName("abc"));
-    expect(guestName("abc")).toMatch(/^Gäst \S+$/);
+  // signInAnonymously, så triggern skrev in det i users.username, som är
+  // UNIQUE. Då fanns tjugo möjliga namn och gästläget dog för 75 % av
+  // besökarna med ett 500 från auth. Sedan 2026-10-26 är namnet alltid
+  // "Gäst", så det ÄR ett kollisionsfall av konstruktion. Det gör
+  // skälet till att det aldrig får lagras ännu tydligare.
+  it("är alltid detsamma, oavsett frö", () => {
+    expect(guestName("abc")).toBe("Gäst");
+    expect(guestName("något helt annat")).toBe("Gäst");
+    expect(guestName()).toBe("Gäst");
   });
 });
 
@@ -90,6 +96,6 @@ describe("triggerns reservnamn", () => {
   });
 
   it("renderas som gäst, inte som id", () => {
-    expect(displayName(helt)).toMatch(/^Gäst /);
+    expect(displayName(helt)).toBe("Gäst");
   });
 });
