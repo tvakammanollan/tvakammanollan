@@ -101,7 +101,7 @@ En del utbildningar använder egna urval, till exempel arbetsprov eller intervju
     answer: `Nej, det stämmer inte. Provet mäter förmågor som går att träna, och uppgiftstyperna är exakt desamma varje termin.
 
 Det som ger mest effekt:
-- **ORD** går att plugga rakt av. Samma ord återkommer, och ett större ordförråd ger direkt fler rätt. Börja i [ordlistan](https://tvakommanollan.se/ordlista).
+- **ORD** går att plugga rakt av. Samma ord kommer sällan tillbaka, men provet håller sig till samma sorts ord: lånord, ålderdomliga ord och ord ur sakprosa. Ett större ordförråd av det slaget ger direkt fler rätt. Börja i [ordlistan](https://tvakommanollan.se/ordlista).
 - **KVA och NOG** handlar mycket om att känna igen uppgiftstypen och undvika vanliga fällor.
 - **XYZ** bygger på grundskolans och gymnasiets matte. Att repetera bråk, procent, ekvationer och geometri lönar sig.
 - **Tidspress** tränas bort genom att skriva hela provpass på tid.
@@ -294,9 +294,9 @@ Se också upp med **viktade medelvärden**. Två grupper av olika storlek får i
     category: "verbal",
     title: "Hur pluggar man ORD till högskoleprovet?",
     question: `Vilket är det bästa sättet att plugga ord inför ORD-delen? ${FYLL_PA}`,
-    answer: `ORD är det delprov där plugg ger snabbast resultat, eftersom många ord återkommer mellan proven.
+    answer: `ORD är det delprov där plugg ger snabbast resultat. Samma ord kommer sällan tillbaka: av de 600 orden på proven 2012–2026 har inget testats två gånger. Men orden är av samma sort varje gång, så ett bredare ordförråd av rätt slag lönar sig direkt.
 
-- **Plugga på ord som faktiskt kommit på provet.** Vi har samlat över 8 700 ord ur gamla prov med förklaringar i [ordlistan](https://tvakommanollan.se/ordlista).
+- **Plugga på ord av provets typ.** [Ordlistan](https://tvakommanollan.se/ordlista) har över 8 700 ord med förklaringar, och [gamla prov](https://tvakommanollan.se/gamla-prov) visar exakt vilka ord som testats.
 - **Repetera med mellanrum.** Ett ord du kan i dag har du glömt om två veckor om du inte ser det igen. [Ordövningen](https://tvakommanollan.se/ord) tar tillbaka ord du svarat fel på.
 - **Lär dig ordstammar och förled.** *Anti-*, *pro-*, *-logi*, *poly-* och liknande hjälper dig gissa ord du aldrig sett.
 - **Plugga lite varje dag** hellre än mycket en gång i veckan. 15 minuter om dagen räcker långt.
@@ -689,7 +689,7 @@ Tänk på att du fortfarande måste vara **behörig** till utbildningen du söke
     category: "allmant",
     title: "Vilken del av högskoleprovet är lättast att höja sig på?",
     question: `Om man har begränsat med tid, vilken del ger mest poäng per pluggtimme? ${FYLL_PA}`,
-    answer: `För de flesta är svaret **ORD**. Ordförrådet går att bygga upp på några veckor, och samma ord återkommer från prov till prov.
+    answer: `För de flesta är svaret **ORD**. Ordförrådet går att bygga upp på några veckor, och provet testar samma sorts ord varje gång.
 
 Efter det brukar **KVA och NOG** ge mycket. Uppgiftstyperna är snäva, och när du kan fällorna går det snabbt. Se trådarna om [KVA](https://tvakommanollan.se/guider/kva) och [NOG](https://tvakommanollan.se/guider/nog).
 
@@ -701,7 +701,7 @@ Men det bästa svaret är ditt eget: skriv ett [gammalt prov](https://tvakommano
     category: "allmant",
     title: "Hur många ord behöver man kunna till ORD-delen?",
     question: `Finns det ett ungefärligt antal ord man bör kunna inför högskoleprovet? ${FYLL_PA}`,
-    answer: `Det finns inget fast antal, men det går att få en bild av omfånget. I ordlistan på sajten finns över 8 700 ord som kommit på högskoleprovet genom åren. Ett ord som en gång kommit på provet har en klar chans att komma igen.
+    answer: `Det finns inget fast antal. Varje prov testar 20 ord, och av de 600 orden på proven 2012–2026 har inget testats två gånger. Att plugga in just de gamla orden räcker alltså inte. Det som lönar sig är att bygga upp ett brett ordförråd av samma sort: ordlistan på sajten har över 8 700 sådana ord med förklaringar.
 
 Ett rimligt mål är inte att kunna alla, utan att:
 1. Kunna de vanligaste lånorden och förleden (se tråden om förled i verbala delen).
@@ -763,5 +763,241 @@ Exempel ur riktiga prov finns i genomgångarna här i kategorin, till exempel up
 Ordningen att pröva i avgör allt. Pröva först (1) ensamt. Pröva sedan (2) ensamt, och glöm (1) under tiden. Räckte båda är det D. Räckte bara den ena är det A eller B. Först om ingen räckte ensam prövar du dem tillsammans, och då blir det C eller E.
 
 Den vanligaste missen är att svara C fast ett av påståendena räckte ensamt, eftersom man läst båda innan man tänkt efter. Mer i [NOG-guiden](https://tvakommanollan.se/guider/nog).`,
+  },
+
+  /* ── Matteområden (2026-10-26) ───────────────────────────────── */
+  {
+    category: "kvantitativ",
+    title: "Kvadreringsreglerna och konjugatregeln på högskoleprovet",
+    question: `Hur används kvadreringsreglerna och konjugatregeln på XYZ och KVA? ${FYLL_PA}`,
+    answer: String.raw`Tre regler som dyker upp på nästan varje kvantitativt pass:
+
+- $(a + b)^2 = a^2 + 2ab + b^2$
+- $(a - b)^2 = a^2 - 2ab + b^2$
+- $(a + b)(a - b) = a^2 - b^2$ (konjugatregeln)
+
+**Var de används:**
+- **Förenkling.** $\frac{x^2 - 9}{x - 3} = \frac{(x+3)(x-3)}{x-3} = x + 3$.
+- **Huvudräkning.** $51 \cdot 49 = (50 + 1)(50 - 1) = 2500 - 1 = 2499$.
+- **Jämförelser på KVA.** $(a + b)^2$ och $a^2 + b^2$ skiljer sig med $2ab$. Är $a$ och $b$ positiva är den första alltid störst.
+
+Den vanligaste missen är att tro att $(a + b)^2 = a^2 + b^2$. Det stämmer bara om $a$ eller $b$ är noll.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Sannolikhet på högskoleprovet: så räknar du",
+    question: `Hur löser man sannolikhetsuppgifter på XYZ utan att det blir rörigt? ${FYLL_PA}`,
+    answer: String.raw`Grundformeln: **sannolikhet = gynnsamma utfall / möjliga utfall**, när alla utfall är lika sannolika.
+
+**Tre fall som täcker det mesta:**
+
+1. **Ett försök.** En vanlig tärning: sannolikheten för en sexa är $\frac{1}{6}$.
+2. **Flera oberoende försök, "och".** Multiplicera. Två sexor i rad: $\frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$.
+3. **Dragning utan återläggning.** Nämnaren minskar för varje dragning. Två röda kulor ur en påse med 3 röda och 2 blå: $\frac{3}{5} \cdot \frac{2}{4} = \frac{3}{10}$.
+
+**Knep: räkna motsatsen.** "Minst en sexa på två kast" är lättare som $1 - $ "ingen sexa": $1 - \frac{5}{6} \cdot \frac{5}{6} = 1 - \frac{25}{36} = \frac{11}{36}$.
+
+Läs alltid efter vad som redan har plockats bort eller är känt. Det är där provet lägger sina fällor. Genomgångarna av riktiga provuppgifter här i kategorin har flera exempel.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Räta linjens ekvation y = kx + m på högskoleprovet",
+    question: `Vad behöver man kunna om räta linjer och funktioner till högskoleprovet? ${FYLL_PA}`,
+    answer: String.raw`I $y = kx + m$ är $k$ lutningen och $m$ där linjen skär y-axeln.
+
+**Det här räcker långt:**
+- **Lutningen ur två punkter:** $k = \frac{y_2 - y_1}{x_2 - x_1}$. Linjen genom $(1, 2)$ och $(3, 8)$ har $k = \frac{6}{2} = 3$.
+- **Skärning med y-axeln:** sätt $x = 0$, då är $y = m$.
+- **Skärning med x-axeln:** sätt $y = 0$ och lös ut $x$.
+- **Två linjers skärningspunkt:** sätt uttrycken lika. $2x + 1 = -x + 4$ ger $x = 1$.
+- **Parallella linjer** har samma $k$.
+
+**Tecknen säger mycket:** $k < 0$ betyder att linjen lutar nedåt, och $m > 0$ att den skär y-axeln ovanför origo. Många KVA-uppgifter går att lösa med en snabb skiss i stället för uträkning.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Bråkräkning utan miniräknare: snabba metoder",
+    question: `Hur räknar man med bråk snabbt på högskoleprovet? ${FYLL_PA}`,
+    answer: String.raw`**Addition och subtraktion:** gemensam nämnare. $\frac{1}{4} + \frac{1}{6} = \frac{3}{12} + \frac{2}{12} = \frac{5}{12}$.
+
+**Multiplikation:** täljare gånger täljare, nämnare gånger nämnare. Förkorta **innan** du multiplicerar: $\frac{6}{25} \cdot \frac{5}{36} = \frac{1}{5} \cdot \frac{1}{6} = \frac{1}{30}$.
+
+**Division:** multiplicera med det inverterade. $\frac{2}{3} / \frac{4}{9} = \frac{2}{3} \cdot \frac{9}{4} = \frac{3}{2}$.
+
+**Jämföra bråk:** korsmultiplicera. Är $\frac{5}{8}$ större än $\frac{7}{11}$? Jämför $5 \cdot 11 = 55$ med $7 \cdot 8 = 56$. Det andra är större.
+
+**Bra att kunna utantill:**
+- $\frac{1}{8} = 0{,}125$
+- $\frac{1}{6} \approx 0{,}167$
+- $\frac{1}{3} \approx 0{,}333$
+- $\frac{3}{8} = 0{,}375$
+- $\frac{5}{8} = 0{,}625$
+
+Delar man med ett bråk mindre än 1 blir svaret större. Det räcker ofta för att stryka hälften av alternativen.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Medelvärde och median: skillnaden och fällorna",
+    question: `Hur skiljer sig medelvärde och median, och hur dyker de upp på provet? ${FYLL_PA}`,
+    answer: String.raw`**Medelvärdet** är summan delad med antalet. **Medianen** är det mittersta värdet när talen står i storleksordning. Med ett jämnt antal tal är medianen medelvärdet av de två mittersta.
+
+Exempel: 2, 3, 4, 10, 81.
+- Medelvärde: $\frac{100}{5} = 20$
+- Median: 4
+
+**Fällorna:**
+1. **Osorterade serier.** Sortera alltid innan du letar median.
+2. **Ett extremt värde** drar iväg medelvärdet men rör knappt medianen.
+3. **Medelvärdet säger inget om medianen.** Tio tal med medelvärdet 0 kan ha nästan vilken median som helst. Svaret på en sådan KVA blir ofta D.
+4. **Nytt värde i en serie.** Räkna med summan: har fem tal medelvärdet 8 är summan 40.
+
+Se tråden om medelvärde för fler snabba metoder.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Hastighet, sträcka och tid på högskoleprovet",
+    question: `Hur löser man uppgifter med hastighet, sträcka och tid snabbt? ${FYLL_PA}`,
+    answer: String.raw`Allt bygger på **sträcka = hastighet · tid**.
+
+**Byt enhet först.** 1 m/s är 3,6 km/h. 20 m/s är alltså 72 km/h.
+
+**Medelhastighet är total sträcka delad med total tid**, inte medelvärdet av hastigheterna. Kör du 60 km i 60 km/h och sedan 60 km i 30 km/h tar det 1 + 2 = 3 timmar för 120 km. Medelhastigheten är 40 km/h, inte 45.
+
+**Om farten ändras med en faktor ändras tiden med det inverterade.** Fyra gånger så fort tar en fjärdedel av tiden. Det är en vanlig NOG-genväg.
+
+**Två personer mot varandra:** lägg ihop hastigheterna. 4 km/h och 6 km/h som går mot varandra från 10 km avstånd möts efter 1 timme.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Primtal, delbarhet och rester på högskoleprovet",
+    question: `Vad behöver man kunna om primtal och delbarhet till kvanten? ${FYLL_PA}`,
+    answer: String.raw`**Primtal** är tal större än 1 som bara är delbara med 1 och sig själva: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 … 2 är det enda jämna primtalet, och 1 är inget primtal.
+
+**Primtalsfaktorisering** löser många uppgifter: $42 = 2 \cdot 3 \cdot 7$ och $72 = 2^3 \cdot 3^2$.
+
+**Delbarhetsregler:**
+- med 2: sista siffran är jämn
+- med 3: siffersumman är delbar med 3 ($1 + 2 + 6 = 9$, så 126 är delbart med 3)
+- med 5: slutar på 0 eller 5
+- med 9: siffersumman är delbar med 9
+
+**Rester:** "rest 4 vid division med 5" betyder att talet är 4, 9, 14, 19 … Skriv upp listan och leta efter tal som uppfyller flera villkor samtidigt. Det är så de flesta NOG-uppgifter med grupper och rester löses.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Ekvationssystem på högskoleprovet",
+    question: `Hur löser man ekvationssystem snabbt på XYZ och NOG? ${FYLL_PA}`,
+    answer: String.raw`Två metoder räcker:
+
+**Addition.** $x + y = 33$ och $x - y = 7$. Lägg ihop: $2x = 40$, så $x = 20$ och $y = 13$.
+
+**Insättning.** $y = 2x$ och $x + y = 12$. Sätt in: $3x = 12$, så $x = 4$.
+
+**Ofta behövs inte varje variabel.** Frågar uppgiften efter $x + y$ kan svaret finnas direkt i ett av påståendena. Lös inte ut mer än vad som efterfrågas.
+
+**På NOG:** två oberoende ekvationer med två obekanta räcker normalt. Men se upp när ekvationerna egentligen säger samma sak, som $x + y = 5$ och $2x + 2y = 10$. Då räcker de inte.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Rötter och kvadratrötter utan miniräknare",
+    question: `Hur förenklar och uppskattar man rötter på högskoleprovet? ${FYLL_PA}`,
+    answer: String.raw`**Förenkla genom att bryta ut kvadrater:** $\sqrt{72} = \sqrt{36 \cdot 2} = 6\sqrt{2}$ och $\sqrt{27} = 3\sqrt{3}$.
+
+**Räknelagar:**
+- $\sqrt{a} \cdot \sqrt{b} = \sqrt{ab}$
+- $\frac{\sqrt{a}}{\sqrt{b}} = \sqrt{\frac{a}{b}}$
+- $\sqrt{a + b}$ är **inte** $\sqrt{a} + \sqrt{b}$
+
+**Uppskatta:** $\sqrt{50}$ ligger mellan 7 ($\sqrt{49}$) och 8 ($\sqrt{64}$), nära 7. Kunna kvadraterna upp till $15^2 = 225$ utantill lönar sig.
+
+**Bra att kunna:** $\sqrt{2} \approx 1{,}41$, $\sqrt{3} \approx 1{,}73$, $\sqrt{5} \approx 2{,}24$.
+
+**Rötter i nämnaren:** $\frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$. Svarsalternativen står ofta på den formen.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Enhetsomvandling på högskoleprovet: längd, area och volym",
+    question: `Jag tappar poäng på enheter. Vilka omvandlingar ska man kunna? ${FYLL_PA}`,
+    answer: String.raw`**Längd:** 1 m = 10 dm = 100 cm = 1 000 mm.
+
+**Area: kvadrera faktorn.** 1 m² = 100 dm² = 10 000 cm².
+
+**Volym: kubera faktorn.** 1 m³ = 1 000 dm³ = 1 000 000 cm³.
+
+**Volym och liter:** 1 dm³ = 1 liter, och 1 cm³ = 1 ml.
+
+**Tid och fart:** 1 timme = 3 600 sekunder, och 1 m/s = 3,6 km/h.
+
+**Metoden:** byt till den enhet svaret står i **innan** du räknar. Ett rätblock som är 2 m, 2 dm och 2 mm blir 200 cm, 20 cm och 0,2 cm, och volymen 800 cm³. Att byta enhet i slutet ger fler fel.`,
+  },
+
+  /* ── Verbala tekniker (2026-10-26) ───────────────────────────── */
+  {
+    category: "verbal",
+    title: "Signalord på MEK och ELF: men, därför, trots och de andra",
+    question: `Vilka signalord ska man leta efter på meningskomplettering och engelska luckuppgifter? ${FYLL_PA}`,
+    answer: `Signalorden säger om luckan ska hålla med texten eller gå emot den.
+
+**Motsats (luckan går emot det som står före):**
+- svenska: *men*, *däremot*, *trots*, *ändå*, *tvärtom*, *emellertid*
+- engelska: *but*, *however*, *although*, *despite*, *yet*, *whereas*
+
+**Fortsättning eller förstärkning (luckan håller med):**
+- svenska: *dessutom*, *även*, *likaså*, *och*
+- engelska: *moreover*, *also*, *furthermore*, *in addition*
+
+**Orsak och följd:**
+- svenska: *därför*, *alltså*, *eftersom*, *följaktligen*
+- engelska: *therefore*, *thus*, *because*, *consequently*
+
+Ringa in signalordet innan du läser alternativen. Det stryker ofta hälften av dem direkt. Öva på [MEK-övningen](https://tvakommanollan.se/mek-ovning).`,
+  },
+  {
+    category: "verbal",
+    title: "Hur läser man snabbare på högskoleprovet utan att missa detaljer?",
+    question: `Jag läser för långsamt på LÄS och ELF. Går det att träna upp läshastigheten? ${FYLL_PA}`,
+    answer: `Ja, men målet är inte att läsa allt snabbare. Det är att läsa **rätt delar** noga.
+
+1. **Läs inledning och avslutning ordentligt.** Där står ofta textens huvudpoäng.
+2. **Skumma mitten första gången.** Notera bara vad varje stycke handlar om.
+3. **Läs frågan och gå tillbaka** till det stycke som svaret finns i. Läs det noga.
+4. **Hoppa inte över ord som *inte*, *bara* och *alltid*.** De vänder på betydelsen.
+
+Läsvana är det som verkligen höjer tempot. 20 minuter sakprosa om dagen, gärna populärvetenskap och längre tidningsartiklar på både svenska och engelska, gör mer än någon teknik.
+
+Läs mer i [LÄS-guiden](https://tvakommanollan.se/guider/las) och [ELF-guiden](https://tvakommanollan.se/guider/elf).`,
+  },
+
+  /* ── Allmänt (2026-10-26) ────────────────────────────────────── */
+  {
+    category: "allmant",
+    title: "Är högskoleprovet svårt?",
+    question: `Hur svårt är högskoleprovet egentligen, och vad gör det svårt? ${FYLL_PA}`,
+    answer: `Uppgifterna i sig är sällan svåra. Matten bygger på grundskolan och gymnasiets första kurs, och texterna är vanlig sakprosa. Det som gör provet svårt är tre saker:
+
+1. **Tidspressen.** 40 uppgifter på 55 minuter, fem pass under en dag.
+2. **Fällorna.** Svarsalternativen är byggda för att fånga vanliga misstag.
+3. **Normeringen.** Poängen jämför dig med alla andra som skrev. För de högsta poängen krävs nästan fullt.
+
+Det goda är att alla tre går att träna. Den som skrivit några gamla prov på tid och gått igenom felen vet vad som väntar och tappar mindre på tid och fällor.
+
+Börja med ett [gammalt prov](https://tvakommanollan.se/gamla-prov) för att se var du står.`,
+  },
+  {
+    category: "allmant",
+    title: "Tio tips inför högskoleprovet",
+    question: `Vilka är de viktigaste tipsen inför högskoleprovet? ${FYLL_PA}`,
+    answer: `1. **Gissa på allt.** Fel svar ger inget avdrag.
+2. **Lär dig svarsalternativen på KVA och NOG utantill**, så att ingen tid går åt till att läsa dem.
+3. **Hoppa över och kom tillbaka.** Fastna aldrig på en uppgift.
+4. **Skriv gamla prov på riktig tid**, inte bara uppgifter i lugn och ro.
+5. **Gå igenom varje fel** och skriv upp varför det blev fel.
+6. **Plugga ORD varje dag** i korta pass.
+7. **Lita inte på figurerna** på kvanten. De är inte alltid skalenliga.
+8. **Svara utifrån texten** på LÄS och ELF, inte utifrån vad du själv vet.
+9. **Glöm ett dåligt pass direkt.** Det kan vara utprövningspasset, som inte räknas.
+10. **Sov och ät ordentligt.** Provet är en hel dag.
+
+Varje punkt har en egen tråd här i forumet om du vill läsa mer.`,
   },
 ];
