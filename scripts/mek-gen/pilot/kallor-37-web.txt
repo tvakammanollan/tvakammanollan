@@ -1,0 +1,7 @@
+# Batch 37: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/oron-och-balans/ont-i-orat/ | 1177 Ont i örat | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/infektioner-i-oron-nasa-och-hals/bihaleinflammation/ | 1177 Bihåleinflammation | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/infektioner-i-oron-nasa-och-hals/kortelfeber/ | 1177 Körtelfeber | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/nasa-och-luktsinne/naspolyper/ | 1177 Näspolyper | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/nasa-och-luktsinne/nastappa-och-snuva/ | 1177 Nästäppa och snuva | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/nasa-och-luktsinne/nedsatt-luktsinne-och-smaksinne/ | 1177 Nedsatt luktsinne | 1177
