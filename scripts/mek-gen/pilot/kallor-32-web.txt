@@ -1,0 +1,7 @@
+# Batch 32: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/bakercysta--svullnad-i-knavecket/ | 1177 Bakercysta | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/barnreumatism---jia/ | 1177 Barnreumatism | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/bursit---slemsacksinflammation/ | 1177 Slemsäcksinflammation | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/frusen-skuldra---frusen-axel/ | 1177 Frusen skuldra | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/ledgangsreumatism---ra/ | 1177 Ledgångsreumatism | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/om-artros/ | 1177 Artros | 1177
