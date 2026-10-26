@@ -2494,8 +2494,7 @@ Tre år efter T var Bianca och Cecilia tillsammans $2 \cdot 25 = 50$ år, allts�
     pass: 2,
     nr: 13,
     svar: "A",
-    losning: String.raw`$(2x)^2 = 4x^2$, som är större än $2x^2$ när $x 
-eq 0$.
+    losning: String.raw`$(2x)^2 = 4x^2$, som är större än $2x^2$ när $x \neq 0$.
 
 **Svar: A.** Mer i ${KVA}.`,
   },
@@ -2785,8 +2784,7 @@ A sänkt 5 %: $0{,}95 \cdot 80 = 76$ kr. B sänkt 25 %: 75 kr.
     pass: 4,
     nr: 20,
     svar: "C",
-    losning: String.raw`$xy = z > 1$, så $y 
-eq 0$ och $x = \frac{z}{y}$.
+    losning: String.raw`$xy = z > 1$, så $y \neq 0$ och $x = \frac{z}{y}$.
 
 **Svar: C.** Mer i ${KVA}.`,
   },
@@ -3166,8 +3164,7 @@ $(x - 1)(x - 5)$. **Svar: B.** Mer i ${XYZ}.`,
     pass: 4,
     nr: 6,
     svar: "B",
-    losning: String.raw`$xy + k = k$ ger $xy = 0$. Eftersom $y 
-eq 0$ måste $x = 0$.
+    losning: String.raw`$xy + k = k$ ger $xy = 0$. Eftersom $y \neq 0$ måste $x = 0$.
 
 **Svar: B.** Mer i ${XYZ}.`,
   },
@@ -3485,8 +3482,7 @@ Av alternativen är det bara 29 ($a = 7$). **Svar: D.** Mer i ${XYZ}.`,
     pass: 1,
     nr: 18,
     svar: "B",
-    losning: String.raw`$x^2 + 5x = 0$ ger $x(x + 5) = 0$. Eftersom $x 
-eq 0$ är $x = -5$.
+    losning: String.raw`$x^2 + 5x = 0$ ger $x(x + 5) = 0$. Eftersom $x \neq 0$ är $x = -5$.
 
 **Svar: B.** Mer i ${KVA}.`,
   },
@@ -3950,8 +3946,7 @@ I: $-3(2 - 5) = 9$. II: $-3(0 - 4) = 12$.
     pass: 1,
     nr: 19,
     svar: "A",
-    losning: String.raw`$x^2 > 0$ eftersom $x 
-eq 0$. När $y < 1$ är $x^2 y < x^2$.
+    losning: String.raw`$x^2 > 0$ eftersom $x \neq 0$. När $y < 1$ är $x^2 y < x^2$.
 
 **Svar: A.** Mer i ${KVA}.`,
   },
