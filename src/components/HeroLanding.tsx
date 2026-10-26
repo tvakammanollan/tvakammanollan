@@ -4,7 +4,6 @@ import { LandingHero } from "@/components/landing/LandingHero";
 import {
   Arkivet,
   BevisRemsan,
-  Delproven,
   EloSkalan,
   Priset,
   Produktytorna,
@@ -57,7 +56,6 @@ export function HeroLanding({
       <Produktytorna />
       <BevisRemsan />
       <EloSkalan />
-      <Delproven />
       <Arkivet />
       <Topplistan stats={stats} />
       <Priset />

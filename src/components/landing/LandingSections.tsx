@@ -202,9 +202,9 @@ export function EloSkalan() {
 /**
  * Kompakt rubrik för de datatunga sektionerna.
  *
- * Delproven och topplistan är tabeller. En 42px-rubrik med en egen
- * lede-spalt bredvid ger dem samma tyngd som sidans tes, vilket är fel
- * viktning och dessutom gjorde att fem sektioner i rad såg identiska ut.
+ * Topplistan är en tabell. En 42px-rubrik med en egen lede-spalt
+ * bredvid ger den samma tyngd som sidans tes, vilket är fel viktning
+ * och dessutom gjorde att fem sektioner i rad såg identiska ut.
  * Här ligger rubrik och lede på samma baslinje, mindre och tätare, så att
  * datan under är det som väger.
  */
@@ -214,95 +214,6 @@ function TatRubrik({ titel, lede }: { titel: string; lede: string }) {
       <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">{titel}</h2>
       <p className="max-w-[52ch] text-[15px] leading-relaxed text-white/70">{lede}</p>
     </div>
-  );
-}
-
-/* -------------------------------------------------------------- delproven */
-
-const DELPROV = [
-  { kod: "ORD", slug: "ord", namn: "Ordförståelse", del: "Verbal", n: 600 },
-  { kod: "LÄS", slug: "las", namn: "Svensk läsförståelse", del: "Verbal", n: 600 },
-  { kod: "MEK", slug: "mek", namn: "Meningskomplettering", del: "Verbal", n: 600 },
-  { kod: "ELF", slug: "elf", namn: "Engelsk läsförståelse", del: "Verbal", n: 600 },
-  { kod: "XYZ", slug: "xyz", namn: "Matematisk problemlösning", del: "Kvantitativ", n: 720 },
-  { kod: "KVA", slug: "kva", namn: "Kvantitativa jämförelser", del: "Kvantitativ", n: 600 },
-  { kod: "NOG", slug: "nog", namn: "Kvantitativa resonemang", del: "Kvantitativ", n: 360 },
-  { kod: "DTK", slug: "dtk", namn: "Diagram, tabeller och kartor", del: "Kvantitativ", n: 720 },
-];
-
-export function Delproven() {
-  return (
-    <section id="delprov" className="border-b border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
-        <TatRubrik
-          titel="Åtta delprov, samma bank som provet."
-          lede="Träna ett i taget, eller kör ett helt provpass med klockan igång. Varje uppgift kommer ur ett publicerat prov och har sitt eget facit."
-        />
-
-        <Reveal delay={0.1}>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px]">
-              <thead>
-                <tr className="border-b border-white/25">
-                  <th className="w-[76px] pb-2.5 pr-3 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
-                    Kod
-                  </th>
-                  <th className="pb-2.5 pr-3 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
-                    Delprov
-                  </th>
-                  <th className="w-[130px] pb-2.5 pr-3 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
-                    Del
-                  </th>
-                  <th className="w-[120px] pb-2.5 text-right font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
-                    I arkivet
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {DELPROV.map((d) => (
-                  <tr
-                    key={d.kod}
-                    className="border-b border-white/8 transition-colors hover:bg-white/[0.03]"
-                  >
-                    <td className="py-0 pr-3">
-                      <Link
-                        to="/ova/$delprov"
-                        params={{ delprov: d.slug }}
-                        className="flex min-h-[44px] items-center font-display text-[19px] font-bold tracking-tight hover:text-primary"
-                      >
-                        {d.kod}
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-3 text-[15px]">{d.namn}</td>
-                    <td className="py-3 pr-3">
-                      <span
-                        className={`inline-block rounded-sm px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.08em] ${
-                          d.del === "Verbal" ? "bg-primary/10 text-primary" : "bg-bark/10 text-bark"
-                        }`}
-                      >
-                        {d.del}
-                      </span>
-                    </td>
-                    <td className="py-3 text-right font-mono text-[14.5px] font-medium tabular-nums">
-                      {formatInt(d.n)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Reveal>
-
-        <p className="mt-5 max-w-[62ch] text-[13.5px] text-white/55">
-          Ordträningen har utöver arkivets 600 en egen bank på 10&nbsp;000+ uppslag, varje ord med
-          förklaring, exempelmening och de uppgifter det kommit ur.{" "}
-          <Link to="/ordlista" className="font-bold text-primary hover:underline">
-            Bläddra i ordlistan
-          </Link>
-          .
-        </p>
-      </div>
-    </section>
   );
 }
 
@@ -405,8 +316,6 @@ export function Arkivet() {
     </section>
   );
 }
-
-/* ------------------------------------------------------------- topplistan */
 
 /* ----------------------------------------------------------- produktytor */
 
@@ -517,15 +426,61 @@ export function Produktytorna() {
 /**
  * Vad som kostar och vad som inte gör det.
  *
- * **Siffran måste stämma med Stripe.** Det finns exakt ett aktivt pris för
- * ordlistan: 150 kr för sex månader. Artboarden föreslår en uppdelning på
- * en månad för 150 och sex för 350, men den produkten finns inte i Stripe,
- * och en landningssida som lovar ett pris kassan inte kan ta är värre än
- * ingen prissektion alls. Skapa priset först, ändra `ACCESS_MONTHS`, och
- * skriv om det här sedan — i den ordningen.
+ * **TILLFÄLLIGT: priserna här är inte vad kassan tar.** Sektionen visar två
+ * betalalternativ, en månad för 150 kr och sex månader för 350 kr, men det
+ * finns bara EN produkt i Stripe: 150 kr för sex månader
+ * (`STRIPE_ORD_PRICE_ID`, `ACCESS_MONTHS = 6`). Båda korten länkar därför
+ * till samma kassa på /ord, och köparen ser det riktiga priset där, 150 kr.
+ * Det är Niklas beslut 2026-10-26, tills de två produkterna finns.
+ *
+ * Felet går åt köparens fördel åt båda håll: den som väljer "sex månader
+ * för 350" betalar 150, och den som väljer "en månad för 150" får sex
+ * månader. Därför är det ofarligt som övergång, men det är en osanning på
+ * sidan och ska inte bli kvar.
+ *
+ * Så här stängs det: skapa de två priserna i Stripe, låt `ord-paywall.ts`
+ * ta en längd per produkt i stället för den fasta `ACCESS_MONTHS`, och
+ * peka varje kort på sin egen kassa. Ta sedan bort den här kommentaren.
  *
  * Studieupplägget är inte med: vi pivoterar bort från det.
  */
+const BETALKORT = [
+  {
+    etikett: "Ordlistan och MEK · en månad",
+    pris: "150 kr",
+    rader: [
+      "Över 10\u00a0000 ord i träningsläget",
+      "Alla MEK-uppgifter, arkivets och våra egna",
+      "Ett köp låser upp båda",
+      "Gäller en månad, engångsköp",
+    ],
+    cta: "Välj en månad",
+    yta: "bg-card border border-white/10",
+    etikettFarg: "text-white/55",
+    prisFarg: "",
+    radFarg: "text-white/70",
+    ikon: "text-success",
+    knapp: "bg-primary text-on-brand hover:brightness-125",
+  },
+  {
+    etikett: "Ordlistan och MEK · sex månader",
+    pris: "350 kr",
+    rader: [
+      "Samma innehåll som enmånadsköpet",
+      "Gäller sex månader, hela vägen till provdagen",
+      "Ett köp låser upp både ordlistan och MEK",
+      "Engångsköp, ingen prenumeration",
+    ],
+    cta: "Välj sex månader",
+    yta: "bg-lavender",
+    etikettFarg: "text-[var(--plum)]",
+    prisFarg: "text-[var(--cream)]",
+    radFarg: "text-[var(--plum)]",
+    ikon: "text-[var(--plum)]",
+    knapp: "bg-primary text-on-brand hover:brightness-125",
+  },
+] as const;
+
 export function Priset() {
   return (
     <section id="priset" className="border-b border-white/10 bg-secondary">
@@ -535,9 +490,9 @@ export function Priset() {
             Det mesta är gratis. Hela ordlistan och MEK kostar.
           </h2>
         </Reveal>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-3">
           <Reveal className="min-w-0">
-            <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-9">
+            <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
                 Konto
               </p>
@@ -565,41 +520,43 @@ export function Priset() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.06} className="min-w-0">
-            <div className="flex h-full flex-col rounded-3xl bg-lavender p-7 sm:p-9">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--plum)]">
-                Hela ordlistan och MEK
-              </p>
-              <p className="mt-4 text-[40px] leading-none tracking-[-0.03em] text-[var(--cream)]">
-                150 kr
-              </p>
-              <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-[var(--plum)]">
-                {[
-                  "Över 10\u00a0000 ord i träningsläget",
-                  "Alla MEK-uppgifter, arkivets och våra egna",
-                  "Ett köp låser upp båda",
-                  "Gäller sex månader, engångsköp",
-                ].map((rad) => (
-                  <li key={rad} className="flex gap-2.5">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0" />
-                    {rad}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex-1" />
-              <Link
-                to="/ord"
-                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg border-2 border-[var(--plum)] px-6 py-3 text-[15px] font-semibold text-[var(--plum)]"
-              >
-                Läs mer
-              </Link>
-            </div>
-          </Reveal>
+          {BETALKORT.map((k, i) => (
+            <Reveal key={k.cta} delay={0.06 * (i + 1)} className="min-w-0">
+              <div className={`flex h-full flex-col rounded-3xl p-7 sm:p-8 ${k.yta}`}>
+                <p
+                  className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${k.etikettFarg}`}
+                >
+                  {k.etikett}
+                </p>
+                <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
+                  {k.pris}
+                </p>
+                <ul className={`mt-6 space-y-3 text-[15px] leading-relaxed ${k.radFarg}`}>
+                  {k.rader.map((rad) => (
+                    <li key={rad} className="flex gap-2.5">
+                      <Check className={`mt-0.5 h-4 w-4 shrink-0 ${k.ikon}`} />
+                      {rad}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex-1" />
+                {/* Båda går till samma kassa, se kommentaren ovanför. */}
+                <Link
+                  to="/ord"
+                  className={`mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg px-6 py-3 text-[15px] font-semibold transition ${k.knapp}`}
+                >
+                  {k.cta}
+                </Link>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+/* ------------------------------------------------------------- topplistan */
 
 export function Topplistan({ stats }: { stats: LandingStats | null }) {
   const rader = (stats?.topPlayers ?? []).filter((p) => p.type === "verbal").slice(0, 6);
@@ -686,16 +643,6 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
     </section>
   );
 }
-
-/* --------------------------------------------------------------- omdömen */
-
-/* -------------------------------------------------------------- coachning */
-
-const COACH_INGAR = [
-  "Du väljer en tid i kalendern innan du betalar.",
-  "Vi går igenom dina siffror och var tiondelarna faktiskt ligger.",
-  "Du får ett upplägg att följa fram till provdagen.",
-];
 
 /* ------------------------------------------------------------------ slut */
 

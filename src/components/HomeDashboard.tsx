@@ -11,10 +11,6 @@ import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
-import { fetchEloPlacering } from "@/lib/leaderboard.functions";
-import { formatInt } from "@/lib/sv-format";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
@@ -292,12 +288,10 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             </Link>
           </div>
 
-          <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
+          <div className="mt-4">
             <SafeBoundary label="word-of-the-day">
               <WordOfTheDay initial={wordOfTheDay} />
             </SafeBoundary>
-            {/* Gäster rankas inte, så rutan vore ett tomt löfte för dem. */}
-            {!isGuest && <PlaceringsKort elo={activeElo} track={matchType} />}
           </div>
         </div>
       </m.div>
@@ -345,50 +339,6 @@ function GuestBanner() {
    Rank, streak och "hur långt till nästa rank" på en rad. Tidigare låg
    detta som fyra separata element (två rank-pills, en streak-pill och en
    egen progress-sektion) som tillsammans tog mer plats än spela-knappen. */
-/**
- * Placeringen på topplistan, plus vad som är kvar till nästa rank.
- *
- * Hämtas i klienten och inte i route-loadern: talet är användarspecifikt,
- * och en loader som beror på vem som är inloggad gör sidan omöjlig att
- * cachea. Faller anropet visas ingenting alls — en siffra som inte går
- * att lita på är sämre än ingen siffra, och rutan är inte sidans syfte.
- */
-function PlaceringsKort({ elo, track }: { elo: number; track: MatchType }) {
-  const hamta = useServerFn(fetchEloPlacering);
-  const { data } = useQuery({
-    queryKey: ["elo-placering", track, elo],
-    queryFn: () => hamta({ data: { match_type: track, elo } }),
-    staleTime: 5 * 60 * 1000,
-    retry: false,
-  });
-  const next = getNextRank(elo);
-
-  if (!data) return null;
-
-  return (
-    <Link
-      to="/leaderboard"
-      className="block rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition hover:border-white/20"
-    >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--cream-3)]">
-        Din placering
-      </p>
-      <p
-        className="display mt-2 text-[28px] font-bold leading-tight text-[var(--cream)]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {formatInt(data.placering)} av {formatInt(data.totalt)}
-      </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-[var(--cream-3)]">
-        {next
-          ? `${formatInt(next.minElo - elo)} ELO till ${next.name.split(" · ")[0]}.`
-          : "Högsta ranken, inget kvar att klättra."}{" "}
-        {track === "verbal" ? "Verbal" : "Kvantitativ"} lista, uppdateras efter varje match.
-      </p>
-    </Link>
-  );
-}
-
 function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; streak: number }) {
   const rank = getRankForElo(elo);
   const next = getNextRank(elo);
