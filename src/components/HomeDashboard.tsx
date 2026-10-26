@@ -408,7 +408,7 @@ function ActionCard({
   cta?: string;
 }) {
   // Apple leder till handling, bark ar struktur, lov ar framsteg.
-  const accent = tone === "teal" ? "#7a5236" : tone === "leaf" ? "#2f6b3c" : "#ae2f26";
+  const accent = tone === "teal" ? "#10242f" : tone === "leaf" ? "#2f6b3c" : "#06040e";
   // Tonen bär hela kortet, inte bara ikonen: en accentlinje i överkant
   // och en svag tonad botten. Det är det som ger sidan färg utan att
   // lägga till dekor som inte betyder något.
@@ -425,7 +425,7 @@ function ActionCard({
       {badge ? (
         <span
           className="pointer-events-none absolute right-0 top-0 rounded-bl-xl px-2.5 py-1 text-[11px] font-bold tracking-wide text-on-brand"
-          style={{ background: "#ae2f26" }}
+          style={{ background: "#06040e" }}
         >
           {badge}
         </span>

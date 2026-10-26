@@ -65,9 +65,9 @@ export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: Circ
   //
   // Literal hex, inte var(--danger): färgen sätts som SVG-presentationsattribut
   // (`stroke`), och var() är inte pålitligt stödd där i alla webbläsare.
-  let color = "#7a5236";
+  let color = "#10242f";
   if (remainingSeconds < 60) color = "#8c1d18";
-  else if (remainingSeconds <= 120) color = "#ae2f26";
+  else if (remainingSeconds <= 120) color = "#06040e";
 
   const mm = String(Math.floor(Math.max(0, remainingSeconds) / 60)).padStart(2, "0");
   const ss = String(Math.max(0, remainingSeconds) % 60).padStart(2, "0");

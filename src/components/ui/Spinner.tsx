@@ -28,7 +28,7 @@ export function Spinner({
       role="status"
       aria-label={label ?? "Laddar"}
       className={cn(
-        "inline-block animate-spin rounded-full border-white/12 border-t-[#ae2f26]",
+        "inline-block animate-spin rounded-full border-white/12 border-t-[#06040e]",
         SIZES[size],
         className,
       )}

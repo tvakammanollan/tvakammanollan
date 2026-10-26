@@ -12,7 +12,7 @@ interface EmptyStateProps {
 }
 
 /**
- * Standardtomläge. Ikonbrickan var tidigare en solid `#5e4632`-cirkel med en
+ * Standardtomläge. Ikonbrickan var tidigare en solid `#452623`-cirkel med en
  * emoji i — en ljus fläck mitt i den mörka ytan. Nu samma tonade amber-bricka
  * som ikonerna på dashboarden.
  */

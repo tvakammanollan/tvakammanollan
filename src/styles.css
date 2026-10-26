@@ -30,13 +30,26 @@
 /* Displaysnittet var Young Serif, en displayserif använd som rubriksnitt.
    Kombinationen cremevit + högkontrastserif + terrakotta är precis den look
    AI-genererad design hamnar i som standard, och den gjorde sajten svår att
-   skilja från vilken mall som helst. Familjen Grotesk är svensk (Letters
-   from Sweden), OFL, och en grotesk — vilket också gör täta tabeller och
-   siffror trovärdiga på ett sätt en serif inte gör.
-   Variabel, 400–700, latin-subset: 18,8 kB för hela viktomfånget. */
+   skilja från vilken mall som helst.
+
+   Manrope sedan 2026-10-26, när Lunden ersattes av Podia-systemet. Det
+   systemet är ENFAMILJS: samma snitt bär allt från 11px-etiketter till
+   60px-rubriker, och DESIGN.md anger Manrope som substitut för Podias
+   egna StabilGrotesk. Variabel, 400–700, latin-subset (täcker å, ä, ö):
+   24,6 kB för hela viktomfånget, OFL.
+
+   Familjen Grotesk och Instrument Sans ligger kvar som filer men
+   refereras inte längre av något token. Ta inte bort filerna utan att
+   först kontrollera att inget @font-face pekar på dem — en saknad fil
+   ger 404 på varje sidladdning utan att något felar, vilket hände i
+   revert 98d852a och överlevde i månader.
+
+   OBS: CyclingTitles klippmask är kalibrerad mot Familjen Grotesks
+   bläckhöjd (43,7 px upp, 28,6 px ned). Manrope har andra metrics och
+   masken måste mätas om i webbläsare, se CLAUDE.md. */
 @font-face {
-  font-family: "Familjen Grotesk";
-  src: url("/fonts/FamiljenGrotesk-Variable.woff2") format("woff2-variations");
+  font-family: "Manrope";
+  src: url("/fonts/Manrope-Variable.woff2") format("woff2-variations");
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
@@ -71,8 +84,8 @@
 }
 
 @theme inline {
-  --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -100,6 +113,11 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-primary-deep: var(--amber-deep);
   --color-bark: var(--teal);
+  --color-sky: var(--sky);
+  --color-terracotta: var(--terracotta);
+  --color-lavender: var(--lavender);
+  --color-plum: var(--plum);
+  --color-cream-wash: var(--cream-wash);
   --color-on-brand: var(--on-brand);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
@@ -131,44 +149,49 @@
      knapp till nästan en tablett och kort till 28px. 0.75rem ger
      sm 8 / md 10 / lg 12 / xl 16 / 2xl 20 och hela appen blir konsekvent
      med en rad, i stället för att 300 rounded-* klassas om för hand. */
-  --radius: 0.75rem;
+  /* 0.5rem sedan Podia-bytet: DESIGN.md sätter knapp och fält på 8 px.
+     Skalan blir sm 4 / md 6 / lg 8 / xl 12 / 2xl 16. rounded-3xl ligger
+     inte i @theme inline och faller därför på Tailwinds 24 px, vilket är
+     precis Podias kortradie. De 56 px som produktkorten ska ha sätts per
+     komponent, inte här. */
+  --radius: 0.5rem;
 
   /* Surfaces — pure clean white with whisper of warmth */
-  --background: #fbf6ec;
-  --foreground: #2e1e14;
+  --background: #f5f5f5;
+  --foreground: #06040e;
 
   --card: #ffffff;
-  --card-foreground: #2e1e14;
+  --card-foreground: #06040e;
   --popover: #ffffff;
-  --popover-foreground: #2e1e14;
+  --popover-foreground: #06040e;
 
   /* Electric Indigo — modern, premium, energetic */
-  --primary: #ae2f26;
-  --primary-foreground: #fff8f5;
-  --primary-soft: rgba(174, 47, 38, 0.12);
+  --primary: #06040e;
+  --primary-foreground: #ffffff;
+  --primary-soft: rgba(6, 4, 14, 0.085);
 
   /* True near-black with hint of indigo */
-  --secondary: #f3e9d8;
-  --secondary-foreground: #2e1e14;
+  --secondary: #e1edf2;
+  --secondary-foreground: #06040e;
 
-  --muted: #f3e9d8;
-  --muted-foreground: #755e4c;
+  --muted: #e1edf2;
+  --muted-foreground: #452623;
 
-  --accent: #f3e9d8;
-  --accent-foreground: #2e1e14;
+  --accent: #e1edf2;
+  --accent-foreground: #06040e;
 
   /* Gold (medals only) */
   --gold: #7d6a0a;
-  --gold-foreground: #fff8f5;
+  --gold-foreground: #ffffff;
   --silver: #5f6672;
   --bronze: #a4530f;
 
   --destructive: #8c1d18;
-  --destructive-foreground: #fff8f5;
+  --destructive-foreground: #ffffff;
 
-  --border: #e6d9c4;
-  --input: #e6d9c4;
-  --ring: #ae2f26;
+  --border: #e1edf2;
+  --input: #e1edf2;
+  --ring: #06040e;
 }
 
 @layer base {
@@ -200,7 +223,7 @@
 
   /* Custom selection */
   ::selection {
-    background: rgba(174, 47, 38, 0.18);
+    background: rgba(6, 4, 14, 0.128);
     color: inherit;
   }
 }
@@ -227,33 +250,33 @@
 
 /* ===== Modern token palette ===== */
 :root {
-  --color-bg-sunken: #f0e4ce;
+  --color-bg-sunken: #d7e5ec;
   --color-bg-paper: #ffffff;
   --color-border-strong: #c8b492;
-  --color-border-soft: #e6d9c4;
+  --color-border-soft: #e1edf2;
 
   /* Brand — Electric Indigo */
-  --color-primary: #ae2f26;
-  --color-primary-deep: #8f2620;
-  --color-primary-light: rgba(174, 47, 38, 0.12);
-  --color-primary-hover: #8f2620;
-  --color-primary-glow: rgba(174, 47, 38, 0.4);
-  --color-primary-ink: #2e1e14;
+  --color-primary: #06040e;
+  --color-primary-deep: #1f1738;
+  --color-primary-light: rgba(6, 4, 14, 0.085);
+  --color-primary-hover: #1f1738;
+  --color-primary-glow: rgba(6, 4, 14, 0.28);
+  --color-primary-ink: #06040e;
 
   /* Aurora accents (Cluely-style glows) */
-  --color-aurora-cyan: #7a5236;
-  --color-aurora-indigo: #7a5236;
-  --color-aurora-violet: #7a5236;
-  --color-aurora-fuchsia: #ae2f26;
-  --color-aurora-pink: #ae2f26;
-  --color-aurora-amber: #ae2f26;
+  --color-aurora-cyan: #10242f;
+  --color-aurora-indigo: #10242f;
+  --color-aurora-violet: #10242f;
+  --color-aurora-fuchsia: #06040e;
+  --color-aurora-pink: #06040e;
+  --color-aurora-amber: #06040e;
   --color-aurora-emerald: #2f6b3c;
 
   /* Gold (kept for medals) */
-  --color-gold-deep: #8f2620;
-  --color-gold-light: rgba(174, 47, 38, 0.14);
-  --color-gold-bright: #ae2f26;
-  --color-gold-soft: rgba(174, 47, 38, 0.26);
+  --color-gold-deep: #1f1738;
+  --color-gold-light: rgba(6, 4, 14, 0.099);
+  --color-gold-bright: #06040e;
+  --color-gold-soft: rgba(6, 4, 14, 0.184);
 
   --color-burgundy: #8c1d18;
   --color-error: #8c1d18;
@@ -266,11 +289,11 @@
 
   /* Glow shadows for primary CTAs and special cards */
   --shadow-glow-indigo:
-    0 0 0 1px rgba(174, 47, 38, 0.2), 0 14px 50px -10px rgba(174, 47, 38, 0.55);
+    0 0 0 1px rgba(6, 4, 14, 0.142), 0 14px 50px -10px rgba(6, 4, 14, 0.379);
   --shadow-glow-aurora:
-    0 0 0 1px rgba(174, 47, 38, 0.18), 0 0 60px -8px rgba(174, 47, 38, 0.35),
+    0 0 0 1px rgba(6, 4, 14, 0.128), 0 0 60px -8px rgba(6, 4, 14, 0.246),
     0 0 80px -16px rgba(122, 82, 54, 0.3);
-  --shadow-glow-gold: 0 0 0 1px rgba(174, 47, 38, 0.22), 0 12px 40px -8px rgba(174, 47, 38, 0.5);
+  --shadow-glow-gold: 0 0 0 1px rgba(6, 4, 14, 0.156), 0 12px 40px -8px rgba(6, 4, 14, 0.346);
   --shadow-glow-emerald:
     0 0 0 1px rgba(47, 107, 60, 0.2), 0 12px 40px -8px rgba(47, 107, 60, 0.45);
 }
@@ -376,10 +399,10 @@
 @keyframes glow-pulse-indigo {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(174, 47, 38, 0.5);
+    box-shadow: 0 0 0 0 rgba(6, 4, 14, 0.346);
   }
   50% {
-    box-shadow: 0 0 0 16px rgba(174, 47, 38, 0);
+    box-shadow: 0 0 0 16px rgba(6, 4, 14, 0.01);
   }
 }
 @keyframes spin-slow {
@@ -558,7 +581,7 @@
       säljer illusionen av en fysisk skiva; utan den ser ytan bara
       halvgenomskinlig ut.
 
-   Kontrast, mätt mot den komposierade bakgrunden: bläcket (#2e1e14)
+   Kontrast, mätt mot den komposierade bakgrunden: bläcket (#06040e)
    ger 14,23:1 över papper i toppläget och 13,03:1 scrollat. Värsta
    fallet är helmörkt innehåll som scrollar under — då 7,87:1
    respektive 9,54:1, alltså fortfarande över AA. Sänk inte alfat
@@ -568,7 +591,7 @@
   /* Fallback först: utan backdrop-filter blir en halvgenomskinlig rad
      oläslig, så då körs den nästan täckande varianten. */
   background: rgba(246, 239, 226, 0.96);
-  border-bottom: 1px solid rgba(46, 30, 20, 0.1);
+  border-bottom: 1px solid rgba(6, 4, 14, 0.089);
   transition:
     background 300ms ease,
     border-color 300ms ease,
@@ -582,7 +605,7 @@
        glaset ska ändra genomsläpp, inte kulör. Platt fyllning av samma
        skäl: en gradient låter tonen vandra över raden. */
     background: rgba(246, 239, 226, 0.72);
-    border-bottom-color: rgba(46, 30, 20, 0.08);
+    border-bottom-color: rgba(6, 4, 14, 0.071);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
     backdrop-filter: blur(18px) saturate(180%);
     /* specular överkant + hårfin underkant */
@@ -595,12 +618,12 @@
      som skiljer den från innehållet som passerar under. */
   .navbar-glass[data-scrolled="true"] {
     background: rgba(240, 228, 206, 0.85);
-    border-bottom-color: rgba(46, 30, 20, 0.14);
+    border-bottom-color: rgba(6, 4, 14, 0.124);
     -webkit-backdrop-filter: blur(28px) saturate(200%);
     backdrop-filter: blur(28px) saturate(200%);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.8),
-      0 8px 32px rgba(46, 30, 20, 0.1);
+      0 8px 32px rgba(6, 4, 14, 0.089);
   }
 }
 
@@ -617,13 +640,13 @@
    DECORATIVE SURFACES
    ============================================================ */
 .bg-dots {
-  background-image: radial-gradient(circle at 1px 1px, rgba(174, 47, 38, 0.1) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(6, 4, 14, 0.071) 1px, transparent 0);
   background-size: 14px 14px;
 }
 .bg-grid {
   background-image:
-    linear-gradient(rgba(174, 47, 38, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(174, 47, 38, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(6, 4, 14, 0.036) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 4, 14, 0.036) 1px, transparent 1px);
   background-size: 56px 56px;
 }
 .bg-paper {
@@ -632,8 +655,8 @@
 .bg-ink {
   background-color: #050507;
   background-image:
-    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(174, 47, 38, 0.3), transparent 60%),
-    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(174, 47, 38, 0.22), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 30% 20%, rgba(6, 4, 14, 0.211), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(6, 4, 14, 0.156), transparent 60%),
     radial-gradient(ellipse 40% 30% at 10% 100%, rgba(122, 82, 54, 0.16), transparent 60%);
 }
 .bg-grid-ink {
@@ -647,19 +670,19 @@
 .bg-mesh {
   background-color: #050507;
   background-image:
-    radial-gradient(at 20% 30%, rgba(174, 47, 38, 0.4) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.32) 0px, transparent 50%),
+    radial-gradient(at 20% 30%, rgba(6, 4, 14, 0.28) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(6, 4, 14, 0.225) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.28) 0px, transparent 50%),
-    radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.22) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(6, 4, 14, 0.156) 0px, transparent 50%),
     radial-gradient(at 10% 90%, rgba(47, 107, 60, 0.2) 0px, transparent 50%);
 }
 .bg-mesh-light {
   background-color: #fafafa;
   background-image:
-    radial-gradient(at 20% 30%, rgba(174, 47, 38, 0.1) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.07) 0px, transparent 50%),
+    radial-gradient(at 20% 30%, rgba(6, 4, 14, 0.071) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(6, 4, 14, 0.05) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.06) 0px, transparent 50%),
-    radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.05) 0px, transparent 50%);
+    radial-gradient(at 90% 70%, rgba(6, 4, 14, 0.036) 0px, transparent 50%);
 }
 
 /* Aurora animated linear gradient */
@@ -674,7 +697,7 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .glass-dark {
-  background: rgba(46, 30, 20, 0.5);
+  background: rgba(6, 4, 14, 0.443);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -784,7 +807,7 @@
    ============================================================ */
 
 .text-aurora-gradient {
-  background: linear-gradient(115deg, #7a5236 0%, #ae2f26 30%, #8f2620 60%, #c9463a 100%);
+  background: linear-gradient(115deg, #10242f 0%, #06040e 30%, #1f1738 60%, #c9463a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -823,7 +846,7 @@
   height: 3px;
   z-index: 100;
   transform-origin: 0 0;
-  background: linear-gradient(90deg, #7a5236, #ae2f26, #8f2620);
+  background: linear-gradient(90deg, #10242f, #06040e, #1f1738);
 }
 
 /* Hide scrollbar but keep scroll capability for marquees */
@@ -843,37 +866,57 @@
    earlier light-mode tokens. Revert by deleting this block.
    ============================================================ */
 :root {
-  /* Base palette — deep brown bas matchar landing (#fbf6ec) i stället
+  /* Base palette — deep brown bas matchar landing (#f5f5f5) i stället
      för det gamla blå-navy. Bevarar --navy-namnen för bakåtkompatibilitet
      med komponenter som refererar dem. */
-  --navy: #fbf6ec; /* papper, sidans grundyta */
+  --navy: #f5f5f5; /* papper, sidans grundyta */
   --navy-2: #ffffff; /* kort */
-  --navy-3: #f3e9d8; /* nedsänkt yta, sekundär */
-  --navy-deep: #f0e4ce; /* djupast nedsänkt */
-  --cream: #2e1e14; /* primärtext (bark) */
-  --cream-2: #1e1209; /* text som ska sticka ut mer */
-  --cream-3: #5e4632; /* dämpad text */
+  --navy-3: #e1edf2; /* nedsänkt yta, sekundär */
+  --navy-deep: #d7e5ec; /* djupast nedsänkt */
+  --cream: #06040e; /* primärtext (bark) */
+  --cream-2: #06040e; /* text som ska sticka ut mer */
+  --cream-3: #452623; /* dämpad text */
   /* Text på ljusa ytor (läspassagen). Var #0a1320 — det gamla blå-navyt,
      som drog åt blått mot den varma cream-bakgrunden. */
-  --ink: #2e1e14;
-  --hp-muted: #755e4c;
+  --ink: #06040e;
+  --hp-muted: #452623;
   /* Varumärkets primärfärg. Rött är BELÖNING i det här systemet
      (äpplen, streak, rank, primär-CTA) — aldrig fel svar. */
-  --amber: #ae2f26; /* äpple */
-  --amber-deep: #8f2620;
+  --amber: #06040e; /* äpple */
+  --amber-deep: #1f1738;
   /* Sekundärfärg. Var teal och betyder "motståndaren" i matchens
      progressbarer — därför bark och INTE löv, som redan betyder rätt. */
-  --teal: #7a5236; /* bark */
+  --teal: #10242f; /* Deep Teal, strukturfärg (hette bark i Lunden) */
+
+  /* ---- Podias produkttriad ------------------------------------------
+     Fyra ytfärger, en per produktzon, och kopplingen är LÅST:
+     Sky = gamla prov, Terracotta = duellen, Plum = MEK,
+     Lavender = ordlistan. Aldrig två av dem på samma kort.
+
+     Alla fyra är YTOR, aldrig text. Terracotta ligger på 2,1:1 mot
+     grundytan och 2,3:1 mot vit text, så den kan inte bära en bokstav
+     någonstans i appen. Text ovanpå dem är --cream (Ink, 8,7:1 på
+     terracotta) eller --cream-3 (Graphite, 5,8:1); på Plum är det
+     #ffffff (16,9:1) eller --cream-wash (13,0:1).
+
+     Komponentlagret känner ännu INTE zonerna — ingen komponent vet
+     vilken produktyta den tillhör. Tokens står här så att fas två kan
+     konsumera dem utan en ny palettändring. */
+  --sky: #a5c8d8;
+  --terracotta: #e39a4d;
+  --lavender: #cbb0eb;
+  --plum: #1f1738;
+  --cream-wash: #f6ddc4;
   /* Alfa-tokens: var ljusa med alfa (för mörk botten). På creme blir
      de osynliga, därför omvända till mörk alfa. Enskilt viktigaste
      delen av hela bytet. */
-  --line: rgba(46, 30, 20, 0.16);
-  --line-strong: rgba(46, 30, 20, 0.34);
-  --line-soft: rgba(46, 30, 20, 0.07);
-  --text-primary: #2e1e14;
-  --text-secondary: rgba(46, 30, 20, 0.78);
-  --text-tertiary: rgba(46, 30, 20, 0.66);
-  --text-quiet: rgba(46, 30, 20, 0.54);
+  --line: rgba(6, 4, 14, 0.142);
+  --line-strong: rgba(6, 4, 14, 0.301);
+  --line-soft: rgba(6, 4, 14, 0.062);
+  --text-primary: #06040e;
+  --text-secondary: rgba(6, 4, 14, 0.691);
+  --text-tertiary: rgba(6, 4, 14, 0.585);
+  --text-quiet: rgba(6, 4, 14, 0.479);
 
   /* Shadcn surface tokens → remap to navy palette */
   --background: var(--navy);
@@ -884,7 +927,7 @@
   --popover-foreground: var(--cream);
   --primary: var(--amber);
   --primary-foreground: var(--navy);
-  --primary-soft: rgba(174, 47, 38, 0.12);
+  --primary-soft: rgba(6, 4, 14, 0.085);
   --secondary: var(--navy-3);
   --secondary-foreground: var(--cream);
   --muted: var(--navy-3);
@@ -894,14 +937,14 @@
   /* Oåterkalleliga handlingar (radera konto). Mörkare och blåare än
      äpplerött så den inte förväxlas med primär-CTA. */
   --destructive: #8c1d18;
-  --destructive-foreground: #fff8f5;
+  --destructive-foreground: #ffffff;
   --border: var(--line);
   /* Fältkanter är inte dekor: WCAG 1.4.11 kräver 3:1 för gränsen runt
      en kontroll man ska hitta och klicka i. --line (0,16) gav 1,40:1 och
      gjorde inloggningens fält nästan osynliga mot papperet. 0,5 ger
      3,14:1. Gäller varje input, textarea och select i appen — de delar
      alla det här tokenet via border-input. */
-  --input: rgba(46, 30, 20, 0.5);
+  --input: rgba(6, 4, 14, 0.443);
   --ring: var(--amber);
 
   /* ---- Semantiska svarstillstånd ----------------------------------
@@ -919,7 +962,7 @@
 
   /* Fel svar är rött. Tre röda toner som aldrig möts i samma vy:
        --danger      #d32f2f  fel svar
-       --amber       #ae2f26  varumärke och primär-CTA
+       --amber       #06040e  varumärke och primär-CTA
        --destructive #8c1d18  oåterkalleliga handlingar (radera konto)
      --danger var tidigare en alias för --destructive; de är frikopplade
      så ett fel svar inte ser lika allvarligt ut som att radera kontot. */
@@ -929,7 +972,7 @@
   --danger-ink: #fff1f0;
   /* Text på SOLID äpple/bark/löv. Fanns bara som hårdkodad hex på 40
      ställen; --destructive-foreground har samma värde men fel namn. */
-  --on-brand: #fff8f5;
+  --on-brand: #ffffff;
 
   /* Old "aurora" tokens → keep names but route to amber/teal so all the
      places that reference them automatically pick up the new palette. */
@@ -937,9 +980,9 @@
   --color-bg-sunken: var(--navy-deep);
   --color-primary: var(--amber);
   --color-primary-deep: var(--amber-deep);
-  --color-primary-light: rgba(174, 47, 38, 0.12);
+  --color-primary-light: rgba(6, 4, 14, 0.085);
   --color-primary-hover: var(--amber-deep);
-  --color-primary-glow: rgba(174, 47, 38, 0.4);
+  --color-primary-glow: rgba(6, 4, 14, 0.28);
   --color-primary-ink: var(--navy);
   --color-aurora-indigo: var(--teal);
   --color-aurora-violet: var(--teal);
@@ -950,8 +993,8 @@
   --color-aurora-emerald: var(--teal);
   --color-gold-deep: var(--amber-deep);
   --color-gold-bright: var(--amber);
-  --color-gold-light: rgba(174, 47, 38, 0.14);
-  --color-gold-soft: rgba(174, 47, 38, 0.26);
+  --color-gold-light: rgba(6, 4, 14, 0.099);
+  --color-gold-soft: rgba(6, 4, 14, 0.184);
   --color-border-strong: var(--line-strong);
   --color-border-soft: var(--line);
 
@@ -960,12 +1003,12 @@
      skuggor med en tunn färgad kant kvar för identiteten. Namnen
      behålls — de refereras på flera håll. */
   --shadow-glow-indigo:
-    0 0 0 1px rgba(122, 82, 54, 0.22), 0 10px 28px -14px rgba(46, 30, 20, 0.34);
+    0 0 0 1px rgba(122, 82, 54, 0.22), 0 10px 28px -14px rgba(6, 4, 14, 0.301);
   --shadow-glow-aurora:
-    0 0 0 1px rgba(174, 47, 38, 0.18), 0 12px 32px -16px rgba(46, 30, 20, 0.38);
-  --shadow-glow-gold: 0 0 0 1px rgba(174, 47, 38, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.34);
+    0 0 0 1px rgba(6, 4, 14, 0.128), 0 12px 32px -16px rgba(6, 4, 14, 0.337);
+  --shadow-glow-gold: 0 0 0 1px rgba(6, 4, 14, 0.17), 0 10px 28px -12px rgba(6, 4, 14, 0.301);
   --shadow-glow-emerald:
-    0 0 0 1px rgba(47, 107, 60, 0.24), 0 10px 28px -12px rgba(46, 30, 20, 0.32);
+    0 0 0 1px rgba(47, 107, 60, 0.24), 0 10px 28px -12px rgba(6, 4, 14, 0.284);
 }
 
 /* Base bg + text */
@@ -979,7 +1022,7 @@ body {
    för hårt och gjorde citat oläsliga mitt i en markering; en tonad
    äpplefyllning med bibehållen textfärg läser lugnare. */
 ::selection {
-  background: rgba(174, 47, 38, 0.2);
+  background: rgba(6, 4, 14, 0.142);
   color: inherit;
 }
 
@@ -1019,16 +1062,16 @@ button,
   background-color: var(--navy);
   background-image:
     radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.32) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.28) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(6, 4, 14, 0.197) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.22) 0px, transparent 50%),
-    radial-gradient(at 90% 70%, rgba(174, 47, 38, 0.18) 0px, transparent 50%),
+    radial-gradient(at 90% 70%, rgba(6, 4, 14, 0.128) 0px, transparent 50%),
     radial-gradient(at 10% 90%, rgba(122, 82, 54, 0.18) 0px, transparent 50%);
 }
 .bg-mesh-light {
   background-color: var(--navy-2);
   background-image:
     radial-gradient(at 20% 30%, rgba(122, 82, 54, 0.18) 0px, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(174, 47, 38, 0.14) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(6, 4, 14, 0.099) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(122, 82, 54, 0.1) 0px, transparent 50%);
 }
 .bg-paper {
@@ -1039,18 +1082,18 @@ button,
   background-color: var(--navy-deep);
   background-image:
     radial-gradient(ellipse 60% 40% at 30% 20%, rgba(122, 82, 54, 0.32), transparent 60%),
-    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(174, 47, 38, 0.26), transparent 60%);
+    radial-gradient(ellipse 55% 40% at 80% 90%, rgba(6, 4, 14, 0.184), transparent 60%);
 }
 .bg-grid,
 .bg-grid-ink {
   background-image:
-    linear-gradient(rgba(46, 30, 20, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46, 30, 20, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(6, 4, 14, 0.044) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 4, 14, 0.044) 1px, transparent 1px);
 }
 .bg-dots {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(46, 30, 20, 0.08) 1px,
+    rgba(6, 4, 14, 0.071) 1px,
     transparent 0
   );
 }
@@ -1184,12 +1227,12 @@ button,
   .text-indigo-700 {
     color: var(--amber);
   }
-  .text-\[\#ae2f26\] {
+  .text-\[\#06040e\] {
     color: var(--amber);
   }
   .bg-indigo-50,
   .bg-indigo-100 {
-    background-color: rgba(174, 47, 38, 0.12);
+    background-color: rgba(6, 4, 14, 0.085);
   }
   .bg-indigo-500,
   .bg-indigo-600,
@@ -1197,34 +1240,34 @@ button,
     background-color: var(--amber);
     color: var(--navy);
   }
-  .bg-\[\#ae2f26\] {
+  .bg-\[\#06040e\] {
     background-color: var(--amber);
     color: var(--navy);
   }
-  .border-\[\#ae2f26\] {
+  .border-\[\#06040e\] {
     border-color: var(--amber);
   }
-  .focus-visible\:ring-\[\#ae2f26\]:focus-visible {
+  .focus-visible\:ring-\[\#06040e\]:focus-visible {
     --tw-ring-color: var(--amber);
   }
-  .hover\:border-\[\#ae2f26\]:hover {
+  .hover\:border-\[\#06040e\]:hover {
     border-color: var(--amber);
   }
   .bg-\[\#e0e7ff\],
   .hover\:bg-\[\#e0e7ff\]:hover,
   .hover\:bg-\[\#e0e7ff\]\/50:hover {
-    background-color: rgba(174, 47, 38, 0.16);
+    background-color: rgba(6, 4, 14, 0.114);
   }
   .bg-\[\#f0ede8\] {
-    background-color: rgba(46, 30, 20, 0.1);
+    background-color: rgba(6, 4, 14, 0.089);
   }
   .bg-\[\#e6e0d2\] {
-    background-color: rgba(46, 30, 20, 0.14);
+    background-color: rgba(6, 4, 14, 0.124);
   }
-  .from-\[\#ae2f26\] {
+  .from-\[\#06040e\] {
     --tw-gradient-from: var(--amber);
   }
-  .to-\[\#8f2620\] {
+  .to-\[\#1f1738\] {
     --tw-gradient-to: var(--amber-deep);
   }
   .from-\[\#c9463a\],
@@ -1239,7 +1282,7 @@ button,
   .ring-indigo-300 {
     --tw-ring-color: var(--amber);
   }
-  .hover\:bg-\[\#8f2620\]:hover {
+  .hover\:bg-\[\#1f1738\]:hover {
     background-color: var(--amber-deep);
   }
   .from-indigo-500,
@@ -1272,7 +1315,7 @@ button,
   }
   .bg-violet-50,
   .bg-violet-100 {
-    background-color: rgba(174, 47, 38, 0.1);
+    background-color: rgba(6, 4, 14, 0.071);
   }
   .bg-fuchsia-100,
   .bg-fuchsia-400,
@@ -1496,7 +1539,7 @@ button,
   }
   .bg-amber-50,
   .bg-amber-100 {
-    background-color: rgba(174, 47, 38, 0.12);
+    background-color: rgba(6, 4, 14, 0.085);
   }
   .bg-amber-200,
   .bg-amber-400,
@@ -1506,7 +1549,7 @@ button,
   }
   .bg-orange-50,
   .bg-orange-100 {
-    background-color: rgba(174, 47, 38, 0.12);
+    background-color: rgba(6, 4, 14, 0.085);
   }
   .bg-orange-500,
   .bg-orange-600 {
@@ -1514,7 +1557,7 @@ button,
     color: var(--navy);
   }
   .bg-yellow-100 {
-    background-color: rgba(174, 47, 38, 0.12);
+    background-color: rgba(6, 4, 14, 0.085);
   }
   .bg-yellow-500 {
     background-color: var(--amber);
@@ -1552,16 +1595,16 @@ button,
 
   /* Backdrop/cards that used light tints */
   .bg-white\/5 {
-    background-color: rgba(46, 30, 20, 0.05);
+    background-color: rgba(6, 4, 14, 0.044);
   }
   .bg-white\/10 {
-    background-color: rgba(46, 30, 20, 0.1);
+    background-color: rgba(6, 4, 14, 0.089);
   }
   .bg-white\/12 {
-    background-color: rgba(46, 30, 20, 0.12);
+    background-color: rgba(6, 4, 14, 0.106);
   }
   .bg-white\/15 {
-    background-color: rgba(46, 30, 20, 0.15);
+    background-color: rgba(6, 4, 14, 0.133);
   }
   .bg-white\/90 {
     background-color: rgba(251, 246, 236, 0.96);
@@ -1583,49 +1626,49 @@ button,
      Ankaret /70 = --text-secondary är oförändrat; steget upp och ned
      därifrån är nu strikt stigande. */
   .text-white\/15 {
-    color: rgba(46, 30, 20, 0.24);
+    color: rgba(6, 4, 14, 0.213);
   }
   .text-white\/20 {
-    color: rgba(46, 30, 20, 0.31);
+    color: rgba(6, 4, 14, 0.275);
   }
   .text-white\/25 {
-    color: rgba(46, 30, 20, 0.38);
+    color: rgba(6, 4, 14, 0.337);
   }
   .text-white\/30 {
-    color: rgba(46, 30, 20, 0.44);
+    color: rgba(6, 4, 14, 0.39);
   }
   .text-white\/35 {
-    color: rgba(46, 30, 20, 0.51); /* 0.40 */
+    color: rgba(6, 4, 14, 0.452); /* 0.40 */
   }
   .text-white\/40 {
-    color: rgba(46, 30, 20, 0.59);
+    color: rgba(6, 4, 14, 0.523);
   }
   .text-white\/45 {
-    color: rgba(46, 30, 20, 0.66);
+    color: rgba(6, 4, 14, 0.585);
   }
   .text-white\/50 {
-    color: rgba(46, 30, 20, 0.73); /* 0.55 */
+    color: rgba(6, 4, 14, 0.647); /* 0.55 */
   }
   .text-white\/55 {
-    color: rgba(46, 30, 20, 0.79);
+    color: rgba(6, 4, 14, 0.7);
   }
   .text-white\/60 {
-    color: rgba(46, 30, 20, 0.83);
+    color: rgba(6, 4, 14, 0.736);
   }
   .text-white\/65 {
-    color: rgba(46, 30, 20, 0.88);
+    color: rgba(6, 4, 14, 0.78);
   }
   .text-white\/70 {
-    color: rgba(46, 30, 20, 0.92); /* 0.78 — ankare, oförändrat */
+    color: rgba(6, 4, 14, 0.815); /* 0.78 — ankare, oförändrat */
   }
   .text-white\/75 {
-    color: rgba(46, 30, 20, 0.95);
+    color: rgba(6, 4, 14, 0.842);
   }
   .text-white\/80 {
-    color: rgba(46, 30, 20, 0.98);
+    color: rgba(6, 4, 14, 0.869);
   }
   .text-white\/85 {
-    color: rgba(46, 30, 20, 1);
+    color: rgba(6, 4, 14, 0.886);
   }
 
   /* ---- Placeholder-trappan -----------------------------------------
@@ -1638,49 +1681,49 @@ button,
      steg som råkar användas idag faller nästa steg tillbaka på rå vit.
      ------------------------------------------------------------------ */
   .placeholder\:text-white\/15::placeholder {
-    color: rgba(46, 30, 20, 0.24);
+    color: rgba(6, 4, 14, 0.213);
   }
   .placeholder\:text-white\/20::placeholder {
-    color: rgba(46, 30, 20, 0.31);
+    color: rgba(6, 4, 14, 0.275);
   }
   .placeholder\:text-white\/25::placeholder {
-    color: rgba(46, 30, 20, 0.38);
+    color: rgba(6, 4, 14, 0.337);
   }
   .placeholder\:text-white\/30::placeholder {
-    color: rgba(46, 30, 20, 0.44);
+    color: rgba(6, 4, 14, 0.39);
   }
   .placeholder\:text-white\/35::placeholder {
-    color: rgba(46, 30, 20, 0.51);
+    color: rgba(6, 4, 14, 0.452);
   }
   .placeholder\:text-white\/40::placeholder {
-    color: rgba(46, 30, 20, 0.59);
+    color: rgba(6, 4, 14, 0.523);
   }
   .placeholder\:text-white\/45::placeholder {
-    color: rgba(46, 30, 20, 0.66);
+    color: rgba(6, 4, 14, 0.585);
   }
   .placeholder\:text-white\/50::placeholder {
-    color: rgba(46, 30, 20, 0.73);
+    color: rgba(6, 4, 14, 0.647);
   }
   .placeholder\:text-white\/55::placeholder {
-    color: rgba(46, 30, 20, 0.79);
+    color: rgba(6, 4, 14, 0.7);
   }
   .placeholder\:text-white\/60::placeholder {
-    color: rgba(46, 30, 20, 0.83);
+    color: rgba(6, 4, 14, 0.736);
   }
   .placeholder\:text-white\/65::placeholder {
-    color: rgba(46, 30, 20, 0.88);
+    color: rgba(6, 4, 14, 0.78);
   }
   .placeholder\:text-white\/70::placeholder {
-    color: rgba(46, 30, 20, 0.92);
+    color: rgba(6, 4, 14, 0.815);
   }
   .placeholder\:text-white\/75::placeholder {
-    color: rgba(46, 30, 20, 0.95);
+    color: rgba(6, 4, 14, 0.842);
   }
   .placeholder\:text-white\/80::placeholder {
-    color: rgba(46, 30, 20, 0.98);
+    color: rgba(6, 4, 14, 0.869);
   }
   .placeholder\:text-white\/85::placeholder {
-    color: rgba(46, 30, 20, 1);
+    color: rgba(6, 4, 14, 0.886);
   }
 
   /* Samma problem på kanterna: /10 och /15 remappades båda till --line
@@ -1688,25 +1731,25 @@ button,
      ritades SVAGARE än `border-white/10`, och /15 var identisk med /10.
      Ankaret /10 = --line är oförändrat. */
   .border-white\/5 {
-    border-color: rgba(46, 30, 20, 0.07);
+    border-color: rgba(6, 4, 14, 0.062);
   }
   .border-white\/8 {
-    border-color: rgba(46, 30, 20, 0.11);
+    border-color: rgba(6, 4, 14, 0.097);
   }
   .border-white\/10 {
     border-color: var(--line); /* 0.14 — ankare, oförändrat */
   }
   .border-white\/12 {
-    border-color: rgba(46, 30, 20, 0.17);
+    border-color: rgba(6, 4, 14, 0.151);
   }
   .border-white\/15 {
-    border-color: rgba(46, 30, 20, 0.21);
+    border-color: rgba(6, 4, 14, 0.186);
   }
   .border-white\/25 {
-    border-color: rgba(46, 30, 20, 0.32); /* = --line-strong */
+    border-color: rgba(6, 4, 14, 0.284); /* = --line-strong */
   }
   .border-white\/30 {
-    border-color: rgba(46, 30, 20, 0.38);
+    border-color: rgba(6, 4, 14, 0.337);
   }
   /* Blank `text-white` utan opacitet. Den var medvetet oremappad så
      länge sajten var mörk, för då var vit text rätt nästan överallt.
@@ -1724,19 +1767,19 @@ button,
      vit — vilket bara var kosmetiskt på mörk botten men blir helt
      osynligt på creme. Rampen hålls monoton. */
   .border-white\/\[0\.06\] {
-    border-color: rgba(46, 30, 20, 0.09);
+    border-color: rgba(6, 4, 14, 0.08);
   }
   .border-white\/20 {
-    border-color: rgba(46, 30, 20, 0.26);
+    border-color: rgba(6, 4, 14, 0.23);
   }
   .divide-white\/8 > :not([hidden]) ~ :not([hidden]) {
-    border-color: rgba(46, 30, 20, 0.11);
+    border-color: rgba(6, 4, 14, 0.097);
   }
   .ring-white\/10 {
-    --tw-ring-color: rgba(46, 30, 20, 0.14);
+    --tw-ring-color: rgba(6, 4, 14, 0.124);
   }
   .ring-white\/30 {
-    --tw-ring-color: rgba(46, 30, 20, 0.38);
+    --tw-ring-color: rgba(6, 4, 14, 0.337);
   }
 
   /* Bakgrundstinten var blandad på samma sätt: /5, /10, /15 remappades till
@@ -1746,25 +1789,25 @@ button,
      botten, alltså osynlig. Mätt: `background-color: oklab(... / 0.12)`
      (rå vit) i stället för den tonade tinten. */
   .bg-white\/8 {
-    background-color: rgba(46, 30, 20, 0.08);
+    background-color: rgba(6, 4, 14, 0.071);
   }
   .bg-white\/\[0\.015\] {
-    background-color: rgba(46, 30, 20, 0.015);
+    background-color: rgba(6, 4, 14, 0.013);
   }
   .bg-white\/\[0\.02\] {
-    background-color: rgba(46, 30, 20, 0.02);
+    background-color: rgba(6, 4, 14, 0.018);
   }
   .bg-white\/\[0\.03\] {
-    background-color: rgba(46, 30, 20, 0.03);
+    background-color: rgba(6, 4, 14, 0.027);
   }
   .bg-white\/\[0\.04\] {
-    background-color: rgba(46, 30, 20, 0.04);
+    background-color: rgba(6, 4, 14, 0.035);
   }
   .bg-white\/\[0\.05\] {
-    background-color: rgba(46, 30, 20, 0.05);
+    background-color: rgba(6, 4, 14, 0.044);
   }
   .bg-white\/\[0\.06\] {
-    background-color: rgba(46, 30, 20, 0.06);
+    background-color: rgba(6, 4, 14, 0.053);
   }
 
   /* Reading passage exception — light cream background */
@@ -1785,8 +1828,8 @@ button,
   /* Läspassagens överstrykning. Var hårdkodad #fff59d (överstrykningsgult)
      med ärvd cream-text ovanpå — dvs. praktiskt taget osynlig text. */
   .hp-highlight {
-    background-color: rgba(174, 47, 38, 0.28);
-    box-shadow: 0 0 0 1px rgba(174, 47, 38, 0.35);
+    background-color: rgba(6, 4, 14, 0.197);
+    box-shadow: 0 0 0 1px rgba(6, 4, 14, 0.246);
     border-radius: 2px;
     color: inherit;
   }
@@ -1804,12 +1847,12 @@ button,
   .bg-fuchsia-50, .bg-fuchsia-200,
   .bg-purple-50, .bg-purple-100, .bg-purple-200,
   .bg-pink-50, .bg-pink-100, .bg-pink-200 {
-    background-color: rgba(174, 47, 38, 0.10);
+    background-color: rgba(6, 4, 14, 0.071);
   }
   .bg-amber-200, .bg-amber-300,
   .bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300,
   .bg-orange-50, .bg-orange-200, .bg-orange-300 {
-    background-color: rgba(174, 47, 38, 0.16);
+    background-color: rgba(6, 4, 14, 0.114);
   }
   .bg-cyan-50, .bg-cyan-200, .bg-cyan-300,
   .bg-teal-50, .bg-teal-100, .bg-teal-200, .bg-teal-300 {
@@ -1820,10 +1863,10 @@ button,
     background-color: var(--success-soft);
   }
   .bg-slate-50, .bg-slate-100, .bg-slate-200 {
-    background-color: rgba(46, 30, 20, 0.06);
+    background-color: rgba(6, 4, 14, 0.053);
   }
   .bg-slate-300, .bg-slate-400 {
-    background-color: rgba(46, 30, 20, 0.12);
+    background-color: rgba(6, 4, 14, 0.106);
   }
   .bg-red-50, .bg-red-100, .bg-red-200,
   .bg-rose-50, .bg-rose-100, .bg-rose-200 {
@@ -1837,10 +1880,10 @@ button,
   /* Opacity-suffix variants (e.g. bg-amber-50/80) */
   .bg-amber-50\/80, .bg-amber-50\/40,
   .bg-yellow-50\/80, .bg-yellow-50\/40, .bg-yellow-50\/30 {
-    background-color: rgba(174, 47, 38, 0.16);
+    background-color: rgba(6, 4, 14, 0.114);
   }
   .bg-fuchsia-50, .bg-fuchsia-50\/40 {
-    background-color: rgba(174, 47, 38, 0.10);
+    background-color: rgba(6, 4, 14, 0.071);
   }
 
   /* Gradient stops — light shades */
@@ -1849,23 +1892,23 @@ button,
   .from-fuchsia-50, .from-fuchsia-100,
   .from-pink-50, .from-pink-100,
   .from-rose-50, .from-rose-100 {
-    --tw-gradient-from: rgba(174, 47, 38, 0.10);
+    --tw-gradient-from: rgba(6, 4, 14, 0.071);
   }
   .from-amber-50, .from-amber-100, .from-amber-200, .from-amber-300,
   .from-yellow-50, .from-yellow-100, .from-yellow-200,
   .from-orange-50, .from-orange-100, .from-orange-200, .from-orange-300 {
-    --tw-gradient-from: rgba(174, 47, 38, 0.18);
+    --tw-gradient-from: rgba(6, 4, 14, 0.128);
   }
   .from-amber-50\/80,
   .from-yellow-50\/80,
   .from-orange-50\/80 {
-    --tw-gradient-from: rgba(174, 47, 38, 0.18);
+    --tw-gradient-from: rgba(6, 4, 14, 0.128);
   }
   .from-emerald-50, .from-cyan-50, .from-teal-50, .from-teal-100 {
     --tw-gradient-from: rgba(122, 82, 54, 0.14);
   }
   .from-slate-50, .from-slate-100, .from-slate-200, .from-slate-300 {
-    --tw-gradient-from: rgba(46, 30, 20, 0.10);
+    --tw-gradient-from: rgba(6, 4, 14, 0.089);
   }
 
   .to-indigo-50, .to-indigo-100,
@@ -1873,33 +1916,33 @@ button,
   .to-fuchsia-50, .to-fuchsia-100,
   .to-pink-50, .to-pink-100,
   .to-rose-50, .to-rose-100 {
-    --tw-gradient-to: rgba(174, 47, 38, 0.10);
+    --tw-gradient-to: rgba(6, 4, 14, 0.071);
   }
   .to-amber-50, .to-amber-100, .to-amber-200, .to-amber-300,
   .to-yellow-50, .to-yellow-100, .to-yellow-200,
   .to-orange-50, .to-orange-100, .to-orange-200, .to-orange-300 {
-    --tw-gradient-to: rgba(174, 47, 38, 0.18);
+    --tw-gradient-to: rgba(6, 4, 14, 0.128);
   }
   .to-yellow-50\/40,
   .to-yellow-50\/30 {
-    --tw-gradient-to: rgba(174, 47, 38, 0.12);
+    --tw-gradient-to: rgba(6, 4, 14, 0.085);
   }
   .to-emerald-50, .to-cyan-50, .to-teal-50 {
     --tw-gradient-to: rgba(122, 82, 54, 0.14);
   }
   .to-slate-50, .to-slate-100, .to-slate-200, .to-slate-300 {
-    --tw-gradient-to: rgba(46, 30, 20, 0.10);
+    --tw-gradient-to: rgba(6, 4, 14, 0.089);
   }
 
   /* Medals (rank 1-3) — keep distinct gold/silver/bronze look but
      in palette-compatible tones */
-  .from-amber-400 { --tw-gradient-from: #ae2f26; }
+  .from-amber-400 { --tw-gradient-from: #06040e; }
   .via-yellow-500 { --tw-gradient-via: #e8c773; }
-  .to-amber-600 { --tw-gradient-to: #8f2620; }
+  .to-amber-600 { --tw-gradient-to: #1f1738; }
   .from-slate-300 { --tw-gradient-from: #cfd5dc; }
   .via-slate-400 { --tw-gradient-via: #9aa3ad; }
   .to-slate-500 { --tw-gradient-to: #6c7480; }
-  .from-orange-400 { --tw-gradient-from: #ae2f26; }
+  .from-orange-400 { --tw-gradient-from: #06040e; }
   .via-orange-500 { --tw-gradient-via: #d4894b; }
   .to-orange-700 { --tw-gradient-to: #8a5028; }
 
@@ -1917,7 +1960,7 @@ button,
   .border-amber-300,
   .border-orange-200,
   .border-yellow-200 {
-    border-color: rgba(174, 47, 38, 0.35);
+    border-color: rgba(6, 4, 14, 0.246);
   }
   .border-emerald-200,
   .border-teal-200,
@@ -1939,14 +1982,14 @@ button,
   .bg-\[\#fefce8\],
   .bg-\[\#fde68a\],
   .bg-\[\#fde047\] {
-    background-color: rgba(174, 47, 38, 0.18);
+    background-color: rgba(6, 4, 14, 0.128);
     color: var(--cream);
   }
 
   /* Light "peach/beige" backgrounds */
   .bg-\[\#fce7d3\],
   .bg-\[\#faf0e8\] {
-    background-color: rgba(174, 47, 38, 0.14);
+    background-color: rgba(6, 4, 14, 0.099);
     color: var(--cream);
   }
 
@@ -1954,16 +1997,16 @@ button,
   .bg-\[\#f0f2f5\],
   .bg-\[\#f3f4f6\],
   .bg-\[\#f9fafb\] {
-    background-color: rgba(46, 30, 20, 0.06);
+    background-color: rgba(6, 4, 14, 0.053);
     color: var(--cream);
   }
 
   /* Medium slate */
   .bg-\[\#94a3b8\] {
-    background-color: rgba(46, 30, 20, 0.20);
+    background-color: rgba(6, 4, 14, 0.177);
   }
   .ring-\[\#94a3b8\] {
-    --tw-ring-color: rgba(46, 30, 20, 0.40);
+    --tw-ring-color: rgba(6, 4, 14, 0.355);
   }
 
   /* Amber/gold mid-shade */
@@ -1994,7 +2037,7 @@ button,
   }
 
   /* Indigo deep — map to amber */
-  .bg-\[\#8f2620\],
+  .bg-\[\#1f1738\],
   .bg-\[\#5048e5\],
   .bg-\[\#1e1b4b\] {
     background-color: var(--amber-deep);
@@ -2028,17 +2071,17 @@ button,
   .from-\[\#fef3c7\],
   .from-\[\#fefce8\],
   .from-\[\#fce7d3\] {
-    --tw-gradient-from: rgba(174, 47, 38, 0.18);
+    --tw-gradient-from: rgba(6, 4, 14, 0.128);
   }
   .from-\[\#f3f4f6\] {
-    --tw-gradient-from: rgba(46, 30, 20, 0.06);
+    --tw-gradient-from: rgba(6, 4, 14, 0.053);
   }
   .from-\[\#E8E4DA\] {
     --tw-gradient-from: var(--cream);
   }
   .to-\[\#fef3c7\],
   .to-\[\#fefce8\] {
-    --tw-gradient-to: rgba(174, 47, 38, 0.18);
+    --tw-gradient-to: rgba(6, 4, 14, 0.128);
   }
   .from-\[\#eab308\],
   .to-\[\#eab308\] {

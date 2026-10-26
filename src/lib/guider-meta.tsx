@@ -129,7 +129,7 @@ export function RelatedGuides({
       <h2
         id="related-guides"
         className="text-xs font-semibold uppercase tracking-[0.25em]"
-        style={{ color: "#7a5236" }}
+        style={{ color: "#10242f" }}
       >
         Fler guider
       </h2>

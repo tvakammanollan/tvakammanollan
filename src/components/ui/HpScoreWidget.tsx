@@ -3,8 +3,8 @@ import { Gauge } from "lucide-react";
 import { combinedHpScore, estimateHpScore, hpScoreLabel } from "@/lib/hpScore";
 import { formatDecimal } from "@/lib/sv-format";
 
-const VERBAL = "#ae2f26";
-const MATH = "#7a5236";
+const VERBAL = "#06040e";
+const MATH = "#10242f";
 /** hpScore-modulen returnerar strängar med punkt; visa svenskt decimaltecken. */
 // Två decimaler: normerad poäng skrivs 1,60, inte 1,6 — skalan går i steg om
 // 0,05. Samma skrivsätt som poängräknaren, annars säger de två ytorna emot

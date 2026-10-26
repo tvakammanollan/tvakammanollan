@@ -177,7 +177,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-4.png" },
-      { name: "theme-color", content: "#fbf6ec" },
+      { name: "theme-color", content: "#f5f5f5" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Tvåkommanollan" },

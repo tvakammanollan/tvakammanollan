@@ -56,8 +56,8 @@ export const Route = createFileRoute("/stats")({
   }),
 });
 
-const VERBAL_COLOR = "#ae2f26";
-const MATH_COLOR = "#7a5236";
+const VERBAL_COLOR = "#06040e";
+const MATH_COLOR = "#10242f";
 
 interface UserRow {
   username: string;
@@ -498,11 +498,11 @@ function StatsPage() {
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
                       background: "rgba(251, 246, 236, 0.96)",
-                      color: "#2e1e14",
+                      color: "#06040e",
                       fontSize: 12,
                     }}
-                    labelStyle={{ color: "#2e1e14" }}
-                    itemStyle={{ color: "#2e1e14" }}
+                    labelStyle={{ color: "#06040e" }}
+                    itemStyle={{ color: "#06040e" }}
                     // Datum OCH klockslag: två matcher samma dag fick annars
                     // samma rubrik i rutan och gick inte att skilja åt.
                     labelFormatter={(v) =>
@@ -589,11 +589,11 @@ function StatsPage() {
                       borderRadius: 10,
                       border: "1px solid rgba(255,255,255,0.12)",
                       background: "rgba(251, 246, 236, 0.96)",
-                      color: "#2e1e14",
+                      color: "#06040e",
                       fontSize: 12,
                     }}
-                    labelStyle={{ color: "#2e1e14" }}
-                    itemStyle={{ color: "#2e1e14" }}
+                    labelStyle={{ color: "#06040e" }}
+                    itemStyle={{ color: "#06040e" }}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     formatter={(value: any, _name: any, props: any) => {
                       const p = props?.payload;

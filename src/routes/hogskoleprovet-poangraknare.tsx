@@ -271,7 +271,7 @@ function SliderRow({
         onChange={(e) => onChange(Number(e.target.value))}
         aria-label={`${label}, antal rätt av 80`}
         className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-white/10"
-        style={{ accentColor: "#ae2f26" }}
+        style={{ accentColor: "#06040e" }}
       />
     </div>
   );

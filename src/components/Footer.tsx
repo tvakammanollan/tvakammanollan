@@ -64,7 +64,7 @@ export function Footer() {
     <footer
       className="relative"
       style={{
-        background: "#f3e9d8",
+        background: "#e1edf2",
       }}
     >
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
@@ -82,7 +82,7 @@ export function Footer() {
                   href="mailto:info@tvakommanollan.se"
                   className="inline-flex items-center gap-2 text-sm text-white/80 transition hover:text-white hover:underline"
                 >
-                  <Mail className="h-3.5 w-3.5" style={{ color: "#ae2f26" }} />
+                  <Mail className="h-3.5 w-3.5" style={{ color: "#06040e" }} />
                   info@tvakommanollan.se
                 </a>
               </li>

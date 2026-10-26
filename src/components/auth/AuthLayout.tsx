@@ -3,7 +3,7 @@ import { useDotMatrixCanvas } from "./dotMatrixCanvas";
 /**
  * Helsidesbakgrund för /login och /signup.
  *
- * Renderar en animerad dot-matrix-shader (amber dots på navy `#fbf6ec`)
+ * Renderar en animerad dot-matrix-shader (Ink-prickar på Fog `#f5f5f5`)
  * och lägger innehåll centrerat ovanpå. Reverse-animation triggas via
  * `reverse`-prop när auth-flödet är klart (dots fadar ut från kanterna).
  */
@@ -25,7 +25,7 @@ export function AuthLayout({
   return (
     <div
       className="relative flex min-h-[calc(100vh-64px)] w-full flex-col text-white"
-      style={{ background: "#fbf6ec" }}
+      style={{ background: "#f5f5f5" }}
     >
       <div className="absolute inset-0 z-0">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />

@@ -120,7 +120,7 @@ export function Navbar() {
           <span
             aria-hidden
             className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
-            style={{ background: "#ae2f26" }}
+            style={{ background: "#06040e" }}
           >
             {/* Samma märke som faviconen och delningsbilden: talet 2,0. */}
             <span
@@ -304,7 +304,7 @@ function NavLink({
       {/* Underline — animates in on hover, persists on active */}
       <span
         className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100"
-        style={{ background: "#ae2f26" }}
+        style={{ background: "#06040e" }}
       />
     </Link>
   );

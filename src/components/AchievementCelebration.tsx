@@ -22,7 +22,7 @@ export function AchievementCelebration({
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.55 },
-        colors: ["#ae2f26", "#7a5236", "#f5c089", "#ffffff"],
+        colors: ["#e39a4d", "#cbb0eb", "#f6ddc4", "#ffffff"],
         particleCount: Math.floor(220 * particleRatio),
         ...opts,
       });

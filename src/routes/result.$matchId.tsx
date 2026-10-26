@@ -401,7 +401,7 @@ function ResultPage() {
         spread: 70,
         startVelocity: 45,
         origin,
-        colors: ["#eab308", "#e8c468", "#ae2f26", "#ffffff"],
+        colors: ["#eab308", "#e8c468", "#e39a4d", "#ffffff"],
       });
     fire({ x: 0.2, y: 0.3 });
     fire({ x: 0.8, y: 0.3 });

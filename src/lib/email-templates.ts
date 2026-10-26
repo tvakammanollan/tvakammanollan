@@ -17,9 +17,9 @@ const SITE = "https://tvakommanollan.se";
 const BRAND = "Tvåkommanollan";
 
 /** Röd som i appen (`--amber`), brun text (`--cream`), gräddvit botten. */
-const APPLE = "#ae2f26";
-const INK = "#2e1e14";
-const PAPER = "#fbf6ec";
+const APPLE = "#06040e";
+const INK = "#06040e";
+const PAPER = "#f5f5f5";
 
 export interface EmailBody {
   subject: string;
@@ -51,7 +51,7 @@ function layout({ heading, paragraphs, cta, footer }: LayoutInput): string {
     .join("");
 
   const button = cta
-    ? `<p style="margin:24px 0 8px;"><a href="${esc(cta.url)}" style="display:inline-block;background:${APPLE};color:#fff8f5;text-decoration:none;font-weight:600;font-size:15px;padding:12px 24px;border-radius:999px;">${esc(cta.label)}</a></p>
+    ? `<p style="margin:24px 0 8px;"><a href="${esc(cta.url)}" style="display:inline-block;background:${APPLE};color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 24px;border-radius:999px;">${esc(cta.label)}</a></p>
        <p style="margin:0 0 16px;font-size:12px;line-height:1.6;color:#6b5648;">Fungerar inte knappen? Klistra in den här adressen i webbläsaren:<br><span style="word-break:break-all;">${esc(cta.url)}</span></p>`
     : "";
 
