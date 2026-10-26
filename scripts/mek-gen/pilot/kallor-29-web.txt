@@ -1,0 +1,7 @@
+# Batch 29: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/nacksparr/ | 1177 Nacksparr | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/skolios/ | 1177 Skolios | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/gikt/ | 1177 Gikt | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/leder/loparkna/ | 1177 Löparknä | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/ben-och-fotter/halseneinflammation/ | 1177 Hälseneinflammation | 1177
+https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/ben-och-fotter/lagt-fotvalv--plattfot/ | 1177 Plattfot | 1177
