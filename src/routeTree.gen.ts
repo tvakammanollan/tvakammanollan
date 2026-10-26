@@ -15,6 +15,7 @@ import { Route as TrainRouteImport } from './routes/train'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PrisRouteImport } from './routes/pris'
+import { Route as PluggaInforHogskoleprovetRouteImport } from './routes/plugga-infor-hogskoleprovet'
 import { Route as OrdlistaSitemapDotxmlRouteImport } from './routes/ordlista-sitemap[.]xml'
 import { Route as OrdlistaRouteImport } from './routes/ordlista'
 import { Route as OrdRouteImport } from './routes/ord'
@@ -106,6 +107,12 @@ const PrisRoute = PrisRouteImport.update({
   path: '/pris',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PluggaInforHogskoleprovetRoute =
+  PluggaInforHogskoleprovetRouteImport.update({
+    id: '/plugga-infor-hogskoleprovet',
+    path: '/plugga-infor-hogskoleprovet',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const OrdlistaSitemapDotxmlRoute = OrdlistaSitemapDotxmlRouteImport.update({
   id: '/ordlista-sitemap.xml',
   path: '/ordlista-sitemap.xml',
@@ -443,6 +450,7 @@ export interface FileRoutesByFullPath {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/plugga-infor-hogskoleprovet': typeof PluggaInforHogskoleprovetRoute
   '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
@@ -511,6 +519,7 @@ export interface FileRoutesByTo {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/plugga-infor-hogskoleprovet': typeof PluggaInforHogskoleprovetRoute
   '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
@@ -580,6 +589,7 @@ export interface FileRoutesById {
   '/ord': typeof OrdRoute
   '/ordlista': typeof OrdlistaRoute
   '/ordlista-sitemap.xml': typeof OrdlistaSitemapDotxmlRoute
+  '/plugga-infor-hogskoleprovet': typeof PluggaInforHogskoleprovetRoute
   '/pris': typeof PrisRoute
   '/signup': typeof SignupRoute
   '/stats': typeof StatsRoute
@@ -650,6 +660,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/plugga-infor-hogskoleprovet'
     | '/pris'
     | '/signup'
     | '/stats'
@@ -718,6 +729,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/plugga-infor-hogskoleprovet'
     | '/pris'
     | '/signup'
     | '/stats'
@@ -786,6 +798,7 @@ export interface FileRouteTypes {
     | '/ord'
     | '/ordlista'
     | '/ordlista-sitemap.xml'
+    | '/plugga-infor-hogskoleprovet'
     | '/pris'
     | '/signup'
     | '/stats'
@@ -855,6 +868,7 @@ export interface RootRouteChildren {
   OrdRoute: typeof OrdRoute
   OrdlistaRoute: typeof OrdlistaRoute
   OrdlistaSitemapDotxmlRoute: typeof OrdlistaSitemapDotxmlRoute
+  PluggaInforHogskoleprovetRoute: typeof PluggaInforHogskoleprovetRoute
   PrisRoute: typeof PrisRoute
   SignupRoute: typeof SignupRoute
   StatsRoute: typeof StatsRoute
@@ -937,6 +951,13 @@ declare module '@tanstack/react-router' {
       path: '/pris'
       fullPath: '/pris'
       preLoaderRoute: typeof PrisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plugga-infor-hogskoleprovet': {
+      id: '/plugga-infor-hogskoleprovet'
+      path: '/plugga-infor-hogskoleprovet'
+      fullPath: '/plugga-infor-hogskoleprovet'
+      preLoaderRoute: typeof PluggaInforHogskoleprovetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ordlista-sitemap.xml': {
@@ -1391,6 +1412,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdRoute: OrdRoute,
   OrdlistaRoute: OrdlistaRoute,
   OrdlistaSitemapDotxmlRoute: OrdlistaSitemapDotxmlRoute,
+  PluggaInforHogskoleprovetRoute: PluggaInforHogskoleprovetRoute,
   PrisRoute: PrisRoute,
   SignupRoute: SignupRoute,
   StatsRoute: StatsRoute,

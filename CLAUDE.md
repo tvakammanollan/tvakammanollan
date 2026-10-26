@@ -190,6 +190,18 @@ touching production; use it for anything you cannot check locally.
   `Delete ␍` i eslint — filtrera bort dem för att se de riktiga träffarna, och
   kontrollera misstänkta prettier-fel mot `origin/main` innan du rättar dem:
   flera är pre-existerande (`Navbar.tsx:122`, `result.$matchId.tsx:439`).
+- **`vite preview` fungerar inte efter `npm run build`.** Nitro skriver bygget
+  till `.output/`, men TanStacks preview-plugin letar efter
+  `dist/server/server.js` och svarar 500 på varje route, även orörda. Det ser
+  ut som att bygget är trasigt. Kör SSR-röktestet mot `vite dev` i stället.
+  Headless Chrome med `--window-size=390,…` lägger dessutom ut sidan i ~500 px
+  och beskär, så all text ser avklippt ut till höger. Mät mobilbredd med
+  `Emulation.setDeviceMetricsOverride` över CDP och jämför
+  `documentElement.scrollWidth` med `innerWidth`.
+- **Läs filen INNAN den öppnas för skrivning.** `open(p,"w").write(f(open(p).read()))`
+  tömmer filen först, eftersom `open(p,"w")` utvärderas före argumentet. Det
+  raderade CLAUDE.md med en annan sessions ocommittade ändringar 2026-10-26.
+  Skriv `s = open(p).read()` på en egen rad.
 - Verifying rendered pages: `--dump-dom` snapshots fire before React finishes its
   async queries, so pages look empty at random. Drive Chrome over CDP with
   `--remote-debugging-port` and poll `document.body.innerText` until the expected text
@@ -1676,6 +1688,17 @@ en lokal dev-server mot produktionsdatabasen anmält testinlägg, och det får
 aldrig fälla inlägget. `seed-forum.ts --apply` anmäler de trådar det skapar.
 Nyckeln står i `indexnow.ts` och i `scripts/indexnow.mjs`; testet pinnar att
 båda stämmer med filen i `public/`.
+
+**Jämförelsesidan `/plugga-infor-hogskoleprovet` (2026-10-26)** finns för
+frågan "hur pluggar man inför högskoleprovet", som AI-assistenterna får hela
+tiden. Den jämför KATEGORIER (UHR:s prov, böcker, kurser, appar, vi) och
+nämner inga konkurrenter vid namn: deras priser och innehåll ändras utan att
+vi märker det, och ett felaktigt påstående om någon annan är värre än inget.
+Den skriver inga belopp för vårt eget köp utan länkar till `/pris`. Avsnittet
+"Där Tvåkommanollan inte räcker till" ska stå kvar, för utan det är sidan
+reklam och citeras inte. Av samma skäl är "Sveriges enda …" borttaget ur
+organisationsdatan och `/om`: ett superlativ som inte går att belägga
+skadar trovärdigheten i just de källor AI-motorerna väger.
 
 **ORD-ord kommer inte tillbaka.** Av de 600 orden på proven 2012–2026 har
 inget testats två gånger (12 har dykt upp som svarsalternativ på ett annat

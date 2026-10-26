@@ -14,6 +14,7 @@ Officiell domän: https://tvakommanollan.se
 - Antal rätt av 80 som krävts (median över 29 prov, verbal/kvantitativ del): 1,0 kräver 48/45, 1,5 kräver 64/61 och 2,0 kräver 76/74. En sida per poäng från 0,5 till 2,0: /hogskoleprovet-antal-ratt/<poäng> (t.ex. /hogskoleprovet-antal-ratt/1-5).
 - Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
 - HP-poäng per program (urval 2, HT 2026) för 33 utbildningar, hämtade ur UHR:s antagningsstatistik, med förra årets gräns (HT 2025) bredvid. Sjuksköterske- och socionomsidorna har alla orter (40 respektive 26).
+- Skillnad mot UHR:s egna PDF:er på studera.nu: samma prov, men skrivbara på originaltid med automatisk rättning och normering, och med den engelska läsförståelsen (ELF) kvar i alla 60 verbala provpass. I UHR:s häften saknas ELF ofta, av upphovsrättsskäl.
 - Grundad av Niklas, som fick 1,95 på högskoleprovet.
 
 ## Pages
@@ -68,6 +69,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 - [Antal rätt per poäng](https://tvakommanollan.se/hogskoleprovet-antal-ratt): Hur många rätt som krävts för varje poäng från 0,5 till 2,0 på båda delarna, med lägsta, högsta och median över alla prov sedan 2012. En sida per poäng med gränsen på varje enskilt prov.
 - [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet, systemvetenskap, logopedprogrammet, biomedicinprogrammet, biomedicinsk-analytiker, kriminologi, medicinsk-teknik, elektroteknik, samhallsbyggnad, personalvetarprogrammet, politices-kandidat, receptarieprogrammet, tandhygienistprogrammet, teknisk-matematik, tekniskt-basar och journalistprogrammet.
+- [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, riktiga provuppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
 

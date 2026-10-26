@@ -259,7 +259,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           logo: "https://tvakommanollan.se/icon-192.png",
           areaServed: "SE",
           description:
-            "Sveriges enda gratis plattform för Högskoleprovet med realtidsmatcher och ELO-ranking. Träna alla 8 delprov med riktiga HP-frågor.",
+            "Övning inför Högskoleprovet: alla 30 provtillfällen sedan vårprovet 2012 med facit och normering, realtidsmatcher med ELO-ranking och träning på alla 8 delprov. Det mesta är gratis.",
           founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",
@@ -392,6 +392,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/hogskoleprovet-resultat">Resultatet på högskoleprovet</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
+          <a href="/plugga-infor-hogskoleprovet">Plugga inför högskoleprovet</a>
           <a href="/om">Om Tvåkommanollan</a>
           <a href="/kontakt">Kontakt</a>
         </nav>

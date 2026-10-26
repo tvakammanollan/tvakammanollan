@@ -12,9 +12,9 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss · varför sajten finns",
       description:
-        "Sveriges enda ELO-rankade plattform för högskoleprovet. Läs om grundaren Niklas (1,95 på HP), varför det mesta är gratis och vad som kostar.",
+        "Alla högskoleprov sedan 2012 med facit, dueller med ELO-ranking och en ordlista över ORD. Läs om grundaren Niklas (1,95 på HP), varför det mesta är gratis och vad som kostar.",
       ogTitle: "Om Tvåkommanollan",
-      ogDescription: "Sveriges enda ELO-rankade högskoleprovsplattform. Varför vi finns.",
+      ogDescription: "Gamla högskoleprov, dueller och ordlista. Varför vi finns.",
     }),
     links: pageLinks("/om"),
     scripts: [
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/om")({
         name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om Tvåkommanollan: Sveriges enda ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
+          "Om Tvåkommanollan: övning inför högskoleprovet med alla gamla prov sedan 2012, dueller med ELO-ranking och en ordlista. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
@@ -43,7 +43,7 @@ function OmPage() {
         eyebrow="Om oss"
         title="Vi gör HP"
         cycleWords={["enklare.", "roligare.", "öppnare.", "modernt."]}
-        subtitle="Tvåkommanollan är Sveriges enda plattform där du tävlar mot vänner i realtid med riktiga frågor från Högskoleprovet. Det mesta är gratis."
+        subtitle="På Tvåkommanollan skriver du alla gamla högskoleprov sedan 2012 och tävlar mot vänner i realtid med riktiga frågor från provet. Det mesta är gratis."
         align="center"
         variant="content"
       />
