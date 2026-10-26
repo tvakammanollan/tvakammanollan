@@ -170,7 +170,7 @@ export function ReportQuestionButton({
             <Button
               onClick={() => void submit()}
               disabled={!reason || submitting}
-              className="bg-primary text-foreground hover:bg-primary-deep"
+              className="bg-primary text-on-brand hover:bg-primary-deep"
             >
               Skicka rapport
             </Button>

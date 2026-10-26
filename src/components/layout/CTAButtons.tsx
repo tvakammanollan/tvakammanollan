@@ -38,7 +38,7 @@ type AsButton = CommonProps & {
 type CTAProps = AsLink | AsAnchor | AsButton;
 
 const primaryClass =
-  "inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-primary px-7 text-[15px] font-semibold text-foreground " +
+  "inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-primary px-7 text-[15px] font-semibold text-on-brand " +
   " transition-all hover:bg-primary/90 " +
   "disabled:cursor-not-allowed disabled:opacity-50";
 

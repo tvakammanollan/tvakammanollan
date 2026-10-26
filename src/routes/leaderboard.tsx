@@ -191,7 +191,7 @@ function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) =
           type="button"
           onClick={() => onChange(o.value)}
           className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-            scope === o.value ? "bg-primary text-foreground" : "text-white/55 hover:text-white"
+            scope === o.value ? "bg-primary text-on-brand" : "text-white/55 hover:text-white"
           }`}
         >
           {o.label}
@@ -505,7 +505,7 @@ function WeeklyTable({
                   <span className="inline-flex items-center gap-2 text-white">
                     {rankedName(r.username)}
                     {isMe && (
-                      <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
+                      <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
                         Du
                       </span>
                     )}
@@ -546,7 +546,7 @@ function WeeklyTable({
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
                     {displayName(me.username)}
-                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
                       Du
                     </span>
                   </span>
@@ -604,7 +604,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           <span className="text-[15px] font-medium text-white">{rankedName(r.username)}</span>
           {isMe && (
-            <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground">
+            <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
               Du
             </span>
           )}
@@ -805,7 +805,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {rankedName(r.username)}
           {isMe && (
-            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-foreground">
+            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-on-brand">
               Du
             </span>
           )}
