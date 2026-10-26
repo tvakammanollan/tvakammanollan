@@ -45,19 +45,41 @@ export type OrdIndex = {
   byLetter: Map<string, string[]>;
   /** Alla sluggar i alfabetisk ordning — bär grann-länkarna och sitemapen. */
   ordered: string[];
+  /**
+   * Sluggar som klarar kvalitetsgrinden (se `ordIndexable`). Bara de står i
+   * sitemapen och saknar `noindex`. Övriga sidor finns kvar för den som
+   * klickar sig dit, men skickas inte till Google.
+   */
+  indexable: Set<string>;
   count: number;
 };
+
+/**
+ * Kvalitetsgrinden för ett ordlisteuppslag.
+ *
+ * Search Console flaggade uppslagen som soft 404 (okt 2026). Ett ord utan
+ * sparad förklaring renderar bara uppslagsordet, en rad facit och en källrad
+ * — tusentals nästan likadana sidor som Google läser som tomma. Grinden:
+ * en förklaring måste finnas, och den riktiga HP-uppgiften med alternativ
+ * och facit måste finnas. Saknas något av dem får sidan `noindex` och hålls
+ * utanför sitemapen tills innehållet finns.
+ */
+export function ordIndexable(sense: string, optionCount: number): boolean {
+  return sense.trim().length > 0 && optionCount >= 2;
+}
 
 let cached: OrdIndex | null = null;
 let building: Promise<OrdIndex> | null = null;
 
 async function buildIndex(): Promise<OrdIndex> {
   const words: string[] = [];
+  // Ord → klarar grinden. Ett ord kan stå på flera rader; en godkänd rad räcker.
+  const okWord = new Set<string>();
   for (let page = 0; ; page++) {
     const from = page * PAGE_SIZE;
     const { data, error } = await supabaseAdmin
       .from("questions")
-      .select("question_text")
+      .select("question_text,definition,options")
       .eq("category", "ORD")
       .not("question_text", "is", null)
       .order("question_text")
@@ -66,7 +88,13 @@ async function buildIndex(): Promise<OrdIndex> {
     if (!data?.length) break;
     for (const row of data) {
       const w = (row.question_text ?? "").trim();
-      if (w) words.push(w);
+      if (!w) continue;
+      words.push(w);
+      const sense = ordDefinitionParts(row.definition).senses[0] ?? "";
+      const options = Array.isArray(row.options)
+        ? (row.options as { id?: string; text?: string }[]).filter((o) => o?.id && o?.text)
+        : [];
+      if (ordIndexable(sense, options.length)) okWord.add(w);
     }
     if (data.length < PAGE_SIZE) break;
   }
@@ -96,7 +124,9 @@ async function buildIndex(): Promise<OrdIndex> {
     byLetter.get(ordLetter(bySlug.get(slug) ?? slug))?.push(slug);
   }
 
-  return { builtAt: Date.now(), bySlug, byLetter, ordered, count: bySlug.size };
+  const indexable = new Set(ordered.filter((slug) => okWord.has(bySlug.get(slug) ?? "")));
+
+  return { builtAt: Date.now(), bySlug, byLetter, ordered, indexable, count: bySlug.size };
 }
 
 /**
@@ -195,6 +225,8 @@ export type OrdlistaEntry = {
     correctAnswer: string;
     correctText: string | null;
   } | null;
+  /** Klarar kvalitetsgrinden (`ordIndexable`); annars `noindex` och ingen sitemap-rad. */
+  indexable: boolean;
   /** Hela beståndets storlek — sidan skriver ut den, och den ändras. */
   total: number;
   /** Grannarna i bokstavsordning, så varje sida ligger i en kedja. */
@@ -234,6 +266,7 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
     return s && s !== slug && index.bySlug.has(s) ? s : null;
   };
 
+  const sense = trimToWord(parts.senses[0] ?? "", SENSE_MAX);
   const pos = index.ordered.indexOf(slug);
   const neighbour = (i: number) => {
     const s = index.ordered[i];
@@ -244,7 +277,7 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
     slug,
     word: ordText(word),
     // Bara första betydelsen, och kortad. Se kommentaren på `sense`.
-    sense: trimToWord(parts.senses[0] ?? "", SENSE_MAX),
+    sense,
     // Bara ord som har en egen sida blir länkar. Ett JFR-ord som inte finns i
     // beståndet ska stå kvar som text — det är fortfarande upplysande — men
     // aldrig som en länk till en 404:a.
@@ -260,6 +293,8 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
             correctText,
           }
         : null,
+    // Samma villkor som i registret, men på exakt den rad som visas.
+    indexable: ordIndexable(sense, options.length),
     total: index.count,
     prev: pos > 0 ? neighbour(pos - 1) : null,
     next: pos >= 0 && pos < index.ordered.length - 1 ? neighbour(pos + 1) : null,
@@ -333,7 +368,11 @@ export async function buildOrdlistaSitemap(): Promise<string> {
       .map(([letter]) => `${ORIGIN}/ordlista/bokstav/${letter}`),
     // encodeURI och inte encodeURIComponent: sluggen kan innehålla å, ä, ö och
     // accenter som måste procentkodas, men aldrig ett "/" som skulle kodas fel.
-    ...index.ordered.map((slug) => `${ORIGIN}/ordlista/${encodeURIComponent(slug)}`),
+    // Bara uppslag som klarar kvalitetsgrinden. En sida med noindex i
+    // sitemapen är en motsägelse Google rapporterar som fel.
+    ...index.ordered
+      .filter((slug) => index.indexable.has(slug))
+      .map((slug) => `${ORIGIN}/ordlista/${encodeURIComponent(slug)}`),
   ];
   const body = urls
     .map(
