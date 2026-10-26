@@ -19,6 +19,10 @@ Kör `scripts/mek-gen/tools/prep.sh NN`. Skriptet
 
 - flaggar `USED-WIKI` / `USED-WEB` för det som redan finns i en tidigare
   batch, och sådant ska bytas ut;
+- flaggar `OMDIRIGERING` när en titel leder till samma Wikipedia-artikel som en
+  titel i en tidigare batch (Vedspis leder till Spis, Kroppkakor och Kroppkaka är
+  samma artikel), eller som en annan titel i samma batch. Kontrollen görs av
+  `tools/redirects.py` och cachas i `out/redirects.json`. Byt ut titeln;
 - hämtar källorna till `out/sources/` (gitignorerad);
 - skriver ett sammandrag till `out/batchNN-sources.txt`;
 - flaggar `SAKNAS`, `KORT-WIKI` (under 700 tecken), `FLERTYDIG` och

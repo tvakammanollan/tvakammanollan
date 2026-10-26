@@ -4,6 +4,7 @@ N=$1; cd "$(dirname "$0")/../../.."
 P=scripts/mek-gen/pilot
 grep -v "^#" $P/kallor-$N.txt | while read t; do grep -qx "$t" $(ls $P/kallor-*.txt | grep -v "kallor-$N") && echo "USED-WIKI $t"; done
 grep -v "^#" $P/kallor-$N-web.txt | awk -F' [|] ' '{print $2}' | while read t; do grep -q "| $t |" $(ls $P/kallor-*-web.txt | grep -v "kallor-$N-") && echo "USED-WEB $t"; done
+python3 scripts/mek-gen/tools/redirects.py $N
 bun run scripts/mek-gen/fetch-web.ts fetch $P/kallor-$N-web.txt 2>&1 | grep -v "^ok" | tail -6
 bun run scripts/mek-gen/fetch-sources.ts $P/kallor-$N.txt 2>&1 | grep -i saknas
 python3 - $N <<'PY'
