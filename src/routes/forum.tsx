@@ -87,6 +87,7 @@ function ForumHomePage() {
         }
         align="center"
         variant="compact"
+        dekor="cream"
       />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">
@@ -125,8 +126,8 @@ function ForumHomePage() {
                   params={{ kategori: cat.slug }}
                   className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--amber)]/15">
-                    <Icon className="h-5 w-5 text-[var(--amber)]" aria-hidden />
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cream-wash">
+                    <Icon className="h-5 w-5 text-[var(--cream-3)]" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-2">
@@ -179,7 +180,7 @@ function ForumHomePage() {
           )}
         </section>
 
-        <section className="mt-14 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm">
+        <section className="mt-14 rounded-3xl bg-cream-wash p-6 sm:p-8">
           <h2
             className="text-lg font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}

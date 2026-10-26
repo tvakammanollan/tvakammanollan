@@ -28,6 +28,7 @@ export function PageHero({
   variant = "compact",
   align = "left",
   zon,
+  dekor,
   className,
 }: {
   eyebrow?: string;
@@ -41,6 +42,14 @@ export function PageHero({
    * eller något annat man ska kunna urskilja. Se `lib/produktzon.ts`.
    */
   zon?: Produktzon;
+  /**
+   * Dekorformer för sidor som INTE är en produktyta, t.ex. forumet. Zonens
+   * färger är reserverade för sina ytor: lånar man dem till en sida utan
+   * zon slutar färg betyda yta, och det är hela poängen med systemet.
+   * Cream tillhör ingen zon och är den DESIGN.md listar för dekor.
+   * Ignoreras när `zon` är satt.
+   */
+  dekor?: "cream";
   title: string;
   subtitle?: string;
   cycleWords?: string[];
@@ -66,19 +75,19 @@ export function PageHero({
         className,
       )}
     >
-      {zon ? (
+      {zon || dekor ? (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div
             className="absolute -top-10 right-[7%] h-[180px] w-[200px] opacity-70"
             style={{
-              background: zonDekor[zon],
+              background: zon ? zonDekor[zon] : "var(--cream-wash)",
               borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
             }}
           />
           <div
             className="absolute -bottom-12 left-[6%] h-[112px] w-[124px] opacity-60"
             style={{
-              background: zonDekor[zon],
+              background: zon ? zonDekor[zon] : "var(--cream-wash)",
               borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
             }}
           />
