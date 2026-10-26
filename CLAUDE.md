@@ -1668,6 +1668,21 @@ och står även i `scripts/indexnow.mjs`; filen måste vara utrullad innan
 skriptet körs. `llms.txt` har ett avsnitt "Fakta i korthet" med de siffror en
 AI-motor kan citera. Det är statiskt och rättas för hand när fakta ändras.
 
+**Forumtrådar anmäls automatiskt (2026-10-26).** När en tråd får sitt första
+synliga svar anropar `createForumPost` `pingIndexNow` (`indexnow.server.ts`),
+samma grind som forumsitemapen: obesvarade trådar skickas inte in.
+Anropet görs bara när requestens `host` är `tvakommanollan.se`, annars hade
+en lokal dev-server mot produktionsdatabasen anmält testinlägg, och det får
+aldrig fälla inlägget. `seed-forum.ts --apply` anmäler de trådar det skapar.
+Nyckeln står i `indexnow.ts` och i `scripts/indexnow.mjs`; testet pinnar att
+båda stämmer med filen i `public/`.
+
+**ORD-ord kommer inte tillbaka.** Av de 600 orden på proven 2012–2026 har
+inget testats två gånger (12 har dykt upp som svarsalternativ på ett annat
+prov). Skriv aldrig att "samma ord återkommer" i text som besökare läser.
+`questions`-tabellens 8 761 ORD-rader är inte alla ur prov (taggar som
+`lektion-64`), så kalla dem inte "ord ur gamla prov" heller.
+
 ### Provdatum och Event-data (2026-08-20)
 
 Search Console rapporterade fyra "mindre allvarliga" Event-varningar på

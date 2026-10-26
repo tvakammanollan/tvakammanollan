@@ -16,6 +16,8 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
+import { pingIndexNow } from "./indexnow.server";
+import { CANONICAL_HOST } from "./canonical-host";
 import {
   POSTS_PER_PAGE,
   THREADS_PER_PAGE,
@@ -589,8 +591,30 @@ export const createForumPost = createServerFn({ method: "POST" })
 
     const row = (rows ?? [])[0];
     if (!row) throw new Error("Något gick fel. Försök igen om en stund.");
+    if (row.status === "visible") await announceFirstReply(data.threadId);
     return { postId: row.post_id, pending: row.status === "pending" };
   });
+
+/**
+ * När en tråd får sitt första svar kommer den med i forumsitemapen, och då
+ * anmäls den till IndexNow. Samma kvalitetsgrind som sitemapen: en obesvarad
+ * tråd är tunt innehåll och skickas inte in. Ett fel här får aldrig fälla
+ * inlägget, därför sväljs det.
+ */
+async function announceFirstReply(threadId: number): Promise<void> {
+  try {
+    const { data: t } = await supabaseAdmin
+      .from("forum_threads")
+      .select("id, slug, status, reply_count, forum_categories(slug, admin_only)")
+      .eq("id", threadId)
+      .maybeSingle();
+    const cat = t?.forum_categories as { slug: string; admin_only: boolean } | null | undefined;
+    if (!t || t.status !== "visible" || t.reply_count !== 1 || !cat || cat.admin_only) return;
+    await pingIndexNow([`https://${CANONICAL_HOST}${threadPath(cat.slug, t.id, t.slug)}`]);
+  } catch (e) {
+    console.warn("[forum] indexnow:", e instanceof Error ? e.message : e);
+  }
+}
 
 export const editForumPost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

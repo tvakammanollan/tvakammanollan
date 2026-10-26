@@ -14,6 +14,8 @@
  *
  *   bun run scripts/seed-forum.ts            # torrkörning
  *   bun run scripts/seed-forum.ts --apply
+ *   bun run scripts/seed-forum.ts --apply --sync-only  # rätta befintliga, skapa inget
+ *   bun run scripts/seed-forum.ts --apply --only-topics  # bara trader.ts
  *   bun run scripts/seed-forum.ts --dump     # trådarna som JSON, ingen databas
  *   bun run scripts/seed-forum.ts --apply --limit 50   # högst 50 nya trådar
  *
@@ -26,12 +28,15 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { slugifyTitle } from "../src/lib/forum";
+import { INDEXNOW_ENDPOINT, indexNowBody } from "../src/lib/indexnow";
 import { SEED_THREADS, type SeedThread } from "./forum-seed/trader";
 import { GENOMGANGAR } from "./forum-seed/genomgangar";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 const APPLY = process.argv.includes("--apply");
+// --sync-only rättar texten i befintliga trådar men skapar inga nya.
+const SYNC_ONLY = process.argv.includes("--sync-only");
 const LIMIT_ARG = process.argv.indexOf("--limit");
 const LIMIT = LIMIT_ARG > -1 ? Number(process.argv[LIMIT_ARG + 1]) : Infinity;
 if (Number.isNaN(LIMIT) || LIMIT < 1) throw new Error("--limit kräver ett positivt tal");
@@ -108,7 +113,11 @@ function genomgangThread(g: (typeof GENOMGANGAR)[number]): SeedThread {
   };
 }
 
-const ALL_THREADS: SeedThread[] = [...SEED_THREADS, ...GENOMGANGAR.map(genomgangThread)];
+// --only-topics tar bara ämnestrådarna (trader.ts), inte genomgångarna.
+const ONLY_TOPICS = process.argv.includes("--only-topics");
+const ALL_THREADS: SeedThread[] = ONLY_TOPICS
+  ? SEED_THREADS
+  : [...SEED_THREADS, ...GENOMGANGAR.map(genomgangThread)];
 
 // --dump skriver ut trådarna som JSON utan att röra databasen, för kontroll
 // av texterna (parser, KaTeX) innan något publiceras.
@@ -151,6 +160,7 @@ const byTitle = new Map(existing.map((t) => [`${t.category_id}:${t.title.toLower
 const takenSlug = new Set(existing.map((t) => `${t.category_id}:${t.slug}`));
 
 let created = 0;
+const createdUrls: string[] = [];
 let waiting = 0;
 for (const t of ALL_THREADS) {
   const cid = catId.get(t.category);
@@ -170,12 +180,30 @@ for (const t of ALL_THREADS) {
     } else {
       console.log(`  finns   ${t.category}/${t.title}`);
     }
+    // Rättelser i texten når publicerade trådar: de två första inläggen
+    // (frågan och svaret) skrivs om om de skiljer sig från filen. Bara våra
+    // egna inlägg rörs, aldrig något en användare skrivit.
+    const posts = await rest<Array<{ id: number; body: string; author_id: string }>>(
+      `forum_posts?select=id,body,author_id&thread_id=eq.${found.id}&order=created_at.asc,id.asc&limit=2`,
+    );
+    for (const [i, want] of [t.question, t.answer].entries()) {
+      const post = posts[i];
+      if (!post || post.author_id !== author.id || post.body === want) continue;
+      if (APPLY) {
+        await rest(`forum_posts?id=eq.${post.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({ body: want, edited_at: new Date().toISOString() }),
+        });
+      }
+      console.log(`  rättad  ${t.category}/${found.id} inlägg ${i + 1}`);
+    }
     continue;
   }
   if (created >= LIMIT) {
     waiting++;
     continue;
   }
+  if (SYNC_ONLY) continue;
   let slug = slugifyTitle(t.title);
   for (let n = 2; takenSlug.has(`${cid}:${slug}`); n++) slug = `${slugifyTitle(t.title)}-${n}`;
   takenSlug.add(`${cid}:${slug}`);
@@ -214,6 +242,7 @@ for (const t of ALL_THREADS) {
     ]),
   });
   console.log(`  skapad  /forum/${t.category}/${thread.id}-${slug}`);
+  createdUrls.push(`https://tvakommanollan.se/forum/${t.category}/${thread.id}-${slug}`);
   created++;
 }
 
@@ -221,3 +250,18 @@ console.log(
   `\n${created} nya trådar${APPLY ? "" : " (torrkörning, kör med --apply för att skriva)"}` +
     (waiting ? `, ${waiting} väntar till nästa körning (--limit)` : ""),
 );
+
+// Trådarna är synliga i samma stund som raderna finns, så de kan anmälas
+// till IndexNow direkt. Fel här stoppar ingenting: sitemapen tar dem ändå.
+if (APPLY && createdUrls.length > 0) {
+  try {
+    const res = await fetch(INDEXNOW_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify(indexNowBody(createdUrls)),
+    });
+    console.log(`IndexNow: ${createdUrls.length} adresser, ${res.status}`);
+  } catch (e) {
+    console.warn("IndexNow misslyckades:", e);
+  }
+}
