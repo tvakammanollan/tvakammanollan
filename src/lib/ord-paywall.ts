@@ -1,7 +1,7 @@
 /**
  * Övningspaywallen: de första 40 orden och de första 40 MEK-uppgifterna är
- * gratis, resten kostar ett köp som gäller i 6 månader (köp gjorda före
- * `TIME_LIMITED_FROM` gäller för alltid). Samma köp ("Hela Ordlistan + MEK")
+ * gratis, resten kostar ett köp som gäller en eller sex månader (`ORD_PLANS`;
+ * köp gjorda före `TIME_LIMITED_FROM` gäller för alltid). Samma köp ("Hela Ordlistan + MEK")
  * låser upp båda, så den som köpte ordlistan innan MEK låstes fick MEK på
  * köpet.
  *
@@ -25,8 +25,40 @@ export const FREE_MEK_LIMIT = 40;
  */
 export const ORD_PRODUCT_TAG = "ord_access";
 
-/** Så många månader ett köp gäller. Ändras den här ändras texten på alla ytor. */
-export const ACCESS_MONTHS = 6;
+/**
+ * De två köpen. Varje plan är en egen produkt i Stripe med ett eget pris
+ * (`STRIPE_ORD_PRICE_ID_1M` / `_6M` i `wrangler.jsonc`), och längden följer
+ * med köpet i sessionens metadata och i `ord_purchases.access_months`.
+ * Priserna i Stripe är satta inklusive moms, så beloppet på knappen är det
+ * köparen betalar.
+ */
+export const ORD_PLANS = {
+  "1m": { months: 1 },
+  "6m": { months: 6 },
+} as const;
+export type OrdPlan = keyof typeof ORD_PLANS;
+export const ORD_PLAN_IDS = Object.keys(ORD_PLANS) as OrdPlan[];
+
+export function isOrdPlan(value: unknown): value is OrdPlan {
+  return (ORD_PLAN_IDS as unknown[]).includes(value);
+}
+
+/**
+ * Längden på köp som inte bär någon egen: allt som såldes innan planerna
+ * fanns var sex månader, och en rad utan `access_months` ska läsas så.
+ */
+export const LEGACY_ACCESS_MONTHS = 6;
+
+/** Läser en lagrad längd. Allt som inte är en känd plans längd blir sex månader. */
+export function accessMonths(value: unknown): number {
+  const n = typeof value === "string" ? Number(value) : value;
+  return ORD_PLAN_IDS.some((p) => ORD_PLANS[p].months === n) ? (n as number) : LEGACY_ACCESS_MONTHS;
+}
+
+/** "en månad" / "6 månader", för löptext. */
+export function planDuration(plan: OrdPlan): string {
+  return plan === "1m" ? "en månad" : "6 månader";
+}
 
 /**
  * Köp gjorda före den här tidpunkten gäller för alltid. Kassan lovade "det är
@@ -40,16 +72,23 @@ export const TIME_LIMITED_FROM = Date.parse("2026-10-21T00:00:00Z");
  * `paid_at` läses som för alltid: hellre en gratis förlängning än att en
  * betalande blir utelåst för att ett datum inte gick att tolka.
  */
-export function accessExpiresAt(paidAt: string): Date | null {
+export function accessExpiresAt(
+  paidAt: string,
+  months: number = LEGACY_ACCESS_MONTHS,
+): Date | null {
   const paid = Date.parse(paidAt);
   if (!Number.isFinite(paid) || paid < TIME_LIMITED_FROM) return null;
   const end = new Date(paid);
-  end.setUTCMonth(end.getUTCMonth() + ACCESS_MONTHS);
+  end.setUTCMonth(end.getUTCMonth() + accessMonths(months));
   return end;
 }
 
-export function purchaseIsActive(paidAt: string, now: number = Date.now()): boolean {
-  const end = accessExpiresAt(paidAt);
+export function purchaseIsActive(
+  paidAt: string,
+  now: number = Date.now(),
+  months: number = LEGACY_ACCESS_MONTHS,
+): boolean {
+  const end = accessExpiresAt(paidAt, months);
   return end === null || now < end.getTime();
 }
 

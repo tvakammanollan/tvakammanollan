@@ -12,7 +12,7 @@ export const Route = createFileRoute("/pris")({
       path: "/pris",
       title: "Pris: vad som är gratis och vad som kostar",
       description:
-        "Alla gamla högskoleprov, duellerna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar ett engångsköp. Så här tänker vi kring priset.",
+        "Alla gamla högskoleprov, duellerna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar 149 kr för en månad eller 349 kr för sex, moms inräknad.",
       ogTitle: "Pris på Tvåkommanollan",
       ogDescription: "Vad som är gratis, vad som kostar och varför.",
     }),
@@ -29,11 +29,9 @@ export const Route = createFileRoute("/pris")({
 /**
  * Sidan om pris. Allt som står här ska gå att belägga i koden.
  *
- * **Priserna i `Priset` är tillfälliga och inte vad kassan tar.** Se
- * kommentaren ovanför `BETALKORT` i `LandingSections.tsx`. Sidan säger det
- * rakt ut i sista stycket nedan ("priset du betalar står i kassan"), så att
- * den inte lovar något den inte kan hålla. Tas osanningen bort där ska
- * stycket skrivas om här också.
+ * Beloppen i `Priset` är skrivna för hand och ska stämma med Stripe; se
+ * kommentaren ovanför `BETALKORT` i `LandingSections.tsx`. Sista stycket
+ * nedan nämner dem också.
  *
  * Avsnittet "Så tänker vi" är skrivet ur det som finns i repot (vad som
  * är gratis, vad som kostar, hur MEK-uppgifterna tas fram). Den som äger
@@ -61,7 +59,7 @@ const TANKER = [
   },
   {
     rubrik: "Ett köp, ingen prenumeration",
-    text: "Du betalar en gång och det gäller en bestämd tid. Inget förnyas av sig självt och inget dras i efterhand. Ett köp låser upp både ordlistan och MEK.",
+    text: "Du väljer en månad eller sex, betalar en gång och det gäller just den tiden. Inget förnyas av sig självt och inget dras i efterhand. Ett köp låser upp både ordlistan och MEK.",
   },
   {
     rubrik: "Du behöver ett riktigt konto för att köpa",
@@ -115,13 +113,12 @@ function PrisPage() {
       <section>
         <div className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
           <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">
-            Priset du betalar står i kassan
+            Priset är vad du betalar
           </h2>
           <p className="mt-4 text-[16px] leading-relaxed text-white/70">
-            Vi finslipar prismodellen, så alternativen ovan kan komma att ändras. Det som gäller är
-            alltid det belopp och den tid som står i kassan innan du bekräftar köpet. Provavgiften
-            på {HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till
-            oss.
+            149 kr för en månad och 349 kr för sex månader, med moms inräknad. Inget läggs på i
+            kassan. Provavgiften på {HP_FEE_SEK} kronor när du anmäler dig till själva provet går
+            till UHR och inte till oss.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

@@ -6,8 +6,11 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { limits } from "./rate-limit";
 import { assertRateLimit } from "./rate-limit.server";
 import {
+  ORD_PLANS,
+  ORD_PLAN_IDS,
   ORD_PRODUCT_TAG,
   PAYWALL_RETURN_PATHS,
+  type OrdPlan,
   mekAccess,
   ordAccess,
   type OrdAccess,
@@ -43,8 +46,17 @@ function siteOrigin(): string {
   return "https://tvakommanollan.se";
 }
 
+export interface OrdPlanPrice {
+  plan: OrdPlan;
+  months: number;
+  /** Pris i ören, inklusive moms. */
+  amount: number;
+}
+
 export interface OrdAccessInfo extends OrdAccess {
-  /** Pris i ören, null om Stripe inte går att nå eller inte är konfigurerat. */
+  /** De köp som går att göra just nu, kortast först. Tom om Stripe inte svarar. */
+  plans: OrdPlanPrice[];
+  /** Lägsta priset i ören, null om inget pris gick att läsa. */
   amount: number | null;
   currency: string;
   publishableKey: string | null;
@@ -52,22 +64,35 @@ export interface OrdAccessInfo extends OrdAccess {
   isAnonymous: boolean;
 }
 
-/** Priset och kassans nyckel till en åtkomst. Den som köpt slipper Stripe-anropet. */
+/**
+ * Priserna och kassans nyckel till en åtkomst. Den som köpt slipper
+ * Stripe-anropen. Ett pris som inte går att läsa faller bort ur listan, så
+ * att den andra planen fortfarande går att köpa.
+ */
 async function withPrice(access: OrdAccess, claims: unknown): Promise<OrdAccessInfo> {
-  let amount: number | null = null;
+  const plans: OrdPlanPrice[] = [];
   let currency = "SEK";
   if (!access.owned && stripeConfigured()) {
-    try {
-      const price = await resolveOrdPrice();
-      amount = price.amount;
-      currency = price.currency.toUpperCase();
-    } catch (e) {
-      console.error("[ord-paywall] kunde inte läsa priset:", e instanceof Error ? e.message : e);
-    }
+    const results = await Promise.allSettled(ORD_PLAN_IDS.map((p) => resolveOrdPrice(p)));
+    results.forEach((r, i) => {
+      const plan = ORD_PLAN_IDS[i];
+      if (r.status === "rejected") {
+        const e = r.reason;
+        console.error(
+          `[ord-paywall] kunde inte läsa priset (${plan}):`,
+          e instanceof Error ? e.message : e,
+        );
+        return;
+      }
+      plans.push({ plan, months: ORD_PLANS[plan].months, amount: r.value.amount });
+      currency = r.value.currency.toUpperCase();
+    });
   }
+  plans.sort((a, b) => a.months - b.months);
   return {
     ...access,
-    amount,
+    plans,
+    amount: plans.length > 0 ? Math.min(...plans.map((p) => p.amount)) : null,
     currency,
     publishableKey: stripePublishableKey(),
     isAnonymous: (claims as { is_anonymous?: boolean } | undefined)?.is_anonymous === true,
@@ -109,8 +134,12 @@ export interface OrdCheckoutHandle {
 }
 
 /**
- * Öppnar kassan för Hela Ordlistan + MEK. `returnTo` är sidan köpet gjordes
- * från; där bekräftas det när köparen kommer tillbaka.
+ * Öppnar kassan för Hela Ordlistan + MEK, en månad eller sex. `returnTo` är
+ * sidan köpet gjordes från; där bekräftas det när köparen kommer tillbaka.
+ *
+ * Planen följer med i metadata (`plan`, `access_months`) och det är därifrån
+ * bokföringen läser längden, inte ur beloppet: en rabattkod gör beloppet
+ * oanvändbart som besked om vad som köptes.
  *
  * Köpet knyts till användaren via `metadata.user_id`, satt här i servern ur
  * den verifierade tokenen och aldrig ur klienten. Webhooken läser det värdet
@@ -120,7 +149,12 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
-      .object({ returnTo: z.enum(PAYWALL_RETURN_PATHS).optional().default("/ord") })
+      .object({
+        returnTo: z.enum(PAYWALL_RETURN_PATHS).optional().default("/ord"),
+        // Utan plan: sex månader, det enda köpet som fanns innan planerna.
+        // En flik som laddats före utrullningen skickar ingen.
+        plan: z.enum(["1m", "6m"]).optional().default("6m"),
+      })
       .parse(input ?? {}),
   )
   .handler(async ({ data, context }): Promise<OrdCheckoutHandle> => {
@@ -135,20 +169,26 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
     }
     if (!stripeConfigured()) throw new Error(CHECKOUT_ERROR);
 
-    const price = await resolveOrdPrice().catch((e) => {
+    const price = await resolveOrdPrice(data.plan).catch((e) => {
       console.error("[ord-paywall] pris saknas:", e);
       throw new Error(CHECKOUT_ERROR);
     });
     const origin = siteOrigin();
     const returnUrl = `${origin}${data.returnTo}?kop=klart&session_id={CHECKOUT_SESSION_ID}`;
+    const metadata = {
+      product: ORD_PRODUCT_TAG,
+      user_id: userId,
+      plan: data.plan,
+      access_months: String(ORD_PLANS[data.plan].months),
+    };
     const base = {
       mode: "payment",
       line_items: [{ price: price.priceId, quantity: 1 }],
       locale: "sv",
       client_reference_id: userId,
       allow_promotion_codes: true,
-      metadata: { product: ORD_PRODUCT_TAG, user_id: userId },
-      payment_intent_data: { metadata: { product: ORD_PRODUCT_TAG, user_id: userId } },
+      metadata,
+      payment_intent_data: { metadata },
     } satisfies Record<string, StripeParam>;
 
     let embedded = stripePublishableKey() !== null;

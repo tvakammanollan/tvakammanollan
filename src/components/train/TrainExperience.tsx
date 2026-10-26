@@ -6,7 +6,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { fetchTrainingBatch, recordTrainingAnswer } from "@/lib/train.functions";
 import { confirmOrdCheckout, getMekAccess, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
 import { OrdPaywall } from "@/components/OrdPaywall";
-import { ACCESS_MONTHS, FREE_MEK_LIMIT } from "@/lib/ord-paywall";
+import { FREE_MEK_LIMIT } from "@/lib/ord-paywall";
 import { MEK_ORIGINS, type MekOrigin } from "@/lib/question-origin";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
@@ -553,7 +553,7 @@ export function TrainExperience({
               <span className="font-semibold text-[var(--cream)]">
                 Du har {formatInt(mekAccessInfo.freeRemaining)} kvar.
               </span>{" "}
-              Sedan låser ett köp upp all MEK och hela ordlistan i {ACCESS_MONTHS} månader.
+              Sedan låser ett köp upp all MEK och hela ordlistan i en månad eller sex.
             </p>
           )}
           {/* STEG 1 — vad. Ligger öppet och inte bakom en "Anpassa"-knapp:

@@ -413,28 +413,27 @@ export function Produktytorna() {
 /**
  * Vad som kostar och vad som inte gör det.
  *
- * **TILLFÄLLIGT: priserna här är inte vad kassan tar.** Sektionen visar två
- * betalalternativ, en månad för 150 kr och 6 månader för 350 kr, men det
- * finns bara EN produkt i Stripe: 150 kr för 6 månader
- * (`STRIPE_ORD_PRICE_ID`, `ACCESS_MONTHS = 6`). Båda korten länkar därför
- * till samma kassa på /ord, och köparen ser det riktiga priset där, 150 kr.
- * Det är Niklas beslut 2026-10-26, tills de två produkterna finns.
+ * De två betalkorten är var sin produkt i Stripe: en månad för 149 kr och sex
+ * månader för 349 kr, båda med moms inräknad (`tax_behavior: inclusive`).
+ * Varje kort länkar till `/ord?plan=…`, där kassan för just det köpet öppnas.
  *
- * Felet går åt köparens fördel åt båda håll: den som väljer "6 månader
- * för 350" betalar 150, och den som väljer "en månad för 150" får sex
- * månader. Därför är det ofarligt som övergång, men det är en osanning på
- * sidan och ska inte bli kvar.
+ * Beloppen här är skrivna för hand eftersom sektionen är serverrenderad och
+ * inte ska vänta på Stripe. Kassan läser sitt eget pris ur Stripe, så ändras
+ * priset där måste `pris` nedan ändras i samma veva, annars lovar kortet ett
+ * annat belopp än kassan tar.
  *
- * Så här stängs det: skapa de två priserna i Stripe, låt `ord-paywall.ts`
- * ta en längd per produkt i stället för den fasta `ACCESS_MONTHS`, och
- * peka varje kort på sin egen kassa. Ta sedan bort den här kommentaren.
+ * Knapparna har var sin färg så att de tre köpen går att skilja åt med en
+ * blick: vit för gratiskontot, orange (terracotta) för en månad och lila
+ * (plum) för 6 månader. Texten på terracotta är Ink och på plum vit, de
+ * par paletten godkänt för de ytorna i `styles.css`.
  *
  * Studieupplägget är inte med: vi pivoterar bort från det.
  */
 const BETALKORT = [
   {
+    plan: "1m",
     etikett: "Ordlistan och MEK: en månad",
-    pris: "150 kr",
+    pris: "149 kr",
     rader: [
       "Över 10\u00a0000 ord i träningsläget",
       "Alla MEK-uppgifter, arkivets och våra egna",
@@ -447,11 +446,12 @@ const BETALKORT = [
     prisFarg: "",
     radFarg: "text-white/70",
     ikon: "text-success",
-    knapp: "bg-primary text-on-brand hover:brightness-125",
+    knapp: "bg-terracotta text-[var(--cream)] hover:brightness-110",
   },
   {
+    plan: "6m",
     etikett: "Ordlistan och MEK: 6 månader",
-    pris: "350 kr",
+    pris: "349 kr",
     rader: [
       "Samma innehåll som enmånadsköpet",
       "Gäller 6 månader, hela vägen till provdagen",
@@ -464,7 +464,7 @@ const BETALKORT = [
     prisFarg: "text-[var(--cream)]",
     radFarg: "text-[var(--plum)]",
     ikon: "text-[var(--plum)]",
-    knapp: "bg-primary text-on-brand hover:brightness-125",
+    knapp: "bg-plum text-on-brand hover:brightness-125",
   },
 ] as const;
 
@@ -500,7 +500,7 @@ export function Priset() {
               <div className="flex-1" />
               <Link
                 to="/signup"
-                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg bg-primary px-6 py-3 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
+                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg border border-[var(--cream)] bg-card px-6 py-3 text-[15px] font-semibold text-[var(--cream)] transition hover:bg-secondary"
               >
                 Skapa konto
               </Link>
@@ -518,6 +518,7 @@ export function Priset() {
                 <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
                   {k.pris}
                 </p>
+                <p className={`mt-2 text-[13px] ${k.radFarg}`}>inklusive moms</p>
                 <ul className={`mt-6 space-y-3 text-[15px] leading-relaxed ${k.radFarg}`}>
                   {k.rader.map((rad) => (
                     <li key={rad} className="flex gap-2.5">
@@ -527,9 +528,9 @@ export function Priset() {
                   ))}
                 </ul>
                 <div className="flex-1" />
-                {/* Båda går till samma kassa, se kommentaren ovanför. */}
                 <Link
                   to="/ord"
+                  search={{ plan: k.plan }}
                   className={`mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg px-6 py-3 text-[15px] font-semibold transition ${k.knapp}`}
                 >
                   {k.cta}

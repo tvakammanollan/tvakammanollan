@@ -1537,8 +1537,32 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
   öppna kassan". Testa nya sessionsparametrar med ett riktigt `curl` mot
   `/v1/checkout/sessions` innan push; typkontrollen ser dem inte.
 - **Gästkonton kan inte köpa** (köpet hade försvunnit med kontot).
-- **Köpet gäller i sex månader sedan 2026-10-21** (`ACCESS_MONTHS`,
-  `purchaseIsActive` i `ord-paywall.ts`, räknat från `paid_at`). Köp före
+- **Två köp sedan 2026-10-26: en månad för 149 kr och sex månader för
+  349 kr** (`ORD_PLANS` i `ord-paywall.ts`). Två produkter i Stripe,
+  `STRIPE_ORD_PRICE_ID_1M` / `_6M` i `wrangler.jsonc`. Betalkorten på
+  landningen och `/pris` länkar till `/ord?plan=1m|6m`, som öppnar kassan för
+  just det köpet; `OrdPaywall` visar annars båda.
+  - **Priserna är satta `tax_behavior: inclusive`.** Kontots standard är
+    `exclusive`, och ett pris med `unspecified` (som det gamla 150-priset)
+    fick momsen pålagd i kassan, alltså ett högre belopp än på knappen. Ett
+    nytt pris ska alltid skapas med `inclusive`. Kontrollera med en
+    provsession: `amount_total` ska vara exakt beloppet på knappen.
+  - **Längden bokförs per köp**, i sessionens metadata (`plan`,
+    `access_months`) och i `ord_purchases.access_months`
+    (`20261026120000_ordlistan_kop_langd.sql`). NULL och okända värden läses
+    som sex månader, det enda som såldes före planerna. Längden läses aldrig
+    ur beloppet: en rabattkod gör beloppet oanvändbart som besked.
+  - **Koden tål att kolumnen saknas.** `hasOrdAccess` läser `*` i stället för
+    en kolumnlista (ett läsfel betyder "lås upp", så en lista som nämner en
+    saknad kolumn hade gett alla allt), och `markOrdPaid` skriver om utan
+    kolumnen om PostgREST svarar PGRST204.
+  - **Beloppen på betalkorten är skrivna för hand** (`BETALKORT` i
+    `LandingSections.tsx`, sista stycket på `/pris`, `llms.txt`). Kassan
+    läser sitt pris ur Stripe. Ändras priset där, ändra de tre ytorna samtidigt.
+  - **`+` i ett Stripe-namn via curl blir ett mellanslag** med `-d`. Använd
+    `--data-urlencode` för allt som innehåller `+`.
+- **Köpet gäller en tidsbegränsad period sedan 2026-10-21**
+  (`purchaseIsActive` i `ord-paywall.ts`, räknat från `paid_at`). Köp före
   `TIME_LIMITED_FROM` gäller för alltid: kassan lovade "det är ditt för alltid"
   fram till dess (tre köp). Flytta aldrig den gränsen bakåt. Inget förnyas
   automatiskt; den som köper igen krockar med sin gamla rad (`user_id` är

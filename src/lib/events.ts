@@ -100,12 +100,12 @@ export interface ProductEvents {
     difficulty_count: number;
   };
   ord_paywall_shown: { answered: number };
-  ord_paywall_checkout_started: { embedded: boolean };
+  ord_paywall_checkout_started: { embedded: boolean; plan: "1m" | "6m" };
   ord_purchase_completed: { via: "return" };
   // MEK-paywallen säljer samma köp som ordlistans, därför egna namn: tratten
   // ska gå att dela på vilken spärr som ledde till köpet.
   mek_paywall_shown: { answered: number };
-  mek_paywall_checkout_started: { embedded: boolean };
+  mek_paywall_checkout_started: { embedded: boolean; plan: "1m" | "6m" };
   mek_purchase_completed: { via: "return" };
   ord_session_completed: {
     answered: number;

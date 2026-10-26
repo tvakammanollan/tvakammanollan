@@ -12,7 +12,7 @@ import { GlassCard } from "@/components/layout/GlassCard";
 import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { OrdPaywall } from "@/components/OrdPaywall";
-import { ACCESS_MONTHS } from "@/lib/ord-paywall";
+import { isOrdPlan, type OrdPlan } from "@/lib/ord-paywall";
 import {
   confirmOrdCheckout,
   getOrdAccess,
@@ -233,6 +233,14 @@ function OrdPracticePage() {
   const fetchAccess = useServerFn(getOrdAccess);
   const confirmPurchase = useServerFn(confirmOrdCheckout);
   const [access, setAccess] = useState<OrdAccessInfo | null>(null);
+  // `?plan=1m|6m`: betalkorten på landningen och /pris länkar hit med köpet
+  // redan valt. Läses i en effekt, inte i renderingen: sidan är
+  // serverrenderad och lika för alla, så annars blir det en hydreringsmiss.
+  const [presetPlan, setPresetPlan] = useState<OrdPlan | null>(null);
+  useEffect(() => {
+    const plan = new URLSearchParams(window.location.search).get("plan");
+    if (isOrdPlan(plan)) setPresetPlan(plan);
+  }, []);
   // Varna bara en gång per session om svars-sparandet strular.
   const recordWarnedRef = useRef(false);
 
@@ -496,7 +504,31 @@ function OrdPracticePage() {
                 källfilter, tre svårighetsknappar, en kryssruta, en lägestoggle
                 och hela listan över felade ord. Starta direkt — den som vill
                 styra öppnar Anpassa, precis som på /train. */}
-            {access?.locked && <OrdPaywall access={access} />}
+            {presetPlan && !authLoading && !user && (
+              <GlassCard className="mb-4 p-6 text-center sm:p-8">
+                <h2 className="text-xl font-semibold text-[var(--cream)]">
+                  Skapa ett konto för att köpa
+                </h2>
+                <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
+                  Köpet knyts till ditt konto, så att det följer med dig mellan enheter. Kom
+                  tillbaka hit när du är inloggad.
+                </p>
+                <div className="mt-5 flex flex-wrap justify-center gap-3">
+                  <PrimaryCTA to="/signup">Skapa konto</PrimaryCTA>
+                  <Link
+                    to="/login"
+                    className="inline-flex min-h-[44px] items-center px-4 text-sm font-semibold text-white/70 transition hover:text-[var(--cream)]"
+                  >
+                    Logga in
+                  </Link>
+                </div>
+              </GlassCard>
+            )}
+            {access && !access.owned && (access.locked || presetPlan) && (
+              <div className={access.locked ? "" : "mb-4"}>
+                <OrdPaywall access={access} plan={presetPlan ?? undefined} />
+              </div>
+            )}
             <GlassCard className={`p-6 text-center sm:p-8 ${access?.locked ? "hidden" : ""}`}>
               <p className="text-xs font-semibold text-white/45">
                 Ditt pass
@@ -513,7 +545,7 @@ function OrdPracticePage() {
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
                   {formatInt(access.freeRemaining)} gratisord kvar. Sedan låser ett köp upp hela
-                  listan i {ACCESS_MONTHS} månader.
+                  listan i en månad eller sex.
                 </p>
               )}
 
