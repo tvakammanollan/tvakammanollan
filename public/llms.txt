@@ -1,6 +1,6 @@
 # Tvåkommanollan
 
-> Sveriges gratis plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Helt gratis, inga annonser, inget kreditkort.
+> Sveriges plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Det mesta är gratis, inga annonser, inget kreditkort för att börja.
 
 Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP och vill att bra HP-träning ska vara gratis för alla.
 
@@ -81,8 +81,8 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 
 ## Key facts
 
-- All träning är gratis: inga annonser, ingen betalspärr, inget kreditkort för att spela.
-- Enda betaltjänsten är ett personligt studieupplägg (coachning). Frivilligt, engångsköp, priset står i kassan.
+- Det mesta är gratis: gamla prov, duellerna, normering, poängräknare och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Inga annonser, inget kreditkort för att spela.
+- Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp (ingen prenumeration). Därutöver finns ett personligt studieupplägg (coachning), också som engångsköp. Priset står alltid i kassan.
 - En match består av 8 frågor på 5 minuter.
 - ELO-systemet liknar schackets: börja på 1 000, vinn poäng mot starkare spelare, tappa mot svagare.
 - Tiers: Brons (<1 000), Silver (1 000–1 199), Guld (1 200–1 399), Platina (1 400–1 599), Diamant (1 600+).
@@ -117,10 +117,10 @@ Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. 
 ## FAQ
 
 **Vad är Tvåkommanollan?**
-En gratis svensk plattform där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
+En svensk plattform, gratis att börja på, där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
 
 **Kostar det något?**
-All träning är gratis: matcher, gamla prov, ordträning, guider. Inga annonser och ingen betalspärr. Det enda som kostar är ett personligt studieupplägg (coachning), som är helt frivilligt och köps som engångsköp; priset står i kassan.
+Det mesta är gratis: matcher, alla gamla prov, guider, normering och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp. Inga annonser och inget kreditkort för att börja. Därutöver finns ett personligt studieupplägg (coachning) som engångsköp; priset står i kassan.
 
 **Behöver jag konto?**
 Du kan spela som gäst, men då sparas ingen ELO och du syns inte på topplistan. Konto tar 30 sekunder med e-post eller Google.
@@ -146,4 +146,4 @@ E-post: info@tvakommanollan.se. Svar oftast inom en vardag. Mer info på [/konta
 
 ## Ägare
 
-Tvåkommanollan drivs av Niklas Pellkvist som privatperson. All träning är gratis; sajten säljer en enda tjänst, ett personligt studieupplägg. Niklas fick 1,95 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara gratis för alla. Sajten har inga annonser. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.
+Tvåkommanollan drivs av Niklas Pellkvist som privatperson. Det mesta är gratis; sajten säljer hela ordlistan och MEK som engångsköp, plus ett personligt studieupplägg. Niklas fick 1,95 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara tillgänglig för alla. Sajten har inga annonser. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.

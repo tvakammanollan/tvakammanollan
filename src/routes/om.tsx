@@ -12,9 +12,9 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss · varför sajten finns",
       description:
-        "Sveriges enda gratis ELO-rankade plattform för högskoleprovet. Läs om grundaren Niklas (1,95 på HP) och varför all träning är gratis.",
+        "Sveriges enda ELO-rankade plattform för högskoleprovet. Läs om grundaren Niklas (1,95 på HP), varför det mesta är gratis och vad som kostar.",
       ogTitle: "Om Tvåkommanollan",
-      ogDescription: "Sveriges enda gratis ELO-rankade högskoleprovsplattform. Varför vi finns.",
+      ogDescription: "Sveriges enda ELO-rankade högskoleprovsplattform. Varför vi finns.",
     }),
     links: pageLinks("/om"),
     scripts: [
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/om")({
         name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om Tvåkommanollan: Sveriges enda gratis ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
+          "Om Tvåkommanollan: Sveriges enda ELO-rankade högskoleprovsplattform. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
@@ -42,8 +42,8 @@ function OmPage() {
       <PageHero
         eyebrow="Om oss"
         title="Vi gör HP"
-        cycleWords={["enklare.", "roligare.", "gratis.", "modernt."]}
-        subtitle="Tvåkommanollan är Sveriges enda plattform där du tävlar mot vänner i realtid med riktiga frågor från Högskoleprovet. Helt utan kostnad."
+        cycleWords={["enklare.", "roligare.", "öppnare.", "modernt."]}
+        subtitle="Tvåkommanollan är Sveriges enda plattform där du tävlar mot vänner i realtid med riktiga frågor från Högskoleprovet. Det mesta är gratis."
         align="center"
         variant="content"
       />
@@ -66,12 +66,12 @@ function OmPage() {
             Tvåkommanollan är vad jag önskat fanns när jag pluggade: ett ställe där du kan träna
             riktiga HP-frågor under riktig tidspress, mot någon på din nivå, och se ditt resultat
             klättra över veckorna. Konkurrensen gör att du orkar längre. ELO-systemet ger en ärlig
-            bild av var du står. Och allt, varje delprov, varje gammalt prov och varje funktion, är
-            gratis. Alltid.
+            bild av var du står. Och det mesta är gratis: varje gammalt prov, duellerna, normeringen
+            och forumet. Ordlistan och MEK har en gratisdel och kostar sedan ett engångsköp.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Varför gratis?
+            Varför är det mesta gratis?
           </h2>
           <p>
             Att plugga inför Högskoleprovet borde inte kosta tusenlappar. De officiella materialen
@@ -86,9 +86,13 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser och ingen betalspärr.
-            Allt pluggmaterial är gratis. Det enda som kostar pengar är personlig coachning, som är
-            helt frivillig. Du betalar aldrig med din uppmärksamhet.
+            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser. Gamla prov,
+            duellerna, normeringen och forumet är gratis, och de första 40 orden och MEK-uppgifterna
+            också, så att du kan prova. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp.{" "}
+            <Link to="/pris" className="underline" style={{ color: "var(--amber)" }}>
+              Så tänker vi kring priset
+            </Link>
+            . Du betalar aldrig med din uppmärksamhet.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
@@ -109,9 +113,9 @@ function OmPage() {
               står, inte vad en kursplattform vill att du ska tro att du är värd.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Gratis betyder gratis.</strong> Inga
-              annonser, ingen betalspärr, inget premium-läge. Personlig coachning är det enda som
-              kostar, och inget i appen kräver den.
+              <strong style={{ color: "var(--cream)" }}>Gratis ska vara gratis.</strong> Det som är
+              gratis är det på riktigt: inga annonser, ingen dold gräns och inget kreditkort. Det
+              som kostar står tydligt på prissidan.
             </li>
           </ul>
 

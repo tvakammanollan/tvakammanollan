@@ -39,9 +39,9 @@ export const Route = createFileRoute("/")({
       // folk skriver "högskoleprovet", "öva högskoleprovet", "gamla prov".
       title: "Öva högskoleprovet gratis · alla gamla prov",
       description:
-        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Alla 8 delprov, utan kostnad.",
+        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Du börjar utan kostnad och behöver inget kreditkort.",
       ogDescription:
-        "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
+        "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
     }),
     links: pageLinks("/"),
     scripts: [
@@ -60,7 +60,7 @@ export const Route = createFileRoute("/")({
         alternateName: "Tvakommanollan",
         url: "https://tvakommanollan.se",
         description:
-          "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Helt gratis.",
+          "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Gratis att börja.",
         applicationCategory: "EducationalApplication",
         applicationSubCategory: "TestPreparation",
         operatingSystem: "Web",

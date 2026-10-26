@@ -12,7 +12,7 @@ interface FaqItem {
 const FAQ: FaqItem[] = [
   {
     q: "Är Tvåkommanollan verkligen gratis?",
-    a: "Ja. Helt gratis. Inga annonser, inget kreditkort, inga in-app-köp och inga premium-paket. Sajten finansieras av grundaren.",
+    a: "Det mesta är det. Alla gamla prov med facit, duellerna, normeringen, poängräknaren och forumet är gratis, utan kreditkort. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp, ingen prenumeration. Inga annonser. Sajten drivs av grundaren.",
   },
   {
     q: "Hur fungerar ELO-systemet?",

@@ -157,7 +157,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
@@ -175,7 +175,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
+          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
       { name: "theme-color", content: "#f5f5f5" },
