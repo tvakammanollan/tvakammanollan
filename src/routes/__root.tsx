@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
+import { ZonBand } from "@/components/layout/ZonBand";
 import { Toaster } from "@/components/ui/sonner";
 import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
 import { useOAuthErrorToast } from "@/hooks/useOAuthErrorToast";
@@ -427,6 +428,9 @@ function RootComponent() {
             </a>
             <AppMotion />
             <Navbar />
+            <SafeBoundary label="zon-band">
+              <ZonBand />
+            </SafeBoundary>
             {/* Diskret remsa, direkt under navbaren — aldrig en overlay.
               Registreringen loggar in på en gång och allt fungerar utan
               bekräftad adress; det här är påminnelsen, inte grinden. */}
