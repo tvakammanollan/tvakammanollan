@@ -1,0 +1,7 @@
+# Batch 35: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/mage-och-tarm/magsack-och-matstrupe/ont-i-magen-hos-vuxna/ | 1177 Ont i magen hos vuxna | 1177
+https://www.1177.se/sjukdomar--besvar/mage-och-tarm/magsack-och-matstrupe/magsaftsreflux-hos-barn/ | 1177 Magsaftsreflux hos barn | 1177
+https://www.1177.se/sjukdomar--besvar/lungor-och-luftvagar/hosta-och-slem-i-luftvagarna/hosta/ | 1177 Hosta | 1177
+https://www.1177.se/sjukdomar--besvar/lungor-och-luftvagar/hosta-och-slem-i-luftvagarna/hosta-hos-barn/ | 1177 Hosta hos barn | 1177
+https://www.1177.se/sjukdomar--besvar/lungor-och-luftvagar/hosta-och-slem-i-luftvagarna/cystisk-fibros/ | 1177 Cystisk fibros | 1177
+https://www.1177.se/sjukdomar--besvar/lungor-och-luftvagar/hojdsjuka/ | 1177 Höjdsjuka | 1177
