@@ -21,14 +21,25 @@ const HANDOFF = 0.26;
  * Fem saker här är medvetna och lätta att råka göra ogjorda:
  *
  * 1. **The vertical padding is the only reason the glyphs are whole.**
- *    `overflow-hidden` clips at the *padding* edge, and Young Serif's ink runs
- *    from 0.99em above the baseline ("Ä") to 0.215em below it ("g") — 1.21em
- *    against a line box of 1.02–1.05em. The box is therefore 0.14em too short
- *    above the baseline and 0.045em below it; the padding buys that back plus
- *    ~0.06em of margin, measured across every word on all five pages at both
- *    hero sizes. Before this, the tails of "Läsning." and "Tidspress." were
- *    shaved flat and "LÄS." nearly lost its dots. It is asymmetric because the
- *    shortfall is — do not "tidy" it into a single `py-`.
+ *    Masken klipper vid paddingkanten, och ordens bläck sticker ut över
+ *    radboxen i båda riktningarna. Paddingen köper tillbaka det plus
+ *    ~0,06em marginal. Den är asymmetrisk för att underskottet är det —
+ *    slå inte ihop den till ett enda `py-`.
+ *
+ *    **Måtten är snittberoende och har räknats om två gånger.** De sattes
+ *    för Young Serif, kontrollerades mot Familjen Grotesk, och gäller
+ *    sedan 2026-10-26 Manrope. Mätt på skarpa sajten vid 84 px: baslinjen
+ *    låg 93,5 px ner i en klippruta på 114, alltså 20,5 px nedåt, medan
+ *    "Läsning." har 21,4 px underhäng. Ordet klipptes med 0,7 px och
+ *    "Tidspress." och "betydelser." låg på 0,6 px marginal, alltså på
+ *    kanten. `pb` gick därför 0,12em → 0,19em. Uppåt är det gott om plats:
+ *    värsta fallet "LÄS." hade 16,8 px kvar.
+ *
+ *    Byter du snitt igen: mät om. Lägg in en nollbred inline-probe i rutan
+ *    och läs dess botten för att få baslinjen, mät orden med canvas
+ *    `actualBoundingBoxAscent/Descent`, och kontrollera varje ord på alla
+ *    fem sidorna. Att det ser rätt ut i en skärmdump räcker inte, felet
+ *    var 0,7 px.
  * 2. **The height comes from the content, not from the caller, and the padding
  *    is cancelled by matching negative margins.** PageHero used to hand down
  *    `h-[1.05em]`, i.e. exactly the line box, with `md:pb-3` bolted on to
@@ -112,7 +123,7 @@ export function CyclingTitle({
     };
     mät();
     window.addEventListener("resize", mät);
-    // Typsnittet laddas asynkront och Young Serif är bredare än fallbacken —
+    // Typsnittet laddas asynkront och Manrope är bredare än fallbacken —
     // mäts bara en gång före det fastnar rutan på systemsnittets bredd.
     void document.fonts?.ready.then(mät).catch(() => {});
     return () => window.removeEventListener("resize", mät);
@@ -124,7 +135,7 @@ export function CyclingTitle({
         "relative inline-block align-baseline",
         // Paddingen är fönstret, marginalerna nollar den mot layouten — annars
         // skjuts ordet ner och de två rubrikraderna glider isär.
-        "pt-[0.22em] pb-[0.12em] -mt-[0.22em] -mb-[0.12em]",
+        "pt-[0.22em] pb-[0.19em] -mt-[0.22em] -mb-[0.19em]",
         className,
       )}
       // Masken klipper bara i höjdled. Negativa insättningar i sidled låter

@@ -187,12 +187,25 @@ export function SplitText({
             key={i}
             className="inline-block align-baseline"
             // Masken måste vara större än radrutan, annars kapar den bokstäverna
-            // den ska maskera. Young Serifs bläck går 0,99em över baslinjen (Ö,
-            // Ä) och 0,215em under den (g, p) — 1,21em mot en radhöjd på
-            // 1,02–1,05em. Utan paddingen tappade "Öva" sina prickar och "gör"
-            // sin svans, på skarpa sajten, i varje rubrik som råkade ha ett
-            // sådant tecken. Marginalerna nollar paddingen mot layouten, så
+            // den ska maskera. Utan paddingen tappade "Öva" sina prickar och
+            // "gör" sin svans, på skarpa sajten, i varje rubrik som råkade ha
+            // ett sådant tecken. Marginalerna nollar paddingen mot layouten, så
             // rutan växer utan att raden gör det.
+            //
+            // MÅTTEN ÄR SNITTBEROENDE. De sattes för Young Serif (bläck 0,99em
+            // över baslinjen, 0,215em under) och gäller sedan 2026-10-26
+            // Manrope, som har djupare underhäng. Mätt på /gamla-prov vid
+            // 64 px: "gamla" och "högskoleprov" hade 0,6 px kvar under
+            // baslinjen, alltså inte klippta men på kanten, där avrundning vid
+            // ett annat pixelförhållande kapar svansen. `paddingBottom` gick
+            // 0,12em → 0,19em, vilket ger ~0,06em marginal igen. Uppåt är det
+            // gott om plats: "Öva" hade 25 px kvar.
+            //
+            // Samma mått och samma skäl i `CyclingTitle` — ändra alltid båda,
+            // de står på samma rad i samma rubrik. Byter du snitt: mät om med
+            // en nollbred inline-probe för baslinjen och canvas
+            // `actualBoundingBoxDescent` för orden. Felet var 0,6 px och syns
+            // inte i en skärmdump.
             //
             // Klippningen är `clip-path`, INTE `overflow: hidden` — och det är
             // en riktig bugg som rättats, inte en smaksak. En inline-block vars
@@ -210,9 +223,9 @@ export function SplitText({
             style={{
               verticalAlign: "baseline",
               paddingTop: "0.22em",
-              paddingBottom: "0.12em",
+              paddingBottom: "0.19em",
               marginTop: "-0.22em",
-              marginBottom: "-0.12em",
+              marginBottom: "-0.19em",
               clipPath: "inset(0 -100%)",
             }}
           >
