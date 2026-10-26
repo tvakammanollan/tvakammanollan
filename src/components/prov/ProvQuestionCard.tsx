@@ -4,6 +4,8 @@ import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovShort, type ProvQuestion } from "@/types/gamla-prov";
 import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "./ProvFigure";
+import { ProvDiscussLink } from "./ProvDiscussLink";
+import type { ProvThreadLink } from "@/lib/forum-prov.functions";
 import { MathText } from "@/components/MathTextLazy";
 
 // XYZ, KVA och NOG skrivs om till text (se scripts/hp-import/apply_quant_text.py) —
@@ -38,6 +40,7 @@ export function ProvQuestionCard({
   revealed,
   onAnswer,
   onToggleFlag,
+  thread,
 }: {
   question: ProvQuestion;
   index: number;
@@ -47,6 +50,8 @@ export function ProvQuestionCard({
   revealed: boolean;
   onAnswer: (letter: string) => void;
   onToggleFlag: () => void;
+  /** Genomgångstråden i forumet, om uppgiften har en. Visas först med facit. */
+  thread?: ProvThreadLink;
 }) {
   const correct = acceptedAnswers(question);
   const isOrd = question.delprov === "ORD";
@@ -215,6 +220,8 @@ export function ProvQuestionCard({
           provet.
         </p>
       )}
+
+      {revealed && <ProvDiscussLink thread={thread} />}
     </article>
   );
 }

@@ -13,6 +13,7 @@ import {
   blockReasonMessage,
   displayAuthor,
   POSTS_PER_PAGE,
+  provThreadNr,
 } from "./forum";
 
 describe("slugifyTitle", () => {
@@ -140,5 +141,18 @@ describe("blockReasonMessage", () => {
     expect(blockReasonMessage("gast")).toContain("Skapa ett konto");
     expect(blockReasonMessage("ej_bekraftad")).toContain("Bekräfta");
     expect(blockReasonMessage("avstangd")).toContain("avstängt");
+  });
+});
+
+describe("provThreadNr", () => {
+  it("läser uppgiftsnumret ur en genomgångstråds slug", () => {
+    expect(provThreadNr("varprovet-2026-provpass-3-uppgift-26-nog-losning", 3)).toBe(26);
+  });
+  it("kräver rätt provpass", () => {
+    expect(provThreadNr("varprovet-2026-provpass-3-uppgift-26-nog-losning", 4)).toBeNull();
+  });
+  it("ignorerar trådar som inte är genomgångar", () => {
+    expect(provThreadNr("hur-loser-man-nog-uppgifter", 3)).toBeNull();
+    expect(provThreadNr("provpass-3-uppgift-0", 3)).toBeNull();
   });
 });

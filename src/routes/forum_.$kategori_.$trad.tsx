@@ -83,7 +83,10 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
     return {
       meta: pageMeta({
         path,
-        title: `${thread.title}${suffix} · Tvåkommanollans forum`,
+        // "Tvåkommanollan | " står redan först. Upprepat varumärke i svansen
+        // knuffade ut trådens egen rubrik ur träfflistan, så det blir bara
+        // "Forum", och inte ens det när rubriken redan är lång.
+        title: `${thread.title}${suffix}${thread.title.length + suffix.length <= 35 ? " · Forum" : ""}`,
         description,
         ogTitle: thread.title,
         ogDescription: description,

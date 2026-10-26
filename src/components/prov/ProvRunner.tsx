@@ -34,6 +34,7 @@ import { delprovFull, hasPassage, passKindLabel, type ProvPass } from "@/types/g
 import { ProvNavigator } from "./ProvNavigator";
 import { ProvPassagePanel } from "./ProvPassagePanel";
 import { ProvQuestionCard } from "./ProvQuestionCard";
+import type { ProvThreadLink } from "@/lib/forum-prov.functions";
 import { ProvResult } from "./ProvResult";
 import { ProvFigure } from "./ProvFigure";
 import { ProvFacitList } from "./ProvFacitList";
@@ -59,7 +60,16 @@ const LETTERS = ["A", "B", "C", "D", "E"];
  * inlämning, och övningsläge utan klocka där rätt svar visas direkt. Allt som
  * pågår sparas lokalt, så en omladdning mitt i provet inte kostar fyrtio svar.
  */
-export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: number }) {
+export function ProvRunner({
+  data,
+  nextPass,
+  threads = {},
+}: {
+  data: ProvPass;
+  nextPass?: number;
+  /** Uppgiftsnummer → genomgångstråd i forumet. */
+  threads?: Record<number, ProvThreadLink>;
+}) {
   const [phase, setPhase] = useState<Phase>("intro");
   const [mode, setMode] = useState<ProvMode>("prov");
   const [current, setCurrent] = useState(0);
@@ -391,6 +401,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
     return (
       <ProvIntro
         data={data}
+        threads={threads}
         resumable={resumable}
         savedAttempt={savedAttempt}
         onStart={start}
@@ -571,6 +582,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
               revealed={revealed}
               onAnswer={answer}
               onToggleFlag={toggleFlag}
+              thread={threads[question.nr]}
             />
 
             <div className="mt-4 flex items-center justify-between gap-3">
@@ -650,6 +662,7 @@ export function ProvRunner({ data, nextPass }: { data: ProvPass; nextPass?: numb
 
 function ProvIntro({
   data,
+  threads,
   resumable,
   savedAttempt,
   onStart,
@@ -658,6 +671,7 @@ function ProvIntro({
   onDiscard,
 }: {
   data: ProvPass;
+  threads: Record<number, ProvThreadLink>;
   resumable: ProvProgress | null;
   savedAttempt: { answers: Record<number, string>; mode: ProvMode; submittedAt: string } | null;
   onStart: (mode: ProvMode) => void;
@@ -827,7 +841,7 @@ function ProvIntro({
           Rätt svar är markerat. Vill du rätta dig själv i stället, börja med provläge ovan.
         </p>
         <div className="mt-6">
-          <ProvFacitList data={data} />
+          <ProvFacitList data={data} threads={threads} />
         </div>
       </details>
     </div>

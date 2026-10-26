@@ -542,4 +542,291 @@ Ur (1) och (2): $y + z = -2y$, alltså $z = -3y$. Dessutom är $x = -2y$.
 
 Det beror på om $y$ är positiv eller negativ, och det står ingenstans. **Svar: E.** Mer i ${NOG}.`,
   },
+
+  /* ── Vårprovet 2026, provpass 5 ──────────────────────────────── */
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 1,
+    svar: "A",
+    losning: String.raw`Multiplicera in parenteserna:
+
+$3x - 12 = 5x + 10$
+
+Samla $x$ på ena sidan och talen på den andra:
+
+$-12 - 10 = 5x - 3x$
+$-22 = 2x$
+$x = -11$
+
+**Svar: A.** Kontroll: $3(-15) = -45$ och $5(-9) = -45$. Stämmer. Att sätta in svaret tar fem sekunder och fångar de flesta teckenfel.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 2,
+    svar: "A",
+    losning: String.raw`Kontrollera steg 1: $-6(x - 2) = -6x + 12$, eftersom minus gånger minus blir plus. Melvin skrev $-12$.
+
+Felet uppstod alltså redan i **steg 1**. **Svar: A.**
+
+Det är det vanligaste räknefelet på hela provet: ett minustecken framför en parentes ska multipliceras med **varje** term inuti. Resten av Melvins steg är korrekta utifrån det felaktiga steg 1, vilket är just det som gör uppgiften lurig.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 3,
+    svar: "C",
+    losning: String.raw`Medelvärdet är summan delad med antalet:
+
+$\frac{1}{2} + \frac{5}{7} = \frac{7}{14} + \frac{10}{14} = \frac{17}{14}$
+
+Dela med 2: $\frac{17}{28}$. **Svar: C.**
+
+Rimlighetskontroll: medelvärdet måste ligga mellan $\frac{1}{2} = 0{,}5$ och $\frac{5}{7} \approx 0{,}71$. $\frac{17}{28} \approx 0{,}61$ gör det, medan $\frac{15}{28} \approx 0{,}54$ ligger väl nära kanten.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 5,
+    svar: "D",
+    losning: String.raw`Täljaren först: $\frac{1}{4} + \frac{1}{5} = \frac{5}{20} + \frac{4}{20} = \frac{9}{20}$.
+
+Att dela med $\frac{1}{6}$ är att multiplicera med 6:
+
+$\frac{9}{20} \cdot 6 = \frac{54}{20} = \frac{27}{10}$
+
+**Svar: D.** Delar man med något mindre än 1 blir svaret större än täljaren. Det utesluter A och B direkt.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 7,
+    svar: "B",
+    losning: String.raw`Räkna utan decimaler först: $8 \cdot 3 = 24$.
+
+Räkna sedan decimalerna: 0,08 har två och 0,03 har två, alltså fyra sammanlagt. Svaret ska ha fyra decimaler: $0{,}0024$.
+
+**Svar: B.** Överslag: 0,08 är knappt en tiondel, så svaret ska vara knappt en tiondel av 0,03, alltså runt 0,003.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 8,
+    svar: "C",
+    losning: String.raw`Båda termerna innehåller $xy$, och 28 och 20 är båda delbara med 4. Bryt ut $4xy$:
+
+$-28xyz + 20xy = 4xy(-7z + 5) = 4xy(5 - 7z)$
+
+**Svar: C.** Kontrollera alltid genom att multiplicera in igen: $4xy \cdot 5 = 20xy$ och $4xy \cdot (-7z) = -28xyz$.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 9,
+    svar: "B",
+    losning: String.raw`Ta reda på $k$ med hjälp av $f(10) = 3$:
+
+$10k + 7 = 3$, alltså $k = -0{,}4$.
+
+Då är $f(20) = 20 \cdot (-0{,}4) + 7 = -8 + 7 = -1$.
+
+**Svar: B.** Ett snabbare sätt: från $x = 0$ till $x = 10$ sjunker funktionen från 7 till 3, alltså med 4. Från 10 till 20 sjunker den lika mycket till: $3 - 4 = -1$.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 11,
+    svar: "D",
+    losning: String.raw`Se $3^4$ som en enhet. $4 \cdot 3^4 - 3^4$ är fyra stycken minus en stycken, alltså $3 \cdot 3^4 = 3^5$.
+
+Sedan multipliceras det med 3 utanför parentesen: $3 \cdot 3^5 = 3^6$.
+
+**Svar: D.** Samma knep som när man räknar "4 äpplen minus 1 äpple". Det sparar dig från att räkna ut $3^4 = 81$ alls.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 12,
+    svar: "A",
+    losning: String.raw`Faktorisera: $a^2b - ab^2 = ab(a - b)$.
+
+Uttrycket är positivt om $ab$ och $a - b$ har samma tecken. Pröva alternativen:
+
+- **A** $a < 0, b > 0$: $ab < 0$ och $a - b < 0$. Minus gånger minus blir plus. Alltid positivt.
+- **B** $a > 0, b < 0$: $ab < 0$ men $a - b > 0$. Alltid negativt.
+- **C** och **D**: $ab > 0$, men tecknet på $a - b$ beror på vilket tal som är störst.
+
+**Svar: A.** Ordet "med säkerhet" betyder att svaret ska gälla för alla tal som uppfyller villkoret, inte bara för några.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 13,
+    svar: "C",
+    losning: String.raw`Om den ena tärningen visar en tvåa avgörs summan helt av den andra tärningen.
+
+- Summan 3 kräver att den andra visar en etta. Sannolikhet $\frac{1}{6}$.
+- Summan 7 kräver att den andra visar en femma. Sannolikhet $\frac{1}{6}$.
+
+De är lika. **Svar: C.**
+
+Fällan är att tänka på hur ovanlig summan 3 är med två tärningar i allmänhet. Men villkoret att en tärning redan visar en tvåa ändrar allt.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 14,
+    svar: "B",
+    losning: String.raw`$\sqrt{27} = \sqrt{9 \cdot 3} = 3\sqrt{3}$, så kvantitet I är $\frac{1}{3} \cdot 3\sqrt{3} = \sqrt{3}$.
+
+$\sqrt{3} \approx 1{,}73$, vilket är mindre än 3. **Svar: B.**
+
+Det går ännu snabbare: $\sqrt{27}$ ligger mellan 5 och 6, och en tredjedel av det är under 2.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 16,
+    svar: "C",
+    losning: String.raw`Skriv villkoret som en ekvation: $1{,}5x = 0{,}5y$.
+
+Multiplicera båda sidor med 2: $3x = y$.
+
+Kvantiteterna är alltså exakt lika. **Svar: C.**
+
+Det är ett vanligt KVA-mönster: villkoret är ofta precis det som behövs för att jämföra kvantiteterna, bara omskrivet.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 17,
+    svar: "C",
+    losning: String.raw`$-2y$ och $-(2y)$ är samma sak. Det spelar ingen roll om man först tar $2y$ och sedan byter tecken, eller multiplicerar $y$ med $-2$ direkt.
+
+**Svar: C.** Villkoret $y < 0$ finns där för att man ska börja tänka på tecken och kanske tro att svaret är A. Läs uttrycken noga innan du sätter in tal.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 19,
+    svar: "B",
+    losning: String.raw`Skärningspunkter hittas genom att sätta y-uttrycken lika.
+
+**$L_1$ och $L_3$:** $2x + 1 = x$, alltså $x = -1$.
+
+**$L_2$ och $L_3$:** $-x + 4 = x$, alltså $x = 2$.
+
+$2 > -1$. **Svar: B.**`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 20,
+    svar: "A",
+    losning: String.raw`Att dela med $\frac{1}{x+1}$ är att multiplicera med $x + 1$. Kvantitet I är alltså $x(x + 1)$.
+
+- I: för $x = 2$ är det 6, och det växer med $x$.
+- II: $\frac{x+1}{x} = 1 + \frac{1}{x}$, som är högst 1,5 när $x \geq 2$.
+
+I är alltid störst. **Svar: A.**`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 21,
+    svar: "A",
+    losning: String.raw`Triangeln är rätvinklig med kateterna 3 och 4. Arean är $\frac{3 \cdot 4}{2} = 6$ cm², och omkretsen $3 + 4 + 5 = 12$ cm.
+
+Kvadraten har också arean 6, så sidan är $\sqrt{6} \approx 2{,}45$ cm och omkretsen ungefär $4 \cdot 2{,}45 = 9{,}8$ cm.
+
+**Svar: A.** Allmänt gäller att av alla fyrhörningar med en viss area har kvadraten minst omkrets. En triangel med samma area har alltid större omkrets än kvadraten.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 22,
+    svar: "D",
+    losning: String.raw`Multiplicera båda sidor med $y$:
+
+$x + 3y = 2y$, alltså $x = -y$.
+
+$x$ och $y$ har motsatta tecken. Är $y$ positiv är II störst, och är $y$ negativ är I störst.
+
+**Svar: D.** Villkoret säger bara att $y \neq 0$, inte om $y$ är positiv eller negativ.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 23,
+    svar: "C",
+    losning: String.raw`**(1)** Den tomma koppen står i mitten. Varmt och kallt kan stå i vilken ordning som helst på sidorna. Inte tillräckligt.
+
+**(2)** Kallt kaffe står längst till höger, och varmt någonstans till vänster om det. Varmt kan stå längst till vänster eller i mitten. Inte tillräckligt.
+
+**Tillsammans:** Tomt i mitten, kallt till höger, och då står varmt till vänster.
+
+**Svar: C.** Formuleringen "någonstans till vänster" är det som gör att (2) inte räcker ensamt.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 24,
+    svar: "D",
+    losning: String.raw`**(1)** Fem tomtar är 25 % av samlingen. Då har hon $\frac{5}{0{,}25} = 20$ tomtar. Tillräckligt.
+
+**(2)** $\frac{7}{10}$ står i skåpet, så de sex på hyllan är $\frac{3}{10}$. Då är hela samlingen $6 \cdot \frac{10}{3} = 20$. Tillräckligt.
+
+**Svar: D.** Båda räcker var för sig, och de ger dessutom samma svar. Det är inget krav på NOG, men det är en bra kontroll.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 25,
+    svar: "C",
+    losning: String.raw`**(1)** 400 askar, varav 250 stora och 150 små. 300 med choklad, alltså 100 med lakrits. Men hur lakritsen fördelar sig på stora och små vet vi inte.
+
+**(2)** 100 små askar med choklad, och en fjärdedel innehöll lakrits. Utan totalen går inget att räkna fram.
+
+**Tillsammans:** Det finns 150 små askar och 100 av dem har choklad, så 50 små har lakrits. Lakritsaskarna är 100 totalt, alltså är $100 - 50 = 50$ av dem stora.
+
+**Svar: C.** Rita gärna en fyrfältstabell (stor/liten mot lakrits/choklad). Det gör den här typen av NOG mycket enklare.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 26,
+    svar: "A",
+    losning: String.raw`**(1)** Priset efter sänkningen var 350 kr, så det ordinarie priset var $350 + 150 = 500$ kr. Sänkningen var $\frac{150}{500} = 30\,\%$. Tillräckligt.
+
+**(2)** Påståendet handlar om ett påhittat pris. Att 150 kr är 25 % av 600 kr stämmer alltid och säger ingenting om varans riktiga pris. Inte tillräckligt.
+
+**Svar: A.** "Om priset hade varit …" är en vanlig fälla. Påståendet är sant men oanvändbart.`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 27,
+    svar: "A",
+    losning: String.raw`**(1)** Med fyra gånger så hög hastighet tar resan en fjärdedel av tiden. Den tiden är 2 timmar, så den riktiga resan tar 8 timmar. Tillräckligt.
+
+**(2)** Vi vet sträckan och förhållandet mellan hastigheterna, men inte någon av hastigheterna själv. Resan kan ta hur lång tid som helst. Inte tillräckligt.
+
+**Svar: A.**`,
+  },
+  {
+    term: "2026vt",
+    pass: 5,
+    nr: 28,
+    svar: "C",
+    losning: String.raw`Serien har sju värden, så medianen är det fjärde i storleksordning. De kända värdena är 1, 11, 19, 27 och 35.
+
+**(1)** För att medianen ska vara 13 måste ett av $x$ och $y$ vara 13 och det andra vara mindre än 13. Då hamnar 1, 11 och det mindre talet under, och 19, 27 och 35 över. Men vilket av $x$ och $y$ som är 13 vet vi inte. Inte tillräckligt.
+
+**(2)** $x < y$ säger ingenting om värdet. Inte tillräckligt.
+
+**Tillsammans:** Det större av de två är 13, och enligt (2) är det $y$. Alltså $y = 13$.
+
+**Svar: C.** Notera att serien inte står i storleksordning. Sortera alltid innan du letar median.`,
+  },
 ];

@@ -1,6 +1,8 @@
 import { ordText } from "@/lib/sv-format";
 import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovFull, type ProvPass, type ProvQuestion } from "@/types/gamla-prov";
+import type { ProvThreadLink } from "@/lib/forum-prov.functions";
+import { ProvDiscussLink } from "./ProvDiscussLink";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -11,7 +13,13 @@ const LETTERS = ["A", "B", "C", "D", "E"];
  * dels för att uppgifterna då finns i serverrenderad HTML — provläget bygger
  * upp sig i webbläsaren och syns inte för en sökmotor.
  */
-export function ProvFacitList({ data }: { data: ProvPass }) {
+export function ProvFacitList({
+  data,
+  threads = {},
+}: {
+  data: ProvPass;
+  threads?: Record<number, ProvThreadLink>;
+}) {
   return (
     <div className="space-y-10">
       {data.sections.map((section) => {
@@ -57,7 +65,7 @@ export function ProvFacitList({ data }: { data: ProvPass }) {
                         ))}
                       </div>
                     )}
-                    <QuestionEntry question={q} />
+                    <QuestionEntry question={q} thread={threads[q.nr]} />
                   </li>
                 );
               })}
@@ -69,7 +77,7 @@ export function ProvFacitList({ data }: { data: ProvPass }) {
   );
 }
 
-function QuestionEntry({ question }: { question: ProvQuestion }) {
+function QuestionEntry({ question, thread }: { question: ProvQuestion; thread?: ProvThreadLink }) {
   const correct = acceptedAnswers(question);
   const isOrd = question.delprov === "ORD";
 
@@ -127,6 +135,7 @@ function QuestionEntry({ question }: { question: ProvQuestion }) {
       <p className="mt-2.5 text-xs font-semibold text-[var(--teal)]">
         Rätt svar: {correct.join(" eller ")}
       </p>
+      <ProvDiscussLink thread={thread} />
     </div>
   );
 }
