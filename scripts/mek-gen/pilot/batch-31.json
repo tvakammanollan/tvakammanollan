@@ -1,0 +1,2892 @@
+[
+ {
+  "id": "p31-01",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Mellan ryggens kotor sitter mjuka diskar av brosk som fungerar som stötdämpare. Spricker en disk kan den mjuka kärnan _____ genom det fastare yttre lagret, och då har man fått ett diskbråck.",
+  "alternatives": [
+   "stelna",
+   "bukta ut",
+   "torka in",
+   "lösas upp"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är bukta ut. Ett bråck är något som tränger ut där det inte ska vara, och genom det yttre lagret visar riktningen. En kärna som stelnar, torkar in eller löses upp bildar inget bråck.",
+  "source": {
+   "title": "1177 Diskbråck",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/diskbrack/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-02",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Spinal stenos drabbar främst personer över 60. Värken sitter oftast i benen när man står eller går, och den lättar när man _____ sig framåt.",
+  "alternatives": [
+   "sträcker",
+   "vänder",
+   "böjer",
+   "spänner"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är böjer. Framåt hör ihop med att kroppen kröks, och böja sig framåt är ett fast uttryck. Man sträcker, vänder eller spänner sig inte framåt för att lindra värken.",
+  "source": {
+   "title": "1177 Spinal stenos",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/spinal-stenos/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-03",
+  "amne": "med",
+  "genre": "pop",
+  "text": "Hos en vuxen i vila slår hjärtat normalt 55 till 80 gånger i minuten. Pulsen ska vara jämn och _____, och när man tar den bedöms också hur kraftig den är.",
+  "alternatives": [
+   "rytmisk",
+   "snabb",
+   "svag",
+   "långsam"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är rytmisk. Jämn och rytmisk hör ihop, eftersom båda beskriver att slagen kommer regelbundet. Snabb och långsam strider mot den normala vilopulsen, och svag strider mot att kraften bedöms för sig.",
+  "source": {
+   "title": "Puls",
+   "url": "https://sv.wikipedia.org/wiki/Puls",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "par"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-04",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Kladdkakan innehåller kakao, smör, socker, ägg och mjöl men inget bakpulver. Det är just _____ av luftbubblor i smeten som gör kakan kladdig.",
+  "alternatives": [
+   "mängden",
+   "storleken",
+   "frånvaron",
+   "färgen"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är frånvaron. Utan bakpulver bildas inga bubblor, och det är därför kakan inte jäser upp. Mängden, storleken och färgen på luftbubblor förklarar inte att kakan saknar bakpulver.",
+  "source": {
+   "title": "Kladdkaka",
+   "url": "https://sv.wikipedia.org/wiki/Kladdkaka",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-05",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Kålpudding är husmanskost, en låda med vitkål och köttfärs som gräddas i ugnen. Grundreceptet _____ kåldolmar, men puddingen har mer köttfärs och inget ris.",
+  "alternatives": [
+   "konkurrerar med",
+   "ersätter",
+   "härstammar från",
+   "påminner om"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är påminner om. Men ställer likheten mot skillnaderna i köttfärs och ris, alltså är recepten lika. Konkurrerar med och ersätter säger inget om likhet, och att puddingen härstammar från kåldolmar står inte i texten.",
+  "source": {
+   "title": "Kålpudding",
+   "url": "https://sv.wikipedia.org/wiki/K%C3%A5lpudding",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-06",
+  "amne": "his",
+  "genre": "pop",
+  "text": "En vallgrav är en bred och ofta vattenfylld grav runt murarna på en befäst anläggning. Sidorna är i regel _____, så att den som anfaller får svårt att ta sig upp.",
+  "alternatives": [
+   "grunda",
+   "branta",
+   "flacka",
+   "gröna"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är branta. Att anfallaren får svårt att ta sig upp visar att väggarna är svåra att klättra på. Grunda och flacka sidor är lätta att ta sig upp för, och gröna sidor stoppar ingen.",
+  "source": {
+   "title": "Vallgrav",
+   "url": "https://sv.wikipedia.org/wiki/Vallgrav",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-07",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Ett personnummer används för att _____ en person hos myndigheter, och det förekommer också i privata sammanhang, till exempel för att ange vem som är part i ett avtal.",
+  "alternatives": [
+   "försäkra",
+   "värdera",
+   "anställa",
+   "identifiera"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är identifiera. Att ange vem som är part i ett avtal är att peka ut en bestämd person. Ett nummer försäkrar, värderar eller anställer ingen.",
+  "source": {
+   "title": "Personnummer",
+   "url": "https://sv.wikipedia.org/wiki/Personnummer",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-08",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "På en lekplats finns ofta sandlåda, gungor och rutschkana. Moderna lekplatser byggs så att de är _____ och kan användas även av barn med funktionsnedsättning.",
+  "alternatives": [
+   "målade",
+   "färgglada",
+   "tillgängliga",
+   "inhägnade"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är tillgängliga. Att barn med funktionsnedsättning kan använda platsen är vad tillgänglighet innebär. Målade, färgglada och inhägnade lekplatser är inte därför möjliga att använda för alla.",
+  "source": {
+   "title": "Lekplats",
+   "url": "https://sv.wikipedia.org/wiki/Lekplats",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-09",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Storspoven hör till världens största vadare, och den har långa ben. Näbben är lång och _____ nedåt.",
+  "alternatives": [
+   "stelnar",
+   "ramlar",
+   "böjer av",
+   "fäller"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är böjer av. En näbb som går nedåt har en krökt form. En näbb stelnar, ramlar eller fäller inte nedåt.",
+  "source": {
+   "title": "Storspov",
+   "url": "https://sv.wikipedia.org/wiki/Storspov",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-10",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Skäggdoppingen har fått sitt namn av den krage av svarta och rödbruna fjädrar som den vuxna fågeln _____ runt huvudet om sommaren.",
+  "alternatives": [
+   "bär",
+   "tappar",
+   "tvättar",
+   "gömmer"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är bär. Namnet kommer av något som syns på fågeln, och ett krås i sommardräkten sitter på huvudet. En fågel som tappar eller gömmer sitt krås får inte namn efter det, och fåglar tvättar inte fjädrar på huvudet.",
+  "source": {
+   "title": "Skäggdopping",
+   "url": "https://sv.wikipedia.org/wiki/Sk%C3%A4ggdopping",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-11",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Den vuxna skrattmåsen har i sommardräkt mörkt huvud och röd näbb, medan nacke, bröst och buk är _____.",
+  "alternatives": [
+   "svarta",
+   "vita",
+   "fläckiga",
+   "bruna"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är vita. Medan ställer de övriga delarna mot det mörka huvudet, alltså är de ljusa. Svarta och bruna strider mot medan, och fläckiga står inte i motsats till mörkt.",
+  "source": {
+   "title": "Skrattmås",
+   "url": "https://sv.wikipedia.org/wiki/Skrattm%C3%A5s",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-12",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Idyllen är en dikt om herdars och lantmäns enkla liv på landet, och hos den grekiske skalden Theokritos framstår herdelivet som ett _____ lugnt och lyckligt tillstånd.",
+  "alternatives": [
+   "hotat",
+   "idealiskt",
+   "förlorat",
+   "farligt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är idealiskt. Lugnt och lyckligt beskriver ett tillstånd som ser fullkomligt ut. Hotat och farligt strider mot lugnt, och förlorat går inte ihop med att dikten skildrar livet som det är.",
+  "source": {
+   "title": "Idyll",
+   "url": "https://sv.wikipedia.org/wiki/Idyll",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "par"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-13",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En krönikör skriver krönikor i till exempel tidningar och utmärks av en _____ stil. Många är specialiserade och skriver om ekonomi, politik, kultur eller livsstil.",
+  "alternatives": [
+   "anonym",
+   "egen",
+   "juridisk",
+   "enhetlig"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är egen. En krönika är en text där skribenten syns med sina egna åsikter. En anonym, juridisk eller enhetlig stil utmärker inte en krönikör.",
+  "source": {
+   "title": "Krönikör",
+   "url": "https://sv.wikipedia.org/wiki/Kr%C3%B6nik%C3%B6r",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-14",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Huvudräkning är att räkna enbart med hjärnan, utan _____ som fingrar, kulram, papper eller miniräknare.",
+  "alternatives": [
+   "siffror",
+   "lärare",
+   "fel",
+   "hjälpmedel"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är hjälpmedel. Uppräkningen av fingrar, kulram och miniräknare visar vad som utesluts, och det är redskap. Man räknar inte utan siffror, och lärare eller fel är inte sådant som räknas upp.",
+  "source": {
+   "title": "Huvudräkning",
+   "url": "https://sv.wikipedia.org/wiki/Huvudr%C3%A4kning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-15",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Miniräknaren är en liten handhållen apparat för beräkningar, och den har _____ de äldre mekaniska räknemaskinerna och räknestickan.",
+  "alternatives": [
+   "tillverkat",
+   "reparerat",
+   "ritat",
+   "ersatt"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är ersatt. Äldre visar att de gamla redskapen har fått lämna plats för den nya apparaten. En miniräknare tillverkar, reparerar eller ritar inte räknemaskiner.",
+  "source": {
+   "title": "Miniräknare",
+   "url": "https://sv.wikipedia.org/wiki/Minir%C3%A4knare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-16",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "En minimilön är den lägsta lön som en arbetsgivare _____ betala för ett arbete. I Sverige finns ingen sådan i lag, utan den bestäms i kollektivavtal.",
+  "alternatives": [
+   "vill",
+   "brukar",
+   "hinner",
+   "får"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är får. En lägsta tillåten lön handlar om vad som är lagligt, och utan i lag visar att det är en regel. Vad arbetsgivaren vill, brukar eller hinner betala är ingen minimilön.",
+  "source": {
+   "title": "Minimilön",
+   "url": "https://sv.wikipedia.org/wiki/Minimil%C3%B6n",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-17",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Klotter är bilder, mönster eller budskap som ofta _____ på väggar och fordon, och brottet kan rubriceras som åverkan eller skadegörelse.",
+  "alternatives": [
+   "olovligen målas",
+   "lagligt ställs ut",
+   "försiktigt tvättas",
+   "gratis säljs"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är olovligen målas. Att det kan vara ett brott visar att målningen sker utan lov. Det som ställs ut lagligt, tvättas eller säljs är inget brott.",
+  "source": {
+   "title": "Klotter",
+   "url": "https://sv.wikipedia.org/wiki/Klotter",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-18",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Taigan är det stora barrskogsbältet på norra halvklotet, från Skandinavien genom Sibirien till Kanada. Den rymmer större delen av jordens barrträd men är ändå ganska _____ på trädslag.",
+  "alternatives": [
+   "fattig",
+   "rik",
+   "känd",
+   "beroende"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är fattig. Ändå visar att det ena går emot det andra, och trots många träd finns det få sorter. Rik strider mot ändå, och känd eller beroende på trädslag ger ingen mening.",
+  "source": {
+   "title": "Taiga",
+   "url": "https://sv.wikipedia.org/wiki/Taiga",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-19",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Ritualer är sociala handlingar som bär en symbolisk mening och som _____ på fasta tider och i en fast form, till exempel en gudstjänst.",
+  "alternatives": [
+   "upprepas",
+   "uppfinns",
+   "ifrågasätts",
+   "glöms bort"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är upprepas. Fasta tider och en fast form visar att handlingen görs om på samma vis. En ritual uppfinns, ifrågasätts eller glöms inte bort vid bestämda tider.",
+  "source": {
+   "title": "Ritual",
+   "url": "https://sv.wikipedia.org/wiki/Ritual",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-20",
+  "amne": "tek",
+  "genre": "pop",
+  "text": "Den första ficklampan kom 1898 och förutsatte två andra uppfinningar, det torra batteriet och den lilla glödlampan. Den var från början för _____ för att rymmas i en ficka.",
+  "alternatives": [
+   "ömtålig",
+   "ljus",
+   "stor",
+   "svag"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är stor. Få plats i en ficka handlar om storleken. En lampa som är ömtålig, ljus eller svag kan ändå få plats i fickan.",
+  "source": {
+   "title": "Ficklampa",
+   "url": "https://sv.wikipedia.org/wiki/Ficklampa",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-21",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Oftast sitter ryggvärken i ländryggen, och den börjar ofta svagt för att sedan _____. Ryggskott är däremot en smärta som kommer _____, ofta i samband med en rörelse.",
+  "alternatives": [
+   "eskalera – gradvis",
+   "tillta – plötsligt",
+   "lägga sig – hastigt",
+   "släppa – periodvis"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är tillta och plötsligt. Börjar svagt och sedan visar att värken blir starkare, och eskalera fungerar också. Däremot ställer ryggskottet mot den värk som kommer långsamt, och hastigt fungerar också. Lägga sig och släppa strider mot att värken börjar svagt, och gradvis eller periodvis står inte i motsats till en långsam start.",
+  "source": {
+   "title": "1177 Ont i ryggen",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/ont-i-ryggen/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "adv"
+   ],
+   "ledtrad": [
+    "kon",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-22",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Hos barn hittar man sällan någon klar _____ till ryggbesvär. Värken kommer ofta när barnet anstränger sig på ett sätt det inte är vant vid, men också den som sitter _____ länge kan få ont.",
+  "alternatives": [
+   "förklaring – i skuggan",
+   "medicin – stilla",
+   "lösning – upp",
+   "orsak – still"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är orsak och still. Det man letar efter när ett barn har ont är varför, och förklaring fungerar också. Men också ställer stillasittande mot ansträngande rörelser, och stilla säger samma sak. En medicin eller lösning hittar man inte till besvären på det sättet, och att sitta i skuggan eller upp är inte motsatsen till rörelse.",
+  "source": {
+   "title": "1177 Ryggbesvär hos barn",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/ryggbesvar-hos-barn/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "adv"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-23",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Pisksnärtskador uppstår oftast vid trafikolyckor där man blir påkörd _____. Symtomen är bland annat ont i nacken och spända muskler, och de brukar komma _____ efter skadan, oftast inom några dygn.",
+  "alternatives": [
+   "bakifrån – snart",
+   "från baksidan – sent",
+   "framifrån – strax",
+   "uppifrån – evigt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är bakifrån och snart. En nacke som piskas till av en stöt kommer av att bilen träffas bakifrån, och från baksidan fungerar också. Oftast inom några dygn visar att symtomen kommer strax efter skadan, och strax fungerar också. Framifrån och uppifrån är inte det vanliga vid en påkörning, och sent eller evigt strider mot inom några dygn.",
+  "source": {
+   "title": "1177 Pisksnärtskada",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/pisksnartsskada--whiplashskada/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "fu"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-24",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Den som rör på sig _____ sin risk att få ont i rygg och nacke. Därför är det bra att fortsätta röra sig trots smärtan, till exempel att ta trapporna i stället för att åka _____.",
+  "alternatives": [
+   "reducerar – skidor",
+   "sänker – hiss",
+   "höjer – hissen",
+   "maskerar – cykel"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är sänker och hiss. Därför bra att röra sig visar att rörelsen skyddar mot värk, och reducerar fungerar också. I stället för att ta trapporna åker man något som lyfter en, och hissen fungerar också. Höjer och maskerar strider mot att det är bra att röra sig, och skidor eller cykel är inte det bekväma sätt att komma upp som trapporna ställs mot.",
+  "source": {
+   "title": "1177 Ont i nacke och axlar",
+   "url": "https://www.1177.se/sjukdomar--besvar/skelett-leder-och-muskler/rygg-och-nacke/ont-i-nacke-och-axlar/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-25",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Bonadsmålningarna var målade utsmyckningar för bostaden, oftast med _____ motiv, och de målades på väv och senare även på papper. Traditionen kan följas tillbaka till senmedeltiden men hade sin _____ mellan 1750 och 1850.",
+  "alternatives": [
+   "bibliska – blomstring",
+   "religiösa – nedgång",
+   "tekniska – glansperiod",
+   "juridiska – undergång"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är bibliska och blomstring. Bonader på landsbygden hade ofta motiv ur Bibeln, och religiösa fungerar också. Men ställer den långa historien mot den tid då traditionen var som starkast, och glansperiod säger samma sak. Tekniska och juridiska motiv målades inte på bonader, och nedgång eller undergång står inte i motsats till en lång historia.",
+  "source": {
+   "title": "Bonadsmålning",
+   "url": "https://sv.wikipedia.org/wiki/Bonadsm%C3%A5lning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-26",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Fiolen hör till stråkinstrumenten och har sedan 1600-talet varit ett av de _____ instrumenten i både klassisk musik och folkmusik. Det italienska ordet violino betyder egentligen liten viola och är alltså en _____.",
+  "alternatives": [
+   "populäraste – pluralform",
+   "dyraste – diminutiv",
+   "vanligaste – förminskningsform",
+   "tystaste – förstärkning"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är vanligaste och förminskningsform. Ett instrument som spelas i både klassisk musik och folkmusik är mycket utbrett, och populäraste fungerar också. Liten viola visar att ordet gör något mindre, och diminutiv säger samma sak. Dyraste och tystaste följer inte av att fiolen spelas överallt, och en pluralform eller förstärkning betyder inte liten.",
+  "source": {
+   "title": "Fiol",
+   "url": "https://sv.wikipedia.org/wiki/Fiol",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-27",
+  "amne": "his",
+  "genre": "pop",
+  "text": "En krigsfånge är en person som fienden har _____ under ett krig. Sedan 1600-talet gäller att krigsfångar står under den krigförande statens välde och inte under den _____ soldat som har tagit dem.",
+  "alternatives": [
+   "fängslat – segrande",
+   "befriat – ensamme",
+   "frihetsberövat – enskilde",
+   "anställt – döde"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är frihetsberövat och enskilde. En fånge är någon som har tagits till fånga, och fängslat fungerar också. Staten ställs mot den person som själv tog fångarna, och ensamme fungerar också. Den som befriats eller anställts är ingen fånge, och den segrande eller döde soldaten är inte motsatsen till staten.",
+  "source": {
+   "title": "Krigsfånge",
+   "url": "https://sv.wikipedia.org/wiki/Krigsf%C3%A5nge",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-28",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Legostadgan var en lag som _____ förhållandet mellan husbonde och tjänstehjon. Den första kom 1664, och den gav husbönderna skyldighet att erbjuda drängar och pigor _____ i form av årstjänst.",
+  "alternatives": [
+   "ordnade – permission",
+   "upplöste – skydd",
+   "styrde – laga försvar",
+   "upphävde – plikter"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är styrde och laga försvar. En lag om förhållandet mellan två parter bestämmer hur det ska vara, och ordnade fungerar också. Årstjänst var det skydd husbonden skulle ge tjänstefolket, och skydd fungerar också. En lag upplöste eller upphävde inte förhållandet, och permission eller plikter ges inte i form av årstjänst.",
+  "source": {
+   "title": "Legostadga",
+   "url": "https://sv.wikipedia.org/wiki/Legostadga",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "utr"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-29",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "En stiftelse saknar både medlemmar, som en förening har, och _____, som ett bolag har. Den förvaltar en förmögenhet som har avsatts för ett _____ ändamål.",
+  "alternatives": [
+   "ägare – särskilt",
+   "delägare – okänt",
+   "ändamål – bestämt",
+   "kontor – påhittat"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ägare och särskilt. Bolag har ägare och föreningar medlemmar, och stiftelsen saknar båda, och delägare fungerar också. En förmögenhet som avsätts för något bestämt har ett utpekat syfte, och bestämt fungerar också. En stiftelse har ändamål, ett kontor ersätter inte ett bolags ägare, och ett okänt eller påhittat ändamål går inte att förvalta för.",
+  "source": {
+   "title": "Insamlingsstiftelse",
+   "url": "https://sv.wikipedia.org/wiki/Insamlingsstiftelse",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-30",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Förtidsröstning är till för den som inte kan rösta i sin egen _____ på valdagen, till exempel sjömän eller den som vistas utomlands. Man kan rösta i en särskild lokal eller skicka rösten _____, så kallad brevröstning.",
+  "alternatives": [
+   "valkrets – elektroniskt",
+   "vallokal – per post",
+   "bostad – med posten",
+   "skola – muntligt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är vallokal och per post. På valdagen röstar man i sin vallokal, och valkrets fungerar delvis också. Brevröstning sker genom att rösten skickas, och med posten säger samma sak. Man röstar inte i sin bostad eller skola på valdagen, och elektronisk eller muntlig röstning är inte brevröstning.",
+  "source": {
+   "title": "Poströstning",
+   "url": "https://sv.wikipedia.org/wiki/Postr%C3%B6stning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-31",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Skogsödlan kan bli 18 centimeter lång och lever i skogar och på andra platser med _____ mikroklimat och hög vegetation. Ryggen är brunaktig, och svansen är ofta _____ än kroppen.",
+  "alternatives": [
+   "blött – ljusare",
+   "torrt – dunklare",
+   "fuktigt – mörkare",
+   "salt – tunnare"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är fuktigt och mörkare. Skog med hög vegetation håller kvar fukten, och blött fungerar också. Svansen beskrivs i jämförelse med den bruna ryggen, och dunklare fungerar också. Torrt och salt mikroklimat finns inte i en skog med hög vegetation, och ljusare eller tunnare är inte det som står om svansen.",
+  "source": {
+   "title": "Skogsödla",
+   "url": "https://sv.wikipedia.org/wiki/Skogs%C3%B6dla",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-32",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Makrillen är en _____ matfisk som i Sverige främst fiskas på västkusten, och den är Bohusläns landskapsfisk. Den gör regelbundna _____ för att leka och söka föda.",
+  "alternatives": [
+   "uppskattad – pauser",
+   "giftig – förflyttningar",
+   "fridlyst – dykningar",
+   "omtyckt – vandringar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är omtyckt och vandringar. En fisk som är landskapsfisk och fiskas mycket är populär, och uppskattad fungerar också. Att leka och söka föda på olika platser kräver att fisken rör sig, och förflyttningar fungerar också. En giftig fisk är ingen matfisk, en fridlyst fisk fiskas inte alls, och pauser eller dykningar tar fisken inte till nya platser.",
+  "source": {
+   "title": "Makrill",
+   "url": "https://sv.wikipedia.org/wiki/Makrill",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-33",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En psalmbok är en sångsamling som ett kristet samfund officiellt har _____. När den trycks läggs ofta en samling böner till, och arbetet med en ny psalmbok brukar ledas av en _____ som lägger fram ett förslag.",
+  "alternatives": [
+   "antagit – redaktion",
+   "godkänt – församling",
+   "förbjudit – kommitté",
+   "sålt – orkester"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är antagit och redaktion. En officiell sångbok har samfundet beslutat att använda, och godkänt fungerar också. Den som arbetar fram ett förslag till en ny bok är en grupp redaktörer, och kommitté fungerar också. Ett samfund förbjuder eller säljer inte sin officiella bok, och en församling eller orkester lägger inte fram förslag till psalmboken.",
+  "source": {
+   "title": "Psalmbok",
+   "url": "https://sv.wikipedia.org/wiki/Psalmbok",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-34",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Allmänbildning är bred kunskap om allmänna ämnen, till skillnad från _____. Ibland omfattar begreppet också ett moget _____ och insikt om var ens egen kunskap tar slut.",
+  "alternatives": [
+   "specialkunskap – utseende",
+   "nyfikenhet – förstånd",
+   "skostorlek – röstläge",
+   "fackkunskap – omdöme"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är fackkunskap och omdöme. Bred kunskap ställs mot djup kunskap i ett fack, och specialkunskap fungerar också. Mogen och medvetenhet om gränserna handlar om förmågan att bedöma, och förstånd fungerar också. Nyfikenhet och skostorlek är inte motsatser till bred kunskap, och utseende eller röstläge hör inte till bildning.",
+  "source": {
+   "title": "Allmänbildning",
+   "url": "https://sv.wikipedia.org/wiki/Allm%C3%A4nbildning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-35",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Ett auktionshus bedriver _____, även om allt fler övergår till budgivning på nätet. Där arbetar bland annat värderingsexperter och intendenter, som ofta har särskilda _____ som måleri, smycken eller möbler.",
+  "alternatives": [
+   "slagauktioner – expertområden",
+   "auktioner – semestrar",
+   "butiker – specialiteter",
+   "konserter – rabatter"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är slagauktioner och expertområden. Ett auktionshus säljer genom auktion, och auktioner fungerar också. Måleri, smycken och möbler är områden som en expert kan, och specialiteter fungerar också. Butiker och konserter är inte auktioner, och semestrar eller rabatter är inget som måleri och smycken exemplifierar.",
+  "source": {
+   "title": "Auktionshus",
+   "url": "https://sv.wikipedia.org/wiki/Auktionshus",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-36",
+  "amne": "eko",
+  "genre": "myn",
+  "text": "I en enskild firma är företaget och ägaren samma person, och ägaren är personligt _____ för alla skulder i verksamheten. Företagaren kan registrera ett firmanamn som _____ från det egna namnet.",
+  "alternatives": [
+   "skyldig – vandrar",
+   "oskyldig – differerar",
+   "glad – hämtas",
+   "ansvarig – avviker"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är ansvarig och avviker. När företaget och ägaren är samma person svarar ägaren själv för skulderna, och skyldig fungerar också. Ett firmanamn kan vara ett annat än det egna namnet, och differerar säger samma sak. Oskyldig och glad beskriver inte ansvaret för skulder, och ett namn vandrar eller hämtas inte från ett annat.",
+  "source": {
+   "title": "Enskild näringsidkare",
+   "url": "https://sv.wikipedia.org/wiki/Enskild_n%C3%A4ringsidkare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-37",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "En domare har till uppgift att _____ vid en domstol och lösa rättsliga tvister på ett slutgiltigt sätt. Domaren övervakar också att rättegången följer reglerna, för att säkerställa _____ och undvika godtycke.",
+  "alternatives": [
+   "avgöra mål – partiskhet",
+   "vittna – neutralitet",
+   "döma – opartiskhet",
+   "åtala – popularitet"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är döma och opartiskhet. Ordet domare kommer av att döma, och avgöra mål fungerar också. Att undvika godtycke kräver att domaren inte tar parti, och neutralitet säger samma sak. En domare vittnar eller åtalar inte, och partiskhet eller popularitet strider mot att godtycke ska undvikas.",
+  "source": {
+   "title": "Domare",
+   "url": "https://sv.wikipedia.org/wiki/Domare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-38",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "En pilgrim reser till en _____ plats. Till skillnad från en turist väljer pilgrimen sitt mål i ett sökande efter Gud, och inte av _____ intresse för platsen.",
+  "alternatives": [
+   "helgad – religiöst",
+   "helig – historiskt",
+   "avlägsen – kulturellt",
+   "ny – andligt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är helig och historiskt. Ett sökande efter Gud leder till en plats som är helig, och helgad fungerar också. Turisten intresserar sig för platsens sevärdheter och förflutna, och kulturellt fungerar också. Avlägsen och ny säger inget om varför pilgrimen reser dit, och religiöst eller andligt intresse är just pilgrimens.",
+  "source": {
+   "title": "Pilgrim",
+   "url": "https://sv.wikipedia.org/wiki/Pilgrim",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-39",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Tundran är ett trädlöst landskap med permafrost norr om taigan, och växtligheten där är låg och _____. Alpin tundra finns i bergsområden ovanför _____.",
+  "alternatives": [
+   "ömtålig – trädgränsen",
+   "känslig – molnen",
+   "frodig – skogsgränsen",
+   "rik – havsytan"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ömtålig och trädgränsen. Låg växtlighet i ett kallt klimat tar lätt skada, och känslig fungerar också. Tundran är trädlös, alltså ligger den alpina tundran högre upp än träden växer, och skogsgränsen säger samma sak. Frodig och rik strider mot låg växtlighet, ovanför molnen beskriver inte var tundran börjar, och alla berg ligger ovanför havsytan.",
+  "source": {
+   "title": "Tundra",
+   "url": "https://sv.wikipedia.org/wiki/Tundra",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-40",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Tilltalsnamnet är det av en persons förnamn som används _____ tillsammans med efternamnet. Det är inte ovanligt att det är ett annat än det _____ förnamnet.",
+  "alternatives": [
+   "vid presentationer – första",
+   "vid omnämnanden – mittersta",
+   "i sömnen – främsta",
+   "i hemlighet – längsta"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är vid presentationer och första. Ordet tilltalsnamn visar att det är namnet man kallas vid, alltså när man presenteras, och vid omnämnanden fungerar också. Det ovanliga i att tilltalsnamnet byter plats syftar på ordningen, och främsta fungerar också. I sömnen och i hemlighet är inte när ett tilltalsnamn används, och mittersta eller längsta förnamnet är inte det man väntar sig att tilltalsnamnet är.",
+  "source": {
+   "title": "Tilltalsnamn",
+   "url": "https://sv.wikipedia.org/wiki/Tilltalsnamn",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-41",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Adelsprivilegier var gemensamma _____ och rättigheter för adeln, medan de enskilda släkternas adelskap reglerades av adelsbrev. Den äldsta regleringen är Alsnö stadga från 1280: den som gjorde krigstjänst till häst _____ att betala skatt för sina gårdar, och kunde därför ses som _____.",
+  "alternatives": [
+   "friheter – undgick – skattskyldig",
+   "plikter – befriades från – fri från skatt",
+   "bördor – tvingades – beskattad",
+   "förmåner – slapp – skattebefriad"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är förmåner, slapp och skattebefriad. Privilegier är fördelar som en grupp får, och friheter fungerar också. Den som gjorde krigstjänst behövde inte betala skatt, och undgick eller befriades från fungerar också. Den som slipper skatt är befriad från den, och fri från skatt säger samma sak. Plikter och bördor är inte privilegier, den som tvingades betala hade inget privilegium, och skattskyldig eller beskattad strider mot att adeln slapp skatten.",
+  "source": {
+   "title": "Adelsprivilegier",
+   "url": "https://sv.wikipedia.org/wiki/Adelsprivilegier",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-42",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Ordet nämnd betecknar ofta en _____ inom stat eller kommun, men det kan också syfta på en grupp människor som tillsammans _____ eller utreder frågor på ett bestämt område. Kommunala nämnder ska _____ av kommunfullmäktige.",
+  "alternatives": [
+   "förvaltning – avgör – avskaffas",
+   "festlighet – bestämmer – utses",
+   "butik – sover – säljas",
+   "myndighet – beslutar – tillsättas"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är myndighet, beslutar och tillsättas. En statlig eller kommunal nämnd är ett organ som utövar offentlig makt, och förvaltning fungerar också. En grupp som utreder inom ett område fattar också beslut, och avgör eller bestämmer fungerar också. Fullmäktige utser nämndernas ledamöter, och utses säger samma sak. En nämnd är ingen festlighet eller butik, en grupp sover inte inom ett område, och fullmäktige avskaffar eller säljer inte nämnder när de ska tillsättas.",
+  "source": {
+   "title": "Nämnd",
+   "url": "https://sv.wikipedia.org/wiki/N%C3%A4mnd",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-43",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Ett historiskt drama skildrar en verklig händelse eller person och är _____ att spelas på en teaterscen. Genren har sitt _____ i antikens Grekland, och Aischylos drama Perserna, som skildrar grekernas seger över perserna, brukar ses som det _____ i genren.",
+  "alternatives": [
+   "avsett – upphov – första",
+   "skrivet – avstamp – yngsta",
+   "olämpligt – fäste – tidigaste",
+   "omöjligt – slut – sämsta"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är avsett, upphov och första. Ett drama är skrivet för att framföras, och skrivet fungerar också. Genren började i antikens Grekland, och avstamp eller fäste fungerar också. Ett drama som visar var genren började är det äldsta, och tidigaste säger samma sak. Ett drama är inte olämpligt eller omöjligt att spela för att det är historiskt, en genre har inte sitt slut där den börjar, och det yngsta eller sämsta dramat visar inte var genren började.",
+  "source": {
+   "title": "Krönikespel",
+   "url": "https://sv.wikipedia.org/wiki/Kr%C3%B6nikespel",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-44",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Gymnasieskolornas avslutning skiljer sig mellan skolor men har gemensamma drag. Firandet _____ i april med att studenterna sätter på sig mössan, och på avslutningsdagen sjunger de _____. Skoldagen slutar med ett utspring, då studenterna _____ skolan.",
+  "alternatives": [
+   "startar – visor – stänger",
+   "inleds – sina sånger – lämnar",
+   "avslutas – traditionella sånger – springer ut ur",
+   "ställs in – nationalsånger – städar"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är inleds, sina sånger och lämnar. Att mössan sätts på i april är början på firandet, och startar fungerar också. Studenterna sjunger de sånger som hör till dagen, och visor fungerar också. Ordet utspring visar att studenterna rusar ut ur skolan, och springer ut ur säger samma sak. Firandet avslutas eller ställs inte in i april, traditionella sånger kan vara vad som helst och nationalsånger är inte studenternas egna, och studenterna stänger eller städar inte skolan vid utspringet.",
+  "source": {
+   "title": "Studentskiva",
+   "url": "https://sv.wikipedia.org/wiki/Studentskiva",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-45",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Ett mynt är ett _____ stycke metall som används som betalningsmedel. Ordet mynt går tillbaka på det latinska moneta, som från början var ett _____ till gudinnan Juno, och vid hennes tempel fanns ett myntverk. Det var ett av de _____ ord som svenskan lånade från lågtyskan.",
+  "alternatives": [
+   "stämplat – tillnamn – senaste",
+   "smält – smeknamn – äldsta",
+   "präglat – binamn – tidigaste",
+   "sprucket – offer – dyraste"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är präglat, binamn och tidigaste. Ett mynt får sitt mönster genom att metallen präglas, och stämplat fungerar också. Moneta var ett namn som Juno också kallades, och tillnamn eller smeknamn fungerar också. Ett ord som kom in mycket tidigt hör till de äldsta lånorden, och äldsta säger samma sak. Smält och sprucket metall är inga mynt, ett offer är inget namn, och de senaste eller dyraste lånorden kom inte först.",
+  "source": {
+   "title": "Mynt",
+   "url": "https://sv.wikipedia.org/wiki/Mynt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-46",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Den som gör ett brottsförsök har _____ att utföra brottet men inte fullbordat det. Enligt brottsbalken kan den som har _____ ett brott dömas för försök, om det fanns _____ att handlingen skulle leda till att brottet fullbordades.",
+  "alternatives": [
+   "varit på väg – inlett – ursäkt",
+   "kommit nära – påbörjat – fara",
+   "avstått – börjat – risk",
+   "struntat i – anmält – tur"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är kommit nära, påbörjat och fara. Ett försök som inte fullbordas har nästan blivit av, och varit på väg fungerar också. Den som har börjat utföra brottet kan dömas för försöket, och inlett eller börjat fungerar också. Det som avgör är att handlingen kunde ha lett till brottet, och risk säger samma sak. Den som avstått eller struntat i det har inte försökt, den som anmält ett brott har inte begått det, och en ursäkt eller tur gör inte ett försök straffbart.",
+  "source": {
+   "title": "Försök till brott",
+   "url": "https://sv.wikipedia.org/wiki/F%C3%B6rs%C3%B6k_till_brott",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-47",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Ödet är summan av de händelser som en människa möter i livet, till lycka eller _____. En människas öde bestäms av många inre och yttre _____, bland annat hennes medfödda natur och de omständigheter hon lever under. Ödet kan också ses som ett _____ förlopp.",
+  "alternatives": [
+   "missöde – faktorer – slumpmässigt",
+   "arbete – krafter – fastställt",
+   "helg – möbler – okänt",
+   "olycka – orsaker – förutbestämt"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är olycka, orsaker och förutbestämt. Till lycka eller ställer det goda mot det onda, och missöde fungerar också. Natur och omständigheter är sådant som påverkar livet, och faktorer eller krafter fungerar också. Ödet som något bestämt i förväg är den andra betydelsen, och fastställt säger samma sak. Arbete och helg står inte i motsats till lycka, möbler är inte inre orsaker, och slumpmässigt eller okänt är inte vad ett öde är.",
+  "source": {
+   "title": "Ödet",
+   "url": "https://sv.wikipedia.org/wiki/%C3%96det",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-48",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Torka är en period med _____ vattentillgång jämfört med det normala. Den kan uppstå i alla klimatzoner och pågå i månader eller år. Meteorologisk torka är perioder med _____ nederbörd än vanligt, men också temperatur, vind och _____ påverkar hur torkan uppstår.",
+  "alternatives": [
+   "sänkt – lägre – solsken",
+   "ökad – sparsammare – markanvändning",
+   "minskad – knappare – luftfuktighet",
+   "normal – rikligare – fiskefångst"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är minskad, knappare och luftfuktighet. Torka är att det finns mindre vatten än vanligt, och sänkt fungerar också. Meteorologisk torka är när det regnar mindre, och lägre eller sparsammare fungerar också. Luftens fukt påverkar hur mycket som avdunstar, och markanvändning nämns också som en faktor. Ökad och normal vattentillgång är ingen torka, rikligare nederbörd ger ingen torka, och solsken eller fiskefångst är inte det som nämns bredvid temperatur och vind.",
+  "source": {
+   "title": "Torka",
+   "url": "https://sv.wikipedia.org/wiki/Torka",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "def",
+    "upp"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-49",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Operant betingning är ett begrepp från behaviorismen och innebär att ett beteende kan _____ eller släckas ut beroende på vilka _____ det får. När man lär en hund att sitta väntar man tills den sätter sig och _____ den då med en godisbit.",
+  "alternatives": [
+   "stärkas – orsaker – straffar",
+   "förstärkas – utfall – belönar",
+   "glömmas – efterverkningar – premierar",
+   "ärvas – namn – tvättar"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är förstärkas, utfall och belönar. Eller släckas ut ställer det som blir starkare mot det som försvinner, och stärkas fungerar också. Det som kommer efter ett beteende avgör om det upprepas, och efterverkningar fungerar också. En godisbit är en belöning, och premierar fungerar också. Ett beteende glöms eller ärvs inte beroende på följderna, orsaker eller namn är inte det som kommer efter beteendet, och man straffar eller tvättar inte en hund med en godisbit.",
+  "source": {
+   "title": "Operant betingning",
+   "url": "https://sv.wikipedia.org/wiki/Operant_betingning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p31-50",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Sje-ljudet är ett tonlöst _____ som används i svenska ord som sju, passion och dusch. Det finns i en bakre och en främre _____, men båda varierar mycket, bland annat beroende på _____.",
+  "alternatives": [
+   "språkljud – form – stavning",
+   "fonem – variant – dialekt",
+   "ord – version – talare",
+   "tecken – bokstav – väder"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är fonem, variant och dialekt. Ett ljud som skiljer betydelser åt i språket är ett fonem, och språkljud fungerar också. Bakre och främre beskriver två sorter av samma ljud, och form eller version fungerar också. Variationen hänger ihop med var talaren kommer ifrån, och talare fungerar också. Ord och tecken är inga ljud, en bokstav kan inte vara bakre eller främre, och stavning eller väder avgör inte hur ljudet uttalas.",
+  "source": {
+   "title": "Sje-ljudet",
+   "url": "https://sv.wikipedia.org/wiki/Sje-ljudet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ }
+]
