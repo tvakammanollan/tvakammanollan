@@ -1,0 +1,7 @@
+# Batch 36: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/hals/ont-i-halsen/ | 1177 Ont i halsen | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/hals/svart-att-svalja--dysfagi/ | 1177 Svårt att svälja | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/horsel/nedsatt-horsel/ | 1177 Nedsatt hörsel | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/oron-och-balans/oroninflammation/ | 1177 Öroninflammation | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/oron-och-balans/vaxpropp-i-orat/ | 1177 Vaxpropp | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/oron-och-balans/kristallsjuka--godartad-lagesyrsel/ | 1177 Kristallsjuka | 1177
