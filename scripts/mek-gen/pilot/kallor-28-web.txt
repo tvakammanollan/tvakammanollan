@@ -1,0 +1,7 @@
+# Batch 28: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/njursten/ | 1177 Njursten | 1177
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/infektioner-i-njurar-och-urinvagar/urinvagsinfektion-hos-kvinnor/ | 1177 Urinvägsinfektion hos kvinnor | 1177
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/overaktiv-blasa/ | 1177 Överaktiv blåsa | 1177
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/sangvatning-hos-barn/ | 1177 Sängvätning hos barn | 1177
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/kronisk-njursjukdom/ | 1177 Kronisk njursjukdom | 1177
+https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/blassten/ | 1177 Blåssten | 1177
