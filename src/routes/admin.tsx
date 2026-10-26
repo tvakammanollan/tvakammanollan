@@ -11,8 +11,7 @@ import {
   Phone,
   Check,
   X,
-  ArrowLeft,
-} from "lucide-react";
+  } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -103,7 +102,6 @@ function AdminPage() {
         </h1>
         <Button asChild variant="ghost" size="sm">
           <Link to="/">
-            <ArrowLeft className="h-4 w-4" aria-hidden />
             Hem
           </Link>
         </Button>
@@ -249,7 +247,7 @@ function ManageTab() {
 
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
+          <thead className="bg-muted/40 text-left text-xs text-muted-foreground">
             <tr>
               <th className="px-3 py-2">Kategori</th>
               <th className="px-3 py-2">Svårighet</th>
@@ -386,7 +384,7 @@ function StatsTab() {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-card">
       <table className="w-full text-sm">
-        <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
+        <thead className="bg-muted/40 text-left text-xs text-muted-foreground">
           <tr>
             <th className="px-3 py-2">Kategori</th>
             <th className="px-3 py-2 text-right">Totalt</th>
@@ -477,7 +475,7 @@ function ReportsTab() {
     <div>
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
         <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-left text-xs tracking-wide text-muted-foreground">
+          <thead className="bg-muted/40 text-left text-xs text-muted-foreground">
             <tr>
               <th className="px-3 py-2">Fråga</th>
               <th className="px-3 py-2">Kategori</th>
@@ -815,7 +813,7 @@ function OrdAuditTab() {
       <div className="rounded-2xl border border-border bg-card p-6">
         <h2 className="text-xl font-bold mb-2" style={{ fontFamily: "var(--font-display)" }}>
           <Search className="mr-2 inline h-5 w-5 align-[-3px]" aria-hidden />
-          ORD-audit · applicera manuella fixar
+          ORD-audit, applicera manuella fixar
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
           Kör de 134 manuellt granskade fixarna från{" "}
@@ -871,7 +869,7 @@ function OrdAuditTab() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card">
-            <div className="border-b border-border px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            <div className="border-b border-border px-4 py-2 text-xs font-semibold text-muted-foreground">
               Detaljerad lista
             </div>
             <div className="max-h-[600px] overflow-y-auto">
@@ -889,7 +887,7 @@ function OrdAuditTab() {
                     <tr key={i} className="border-t border-border">
                       <td className="px-3 py-1.5 font-medium">{r.word}</td>
                       <td className="px-3 py-1.5 tabular-nums">
-                        {r.from && r.to ? `${r.from} → ${r.to}` : "–"}
+                        {r.from && r.to ? `${r.from} till ${r.to}` : "–"}
                       </td>
                       <td className={`px-3 py-1.5 font-semibold ${statusColor(r.status)}`}>
                         {r.status}
@@ -926,7 +924,7 @@ function SummaryStat({
           : "text-foreground";
   return (
     <div className="rounded-xl border border-border bg-card p-3 text-center">
-      <div className="text-[11px] uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="text-xs text-muted-foreground">{label}</div>
       <div
         className={`mt-1 text-2xl font-bold tabular-nums ${color}`}
         style={{ fontFamily: "var(--font-display)" }}

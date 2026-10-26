@@ -19,8 +19,6 @@ import {
   Cell,
 } from "recharts";
 import {
-  ArrowLeft,
-  ArrowRight,
   Trophy,
   Target,
   BookA,
@@ -320,10 +318,7 @@ function StatsPage() {
   return (
     <>
       <PageHero
-        eyebrowTone="leaf"
-        eyebrow="Din resa"
         title="Din utveckling"
-        subtitle="Progression och prestation över tid."
         variant="compact"
       />
       <main className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
@@ -356,14 +351,14 @@ function StatsPage() {
           />
           <StatCard
             icon={<Sigma className="h-4 w-4" />}
-            label="Snitt matte"
+            label="Snitt kvantitativ"
             value={mathAvg !== null ? `${mathAvg.toFixed(1)}/8` : "–"}
           />
           <StatCard
             icon={<Star className="h-4 w-4" />}
             label="Bästa ELO"
             value={Math.max(profile.elo_verbal_peak, profile.elo_math_peak)}
-            sub={`V ${profile.elo_verbal_peak} · M ${profile.elo_math_peak}`}
+            sub={`Verbal ${profile.elo_verbal_peak}, kvantitativ ${profile.elo_math_peak}`}
           />
           {/* Ett kort, inte två. "Nuvarande" och "Längsta" är samma begrepp,
               och rekordet betyder bara något i relation till var man står nu. */}
@@ -401,7 +396,7 @@ function StatsPage() {
               {(
                 [
                   ["verbal", "Verbal", VERBAL_COLOR],
-                  ["math", "Matte", MATH_COLOR],
+                  ["math", "Kvantitativ", MATH_COLOR],
                 ] as const
               ).map(([track, label, color]) => {
                 const span = eloSeries.span[track];
@@ -533,7 +528,7 @@ function StatsPage() {
                   <Line
                     type="monotone"
                     dataKey="math"
-                    name="Matte"
+                    name="Kvantitativ"
                     stroke={MATH_COLOR}
                     strokeWidth={2.5}
                     dot={{ r: 3 }}
@@ -644,7 +639,7 @@ function StatsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-border text-left text-xs tracking-wide text-muted-foreground">
+                    <tr className="border-b border-border text-left text-xs text-muted-foreground">
                       <th className="px-2 py-2">Datum</th>
                       <th className="px-2 py-2">Typ</th>
                       <th className="px-2 py-2">Motståndare</th>
@@ -726,7 +721,7 @@ function StatsPage() {
                     disabled={page === 0}
                     onClick={() => setPage((p) => Math.max(0, p - 1))}
                   >
-                    <ArrowLeft className="mr-1 h-3.5 w-3.5" /> Föregående
+Föregående
                   </Button>
                   <span className="text-muted-foreground">
                     Sida {page + 1} av {totalPages}
@@ -737,7 +732,7 @@ function StatsPage() {
                     disabled={page >= totalPages - 1}
                     onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                   >
-                    Nästa <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                    Nästa
                   </Button>
                 </div>
               )}
@@ -765,7 +760,7 @@ function StatCard({
 }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground">
+      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
         {icon}
         {label}
       </div>

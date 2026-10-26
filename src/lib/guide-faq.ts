@@ -4,19 +4,19 @@
  * Antal uppgifter per provpass följer DELPROV i preliminart-facit.ts
  * (provformatet sedan 2011): ORD, LÄS, MEK, ELF och KVA 10, XYZ och DTK 12,
  * NOG 6. Ett provpass är 40 uppgifter på 55 minuter, och varje prov har två
- * räknade provpass av varje slag. Fem svarsalternativ finns bara i ORD och
+ * räknade provpass av varje slag. 5 svarsalternativ finns bara i ORD och
  * NOG. Ändras något av det: ändra här, inte i guiden.
  */
 import type { GuideFaqItem } from "@/lib/guider-meta";
 
 const TID =
-  "Delprovet har ingen egen tid. Ett provpass är 40 uppgifter på 55 minuter, och du fördelar tiden själv mellan passets fyra delprov.";
+  "Delprovet har ingen egen tid. Ett provpass är 40 uppgifter på 55 minuter, och du fördelar tiden själv mellan passets 4 delprov.";
 
 export const GUIDE_FAQ: Record<string, GuideFaqItem[]> = {
   ord: [
     {
       q: "Hur många ORD-uppgifter är det på högskoleprovet?",
-      a: "10 per verbalt provpass. Två verbala provpass räknas, så det blir 20 ORD-uppgifter per prov.",
+      a: "10 per verbalt provpass. 2 verbala provpass räknas, så det blir 20 ORD-uppgifter per prov.",
     },
     {
       q: "Hur lång tid har man på ORD?",
@@ -24,7 +24,7 @@ export const GUIDE_FAQ: Record<string, GuideFaqItem[]> = {
     },
     {
       q: "Hur många svarsalternativ har ORD?",
-      a: "Fem, A till E. ORD och NOG är de enda delproven med fem alternativ.",
+      a: "Fem, A till E. ORD och NOG är de enda delproven med 5 alternativ.",
     },
     {
       q: "Vilka ord har kommit på tidigare prov?",
@@ -43,7 +43,7 @@ export const GUIDE_FAQ: Record<string, GuideFaqItem[]> = {
     },
     {
       q: "Vad är det viktigaste att leta efter i en MEK-text?",
-      a: "Sambandsorden: men, därför, trots, alltså. De avgör om luckan ska fortsätta resonemanget eller vända det, och de stryker ofta två alternativ direkt.",
+      a: "Sambandsorden: men, därför, trots, alltså. De avgör om luckan ska fortsätta resonemanget eller vända det, och de stryker ofta 2 alternativ direkt.",
     },
   ],
   las: [

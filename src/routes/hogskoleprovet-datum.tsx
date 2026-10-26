@@ -10,7 +10,7 @@ import {
   registrationPeriodText,
 } from "@/lib/hp-event";
 import { FACIT } from "@/lib/preliminart-facit";
-import { ArrowRight, CalendarDays, Clock, ScrollText } from "lucide-react";
+import { ScrollText } from "lucide-react";
 
 /* =====================================================================
    SEO: dedikerad sida för "högskoleprovet datum / när är nästa HP" — en av
@@ -86,7 +86,7 @@ function DatumPage() {
           Högskoleprovet datum 2026 &amp; 2027
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
-          Högskoleprovet (HP) hålls två gånger om året:{" "}
+          Högskoleprovet (HP) hålls 2 gånger om året:{" "}
           <strong className="text-white/80">vårprovet på en lördag i april</strong> och{" "}
           <strong className="text-white/80">höstprovet på en söndag i oktober</strong>. Här är alla
           kommande provdatum, en nedräkning till nästa prov, anmälningsperioderna och hur provdagen
@@ -102,7 +102,6 @@ function DatumPage() {
           <strong>Skrev du {FACIT.label.toLowerCase()}?</strong>{" "}
           <span className="text-white/60">Preliminärt facit och trolig normering.</span>
         </span>
-        <ArrowRight className="h-4 w-4 shrink-0 text-primary" aria-hidden />
       </Link>
 
       {/* Nedräkning till nästa prov */}
@@ -116,7 +115,6 @@ function DatumPage() {
           className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <CalendarDays className="h-5 w-5 text-primary" />
           Kommande provdatum
         </h2>
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -128,10 +126,10 @@ function DatumPage() {
                 </div>
                 <div className="mt-0.5 text-xs text-white/50">
                   {d.session === "vår" ? "Vårprovet" : "Höstprovet"}
-                  {hasRegistrationWindow(d) && <> · Anmälan {registrationPeriodText(d)}</>}
+                  {hasRegistrationWindow(d) && <>, Anmälan {registrationPeriodText(d)}</>}
                 </div>
               </div>
-              <span className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+              <span className="shrink-0 text-xs font-semibold text-primary">
                 {d.label}
               </span>
             </li>
@@ -149,12 +147,11 @@ function DatumPage() {
           className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Clock className="h-5 w-5 text-primary" />
           Så ser provdagen ut
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-          Provet består av fem provpass på 55 minuter vardera. Fyra räknas, ett är ett
-          utprövningspass som inte ger poäng. Med raster och lunch är du på plats i drygt åtta
+          Provet består av 5 provpass på 55 minuter vardera. Fyra räknas, ett är ett
+          utprövningspass som inte ger poäng. Med raster och lunch är du på plats i drygt 8
           timmar.
         </p>
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -228,7 +225,6 @@ function DatumPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/ord"

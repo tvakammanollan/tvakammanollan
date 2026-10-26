@@ -104,7 +104,7 @@ export function voteWeight(t: VoteTally | undefined): number {
  * alltså oftare tidigt, men aldrig alltid, och vikt 0 tas bort helt.
  *
  * Det är blandningen och inte en sortering på poäng med flit: sorterades
- * frågorna på röster skulle samma tjugo frågor komma först i varje pass.
+ * frågorna på röster skulle samma 20 frågor komma först i varje pass.
  */
 export function weightedShuffle<T>(
   items: T[],

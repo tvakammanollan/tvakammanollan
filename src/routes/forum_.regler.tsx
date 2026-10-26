@@ -47,9 +47,7 @@ function ForumRulesPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Forum"
         title="Regler"
-        subtitle="Korta, och de handlar mest om att göra forumet användbart för nästa person som googlar samma fråga."
         align="center"
         variant="compact"
       />
@@ -102,7 +100,7 @@ function ForumRulesPage() {
               "Skriv en rubrik som säger vad frågan gäller. Den är det andra googlar.",
               "Visa hur du tänkt, inte bara vad svaret blev. Det är därför folk kommer tillbaka.",
               "Svara på frågan som ställdes. Går diskussionen åt ett annat håll: starta en ny tråd.",
-              "Matte skrivs mellan dollartecken: $x^2$, $\\frac{3}{4}$.",
+              "Formler skrivs mellan dollartecken: $x^2$, $\\frac{3}{4}$.",
             ]}
           />
         </Section>
@@ -128,7 +126,7 @@ function ForumRulesPage() {
         <Section title="Vem får skriva">
           <p>
             Läsa kan alla, även utan konto. För att skriva krävs ett konto med bekräftad mejladress
-            som är äldre än tio minuter. Gästkonton, de som skapas automatiskt när du spelar utan
+            som är äldre än 10 minuter. Gästkonton, de som skapas automatiskt när du spelar utan
             att registrera dig, kan inte skriva.
           </p>
           <p>
@@ -164,19 +162,13 @@ function ForumRulesPage() {
           </p>
         </Section>
 
-        <div className="mt-12 flex flex-wrap gap-3 border-t border-white/8 pt-8 text-sm">
+        <div className="mt-12 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/8 pt-8 text-sm">
           <Link to="/forum" className="text-[var(--teal)] hover:underline">
-            ← Till forumet
+            Till forumet
           </Link>
-          <span className="text-white/25" aria-hidden>
-            ·
-          </span>
           <Link to="/integritetspolicy" className="text-[var(--teal)] hover:underline">
             Integritetspolicy
           </Link>
-          <span className="text-white/25" aria-hidden>
-            ·
-          </span>
           <Link to="/villkor" className="text-[var(--teal)] hover:underline">
             Användarvillkor
           </Link>

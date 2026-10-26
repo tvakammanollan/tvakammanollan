@@ -9,7 +9,7 @@ import { formatInt } from "@/lib/sv-format";
  *
  * Frågorna kommer ur route-loadern (`fetchLandingDemoQuestions`) och ligger
  * alltså i den serverrenderade HTML:en. En crawler ser en verklig
- * ORD-uppgift med sina fem alternativ, och ingen provpass-chunk dras in i
+ * ORD-uppgift med sina 5 alternativ, och ingen provpass-chunk dras in i
  * landningsbundlen.
  *
  * ELO-siffran här är en demonstration av mekaniken, inte ett påstående om
@@ -47,10 +47,10 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
   return (
     <div className="overflow-hidden rounded-xl border border-white/10 bg-card">
       <div className="flex items-center gap-3 border-b border-white/10 bg-secondary px-4 py-3">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-bark">
+        <span className="font-mono text-xs text-bark">
           Ordförståelse
         </span>
-        <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">
+        <span className="ml-auto font-mono text-xs text-white/55">
           Prova direkt
         </span>
       </div>
@@ -118,7 +118,7 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
           </button>
         ) : null}
         <span className="ml-auto flex items-baseline gap-2">
-          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">
+          <span className="font-mono text-xs text-white/55">
             ELO
           </span>
           <span className="font-mono text-[22px] font-medium tabular-nums tracking-tight">
@@ -178,7 +178,7 @@ export function LandingHero({
             <p>: "Plugga på de prov som faktiskt har getts" säger ingenting
             om vad sajten är för en sökmotor, och startsidans h1 är den
             starkaste rubriken sajten har. */}
-        <h1 className="mb-6 text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--cream)]">
+        <h1 className="sr-only">
           Öva på högskoleprovet gratis
         </h1>
         <m.p
@@ -198,7 +198,7 @@ export function LandingHero({
           className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]"
         >
           Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
-          ord med förklaring. Och en duell på fem minuter när du vill mäta dig mot någon annan.
+          ord med förklaring. Och en duell på 5 minuter när du vill mäta dig mot någon annan.
         </m.p>
 
         <m.div
@@ -233,7 +233,7 @@ export function LandingHero({
             <b className="font-semibold tabular-nums text-[var(--cream)]">
               {formatInt(stats.totalPlayers)}
             </b>{" "}
-            spelare ·{" "}
+            spelare,{" "}
             <b className="font-semibold tabular-nums text-[var(--cream)]">
               {formatInt(stats.totalMatches)}
             </b>{" "}
@@ -254,7 +254,7 @@ export function LandingHero({
             // Databasen svarade inte. Hellre ingen ruta än en tom ruta.
             <div className="rounded-3xl border border-white/10 bg-card p-6">
               <p className="text-[15px] text-[var(--cream-3)]">
-                Åtta delprov, 10&nbsp;000+ ord och 30 hela prov med facit. Börja var du vill.
+                8 delprov, 10&nbsp;000+ ord och 30 hela prov med facit. Börja var du vill.
               </p>
               <Link
                 to="/ord"

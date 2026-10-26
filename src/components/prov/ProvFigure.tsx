@@ -55,7 +55,7 @@ export function ProvFigure({
                 collapsible ? "transition-colors hover:text-[var(--cream)]" : "cursor-default"
               }`}
             >
-              <span className="truncate text-[11px] font-semibold uppercase tracking-wider text-[var(--amber)]">
+              <span className="truncate text-xs font-semibold text-[var(--amber)]">
                 {label ?? "Diagram ur provhäftet"}
               </span>
               {collapsible && (

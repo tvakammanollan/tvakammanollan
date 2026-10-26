@@ -131,13 +131,13 @@ export function ForumPostCard({
             <span className="text-sm font-semibold text-[var(--cream)]">{author}</span>
             {post.author && post.author.elo > 0 && <EloBadge elo={post.author.elo} size="sm" />}
             {post.author?.isAdmin && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--amber)]/15 px-2 py-0.5 text-[11px] font-medium text-[var(--amber)]">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--amber)]">
                 <Shield className="h-3 w-3" aria-hidden />
                 Moderator
               </span>
             )}
             {isOp && (
-              <span className="rounded-full bg-white/[0.06] px-2 py-0.5 text-[11px] text-[var(--text-tertiary)]">
+              <span className="text-[11px] text-[var(--text-tertiary)]">
                 Trådstartare
               </span>
             )}
@@ -146,7 +146,7 @@ export function ForumPostCard({
             <time dateTime={post.createdAt} title={formatDate(post.createdAt)}>
               {formatRelativeTime(post.createdAt)}
             </time>
-            {post.editedAt && <span> · redigerad</span>}
+            {post.editedAt && <span>, redigerad</span>}
           </p>
         </div>
         <span className="text-xs tabular-nums text-[var(--text-tertiary)]">#{number}</span>

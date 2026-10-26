@@ -6,7 +6,7 @@ import { Link } from "@tanstack/react-router";
  * RelatedGuides (guider-meta.tsx) har redan en identisk banderoll längst ner
  * på varje guide — den här är en andra kopia högst upp, så att CTA:n
  * uppfyller "både högt och lågt på sidan" (se SEO-CHECKLIST.md) i stället för
- * att bara finnas i botten två gånger (train-länken och ova-banderollen).
+ * att bara finnas i botten 2 gånger (train-länken och ova-banderollen).
  * Länkar till /ova/$delprov och inte rakt till /train eller /ord, eftersom
  * den sidan visar riktiga exempeluppgifter innan besökaren committar till en
  * hel övningssession.
@@ -25,7 +25,7 @@ export function GuideTopCta({ delprov, code }: { delprov: string; code: string }
         className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"
         style={{ color: "var(--amber)" }}
       >
-        Kom igång →
+        Kom igång
       </span>
     </Link>
   );

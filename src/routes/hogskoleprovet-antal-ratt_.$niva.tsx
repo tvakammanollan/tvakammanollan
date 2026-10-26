@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Calculator, Table2 } from "lucide-react";
+import { Calculator, Table2 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ANTAL_RATT_NIVÅER, nivåFrånSlug, nivåSlug, nivåText } from "@/lib/normering";
@@ -77,7 +77,6 @@ function H2({ icon: Icon, children }: { icon: typeof Table2; children: React.Rea
       className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
       style={{ fontFamily: "var(--font-display)" }}
     >
-      <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
       {children}
     </h2>
   );
@@ -107,8 +106,8 @@ function NivåSida() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-          {d.rader.length} provtillfällen · UHR:s officiella tabeller
+        <p className="text-sm text-white/65">
+          {d.rader.length} provtillfällen, UHR:s officiella tabeller
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -121,14 +120,14 @@ function NivåSida() {
 
       <section className="mt-8 grid grid-cols-2 gap-3">
         {[
-          { rubrik: "Verbal del", s: d.verbal, senast: d.senaste?.verbal },
-          { rubrik: "Kvantitativ del", s: d.kvant, senast: d.senaste?.kvant },
+          { rubrik: "Verbal", s: d.verbal, senast: d.senaste?.verbal },
+          { rubrik: "Kvantitativ", s: d.kvant, senast: d.senaste?.kvant },
         ].map(({ rubrik, s, senast }) => (
           <div
             key={rubrik}
             className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center backdrop-blur-sm"
           >
-            <div className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/50">
+            <div className="text-[12px] font-semibold text-white/50">
               {rubrik}
             </div>
             <div
@@ -214,7 +213,6 @@ function NivåSida() {
             params={{ niva: nivåSlug(lägre) }}
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-semibold text-[var(--cream)] hover:border-primary/50"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
             Antal rätt för {nivåText(lägre)}
           </Link>
         ) : (
@@ -227,7 +225,6 @@ function NivåSida() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-semibold text-[var(--cream)] hover:border-primary/50"
           >
             Antal rätt för {nivåText(högre)}
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         )}
       </nav>
@@ -244,7 +241,6 @@ function NivåSida() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Skriv ett gammalt prov
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/hogskoleprovet-poangraknare"

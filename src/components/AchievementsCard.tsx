@@ -51,7 +51,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
     if (unlocked.length === 0) {
       return (
         <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-          <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/45">
+          <p className="text-xs font-medium text-white/45">
             Utmärkelser
           </p>
           <p className="mt-2 text-sm text-white/55">
@@ -63,7 +63,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
     return (
       <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/45">
+          <p className="text-xs font-medium text-white/45">
             Utmärkelser
           </p>
           <span className="text-xs tabular-nums text-white/45">

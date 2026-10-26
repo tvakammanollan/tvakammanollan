@@ -1,7 +1,7 @@
 /**
  * Officiella Högskoleprovs-datum.
  *
- * Provet hålls två gånger per år: **vårprovet på en lördag i april** och
+ * Provet hålls 2 gånger per år: **vårprovet på en lördag i april** och
  * **höstprovet på en söndag i oktober** (söndag sedan 2022 — listan hade
  * lördagsdatum för båda fram till 2026-08-20, alltså fel dag *och* fel
  * datum på samtliga tre poster).
@@ -157,7 +157,7 @@ export function hpDatesAnswer(): string {
       ? `${parts.slice(0, -1).join(", ")} och ${parts[parts.length - 1]}`
       : (parts[0] ?? "");
   return (
-    "Högskoleprovet ges två gånger per år: vårprovet på en lördag i april och " +
+    "Högskoleprovet ges 2 gånger per år: vårprovet på en lördag i april och " +
     `höstprovet på en söndag i oktober. Kommande datum: ${list}. Anmälan görs på ` +
     `hogskoleprov.nu under en kort period ett par månader före provdagen och ` +
     `provavgiften är ${HP_FEE_SEK} kronor.`

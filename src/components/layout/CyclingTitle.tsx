@@ -26,7 +26,7 @@ const HANDOFF = 0.26;
  *    ~0,06em marginal. Den är asymmetrisk för att underskottet är det —
  *    slå inte ihop den till ett enda `py-`.
  *
- *    **Måtten är snittberoende och har räknats om två gånger.** De sattes
+ *    **Måtten är snittberoende och har räknats om 2 gånger.** De sattes
  *    för Young Serif, kontrollerades mot Familjen Grotesk, och gäller
  *    sedan 2026-10-26 Manrope. Mätt på skarpa sajten vid 84 px: baslinjen
  *    låg 93,5 px ner i en klippruta på 114, alltså 20,5 px nedåt, medan
@@ -58,7 +58,7 @@ const HANDOFF = 0.26;
  *      - *En `inline-grid` där alla ord låg i samma cell* placerade rätt, men
  *        gjorde varje ord till ett grid-item — alltså en blocknivåbox. Kopierar
  *        man rubriken lägger webbläsaren en RADBRYTNING vid varje sådan gräns
- *        OCH tar med alla ord: "Bemästra Ord." blev fem rader, varav fyra ord
+ *        OCH tar med alla ord: "Bemästra Ord." blev fem rader, varav 4 ord
  *        aldrig hade synts på skärmen. Mätt i Chrome 2026-08-21: `inline-grid`
  *        ger `"Bemästra \nOrd.\nLäsning."`, `inline-block` ger `"Bemästra
  *        Ord."`. `user-select: none` tar bort de osynliga orden men INTE

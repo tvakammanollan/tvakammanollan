@@ -33,7 +33,7 @@ export const Route = createFileRoute("/forum_/sok")({
   },
   head: ({ loaderData }) => {
     const q = loaderData?.query;
-    const title = q ? `Sök: ${q} · Tvåkommanollans forum` : "Sök i forumet · Tvåkommanollan";
+    const title = q ? `Sök: ${q}, Tvåkommanollans forum` : "Sök i forumet, Tvåkommanollan";
     return {
       meta: pageMeta({
         path: "/forum/sok",
@@ -134,7 +134,7 @@ function ForumSearchPage() {
           <p className="mt-6 text-xs tabular-nums text-[var(--text-tertiary)]">
             {formatInt(data.total)} {data.total === 1 ? "träff" : "träffar"} på &quot;{data.query}
             &quot;
-            {pages > 1 ? ` · sida ${data.page} av ${pages}` : ""}
+            {pages > 1 ? `, sida ${data.page} av ${pages}` : ""}
           </p>
 
           <ul className="mt-4 grid gap-3">
@@ -153,16 +153,13 @@ function ForumSearchPage() {
                       {hit.excerpt}
                     </p>
                   )}
-                  <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
+                  <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-tertiary)]">
                     <span>{hit.categoryName}</span>
-                    <span aria-hidden>·</span>
                     <span className="inline-flex items-center gap-1">
                       <MessageSquare className="h-3 w-3" aria-hidden />
                       {formatInt(hit.replyCount)} svar
                     </span>
-                    <span aria-hidden>·</span>
                     <span>{displayAuthor(hit.author?.username)}</span>
-                    <span aria-hidden>·</span>
                     <time dateTime={hit.lastPostAt}>{formatRelativeTime(hit.lastPostAt)}</time>
                   </p>
                 </Link>

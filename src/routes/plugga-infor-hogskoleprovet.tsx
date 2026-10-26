@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { hpDateShort } from "@/lib/hp-dates";
@@ -194,7 +194,7 @@ function PluggaPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+        <p className="text-sm text-white/65">
           Uppdaterat {hpDateShort(UPPDATERAD)}
         </p>
         <h1
@@ -247,7 +247,7 @@ function PluggaPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-[18px] font-bold text-[var(--cream)]">{m.namn}</h3>
                 {m.egen && (
-                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+                  <span className="text-[11px] font-semibold text-primary">
                     Det här är vi
                   </span>
                 )}
@@ -348,7 +348,6 @@ function PluggaPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Skriv ett gammalt prov
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/hogskoleprovet-poangraknare"

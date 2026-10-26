@@ -41,7 +41,7 @@ export const SESSIONS_BEFORE_DISCOUNT = 3;
 /**
  * Hur länge en session lever utan aktivitet.
  *
- * Trettio minuter är samma fönster som PostHog och Google Analytics använder,
+ * 30 minuter är samma fönster som PostHog och Google Analytics använder,
  * vilket är hela poängen: siffran i den här räkningen ska betyda samma sak som
  * "session" gör i mätningen, annars går de två inte att jämföra när någon
  * frågar varför rabatten visats färre gånger än väntat.
@@ -104,7 +104,7 @@ export function serializeDiscountState(state: DiscountState): string {
  * Bokför aktivitet och räknar upp sessionen när fönstret runnit ut.
  *
  * Anropas vid VARJE sidvisning, inte bara vid sidladdning. Utan det skulle en
- * besökare som läser en guide i fyrtio minuter och sedan klickar vidare bokföras
+ * besökare som läser en guide i 40 minuter och sedan klickar vidare bokföras
  * som två sessioner, och tre sessioner vore då något man kan nå på ett enda
  * besök — vilket är precis inte vad rabatten ska belöna.
  *

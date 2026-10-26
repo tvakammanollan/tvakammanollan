@@ -7,7 +7,7 @@
  * läser tiden ur Calendly, skriver den på raden och öppnar kassan → betalningen
  * sker i en Stripe-iframe i samma modal → `/coachning/tack` kvitterar.
  *
- * ORDNINGEN ÄR VALD MEDVETET, OCH DEN HAR ÄNDRATS TVÅ GÅNGER. Tid-före-kassa
+ * ORDNINGEN ÄR VALD MEDVETET, OCH DEN HAR ÄNDRATS 2 GÅNGER. Tid-före-kassa
  * var det ursprungliga läget (den som redan har en tid i kalendern slutför
  * köpet oftare), men kostade att en tid kunde bli stående obetald: Calendly
  * binder tiden i samma sekund den bokas, medan en kassa som ligger på en annan

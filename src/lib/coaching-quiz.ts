@@ -1,7 +1,7 @@
 /**
  * Kvalificeringen bakom "Är studieupplägget något för dig?".
  *
- * Två frågor, och alla svarsvägar leder vidare. Det är avsiktligt: syftet är
+ * 2 frågor, och alla svarsvägar leder vidare. Det är avsiktligt: syftet är
  * inte att sålla bort någon utan att få igång ett samtal och att den som
  * lämnar sitt nummer redan har sagt högt vad problemet är. Att det alltid går
  * vidare är också varför copyn aldrig lovar mer än den kan hålla — texten

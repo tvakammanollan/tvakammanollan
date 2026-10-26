@@ -39,7 +39,6 @@ import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
 import { sounds } from "@/lib/sounds";
 import {
-  ArrowRight,
   Check,
   X as XIcon,
   AlertTriangle,
@@ -405,10 +404,10 @@ export function TrainExperience({
     const diff = config.difficulty === null ? "alla nivåer" : `nivå ${config.difficulty}`;
     const källa =
       config.subs.includes("MEK") && config.mekOrigin !== "all"
-        ? ` · ${MEK_ORIGIN_LABEL[config.mekOrigin].toLowerCase()}`
+        ? `, ${MEK_ORIGIN_LABEL[config.mekOrigin].toLowerCase()}`
         : "";
-    const dölj = config.excludeCorrect ? " · utan frågor du klarat" : "";
-    return `${config.track === "verbal" ? "Svenska" : "Matte"} · ${subs}${källa} · ${diff} · ${config.count} frågor${dölj}`;
+    const dölj = config.excludeCorrect ? ", utan frågor du klarat" : "";
+    return `${config.track === "verbal" ? "Svenska" : "Kvantitativ"}, ${subs}${källa}, ${diff}, ${config.count} frågor${dölj}`;
   })();
 
   const currentQ = questions[current];
@@ -533,19 +532,15 @@ export function TrainExperience({
         {mode === "mek" ? (
           <PageHero
             zon="mek"
-            eyebrow="Beta"
-            eyebrowTone="amber"
             title="MEK-övning"
-            subtitle="Meningskomplettering ur gamla prov och Tvåkommanollans egna uppgifter. Rösta efter varje fråga, så sållar vi fram de bästa."
+            subtitle="Uppgifter ur gamla prov och våra egna. Rösta efter varje fråga så visas de bästa oftare."
             align="center"
             variant="compact"
           />
         ) : (
           <PageHero
-            eyebrow="Lugn takt"
             title="Träna"
             cycleWords={["ORD.", "MEK.", "LÄS.", "ELF.", "XYZ.", "KVA.", "NOG.", "DTK."]}
-            subtitle="Ingen timer, inga motståndare. Bara du och frågorna."
             align="center"
             variant="compact"
           />
@@ -610,7 +605,7 @@ export function TrainExperience({
                   onPick={välj}
                 />
                 <TrackGroup
-                  label="Matte"
+                  label="Kvantitativ"
                   icon={Sigma}
                   subs={MATH_SUBS}
                   mixLabel="Hela kvantitativa delen"
@@ -726,7 +721,7 @@ export function TrainExperience({
                   mekLåst && baraMek ? "hidden" : ""
                 }`}
               >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+                <p className="text-xs font-semibold text-white/45">
                   Ditt pass
                 </p>
                 <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
@@ -738,7 +733,6 @@ export function TrainExperience({
                 <PrimaryCTA
                   onClick={startTraining}
                   className="mt-4 w-full"
-                  icon={<ArrowRight className="h-4 w-4" />}
                 >
                   Starta träning
                 </PrimaryCTA>
@@ -834,7 +828,7 @@ export function TrainExperience({
           {showPassage && currentQ.passage_text && (
             <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
               <div className="mb-2 flex items-center justify-between gap-3">
-                <div className="text-xs font-semibold tracking-wide text-muted-foreground">
+                <div className="text-xs font-semibold text-muted-foreground">
                   Textpassage
                 </div>
                 <HighlighterToggle highlighter={passageHighlighter} />
@@ -854,8 +848,8 @@ export function TrainExperience({
             style={{ boxShadow: "var(--shadow-md)" }}
           >
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold tracking-wide text-primary">
-                {displayCategory(currentQ.category)} · Fråga {current + 1}
+              <span className="text-xs font-semibold text-primary">
+                {displayCategory(currentQ.category)}, Fråga {current + 1}
               </span>
               {currentQ.withdrawn && <WithdrawnBadge />}
             </div>
@@ -1056,7 +1050,6 @@ export function TrainExperience({
                   className="w-full bg-primary py-5 text-base text-on-brand hover:bg-primary-deep"
                 >
                   {current >= questions.length - 1 ? "Visa resultat" : "Nästa fråga"}
-                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               ) : (
                 <button
@@ -1146,7 +1139,7 @@ export function TrainExperience({
 
           {Object.keys(byCat).length > 1 && (
             <div className="mt-6 border-t border-white/10 pt-4">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/45">
+              <div className="mb-2 text-xs font-semibold text-white/45">
                 Per delprov
               </div>
               <div className="grid gap-2">
@@ -1263,7 +1256,7 @@ function TrackGroup({
   const mixValt = activeTrack === track && active.length === subs.length;
   return (
     <div>
-      <p className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+      <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-white/45">
         <Icon className="h-3.5 w-3.5" aria-hidden />
         {label}
       </p>

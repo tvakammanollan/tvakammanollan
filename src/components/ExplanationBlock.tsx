@@ -48,7 +48,7 @@ export function ExplanationBlock({ explanation, defaultOpen = true }: Props) {
             className="mt-2 rounded-lg border-l-4 border-primary bg-secondary p-3"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold tracking-wide text-primary">
+            <div className="mb-1 flex items-center gap-1.5 text-xs font-bold text-primary">
               <Lightbulb className="h-3.5 w-3.5" /> Förklaring
             </div>
             {/* Matteförklaringar bär LaTeX i $…$ — utan MathText stod de rått

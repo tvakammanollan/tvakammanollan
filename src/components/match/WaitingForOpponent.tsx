@@ -125,7 +125,6 @@ export function WaitingForOpponent({
       </m.span>
 
       <div>
-        <p className="eyebrow text-primary">{utgången ? "Inget svar" : "Väntar"}</p>
         <h1
           className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -136,7 +135,7 @@ export function WaitingForOpponent({
 
       {utgången ? (
         <p className="text-white/65">
-          Inbjudan gällde i 30 minuter och har gått ut. En match spelas live i fem minuter, så den
+          Inbjudan gällde i 30 minuter och har gått ut. En match spelas live i 5 minuter, så den
           måste accepteras medan ni båda är här. Skicka en ny när {motståndare} är online, eller
           spela en match direkt mot datorn under tiden.
         </p>

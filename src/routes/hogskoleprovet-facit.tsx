@@ -16,7 +16,7 @@ import {
   type FacitPass,
   type PassKind,
 } from "@/lib/preliminart-facit";
-import { ArrowRight, Calculator, ClipboardCheck, Target } from "lucide-react";
+import { Calculator, ClipboardCheck, Target } from "lucide-react";
 
 /* =====================================================================
    SEO: "facit högskoleprovet" och "normering högskoleprovet" är de mest
@@ -43,7 +43,7 @@ function faq(): Array<{ q: string; a: string }> {
   return [
     {
       q: `Var hittar jag facit till högskoleprovet ${FACIT.label.toLowerCase()}?`,
-      a: `Här ovan finns ${OFFICIELLT ? "facit" : "vårt preliminära facit"} för de fyra provpass som räknas: ${FACIT.passes
+      a: `Här ovan finns ${OFFICIELLT ? "facit" : "vårt preliminära facit"} för de 4 provpass som räknas: ${FACIT.passes
         .map((p) => `provpass ${p.pass} (${KIND_LABEL[p.kind]})`)
         .join(", ")}. ${
         OFFICIELLT
@@ -65,7 +65,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Varför finns inget facit för provpass 3?",
-      a: "Ett av dagens fem provpass är ett utprövningspass med nya uppgifter som testas inför kommande prov. Det räknas inte in i resultatet, och facit till det publiceras inte.",
+      a: "Ett av dagens 5 provpass är ett utprövningspass med nya uppgifter som testas inför kommande prov. Det räknas inte in i resultatet, och facit till det publiceras inte.",
     },
     {
       q: "Hur räknas resultatet ut?",
@@ -85,7 +85,7 @@ export const Route = createFileRoute("/hogskoleprovet-facit")({
         `${OFFICIELLT ? "Facit" : "Preliminärt facit"} till högskoleprovet ${hpDateShort(FACIT.date)}${
           FACIT.troligGrans
             ? ` och trolig normering: ${FACIT.troligGrans.verbal}/${PART_LENGTH} verbalt, ${FACIT.troligGrans.kvant}/${PART_LENGTH} kvantitativt för 2,0.`
-            : ", alla fyra provpass."
+            : ", alla 4 provpass."
         }`,
         "Räkna dina rätt.",
       ),
@@ -133,7 +133,6 @@ function H2({ icon: Icon, children }: { icon: typeof Target; children: React.Rea
       className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
       style={{ fontFamily: "var(--font-display)" }}
     >
-      <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
       {children}
     </h2>
   );
@@ -156,8 +155,8 @@ function FacitPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-          {OFFICIELLT ? "Kontrollerat mot UHR:s facit" : "Preliminärt"} · uppdaterat{" "}
+        <p className="text-sm text-white/65">
+          {OFFICIELLT ? "Kontrollerat mot UHR:s facit" : "Preliminärt"}, uppdaterat{" "}
           {hpDateShort(FACIT.updated)}
         </p>
         <h1
@@ -167,7 +166,7 @@ function FacitPage() {
           Facit och trolig normering, {FACIT.label.toLowerCase()}
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-          Högskoleprovet skrevs {hpDateLong(FACIT.date)}. Här är {FACIT_ORD} till de fyra provpass
+          Högskoleprovet skrevs {hpDateLong(FACIT.date)}. Här är {FACIT_ORD} till de 4 provpass
           som räknas, och vår uppskattning av vad som krävs för 2,0.{" "}
           {OFFICIELLT
             ? `Facit är kontrollerat mot UHR:s officiella facit från ${hpDateShort(FACIT.officielltFacit as string)}. Normeringen är fortfarande vår uppskattning tills UHR publicerar den.`
@@ -184,8 +183,8 @@ function FacitPage() {
                 key={k}
                 className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center"
               >
-                <div className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/50">
-                  {k === "verbal" ? "Verbal del" : "Kvantitativ del"}
+                <div className="text-[12px] font-semibold text-white/50">
+                  {k === "verbal" ? "Verbal" : "Kvantitativ"}
                 </div>
                 <div
                   className="mt-1 text-[32px] font-bold tabular-nums text-[var(--cream)]"
@@ -295,7 +294,6 @@ function FacitPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/hogskoleprovet-datum"
@@ -341,8 +339,8 @@ function PassFacit({ pass }: { pass: FacitPass }) {
       <div className="mt-3 space-y-3">
         {DELPROV[pass.kind].map((d) => (
           <div key={d.kod}>
-            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-              {d.kod} · uppgift {d.from}–{d.to}
+            <div className="text-xs font-bold text-white/45">
+              {d.kod}, uppgift {d.from}–{d.to}
             </div>
             <ol className="mt-1.5 grid grid-cols-5 gap-1.5 sm:grid-cols-10">
               {svar.slice(d.from - 1, d.to).map((l, i) => (
@@ -404,8 +402,8 @@ function RaknaRatt() {
           const diff = s === null ? null : distansTillGrans(s, grans ? grans[k] : null);
           return (
             <div key={k} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-              <div className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/50">
-                {k === "verbal" ? "Verbal del" : "Kvantitativ del"}
+              <div className="text-[12px] font-semibold text-white/50">
+                {k === "verbal" ? "Verbal" : "Kvantitativ"}
               </div>
               <div className="mt-1 text-[24px] font-bold tabular-nums text-[var(--cream)]">
                 {s === null ? "–" : `${formatInt(s)}/${PART_LENGTH}`}

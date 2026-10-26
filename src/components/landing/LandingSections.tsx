@@ -333,48 +333,40 @@ export function Arkivet() {
 const YTOR = [
   {
     to: "/gamla-prov",
-    etikett: "Gamla prov",
     rubrik: "Skriv ett helt provpass under tiden det ska ta.",
     text: "120 provpass à 40 uppgifter, från vårprovet 2012 till vårprovet 2026. Facit på varje uppgift, normering på varje provdel.",
     cta: "Öppna arkivet",
     yta: "bg-sky",
-    etikettFarg: "text-bark",
     textFarg: "text-bark",
     rubrikFarg: "text-[var(--cream)]",
     knapp: "border-2 border-bark text-bark",
   },
   {
     to: "/matchmaking",
-    etikett: "Duellen",
-    rubrik: "En duell är åtta uppgifter på fem minuter.",
+    rubrik: "En duell är 8 uppgifter på 5 minuter.",
     text: "Verbalt eller kvantitativt, mot en vän eller mot kön. Vid lika poäng vinner den som lämnade in först.",
     cta: "Starta en duell",
     yta: "bg-terracotta",
-    etikettFarg: "text-[var(--cream-3)]",
     textFarg: "text-[var(--cream-3)]",
     rubrikFarg: "text-[var(--cream)]",
     knapp: "border-2 border-[var(--cream-3)] text-[var(--cream-3)]",
   },
   {
     to: "/mek-ovning",
-    etikett: "MEK",
     rubrik: "Vi skriver egna MEK-uppgifter.",
     text: "Uppgifter vi skriver själva och blindprövar innan de publiceras. Arkivets MEK ligger kvar bredvid.",
     cta: "Öva på MEK",
     yta: "bg-plum",
-    etikettFarg: "text-cream-wash",
     textFarg: "text-[var(--navy-3)]",
     rubrikFarg: "text-on-brand",
     knapp: "border-2 border-cream-wash text-cream-wash",
   },
   {
     to: "/ordlista",
-    etikett: "Ordlistan",
     rubrik: "Alla ord förklarade, med provfrågan de kom från.",
     text: "Över 10\u00a0000 ord med betydelse, exempelmening, liknande ord och ordklass.",
     cta: "Slå upp ett ord",
     yta: "bg-lavender",
-    etikettFarg: "text-[var(--plum)]",
     textFarg: "text-[var(--plum)]",
     rubrikFarg: "text-[var(--cream)]",
     knapp: "border-2 border-[var(--plum)] text-[var(--plum)]",
@@ -397,12 +389,7 @@ export function Produktytorna() {
                 to={y.to}
                 className={`flex h-full flex-col rounded-[40px] p-7 transition hover:brightness-[1.03] sm:p-9 ${y.yta}`}
               >
-                <p
-                  className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${y.etikettFarg}`}
-                >
-                  {y.etikett}
-                </p>
-                <h3 className={`mt-5 text-[24px] leading-tight tracking-[-0.02em] ${y.rubrikFarg}`}>
+                <h3 className={`text-[24px] leading-tight tracking-[-0.02em] ${y.rubrikFarg}`}>
                   {y.rubrik}
                 </h3>
                 <p className={`mt-3 text-[15px] leading-relaxed ${y.textFarg}`}>{y.text}</p>
@@ -427,13 +414,13 @@ export function Produktytorna() {
  * Vad som kostar och vad som inte gör det.
  *
  * **TILLFÄLLIGT: priserna här är inte vad kassan tar.** Sektionen visar två
- * betalalternativ, en månad för 150 kr och sex månader för 350 kr, men det
- * finns bara EN produkt i Stripe: 150 kr för sex månader
+ * betalalternativ, en månad för 150 kr och 6 månader för 350 kr, men det
+ * finns bara EN produkt i Stripe: 150 kr för 6 månader
  * (`STRIPE_ORD_PRICE_ID`, `ACCESS_MONTHS = 6`). Båda korten länkar därför
  * till samma kassa på /ord, och köparen ser det riktiga priset där, 150 kr.
  * Det är Niklas beslut 2026-10-26, tills de två produkterna finns.
  *
- * Felet går åt köparens fördel åt båda håll: den som väljer "sex månader
+ * Felet går åt köparens fördel åt båda håll: den som väljer "6 månader
  * för 350" betalar 150, och den som väljer "en månad för 150" får sex
  * månader. Därför är det ofarligt som övergång, men det är en osanning på
  * sidan och ska inte bli kvar.
@@ -446,7 +433,7 @@ export function Produktytorna() {
  */
 const BETALKORT = [
   {
-    etikett: "Ordlistan och MEK · en månad",
+    etikett: "Ordlistan och MEK: en månad",
     pris: "150 kr",
     rader: [
       "Över 10\u00a0000 ord i träningsläget",
@@ -463,15 +450,15 @@ const BETALKORT = [
     knapp: "bg-primary text-on-brand hover:brightness-125",
   },
   {
-    etikett: "Ordlistan och MEK · sex månader",
+    etikett: "Ordlistan och MEK: 6 månader",
     pris: "350 kr",
     rader: [
       "Samma innehåll som enmånadsköpet",
-      "Gäller sex månader, hela vägen till provdagen",
+      "Gäller 6 månader, hela vägen till provdagen",
       "Ett köp låser upp både ordlistan och MEK",
       "Engångsköp, ingen prenumeration",
     ],
-    cta: "Välj sex månader",
+    cta: "Välj 6 månader",
     yta: "bg-lavender",
     etikettFarg: "text-[var(--plum)]",
     prisFarg: "text-[var(--cream)]",
@@ -493,7 +480,7 @@ export function Priset() {
         <div className="grid gap-4 lg:grid-cols-3">
           <Reveal className="min-w-0">
             <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
+              <p className="text-xs font-semibold text-white/55">
                 Konto
               </p>
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
@@ -524,7 +511,7 @@ export function Priset() {
             <Reveal key={k.cta} delay={0.06 * (i + 1)} className="min-w-0">
               <div className={`flex h-full flex-col rounded-3xl p-7 sm:p-8 ${k.yta}`}>
                 <p
-                  className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${k.etikettFarg}`}
+                  className={`text-xs font-semibold ${k.etikettFarg}`}
                 >
                   {k.etikett}
                 </p>
@@ -582,16 +569,16 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
               <table className="w-full min-w-[420px]">
                 <thead>
                   <tr className="border-b border-white/25">
-                    <th className="w-[46px] pb-2.5 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
+                    <th className="w-[46px] pb-2.5 text-left font-mono text-xs font-normal text-white/55">
                       #
                     </th>
-                    <th className="pb-2.5 pr-3 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
+                    <th className="pb-2.5 pr-3 text-left font-mono text-xs font-normal text-white/55">
                       Spelare
                     </th>
-                    <th className="w-[150px] pb-2.5 pr-3 text-left font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
+                    <th className="w-[150px] pb-2.5 pr-3 text-left font-mono text-xs font-normal text-white/55">
                       Form
                     </th>
-                    <th className="w-[90px] pb-2.5 text-right font-mono text-[11px] font-normal uppercase tracking-[0.13em] text-white/55">
+                    <th className="w-[90px] pb-2.5 text-right font-mono text-xs font-normal text-white/55">
                       ELO
                     </th>
                   </tr>
@@ -623,7 +610,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
 
           <Reveal delay={0.08}>
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">
+              <p className="font-mono text-xs text-white/55">
                 Var du hamnar
               </p>
               <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/70">
@@ -678,7 +665,7 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
           </Link>
         </Reveal>
         <p className="mt-4 text-[13.5px] text-white/55">
-          Fem minuter, åtta frågor, en motståndare. Inget konto behövs för att testa.
+          En match är 8 frågor på 5 minuter. Inget konto behövs för att testa.
         </p>
       </div>
     </section>

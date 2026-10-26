@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound, redirect, useRouter } from "@tanstack/
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { toast } from "sonner";
-import { ArrowDown, Bell, BellOff, Lock, MessageSquarePlus, Pin, Trash2 } from "lucide-react";
+import { ArrowDown, Bell, BellOff, Lock, Pin, Trash2 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { supabase } from "@/integrations/supabase/client";
 import { ForumPostCard } from "@/components/forum/ForumPostCard";
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
     const { thread, category, posts, page, total, perPage } = loaderData;
     const base = threadPath(category.slug, thread.id, thread.slug);
     const path = page > 1 ? `${base}?sida=${page}` : base;
-    const suffix = page > 1 ? ` · sida ${page}` : "";
+    const suffix = page > 1 ? `, sida ${page}` : "";
     const first = posts[0];
     const description = first
       ? excerpt(first.body, 155)
@@ -86,7 +86,7 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
         // "Tvåkommanollan | " står redan först. Upprepat varumärke i svansen
         // knuffade ut trådens egen rubrik ur träfflistan, så det blir bara
         // "Forum", och inte ens det när rubriken redan är lång.
-        title: `${thread.title}${suffix}${thread.title.length + suffix.length <= 35 ? " · Forum" : ""}`,
+        title: `${thread.title}${suffix}${thread.title.length + suffix.length <= 35 ? ": Forum" : ""}`,
         description,
         ogTitle: thread.title,
         ogDescription: description,
@@ -429,15 +429,12 @@ function ForumThreadPage() {
           )}
           {thread.title}
         </h1>
-        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
+        <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-tertiary)]">
           <span>{displayAuthor(thread.author?.username)}</span>
-          <span aria-hidden>·</span>
           <time dateTime={thread.createdAt}>{formatDate(thread.createdAt)}</time>
-          <span aria-hidden>·</span>
           <span>{formatInt(thread.replyCount)} svar</span>
           {thread.provTerm && (
             <>
-              <span aria-hidden>·</span>
               <Link
                 to="/gamla-prov/$term"
                 params={{ term: thread.provTerm }}
@@ -449,7 +446,6 @@ function ForumThreadPage() {
           )}
           {pages > 1 && (
             <>
-              <span aria-hidden>·</span>
               <span>
                 sida {page} av {pages}
               </span>
@@ -547,7 +543,7 @@ function ForumThreadPage() {
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--amber)]/30 bg-[var(--amber)]/[0.08] px-4 py-2.5 text-sm font-medium text-[var(--amber)] transition-colors hover:bg-[var(--amber)]/15"
         >
           <ArrowDown className="h-4 w-4" aria-hidden />
-          {newPosts === 1 ? "1 nytt inlägg" : `${formatInt(newPosts)} nya inlägg`} · visa
+          {newPosts === 1 ? "1 nytt inlägg" : `${formatInt(newPosts)} nya inlägg`}, visa
         </button>
       )}
 
@@ -558,7 +554,6 @@ function ForumThreadPage() {
           className="mb-3 flex items-center gap-2 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <MessageSquarePlus className="h-5 w-5 text-[var(--amber)]" aria-hidden />
           Svara
         </h2>
 
@@ -570,7 +565,7 @@ function ForumThreadPage() {
           <>
             {quotedPostId && (
               <p className="mb-2 text-xs text-[var(--text-tertiary)]">
-                Svarar på inlägg #{quotedPostId} ·{" "}
+                Svarar på inlägg #{quotedPostId},{" "}
                 <button
                   type="button"
                   onClick={() => setQuotedPostId(null)}
@@ -604,7 +599,7 @@ function ForumThreadPage() {
           params={{ kategori: category.slug }}
           className="text-[var(--teal)] hover:underline"
         >
-          ← Alla trådar i {category.name}
+          Alla trådar i {category.name}
         </Link>
       </section>
     </div>

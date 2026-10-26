@@ -1,6 +1,6 @@
 /**
  * Typer för gamla högskoleprov (src/data/prov/*.json, byggda av
- * scripts/hp-import/). Ett provtillfälle består av fyra provpass; varje
+ * scripts/hp-import/). Ett provtillfälle består av 4 provpass; varje
  * provpass är en egen fil med sina uppgifter, lästexter och facit.
  *
  * Uppgifterna kommer i två former:
@@ -200,7 +200,7 @@ export function termToLabel(term: string): string {
   return `${season} ${m[1]}${m[3] ? ` (prov ${m[3].toUpperCase()})` : ""}`;
 }
 
-/** "verbal" → "Verbal del". */
+/** "verbal" → "Verbal". */
 export function passKindLabel(kind: "verbal" | "kvant"): string {
-  return kind === "verbal" ? "Verbal del" : "Kvantitativ del";
+  return kind === "verbal" ? "Verbal" : "Kvantitativ";
 }

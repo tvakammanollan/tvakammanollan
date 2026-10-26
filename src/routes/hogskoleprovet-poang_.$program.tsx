@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { formatDecimal } from "@/lib/sv-format";
-import { ArrowRight, GraduationCap, Info } from "lucide-react";
+import { Info } from "lucide-react";
 
 /* =====================================================================
    POÄNGGRÄNSER PER PROGRAM ("money pages" — se SEO-AUDIT.md)
@@ -59,9 +59,9 @@ type ProgramConfig = {
 const PROGRAM: Record<string, ProgramConfig> = {
   lakarprogrammet: {
     name: "Läkarprogrammet",
-    h1: "Läkarprogrammet · HP-poäng per lärosäte",
+    h1: "Läkarprogrammet: HP-poäng per lärosäte",
     intro:
-      "Läkarprogrammet finns vid åtta lärosäten i Sverige och hör till de mest sökta utbildningarna i landet. Här är den senaste antagningspoängen i högskoleprovsgruppen (HP) för de största.",
+      "Läkarprogrammet finns vid 8 lärosäten i Sverige och hör till de mest sökta utbildningarna i landet. Här är den senaste antagningspoängen i högskoleprovsgruppen (HP) för de största.",
     note: "Karolinska Institutet antar dessutom en del av sina platser genom PIL (prov- och intervjubaserat urval), ett separat spår med kognitivt test och intervjuer, där ett starkt högskoleprovsresultat är biljetten in till steg två. PIL ersätter inte HP-kvoten ovan, det är en tredje väg vid sidan av den.",
     labelHeader: "Lärosäte",
     schools: [
@@ -83,7 +83,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   civilekonom: {
     name: "Civilekonomprogrammet, Handelshögskolan i Stockholm",
-    h1: "Handelshögskolan · HP-poäng för Civilekonomprogrammet",
+    h1: "Handelshögskolan: HP-poäng för Civilekonomprogrammet",
     intro:
       "Handelshögskolan i Stockholm (SSE) är en fristående högskola och en av de mest sökta ekonomutbildningarna i landet. Sedan 2025 antas de flesta platserna via gymnasiebetyg med meritpoäng, men en HP-kvot finns kvar, och kravet har stigit varje år.",
     note: "Från och med 2025 räknar Handelshögskolan in meritpoäng i betygsurvalet (max meritvärde höjt från 20,0 till 22,5), vilket är varför BI/BII-poängen ovan inte är direkt jämförbara mellan 2024 och 2025. HP-kravet påverkas inte av den ändringen.",
@@ -106,7 +106,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "teknisk-fysik": {
     name: "Civilingenjörsutbildning i teknisk fysik",
-    h1: "Teknisk fysik · HP-poäng per lärosäte",
+    h1: "Teknisk fysik: HP-poäng per lärosäte",
     intro:
       "Teknisk fysik är ett av de mest teoretiskt tunga civilingenjörsprogrammen. KTH och Lund ligger högst, med Chalmers och Uppsala strax efter.",
     labelHeader: "Lärosäte",
@@ -134,7 +134,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   psykologprogrammet: {
     name: "Psykologprogrammet",
-    h1: "Psykologprogrammet · HP-poäng per lärosäte",
+    h1: "Psykologprogrammet: HP-poäng per lärosäte",
     intro:
       "Psykologprogrammet ges vid elva lärosäten i Sverige. Kravet i högskoleprovsgruppen varierar mer mellan orter än för de flesta andra program på den här listan: från 1,25 till 1,70.",
     labelHeader: "Lärosäte",
@@ -161,9 +161,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   juristprogrammet: {
     name: "Juristprogrammet",
-    h1: "Juristprogrammet · HP-poäng per lärosäte",
+    h1: "Juristprogrammet: HP-poäng per lärosäte",
     intro:
-      "Juristprogrammet är enligt UHR:s egen statistik det program som drar flest behöriga sökande i landet. Det ges vid sju lärosäten, med Lund som mest krävande i HP-kvoten.",
+      "Juristprogrammet är enligt UHR:s egen statistik det program som drar flest behöriga sökande i landet. Det ges vid 7 lärosäten, med Lund som mest krävande i HP-kvoten.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.6, prev: 1.55 },
@@ -184,9 +184,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   tandlakarprogrammet: {
     name: "Tandläkarprogrammet",
-    h1: "Tandläkarprogrammet · HP-poäng per lärosäte",
+    h1: "Tandläkarprogrammet: HP-poäng per lärosäte",
     intro:
-      "Tandläkarprogrammet ges vid tre lärosäten. Kraven ligger tätt ihop och strax under läkarprogrammets.",
+      "Tandläkarprogrammet ges vid 3 lärosäten. Kraven ligger tätt ihop och strax under läkarprogrammets.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Göteborgs universitet", sub: "Göteborg", hp: 1.45, prev: 1.4 },
@@ -203,7 +203,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   sjukskoterskeprogrammet: {
     name: "Sjuksköterskeprogrammet",
-    h1: "Sjuksköterskeprogrammet · HP-poäng, olika orter",
+    h1: "Sjuksköterskeprogrammet: HP-poäng, olika orter",
     intro:
       "Sjuksköterskeprogrammet ges på fler orter än något annat program, inklusive decentraliserade platser. Hösten 2026 hade 40 sjuksköterskeutbildningar en gräns i högskoleprovsgruppen, från 1,25 i Lund till 0,05 i Kramfors. Här är alla, med förra årets gräns bredvid.",
     labelHeader: "Lärosäte / studieort",
@@ -269,9 +269,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   arkitektprogrammet: {
     name: "Arkitektprogrammet",
-    h1: "Arkitektprogrammet · HP-poäng per lärosäte",
+    h1: "Arkitektprogrammet: HP-poäng per lärosäte",
     intro:
-      "Arkitektutbildningen på fem år ges vid fyra lärosäten. Chalmers kombinerade program i arkitektur och teknik, som leder till både civilingenjörs- och arkitektexamen, har det klart högsta kravet.",
+      "Arkitektutbildningen på 5 år ges vid 4 lärosäten. Chalmers kombinerade program i arkitektur och teknik, som leder till både civilingenjörs- och arkitektexamen, har det klart högsta kravet.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Chalmers, Arkitektur och teknik", sub: "Göteborg", hp: 1.7 },
@@ -290,7 +290,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "industriell-ekonomi": {
     name: "Civilingenjör i industriell ekonomi",
-    h1: "Industriell ekonomi · HP-poäng per lärosäte",
+    h1: "Industriell ekonomi: HP-poäng per lärosäte",
     intro:
       "Civilingenjörsprogrammet i industriell ekonomi blandar teknik och ekonomi och hör till de mest sökta ingenjörsutbildningarna. Lund, KTH och Uppsala ligger högst.",
     labelHeader: "Lärosäte",
@@ -317,7 +317,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   veterinarprogrammet: {
     name: "Veterinärprogrammet",
-    h1: "Veterinärprogrammet · HP-poäng",
+    h1: "Veterinärprogrammet: HP-poäng",
     intro:
       "Veterinärprogrammet ges bara vid Sveriges lantbruksuniversitet (SLU) i Uppsala, så det finns en enda gräns att slå.",
     labelHeader: "Lärosäte",
@@ -332,7 +332,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   fysioterapeutprogrammet: {
     name: "Fysioterapeutprogrammet",
-    h1: "Fysioterapeutprogrammet · HP-poäng per lärosäte",
+    h1: "Fysioterapeutprogrammet: HP-poäng per lärosäte",
     intro:
       "Fysioterapeutprogrammet ges på många orter, och kravet i högskoleprovsgruppen skiljer sig mer än en halv poäng mellan det högsta och det lägsta.",
     labelHeader: "Lärosäte",
@@ -357,8 +357,8 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   apotekarprogrammet: {
     name: "Apotekarprogrammet",
-    h1: "Apotekarprogrammet · HP-poäng per lärosäte",
-    intro: "Apotekarprogrammet ges vid tre lärosäten, och kraven ligger tätt ihop.",
+    h1: "Apotekarprogrammet: HP-poäng per lärosäte",
+    intro: "Apotekarprogrammet ges vid 3 lärosäten, och kraven ligger tätt ihop.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Umeå universitet", sub: "Umeå", hp: 1.25, prev: 1.1 },
@@ -375,7 +375,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   datateknik: {
     name: "Civilingenjör i datateknik",
-    h1: "Datateknik · HP-poäng per lärosäte",
+    h1: "Datateknik: HP-poäng per lärosäte",
     intro:
       "Civilingenjörsprogrammet i datateknik finns på många lärosäten. KTH ligger högst, följt av Chalmers och Lund. På flera mindre lärosäten antogs alla behöriga i högskoleprovsgruppen, och de står därför inte i tabellen.",
     labelHeader: "Lärosäte",
@@ -399,7 +399,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   maskinteknik: {
     name: "Civilingenjör i maskinteknik",
-    h1: "Maskinteknik · HP-poäng per lärosäte",
+    h1: "Maskinteknik: HP-poäng per lärosäte",
     intro:
       "Civilingenjörsprogrammet i maskinteknik ges vid de flesta tekniska högskolor. Lund har högst krav, och Chalmers, KTH och Linköping ligger på samma nivå strax under.",
     labelHeader: "Lärosäte",
@@ -423,7 +423,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   socionomprogrammet: {
     name: "Socionomprogrammet",
-    h1: "Socionomprogrammet · HP-poäng per lärosäte",
+    h1: "Socionomprogrammet: HP-poäng per lärosäte",
     intro:
       "Hösten 2026 hade 26 socionomutbildningar en gräns i högskoleprovsgruppen, flera av dem på distans. Kravet var högst på Marie Cederschiöld högskola i Stockholm och i Uppsala. Här är alla, med förra årets gräns bredvid.",
     labelHeader: "Lärosäte",
@@ -465,7 +465,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   ekonomprogrammet: {
     name: "Civilekonom- och ekonomprogrammet",
-    h1: "Civilekonom och ekonom · HP-poäng per lärosäte",
+    h1: "Civilekonom och ekonom: HP-poäng per lärosäte",
     intro:
       "Ekonomie kandidatprogrammet i Lund och Göteborg och civilekonomprogrammet i Linköping har de högsta kraven bland universitetens ekonomutbildningar. Handelshögskolan i Stockholm har en egen sida.",
     labelHeader: "Lärosäte",
@@ -507,7 +507,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   arbetsterapeutprogrammet: {
     name: "Arbetsterapeutprogrammet",
-    h1: "Arbetsterapeutprogrammet · HP-poäng per lärosäte",
+    h1: "Arbetsterapeutprogrammet: HP-poäng per lärosäte",
     intro:
       "Arbetsterapeutprogrammet har lägre krav i högskoleprovsgruppen än de flesta vårdutbildningar. På flera orter antogs alla behöriga, och de står därför inte i tabellen.",
     labelHeader: "Lärosäte",
@@ -529,7 +529,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   rontgensjukskoterskeprogrammet: {
     name: "Röntgensjuksköterskeprogrammet",
-    h1: "Röntgensjuksköterskeprogrammet · HP-poäng per lärosäte",
+    h1: "Röntgensjuksköterskeprogrammet: HP-poäng per lärosäte",
     intro:
       "Röntgensjuksköterskeprogrammet ges vid ett fåtal lärosäten. Uppsala hade högst krav i högskoleprovsgruppen.",
     labelHeader: "Lärosäte",
@@ -550,7 +550,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   systemvetenskap: {
     name: "Systemvetenskapliga programmet",
-    h1: "Systemvetenskap · HP-poäng per lärosäte",
+    h1: "Systemvetenskap: HP-poäng per lärosäte",
     intro:
       "Systemvetenskap ges som kandidatprogram vid de flesta universitet. Lund och Luleås distansvariant ligger högst.",
     labelHeader: "Lärosäte",
@@ -576,9 +576,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   logopedprogrammet: {
     name: "Logopedprogrammet",
-    h1: "Logopedprogrammet · HP-poäng per lärosäte",
+    h1: "Logopedprogrammet: HP-poäng per lärosäte",
     intro:
-      "Logopedprogrammet är fyra år och leder till legitimation. Tre lärosäten hade en poänggräns i högskoleprovsgruppen hösten 2026, och Lund låg klart högst.",
+      "Logopedprogrammet är 4 år och leder till legitimation. 3 lärosäten hade en poänggräns i högskoleprovsgruppen hösten 2026, och Lund låg klart högst.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.0, prev: 0.3 },
@@ -595,7 +595,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   biomedicinprogrammet: {
     name: "Biomedicinprogrammet",
-    h1: "Biomedicinprogrammet · HP-poäng per lärosäte",
+    h1: "Biomedicinprogrammet: HP-poäng per lärosäte",
     intro:
       "Biomedicinprogrammet är ett kandidatprogram inom medicinsk forskning. Lund och Uppsala krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
@@ -615,7 +615,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "biomedicinsk-analytiker": {
     name: "Biomedicinska analytikerprogrammet",
-    h1: "Biomedicinsk analytiker · HP-poäng per lärosäte",
+    h1: "Biomedicinsk analytiker: HP-poäng per lärosäte",
     intro:
       "Biomedicinska analytikerprogrammet leder till legitimation och arbete på sjukhusens laboratorier. Kravet i högskoleprovsgruppen skilde sig mycket mellan orterna hösten 2026.",
     labelHeader: "Lärosäte",
@@ -640,7 +640,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   kriminologi: {
     name: "Kriminologiprogrammet",
-    h1: "Kriminologi · HP-poäng per lärosäte",
+    h1: "Kriminologi: HP-poäng per lärosäte",
     intro:
       "Kriminologi ges som kandidatprogram vid flera universitet. Stockholm och Lund krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
@@ -663,7 +663,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "medicinsk-teknik": {
     name: "Civilingenjör i medicinsk teknik",
-    h1: "Civilingenjör medicinsk teknik · HP-poäng per lärosäte",
+    h1: "Civilingenjör medicinsk teknik: HP-poäng per lärosäte",
     intro:
       "Civilingenjörsprogrammen i medicinsk teknik kombinerar teknik och vård. Lunds program i medicin och teknik låg högst hösten 2026.",
     labelHeader: "Lärosäte",
@@ -682,7 +682,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   elektroteknik: {
     name: "Civilingenjör i elektroteknik",
-    h1: "Civilingenjör elektroteknik · HP-poäng per lärosäte",
+    h1: "Civilingenjör elektroteknik: HP-poäng per lärosäte",
     intro:
       "Elektroteknik ges som civilingenjörsprogram vid de stora tekniska högskolorna. KTH krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
@@ -714,7 +714,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   samhallsbyggnad: {
     name: "Civilingenjör i samhällsbyggnad",
-    h1: "Civilingenjör samhällsbyggnad · HP-poäng per lärosäte",
+    h1: "Civilingenjör samhällsbyggnad: HP-poäng per lärosäte",
     intro:
       "Samhällsbyggnad, väg och vatten och byggteknik är civilingenjörsprogrammen för den som vill bygga städer, vägar och broar. Kravet hösten 2026 låg mellan 0,70 och 1,40.",
     labelHeader: "Lärosäte",
@@ -744,7 +744,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   personalvetarprogrammet: {
     name: "Personalvetarprogrammet",
-    h1: "Personalvetarprogrammet · HP-poäng per lärosäte",
+    h1: "Personalvetarprogrammet: HP-poäng per lärosäte",
     intro:
       "Personalvetarprogrammet leder till arbete med HR, rekrytering och arbetsmiljö. Göteborg krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
@@ -767,7 +767,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "politices-kandidat": {
     name: "Politices kandidatprogrammet",
-    h1: "Politices kandidat · HP-poäng per lärosäte",
+    h1: "Politices kandidat: HP-poäng per lärosäte",
     intro:
       "Politices kandidat kombinerar statsvetenskap med nationalekonomi eller andra samhällsämnen. Lund krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
@@ -793,9 +793,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   receptarieprogrammet: {
     name: "Receptarieprogrammet",
-    h1: "Receptarieprogrammet · HP-poäng per lärosäte",
+    h1: "Receptarieprogrammet: HP-poäng per lärosäte",
     intro:
-      "Receptarieprogrammet är tre år och leder till legitimation som receptarie, med arbete på apotek. Kravet i högskoleprovsgruppen låg mellan 0,65 och 0,80 hösten 2026.",
+      "Receptarieprogrammet är 3 år och leder till legitimation som receptarie, med arbete på apotek. Kravet i högskoleprovsgruppen låg mellan 0,65 och 0,80 hösten 2026.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Uppsala universitet", sub: "Uppsala", hp: 0.8, prev: "alla" },
@@ -813,9 +813,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   tandhygienistprogrammet: {
     name: "Tandhygienistprogrammet",
-    h1: "Tandhygienistprogrammet · HP-poäng per lärosäte",
+    h1: "Tandhygienistprogrammet: HP-poäng per lärosäte",
     intro:
-      "Tandhygienistprogrammet är tre år och leder till legitimation. Göteborg och Malmö krävde mest i högskoleprovsgruppen hösten 2026.",
+      "Tandhygienistprogrammet är 3 år och leder till legitimation. Göteborg och Malmö krävde mest i högskoleprovsgruppen hösten 2026.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Göteborgs universitet", sub: "Göteborg", hp: 0.85 },
@@ -834,7 +834,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "teknisk-matematik": {
     name: "Civilingenjör i teknisk matematik",
-    h1: "Civilingenjör teknisk matematik · HP-poäng per lärosäte",
+    h1: "Civilingenjör teknisk matematik: HP-poäng per lärosäte",
     intro:
       "Teknisk matematik hör till de civilingenjörsprogram som krävt mest på högskoleprovet. KTH låg högst hösten 2026, med Lund och Uppsala strax efter.",
     labelHeader: "Lärosäte",
@@ -855,7 +855,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   "tekniskt-basar": {
     name: "Tekniskt basår",
-    h1: "Tekniskt basår · HP-poäng per lärosäte",
+    h1: "Tekniskt basår: HP-poäng per lärosäte",
     intro:
       "Tekniskt basår ger behörighet till ingenjörsutbildningar för den som saknar rätt gymnasiekurser. Basåret leder inte till examen, men många läser vidare till civilingenjör. Kravet hösten 2026 skilde sig mycket mellan lärosätena.",
     labelHeader: "Lärosäte",
@@ -894,9 +894,9 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   journalistprogrammet: {
     name: "Journalistprogrammet",
-    h1: "Journalistprogrammet · HP-poäng per lärosäte",
+    h1: "Journalistprogrammet: HP-poäng per lärosäte",
     intro:
-      "Journalistprogrammet är ett kandidatprogram. Två lärosäten hade en poänggräns i högskoleprovsgruppen hösten 2026, och Göteborg låg klart högst.",
+      "Journalistprogrammet är ett kandidatprogram. 2 lärosäten hade en poänggräns i högskoleprovsgruppen hösten 2026, och Göteborg låg klart högst.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Göteborgs universitet", sub: "Göteborg", hp: 1.15, prev: 1.2 },
@@ -1026,7 +1026,6 @@ function ProgramPage() {
           className="flex items-center gap-2 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <GraduationCap className="h-5 w-5 text-primary" />
           HP-poäng, {cfg.term}
         </h2>
         <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
@@ -1104,7 +1103,6 @@ function ProgramPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Räkna ut din poäng
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/gamla-prov"

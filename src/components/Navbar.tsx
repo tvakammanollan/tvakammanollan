@@ -409,7 +409,7 @@ function CoachingMenuItem() {
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-bold text-success">Coachning</span>
         <span className="block text-xs text-muted-foreground">
-          Personligt studieupplägg{pris ? ` · ${pris}` : ""}
+          Personligt studieupplägg{pris ? `, ${pris}` : ""}
         </span>
       </span>
     </span>

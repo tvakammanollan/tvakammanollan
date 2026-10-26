@@ -44,7 +44,7 @@ export function ThreadListItem({
               {thread.title}
             </h3>
             {thread.hasAnswer && (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--success)]">
+              <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-medium text-[var(--success)]">
                 <CheckCircle2 className="h-3 w-3" aria-hidden />
                 Löst
               </span>
@@ -57,21 +57,18 @@ export function ThreadListItem({
             </p>
           )}
 
-          <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-tertiary)]">
             <span>{displayAuthor(thread.author?.username)}</span>
             {showCategory && thread.categoryName && (
               <>
-                <span aria-hidden>·</span>
                 <span className="text-[var(--teal)]">{thread.categoryName}</span>
               </>
             )}
             {thread.provTerm && (
               <>
-                <span aria-hidden>·</span>
                 <span>{provTermLabel(thread.provTerm)}</span>
               </>
             )}
-            <span aria-hidden>·</span>
             <span>
               senast {formatRelativeTime(thread.lastPostAt)}
               {thread.lastPoster ? ` av ${displayAuthor(thread.lastPoster.username)}` : ""}

@@ -89,7 +89,7 @@ export const FACIT: PreliminartFacit = {
   troligGrans: { verbal: 76, kvant: 76 },
   promoUntil: "2026-11-30",
   // Jämfört 2026-10-24 mot hogskoleprovet-facit-26b.pdf på studera.nu:
-  // alla fyra provpass identiska, inga uppgifter utgår.
+  // alla 4 provpass identiska, inga uppgifter utgår.
   officielltFacit: "2026-10-21",
 };
 

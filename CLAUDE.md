@@ -1981,7 +1981,7 @@ en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.
-- **Colour has three jobs.** Apple leads to action (CTA, streak, rank). Bark is structure (borders, secondary, "the opponent" in match bars). Leaf is progress (correct answers, stats, coaching). `--danger` is wrong answers and is **not** an alias for `--destructive` any more — a wrong answer must not look as alarming as deleting your account. `EyebrowLabel` and `PageHero` take a `leaf` tone for progress-oriented pages.
+- **Colour has three jobs.** Apple leads to action (CTA, streak, rank). Bark is structure (borders, secondary, "the opponent" in match bars). Leaf is progress (correct answers, stats, coaching). `--danger` is wrong answers and is **not** an alias for `--destructive` any more — a wrong answer must not look as alarming as deleting your account. Progress-oriented text uses `text-success`; there is no eyebrow component any more (see "Copy- och UI-regler").
 - **Alpha ramps are not contrast-neutral when the theme flips.** Moving the same alpha from light-on-dark to dark-on-light cost the `text-white/N` ramp up to 1.95 contrast points; `/45` (36 usages) silently fell from 5.13 to 3.62. The ramp is solved so each step reproduces its *old ratio*, not its old alpha. If you touch the base palette again, re-solve it — never carry alphas across.
 - **Measure contrast against the composited background, not the token.** `--rank-silver` passed 5.37 against paper but sat on a tinted surface where it was 4.13. Walk the ancestor chain and composite every semi-transparent layer before you judge a pair.
 - **Light-on-dark islands.** A few surfaces stay dark in the light theme: the `ProvFigure` lightbox (`bg-black/90`, so scanned line art pops) and anything whose background is set with an inline `style`. Inside those, `white/N` and bare `text-white` must NOT go through the remap — use explicit `#fff8f5`. `.text-white` **is** remapped to dark ink, which is why `UserAvatar` and the difficulty pills in `/ord` need explicit hex.
@@ -1989,6 +1989,56 @@ en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
 - **New indexable pages:** SSR the content (route `loader`, not client fetch), use `pageMeta`/`pageLinks` + JSON-LD, add the URL to `public/sitemap.xml`, and cross-link from related pages (guider ↔ öva ↔ gamla-prov cluster).
 - **Retiring or merging a page:** put a 301 in `PERMANENT_REDIRECTS` at the bottom of `src/server.ts` — it answers before SSR starts, so no React runs. Do NOT leave a route file behind that just redirects: it stays in `routeTree.gen.ts` and keeps showing up in `GUIDES`/`RelatedGuides` as if the page still existed. Then sweep all six places a URL lives: `src/lib/guider-meta.tsx`, the footer link list in `__root.tsx`, the cards **and** the ItemList JSON-LD in `guider/index.tsx`, every `relatedPaths` array, `public/sitemap.xml`, and `public/llms.txt`. A stale path in `relatedPaths` fails silently — `RelatedGuides` filters unknown paths out, so the section just renders 3 cards instead of 4 with no error.
 - **Deleting a route invalidates `routeTree.gen.ts`.** It is checked in but generated, so it still imports the deleted file and `npx tsc --noEmit` fails until the generator runs. `npm run dev` and `npm run build` regenerate it themselves — run one before type-checking, otherwise the failure looks like a real breakage.
+
+### Copy- och UI-regler (2026-10-26)
+
+Sajten läste som AI-genererad: tankstreck, mittpunkter, versala etiketter med
+bred bokstavsföljd över varje rubrik, pills på all statisk info och undertexter
+som bara upprepade rubriken. Reglerna nedan rensades ur hela `src/` på en gång
+och gäller allt nytt. Kodkommentarer, loggmeddelanden och tester är undantagna.
+
+1. **Inga tankstreck (`—`, spatierat `–`) i text besökare läser.** Skriv om med
+   punkt, komma eller kolon. Intervall behåller sitt streck utan mellanslag
+   (`2012–2026`, `A–E`), och `–` ensamt betyder "inget värde" (se `sv-format`).
+2. **Inga mittpunkter (`·`) som separator.** `Pass 2: Verbal` i titlar och
+   etiketter (kolon), `4 provpass, 160 uppgifter` i uppräknad metadata (komma).
+   Metadata i forumet är egna element med `gap-x-3`, utan tecken emellan.
+   Undantag: `·` som multiplikation i `hogskoleprovet-formler.tsx`.
+3. **Ingen eyebrow.** Komponenten `EyebrowLabel`, `eyebrow`-propen på `PageHero`,
+   `PageHeader` och CSS-klassen `.eyebrow` är borta. Rubriken står på egen hand.
+   Behövs ett datum eller en räkning skrivs den som vanlig `text-sm`-rad.
+4. **Ingen `uppercase` och ingen `tracking-wide/wider/widest/[Nem]`.** Etiketter
+   skrivs i vanlig gemen text. Undantag: rumskoden i `MatchmakerModal` och
+   rabattkoden i `DiscountCodeChip` (koder, inte etiketter) samt
+   `dropdown-menu.tsx` (biblioteksfil). `tracking-tight` på rubriker är kvar.
+5. **Undertexter finns bara om de ger information.** En `subtitle` som
+   parafraserar rubriken tas bort. Skriv sakligt, aldrig rytmiskt: inga
+   tretal ("Fem minuter, åtta frågor, en motståndare"), inga parallella korta
+   satser.
+6. **Siffror skrivs med siffror**: `40 uppgifter`, `5 minuter`, `8 delprov`.
+   Aldrig "Fyrtio uppgifter". Samma sak får inte stå på två sätt.
+7. **Samma information en gång per vy.** ELO står i dashboardens statusrad
+   (rank, streak, "200 till Guld") och inte också som badge på duellkortet.
+8. **Pill-formen (`rounded-full` + bakgrund) är för interaktiva val** som
+   Verbal/Kvantitativ-växeln. Statisk info (ELO, provpass, "Efter provet") är
+   vanlig text eller en textlänk. Undantag: numeriska notisbrickor.
+9. **Inga pilar i knappar och länkar**: varken `→`/`←` i text eller
+   `ArrowRight`/`ArrowLeft` som ikon. Tangentbordstecken i hjälptext
+   (`←/→ byter uppgift`) är symboler för knappar, inte dekoration.
+10. **Ett begrepp, en term.** **Kvantitativ** och **Verbal**, aldrig "Matte",
+    "Matematik" eller "Verbal del"/"Kvantitativ del" som namn på provdelen.
+    Matchtypen heter fortfarande `"math"` i koden; det är teknik. "Matte"
+    som vanligt ord i löptext om matematik är inte provdelen och får stå.
+11. **Inga ikoner bredvid rubriker eller etiketter** när de bara dekorerar.
+    Ikoner bär betydelse i knappar utan text, statusrader och tomma tillstånd.
+12. **Forumets starttrådar** (`scripts/forum-seed/trader.ts`) slutar inte med
+    någon mallmening. Texten som ändras i filen når redan publicerade trådar
+    med `bun run scripts/seed-forum.ts --apply --sync-only --only-topics`
+    (märker inläggen som redigerade).
+
+Kontroll efter en ändring: `node scripts/lint-copy.cjs` listar tankstreck,
+mittpunkter och pilar i strängar och JSX-text, och grep på
+`uppercase|tracking-(wide|wider|widest|\[)` ska bara träffa undantagen ovan.
 
 ### Shared primitives — use these, don't re-roll them
 

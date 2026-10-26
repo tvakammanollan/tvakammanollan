@@ -53,9 +53,6 @@ export function OrdPromoDialog({
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success/15 text-success">
             <BookOpen className="h-6 w-6" aria-hidden />
           </div>
-          <p className="mt-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-success">
-            Hela ordlistan
-          </p>
           <DialogTitle
             className="mt-2 text-[22px] leading-tight tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}

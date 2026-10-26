@@ -454,8 +454,8 @@ export function ProvRunner({
           </Link>
 
           <div className="min-w-0 flex-1 text-center">
-            <p className="truncate text-[11px] uppercase tracking-widest text-[var(--text-tertiary)]">
-              Provpass {data.pass} · {passKindLabel(data.kind)}
+            <p className="truncate text-xs text-[var(--text-tertiary)]">
+              Provpass {data.pass}: {passKindLabel(data.kind)}
             </p>
             <p className="text-xs tabular-nums text-[var(--cream)]">
               {answeredCount} av {total} besvarade
@@ -466,7 +466,7 @@ export function ProvRunner({
             {remaining !== null ? (
               <CircularTimer totalSeconds={data.minutes * 60} remainingSeconds={remaining} />
             ) : (
-              <span className="hidden items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs text-[var(--text-tertiary)] sm:inline-flex">
+              <span className="hidden items-center gap-1.5 text-xs text-[var(--text-tertiary)] sm:inline-flex">
                 <Clock className="h-3.5 w-3.5" aria-hidden />
                 Övningsläge
               </span>
@@ -698,7 +698,7 @@ function ProvIntro({
         Provpass {data.pass}
       </h1>
       <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
-        {passKindLabel(data.kind)} · {formatInt(data.questions.length)} uppgifter · {data.minutes}{" "}
+        {passKindLabel(data.kind)}, {formatInt(data.questions.length)} uppgifter, {data.minutes}{" "}
         minuter
       </p>
 
@@ -713,8 +713,8 @@ function ProvIntro({
               {delprovFull(s.code)}
             </dt>
             <dd className="mt-0.5 text-xs text-[var(--text-tertiary)]">
-              {s.count} uppgifter · rekommenderad tid {s.minutes} min
-              {hasPassage(s.code) ? " · med lästext" : ""}
+              {s.count} uppgifter, rekommenderad tid {s.minutes} min
+              {hasPassage(s.code) ? ", med lästext" : ""}
             </dd>
           </div>
         ))}
@@ -759,7 +759,7 @@ function ProvIntro({
           <h2 className="text-sm font-semibold text-[var(--cream)]">Du har ett påbörjat försök</h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)]">
             {answered} av {data.questions.length} uppgifter besvarade
-            {resumable.submittedAt ? " · redan inlämnat" : ""}.
+            {resumable.submittedAt ? ", redan inlämnat" : ""}.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <button

@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Table2 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { nivåSlug, nivåText } from "@/lib/normering";
@@ -75,8 +74,8 @@ function AntalRättHub() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-          {antalProv} provtillfällen · UHR:s officiella tabeller
+        <p className="text-sm text-white/65">
+          {antalProv} provtillfällen, UHR:s officiella tabeller
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -97,7 +96,6 @@ function AntalRättHub() {
           className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Table2 className="h-5 w-5 shrink-0 text-primary" aria-hidden />
           Antal rätt av 80 per poäng
         </h2>
         <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
@@ -158,7 +156,6 @@ function AntalRättHub() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Skriv ett gammalt prov
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/hogskoleprovet-normering"

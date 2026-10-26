@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
 import { HP_FEE_SEK, hpDatesAnswer } from "@/lib/hp-dates";
@@ -36,11 +35,11 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vilka delprov kan jag träna?",
-    a: "Alla åtta delprov: ORD (ordkunskap), MEK (meningskomplettering), LÄS (svensk läsförståelse), ELF (engelsk läsförståelse), XYZ (matematisk problemlösning), KVA (kvantitativa jämförelser), NOG (kvantitativa resonemang) och DTK (diagram, tabeller och kartor).",
+    a: "Alla 8 delprov: ORD (ordkunskap), MEK (meningskomplettering), LÄS (svensk läsförståelse), ELF (engelsk läsförståelse), XYZ (matematisk problemlösning), KVA (kvantitativa jämförelser), NOG (kvantitativa resonemang) och DTK (diagram, tabeller och kartor).",
   },
   {
     q: "Hur länge tar en match?",
-    a: "En match är 8 frågor på 5 minuter. Du kan välja verbal eller matte. Direkt efter matchen ser du ditt nya ELO och statistik per fråga.",
+    a: "En match är 8 frågor på 5 minuter. Du kan välja verbal eller kvantitativ. Direkt efter matchen ser du ditt nya ELO och statistik per fråga.",
   },
   {
     q: "Hur fungerar Gamla prov-läget?",
@@ -64,7 +63,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: "Vad är skillnaden mellan verbal och kvantitativ del?",
-    a: "Verbal del = ORD, MEK, LÄS och ELF (totalt 80 uppgifter). Kvantitativ del = XYZ, KVA, NOG och DTK (totalt 80 uppgifter). De viktas lika i normeringen, så båda halvorna är lika viktiga för slutbetyget.",
+    a: "Verbal = ORD, MEK, LÄS och ELF (totalt 80 uppgifter). Kvantitativ = XYZ, KVA, NOG och DTK (totalt 80 uppgifter). De viktas lika i normeringen, så båda halvorna är lika viktiga för slutbetyget.",
   },
   {
     q: "Hjälper Tvåkommanollan verkligen mot att höja mitt resultat?",
@@ -85,7 +84,7 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: pageMeta({
       path: "/faq",
-      title: "Vanliga frågor · FAQ",
+      title: "Vanliga frågor: FAQ",
       description:
         "Svar på vanliga frågor: är Tvåkommanollan gratis, hur fungerar ELO, är frågorna riktiga, behöver jag konto.",
       ogTitle: "Tvåkommanollan | Vanliga frågor",
@@ -120,9 +119,7 @@ function FaqPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="FAQ"
         title="Vanliga frågor"
-        subtitle="Korta svar på det vi oftast får. Hittar du inte det du söker?"
         align="center"
         variant="content"
       />
@@ -137,7 +134,6 @@ function FaqPage() {
             style={{ color: "var(--amber)" }}
           >
             Hör av dig
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
 

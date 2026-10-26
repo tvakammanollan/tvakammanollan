@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
-import { ArrowRight, type LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
 
 /* =====================================================================
    NEXT STEP — samma svar på "vad gör jag nu?" på varje slutskärm.
@@ -73,7 +73,6 @@ export function NextStep({
             <>
               <Icon className="h-4 w-4" />
               {f.label}
-              <ArrowRight className="h-3.5 w-3.5 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
             </>
           );
           const className =

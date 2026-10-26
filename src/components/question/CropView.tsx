@@ -5,7 +5,7 @@
  * text ur UHR:s PDF:er (se `scripts/hp-import/kvant.py`). Bilden innehåller hela
  * uppgiften — stam *och* svarsalternativ — vilket förr gav ett kort med fyra
  * tomma bokstavsknappar under en bild där alternativen redan stod, plus
- * uppgiftsnumret två gånger.
+ * uppgiftsnumret 2 gånger.
  *
  * Importen skriver därför ut var varje del sitter, som andelar av bilden, och
  * den här komponenten visar en av dem. Samma fil används till alla utsnitt —

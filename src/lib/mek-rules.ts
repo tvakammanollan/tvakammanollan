@@ -45,7 +45,7 @@ export const MAX_SENTENCES = 5;
 
 /**
  * Funktionsord som ensamt luckvärde. UHR tillåter det bara i flerluckor
- * (`När – omhuldade – komplex`, `med – opålitliga`), fem gånger på 600.
+ * (`När – omhuldade – komplex`, `med – opålitliga`), 5 gånger på 600.
  */
 const FUNCTION_WORDS = new Set(
   (
@@ -281,7 +281,7 @@ export function mekItemPasses(item: MekItem): boolean {
 }
 
 /**
- * Längsta följd av ord två texter delar. Används två gånger: mot arkivet (ingen
+ * Längsta följd av ord 2 texter delar. Används 2 gånger: mot arkivet (ingen
  * egen uppgift får likna en UHR-uppgift) och mot upphovsrättsskyddade källor
  * (nivå D får inte dela 6 ord i följd med källan, C7).
  */

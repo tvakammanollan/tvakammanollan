@@ -20,7 +20,6 @@ import {
 } from "@/lib/ord-paywall.functions";
 
 import {
-  ArrowRight,
   Check,
   X,
   RotateCcw,
@@ -53,10 +52,10 @@ export const Route = createFileRoute("/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/ord",
-      title: "ORD högskoleprovet · öva 10 000+ ord",
+      title: "ORD högskoleprovet: öva 10 000+ ord",
       description:
         "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition och ingen tidspress. De första 40 orden är gratis.",
-      ogTitle: "Öva ord · 10 000+ HP-ord",
+      ogTitle: "Öva ord: 10 000+ HP-ord",
       ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
     }),
     links: pageLinks("/ord"),
@@ -68,7 +67,7 @@ export const Route = createFileRoute("/ord")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        name: "Öva HP-ord · 10 000+ riktiga ORD-frågor",
+        name: "Öva HP-ord: 10 000+ riktiga ORD-frågor",
         description:
           "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
         url: "https://tvakommanollan.se/ord",
@@ -151,7 +150,7 @@ function DefinitionBody({ definition }: { definition: string | null | undefined 
 
       {related.length > 0 && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-white/55">
+          <span className="text-xs font-semibold text-white/55">
             Liknande ord
           </span>
           {related.map((w) => (
@@ -166,7 +165,7 @@ function DefinitionBody({ definition }: { definition: string | null | undefined 
       )}
 
       {wordClass && (
-        <p className="mt-2 text-[11px] uppercase tracking-wide text-white/45">{wordClass}</p>
+        <p className="mt-2 text-xs text-white/45">{wordClass}</p>
       )}
     </div>
   );
@@ -210,7 +209,7 @@ function DefinitionBlock({
             {/* Ingen versalisering: definitionSourceLabel() skriver ut
                 kvalifikationer med ordet i (`– om "sälla"`), och ORD-ord står
                 gement överallt annars — ordText() ser till det. */}
-            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-primary">
+            <div className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold text-primary">
               <BookOpen className="h-3.5 w-3.5" />
               {definitionSourceLabel(source)}
             </div>
@@ -454,8 +453,8 @@ function OrdPracticePage() {
             .sort()
             .map((d) => diffNames[d])
             .join(", ");
-    const filtered = excludeCorrect ? " · utan ord du redan kan" : "";
-    return `${target} ord · ${source} · ${diff}${filtered}`;
+    const filtered = excludeCorrect ? ", utan ord du redan kan" : "";
+    return `${target} ord, ${source}, ${diff}${filtered}`;
   })();
 
   // Ord som är mogna för repetition just nu. Körs vid varje render, till
@@ -473,12 +472,10 @@ function OrdPracticePage() {
     <>
       {/* Bara i startvyn, precis som /train. Hjälten är en halv skärm hög och
           låg tidigare kvar under hela passet, så varje ord sköts ner under
-          vecket och man fick skrolla förbi den trettio gånger i rad. */}
+          vecket och man fick skrolla förbi den 30 gånger i rad. */}
       {phase === "setup" && (
         <PageHero
           zon="ord"
-          eyebrowTone="leaf"
-          eyebrow="10 000+ ord"
           title="Öva"
           cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
           subtitle="Spaced repetition. Ingen tidspress. De första 40 orden är gratis."
@@ -501,7 +498,7 @@ function OrdPracticePage() {
                 styra öppnar Anpassa, precis som på /train. */}
             {access?.locked && <OrdPaywall access={access} />}
             <GlassCard className={`p-6 text-center sm:p-8 ${access?.locked ? "hidden" : ""}`}>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45">
+              <p className="text-xs font-semibold text-white/45">
                 Ditt pass
               </p>
               <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
@@ -510,7 +507,6 @@ function OrdPracticePage() {
                 onClick={() => void startSession(target)}
                 disabled={loading}
                 className="mt-4 w-full"
-                icon={<ArrowRight className="h-4 w-4" />}
               >
                 {loading ? "Förbereder…" : `Öva ${target} ord`}
               </PrimaryCTA>
@@ -556,7 +552,6 @@ function OrdPracticePage() {
                   style={{ borderColor: "var(--danger-line)", color: "var(--danger)" }}
                 >
                   Repetera
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </button>
               </div>
             )}
@@ -684,7 +679,7 @@ function OrdPracticePage() {
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
               <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm sm:p-8">
-                <div className="text-[11px] tracking-wide text-muted-foreground">Synonym till</div>
+                <div className="text-[11px] text-muted-foreground">Synonym till</div>
                 <h2
                   className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"
                   style={{ fontFamily: "var(--font-display)" }}
@@ -765,7 +760,6 @@ function OrdPracticePage() {
                   <div className="mt-6 flex items-center justify-end">
                     <Button onClick={next} className="gap-2">
                       {idx + 1 >= target ? "Visa resultat" : "Nästa"}{" "}
-                      <ArrowRight className="h-4 w-4" />
                     </Button>
                   </div>
                 )}
@@ -801,7 +795,7 @@ function OrdPracticePage() {
             </div>
 
             <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
-              <h3 className="mb-3 text-xs font-semibold tracking-wide text-muted-foreground">
+              <h3 className="mb-3 text-xs font-semibold text-muted-foreground">
                 Genomgång
               </h3>
               <ol className="grid gap-2">

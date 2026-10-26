@@ -160,7 +160,7 @@ export function officialNormering(
   if (!table || table.length === 0 || total <= 0) return null;
   const max = partMax(table);
   // Skrivet underlag räknas upp till tabellens skala. Har man skrivit hela
-  // delen är det en ren identitet; har man skrivit ett av två provpass är det
+  // delen är det en ren identitet; har man skrivit ett av 2 provpass är det
   // samma antagande som resten av flödet gör, och det sägs i gränssnittet.
   const raw = Math.max(0, Math.min(max, Math.round((score / total) * max)));
   for (const [lo, hi, value] of table) {

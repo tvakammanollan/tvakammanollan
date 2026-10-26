@@ -13,7 +13,7 @@
  *    `question_text` den riktiga frågan, alternativen har egna texter, och
  *    bilden är underlaget bredvid.
  *
- * Renderades båda likadant fick den första formen sin uppgift två gånger: en
+ * Renderades båda likadant fick den första formen sin uppgift 2 gånger: en
  * gång som obegriplig radbruten text och en gång, korrekt, i bilden strax
  * under.
  *

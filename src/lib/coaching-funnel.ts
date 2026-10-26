@@ -8,7 +8,7 @@
  * läste sammanfattningen och stängde fliken, eller skrev in halva sitt nummer
  * och ångrade sig, lämnade inte ett enda spår: i PostHog syntes det som att
  * steget efter saknades, vilket ser likadant ut vare sig personen tänkte efter
- * i tio minuter eller aldrig såg fältet. "Hur många fyllde i det alls" gick
+ * i 10 minuter eller aldrig såg fältet. "Hur många fyllde i det alls" gick
  * därför inte att svara på.
  *
  * Den här modulen äger språket för det: ett **steg** (jämförbart tal) och ett

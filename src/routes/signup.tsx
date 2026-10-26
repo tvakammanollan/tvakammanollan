@@ -7,12 +7,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
-import { ArrowRight, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
 import { useServerFn } from "@tanstack/react-start";
 import { sendVerificationEmail } from "@/lib/email-verification.functions";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { SuccessScreen } from "@/routes/login";
 
 export const Route = createFileRoute("/signup")({
@@ -20,7 +19,7 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: pageMeta({
       path: "/signup",
-      title: "Skapa konto · gratis HP-träning",
+      title: "Skapa konto: gratis HP-träning",
       description:
         "Skapa gratis konto på Tvåkommanollan på 30 sekunder. Inget kreditkort. Börja tävla direkt.",
       ogTitle: "Tvåkommanollan | Skapa konto gratis",
@@ -153,7 +152,6 @@ function SignupPage() {
                   className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {submitting ? "Skapar konto…" : "Skapa konto"}
-                  {!submitting && <ArrowRight className="h-4 w-4" />}
                 </button>
               </form>
             </div>
@@ -232,7 +230,6 @@ function CheckEmailScreen({
       className="space-y-6 text-center"
     >
       <div className="space-y-2">
-        <EyebrowLabel tone="teal">Nästan klart</EyebrowLabel>
         <h1
           className="text-[36px] font-bold leading-[1.05] tracking-tight text-white sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}

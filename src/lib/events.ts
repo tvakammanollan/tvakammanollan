@@ -5,7 +5,7 @@
  * PostHog (se telemetry.ts). Poängen med den här filen är att namnen och deras
  * egenskaper står på ETT ställe: ett stavfel eller ett `match_type` som ibland
  * heter `matchType` gör en funnel obrukbar i efterhand, och det syns inte
- * förrän någon försöker bygga insikten i PostHog tre veckor senare.
+ * förrän någon försöker bygga insikten i PostHog 3 veckor senare.
  *
  * Regler för nya händelser:
  * - `substantiv_verb` i imperfekt (`match_created`, inte `createMatch`).
@@ -178,7 +178,7 @@ export interface ProductEvents {
       `lead_submitted` är "började skriva och skickade ändå inte". */
   coaching_form_started: { source: CoachingSource; field: LeadField };
   /** Klientvalideringen stoppade inskicket. Fyras vid varje försök, inte en
-      gång per person: samma fel tre gånger i rad är en annan historia än ett
+      gång per person: samma fel 3 gånger i rad är en annan historia än ett
       fel som rättades direkt. Detta är INTE ett serverfel — knappen trycktes,
       men inget lämnade webbläsaren. */
   coaching_lead_blocked: { source: CoachingSource; reason: LeadBlockReason };

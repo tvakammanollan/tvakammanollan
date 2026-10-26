@@ -29,7 +29,7 @@ export const MATCH_QUOTA = {
 /**
  * Minsta rimliga sekunder per fråga innan en match får ge ELO.
  * Ett verbalt pass har 8 frågor → golvet blir 16 sekunder. Att läsa och
- * besvara en ORD-uppgift på under två sekunder går inte; att klicka igenom
+ * besvara en ORD-uppgift på under 2 sekunder går inte; att klicka igenom
  * åtta av dem gör det bara om en maskin gör det.
  */
 export const MIN_SECONDS_PER_QUESTION = 2;

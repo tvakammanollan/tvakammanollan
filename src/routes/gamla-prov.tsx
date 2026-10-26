@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, FileText } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
@@ -27,11 +26,11 @@ export const Route = createFileRoute("/gamla-prov")({
     return {
       meta: pageMeta({
         path: "/gamla-prov",
-        title: fitTitle(`Gamla högskoleprov ${oldest}–${newest} · alla provpass med facit`),
+        title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}: alla provpass med facit`),
         description:
           `Skriv ${exams.length} riktiga högskoleprov online: ${formatInt(count)} uppgifter från ` +
           `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,
-        ogTitle: `Gamla högskoleprov ${oldest}–${newest} · Tvåkommanollan`,
+        ogTitle: `Gamla högskoleprov ${oldest}–${newest}: Tvåkommanollan`,
         ogDescription: `${exams.length} provtillfällen, ${formatInt(count)} uppgifter med facit. Gratis.`,
       }),
       links: pageLinks("/gamla-prov"),
@@ -82,9 +81,7 @@ function GamlaProvPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Högskoleprovet · gamla prov"
         title="Alla gamla högskoleprov"
-        subtitle={`${exams.length} provtillfällen och ${formatInt(count)} uppgifter med facit. Skriv hela provpass på tid, direkt i webbläsaren.`}
         align="center"
         variant="compact"
         zon="prov"
@@ -103,15 +100,14 @@ function GamlaProvPage() {
 
         <section className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm">
           <h2
-            className="flex items-center gap-2 text-lg font-bold text-[var(--cream)]"
+            className="text-lg font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <FileText className="h-5 w-5 text-[var(--amber)]" aria-hidden />
             Om proven
           </h2>
           <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
             <p>
-              Ett högskoleprov består av fem provpass, varav ett är ett utprövningspass som inte
+              Ett högskoleprov består av 5 provpass, varav ett är ett utprövningspass som inte
               räknas. De fyra som räknas, två verbala och två kvantitativa, publiceras av
               Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade
               precis som i provhäftet och med samma tidsgräns: 55 minuter per pass.
@@ -154,32 +150,27 @@ function ExamCard({ exam, results }: { exam: ExamSummary; results: ProvResults |
     >
       <span className="flex items-center justify-between gap-2">
         <span className="text-base font-semibold text-[var(--cream)]">{exam.label}</span>
-        <ArrowRight
-          className="h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-colors group-hover:text-[var(--amber)]"
-          aria-hidden
-        />
+
       </span>
       <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
         <span>
-          {exam.passes.length} provpass · {formatInt(exam.questions)} uppgifter
+          {exam.passes.length} provpass, {formatInt(exam.questions)} uppgifter
         </span>
       </span>
-      <span className="mt-3 flex flex-wrap gap-1.5">
+      <span className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
         {exam.passes.map((p) => {
           const written = results ? passResult(results, exam.term, p.pass) : undefined;
           return (
             <span
               key={p.pass}
-              className={`rounded-full px-2 py-0.5 text-[11px] ${
-                written
-                  ? "bg-[var(--success-soft)] text-[var(--success)]"
-                  : "bg-white/[0.05] text-[var(--text-secondary)]"
+              className={`text-xs ${
+                written ? "text-[var(--success)]" : "text-[var(--text-secondary)]"
               }`}
             >
-              Pass {p.pass} · {passKindLabel(p.kind)}
+              Pass {p.pass}: {passKindLabel(p.kind)}
               {written && (
                 <span className="font-semibold tabular-nums">
-                  {" · "}
+                  {", "}
                   {written.score}/{written.total}
                 </span>
               )}

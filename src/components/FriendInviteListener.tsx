@@ -44,7 +44,7 @@ export function FriendInviteListener() {
               .eq("id", inv.from_user)
               .maybeSingle();
             const name = sender?.username ? displayName(sender.username) : "En vän";
-            const typeLabel = inv.match_type === "math" ? "matte" : "verbal";
+            const typeLabel = inv.match_type === "math" ? "kvantitativ" : "verbal";
             sounds.invite();
             toast.message(`${name} bjuder in dig`, {
               description: `Snabbmatch i ${typeLabel}`,

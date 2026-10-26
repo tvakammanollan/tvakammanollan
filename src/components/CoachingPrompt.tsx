@@ -130,7 +130,7 @@ export function CoachingPrompt() {
     recordPageview();
     // Måste ske vid VARJE sidvisning, inte bara vid första: det är den som
     // håller sessionen vid liv. Utan den räknas den som läser en guide i
-    // fyrtio minuter och klickar vidare som två besök.
+    // 40 minuter och klickar vidare som två besök.
     recordSessionActivity();
     countOrdPromoPageview();
   }, [path]);
@@ -267,9 +267,6 @@ export function CoachingPrompt() {
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
               <GraduationCap className="h-6 w-6" aria-hidden />
             </div>
-            <p className="mt-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-success">
-              Personlig coachning
-            </p>
             <DialogTitle
               className="mt-2 text-[22px] leading-tight tracking-tight"
               style={{ fontFamily: "var(--font-display)" }}

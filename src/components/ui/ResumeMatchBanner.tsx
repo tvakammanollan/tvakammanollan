@@ -112,7 +112,7 @@ export function ResumeMatchBanner() {
     setSaved(null);
   };
 
-  const typ = saved.matchType === "math" ? "Matte" : saved.matchType === "verbal" ? "Verbal" : null;
+  const typ = saved.matchType === "math" ? "Kvantitativ" : saved.matchType === "verbal" ? "Verbal" : null;
 
   return (
     <div className="mx-auto max-w-5xl px-4 pt-6">

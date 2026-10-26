@@ -10,18 +10,12 @@ import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { SafeBoundary } from "@/components/SafeBoundary";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
 import { getNextHpDate } from "@/lib/hp-dates";
 import {
-  BookOpen,
-  PenLine,
   Sparkles,
   Flame,
-  ArrowRight,
-  Swords,
-  ClipboardCheck,
 } from "lucide-react";
 import { trackEvent } from "@/lib/events";
 
@@ -68,9 +62,9 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
   const dagarKvar = nastaProv
     ? Math.max(0, Math.ceil((nastaProv.date.getTime() - Date.now()) / 86_400_000))
     : null;
-  const eyebrow =
+  const nedräkning =
     nastaProv && dagarKvar !== null
-      ? `${nastaProv.label} · ${dagarKvar} ${dagarKvar === 1 ? "dag" : "dagar"} kvar`
+      ? `${nastaProv.label}, ${dagarKvar} ${dagarKvar === 1 ? "dag" : "dagar"} kvar`
       : null;
 
   return (
@@ -110,10 +104,8 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
         <div>
           <header>
             <div className="min-w-0">
-              {eyebrow ? (
-                <EyebrowLabel tone="teal" animate={false}>
-                  {eyebrow}
-                </EyebrowLabel>
+              {nedräkning ? (
+                <p className="text-sm font-semibold text-bark">{nedräkning}</p>
               ) : null}
               {/* Rubriken är en fråga, för det är vad sidan är: ett val
                   mellan fyra aktiviteter. Användarens namn och avatar finns
@@ -154,15 +146,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           <div className="grid gap-4 sm:grid-cols-2">
             {/* ---------- Duellen ---------- */}
             <section className="flex flex-col rounded-[40px] bg-terracotta p-7 sm:p-8">
-              <div className="flex items-start justify-between gap-3">
-                <span className="flex items-center gap-2.5 text-[var(--cream-3)]">
-                  <Swords className="h-6 w-6" />
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
-                    Duellen
-                  </span>
-                </span>
-                <RankBadge elo={activeElo} size="sm" />
-              </div>
 
               <h2
                 className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
@@ -171,7 +154,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 Spela en match
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-[var(--cream-3)]">
-                Åtta uppgifter på fem minuter. Verbal och kvantitativ ELO räknas var för sig.
+                8 uppgifter på 5 minuter. Verbal och kvantitativ ELO räknas var för sig.
               </p>
 
               {/* Spåret måste vara ljusare än kortet, inte mörkare som när
@@ -187,7 +170,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                   onClick={() => setMatchType("verbal")}
                 />
                 <SubjectPill
-                  label="Matte"
+                  label="Kvantitativ"
                   active={matchType === "math"}
                   onClick={() => setMatchType("math")}
                 />
@@ -199,8 +182,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 onClick={() => setMatchOpen(true)}
                 className="group mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-125 sm:w-auto sm:self-start sm:px-8"
               >
-                Spela {matchType === "verbal" ? "verbal" : "matte"}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                Spela {matchType === "verbal" ? "verbal" : "kvantitativ"}
               </button>
             </section>
 
@@ -209,12 +191,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               to="/gamla-prov"
               className="flex flex-col rounded-[40px] bg-sky p-7 transition hover:brightness-[1.03] sm:p-8"
             >
-              <span className="flex items-center gap-2.5 text-bark">
-                <ClipboardCheck className="h-6 w-6" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
-                  Gamla prov
-                </span>
-              </span>
               <h2
                 className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -222,13 +198,11 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 Skriv ett provpass
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-bark">
-                Fyrtio uppgifter på tid, precis som på provdagen. Trettio provtillfällen med facit
-                på varje uppgift.
+                40 uppgifter på tid, med facit på varje uppgift.
               </p>
               <div className="flex-1" />
               <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand">
                 Välj provtillfälle
-                <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
 
@@ -237,12 +211,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               to="/ord"
               className="flex flex-col rounded-[40px] bg-lavender p-7 transition hover:brightness-[1.03] sm:p-8"
             >
-              <span className="flex items-center gap-2.5 text-[var(--plum)]">
-                <BookOpen className="h-6 w-6" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
-                  Ordlistan
-                </span>
-              </span>
               <h2
                 className="display mt-5 text-[24px] font-bold leading-tight text-[var(--cream)]"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -250,13 +218,12 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 Plugga ord
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-[var(--plum)]">
-                Över 10 000 riktiga HP-ord. Ett ord du missar kommer tillbaka nästa dag, sedan med
-                längre mellanrum för varje gång du har det rätt.
+                Över 10 000 HP-ord. Ord du missar kommer tillbaka nästa dag, sedan med längre
+                mellanrum för varje gång du har rätt.
               </p>
               <div className="flex-1" />
               <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg border-2 border-[var(--plum)] px-6 py-3 text-[15px] font-semibold text-[var(--plum)]">
                 Öva ord
-                <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
 
@@ -265,10 +232,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               to="/mek-ovning"
               className="flex flex-col rounded-[40px] bg-plum p-7 transition hover:brightness-125 sm:p-8"
             >
-              <span className="flex items-center gap-2.5 text-cream-wash">
-                <PenLine className="h-6 w-6" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">MEK</span>
-              </span>
               <h2
                 className="display mt-5 text-[24px] font-bold leading-tight text-on-brand"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -282,7 +245,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               <div className="flex-1" />
               <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg bg-cream-wash px-6 py-3.5 text-[15px] font-semibold text-[var(--cream-3)]">
                 Öva MEK
-                <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
           </div>
@@ -322,7 +284,6 @@ function GuestBanner() {
           className="group inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-on-brand transition hover:brightness-125"
         >
           Skapa konto
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
     </div>
@@ -345,7 +306,7 @@ function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; stre
         {/* Vilket ELO som visas måste stå utskrivet — annars ser samma rad
             olika ut vid två besök utan att något förklarar varför. */}
         <span className="text-xs font-medium text-white/50">
-          {track === "verbal" ? "verbal" : "matte"}
+          {track === "verbal" ? "verbal" : "kvantitativ"}
         </span>
       </span>
 
@@ -414,7 +375,7 @@ function SubjectPill({
 }
 
 /**
- * Liten rund knapp till preliminärt facit, veckorna efter en provdag.
+ * Textlänk till preliminärt facit, veckorna efter en provdag.
  *
  * Med flit inte ett kort till och inte en popup: skärmen ska fortfarande
  * svara på "vad gör jag nu?" med tre val, och den som undrar över facit
@@ -422,21 +383,14 @@ function SubjectPill({
  */
 function EfterProvetKnapp() {
   return (
-    <div className="mb-3 flex">
+    <p className="mb-4 text-sm">
       <Link
         to="/hogskoleprovet-facit"
         onClick={() => trackEvent("facit_button_clicked", { term: FACIT.term })}
-        className="group inline-flex min-h-[40px] items-center gap-2 rounded-full border border-primary/30 bg-white/80 py-1.5 pl-1.5 pr-4 text-[13.5px] font-semibold text-[var(--cream)] shadow-sm transition hover:border-primary/60"
+        className="font-semibold text-primary underline-offset-2 hover:underline"
       >
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-on-brand">
-          <ClipboardCheck className="h-3.5 w-3.5" aria-hidden />
-        </span>
         Efter provet: facit och trolig normering
-        <ArrowRight
-          className="h-3.5 w-3.5 text-primary transition-transform group-hover:translate-x-0.5"
-          aria-hidden
-        />
       </Link>
-    </div>
+    </p>
   );
 }

@@ -1,7 +1,6 @@
 import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { type Produktzon, zonDekor } from "@/lib/produktzon";
-import { EyebrowLabel } from "./EyebrowLabel";
 import { CyclingTitle } from "./CyclingTitle";
 import { SplitText } from "@/components/landing/MotionFX";
 
@@ -18,8 +17,6 @@ type Variant = "compact" | "content";
  * rad, med ett vanligt mellanslag emellan.
  */
 export function PageHero({
-  eyebrow,
-  eyebrowTone = "teal",
   title,
   subtitle,
   cycleWords,
@@ -31,9 +28,6 @@ export function PageHero({
   dekor,
   className,
 }: {
-  eyebrow?: string;
-  /** Bark som standard. Löv på sidor som handlar om framsteg och resultat. */
-  eyebrowTone?: "teal" | "amber" | "leaf";
   /**
    * Produktzonen sidan tillhör. Sätter den färgar heron med zonens
    * dekorformer, vilket är det enda stället zonfärgen får synas i hero:n.
@@ -95,15 +89,9 @@ export function PageHero({
       ) : null}
 
       <div className={cn("relative mx-auto max-w-6xl px-4 sm:px-6", centered && "text-center")}>
-        {eyebrow ? (
-          <EyebrowLabel tone={eyebrowTone} className={cn(centered && "mx-auto")}>
-            {eyebrow}
-          </EyebrowLabel>
-        ) : null}
-
         <h1
           className={cn(
-            "mt-4 font-bold tracking-tight text-white",
+            "font-bold tracking-tight text-white",
             isCompact
               ? "text-[40px] leading-[1.05] sm:text-[56px] md:text-[64px]"
               : "text-[48px] leading-[1.02] sm:text-[68px] md:text-[84px]",

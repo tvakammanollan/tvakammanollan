@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/guider/elf")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "ELF · Engelsk läsförståelse", path: "/guider/elf" },
+        { name: "ELF: Engelsk läsförståelse", path: "/guider/elf" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -44,17 +43,11 @@ function ElfGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Verbalt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          ELF · Engelsk läsförståelse
+          ELF: Engelsk läsförståelse
         </h1>
       </header>
 
@@ -65,7 +58,7 @@ function ElfGuidePage() {
           Vad är ELF?
         </h2>
         <p>
-          ELF (English as a Foreign Language) är läsförståelse på engelska. Du möter fyra texter per
+          ELF (English as a Foreign Language) är läsförståelse på engelska. Du möter 4 texter per
           provpass hämtade från akademiska tidskrifter, vetenskapsjournalistik, kulturkritik och
           samhällsdebatt. Texterna är på engelska och frågorna är formulerade på engelska, men de
           alternativa svaren är noggrant valda för att testa exakt läsförståelse, inte allmänna
@@ -155,7 +148,6 @@ function ElfGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Öva ELF-frågor gratis på Tvåkommanollan
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

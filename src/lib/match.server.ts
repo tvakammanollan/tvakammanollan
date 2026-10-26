@@ -368,11 +368,11 @@ export function calcNewElo(oldElo: number, oppElo: number, result: 0 | 0.5 | 1):
  * En match som lämnats in orimligt fort (`isImplausiblyFast`) får inte HÖJA
  * någons ELO — det var hela poängen med tidsgolvet, och den delen står kvar.
  * Men den ska sänka: en förlust kostar lika mycket vare sig den tog tio
- * sekunder eller fem minuter. Att hoppa över uträkningen helt gjorde både att
+ * sekunder eller 5 minuter. Att hoppa över uträkningen helt gjorde både att
  * förlusten blev gratis och att matchen saknade vinnare, ELO-historik och
  * siffra på resultatskärmen.
  *
- * Följden är medvetet asymmetrisk: den som klickar igenom åtta frågor på tio
+ * Följden är medvetet asymmetrisk: den som klickar igenom 8 frågor på tio
  * sekunder kan bara förlora på det. Det är det enda som gör odling
  * meningslös utan att straffa den som råkar spela snabbt.
  */
@@ -482,7 +482,7 @@ export async function processMatchResultServer(matchId: string, opts?: { force?:
     return processMatchResultServer(matchId);
   }
 
-  // Tidsgolv: en match som lämnats in snabbare än två sekunder per fråga är
+  // Tidsgolv: en match som lämnats in snabbare än 2 sekunder per fråga är
   // inte spelad, den är skriptad. Mäts från `started_at` (annars `created_at`),
   // vilket för privata rum alltid är *före* spelstart och därför aldrig kan
   // slå fel där. Se `match-abuse.ts`.

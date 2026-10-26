@@ -38,7 +38,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         // Titeln var 83 tecken och kapades i träfflistan. Varumärket är den
         // svans som tål att falla bort — Google skriver ofta dit sajtnamnet
         // ändå, härlett ur og:site_name.
-        title: fitTitle(`${data.label} provpass ${data.pass} · ${delprov}`, "med facit"),
+        title: fitTitle(`${data.label} provpass ${data.pass}: ${delprov}`, "med facit"),
         // Två meningar, inte en: `data.label` bär redan ordet provet ("Skriv
         // provpass 1 från högskoleprovet Höstprovet 2025" stammade), och en
         // enda lång mening kan bara kapas mitt i — den andra meningen kan
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
             `Facit och automatisk rättning direkt.`,
           "Gratis och utan inloggning.",
         ),
-        ogTitle: `${data.label} · provpass ${data.pass}`,
+        ogTitle: `${data.label}: provpass ${data.pass}`,
         ogDescription: `${formatInt(data.questions.length)} uppgifter i ${delprov} med facit.`,
       }),
       links: pageLinks(path),
@@ -64,7 +64,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "Quiz",
-          name: `${data.label} · provpass ${data.pass} (${passKindLabel(data.kind)})`,
+          name: `${data.label}: provpass ${data.pass} (${passKindLabel(data.kind)})`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
           isAccessibleForFree: true,

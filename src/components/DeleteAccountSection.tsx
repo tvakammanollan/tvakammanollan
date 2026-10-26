@@ -71,7 +71,7 @@ export function DeleteAccountSection() {
         </p>
         <p>
           <strong className="text-[var(--cream)]">Behålls:</strong> matchresultat och forumsinlägg,
-          men utan ditt namn — motståndarens historik och trådarnas läsbarhet ska överleva. Har du
+          men utan ditt namn. Motståndarens historik och trådarnas läsbarhet ska överleva. Har du
           köpt studieupplägget behålls köpuppgifterna, eftersom bokföring kräver det.
         </p>
         <p>Detta går inte att ångra.</p>

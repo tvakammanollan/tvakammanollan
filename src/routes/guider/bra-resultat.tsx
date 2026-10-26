@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
@@ -9,7 +8,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/bra-resultat",
-      title: fitTitle("Hur får man bra resultat på HP? · Komplett guide"),
+      title: fitTitle("Hur får man bra resultat på HP?: Komplett guide"),
       description:
         "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat. Från 1.0 till 2.0 med rätt strategi.",
       ogTitle: "Tvåkommanollan | Bra resultat på HP",
@@ -25,7 +24,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "Hur får man bra resultat på HP? · Komplett guide",
+          headline: "Hur får man bra resultat på HP?: Komplett guide",
           description:
             "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat.",
           url: "https://tvakommanollan.se/guider/bra-resultat",
@@ -50,7 +49,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
             "@type": "HowToStep",
             position: 2,
             name: "Vecka 1–2: fokusera på svagaste delprov",
-            text: "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller matte: välj din starkare sida och gör den perfekt.",
+            text: "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller kvantitativ: välj din starkare sida och gör den perfekt.",
           },
           {
             "@type": "HowToStep",
@@ -89,12 +88,6 @@ function BraResultatGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Strategi
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
@@ -236,7 +229,6 @@ function BraResultatGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Skapa gratis konto och börja träna
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

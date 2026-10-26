@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle, trimToWord } from "@/lib/seo-text";
 import { getOrdlistaEntry } from "@/lib/ordlista.functions";
@@ -20,7 +19,7 @@ import { ordExamTerms } from "@/lib/ord-termer";
    1. Förklaringen, med källan utskriven. Den är hämtad ur en ordbok och
       ska aldrig se ut som vår egen text — därav källraden och att
       exempelmeningarna sätts i kursiv som citat.
-   2. Uppgiften ordet faktiskt kom ur, med sina fem alternativ och facit.
+   2. Uppgiften ordet faktiskt kom ur, med sina 5 alternativ och facit.
       Det är offentligt UHR-material och finns inte samlat någon
       annanstans; det är det som gör sidan värd att indexera i stället
       för att vara ännu en ordboksavskrift.
@@ -56,7 +55,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Vad betyder ${word}?`, "· Ordlista"),
+        title: fitTitle(`Vad betyder ${word}?`, "Ordlista"),
         // Kvalitetsgrinden, se `ordIndexable` i ordlista.server.ts.
         noindex: !loaderData.indexable,
         description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
@@ -160,7 +159,6 @@ function OrdlistaEntryPage() {
           className="flex items-center gap-1.5 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <BookOpen className="h-4 w-4 text-primary" />
           Vad betyder {word}?
         </h2>
 
@@ -178,7 +176,7 @@ function OrdlistaEntryPage() {
         {/* Källraden är också gemen: `definitionSourceLabel()` skriver ut
             kvalifikationer med ordet i (`– om "sälla"`, `rättstavat "sälla"`,
             54 rader), och versaler hade skrikit ut ordet där också. */}
-        <p className="mt-4 text-[11px] tracking-wide text-white/45">
+        <p className="mt-4 text-[11px] text-white/45">
           {sourceUrl ? (
             <a
               href={sourceUrl}
@@ -305,7 +303,6 @@ function OrdlistaEntryPage() {
           className="flex items-center gap-1.5 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Sparkles className="h-4 w-4 text-[var(--amber)]" />
           Plugga orden i stället för att slå upp dem
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
@@ -318,7 +315,6 @@ function OrdlistaEntryPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Träna ORD gratis
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/guider/ord"
@@ -342,7 +338,6 @@ function OrdlistaEntryPage() {
             className="group flex max-w-[48%] items-center gap-2 text-white/60 transition hover:text-[var(--cream)]"
             rel="prev"
           >
-            <ArrowLeft className="h-4 w-4 shrink-0" />
             <span className="truncate">{prev.word}</span>
           </Link>
         ) : (
@@ -356,7 +351,6 @@ function OrdlistaEntryPage() {
             rel="next"
           >
             <span className="truncate">{next.word}</span>
-            <ArrowRight className="h-4 w-4 shrink-0" />
           </Link>
         ) : (
           <span />

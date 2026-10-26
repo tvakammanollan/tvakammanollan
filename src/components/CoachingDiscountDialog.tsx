@@ -50,7 +50,7 @@ export function CoachingDiscountDialog({
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
             <BadgePercent className="h-6 w-6" aria-hidden />
           </div>
-          <p className="mt-3.5 text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+          <p className="mt-3.5 text-sm font-semibold text-primary">
             {DISCOUNT_PERCENT} % rabatt
           </p>
           <DialogTitle

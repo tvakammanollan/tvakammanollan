@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/guider/las")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "LÄS · Svensk läsförståelse", path: "/guider/las" },
+        { name: "LÄS: Svensk läsförståelse", path: "/guider/las" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -84,17 +83,11 @@ function LasGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Verbalt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          LÄS · Svensk läsförståelse
+          LÄS: Svensk läsförståelse
         </h1>
       </header>
 
@@ -105,7 +98,7 @@ function LasGuidePage() {
           Vad testar LÄS?
         </h2>
         <p>
-          LÄS-delprovet består av fyra svenska texter per provpass med fem frågor per text, totalt
+          LÄS-delprovet består av 4 svenska texter per provpass med 5 frågor per text, totalt
           20 uppgifter. Texterna är hämtade från vetenskap, samhällsdebatt och kultur och är ofta
           komplexa med ett akademiskt eller resonerande språk. Frågorna testar inte om du kan
           memorera texten utan om du kan navigera i den: hitta information, dra slutsatser och
@@ -248,7 +241,6 @@ function LasGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Öva LÄS-frågor gratis på Tvåkommanollan
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

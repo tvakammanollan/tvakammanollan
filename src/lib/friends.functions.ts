@@ -167,7 +167,7 @@ export const inviteFriendToMatch = createServerFn({ method: "POST" })
  * via notisklockan / FriendInviteListener och accepterar precis som vanligt.
  *
  * INBJUDAN LEVER I 30 MINUTER (`expires_at`-default på tabellen) och det är
- * med flit: matchen är fem minuter lång och realtidsspelad, så en inbjudan
+ * med flit: matchen är 5 minuter lång och realtidsspelad, så en inbjudan
  * som accepteras i morgon ger ett bräde ingen sitter vid. Följden är att
  * revansch bara fungerar mot någon som är online ungefär nu — och det MÅSTE
  * synas i UI:t, annars ser en obesvarad inbjudan ut som en trasig funktion.

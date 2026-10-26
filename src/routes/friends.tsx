@@ -34,7 +34,7 @@ export const Route = createFileRoute("/friends")({
   head: () => ({
     meta: pageMeta({
       path: "/friends",
-      title: "Vänner · utmana dina kompisar i HP",
+      title: "Vänner: utmana dina kompisar i HP",
       description:
         "Lägg till vänner på Tvåkommanollan och bjud in dem till en privat HP-battle. Se vem som plockar mest ELO i ditt gäng.",
       ogTitle: "Tvåkommanollan | Vänner",
@@ -204,7 +204,6 @@ function FriendsPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Din krets"
         title="Vänner och utmaningar"
         subtitle="Lägg till vänner via användarnamn och bjud in dem till en snabbmatch."
         variant="compact"
@@ -227,7 +226,7 @@ function FriendsPage() {
         {/* Incoming requests */}
         {incoming.length > 0 && (
           <section className="mt-8">
-            <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
+            <h2 className="mb-2 text-sm font-semibold text-muted-foreground">
               Förfrågningar ({incoming.length})
             </h2>
             <ul className="grid gap-2">
@@ -267,7 +266,7 @@ function FriendsPage() {
 
         {/* Friends list */}
         <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
+          <h2 className="mb-2 text-sm font-semibold text-muted-foreground">
             Mina vänner ({accepted.length})
           </h2>
           {accepted.length === 0 ? (
@@ -292,7 +291,7 @@ function FriendsPage() {
                         {displayName(r.other?.username, r.other?.id)}
                       </div>
                       <div className="text-xs text-muted-foreground tabular-nums">
-                        Verbal {r.other?.elo_verbal ?? 1000} · Matte {r.other?.elo_math ?? 1000}
+                        Verbal {r.other?.elo_verbal ?? 1000}, Kvantitativ {r.other?.elo_math ?? 1000}
                       </div>
                     </div>
                   </div>
@@ -311,7 +310,7 @@ function FriendsPage() {
                       className="gap-1"
                       onClick={() => r.other && invite(r.other.id, "math")}
                     >
-                      <Swords className="h-4 w-4" /> Matte
+                      <Swords className="h-4 w-4" /> Kvantitativ
                     </Button>
                     {/* Papperskorgen sitter bredvid två knappar man trycker
                         ofta, och borttagningen gick tidigare igenom direkt.
@@ -340,7 +339,7 @@ function FriendsPage() {
         {/* Outgoing */}
         {outgoing.length > 0 && (
           <section className="mt-8">
-            <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted-foreground">
+            <h2 className="mb-2 text-sm font-semibold text-muted-foreground">
               Skickade förfrågningar
             </h2>
             <ul className="grid gap-2">

@@ -74,8 +74,8 @@ export function ProvQuestionCard({
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[var(--amber)]/15 text-xs font-bold tabular-nums text-[var(--amber)]">
             {question.nr}
           </span>
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-            {question.delprov} · {delprovShort(question.delprov)}
+          <span className="text-xs font-semibold text-[var(--text-tertiary)]">
+            {question.delprov}, {delprovShort(question.delprov)}
           </span>
         </div>
         <div className="flex items-center gap-3">

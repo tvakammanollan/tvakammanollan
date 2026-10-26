@@ -80,7 +80,7 @@ export function isAutoGuestName(name: string | null | undefined): boolean {
  * samma sak: kontot har aldrig valt ett namn. De måste kännas igen
  * på ett enda ställe, annars glider topplistans filter isär från
  * namnsättningen — vilket hände: filtret kände bara igen det gamla formatet,
- * och nya gäster började rankas fyra minuter efter att det gick live.
+ * och nya gäster började rankas 4 minuter efter att det gick live.
  *
  * Matchningen kräver ett ord ur ORD och är skiftlägesokänslig, så någon som
  * väljer "Gäst i huset" berörs inte.

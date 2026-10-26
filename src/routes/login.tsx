@@ -11,8 +11,6 @@ import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
-import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -113,7 +111,6 @@ function LoginPage() {
           className="space-y-7 text-center"
         >
           <div className="space-y-2">
-            <EyebrowLabel tone="teal">Välkommen tillbaka</EyebrowLabel>
             <h1
               className="text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[44px]"
               style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
@@ -151,7 +148,6 @@ function LoginPage() {
                 className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? "Loggar in…" : "Logga in"}
-                {!submitting && <ArrowRight className="h-4 w-4" />}
               </button>
             </form>
           </div>
@@ -219,7 +215,6 @@ export function SuccessScreen() {
       className="space-y-6 text-center"
     >
       <div className="space-y-2">
-        <EyebrowLabel tone="amber">Du är inne</EyebrowLabel>
         <h1
           className="text-[40px] font-bold leading-[1.05] tracking-tight text-white"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}

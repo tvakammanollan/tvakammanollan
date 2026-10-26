@@ -16,7 +16,6 @@ import {
   GraduationCap,
   Check,
   Lock,
-  ArrowLeft,
   CalendarClock,
   CalendarCheck2,
 } from "lucide-react";
@@ -44,7 +43,7 @@ import { formatDateLong, formatTime } from "@/lib/sv-format";
 /* =====================================================================
    COACHING — välj en tid, betala sedan, allt i samma modal.
 
-   Tre steg: erbjudandet, Calendlys tidsväljare och Stripes kassa. Ingen av
+   3 steg: erbjudandet, Calendlys tidsväljare och Stripes kassa. Ingen av
    dem byter sida. Ordningen tid-före-betalning är den som säljer bäst — den
    som redan har en tid i kalendern slutför köpet oftare än den som ska
    "höra av sig sen" — och den var tidigare dyr av ett enda skäl: kassan låg
@@ -477,7 +476,6 @@ export function CoachingModal({
               onClick={() => setSteg("erbjudande")}
               className="mx-auto flex min-h-[44px] items-center gap-1.5 text-sm text-white/60 underline-offset-4 transition hover:text-[var(--cream)] hover:underline"
             >
-              <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
               Tillbaka
             </button>
           </>

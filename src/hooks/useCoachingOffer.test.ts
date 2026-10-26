@@ -15,7 +15,7 @@ const bas: CoachingOffer = {
 
 describe("coachingTermsLabel", () => {
   it("lovar ingen bindningstid när priset är ett engångsköp", () => {
-    expect(coachingTermsLabel(bas)).toBe("Engångsköp · Ingen bindningstid");
+    expect(coachingTermsLabel(bas)).toBe("Engångsköp, ingen bindningstid");
   });
 
   it("säger ingenting alls när priset är återkommande", () => {

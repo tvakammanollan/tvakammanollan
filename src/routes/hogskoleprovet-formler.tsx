@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sigma } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 
@@ -178,7 +177,7 @@ export const Route = createFileRoute("/hogskoleprovet-formler")({
       path: PATH,
       title: fitTitle("Formler för högskoleprovet", "XYZ och KVA"),
       description:
-        "Formlerna som behövs på högskoleprovets matte: bråk, potenser, kvadreringsreglerna, räta linjer, area, volym, sannolikhet och hastighet. Med riktiga provuppgifter.",
+        "Formlerna som behövs på högskoleprovets kvantitativa del: bråk, potenser, kvadreringsreglerna, räta linjer, area, volym, sannolikhet och hastighet. Med riktiga provuppgifter.",
       ogTitle: "Alla formler du behöver till högskoleprovet",
     }),
     links: pageLinks(PATH),
@@ -247,7 +246,6 @@ function FormlerPage() {
             className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Sigma className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             {a.rubrik}
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-white/60">{a.intro}</p>
@@ -269,7 +267,7 @@ function FormlerPage() {
               Öva:{" "}
               {a.exempel.map((e, i) => (
                 <span key={`${e.term}-${e.pass}-${e.nr}`}>
-                  {i > 0 && " · "}
+                  {i > 0 && ", "}
                   <Link
                     to="/gamla-prov/$term/$pass"
                     params={{ term: e.term, pass: String(e.pass) }}
@@ -301,8 +299,7 @@ function FormlerPage() {
             to="/train"
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
-            Träna matte
-            <ArrowRight className="h-4 w-4" aria-hidden />
+            Träna kvantitativt
           </Link>
           <Link
             to="/guider/xyz"

@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/guider/xyz")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "XYZ · Matematisk problemlösning", path: "/guider/xyz" },
+        { name: "XYZ: Matematisk problemlösning", path: "/guider/xyz" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -44,17 +43,11 @@ function XyzGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Kvantitativt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          XYZ · Matematisk problemlösning
+          XYZ: Matematisk problemlösning
         </h1>
       </header>
 
@@ -75,7 +68,7 @@ function XyzGuidePage() {
         <p>
           XYZ-delprovet innehåller 12 uppgifter per provpass. Det är klassisk matematisk
           problemlösning på gymnasienivå: du får ett problem formulerat i text eller med en figur
-          och ska välja rätt svar bland fyra alternativ. Ingen formelsamling tillåts och inga
+          och ska välja rätt svar bland 4 alternativ. Ingen formelsamling tillåts och inga
           hjälpmedel. Matematik på HP testar inte avancerad kalkyl. Det testar om du kan tillämpa
           grundläggande matematik snabbt och säkert. Läs mer om högskoleprovets uppbyggnad i sin
           helhet på{" "}
@@ -125,7 +118,7 @@ function XyzGuidePage() {
           Strategin: eliminera och uppskatta
         </h2>
         <p>
-          XYZ har alltid fyra svarsalternativ, och minst ett av dem är uppenbart orimligt. Börja med
+          XYZ har alltid 4 svarsalternativ, och minst ett av dem är uppenbart orimligt. Börja med
           att uppskatta storleksordningen på svaret och stryk alternativ som avviker kraftigt. Det
           minskar risken vid gissning och bekräftar dina räkningar.
         </p>
@@ -156,7 +149,6 @@ function XyzGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Öva XYZ-uppgifter gratis på Tvåkommanollan
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

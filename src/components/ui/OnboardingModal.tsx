@@ -14,8 +14,6 @@ import {
   Sigma,
   Library,
   Check,
-  ArrowLeft,
-  ArrowRight,
   Zap,
   Home,
   type LucideIcon,
@@ -41,7 +39,7 @@ const FOCUS: ReadonlyArray<{
   sub: string;
 }> = [
   { value: "verbal", icon: BookOpen, label: "Svenska", sub: "ORD, MEK, LÄS, ELF" },
-  { value: "math", icon: Sigma, label: "Matte", sub: "XYZ, KVA, NOG, DTK" },
+  { value: "math", icon: Sigma, label: "Kvantitativ", sub: "XYZ, KVA, NOG, DTK" },
   { value: "both", icon: Library, label: "Båda", sub: "Träna allt" },
 ];
 
@@ -189,7 +187,6 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                 </button>
                 <Button onClick={() => setStep(1)} disabled={target === null}>
                   Sätt mitt mål
-                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               </div>
             </>
@@ -226,12 +223,10 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               </div>
               <div className="mt-6 flex items-center justify-between">
                 <Button variant="ghost" onClick={() => setStep(0)}>
-                  <ArrowLeft className="h-4 w-4" aria-hidden />
                   Tillbaka
                 </Button>
                 <Button onClick={() => setStep(2)} disabled={focus === null}>
                   Nästa
-                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Button>
               </div>
             </>

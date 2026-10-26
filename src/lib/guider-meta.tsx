@@ -16,49 +16,49 @@ export interface GuideMeta {
 export const GUIDES: GuideMeta[] = [
   {
     path: "/guider/ord",
-    label: "ORD · Ordkunskap",
+    label: "ORD: Ordkunskap",
     short: "ORD",
     description: "Synonymer, antonymer och ordförrådsbygge inför HP.",
   },
   {
     path: "/guider/mek",
-    label: "MEK · Meningskomplettering",
+    label: "MEK: Meningskomplettering",
     short: "MEK",
     description: "Luckteknik, logikord och så undviker du fällor.",
   },
   {
     path: "/guider/las",
-    label: "LÄS · Svensk läsförståelse",
+    label: "LÄS: Svensk läsförståelse",
     short: "LÄS",
     description: "Frågetyper, lässtrategi och tidsdisposition per text.",
   },
   {
     path: "/guider/elf",
-    label: "ELF · Engelsk läsförståelse",
+    label: "ELF: Engelsk läsförståelse",
     short: "ELF",
     description: "Akademisk engelska, except/NOT-fällor och strategi.",
   },
   {
     path: "/guider/xyz",
-    label: "XYZ · Matematisk problemlösning",
+    label: "XYZ: Matematisk problemlösning",
     short: "XYZ",
     description: "Algebra, geometri, sannolikhet och uppskattning.",
   },
   {
     path: "/guider/kva",
-    label: "KVA · Kvantitativa jämförelser",
+    label: "KVA: Kvantitativa jämförelser",
     short: "KVA",
     description: "Jämför uttryck och avgör när 'kan ej avgöras' gäller.",
   },
   {
     path: "/guider/nog",
-    label: "NOG · Kvantitativa resonemang",
+    label: "NOG: Kvantitativa resonemang",
     short: "NOG",
     description: "Avgör om informationen räcker: strategi och fällor.",
   },
   {
     path: "/guider/dtk",
-    label: "DTK · Diagram, tabeller och kartor",
+    label: "DTK: Diagram, tabeller och kartor",
     short: "DTK",
     description: "Läs grafer snabbt och undvik skala-fällan.",
   },
@@ -116,7 +116,7 @@ export function RelatedGuides({
           className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-4 transition-colors hover:border-primary/50 hover:bg-primary/[0.1]"
         >
           <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
-            Redo att öva? Kör {ovaSlug.toUpperCase()}-frågor med facit →
+            Redo att öva? Kör {ovaSlug.toUpperCase()}-frågor med facit
           </span>
           <span
             className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"
@@ -128,7 +128,7 @@ export function RelatedGuides({
       )}
       <h2
         id="related-guides"
-        className="text-xs font-semibold uppercase tracking-[0.25em]"
+        className="text-xs font-semibold "
         style={{ color: "#10242f" }}
       >
         Fler guider
@@ -153,7 +153,7 @@ export function RelatedGuides({
       </div>
       <p className="mt-6 text-xs" style={{ color: "var(--text-tertiary)" }}>
         <Link to="/guider" className="underline" style={{ color: "var(--amber)" }}>
-          Se alla guider →
+          Se alla guider
         </Link>
       </p>
     </section>

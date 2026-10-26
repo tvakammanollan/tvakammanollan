@@ -2,8 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Loader2, Send, Sparkles } from "lucide-react";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
+import { Check, Loader2, Send, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useImpression } from "@/hooks/useImpression";
 import { trackEvent } from "@/lib/events";
@@ -32,7 +31,7 @@ import { formatPhone, normalizePhone } from "@/lib/phone";
    gärna på en fråga som redan står på skärmen. Formuläret byter därför
    innehåll på plats, i samma ruta.
 
-   Två frågor, och alla svar leder vidare — se coaching-quiz.ts för varför.
+   2 frågor, och alla svar leder vidare — se coaching-quiz.ts för varför.
    Det som skiljer vägarna åt är sammanfattningen, som formuleras ur
    svaren så att samtalet efteråt börjar någonstans.
 
@@ -112,7 +111,7 @@ export function CoachingQuizCard() {
       seconds: elapsedSeconds(startedAt.current || Date.now()),
       via,
     });
-    // Kön töms annars först efter två sekunder, och de finns inte när fliken
+    // Kön töms annars först efter 2 sekunder, och de finns inte när fliken
     // är på väg bort. Se flushTelemetry.
     flushTelemetry();
   }, []);
@@ -243,9 +242,7 @@ export function CoachingQuizCard() {
       aria-live="polite"
     >
       <div className="flex items-center gap-2">
-        <EyebrowLabel tone="leaf" animate={false}>
-          Studieupplägg
-        </EyebrowLabel>
+        <p className="text-sm font-semibold text-success">Studieupplägg</p>
       </div>
 
       {phase === "teaser" && (
@@ -265,7 +262,6 @@ export function CoachingQuizCard() {
             className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-success px-4 py-2.5 text-sm font-semibold text-success-ink transition hover:brightness-110"
           >
             Ta reda på det
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
         </>
       )}

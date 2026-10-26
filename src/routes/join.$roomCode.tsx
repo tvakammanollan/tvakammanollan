@@ -51,7 +51,6 @@ function JoinPage() {
           <AlertTriangle className="h-7 w-7" />
         </span>
         <div>
-          <p className="eyebrow text-bark">Privat rum</p>
           <h1
             className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -82,7 +81,6 @@ function JoinPage() {
         <Users className="h-7 w-7" />
       </m.span>
       <div>
-        <p className="eyebrow text-bark">Privat rum</p>
         <h1
           className="mt-1 text-[28px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}

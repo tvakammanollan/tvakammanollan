@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
@@ -15,12 +15,14 @@ import {
   CalendarDays,
   BookA,
   Puzzle,
+  ClipboardCheck,
   type LucideIcon,
 } from "lucide-react";
-import { formatTime } from "@/lib/sv-format";
+import { formatInt, formatTime } from "@/lib/sv-format";
 import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
 import { fetchMekLeaderboard } from "@/lib/mek-leaderboard.functions";
+import { fetchProvLeaderboard, type ProvLeaderboardRow } from "@/lib/prov-leaderboard.functions";
 import {
   LEADERBOARD_SIZE,
   fetchLeaderboard,
@@ -87,9 +89,9 @@ export const Route = createFileRoute("/leaderboard")({
   head: () => ({
     meta: pageMeta({
       path: "/leaderboard",
-      title: "Topplista · ELO-ranking",
+      title: "Topplista: ELO-ranking",
       description:
-        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal och matte, plus topplistor för ord och MEK. Uppdateras live efter varje match. Helt gratis.",
+        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal och kvantitativ, plus topplistor för ord och MEK. Uppdateras live efter varje match. Helt gratis.",
       ogTitle: "Tvåkommanollan | Topplista",
       ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
     }),
@@ -102,9 +104,9 @@ export const Route = createFileRoute("/leaderboard")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        name: "Topplista · Tvåkommanollan",
+        name: "Topplista: Tvåkommanollan",
         description:
-          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, matte, ord och MEK. Uppdateras live efter varje match.",
+          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, kvantitativ, ord och MEK. Uppdateras live efter varje match.",
         url: "https://tvakommanollan.se/leaderboard",
         inLanguage: "sv-SE",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -117,17 +119,14 @@ export const Route = createFileRoute("/leaderboard")({
 function LeaderboardPage() {
   const { user } = useAuth();
   const { initialVerbalRows } = Route.useLoaderData();
-  const [tab, setTab] = useState<"verbal" | "math" | "ord" | "mek">("verbal");
+  const [tab, setTab] = useState<"verbal" | "math" | "ord" | "mek" | "prov">("verbal");
 
   return (
     <div className="min-h-screen">
       <PageHero
         zon="duell"
-        eyebrowTone="leaf"
-        eyebrow="Hall of fame"
         title="Se vem som är"
         cycleWords={["bäst.", "snabbast.", "vassast.", "smartast."]}
-        subtitle="De vassaste HP-spelarna just nu, uppdateras live efter varje match."
         align="center"
         variant="compact"
       />
@@ -144,11 +143,12 @@ function LeaderboardPage() {
         )}
         <Reveal delay={0.2}>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-            <TabsList className="grid w-full max-w-md grid-cols-4">
+            <TabsList className="grid w-full max-w-md grid-cols-5">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
               <TabsTrigger value="math">Matte</TabsTrigger>
               <TabsTrigger value="ord">Ord</TabsTrigger>
               <TabsTrigger value="mek">MEK</TabsTrigger>
+              <TabsTrigger value="prov">Prov</TabsTrigger>
             </TabsList>
 
             <TabsContent value="verbal">
@@ -167,6 +167,9 @@ function LeaderboardPage() {
             </TabsContent>
             <TabsContent value="mek">
               <MekBoard />
+            </TabsContent>
+            <TabsContent value="prov">
+              <ProvBoard />
             </TabsContent>
           </Tabs>
         </Reveal>
@@ -313,11 +316,11 @@ function Board({
         <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
           <span className="inline-flex items-center gap-1.5">
             {scope === "week"
-              ? "Senaste 7 dygnen · störst ELO-klättring"
+              ? "Senaste 7 dygnen, störst ELO-klättring"
               : scope === "friends"
                 ? "Du och dina vänner"
                 : updatedAt
-                  ? `Live · uppdaterad ${formatTime(updatedAt)}`
+                  ? `Live, uppdaterad ${formatTime(updatedAt)}`
                   : "Live"}
           </span>
           <button
@@ -399,15 +402,15 @@ function AllTimeTable({
         <table className="w-full text-sm">
           <thead className="bg-white/[0.03] text-xs text-white/55">
             <tr>
-              <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
-              <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">
+              <th className="px-4 py-3 text-left font-semibold">#</th>
+              <th className="px-4 py-3 text-left font-semibold">
                 Spelare
               </th>
-              <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">ELO</th>
-              <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
+              <th className="px-4 py-3 text-right font-semibold">ELO</th>
+              <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">
                 Matcher
               </th>
-              <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">Win %</th>
+              <th className="px-4 py-3 text-right font-semibold">Win %</th>
             </tr>
           </thead>
           <tbody>
@@ -471,12 +474,12 @@ function WeeklyTable({
       <table className="w-full text-sm">
         <thead className="bg-white/[0.03] text-xs text-white/55">
           <tr>
-            <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">#</th>
-            <th className="px-4 py-3 text-left font-semibold uppercase tracking-wider">Spelare</th>
-            <th className="px-4 py-3 text-right font-semibold uppercase tracking-wider">
+            <th className="px-4 py-3 text-left font-semibold">#</th>
+            <th className="px-4 py-3 text-left font-semibold">Spelare</th>
+            <th className="px-4 py-3 text-right font-semibold">
               ELO denna vecka
             </th>
-            <th className="hidden px-4 py-3 text-right font-semibold uppercase tracking-wider sm:table-cell">
+            <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">
               Matcher
             </th>
           </tr>
@@ -501,7 +504,7 @@ function WeeklyTable({
                   <span className="inline-flex items-center gap-2 text-white">
                     {rankedName(r.username)}
                     {isMe && (
-                      <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
+                      <span className="text-xs font-bold text-primary">
                         Du
                       </span>
                     )}
@@ -542,7 +545,7 @@ function WeeklyTable({
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
                     {displayName(me.username)}
-                    <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
+                    <span className="text-xs font-bold text-primary">
                       Du
                     </span>
                   </span>
@@ -600,7 +603,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           <span className="text-[15px] font-medium text-white">{rankedName(r.username)}</span>
           {isMe && (
-            <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-brand">
+            <span className="text-xs font-bold text-primary">
               Du
             </span>
           )}
@@ -632,7 +635,19 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
 
 // ---------- Ord- och MEK-listorna ----------
 
-type PracticeBoardResult = { top: OrdLeaderboardRow[]; me: OrdLeaderboardRow | null };
+/** Minsta en rad måste ha för att listan ska kunna rendera och numrera den. */
+type BoardRow = { user_id: string; rank: number; username: string };
+
+type BoardResult<T> = { top: T[]; me: T | null };
+
+interface BoardShellProps<T extends BoardRow> {
+  fetchLb: () => Promise<BoardResult<T>>;
+  emptyIcon: LucideIcon;
+  emptyTitle: string;
+  emptySubtitle: string;
+  emptyCtaLabel: string;
+  emptyCtaHref: string;
+}
 
 function OrdBoard() {
   const fetchOrd = useServerFn(fetchOrdLeaderboard);
@@ -669,24 +684,32 @@ function MekBoard() {
   );
 }
 
-function PracticeBoard({
+/**
+ * Chromet runt en klienthämtad lista: tidsstämpel, uppdatering, skelett, tomt
+ * läge och den egna raden under tabellen. Ord, MEK och prov delar allt det;
+ * bara kolumnerna skiljer, och de kommer in som `head` och `renderRow`.
+ */
+function BoardShell<T extends BoardRow>({
   fetchLb,
   emptyIcon,
   emptyTitle,
   emptySubtitle,
   emptyCtaLabel,
   emptyCtaHref,
-}: {
-  fetchLb: () => Promise<PracticeBoardResult>;
-  emptyIcon: LucideIcon;
-  emptyTitle: string;
-  emptySubtitle: string;
-  emptyCtaLabel: string;
-  emptyCtaHref: string;
+  head,
+  columns,
+  renderRow,
+  footnote,
+}: BoardShellProps<T> & {
+  head: ReactNode;
+  /** Antal kolumner, för raden som skriver ut den egna placeringen. */
+  columns: number;
+  renderRow: (r: T, isMe: boolean) => ReactNode;
+  footnote?: ReactNode;
 }) {
   const { user } = useAuth();
-  const [top, setTop] = useState<OrdLeaderboardRow[]>([]);
-  const [me, setMe] = useState<OrdLeaderboardRow | null>(null);
+  const [top, setTop] = useState<T[]>([]);
+  const [me, setMe] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatedAt, setUpdatedAt] = useState<number | null>(null);
@@ -745,34 +768,53 @@ function PracticeBoard({
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/[0.03] text-xs uppercase tracking-wide text-white/55">
-              <tr>
-                <th className="px-3 py-2 text-left">#</th>
-                <th className="px-3 py-2 text-left">Spelare</th>
-                <th className="px-3 py-2 text-right">Rätt</th>
-                <th className="hidden px-3 py-2 text-right sm:table-cell">Totalt</th>
-                <th className="px-3 py-2 text-right">Träffsäkerhet</th>
-              </tr>
+            <thead className="bg-white/[0.03] text-xs text-white/55">
+              {head}
             </thead>
             <tbody>
-              {top.map((r) => (
-                <OrdRow key={r.user_id} r={r} isMe={!!user && r.user_id === user.id} />
-              ))}
+              {top.map((r) => renderRow(r, !!user && r.user_id === user.id))}
               {showMe && me && (
                 <>
                   <tr>
-                    <td colSpan={5} className="px-3 py-2 text-center text-xs text-white/45">
+                    <td colSpan={columns} className="px-3 py-2 text-center text-xs text-white/45">
                       {me.rank > 0 ? `Din placering: #${me.rank}` : "Din statistik"}
                     </td>
                   </tr>
-                  <OrdRow r={me} isMe />
+                  {renderRow(me, true)}
                 </>
               )}
             </tbody>
           </table>
         </div>
       )}
+      {footnote && top.length > 0 && (
+        <p className="border-t border-white/8 px-4 py-2.5 text-xs leading-relaxed text-white/45">
+          {footnote}
+        </p>
+      )}
     </div>
+  );
+}
+
+/**
+ * Ord- och MEK-listorna: samma rad, samma kolumner, bara olika data.
+ */
+function PracticeBoard(props: BoardShellProps<OrdLeaderboardRow>) {
+  return (
+    <BoardShell
+      {...props}
+      columns={5}
+      head={
+        <tr>
+          <th className="px-3 py-2 text-left">#</th>
+          <th className="px-3 py-2 text-left">Spelare</th>
+          <th className="px-3 py-2 text-right">Rätt</th>
+          <th className="hidden px-3 py-2 text-right sm:table-cell">Totalt</th>
+          <th className="px-3 py-2 text-right">Träffsäkerhet</th>
+        </tr>
+      }
+      renderRow={(r, isMe) => <OrdRow key={r.user_id} r={r} isMe={isMe} />}
+    />
   );
 }
 
@@ -795,7 +837,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
         <span className="inline-flex items-center gap-2">
           {rankedName(r.username)}
           {isMe && (
-            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-on-brand">
+            <span className="text-[10px] font-semibold text-primary">
               Du
             </span>
           )}
@@ -806,6 +848,87 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       </td>
       <td className="hidden px-3 py-2.5 text-right tabular-nums text-white/70 sm:table-cell">
         {r.total_count}
+      </td>
+      <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
+    </tr>
+  );
+}
+
+// ---------- Provlistan ----------
+
+/**
+ * Gamla prov på topplistan: flest skrivna provpass först.
+ *
+ * Träffsäkerheten står som egen kolumn men rankar inte, se
+ * `prov-leaderboard.ts` för varför.
+ */
+function ProvBoard() {
+  // Den egna raden läses ur tokenen i servern, inte ur ett skickat id.
+  const fetchProv = useServerFn(fetchProvLeaderboard);
+  const fetchLb = useCallback(() => fetchProv(), [fetchProv]);
+  return (
+    <BoardShell
+      fetchLb={fetchLb}
+      emptyIcon={ClipboardCheck}
+      emptyTitle="Inga provpass skrivna ännu"
+      emptySubtitle="Provlistan rankar på antal skrivna provpass. Skriv ett så hamnar du på den."
+      emptyCtaLabel="Skriv ett provpass"
+      emptyCtaHref="/gamla-prov"
+      columns={5}
+      head={
+        <tr>
+          <th className="px-3 py-2 text-left">#</th>
+          <th className="px-3 py-2 text-left">Spelare</th>
+          <th className="px-3 py-2 text-right">Provpass</th>
+          <th className="hidden px-3 py-2 text-right sm:table-cell">Rätt</th>
+          <th className="px-3 py-2 text-right">Träffsäkerhet</th>
+        </tr>
+      }
+      renderRow={(r, isMe) => <ProvRow key={r.user_id} r={r} isMe={isMe} />}
+      footnote={
+        <>
+          Listan rankar på antal skrivna provpass. Övningspass räknas med, men de saknar tidspress.
+          Bara pass skrivna med konto hamnar på listan.
+        </>
+      }
+    />
+  );
+}
+
+function ProvRow({ r, isMe }: { r: ProvLeaderboardRow; isMe: boolean }) {
+  const tintBg = isMe
+    ? "bg-primary/10 ring-1 ring-primary/40"
+    : r.rank === 1
+      ? "bg-primary/[0.04]"
+      : "";
+  return (
+    <tr
+      className={`border-t border-white/8 transition-colors ${tintBg} ${
+        isMe ? "font-semibold" : "hover:bg-white/[0.03]"
+      }`}
+    >
+      <td className="px-3 py-2.5 tabular-nums">
+        <PodiumRank rank={r.rank} />
+      </td>
+      <td className="px-3 py-2.5 text-white">
+        <span className="inline-flex items-center gap-2">
+          {rankedName(r.username)}
+          {isMe && (
+            <span className="text-[10px] font-semibold text-primary">
+              Du
+            </span>
+          )}
+        </span>
+      </td>
+      <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-primary">
+        {formatInt(r.passes)}
+        <span className="block text-[11px] font-normal text-white/45">
+          {formatInt(r.exams)} prov
+        </span>
+      </td>
+      <td className="hidden px-3 py-2.5 text-right tabular-nums text-white/70 sm:table-cell">
+        {formatInt(r.correct)}
+        <span className="block text-[11px] text-white/45">av {formatInt(r.questions)}</span>
       </td>
       <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
     </tr>

@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
@@ -23,7 +22,7 @@ export const Route = createFileRoute("/guider/dtk")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "DTK · Diagram, tabeller, kartor", path: "/guider/dtk" },
+        { name: "DTK: Diagram, tabeller, kartor", path: "/guider/dtk" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -45,17 +44,11 @@ function DtkGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Kvantitativt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          DTK · Diagram, tabeller och kartor
+          DTK: Diagram, tabeller och kartor
         </h1>
       </header>
 
@@ -168,7 +161,6 @@ function DtkGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Öva DTK-uppgifter gratis på Tvåkommanollan
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

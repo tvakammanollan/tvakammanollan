@@ -6,7 +6,7 @@
  * när provet är inom 0 sekunder och visar "Lycka till idag!".
  *
  * Två storlekar:
- *   - "card"    (default) — fullständigt kort med eyebrow, datum, ticker
+ *   - "card"    (default) — fullständigt kort med datum, ticker
  *   - "inline"  — kompakt rad för t.ex. dashboard-sidebar
  * ──────────────────────────────────────────────────────────────
  */
@@ -83,7 +83,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
         <div className="flex items-center justify-center gap-2">
           <CalendarDays className="h-4 w-4" style={{ color: "var(--amber)" }} />
           <p
-            className="text-[10px] font-semibold uppercase tracking-[0.22em]"
+            className="text-xs font-semibold "
             style={{ color: "var(--hp-muted)" }}
           >
             Nästa HP-prov
@@ -143,7 +143,7 @@ function TimeBlock({ value, label }: { value: number; label: string }) {
       <span suppressHydrationWarning style={{ color: "var(--cream)" }} className="font-bold">
         {value.toString().padStart(2, "0")}
       </span>
-      <span className="text-[10px] uppercase tracking-wide" style={{ color: "var(--text-quiet)" }}>
+      <span className="text-xs " style={{ color: "var(--text-quiet)" }}>
         {label}
       </span>
     </span>

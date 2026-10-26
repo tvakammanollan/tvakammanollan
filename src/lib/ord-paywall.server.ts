@@ -54,10 +54,10 @@ export async function countMekTrainingAnswers(userId: string): Promise<number> {
  * Skriver in köpet. Returnerar true bara för den som faktiskt skapade raden.
  * Köpet knyts till `metadata.user_id`, som vi själva satte när kassan öppnades.
  *
- * `user_id` är primärnyckel, så den som köper igen efter att sex månader gått
+ * `user_id` är primärnyckel, så den som köper igen efter att 6 månader gått
  * krockar med sin gamla rad. Då skrivs raden över med det nya köpet och ny
  * `paid_at`; annars hade andra köpet dragit pengar utan att låsa upp något.
- * Samma session två gånger (webhook + återvändande) rör ingenting.
+ * Samma session 2 gånger (webhook + återvändande) rör ingenting.
  */
 export async function markOrdPaid(session: StripeCheckoutSession): Promise<boolean> {
   if (!isOrdSession(session)) return false;
