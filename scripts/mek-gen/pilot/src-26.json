@@ -1,0 +1,3002 @@
+[
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Halsfluss"
+},
+"text": "Halsmandlarna är två körtlar på ömse sidor om svalget. De består av lymfvävnad, som hör till immunförsvaret, och deras uppgift är att _____ luftvägarna och matsmältningskanalen mot infektioner.",
+"key": [
+"skydda"
+],
+"distractors": [
+[
+"rensa"
+],
+[
+"fukta"
+],
+[
+"vidga"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är skydda. Immunförsvaret försvarar kroppen, och mot infektioner visar att körtlarna står emot något. Att rensa, fukta eller vidga luftvägarna mot infektioner ger ingen mening.",
+"id": "p26-01"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Näsblod"
+},
+"text": "Vid näsblod ska man sitta upp, luta sig lite framåt och klämma om den mjuka delen av näsan under tio minuter. En isbit att suga på eller en kall handduk över näsan kan också hjälpa, eftersom kylan får blodkärlen att _____.",
+"key": [
+"dra ihop sig"
+],
+"distractors": [
+[
+"slappna av"
+],
+[
+"fyllas på"
+],
+[
+"förgrena sig"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är dra ihop sig. Kylan hjälper mot blödningen, alltså gör den kärlen trängre så att mindre blod kommer ut. Kärl som slappnar av eller fylls på blöder mer, och kyla får inte kärl att förgrena sig.",
+"id": "p26-02"
+},
+{
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Hicka"
+},
+"text": "Hicka är ofrivilliga och upprepade sammandragningar i mellangärdet. Trots att alla känner till fenomenet är dess biologiska _____ inte helt klarlagd, men den kan ha betydelse för hur fostrets andningsmuskler utvecklas.",
+"key": [
+"funktion"
+],
+"distractors": [
+[
+"förekomst"
+],
+[
+"utbredning"
+],
+[
+"uppbyggnad"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är funktion. Men den kan ha betydelse för visar att det oklara är vad hickan är till för. Att alla känner till fenomenet strider mot att förekomsten eller utbredningen skulle vara okänd, och en reflex har ingen uppbyggnad som kan ha betydelse för något.",
+"id": "p26-03"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Julbord"
+},
+"text": "Få av rätterna på ett julbord har gamla anor. Köttbullar, julskinka och prinskorv blev vanliga först under 1900-talet, medan lutfisk, julkorv och dopp i grytan hör till _____.",
+"key": [
+"undantagen"
+],
+"distractors": [
+[
+"nyheterna"
+],
+[
+"kryddorna"
+],
+[
+"efterrätterna"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är undantagen. Medan ställer de nya rätterna mot de gamla, och de gamla är få, alltså avviker de från regeln. Nyheterna strider mot medan, och dopp i grytan och lutfisk är varken kryddor eller efterrätter.",
+"id": "p26-04"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Blodpudding"
+},
+"text": "Blodpudding görs av bland annat svinblod, mjölk och rågmjöl. Smeten hälls i formar och _____ i ugn i vattenbad, och när den ska ätas skivas den och steks i smör.",
+"key": [
+"gräddas"
+],
+"distractors": [
+[
+"jäser"
+],
+[
+"fryses"
+],
+[
+"röks"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är gräddas. En smet i formar som sätts i ugnen tillagas av värmen. En ugn får inte smeten att jäsa, och man fryser eller röker inte mat i en ugn med vattenbad.",
+"id": "p26-05"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Bonad"
+},
+"text": "En bonad är en vävd, broderad eller målad textil som hängs på väggen. Till skillnad från en tapet är den inte _____ över hela väggen, och den sitter heller inte i en ram.",
+"key": [
+"uppspänd"
+],
+"distractors": [
+[
+"upphängd"
+],
+[
+"fastsydd"
+],
+[
+"inbyggd"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är uppspänd. En tapet täcker hela väggen, och till skillnad från visar att bonaden inte är sträckt över väggen på det sättet. Upphängd strider mot att bonaden hängs på väggen, och tapeter är varken fastsydda eller inbyggda.",
+"id": "p26-06"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Milstolpe"
+},
+"text": "Milstolparna var föregångare till dagens vägmärken. I Sverige användes de mellan 1649 och 1890-talet för att _____ avstånden längs landsvägarna.",
+"key": [
+"markera"
+],
+"distractors": [
+[
+"förlänga"
+],
+[
+"bevaka"
+],
+[
+"asfaltera"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är markera. Ett vägmärke visar något för den som färdas, och en milstolpe visade hur långt man hade kommit. En stolpe förlänger eller bevakar inte ett avstånd, och landsvägarna asfalterades inte med milstolpar.",
+"id": "p26-07"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Rotehjon"
+},
+"text": "Rotehjonen var de fattiga som hade det sämst, eftersom de inte fick bo på ett och samma ställe utan _____ mellan gårdarna och fick mat och husrum ett bestämt antal dagar på varje.",
+"key": [
+"flyttades runt"
+],
+"distractors": [
+[
+"delades upp"
+],
+[
+"valdes ut"
+],
+[
+"stängdes ute"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är flyttades runt. Utan ställer ett fast boende mot att vandra från gård till gård, och ett antal dagar på varje bekräftar det. Delades upp, valdes ut och stängdes ute förklarar inte att de bodde på flera gårdar i tur och ordning.",
+"id": "p26-08"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Flugsvamp"
+},
+"text": "Släktet flugsvampar omfattar över 700 kända arter. Några av dem går att äta, men många är giftiga, och vit flugsvamp och lömsk flugsvamp är till och med _____.",
+"key": [
+"dödliga"
+],
+"distractors": [
+[
+"ovanliga"
+],
+[
+"fridlysta"
+],
+[
+"eftertraktade"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"par"
+],
+"explanation": "Rätt svar är dödliga. Till och med visar att ordet ska gå ett steg längre än giftiga, och det värsta ett gift kan vara är dödligt. Ovanliga, fridlysta och eftertraktade fortsätter inte raden om hur farliga svamparna är.",
+"id": "p26-09"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Sädesärla"
+},
+"text": "Sädesärlan söker helst föda på bar mark, och i städerna har den lärt sig att leta insekter på _____ ytor som parkeringar.",
+"key": [
+"asfalterade"
+],
+"distractors": [
+[
+"gräsbevuxna"
+],
+[
+"sandiga"
+],
+[
+"vattenfyllda"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är asfalterade. Exemplet parkeringar och att det rör sig om städer visar vilken sorts yta det gäller. Parkeringar är inte gräsbevuxna, sandiga eller vattenfyllda.",
+"id": "p26-10"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Gös"
+},
+"text": "Gösen är en rovfisk med kraftiga tänder, och den _____ därför med gädda och abborre om bytesfiskar som mört och siklöja.",
+"key": [
+"konkurrerar"
+],
+"distractors": [
+[
+"samarbetar"
+],
+[
+"parar sig"
+],
+[
+"leker"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är konkurrerar. Om bytesfiskar visar att fiskarna vill åt samma föda. Rovfiskar samarbetar inte om byten, och arter parar sig eller leker inte med varandra om föda.",
+"id": "p26-11"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Robinsonad"
+},
+"text": "En robinsonad är en berättelse om någon som hamnat på en nästan _____ ö, ofta efter ett skeppsbrott, och som måste lära sig att klara sig själv där.",
+"key": [
+"obebodd"
+],
+"distractors": [
+[
+"bergig"
+],
+[
+"avlägsen"
+],
+[
+"tropisk"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är obebodd. Att klara sig själv förutsätter att ingen annan finns på ön, och nästan obebodd är ett vanligt uttryck. Bergig, avlägsen och tropisk förklarar inte att personen måste klara sig ensam.",
+"id": "p26-12"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Plagiat"
+},
+"text": "Ett plagiat är en medveten efterbildning av någon annans verk där man inte _____ källan.",
+"key": [
+"anger"
+],
+"distractors": [
+[
+"kritiserar"
+],
+[
+"förstår"
+],
+[
+"översätter"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är anger. Det som gör en efterbildning till plagiat är att man låter bli att tala om var den kommer ifrån. Att kritisera, förstå eller översätta källan gör inte en efterbildning till ett plagiat.",
+"id": "p26-13"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Tentamen"
+},
+"text": "En tentamen ska vara rättssäker, alltså visa både vem som skriver och vad hen kan. Den görs därför vanligen _____, utan samarbete med andra kursdeltagare.",
+"key": [
+"på egen hand"
+],
+"distractors": [
+[
+"muntligt"
+],
+[
+"i grupp"
+],
+[
+"digitalt"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är på egen hand. Utan samarbete förklarar uttrycket, och den som skriver ensam visar sina egna kunskaper. I grupp strider mot utan samarbete, och muntligt eller digitalt säger inget om samarbete.",
+"id": "p26-14"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Elevkår"
+},
+"text": "En elevkår är en förening som eleverna själva driver, och ingen kan tvingas att gå med, eftersom medlemskapet är _____.",
+"key": [
+"frivilligt"
+],
+"distractors": [
+[
+"kostsamt"
+],
+[
+"livslångt"
+],
+[
+"ärftligt"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är frivilligt. Att ingen kan tvingas är just vad frivilligt betyder. Kostsamt, livslångt och ärftligt förklarar inte att man inte kan tvingas att gå med.",
+"id": "p26-15"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Kartell"
+},
+"text": "En kartell är ett samarbete mellan säljare på en marknad som vill sätta _____ ur spel, och därför förbjuds karteller i de flesta länders lagar.",
+"key": [
+"konkurrensen"
+],
+"distractors": [
+[
+"efterfrågan"
+],
+[
+"kunderna"
+],
+[
+"staten"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är konkurrensen. Säljare som samarbetar slutar tävla med varandra om priserna, och det är därför lagen förbjuder det. Efterfrågan och kunderna kan säljarna inte sätta ur spel genom att samarbeta, och staten förbjuder karteller.",
+"id": "p26-16"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Patent"
+},
+"text": "Ett patent ger under en begränsad tid ensamrätt att utnyttja en uppfinning kommersiellt. För att det ska beviljas måste uppfinningen vara ny och skilja sig _____ från tidigare känd teknik.",
+"key": [
+"väsentligt"
+],
+"distractors": [
+[
+"provisoriskt"
+],
+[
+"formellt"
+],
+[
+"estetiskt"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"adv"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är väsentligt. En uppfinning som ska få ensamrätt måste vara något mer än en liten ändring, och väsentligt hör ihop med skilja sig. Provisoriskt, formellt och estetiskt beskriver inte vad som gör en teknisk lösning ny.",
+"id": "p26-17"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Föhn"
+},
+"text": "Föhn är en varm och torr vind vid bergskedjor. Luften avger sin fukt som regn när den stiger uppför ena sluttningen, och när den sedan _____ på andra sidan blir den varmare än den var från början.",
+"key": [
+"sänker sig"
+],
+"distractors": [
+[
+"snurrar"
+],
+[
+"stannar"
+],
+[
+"dånar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är sänker sig. Luften har stigit uppför ena sidan och måste ned igen på den andra. Luft som snurrar, stannar eller dånar förklarar inte uppvärmningen.",
+"id": "p26-18"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Dagdröm"
+},
+"text": "En dagdröm är en fantasibild som man har när man är vaken, till skillnad från drömmar under sömnen, och den beskrivs ofta som en sorts _____ från verkligheten.",
+"key": [
+"flykt"
+],
+"distractors": [
+[
+"kopia"
+],
+[
+"rapport"
+],
+[
+"gåva"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är flykt. En fantasi tar en bort från det som händer runt omkring, och verklighetsflykt är ett fast uttryck. En kopia eller rapport från verkligheten är inte en fantasi, och en gåva från verkligheten ger ingen mening.",
+"id": "p26-19"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Homonym"
+},
+"text": "Homonymer är ord som uttalas likadant men har helt olika betydelser, och i ordböcker _____ de därför som skilda uppslagsord.",
+"key": [
+"förs upp"
+],
+"distractors": [
+[
+"stryks"
+],
+[
+"översätts"
+],
+[
+"böjs"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är förs upp. Ord med olika betydelser står var för sig i ordboken, och därför visar att det är följden av betydelseskillnaden. Ord stryks, översätts eller böjs inte som skilda uppslagsord.",
+"id": "p26-20"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Tinnitus"
+},
+"text": "Tinnitus beror ofta på en bullerskada som uppstått efter att man har _____ höga ljud. Ljudet kan vara susande, pysande eller brummande, och det skiljer sig mellan olika personer men kan också _____ hos en och samma person.",
+"key": [
+"utsatts för",
+"skifta"
+],
+"distractors": [
+[
+"exponerats för",
+"spridas"
+],
+[
+"lyssnat efter",
+"växla"
+],
+[
+"skyddats mot",
+"försämras"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"v"
+],
+"ledtrad": [
+"ors",
+"par"
+],
+"explanation": "Rätt svar är utsatts för och skifta. En bullerskada kommer av att höga ljud har träffat örat, och exponerats för fungerar också. Men också visar att ljudet inte bara skiljer sig mellan personer utan även hos samma person, och växla säger samma sak. Den som lyssnat efter eller skyddats mot höga ljud får ingen bullerskada, och spridas eller försämras är inte samma sorts skillnad som den mellan olika personer.",
+"id": "p26-21"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Scharlakansfeber"
+},
+"text": "Det är framför allt barn i åldern fem till femton år som får scharlakansfeber, medan spädbarn oftast är _____ genom antikroppar från mamman. Ett typiskt tecken är att tungan blir röd och knottrig av små upphöjda prickar, vilket har gett den _____ smultrontunga.",
+"key": [
+"skyddade",
+"namnet"
+],
+"distractors": [
+[
+"immuna",
+"färgen"
+],
+[
+"smittade",
+"beteckningen"
+],
+[
+"sjuka",
+"smaken"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är skyddade och namnet. Antikroppar hindrar sjukdom, och immuna fungerar också. Smultrontunga är vad tungan kallas, och beteckningen säger samma sak. Antikroppar gör inte spädbarn smittade eller sjuka, och smultrontunga är varken en färg eller en smak.",
+"id": "p26-22"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Påssjuka"
+},
+"text": "Vid påssjuka _____ spottkörtlarna framför och under öronen, och kinden kan bli tydligt rund. Den som får sjukdomen trots att hen är vaccinerad har troligen smittats av ett annat virus, och då blir besvären oftast _____.",
+"key": [
+"svullnar",
+"lindrigare"
+],
+"distractors": [
+[
+"sväller",
+"allvarligare"
+],
+[
+"skrumpnar",
+"mildare"
+],
+[
+"torkar",
+"farligare"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"ors",
+"ors"
+],
+"explanation": "Rätt svar är svullnar och lindrigare. En kind som blir rund visar att körtlarna har blivit större, och sväller fungerar också. Den som är vaccinerad har ett skydd, och ett annat virus ger då svagare besvär, och mildare säger samma sak. Körtlar som skrumpnar eller torkar gör inte kinden rund, och vaccinet gör inte besvären allvarligare eller farligare.",
+"id": "p26-23"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Heshet"
+},
+"text": "Det finns inget läkemedel mot själva hesheten, men en del saker kan _____ besvären, som att dricka lite vatten när man pratar. De allra flesta behöver inte söka vård, eftersom besvären brukar _____ av sig själva.",
+"key": [
+"lätta på",
+"gå över"
+],
+"distractors": [
+[
+"minska",
+"tillta"
+],
+[
+"kurera",
+"försvinna"
+],
+[
+"orsaka",
+"sprida sig"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är lätta på och gå över. Men ställer det man kan göra mot att det inte finns något läkemedel, alltså handlar det om att göra besvären mindre, och minska fungerar också. Man behöver inte söka vård eftersom besvären slutar av sig själva, och försvinna säger samma sak. Kurera strider mot att inget läkemedel hjälper, vatten orsakar inte heshet, och besvär som tilltar eller sprider sig är ett skäl att söka vård.",
+"id": "p26-24"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Hambo"
+},
+"text": "Hambon hör till de svenska gammaldanserna och dansas i tretakt, med tydlig _____ på första taktdelen. Tempot _____ mycket mellan olika hambodanser, från snabba till långsamma.",
+"key": [
+"betoning",
+"skiftar"
+],
+"distractors": [
+[
+"tyngd",
+"stiger"
+],
+[
+"paus",
+"växlar"
+],
+[
+"tystnad",
+"stannar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är betoning och skiftar. En taktdel som framhävs är betonad, och tyngd fungerar också. Från snabba till långsamma visar att tempot är olika, och växlar säger samma sak. En paus eller tystnad på första taktdelen är inte tydlig, och ett tempo som stiger eller stannar går inte från snabbt till långsamt mellan olika danser.",
+"id": "p26-25"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Krukmakeri"
+},
+"text": "Inom krukmakeriet formas leran med händerna eller drejas, och föremålen får sedan _____ och kan ytbehandlas innan de _____ till keramik.",
+"key": [
+"torka",
+"bränns"
+],
+"distractors": [
+[
+"lufttorka",
+"smälts"
+],
+[
+"fuktas",
+"hårdnar"
+],
+[
+"jäsa",
+"målas"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är torka och bränns. Lera som har formats måste bli torr innan den hanteras vidare, och lufttorka fungerar också. Keramik är lera som har hettats upp i en ugn tills den blir hård, och hårdnar fungerar också. Formad lera fuktas inte och kan inte jäsa, och keramik blir inte till genom att leran smälts eller målas.",
+"id": "p26-26"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Linberedning"
+},
+"text": "Vid linberedning förädlas linplantor till _____ fibrer. Förr skördades linet genom att det ryktes upp med rötterna, eftersom man annars _____ en del av fibrerna, som satt kvar i stubben.",
+"key": [
+"spinnbara",
+"miste"
+],
+"distractors": [
+[
+"användbara",
+"bevarade"
+],
+[
+"giftiga",
+"tappade"
+],
+[
+"färgade",
+"sparade"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är spinnbara och miste. Lin förädlas till fibrer som går att göra garn av, och användbara fungerar också. Annars visar att det fanns ett skäl att inte skära linet, och fibrer som blir kvar i stubben går förlorade, och tappade säger samma sak. Linfibrer är varken giftiga eller färgade av förädlingen, och fibrer som sitter kvar i stubben är inte bevarade eller sparade för den som skördar.",
+"id": "p26-27"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Kyrkstad"
+},
+"text": "En kyrkstad är en samling stugor och bodar vid en kyrka i norra Sverige som användes _____ när folk kom till gudstjänsten. Den byggdes för sockenbor som bodde så _____ att de inte kunde resa fram och tillbaka på en dag.",
+"key": [
+"tillfälligt",
+"avlägset"
+],
+"distractors": [
+[
+"kortvarigt",
+"nära"
+],
+[
+"året runt",
+"långt bort"
+],
+[
+"dagligen",
+"centralt"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"adv",
+"adv"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är tillfälligt och avlägset. Stugorna användes bara när folk kom till kyrkan, och kortvarigt fungerar också. Den som inte hinner resa fram och tillbaka på en dag bor långt från kyrkan, och långt bort säger samma sak. Året runt och dagligen strider mot att stugorna bara användes vid gudstjänsterna, och den som bor nära eller centralt behöver ingen stuga vid kyrkan.",
+"id": "p26-28"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Remiss"
+},
+"text": "En remiss är när ett ärende skickas till myndigheter och organisationer så att de kan _____ sig innan beslut fattas. Innan regeringen lägger fram en proposition får därför berörda parter _____ sina synpunkter.",
+"key": [
+"yttra",
+"lämna"
+],
+"distractors": [
+[
+"uttala",
+"tiga om"
+],
+[
+"skämmas",
+"framföra"
+],
+[
+"skynda",
+"slarva bort"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"par"
+],
+"explanation": "Rätt svar är yttra och lämna. Den som får ett ärende på remiss ska säga vad den tycker, och uttala fungerar också. Därför visar att parterna får komma med synpunkter, och framföra säger samma sak. Ett ärende skickas inte ut för att någon ska skämmas eller skynda sig, och synpunkter som man tiger om eller slarvar bort hjälper inte beslutet.",
+"id": "p26-29"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Barnhem"
+},
+"text": "Ett barnhem är en institution där barn som saknar _____ får omvårdnad dygnet runt. Sådana hem är vanligast i fattigare länder och finns bara i _____ omfattning i rikare länder.",
+"key": [
+"vårdnadshavare",
+"liten"
+],
+"distractors": [
+[
+"föräldrar",
+"ökande"
+],
+[
+"leksaker",
+"ringa"
+],
+[
+"syskon",
+"obegränsad"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är vårdnadshavare och liten. Barn som behöver omvårdnad dygnet runt har ingen vuxen som tar hand om dem, och föräldrar fungerar också. Bara ställer de rikare länderna mot de fattigare, där hemmen är vanligast, och ringa säger samma sak. Barn hamnar inte på barnhem för att de saknar leksaker eller syskon, och ökande eller obegränsad strider mot bara.",
+"id": "p26-30"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Kråka"
+},
+"text": "Kråkan är vanlig i Europa och Asien och anses inte vara i fara som art. I Sverige _____ den däremot i antal, och den har därför klassats som _____.",
+"key": [
+"går tillbaka",
+"nära hotad"
+],
+"distractors": [
+[
+"minskar",
+"livskraftig"
+],
+[
+"tilltar",
+"sårbar"
+],
+[
+"blomstrar",
+"utdöd"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är går tillbaka och nära hotad. Däremot ställer Sverige mot världen, där arten inte är i fara, alltså går det sämre här, och minskar fungerar också. Därför visar att antalet som sjunker ger en varningsklass, och sårbar fungerar också. Tilltar och blomstrar strider mot däremot, livskraftig är ingen varning, och en fågel som är vanlig kan inte vara utdöd.",
+"id": "p26-31"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Dystopi"
+},
+"text": "En dystopi är en _____ samhällsvision, alltså motsatsen till en utopi. Genom att överdriva negativa fenomen kan författaren _____ det rådande samhället och få läsarna att reagera.",
+"key": [
+"mörk",
+"kritisera"
+],
+"distractors": [
+[
+"dyster",
+"hylla"
+],
+[
+"ljus",
+"ifrågasätta"
+],
+[
+"neutral",
+"befästa"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"def",
+"ors"
+],
+"explanation": "Rätt svar är mörk och kritisera. En utopi är ett drömsamhälle, och motsatsen är en hotande framtid, och dyster fungerar också. Att överdriva det negativa för att få folk att reagera är ett sätt att angripa samhället, och ifrågasätta säger samma sak. Ljus och neutral strider mot att dystopin är motsatsen till en utopi, och den som överdriver det negativa vill varken hylla eller befästa samhället.",
+"id": "p26-32"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Hemkunskap"
+},
+"text": "I skolämnet hem- och konsumentkunskap arbetar eleverna med _____ sysslor som matlagning och inköp. Undervisningen ska utgå från hälsa, ekonomi och miljö, och ämnet _____ därför gränserna mot flera andra skolämnen.",
+"key": [
+"vardagliga",
+"överskrider"
+],
+"distractors": [
+[
+"dagliga",
+"respekterar"
+],
+[
+"akademiska",
+"korsar"
+],
+[
+"exotiska",
+"stänger"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är vardagliga och överskrider. Matlagning och inköp är sådant man gör till vardags, och dagliga fungerar också. Hälsa, ekonomi och miljö hör till andra ämnen också, så ämnet går in på deras områden, och korsar fungerar också. Matlagning och inköp är varken akademiska eller exotiska, och ett ämne som utgår från andra ämnens frågor respekterar eller stänger inte gränserna mot dem.",
+"id": "p26-33"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Kredit"
+},
+"text": "En kredit innebär att någon under en viss tid får _____ en summa pengar eller en mängd varor. Lån, avbetalningsköp och anstånd med betalningen är exempel, och oftast måste den som får krediten betala _____ utöver själva beloppet.",
+"key": [
+"disponera",
+"ränta"
+],
+"distractors": [
+[
+"förfoga över",
+"kvitto"
+],
+[
+"vakta",
+"avgifter"
+],
+[
+"tävla om",
+"böter"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är disponera och ränta. Den som har lånat pengar får använda dem som den vill, och förfoga över fungerar också. Det man betalar för att få låna utöver beloppet är ränta, och avgifter fungerar också. Den som lånar får inte bara vakta pengarna och tävlar inte om dem, ett kvitto betalar man inte, och böter är inget som hör till ett lån.",
+"id": "p26-34"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Leasing"
+},
+"text": "Leasing är ett sätt att _____ fordon och maskiner. Leasetagaren betalar en avgift för att få använda tillgången under en viss tid, och avgiftens storlek beror bland annat på avtalets _____ och varans pris.",
+"key": [
+"bekosta",
+"löptid"
+],
+"distractors": [
+[
+"betala för",
+"färg"
+],
+[
+"reparera",
+"varaktighet"
+],
+[
+"tillverka",
+"rubrik"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är bekosta och löptid. En avgift för att få använda något är ett sätt att stå för kostnaden, och betala för fungerar också. Under en viss tid visar att avtalet gäller en period, och varaktighet fungerar också. Leasing är inte ett sätt att reparera eller tillverka fordon, och ett avtals färg eller rubrik påverkar inte priset.",
+"id": "p26-35"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Inbrott"
+},
+"text": "Vid ett inbrott tar sig någon in i en annans låsta utrymme och stjäl. Sker det i en bostad räknas det oftast som _____ stöld, och om ingenting stjäls är brottet i stället _____ eller hemfridsbrott.",
+"key": [
+"grov",
+"olaga intrång"
+],
+"distractors": [
+[
+"allvarlig",
+"snatteri"
+],
+[
+"ringa",
+"intrång"
+],
+[
+"lätt",
+"bedrägeri"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"utr"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är grov och olaga intrång. En stöld i någons hem bedöms som ett svårare brott, och allvarlig fungerar också. Om ingenting stjäls har gärningsmannen bara tagit sig in, och intrång fungerar också. Ringa och lätt strider mot att bostaden gör brottet värre, och snatteri och bedrägeri förutsätter att något tas.",
+"id": "p26-36"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Drumlin"
+},
+"text": "En drumlin är en avlång kulle av morän som har bildats _____ en glaciär. Drumliner ligger i samma riktning som isen rörde sig och förekommer ofta i _____.",
+"key": [
+"under",
+"grupper"
+],
+"distractors": [
+[
+"nedanför",
+"ensamhet"
+],
+[
+"ovanpå",
+"svärmar"
+],
+[
+"bredvid",
+"hemlighet"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"fu",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är under och grupper. En kulle som formats av en rörlig is har legat under den, och nedanför fungerar också. Ofta i visar att drumliner brukar finnas flera tillsammans, och svärmar säger samma sak. Morän som ligger ovanpå eller bredvid isen formas inte i isens riktning, och ensamhet och hemlighet är inget en kulle förekommer i.",
+"id": "p26-37"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Förväntan"
+},
+"text": "En förväntan är att man hoppas på att något ska hända och samtidigt bedömer det som det mest _____ utfallet. Inträffar den inte kan man känna _____.",
+"key": [
+"sannolika",
+"besvikelse"
+],
+"distractors": [
+[
+"troliga",
+"lättnad"
+],
+[
+"omöjliga",
+"missnöje"
+],
+[
+"olyckliga",
+"förtjusning"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är sannolika och besvikelse. Att bedöma en utveckling är att uppskatta hur troligt det är att den inträffar, och troliga fungerar också. Den som hoppas på något som sedan inte blir av blir besviken, och missnöje fungerar också. Man hoppar inte på något man bedömer som omöjligt eller olyckligt, och lättnad eller förtjusning följer inte på ett hopp som sviker.",
+"id": "p26-38"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Sociolekt"
+},
+"text": "En sociolekt är det språk som talas inom en viss _____ grupp, medan en dialekt är knuten till ett _____ område.",
+"key": [
+"social",
+"geografiskt"
+],
+"distractors": [
+[
+"samhällelig",
+"personligt"
+],
+[
+"slumpmässig",
+"avgränsat"
+],
+[
+"kortlivad",
+"digitalt"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"a"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är social och geografiskt. Ordet sociolekt bär själv på social, och samhällelig fungerar också. Medan ställer gruppen mot ett område på kartan, och avgränsat fungerar också. En slumpmässig eller kortlivad grupp har inget eget språk, och en dialekt hör inte till ett personligt eller digitalt område.",
+"id": "p26-39"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Askes"
+},
+"text": "Askes är en form av andlig eller fysisk övning för att nå större helighet. Asketen _____ ofta från mat, sömn eller tal och strävar efter att _____ sig från det jordiska.",
+"key": [
+"avstår",
+"lösgöra"
+],
+"distractors": [
+[
+"avhåller sig",
+"närma"
+],
+[
+"hämtar kraft",
+"frigöra"
+],
+[
+"njuter",
+"binda"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är avstår och lösgöra. Asketen försakar sådant som mat och sömn, och avhåller sig fungerar också. Den som avstår från det kroppsliga vill komma loss från det jordiska, och frigöra säger samma sak. Att hämta kraft från mat eller njuta av den är motsatsen till askes, och den som försakar närmar eller binder sig inte till det jordiska.",
+"id": "p26-40"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Flottning"
+},
+"text": "Vid flottning fick timret _____ med strömmen i älvar och bäckar från skogarna till sågverken vid kusten. Där vattnet rann långsamt samlades stockarna i stora flottar som _____ vidare, och vid ett skilje _____ timret efter ägare.",
+"key": [
+"driva",
+"bogserades",
+"sorterades"
+],
+"distractors": [
+[
+"flyta",
+"drogs",
+"brändes"
+],
+[
+"kämpa",
+"fördes",
+"delades upp"
+],
+[
+"stanna",
+"sänktes",
+"auktionerades"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"def"
+],
+"explanation": "Rätt svar är driva, bogserades och sorterades. Timmer som transporteras i strömmande vatten åker med strömmen, och flyta fungerar också. Där strömmen inte räckte drogs flottarna av något annat, och drogs eller fördes fungerar också. Efter ägare visar att stockarna skildes åt efter vem de tillhörde, och delades upp säger samma sak. Timret kämpar inte med strömmen och stannar inte i den, flottar som sänks kommer inte vidare, och timret brändes eller auktionerades inte efter ägare vid skiljet.",
+"id": "p26-41"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Nykterhetsrörelse"
+},
+"text": "Nykterhetsrörelsen är en folkrörelse vars medlemmar _____ alkohol och narkotika. Den moderna rörelsen har sina _____ i USA, där kyrkor kring år 1800 uppmanade medlemmarna att skriva under personliga löften om nykterhet, och den _____ sig snabbt.",
+"key": [
+"avstår från",
+"anor",
+"spred"
+],
+"distractors": [
+[
+"avsäger sig",
+"grenar",
+"isolerade"
+],
+[
+"tillverkar",
+"förebilder",
+"bredde ut"
+],
+[
+"dricker",
+"belackare",
+"upplöste"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"utr",
+"s",
+"v"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är avstår från, anor och spred. En rörelse för nykterhet består av människor som inte dricker, och avsäger sig fungerar också. Att rörelsen började i USA betyder att den har sitt ursprung där, och grenar eller förebilder fungerar också. En rörelse som får många anhängare växer i omfång, och bredde ut säger samma sak. Medlemmar i en nykterhetsrörelse tillverkar eller dricker inte alkohol, kyrkorna i USA var inte rörelsens belackare, och en rörelse som isolerade eller upplöste sig hade inte blivit en folkrörelse.",
+"id": "p26-42"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Sommarstuga"
+},
+"text": "Ett fritidshus är ett hus som man bor i som _____ bostad på semestern och annan ledig tid. Ännu i början av 1900-talet var det en _____ för överklassen att ha ett eget sommarhus, och de flesta som ville bo på landet om sommaren _____ i stället ett hus eller tog in på pensionat.",
+"key": [
+"temporär",
+"lyx",
+"hyrde"
+],
+"distractors": [
+[
+"provisorisk",
+"förmån",
+"rev"
+],
+[
+"permanent",
+"ynnest",
+"lånade"
+],
+[
+"officiell",
+"börda",
+"brände"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är temporär, lyx och hyrde. Ett hus för semestern bor man i bara en del av året, och provisorisk fungerar också. Att bara överklassen ägde sommarhus visar att det var något dyrt och ovanligt, och förmån eller ynnest fungerar också. I stället ställer de andra mot dem som ägde, så de fick bo i någon annans hus, och lånade fungerar också. Ett fritidshus är inte en permanent eller officiell bostad, ett eget sommarhus var ingen börda, och den som rev eller brände ett hus kunde inte bo i det.",
+"id": "p26-43"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Miljonprogrammet"
+},
+"text": "Miljonprogrammet var ett _____ för bostadsbyggande i Sverige mellan 1965 och 1975. Varje år beslutade riksdagen att _____ lån till omkring 100 000 bostäder, och i de nya områdena _____ biltrafiken ofta från gång- och cykelvägar.",
+"key": [
+"program",
+"bevilja",
+"skildes"
+],
+"distractors": [
+[
+"projekt",
+"godkänna",
+"hämtades"
+],
+[
+"hinder",
+"ge",
+"separerades"
+],
+[
+"museum",
+"vägra",
+"lånades"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är program, bevilja och skildes. En plan för att bygga bostäder under tio år är ett program, och projekt fungerar också. Riksdagen bestämde att lånen skulle ges, och godkänna eller ge fungerar också. Biltrafik och gång- och cykelvägar hölls isär, och separerades säger samma sak. Ett hinder eller museum bygger inga bostäder, riksdagen vägrade inte lånen när det byggdes en miljon bostäder, och biltrafik hämtas eller lånas inte från cykelvägar.",
+"id": "p26-44"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Bildroman"
+},
+"text": "En bildroman _____ prosa med bildkonst och den görs ofta av en författare och en konstnär tillsammans. Formen gränsar till serieromanen men är inte i _____ mening en tecknad serie, och den skiljer sig från bilderboken, som oftast _____ till barnlitteraturen.",
+"key": [
+"förenar",
+"strikt",
+"räknas"
+],
+"distractors": [
+[
+"kombinerar",
+"sträng",
+"fattas"
+],
+[
+"ersätter",
+"egentlig",
+"förs"
+],
+[
+"censurerar",
+"lös",
+"skänks"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är förenar, strikt och räknas. En författare och en konstnär som arbetar tillsammans ger både text och bild, och kombinerar fungerar också. Att formen gränsar till serier men inte är det i snäv mening uttrycks med i strikt mening, och sträng eller egentlig fungerar också. Bilderboken hör till barnlitteraturen, och förs säger samma sak. Ersätter och censurerar strider mot att text och bild finns tillsammans, i lös mening ger fel betydelse, och bilderboken fattas eller skänks inte till barnlitteraturen.",
+"id": "p26-45"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Söndagsskola"
+},
+"text": "Den första egentliga söndagsskolan _____ i England år 1780 av en boktryckare som ville _____ att fattiga barn drogs in i brott. Hans tidningsartiklar väckte stort _____, och snart fanns söndagsskolor över hela landet.",
+"key": [
+"startades",
+"förhindra",
+"intresse"
+],
+"distractors": [
+[
+"inrättades",
+"hindra",
+"förakt"
+],
+[
+"stängdes",
+"motverka",
+"uppseende"
+],
+[
+"lades ned",
+"uppmuntra",
+"ointresse"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är startades, förhindra och intresse. Den första skolan i sitt slag kom till detta år, och inrättades fungerar också. En boktryckare som oroade sig för barnen ville stoppa att de blev kriminella, och hindra eller motverka fungerar också. Snart fanns skolorna i hela landet, alltså tog folk till sig idén, och uppseende fungerar också. Den första skolan kan inte ha stängts eller lagts ned när den kom till, ingen vill uppmuntra brott, och förakt eller ointresse hade inte spritt skolorna över landet.",
+"id": "p26-46"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Loppmarknad"
+},
+"text": "På en loppmarknad handlar man med _____ saker, ofta mindre föremål som köksgeråd, kläder och böcker. Ordets ursprung är _____, men enligt en teori kommer det av att kläderna och möblerna på marknaderna i Paris påstods vara _____ med loppor.",
+"key": [
+"begagnade",
+"osäkert",
+"fulla"
+],
+"distractors": [
+[
+"använda",
+"omstritt",
+"rensade"
+],
+[
+"nya",
+"oklart",
+"angripna"
+],
+[
+"stulna",
+"känt",
+"tvättade"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"a",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är begagnade, osäkert och fulla. Kläder och böcker som säljs vidare har haft ägare förut, och använda fungerar också. Men enligt en teori visar att ingen vet säkert var ordet kommer ifrån, och omstritt eller oklart fungerar också. Ett namn efter loppor förutsätter att varorna hade loppor, och angripna säger samma sak. Nya saker säljs inte på loppis, stulna strider mot vanlig handel, känt strider mot men enligt en teori, och rensade eller tvättade kläder ger inte marknaden namn efter loppor.",
+"id": "p26-47"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Arv"
+},
+"text": "Arv innebär att egendom, men också skulder och skyldigheter, _____ när någon dör. Enligt gammal germansk rätt avgjordes arvet helt av _____, och testamente var _____.",
+"key": [
+"förs vidare",
+"släktskap",
+"okänt"
+],
+"distractors": [
+[
+"överlåts",
+"blodsband",
+"brukligt"
+],
+[
+"förintas",
+"härkomst",
+"obekant"
+],
+[
+"konfiskeras",
+"vänskap",
+"obligatoriskt"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"utr",
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är förs vidare, släktskap och okänt. Arv är att det någon ägde går till andra efter döden, och överlåts fungerar också. I den gamla rätten var det släkten som avgjorde vem som ärvde, och blodsband eller härkomst säger samma sak. Om arvet helt bestämdes av släkten fanns inget utrymme för testamente, och obekant fungerar också. Egendom som förintas eller konfiskeras är inte ett arv, vänskap avgjorde inte arv i den gamla rätten, och ett brukligt eller obligatoriskt testamente strider mot att släkten avgjorde helt.",
+"id": "p26-48"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Paradox"
+},
+"text": "En paradox uppstår när till synes _____ premisser och regler leder fram till en oväntad _____. Ett exempel är kung Pyrrhus yttrande om att ännu en sådan seger skulle _____ honom.",
+"key": [
+"sunda",
+"motsägelse",
+"förgöra"
+],
+"distractors": [
+[
+"rimliga",
+"motsats",
+"gynna"
+],
+[
+"absurda",
+"orimlighet",
+"fälla"
+],
+[
+"felaktiga",
+"bekräftelse",
+"hylla"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"s",
+"v"
+],
+"ledtrad": [
+"kon",
+"kon",
+"kon"
+],
+"explanation": "Rätt svar är sunda, motsägelse och förgöra. Till synes visar att premisserna verkar riktiga, och rimliga fungerar också. Det oväntade i en paradox är att något riktigt leder till något som strider mot sig självt, och motsats eller orimlighet fungerar också. En seger som är en paradox är en seger som blir ens undergång, och fälla säger samma sak. Absurda och felaktiga premisser verkar inte riktiga, en bekräftelse är inte oväntad, och en seger som gynnar eller hyllar segraren är ingen paradox.",
+"id": "p26-49"
+},
+{
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Symaskin"
+},
+"text": "Symaskinen utvecklades under 1800-talet och gjorde klädindustrin betydligt mer _____. Den finns både som stora _____ maskiner och som mindre modeller för hemmabruk, och de enklaste _____ med handvev eller pedal.",
+"key": [
+"effektiv",
+"industriella",
+"drivs"
+],
+"distractors": [
+[
+"produktiv",
+"professionella",
+"sys"
+],
+[
+"långsam",
+"fabriksmässiga",
+"körs"
+],
+[
+"dyrbar",
+"bärbara",
+"stängs"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är effektiv, industriella och drivs. En maskin som syr åt människan gör att det går snabbare att tillverka kläder, och produktiv fungerar också. De stora maskinerna ställs mot dem för hemmabruk, alltså är de till för fabriker, och professionella eller fabriksmässiga fungerar också. En vev eller pedal sätter maskinen i gång, och körs fungerar också. En maskin som syr gör inte industrin långsam eller dyrbar, stora maskiner är inte bärbara, och en symaskin sys eller stängs inte med pedalen.",
+"id": "p26-50"
+}
+]

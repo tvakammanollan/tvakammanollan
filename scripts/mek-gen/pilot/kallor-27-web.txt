@@ -1,0 +1,7 @@
+# Batch 27: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/ogon/ogonsjukdomar/glaukom/ | 1177 Glaukom | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/ogonsjukdomar/gra-starr-katarakt/ | 1177 Grå starr | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/fargblindhet/ | 1177 Färgblindhet | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/skelning-hos-barn/ | 1177 Skelning hos barn | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/ogonbesvar/hangande-ogonlock/ | 1177 Hängande ögonlock | 1177
+https://www.1177.se/sjukdomar--besvar/ogon/synfel/ | 1177 Synfel | 1177

@@ -1,0 +1,7 @@
+# Batch 25: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/vartor-och-svamp/fotsvamp/ | 1177 Fotsvamp | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/vartor-och-svamp/vartor-pa-hander-och-fotter/ | 1177 Vårtor | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/infektioner-pa-huden/baltros/ | 1177 Bältros | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/infektioner-pa-huden/vattkoppor/ | 1177 Vattkoppor | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/forhardnader-och-sjalvsprickor/forhardnader-och-liktornar/ | 1177 Förhårdnader | 1177
+https://www.1177.se/sjukdomar--besvar/hud-har-och-naglar/forhardnader-och-sjalvsprickor/sjalvsprickor/ | 1177 Självsprickor | 1177

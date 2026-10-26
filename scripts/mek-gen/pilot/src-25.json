@@ -1,0 +1,3002 @@
+[
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Fotsvamp"
+},
+"text": "Fotsvamp sitter oftast mellan lilltån och tån intill och ger klåda, sveda och hud som fjällar. Receptfria svampmedel finns som kräm, gel och lösning, och eftersom gel är _____ passar den bäst när huden är fuktig.",
+"key": [
+"uttorkande"
+],
+"distractors": [
+[
+"kylande"
+],
+[
+"smörjande"
+],
+[
+"bedövande"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är uttorkande. Eftersom visar att gelens egenskap är skälet till att den passar fuktig hud, och fukt motverkas av något som torkar. Kylande och bedövande säger inget om fukt, och smörjande medel passar torr hud snarare än fuktig.",
+"id": "p25-01"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Vårtor"
+},
+"text": "Vårtor smittar genom hudkontakt men också via blöta golv i duschar och omklädningsrum. Fotvårtor brukar vara runda och lite upphöjda, med en hård kant men en _____ mitt.",
+"key": [
+"mjukare"
+],
+"distractors": [
+[
+"strävare"
+],
+[
+"grövre"
+],
+[
+"kallare"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är mjukare. Men ställer mitten mot den hårda kanten, alltså ska mitten vara motsatsen till hård. Strävare och grövre ligger nära hård och ger ingen kontrast, och kallare handlar inte om hur vårtan känns att ta på.",
+"id": "p25-02"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Vattkoppor"
+},
+"text": "De flesta får vattkoppor bara en gång, eftersom man efter sjukdomen nästan alltid blir _____. Man kan då umgås med någon som är smittad utan att själv bli sjuk.",
+"key": [
+"immun"
+],
+"distractors": [
+[
+"smittsam"
+],
+[
+"allergisk"
+],
+[
+"vaccinerad"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är immun. Den som inte blir sjuk igen trots att den umgås med smittade har ett skydd mot sjukdomen. Den som är smittsam kan sprida sjukdomen, allergi skyddar inte mot ett virus, och man blir inte vaccinerad av att ha varit sjuk.",
+"id": "p25-03"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Köttbullar"
+},
+"text": "Bullar i köttbullar har inget med bakverket att göra. Ordet är släkt med boll och syftar på maträtter med _____ form, som fiskbullar och potatisbullar.",
+"key": [
+"rundad"
+],
+"distractors": [
+[
+"platt"
+],
+[
+"avlång"
+],
+[
+"fyrkantig"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är rundad. Ett ord som är släkt med boll syftar på något runt. Platt, avlång och fyrkantig stämmer inte med en boll.",
+"id": "p25-04"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Pytt i panna"
+},
+"text": "Pyttipanna räknas som svensk husmanskost och består av tärnad potatis, lök och bitar av kött eller korv som steks tillsammans. Ofta lagas rätten av _____ från veckans tidigare måltider, vilket gett den smeknamnet hänt i veckan.",
+"key": [
+"rester"
+],
+"distractors": [
+[
+"tillbehör"
+],
+[
+"kryddor"
+],
+[
+"recept"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är rester. Det som blivit över från tidigare måltider är rester, och smeknamnet syftar på att maten redan har serverats under veckan. Tillbehör och kryddor är inte vad rätten görs av, och man lagar inte mat av recept från måltider.",
+"id": "p25-05"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Klockstapel"
+},
+"text": "I Sverige hängdes kyrkklockorna först i små torn eller huvar på kyrktaken, som inte bar hur mycket som helst. När klockorna blev _____ behövdes fristående klockstaplar, och de äldsta byggdes i trä.",
+"key": [
+"tyngre"
+],
+"distractors": [
+[
+"vackrare"
+],
+[
+"ljusare"
+],
+[
+"sprödare"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är tyngre. Att taken inte bar hur mycket som helst visar att det var vikten som krävde en egen konstruktion. Vackrare, ljusare och sprödare klockor belastar inte taket mer.",
+"id": "p25-06"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Ladugård"
+},
+"text": "Rödfärgen skyddade träet, men länge hade bara bönder i välbärgade trakter råd att måla sina ladugårdar. Kring 1900 hade färgen blivit så _____ att den ströks även på enkla uthus.",
+"key": [
+"billig"
+],
+"distractors": [
+[
+"hållbar"
+],
+[
+"känd"
+],
+[
+"mörk"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är billig. Att bara de välbärgade hade råd visar att priset var hindret, och färgen spreds när den kostade mindre. Hållbar, känd och mörk förklarar inte att även fattigare kunde måla sina uthus.",
+"id": "p25-07"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Allmoge"
+},
+"text": "Ordet allmoge betydde från början alla som bodde inom ett visst område, men med tiden fick det en _____ innebörd: de ofrälse, framför allt bönderna, i det förmoderna samhället.",
+"key": [
+"mer begränsad"
+],
+"distractors": [
+[
+"mer högtidlig"
+],
+[
+"mer vänlig"
+],
+[
+"mer modern"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är mer begränsad. Kolonet visar att ordet gick från att gälla alla till att gälla bara en del av befolkningen. Mer högtidlig, mer vänlig och mer modern beskriver inte att innebörden krympte.",
+"id": "p25-08"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Åtal"
+},
+"text": "I Sverige väcks åtal oftast av en åklagare, som har plikt att göra det. Vid ärekränkningsbrott som förtal ligger _____ däremot i regel hos den som känner sig kränkt.",
+"key": [
+"initiativet"
+],
+"distractors": [
+[
+"straffet"
+],
+[
+"skulden"
+],
+[
+"domen"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är initiativet. Däremot ställer den kränkte mot åklagaren, och det gäller vem som tar steget att väcka åtal. Straffet, skulden och domen ligger inte hos den som har blivit kränkt.",
+"id": "p25-09"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Bedrägeri"
+},
+"text": "Bedrägeri innebär att någon med flit _____ en annan person, så att hon gör något som skadar henne själv. Offret förs alltså bakom ljuset, ofta till vinning för gärningsmannen.",
+"key": [
+"vilseleder"
+],
+"distractors": [
+[
+"hotar"
+],
+[
+"övertalar"
+],
+[
+"förföljer"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är vilseleder. Att föras bakom ljuset är att bli lurad, och alltså visar att det är samma sak. Hot och förföljelse är andra brott, och den som övertalas behöver inte vara lurad.",
+"id": "p25-10"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Servitut"
+},
+"text": "Ett servitut ger en fastighet rätt att på ett bestämt sätt _____ en annan fastighet, till exempel genom att en väg får dras över grannens mark.",
+"key": [
+"använda"
+],
+"distractors": [
+[
+"förvalta"
+],
+[
+"bebygga"
+],
+[
+"taxera"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är använda. Exemplet med vägen visar att rätten gäller att utnyttja grannens mark för ett visst ändamål. Att förvalta, bebygga eller taxera grannens fastighet är inget som en väg över marken ger rätt till.",
+"id": "p25-11"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Smultron"
+},
+"text": "Smultronplantan sprider sig med revor, långa utlöpare ovan jord som kan _____ och växa till nya plantor.",
+"key": [
+"slå rot"
+],
+"distractors": [
+[
+"slå ut"
+],
+[
+"gå i blom"
+],
+[
+"vissna ned"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är slå rot. En utlöpare blir en ny planta när den fäster i jorden. Slå ut och gå i blom handlar om blommor, och en utlöpare som vissnar ned blir ingen ny planta.",
+"id": "p25-12"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Utter"
+},
+"text": "Uttern är väl anpassad till ett liv i vatten. Tassarna har simhud, och både näsborrar och öronöppningar kan _____ när djuret dyker.",
+"key": [
+"tillslutas"
+],
+"distractors": [
+[
+"vidgas"
+],
+[
+"rengöras"
+],
+[
+"värmas"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är tillslutas. Ett djur som dyker behöver hålla vattnet ute, alltså stänger det näsa och öron. Att de vidgas, rengörs eller värms skyddar inte mot vattnet.",
+"id": "p25-13"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Liljekonvalj"
+},
+"text": "Liljekonvaljen har en krypande jordstam och bildar därför ofta stora, _____ bestånd som ligger som en matta över skogsmarken.",
+"key": [
+"täta"
+],
+"distractors": [
+[
+"fuktiga"
+],
+[
+"höga"
+],
+[
+"ljusa"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"par"
+],
+"explanation": "Rätt svar är täta. En matta täcker marken utan glipor, och jämförelsen visar att plantorna står nära varandra. Fuktiga, höga och ljusa bestånd liknar inte en matta.",
+"id": "p25-14"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Torv"
+},
+"text": "Torv bildas av växtrester i mossar och kärr, där de bara delvis har _____ eftersom marken saknar syre.",
+"key": [
+"förmultnat"
+],
+"distractors": [
+[
+"frusit"
+],
+[
+"vuxit"
+],
+[
+"torkat"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är förmultnat. Utan syre bryts växtrester inte ned helt, och det är just nedbrytningen som bristen på syre hindrar. Syrebrist förklarar inte att växtdelar frusit, vuxit eller torkat.",
+"id": "p25-15"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Avund"
+},
+"text": "Avund uppstår när någon saknar en egenskap, en framgång eller en ägodel som en annan har, och antingen _____ den själv eller vill att den andra ska bli av med den.",
+"key": [
+"eftertraktar"
+],
+"distractors": [
+[
+"föraktar"
+],
+[
+"överskattar"
+],
+[
+"undervisar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är eftertraktar. Den som saknar något som en annan har vill gärna ha det. Den som föraktar en sak vill inte ha den, och överskattar eller undervisar den själv ger ingen mening.",
+"id": "p25-16"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Intuition"
+},
+"text": "Intuition är förmågan att bilda sig en uppfattning på stället, utan att ha alla fakta, och den ställs ofta mot att _____ logiskt.",
+"key": [
+"resonera"
+],
+"distractors": [
+[
+"känna"
+],
+[
+"gissa"
+],
+[
+"drömma"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är resonera. Ställs mot visar att intuitionen jämförs med att tänka steg för steg, och logiskt hör ihop med att resonera. Att känna, gissa eller drömma logiskt ger ingen mening.",
+"id": "p25-17"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Neologism"
+},
+"text": "En neologism är ett nybildat ord eller uttryck, men det kan också vara ett äldre ord som används med en ny _____.",
+"key": [
+"innebörd"
+],
+"distractors": [
+[
+"stavning"
+],
+[
+"böjning"
+],
+[
+"uttal"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är innebörd. Men också ställer ett gammalt ord som fått ett nytt innehåll mot ett helt nytt ord. Ett ord blir inte nytt för att det stavas, böjs eller uttalas annorlunda.",
+"id": "p25-18"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Disciplin"
+},
+"text": "En disciplinerad människa fullgör sina åtaganden och gör det hon anser bäst, även när det innebär ett _____ på kort sikt.",
+"key": [
+"obehag"
+],
+"distractors": [
+[
+"beslut"
+],
+[
+"avbrott"
+],
+[
+"löfte"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är obehag. Även när visar att det krävs något av personen, och det som disciplinen övervinner är det som är jobbigt. Ett beslut, ett avbrott eller ett löfte är inget man behöver disciplin för att stå ut med.",
+"id": "p25-19"
+},
+{
+"amne": "utb",
+"genre": "myn",
+"source": {
+"title": "Skolhälsovård"
+},
+"text": "I Sverige är skolhälsovården kostnadsfri för eleverna. Den ska följa deras utveckling och hälsa och i första hand vara _____, med hälsokontroller och enkla sjukvårdsinsatser.",
+"key": [
+"preventiv"
+],
+"distractors": [
+[
+"akut"
+],
+[
+"specialiserad"
+],
+[
+"kirurgisk"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är preventiv. Hälsokontroller görs för att upptäcka och förhindra problem innan de uppstår, och det är vad preventiv betyder. Enkla sjukvårdsinsatser strider mot specialiserad och kirurgisk vård, och hälsokontroller är inte akuta.",
+"id": "p25-20"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Bältros"
+},
+"text": "Vid bältros får man blåsor och utslag på huden, och det brukar göra ont. Sjukdomen beror på att viruset från vattkopporna _____ i kroppen och senare blir aktivt igen, men varför bara vissa drabbas är fortfarande _____.",
+"key": [
+"ligger kvar",
+"oklart"
+],
+"distractors": [
+[
+"finns kvar",
+"välkänt"
+],
+[
+"förökar sig",
+"okänt"
+],
+[
+"bryts ned",
+"bevisat"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är ligger kvar och oklart. Ett virus som senare blir aktivt igen har funnits i kroppen hela tiden, och finns kvar säger samma sak. Men fortfarande visar att frågan inte är besvarad, och okänt fungerar också. Ett virus som förökar sig är redan aktivt och ett som bryts ned kan inte väckas igen, och välkänt eller bevisat strider mot men fortfarande.",
+"id": "p25-21"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Förhårdnader"
+},
+"text": "Förhårdnader och liktornar sitter ofta på tårna eller under foten. De kan uppstå om man går snett och därför _____ foten ojämnt, och den som har diabetes kan _____ vårdcentralen för att få hjälp med fotvården.",
+"key": [
+"belastar",
+"vända sig till"
+],
+"distractors": [
+[
+"trycker på",
+"kringgå"
+],
+[
+"masserar",
+"kontakta"
+],
+[
+"tvättar",
+"lämna"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"ors",
+"kol"
+],
+"explanation": "Rätt svar är belastar och vända sig till. Den som går snett lägger tyngden ojämnt på foten, och trycker på fungerar också. För att få hjälp tar man kontakt med vårdcentralen, och kontakta säger samma sak. Att massera eller tvätta foten ger inga förhårdnader, och den som vill ha hjälp kringgår eller lämnar inte vårdcentralen.",
+"id": "p25-22"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Självsprickor"
+},
+"text": "Självsprickor sitter oftast på hälar, fotsulor och fingertoppar och blir värre av kyla och torr luft. De är svåra att _____ helt, men det finns mycket man kan göra själv för att _____ besvären, till exempel att smörja huden ofta.",
+"key": [
+"bli av med",
+"lindra"
+],
+"distractors": [
+[
+"bota",
+"förvärra"
+],
+[
+"upptäcka",
+"mildra"
+],
+[
+"smitta",
+"maskera"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är bli av med och lindra. Men ställer det som är svårt mot det man kan göra, så det svåra är att få sprickorna att försvinna, och bota fungerar också. Att smörja huden gör besvären mindre, och mildra säger samma sak. Sprickor på hälarna är inte svåra att upptäcka och smittar inte, och smörjning förvärrar eller maskerar inte besvären.",
+"id": "p25-23"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Granbarkborre"
+},
+"text": "Granbarkborren angriper framför allt _____ granar, men efter en storm kan den föröka sig så kraftigt att även friska träd drabbas. Skalbaggen för också med sig svampar som _____ veden, och virket förlorar då i värde.",
+"key": [
+"försvagade",
+"missfärgar"
+],
+"distractors": [
+[
+"sjuka",
+"stärker"
+],
+[
+"unga",
+"färgar"
+],
+[
+"höga",
+"konserverar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kon",
+"ors"
+],
+"explanation": "Rätt svar är försvagade och missfärgar. Men även friska ställer de träd som angrips i första hand mot friska träd, och sjuka fungerar också. Svamparna gör att virket förlorar i värde, alltså förstör de veden, och färgar fungerar också. Unga och höga granar står inte i motsats till friska, och svampar som stärker eller konserverar veden sänker inte dess värde.",
+"id": "p25-24"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Rullstensås"
+},
+"text": "En rullstensås är en lång rygg av grus, sand och stenar som har _____ av smältvattnet från inlandsisen och sorterats efter storlek. Åsarna kan vara flera hundra kilometer långa och _____ oftast i den riktning som isen smälte undan.",
+"key": [
+"slipats",
+"löper"
+],
+"distractors": [
+[
+"nötts",
+"vandrar"
+],
+[
+"värmts",
+"sträcker sig"
+],
+[
+"lösts upp",
+"faller"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är slipats och löper. Strömmande vatten gör stenar runda genom att nöta på dem, och nötts säger samma sak. En lång rygg som har en riktning sträcker sig åt det hållet, och sträcker sig fungerar också. Smältvatten värmer inte stenar, och stenar som lösts upp kan inte sorteras, medan en ås varken vandrar eller faller i en riktning.",
+"id": "p25-25"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Tjäle"
+},
+"text": "Tjäle bildas när vattnet i marken fryser, och eftersom is tar större plats än vatten kan den _____ vägar och husgrunder. Vattenledningar läggs därför så djupt att de hamnar _____ tjälen.",
+"key": [
+"skada",
+"nedanför"
+],
+"distractors": [
+[
+"spräcka",
+"ovanför"
+],
+[
+"isolera",
+"under"
+],
+[
+"kyla",
+"inuti"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"fu"
+],
+"ledtrad": [
+"ors",
+"ors"
+],
+"explanation": "Rätt svar är skada och nedanför. Is som tar större plats pressar på det som finns i marken, och spräcka fungerar också. Ledningar som läggs djupt hamnar lägre än den frusna marken, och under säger samma sak. Att isen tar större plats förklarar inte att den skulle isolera eller kyla vägar, och ovanför eller inuti tjälen skulle ledningarna frysa.",
+"id": "p25-26"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Lockout"
+},
+"text": "Vid en lockout _____ arbetsgivaren de anställda från arbetsplatsen. Åtgärden får bara verklig slagkraft om arbetsgivarna är _____, men den kan då snabbt omfatta alla anställda inom ett fackligt område.",
+"key": [
+"stänger ute",
+"organiserade"
+],
+"distractors": [
+[
+"utestänger",
+"oeniga"
+],
+[
+"befordrar",
+"samordnade"
+],
+[
+"belönar",
+"ensamma"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"a"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är stänger ute och organiserade. Ordet lockout och från arbetsplatsen visar att de anställda hålls borta från jobbet, och utestänger säger samma sak. Att åtgärden då kan omfatta ett helt område visar att arbetsgivarna agerar tillsammans, och samordnade fungerar också. Att befordra eller belöna anställda är ingen stridsåtgärd, och oeniga eller ensamma arbetsgivare kan inte stänga ute alla inom ett område.",
+"id": "p25-27"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Lektion"
+},
+"text": "En lektion är en _____ stund då lärare och elever arbetar tillsammans, och både kurser och skoldagar delas in i lektioner. Från början var en lektion lika lång som den tid en munk eller nunna hann _____ sina elever mellan två bönestunder.",
+"key": [
+"avgränsad",
+"undervisa"
+],
+"distractors": [
+[
+"bestämd",
+"väcka"
+],
+[
+"oändlig",
+"lära upp"
+],
+[
+"frivillig",
+"tysta ned"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är avgränsad och undervisa. Något som skoldagen delas in i har en början och ett slut, och bestämd fungerar också. Lektionens längd mättes efter hur länge munken kunde ge sina elever kunskap, och lära upp säger samma sak. En oändlig eller frivillig stund går inte att dela in en skoldag i, och den tid det tar att väcka eller tysta ned elever är ingen lektion.",
+"id": "p25-28"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Dialektik"
+},
+"text": "Inom dialektiken _____ ett påstående av ett motargument. Efter noggrann prövning förenas de båda i en syntes, och målet är att komma fram till sanningen snarare än att _____ diskussionen.",
+"key": [
+"bemöts",
+"vinna"
+],
+"distractors": [
+[
+"besvaras",
+"dokumentera"
+],
+[
+"ersätts",
+"segra i"
+],
+[
+"bekräftas",
+"inleda"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är bemöts och vinna. Ett motargument är ett svar som går emot påståendet, och besvaras fungerar också. Snarare än ställer sanningen mot att gå segrande ur debatten, och segra i säger samma sak. Ett påstående som ersätts kan inte förenas med motargumentet, ett motargument bekräftar inte, och att dokumentera eller inleda en diskussion står inte i motsats till att söka sanningen.",
+"id": "p25-29"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Enskifte"
+},
+"text": "Vid enskiftet slogs böndernas tegar ihop, och varje bonde fick då några få _____ åkrar. Reformen kom efter storskiftet och var betydligt mer _____, eftersom gårdarna ofta flyttades ut från byarna.",
+"key": [
+"sammanhållna",
+"radikal"
+],
+"distractors": [
+[
+"samlade",
+"försiktig"
+],
+[
+"utspridda",
+"genomgripande"
+],
+[
+"avlägsna",
+"blygsam"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"a"
+],
+"ledtrad": [
+"ors",
+"ors"
+],
+"explanation": "Rätt svar är sammanhållna och radikal. Tegar som slås ihop blir åkrar i ett stycke, och samlade fungerar också. Att hela gårdar flyttades ut ur byarna var en stor förändring, och genomgripande säger samma sak. Utspridda och avlägsna åkrar är vad reformen skulle avskaffa, och en försiktig eller blygsam reform flyttar inte ut gårdar.",
+"id": "p25-30"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Länsman"
+},
+"text": "Före 1675 var länsmannen en förtroendeman ur lokalsamhället som _____ bygden med statens förvaltning. Sedan blev han en statlig tjänsteman, kronolänsman, och hans _____ var skatteuppbörd, indrivning och polisarbete.",
+"key": [
+"förband",
+"uppgifter"
+],
+"distractors": [
+[
+"länkade samman",
+"privilegier"
+],
+[
+"jämförde",
+"sysslor"
+],
+[
+"bekämpade",
+"fiender"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är förband och uppgifter. En förtroendeman mellan bygden och staten var en länk mellan dem, och länkade samman säger samma sak. Skatteuppbörd och polisarbete är arbete som ingick i tjänsten, och sysslor fungerar också. Länsmannen jämförde eller bekämpade inte bygden, och indrivning är varken ett privilegium eller en fiende.",
+"id": "p25-31"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Seriealbum"
+},
+"text": "I bred mening är ett seriealbum varje utgåva av tecknade serier som inte kommer ut _____, till skillnad från serietidningen. I en snävare mening avses en tunn bok med mjuka pärmar som _____ en enda avslutad berättelse.",
+"key": [
+"fortlöpande",
+"rymmer"
+],
+"distractors": [
+[
+"periodiskt",
+"avbryter"
+],
+[
+"gratis",
+"innehåller"
+],
+[
+"på svenska",
+"censurerar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"adv",
+"v"
+],
+"ledtrad": [
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är fortlöpande och rymmer. En tidning kommer ut med jämna mellanrum, och till skillnad från visar att albumet inte gör det, och periodiskt fungerar också. En bok med en avslutad berättelse har berättelsen i sig, och innehåller säger samma sak. Att serietidningen är gratis eller på svenska stämmer inte, och en bok som avbryter eller censurerar sin enda berättelse ger ingen mening.",
+"id": "p25-32"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Skräcklitteratur"
+},
+"text": "Skräcklitteratur vill skrämma eller _____ läsarna, och länge kom skräcken oftast från något ont och övernaturligt som tränger in i _____.",
+"key": [
+"oroa",
+"vardagen"
+],
+"distractors": [
+[
+"förskräcka",
+"rymden"
+],
+[
+"roa",
+"tillvaron"
+],
+[
+"trösta",
+"drömmen"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"par",
+"kol"
+],
+"explanation": "Rätt svar är oroa och vardagen. Skrämma eller visar att det andra ordet ska ligga nära i betydelse, och förskräcka fungerar också. Något övernaturligt som gör intrång stör det vanliga livet, och tillvaron säger samma sak. Roa och trösta passar inte ihop med skräck, och något som tränger in i rymden eller drömmen är inte ett intrång i det vardagliga.",
+"id": "p25-33"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Liknelse"
+},
+"text": "En liknelse är en jämförelse mellan två saker där orden som eller liksom _____ sambandet. Liknelser kan vara _____ för ett visst språk, precis som idiom, och därför vara svåra att översätta.",
+"key": [
+"markerar",
+"specifika"
+],
+"distractors": [
+[
+"anger",
+"universella"
+],
+[
+"suddar ut",
+"typiska"
+],
+[
+"upphäver",
+"främmande"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"def",
+"ors"
+],
+"explanation": "Rätt svar är markerar och specifika. Orden som och liksom visar att två saker jämförs, och anger fungerar också. Det som är svårt att översätta hör till just ett språk, och typiska fungerar också. Orden suddar inte ut eller upphäver jämförelsen, och universella eller främmande uttryck är inte svåra att översätta av det skälet.",
+"id": "p25-34"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Landshövding"
+},
+"text": "Landshövdingen är statens _____ i länet men ska samtidigt föra länets talan gentemot staten. Rollen är alltså _____, och den som har den förordnas på sex år.",
+"key": [
+"företrädare",
+"dubbel"
+],
+"distractors": [
+[
+"representant",
+"ärftlig"
+],
+[
+"utmanare",
+"tudelad"
+],
+[
+"gäst",
+"anonym"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är företrädare och dubbel. Den som för statens talan i länet representerar staten, och representant säger samma sak. Alltså sammanfattar att uppdraget har två sidor, och tudelad fungerar också. En utmanare eller gäst företräder inte staten, och en roll som förordnas på sex år är varken ärftlig eller anonym.",
+"id": "p25-35"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Rekrytering"
+},
+"text": "Ordet rekrytering kommer från det militära, där det betyder att en trupp får nytt _____, antingen som ersättning för förluster eller som _____.",
+"key": [
+"manskap",
+"förstärkning"
+],
+"distractors": [
+[
+"folk",
+"gåva"
+],
+[
+"material",
+"utökning"
+],
+[
+"proviant",
+"bestraffning"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är manskap och förstärkning. Rekryter är soldater, alltså förses truppen med människor, och folk fungerar också. Antingen ställer ersättning mot att truppen blir större, och utökning säger samma sak. Material och proviant är inte rekryter, och nya soldater ges inte som gåva eller bestraffning.",
+"id": "p25-36"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Fackspråk"
+},
+"text": "Med fackspråk kan människor _____ inom ett visst ämne, och de ord som har en särskild betydelse där kallas facktermer. På en vårdcentral talar personalen därför ofta _____ med varandra än med patienterna.",
+"key": [
+"kommunicera",
+"mer tekniskt"
+],
+"distractors": [
+[
+"samtala",
+"mer vardagligt"
+],
+[
+"tiga",
+"mer specialiserat"
+],
+[
+"skämta",
+"mer högljutt"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är kommunicera och mer tekniskt. Ett språk är ett redskap för att utbyta kunskap, och samtala fungerar också. Kollegor kan använda facktermer med varandra men inte med patienterna, och mer specialiserat säger samma sak. Man tiger eller skämtar inte med ett fackspråk, och personalen talar inte mer vardagligt eller högljutt med varandra för att de har facktermer.",
+"id": "p25-37"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Lojalitet"
+},
+"text": "Lojalitet är ett känslomässigt _____ till en person, en grupp eller en sak, och det kan få människor att stå fast även under svåra omständigheter. Den som är lojal tar också den andres _____ i konflikter.",
+"key": [
+"band",
+"parti"
+],
+"distractors": [
+[
+"fäste",
+"fiender"
+],
+[
+"glapp",
+"sida"
+],
+[
+"skuldförhållande",
+"pengar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är band och parti. Att stå fast vid någon förutsätter att man känner sig knuten till personen, och fäste fungerar också. Att ta någons parti är att stödja den, och sida säger samma sak. Ett glapp strider mot att man står fast, ett skuldförhållande är inte känslomässigt, och man tar inte den andres fiender eller pengar i en konflikt.",
+"id": "p25-38"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Koncentration"
+},
+"text": "Koncentration är ett mått på hur mycket av ett ämne en blandning innehåller per _____. Är blandningen väl omrörd är koncentrationen lika hög _____.",
+"key": [
+"volymenhet",
+"överallt"
+],
+"distractors": [
+[
+"liter",
+"ytterst"
+],
+[
+"timme",
+"i varje del"
+],
+[
+"person",
+"på ytan"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"adv"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är volymenhet och överallt. En mängd per enhet av blandningen anges per volym, och liter fungerar också. En väl omrörd blandning är likadan i alla delar, och i varje del säger samma sak. Timme och person är inga mått på en blandning, och ytterst eller på ytan pekar ut ett ställe när omrörningen gör alla ställen lika.",
+"id": "p25-39"
+},
+{
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Smide"
+},
+"text": "Vid smide läggs metallen på ett städ och _____ med hammarslag tills den får den form smeden vill ha. Arbetar man med kall metall blir resultatet mer _____, medan upphettad metall kräver mindre kraft.",
+"key": [
+"bearbetas",
+"exakt"
+],
+"distractors": [
+[
+"formas",
+"ojämnt"
+],
+[
+"kyls",
+"precist"
+],
+[
+"smälts",
+"färgglatt"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är bearbetas och exakt. Hammarslag på ett städ ändrar metallens form, och formas fungerar också. Medan ställer de två arbetssätten mot varandra, så den kalla metallen måste ha en annan fördel än att den kräver mindre kraft, och precist säger samma sak. Metall kyls eller smälts inte med hammarslag, och ojämnt eller färgglatt är ingen fördel som vägs mot kraften.",
+"id": "p25-40"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Pamflett"
+},
+"text": "Under frihetstiden blev pamfletter ett vanligt sätt att _____ opinion, och de liberala tryckfrihetslagarna gjorde samhällsdebatten allt _____. Tonen hårdnade före Gustav III:s statskupp, men när kungen införde envälde förlorade pamfletterna sin _____.",
+"key": [
+"forma",
+"öppnare",
+"betydelse"
+],
+"distractors": [
+[
+"skapa",
+"friare",
+"censur"
+],
+[
+"dämpa",
+"livligare",
+"tyngd"
+],
+[
+"köpa",
+"tystlåtnare",
+"trycksvärta"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"ors",
+"kon"
+],
+"explanation": "Rätt svar är forma, öppnare och betydelse. Opinion formas och bildas, och skapa fungerar också. Liberala lagar om tryckfrihet gör att fler kan delta i debatten, och friare eller livligare säger samma sak. Men ställer det fria debattklimatet mot enväldet, där pamfletterna inte längre spelade någon roll, och tyngd fungerar också. Den som skriver pamfletter vill inte dämpa eller köpa opinion, tryckfrihet gör inte debatten tystlåtnare, och pamfletter förlorar inte sin censur eller sin trycksvärta.",
+"id": "p25-41"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Litteraturkritik"
+},
+"text": "Litteraturkritik är att granska och _____ litteratur. Till skillnad från litteraturteoretikern, som strävar efter _____, låter kritikern sina egna värderingar synas, och kritiken _____ gärna i essäform.",
+"key": [
+"bedöma",
+"objektivitet",
+"publiceras"
+],
+"distractors": [
+[
+"betygsätta",
+"saklighet",
+"glöms"
+],
+[
+"censurera",
+"neutralitet",
+"trycks"
+],
+[
+"illustrera",
+"popularitet",
+"tystnar"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"s",
+"v"
+],
+"ledtrad": [
+"par",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är bedöma, objektivitet och publiceras. En kritiker säger vad litteraturen är värd, och betygsätta fungerar också. Till skillnad från ställer teoretikern mot den som visar sina egna värderingar, alltså vill teoretikern hålla dem borta, och saklighet eller neutralitet säger samma sak. Kritik i essäform är kritik som ges ut, och trycks fungerar också. Att censurera eller illustrera litteratur är inte kritik, popularitet står inte i motsats till egna värderingar, och kritik som glöms eller tystnar har ingen form.",
+"id": "p25-42"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Kanslisvenska"
+},
+"text": "Kanslisvenskan växte fram ur juridikens krav på _____ och opersonlighet, och den har präglat hur myndigheter skriver ända sedan 1500-talet. Stilen har _____ för sina långa och invecklade meningar, som hade latinets _____ satsbyggnad som förebild.",
+"key": [
+"exakthet",
+"kritiserats",
+"komplicerade"
+],
+"distractors": [
+[
+"noggrannhet",
+"fått kritik",
+"lättbegripliga"
+],
+[
+"känsla",
+"klandrats",
+"krångliga"
+],
+[
+"humor",
+"berömts",
+"korta"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"v",
+"a"
+],
+"ledtrad": [
+"par",
+"kol",
+"par"
+],
+"explanation": "Rätt svar är exakthet, kritiserats och komplicerade. Juridiken kräver att det står exakt vad som menas, och noggrannhet fungerar också. Långa och invecklade meningar är något man klagar på, och fått kritik eller klandrats säger samma sak. Invecklade meningar har en förebild som är lika invecklad, och krångliga fungerar också. Känsla och humor går inte ihop med opersonlighet, en stil berömms inte för invecklade meningar, och lättbegripliga eller korta satser kan inte ge långa och invecklade meningar.",
+"id": "p25-43"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Adoption"
+},
+"text": "Vid en adoption tar någon över _____ för ett barn och räknas sedan som barnets förälder. Bruket är mycket gammalt, och förr var skälet inte bara en _____ att få barn utan ofta att den adopterade skulle föra vidare familjens religiösa _____.",
+"key": [
+"ansvaret",
+"önskan",
+"plikter"
+],
+"distractors": [
+[
+"vårdnaden",
+"längtan",
+"affärer"
+],
+[
+"kostnaden",
+"vilja",
+"sysslor"
+],
+[
+"namnet",
+"rädsla",
+"fiender"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är ansvaret, önskan och plikter. Den som blir förälder tar på sig ansvaret för barnet, och vårdnaden fungerar också. Att få barn är något man vill, och längtan eller vilja säger samma sak. Det religiösa som barnet skulle föra vidare var uppgifter i familjen, och sysslor fungerar också. Att betala för ett barn eller ge det sitt namn gör en inte till förälder, rädsla att få barn är inget skäl att adoptera, och affärer eller fiender är inte religiösa.",
+"id": "p25-44"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Prästgård"
+},
+"text": "Prästgårdarna var från början boställen där avkastningen från _____ jord och skog bidrog till prästens _____. Redan i landskapslagarna var bönderna i socknen _____ att bygga och underhålla husen åt sin präst.",
+"key": [
+"tillhörande",
+"avlöning",
+"ålagda"
+],
+"distractors": [
+[
+"egen",
+"inkomst",
+"ovilliga"
+],
+[
+"främmande",
+"försörjning",
+"tvungna"
+],
+[
+"såld",
+"pension",
+"förhindrade"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"kol",
+"def"
+],
+"explanation": "Rätt svar är tillhörande, avlöning och ålagda. Jorden och skogen hörde till prästgården, och egen fungerar också. Avkastningen var en del av det prästen levde av, och inkomst eller försörjning säger samma sak. En lag lägger plikter på någon, och tvungna fungerar också. Främmande eller såld jord ger ingen avkastning till prästgården, en präst i tjänst får ingen pension, och en lag gör inte bönderna ovilliga eller förhindrade att bygga åt prästen.",
+"id": "p25-45"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Fältpräst"
+},
+"text": "Militära själavårdare, ofta kallade fältpräster, _____ soldaterna i deras religionsutövning, och en särskilt viktig uppgift är att hjälpa dem att _____ döden. De har samma folkrättsliga _____ som sjukvårdspersonalen.",
+"key": [
+"stöder",
+"hantera",
+"skydd"
+],
+"distractors": [
+[
+"bistår",
+"handskas med",
+"böter"
+],
+[
+"hindrar",
+"bearbeta",
+"ställning"
+],
+[
+"bestraffar",
+"frukta",
+"arvode"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är stöder, hantera och skydd. En själavårdare hjälper soldaterna i deras tro, och bistår fungerar också. Att hjälpa någon med döden är att hjälpa den att klara av det som hänt, och handskas med eller bearbeta säger samma sak. Folkrätten ger sjukvårdspersonal ett särskilt skydd i krig, och ställning fungerar också. En själavårdare hindrar eller bestraffar inte religionsutövning, hjälper ingen att frukta döden, och folkrätten ger varken böter eller arvode.",
+"id": "p25-46"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Kompani"
+},
+"text": "Ett kompani är en _____ av en bataljon och består av två till sju plutoner. Chefen har en kompaniadjutant som _____, och kompaniet är den minsta enhet i armén som är delvis _____ både administrativt och taktiskt.",
+"key": [
+"del",
+"biträde",
+"självständig"
+],
+"distractors": [
+[
+"underavdelning",
+"hjälp",
+"beroende"
+],
+[
+"utvidgning",
+"medhjälpare",
+"fristående"
+],
+[
+"kopia",
+"fiende",
+"underställd"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är del, biträde och självständig. Ett förband som ingår i en bataljon är en del av den, och underavdelning fungerar också. En adjutant hjälper sin chef, och hjälp eller medhjälpare säger samma sak. Den minsta enhet som är delvis något måste vara mer än de mindre enheterna, och det som skiljer kompaniet är att det kan klara sig på egen hand, och fristående fungerar också. En utvidgning eller kopia av en bataljon består inte av plutoner, en adjutant är ingen fiende, och beroende eller underställd är även de minsta enheterna.",
+"id": "p25-47"
+},
+{
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Tröskverk"
+},
+"text": "Under 1700-talet _____ flera förslag på mekaniska tröskverk, men det moderna med en roterande cylinder _____ först omkring 1786. Innan dess tröskade man med slaga, och i norra Sverige _____ man även vältar som drogs av hästar.",
+"key": [
+"lades fram",
+"konstruerades",
+"använde"
+],
+"distractors": [
+[
+"presenterades",
+"utvecklades",
+"bannlyste"
+],
+[
+"revs",
+"byggdes",
+"nyttjade"
+],
+[
+"hyrdes ut",
+"lämnades",
+"fruktade"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"utr",
+"v",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon",
+"kol"
+],
+"explanation": "Rätt svar är lades fram, konstruerades och använde. Förslag läggs fram, och presenterades fungerar också. Men först ställer de tidiga förslagen mot maskinen som kom senare, och utvecklades eller byggdes säger samma sak. Vältar dragna av hästar var ett redskap för tröskning, och nyttjade fungerar också. Förslag rivs eller hyrs inte ut, en maskin som lämnades 1786 blev inte den moderna, och man bannlyste eller fruktade inte sina egna redskap.",
+"id": "p25-48"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Ackord"
+},
+"text": "Ett ackord är minst tre toner som _____ samtidigt. Ackorden skrivs med symboler som ofta kan _____ noterna vid ackompanjemang på gitarr, piano och dragspel, och de ger då musikern större _____ än noter gör.",
+"key": [
+"klingar",
+"ta platsen för",
+"frihet"
+],
+"distractors": [
+[
+"ljuder",
+"komplettera",
+"tyngd"
+],
+[
+"övas",
+"ersätta",
+"spelrum"
+],
+[
+"glöms",
+"radera",
+"trötthet"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är klingar, ta platsen för och frihet. Toner som hörs tillsammans klingar, och ljuder fungerar också. Symboler som kan användas i stället för noter tar deras plats, och komplettera eller ersätta fungerar också. Den som spelar efter symboler får själv välja hur ackordet ska spelas, och spelrum säger samma sak. Toner övas eller glöms inte samtidigt, symboler raderar inte noter, och tyngd eller trötthet är inget som symboler ger musikern.",
+"id": "p25-49"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Ledarskap"
+},
+"text": "Ett sätt att se på ledarskap är som en social _____ där en person får andra att _____ i en gemensam uppgift. Ett annat synsätt ser ledarskap som att påverka andra och betonar att relationen mellan ledaren och de ledda är _____.",
+"key": [
+"process",
+"engagera sig",
+"ojämlik"
+],
+"distractors": [
+[
+"förlopp",
+"delta",
+"jämlik"
+],
+[
+"katastrof",
+"samarbeta",
+"asymmetrisk"
+],
+[
+"fest",
+"slumra",
+"symmetrisk"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"utr",
+"a"
+],
+"ledtrad": [
+"kol",
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är process, engagera sig och ojämlik. Ledarskap pågår över tid mellan människor, och förlopp fungerar också. En ledare får andra att göra en insats för uppgiften, och delta eller samarbeta säger samma sak. Den som påverkar andra har mer makt än de ledda, och asymmetrisk fungerar också. Ledarskap är ingen katastrof eller fest, att slumra i en uppgift ger ingen mening, och en relation där den ena påverkar den andra är varken jämlik eller symmetrisk.",
+"id": "p25-50"
+}
+]

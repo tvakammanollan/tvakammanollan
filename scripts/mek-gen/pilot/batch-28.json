@@ -1,0 +1,2892 @@
+[
+ {
+  "id": "p28-01",
+  "amne": "med",
+  "genre": "myn",
+  "text": "En njursten kan sitta där helt utan att ge besvär, och då upptäcks den ofta av en _____, till exempel när man röntgas av något helt annat skäl.",
+  "alternatives": [
+   "vana",
+   "regel",
+   "slump",
+   "plan"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är slump. Att stenen syns när man undersöks för något annat visar att ingen letade efter den. En vana, regel eller plan förklarar inte att stenen hittas när man söker något annat.",
+  "source": {
+   "title": "1177 Njursten",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/njursten/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-02",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Sängvätning är inte farligt för kroppen, men det kan ge barnet sämre självförtroende. Barnet behöver därför höra att det inte är dess _____ att sängen blir blöt.",
+  "alternatives": [
+   "vana",
+   "tur",
+   "fel",
+   "sjukdom"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är fel. Barnet ska inte känna att det har gjort något dåligt, och det är så självförtroendet skyddas. Vana, tur och sjukdom handlar inte om att barnet ska slippa skämmas.",
+  "source": {
+   "title": "1177 Sängvätning hos barn",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/sangvatning-hos-barn/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-03",
+  "amne": "med",
+  "genre": "pop",
+  "text": "Nysningen är, liksom hostningen, kroppens sätt att _____ luftvägarna, och den framkallas oftast av att något retar nervcellerna i näsan.",
+  "alternatives": [
+   "kyla",
+   "rensa",
+   "fukta",
+   "vidga"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är rensa. Något som retar näsan ska bort, och en snabb utblåsning av luft blåser bort det. Att kyla, fukta eller vidga luftvägarna gör inte en nysning.",
+  "source": {
+   "title": "Nysning",
+   "url": "https://sv.wikipedia.org/wiki/Nysning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-04",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Till skillnad från potatismos görs rotmos vanligen utan mjölk och grädde. I stället används oftast _____ för att få rätt konsistens på moset.",
+  "alternatives": [
+   "smöret",
+   "kokvattnet",
+   "ägget",
+   "osten"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är kokvattnet. I stället visar att en annan vätska tar mjölkens och gräddens plats, och rotfrukterna har kokats i vatten. Smör, ägg och ost är ingen vätska att späda moset med.",
+  "source": {
+   "title": "Rotmos",
+   "url": "https://sv.wikipedia.org/wiki/Rotmos",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-05",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Förr var brännvin ett _____ namn på alla spritdrycker, även whisky och konjak, men numera syftar ordet framför allt på sprit i nordisk stil.",
+  "alternatives": [
+   "övergripande",
+   "nedsättande",
+   "tekniskt",
+   "utländskt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är övergripande. Ett namn på alla spritdrycker samlar många sorter under sig, och men numera ställer det mot den snävare betydelsen. Nedsättande, tekniskt och utländskt säger inget om att ordet täckte alla sorter.",
+  "source": {
+   "title": "Brännvin",
+   "url": "https://sv.wikipedia.org/wiki/Br%C3%A4nnvin",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-06",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Marionetten är en docka med rörliga leder som styrs med trådar, och trådarna är så tunna att de på håll ser _____ ut.",
+  "alternatives": [
+   "ljusa",
+   "böjda",
+   "färgade",
+   "osynliga"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är osynliga. Så fina att visar vad som händer med trådar som är mycket tunna, nämligen att man inte ser dem. Fina trådar ser inte ljusa, böjda eller färgade ut på avstånd för att de är tunna.",
+  "source": {
+   "title": "Marionett",
+   "url": "https://sv.wikipedia.org/wiki/Marionett",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-07",
+  "amne": "his",
+  "genre": "pop",
+  "text": "En amma ger bröstmjölk åt ett spädbarn som hon inte själv är _____ mor till, och bruket var särskilt vanligt i Europas överklass under 1700-talet.",
+  "alternatives": [
+   "ogift",
+   "fattig",
+   "vanlig",
+   "biologisk"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är biologisk. Inte själv mor till visar att amman inte har fött barnet. Att inte vara ogift, fattig eller vanlig mor till ett barn ger ingen mening.",
+  "source": {
+   "title": "Ammor",
+   "url": "https://sv.wikipedia.org/wiki/Ammor",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-08",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Ordet lasarett är bildat av namnet Lasaros, som i den katolska kyrkan räknas som de sjukas _____, och därför fick de medeltida sjukhusen för spetälska namn efter honom.",
+  "alternatives": [
+   "fiende",
+   "granne",
+   "skyddshelgon",
+   "motpol"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är skyddshelgon. Därför visar att sjukhusen fick namn efter Lasaros för att han hade en särskild ställning för de sjuka i kyrkan. Ingen uppkallar sjukhus efter de sjukas fiende, granne eller motpol.",
+  "source": {
+   "title": "Lasarett",
+   "url": "https://sv.wikipedia.org/wiki/Lasarett",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-09",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Ett rådhus var i Sverige den byggnad där stadens rådhusrätt höll till. När tingsrätterna infördes 1971 _____ domstolen från kommunens förvaltning.",
+  "alternatives": [
+   "skildes",
+   "räknades",
+   "beskattades",
+   "valdes"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är skildes. Kommun och domstol hade delat byggnad, och reformen förde dem åt var sitt håll. Verksamheter räknas, beskattas eller väljs inte från varandra.",
+  "source": {
+   "title": "Rådhus",
+   "url": "https://sv.wikipedia.org/wiki/R%C3%A5dhus",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-10",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Mördarsnigeln har spridits av människan, eftersom ägg och sniglar följer med när plantor och jord _____, och i många trädgårdar har den blivit ett gissel.",
+  "alternatives": [
+   "vattnas",
+   "gödslas",
+   "beskärs",
+   "flyttas"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är flyttas. Sniglar som följer med plantor och jord sprids när de förs från ett ställe till ett annat. Att vattna, gödsla eller beskära plantor sprider inte sniglarna till nya platser.",
+  "source": {
+   "title": "Mördarsnigel",
+   "url": "https://sv.wikipedia.org/wiki/M%C3%B6rdarsnigel",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-11",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Rödhaken är huvudsakligen en _____, men den äter också bär och frön.",
+  "alternatives": [
+   "insektsätare",
+   "fröätare",
+   "växtätare",
+   "asätare"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är insektsätare. Men också visar att bär och frön är ett komplement till den vanliga födan, så den kan inte vara frön. En växtätare äter redan bär och frön, och en liten tätting är ingen asätare.",
+  "source": {
+   "title": "Rödhake",
+   "url": "https://sv.wikipedia.org/wiki/R%C3%B6dhake",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-12",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Gräsanden är mycket vanlig på norra halvklotet, och tillsammans med myskanden är den _____ till tamankorna.",
+  "alternatives": [
+   "fienden",
+   "konkurrenten",
+   "grannen",
+   "ursprunget"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är ursprunget. Tamdjur kommer från vilda arter, och två vilda arter som tillsammans står bakom tamankorna är deras ursprung. En fiende, konkurrent eller granne till tamankorna förklarar inte varifrån de kommer.",
+  "source": {
+   "title": "Gräsand",
+   "url": "https://sv.wikipedia.org/wiki/Gr%C3%A4sand",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-13",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Protagonisten är den person i en berättelse som läsarens största _____ och identifikation ska ligga hos.",
+  "alternatives": [
+   "tvivel",
+   "avsky",
+   "förvåning",
+   "sympati"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är sympati. Identifikation står i samma led, och den man identifierar sig med känner man med. Tvivel, avsky och förvåning hör inte ihop med att identifiera sig med någon.",
+  "source": {
+   "title": "Protagonist",
+   "url": "https://sv.wikipedia.org/wiki/Protagonist",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "par"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-14",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "En hedersdoktor får titeln som en ren utmärkelse, alltså utan att ha _____ doktorsexamen vid universitetet.",
+  "alternatives": [
+   "sökt",
+   "avlagt",
+   "granskat",
+   "underkänt"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är avlagt. En examen avläggs, och alltså visar att utmärkelsen ges utan den vanliga vägen till titeln. Att ha sökt, granskat eller underkänt en examen är inte det man annars behöver för att bli doktor.",
+  "source": {
+   "title": "Hedersdoktor",
+   "url": "https://sv.wikipedia.org/wiki/Hedersdoktor",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-15",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Ett checkkonto används för pengar som ofta sätts in och tas ut, och i gengäld ger banken normalt ingen eller mycket låg _____ på pengarna som står där.",
+  "alternatives": [
+   "skatt",
+   "försäkring",
+   "ränta",
+   "rabatt"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är ränta. Det banken ger för pengar på ett konto är ränta, och i gengäld visar att friheten att ta ut pengar kostar avkastningen. Banken ger ingen skatt, försäkring eller rabatt på pengar på ett konto.",
+  "source": {
+   "title": "Checkkonto",
+   "url": "https://sv.wikipedia.org/wiki/Checkkonto",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-16",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Den som är myndig har rätt att på egen hand ingå _____ avtal, till exempel om ekonomiska överenskommelser.",
+  "alternatives": [
+   "muntliga",
+   "olagliga",
+   "internationella",
+   "giltiga"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är giltiga. Att vara myndig innebär att avtalen man ingår gäller. Rätten handlar inte om muntliga eller internationella avtal, och ingen har rätt att ingå olagliga avtal.",
+  "source": {
+   "title": "Myndighetsålder",
+   "url": "https://sv.wikipedia.org/wiki/Myndighets%C3%A5lder",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-17",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Panteismen är en gudsuppfattning där allt anses vara besjälat av ett andligt väsen, och därför ses Gud och universum som _____.",
+  "alternatives": [
+   "åtskilda",
+   "jämbördiga",
+   "identiska",
+   "oförenliga"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är identiska. Om allt är besjälat av det gudomliga finns inget skilt mellan Gud och världen, och därför visar att de är samma sak. Åtskilda och oförenliga strider mot att allt är besjälat, och jämbördiga förutsätter två olika saker.",
+  "source": {
+   "title": "Panteism",
+   "url": "https://sv.wikipedia.org/wiki/Panteism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-18",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Erosion är att berg och jord nöts ned av vind, vatten eller is. Till skillnad från vittring kräver erosion också att materialet _____.",
+  "alternatives": [
+   "vittrar",
+   "förs bort",
+   "kristalliseras",
+   "löses upp"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är förs bort. Till skillnad från visar att erosion har något som vittringen saknar, och nedbrutet material som stannar kvar har bara vittrat. Vittrar är just vittring, och kristalliseras eller löses upp är ingen skillnad mot vittring.",
+  "source": {
+   "title": "Erosion",
+   "url": "https://sv.wikipedia.org/wiki/Erosion",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-19",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Med ögonkontakt kommunicerar man utan ord, men hur blicken används och tolkas _____ starkt mellan olika kulturer.",
+  "alternatives": [
+   "skiftar",
+   "dalar",
+   "läcker",
+   "prövas"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är skiftar. Mellan olika kulturer visar att det handlar om skillnader, och men ställer det mot att ögonkontakt är ett gemensamt sätt att kommunicera. Dalar, läcker och prövas säger inget om skillnader mellan kulturer.",
+  "source": {
+   "title": "Ögonkontakt",
+   "url": "https://sv.wikipedia.org/wiki/%C3%96gonkontakt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-20",
+  "amne": "tek",
+  "genre": "pop",
+  "text": "Elisha Otis säkerhetssystem för hissar visades 1853 och förändrade marknaden, eftersom det tidigare hade varit _____ att åka hiss.",
+  "alternatives": [
+   "riskabelt",
+   "dyrt",
+   "tröttsamt",
+   "bekvämt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är riskabelt. Ett säkerhetssystem förändrar marknaden om hissarna tidigare var farliga. Dyrt och tröttsamt löser inte ett säkerhetssystem, och bekvämt hade inte krävt något nytt.",
+  "source": {
+   "title": "Hiss",
+   "url": "https://sv.wikipedia.org/wiki/Hiss",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-21",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Vid urinvägsinfektion kan det _____ när man kissar och strax efteråt, och det kan värka längst ned i magen. Efter ett par dagar _____ besvären ofta, och de kan gå över utan behandling.",
+  "alternatives": [
+   "svida – lättar",
+   "göra ont – eskalerar",
+   "domna – ger med sig",
+   "klia – uppstår"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är svida och lättar. En infektion i urinvägarna ger en sveda när man kissar, och göra ont fungerar också. Att besvären sedan kan försvinna visar att de blir mindre, och ger med sig säger samma sak. Det domnar eller kliar inte när man kissar vid en infektion, och besvär som eskalerar eller uppstår efter några dagar går inte över av sig själva.",
+  "source": {
+   "title": "1177 Urinvägsinfektion hos kvinnor",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/infektioner-i-njurar-och-urinvagar/urinvagsinfektion-hos-kvinnor/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-22",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Många med en överaktiv blåsa lär sig att _____ med besvären, och det finns bra hjälp om de påverkar vardagen. Hjälp kan behövas till exempel om sömnen _____ av att man måste gå upp och kissa på natten.",
+  "alternatives": [
+   "trivas – förbättras",
+   "tävla – avbryts",
+   "leva – störs",
+   "skämta – fördjupas"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är leva och störs. Att lära sig att klara vardagen trots besvär är att leva med dem, och trivas fungerar också. Att behöva gå upp på natten gör sömnen sämre, och avbryts fungerar också. Man tävlar eller skämtar inte med besvären, och sömnen förbättras eller fördjupas inte av att man går upp.",
+  "source": {
+   "title": "1177 Överaktiv blåsa",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/overaktiv-blasa/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-23",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Kronisk njursjukdom utvecklas under lång tid, ofta tio till trettio år, och det dröjer ofta flera år innan några symtom _____. Man kan inte bli frisk, utan målet är att _____ sjukdomen så att njurarna inte blir ännu sämre.",
+  "alternatives": [
+   "syns – påskynda",
+   "visar sig – bromsa",
+   "avklingar – hejda",
+   "botas – sprida"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är visar sig och bromsa. En sjukdom som utvecklas långsamt ger tecken först efter lång tid, och syns fungerar också. Utan ställer att bli frisk mot att få sjukdomen att gå långsammare, och hejda fungerar också. Symtom avklingar eller botas inte innan de har kommit, och ingen vill påskynda eller sprida en njursjukdom.",
+  "source": {
+   "title": "1177 Kronisk njursjukdom",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/kronisk-njursjukdom/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-24",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Blåssten bildas av små kristaller som _____ till stenar i urinblåsan. Blåsstenar kan finnas i flera år utan att man _____ dem, och små stenar kan man kissa ut.",
+  "alternatives": [
+   "klumpar ihop sig – märker",
+   "fogas samman – önskar",
+   "löses upp – känner av",
+   "smälter – tillåter"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är klumpar ihop sig och märker. Små kristaller blir till stenar genom att fastna i varandra, och fogas samman fungerar också. I flera år utan att visar att stenen inte ger några tecken, och känna av fungerar också. Kristaller som löses upp eller smälter blir inga stenar, och ingen önskar eller tillåter blåssten.",
+  "source": {
+   "title": "1177 Blåssten",
+   "url": "https://www.1177.se/sjukdomar--besvar/njurar-och-urinvagar/blassten/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-25",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "I dockteater framställs rollerna av dockor. Marionetter styrs _____ med linor eller stavar, medan stavdockor och handdockor styrs _____.",
+  "alternatives": [
+   "uppifrån – ovanifrån",
+   "ovanifrån – nedifrån",
+   "inifrån – underifrån",
+   "utifrån – framifrån"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är ovanifrån och nedifrån. Dockor som hänger i linor styrs från en plats över dem, och uppifrån fungerar också. Medan ställer de andra dockorna mot marionetterna, och en hand i en docka kommer underifrån. Inifrån och utifrån beskriver inte var linorna sitter, och ovanifrån eller framifrån står inte i motsats till marionetterna.",
+  "source": {
+   "title": "Dockteater",
+   "url": "https://sv.wikipedia.org/wiki/Dockteater",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "adv"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-26",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Kabaré är en underhållningsform som främst _____ på restauranger och nattklubbar, med sketcher, sång och dans. Den europeiska kabarén bygger oftare på nyskapande än på _____ trender.",
+  "alternatives": [
+   "ges – konstnärliga",
+   "förekommer – kommersiella",
+   "stängs – populära",
+   "tystnar – radikala"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är förekommer och kommersiella. En underhållningsform finns på vissa platser, och ges fungerar också. Nyskapande ställs mot det som är gjort för att sälja, och populära fungerar också. En underhållningsform stängs eller tystnar inte på restauranger, och konstnärliga eller radikala trender står inte i motsats till nyskapande.",
+  "source": {
+   "title": "Kabaré",
+   "url": "https://sv.wikipedia.org/wiki/Kabar%C3%A9",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-27",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Att bygga skepp och fartyg är ett gammalt hantverk som bedrivs på ett _____, och förr byggdes skeppen på en stapelbädd som _____ på en strand.",
+  "alternatives": [
+   "skeppsvarv – flöt",
+   "kontor – stod",
+   "sjukhus – sjönk",
+   "varv – låg"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är varv och låg. Skepp byggs på ett varv, och skeppsvarv säger samma sak. En stapelbädd på en strand finns där, och stod fungerar också. Skepp byggs inte på kontor eller sjukhus, och en bädd på en strand flyter eller sjunker inte.",
+  "source": {
+   "title": "Skeppsbyggnad",
+   "url": "https://sv.wikipedia.org/wiki/Skeppsbyggnad",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-28",
+  "amne": "his",
+  "genre": "pop",
+  "text": "En tullstation finns vid en gräns mellan två områden för att _____ dem som passerar till en bestämd åtgärd och kontrollera att reglerna _____.",
+  "alternatives": [
+   "förmå – undviks",
+   "tvinga – efterlevs",
+   "locka – följs",
+   "hylla – ignoreras"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är tvinga och efterlevs. En kontroll vid gränsen gör att de som passerar måste göra något, och förmå fungerar också. Man kontrollerar att regler blir följda, och följs säger samma sak. En tullstation lockar eller hyllar inte dem som passerar, och ingen kontrollerar att regler undviks eller ignoreras.",
+  "source": {
+   "title": "Tullstation",
+   "url": "https://sv.wikipedia.org/wiki/Tullstation",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-29",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Ett friluftsmuseum visar en stor del av sina samlingar _____, och grundstommen utgörs oftast av _____ byggnader som har flyttats dit.",
+  "alternatives": [
+   "under bar himmel – nybyggda",
+   "utomhus – historiska",
+   "inomhus – gamla",
+   "virtuellt – provisoriska"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är utomhus och historiska. Ordet friluft visar att samlingarna visas ute, och under bar himmel fungerar också. Ett museum visar det som bevarats från förr, och gamla fungerar också. Inomhus och virtuellt strider mot friluft, och nybyggda eller provisoriska byggnader är inga museiföremål.",
+  "source": {
+   "title": "Friluftsmuseum",
+   "url": "https://sv.wikipedia.org/wiki/Friluftsmuseum",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-30",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Bostadsbrist innebär att tillgången på bostäder är mindre än _____. Den kan leda till trångboddhet och hemlöshet och i en marknadsekonomi till _____ hyror och priser.",
+  "alternatives": [
+   "behovet – sjunkande",
+   "efterfrågan – stigande",
+   "utbudet – ökande",
+   "byggandet – frysta"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är efterfrågan och stigande. Brist betyder att det finns färre bostäder än det finns folk som vill ha dem, och behovet fungerar också. När många vill ha det som är ont om blir det dyrare, och ökande säger samma sak. Utbudet är just tillgången, byggandet är inte vad tillgången jämförs med, och brist ger inte sjunkande eller frysta priser på en marknad.",
+  "source": {
+   "title": "Bostadsbrist",
+   "url": "https://sv.wikipedia.org/wiki/Bostadsbrist",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-31",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Tamsvinet är den _____ formen av vildsvin. Vilda och tama svin parar sig gärna med varandra, och därför avgör man ofta utifrån _____ där populationen finns.",
+  "alternatives": [
+   "tämjda – färgen",
+   "vilda – området",
+   "domesticerade – platsen",
+   "utrotade – antalet"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är domesticerade och platsen. Ett tamdjur är ett djur som människan har gjort tamt, och tämjda fungerar också. Om djuren inte går att skilja åt genom avel avgör var de lever, och området fungerar också. Vilda och utrotade beskriver inte tamsvinet, och färgen eller antalet där populationen finns ger ingen mening.",
+  "source": {
+   "title": "Vildsvin",
+   "url": "https://sv.wikipedia.org/wiki/Vildsvin",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-32",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Översättare överför texter mellan olika språk. Sker översättningen muntligt och i stunden kallas översättaren _____, och facköversättare är ofta _____ på ett eller flera ämnen, som medicin eller juridik.",
+  "alternatives": [
+   "tolk – specialiserade",
+   "simultantolk – ointresserade",
+   "redaktör – inriktade",
+   "lektör – okunniga"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är tolk och specialiserade. Den som översätter muntligt är en tolk, och simultantolk fungerar också. En facköversättare har sitt fack, alltså ett ämne den kan särskilt väl, och inriktade säger samma sak. En redaktör eller lektör översätter inte muntligt, och en facköversättare är inte ointresserad av eller okunnig i sina ämnen.",
+  "source": {
+   "title": "Översättare",
+   "url": "https://sv.wikipedia.org/wiki/%C3%96vers%C3%A4ttare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-33",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Till skillnad från en föreläsning förutsätter ett seminarium att alla deltagare är beredda att spela en _____ roll. Slutsatser dras och _____ sedan mot varandra.",
+  "alternatives": [
+   "deltagande – skrivs av",
+   "passiv – vägs",
+   "aktiv – prövas",
+   "tyst – hyrs ut"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är aktiv och prövas. Till skillnad från en föreläsning, där man lyssnar, ska alla bidra, och deltagande fungerar också. Slutsatser som ställs mot varandra jämförs och bedöms, och vägs fungerar också. Passiv och tyst strider mot till skillnad från en föreläsning, och slutsatser skrivs inte av eller hyrs ut mot varandra.",
+  "source": {
+   "title": "Seminarium",
+   "url": "https://sv.wikipedia.org/wiki/Seminarium",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-34",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "En speciallärare arbetar med elever som behöver _____ stöd, till exempel vid svårigheter med läsning eller matematik. Till skillnad från specialpedagogen inriktar sig specialläraren på det _____ arbetet med eleverna.",
+  "alternatives": [
+   "särskilt – direkta",
+   "extra – indirekta",
+   "ekonomiskt – praktiska",
+   "juridiskt – administrativa"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är särskilt och direkta. Elever med svårigheter i läsning behöver mer stöd än andra, och extra fungerar också. Till skillnad från specialpedagogen arbetar specialläraren själv med eleverna, och praktiska fungerar också. Ekonomiskt och juridiskt stöd hjälper inte mot svårigheter i läsning, och indirekta eller administrativa uppgifter är inte arbete direkt med eleverna.",
+  "source": {
+   "title": "Speciallärare",
+   "url": "https://sv.wikipedia.org/wiki/Speciall%C3%A4rare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-35",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "En sparbank saknar egentliga ägare och drivs utan enskilt _____. Vinsten får därför bara delas ut till sådant som gynnar bygden eller _____ i banken.",
+  "alternatives": [
+   "vinstsyfte – förskingras",
+   "kapital – plöjas ned",
+   "vinstintresse – återinvesteras",
+   "kontor – spelas bort"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är vinstintresse och återinvesteras. En bank utan ägare har ingen som ska tjäna pengar på den, och vinstsyfte fungerar också. Vinsten som inte delas ut stannar i verksamheten, och plöjas ned säger samma sak. En bank drivs inte utan kapital eller kontor av det skälet, och vinsten får inte förskingras eller spelas bort.",
+  "source": {
+   "title": "Sparbank",
+   "url": "https://sv.wikipedia.org/wiki/Sparbank",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-36",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Köprätten är den del av avtalsrätten som _____ köp av olika slag. Köp av fast egendom ingår dock inte, utan _____ i stället till fastighetsrätten.",
+  "alternatives": [
+   "reglerar – beror",
+   "ignorerar – räknas",
+   "behandlar – hör",
+   "hyllar – lämnas"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är behandlar och hör. Ett rättsområde tar upp en viss sorts frågor, och reglerar fungerar också. Köp av fast egendom tillhör ett annat område, och räknas fungerar också. Köprätten ignorerar eller hyllar inte köp, och köp beror eller lämnas inte till fastighetsrätten.",
+  "source": {
+   "title": "Köprätt",
+   "url": "https://sv.wikipedia.org/wiki/K%C3%B6pr%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-37",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Pacifismen är en hållning som av religiösa eller etiska skäl _____ våld som ett sätt att lösa konflikter. Därför har man utvecklat tekniker för icke-våldsförsvar som ett _____ till militärt försvar.",
+  "alternatives": [
+   "förkastar – komplement",
+   "förespråkar – substitut",
+   "förfinar – hot",
+   "avvisar – alternativ"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är avvisar och alternativ. Den som är för fred tar avstånd från våld, och förkastar fungerar också. Den som avvisar militärt försvar behöver något i stället, och substitut säger samma sak. En pacifist förespråkar eller förfinar inte våld, och ett komplement eller hot till militärt försvar ersätter det inte.",
+  "source": {
+   "title": "Pacifism",
+   "url": "https://sv.wikipedia.org/wiki/Pacifism",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-38",
+  "amne": "mil",
+  "genre": "myn",
+  "text": "Övergödning uppstår när stora mängder kväve och fosfor sprids i vatten och mark. Då _____ mängden alger, och problemet är att vattenkvaliteten _____ och att det kan uppstå syrebrist.",
+  "alternatives": [
+   "ökar – försämras",
+   "mångdubblas – förbättras",
+   "reduceras – blir sämre",
+   "smälter – höjs"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ökar och försämras. Näring i vattnet får algerna att växa, och mångdubblas fungerar också. Att det är ett problem och att det blir syrebrist visar att vattnet blir sämre, och blir sämre fungerar också. Algerna reduceras inte av näring, alger smälter inte, och vattenkvalitet som förbättras eller höjs är inget problem.",
+  "source": {
+   "title": "Övergödning",
+   "url": "https://sv.wikipedia.org/wiki/%C3%96verg%C3%B6dning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-39",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Kroppsspråk är en form av _____ kommunikation, både medveten och omedveten. Det skiljer sig mellan människor och grupper och fungerar därför också som social och kulturell _____.",
+  "alternatives": [
+   "ordlös – kliché",
+   "skriftlig – signal",
+   "icke-verbal – markör",
+   "digital – fiende"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är icke-verbal och markör. Kroppsspråk kommunicerar utan ord, och ordlös fungerar också. Något som skiljer grupper åt visar vilken grupp man hör till, och signal fungerar också. Kroppsspråk är varken skriftligt eller digitalt, och en kliché eller fiende visar inte tillhörighet.",
+  "source": {
+   "title": "Kroppsspråk",
+   "url": "https://sv.wikipedia.org/wiki/Kroppsspr%C3%A5k",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-40",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Versaler är alfabetets stora bokstäver, i _____ till gemener. På engelska kallas de upper case, eftersom typerna förr _____ i den övre av två lådor vid handsättning.",
+  "alternatives": [
+   "opposition – trycktes",
+   "kontrast – förvarades",
+   "likhet – låg",
+   "harmoni – brändes"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är kontrast och förvarades. Stora bokstäver står mot de små, och opposition fungerar också. Namnet övre lådan kommer av var typerna hade sin plats, och låg fungerar också. Likhet och harmoni strider mot att stora och små bokstäver ställs mot varandra, och typer trycks eller bränns inte i en låda.",
+  "source": {
+   "title": "Versal",
+   "url": "https://sv.wikipedia.org/wiki/Versal",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-41",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Spinning är framställning av tråd eller garn, och metoden är _____: handspinning har minst 8 000 år på nacken. Sländan är tusentals år gammal, medan spinnrockar _____ först under och efter medeltiden. Sedan 1800-talets mitt har fabrikerna helt _____ den storskaliga tillverkningen av garn.",
+  "alternatives": [
+   "urgammal – kom – övergett",
+   "ny – blev vanliga – dominerat",
+   "bortglömd – brann upp – förlorat greppet om",
+   "uråldrig – introducerades – tagit över"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är uråldrig, introducerades och tagit över. Kolonet förklarar med de 8 000 åren, och urgammal säger samma sak. Medan ställer de gamla sländorna mot rockarna som kom senare, och kom eller blev vanliga fungerar också. Helt visar att industrin står för hela tillverkningen, och dominerat fungerar också. En metod som är 8 000 år är inte ny eller bortglömd, rockar brann inte upp under medeltiden, och fabrikerna har inte övergett eller förlorat greppet om tillverkningen.",
+  "source": {
+   "title": "Spinneri",
+   "url": "https://sv.wikipedia.org/wiki/Spinneri",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v",
+    "utr"
+   ],
+   "ledtrad": [
+    "def",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-42",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Barnbidrag är statligt _____ till familjer med barn. Sverige har en _____ modell: år 1947 ersattes ett behovsprövat bidrag med ett _____ barnbidrag som alla familjer får.",
+  "alternatives": [
+   "bistånd – enhetlig – inkomstprövat",
+   "understöd – generell – allmänt",
+   "skatt – selektiv – gemensamt",
+   "kredit – provisorisk – behovsprövat"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är understöd, generell och allmänt. Ett bidrag är en hjälp med pengar, och bistånd fungerar också. Kolonet förklarar modellen med ett bidrag som gäller alla, och enhetlig fungerar också. Ett bidrag som alla familjer får är för alla, och gemensamt fungerar också. Ett bidrag är inte en skatt eller kredit, en modell för alla är inte selektiv eller provisorisk, och inkomstprövat eller behovsprövat strider mot att alla får det.",
+  "source": {
+   "title": "Barnbidrag",
+   "url": "https://sv.wikipedia.org/wiki/Barnbidrag",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-43",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Välgörenhet är privat verksamhet för att hjälpa _____ människor. Den som ger en gåva till ett gott ändamål kallas donator, och hjälporganisationerna drivs ofta av _____. Där staten och kommunerna sköter mycket av välfärden spelar välgörenheten en mer _____ roll.",
+  "alternatives": [
+   "nödställda – ideellt arbetande – central",
+   "behövande – volontärer – underordnad",
+   "rika – eldsjälar – blygsam",
+   "friska – ämbetsverk – avgörande"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är behövande, volontärer och underordnad. Välgörenhet hjälper dem som saknar något, och nödställda fungerar också. Privat verksamhet som ofta drivs av människor som ställer upp utan lön, och ideellt arbetande eller eldsjälar fungerar också. Där det offentliga tar ansvaret behövs välgörenheten mindre, och blygsam säger samma sak. Rika och friska behöver ingen hjälp, privat verksamhet drivs inte av ämbetsverk, och central eller avgörande strider mot att det offentliga tar ansvaret.",
+  "source": {
+   "title": "Välgörenhet",
+   "url": "https://sv.wikipedia.org/wiki/V%C3%A4lg%C3%B6renhet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-44",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En bokmässa samlar förlag, bokhandlare, bibliotek, författare och läsare. Handel med _____ är en central del av verksamheten, och många mässor har varje år ett _____ som riktar ljuset mot ett land, ett ämne eller ett språk. Det finns både fackmässor för branschen och mässor som _____ sig till allmänheten.",
+  "alternatives": [
+   "rättigheter – motto – stänger",
+   "frimärkssamlingar – fokusområde – riktar",
+   "vapen – skuldebrev – gömmer",
+   "utgivningsrättigheter – tema – vänder"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är utgivningsrättigheter, tema och vänder. På en mässa för bokbranschen handlar förlagen med rätten att ge ut böcker, och rättigheter fungerar också. Något som riktar ljuset mot ett land eller ämne är mässans tema, och motto eller fokusområde fungerar också. Både och ställer branschen mot allmänheten som publik, och riktar säger samma sak. Frimärkssamlingar och vapen säljs inte på en bokmässa, ett skuldebrev riktar inte ljuset mot ett land, och en mässa stänger eller gömmer sig inte till allmänheten.",
+  "source": {
+   "title": "Bokmässa",
+   "url": "https://sv.wikipedia.org/wiki/Bokm%C3%A4ssa",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-45",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En redaktör är den som _____ eller redigerar innehållet i en tidning, en tidskrift eller ett bokverk. På en föreningstidning med _____ upplaga får redaktören ofta sköta många roller själv av _____ skäl.",
+  "alternatives": [
+   "bestämmer över – liten – ekonomiska",
+   "avgör – begränsad – religiösa",
+   "trycker – blygsam – finansiella",
+   "censurerar – enorm – medicinska"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är bestämmer över, liten och ekonomiska. En redaktör väljer vad som ska stå i tidningen, och avgör fungerar också. Den som sköter alla roller själv arbetar på en tidning som inte har råd med fler, och begränsad eller blygsam fungerar också. Skälet att en person gör allt är brist på pengar, och finansiella säger samma sak. En redaktör trycker eller censurerar inte innehållet, en enorm upplaga har råd med fler anställda, och religiösa eller medicinska skäl förklarar inte att en person gör allt.",
+  "source": {
+   "title": "Redaktör",
+   "url": "https://sv.wikipedia.org/wiki/Redakt%C3%B6r",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-46",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Waldorfpedagogiken bygger på antroposofins _____ och lägger lika stor vikt vid _____ av barnens tankar, känslor och vilja. Skolan strävar efter att ha _____ klasser från första till tolfte året.",
+  "alternatives": [
+   "världsbild – mognaden – splittrade",
+   "ekonomi – tillväxten – samlade",
+   "arkitektur – försämringen – nyinsatta",
+   "människosyn – utvecklingen – sammanhållna"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är människosyn, utvecklingen och sammanhållna. En pedagogik bygger på en uppfattning om människan, och världsbild fungerar också. Tankar, känslor och vilja hos barn är något som växer, och mognaden eller tillväxten fungerar också. Från första till tolfte året visar att klassen ska hålla ihop, och samlade säger samma sak. En pedagogik bygger inte på ekonomi eller arkitektur, ingen skola lägger vikt vid barns försämring, och splittrade eller nyinsatta klasser hålls inte ihop i tolv år.",
+  "source": {
+   "title": "Waldorfpedagogik",
+   "url": "https://sv.wikipedia.org/wiki/Waldorfpedagogik",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-47",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Vid en devalvering skrivs värdet _____ på en valuta som har fast växelkurs. Syftet är ofta att förbättra bytesbalansen, eftersom en devalvering _____ exporten. Samtidigt blir importerade varor dyrare, och då riskerar _____ att öka.",
+  "alternatives": [
+   "om – stärker – arbetslösheten",
+   "upp – främjar – prisnivån",
+   "in – hämmar – räntan",
+   "ned – gynnar – inflationen"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är ned, gynnar och inflationen. En devalvering sänker valutans värde, och skrivs om fungerar också. En billigare valuta gör landets varor billigare utomlands, och stärker eller främjar fungerar också. Dyrare importvaror höjer priserna, och prisnivån säger samma sak. Ett värde skrivs inte upp eller in vid en devalvering, en devalvering hämmar inte exporten, och dyrare import ökar inte arbetslösheten eller räntan av sig själv.",
+  "source": {
+   "title": "Devalvering",
+   "url": "https://sv.wikipedia.org/wiki/Devalvering",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "v",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-48",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Postorder är en försäljningsform där varorna _____ med posten och där köpare och säljare oftast inte har någon _____ kontakt. Förr i tiden _____ kunden oftast varorna i en katalog och beställde sedan via telefon eller brev.",
+  "alternatives": [
+   "levereras – fysisk – valde ut",
+   "skickas – direkt – returnerade",
+   "återlämnas – egentlig – letade fram",
+   "förstörs – skriftlig – skrev"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är levereras, fysisk och valde ut. Varor som köps på distans kommer hem med posten, och skickas fungerar också. Säljare och köpare träffas inte, alltså har de ingen kontakt öga mot öga, och direkt eller egentlig fungerar också. En katalog är till för att hitta det man vill köpa, och letade fram säger samma sak. Varor återlämnas eller förstörs inte med posten vid ett köp, beställningar via brev är skriftlig kontakt, och man returnerar eller skriver inte varor i en katalog innan man beställt.",
+  "source": {
+   "title": "Postorder",
+   "url": "https://sv.wikipedia.org/wiki/Postorder",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-49",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Tomträtt är en rätt att _____ mark som tillhör stat eller kommun och som har avdelats för att bebyggas. Rätten är betydligt _____ än en vanlig nyttjanderätt, men själva äganderätten _____ hos upplåtaren.",
+  "alternatives": [
+   "inneha – fastare – upphör",
+   "avyttra – tryggare – består",
+   "besitta – starkare – ligger kvar",
+   "riva – svagare – flyttar"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är besitta, starkare och ligger kvar. Tomträtt är en rätt att ha och bruka marken, och inneha fungerar också. Men visar att rätten är stark utan att ägandet följer med, och fastare eller tryggare fungerar också. Ägaren behåller marken, och består säger samma sak. Den som inte äger marken kan inte avyttra den, ingen river mark, svagare strider mot men, och ägandet upphör eller flyttar inte hos upplåtaren.",
+  "source": {
+   "title": "Tomträtt",
+   "url": "https://sv.wikipedia.org/wiki/Tomtr%C3%A4tt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a",
+    "utr"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p28-50",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Kursiv är en _____ bokstavsform. Namnet kommer av latinets ord för att löpa, och stilen uppstod som en _____ i påvens kansli på 1400-talet. Som trycktyp _____ den år 1501 av boktryckaren Aldus Manutius.",
+  "alternatives": [
+   "högerlutande – snabbskrift – lanserades",
+   "snedställd – kortskrift – brändes",
+   "upprätt – hastig handstil – introducerades",
+   "fyrkantig – prydnadsskrift – makulerades"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är högerlutande, snabbskrift och lanserades. Kursiv är den lutande stilen, och snedställd fungerar också. En skrift som fått namn efter att löpa skrevs fort, och kortskrift eller hastig handstil fungerar också. En boktryckare som för första gången erbjuder en ny typ för den ut i tryck, och introducerades säger samma sak. Upprätt och fyrkantig är inte kursiv, en prydnadsskrift skrivs inte fort, och en boktryckare bränner eller makulerar inte sina egna nya typer.",
+  "source": {
+   "title": "Kursiv",
+   "url": "https://sv.wikipedia.org/wiki/Kursiv",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "ors",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ }
+]

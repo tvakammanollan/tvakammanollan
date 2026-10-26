@@ -1,0 +1,7 @@
+# Batch 26: webbkällor (url | titel | utgivare)
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/hals/halsfluss/ | 1177 Halsfluss | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/horsel/tinnitus/ | 1177 Tinnitus | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/infektioner-i-oron-nasa-och-hals/scharlakansfeber/ | 1177 Scharlakansfeber | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/infektioner-i-oron-nasa-och-hals/passjuka/ | 1177 Påssjuka | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/nasa-och-luktsinne/nasblod/ | 1177 Näsblod | 1177
+https://www.1177.se/sjukdomar--besvar/oron-nasa-och-hals/rost-och-tal/heshet/ | 1177 Heshet | 1177

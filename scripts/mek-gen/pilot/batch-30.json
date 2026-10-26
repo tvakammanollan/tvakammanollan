@@ -1,0 +1,2892 @@
+[
+ {
+  "id": "p30-01",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Vid blindtarmsinflammation får man ont långt ned till höger i magen. Det gör mer ont när man rör sig, hostar eller _____, och efter något dygn kommer ofta lätt feber.",
+  "alternatives": [
+   "sitter still",
+   "nyser",
+   "läser",
+   "drömmer"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är nyser. Uppräkningen handlar om häftiga rörelser i kroppen, och en nysning skakar magen som en hostning. Att sitta still, läsa eller drömma rör inte magen.",
+  "source": {
+   "title": "1177 Blindtarmsinflammation",
+   "url": "https://www.1177.se/sjukdomar--besvar/mage-och-tarm/tarmbesvar/blindtarmsinflammation/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "par"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-02",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Spolmasken liknar en daggmask och blir ofta 10 till 30 centimeter lång. Den smittar inte mellan människor, och vid en lindrig infektion märks den sällan utan _____ oftast först i avföringen.",
+  "alternatives": [
+   "förökar sig",
+   "dör",
+   "upptäcks",
+   "bildas"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är upptäcks. Utan ställer att masken inte märks mot det ställe där man ändå får syn på den. Att masken förökar sig, dör eller bildas i avföringen säger inget om att den inte märks.",
+  "source": {
+   "title": "1177 Spolmask",
+   "url": "https://www.1177.se/sjukdomar--besvar/mage-och-tarm/tarmbesvar/spolmask/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-03",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Hypokondri är en _____ övertygelse om att man har eller ska få en svår sjukdom, trots att det saknas skäl för den.",
+  "alternatives": [
+   "ogrundad",
+   "kollektiv",
+   "delad",
+   "religiös"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är ogrundad. Trots att det saknas skäl förklarar ordet, alltså vilar övertygelsen inte på något. Kollektiv, delad och religiös säger inget om att det saknas skäl.",
+  "source": {
+   "title": "Hypokondri",
+   "url": "https://sv.wikipedia.org/wiki/Hypokondri",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-04",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Jojken är en mycket gammal samisk sångform, och en jojk behöver inte innehålla några ord. Ofta förmedlar melodin budskap och känslor enbart med hjälp av _____.",
+  "alternatives": [
+   "bilder",
+   "dans",
+   "färger",
+   "ljud"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är ljud. En sång utan ord måste bära sitt budskap med rösten. Bilder, dans och färger är inte en del av en sång.",
+  "source": {
+   "title": "Jojk",
+   "url": "https://sv.wikipedia.org/wiki/Jojk",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-05",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Ordet koral kommer av latinets ord för körsång och betecknar _____ till en kyrkosång, som i Sverige ibland kallas psalmmelodi.",
+  "alternatives": [
+   "texten",
+   "ackompanjemanget",
+   "rytmen",
+   "melodin"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är melodin. Det svenska namnet psalmmelodi visar vad ordet betecknar. Texten, ackompanjemanget och rytmen är inte en melodi.",
+  "source": {
+   "title": "Koral",
+   "url": "https://sv.wikipedia.org/wiki/Koral",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-06",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Förr användes namnsdagarna som _____ för när saker skulle göras under året, till exempel när potatisen skulle sättas eller rågen skördas.",
+  "alternatives": [
+   "ursäkter",
+   "belöningar",
+   "undantag",
+   "hållpunkter"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är hållpunkter. Dagar som visar när arbetet ska göras är fasta punkter i kalendern. Ursäkter, belöningar och undantag säger inte när något ska göras.",
+  "source": {
+   "title": "Namnsdag",
+   "url": "https://sv.wikipedia.org/wiki/Namnsdag",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-07",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "En husvagn är en släpvagn som dras av en bil och har _____ med sängar, matplats, kök och ibland toalett.",
+  "alternatives": [
+   "motor",
+   "last",
+   "inredning",
+   "takräcke"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är inredning. Sängar, matplats och kök är det som finns inne i vagnen. En släpvagn har ingen motor, och last eller takräcke består inte av sängar och kök.",
+  "source": {
+   "title": "Husvagn",
+   "url": "https://sv.wikipedia.org/wiki/Husvagn",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-08",
+  "amne": "his",
+  "genre": "pop",
+  "text": "Klockaren hade från början uppgiften att vårda kyrkan och ringa i klockorna. På 1600-talet fick han dessutom _____ ungdomen att läsa och skriva.",
+  "alternatives": [
+   "lära",
+   "hindra",
+   "straffa",
+   "kalla"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är lära. Att läsa och skriva är något man undervisas i. Kyrkan ville inte hindra ungdomen att läsa, och straffa eller kalla ungdomen att läsa ger ingen mening.",
+  "source": {
+   "title": "Klockare",
+   "url": "https://sv.wikipedia.org/wiki/Klockare",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-09",
+  "amne": "his",
+  "genre": "pop",
+  "text": "En kyrkvärd är en _____, alltså någon utan prästvigning, som hjälper till vid gudstjänsten genom att till exempel hälsa välkommen, läsa texter och ta upp kollekt.",
+  "alternatives": [
+   "präst",
+   "biskop",
+   "kantor",
+   "lekman"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är lekman. Någon utan prästvigning är en lekman, och alltså förklarar ordet. En präst och en biskop är prästvigda, och en kantor leder sången och tar inte upp kollekten.",
+  "source": {
+   "title": "Kyrkvärd",
+   "url": "https://sv.wikipedia.org/wiki/Kyrkv%C3%A4rd",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-10",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Vandrarhemmen var från början avsedda för ungdomar som vandrade eller cyklade, och de utmärks av att gästerna har _____, alltså lagar sin egen mat.",
+  "alternatives": [
+   "restaurang",
+   "självhushåll",
+   "bastu",
+   "reception"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är självhushåll. Alltså förklarar ordet, och att laga sin egen mat är vad självhushåll innebär. I en restaurang lagar personalen maten, och bastu eller reception har inget med mat att göra.",
+  "source": {
+   "title": "Vandrarhem",
+   "url": "https://sv.wikipedia.org/wiki/Vandrarhem",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-11",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Fiskgjusen är en hökfågel som lever _____ av fisk, som den tar vid vattenytan.",
+  "alternatives": [
+   "tidvis",
+   "ibland",
+   "knappast",
+   "endast"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är endast. Namnet fiskgjuse och att den tar fisk vid vattenytan visar att fisk är dess föda. Tidvis, ibland och knappast strider mot att fågeln har fått namn efter fisken.",
+  "source": {
+   "title": "Fiskgjuse",
+   "url": "https://sv.wikipedia.org/wiki/Fiskgjuse",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-12",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Nötväckan söker insekter på trädstammar, och om hösten lägger den frön och nötter på _____ inför vintern.",
+  "alternatives": [
+   "lager",
+   "hög",
+   "rad",
+   "linje"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är lager. Att lägga på lager är ett fast uttryck för att spara till senare, och inför vintern visar att det är det som sker. Hög, rad och linje bildar inget sådant uttryck.",
+  "source": {
+   "title": "Nötväcka",
+   "url": "https://sv.wikipedia.org/wiki/N%C3%B6tv%C3%A4cka",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-13",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Innan tryckkonsten uppfanns måste all litteratur _____ för hand, och medeltida handskrifter försågs ofta med färgade initialer och små bilder.",
+  "alternatives": [
+   "läsas",
+   "kopieras",
+   "gömmas",
+   "censureras"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är kopieras. Innan tryckkonsten fanns måste nya exemplar av en bok göras av någon som skrev av den. Läsa, gömma och censurera gör man inte för hand.",
+  "source": {
+   "title": "Handskrift",
+   "url": "https://sv.wikipedia.org/wiki/Handskrift",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-14",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Kritor är stavar av färgat vax, kol, kalk eller andra _____ material, och de används för att rita och skriva.",
+  "alternatives": [
+   "mjuka",
+   "gasformiga",
+   "genomskinliga",
+   "giftiga"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är mjuka. Vax, kol och kalk är material som nöts av mot ett underlag, och därför går det att rita med dem. Gasformiga, genomskinliga och giftiga stämmer inte med vax och kalk.",
+  "source": {
+   "title": "Kritor",
+   "url": "https://sv.wikipedia.org/wiki/Kritor",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "par"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-15",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Amortering är en _____ på en skuld. Ett amorteringsfritt lån betalas däremot tillbaka i sin helhet när löptiden är slut.",
+  "alternatives": [
+   "avbetalning",
+   "påminnelse",
+   "avi",
+   "garanti"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är avbetalning. Däremot ställer ett lån som betalas tillbaka på en gång mot ett som betalas i omgångar. En påminnelse, avi eller garanti betalar inte av skulden.",
+  "source": {
+   "title": "Amortering",
+   "url": "https://sv.wikipedia.org/wiki/Amortering",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-16",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Vid dagsböter beror antalet böter på hur grovt brottet är, medan storleken på varje dagsbot beror på den dömdes _____.",
+  "alternatives": [
+   "hårfärg",
+   "bostad",
+   "utbildning",
+   "inkomst"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är inkomst. En bots storlek är ett belopp, och det ska stå i proportion till vad den dömde kan betala. Hårfärg, bostad och utbildning säger inget om hur mycket någon har råd att betala.",
+  "source": {
+   "title": "Dagsböter",
+   "url": "https://sv.wikipedia.org/wiki/Dagsb%C3%B6ter",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-17",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Katarsis är grekiska och betyder rening. Aristoteles använde begreppet när han hävdade att tragedin _____ oss.",
+  "alternatives": [
+   "underhåller",
+   "skrämmer",
+   "fördummar",
+   "befriar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är befriar. En rening gör att något tungt släpper, och det är vad katarsis innebär. Underhålla, skrämma och fördumma är inte en rening.",
+  "source": {
+   "title": "Katharsis",
+   "url": "https://sv.wikipedia.org/wiki/Katharsis",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "def"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-18",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "Hagel bildas när regn fryser till is i molnet, och kornen _____ när de förs upp och ned av luftströmmarna tills de blir för tunga och faller.",
+  "alternatives": [
+   "avdunstar",
+   "växer",
+   "spricker",
+   "mörknar"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är växer. Tills de blir för tunga visar att kornen blir större för varje tur i molnet. Korn som avdunstar eller spricker blir inte tyngre, och korn som mörknar blir inte heller det.",
+  "source": {
+   "title": "Hagel",
+   "url": "https://sv.wikipedia.org/wiki/Hagel",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-19",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Spindelfobi är en överdriven och _____ rädsla för spindlar, trots att de flesta spindlar är ofarliga.",
+  "alternatives": [
+   "berättigad",
+   "irrationell",
+   "dold",
+   "ömsesidig"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är irrationell. Trots att spindlarna är ofarliga visar att rädslan inte har något förnuftigt skäl. Berättigad strider mot trots, och dold eller ömsesidig säger inget om skälen.",
+  "source": {
+   "title": "Spindelfobi",
+   "url": "https://sv.wikipedia.org/wiki/Spindelfobi",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a"
+   ],
+   "ledtrad": [
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-20",
+  "amne": "tek",
+  "genre": "pop",
+  "text": "En fyr är ett sjömärke som nattetid sprider ljus för att _____ sjöfarare om grund och visa dem var de befinner sig.",
+  "alternatives": [
+   "varna",
+   "underhålla",
+   "fråga",
+   "berätta"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är varna. Ljus vid ett grund ska få sjöfarare att undvika faran, och varna om är ett fast uttryck. Ett ljus underhåller eller frågar inte, och berätta om grund säger man inte om ett sjömärke.",
+  "source": {
+   "title": "Fyr",
+   "url": "https://sv.wikipedia.org/wiki/Fyr",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v"
+   ],
+   "ledtrad": [
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa"
+     ],
+     "faller_pa": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-21",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Ljumskbråck går inte över av sig självt utan behöver _____. Ett bråck uppstår när bukhinnan och en del av bukens innehåll _____ ut genom muskellagret i bukväggen.",
+  "alternatives": [
+   "opereras – pressas",
+   "behandlas – rinner",
+   "läka – tränger",
+   "ignoreras – spolas"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är opereras och pressas. Utan ställer att bråcket inte läker själv mot att det måste åtgärdas, och behandlas fungerar också. Innehåll som kommer ut genom ett muskellager trycks ut, och tränger säger samma sak. Läka strider mot att bråcket inte går över av sig självt, ignoreras strider mot utan, och bukens innehåll rinner eller spolas inte ut.",
+  "source": {
+   "title": "1177 Ljumskbråck",
+   "url": "https://www.1177.se/sjukdomar--besvar/mage-och-tarm/tarmbesvar/ljumskbrack/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-22",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Halsbränna känns som en _____ känsla bakom bröstbenet, och ibland kommer det upp surt maginnehåll i munnen. Besvären är ofta _____ och brukar ge med sig utan behandling.",
+  "alternatives": [
+   "svidande – allvarliga",
+   "brännande – lindriga",
+   "kylande – milda",
+   "kittlande – kroniska"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är brännande och lindriga. Ordet halsbränna förklarar känslan, och svidande fungerar också. Besvär som ger med sig utan behandling är inte svåra, och milda säger samma sak. Kylande och kittlande är inte en bränna, och allvarliga eller kroniska besvär ger inte med sig utan behandling.",
+  "source": {
+   "title": "1177 Halsbränna",
+   "url": "https://www.1177.se/sjukdomar--besvar/mage-och-tarm/magsack-och-matstrupe/halsbranna--magsaftsreflux/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-23",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Vid magsår har man ont i maggropen, ofta i _____: några veckor med smärta kan följas av en tid helt utan symtom. Smärtan kan ibland upplevas som _____.",
+  "alternatives": [
+   "perioder – hungersug",
+   "omgångar – lättnad",
+   "sömnen – hunger",
+   "solsken – klåda"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är perioder och hungersug. Kolonet förklarar att smärtan kommer och går, och omgångar fungerar också. Ont i maggropen kan likna känslan av att vara hungrig, och hunger fungerar också. Sömnen och solsken förklarar inte kolonet, och smärta upplevs inte som lättnad eller klåda.",
+  "source": {
+   "title": "1177 Magsår",
+   "url": "https://www.1177.se/sjukdomar--besvar/mage-och-tarm/magsack-och-matstrupe/magsar/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-24",
+  "amne": "med",
+  "genre": "myn",
+  "text": "Kikhosta börjar ofta som en vanlig förkylning, men efter en till två veckor _____ hostan i attacker. Små barn smittas nästan alltid av vuxna som inte själva vet att de är _____.",
+  "alternatives": [
+   "slår om – friska",
+   "övergår – sjuka",
+   "klingar av – smittade",
+   "bedarrar – vaccinerade"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är övergår och sjuka. Men ställer förkylningen mot något värre, alltså blir hostan till attacker, och slår om fungerar också. Den som smittar andra bär på sjukdomen, och smittade säger samma sak. En hosta som klingar av eller bedarrar blir inga attacker, och friska eller vaccinerade smittar inte.",
+  "source": {
+   "title": "1177 Kikhosta",
+   "url": "https://www.1177.se/sjukdomar--besvar/lungor-och-luftvagar/hosta-och-slem-i-luftvagarna/kikhosta/",
+   "publisher": "1177"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-25",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Ordet bröllop kommer av fornsvenskans brudlopp, som syftade på det _____ som förde bruden från hennes hem till det nya. Bröllopet _____ ibland av en förlovning.",
+  "alternatives": [
+   "sällskap – avslutas",
+   "avtal – inleds",
+   "regn – ersätts",
+   "följe – föregås"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är följe och föregås. Ett lopp som för bruden till hennes nya hem är en grupp människor som går med henne, och sällskap fungerar också. En förlovning kommer före bröllopet, och inleds fungerar också. Ett avtal eller regn för inte bruden till sitt hem, och bröllopet avslutas eller ersätts inte av en förlovning.",
+  "source": {
+   "title": "Bröllop",
+   "url": "https://sv.wikipedia.org/wiki/Br%C3%B6llop",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-26",
+  "amne": "his",
+  "genre": "pop",
+  "text": "På en typisk badort är turismen en viktig _____ för dem som bor där. På sommaren kan befolkningen _____ och sedan krympa igen när säsongen är över.",
+  "alternatives": [
+   "intäkt – halveras",
+   "sjukdom – tiodubblas",
+   "inkomstkälla – mångdubblas",
+   "plåga – utvandra"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är inkomstkälla och mångdubblas. Turister ger pengar åt de bofasta, och intäkt fungerar också. När turisterna kommer på sommaren blir det många fler människor, och tiodubblas fungerar också. Turismen är ingen sjukdom eller plåga för dem som lever på den, och en befolkning som halveras eller utvandrar på sommaren stämmer inte med turismen.",
+  "source": {
+   "title": "Badort",
+   "url": "https://sv.wikipedia.org/wiki/Badort",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-27",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Kantorn har fått sitt namn av latinets ord för sångare. Hen leder församlingens gemensamma _____ i gudstjänsten, medan prästen leder _____.",
+  "alternatives": [
+   "psalmsång – kören",
+   "sång – mässan",
+   "bokföring – gudstjänsten",
+   "måltid – orkestern"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är sång och mässan. Ordet kantor betyder sångare, och psalmsång fungerar också. Medan ställer prästen mot kantorn, och prästen leder själva gudstjänsten, och gudstjänsten fungerar också. En kantor leder inte bokföringen eller måltiden, och prästen leder varken kören eller orkestern.",
+  "source": {
+   "title": "Kantor",
+   "url": "https://sv.wikipedia.org/wiki/Kantor",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "def",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-28",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "Invandring är att en person som är född i ett annat land flyttar in och _____ sig i landet. I statistiken räknas ofta även de som är födda i landet och _____ efter att ha bott länge utomlands.",
+  "alternatives": [
+   "etablerar – emigrerar",
+   "roar – flyttar hem",
+   "bosätter – återvänder",
+   "skiljer – semestrar"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är bosätter och återvänder. Invandring är att stanna och bo i landet, och etablerar fungerar också. Den som är född i landet och kommer tillbaka efter en tid utomlands flyttar hem, och flyttar hem säger samma sak. Roar och skiljer sig i landet är inte invandring, och den som emigrerar eller semestrar flyttar inte in.",
+  "source": {
+   "title": "Invandring",
+   "url": "https://sv.wikipedia.org/wiki/Invandring",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-29",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "På ett hotell hyr man alltid ett helt rum och aldrig bara _____, till skillnad från på ett vandrarhem. Självhushåll är som regel inte möjligt, och maten _____ därför på annat vis, till exempel i en restaurang på hotellet.",
+  "alternatives": [
+   "bäddar – slängs",
+   "dörrar – fixas",
+   "sängar – ordnas",
+   "badrum – bannlyses"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är sängar och ordnas. Till skillnad från vandrarhemmet hyr man inte en plats i ett delat rum, och bäddar fungerar också. Om man inte kan laga mat själv måste den lösas på annat sätt, och fixas fungerar också. Dörrar och badrum hyrs inte ut för sig, och mat slängs eller bannlyses inte för att självhushåll saknas.",
+  "source": {
+   "title": "Hotell",
+   "url": "https://sv.wikipedia.org/wiki/Hotell",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-30",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Grodor skiljer sig från paddor genom att huden är _____ och fuktigare och att de _____ fram i stället för att krypa.",
+  "alternatives": [
+   "mjukare – kryper",
+   "vårtigare – skuttar",
+   "torrare – flyger",
+   "slätare – hoppar"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är slätare och hoppar. Huden beskrivs bredvid fuktigare som något som skiljer grodan från den vårtiga paddan, och mjukare fungerar också. I stället för att krypa visar att grodan tar sig fram på annat sätt, och skuttar säger samma sak. Vårtigare och torrare strider mot fuktigare, och kryper eller flyger stämmer inte med i stället för att krypa.",
+  "source": {
+   "title": "Groda",
+   "url": "https://sv.wikipedia.org/wiki/Groda",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "par",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-31",
+  "amne": "bio",
+  "genre": "pop",
+  "text": "Torsken är en av de viktigaste _____ och har stor ekonomisk betydelse. Den säljs färsk eller fryst men också _____ och saltad som klippfisk.",
+  "alternatives": [
+   "konsumtionsfiskarna – kokt",
+   "rovfåglarna – lufttorkad",
+   "matfiskarna – torkad",
+   "prydnadsfiskarna – målad"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är matfiskarna och torkad. En fisk som säljs och har ekonomisk betydelse äts, och konsumtionsfiskarna fungerar också. Klippfisk är fisk som har fått torka, och lufttorkad fungerar också. Torsken är ingen rovfågel eller prydnadsfisk, och kokt eller målad fisk är inte klippfisk.",
+  "source": {
+   "title": "Torsk",
+   "url": "https://sv.wikipedia.org/wiki/Torsk",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-32",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "En trubadur är en sångare som oftast uppträder _____ med visor och ballader. Ordet kommer från de medeltida trubadurerna vid hoven i södra Frankrike, och på deras språk betydde det ungefär en som _____.",
+  "alternatives": [
+   "solo – stjäl",
+   "ensam – hittar på",
+   "i kör – diktar",
+   "tyst – tiger"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är ensam och hittar på. En trubadur står själv med sina visor, och solo fungerar också. En sångare som skriver egna visor skapar dem, och diktar fungerar också. I kör och tyst stämmer inte med en sångare som uppträder med visor, och ordet för en diktare betyder inte en som stjäl eller tiger.",
+  "source": {
+   "title": "Trubadur",
+   "url": "https://sv.wikipedia.org/wiki/Trubadur",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-33",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Ett uppslagsverk vill _____ all kunskap, eller all kunskap inom ett visst ämne. Det liknar ordboken och är vanligen ordnat _____.",
+  "alternatives": [
+   "sammanfatta – alfabetiskt",
+   "samla – slumpvis",
+   "förneka – i bokstavsordning",
+   "censurera – kronologiskt"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är sammanfatta och alfabetiskt. Ett verk med artiklar om alla ämnen försöker ge en översikt över kunskapen, och samla fungerar också. Liksom ordboken är det ordnat efter bokstäverna, och i bokstavsordning säger samma sak. Ett uppslagsverk förnekar eller censurerar inte vetande, och slumpvis eller kronologiskt är inte ordboksordning.",
+  "source": {
+   "title": "Uppslagsverk",
+   "url": "https://sv.wikipedia.org/wiki/Uppslagsverk",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "adv"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-34",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "I Finland är kandidatexamen numera en lägre examen, och efter den _____ de flesta vidare till magister, även om examen är tänkt att kunna stå _____.",
+  "alternatives": [
+   "studerar – i vägen",
+   "vilar – fritt",
+   "läser – för sig själv",
+   "skriver – stilla"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är läser och för sig själv. Den som fortsätter till en högre examen studerar vidare, och studerar fungerar också. Även om ställer att de flesta fortsätter mot att examen ska räcka ensam, och fritt fungerar också. Man vilar eller skriver inte vidare till magister, och en examen som står i vägen eller stilla är inte tänkt att räcka själv.",
+  "source": {
+   "title": "Kandidatexamen",
+   "url": "https://sv.wikipedia.org/wiki/Kandidatexamen",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-35",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Didaktik är vetenskapen om allt som påverkar undervisningen och dess innehåll, med fokus på hur _____ organiseras. Den är en del av _____ och delas in i allmän didaktik och ämnesdidaktik.",
+  "alternatives": [
+   "inlärning – juridiken",
+   "städning – utbildningsvetenskapen",
+   "semestern – medicinen",
+   "lärande – pedagogiken"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är lärande och pedagogiken. Undervisning syftar till att elever lär sig, och inlärning fungerar också. En vetenskap om undervisning hör till läran om uppfostran och utbildning, och utbildningsvetenskapen fungerar också. Städning och semestern har inget med undervisning att göra, och didaktik är ingen del av juridiken eller medicinen.",
+  "source": {
+   "title": "Didaktik",
+   "url": "https://sv.wikipedia.org/wiki/Didaktik",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-36",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Partihandel är handel med varor i stora _____, framför allt mellan industrin och detaljhandeln. Den riktar sig inte till _____ konsumenter.",
+  "alternatives": [
+   "partier – alla",
+   "butiker – individuella",
+   "volymer – enskilda",
+   "hamnar – avlägsna"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är volymer och enskilda. Ordet partihandel visar att varorna säljs i stora mängder, och partier fungerar också. Handel mellan industri och detaljhandel når inte den vanliga kunden, och individuella fungerar också. Butiker och hamnar är inte mängder av varor, och handeln riktar sig inte till alla eller avlägsna konsumenter.",
+  "source": {
+   "title": "Grossist",
+   "url": "https://sv.wikipedia.org/wiki/Grossist",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-37",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Med rättshjälp _____ samhället hela eller en del av en persons kostnader i en rättslig fråga. Den täcker bara de egna kostnaderna, så den som förlorar ett tvistemål får ändå betala _____ kostnader.",
+  "alternatives": [
+   "betalar – domstolens",
+   "höjer – den andra sidans",
+   "står för – motpartens",
+   "granskar – statens"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är står för och motpartens. Hjälp med kostnader är att någon annan betalar dem, och betalar fungerar också. Bara de egna ställs mot den andra partens kostnader, och den andra sidans säger samma sak. Det allmänna höjer eller granskar inte kostnaderna som hjälp, och den som förlorar betalar inte domstolens eller statens kostnader i stället för motpartens.",
+  "source": {
+   "title": "Rättshjälp",
+   "url": "https://sv.wikipedia.org/wiki/R%C3%A4ttshj%C3%A4lp",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "utr",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-38",
+  "amne": "mil",
+  "genre": "pop",
+  "text": "En myr är en våtmark där marken innehåller så lite _____ att döda växter inte förmultnar utan samlas och blir till torv. Många svenska myrar har bildats när mark har _____ och blivit blöt.",
+  "alternatives": [
+   "luft – torkat",
+   "syre – försumpats",
+   "salt – översvämmats",
+   "kalk – plogats"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är syre och försumpats. Växter förmultnar inte när det saknas syre i marken, och luft fungerar också. Mark som blir blöt blir sumpig, och översvämmats fungerar också. Salt och kalk förklarar inte att växterna inte förmultnar, och mark som torkar eller plogas blir inte blöt.",
+  "source": {
+   "title": "Myr",
+   "url": "https://sv.wikipedia.org/wiki/Myr",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-39",
+  "amne": "psy",
+  "genre": "pop",
+  "text": "Utbrändhet är ett tillstånd som hänger ihop med långvarig _____ i arbetslivet. Typiska tecken är cynism, utmattning och en känsla av att _____ för sina uppgifter.",
+  "alternatives": [
+   "press – vara överkvalificerad",
+   "avkoppling – vara otillräcklig",
+   "stress – inte räcka till",
+   "fritid – trivas"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är stress och inte räcka till. Ett tillstånd som slutar i utmattning kommer av långvarig belastning, och press fungerar också. Cynism och utmattning hör ihop med en känsla av att inte klara jobbet, och vara otillräcklig säger samma sak. Avkoppling och fritid leder inte till utmattning, och den som är överkvalificerad eller trivs klarar sina uppgifter.",
+  "source": {
+   "title": "Utbrändhet",
+   "url": "https://sv.wikipedia.org/wiki/Utbr%C3%A4ndhet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "utr"
+   ],
+   "ledtrad": [
+    "kol",
+    "par"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-40",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Vid särskrivning delas ett uttryck upp i två eller fler ord, och _____ är sammanskrivning. Felaktig särskrivning är ett vanligt skrivfel och kan göra att _____ blir en helt annan.",
+  "alternatives": [
+   "kontrasten – stavningen",
+   "motpolen – betydelsen",
+   "synonymen – innebörden",
+   "förkortningen – uttalet"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är motpolen och betydelsen. Att skriva ihop är det motsatta mot att skriva isär, och kontrasten fungerar också. Ett felaktigt mellanrum kan få orden att säga något annat, och innebörden säger samma sak. En synonym eller förkortning är inte det motsatta mot särskrivning, och det är inte stavningen eller uttalet som blir en helt annan.",
+  "source": {
+   "title": "Särskrivning",
+   "url": "https://sv.wikipedia.org/wiki/S%C3%A4rskrivning",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      2
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-41",
+  "amne": "kul",
+  "genre": "pop",
+  "text": "Konfirmation är en kyrklig akt som _____ dopet. I den katolska kyrkan räknas den som ett av de sju _____, och den åtföljs av smörjelse med _____ olja.",
+  "alternatives": [
+   "befäster – heliga handlingarna – otillåten",
+   "upphäver – mysterierna – välsignad",
+   "stadfäster – sakramenten – invigd",
+   "ersätter – budorden – bränd"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är stadfäster, sakramenten och invigd. Konfirmation betyder bekräftelse, och en akt som bekräftar dopet gör det fast, och befäster fungerar också. De sju är kyrkans heliga handlingar, och heliga handlingarna eller mysterierna fungerar också. Olja som används i en helig handling är helgad, och välsignad fungerar också. En bekräftelse upphäver eller ersätter inte dopet, budorden är tio och inga handlingar, och olja i en kyrklig akt är varken otillåten eller bränd.",
+  "source": {
+   "title": "Konfirmation",
+   "url": "https://sv.wikipedia.org/wiki/Konfirmation",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-42",
+  "amne": "sam",
+  "genre": "myn",
+  "text": "Vid allmänna val _____ väljarna representanter till en beslutande församling, som ett parlament eller ett fullmäktige. Man röstar i en vallokal, som ofta ordnas _____ i en skola eller annan offentlig byggnad, och i Sverige räcker väljaren över valsedeln till en _____ som lägger den i urnan.",
+  "alternatives": [
+   "utser – tillfälligt – valfunktionär",
+   "väljer – permanent – granne",
+   "avsätter – provisoriskt – valförrättare",
+   "bannlyser – hemligt – präst"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är utser, tillfälligt och valfunktionär. Väljare bestämmer vem som ska företräda dem, och väljer fungerar också. En vallokal i en offentlig lokal finns bara under valet, och provisoriskt fungerar också. Den som tar emot valsedlar i vallokalen arbetar med valet, och valförrättare säger samma sak. Ett val avsätter eller bannlyser inte representanter, en vallokal är inte permanent eller hemlig, och man lämnar inte sin valsedel till en granne eller präst.",
+  "source": {
+   "title": "Riksdagsval",
+   "url": "https://sv.wikipedia.org/wiki/Riksdagsval",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "adv",
+    "s"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-43",
+  "amne": "sam",
+  "genre": "pop",
+  "text": "En idrottsförening finns för att medlemmarna ska kunna _____ en idrott och ofta tävla i den. Sveriges äldsta allmänna idrottsklubb är ett simsällskap i Uppsala som _____ 1796, och många fler föreningar har _____ sedan slutet av 1800-talet.",
+  "alternatives": [
+   "träna – stängdes – upplösts",
+   "bedriva – grundades – bildats",
+   "förakta – instiftades – startats",
+   "bevaka – bannlystes – rivits"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är bedriva, grundades och bildats. Den som tävlar i en idrott håller också på med den, och träna fungerar också. Den äldsta klubben kom till detta år, och instiftades fungerar också. Många fler föreningar har kommit till sedan dess, och startats säger samma sak. En idrottsförening föraktar eller bevakar inte sin idrott, den äldsta klubben kan inte ha stängts eller bannlysts det år den kom till, och föreningar som upplösts eller rivits finns inte.",
+  "source": {
+   "title": "Idrottsförening",
+   "url": "https://sv.wikipedia.org/wiki/Idrottsf%C3%B6rening",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "v",
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-44",
+  "amne": "lit",
+  "genre": "pop",
+  "text": "Hjältesagan är en genre i den muntliga berättartraditionen, och den ligger egentligen närmare _____ än folksagan. Berättelserna kretsar ofta kring _____ händelser och verkliga personer som kungar och krigare, men de kan också handla om legender som man vid den tiden trodde var _____.",
+  "alternatives": [
+   "sägnen – historiska – sanna",
+   "legenden – betydelsefulla – påhittade",
+   "romanen – faktiska – äkta",
+   "dramat – triviala – roliga"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är sägnen, historiska och sanna. Egentligen närmare än folksagan visar att genren ligger nära en annan muntlig berättelse om verkliga händelser, och legenden fungerar också. Verkliga personer som kungar hör ihop med händelser som har inträffat, och faktiska fungerar också. Men ställer legenderna mot de verkliga händelserna, och de troddes ändå vara verkliga, och äkta fungerar också. Romanen och dramat är inte muntlig tradition, triviala händelser kretsar inte kring kungar, och legender som man trodde var påhittade eller roliga ställs inte mot de verkliga.",
+  "source": {
+   "title": "Hjältesaga",
+   "url": "https://sv.wikipedia.org/wiki/Hj%C3%A4ltesaga",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "a",
+    "a"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-45",
+  "amne": "utb",
+  "genre": "pop",
+  "text": "Ordet gymnasium kommer av grekiskans ord för naken, och i antikens Grekland var ett gymnasium en anläggning för _____ träning. I flera språk betecknar ordet i stället en _____ utbildning som förbereder för universitetet, och i Sverige _____ gymnasierna 1970 av gymnasieskolan.",
+  "alternatives": [
+   "kroppslig – avancerad – ersattes",
+   "fysisk – lägre – kompletterades",
+   "andlig – kvalificerad – avlöstes",
+   "militär – praktisk – utökades"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är kroppslig, avancerad och ersattes. Ordet gymnastik och grekiskans ord för naken visar att träningen gällde kroppen, och fysisk fungerar också. En utbildning som förbereder för universitetet ligger högt i utbildningssystemet, och kvalificerad fungerar också. Gymnasieskolan tog de gamla gymnasiernas plats, och avlöstes säger samma sak. Andlig och militär träning har inget med naken att göra, en lägre eller praktisk utbildning förbereder inte för universitetet, och gymnasierna kompletterades eller utökades inte av gymnasieskolan utan försvann.",
+  "source": {
+   "title": "Gymnasium",
+   "url": "https://sv.wikipedia.org/wiki/Gymnasium",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "ors",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-46",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Skatteflykt är åtgärder som vidtas _____ för att slippa betala skatt. Begreppet kan också gälla den som _____ till ett annat land för att betala mindre, och gränsen mellan tillåten och otillåten skatteflykt är _____.",
+  "alternatives": [
+   "endast – emigrerar – skarp",
+   "ibland – utvandrar – diffus",
+   "enbart – flyttar – flytande",
+   "motvilligt – skriver – tydlig"
+  ],
+  "answer": "C",
+  "explanation": "Rätt svar är enbart, flyttar och flytande. Skatteflykt är åtgärder som inte har något annat syfte än att undvika skatt, och endast fungerar också. Den som byter land för att betala mindre lämnar sitt land, och emigrerar eller utvandrar fungerar också. Tillåten och otillåten skatteflykt är svåra att skilja åt, och diffus säger samma sak. Ibland och motvilligt strider mot att syftet är att slippa skatt, man skriver inte till ett annat land för att betala mindre, och skarp eller tydlig strider mot att gränsen är svår att dra.",
+  "source": {
+   "title": "Skatteflykt",
+   "url": "https://sv.wikipedia.org/wiki/Skatteflykt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "adv",
+    "v",
+    "a"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-47",
+  "amne": "eko",
+  "genre": "pop",
+  "text": "Arvsskatten är oftast _____, så att skattesatsen stiger med arvets storlek, och nära släktingar beskattas _____ än avlägsna. Under 1900-talet sågs arvsskatten som ett viktigt verktyg för att _____ skillnaderna i förmögenhet.",
+  "alternatives": [
+   "stigande – hårdare – förstärka",
+   "platt – lindrigare – minska",
+   "symbolisk – kostsammare – befästa",
+   "progressiv – mildare – utjämna"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är progressiv, mildare och utjämna. En skatt vars sats stiger med beloppet är progressiv, och stigande fungerar också. Nära släktingar gynnas jämfört med avlägsna, och lindrigare fungerar också. En skatt som tar mer av de största arven gör skillnaderna mindre, och minska säger samma sak. En platt eller symbolisk skatt stiger inte med arvet, hårdare eller kostsammare skatt för nära släktingar strider mot att de gynnas, och en skatt som tar mest av de rika förstärker eller befäster inte skillnaderna.",
+  "source": {
+   "title": "Arvsskatt",
+   "url": "https://sv.wikipedia.org/wiki/Arvsskatt",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "a",
+    "v"
+   ],
+   "ledtrad": [
+    "def",
+    "kol",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-48",
+  "amne": "jur",
+  "genre": "pop",
+  "text": "Husrannsakan är ett _____ som innebär att en myndighet går igenom någon annans egendom, även om ägaren inte går med på det. Till skillnad från en kroppsvisitation gäller den en sak eller en _____, och syftet kan vara att _____ bevisning.",
+  "alternatives": [
+   "maktmedel – lokal – manipulera",
+   "tvångsmedel – plats – tillvarata",
+   "belöningssystem – byggnad – spara",
+   "nöje – person – gömma"
+  ],
+  "answer": "B",
+  "explanation": "Rätt svar är tvångsmedel, plats och tillvarata. En undersökning som kan göras utan medgivande tvingas fram, och maktmedel fungerar också. Till skillnad från en kroppsvisitation, som gäller en person, gäller husrannsakan ett ställe, och lokal eller byggnad fungerar också. Myndigheten undersöker för att få tag på bevis, och spara fungerar också. En undersökning utan medgivande är varken ett belöningssystem eller ett nöje, person är just kroppsvisitationen, och en myndighet manipulerar eller gömmer inte bevisning.",
+  "source": {
+   "title": "Husrannsakan",
+   "url": "https://sv.wikipedia.org/wiki/Husrannsakan",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "s",
+    "s",
+    "v"
+   ],
+   "ledtrad": [
+    "kol",
+    "kon",
+    "kol"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-49",
+  "amne": "fil",
+  "genre": "pop",
+  "text": "Teodicéproblemet gäller hur en gud kan vara både fullkomligt _____ och allsmäktig i en värld där det också finns ondska och lidande. För att problemet ska uppstå måste både Gud och det onda _____, och tas det ena bort _____ problemet.",
+  "alternatives": [
+   "rättvis – finnas – fördjupas",
+   "ond – förutsättas – löses upp",
+   "frånvarande – glömmas – skärps",
+   "god – existera – faller bort"
+  ],
+  "answer": "D",
+  "explanation": "Rätt svar är god, existera och faller bort. Problemet uppstår när ondskan ställs mot en gud som vill väl, och rättvis fungerar också. Både Gud och det onda måste finnas för att det ska bli en motsägelse, och förutsättas fungerar också. Utan den ena delen finns ingen motsägelse kvar, och löses upp säger samma sak. En ond eller frånvarande gud ger ingen motsägelse med ondskan, det onda måste inte glömmas, och problemet fördjupas eller skärps inte när den ena delen tas bort.",
+  "source": {
+   "title": "Teodicéproblemet",
+   "url": "https://sv.wikipedia.org/wiki/Teodic%C3%A9problemet",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "v",
+    "v"
+   ],
+   "ledtrad": [
+    "kon",
+    "kol",
+    "ors"
+   ],
+   "distraktorer": {
+    "A": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "B": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ },
+ {
+  "id": "p30-50",
+  "amne": "spr",
+  "genre": "pop",
+  "text": "Kraftuttryck är _____ ord eller fraser som man tar till för att ge utlopp åt en stark känsla, ofta som en reaktion på något. De flesta har med _____ att göra och är former av svordomar, men många är _____ svordomar som inte ska uppfattas som sådana.",
+  "alternatives": [
+   "häftiga – ilska – mildrade",
+   "starka – lycka – skärpta",
+   "sansade – vrede – försvagade",
+   "tekniska – sömn – lånade"
+  ],
+  "answer": "A",
+  "explanation": "Rätt svar är häftiga, ilska och mildrade. Ord för stark känsla är kraftiga ord, och starka fungerar också. Svordomar hör ihop med att vara arg, och vrede säger samma sak. Men ställer svordomar mot ord som inte ska uppfattas som svordomar, alltså är de dämpade, och försvagade fungerar också. Sansade och tekniska ord uttrycker ingen stark känsla, lycka och sömn har inget med svordomar att göra, och skärpta eller lånade svordomar är fortfarande svordomar.",
+  "source": {
+   "title": "Kraftuttryck",
+   "url": "https://sv.wikipedia.org/wiki/Kraftuttryck",
+   "publisher": "Wikipedia"
+  },
+  "meta": {
+   "ordklass": [
+    "a",
+    "s",
+    "a"
+   ],
+   "ledtrad": [
+    "kol",
+    "kol",
+    "kon"
+   ],
+   "distraktorer": {
+    "B": {
+     "typer": [
+      "de",
+      "de",
+      "fa"
+     ],
+     "faller_pa": [
+      3
+     ]
+    },
+    "C": {
+     "typer": [
+      "fa",
+      "de",
+      "de"
+     ],
+     "faller_pa": [
+      1
+     ]
+    },
+    "D": {
+     "typer": [
+      "fa",
+      "fa",
+      "fa"
+     ],
+     "faller_pa": [
+      1,
+      2,
+      3
+     ]
+    }
+   }
+  }
+ }
+]
