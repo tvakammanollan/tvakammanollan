@@ -11,7 +11,10 @@ import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
-import { CoachingQuizCard } from "@/components/CoachingQuizCard";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { fetchEloPlacering } from "@/lib/leaderboard.functions";
+import { formatInt } from "@/lib/sv-format";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
@@ -114,13 +117,16 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               />
               <div className="min-w-0">
                 <EyebrowLabel tone="teal" animate={false}>
-                  {greeting}
+                  {greeting} {displayName(profile.username, profile.id)}
                 </EyebrowLabel>
+                {/* Rubriken är en fråga, för det är vad sidan är: ett val
+                    mellan fyra aktiviteter. Här stod tidigare användarens
+                    eget namn, vilket är det enda på skärmen man redan vet. */}
                 <h1
-                  className="display truncate text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
+                  className="display text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[38px]"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {displayName(profile.username, profile.id)}.
+                  Vad vill du göra idag?
                 </h1>
               </div>
             </div>
@@ -139,120 +145,159 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           </header>
         </div>
 
-        {/* Två spalter från lg: dagens ord står kvar i vänsterkanten
-            medan man jobbar sig genom valen till höger. Under lg
-            staplas de och ordet hamnar sist, eftersom "vad gör jag nu"
-            ska komma före på en liten skärm. */}
-        <div className="mt-10 grid items-start gap-4 lg:grid-cols-[288px_minmax(0,1fr)]">
-          {/* Ordningsklasserna sitter på WRAPPERN och inte på <aside>: wrappern
-              är grid-barnet, och `order-*` på ett element som inte är ett
-              flex/grid-item gör ingenting. Utan det här hamnade dagens ord och
-              kvalificeringen ÖVERST på mobil, före "Spela en match" — tvärtemot
-              vad kommentaren ovan påstod. */}
-          <div className="order-2 lg:order-1">
-            <aside className="space-y-3 lg:sticky lg:top-24">
-              <SafeBoundary label="word-of-the-day">
-                <WordOfTheDay initial={wordOfTheDay} />
-              </SafeBoundary>
-              {/* Kvalificeringen står här och inte bredvid coachningskortet
-                  med flit: köpknappen säljer till den som redan bestämt sig,
-                  den här rutan till den som inte har det. Egen SafeBoundary —
-                  ett fel i formuläret får inte ta med sig dagens ord. */}
-              <SafeBoundary label="coaching-quiz">
-                <CoachingQuizCard />
-              </SafeBoundary>
-            </aside>
-          </div>
+        <div className="mt-10">
+          {facitKnappSynlig(FACIT) && <EfterProvetKnapp />}
 
-          <div className="order-1 lg:order-2 min-w-0">
-            {facitKnappSynlig(FACIT) && <EfterProvetKnapp />}
+          {/* Fyra aktiviteter, en per produktyta, i zonens egen färg. Färgen
+              är hela poängen: den lär ut systemet medan man använder det, så
+              att Sky betyder arkivet också på /gamla-prov. Kopplingen är låst
+              i `lib/produktzon.ts` — ändra den där, inte här.
 
-            {/* ---------- 1. Spela match ---------- */}
-            <div>
-              <section>
-                <div
-                  className="relative overflow-hidden rounded-2xl border border-primary/30 p-5 backdrop-blur-sm sm:p-6"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(174,47,38,0.07) 0%, rgba(255,255,255,0.9) 55%)",
-                  }}
-                >
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl"
-                  />
+              Zonfärgerna är YTOR. Ingen av dem klarar 3:1 mot grundytan, så
+              text ovanpå dem är Ink eller Graphite, och på Plum vit. Sätt
+              aldrig en zonfärg på en bokstav. */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {/* ---------- Duellen ---------- */}
+            <section className="flex flex-col rounded-[40px] bg-terracotta p-7 sm:p-8">
+              <div className="flex items-start justify-between gap-3">
+                <span className="flex items-center gap-2.5 text-[var(--cream-3)]">
+                  <Swords className="h-6 w-6" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
+                    Duellen
+                  </span>
+                </span>
+                <RankBadge elo={activeElo} size="sm" />
+              </div>
 
-                  <div className="relative flex items-start justify-between gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
-                      <Swords className="h-5 w-5" />
-                    </span>
-                    <RankBadge elo={activeElo} size="sm" />
-                  </div>
+              <h2
+                className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Spela en match
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-[var(--cream-3)]">
+                Åtta uppgifter på fem minuter. Verbal och kvantitativ ELO räknas var för sig.
+              </p>
 
-                  <h2
-                    className="display relative mt-3.5 text-[24px] font-bold leading-tight text-[var(--cream)] sm:text-[28px]"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    Spela en match
-                  </h2>
-                  <p className="relative mt-1 text-sm text-white/50">
-                    8 frågor · 5 minuter · ELO på spel
-                  </p>
-
-                  {/* Ämnesväxel — ett val, inte två kort */}
-                  <div
-                    role="radiogroup"
-                    aria-label="Välj ämne"
-                    // Ligger INUTI ett vitt kort, så den får inte vara vit
-                    // också. En aning mörkare än kortet, annars syns inte
-                    // spåret bakom det valda alternativet.
-                    className="relative mt-4 inline-flex rounded-full border border-[rgba(46,30,20,0.12)] bg-[rgba(46,30,20,0.05)] p-1"
-                  >
-                    <SubjectPill
-                      label="Verbal"
-                      active={matchType === "verbal"}
-                      onClick={() => setMatchType("verbal")}
-                    />
-                    <SubjectPill
-                      label="Matte"
-                      active={matchType === "math"}
-                      onClick={() => setMatchType("math")}
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setMatchOpen(true)}
-                    className="group relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-110 sm:w-auto sm:px-8"
-                  >
-                    Spela {matchType === "verbal" ? "verbal" : "matte"}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </button>
-                </div>
-              </section>
-            </div>
-
-            {/* ---------- 2. Plugga ord   3. MEK-övning ---------- */}
-            <div>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <ActionCard
-                  to="/ord"
-                  tone="teal"
-                  icon={<BookOpen className="h-5 w-5" />}
-                  title="Plugga ord"
-                  subtitle="10 000+ riktiga HP-ord, repetition som minns vad du missar"
+              {/* Spåret måste vara ljusare än kortet, inte mörkare som när
+                  kortet var vitt — annars försvinner det valda alternativet. */}
+              <div
+                role="radiogroup"
+                aria-label="Välj ämne"
+                className="mt-5 inline-flex self-start rounded-full bg-card/60 p-1"
+              >
+                <SubjectPill
+                  label="Verbal"
+                  active={matchType === "verbal"}
+                  onClick={() => setMatchType("verbal")}
                 />
-                <ActionCard
-                  to="/mek-ovning"
-                  tone="amber"
-                  badge="BETA"
-                  icon={<PenLine className="h-5 w-5" />}
-                  title="MEK-övning"
-                  subtitle="2 000 uppgifter ur gamla prov och Tvåkommanollans egna. Du röstar fram de bästa, och de visas oftare."
-                  cta="Öva MEK"
+                <SubjectPill
+                  label="Matte"
+                  active={matchType === "math"}
+                  onClick={() => setMatchType("math")}
                 />
               </div>
-            </div>
+
+              <div className="flex-1" />
+              <button
+                type="button"
+                onClick={() => setMatchOpen(true)}
+                className="group mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-125 sm:w-auto sm:self-start sm:px-8"
+              >
+                Spela {matchType === "verbal" ? "verbal" : "matte"}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </section>
+
+            {/* ---------- Gamla prov ---------- */}
+            <Link
+              to="/gamla-prov"
+              className="flex flex-col rounded-[40px] bg-sky p-7 transition hover:brightness-[1.03] sm:p-8"
+            >
+              <span className="flex items-center gap-2.5 text-bark">
+                <ClipboardCheck className="h-6 w-6" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
+                  Gamla prov
+                </span>
+              </span>
+              <h2
+                className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Skriv ett provpass
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-bark">
+                Fyrtio uppgifter på tid, precis som på provdagen. Trettio provtillfällen med facit
+                på varje uppgift.
+              </p>
+              <div className="flex-1" />
+              <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand">
+                Välj provtillfälle
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            {/* ---------- Ordlistan ---------- */}
+            <Link
+              to="/ord"
+              className="flex flex-col rounded-[40px] bg-lavender p-7 transition hover:brightness-[1.03] sm:p-8"
+            >
+              <span className="flex items-center gap-2.5 text-[var(--plum)]">
+                <BookOpen className="h-6 w-6" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">
+                  Ordlistan
+                </span>
+              </span>
+              <h2
+                className="display mt-5 text-[24px] font-bold leading-tight text-[var(--cream)]"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Plugga ord
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-[var(--plum)]">
+                Över 10 000 riktiga HP-ord. Ett ord du missar kommer tillbaka nästa dag, sedan med
+                längre mellanrum för varje gång du har det rätt.
+              </p>
+              <div className="flex-1" />
+              <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg border-2 border-[var(--plum)] px-6 py-3 text-[15px] font-semibold text-[var(--plum)]">
+                Öva ord
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+
+            {/* ---------- MEK ---------- */}
+            <Link
+              to="/mek-ovning"
+              className="flex flex-col rounded-[40px] bg-plum p-7 transition hover:brightness-125 sm:p-8"
+            >
+              <span className="flex items-center gap-2.5 text-cream-wash">
+                <PenLine className="h-6 w-6" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.1em]">MEK</span>
+              </span>
+              <h2
+                className="display mt-5 text-[24px] font-bold leading-tight text-on-brand"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                MEK-övning
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-[var(--navy-3)]">
+                Uppgifter ur gamla prov och Tvåkommanollans egna. Du röstar efter varje fråga, och
+                de som får tummen upp visas oftare.
+              </p>
+              <div className="flex-1" />
+              <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg bg-cream-wash px-6 py-3.5 text-[15px] font-semibold text-[var(--cream-3)]">
+                Öva MEK
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </Link>
+          </div>
+
+          <div className="mt-4 grid items-start gap-4 sm:grid-cols-2">
+            <SafeBoundary label="word-of-the-day">
+              <WordOfTheDay initial={wordOfTheDay} />
+            </SafeBoundary>
+            {/* Gäster rankas inte, så rutan vore ett tomt löfte för dem. */}
+            {!isGuest && <PlaceringsKort elo={activeElo} track={matchType} />}
           </div>
         </div>
       </m.div>
@@ -300,6 +345,50 @@ function GuestBanner() {
    Rank, streak och "hur långt till nästa rank" på en rad. Tidigare låg
    detta som fyra separata element (två rank-pills, en streak-pill och en
    egen progress-sektion) som tillsammans tog mer plats än spela-knappen. */
+/**
+ * Placeringen på topplistan, plus vad som är kvar till nästa rank.
+ *
+ * Hämtas i klienten och inte i route-loadern: talet är användarspecifikt,
+ * och en loader som beror på vem som är inloggad gör sidan omöjlig att
+ * cachea. Faller anropet visas ingenting alls — en siffra som inte går
+ * att lita på är sämre än ingen siffra, och rutan är inte sidans syfte.
+ */
+function PlaceringsKort({ elo, track }: { elo: number; track: MatchType }) {
+  const hamta = useServerFn(fetchEloPlacering);
+  const { data } = useQuery({
+    queryKey: ["elo-placering", track, elo],
+    queryFn: () => hamta({ data: { match_type: track, elo } }),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+  const next = getNextRank(elo);
+
+  if (!data) return null;
+
+  return (
+    <Link
+      to="/leaderboard"
+      className="block rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition hover:border-white/20"
+    >
+      <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--cream-3)]">
+        Din placering
+      </p>
+      <p
+        className="display mt-2 text-[28px] font-bold leading-tight text-[var(--cream)]"
+        style={{ fontFamily: "var(--font-display)" }}
+      >
+        {formatInt(data.placering)} av {formatInt(data.totalt)}
+      </p>
+      <p className="mt-1.5 text-sm leading-relaxed text-[var(--cream-3)]">
+        {next
+          ? `${formatInt(next.minElo - elo)} ELO till ${next.name.split(" · ")[0]}.`
+          : "Högsta ranken, inget kvar att klättra."}{" "}
+        {track === "verbal" ? "Verbal" : "Kvantitativ"} lista, uppdateras efter varje match.
+      </p>
+    </Link>
+  );
+}
+
 function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; streak: number }) {
   const rank = getRankForElo(elo);
   const next = getNextRank(elo);
@@ -376,106 +465,6 @@ function SubjectPill({
       }`}
     >
       {label}
-    </button>
-  );
-}
-
-/* =================== ACTION CARD ===================
-   Samma kort oavsett om målet är en route (`to`) eller en modal
-   (`onClick`) — så ord och coachning väger exakt lika mycket. */
-function ActionCard({
-  to,
-  search,
-  onClick,
-  tone,
-  icon,
-  title,
-  subtitle,
-  badge,
-  cta = "Öppna",
-}: {
-  to?: string;
-  /** Sökparametrar till `to`, t.ex. `{ delprov: "MEK" }` för ett förval i /train. */
-  search?: Record<string, string>;
-  onClick?: () => void;
-  tone: "teal" | "amber" | "leaf";
-  /** Liten flagga i övre högra hörnet, t.ex. en rabatt. */
-  badge?: string;
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-  /** Texten på handlingsraden längst ned — t.ex. priset i stället för "Öppna". */
-  cta?: string;
-}) {
-  // Apple leder till handling, bark ar struktur, lov ar framsteg.
-  const accent = tone === "teal" ? "#10242f" : tone === "leaf" ? "#2f6b3c" : "#06040e";
-  // Tonen bär hela kortet, inte bara ikonen: en accentlinje i överkant
-  // och en svag tonad botten. Det är det som ger sidan färg utan att
-  // lägga till dekor som inte betyder något.
-  const cardStyle: React.CSSProperties = {
-    borderTopColor: accent,
-    borderTopWidth: 3,
-    background: `linear-gradient(180deg, ${accent}14 0%, #fffdf9 60%)`,
-  };
-  const className =
-    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[rgba(46,30,20,0.16)] p-5 text-left backdrop-blur-sm transition-colors hover:border-[rgba(46,30,20,0.3)]";
-
-  const body = (
-    <>
-      {badge ? (
-        <span
-          className="pointer-events-none absolute right-0 top-0 rounded-bl-xl px-2.5 py-1 text-[11px] font-bold tracking-wide text-on-brand"
-          style={{ background: "#06040e" }}
-        >
-          {badge}
-        </span>
-      ) : null}
-      <span
-        className="flex h-10 w-10 items-center justify-center rounded-xl border"
-        style={{
-          borderColor: `${accent}33`,
-          background: `${accent}1a`,
-          color: accent,
-        }}
-      >
-        {icon}
-      </span>
-      <h3
-        className="mt-3 text-[18px] font-bold leading-tight text-[var(--cream)]"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {title}
-      </h3>
-      <p className="mt-1 flex-1 text-[13px] leading-relaxed text-white/50">{subtitle}</p>
-      <span
-        className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold"
-        style={{ color: accent }}
-      >
-        {cta}
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-      </span>
-    </>
-  );
-
-  if (to) {
-    return (
-      <Link
-        to={to}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        params={{} as any}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        search={search as any}
-        className={className}
-        style={cardStyle}
-      >
-        {body}
-      </Link>
-    );
-  }
-
-  return (
-    <button type="button" onClick={onClick} className={className} style={cardStyle}>
-      {body}
     </button>
   );
 }
