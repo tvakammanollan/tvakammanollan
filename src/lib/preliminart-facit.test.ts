@@ -67,7 +67,19 @@ describe("historiskaKrav", () => {
   });
 
   it("hoppar över prov där en del saknar tabell", () => {
-    expect(historiskaKrav(30).some((k) => k.term === "2025vt")).toBe(false);
+    // 2019ht saknar den kvantitativa tabellen. Testet stod tidigare på
+    // 2025vt, som fick sin kvant-tabell påfylld när tre tabeller lades in
+    // för hand 2026-10-24. Påståendet blev då osant utan att något var fel
+    // i koden, och testet har varit rött sedan dess.
+    expect(historiskaKrav(30).some((k) => k.term === "2019ht")).toBe(false);
+
+    // Invarianten är det som faktiskt ska gälla, oavsett vilken termin som
+    // råkar sakna vad. Utan den går testet sönder igen den dag 2019ht får
+    // sin tabell, och nästa person får gissa om det är koden eller datan.
+    for (const krav of historiskaKrav(30)) {
+      expect(typeof krav.verbal).toBe("number");
+      expect(typeof krav.kvant).toBe("number");
+    }
   });
 
   it("skiljer på vårens två prov", () => {
