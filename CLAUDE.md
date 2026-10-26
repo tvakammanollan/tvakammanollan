@@ -966,6 +966,33 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
   summeras i `mek-leaderboard.ts`, cachat en minut per isolat. Det håller i
   tiotusental svar; därefter behövs en tabell som `ord_practice_stats`. Den
   egna raden läses ur tokenen (`optionalSupabaseAuth`), inte ur ett skickat id.
+- **Provfliken (2026-10-26)** är `fetchProvLeaderboard`
+  (`prov-leaderboard.functions.ts`): skrivna provpass ur `prov_attempts`,
+  summerade per spelare, lästa sidvis och cachade en minut per isolat som
+  MEK-listan.
+  - **Den rankar på ANTAL skrivna provpass**, inte på träffsäkerhet. Första
+    versionen rankade på Wilsons undre gräns för andelen rätta, alltså
+    träffsäkerheten vägd mot underlaget. Niklas valde bort den 2026-10-26:
+    listan ska gå att förstå på en halv sekund, och "flest skrivna pass" är
+    ett tal man kan peka på utan att behöva fråga hur det räknats fram.
+    Ändrar du tillbaka, använd `wilsonInterval` i `question-votes.ts` och
+    skriv inte formeln en gång till.
+  - **Träffsäkerheten står kvar som egen kolumn.** Den rankar inte, men utan
+    den säger listan bara hur mycket någon nött och ingenting om hur det gick.
+  - **Ordningen vid lika: antal pass, antal rätta, id.** Det sista är inte
+    smak. Utan det byter två spelare med samma siffror plats mellan två
+    laddningar av samma sida.
+  - **Övningspass räknas med.** Svaret låses när det läggs, så träffsäkerheten
+    är riktig; det som saknas är tidspressen. Samma beslut som på resultatsidan
+    för gamla prov. De var två tredjedelar av allt skrivet 2026-10-26 (264 av
+    411 pass), så utan dem är listan nästan tom. Fottexten säger det rakt ut.
+  - **Listan mäter bara inloggade.** Gamla prov går att skriva utan konto, och
+    då ligger passet bara i besökarens localStorage (`tkn:prov-resultat:v1`).
+    `prov_attempts` fylls framåt, aldrig bakåt, precis som landningssidans
+    provsiffra. Räkna inte listans längd som "så många har skrivit prov": vid
+    mätningen 2026-10-26 hade 44 konton lämnat in minst ett pass, 26 av dem
+    med valt namn och alltså rankbara, medan 154 pass påbörjats helt utan
+    konto och aldrig kan synas.
 - **Radix-flikarna går inte att klicka på i headless Chrome** utan
   `Emulation.setFocusEmulationEnabled`: fönstret saknar fokus, flikarna
   aktiveras aldrig och det ser ut som att fliken är trasig. Gäller skarpa
