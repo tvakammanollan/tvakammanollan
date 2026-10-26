@@ -476,6 +476,7 @@ function OrdPracticePage() {
           vecket och man fick skrolla förbi den trettio gånger i rad. */}
       {phase === "setup" && (
         <PageHero
+          zon="ord"
           eyebrowTone="leaf"
           eyebrow="10 000+ ord"
           title="Öva"

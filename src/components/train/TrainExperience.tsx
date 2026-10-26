@@ -532,6 +532,7 @@ export function TrainExperience({
       <div className="min-h-screen">
         {mode === "mek" ? (
           <PageHero
+            zon="mek"
             eyebrow="Beta"
             eyebrowTone="amber"
             title="MEK-övning"

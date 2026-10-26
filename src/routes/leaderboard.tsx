@@ -122,6 +122,7 @@ function LeaderboardPage() {
   return (
     <div className="min-h-screen">
       <PageHero
+        zon="duell"
         eyebrowTone="leaf"
         eyebrow="Hall of fame"
         title="Se vem som är"

@@ -87,6 +87,7 @@ function GamlaProvPage() {
         subtitle={`${exams.length} provtillfällen och ${formatInt(count)} uppgifter med facit. Skriv hela provpass på tid, direkt i webbläsaren.`}
         align="center"
         variant="compact"
+        zon="prov"
       />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">

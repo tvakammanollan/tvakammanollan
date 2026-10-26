@@ -1,5 +1,6 @@
 import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { type Produktzon, zonDekor } from "@/lib/produktzon";
 import { EyebrowLabel } from "./EyebrowLabel";
 import { CyclingTitle } from "./CyclingTitle";
 import { SplitText } from "@/components/landing/MotionFX";
@@ -26,11 +27,20 @@ export function PageHero({
   secondaryCta,
   variant = "compact",
   align = "left",
+  zon,
   className,
 }: {
   eyebrow?: string;
   /** Bark som standard. Löv på sidor som handlar om framsteg och resultat. */
   eyebrowTone?: "teal" | "amber" | "leaf";
+  /**
+   * Produktzonen sidan tillhör. Sätter den färgar heron med zonens
+   * dekorformer, vilket är det enda stället zonfärgen får synas i hero:n.
+   * Formerna ligger bakom innehållet och är rent dekorativa — zonfärgerna
+   * klarar inte 3:1 mot grundytan och kan därför inte bära text, ikoner
+   * eller något annat man ska kunna urskilja. Se `lib/produktzon.ts`.
+   */
+  zon?: Produktzon;
   title: string;
   subtitle?: string;
   cycleWords?: string[];
@@ -56,6 +66,25 @@ export function PageHero({
         className,
       )}
     >
+      {zon ? (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute -top-10 right-[7%] h-[180px] w-[200px] opacity-70"
+            style={{
+              background: zonDekor[zon],
+              borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
+            }}
+          />
+          <div
+            className="absolute -bottom-12 left-[6%] h-[112px] w-[124px] opacity-60"
+            style={{
+              background: zonDekor[zon],
+              borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
+            }}
+          />
+        </div>
+      ) : null}
+
       <div className={cn("relative mx-auto max-w-6xl px-4 sm:px-6", centered && "text-center")}>
         {eyebrow ? (
           <EyebrowLabel tone={eyebrowTone} className={cn(centered && "mx-auto")}>
