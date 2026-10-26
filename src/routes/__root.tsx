@@ -162,7 +162,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://tvakommanollan.se/og-image-4.png" },
+      { property: "og:image", content: "https://tvakommanollan.se/og-image-5.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "Tvåkommanollan · Tävla mot vänner i Högskoleprovet" },
@@ -177,7 +177,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Helt gratis.",
       },
-      { name: "twitter:image", content: "https://tvakommanollan.se/og-image-4.png" },
+      { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
       { name: "theme-color", content: "#f5f5f5" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },

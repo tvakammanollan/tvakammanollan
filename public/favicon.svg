@@ -8,8 +8,8 @@
     kommat lästes som en klump mellan siffrorna i stället för som ett
     decimaltecken. Nu bara talet, i en ton, så stort det får plats.
   -->
-  <rect width="32" height="32" rx="7" fill="#ae2f26"/>
-  <g fill="#fbf6ec">
+  <rect width="32" height="32" rx="7" fill="#06040e"/>
+  <g fill="#f5f5f5">
     <text x="15.5" y="16" text-anchor="middle" dominant-baseline="central"
           font-family="Georgia, 'Times New Roman', serif" font-weight="700"
           font-size="21" letter-spacing="-1.5">2 0</text>

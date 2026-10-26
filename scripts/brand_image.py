@@ -19,28 +19,43 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Paletten från src/styles.css (Lunden-temat, alltid ljust).
-PAPER = (251, 246, 236)  # --navy   "underlaget"
-INK = (46, 30, 20)  # --cream  "texten"
-APPLE = (174, 47, 38)  # --amber  handling
-BARK = (122, 82, 54)  # --teal   struktur
-LEAF = (47, 107, 60)  # --success framsteg
+# Paletten från src/styles.css. Podia-systemet sedan 2026-10-26; namnen är
+# kvar från Lunden så att kompositionen i de två rit-scripten inte behöver
+# röras, men värdena är de nya. Läs APPLE som "märkets fyllning", inte som
+# en färg: Podias primära fyllning är bläck på papper, inte rött.
+PAPER = (245, 245, 245)  # --navy   Fog, underlaget
+INK = (6, 4, 14)  # --cream  Ink, texten
+APPLE = (6, 4, 14)  # --amber  Ink, märket och primära ytor
+BARK = (69, 38, 35)  # --teal   Graphite, sekundär text
+LEAF = (47, 107, 60)  # --success oförändrad, framsteg
+
+# Dekoraccenten. Terracotta är en YTA och klarar varken 3:1 mot Fog eller vit
+# text, så den får bära former och fält men aldrig en bokstav i bilderna.
+TERRACOTTA = (227, 154, 77)
 
 SS = 2  # supersampling — ritas i 2x och skalas ned, annars fransar texten
 
-# Typsnitten ligger inte alltid i public/fonts (borttagna i revert 98d852a,
-# återställda 2026-08-19), men finns kvar i historiken.
+# Sedan Podia-bytet är systemet enfamiljs: samma snitt bär allt. Alla tre
+# rollerna pekar därför på samma variabla Manrope, med olika vikt.
+#
+# Filen ligger i scripts/fonts/ och inte i public/fonts/, därför att webben
+# bara ska ladda woff2:an — en TTF på 165 kB i public hade serverats till
+# ingen nytta. Pillow läser inte woff2, därav TTF:en här.
 FONT_COMMIT = "189d203"
 FONT_CACHE = ROOT / ".og-cache"
+MANROPE = "Manrope[wght].ttf"
 FONTS = {
-    "serif": "YoungSerif-Regular.ttf",
-    "sans": "InstrumentSans-Regular.ttf",
-    "sans_bold": "InstrumentSans-Bold.ttf",
+    "serif": (MANROPE, "Bold"),
+    "sans": (MANROPE, "Regular"),
+    "sans_bold": (MANROPE, "Bold"),
 }
 
 
 def font_path(name: str) -> Path:
-    """Typsnittsfilen ur public/fonts, annars ur git-historiken."""
+    """Typsnittsfilen ur scripts/fonts, annars public/fonts, annars historiken."""
+    bundled = ROOT / "scripts" / "fonts" / name
+    if bundled.exists():
+        return bundled
     live = ROOT / "public" / "fonts" / name
     if live.exists():
         return live
@@ -61,7 +76,16 @@ def font_path(name: str) -> Path:
 
 
 def load(kind: str, size: int) -> ImageFont.FreeTypeFont:
-    return ImageFont.truetype(str(font_path(FONTS[kind])), size * SS)
+    name, vikt = FONTS[kind]
+    font = ImageFont.truetype(str(font_path(name)), size * SS)
+    # Variabel font: utan det här ritas allt i Regular och rubrikerna tappar
+    # sin tyngd, vilket inte syns som ett fel någonstans — bilden blir bara
+    # blekare än sajten.
+    try:
+        font.set_variation_by_name(vikt)
+    except OSError:
+        pass
+    return font
 
 
 def fit(loader, kind, size: int, text: str, max_w: int) -> ImageFont.FreeTypeFont:
