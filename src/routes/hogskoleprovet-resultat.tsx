@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CalendarCheck } from "lucide-react";
+import { CalendarCheck } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { hpDateLong, hpDateShort } from "@/lib/hp-dates";
@@ -39,7 +39,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Hur länge gäller resultatet?",
-      a: "Resultatet gäller till utgången av det kalenderhalvår som infaller åtta år efter provtillfället.",
+      a: "Resultatet gäller till utgången av det kalenderhalvår som infaller 8 år efter provtillfället.",
     },
     {
       q: "Vilket resultat räknas om jag skrivit provet flera gånger?",
@@ -92,7 +92,7 @@ function ResultatPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+        <p className="text-sm text-white/65">
           Uppdaterat {hpDateShort(SENASTE.uppdaterad)}
         </p>
         <h1
@@ -144,7 +144,6 @@ function ResultatPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Facit och trolig normering
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/hogskoleprovet-normering"

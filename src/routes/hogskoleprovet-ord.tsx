@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { formatDateLong } from "@/lib/sv-format";
@@ -85,10 +84,7 @@ function OrdHub() {
                 </span>
                 <span className="block text-xs text-white/50">{formatDateLong(e.date)}</span>
               </span>
-              <ArrowRight
-                className="h-4 w-4 shrink-0 text-white/45 group-hover:text-primary"
-                aria-hidden
-              />
+
             </Link>
           </li>
         ))}

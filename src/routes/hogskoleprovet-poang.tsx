@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
-import { ArrowRight, Calculator, GraduationCap, Scale, TrendingUp } from "lucide-react";
 import { PROGRAM_LIST } from "./hogskoleprovet-poang_.$program";
 
 /* =====================================================================
@@ -81,7 +80,6 @@ function PoangPage() {
             className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Calculator className="h-5 w-5 text-primary" />
             Vad betyder poängen?
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -98,7 +96,6 @@ function PoangPage() {
             className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Scale className="h-5 w-5 text-primary" />
             Hur räknas poängen ut? (normering)
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -130,7 +127,6 @@ function PoangPage() {
             className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
           >
             Räkna ut din normerade poäng
-            <ArrowRight className="h-4 w-4" />
           </Link>
         </section>
 
@@ -140,7 +136,6 @@ function PoangPage() {
             className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <GraduationCap className="h-5 w-5 text-primary" />
             Hur används HP vid antagning?
           </h2>
           <ul className="mt-3 space-y-2.5 text-[15px] leading-relaxed text-white/65">
@@ -157,7 +152,7 @@ function PoangPage() {
             </li>
             <li className="flex gap-2.5">
               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bark" />
-              Ditt resultat är giltigt i <strong className="text-white/80">åtta år</strong>. Du kan
+              Ditt resultat är giltigt i <strong className="text-white/80">8 år</strong>. Du kan
               skriva flera gånger, och ditt bästa resultat används.
             </li>
             <li className="flex gap-2.5">
@@ -174,7 +169,6 @@ function PoangPage() {
             className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <TrendingUp className="h-5 w-5 text-primary" />
             Vad krävs för olika utbildningar?
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -222,7 +216,6 @@ function PoangPage() {
             className="flex items-center justify-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <GraduationCap className="h-5 w-5 text-primary" />
             HP-poäng för specifika program
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
@@ -262,7 +255,6 @@ function PoangPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/ova/$delprov"

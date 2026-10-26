@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Zap, Link2, KeyRound, ArrowLeft, Copy, Loader2 } from "lucide-react";
+import { Zap, Link2, KeyRound, Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -80,7 +80,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, waitingMatchId]);
 
-  const typeLabel = matchType === "verbal" ? "Verbal" : "Matte";
+  const typeLabel = matchType === "verbal" ? "Verbal" : "Kvantitativ";
 
   const handleQuickMatch = () => {
     navigate({ to: "/matchmaking", search: { type: matchType } });
@@ -198,7 +198,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
             />
             <div className="flex items-center justify-between gap-2">
               <Button type="button" variant="ghost" size="sm" onClick={() => setMode("choose")}>
-                <ArrowLeft className="mr-1 h-4 w-4" /> Tillbaka
+Tillbaka
               </Button>
               <Button type="submit" disabled={busy}>
                 {busy ? "Ansluter…" : "Anslut"}

@@ -283,7 +283,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                         {n.unreadCount === 1
                           ? "1 nytt svar"
                           : `${formatInt(n.unreadCount)} nya svar`}
-                        {" · "}
+                        {", "}
                         {n.fromName}
                       </span>
                     </span>
@@ -303,7 +303,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
                       {n.kind === "invite" ? (
                         <>
                           <Swords className="h-3 w-3" />
-                          Utmanar dig · {n.matchType === "math" ? "matte" : "verbal"}
+                          Utmanar dig, {n.matchType === "math" ? "kvantitativ" : "verbal"}
                         </>
                       ) : (
                         <>

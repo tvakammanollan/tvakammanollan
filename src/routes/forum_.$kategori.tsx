@@ -35,19 +35,19 @@ export const Route = createFileRoute("/forum_/$kategori")({
     if (!loaderData) return {};
     const { category, page, total, perPage, threads } = loaderData;
     const path = page > 1 ? `/forum/${category.slug}?sida=${page}` : `/forum/${category.slug}`;
-    const suffix = page > 1 ? ` · sida ${page}` : "";
+    const suffix = page > 1 ? `, sida ${page}` : "";
 
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`${category.name} · forum om högskoleprovet${suffix}`),
+        title: fitTitle(`${category.name}: forum om högskoleprovet${suffix}`),
         // Kategoribeskrivningen är olika lång per kategori och sprack på de
         // längsta — därför en budget i stället för en fast mening.
         description: describeWithin(
           `${category.description} ${antal(total, "tråd", "trådar")}.`,
           "Ställ din fråga eller läs vad andra som pluggar frågat.",
         ),
-        ogTitle: `${category.name} · Tvåkommanollans forum`,
+        ogTitle: `${category.name}: Tvåkommanollans forum`,
         ogDescription: category.description,
         // En kategori utan trådar är en rubrik och en mening — tunt innehåll,
         // och sex sådana sidor drar ner bedömningen av hela sajten. `follow`
@@ -120,7 +120,7 @@ function ForumCategoryPage() {
           </p>
           <p className="mt-1 text-xs tabular-nums text-[var(--text-tertiary)]">
             {antal(total, "tråd", "trådar")}
-            {pages > 1 ? ` · sida ${page} av ${pages}` : ""}
+            {pages > 1 ? `, sida ${page} av ${pages}` : ""}
           </p>
         </div>
 

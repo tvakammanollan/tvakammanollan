@@ -4,7 +4,7 @@
  * Numret ska ringas av en människa, så det viktiga är inte att avvisa udda
  * inmatning utan att `0701-23 45 67`, `+46 70 123 45 67` och `0046701234567`
  * hamnar i databasen som samma sträng. Lagras de som de skrevs blir varje
- * dubblett osynlig, och samma person rings två gånger.
+ * dubblett osynlig, och samma person rings 2 gånger.
  *
  * Bara mobilnummer godtas. Ett fast nummer går att ringa, men den som lämnar
  * det på en mobilsajt har nästan alltid slagit fel — och 08-nummer krockar med

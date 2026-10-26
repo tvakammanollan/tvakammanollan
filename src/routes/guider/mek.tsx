@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/guider/mek")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "MEK · Meningskomplettering", path: "/guider/mek" },
+        { name: "MEK: Meningskomplettering", path: "/guider/mek" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -44,17 +43,11 @@ function MekGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Verbalt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          MEK · Meningskomplettering
+          MEK: Meningskomplettering
         </h1>
       </header>
 
@@ -163,7 +156,6 @@ function MekGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Träna MEK gratis
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

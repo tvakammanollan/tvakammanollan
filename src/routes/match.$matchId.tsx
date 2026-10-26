@@ -334,7 +334,7 @@ function MatchPage() {
     // Klockan kräver TVÅ saker: att frågorna finns OCH att servern säger att
     // matchen är spelbar. Bara frågorna räckte förut, och det var buggen:
     // `acceptMatchInvite`/`joinMatch` skriver `match_questions` före
-    // statusuppdateringen, så inbjudarens flik hittade åtta frågor på en match
+    // statusuppdateringen, så inbjudarens flik hittade 8 frågor på en match
     // som ännu stod som `waiting` och började räkna ned där. Se `matchIsLive`.
     if (!match || !matchIsLive(match.status) || questions.length === 0) return;
     // Klockan startar när spelaren faktiskt får se första frågan, inte när
@@ -787,7 +787,6 @@ function MatchPage() {
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-primary">Klart</p>
           <h1
             className="mt-1 text-[34px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -831,7 +830,7 @@ function MatchPage() {
       >
         {/* Bara klockan. Raden bar tidigare också "Fråga 3 av 8" och
             "Mot: {namn}" — båda står ordagrant i progressbarerna direkt
-            under, så frågepositionen syntes tre gånger på skärmen och
+            under, så frågepositionen syntes 3 gånger på skärmen och
             motståndarens namn två. */}
         <div className="mx-auto flex max-w-3xl items-center justify-center gap-2 px-4 pt-3 pb-2">
           <CircularTimer totalSeconds={TOTAL_SECONDS} remainingSeconds={secondsLeft} />
@@ -1054,7 +1053,7 @@ function QuestionCard({
       {/* Frågenumret står här, inte i stapeln ovanför — den mäter besvarade
           frågor, inte var i häftet man befinner sig. */}
       <div className="mb-2 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold tracking-wide text-primary">
+        <span className="text-xs font-semibold text-primary">
           {displayCategory(currentQ.category)}
         </span>
         <span className="text-xs text-muted-foreground tabular-nums">
@@ -1065,7 +1064,7 @@ function QuestionCard({
       {/* Bilduppgifter (utsnitt ur provhäftet) bär hela frågan i bilden.
           Texten är då PDF-extraktionen av samma sak — "3 27 x 2 =" där häftet
           visar en kubikrot — och renderades tidigare ovanför bilden, så
-          uppgiften stod två gånger. Se `math-question.ts`. */}
+          uppgiften stod 2 gånger. Se `math-question.ts`. */}
       {!bildUppgift && (
         <h2
           className="mb-5 whitespace-pre-wrap text-lg font-semibold leading-relaxed sm:text-xl"
@@ -1181,7 +1180,7 @@ function QuestionCard({
         })}
       </div>
 
-      {/* Framåtknappen står stilla hela matchen. Sju gånger heter den
+      {/* Framåtknappen står stilla hela matchen. 7 gånger heter den
           "Nästa fråga", på den åttonde "Lämna in svar" — samma plats, samma
           tumme. Bottenlisten behåller sin knapp för den som vill lämna in
           tidigare, men den som svarat klart ska inte behöva leta efter

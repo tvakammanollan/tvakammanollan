@@ -24,7 +24,7 @@ export const Route = createFileRoute("/matchmaking")({
       {
         name: "description",
         content:
-          "Matchas mot en HP-spelare på din ELO-nivå inom sekunder. Välj verbal eller matte.",
+          "Matchas mot en HP-spelare på din ELO-nivå inom sekunder. Välj verbal eller kvantitativ.",
       },
       { name: "robots", content: "noindex, follow" },
     ],
@@ -292,7 +292,6 @@ function MatchmakingPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="eyebrow text-primary">Realtid</p>
         <h1
           className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}

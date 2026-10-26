@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Target } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { formatDateLong, formatDecimal } from "@/lib/sv-format";
@@ -21,8 +20,8 @@ import {
    ===================================================================== */
 
 const KINDS = [
-  { kind: "verbal", rubrik: "Verbal del", delprov: "ORD, LÄS, MEK och ELF" },
-  { kind: "kvant", rubrik: "Kvantitativ del", delprov: "XYZ, KVA, NOG och DTK" },
+  { kind: "verbal", rubrik: "Verbal", delprov: "ORD, LÄS, MEK och ELF" },
+  { kind: "kvant", rubrik: "Kvantitativ", delprov: "XYZ, KVA, NOG och DTK" },
 ] as const;
 
 const NIVÅER = [2.0, 1.5, 1.0, 0.5] as const;
@@ -124,7 +123,7 @@ function Tabell({
           {rubrik}
         </h3>
         <p className="text-[12.5px] text-white/50">
-          {max} uppgifter · {delprov}
+          {max} uppgifter, {delprov}
         </p>
       </div>
       <table className="mt-3 w-full text-[14px] tabular-nums">
@@ -177,7 +176,7 @@ function NormeringTermPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+        <p className="text-sm text-white/65">
           UHR:s officiella normering
         </p>
         <h1
@@ -204,7 +203,6 @@ function NormeringTermPage() {
           className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Target className="h-5 w-5 shrink-0 text-primary" aria-hidden />
           Så många rätt krävdes
         </h2>
         <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
@@ -244,7 +242,6 @@ function NormeringTermPage() {
             className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Skriv provet med den här normeringen
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         )}
       </section>
@@ -301,7 +298,6 @@ function NormeringTermPage() {
               params={{ term: older.term }}
               className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
               {older.label}
             </Link>
           ) : (
@@ -314,7 +310,6 @@ function NormeringTermPage() {
               className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
             >
               {newer.label}
-              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           ) : (
             <span />

@@ -29,7 +29,6 @@ function IntegritetspolicyPage() {
     <div className="min-h-screen">
       <PageHero
         align="center"
-        eyebrow="Juridik"
         title="Integritetspolicy"
         subtitle="Senast uppdaterad: 2026-10-19"
         variant="compact"
@@ -290,7 +289,7 @@ function IntegritetspolicyPage() {
           </p>
           <p>
             <strong style={{ color: "var(--cream)" }}>Radera kontot själv:</strong> gå till{" "}
-            <strong style={{ color: "var(--cream)" }}>Statistik → Radera konto</strong> när du är
+            <strong style={{ color: "var(--cream)" }}>Statistik, sedan Radera konto</strong> när du är
             inloggad. Det tar bort din inloggning, e-postadress och all personlig historik direkt;
             matchresultat behålls enbart i anonymiserad form, och har du köpt coachning sparas
             uppgifterna om det köpet enligt punkten om köpuppgifter ovan. Har du lämnat ditt

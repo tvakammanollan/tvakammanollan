@@ -72,7 +72,7 @@ export const limits = {
   wordBatch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
   /**
    * Öppna Stripe-kassan. Varje anrop kostar ett API-anrop hos Stripe och en rad
-   * i coaching_requests, och ingen människa behöver fem kassor på tio minuter.
+   * i coaching_requests, och ingen människa behöver fem kassor på 10 minuter.
    * Nyckeln är användar-id för inloggade, annars IP — landningssidan säljer
    * även till utloggade besökare.
    */

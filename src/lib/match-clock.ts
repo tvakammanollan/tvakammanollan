@@ -2,7 +2,7 @@
 //
 // Längden låg tidigare i två konstanter som glidit isär: matchsidan körde
 // 5 minuter medan `ResumeMatchBanner` trodde 8. Följden var att banderollen
-// "Du har en pågående match – vill du fortsätta?" satt kvar i tre minuter
+// "Du har en pågående match – vill du fortsätta?" satt kvar i 3 minuter
 // efter att tiden faktiskt tagit slut, och den som klickade landade på
 // matchsidan med noll sekunder kvar. Klockan lämnade då in matchen i samma
 // sekund den öppnades — "matchen lämnas in automatiskt ibland".
@@ -41,7 +41,7 @@ export function secondsLeftFrom(anchorMs: number, now: number = Date.now()): num
  * Klockan får INTE starta på en match som fortfarande är `waiting`, och det är
  * inte en teoretisk finess: `acceptMatchInvite` och `joinMatch` skriver
  * `match_questions` FÖRST och flippar raden till `active` + `started_at`
- * efteråt. Mellan de två skrivningarna finns en match som har åtta frågor men
+ * efteråt. Mellan de två skrivningarna finns en match som har 8 frågor men
  * inte har börjat. Matchsidan gick tidigare bara på "finns det frågor?", så
  * inbjudarens flik började räkna ned där — och sparade dessutom ankaret
  * lokalt. När vännen sedan accepterade var de fem minuterna redan brända, och
@@ -88,7 +88,7 @@ export interface AnchorResult {
  * ett trasigt värde tar matchen i stället för att bara se konstigt ut.
  *
  * Ett ankare som är gammalt men giltigt behålls med flit. Den som spelat i
- * fem minuter, somnat om fliken och kommer tillbaka SKA mötas av en match vars
+ * 5 minuter, somnat om fliken och kommer tillbaka SKA mötas av en match vars
  * tid tagit slut — det är inte samma sak som den här funktionens felfall.
  */
 export function resolveMatchAnchor({ startedAt, stored, now }: AnchorInput): AnchorResult {

@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/guider/nog")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "NOG · Kvantitativa resonemang", path: "/guider/nog" },
+        { name: "NOG: Kvantitativa resonemang", path: "/guider/nog" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
@@ -44,17 +43,11 @@ function NogGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Kvantitativt delprov
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          NOG · Kvantitativa resonemang
+          NOG: Kvantitativa resonemang
         </h1>
       </header>
 
@@ -66,7 +59,7 @@ function NogGuidePage() {
         </h2>
         <p>
           NOG är Högskoleprovets mest unika delprovsformat. Du presenteras med en fråga (t.ex. "Hur
-          stor är vinkeln x?") följt av två påståenden: (1) och (2). Din uppgift är inte att beräkna
+          stor är vinkeln x?") följt av 2 påståenden: (1) och (2). Din uppgift är inte att beräkna
           svaret. Din uppgift är att avgöra om informationen i påståendena räcker för att besvara
           frågan. De fem svarsalternativen är alltid:
         </p>
@@ -112,15 +105,15 @@ function NogGuidePage() {
         <ol className="list-decimal space-y-2 pl-6">
           <li>
             Testa påstående (1) <em>ensamt</em>: ignorera (2) helt. Räcker (1) för att besvara
-            frågan entydigt? Om ja → möjliga svar är A eller D.
+            frågan entydigt? Om ja: möjliga svar är A eller D.
           </li>
           <li>
-            Testa påstående (2) <em>ensamt</em>: ignorera (1) helt. Räcker (2)? Om ja → möjliga svar
+            Testa påstående (2) <em>ensamt</em>: ignorera (1) helt. Räcker (2)? Om ja: möjliga svar
             är B eller D.
           </li>
           <li>
-            Om inget ensamt räcker: testa (1) + (2) tillsammans. Räcker kombinationen? Om ja → svar
-            C. Annars → svar E.
+            Om inget ensamt räcker: testa (1) + (2) tillsammans. Räcker kombinationen? Om ja: svar
+            C. Annars: svar E.
           </li>
           <li>Om båda ensamt räcker: svar D.</li>
         </ol>
@@ -162,7 +155,6 @@ function NogGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Öva NOG-uppgifter gratis på Tvåkommanollan
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

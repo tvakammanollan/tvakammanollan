@@ -203,7 +203,7 @@ export function blockReasonMessage(reason: BlockReason | null): string | null {
     case "ej_bekraftad":
       return "Bekräfta din mejladress för att kunna skriva i forumet. Kolla inkorgen (och skräpposten).";
     case "for_nytt":
-      return "Ditt konto är alldeles nyss skapat. Vänta tio minuter, så öppnas skrivrutan.";
+      return "Ditt konto är alldeles nyss skapat. Vänta 10 minuter, så öppnas skrivrutan.";
     case "anvandarnamn":
       return "Välj ett användarnamn innan du skriver i forumet.";
     case "avstangd":

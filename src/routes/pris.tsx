@@ -10,7 +10,7 @@ export const Route = createFileRoute("/pris")({
   head: () => ({
     meta: pageMeta({
       path: "/pris",
-      title: "Pris · vad som är gratis och vad som kostar",
+      title: "Pris: vad som är gratis och vad som kostar",
       description:
         "Alla gamla högskoleprov, duellerna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar ett engångsköp. Så här tänker vi kring priset.",
       ogTitle: "Pris på Tvåkommanollan",
@@ -73,9 +73,7 @@ function PrisPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Pris"
         title="Vad som är gratis och vad som kostar"
-        subtitle="Det mesta på sajten kostar ingenting. Här står vad som gör det, vad som inte gör det, och hur vi tänker kring det."
         align="center"
         variant="content"
       />

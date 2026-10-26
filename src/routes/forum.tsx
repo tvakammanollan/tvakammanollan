@@ -1,14 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  BookOpen,
-  Calculator,
-  GraduationCap,
-  MessageSquare,
-  Plus,
-  ScrollText,
-  Search,
-  Sparkles,
-} from "lucide-react";
+import { BookOpen, Calculator, GraduationCap, MessageSquare, Plus, ScrollText, Search } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
@@ -32,7 +23,7 @@ export const Route = createFileRoute("/forum")({
     return {
       meta: pageMeta({
         path: "/forum",
-        title: fitTitle("Forum om högskoleprovet · frågor och svar"),
+        title: fitTitle("Forum om högskoleprovet: frågor och svar"),
         description:
           "Ställ frågor om högskoleprovet och få svar av andra som pluggar: uppgifter i KVA, XYZ, NOG och DTK, anmälan, normering och resultat. Gratis att läsa.",
         ogTitle: "Tvåkommanollan | Forum om högskoleprovet",
@@ -76,7 +67,6 @@ function ForumHomePage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Högskoleprovet · forum"
         // H1:n stod på ett enda ord. Sidans <title> bar sökordet men rubriken
         // gjorde det inte, och H1 är det Google väger tyngst efter titeln.
         title="Forum om högskoleprovet"
@@ -135,7 +125,7 @@ function ForumHomePage() {
                         {cat.name}
                       </span>
                       {cat.kind === "qa" && (
-                        <span className="rounded-full bg-[var(--teal)]/15 px-2 py-0.5 text-[11px] font-medium text-[var(--teal)]">
+                        <span className="text-[11px] font-medium text-[var(--teal)]">
                           Fråga & svar
                         </span>
                       )}
@@ -144,7 +134,7 @@ function ForumHomePage() {
                       {cat.description}
                     </span>
                     <span className="mt-2 block text-xs tabular-nums text-[var(--text-tertiary)]">
-                      {antal(cat.threadCount, "tråd", "trådar")} ·{" "}
+                      {antal(cat.threadCount, "tråd", "trådar")},{" "}
                       {antal(cat.postCount, "inlägg", "inlägg")}
                     </span>
                   </span>
@@ -159,7 +149,6 @@ function ForumHomePage() {
             className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <Sparkles className="h-5 w-5 text-[var(--amber)]" aria-hidden />
             Senaste aktivitet
           </h2>
 

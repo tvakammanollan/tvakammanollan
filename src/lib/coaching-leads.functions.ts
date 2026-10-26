@@ -1,7 +1,7 @@
 /**
  * Kvalificeringsformuläret — "Är studieupplägget något för dig?"
  *
- * Två frågor på dashboarden, sedan ett telefonnummer, sedan hör vi av oss.
+ * 2 frågor på dashboarden, sedan ett telefonnummer, sedan hör vi av oss.
  * Det är hela flödet: ingen kassa, ingen kalender, inget konto. Skälet till att
  * det ligger bredvid Stripe-köpet och inte i stället för det är att de säljer
  * till olika personer — den som redan bestämt sig köper direkt, den som är
@@ -12,7 +12,7 @@
  *   - `consent_at` är NOT NULL i tabellen, och sätts av servern. Inskicket ÄR
  *     samtycket (texten står över knappen), och tidpunkten är beviset.
  *   - Numret normaliseras till E.164 innan det sparas (`normalizePhone`), så
- *     samma person inte hamnar i ringlistan två gånger.
+ *     samma person inte hamnar i ringlistan 2 gånger.
  *   - Läsvägen är admin-only. Tabellen har RLS på och noll policies, så bara
  *     service role kommer åt den, och `fetchCoachingLeads` kontrollerar
  *     is_admin innan den svarar.

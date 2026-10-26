@@ -7,9 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
 import { toast } from "sonner";
-import { ArrowRight } from "lucide-react";
 import { AuthLayout } from "@/components/auth/AuthLayout";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -86,7 +84,7 @@ function OnboardingPage() {
         className="space-y-7 text-center"
       >
         <div className="space-y-2">
-          <EyebrowLabel tone="teal">Steg 2 av 2</EyebrowLabel>
+          <p className="text-sm text-white/65">Steg 2 av 2</p>
           <h1
             className="text-[36px] font-bold leading-[1.05] tracking-tight text-white sm:text-[40px]"
             style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
@@ -119,7 +117,6 @@ function OnboardingPage() {
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
-            {!submitting && <ArrowRight className="h-4 w-4" />}
           </button>
         </form>
       </m.div>

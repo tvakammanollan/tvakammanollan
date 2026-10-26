@@ -35,7 +35,7 @@ export function ProvFacitList({
               {delprovFull(section.code)} ({section.code})
             </h3>
             <p className="mt-0.5 text-sm text-[var(--text-tertiary)]">
-              Uppgift {section.first}–{section.last} · {section.minutes} minuter
+              Uppgift {section.first}–{section.last}, {section.minutes} minuter
             </p>
 
             <ol className="mt-4 space-y-4">
@@ -83,7 +83,7 @@ function QuestionEntry({ question, thread }: { question: ProvQuestion; thread?: 
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-      <p className="text-[13px] font-semibold tracking-wide text-[var(--amber)]">
+      <p className="text-[13px] font-semibold text-[var(--amber)]">
         Uppgift {question.nr}
       </p>
       {question.text && !question.image && (

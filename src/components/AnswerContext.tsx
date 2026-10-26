@@ -62,7 +62,7 @@ function Rad({
         {option?.id ?? "–"}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: färg }}>
+        <p className="text-xs font-semibold" style={{ color: färg }}>
           {etikett}
           {rätt ? (
             <Check className="ml-1 inline h-3 w-3" aria-hidden />

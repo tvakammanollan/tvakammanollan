@@ -169,7 +169,7 @@ export function buildCoachingCheckoutParams(input: CheckoutParamsInput) {
     // Formuläret som låg i modalen är borta — frågorna coachen faktiskt behöver
     // ställs i kassan i stället, alltid frivilliga så att de inte kan stoppa ett
     // köp. Varje fråga som redan besvarats tidigare i flödet utelämnas: samma
-    // fråga två gånger läser som att första svaret inte togs emot.
+    // fråga 2 gånger läser som att första svaret inte togs emot.
     custom_fields: [
       ...(input.focusAnswered
         ? []

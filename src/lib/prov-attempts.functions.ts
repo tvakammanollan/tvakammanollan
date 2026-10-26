@@ -4,7 +4,7 @@
  * Ett inlämnat provpass har hittills bara lämnat två spår, båda i besökarens
  * localStorage: hela försöket under `tkn:prov-progress:*` (som städas efter en
  * vecka) och summan under `tkn:prov-resultat:v1`. Gick man tillbaka till ett
- * prov man skrivit för två veckor sedan fanns alltså bara siffran kvar — ingen
+ * prov man skrivit för 2 veckor sedan fanns alltså bara siffran kvar — ingen
  * genomgång, inget facit, ingen möjlighet att se vad man svarade på uppgift 23.
  *
  * Det här lagret är tillägget för den som är inloggad. localStorage står kvar

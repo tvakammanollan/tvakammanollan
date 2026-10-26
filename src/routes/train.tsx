@@ -24,7 +24,7 @@ export const Route = createFileRoute("/train")({
   head: () => ({
     meta: pageMeta({
       path: "/train",
-      title: "Öva högskoleprovet · alla 8 delprov",
+      title: "Öva högskoleprovet: alla 8 delprov",
       description:
         "Träna inför Högskoleprovet i lugn takt. Välj delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK), svårighet och antal frågor. Gratis.",
       ogTitle: "Tvåkommanollan | Träna HP utan tidspress",
@@ -40,9 +40,9 @@ export const Route = createFileRoute("/train")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Course",
-        name: "Träna Högskoleprovet · alla 8 delprov",
+        name: "Träna Högskoleprovet: alla 8 delprov",
         description:
-          "Gratis solo-träning inför Högskoleprovet med riktiga frågor i alla åtta delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
+          "Gratis solo-träning inför Högskoleprovet med riktiga frågor i alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
         url: "https://tvakommanollan.se/train",
         inLanguage: "sv-SE",
         isAccessibleForFree: true,

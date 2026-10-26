@@ -58,7 +58,7 @@ const SCRIPT_URL = "https://js.stripe.com/dahlia/stripe.js";
  * En laddning per sidladdning, delad mellan alla som frågar.
  *
  * Utan modulcachen hade en modal som öppnas, stängs och öppnas igen lagt en ny
- * script-tagg varje gång — och Stripe varnar högljutt om v3 laddas två gånger.
+ * script-tagg varje gång — och Stripe varnar högljutt om v3 laddas 2 gånger.
  */
 let scriptPromise: Promise<StripeFactory> | null = null;
 
@@ -130,7 +130,7 @@ export function StripeCheckoutEmbed({
             : null;
         if (!checkout) throw new Error("Stripe saknar båda API:erna för inbäddad kassa");
         // Effekten kan ha städats medan Stripe svarade (React 19 kör effekter
-        // två gånger i utvecklingsläge). Montera aldrig något som redan är
+        // 2 gånger i utvecklingsläge). Montera aldrig något som redan är
         // övergivet — då ligger en död kassa kvar i DOM:en.
         if (avbruten || !containerRef.current) {
           checkout.destroy();

@@ -5,7 +5,6 @@ import { fitTitle } from "@/lib/seo-text";
 import { normeringFromRaw } from "@/lib/normering";
 import { hpScoreLabel } from "@/lib/hpScore";
 import { formatDecimal } from "@/lib/sv-format";
-import { ArrowRight } from "lucide-react";
 
 /* =====================================================================
    HP-POÄNGRÄKNARE — interaktiv normeringskalkylator. Efterfrågad produkt-
@@ -100,15 +99,15 @@ function PoangraknarePage() {
       {/* Kalkylator */}
       <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm">
         <SliderRow
-          label="Verbal del"
-          hint="ORD · LÄS · MEK · ELF"
+          label="Verbal"
+          hint="ORD, LÄS, MEK, ELF"
           value={verbal}
           onChange={setVerbal}
         />
         <div className="mt-6">
           <SliderRow
-            label="Kvantitativ del"
-            hint="XYZ · KVA · NOG · DTK"
+            label="Kvantitativ"
+            hint="XYZ, KVA, NOG, DTK"
             value={quant}
             onChange={setQuant}
           />
@@ -118,7 +117,7 @@ function PoangraknarePage() {
         <div className="mt-8 border-t border-white/8 pt-6">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/45">
+              <p className="text-xs font-medium text-white/45">
                 Uppskattad poäng
               </p>
               <div className="mt-1 flex items-baseline gap-2">
@@ -131,7 +130,7 @@ function PoangraknarePage() {
                 <span className="text-lg text-white/40">/ 2,00</span>
               </div>
             </div>
-            <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <span className="text-xs font-semibold text-primary">
               {label}
             </span>
           </div>
@@ -223,7 +222,6 @@ function PoangraknarePage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva på gamla prov
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/hogskoleprovet-poang"

@@ -33,8 +33,7 @@ import {
   AlertTriangle,
   Share2,
   Flame,
-  ArrowRight,
-} from "lucide-react";
+  } from "lucide-react";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/events";
 import { recordMatchFinished } from "@/lib/coaching-prompt";
@@ -469,7 +468,6 @@ function ResultPage() {
           <Trophy className="h-7 w-7" />
         </m.span>
         <div>
-          <p className="eyebrow text-primary">Nästan klart</p>
           <h1
             className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -564,7 +562,7 @@ function ResultPage() {
       outcome: won ? "win" : "loss",
       match_type: match.match_type as "verbal" | "math",
     });
-    const elo = eloChange != null ? ` · ELO ${eloChange >= 0 ? "+" : ""}${eloChange}` : "";
+    const elo = eloChange != null ? `, ELO ${eloChange >= 0 ? "+" : ""}${eloChange}` : "";
     const verb = won ? `vann ${myScore}–${oppScore}` : `förlorade ${myScore}–${oppScore}`;
     const text = `Jag ${verb} mot ${opponentName} på Tvåkommanollan${elo}! 🏆`;
     const url = "https://tvakommanollan.se";
@@ -666,7 +664,6 @@ function ResultPage() {
             >
               <Link to="/signup">
                 Skapa konto
-                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </Button>
           </div>
@@ -678,8 +675,8 @@ function ResultPage() {
         delay={0.25}
         className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6"
       >
-        <div className="mb-4 text-center text-xs font-semibold tracking-wide text-muted-foreground">
-          {match.match_type === "verbal" ? "Verbal" : "Matte"} · Slutresultat
+        <div className="mb-4 text-center text-xs font-semibold text-muted-foreground">
+          {match.match_type === "verbal" ? "Verbal" : "Kvantitativ"}, Slutresultat
         </div>
         <div className="grid grid-cols-2 gap-4">
           <PlayerColumn
@@ -707,7 +704,7 @@ function ResultPage() {
           <div className="mt-5 flex items-center justify-center gap-2 text-sm">
             <span className="text-muted-foreground">ELO {match.match_type}:</span>
             <span className="font-semibold tabular-nums">{eloBefore}</span>
-            <span className="text-muted-foreground">→</span>
+            <span className="text-muted-foreground">till</span>
             <span className="font-semibold tabular-nums">{eloAfter}</span>
             <span
               className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${
@@ -727,12 +724,12 @@ function ResultPage() {
         {/* Streak — förstärk vanan i det heta ögonblicket */}
         {!user?.is_anonymous && (profile?.current_streak ?? 0) > 0 && (
           <div className="mt-3 flex justify-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-sm font-semibold text-primary tabular-nums">
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary tabular-nums">
               <Flame className="h-3.5 w-3.5" />
               {profile!.current_streak} dagar i rad
               {(profile!.current_streak ?? 0) >= 3 &&
                 profile!.current_streak === profile!.longest_streak && (
-                  <span className="font-medium text-white/70">· nytt rekord!</span>
+                  <span className="font-medium text-white/70">(nytt rekord!)</span>
                 )}
             </span>
           </div>
@@ -745,7 +742,7 @@ function ResultPage() {
             const norm = normeringForAccuracy(correctCount, total);
             return (
               <div className="mt-5 rounded-xl border border-primary/30 bg-primary/[0.06] p-4 text-center">
-                <div className="text-[11px] font-semibold tracking-wide text-primary">
+                <div className="text-[11px] font-semibold text-primary">
                   Trolig normering
                 </div>
                 <div className="mt-1 flex items-baseline justify-center gap-2">
@@ -815,7 +812,7 @@ function ResultPage() {
                   const m = Math.floor(avg / 60);
                   const s = avg % 60;
                   return (
-                    <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-normal text-muted-foreground">
+                    <span className="ml-2 inline-flex items-center gap-1 text-[11px] font-normal text-muted-foreground">
                       <Clock className="h-3 w-3" /> {m > 0 ? `${m} min ` : ""}
                       {s} sek snitt
                     </span>
@@ -854,7 +851,7 @@ function ResultPage() {
                             : "border-[var(--danger-line)] bg-[var(--danger-soft)]"
                       }`}
                     >
-                      <div className="mb-1 flex items-center gap-2 text-xs font-semibold tracking-wide text-muted-foreground">
+                      <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-muted-foreground">
                         <span>{i + 1}.</span>
                         <span>{displayCategory(q.category)}</span>
                         {q.withdrawn && <WithdrawnBadge />}
@@ -877,7 +874,7 @@ function ResultPage() {
                               const s = t % 60;
                               return m > 0 ? `${m} min ${s} sek` : `${s} sek`;
                             })()}
-                            {a.time_spent_seconds > 180 ? " · Lång tid" : ""}
+                            {a.time_spent_seconds > 180 ? ", Lång tid" : ""}
                           </span>
                         )}
                         <span className="ml-auto inline-flex items-center gap-1">
@@ -1130,7 +1127,7 @@ function PlayerColumn({
         {score}
         <span className="text-base font-normal text-muted-foreground">/{total}</span>
       </div>
-      <div className="mt-1 text-[11px] tracking-wide text-muted-foreground">
+      <div className="mt-1 text-[11px] text-muted-foreground">
         Tid: <span className="font-medium text-foreground">{duration}</span>
       </div>
     </div>

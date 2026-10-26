@@ -53,7 +53,7 @@ export function AchievementCelebration({
         className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+        <p className="text-sm font-semibold text-primary">
           {many ? `${items.length} nya utmärkelser` : "Ny utmärkelse"}
         </p>
         <h2

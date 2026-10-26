@@ -8,7 +8,7 @@ import { discountedAmount } from "@/lib/coaching-discount";
  * Priset på coachningen, hämtat ur Stripe.
  *
  * Kortet på startsidan, blocket på landningssidan och modalen visar samma
- * belopp och skulle annars fråga tre gånger. Cachen ligger i modulen, alltså
+ * belopp och skulle annars fråga 3 gånger. Cachen ligger i modulen, alltså
  * per sidladdning: priset ändras i dashboarden och slår igenom vid nästa
  * besök, utan att kosta ett anrop per komponent.
  */
@@ -76,7 +76,7 @@ export function useCoachingOffer(enabled = true): {
  */
 export function coachingTermsLabel(offer: CoachingOffer | null): string | null {
   if (!offer?.available || offer.amount === null) return null;
-  return offer.interval ? null : "Engångsköp · Ingen bindningstid";
+  return offer.interval ? null : "Engångsköp, ingen bindningstid";
 }
 
 /** " / månad" när priset är återkommande, annars tomt. */

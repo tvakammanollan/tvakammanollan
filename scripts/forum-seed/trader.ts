@@ -18,15 +18,12 @@ export type SeedThread = {
   provTerm?: string;
 };
 
-const FYLL_PA =
-  "Svaret ligger nedanför. Fyll gärna på med egna erfarenheter eller rätta om något är fel.";
-
 export const SEED_THREADS: SeedThread[] = [
   /* ── Allmänt ─────────────────────────────────────────────────── */
   {
     category: "allmant",
     title: "Hur är högskoleprovet uppbyggt?",
-    question: `Hur många delar har högskoleprovet, hur lång tid tar det och vilka delprov ingår? ${FYLL_PA}`,
+    question: `Hur många delar har högskoleprovet, hur lång tid tar det och vilka delprov ingår?`,
     answer: `Provet består av **fem provpass på 55 minuter** vardera. Fyra av dem räknas, det femte är ett utprövningspass där nya uppgifter testas. Du vet inte vilket pass som är utprövningen, så gör ditt bästa på alla fem.
 
 Passen är antingen verbala eller kvantitativa, och varje pass har 40 uppgifter.
@@ -48,7 +45,7 @@ Totalt räknas alltså 160 uppgifter: 80 verbala och 80 kvantitativa. Vill du se
   {
     category: "allmant",
     title: "Hur räknas poängen på högskoleprovet ut?",
-    question: `Hur går det till när antalet rätt blir en poäng mellan 0,0 och 2,0? ${FYLL_PA}`,
+    question: `Hur går det till när antalet rätt blir en poäng mellan 0,0 och 2,0?`,
     answer: `Först räknas antalet rätt på den verbala delen (max 80) och den kvantitativa delen (max 80) var för sig. Varje del **normeras** sedan till en poäng mellan 0,00 och 2,00 med en tabell som tas fram för just det provtillfället.
 
 Totalpoängen är **medelvärdet av de två delarnas poäng**. 1,90 verbalt och 2,00 kvantitativt ger alltså 1,95.
@@ -63,7 +60,7 @@ Du kan räkna fram din poäng i [poängräknaren](https://tvakommanollan.se/hogs
   {
     category: "allmant",
     title: "Vad är ett bra resultat på högskoleprovet?",
-    question: `Vad räknas som ett bra resultat, och vad krävs för de populäraste utbildningarna? ${FYLL_PA}`,
+    question: `Vad räknas som ett bra resultat, och vad krävs för de populäraste utbildningarna?`,
     answer: `Det beror helt på vad du ska söka. Ett resultat är bra om det räcker till den utbildning du vill in på.
 
 En grov bild:
@@ -79,7 +76,7 @@ Läs gärna [guiden om bra resultat](https://tvakommanollan.se/guider/bra-result
   {
     category: "allmant",
     title: "Hur länge gäller resultatet från högskoleprovet?",
-    question: `Måste man skriva om provet efter några år, och vilket resultat räknas om man skrivit flera gånger? ${FYLL_PA}`,
+    question: `Måste man skriva om provet efter några år, och vilket resultat räknas om man skrivit flera gånger?`,
     answer: `Resultatet gäller i **åtta år**. Har du skrivit flera gånger används **ditt bästa giltiga resultat** automatiskt när du söker, så du riskerar ingenting på att skriva igen.
 
 Det finns ingen gräns för hur många gånger du får skriva provet och ingen åldersgräns. Många skriver det flera gånger och höjer sig rejält mellan tillfällena, eftersom provet går att träna på: uppgiftstyperna är desamma från gång till gång.`,
@@ -87,7 +84,7 @@ Det finns ingen gräns för hur många gånger du får skriva provet och ingen �
   {
     category: "allmant",
     title: "Hur stor del av platserna går till högskoleprovet?",
-    question: `Hur fungerar urvalet, och hur många platser fördelas på högskoleprovet jämfört med betyg? ${FYLL_PA}`,
+    question: `Hur fungerar urvalet, och hur många platser fördelas på högskoleprovet jämfört med betyg?`,
     answer: `Till de flesta utbildningar fördelas **minst en tredjedel av platserna på betyg och minst en tredjedel på högskoleprovet**. Resten bestämmer lärosätet, och ofta hamnar även de i någon av de två grupperna.
 
 Du hamnar automatiskt i alla urvalsgrupper du är behörig till och konkurrerar i den där du står starkast. Ett bra provresultat kan alltså aldrig skada en ansökan med bra betyg, det ger bara en chans till.
@@ -97,7 +94,7 @@ En del utbildningar använder egna urval, till exempel arbetsprov eller intervju
   {
     category: "allmant",
     title: "Kan man plugga till högskoleprovet eller är det ett begåvningstest?",
-    question: `Det sägs ibland att man inte kan plugga till högskoleprovet. Stämmer det? ${FYLL_PA}`,
+    question: `Det sägs ibland att man inte kan plugga till högskoleprovet. Stämmer det?`,
     answer: `Nej, det stämmer inte. Provet mäter förmågor som går att träna, och uppgiftstyperna är exakt desamma varje termin.
 
 Det som ger mest effekt:
@@ -111,7 +108,7 @@ Det bästa sättet att se var du står är att skriva ett [gammalt prov](https:/
   {
     category: "allmant",
     title: "Ska man gissa på högskoleprovet?",
-    question: `Blir det minuspoäng för fel svar, och ska man gissa när man inte vet? ${FYLL_PA}`,
+    question: `Blir det minuspoäng för fel svar, och ska man gissa när man inte vet?`,
     answer: `Ja, **gissa alltid**. Fel svar ger inget avdrag, så en tom ruta är en garanterad nolla medan en gissning har 20–25 % chans att bli rätt.
 
 Gör det till en vana: när det är fem minuter kvar på passet fyller du i alla uppgifter du inte hunnit med. Kan du stryka ett eller två alternativ först ökar chansen ordentligt. På KVA kan du till exempel ofta utesluta D direkt om båda storheterna går att räkna ut.`,
@@ -121,7 +118,7 @@ Gör det till en vana: när det är fem minuter kvar på passet fyller du i alla
   {
     category: "kvantitativ",
     title: "Hur löser man NOG-uppgifter?",
-    question: `NOG-uppgifterna med påstående (1) och (2) känns förvirrande. Hur ska man tänka? ${FYLL_PA}`,
+    question: `NOG-uppgifterna med påstående (1) och (2) känns förvirrande. Hur ska man tänka?`,
     answer: `NOG frågar inte efter svaret, bara **om informationen räcker** för att få fram det. Svarsalternativen är alltid desamma:
 
 - **A** i (1) men inte i (2)
@@ -143,7 +140,7 @@ Mer i [NOG-guiden](https://tvakommanollan.se/guider/nog).`,
   {
     category: "kvantitativ",
     title: "Hur löser man KVA-uppgifter snabbt?",
-    question: `KVA tar för lång tid för mig. Finns det knep för kvantitativa jämförelser? ${FYLL_PA}`,
+    question: `KVA tar för lång tid för mig. Finns det knep för kvantitativa jämförelser?`,
     answer: `I KVA ska du jämföra kvantitet I med kvantitet II. Alternativen är:
 
 - **A** I är större än II
@@ -163,7 +160,7 @@ Mer i [KVA-guiden](https://tvakommanollan.se/guider/kva).`,
   {
     category: "kvantitativ",
     title: "Vilken matte behöver man kunna till XYZ?",
-    question: `Vilka mattekunskaper krävs för XYZ på högskoleprovet? ${FYLL_PA}`,
+    question: `Vilka mattekunskaper krävs för XYZ på högskoleprovet?`,
     answer: `XYZ bygger på matte från grundskolan och gymnasiets första kurs. Det som återkommer mest:
 
 - **Bråk och procent**: förlänga, förkorta, procentuell förändring.
@@ -180,7 +177,7 @@ Mer i [XYZ-guiden](https://tvakommanollan.se/guider/xyz).`,
   {
     category: "kvantitativ",
     title: "Tips för DTK: diagram, tabeller och kartor",
-    question: `DTK-uppgifterna tar lång tid. Hur blir man snabbare på att läsa diagram och tabeller? ${FYLL_PA}`,
+    question: `DTK-uppgifterna tar lång tid. Hur blir man snabbare på att läsa diagram och tabeller?`,
     answer: `DTK är mer läsning än räkning. De flesta fel kommer av att man läst av fel rad, fel enhet eller fel år.
 
 - **Läs frågan först**, sedan diagrammet. Då vet du vad du letar efter.
@@ -194,7 +191,7 @@ Mer i [DTK-guiden](https://tvakommanollan.se/guider/dtk).`,
   {
     category: "kvantitativ",
     title: "Hur hinner man klart med det kvantitativa provpasset?",
-    question: `Jag hinner aldrig alla 40 uppgifter på 55 minuter i kvant. Hur ska man fördela tiden? ${FYLL_PA}`,
+    question: `Jag hinner aldrig alla 40 uppgifter på 55 minuter i kvant. Hur ska man fördela tiden?`,
     answer: `55 minuter på 40 uppgifter är knappt 1,4 minuter per uppgift. Uppgifterna tar olika lång tid, så en ungefärlig plan hjälper:
 
 - **XYZ** (12): cirka 1 minut var
@@ -212,7 +209,7 @@ Det enda som verkligen gör dig snabbare är att skriva hela pass på tid. Testa
   {
     category: "kvantitativ",
     title: "Procent på högskoleprovet: förändringsfaktor och procentenheter",
-    question: `Hur räknar man procent snabbt utan miniräknare, och vad är skillnaden mellan procent och procentenheter? ${FYLL_PA}`,
+    question: `Hur räknar man procent snabbt utan miniräknare, och vad är skillnaden mellan procent och procentenheter?`,
     answer: `**Förändringsfaktorn** är det snabbaste verktyget:
 - En ökning med 20 % betyder att du multiplicerar med 1,20.
 - En minskning med 15 % betyder att du multiplicerar med 0,85.
@@ -225,7 +222,7 @@ Bra att kunna utantill: $\\frac{1}{8} = 12{,}5\\,\\%$, $\\frac{1}{6} \\approx 16
   {
     category: "kvantitativ",
     title: "Potenslagar på högskoleprovet: en sammanfattning",
-    question: `Vilka potenslagar behöver man kunna till XYZ och KVA? ${FYLL_PA}`,
+    question: `Vilka potenslagar behöver man kunna till XYZ och KVA?`,
     answer: `De här räcker till nästan alla uppgifter:
 
 - $a^m \\cdot a^n = a^{m+n}$
@@ -244,7 +241,7 @@ Knepet är nästan alltid att skriva om allt i **samma bas** först. Ser du 8, 1
   {
     category: "kvantitativ",
     title: "Geometri på högskoleprovet: formler att kunna",
-    question: `Vilka geometriformler återkommer på XYZ och NOG? ${FYLL_PA}`,
+    question: `Vilka geometriformler återkommer på XYZ och NOG?`,
     answer: `Du får inget formelblad, så de här bör sitta:
 
 - **Triangel:** area $= \\frac{b \\cdot h}{2}$, vinkelsumma 180°
@@ -261,7 +258,7 @@ Figurerna på provet är **inte alltid skalenliga**. Lita på det som står i te
   {
     category: "kvantitativ",
     title: "Vanliga fällor på KVA",
-    question: `Vilka fällor är vanligast på kvantitativa jämförelser? ${FYLL_PA}`,
+    question: `Vilka fällor är vanligast på kvantitativa jämförelser?`,
     answer: `De som fäller flest:
 
 1. **Att glömma negativa tal.** Om $x < 0$ är $x^2 > x$, men om $0 < x < 1$ är $x^2 < x$.
@@ -275,7 +272,7 @@ En bra vana är att pröva tre värden när en variabel är inblandad: ett negat
   {
     category: "kvantitativ",
     title: "Hur räknar man medelvärde snabbt på högskoleprovet?",
-    question: `Det kommer ofta uppgifter om medelvärde. Finns det snabba sätt att räkna? ${FYLL_PA}`,
+    question: `Det kommer ofta uppgifter om medelvärde. Finns det snabba sätt att räkna?`,
     answer: `Grundformeln: **medelvärde = summa / antal**. Nästan alla uppgifter löses genom att räkna med **summan** i stället för medelvärdet.
 
 **Exempel:** Fem tal har medelvärdet 8. Ett sjätte tal läggs till och medelvärdet blir 9. Vilket är det sjätte talet?
@@ -293,7 +290,7 @@ Se också upp med **viktade medelvärden**. Två grupper av olika storlek får i
   {
     category: "verbal",
     title: "Hur pluggar man ORD till högskoleprovet?",
-    question: `Vilket är det bästa sättet att plugga ord inför ORD-delen? ${FYLL_PA}`,
+    question: `Vilket är det bästa sättet att plugga ord inför ORD-delen?`,
     answer: `ORD är det delprov där plugg ger snabbast resultat. Samma ord kommer sällan tillbaka: av de 600 orden på proven 2012–2026 har inget testats två gånger. Men orden är av samma sort varje gång, så ett bredare ordförråd av rätt slag lönar sig direkt.
 
 - **Plugga på ord av provets typ.** [Ordlistan](https://tvakommanollan.se/ordlista) har över 8 700 ord med förklaringar, och [gamla prov](https://tvakommanollan.se/gamla-prov) visar exakt vilka ord som testats.
@@ -306,7 +303,7 @@ När du skriver: läs alternativen och leta efter det som kan **ersätta** ordet
   {
     category: "verbal",
     title: "Hur löser man MEK-uppgifter på högskoleprovet?",
-    question: `Hur ska man tänka på meningskomplettering? Jag fastnar ofta mellan två alternativ. ${FYLL_PA}`,
+    question: `Hur ska man tänka på meningskomplettering? Jag fastnar ofta mellan två alternativ.`,
     answer: `I MEK saknas ett eller flera ord i en text, och du ska välja det alternativ som passar bäst. Det handlar lika mycket om logik som om ordförråd.
 
 1. **Läs hela texten först**, utan alternativen. Försök själv gissa vad som borde stå i luckan.
@@ -321,7 +318,7 @@ Står du mellan två alternativ: välj det som passar texten som helhet, inte ba
   {
     category: "verbal",
     title: "Hur blir man bättre på LÄS, svensk läsförståelse?",
-    question: `LÄS tar för lång tid och jag är osäker på svaren. Hur tränar man läsförståelse? ${FYLL_PA}`,
+    question: `LÄS tar för lång tid och jag är osäker på svaren. Hur tränar man läsförståelse?`,
     answer: `LÄS har 10 uppgifter per verbalt pass, kopplade till några längre texter. Två saker avgör: tiden och att svara på det som faktiskt står i texten.
 
 - **Svara utifrån texten, inte vad du vet sedan tidigare.** Rätt svar är det texten stöder, även om du själv tycker annorlunda.
@@ -334,7 +331,7 @@ Tidsmässigt brukar ungefär 20 minuter av det verbala passet gå till LÄS. Mer
   {
     category: "verbal",
     title: "Tips för ELF, engelsk läsförståelse",
-    question: `Hur ska man förbereda sig för ELF? Min engelska är okej men jag tappar poäng. ${FYLL_PA}`,
+    question: `Hur ska man förbereda sig för ELF? Min engelska är okej men jag tappar poäng.`,
     answer: `ELF har 10 uppgifter per verbalt pass: längre texter, kortare texter och luckuppgifter där ett ord saknas.
 
 - **Läs engelsk sakprosa regelbundet.** Tidningsartiklar och populärvetenskap ligger nära provets texter i stil och svårighet.
@@ -347,7 +344,7 @@ Alla verbala pass i [gamla prov](https://tvakommanollan.se/gamla-prov) har ELF m
   {
     category: "verbal",
     title: "Hur hinner man klart med det verbala provpasset?",
-    question: `Hur ska man fördela tiden på det verbala passet? Jag brukar inte hinna med ELF. ${FYLL_PA}`,
+    question: `Hur ska man fördela tiden på det verbala passet? Jag brukar inte hinna med ELF.`,
     answer: `Ordningen i häftet är ORD, LÄS, MEK och ELF. En fördelning som fungerar för många:
 
 - **ORD** (10): 3–4 minuter. Antingen kan du ordet eller inte, så grubbla inte.
@@ -364,7 +361,7 @@ Fyll alltid i en gissning på allt du inte hinner. Läs mer i [guiden om tidspre
   {
     category: "verbal",
     title: "Förled och ordstammar som hjälper på ORD",
-    question: `Vilka förled och ordstammar är bra att kunna för att gissa ord man inte känner igen? ${FYLL_PA}`,
+    question: `Vilka förled och ordstammar är bra att kunna för att gissa ord man inte känner igen?`,
     answer: `Många ord på provet är lånord från latin och grekiska. Med ett tjugotal byggstenar kan du ofta lista ut betydelsen:
 
 - **a-, an-**: utan (*apatisk*, *anonym*)
@@ -386,7 +383,7 @@ Kombinera med sammanhanget i alternativen så blir gissningarna mycket bättre �
   {
     category: "verbal",
     title: "Varför fastnar jag mellan två alternativ på ORD?",
-    question: `På ORD känns det ofta som att två alternativ passar. Hur väljer man rätt? ${FYLL_PA}`,
+    question: `På ORD känns det ofta som att två alternativ passar. Hur väljer man rätt?`,
     answer: `Provmakarna lägger medvetet in alternativ som ligger nära i betydelse eller **låter** som ordet. Några knep:
 
 - **Pröva att byta ut ordet** i en tänkt mening. Rätt alternativ ska kunna ersätta det utan att betydelsen ändras.
@@ -401,7 +398,7 @@ Ord du fastnar på hamnar i repetitionen i [ordövningen](https://tvakommanollan
   {
     category: "provdagen",
     title: "När är nästa högskoleprov och när öppnar anmälan?",
-    question: `När skrivs nästa högskoleprov, när kan man anmäla sig och vad kostar det? ${FYLL_PA}`,
+    question: `När skrivs nästa högskoleprov, när kan man anmäla sig och vad kostar det?`,
     answer: `Nästa prov är **vårprovet lördagen den 10 april 2027**. Anmälan är öppen **7–14 januari 2027** på hogskoleprov.nu. Provavgiften är **550 kronor**.
 
 Tänk på att anmälningsperioden bara är en dryg vecka, ett par månader före provet. Missar du den går det inte att anmäla sig i efterhand.
@@ -411,7 +408,7 @@ Vårprovet skrivs alltid på en lördag i april och höstprovet på en söndag i
   {
     category: "provdagen",
     title: "Vad ska man ta med till högskoleprovet?",
-    question: `Vad behöver man ha med sig på provdagen, och vad är inte tillåtet? ${FYLL_PA}`,
+    question: `Vad behöver man ha med sig på provdagen, och vad är inte tillåtet?`,
     answer: `Det viktigaste är **giltig legitimation**. Utan den får du inte skriva. Kallelsen säger var och när du ska vara, läs den noga dagen innan.
 
 Bra att ha med:
@@ -426,7 +423,7 @@ Mobiler och smarta klockor får inte användas under provet. Exakt vad som gäll
   {
     category: "provdagen",
     title: "När kommer facit och resultat efter högskoleprovet?",
-    question: `Hur lång tid efter provet kommer facit, normering och det riktiga resultatet? ${FYLL_PA}`,
+    question: `Hur lång tid efter provet kommer facit, normering och det riktiga resultatet?`,
     answer: `Ordningen är densamma varje termin:
 
 1. **Facit** publiceras kort efter provdagen. Då kan du räkna antal rätt själv.
@@ -438,7 +435,7 @@ Medan du väntar kan du jämföra med tidigare terminers normeringar. Vi lägger
   {
     category: "provdagen",
     title: "Hur många rätt krävs för 2,0 på högskoleprovet?",
-    question: `Hur många rätt behöver man ha på verbal och kvant för att få högsta poäng? ${FYLL_PA}`,
+    question: `Hur många rätt behöver man ha på verbal och kvant för att få högsta poäng?`,
     answer: `Det varierar mellan provtillfällena, eftersom varje prov normeras för sig. De senaste åren har det ofta krävts **runt 75–78 rätt av 80** på en del för att få 2,0 just där.
 
 Eftersom totalpoängen är medelvärdet av verbal och kvant behöver du 2,0 på **båda** delarna för 2,0 totalt. 2,0 verbalt och 1,9 kvantitativt ger alltså 1,95.
@@ -460,7 +457,7 @@ Dela gärna era tankar om provet här nedanför.`,
   {
     category: "provdagen",
     title: "Hur vet man vilket provpass som var utprövningspasset?",
-    question: `Ett av de fem passen räknas inte. Går det att lista ut vilket? ${FYLL_PA}`,
+    question: `Ett av de fem passen räknas inte. Går det att lista ut vilket?`,
     answer: `Nej, inte under provdagen. Utprövningspasset ser ut precis som de andra och kan vara antingen verbalt eller kvantitativt. Därför ska du göra ditt bästa på alla fem.
 
 Efter provet framgår det när facit publiceras: de pass som räknas har facit, utprövningspasset har det inte. Har du skrivit tre verbala pass var ett av dem utprövning, och samma sak gäller om du hade tre kvantitativa.
@@ -470,7 +467,7 @@ Ett tips är att inte låta ett pass som gick dåligt påverka resten av dagen. 
   {
     category: "provdagen",
     title: "Hur fungerar normeringen av högskoleprovet?",
-    question: `Varför ger samma antal rätt olika poäng olika år? ${FYLL_PA}`,
+    question: `Varför ger samma antal rätt olika poäng olika år?`,
     answer: `Normeringen finns för att ett resultat ska betyda samma sak oavsett vilket prov du skrev. Är ett prov svårare än vanligt sjunker antalet rätt för alla, och då ger färre rätt samma poäng som tidigare.
 
 Varje del, verbal och kvantitativ, normeras för sig till 0,00–2,00. Totalpoängen är medelvärdet av de två.
@@ -486,7 +483,7 @@ Med normeringstabellerna för tidigare prov kan du räkna fram poängen på ett 
   {
     category: "plugg",
     title: "Hur lång tid behöver man plugga inför högskoleprovet?",
-    question: `Hur många veckor innan ska man börja plugga, och hur mycket per dag? ${FYLL_PA}`,
+    question: `Hur många veckor innan ska man börja plugga, och hur mycket per dag?`,
     answer: `Det beror på var du startar och var du vill landa, men en riktlinje som fungerar för många:
 
 - **2–3 månader** med 30–60 minuter om dagen räcker långt för de flesta.
@@ -498,7 +495,7 @@ Börja med att skriva ett [gammalt prov](https://tvakommanollan.se/gamla-prov) p
   {
     category: "plugg",
     title: "Hur lägger man upp ett studieschema för högskoleprovet?",
-    question: `Hur ska en vanlig pluggvecka se ut inför högskoleprovet? ${FYLL_PA}`,
+    question: `Hur ska en vanlig pluggvecka se ut inför högskoleprovet?`,
     answer: `Ett exempel på en vecka med ungefär 45 minuter om dagen:
 
 - **Måndag:** ORD 15 min + KVA 30 min
@@ -516,7 +513,7 @@ Vill du ha ett upplägg anpassat efter dina resultat finns [studieupplägget](ht
   {
     category: "plugg",
     title: "Hur höjer man sig från 1,0 till 1,5 på högskoleprovet?",
-    question: `Jag ligger runt 1,0. Vad ska jag fokusera på för att nå 1,5? ${FYLL_PA}`,
+    question: `Jag ligger runt 1,0. Vad ska jag fokusera på för att nå 1,5?`,
     answer: `Från 1,0 till 1,5 handlar det mest om att plocka de uppgifter du **borde** klara, inte de svåraste.
 
 1. **Gissa på allt.** Lämnar du tomma rutor är det den snabbaste höjningen som finns.
@@ -530,7 +527,7 @@ Skriv ett helt prov på tid var tredje vecka och följ poängen. Sajten räknar 
   {
     category: "plugg",
     title: "Är gamla högskoleprov det bästa sättet att plugga?",
-    question: `Räcker det att göra gamla prov, eller behöver man annat material också? ${FYLL_PA}`,
+    question: `Räcker det att göra gamla prov, eller behöver man annat material också?`,
     answer: `Gamla prov är det **närmaste du kommer det riktiga provet**: samma uppgiftstyper, samma svårighet och samma tidspress. De är oumbärliga, men det finns två fällor:
 
 - **Att bara göra prov utan att gå igenom felen.** Det är i genomgången du lär dig.
@@ -543,7 +540,7 @@ Alla prov från 2012 och framåt, med facit och poängräkning, finns i [gamla p
   {
     category: "plugg",
     title: "Hur håller man motivationen uppe när man pluggar till högskoleprovet?",
-    question: `Det är svårt att hålla igång i flera månader. Hur gör ni för att orka? ${FYLL_PA}`,
+    question: `Det är svårt att hålla igång i flera månader. Hur gör ni för att orka?`,
     answer: `Några saker som brukar fungera:
 
 - **Korta pass varje dag** slår långa pass ibland. 20 minuter är lättare att komma igång med än två timmar.
@@ -557,7 +554,7 @@ Hur gör ni? Dela gärna det som fungerar för er.`,
   {
     category: "plugg",
     title: "Vad ska man göra dagen innan högskoleprovet?",
-    question: `Ska man plugga dagen innan provet eller vila? ${FYLL_PA}`,
+    question: `Ska man plugga dagen innan provet eller vila?`,
     answer: `**Vila.** Det du inte kan dagen innan lär du dig inte heller på en kväll, men du kan bli trött av att försöka.
 
 - Gå lätt igenom de ord och formler du redan kan, högst en halvtimme.
@@ -572,7 +569,7 @@ På provdagen: ät frukost, var på plats i god tid, och glöm ett pass så fort
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för läkarprogrammet?",
-    question: `Hur högt behöver man ligga på högskoleprovet för att komma in på läkarprogrammet? ${FYLL_PA}`,
+    question: `Hur högt behöver man ligga på högskoleprovet för att komma in på läkarprogrammet?`,
     answer: `Läkarprogrammet hör till de svåraste utbildningarna att komma in på via provet. Antagningspoängen i HP-gruppen till hösten 2026 enligt UHR:s statistik:
 
 - Lunds universitet: **1,80**
@@ -591,7 +588,7 @@ Hela tabellen finns på [poängsidan för läkarprogrammet](https://tvakommanoll
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för psykologprogrammet?",
-    question: `Vad behöver man på högskoleprovet för att komma in på psykologprogrammet? ${FYLL_PA}`,
+    question: `Vad behöver man på högskoleprovet för att komma in på psykologprogrammet?`,
     answer: `Psykologprogrammet ges vid elva lärosäten, och kraven skiljer sig mycket mellan orterna. Antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
 
 - Lund: **1,70**
@@ -608,7 +605,7 @@ Hela tabellen finns på [poängsidan för läkarprogrammet](https://tvakommanoll
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för juristprogrammet?",
-    question: `Hur högt måste man ligga på högskoleprovet för juristprogrammet? ${FYLL_PA}`,
+    question: `Hur högt måste man ligga på högskoleprovet för juristprogrammet?`,
     answer: `Juristprogrammet är enligt UHR det program som har flest behöriga sökande i landet. Antagningspoäng i HP-gruppen till hösten 2026:
 
 - Lunds universitet: **1,60**
@@ -623,7 +620,7 @@ Se [poängsidan för juristprogrammet](https://tvakommanollan.se/hogskoleprovet-
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för Handelshögskolan i Stockholm?",
-    question: `Vad krävs på högskoleprovet för civilekonomprogrammet på Handels? ${FYLL_PA}`,
+    question: `Vad krävs på högskoleprovet för civilekonomprogrammet på Handels?`,
     answer: `Handelshögskolan i Stockholm har en HP-kvot som blivit svårare för varje år. Antagningspoängen enligt skolans egen statistik:
 
 - 2026: **1,95**
@@ -640,7 +637,7 @@ Mer på [poängsidan för Handelshögskolan](https://tvakommanollan.se/hogskolep
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för teknisk fysik på KTH och LTH?",
-    question: `Hur högt ligger antagningen till teknisk fysik via högskoleprovet? ${FYLL_PA}`,
+    question: `Hur högt ligger antagningen till teknisk fysik via högskoleprovet?`,
     answer: `Till hösten 2026 låg antagningspoängen i HP-gruppen på **1,80** både på KTH och på Lunds tekniska högskola.
 
 Teknisk fysik är ett av de tyngsta civilingenjörsprogrammen. Det kvantitativa provet är därför extra viktigt att träna på, men kom ihåg att totalpoängen är medelvärdet av båda delarna. Ett svagt verbalt resultat drar ner lika mycket.
@@ -650,7 +647,7 @@ Mer på [poängsidan för teknisk fysik](https://tvakommanollan.se/hogskoleprove
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för tandläkarprogrammet?",
-    question: `Vad behöver man på högskoleprovet för att komma in på tandläkarprogrammet? ${FYLL_PA}`,
+    question: `Vad behöver man på högskoleprovet för att komma in på tandläkarprogrammet?`,
     answer: `Tandläkarprogrammet ges vid tre lärosäten, och kraven ligger tätt ihop. Antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
 
 - Göteborgs universitet: **1,45**
@@ -662,7 +659,7 @@ Mer på [poängsidan för tandläkarprogrammet](https://tvakommanollan.se/hogsko
   {
     category: "provdagen",
     title: "Vilket HP-resultat krävs för sjuksköterskeprogrammet?",
-    question: `Hur högt måste man ligga på högskoleprovet för att komma in på sjuksköterskeprogrammet? ${FYLL_PA}`,
+    question: `Hur högt måste man ligga på högskoleprovet för att komma in på sjuksköterskeprogrammet?`,
     answer: `Det skiljer sig väldigt mycket mellan orterna. Några exempel på antagningspoäng i HP-gruppen till hösten 2026 enligt UHR:
 
 - Uppsala universitet, Uppsala: **1,10**
@@ -678,7 +675,7 @@ Mer på [poängsidan för tandläkarprogrammet](https://tvakommanollan.se/hogsko
   {
     category: "allmant",
     title: "Kan man skriva högskoleprovet när man går i gymnasiet?",
-    question: `Får man skriva högskoleprovet innan man tagit studenten? ${FYLL_PA}`,
+    question: `Får man skriva högskoleprovet innan man tagit studenten?`,
     answer: `Ja. Det finns ingen åldersgräns och inget krav på att du ska vara klar med gymnasiet. Många skriver provet första gången i tvåan eller trean.
 
 Resultatet gäller i åtta år, så ett prov du skriver i gymnasiet kan användas när du söker senare. Och eftersom bästa resultatet räknas kostar det ingenting att skriva tidigt. Det enda du riskerar är provavgiften.
@@ -688,7 +685,7 @@ Tänk på att du fortfarande måste vara **behörig** till utbildningen du söke
   {
     category: "allmant",
     title: "Vilken del av högskoleprovet är lättast att höja sig på?",
-    question: `Om man har begränsat med tid, vilken del ger mest poäng per pluggtimme? ${FYLL_PA}`,
+    question: `Om man har begränsat med tid, vilken del ger mest poäng per pluggtimme?`,
     answer: `För de flesta är svaret **ORD**. Ordförrådet går att bygga upp på några veckor, och provet testar samma sorts ord varje gång.
 
 Efter det brukar **KVA och NOG** ge mycket. Uppgiftstyperna är snäva, och när du kan fällorna går det snabbt. Se trådarna om [KVA](https://tvakommanollan.se/guider/kva) och [NOG](https://tvakommanollan.se/guider/nog).
@@ -700,7 +697,7 @@ Men det bästa svaret är ditt eget: skriv ett [gammalt prov](https://tvakommano
   {
     category: "allmant",
     title: "Hur många ord behöver man kunna till ORD-delen?",
-    question: `Finns det ett ungefärligt antal ord man bör kunna inför högskoleprovet? ${FYLL_PA}`,
+    question: `Finns det ett ungefärligt antal ord man bör kunna inför högskoleprovet?`,
     answer: `Det finns inget fast antal. Varje prov testar 20 ord, och av de 600 orden på proven 2012–2026 har inget testats två gånger. Att plugga in just de gamla orden räcker alltså inte. Det som lönar sig är att bygga upp ett brett ordförråd av samma sort: ordlistan på sajten har över 8 700 sådana ord med förklaringar.
 
 Ett rimligt mål är inte att kunna alla, utan att:
@@ -713,7 +710,7 @@ Börja i [ordlistan](https://tvakommanollan.se/ordlista) eller i [ordövningen](
   {
     category: "provdagen",
     title: "Kan man få anpassning på högskoleprovet vid dyslexi eller annan funktionsnedsättning?",
-    question: `Finns det möjlighet till förlängd tid eller andra anpassningar på högskoleprovet? ${FYLL_PA}`,
+    question: `Finns det möjlighet till förlängd tid eller andra anpassningar på högskoleprovet?`,
     answer: `Ja. Det går att ansöka om anpassat provgenomförande, till exempel vid dyslexi, synnedsättning eller annan funktionsnedsättning. Ansökan görs i samband med anmälan och kräver intyg.
 
 Vilka anpassningar som finns och vad som krävs i ansökan står på hogskoleprov.nu. Läs där i god tid före anmälningsperioden.
@@ -723,7 +720,7 @@ Har du själv skrivit med anpassning får du gärna berätta hur det gick till.`
   {
     category: "plugg",
     title: "Hur går man igenom ett gammalt prov på bästa sätt?",
-    question: `Jag har gjort ett gammalt högskoleprov. Hur ska jag gå igenom felen för att lära mig mest? ${FYLL_PA}`,
+    question: `Jag har gjort ett gammalt högskoleprov. Hur ska jag gå igenom felen för att lära mig mest?`,
     answer: `Genomgången är viktigare än själva provet. Ett sätt som fungerar:
 
 1. **Rätta och räkna poängen** per delprov. Sajten gör det åt dig i [gamla prov](https://tvakommanollan.se/gamla-prov).
@@ -737,7 +734,7 @@ Gå igenom samma lista innan nästa prov. De flesta upptäcker att två eller tr
   {
     category: "kvantitativ",
     title: "När är svaret D på KVA?",
-    question: `Hur vet man när informationen är otillräcklig på kvantitativa jämförelser? ${FYLL_PA}`,
+    question: `Hur vet man när informationen är otillräcklig på kvantitativa jämförelser?`,
     answer: `Svaret är **D** när du kan hitta två tillåtna fall som ger olika svar. Det räcker att visa att det **kan** gå åt båda hållen.
 
 Tecken på att D kan vara rätt:
@@ -754,7 +751,7 @@ Exempel ur riktiga prov finns i genomgångarna här i kategorin, till exempel up
   {
     category: "kvantitativ",
     title: "Skillnaden mellan C och D på NOG",
-    question: `På NOG blandar jag ihop "(1) tillsammans med (2)" och "(1) och (2) var för sig". Hur ska man tänka? ${FYLL_PA}`,
+    question: `På NOG blandar jag ihop "(1) tillsammans med (2)" och "(1) och (2) var för sig". Hur ska man tänka?`,
     answer: `De betyder nästan motsatta saker:
 
 - **C, (1) tillsammans med (2):** inget av påståendena räcker ensamt, men båda **tillsammans** gör det.
@@ -769,7 +766,7 @@ Den vanligaste missen är att svara C fast ett av påståendena räckte ensamt, 
   {
     category: "kvantitativ",
     title: "Kvadreringsreglerna och konjugatregeln på högskoleprovet",
-    question: `Hur används kvadreringsreglerna och konjugatregeln på XYZ och KVA? ${FYLL_PA}`,
+    question: `Hur används kvadreringsreglerna och konjugatregeln på XYZ och KVA?`,
     answer: String.raw`Tre regler som dyker upp på nästan varje kvantitativt pass:
 
 - $(a + b)^2 = a^2 + 2ab + b^2$
@@ -786,7 +783,7 @@ Den vanligaste missen är att tro att $(a + b)^2 = a^2 + b^2$. Det stämmer bara
   {
     category: "kvantitativ",
     title: "Sannolikhet på högskoleprovet: så räknar du",
-    question: `Hur löser man sannolikhetsuppgifter på XYZ utan att det blir rörigt? ${FYLL_PA}`,
+    question: `Hur löser man sannolikhetsuppgifter på XYZ utan att det blir rörigt?`,
     answer: String.raw`Grundformeln: **sannolikhet = gynnsamma utfall / möjliga utfall**, när alla utfall är lika sannolika.
 
 **Tre fall som täcker det mesta:**
@@ -802,7 +799,7 @@ Läs alltid efter vad som redan har plockats bort eller är känt. Det är där 
   {
     category: "kvantitativ",
     title: "Räta linjens ekvation y = kx + m på högskoleprovet",
-    question: `Vad behöver man kunna om räta linjer och funktioner till högskoleprovet? ${FYLL_PA}`,
+    question: `Vad behöver man kunna om räta linjer och funktioner till högskoleprovet?`,
     answer: String.raw`I $y = kx + m$ är $k$ lutningen och $m$ där linjen skär y-axeln.
 
 **Det här räcker långt:**
@@ -817,7 +814,7 @@ Läs alltid efter vad som redan har plockats bort eller är känt. Det är där 
   {
     category: "kvantitativ",
     title: "Bråkräkning utan miniräknare: snabba metoder",
-    question: `Hur räknar man med bråk snabbt på högskoleprovet? ${FYLL_PA}`,
+    question: `Hur räknar man med bråk snabbt på högskoleprovet?`,
     answer: String.raw`**Addition och subtraktion:** gemensam nämnare. $\frac{1}{4} + \frac{1}{6} = \frac{3}{12} + \frac{2}{12} = \frac{5}{12}$.
 
 **Multiplikation:** täljare gånger täljare, nämnare gånger nämnare. Förkorta **innan** du multiplicerar: $\frac{6}{25} \cdot \frac{5}{36} = \frac{1}{5} \cdot \frac{1}{6} = \frac{1}{30}$.
@@ -838,7 +835,7 @@ Delar man med ett bråk mindre än 1 blir svaret större. Det räcker ofta för 
   {
     category: "kvantitativ",
     title: "Medelvärde och median: skillnaden och fällorna",
-    question: `Hur skiljer sig medelvärde och median, och hur dyker de upp på provet? ${FYLL_PA}`,
+    question: `Hur skiljer sig medelvärde och median, och hur dyker de upp på provet?`,
     answer: String.raw`**Medelvärdet** är summan delad med antalet. **Medianen** är det mittersta värdet när talen står i storleksordning. Med ett jämnt antal tal är medianen medelvärdet av de två mittersta.
 
 Exempel: 2, 3, 4, 10, 81.
@@ -856,7 +853,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "kvantitativ",
     title: "Hastighet, sträcka och tid på högskoleprovet",
-    question: `Hur löser man uppgifter med hastighet, sträcka och tid snabbt? ${FYLL_PA}`,
+    question: `Hur löser man uppgifter med hastighet, sträcka och tid snabbt?`,
     answer: String.raw`Allt bygger på **sträcka = hastighet · tid**.
 
 **Byt enhet först.** 1 m/s är 3,6 km/h. 20 m/s är alltså 72 km/h.
@@ -870,7 +867,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "kvantitativ",
     title: "Primtal, delbarhet och rester på högskoleprovet",
-    question: `Vad behöver man kunna om primtal och delbarhet till kvanten? ${FYLL_PA}`,
+    question: `Vad behöver man kunna om primtal och delbarhet till kvanten?`,
     answer: String.raw`**Primtal** är tal större än 1 som bara är delbara med 1 och sig själva: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 … 2 är det enda jämna primtalet, och 1 är inget primtal.
 
 **Primtalsfaktorisering** löser många uppgifter: $42 = 2 \cdot 3 \cdot 7$ och $72 = 2^3 \cdot 3^2$.
@@ -886,7 +883,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "kvantitativ",
     title: "Ekvationssystem på högskoleprovet",
-    question: `Hur löser man ekvationssystem snabbt på XYZ och NOG? ${FYLL_PA}`,
+    question: `Hur löser man ekvationssystem snabbt på XYZ och NOG?`,
     answer: String.raw`Två metoder räcker:
 
 **Addition.** $x + y = 33$ och $x - y = 7$. Lägg ihop: $2x = 40$, så $x = 20$ och $y = 13$.
@@ -900,7 +897,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "kvantitativ",
     title: "Rötter och kvadratrötter utan miniräknare",
-    question: `Hur förenklar och uppskattar man rötter på högskoleprovet? ${FYLL_PA}`,
+    question: `Hur förenklar och uppskattar man rötter på högskoleprovet?`,
     answer: String.raw`**Förenkla genom att bryta ut kvadrater:** $\sqrt{72} = \sqrt{36 \cdot 2} = 6\sqrt{2}$ och $\sqrt{27} = 3\sqrt{3}$.
 
 **Räknelagar:**
@@ -917,7 +914,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "kvantitativ",
     title: "Enhetsomvandling på högskoleprovet: längd, area och volym",
-    question: `Jag tappar poäng på enheter. Vilka omvandlingar ska man kunna? ${FYLL_PA}`,
+    question: `Jag tappar poäng på enheter. Vilka omvandlingar ska man kunna?`,
     answer: String.raw`**Längd:** 1 m = 10 dm = 100 cm = 1 000 mm.
 
 **Area: kvadrera faktorn.** 1 m² = 100 dm² = 10 000 cm².
@@ -935,7 +932,7 @@ Se tråden om medelvärde för fler snabba metoder.`,
   {
     category: "verbal",
     title: "Signalord på MEK och ELF: men, därför, trots och de andra",
-    question: `Vilka signalord ska man leta efter på meningskomplettering och engelska luckuppgifter? ${FYLL_PA}`,
+    question: `Vilka signalord ska man leta efter på meningskomplettering och engelska luckuppgifter?`,
     answer: `Signalorden säger om luckan ska hålla med texten eller gå emot den.
 
 **Motsats (luckan går emot det som står före):**
@@ -955,7 +952,7 @@ Ringa in signalordet innan du läser alternativen. Det stryker ofta hälften av 
   {
     category: "verbal",
     title: "Hur läser man snabbare på högskoleprovet utan att missa detaljer?",
-    question: `Jag läser för långsamt på LÄS och ELF. Går det att träna upp läshastigheten? ${FYLL_PA}`,
+    question: `Jag läser för långsamt på LÄS och ELF. Går det att träna upp läshastigheten?`,
     answer: `Ja, men målet är inte att läsa allt snabbare. Det är att läsa **rätt delar** noga.
 
 1. **Läs inledning och avslutning ordentligt.** Där står ofta textens huvudpoäng.
@@ -972,7 +969,7 @@ Läs mer i [LÄS-guiden](https://tvakommanollan.se/guider/las) och [ELF-guiden](
   {
     category: "allmant",
     title: "Är högskoleprovet svårt?",
-    question: `Hur svårt är högskoleprovet egentligen, och vad gör det svårt? ${FYLL_PA}`,
+    question: `Hur svårt är högskoleprovet egentligen, och vad gör det svårt?`,
     answer: `Uppgifterna i sig är sällan svåra. Matten bygger på grundskolan och gymnasiets första kurs, och texterna är vanlig sakprosa. Det som gör provet svårt är tre saker:
 
 1. **Tidspressen.** 40 uppgifter på 55 minuter, fem pass under en dag.
@@ -986,7 +983,7 @@ Börja med ett [gammalt prov](https://tvakommanollan.se/gamla-prov) för att se 
   {
     category: "allmant",
     title: "Tio tips inför högskoleprovet",
-    question: `Vilka är de viktigaste tipsen inför högskoleprovet? ${FYLL_PA}`,
+    question: `Vilka är de viktigaste tipsen inför högskoleprovet?`,
     answer: `1. **Gissa på allt.** Fel svar ger inget avdrag.
 2. **Lär dig svarsalternativen på KVA och NOG utantill**, så att ingen tid går åt till att läsa dem.
 3. **Hoppa över och kom tillbaka.** Fastna aldrig på en uppgift.

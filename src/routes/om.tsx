@@ -3,14 +3,13 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { PageHero } from "@/components/layout/PageHero";
 import { APP_VERSION_LABEL } from "@/lib/app-version";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
-import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/om")({
   component: OmPage,
   head: () => ({
     meta: pageMeta({
       path: "/om",
-      title: "Om oss · varför sajten finns",
+      title: "Om oss: varför sajten finns",
       description:
         "Alla högskoleprov sedan 2012 med facit, dueller med ELO-ranking och en ordlista över ORD. Läs om grundaren Niklas (1,95 på HP), varför det mesta är gratis och vad som kostar.",
       ogTitle: "Om Tvåkommanollan",
@@ -40,10 +39,8 @@ function OmPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Om oss"
         title="Vi gör HP"
         cycleWords={["enklare.", "roligare.", "öppnare.", "modernt."]}
-        subtitle="På Tvåkommanollan skriver du alla gamla högskoleprov sedan 2012 och tävlar mot vänner i realtid med riktiga frågor från provet. Det mesta är gratis."
         align="center"
         variant="content"
       />
@@ -184,7 +181,7 @@ function OmPage() {
         </section>
 
         <div className="mt-16 flex justify-center">
-          <PrimaryCTA to="/train" icon={<ArrowRight className="h-4 w-4" />}>
+          <PrimaryCTA to="/train">
             Börja träna gratis
           </PrimaryCTA>
         </div>

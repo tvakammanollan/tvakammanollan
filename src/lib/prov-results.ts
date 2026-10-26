@@ -174,7 +174,7 @@ export interface ExamResult {
  * Räknar ihop ett provtillfälle ur de sparade passresultaten.
  *
  * Delpoängen visas först när **hela** delen är skriven. Ett verbalt pass är
- * fyrtio uppgifter av åttio, och en normering ur halva underlaget hade sett ut
+ * 40 uppgifter av åttio, och en normering ur halva underlaget hade sett ut
  * som ett provresultat utan att vara det — den som fick 1,90 på ett pass
  * behöver inte alls landa där när det andra passet är skrivet.
  */

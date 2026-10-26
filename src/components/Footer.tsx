@@ -74,7 +74,7 @@ export function Footer() {
           <FooterCol title="Företag" items={COMPANY} />
           <FooterCol title="Juridik" items={LEGAL} />
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
+            <h4 className="text-xs font-bold text-white/45">
               Hör av dig
             </h4>
             <ul className="mt-4 space-y-2">
@@ -110,7 +110,7 @@ export function Footer() {
 
         {/* Öva per delprov — sitewide intern länkning */}
         <div className="mt-10 border-t border-white/8 pt-8">
-          <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
+          <h4 className="text-xs font-bold text-white/45">
             Öva per delprov
           </h4>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
@@ -184,7 +184,7 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4 className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">{title}</h4>
+      <h4 className="text-xs font-bold text-white/45">{title}</h4>
       <ul className="mt-4 space-y-2">
         {items.map((it) => (
           <li key={it.to}>

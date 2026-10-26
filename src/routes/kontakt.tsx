@@ -23,7 +23,7 @@ export const Route = createFileRoute("/kontakt")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "ContactPage",
-        name: "Kontakt · Tvåkommanollan",
+        name: "Kontakt: Tvåkommanollan",
         url: "https://tvakommanollan.se/kontakt",
         description: "Kontaktinformation till Tvåkommanollan: e-post, buggrapporter och feedback.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
@@ -36,9 +36,8 @@ function KontaktPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Hör av dig"
         title="Kontakt"
-        subtitle="Fel i en fråga, feature-önskemål, samarbeten eller bara hejhej. Vi svarar oftast inom en vardag."
+        subtitle="Vi svarar oftast inom en vardag."
         align="center"
         variant="content"
       />

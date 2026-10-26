@@ -55,10 +55,10 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
     >
       {/* Label */}
       <div className="flex items-center justify-between gap-2">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/45">
+        <p className="text-xs font-medium text-white/45">
           Trolig HP-poäng
         </p>
-        <span className="rounded-full border border-primary/25 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+        <span className="text-[11px] font-semibold text-primary">
           {label}
         </span>
       </div>
@@ -106,7 +106,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
           elo={eloVerbal}
           accent={VERBAL}
         />
-        <ScoreCol label="Matte" score={m.score} desc={m.description} elo={eloMath} accent={MATH} />
+        <ScoreCol label="Kvantitativ" score={m.score} desc={m.description} elo={eloMath} accent={MATH} />
       </div>
 
       <p className="mt-4 text-[11px] leading-relaxed text-white/35">
@@ -133,7 +133,7 @@ function ScoreCol({
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-white/45">{label}</p>
+        <p className="text-xs font-medium text-white/45">{label}</p>
         <p className="text-[11px] tabular-nums text-white/35">ELO {elo}</p>
       </div>
       <p

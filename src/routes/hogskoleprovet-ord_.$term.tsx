@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { formatDateLong, formatInt } from "@/lib/sv-format";
@@ -95,8 +94,8 @@ function ProvOrdPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
-          Delprovet ORD · {formatInt(ord.length)} uppgifter
+        <p className="text-sm text-white/65">
+          Delprovet ORD: {formatInt(ord.length)} uppgifter
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -117,7 +116,6 @@ function ProvOrdPage() {
             className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <BookOpen className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             Provpass {pass}
           </h2>
           <ol className="mt-4 space-y-3">
@@ -179,7 +177,6 @@ function ProvOrdPage() {
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
           >
             Skriv hela provpass {pass} på tid
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </section>
       ))}
@@ -200,7 +197,6 @@ function ProvOrdPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Öva ORD
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
           <Link
             to="/gamla-prov/$term"
@@ -228,7 +224,6 @@ function ProvOrdPage() {
             params={{ term: older.term }}
             className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
             {termLabel(older.term, older.date)}
           </Link>
         ) : (
@@ -241,7 +236,6 @@ function ProvOrdPage() {
             className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
           >
             {termLabel(newer.term, newer.date)}
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         ) : (
           <span />

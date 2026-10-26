@@ -442,9 +442,9 @@ export function definitionSourceLabel(s?: string | null): string {
   const about = s.match(/– om "([^"]+)"/)?.[1];
   const respelled = s.match(/rättstavat "([^"]+)"/)?.[1];
   const base = s.startsWith("SO idiom")
-    ? "SO · idiom (svenska.se)"
+    ? "SO idiom (svenska.se)"
     : s.startsWith("SO")
-      ? "SO · Svensk ordbok (svenska.se)"
+      ? "Svensk ordbok (SO, svenska.se)"
       : s.startsWith("SAOL")
         ? "SAOL (svenska.se)"
         : s.startsWith("SAOB")
@@ -456,7 +456,7 @@ export function definitionSourceLabel(s?: string | null): string {
               : s.startsWith("HP-facit")
                 ? "Synonym (HP-facit)"
                 : "Förklaring";
-  if (about) return `${base} · om "${about}"`;
-  if (respelled) return `${base} · uppslag "${respelled}"`;
+  if (about) return `${base}, om "${about}"`;
+  if (respelled) return `${base}, uppslag "${respelled}"`;
   return base;
 }

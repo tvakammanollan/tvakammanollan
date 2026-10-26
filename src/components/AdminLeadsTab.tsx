@@ -226,7 +226,7 @@ function LeadRow({ lead, onChanged }: { lead: CoachingLead; onChanged: () => voi
         </div>
         <span className="text-xs text-white/45">
           {formatRelativeTime(lead.created_at)}
-          {lead.source ? ` · ${lead.source}` : ""}
+          {lead.source ? `, ${lead.source}` : ""}
         </span>
       </div>
 

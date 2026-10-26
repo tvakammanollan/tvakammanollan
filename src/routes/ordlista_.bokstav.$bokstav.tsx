@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaLetter } from "@/lib/ordlista.functions";
@@ -35,7 +34,7 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Ord på ${label} · ordlista för högskoleprovet`),
+        title: fitTitle(`Ord på ${label}: ordlista för högskoleprovet`),
         description:
           `${formatInt(count)} ord på ${label} från ORD-delprovet, med betydelse och den uppgift de kom ur. ` +
           `Bland dem: ${sample}.`,
@@ -134,7 +133,6 @@ function OrdlistaLetterPage() {
             params={{ bokstav: prev.letter }}
             className="inline-flex items-center gap-1.5 text-white/60 transition hover:text-[var(--amber)]"
           >
-            <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
             {ordLetterLabel(prev.letter)} ({formatInt(prev.count)} ord)
           </Link>
         ) : (
@@ -147,7 +145,6 @@ function OrdlistaLetterPage() {
             className="inline-flex items-center gap-1.5 text-white/60 transition hover:text-[var(--amber)]"
           >
             {ordLetterLabel(next.letter)} ({formatInt(next.count)} ord)
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
           </Link>
         ) : (
           <span />
@@ -158,7 +155,7 @@ function OrdlistaLetterPage() {
         <Link to="/ordlista" className="text-[var(--amber)] underline underline-offset-2">
           Tillbaka till ordlistan
         </Link>{" "}
-        · eller{" "}
+       , eller{" "}
         <Link to="/ord" className="text-[var(--amber)] underline underline-offset-2">
           träna orden med upprepning
         </Link>

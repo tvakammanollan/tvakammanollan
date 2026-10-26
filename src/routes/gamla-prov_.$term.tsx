@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { PassScoreBadge, ProvScorePanel } from "@/components/prov/ProvScore";
@@ -40,11 +40,11 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         path,
         // Stod som "Högskoleprovet Höstprovet 2025 – …" på alla 30 sidorna:
         // `label` bär redan ordet provet, så prefixet stammade.
-        title: fitTitle(`${exam.label} · alla provpass med facit`),
+        title: fitTitle(`${exam.label}: alla provpass med facit`),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
-        ogTitle: `Högskoleprovet ${exam.label} · provpass & facit`,
+        ogTitle: `Högskoleprovet ${exam.label}: provpass & facit`,
         ogDescription: `${formatInt(exam.questions)} uppgifter med rätta svar. Öva gratis på Tvåkommanollan.`,
       }),
       links: pageLinks(path),
@@ -57,7 +57,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "LearningResource",
-          name: `Högskoleprovet ${exam.label} · provpass med facit`,
+          name: `Högskoleprovet ${exam.label}: provpass med facit`,
           description: `Samtliga ${exam.passes.length} provpass från ${exam.label} med rätta svar.`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
@@ -220,7 +220,6 @@ function ExamTermPage() {
               params={{ term: older.term }}
               className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
               {older.label}
             </Link>
           ) : (
@@ -233,7 +232,6 @@ function ExamTermPage() {
               className="inline-flex items-center gap-1.5 text-white/60 hover:text-[var(--cream)]"
             >
               {newer.label}
-              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           ) : (
             <span />
@@ -264,10 +262,10 @@ function PassCard({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-base font-semibold text-[var(--cream)]">
-          Provpass {pass.pass} · {passKindLabel(pass.kind)}
+          Provpass {pass.pass}: {passKindLabel(pass.kind)}
         </span>
         <span className="mt-0.5 block text-xs text-[var(--text-tertiary)]">
-          {pass.delprov.map(delprovFull).join(" · ")}
+          {pass.delprov.map(delprovFull).join(", ")}
         </span>
         <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-tertiary)]">
           <span className="inline-flex items-center gap-1">
@@ -279,10 +277,7 @@ function PassCard({
         </span>
       </span>
       {result && <PassScoreBadge result={result} />}
-      <ArrowRight
-        className="h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-colors group-hover:text-[var(--amber)]"
-        aria-hidden
-      />
+
     </Link>
   );
 }

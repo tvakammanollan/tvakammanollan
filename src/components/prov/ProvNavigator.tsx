@@ -38,7 +38,7 @@ export function ProvNavigator({
         return (
           <div key={section.code}>
             <div className="mb-2 flex items-baseline justify-between gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
+              <span className="text-xs font-semibold text-[var(--text-tertiary)]">
                 {section.code}
               </span>
               <span className="text-[11px] tabular-nums text-[var(--text-tertiary)]">
@@ -58,7 +58,7 @@ export function ProvNavigator({
                     type="button"
                     onClick={() => onSelect(i)}
                     aria-current={i === current ? "true" : undefined}
-                    title={`Uppgift ${q.nr}${flagged.includes(q.nr) ? " · markerad" : ""}`}
+                    title={`Uppgift ${q.nr}${flagged.includes(q.nr) ? ", markerad" : ""}`}
                     className={[
                       "relative h-9 w-9 rounded-lg text-xs font-semibold tabular-nums transition-colors",
                       right

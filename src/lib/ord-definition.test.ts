@@ -229,8 +229,8 @@ describe("ordDefinitionParts", () => {
 
 describe("definitionSourceLabel", () => {
   it("namnger ordböckerna", () => {
-    expect(definitionSourceLabel("SO (svenska.se)")).toBe("SO · Svensk ordbok (svenska.se)");
-    expect(definitionSourceLabel("SO idiom (svenska.se)")).toBe("SO · idiom (svenska.se)");
+    expect(definitionSourceLabel("SO (svenska.se)")).toBe("Svensk ordbok (SO, svenska.se)");
+    expect(definitionSourceLabel("SO idiom (svenska.se)")).toBe("SO idiom (svenska.se)");
     expect(definitionSourceLabel("SAOL (svenska.se)")).toBe("SAOL (svenska.se)");
     expect(definitionSourceLabel("SAOB (svenska.se)")).toBe("SAOB (svenska.se)");
     expect(definitionSourceLabel("HP-facit (rätt svar)")).toBe("Synonym (HP-facit)");
@@ -243,13 +243,13 @@ describe("definitionSourceLabel", () => {
    */
   it("visar att förklaringen gäller ett annat uppslagsord", () => {
     expect(definitionSourceLabel('SO (svenska.se) – om "sälla"')).toBe(
-      'SO · Svensk ordbok (svenska.se) · om "sälla"',
+      'Svensk ordbok (SO, svenska.se), om "sälla"',
     );
     expect(definitionSourceLabel('SO (svenska.se), rättstavat "obstetrik"')).toBe(
-      'SO · Svensk ordbok (svenska.se) · uppslag "obstetrik"',
+      'Svensk ordbok (SO, svenska.se), uppslag "obstetrik"',
     );
     expect(definitionSourceLabel('SAOL (svenska.se), rättstavat "hemi-"')).toBe(
-      'SAOL (svenska.se) · uppslag "hemi-"',
+      'SAOL (svenska.se), uppslag "hemi-"',
     );
   });
 });

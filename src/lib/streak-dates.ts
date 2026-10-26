@@ -2,7 +2,7 @@
  * Datumräkningen bakom streaken — ren, testbar och i svensk tid.
  *
  * Streaken räknades tidigare med `new Date().toISOString().slice(0,10)`, alltså
- * i UTC. Sverige ligger en eller två timmar före, och det ger ett fönster varje
+ * i UTC. Sverige ligger en eller 2 timmar före, och det ger ett fönster varje
  * kväll där appen och användaren inte är överens om vilken dag det är:
  *
  *   * Ett pass klockan 00:30 natten till tisdag skrevs som *måndag*. Spelade
@@ -10,7 +10,7 @@
  *     redan på måndag, alltså "redan räknad idag", och streaken stod stilla.
  *   * Omvänt: den som spelade 00:30 på tisdag och sedan 23:00 på onsdag hade
  *     enligt UTC hoppat över en dag (måndag → onsdag) och fick streaken nollad
- *     trots att hen spelat två dagar i rad.
+ *     trots att hen spelat 2 dagar i rad.
  *
  * Allt räknas därför i `Europe/Stockholm`. Datumsträngen är fortfarande
  * `YYYY-MM-DD` och jämförs som text, precis som kolumnen i databasen.

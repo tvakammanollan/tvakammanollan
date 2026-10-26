@@ -61,7 +61,7 @@ export function ForumComposer({
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)]">
           <SquareFunction className="h-3.5 w-3.5" aria-hidden />
-          Matte skrivs mellan dollartecken: <code className="text-[var(--cream)]">$x^2$</code>
+          Formler skrivs mellan dollartecken: <code className="text-[var(--cream)]">$x^2$</code>
         </p>
         <button
           type="button"

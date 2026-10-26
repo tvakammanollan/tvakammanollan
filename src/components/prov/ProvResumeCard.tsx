@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { findExam } from "@/lib/prov-data";
 import { startedPasses, type ProvProgress } from "@/lib/prov-progress";
@@ -42,11 +42,10 @@ export function ProvResumeCard() {
           Fortsätt {exam.label}, provpass {entry.pass}
         </span>
         <span className="mt-0.5 block text-xs text-[var(--text-secondary)]">
-          {pass ? `${passKindLabel(pass.kind)} · ` : ""}
+          {pass ? `${passKindLabel(pass.kind)}, ` : ""}
           {answered} av {total} uppgifter besvarade
         </span>
       </span>
-      <ArrowRight className="h-4 w-4 shrink-0 text-[var(--amber)]" aria-hidden />
     </Link>
   );
 }

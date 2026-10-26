@@ -4,7 +4,7 @@ import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ordText } from "@/lib/sv-format";
 import { provExamples } from "@/lib/prov-data";
 import { MathText } from "@/components/MathTextLazy";
-import { ArrowRight, BookOpen, ScrollText } from "lucide-react";
+import { BookOpen, ScrollText } from "lucide-react";
 
 /* =====================================================================
    PER-DELPROV ÖVNINGSSIDOR (transaktionell sök: "öva ORD", "MEK-övningar",
@@ -47,7 +47,7 @@ const DELPROV: Record<string, Delprov> = {
       "ORD testar din ordförståelse: du ska hitta synonymen eller den närmaste betydelsen till ett ord. Det är ofta det delprov där man snabbast höjer sitt resultat genom att plugga ord. Här övar du på riktiga ORD-frågor från tidigare högskoleprov, med facit.",
     practiceTo: "/ord",
     practiceLabel: "Öva 10 000+ ord nu",
-    tips: 'Känner du inte igen ordet, leta efter ett bekant förled eller efterled. Många HP-ord är sammansatta eller släkt med vardagsord ("hemställa" hör ihop med "ställa hem/fram ett önskemål"). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart — inget avdrag för fel svar.',
+    tips: 'Känner du inte igen ordet, leta efter ett bekant förled eller efterled. Många HP-ord är sammansatta eller släkt med vardagsord ("hemställa" hör ihop med "ställa hem/fram ett önskemål"). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart. Det blir inget avdrag för fel svar.',
   },
   mek: {
     code: "MEK",
@@ -200,7 +200,6 @@ function OvaDelprovPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             {cfg.practiceLabel}
-            <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to={`/guider/${delprov}` as string}
@@ -245,7 +244,7 @@ function OvaDelprovPage() {
                 key={`${q.term}-${q.pass}-${q.nr}`}
                 className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm"
               >
-                <div className="text-[13px] font-semibold tracking-wide text-[var(--amber)]">
+                <div className="text-[13px] font-semibold text-[var(--amber)]">
                   Exempel {i + 1}
                 </div>
                 {q.passage && (
@@ -318,7 +317,7 @@ function OvaDelprovPage() {
                   </ul>
                 )}
                 <p className="mt-2.5 text-xs font-semibold text-[var(--teal)]">
-                  Rätt svar: {q.answer} ·{" "}
+                  Rätt svar: {q.answer}.{" "}
                   <Link
                     to="/gamla-prov/$term/$pass"
                     params={{ term: q.term, pass: String(q.pass) }}

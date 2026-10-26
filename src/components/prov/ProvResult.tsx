@@ -1,14 +1,4 @@
-import {
-  ArrowRight,
-  Check,
-  FileText,
-  ListChecks,
-  RotateCcw,
-  Swords,
-  Target,
-  Trophy,
-  X,
-} from "lucide-react";
+import { Check, FileText, ListChecks, RotateCcw, Swords, Trophy, X } from "lucide-react";
 import { NextStep } from "@/components/layout/NextStep";
 import { ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
@@ -85,8 +75,8 @@ export function ProvResult({
         <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--amber)]/18">
           <Trophy className="h-6 w-6 text-[var(--amber)]" aria-hidden />
         </span>
-        <p className="mt-3 text-xs font-semibold uppercase tracking-widest text-[var(--text-tertiary)]">
-          {data.label} · Provpass {data.pass}
+        <p className="mt-3 text-xs font-semibold text-[var(--text-tertiary)]">
+          {data.label}, Provpass {data.pass}
         </p>
         <p
           className="mt-2 text-6xl font-bold tabular-nums text-[var(--amber)]"
@@ -96,14 +86,13 @@ export function ProvResult({
           <span className="text-2xl font-normal text-[var(--text-secondary)]">/{total}</span>
         </p>
         <p className="mt-1 text-sm text-[var(--text-secondary)]">
-          {formatPercent(ratio)} rätt · {formatDuration(elapsedSeconds)}
-          {unanswered > 0 && <> · {unanswered} obesvarade</>}
+          {formatPercent(ratio)} rätt, {formatDuration(elapsedSeconds)}
+          {unanswered > 0 && <>, {unanswered} obesvarade</>}
         </p>
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-        <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--amber)]">
-          <Target className="h-4 w-4" aria-hidden />
+        <h2 className="flex items-center gap-2 text-xs font-semibold text-[var(--amber)]">
           Uppskattad normering
         </h2>
         <p
@@ -123,7 +112,7 @@ export function ProvResult({
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
+        <h2 className="mb-3 text-xs font-semibold text-[var(--text-tertiary)]">
           Per delprov
         </h2>
         <div className="space-y-3">
@@ -137,7 +126,7 @@ export function ProvResult({
                     {delprovShort(s.code)}
                   </span>
                   <span className="tabular-nums text-[var(--text-secondary)]">
-                    {s.right}/{s.total} · {formatPercent(pct)}
+                    {s.right}/{s.total}, {formatPercent(pct)}
                   </span>
                 </div>
                 <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
@@ -178,7 +167,7 @@ export function ProvResult({
           är rätt och fel syns på varje rad (`ReviewRow`), så grupperingen bar
           ingen information som raden inte redan har. */}
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-        <h2 className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
+        <h2 className="mb-1 text-xs font-semibold text-[var(--text-tertiary)]">
           Genomgång ({alla.length} uppgifter)
         </h2>
         <p className="mb-3 text-xs text-[var(--text-tertiary)]">
@@ -205,7 +194,6 @@ export function ProvResult({
           primaryLabel={`Fortsätt med provpass ${nextPass}`}
           primaryTo="/gamla-prov/$term/$pass"
           primaryParams={{ term: data.term, pass: String(nextPass) }}
-          primaryIcon={<ArrowRight className="h-4 w-4" />}
           forward={[
             { label: "Gå igenom alla uppgifter", icon: ListChecks, onClick: () => onReview(0) },
             { label: "Gör om provpasset", icon: RotateCcw, onClick: onRestart },
@@ -275,8 +263,8 @@ function ReviewRow({
           <strong className={rätt ? "text-[var(--success)]" : "text-[var(--destructive)]"}>
             {answer ?? "–"}
           </strong>{" "}
-          · rätt svar <strong className="text-[var(--cream)]">{facit.join(" eller ")}</strong>
-          {q.utgar ? " · uppgiften ströks av UHR" : ""}
+         , rätt svar <strong className="text-[var(--cream)]">{facit.join(" eller ")}</strong>
+          {q.utgar ? ", uppgiften ströks av UHR" : ""}
         </span>
       </span>
       {rätt ? (

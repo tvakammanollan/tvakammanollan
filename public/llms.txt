@@ -67,7 +67,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 ## Strategiguider
 
 - [Antal rätt per poäng](https://tvakommanollan.se/hogskoleprovet-antal-ratt): Hur många rätt som krävts för varje poäng från 0,5 till 2,0 på båda delarna, med lägsta, högsta och median över alla prov sedan 2012. En sida per poäng med gränsen på varje enskilt prov.
-- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Råpoäng → betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
+- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Från råpoäng till betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet, systemvetenskap, logopedprogrammet, biomedicinprogrammet, biomedicinsk-analytiker, kriminologi, medicinsk-teknik, elektroteknik, samhallsbyggnad, personalvetarprogrammet, politices-kandidat, receptarieprogrammet, tandhygienistprogrammet, teknisk-matematik, tekniskt-basar och journalistprogrammet.
 - [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, riktiga provuppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
@@ -103,7 +103,7 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 - NOG: Kvantitativa resonemang. 6 frågor, ca 10 minuter.
 - DTK: Diagram, tabeller och kartor. 12 frågor, ca 25 minuter.
 
-Verbal del = ORD + MEK + LÄS + ELF. Matte del = XYZ + KVA + NOG + DTK.
+Verbal = ORD + MEK + LÄS + ELF. Kvantitativ = XYZ + KVA + NOG + DTK.
 
 ## Hur HP-poängen räknas
 

@@ -63,7 +63,7 @@ function layout({ heading, paragraphs, cta, footer }: LayoutInput): string {
     ${button}
   </div>
   <p style="max-width:520px;margin:16px auto 0;font-size:12px;line-height:1.6;color:#6b5648;text-align:center;">
-    ${footer ? `${esc(footer)}<br>` : ""}${BRAND} · <a href="${SITE}" style="color:#6b5648;">tvakommanollan.se</a><br>
+    ${footer ? `${esc(footer)}<br>` : ""}${BRAND}, <a href="${SITE}" style="color:#6b5648;">tvakommanollan.se</a><br>
     Svara på det här mejlet om du undrar något. Det går till en riktig inkorg.
   </p>
 </div>`;
@@ -76,7 +76,7 @@ function textLayout(
 ): string {
   const parts = [heading, "", ...lines];
   if (cta) parts.push("", `${cta.label}: ${cta.url}`);
-  parts.push("", `${BRAND} · ${SITE}`, "Svara på det här mejlet om du undrar något.");
+  parts.push("", `${BRAND}, ${SITE}`, "Svara på det här mejlet om du undrar något.");
   return parts.join("\n");
 }
 
@@ -85,7 +85,7 @@ function textLayout(
 export function verifyEmailTemplate(input: { url: string; username?: string | null }): EmailBody {
   const hej = input.username ? `Hej ${input.username}!` : "Hej!";
   return {
-    subject: `Bekräfta din e-postadress · ${BRAND}`,
+    subject: `Bekräfta din e-postadress: ${BRAND}`,
     html: layout({
       heading: "Bekräfta din e-postadress",
       paragraphs: [
@@ -133,8 +133,8 @@ export function coachingConfirmationTemplate(input: CoachingConfirmationInput): 
 
   return {
     subject: input.scheduledLabel
-      ? `Kvitto för Studieupplägg · bokad tid · ${BRAND}`
-      : `Kvitto för Studieupplägg · välj din tid · ${BRAND}`,
+      ? `Kvitto för Studieupplägg, bokad tid, ${BRAND}`
+      : `Kvitto för Studieupplägg, välj din tid, ${BRAND}`,
     html: layout({
       heading: input.scheduledLabel ? "Tack! Din tid är bokad." : "Tack! Välj din tid.",
       paragraphs,

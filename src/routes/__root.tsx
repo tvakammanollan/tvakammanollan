@@ -74,7 +74,7 @@ function NotFoundComponent() {
                 to={p.to as any}
                 className="group block rounded-2xl border border-border bg-card p-4 transition hover:border-primary/50 hover:shadow-md"
               >
-                <div className="text-sm font-semibold text-foreground">{p.label} →</div>
+                <div className="text-sm font-semibold text-foreground">{p.label}</div>
                 <div className="mt-1 text-xs text-muted-foreground">{p.desc}</div>
               </Link>
             </li>
@@ -152,7 +152,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         property: "og:title",
-        content: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan: Gratis ELO-rankade HP-dueller & övningsprov",
       },
       {
         property: "og:description",
@@ -165,12 +165,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://tvakommanollan.se/og-image-5.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Tvåkommanollan · Tävla mot vänner i Högskoleprovet" },
+      { property: "og:image:alt", content: "Tvåkommanollan: Tävla mot vänner i Högskoleprovet" },
       { property: "og:site_name", content: "Tvåkommanollan" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Tvåkommanollan · Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan: Gratis ELO-rankade HP-dueller & övningsprov",
       },
       {
         name: "twitter:description",

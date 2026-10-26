@@ -27,7 +27,7 @@ const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
  * Poängen med att flytta hämtningen hit är därför INTE att svaret passerar en
  * server (det gör det ändå, och träningsläget måste kunna visa rätt svar när
  * spelaren svarat). Poängen är att **anroparen inte får peka ut vilka frågor
- * den vill ha**. Man ber om "tjugo ORD-frågor", inte om "de här id:na" — och
+ * den vill ha**. Man ber om "20 ORD-frågor", inte om "de här id:na" — och
  * då går luckan inte längre att rikta mot en pågående match.
  *
  * En rättnings-endpoint hade inte räckt: en sådan svarar ju med facit, och
@@ -102,7 +102,7 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
       return { questions: [], exhausted: false, mekLocked, mekAccess: mek };
     }
 
-    // Urvalet görs i två steg: först id:n per delprov, sedan hela raderna för
+    // Urvalet görs i 2 steg: först id:n per delprov, sedan hela raderna för
     // just de id som lottats fram. Tidigare hämtades hela rader med
     // `.limit(300)` och utan ordning, vilket i praktiken gav de 300 äldsta
     // raderna varje gång. För MEK (698 rader) betydde det att de nyare
@@ -244,7 +244,7 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     // blandningen kvar INOM varje kategori.
     //
     // Frågor som delar lästext hamnar dessutom bredvid varandra. Utan det kan
-    // samma text dyka upp två gånger i passet med tre frågor emellan, och
+    // samma text dyka upp 2 gånger i passet med 3 frågor emellan, och
     // överstrykningarna (som hör till texten) ser ut att komma och gå.
     const rank = new Map(data.categories.map((c, i) => [c as string, i]));
     const passageOrder = new Map<string, number>();

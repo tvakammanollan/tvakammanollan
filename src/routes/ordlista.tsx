@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { getOrdlistaOverview } from "@/lib/ordlista.functions";
@@ -11,7 +10,7 @@ import { formatInt } from "@/lib/sv-format";
 
    Bokstavsregistren i stället för en lista med 8 761 länkar: en sida med
    åtta tusen länkar är varken läsbar eller krypbar, och Google slutar
-   följa långt innan slutet. Två steg — bokstav, sedan ord — håller varje
+   följa långt innan slutet. 2 steg — bokstav, sedan ord — håller varje
    uppslag tre klick från startsidan.
    ===================================================================== */
 
@@ -22,7 +21,7 @@ export const Route = createFileRoute("/ordlista")({
     return {
       meta: pageMeta({
         path: "/ordlista",
-        title: fitTitle("Ordlista för högskoleprovet · alla ord med förklaring"),
+        title: fitTitle("Ordlista för högskoleprovet: alla ord med förklaring"),
         description:
           `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
           `exempelmening, liknande ord och uppgiften ordet kom ur. Sök på bokstav och plugga gratis.`,
@@ -84,7 +83,6 @@ function OrdlistaIndexPage() {
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Träna orden i stället
-            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </header>
@@ -94,7 +92,6 @@ function OrdlistaIndexPage() {
           className="flex items-center gap-1.5 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <BookOpen className="h-5 w-5 text-[var(--amber)]" />
           Bläddra på bokstav
         </h2>
         <ul className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5">

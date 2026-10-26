@@ -3,7 +3,7 @@ export function renderErrorPage(): string {
 <html lang="sv">
   <head>
     <meta charset="utf-8" />
-    <title>Sidan kunde inte laddas · Tvåkommanollan</title>
+    <title>Sidan kunde inte laddas, Tvåkommanollan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <style>
@@ -15,12 +15,10 @@ export function renderErrorPage(): string {
       a, button { padding: 0.5rem 1.25rem; border-radius: 9999px; font: inherit; cursor: pointer; text-decoration: none; border: 1px solid transparent; font-weight: 500; }
       .primary { background: #06040e; color: #0A0A0F; }
       .secondary { background: transparent; color: #F5E9D6; border-color: rgba(245, 233, 214, 0.2); }
-      .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; background: rgba(174, 47, 38, 0.15); color: #06040e; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
     </style>
   </head>
   <body>
     <div class="card">
-      <div class="badge">Tekniskt fel</div>
       <h1>Sidan kunde inte laddas</h1>
       <p>Något gick fel på vår sida. Du kan prova att ladda om, eller gå tillbaka till startsidan så löser det sig oftast direkt.</p>
       <div class="actions">

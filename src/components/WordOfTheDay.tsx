@@ -4,8 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { fetchWordOfTheDay, type WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { ordText } from "@/lib/sv-format";
 import { ordDefinitionParts } from "@/lib/ord-definition";
-import { EyebrowLabel } from "@/components/layout/EyebrowLabel";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 /* =====================================================================
    DAGENS ORD — ett riktigt HP-ord med förklaring, samma för alla.
@@ -104,7 +103,7 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
     if (!failed) {
       return (
         <div className="rounded-2xl border border-bark/20 bg-bark/[0.05] p-5" aria-busy="true">
-          <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
+          <p className="text-sm font-semibold text-bark">Dagens ord</p>
           <div className="skeleton-shimmer mt-3 h-8 w-2/3 rounded-lg" />
           <div className="skeleton-shimmer mt-2.5 h-4 w-full rounded" />
           <div className="skeleton-shimmer mt-1.5 h-4 w-4/5 rounded" />
@@ -118,7 +117,7 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
         params={{} as any}
         className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40"
       >
-        <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
+        <p className="text-sm font-semibold text-bark">Dagens ord</p>
         <div
           className="mt-2 text-[22px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -132,7 +131,6 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
         <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-bark">
           <BookOpen className="h-3.5 w-3.5" />
           Öva ord
-          <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
         </span>
       </Link>
     );
@@ -146,11 +144,10 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
       className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40 hover:bg-bark/[0.08]"
     >
       <div className="flex items-center justify-between gap-3">
-        <EyebrowLabel tone="teal">Dagens ord</EyebrowLabel>
+        <p className="text-sm font-semibold text-bark">Dagens ord</p>
         <span className="inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-bark">
           <BookOpen className="h-3.5 w-3.5" />
           Öva fler
-          <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
       <div

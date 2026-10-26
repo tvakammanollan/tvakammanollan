@@ -1,6 +1,6 @@
 /**
  * Övningspaywallen: de första 40 orden och de första 40 MEK-uppgifterna är
- * gratis, resten kostar ett köp som gäller i sex månader (köp gjorda före
+ * gratis, resten kostar ett köp som gäller i 6 månader (köp gjorda före
  * `TIME_LIMITED_FROM` gäller för alltid). Samma köp ("Hela Ordlistan + MEK")
  * låser upp båda, så den som köpte ordlistan innan MEK låstes fick MEK på
  * köpet.

@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
       path: "/",
       // Sökordet först. "HP-dueller" var titeln förut, och ingen söker på det:
       // folk skriver "högskoleprovet", "öva högskoleprovet", "gamla prov".
-      title: "Öva högskoleprovet gratis · alla gamla prov",
+      title: "Öva högskoleprovet gratis: alla gamla prov",
       description:
         "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Du börjar utan kostnad och behöver inget kreditkort.",
       ogDescription:

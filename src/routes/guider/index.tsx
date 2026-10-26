@@ -7,7 +7,7 @@ export const Route = createFileRoute("/guider/")({
   head: () => ({
     meta: pageMeta({
       path: "/guider",
-      title: "Guider till högskoleprovet · alla 8 delprov",
+      title: "Guider till högskoleprovet: alla 8 delprov",
       description:
         "Kompletta guider till alla 8 delprov på Högskoleprovet: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK. Plus normering, tidspress och toppresultat.",
       ogTitle: "Tvåkommanollan | Guider till Högskoleprovet",
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/guider/")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Course",
-        name: "Tvåkommanollans guidekurs · alla 8 delprov + strategi",
+        name: "Tvåkommanollans guidekurs: alla 8 delprov + strategi",
         description:
           "10 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus tidspress och en komplett studieplan, samt en genomgång av normering och antagningspoäng. Helt gratis.",
         url: "https://tvakommanollan.se/guider",
@@ -74,49 +74,49 @@ export const Route = createFileRoute("/guider/")({
           {
             "@type": "ListItem",
             position: 1,
-            name: "ORD · Ordkunskap",
+            name: "ORD: Ordkunskap",
             url: "https://tvakommanollan.se/guider/ord",
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "MEK · Meningskomplettering",
+            name: "MEK: Meningskomplettering",
             url: "https://tvakommanollan.se/guider/mek",
           },
           {
             "@type": "ListItem",
             position: 3,
-            name: "LÄS · Svensk läsförståelse",
+            name: "LÄS: Svensk läsförståelse",
             url: "https://tvakommanollan.se/guider/las",
           },
           {
             "@type": "ListItem",
             position: 4,
-            name: "ELF · Engelsk läsförståelse",
+            name: "ELF: Engelsk läsförståelse",
             url: "https://tvakommanollan.se/guider/elf",
           },
           {
             "@type": "ListItem",
             position: 5,
-            name: "XYZ · Matematisk problemlösning",
+            name: "XYZ: Matematisk problemlösning",
             url: "https://tvakommanollan.se/guider/xyz",
           },
           {
             "@type": "ListItem",
             position: 6,
-            name: "KVA · Kvantitativa jämförelser",
+            name: "KVA: Kvantitativa jämförelser",
             url: "https://tvakommanollan.se/guider/kva",
           },
           {
             "@type": "ListItem",
             position: 7,
-            name: "NOG · Kvantitativa resonemang",
+            name: "NOG: Kvantitativa resonemang",
             url: "https://tvakommanollan.se/guider/nog",
           },
           {
             "@type": "ListItem",
             position: 8,
-            name: "DTK · Diagram, tabeller, kartor",
+            name: "DTK: Diagram, tabeller, kartor",
             url: "https://tvakommanollan.se/guider/dtk",
           },
           {
@@ -141,10 +141,8 @@ function GuiderPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        eyebrow="Lärresurser"
         title="Bemästra"
-        cycleWords={["Ord.", "Läsning.", "Matte.", "Tidspress."]}
-        subtitle="Djupgående guider till alla 8 delprov plus normering, tidspress och en komplett studieplan."
+        cycleWords={["Ord.", "Läsning.", "Kvantitativ.", "Tidspress."]}
         align="center"
         variant="content"
       />
@@ -163,7 +161,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                ORD · Ordkunskap
+                ORD: Ordkunskap
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Synonymer och antonymer. Bygg ordförråd och lär dig taktiken för att plocka säkra
@@ -177,7 +175,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                MEK · Meningskomplettering
+                MEK: Meningskomplettering
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Fyll i rätt ord i meningsluckor. Logikord, distraktorer och lässtrategin som sparar
@@ -191,10 +189,10 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                LÄS · Svensk läsförståelse
+                LÄS: Svensk läsförståelse
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Fyra svenska texter per pass. Rätt lästeknik och frågeanalys avgör hur snabbt du
+                4 svenska texter per pass. Rätt lästeknik och frågeanalys avgör hur snabbt du
                 hittar svaren.
               </div>
             </Link>
@@ -205,7 +203,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                ELF · Engelsk läsförståelse
+                ELF: Engelsk läsförståelse
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Akademiska engelska texter. Ordstrategier och skillnaden mot LÄS-delprovet.
@@ -225,7 +223,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                XYZ · Matematisk problemlösning
+                XYZ: Matematisk problemlösning
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Algebra, geometri, sannolikhet och kombinatorik. Lär dig uppskatta och eliminera
@@ -239,7 +237,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                KVA · Kvantitativa jämförelser
+                KVA: Kvantitativa jämförelser
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Jämför kolumn A och B. Snabbteknik och när du ska välja "kan ej avgöras".
@@ -252,7 +250,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                NOG · Kvantitativa resonemang
+                NOG: Kvantitativa resonemang
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Räcker informationen för att lösa uppgiften? Arbetsordning och vanliga fällor.
@@ -265,7 +263,7 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                DTK · Diagram, tabeller och kartor
+                DTK: Diagram, tabeller och kartor
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Läs av diagram och tabeller korrekt. Vanliga misstag med skalor och enheter.

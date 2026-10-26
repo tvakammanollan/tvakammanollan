@@ -80,7 +80,7 @@ export function AdminForumTab() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">
-          {formatInt(queue.pendingCount)} i granskning · {formatInt(queue.reportCount)} rapporterade
+          {formatInt(queue.pendingCount)} i granskning, {formatInt(queue.reportCount)} rapporterade
         </p>
         <Button variant="ghost" size="sm" onClick={() => void refresh()} disabled={loading}>
           {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
@@ -147,12 +147,12 @@ function QueueItem({
               {formatInt(post.authorPostCount)} inlägg totalt
             </span>
             {post.status === "pending" && (
-              <span className="rounded-full bg-[var(--amber)]/15 px-2 py-0.5 text-[11px] font-medium text-[var(--amber)]">
+              <span className="text-[11px] font-medium text-[var(--amber)]">
                 I granskning
               </span>
             )}
             {banned && (
-              <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--destructive)]">
+              <span className="text-[11px] font-medium text-[var(--destructive)]">
                 Avstängd t.o.m. {formatDate(post.authorBannedUntil!)}
               </span>
             )}

@@ -1,4 +1,3 @@
-import { Target } from "lucide-react";
 import { formatDecimal, formatPercent } from "@/lib/sv-format";
 import type { ExamResult, PartResult, PassResult } from "@/lib/prov-results";
 
@@ -9,7 +8,7 @@ import type { ExamResult, PartResult, PassResult } from "@/lib/prov-results";
    alls, så uträkningen ligger i lib/prov-results.ts och renderingen här.
    ===================================================================== */
 
-const PART_LABEL = { verbal: "Verbal", kvant: "Matte" } as const;
+const PART_LABEL = { verbal: "Verbal", kvant: "Kvantitativ" } as const;
 
 /** "1 av 2 pass" — det som saknas innan delen får en poäng. */
 function partProgress(part: PartResult): string {
@@ -31,7 +30,7 @@ export function ProvScoreRow({ result }: { result: ExamResult }) {
       <PartChip part={result.verbal} />
       <PartChip part={result.kvant} />
       {result.normering !== null && (
-        <span className="inline-flex items-baseline gap-1.5 rounded-full bg-[var(--amber)]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[var(--amber)]">
+        <span className="inline-flex items-baseline gap-1.5 text-[11px] font-semibold text-[var(--amber)]">
           Totalt
           <span className="tabular-nums">{formatDecimal(result.normering, 2)}</span>
         </span>
@@ -45,12 +44,12 @@ function PartChip({ part }: { part: PartResult }) {
   const label = PART_LABEL[part.kind];
 
   return part.normering !== null ? (
-    <span className="inline-flex items-baseline gap-1.5 rounded-full bg-[var(--success-soft)] px-2.5 py-0.5 text-[11px] text-[var(--success)]">
+    <span className="inline-flex items-baseline gap-1.5 text-[11px] text-[var(--success)]">
       {label}
       <span className="font-semibold tabular-nums">{formatDecimal(part.normering, 2)}</span>
     </span>
   ) : (
-    <span className="inline-flex items-baseline gap-1.5 rounded-full bg-white/[0.05] px-2.5 py-0.5 text-[11px] text-[var(--text-tertiary)]">
+    <span className="inline-flex items-baseline gap-1.5 text-[11px] text-[var(--text-tertiary)]">
       {label}
       <span className="tabular-nums">{partProgress(part)}</span>
     </span>
@@ -79,8 +78,7 @@ export function ProvScorePanel({
 
   return (
     <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
-      <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--amber)]">
-        <Target className="h-4 w-4" aria-hidden />
+      <h2 className="flex items-center gap-2 text-xs font-semibold text-[var(--amber)]">
         {title}
       </h2>
 
@@ -140,7 +138,7 @@ function Cell({
 }) {
   return (
     <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 text-center">
-      <p className="text-[11px] font-medium uppercase tracking-wider text-[var(--text-tertiary)]">
+      <p className="text-xs font-medium text-[var(--text-tertiary)]">
         {label}
       </p>
       <p
@@ -169,9 +167,9 @@ function Cell({
 export function PassScoreBadge({ result }: { result: PassResult }) {
   return (
     <span className="inline-flex flex-col items-end gap-0.5">
-      <span className="inline-flex items-baseline gap-1 rounded-full bg-[var(--success-soft)] px-2.5 py-1 text-xs font-semibold tabular-nums text-[var(--success)]">
+      <span className="inline-flex items-baseline gap-1 text-xs font-semibold tabular-nums text-[var(--success)]">
         {result.score}/{result.total}
-        <span className="font-normal">· {formatPercent(result.score / result.total)}</span>
+        <span className="font-normal">({formatPercent(result.score / result.total)})</span>
       </span>
       {result.mode === "ova" && (
         <span className="text-[10px] text-[var(--text-tertiary)]">övningsläge</span>

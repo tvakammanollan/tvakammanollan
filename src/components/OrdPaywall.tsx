@@ -123,7 +123,7 @@ export function OrdPaywall({
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
             ) : price ? (
-              `Lås upp ordlistan och MEK · ${price}`
+              `Lås upp ordlistan och MEK, ${price}`
             ) : (
               "Köp är inte tillgängligt just nu"
             )}

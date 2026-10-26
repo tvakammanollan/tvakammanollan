@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { RelatedGuides, guideArticleJsonLd } from "@/lib/guider-meta";
@@ -9,7 +8,7 @@ export const Route = createFileRoute("/guider/tidspress")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/tidspress",
-      title: fitTitle("Tidspress på HP · strategi för varje delprov"),
+      title: fitTitle("Tidspress på HP: strategi för varje delprov"),
       description:
         "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
       ogTitle: "Tvåkommanollan | Tidspress på HP",
@@ -25,7 +24,7 @@ export const Route = createFileRoute("/guider/tidspress")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "Tidspress på Högskoleprovet · strategi för varje delprov",
+          headline: "Tidspress på Högskoleprovet: strategi för varje delprov",
           description:
             "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart.",
           url: "https://tvakommanollan.se/guider/tidspress",
@@ -42,12 +41,6 @@ function TidspressGuidePage() {
       style={{ color: "var(--text-secondary)" }}
     >
       <header className="mb-10">
-        <p
-          className="text-xs font-semibold uppercase tracking-[0.25em]"
-          style={{ color: "var(--teal)" }}
-        >
-          Strategi
-        </p>
         <h1
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
@@ -141,7 +134,7 @@ function TidspressGuidePage() {
         </h2>
         <p>
           HP har inget avdrag för fel svar. Det finns ingen anledning att någonsin lämna en uppgift
-          obesvarad. Om du kör fast: gissa. Med fyra alternativ är sannolikheten 25 % per ren
+          obesvarad. Om du kör fast: gissa. Med 4 alternativ är sannolikheten 25 % per ren
           gissning, och med eliminering av ett eller två orimliga alternativ stiger oddsen kraftigt.
           En blank ruta ger alltid noll poäng.
         </p>
@@ -165,7 +158,6 @@ function TidspressGuidePage() {
             style={{ color: "var(--amber)" }}
           >
             Spela live-match under tidspress
-            <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </p>
       </section>

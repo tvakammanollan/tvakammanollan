@@ -45,8 +45,8 @@ function VerifyPage() {
   const [reason, setReason] = useState<string>(
     token ? "" : "Länken saknar sin nyckel. Öppna adressen från mejlet igen.",
   );
-  // React 19 i utvecklingsläge monterar effekter två gånger. Utan spärren
-  // löses samma token in två gånger och andra svaret blir "redan använd".
+  // React 19 i utvecklingsläge monterar effekter 2 gånger. Utan spärren
+  // löses samma token in 2 gånger och andra svaret blir "redan använd".
   const ranRef = useRef(false);
 
   useEffect(() => {

@@ -722,17 +722,6 @@
   font-style: italic;
   letter-spacing: -0.02em;
 }
-.eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  font-style: italic;
-  font-family: var(--font-display);
-  color: var(--color-aurora-indigo);
-}
-.smallcaps {
-  letter-spacing: 0.04em;
-}
 
 /* ============================================================
    ORNAMENTAL DIVIDERS
@@ -1122,9 +1111,6 @@ button,
 .orb-fuchsia,
 
 
-.eyebrow {
-  color: var(--hp-muted);
-}
 
 .surface-paper,
 .surface-elevated {
