@@ -1,0 +1,3002 @@
+[
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Tarmvred"
+},
+"text": "Vid tarmvred gör det mycket ont i hela magen, och smärtan kommer i attacker med lugnare stunder emellan. Besvären kan komma på några timmar eller utvecklas under flera dagar, beroende på var i tarmen det har blivit _____.",
+"key": [
+"stopp"
+],
+"distractors": [
+[
+"sår"
+],
+[
+"glapp"
+],
+[
+"utrymme"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är stopp. Ordet tarmvred beskriver en tarm som har vridit sig så att innehållet inte kommer förbi. Ett sår, ett glapp eller mer utrymme i tarmen är inte vad tarmvred innebär.",
+"id": "p34-01"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Bukväggsbråck"
+},
+"text": "Mellan huden och bukens organ sitter bukväggen, som består av flera lager. Om någon del av bukväggen skadas eller _____ kan bukhinnan tränga igenom, och då har man fått ett bråck.",
+"key": [
+"försvagas"
+],
+"distractors": [
+[
+"förstärks"
+],
+[
+"tjocknar"
+],
+[
+"läks"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"par"
+],
+"explanation": "Rätt svar är försvagas. Skadas står bredvid, och en vägg som blir svagare släpper igenom det som ligger innanför. En bukvägg som förstärks, tjocknar eller läks släpper inte igenom något.",
+"id": "p34-02"
+},
+{
+"amne": "med",
+"genre": "pop",
+"source": {
+"title": "Tandborste"
+},
+"text": "En tandborste bör bytas ut då och då, både för att bakterier trivs på den och för att borsten _____, så att den inte rengör lika bra.",
+"key": [
+"slits"
+],
+"distractors": [
+[
+"mjuknar"
+],
+[
+"torkar ut"
+],
+[
+"färgas"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är slits. Så att den inte rengör lika bra visar att borsten har blivit sämre av att användas. Mjuknar, torkar ut och färgas förklarar inte att borsten fungerar sämre efter lång användning.",
+"id": "p34-03"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Prinskorv"
+},
+"text": "Prinskorv är en liten korv som hör till julbordet i Sverige. Från början kallades den siskonkorv, efter ett franskt ord som betyder _____ korv.",
+"key": [
+"pytteliten"
+],
+"distractors": [
+[
+"stekt"
+],
+[
+"kryddad"
+],
+[
+"fransk"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"upp"
+],
+"explanation": "Rätt svar är pytteliten. Prinskorven är en pytteliten korv, och namnet beskriver just det. Stekt, kryddad och fransk korv är inte vad ordet betyder.",
+"id": "p34-04"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Julgran"
+},
+"text": "Den moderna julgranen har sitt ursprung i 1500-talets Tyskland, där protestanter tog in pyntade träd i hemmen. Först fanns seden i städernas övre samhällsskikt, och sedan _____ den till andra grupper och ut på landet.",
+"key": [
+"spred sig"
+],
+"distractors": [
+[
+"flyttade"
+],
+[
+"återvände"
+],
+[
+"tvingades"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är spred sig. En sed som börjar hos en grupp och sedan når fler har blivit utbredd. Flyttade säger inte att seden fanns kvar i städerna, återvände och tvingades ger ingen mening här.",
+"id": "p34-05"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Sockenbud"
+},
+"text": "Sockenbud kallas det när en präst besöker en sjuk eller döende i hemmet. Den som är svårt sjuk _____ genom sina anhöriga prästen till sig för att få del av kyrkans sakrament.",
+"key": [
+"kallar"
+],
+"distractors": [
+[
+"skickar bort"
+],
+[
+"bjuder ut"
+],
+[
+"undervisar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är kallar. Prästen kommer på besök, alltså har den sjuke bett honom att komma. Den sjuke skickar inte bort prästen till sig, bjuder ut inte prästen till sig och undervisar inte prästen.",
+"id": "p34-06"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Kapare"
+},
+"text": "En kapare var ett privat fartyg med ett kaparbrev från en regering, som gav rätt att ta _____ handelsfartyg och deras last i besittning.",
+"key": [
+"fientliga"
+],
+"distractors": [
+[
+"egna"
+],
+[
+"vänliga"
+],
+[
+"sjunkna"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är fientliga. Ett brev från regeringen gav rätt att kapa i krig, och det gällde fiendens skepp. Egna och vänliga fartyg har man ingen rätt att kapa, och sjunkna fartyg går inte att ta i besittning.",
+"id": "p34-07"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Hemvärn"
+},
+"text": "Hemvärnet är militära reservförband med frivilliga soldater. En hemvärnssoldat har oftast ett civilt liv, och övningarna sker därför på _____.",
+"key": [
+"fritiden"
+],
+"distractors": [
+[
+"arbetstid"
+],
+[
+"nätterna"
+],
+[
+"helgdagar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är fritiden. Den som har ett vanligt jobb kan bara öva när den är ledig, och därför visar sambandet. Arbetstid strider mot det civila jobbet, och nätterna eller helgdagar är för snävt jämfört med att övningarna sker när man är ledig.",
+"id": "p34-08"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Stadshus"
+},
+"text": "Ett stadshus är en ofta centralt _____ byggnad som har byggts för att rymma förvaltningen i en större stad och användas vid representation.",
+"key": [
+"belägen"
+],
+"distractors": [
+[
+"byggd"
+],
+[
+"riven"
+],
+[
+"uppmålad"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är belägen. Centralt beskriver var byggnaden ligger, och centralt belägen är ett fast uttryck. Uppförts står redan i texten, och riven eller uppmålad säger inget om läget.",
+"id": "p34-09"
+},
+{
+"amne": "sam",
+"genre": "pop",
+"source": {
+"title": "Volontär"
+},
+"text": "En volontär erbjuder sina tjänster frivilligt och _____ betalning, oftast genom en frivilligorganisation.",
+"key": [
+"utan att kräva"
+],
+"distractors": [
+[
+"mot extra"
+],
+[
+"i väntan på"
+],
+[
+"efter förhandlad"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är utan att kräva. Frivilligt arbete görs gratis, och det är vad ordet volontär betyder. Mot extra, i väntan på och efter förhandlad betalning är inte frivilligt arbete.",
+"id": "p34-10"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Kaja"
+},
+"text": "Kajan är en kråkfågel som till största delen är stannfågel, men en del bestånd i norr och öster _____ söderut på vintern.",
+"key": [
+"drar"
+],
+"distractors": [
+[
+"häckar"
+],
+[
+"ruggar"
+],
+[
+"sjunger"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är drar. Men ställer stannfåglarna mot de fåglar som lämnar sina områden på vintern. Fåglar häckar, ruggar eller sjunger inte söderut.",
+"id": "p34-11"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Berguv"
+},
+"text": "Berguven är Europas största uggla. Den har en kraftfull kropp, ett påfallande stort huvud med örontofsar och ögon som är _____.",
+"key": [
+"orangegula"
+],
+"distractors": [
+[
+"blåa"
+],
+[
+"ljusgröna"
+],
+[
+"röda"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är orangegula. Text om fåglars utseende räknar upp fjäderdräkt och ögonfärg, och berguvens ögon är orangegula. Blåa, ljusgröna och röda ögon har inte berguven.",
+"id": "p34-12"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Grågås"
+},
+"text": "Grågåsen är en kraftigt byggd grå gås med ljusrosa näbb och ben. Den är en flyttfågel som _____ kort sträcka, och dess häckningsområde täcker stora delar av norra och centrala Eurasien.",
+"key": [
+"förflyttar sig"
+],
+"distractors": [
+[
+"simmar"
+],
+[
+"springer"
+],
+[
+"dyker"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är förflyttar sig. En flyttfågel lämnar sitt område, och kortflyttande innebär att den inte reser långt. Att simma, springa eller dyka kort sträcka gör inte en fågel till flyttfågel.",
+"id": "p34-13"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Bokmärke"
+},
+"text": "Ett bokmärke används för att _____ en plats i en bok, så att det blir lätt att hitta tillbaka till uppslaget.",
+"key": [
+"märka ut"
+],
+"distractors": [
+[
+"riva ut"
+],
+[
+"stryka över"
+],
+[
+"kopiera"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"utr"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är märka ut. Att hitta tillbaka kräver att platsen syns, och ordet bokmärke visar det. Den som river ut eller stryker över en sida hittar inte tillbaka till den, och kopiera förklarar inte bokmärket.",
+"id": "p34-14"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Glosa"
+},
+"text": "En glosa är ett ord, ofta på ett annat språk, som man ska lära sig. I skolan används ordet ofta i _____, som i engelska glosor.",
+"key": [
+"plural"
+],
+"distractors": [
+[
+"bestämd form"
+],
+[
+"förkortad form"
+],
+[
+"genitiv"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"s"
+],
+"ledtrad": [
+"def"
+],
+"explanation": "Rätt svar är plural. Exemplet glosor är pluralformen av glosa. Bestämd form vore glosan, förkortad form finns inte, och genitiv vore glosas.",
+"id": "p34-15"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Kulram"
+},
+"text": "En kulram är ett gammalt räkneredskap där kulor på stavar eller trådar kan _____ fram och tillbaka. I Japan och Kina används den fortfarande ibland.",
+"key": [
+"skjutas"
+],
+"distractors": [
+[
+"kastas"
+],
+[
+"rullas av"
+],
+[
+"knytas"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är skjutas. Kulor som sitter på stavar flyttas längs dem. Kulor på en stav kastas eller knyts inte, och rullas av skulle få dem att trilla bort.",
+"id": "p34-16"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Gatukök"
+},
+"text": "Ett gatukök är en kiosk som säljer enkla och _____ varmrätter, och det ligger ofta vid en trafikerad gata, där fotgängare och bilister gör ett kort uppehåll.",
+"key": [
+"snabblagade"
+],
+"distractors": [
+[
+"exklusiva"
+],
+[
+"långkokta"
+],
+[
+"franska"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är snabblagade. Ett kort uppehåll vid en gata kräver mat som går fort att få. Exklusiva och långkokta rätter tar tid, och franska rätter är inte vad ett gatukök utmärks av.",
+"id": "p34-17"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Regnbåge"
+},
+"text": "En regnbåge syns på himlen när solen _____ på fallande regn, och solen står då lågt och bakom den som tittar.",
+"key": [
+"lyser"
+],
+"distractors": [
+[
+"regnar"
+],
+[
+"slumrar"
+],
+[
+"snöar"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"v"
+],
+"ledtrad": [
+"kol"
+],
+"explanation": "Rätt svar är lyser. Ljuset bryts i regndropparna och ger färgerna, alltså måste solen skina på regnet. Solen regnar, slumrar eller snöar inte.",
+"id": "p34-18"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Agorafobi"
+},
+"text": "Agorafobi kallas ibland torgskräck, men det är en missuppfattning att den bara gäller öppna platser. Också _____ offentliga platser väcker ångest, särskilt när det är trängsel.",
+"key": [
+"befolkade"
+],
+"distractors": [
+[
+"tomma"
+],
+[
+"stängda"
+],
+[
+"nyrenoverade"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"kon"
+],
+"explanation": "Rätt svar är befolkade. Också visar att det handlar om något annat än tomma ytor, och trängsel betyder att det finns mycket folk. Tomma platser är just de öppna ytorna, och stängda eller nyrenoverade platser har ingen trängsel.",
+"id": "p34-19"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Vokal"
+},
+"text": "En vokal bildas utan att luftvägen ovanför stämbanden trängs ihop, och motståndet är så _____ att ingen hörbar friktion uppstår.",
+"key": [
+"litet"
+],
+"distractors": [
+[
+"stort"
+],
+[
+"ojämnt"
+],
+[
+"högljutt"
+]
+],
+"dtyp": [
+[
+"fa"
+],
+[
+"fa"
+],
+[
+"fa"
+]
+],
+"faller": [
+[
+1
+],
+[
+1
+],
+[
+1
+]
+],
+"ordklass": [
+"a"
+],
+"ledtrad": [
+"ors"
+],
+"explanation": "Rätt svar är litet. Att ingen friktion hörs beror på att luften kommer ut nästan utan hinder. Stort strider mot att friktionen inte hörs, och ojämnt eller högljutt motstånd ger hörbara ljud.",
+"id": "p34-20"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 IBS"
+},
+"text": "IBS står för irritable bowel syndrome, vilket ungefär betyder _____ tarm. För diagnosen krävs magsmärtor tillsammans med till exempel förstoppning eller diarré, eller att magen _____ mellan dem.",
+"key": [
+"överkänslig",
+"pendlar"
+],
+"distractors": [
+[
+"lättretlig",
+"fastnar"
+],
+[
+"frisk",
+"skiftar"
+],
+[
+"förlamad",
+"sover"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är överkänslig och pendlar. Irritable betyder att något lätt blir irriterat, och lättretlig fungerar också. Mellan förstoppning och diarré beskriver att magen går från det ena till det andra, och skiftar fungerar också. En frisk eller förlamad tarm ger ingen IBS, och en mage fastnar eller sover inte mellan två besvär.",
+"id": "p34-21"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Inflammerade tarmfickor"
+},
+"text": "En inflammerad tarmficka gör ofta ont längst ned på vänster sida av magen. Inflammationen kan få tarmfickan att _____, och då kan den _____ och ge mycket ont i hela magen.",
+"key": [
+"brista",
+"breda ut sig"
+],
+"distractors": [
+[
+"gå sönder",
+"dra sig undan"
+],
+[
+"krympa ihop",
+"sprida ut sig"
+],
+[
+"lossna",
+"somna"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"utr"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är brista och breda ut sig. En ficka som blir inflammerad kan gå hål på, och gå sönder fungerar också. Ont i hela magen visar att inflammationen har nått längre, och sprida ut sig fungerar också. En ficka som krymper ihop eller lossnar ger inte ont i hela magen, och en inflammation drar sig inte undan eller somnar när den förvärras.",
+"id": "p34-22"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Körtelmage hos barn"
+},
+"text": "Körtelmage är vanligast hos barn under tolv år och ger ofta ont i nedre högra delen av magen och feber över 39 grader. Smärtan kan _____, och när barnet har ont går det ofta _____ med händerna över magen.",
+"key": [
+"komma och gå",
+"framåtböjt"
+],
+"distractors": [
+[
+"skifta",
+"rakryggat"
+],
+[
+"sitta stilla",
+"hopkrupet"
+],
+[
+"sjunga",
+"baklänges"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"utr",
+"adv"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är komma och gå och framåtböjt. Smärta som inte är konstant kommer i omgångar, och skifta fungerar också. Händerna över magen hör ihop med att barnet kröker sig, och hopkrupet fungerar också. Smärta sitter inte stilla eller sjunger, och ett barn med ont i magen går inte rakryggat eller baklänges.",
+"id": "p34-23"
+},
+{
+"amne": "med",
+"genre": "myn",
+"source": {
+"title": "1177 Dyspepsi"
+},
+"text": "Ont i övre delen av magen kallas ofta magkatarr, men oftast handlar det om funktionell dyspepsi, även kallad _____ mage. Ordet katarr _____ att det rör sig om en infektion, men så är det inte.",
+"key": [
+"känslig",
+"antyder"
+],
+"distractors": [
+[
+"ömtålig",
+"bevisar"
+],
+[
+"tom",
+"låter förstå"
+],
+[
+"sjunkande",
+"förnekar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är känslig och antyder. En mage som reagerar lätt utan att vara sjuk är ömtålig, och ömtålig fungerar också. Ordet ger ett felaktigt intryck utan att säga det rakt ut, och låter förstå fungerar också. En tom eller sjunkande mage är ingen diagnos, och ett ord bevisar eller förnekar inte något om magen.",
+"id": "p34-24"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Schottis"
+},
+"text": "Schottisen, en grupp pardanser, är nära _____ med polkan, och båda räknas som hoppvalser. På 1830-talet var schottisen mycket _____ i Tyskland, där den också kallades skotsk vals.",
+"key": [
+"besläktad",
+"populär"
+],
+"distractors": [
+[
+"släkt",
+"impopulär"
+],
+[
+"oense",
+"omtyckt"
+],
+[
+"gift",
+"stängd"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"a"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är besläktad och populär. Danser med samma ursprung är nära släkt, och släkt fungerar också. En dans som får ett eget namn och sprids är omtyckt, och omtyckt säger samma sak. Danser är inte oense eller gifta med varandra, och en impopulär eller stängd dans sprids inte.",
+"id": "p34-25"
+},
+{
+"amne": "kul",
+"genre": "pop",
+"source": {
+"title": "Smörgåsbord"
+},
+"text": "Smörgåsbordet var från början en svensk förrätt, men sedan mitten av 1900-talet är ordet ett _____ för en buffé med många rätter. Under 1900-talet _____ buffén över världen och blev en symbol för svensk mat.",
+"key": [
+"samlingsnamn",
+"bredde ut sig"
+],
+"distractors": [
+[
+"paraplyord",
+"försvagades"
+],
+[
+"bannlysning",
+"fördes ut"
+],
+[
+"recept",
+"frös"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är samlingsnamn och bredde ut sig. Ett ord som täcker en hel buffé av olika rätter är ett samlingsnamn, och paraplyord fungerar också. En symbol för svensk mat som blir känd utomlands har förts ut i världen, och fördes ut säger samma sak. Smörgåsbordet är inget bannlysning eller recept, och en buffé som försvagades eller frös blir ingen symbol.",
+"id": "p34-26"
+},
+{
+"amne": "jur",
+"genre": "myn",
+"source": {
+"title": "Domsaga"
+},
+"text": "En domsaga var ett område där en viss tingsrätt prövade målen som första _____. Från och med 2018 _____ sådana områden i stället domkretsar, och ordet domsaga används inte längre.",
+"key": [
+"instans",
+"benämns"
+],
+"distractors": [
+[
+"domstol",
+"avskaffas"
+],
+[
+"fängelse",
+"heter"
+],
+[
+"semesterort",
+"auktioneras ut"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är instans och benämns. Första instans är den första domstol som prövar ett mål, och domstol fungerar också. Att ordet byts ut visar att områdena har fått ett annat namn, och heter fungerar också. En tingsrätt är inget fängelse eller semesterort, och områden avskaffas eller auktioneras ut inte domkretsar.",
+"id": "p34-27"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Ting"
+},
+"text": "Ting var församlingar i det forntida och medeltida Norden där man stiftade lagar, _____ och skötte förvaltningen. Begreppet lever kvar i _____ på flera nordeuropeiska parlament, som Stortinget och Alltinget.",
+"key": [
+"dömde",
+"namnen"
+],
+"distractors": [
+[
+"skipade rätt",
+"lagarna"
+],
+[
+"bröt lagen",
+"beteckningarna"
+],
+[
+"dansade",
+"tavlorna"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"upp",
+"kol"
+],
+"explanation": "Rätt svar är dömde och namnen. Rättskipning står bredvid lagstiftning, alltså avgjorde tinget också mål, och skipade rätt fungerar också. Stortinget och Alltinget är namn på parlament, och beteckningarna säger samma sak. Ett ting bröt inte lagen och dansade inte, och lagar eller tavlor på parlamenten bär inte ordet ting.",
+"id": "p34-28"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Barnavårdscentral"
+},
+"text": "På en barnavårdscentral håller man koll på hur nyfödda och små barn mår, och besöken är _____. När barnet börjar förskoleklass _____ skolans elevhälsa ansvaret för barnets hälsovård.",
+"key": [
+"kostnadsfria",
+"tar över"
+],
+"distractors": [
+[
+"gratis",
+"lämnar ifrån sig"
+],
+[
+"dyrbara",
+"övertar"
+],
+[
+"förbjudna mot",
+"tappar bort"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"utr"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är kostnadsfria och tar över. Besök inom offentlig barnhälsovård kostar inget, och gratis fungerar också. När barnet börjar skolan är det skolan som får ansvaret, och övertar säger samma sak. Dyrbara och förbjudna besök stämmer inte med barnhälsovården, och elevhälsan lämnar inte ifrån sig eller tappar bort ansvaret när den får det.",
+"id": "p34-29"
+},
+{
+"amne": "sam",
+"genre": "myn",
+"source": {
+"title": "Socialtjänst"
+},
+"text": "Socialtjänsten är den _____ förvaltning som lyder under socialnämnden och sköter det arbete som socialtjänstlagen reglerar. Det exakta namnet på förvaltningen kan _____ mellan olika orter.",
+"key": [
+"kommunala",
+"skifta"
+],
+"distractors": [
+[
+"lokala",
+"utebli"
+],
+[
+"statliga",
+"variera"
+],
+[
+"ideella",
+"sjunga"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är kommunala och skifta. Socialnämnden finns i varje kommun, alltså är förvaltningen kommunens, och lokala fungerar också. Från kommun till kommun beskriver att namnet är olika, och variera säger samma sak. Statliga och ideella förvaltningar lyder inte under kommunens nämnd, och ett namn uteblir eller sjunger inte från kommun till kommun.",
+"id": "p34-30"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Knölsvan"
+},
+"text": "Knölsvanen är en stor och vit andfågel, och dess orange näbb har en svart knöl vid _____. Den väger i snitt omkring tolv kilo och hör därmed till de _____ flygande fåglarna.",
+"key": [
+"näbbroten",
+"tyngsta"
+],
+"distractors": [
+[
+"näbbasen",
+"lättaste"
+],
+[
+"stjärten",
+"största"
+],
+[
+"fötterna",
+"snabbaste"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är näbbroten och tyngsta. Knölen sitter där näbben möter huvudet, och näbbasen fungerar också. Tolv kilo är mycket för en fågel som flyger, och största fungerar också. Knölen sitter inte på stjärten eller fötterna, och en fågel på tolv kilo är varken bland de lättaste eller de snabbaste av den anledningen.",
+"id": "p34-31"
+},
+{
+"amne": "bio",
+"genre": "pop",
+"source": {
+"title": "Bergfink"
+},
+"text": "Bergfinken är nära _____ med bofinken och liknar den, men har en vit övergump. Den häckar i hela barrskogsbältet längst i norr men _____ längre söderut, bland annat i västra och mellersta Europa.",
+"key": [
+"befryndad",
+"övervintrar"
+],
+"distractors": [
+[
+"besläktad",
+"häckar"
+],
+[
+"oense",
+"tillbringar vintern"
+],
+[
+"gift",
+"föds"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är befryndad och övervintrar. Två finkar som liknar varandra hör till samma släkte, och besläktad fungerar också. Men ställer häckningen i norr mot var fågeln finns resten av året, och tillbringar vintern säger samma sak. Fåglar är inte oense eller gifta med varandra, och häckar eller föds strider mot att häckningen sker i norr.",
+"id": "p34-32"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Herdedikt"
+},
+"text": "Herdedikten handlar om herdar och andra enkla landsbor och om deras kärlek. I antikens Grekland fick bara komedin _____ vanliga människor, och herdediktningen blev därför en viktig _____.",
+"key": [
+"skildra",
+"motvikt"
+],
+"distractors": [
+[
+"beskriva",
+"efterföljare"
+],
+[
+"bannlysa",
+"kontrast"
+],
+[
+"döma",
+"rättegång"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"kol",
+"ors"
+],
+"explanation": "Rätt svar är skildra och motvikt. En genre som handlar om vanliga människor framställer dem, och beskriva fungerar också. Om bara komedin fick visa vanligt folk blev en allvarligare genre om dem något annat, och kontrast fungerar också. Komedin förbjöd eller dömde inte vanliga människor, och herdedikten var ingen efterföljare eller rättegång.",
+"id": "p34-33"
+},
+{
+"amne": "lit",
+"genre": "pop",
+"source": {
+"title": "Högläsning"
+},
+"text": "Läsning är att _____ och förstå en text. Den som aldrig har fått lära sig att läsa är analfabet, medan den som har svårt att läsa trots skolgång brukar sägas ha _____.",
+"key": [
+"avkoda",
+"dyslexi"
+],
+"distractors": [
+[
+"tyda",
+"näsblod"
+],
+[
+"skriva",
+"lässvårigheter"
+],
+[
+"sjunga",
+"hicka"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"v",
+"s"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är avkoda och dyslexi. Att läsa börjar med att man tolkar tecknen, och tyda fungerar också. Medan ställer den som inte fått lära sig mot den som har svårt trots skolgång, och lässvårigheter fungerar också. Att skriva eller sjunga en text är inte läsning, och näsblod eller hicka är inte svårigheter med att läsa.",
+"id": "p34-34"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Skolväska"
+},
+"text": "En ryggsäck bärs på ryggen och är i sin enklaste form en _____ säck med två remmar som läggs över axlarna. I sina mindre storlekar har ryggsäcken till stor del _____ skolväskan.",
+"key": [
+"lös",
+"ersatt"
+],
+"distractors": [
+[
+"enkel",
+"stängt"
+],
+[
+"tung",
+"avlöst"
+],
+[
+"vattentät",
+"läst"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är lös och ersatt. Den enklaste formen är en säck utan ram, och enkel fungerar också. Gamla tiders skolväska har fått lämna plats, och avlöst fungerar också. Tung och vattentät beskriver inte den enklaste formen, och en ryggsäck stänger eller läser inte en skolväska.",
+"id": "p34-35"
+},
+{
+"amne": "utb",
+"genre": "pop",
+"source": {
+"title": "Fakultet"
+},
+"text": "En fakultet är en _____ enhet inom ett universitet eller en högskola, och den ansvarar oftast ytterst för forskning och _____ inom en grupp av ämnen.",
+"key": [
+"organisatorisk",
+"utbildning"
+],
+"distractors": [
+[
+"administrativ",
+"turism"
+],
+[
+"militär",
+"undervisning"
+],
+[
+"juridisk",
+"fordringar"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"a",
+"s"
+],
+"ledtrad": [
+"kol",
+"par"
+],
+"explanation": "Rätt svar är organisatorisk och utbildning. En enhet vid ett universitet är en del av dess organisation, och administrativ fungerar också. Forskning och undervisning är universitetens två uppgifter, och undervisning säger samma sak. En militär eller juridisk enhet hör inte till ett universitet på det sättet, och turism eller fordringar är inget fakulteten ansvarar för.",
+"id": "p34-36"
+},
+{
+"amne": "eko",
+"genre": "pop",
+"source": {
+"title": "Sponsring"
+},
+"text": "En sponsor ger pengar eller tjänster till en verksamhet i _____ mot något annat. Inom idrotten får sponsorn oftast _____ i form av reklam och marknadsföring.",
+"key": [
+"utbyte",
+"exponering"
+],
+"distractors": [
+[
+"byte",
+"bot"
+],
+[
+"protest",
+"synlighet"
+],
+[
+"konflikt",
+"förlåtelse"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"kol",
+"def"
+],
+"explanation": "Rätt svar är utbyte och exponering. Den som ger något och får något tillbaka gör det i utbyte, och byte fungerar också. Reklam och marknadsföring är att synas, och synlighet fungerar också. En sponsor ger inte i protest eller konflikt, och bot eller förlåtelse är inte vad sponsorn vill ha.",
+"id": "p34-37"
+},
+{
+"amne": "eko",
+"genre": "myn",
+"source": {
+"title": "Handelsbolag"
+},
+"text": "Ett handelsbolag drivs av två eller flera bolagsmän, som är _____ ansvariga för bolagets avtal och skulder. I ett kommanditbolag måste minst en bolagsman ha ett _____ ansvar.",
+"key": [
+"personligen",
+"inskränkt"
+],
+"distractors": [
+[
+"själva",
+"fullständigt"
+],
+[
+"knappt",
+"begränsat"
+],
+[
+"måttligt",
+"oändligt"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"adv",
+"a"
+],
+"ledtrad": [
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är personligen och inskränkt. Bolagsmännen svarar själva för skulderna, och själva fungerar också. Kommanditbolaget är en särskild form där någon har ett mindre ansvar, och begränsat fungerar också. Knappt och måttligt strider mot att ägarna ansvarar för bolaget, och fullständigt eller oändligt ansvar är inte det som gör kommanditbolaget särskilt.",
+"id": "p34-38"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Fjäll"
+},
+"text": "Ett fjäll är ett berg eller ett flackare landskap vars högsta delar når över _____. Där finns ingen sammanhängande skog, och i stället kännetecknas fjället av _____ växter.",
+"key": [
+"skogsgränsen",
+"lågväxta"
+],
+"distractors": [
+[
+"trädgränsen",
+"högväxta"
+],
+[
+"molnen",
+"korta"
+],
+[
+"havsytan",
+"giftiga"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"a"
+],
+"ledtrad": [
+"def",
+"kon"
+],
+"explanation": "Rätt svar är skogsgränsen och lågväxta. Ett fjäll saknar sammanhängande skog, alltså når det högre upp än där skogen växer, och trädgränsen fungerar också. I stället för skog växer det småväxta örter och buskar, och korta fungerar också. Alla berg når över havsytan, molnen ligger ofta högre än fjället, och högväxta eller giftiga växter är inte det som kännetecknar fjället.",
+"id": "p34-39"
+},
+{
+"amne": "spr",
+"genre": "pop",
+"source": {
+"title": "Passiv form"
+},
+"text": "Passiv form är en böjningsform av verb som visar att subjektet är _____ för handlingen. I svenskan bildas passiv antingen med ändelsen -s eller genom en _____ med hjälpverb som bli eller vara.",
+"key": [
+"föremålet",
+"omskrivning"
+],
+"distractors": [
+[
+"målet",
+"förminskning"
+],
+[
+"upphovet",
+"konstruktion"
+],
+[
+"fienden",
+"sång"
+]
+],
+"dtyp": [
+[
+"de",
+"fa"
+],
+[
+"fa",
+"de"
+],
+[
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+2
+],
+[
+1
+],
+[
+1,
+2
+]
+],
+"ordklass": [
+"s",
+"s"
+],
+"ledtrad": [
+"def",
+"kol"
+],
+"explanation": "Rätt svar är föremålet och omskrivning. I passiv drabbas subjektet av handlingen i stället för att utföra den, och målet fungerar också. Ett hjälpverb tillsammans med verbet är ett annat sätt att uttrycka samma sak, och konstruktion fungerar också. Upphovet till handlingen är just aktiv form, fienden ger ingen mening, och en förminskning eller sång bildar inte passiv.",
+"id": "p34-40"
+},
+{
+"amne": "his",
+"genre": "pop",
+"source": {
+"title": "Kanon"
+},
+"text": "En kanon är ett grovkalibrigt eldvapen som oftast används för att skjuta _____ mot ett mål man ser. Numera ska kalibern vara minst 20 millimeter, men förr fanns det sällan någon _____ norm, och gränsen har _____ mellan olika försvarsgrenar.",
+"key": [
+"rakt",
+"gemensam",
+"varierat"
+],
+"distractors": [
+[
+"direkt",
+"likformig",
+"stått still"
+],
+[
+"i båge",
+"allmän",
+"skiftat"
+],
+[
+"försiktigt",
+"mytisk",
+"sjungit"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"adv",
+"a",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är rakt, gemensam och varierat. Ett vapen som skjuter mot ett mål det ser riktas direkt mot det, och direkt fungerar också. Att normen saknades mellan olika delar av försvaret visar att det inte fanns någon som gällde för alla, och likformig eller allmän fungerar också. Gränsen var olika mellan försvarsgrenarna, och skiftat säger samma sak. Att skjuta i båge är motsatsen till att sikta direkt, en kanon skjuter inte försiktigt, en mytisk norm finns inte, och en gräns som stått still eller sjungit varierar inte.",
+"id": "p34-41"
+},
+{
+"amne": "eko",
+"genre": "myn",
+"source": {
+"title": "Ackordslön"
+},
+"text": "Lön är ersättningen för att utföra ett arbete eller stå till förfogande för det. I regel betalas den ut i _____, men den kan också ges i form av varor eller tjänster. Förr arbetade många mot kost och _____, eller fick sin årslön i kläder och _____.",
+"key": [
+"kontanter",
+"husrum",
+"matvaror"
+],
+"distractors": [
+[
+"sedlar",
+"logi",
+"guld"
+],
+[
+"aktier",
+"bostad",
+"livsmedel"
+],
+[
+"sånger",
+"stillhet",
+"fordringar"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"s",
+"s"
+],
+"ledtrad": [
+"kon",
+"kol",
+"par"
+],
+"explanation": "Rätt svar är kontanter, husrum och matvaror. Men ställer den vanliga lönen i pengar mot lön i varor och tjänster, och sedlar fungerar också. Kost och ett ställe att bo på hör ihop, och logi eller bostad fungerar också. Kläder står i en uppräkning av förnödenheter, och livsmedel säger samma sak. Lön betalas i regel inte i aktier eller sånger, stillhet är inget man arbetar för, och guld eller fordringar är inte förnödenheter som en årslön förr bestod av.",
+"id": "p34-42"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Förvaltningsrätt"
+},
+"text": "Förvaltningsrätt är det rättsområde som _____ hur den offentliga förvaltningen arbetar och är organiserad och hur den förhåller sig till enskilda. En stor del av förvaltningen består av _____, och området delas in i allmän och speciell förvaltningsrätt, där den allmänna handlar om hur förvaltningen ska _____.",
+"key": [
+"rör",
+"myndigheter",
+"fungera"
+],
+"distractors": [
+[
+"innefattar",
+"privatpersoner",
+"förfalla"
+],
+[
+"förbiser",
+"ämbetsverk",
+"verka"
+],
+[
+"ignorerar",
+"idrottsklubbar",
+"semestra"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är rör, myndigheter och fungera. Ett rättsområde gäller vissa frågor, och innefattar fungerar också. Den offentliga förvaltningen består av ämbetsverk, och ämbetsverk fungerar också. Den allmänna förvaltningsrätten anger hur förvaltningen ska fungera, och verka säger samma sak. Ett rättsområde förbiser eller ignorerar inte det det handlar om, privatpersoner och idrottsklubbar är inte offentlig förvaltning, och förvaltningen ska inte förfalla eller semestra.",
+"id": "p34-43"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Huvudförhandling"
+},
+"text": "Huvudförhandlingen är det sammanträde i domstolen där det ska _____, till exempel om den som misstänks för ett brott är skyldig, och samtidigt vilken _____ det ska bli. När folk talar om en rättegång är det i regel huvudförhandlingen som _____.",
+"key": [
+"avgöras",
+"påföljd",
+"avses"
+],
+"distractors": [
+[
+"bestämmas",
+"bestraffning",
+"tappas"
+],
+[
+"förhalas",
+"sanktion",
+"menas"
+],
+[
+"dansas",
+"middag",
+"auktioneras"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"s",
+"v"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är avgöras, påföljd och avses. Domstolen ska komma fram till om den misstänkte är skyldig, och bestämmas fungerar också. Det som följer på en fällande dom är ett straff eller en annan åtgärd, och bestraffning eller sanktion fungerar också. Det man menar med rättegång i vardagligt tal är huvudförhandlingen, och menas säger samma sak. En domstol förhalar eller firar inte sitt avgörande, en middag är ingen påföljd, och ett ord som tappas eller auktioneras pekar inte ut något.",
+"id": "p34-44"
+},
+{
+"amne": "jur",
+"genre": "pop",
+"source": {
+"title": "Jordabalken"
+},
+"text": "Jordabalken är den lag som samlar _____ bestämmelser om fast egendom. Den ingick från början bland de nio balkarna i 1734 års lag men har senare _____ av nyare lagar, och i Sverige är det jordabalken från 1970 som är _____.",
+"key": [
+"grundläggande",
+"avlösts",
+"gällande"
+],
+"distractors": [
+[
+"centrala",
+"efterträtts",
+"utgången"
+],
+[
+"tillfälliga",
+"bytts ut",
+"i kraft"
+],
+[
+"påhittade",
+"firats",
+"tänkt"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"v",
+"a"
+],
+"ledtrad": [
+"kol",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är grundläggande, avlösts och gällande. En lag om fast egendom samlar de viktigaste reglerna på området, och centrala fungerar också. En gammal lag som fått nya lagar i sitt ställe har bytts ut, och efterträtts fungerar också. Lagen från 1970 är den som gäller, och i kraft säger samma sak. Tillfälliga och påhittade bestämmelser är inte en grundlag om egendom, en lag firas inte av nya lagar, och en utgången eller tänkt lag gäller inte.",
+"id": "p34-45"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Deduktion"
+},
+"text": "Deduktion är att _____ slutsatser ur givna premisser. Mellan premisserna och slutsatsen finns ett villkorat samband i stil med att om P gäller, så gäller S, och begreppet används också i _____ mening om all forskning som _____ från teoretiska antaganden.",
+"key": [
+"härleda",
+"vidare",
+"utgår"
+],
+"distractors": [
+[
+"dra",
+"bredare",
+"avviker"
+],
+[
+"gissa",
+"allmännare",
+"tar sin början"
+],
+[
+"förneka",
+"snävare",
+"flyr"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"v",
+"a",
+"v"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är härleda, vidare och utgår. En slutsats ur premisser tas fram genom att följa dem, och dra fungerar också. Att begreppet också gäller all forskning av ett visst slag visar en bredare betydelse, och bredare eller allmännare fungerar också. Forskning som börjar i teorin tar sin början där, och tar sin början säger samma sak. Man gissar eller förnekar inte slutsatser i deduktion, snävare strider mot all forskning, och forskning som avviker från eller flyr antagandena bygger inte på dem.",
+"id": "p34-46"
+},
+{
+"amne": "fil",
+"genre": "pop",
+"source": {
+"title": "Syllogism"
+},
+"text": "En syllogism är ett sätt att ur två _____ dra en slutsats. Begreppet går tillbaka på Aristoteles, och hans lära om syllogismerna räknades länge till det exakta tänkandets främsta _____ och ingick i många länder i gymnasiets _____ långt in på 1900-talet.",
+"key": [
+"premisser",
+"triumfer",
+"läroplan"
+],
+"distractors": [
+[
+"påståenden",
+"segrar",
+"matsal"
+],
+[
+"frågor",
+"landvinningar",
+"undervisning"
+],
+[
+"dikter",
+"förluster",
+"idrott"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"s",
+"s",
+"s"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är premisser, triumfer och läroplan. En slutsats dras ur två antaganden, och påståenden fungerar också. Det som ses som ett av tänkandets största framsteg är en seger, och segrar eller landvinningar fungerar också. Det man läser i gymnasiet står i läroplanen, och undervisning fungerar också. Ur frågor eller dikter drar man inte en slutsats, en förlust är inget man beundrar, och syllogismer ingår inte i matsalen eller idrotten.",
+"id": "p34-47"
+},
+{
+"amne": "mil",
+"genre": "pop",
+"source": {
+"title": "Landhöjning"
+},
+"text": "Landhöjning innebär att jordskorpan höjs _____ havsnivån. I områden som har varit täckta av inlandsis, till exempel i Skandinavien, förekommer landhöjning _____ istiden. Landsänkning är _____.",
+"key": [
+"i förhållande till",
+"efter",
+"motsatsen"
+],
+"distractors": [
+[
+"jämfört med",
+"före",
+"fortsättningen"
+],
+[
+"oberoende av",
+"sedan",
+"det omvända"
+],
+[
+"i stället för",
+"under",
+"sjukdomen"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"utr",
+"fu",
+"s"
+],
+"ledtrad": [
+"def",
+"kol",
+"def"
+],
+"explanation": "Rätt svar är i förhållande till, efter och motsatsen. Höjningen mäts mot havsytan, och jämfört med fungerar också. Landet höjer sig sedan isens tyngd har försvunnit, alltså efter istiden, och sedan fungerar också. Landsänkning är det omvända mot att landet höjs, och det omvända säger samma sak. Oberoende av och i stället för strider mot att höjningen mäts mot havet, landet höjdes inte före eller under istiden medan isen låg kvar, och fortsättningen eller sjukdomen är inte vad landsänkning är.",
+"id": "p34-48"
+},
+{
+"amne": "psy",
+"genre": "pop",
+"source": {
+"title": "Flow"
+},
+"text": "Flow är ett tillstånd som uppstår när en människa blir helt _____ av en aktivitet och glömmer bort sig själv, samtidigt som hon får en djup känsla av _____. Begreppet har sedan blivit _____ känt efter att psykologen Csikszentmihalyi beskrev det i en bok från 1975.",
+"key": [
+"uppslukad",
+"behärskning",
+"vida"
+],
+"distractors": [
+[
+"absorberad",
+"herravälde",
+"knappt"
+],
+[
+"uttråkad",
+"självkontroll",
+"brett"
+],
+[
+"sårad",
+"skam",
+"knappast"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"s",
+"adv"
+],
+"ledtrad": [
+"def",
+"kol",
+"kol"
+],
+"explanation": "Rätt svar är uppslukad, behärskning och vida. Den som glömmer bort sig själv i en aktivitet är helt fångad av den, och absorberad fungerar också. Flow beskrivs som ett tillstånd där man har allt under kontroll, och herravälde eller självkontroll fungerar också. Efter att begreppet beskrevs i en bok blev det känt för många, och brett fungerar också. Uttråkad och sårad strider mot att man går upp i aktiviteten, skam är ingen positiv känsla, och knappt eller knappast känt strider mot att boken gjorde begreppet känt.",
+"id": "p34-49"
+},
+{
+"amne": "tek",
+"genre": "pop",
+"source": {
+"title": "Radioapparat"
+},
+"text": "Radio är _____ överföring av signaler med elektromagnetiska vågor, vars frekvens ligger under det synliga ljusets. En sändare sänder oftast åt alla håll, och täckningen kan utökas med reläsändare som tar emot signalerna och sänder dem vidare _____. Överföringen kan också ske _____ mellan två fasta punkter.",
+"key": [
+"trådlös",
+"förstärkta",
+"riktat"
+],
+"distractors": [
+[
+"kabellös",
+"försvagade",
+"ensidigt"
+],
+[
+"optisk",
+"förbättrade",
+"koncentrerat"
+],
+[
+"mekanisk",
+"stulna",
+"bakvänt"
+]
+],
+"dtyp": [
+[
+"de",
+"de",
+"fa"
+],
+[
+"fa",
+"de",
+"de"
+],
+[
+"fa",
+"fa",
+"fa"
+]
+],
+"faller": [
+[
+3
+],
+[
+1
+],
+[
+1,
+2,
+3
+]
+],
+"ordklass": [
+"a",
+"a",
+"adv"
+],
+"ledtrad": [
+"def",
+"kol",
+"kon"
+],
+"explanation": "Rätt svar är trådlös, förstärkta och riktat. Radio skickar signaler genom luften utan ledningar, och kabellös fungerar också. En reläsändare som ska nå längre bort gör signalen starkare, och förbättrade fungerar också. Också ställer sändning mellan två punkter mot sändning åt alla håll, och koncentrerat fungerar också. Optisk och mekanisk överföring är inte radio, en signal som försvagas eller stjäls når inte längre, och ensidigt eller bakvänt beskriver inte sändning mellan två punkter.",
+"id": "p34-50"
+}
+]
