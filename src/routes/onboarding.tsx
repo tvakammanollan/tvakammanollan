@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
+import { readPendingPlan } from "@/lib/pending-plan";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -33,7 +34,14 @@ function OnboardingPage() {
   const [submitting, setSubmitting] = useState(false);
 
   if (!loading && !user) return <Navigate to="/login" />;
-  if (profile && !isAutoUsername(profile.username)) return <Navigate to="/" />;
+  // Ett köp som valdes före registreringen går vidare till kassan.
+  const pendingPlan = readPendingPlan();
+  if (profile && !isAutoUsername(profile.username))
+    return pendingPlan ? (
+      <Navigate to="/ord" search={{ plan: pendingPlan }} />
+    ) : (
+      <Navigate to="/" />
+    );
 
   // Google-inloggningen landar här (se GoogleButton), och den som redan valt
   // namn skickas vidare av guarden ovan — men först när profilen kommit hem.
@@ -72,7 +80,7 @@ function OnboardingPage() {
     }
     toast.success(`Välkommen, ${parsed.data}`);
     refreshProfile();
-    navigate({ to: "/" });
+    navigate(pendingPlan ? { to: "/ord", search: { plan: pendingPlan } } : { to: "/" });
   };
 
   return (

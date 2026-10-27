@@ -13,6 +13,7 @@ import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { OrdPaywall } from "@/components/OrdPaywall";
 import { isOrdPlan, type OrdPlan } from "@/lib/ord-paywall";
+import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
 import {
   confirmOrdCheckout,
   getOrdAccess,
@@ -241,6 +242,13 @@ function OrdPracticePage() {
     const plan = new URLSearchParams(window.location.search).get("plan");
     if (isOrdPlan(plan)) setPresetPlan(plan);
   }, []);
+  // Utloggad: kom ihåg valet över inloggningen (`pending-plan.ts`). Inloggad:
+  // valet är förbrukat här, så nästa inloggning går till startsidan som vanligt.
+  useEffect(() => {
+    if (!presetPlan || authLoading) return;
+    if (user) clearPendingPlan();
+    else rememberPendingPlan(presetPlan);
+  }, [presetPlan, authLoading, user]);
   // Varna bara en gång per session om svars-sparandet strular.
   const recordWarnedRef = useRef(false);
 
@@ -522,6 +530,17 @@ function OrdPracticePage() {
                     Logga in
                   </Link>
                 </div>
+              </GlassCard>
+            )}
+            {presetPlan && access?.owned && (
+              <GlassCard className="mb-4 p-6 text-center sm:p-8">
+                <h2 className="text-xl font-semibold text-[var(--cream)]">
+                  Du har redan hela ordlistan och MEK
+                </h2>
+                <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
+                  Ditt konto har ett köp som gäller, så det finns inget att betala. Börja öva direkt
+                  här nedanför.
+                </p>
               </GlassCard>
             )}
             {access && !access.owned && (access.locked || presetPlan) && (
