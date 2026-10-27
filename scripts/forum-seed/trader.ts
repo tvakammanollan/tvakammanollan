@@ -997,4 +997,665 @@ Börja med ett [gammalt prov](https://tvakommanollan.se/gamla-prov) för att se 
 
 Varje punkt har en egen tråd här i forumet om du vill läsa mer.`,
   },
+
+  /* ── Kvantitativ, fler ämnen (2026-10-26) ────────────────────── */
+  {
+    category: "kvantitativ",
+    title: "Procentuell ökning följd av minskning: varför blir det inte noll?",
+    question: `Priset höjs med 20 % och sänks sedan med 20 %. Varför är det inte tillbaka där det började?`,
+    answer: String.raw`Den andra procentsatsen räknas på ett **nytt** belopp. Använd förändringsfaktorer så ser du det direkt:
+
+- Höjning med 20 % ger faktorn $1{,}2$.
+- Sänkning med 20 % ger faktorn $0{,}8$.
+- Tillsammans: $1{,}2 \cdot 0{,}8 = 0{,}96$, alltså **4 % lägre** än från början.
+
+Samma sak gäller åt andra hållet: för att komma tillbaka efter en sänkning med 20 % måste du höja med 25 %, eftersom $0{,}8 \cdot 1{,}25 = 1$.
+
+**Tumregel:** multiplicera faktorerna, lägg aldrig ihop procentsatserna. Det är den vanligaste fällan på procent i XYZ och KVA. Mer om faktorer i tråden om förändringsfaktor och procentenheter.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Upprepad procentförändring och ränta på ränta",
+    question: `Hur räknar man när något ökar med samma procent flera år i rad?`,
+    answer: String.raw`Upprepa förändringsfaktorn med en potens. Ökar något med 5 % per år i tre år är den sammanlagda faktorn
+
+$$1{,}05^3 \approx 1{,}16$$
+
+alltså ungefär 16 % mer, inte 15 %. Skillnaden är **räntan på räntan**.
+
+Allmänt: startvärde $\cdot$ faktor$^{\text{antal perioder}}$.
+
+**Utan miniräknare** på provet räcker oftast en uppskattning. Räkna stegvis: 100 kr blir 105, sedan ungefär 110,25, sedan ungefär 115,76. Svarsalternativen ligger sällan så nära att du behöver fler decimaler.
+
+Minskar något med 10 % per år i två år är faktorn $0{,}9^2 = 0{,}81$, alltså **19 % lägre**, inte 20 %.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Andragradsekvationer och pq-formeln på högskoleprovet",
+    question: `Hur snabbt löser man x² + px + q = 0 på XYZ?`,
+    answer: String.raw`Börja med att pröva om ekvationen går att **faktorisera i huvudet**. Leta efter två tal som har produkten $q$ och summan $-p$.
+
+Exempel: $x^2 - 6x + 8 = 0$. Talen 2 och 4 har produkten 8 och summan 6, så $x = 2$ eller $x = 4$.
+
+Går det inte, använd pq-formeln:
+
+$$x = -\frac{p}{2} \pm \sqrt{\left(\frac{p}{2}\right)^2 - q}$$
+
+Exempel: $x^2 - 6x + 8 = 0$ ger $x = 3 \pm \sqrt{9 - 8} = 3 \pm 1$.
+
+Tänk på:
+- Ekvationen måste ha **högerledet 0** och $x^2$ ensamt innan du läser av $p$ och $q$.
+- Är uttrycket under rottecknet negativt finns inga reella lösningar.
+- Frågar uppgiften efter **summan eller produkten** av lösningarna behöver du inte lösa ekvationen: summan är $-p$ och produkten är $q$.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Förhållanden och proportioner: så delar du upp en mängd",
+    question: `Hur räknar man uppgifter där något ska delas i förhållandet 3:5?`,
+    answer: `Gör förhållandet till **delar**.
+
+Exempel: 40 kr delas i förhållandet 3:5.
+1. Antal delar: 3 + 5 = 8.
+2. En del: 40 / 8 = 5 kr.
+3. Delarna: 3 × 5 = 15 kr och 5 × 5 = 25 kr.
+
+**Blandningar** fungerar likadant. Blandas saft och vatten 1:4 är en femtedel saft, inte en fjärdedel. Det är en klassisk fälla: förhållandet jämför delarna med varandra, andelen jämför dem med helheten.
+
+**Proportionalitet:** går det åt 6 arbetare i 10 dagar går det åt 12 arbetare i 5 dagar, eftersom arbetsmängden (arbetare gånger dagar) är konstant. Fråga dig alltid om storheterna ökar tillsammans (rakt proportionellt) eller motverkar varandra (omvänt proportionellt).`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Cirkelns area och omkrets, och skuggade områden",
+    question: `Jag blir osäker på uppgifter med cirklar och skuggade ytor. Vad är det som gäller?`,
+    answer: String.raw`**Formler:**
+- Area: $A = \pi r^2$
+- Omkrets: $O = 2\pi r$
+- Diametern är $d = 2r$, och uppgifter ger ofta diametern fast formlerna vill ha radien.
+
+**Skuggade områden** löser du nästan alltid med subtraktion: area av hela figuren minus area av den del som inte är skuggad.
+
+Exempel: en kvadrat med sidan 4 med en inskriven cirkel (radie 2). Det skuggade hörnområdet är $16 - 4\pi$.
+
+**Utan miniräknare:** låt $\pi$ stå kvar i svaret så länge det går. Svarsalternativen anges ofta med $\pi$.
+
+**Cirkelsektorer:** en sektor med medelpunktsvinkeln $v$ har arean $\frac{v}{360} \cdot \pi r^2$ och bågen $\frac{v}{360} \cdot 2\pi r$.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Pythagoras sats och trianglar du bör känna igen",
+    question: `Vilka trianglar och sidlängder går det att känna igen direkt på provet?`,
+    answer: String.raw`Pythagoras sats: $a^2 + b^2 = c^2$, där $c$ är hypotenusan i en rätvinklig triangel.
+
+**Pythagoreiska trianglar att känna igen** (och alla multiplar av dem):
+- 3, 4, 5 (och 6, 8, 10 och 9, 12, 15)
+- 5, 12, 13
+- 8, 15, 17
+- 7, 24, 25
+
+**Specialtrianglar:**
+- Halv kvadrat (45°, 45°, 90°): sidorna förhåller sig som $1 : 1 : \sqrt{2}$.
+- Halv liksidig triangel (30°, 60°, 90°): sidorna förhåller sig som $1 : \sqrt{3} : 2$.
+
+**Höjden i en liksidig triangel** med sidan $s$ är $\frac{\sqrt{3}}{2}s$, och arean är $\frac{\sqrt{3}}{4}s^2$.
+
+Ser du ett 3-4-5-mönster i en figur slipper du räkna med rötter. Rita ut en höjd i en likbent triangel så får du två rätvinkliga trianglar.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Vinklar: parallella linjer, månghörningar och randvinklar",
+    question: `Vilka vinkelregler behöver man kunna?`,
+    answer: String.raw`**Grundreglerna:**
+- Vinklarna i en triangel summerar till 180°.
+- Vinklarna i en fyrhörning summerar till 360°.
+- I en $n$-hörning är vinkelsumman $(n-2) \cdot 180°$. Femhörning: 540°. Sexhörning: 720°.
+- En regelbunden sexhörning har vinklarna 120°.
+- Vinklar på en rät linje summerar till 180° (sidovinklar).
+- Topptvinklar (vertikalvinklar) är lika stora.
+
+**Parallella linjer** som skärs av en tredje linje ger lika stora **likbelägna vinklar** och lika stora **växelvinklar**.
+
+**Cirkelns vinklar:**
+- Randvinkeln är hälften av medelpunktsvinkeln på samma båge.
+- Randvinkeln över en diameter är 90°.
+
+**En likbent triangel** har två lika stora basvinklar. Vet du toppvinkeln $v$ är varje basvinkel $\frac{180° - v}{2}$.
+
+Rita ut alla vinklar du kan räkna fram direkt i figuren. Då dyker den du söker oftast upp av sig själv.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Kombinatorik på högskoleprovet: hur många sätt?",
+    question: `Hur räknar man ut på hur många sätt något kan ordnas eller väljas?`,
+    answer: String.raw`**Multiplikationsprincipen:** hör valen ihop, multiplicera. 3 tröjor och 4 byxor ger $3 \cdot 4 = 12$ klädsel.
+
+**Ordning spelar roll (permutationer):**
+- 5 personer i en rad: $5! = 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120$.
+- Välja och ordna 2 av 5 (t.ex. ordförande och sekreterare): $5 \cdot 4 = 20$.
+
+**Ordning spelar ingen roll (kombinationer):** dela med antalet sätt att ordna de valda.
+- Välja 2 av 5: $\frac{5 \cdot 4}{2} = 10$.
+- Välja 3 av 6: $\frac{6 \cdot 5 \cdot 4}{3 \cdot 2 \cdot 1} = 20$.
+
+**Fråga dig alltid:** blir det en ny möjlighet om jag byter plats på två av de valda? Ja betyder ordning. Nej betyder kombination.
+
+När talen är små är det ofta snabbast att **rita ett träddiagram** eller räkna upp alla möjligheter systematiskt.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Olikheter och absolutbelopp",
+    question: `Vilka fällor finns när man löser olikheter?`,
+    answer: String.raw`Olikheter löses som ekvationer med **en viktig undantagsregel**: multiplicerar eller dividerar du med ett **negativt** tal vänds olikhetstecknet.
+
+Exempel: $-2x > 6$ ger $x < -3$.
+
+**Absolutbelopp** betyder avståndet till noll:
+- $|x| = 3$ ger $x = 3$ eller $x = -3$.
+- $|x| < 3$ ger $-3 < x < 3$.
+- $|x| > 3$ ger $x < -3$ eller $x > 3$.
+
+**Vanliga fällor:**
+- Att glömma den negativa lösningen.
+- Att multiplicera en olikhet med ett uttryck som kan vara negativt (t.ex. $x$ utan att veta tecknet).
+- Att anta att $x^2 > x$ alltid gäller. Det stämmer för $x > 1$ och för $x < 0$, men inte för $0 < x < 1$.
+
+På KVA lönar det sig att **pröva några värden** (negativt, noll, mellan 0 och 1, större än 1) innan du bestämmer dig.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Tiopotenser och standardform utan miniräknare",
+    question: `Hur räknar man snabbt med stora och små tal som 3 × 10⁴?`,
+    answer: String.raw`Standardform är ett tal mellan 1 och 10 gånger en tiopotens, till exempel $3{,}2 \cdot 10^4 = 32\,000$.
+
+**Räkna med tiopotenserna för sig:**
+- Multiplikation: $3 \cdot 10^4 \cdot 2 \cdot 10^3 = 6 \cdot 10^7$ (multiplicera talen, addera exponenterna).
+- Division: $\frac{8 \cdot 10^6}{4 \cdot 10^2} = 2 \cdot 10^4$ (dividera talen, subtrahera exponenterna).
+- Addition: gör först exponenterna lika. $2 \cdot 10^3 + 5 \cdot 10^2 = 2 \cdot 10^3 + 0{,}5 \cdot 10^3 = 2{,}5 \cdot 10^3$.
+
+**Små tal:** negativ exponent flyttar kommat åt vänster. $4 \cdot 10^{-3} = 0{,}004$.
+
+**Prefix som återkommer:** kilo = $10^3$, mega = $10^6$, giga = $10^9$, milli = $10^{-3}$, mikro = $10^{-6}$.
+
+Svarsalternativen skiljer sig ofta bara på exponenten, så räkna den noga och slarva hellre med decimalerna.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Faktorisera och förenkla uttryck på XYZ",
+    question: `Hur ser man snabbt hur ett algebraiskt uttryck ska förenklas?`,
+    answer: String.raw`Tre knep täcker det mesta:
+
+1. **Bryt ut gemensam faktor.** $6x + 9 = 3(2x + 3)$ och $x^2 - 5x = x(x - 5)$.
+2. **Känn igen kvadreringsreglerna och konjugatregeln.** $x^2 - 9 = (x-3)(x+3)$ och $x^2 + 6x + 9 = (x+3)^2$.
+3. **Förkorta först, räkna sedan.** I $\frac{x^2 - 4}{x - 2}$ är täljaren $(x-2)(x+2)$, så uttrycket är $x + 2$ (för $x \neq 2$).
+
+Förenkla innan du sätter in tal. Uppgiften är ofta byggd så att uttrycket blir ett enkelt tal efter förkortning.
+
+**Fälla:** du får inte förkorta termer, bara faktorer. I $\frac{x + 4}{4}$ går det inte att stryka 4:orna.
+
+Går det trögt: **sätt in ett enkelt tal** (t.ex. $x = 2$) i både uttrycket och svarsalternativen och se vilket som stämmer.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Pröva svarsalternativen: en genväg på XYZ",
+    question: `Är det okej att sätta in svarsalternativen i stället för att räkna? Jag tycker det känns som fusk.`,
+    answer: `Det är inte fusk, det är en av de bästa metoderna på provet. Du får poäng för rätt svar, inte för vilken väg du valde.
+
+**När det fungerar bra:**
+- Ekvationer där alternativen är enkla tal. Sätt in alternativ C först. Blir det för stort eller litet vet du åt vilket håll du ska gå.
+- Textuppgifter där du kan kontrollera varje villkor mot ett föreslaget svar.
+- Uppgifter där du kört fast i algebran.
+
+**När det inte lönar sig:** när alternativen är långa uttryck eller rötter som tar längre tid att sätta in än att räkna ut.
+
+**Kombinera med uteslutning.** Ofta räcker en snabb överslagsräkning för att stryka två eller tre alternativ. Ligger svaret nära 50 och bara ett alternativ är i den storleksordningen behöver du inte räkna exakt.
+
+Behåll alltid kollen på tiden: XYZ har 12 uppgifter, och en uppgift som tar mer än två minuter bör du markera och återkomma till.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Hur testar man värden på KVA?",
+    question: `Hur vet man vilka tal man ska sätta in när storheterna innehåller en okänd?`,
+    answer: String.raw`Innehåller uppgiften en variabel är svaret D (kan inte avgöras) bara korrekt om olika tillåtna värden ger **olika** resultat. Så pröva värden som verkligen skiljer sig åt:
+
+- **Noll och ett.** Många uttryck ändrar karaktär här.
+- **Ett negativt tal**, t.ex. $-1$ eller $-2$.
+- **Ett tal mellan 0 och 1**, t.ex. $\frac{1}{2}$.
+- **Ett tal större än 1**, t.ex. 2 eller 10.
+
+Exempel: jämför $x^2$ med $x$.
+- $x = 2$: $4 > 2$.
+- $x = 1$: lika.
+- $x = \frac{1}{2}$: $\frac{1}{4} < \frac{1}{2}$.
+
+Tre olika utfall betyder D. Så fort **två** värden ger olika förhållande är D rätt. Ger alla värden du provar samma förhållande, titta efter ett argument som visar att det gäller alltid innan du svarar A, B eller C.
+
+Se också uppgiftens villkor: står det att $x$ är ett positivt heltal är negativa tal och bråk inte tillåtna.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "DTK: skala, axlar och andra saker som luras",
+    question: `Vad ska man titta efter först när man får ett diagram eller en karta?`,
+    answer: `Innan du läser av något, kolla följande:
+
+1. **Rubrik och enhet.** Står det tusental, miljoner eller procent? Ett felläst enhetsbyte kostar fler poäng än något annat.
+2. **Axlarna.** Börjar y-axeln på noll? Om inte ser skillnaderna större ut än de är. Är skalan ojämn (logaritmisk eller med brott) går det inte att jämföra avstånd med ögat.
+3. **Förklaringen (legenden).** Vilken stapel, linje eller färg hör till vad?
+4. **Kartskalan.** Skalan 1:50 000 betyder att 1 cm på kartan är 500 m i verkligheten. Mät med en linjal eller markera ett papper.
+
+**Procent mot antal:** frågar uppgiften efter antal men diagrammet visar procent behöver du också totalen. Frågar den efter förändring i procentenheter eller i procent? De är olika saker.
+
+**Läs frågan före diagrammet.** Då vet du vilken siffra du ska leta efter och slipper läsa av allt.
+
+Skriv gärna här vilka DTK-uppgifter du tappat poäng på.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Summan av 1 + 2 + 3 + … och aritmetiska följder",
+    question: `Finns det ett snabbt sätt att räkna ut summan av många tal i rad?`,
+    answer: String.raw`Ja. Summan av heltalen från 1 till $n$ är
+
+$$1 + 2 + \dots + n = \frac{n(n+1)}{2}$$
+
+Exempel: $1 + 2 + \dots + 100 = \frac{100 \cdot 101}{2} = 5050$.
+
+**Varför det fungerar:** para ihop första och sista, andra och näst sista och så vidare. Varje par har samma summa ($n + 1$) och det finns $\frac{n}{2}$ par.
+
+**Allmän aritmetisk följd** (konstant differens): summan är
+
+$$\text{antal} \cdot \frac{\text{första} + \text{sista}}{2}$$
+
+Exempel: 5, 8, 11, …, 29 har 9 termer (differens 3). Summan är $9 \cdot \frac{5 + 29}{2} = 153$.
+
+**Räkna antal termer:** $\frac{\text{sista} - \text{första}}{\text{differens}} + 1$. Glöm inte "plus 1", det är den vanligaste feltaget (stolpe-och-staket-felet).`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Volym och area: cylinder, kon och klot",
+    question: `Vilka formler för rymdgeometri behöver man kunna utantill?`,
+    answer: String.raw`Provet brukar ge formlerna i uppgiften när de är ovanliga, men dessa är bra att kunna:
+
+- **Rätblock:** $V = a \cdot b \cdot c$, ytan $2(ab + ac + bc)$.
+- **Kub med sidan $s$:** $V = s^3$, ytan $6s^2$.
+- **Cylinder:** $V = \pi r^2 h$, mantelytan $2\pi r h$.
+- **Kon:** $V = \frac{\pi r^2 h}{3}$, alltså en tredjedel av motsvarande cylinder.
+- **Klot:** $V = \frac{4\pi r^3}{3}$ och ytan $4\pi r^2$.
+- **Pyramid:** $V = \frac{\text{basarea} \cdot h}{3}$.
+
+**Likformighet:** förstoras en figur med längdfaktorn $k$ blir arean $k^2$ gånger större och volymen $k^3$ gånger större. Dubbleras radien på ett klot åttadubblas volymen.
+
+**Enheter:** byt allt till samma enhet först. Se tråden om enhetsomvandling.`,
+  },
+
+  /* ── Verbal, fler ämnen (2026-10-26) ─────────────────────────── */
+  {
+    category: "verbal",
+    title: "Vad gör man när man inte kan ordet på ORD?",
+    question: `Ibland har jag aldrig sett ordet. Finns det något annat än att gissa blint?`,
+    answer: `Ja, du kan oftast förbättra chansen rejält innan du gissar.
+
+1. **Tänk på ordets känsla.** Är det positivt, negativt eller neutralt? Alternativ med fel klang kan strykas.
+2. **Leta efter ord i ordet.** *Opportunism* har *opportunity* (möjlighet) i sig. Många svenska lånord är lätta att känna igen på engelska, franska eller tyska.
+3. **Använd förled och ändelser.** Se tråden om förled och ordstammar.
+4. **Har du hört ordet i en mening?** Försök minnas var. Sammanhanget ger ofta mer än du tror.
+5. **Stryk det du är säker på är fel** och gissa bland resten.
+6. **Akta dig för det som liknar ordet** i stavning eller ljud. Det är oftare en fälla än rätt svar.
+
+Gissa alltid. Fel svar ger inget avdrag, och efter att ha strukit två alternativ är chansen redan 33 %.
+
+Ord du inte kunde: slå upp dem efteråt i [ordlistan](https://tvakommanollan.se/ordlista) så att du känner igen dem nästa gång.`,
+  },
+  {
+    category: "verbal",
+    title: "Vanliga fällor på MEK",
+    question: `Vilka misstag gör man oftast på meningskomplettering?`,
+    answer: `De vanligaste fällorna:
+
+- **Att välja första alternativet som låter bra.** Läs alla innan du bestämmer dig.
+- **Att bara kolla meningen med luckan.** Alternativet ska passa i textens hela resonemang.
+- **Att missa en negation.** *Inte*, *knappast* och *utan* kan vända betydelsen.
+- **Att glömma sambanden.** Ord hör ihop: man *drar slutsatser*, *fattar beslut* och *lägger fram* ett förslag. Fel verb ger en konstig fras även om ordet i sig är rimligt.
+- **Att bortse från ordklassen.** Luckan kräver ibland ett adjektiv och ibland ett verb. Läs meningen högt i huvudet.
+- **Att välja ett fint ord.** Det mest högtravande alternativet är sällan rätt. Rätt är det som är mest exakt.
+
+När det finns två luckor: avgör en av dem först och stryk alla alternativ som inte passar. Då återstår ofta bara ett.
+
+Öva med riktiga uppgifter i [MEK-övningen](https://tvakommanollan.se/mek-ovning).`,
+  },
+  {
+    category: "verbal",
+    title: "Olika frågetyper på LÄS och hur man angriper dem",
+    question: `Är det någon skillnad på hur man ska tänka beroende på vilken fråga som ställs?`,
+    answer: `Ja. Frågorna på LÄS brukar vara av några huvudtyper:
+
+**Detaljfrågor** ("Enligt texten…"). Svaret står i texten, ofta nästan ordagrant. Hitta stället och läs noga. Ofta är fel alternativ en förvrängning av en detalj (fel siffra, fel orsak).
+
+**Slutsatsfrågor** ("Vad kan man dra för slutsats…", "Texten antyder…"). Svaret står inte direkt men ska följa av det som står. Välj det som texten stöder, inte det som är sant i allmänhet.
+
+**Huvudtankefrågor** ("Vad handlar texten om?"). Läs inledning och avslutning. Det rätta alternativet är varken för smalt (en detalj) eller för brett (något texten inte tar upp).
+
+**Syftesfrågor** ("Varför nämner författaren…?"). Fråga dig vad stycket gör i texten: ger ett exempel, bemöter en invändning, sammanfattar.
+
+**Ordfrågor i sammanhang** ("Vad betyder ordet X här?"). Läs meningarna runt omkring. Betydelsen är den texten använder, inte den vanligaste.
+
+Gemensamt: **peka ut stället i texten** som styrker ditt svar. Kan du inte det, tveka. Läs mer i [LÄS-guiden](https://tvakommanollan.se/guider/las).`,
+  },
+  {
+    category: "verbal",
+    title: "ELF: luckuppgifter och kollokationer",
+    question: `På de engelska luckuppgifterna fastnar jag på ordval som låter rätt men inte är det. Hur tänker man?`,
+    answer: `Luckuppgifterna prövar både innebörd och **hur engelska ord brukar kombineras**.
+
+1. **Läs hela texten först** för att förstå riktningen. Sedan återvänder du till luckan.
+2. **Bestäm ordklass och grammatik** (verb, substantiv, singular eller plural, tempus) innan du tittar på betydelsen. Det stryker ofta ett par alternativ.
+3. **Tänk på fasta fraser.** På engelska *makes* man ett beslut, men *does* en studie och *takes* en risk. Alternativ som är rätt ord i fel fras är den typiska fällan.
+4. **Kolla signalord** som *however*, *therefore* och *although*. Se tråden om signalord.
+5. **Passar det i hela stycket?** Prova att läsa meningen före och efter luckan.
+
+Lägg inte lång tid på en enda lucka. Markera, gå vidare och återvänd.
+
+Träna på riktiga luckuppgifter ur [gamla prov](https://tvakommanollan.se/gamla-prov). Där finns ELF i alla verbala pass.`,
+  },
+  {
+    category: "verbal",
+    title: "Hur bygger man ordförråd genom läsning?",
+    question: `Jag vill förbättra ORD och LÄS på sikt. Vad ska jag läsa?`,
+    answer: `Ordförråd byggs bäst av **mycket läsning av rätt sorts text**, kompletterat med målmedveten ordinlärning.
+
+**Bra läsning:**
+- Dagstidningarnas längre artiklar, kultur- och debattsidor
+- Populärvetenskap och essäer
+- Facklitteratur i ett ämne du redan är nyfiken på
+- På engelska: *The Economist*, *The Guardian* och populärvetenskapliga artiklar
+
+**Så gör du läsningen till plugg:**
+1. Markera ord du inte kan, men **slå inte upp allt** direkt, så tappar du flytet.
+2. Samla orden i en lista och slå upp dem när du är klar.
+3. Repetera listan efter en dag, en vecka och en månad.
+
+Läsningen ger dig orden i sitt sammanhang, vilket gör att de fastnar bättre än ur en lista. Listorna ger fart. Gör båda.
+
+Börja gärna med att slå upp dina okända ord i [ordlistan](https://tvakommanollan.se/ordlista) och öva dem i [ordövningen](https://tvakommanollan.se/ord).`,
+  },
+  {
+    category: "verbal",
+    title: "Hur lägger man upp ordinlärningen så att orden fastnar?",
+    question: `Jag glömmer orden jag pluggat. Hur gör man för att komma ihåg dem?`,
+    answer: `Det handlar om **att ta fram** ordet ur minnet, inte om att läsa det om och om igen.
+
+- **Testa dig själv.** Täck över förklaringen och försök minnas den. Det är jobbigare än att läsa men fungerar mycket bättre.
+- **Sprid ut repetitionen.** Ett ord du ser dag 1, dag 3, dag 7 och dag 21 sitter bättre än tio repetitioner på en kväll.
+- **Koppla ordet till något.** En egen mening, ett minne eller en synonym du redan kan.
+- **Plugga få ord i taget.** 10–20 nya ord per dag är mer än nog om du repeterar de gamla.
+- **Lär dig synonymerna.** ORD frågar efter ett ord med ungefär samma betydelse, så synonymparet är själva uppgiften.
+
+Spaced repetition gör jobbet åt dig i [ordövningen](https://tvakommanollan.se/ord): ord du svarar fel på kommer tillbaka tidigare, ord du kan kommer tillbaka allt mer sällan.`,
+  },
+
+  /* ── Plugg & strategi, fler ämnen (2026-10-26) ───────────────── */
+  {
+    category: "plugg",
+    title: "Så för du en felbok efter varje gammalt prov",
+    question: `Jag skriver gamla prov men ser inte att jag blir bättre. Vad gör jag fel?`,
+    answer: `Ofta är det genomgången efteråt som saknas. Att skriva fler prov utan att lära sig av felen ger mindre än att skriva färre och analysera dem.
+
+**Gör en felbok.** För varje uppgift du hade fel, eller hade rätt på av en slump, skriv:
+1. **Vilken uppgift** (termin, pass, nummer).
+2. **Varför blev det fel?** Välj en kategori: kunskapslucka, slarv, tidsbrist, missförstod frågan, gissade.
+3. **Vad gör jag nästa gång?** En mening.
+
+Efter tre prov ser du **mönster**. Kanske är 70 % av felen slarv i KVA, eller kunskapsluckor i procent. Då vet du vad du ska träna.
+
+Se också till att lösa om uppgiften du hade fel på efter en vecka, utan att titta på lösningen. Klarar du den då har du lärt dig något.
+
+Alla uppgifter i [gamla prov](https://tvakommanollan.se/gamla-prov) har facit.`,
+  },
+  {
+    category: "plugg",
+    title: "Så simulerar du provdagen hemma",
+    question: `Hur övar man på att hålla koncentrationen hela dagen?`,
+    answer: `Provet är fem pass á 55 minuter på en och samma dag, och uthålligheten är en egen färdighet. Träna den.
+
+**En provsimulering:**
+- Välj en dag, helst en lördag eller söndag, och sätt dig på ett lugnt ställe.
+- Skriv **minst tre pass i följd** med verklig tid (55 minuter) och korta pauser emellan.
+- Telefonen ska vara avstängd och i ett annat rum.
+- Ät lunch som du ska äta på provdagen.
+- Rätta efteråt och för in felen i din felbok.
+
+**Varför det hjälper:**
+- Du märker när koncentrationen sjunker, och vad du kan göra åt det (äta, dricka, andas).
+- Du övar på att släppa ett pass som gick dåligt och starta nästa friskt.
+- Tidspressen blir en vana i stället för en chock.
+
+Gör simuleringen minst en gång innan provet, och gärna två. Gamla prov finns i [gamla prov](https://tvakommanollan.se/gamla-prov), och de går att skriva i provläge med klocka.`,
+  },
+  {
+    category: "plugg",
+    title: "Sista veckan före högskoleprovet: vad är värt att göra?",
+    question: `Det är en vecka kvar. Ska jag fortsätta plugga hårt eller ta det lugnt?`,
+    answer: `Sista veckan handlar om att **behålla formen och inte lära sig nytt i panik**.
+
+**Gör:**
+- Ett eller två gamla prov tidigt i veckan, på tid. Inte dagen innan.
+- Gå igenom felboken och de formler du brukar glömma.
+- Lite ORD varje dag. Repetition ger mest när tiden är kort.
+- Gå igenom det praktiska: kallelse, legitimation, resväg.
+- Sov regelbundet. Det gör mer än extra plugg.
+
+**Undvik:**
+- Att lära dig helt nya områden. Det du inte kan nu hinner du sällan lära dig, och osäkerheten kostar mer än den ger.
+- Att jämföra dig med andra.
+- Ett helt prov kvällen före.
+
+Läs också tråden om vad man ska göra dagen före provet, så att den dagen blir lugn.`,
+  },
+  {
+    category: "plugg",
+    title: "Pluggschema för fyra veckor före högskoleprovet",
+    question: `Jag har fyra veckor kvar. Hur lägger jag upp tiden?`,
+    answer: `Ett förslag med cirka 1 timme om dagen på vardagar och 3 timmar på helgen:
+
+**Vecka 1: kartlägg**
+- Skriv ett helt gammalt prov (alla verbala och kvantitativa pass som du hinner) för att se var du står.
+- Gå igenom resultatet i en felbok.
+- Börja med ORD varje dag.
+
+**Vecka 2: laga luckorna**
+- Träna på de delprov där du tappade mest poäng.
+- Repetera matematiken som du saknar (procent, potenser, geometri).
+- Ett pass på tid på helgen.
+
+**Vecka 3: bygg tempo**
+- Hela pass på tid, 2–3 stycken per vecka.
+- Gå igenom varje felsvar.
+- Fortsätt med ORD.
+
+**Vecka 4: håll formen**
+- Ett provsimulerat tillfälle tidigt i veckan.
+- Repetera felbok och formler.
+- Lätt dag före provet.
+
+Anpassa efter din utgångspunkt. Är matten din svaga sida: lägg mer tid där, eftersom kvantitativ poäng ofta går att höja snabbare än verbal.`,
+  },
+  {
+    category: "plugg",
+    title: "Hur hanterar man provångest och nervositet?",
+    question: `Jag blir så nervös på prov att jag tappar poäng jag borde ha klarat. Tips?`,
+    answer: `Nervositet är normalt, och lite av den hjälper faktiskt prestationen. Det som kostar är när den tar över.
+
+**Före provet:**
+- **Övning minskar ångest.** Den som skrivit flera gamla prov på tid vet vad som väntar, och det är det som lugnar mest.
+- **Sov, ät och rör på dig.** Det låter banalt men påverkar stressnivån tydligt.
+- **Ha en rutin** för morgonen så att inget lämnas åt slumpen.
+
+**Under provet:**
+- **Andas långsamt** i 30 sekunder om du känner att det snurrar. Låt utandningen vara längre än inandningen.
+- **Börja med en uppgift du är säker på.** En tidig rätt ger lugn.
+- **Hoppa över och återvänd** i stället för att fastna.
+- **Glöm passet som gick dåligt.** Ett av fem pass räknas inte ens.
+
+Känns ångesten överväldigande och ligger utanför vad övning kan lösa: prata med studievägledare eller vårdcentral. Det finns hjälp.`,
+  },
+  {
+    category: "plugg",
+    title: "Hur många gånger ska man skriva högskoleprovet?",
+    question: `Är det värt att skriva om provet flera gånger?`,
+    answer: `Det finns ingen gräns för antal gånger och **det bästa giltiga resultatet** är det som räknas vid ansökan. Du riskerar alltså inget på att skriva igen.
+
+**Bra skäl att skriva om:**
+- Du är nära en gräns för utbildningen du vill in på.
+- Du har pluggat bättre sedan förra gången eller vet vad som gick snett.
+- Du har tid och ork för en ny pluggperiod.
+
+**Tänk på:**
+- Anmälningsperioden är kort (en dryg vecka) och avgiften är 550 kr. Se [provdatumsidan](https://tvakommanollan.se/hogskoleprovet-datum).
+- Provformatet blir bekant andra gången, vilket i sig kan ge mer rutin på tidspressen.
+- Förändra sättet du pluggar på, annars blir det samma resultat.
+
+Börja med att analysera förra provet: vilka delar tappade du mest på, och varför? Lägg tiden där.`,
+  },
+  {
+    category: "plugg",
+    title: "Hur pluggar man vid sidan av jobb eller heltidsstudier?",
+    question: `Jag jobbar heltid. Hur får jag ihop plugget till högskoleprovet?`,
+    answer: `Det går, men det kräver att du planerar små pass och håller fast vid dem.
+
+- **15–30 minuter varje dag** slår 3 timmar en gång i veckan, särskilt för ORD och formler som behöver repeteras.
+- **Använd restiden.** Ordövning på mobilen på bussen, ljudböcker eller poddar på engelska på väg till jobbet.
+- **Fast tid.** Lägg pluggandet på samma tid varje dag, t.ex. direkt efter middagen. Beslutströtthet blir mindre när det är en rutin.
+- **Helgpass för prov.** Ett längre pass på helgen för gamla prov på tid.
+- **Prioritera.** Du hinner inte allt. Lägg tiden på det delprov som ger mest poäng per timme för dig, och lär dig inte det du redan kan.
+
+Räkna med 6–10 veckor av jämn plugg om du börjar från noll. Se tråden om hur lång tid man behöver, och [jämförelsen av pluggsätt](https://tvakommanollan.se/plugga-infor-hogskoleprovet).`,
+  },
+
+  /* ── Provdagen & resultat, fler ämnen (2026-10-26) ───────────── */
+  {
+    category: "provdagen",
+    title: "Hur går provdagen till?",
+    question: `Jag ska skriva för första gången. Hur ser dagen ut?`,
+    answer: `Provet består av **fem pass på 55 minuter**, med pauser emellan och en längre rast för lunch. Exakta tider och lokal står i **kallelsen** du får efter anmälan, så läs den noga.
+
+**Så brukar dagen se ut:**
+1. Du kommer i god tid, visar legitimation och hänvisas till en plats.
+2. Du får instruktioner om reglerna för dagen.
+3. Passen skrivs i en bestämd ordning, med pauser och lunch.
+4. Du för in dina svar på det sätt instruktionerna anger.
+
+**Praktiska tips:**
+- Ta med mat som du vet att du tål, och vatten.
+- Klä dig i lager, för temperaturen i lokalen kan vara svår att förutse.
+- För över svaren **löpande**, inte alla på slutet. Sista minuten räcker inte till för att föra över 40 svar.
+- Använd pauserna till att vila, inte att gå igenom det senaste passet.
+
+Mer om vad som ska med finns i tråden "Vad ska man ta med till högskoleprovet?".`,
+  },
+  {
+    category: "provdagen",
+    title: "Hur fördelar man energin över fem pass?",
+    question: `Jag orkade inte fokusera på de sista passen förra gången. Hur gör man?`,
+    answer: `Fem pass på en dag tär på koncentrationen. Några saker som hjälper:
+
+- **Ät och drick regelbundet.** Ta något litet i varje paus. Ett stort mål mitt på dagen ger trötthet.
+- **Rör på dig i pauserna.** Gå en runda och andas frisk luft i stället för att sitta kvar.
+- **Prata inte om passen.** Att jämföra svar med andra i pausen ger bara oro, och det går inte att ändra.
+- **Sista passet är lika mycket värt som det första.** Räkna inte med att du "redan gjort det viktigaste". Alla räknade pass väger lika.
+- **Gör en provsimulering hemma** med minst tre pass i följd, så att uthålligheten är övad.
+
+Sömnen veckan före påverkar mer än de flesta tror. Gå och lägg dig i tid även om du är nervös.`,
+  },
+  {
+    category: "provdagen",
+    title: "Hur räknar man ut sitt resultat direkt efter provet?",
+    question: `Jag vill veta ungefär vad jag fick utan att vänta på normeringen.`,
+    answer: `Du kan göra en uppskattning så snart facit är ute.
+
+1. **Rätta dina svar** mot facit. Räkna antal rätt på verbal respektive kvantitativ del (max 80 var). Kom ihåg att utprövningspasset inte har något facit och inte räknas.
+2. **Jämför med tidigare normeringar.** Normeringstabellerna för äldre prov finns på [sajten](https://tvakommanollan.se/hogskoleprovet-poangraknare). Ett prov som kändes svårare ger ofta något lägre krav per poängsteg.
+3. **Räkna medelvärdet** av de två delpoängen.
+
+Poängräknaren översätter antal rätt till en ungefärlig poäng. Det är en **uppskattning**: den riktiga normeringen vet du först när provarrangören publicerar tabellen några veckor senare.
+
+Se också vår uppskattning på [facitsidan](https://tvakommanollan.se/hogskoleprovet-facit). Den är vår egen bedömning och inget officiellt besked.`,
+  },
+  {
+    category: "provdagen",
+    title: "Vad händer om jag gör fel på svarsbladet?",
+    question: `Jag är rädd att fylla i fel ruta på svarsbladet. Hur undviker man det?`,
+    answer: `Det är en vanlig oro, och den går att göra mindre.
+
+- **Kontrollera numret** varje gång du för över ett svar. Gör det till en vana att säga "uppgift 14" för dig själv.
+- **För över i omgångar** under passet, t.ex. efter var tionde uppgift, så att du inte hamnar efter. Spara inte allt till slutet.
+- **Om du hoppar över en uppgift:** hoppa över rutan också, och markera uppgiften i häftet så att du ser det.
+- **Gissa i sista stund:** fyll i alla rutor du inte hunnit med. Även där måste raden stämma med uppgiften.
+- **Läs instruktionerna** på provdagen om hur svar ska markeras och ändras.
+
+Om du upptäcker att du hamnat en rad fel mitt i passet: ta en minut och rätta det direkt. Det kostar mindre än att hela resten av svarsbladet blir förskjutet.`,
+  },
+
+  /* ── Allmänt, fler ämnen (2026-10-26) ────────────────────────── */
+  {
+    category: "allmant",
+    title: "Vad betyder BI, BII och HP i antagningen?",
+    question: `Jag ser förkortningar som BI, BII och HP vid antagningen. Vad är skillnaden?`,
+    answer: `De är **urvalsgrupper**, alltså olika sätt att rangordna sökande till samma utbildning:
+
+- **BI:** betygsgrupp för dig med gymnasieexamen eller motsvarande. Här räknas ditt meritvärde.
+- **BII:** betygsgrupp för dig som kompletterat betyg eller har äldre betyg.
+- **HP:** högskoleprovsgruppen. Här räknas ditt resultat på högskoleprovet.
+
+Du hamnar automatiskt i alla grupper du är behörig till och konkurrerar i den där du står starkast. Antagningen räknar fram **en antagningsgräns per grupp**, och du blir antagen om du ligger över gränsen i **någon** av dem.
+
+Därför kan ett bra högskoleprov hjälpa även om betygen är bra. Det kan aldrig skada.
+
+Gränserna för tidigare terminer finns per program på [poäng per utbildning](https://tvakommanollan.se/hogskoleprovet-poang). Exakta regler för fördelningen finns på antagning.se och hos det aktuella lärosätet.`,
+  },
+  {
+    category: "allmant",
+    title: "Är verbal och kvantitativ del lika viktiga?",
+    question: `Väger den verbala och den kvantitativa delen lika mycket i slutpoängen?`,
+    answer: `Ja. Totalpoängen är **medelvärdet av de två delarnas normerade poäng**, så varje del väger exakt hälften. 1,60 verbalt och 1,80 kvantitativt ger 1,70.
+
+Några konsekvenser:
+- Det är ofta **lättare att höja sig på den del där man ligger lägst**, eftersom de första extra rätta svaren där ger fler poängsteg per ansträngning.
+- Den normerade poängen stiger brantare nära toppen, så de sista rätta svaren på en redan stark del ger mycket, men de är också svårast att få.
+- Du kan inte kompensera ett nollresultat på ena delen med ett perfekt på den andra: 0,0 och 2,0 ger bara 1,0.
+
+Fundera på var du kan få flest poäng per timme plugg. För många är det kvant, eftersom matten går att repetera systematiskt. För andra är det ORD, där ordförrådet går att bygga stegvis.
+
+Se också tråden "Vilken del av högskoleprovet är lättast att höja sig på?".`,
+  },
+  {
+    category: "allmant",
+    title: "Vilka olika uppgiftstyper finns på högskoleprovet och vad testar de?",
+    question: `Kan någon förklara vad varje delprov egentligen mäter?`,
+    answer: `Provet har åtta delprov, fyra verbala och fyra kvantitativa.
+
+**Verbalt:**
+- **ORD** testar ordförståelse. Du väljer det ord som betyder ungefär detsamma som ett givet ord.
+- **LÄS** testar svensk läsförståelse: du läser längre texter och svarar på frågor om innehåll, slutsatser och syfte.
+- **MEK** testar meningskomplettering. Du fyller i luckor så att texten blir begriplig och logisk.
+- **ELF** testar engelsk läsförståelse, med texter på engelska och luckuppgifter.
+
+**Kvantitativt:**
+- **XYZ** är matematisk problemlösning: algebra, geometri, procent och sannolikhet på grundnivå.
+- **KVA** testar kvantitativa jämförelser. Du jämför två storheter utan att alltid räkna ut dem.
+- **NOG** testar kvantitativa resonemang: räcker informationen för att lösa uppgiften?
+- **DTK** testar att läsa diagram, tabeller och kartor.
+
+Gemensamt är att inget kräver förkunskaper utöver gymnasiets första matte och god allmänbildning. Det som skiljer är **vana och tempo**.
+
+Börja gärna med [guiderna](https://tvakommanollan.se/guider) för respektive delprov.`,
+  },
+  {
+    category: "allmant",
+    title: "Vem kan skriva högskoleprovet?",
+    question: `Måste man vara över en viss ålder eller ha gymnasiebetyg för att få skriva?`,
+    answer: `Du behöver **inte** ha gymnasiebetyg för att skriva provet, och det finns ingen övre åldersgräns. Du kan skriva provet flera gånger, och resultatet gäller i åtta år.
+
+Du anmäler dig själv på hogskoleprov.nu under anmälningsperioden och betalar provavgiften (550 kr). Anmälningstider hittar du på [provdatumsidan](https://tvakommanollan.se/hogskoleprovet-datum).
+
+Tänk på att **behörighet till en utbildning** är en annan sak än att få skriva provet. För att komma in via högskoleprovet behöver du ändå vara behörig till utbildningen i övrigt, till exempel ha grundläggande behörighet. Kontrollera kraven för just ditt program hos antagning.se.
+
+Frågor om vem som får skriva i särskilda situationer (t.ex. som yngre elev) bör du ställa direkt till provets arrangör, eftersom reglerna kan ändras.`,
+  },
 ];
