@@ -403,13 +403,9 @@ function AllTimeTable({
           <thead className="bg-white/[0.03] text-xs text-white/55">
             <tr>
               <th className="px-4 py-3 text-left font-semibold">#</th>
-              <th className="px-4 py-3 text-left font-semibold">
-                Spelare
-              </th>
+              <th className="px-4 py-3 text-left font-semibold">Spelare</th>
               <th className="px-4 py-3 text-right font-semibold">ELO</th>
-              <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">
-                Matcher
-              </th>
+              <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">Matcher</th>
               <th className="px-4 py-3 text-right font-semibold">Win %</th>
             </tr>
           </thead>
@@ -476,12 +472,8 @@ function WeeklyTable({
           <tr>
             <th className="px-4 py-3 text-left font-semibold">#</th>
             <th className="px-4 py-3 text-left font-semibold">Spelare</th>
-            <th className="px-4 py-3 text-right font-semibold">
-              ELO denna vecka
-            </th>
-            <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">
-              Matcher
-            </th>
+            <th className="px-4 py-3 text-right font-semibold">ELO denna vecka</th>
+            <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">Matcher</th>
           </tr>
         </thead>
         <tbody>
@@ -503,11 +495,7 @@ function WeeklyTable({
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
                     {rankedName(r.username)}
-                    {isMe && (
-                      <span className="text-xs font-bold text-primary">
-                        Du
-                      </span>
-                    )}
+                    {isMe && <span className="text-xs font-bold text-primary">Du</span>}
                   </span>
                 </td>
                 <td className="px-4 py-3.5 text-right">
@@ -545,9 +533,7 @@ function WeeklyTable({
                 <td className="px-4 py-3.5">
                   <span className="inline-flex items-center gap-2 text-white">
                     {displayName(me.username)}
-                    <span className="text-xs font-bold text-primary">
-                      Du
-                    </span>
+                    <span className="text-xs font-bold text-primary">Du</span>
                   </span>
                 </td>
                 <td className="px-4 py-3.5 text-right">
@@ -602,11 +588,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       <td className="px-4 py-4">
         <span className="inline-flex items-center gap-2">
           <span className="text-[15px] font-medium text-white">{rankedName(r.username)}</span>
-          {isMe && (
-            <span className="text-xs font-bold text-primary">
-              Du
-            </span>
-          )}
+          {isMe && <span className="text-xs font-bold text-primary">Du</span>}
         </span>
       </td>
       <td className="px-4 py-4 text-right">
@@ -768,9 +750,7 @@ function BoardShell<T extends BoardRow>({
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-white/[0.03] text-xs text-white/55">
-              {head}
-            </thead>
+            <thead className="bg-white/[0.03] text-xs text-white/55">{head}</thead>
             <tbody>
               {top.map((r) => renderRow(r, !!user && r.user_id === user.id))}
               {showMe && me && (
@@ -836,11 +816,7 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       <td className="px-3 py-2.5 text-white">
         <span className="inline-flex items-center gap-2">
           {rankedName(r.username)}
-          {isMe && (
-            <span className="text-[10px] font-semibold text-primary">
-              Du
-            </span>
-          )}
+          {isMe && <span className="text-[10px] font-semibold text-primary">Du</span>}
         </span>
       </td>
       <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-primary">
@@ -913,11 +889,7 @@ function ProvRow({ r, isMe }: { r: ProvLeaderboardRow; isMe: boolean }) {
       <td className="px-3 py-2.5 text-white">
         <span className="inline-flex items-center gap-2">
           {rankedName(r.username)}
-          {isMe && (
-            <span className="text-[10px] font-semibold text-primary">
-              Du
-            </span>
-          )}
+          {isMe && <span className="text-[10px] font-semibold text-primary">Du</span>}
         </span>
       </td>
       <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-primary">
