@@ -590,6 +590,47 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
   `https://hpkampen.se/gamla-prov-data.json` (916 kB) i webbläsaren, vilket gjorde
   att lokal utveckling läste produktionsdata.
 
+### Lösningar till matteuppgifterna (2026-10-26)
+
+`questions.explanation` var tom på all matte tills 2026-10-26. Nu har **1 113
+uppgifter** en lösning: XYZ 458 av 458, KVA 403 av 404 och NOG 252 av 255
+(bland de uppgifter som är text med `clean_status = 'ok'`). De visas av
+`ExplanationBlock` i `/train` och på resultatsidan efter en match.
+
+- **Texterna är handskrivna, inte genererade av ett API.** De står i
+  `scripts/math-expl/{xyz,kva,nog}.json`, nycklade på `termin/provpass/uppgift`
+  (inte rad-id), så de går att granska i git och följer med om raderna importeras
+  om. Varje uppgift är löst på riktigt och landade på facit innan texten skrevs;
+  en uppgift där lösningen inte höll med facit skrivs inte (se facitfelet nedan).
+  `generate-math-explanations.ts` (API-vägen) är orörd och kräver
+  `ANTHROPIC_API_KEY`, som inte finns i `.env.local`.
+- **`bun run scripts/import-math-explanations.ts`** (torrkörning, `--apply` för
+  att skriva, `--category XYZ` för ett delprov). Skriver bara där
+  `explanation IS NULL` och avvisar texter med tankstreck, mittpunkter, pilar,
+  udda antal `$` eller fler än 130 ord. Att ersätta en redan skriven text görs
+  för hand.
+- **Utelämnade med flit:** DTK (alla 696; uppgifterna hänvisar till ett diagram
+  som texten inte innehåller, så lösningen går inte att kontrollera), alla
+  bildutsnitt (`clean_status = 'pending'`) och fyra uppgifter vars text är
+  trasig i källan: `2013ht/3/17` (KVA, bara en platshållare), `2024vt/2/23` (NOG,
+  symbolerna blev `$` och `#`), `2024vt/5/26` (NOG, avklippt) och `2025vt/3/26`
+  (NOG, kvoten `y x 5 =` kan läsas åt två håll med olika svar). LÄS, ELF och de
+  398 MEK-raderna med `pending` saknar också förklaring.
+- **Stapelbråk i NOG-källan har kommit ut med nämnaren först**: `3 2` är 2/3 och
+  `5 3` är 3/5 (`2021ht/4/28`, `2022ht/1/23`, `2024ht/4/26`). Likadant är π ibland
+  `r` (`2022vta/5/27`). Det är den läsningen som ger hela tal och facit, och
+  texterna är skrivna efter den; fixa källan om du rör dem.
+- **Facit kan vara fel i databasen utan att arkivet är det.** `XYZ 2024ht/4/9`
+  hade alternativen förskjutna ett steg mot arkivet men `correct_answer` kvar,
+  så facit pekade på $2 + 8x$ i stället för $2 + x$. Rättat 2026-10-26.
+  Jämförelsen (texten på `correct_answer` i `questions` mot arkivets rätta
+  alternativ i `src/data/prov/`) gav 27 avvikelser av 1 785 jämförbara rader:
+  den enda levande var den ovan, de övriga 26 har `clean_status = 'pending'`
+  (alla 2016vt/3) och serveras inte. Kör jämförelsen igen efter varje ny
+  import av matteuppgifter.
+- **Källnyckeln är `termin/provpass/uppgift` per delprov.** Samma nyckel i två
+  delprov är två olika rader, och filerna är därför skilda per delprov.
+
 ### ORD-beståndet — var orden kommer ifrån
 
 Ordlistan (`questions` med `category = "ORD"`) byggs av två scrapers, båda mot
