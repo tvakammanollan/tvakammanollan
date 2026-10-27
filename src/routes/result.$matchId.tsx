@@ -33,10 +33,9 @@ import {
   AlertTriangle,
   Share2,
   Flame,
-  } from "lucide-react";
+} from "lucide-react";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/events";
-import { recordMatchFinished } from "@/lib/coaching-prompt";
 import { MathText } from "@/components/MathTextLazy";
 import { ExplanationBlock } from "@/components/ExplanationBlock";
 import { QuestionOriginNote } from "@/components/QuestionOriginNote";
@@ -60,10 +59,7 @@ import { AnswerContext } from "@/components/AnswerContext";
 export const Route = createFileRoute("/result/$matchId")({
   component: ResultPage,
   head: () => ({
-    meta: [
-      { title: pageTitle("Resultat") },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: pageTitle("Resultat") }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 
@@ -428,10 +424,6 @@ function ResultPage() {
       outcome,
       elo_change: eloChange,
     });
-    // Räknas här och inte vid start: en påbörjad match som aldrig lämnas in
-    // är inte en spelad match. Samma engångsspärr (resultLoggedRef) gäller,
-    // så en omladdning av resultatsidan räknar inte en gång till.
-    recordMatchFinished();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match, user, eloChange]);
 
@@ -662,9 +654,7 @@ function ResultPage() {
               asChild
               className="shrink-0 bg-primary px-6 text-base font-semibold text-on-brand shadow-md hover:bg-primary-deep"
             >
-              <Link to="/signup">
-                Skapa konto
-              </Link>
+              <Link to="/signup">Skapa konto</Link>
             </Button>
           </div>
         </Reveal>
@@ -742,9 +732,7 @@ function ResultPage() {
             const norm = normeringForAccuracy(correctCount, total);
             return (
               <div className="mt-5 rounded-xl border border-primary/30 bg-primary/[0.06] p-4 text-center">
-                <div className="text-[11px] font-semibold text-primary">
-                  Trolig normering
-                </div>
+                <div className="text-[11px] font-semibold text-primary">Trolig normering</div>
                 <div className="mt-1 flex items-baseline justify-center gap-2">
                   <span
                     className="text-4xl font-bold tabular-nums text-primary sm:text-5xl"

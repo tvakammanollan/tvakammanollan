@@ -11,33 +11,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import {
-  Loader2,
-  GraduationCap,
-  Check,
-  Lock,
-  CalendarClock,
-  CalendarCheck2,
-} from "lucide-react";
+import { Loader2, GraduationCap, Check, Lock, CalendarClock, CalendarCheck2 } from "lucide-react";
 import {
   completeCoachingBooking,
   startCoachingBooking,
   startCoachingCheckout,
   type CoachingCheckoutHandle,
 } from "@/lib/coaching.functions";
-import {
-  useCoachingOffer,
-  coachingPriceLabel,
-  coachingDiscountedPriceLabel,
-  coachingTermsLabel,
-} from "@/hooks/useCoachingOffer";
-import { DISCOUNT_PERCENT, discountUnlocked, readDiscountState } from "@/lib/coaching-discount";
+import { useCoachingOffer, coachingPriceLabel, coachingTermsLabel } from "@/hooks/useCoachingOffer";
 import { trackEvent, type CoachingSource } from "@/lib/events";
 import { flushTelemetry, trackError } from "@/lib/telemetry";
 import { checkoutStepIndex, elapsedSeconds } from "@/lib/coaching-funnel";
 import { CALENDLY_ORIGIN, readCalendlyMessage } from "@/lib/calendly-embed";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
-import { DiscountCodeChip } from "@/components/DiscountCodeChip";
 import { formatDateLong, formatTime } from "@/lib/sv-format";
 
 /* =====================================================================
@@ -70,13 +56,10 @@ export function CoachingModal({
   open,
   onOpenChange,
   source = "dashboard",
-  autoStart = false,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
   source?: CoachingSource;
-  /** Hoppa förbi erbjudandesteget och gå rakt på tidsväljaren när den öppnas. */
-  autoStart?: boolean;
 }) {
   const { user, profile } = useAuth();
   const checkoutFn = useServerFn(startCoachingCheckout);
@@ -95,19 +78,6 @@ export function CoachingModal({
   const [kassaFel, setKassaFel] = useState<string | null>(null);
   /** Sparad för att kunna försöka igen — tiden är redan bokad hos Calendly. */
   const [inviteeUri, setInviteeUri] = useState<string | null>(null);
-  /**
-   * Har besökaren låst upp lojalitetsrabatten? Då ska koden stå framme i
-   * kassan, oavsett var modalen öppnades ifrån: den som fick den i rutan och
-   * köper en vecka senare från startsidan ska inte behöva minnas en sträng.
-   *
-   * Läses vid öppning och inte i renderingen — localStorage under första
-   * renderingen ger en hydreringsmiss på en serverrenderad sida.
-   */
-  const [rabattUpplåst, setRabattUpplåst] = useState(false);
-  useEffect(() => {
-    if (open) setRabattUpplåst(discountUnlocked(readDiscountState()));
-  }, [open]);
-
   /**
    * Calendly skickar ibland samma `event_scheduled` mer än en gång. Utan
    * spärren blir varje dubblett en extra Checkout-session hos Stripe, och
@@ -255,29 +225,6 @@ export function CoachingModal({
     }
   };
 
-  /**
-   * Öppnad från nudgen, som redan visat pris och argument: gå rakt på
-   * kalendern i stället för att säga samma sak en gång till.
-   *
-   * Bara när tidsbokning bevisligen är påslagen. Utan Calendly faller
-   * `öppnaTidsval` vidare till kassan, och att skicka någon in i en betalning
-   * på ett klick är inte samma sak som att visa lediga tider — då får
-   * erbjudandesteget stå kvar och köparen klicka själv.
-   */
-  const öppnaTidsvalRef = useRef(öppnaTidsval);
-  öppnaTidsvalRef.current = öppnaTidsval;
-  const autoStartad = useRef(false);
-  useEffect(() => {
-    if (!open) {
-      autoStartad.current = false;
-      return;
-    }
-    if (!autoStart || autoStartad.current) return;
-    if (!offer?.available || !offer.schedulingEnabled) return;
-    autoStartad.current = true;
-    void öppnaTidsvalRef.current();
-  }, [open, autoStart, offer]);
-
   const slutför = useCallback(
     async (uri: string) => {
       if (!requestId) return;
@@ -346,7 +293,6 @@ export function CoachingModal({
   }, [steg, schedulingUrl, source]);
 
   const priceLabel = coachingPriceLabel(offer);
-  const rabattPris = coachingDiscountedPriceLabel(offer);
   const termsLabel = coachingTermsLabel(offer);
   const brett = steg !== "erbjudande";
 
@@ -454,15 +400,8 @@ export function CoachingModal({
                 Välj en tid
               </DialogTitle>
               <DialogDescription>
-                {/* Ordinarie pris här, rakt efter att rabattrutan lovat ett lägre,
-                    läses som att rabatten försvann. Den som låst upp koden får
-                    därför se sitt pris och en påminnelse om var den matas in. */}
-                {priceLabel
-                  ? `Studieupplägg, ${rabattUpplåst && rabattPris ? rabattPris : priceLabel}. `
-                  : ""}
-                {rabattUpplåst && rabattPris
-                  ? "Du lägger in din rabattkod i nästa steg, där du betalar."
-                  : "Betalningen sker i nästa steg, här i rutan."}
+                {priceLabel ? `Studieupplägg, ${priceLabel}. ` : ""}
+                Betalningen sker i nästa steg, här i rutan.
               </DialogDescription>
             </DialogHeader>
 
@@ -531,18 +470,6 @@ export function CoachingModal({
               </div>
             ) : kassa?.clientSecret && offer?.publishableKey ? (
               <>
-                {/* Koden matas in i Stripes eget formulär, alltså kan vi inte fylla
-                    den åt köparen. Att den står direkt ovanför med en kopieringsknapp
-                    är skillnaden mellan att komma ihåg en sträng och att klistra in den. */}
-                {rabattUpplåst && (
-                  <div className="mb-4 rounded-xl border border-primary/25 bg-primary/[0.05] p-3.5">
-                    <p className="mb-2.5 text-[13px] leading-relaxed text-white/70">
-                      Din rabatt på {DISCOUNT_PERCENT} procent. Kopiera koden och klistra in den där
-                      Stripe frågar efter kampanjkod.
-                    </p>
-                    <DiscountCodeChip source={source} />
-                  </div>
-                )}
                 <StripeCheckoutEmbed
                   clientSecret={kassa.clientSecret}
                   publishableKey={offer.publishableKey}

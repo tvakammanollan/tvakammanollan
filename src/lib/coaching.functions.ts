@@ -1,7 +1,7 @@
 /**
  * Coachning — pris, tidsbokning, kassa och bekräftelse.
  *
- * Flödet (2026-08-29): knappen (startsidan, landningssidan eller nudgen) →
+ * Flödet (2026-08-29): knappen (startsidan, landningssidan eller navbaren) →
  * `startCoachingBooking` skapar en rad i `coaching_requests` och ger tillbaka
  * en Calendly-länk → köparen väljer en tid i iframen → `completeCoachingBooking`
  * läser tiden ur Calendly, skriver den på raden och öppnar kassan → betalningen

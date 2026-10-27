@@ -35,8 +35,8 @@ import {
  *  - Stjärnbetyget i hjälten är borta av samma skäl.
  * Läggs sektionen tillbaka: lägg tillbaka alla tre i samma commit.
  *
- * `CoachingModal`, nudgen och rabattrutan lever kvar i roten och navbaren.
- * De är inte en del av den här sidan och rördes inte.
+ * `CoachingModal` lever kvar i navbaren och på startsidan. Den är inte en
+ * del av den här sidan och rördes inte.
  */
 export function HeroLanding({
   fragor = [],
