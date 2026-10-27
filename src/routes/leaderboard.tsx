@@ -682,12 +682,15 @@ function BoardShell<T extends BoardRow>({
   columns,
   renderRow,
   footnote,
+  toolbar,
 }: BoardShellProps<T> & {
   head: ReactNode;
   /** Antal kolumner, för raden som skriver ut den egna placeringen. */
   columns: number;
   renderRow: (r: T, isMe: boolean) => ReactNode;
   footnote?: ReactNode;
+  /** Egna knappar i verktygsraden, till vänster om "Uppdatera". */
+  toolbar?: ReactNode;
 }) {
   const { user } = useAuth();
   const [top, setTop] = useState<T[]>([]);
@@ -724,15 +727,20 @@ function BoardShell<T extends BoardRow>({
 
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
-      <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-4 py-2 text-xs text-white/55">
-        <span>{updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "–"}</span>
-        <button
-          onClick={() => void load()}
-          className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-white/55 hover:bg-white/[0.05] hover:text-white"
-        >
-          <RefreshCw className="h-3 w-3" />
-          Uppdatera
-        </button>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-white/8 bg-white/[0.02] px-4 py-2 text-xs text-white/55">
+        <span className="whitespace-nowrap">
+          {updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "–"}
+        </span>
+        <div className="ml-auto flex items-center gap-1">
+          {toolbar}
+          <button
+            onClick={() => void load()}
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-white/55 hover:bg-white/[0.05] hover:text-white"
+          >
+            <RefreshCw className="h-3 w-3" />
+            Uppdatera
+          </button>
+        </div>
       </div>
 
       {loading && top.length === 0 ? (
@@ -835,13 +843,16 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
 /**
  * Gamla prov på topplistan: flest skrivna provpass först.
  *
- * Träffsäkerheten står som egen kolumn men rankar inte, se
- * `prov-leaderboard.ts` för varför.
+ * Listan visar bara antalet. Träffsäkerheten rankar inte och är inte med från
+ * början; den som vill se den slår på den med knappen i verktygsraden. Valet
+ * ligger i komponentens state och inte i localStorage: det är en vy, inte en
+ * inställning, och listan ska se likadan ut för alla vid första besöket.
  */
 function ProvBoard() {
   // Den egna raden läses ur tokenen i servern, inte ur ett skickat id.
   const fetchProv = useServerFn(fetchProvLeaderboard);
   const fetchLb = useCallback(() => fetchProv(), [fetchProv]);
+  const [visaTräffsäkerhet, setVisaTräffsäkerhet] = useState(false);
   return (
     <BoardShell
       fetchLb={fetchLb}
@@ -850,17 +861,32 @@ function ProvBoard() {
       emptySubtitle="Provlistan rankar på antal skrivna provpass. Skriv ett så hamnar du på den."
       emptyCtaLabel="Skriv ett provpass"
       emptyCtaHref="/gamla-prov"
-      columns={5}
+      columns={visaTräffsäkerhet ? 4 : 3}
+      toolbar={
+        <button
+          type="button"
+          aria-pressed={visaTräffsäkerhet}
+          onClick={() => setVisaTräffsäkerhet((v) => !v)}
+          className={`inline-flex min-h-[32px] items-center whitespace-nowrap rounded-full border px-3 py-1 font-semibold transition-colors ${
+            visaTräffsäkerhet
+              ? "border-primary bg-primary text-on-brand"
+              : "border-white/15 text-white/70 hover:bg-white/[0.05] hover:text-white"
+          }`}
+        >
+          {visaTräffsäkerhet ? "Dölj träffsäkerhet" : "Visa träffsäkerhet"}
+        </button>
+      }
       head={
         <tr>
           <th className="px-3 py-2 text-left">#</th>
           <th className="px-3 py-2 text-left">Spelare</th>
           <th className="px-3 py-2 text-right">Provpass</th>
-          <th className="hidden px-3 py-2 text-right sm:table-cell">Rätt</th>
-          <th className="px-3 py-2 text-right">Träffsäkerhet</th>
+          {visaTräffsäkerhet && <th className="px-3 py-2 text-right">Träffsäkerhet</th>}
         </tr>
       }
-      renderRow={(r, isMe) => <ProvRow key={r.user_id} r={r} isMe={isMe} />}
+      renderRow={(r, isMe) => (
+        <ProvRow key={r.user_id} r={r} isMe={isMe} visaTräffsäkerhet={visaTräffsäkerhet} />
+      )}
       footnote={
         <>
           Listan rankar på antal skrivna provpass. Övningspass räknas med, men de saknar tidspress.
@@ -871,7 +897,15 @@ function ProvBoard() {
   );
 }
 
-function ProvRow({ r, isMe }: { r: ProvLeaderboardRow; isMe: boolean }) {
+function ProvRow({
+  r,
+  isMe,
+  visaTräffsäkerhet,
+}: {
+  r: ProvLeaderboardRow;
+  isMe: boolean;
+  visaTräffsäkerhet: boolean;
+}) {
   const tintBg = isMe
     ? "bg-primary/10 ring-1 ring-primary/40"
     : r.rank === 1
@@ -894,15 +928,10 @@ function ProvRow({ r, isMe }: { r: ProvLeaderboardRow; isMe: boolean }) {
       </td>
       <td className="px-3 py-2.5 text-right font-semibold tabular-nums text-primary">
         {formatInt(r.passes)}
-        <span className="block text-[11px] font-normal text-white/45">
-          {formatInt(r.exams)} prov
-        </span>
       </td>
-      <td className="hidden px-3 py-2.5 text-right tabular-nums text-white/70 sm:table-cell">
-        {formatInt(r.correct)}
-        <span className="block text-[11px] text-white/45">av {formatInt(r.questions)}</span>
-      </td>
-      <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
+      {visaTräffsäkerhet && (
+        <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
+      )}
     </tr>
   );
 }
