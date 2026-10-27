@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { isPromptablePath } from "@/lib/coaching-prompt";
+import { isPromptablePath } from "@/lib/promptable-path";
 import { m } from "framer-motion";
 import { ChartNoAxesColumn } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,9 +54,8 @@ export function ConsentBanner() {
 
   // Aldrig ovanpå något som pågår. Bannern är full bredd på telefon och tar
   // ~40 % av skärmen: mitt i en match dolde den svarsalternativ D och E OCH
-  // hela inlämningslisten, medan klockan tickade. Samma väg och samma regel
-  // som coachningsnudgen (`isPromptablePath`) — den kommer upp på nästa sida
-  // som inte är ett pågående pass. Att skjuta upp frågan är dessutom det
+  // hela inlämningslisten, medan klockan tickade. Regeln är `isPromptablePath`:
+  // bannern kommer upp på nästa sida som inte är ett pågående pass. Att skjuta upp frågan är dessutom det
   // integritetsmässigt säkra hållet: utan svar laddas ingen analys alls.
   if (!visible || !isPromptablePath(pathname)) return null;
 

@@ -65,15 +65,15 @@ upp igen är det något som kopierats från en gammal gren.
   routerna i `wrangler.jsonc`. Att "städa bort" dem släcker 301:an som Google
   ska följa i minst ett år till. Se avsnitten ovan.
 - **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
-  `tkn-analytics-consent`, `tkn-coaching-prompt`, `tkn:ach:v1:<uid>`,
+  `tkn-analytics-consent`, `tkn:ach:v1:<uid>`,
   `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:consent-changed`,
   `tkn:achievements:check`.
-  De två förstnämnda flyttas över från sina `hpk-`-föregångare. Båda modulerna läser den gamla
-  `hpk-`-nyckeln en gång och skriver om den — utan flytten hade varje besökare
-  som redan svarat om samtycke fått bannern igen, och varje köpare av
-  studieupplägget fått nudgen igen. Flytten är pinnad i `consent.test.ts` och
-  `coaching-prompt.test.ts`; ta bort den tidigast när `hpk-`-nycklarna rimligen
-  hunnit försvinna ur alla webbläsare.
+  Samtyckesnyckeln flyttas över från sin `hpk-`-föregångare: modulen läser den
+  gamla nyckeln en gång och skriver om den — utan flytten hade varje besökare
+  som redan svarat om samtycke fått bannern igen. Flytten är pinnad i
+  `consent.test.ts`; ta bort den tidigast när `hpk-`-nyckeln rimligen hunnit
+  försvinna ur alla webbläsare. (Coachningsnudgens nyckel gjorde samma flytt
+  tills nudgen togs bort 2026-10-27, se "Inga automatiska rutor".)
 - **Workern heter fortfarande `tvakammanollan`** (`wrangler.jsonc`), med
   stavfelet — "kamma", inte "komma". Namnet är Workerns identitet: byts det i
   konfigen skapar nästa deploy en **ny** Worker medan den gamla behåller
@@ -1190,7 +1190,8 @@ nu skapas raden av servern när kassan öppnas och fylls i av webhooken.
 
 **Tratten, steg för steg (2026-08-19).** Hela vägen mäts, och stegen är valda så
 att varje avhopp går att peka ut. Alla ligger i `ProductEvents` och bär `source`
-(`dashboard` / `landing` / `popup`), så samma tratt går att bryta ner per yta:
+(`dashboard` / `landing` / `navbar`, och `popup` i äldre data från den tid sajten hade
+automatiska rutor), så samma tratt går att bryta ner per yta:
 
 ```
 coaching_card_viewed      kortet/blocket syntes på skärmen
@@ -1232,10 +1233,9 @@ coaching_quiz_exited      lämnade utan att skicka     (+ stage, step, fields, s
   landat, och `useCoachingOffer` läser modulcachen **i renderingen** i stället
   för i en effekt. Det senare tog också bort en bildruta där modalen sa "köp
   direkt i appen är inte igång just nu" fast priset stod på knappen bakom.
-- Nudgens egna `coaching_prompt_*` ligger före det här i kedjan; se avsnittet
-  om den. En popup-öppning hoppar över erbjudandesteget (`autoStart`), men
-  `coaching_offer_opened` fyras ändå — den betyder "modalen öppnades", inte
-  "erbjudandet lästes".
+- `coaching_offer_opened` betyder "modalen öppnades", inte "erbjudandet
+  lästes". Före 2026-10-27 hoppade en öppning från den automatiska nudgen över
+  erbjudandesteget men fyrade den ändå; äldre data bär den skillnaden.
 
 **Avhoppen mäts också, sedan 2026-08-30.** Fram till dess mätte båda kedjorna
 bara det som gick *framåt*, alltså syntes ett avhopp bara som ett steg som
@@ -1421,116 +1421,48 @@ röra sajten. Båda lämnade en levande tid i kalendern. Tre lager stänger det.
   en känd tyst felkälla. Byts slugen matchar ingen event-typ, loggen säger det
   rakt ut, och städaren gör då **ingenting** (den avbokar aldrig i blindo).
 
-### Nudgen om studieupplägget (2026-08-18)
+### Inga automatiska rutor (2026-10-27)
 
-Erbjudandet kommer upp av sig självt: **var sjunde sidvisning eller varannan
-avslutade match**, det som inträffar först. `CoachingPrompt` (monterad i
-`__root` under `SafeBoundary`) äger rutan, `lib/coaching-prompt.ts` äger
-räkningen, och knappen går in i samma `CoachingModal` som korten på start- och
-landningssidan — det finns fortfarande bara en väg till Stripe.
+**Sajten visar inga popups av sig själv.** Tre rutor ägdes tidigare av en
+komponent i roten (`CoachingPrompt`): nudgen om studieupplägget (var sjunde
+sidvisning eller varannan match), lojalitetsrabatten på 20 % (tredje sessionen)
+och påminnelsen om Hela Ordlistan (var fjärde sidvisning). De är borttagna med
+komponenter, räknare, localStorage-nycklar, tester och mätning, på Niklas
+begäran. Skälet är det man kunde se själv: ett första besök på `/leaderboard`
+möttes av två rutor i rad, och den andra åt klicket på fliken man var där för.
 
-- **`MAX_PROMPTS = 1` är hela engångsspärren.** Allt annat är redan byggt
-  återkommande: räknarna nollas vid visning, `PROMPT_COOLDOWN_MS` (24 h) står
-  där och `promptTrigger` respekterar den. Att slå på återkommande är alltså
-  att höja en siffra, inte att bygga om — och `coaching-prompt.test.ts` pinnar
-  både trösklarna och vilotiden redan nu.
-- **Räkningen ligger i localStorage** (`tkn-coaching-prompt`, versionerad som
-  samtycket) och inte i databasen: nudgen ska gälla besökare utan konto, och
-  "hur många sidor har du tittat på" hör inte hemma hos oss. Trasig eller
-  gammal lagring tolkas som ett rent blad — värsta utfallet blir en visning för
-  mycket, aldrig en räkning som tystnar för alltid.
-- **Aldrig mitt i något.** `isPromptablePath` håller den borta från matcher,
-  provpass, kassan och inloggningen. `/train` och `/ord` ligger med trots att de
-  har en startvy: själva passet byter aldrig URL, så det går inte att skilja
-  "har inte börjat" från "mitt i". En tröskad nudge på en blockerad väg går
-  inte förlorad — räknarna står kvar och den kommer vid nästa tillåtna sida.
-- **Aldrig ovanpå något annat.** Är en annan overlay uppe (utmärkelser,
-  rank-up, onboarding, samtyckesbannern) hoppas visningen över helt.
-  Kontrollen är `[role="dialog"]:not([data-state="closed"])` — Radix sätter
-  `data-state`, de handrullade sätter `aria-modal`, alla sätter `role`.
-- **Priset hämtas först när rutan ska upp** (`useCoachingOffer(öppen)`).
-  Annars hade varje sidladdning i appen kostat ett anrop till en endpoint som
-  bara nudgen behöver. Av samma skäl monteras `CoachingModal` först när nudgen
-  visats — den drar in `useAuth`, alltså en auth-lyssnare och en profil-query
-  per mount.
-- **`autoStart` hoppar förbi erbjudandesteget** och går rakt på tidsväljaren,
-  eftersom nudgen redan visat pris och argument. Bara när tidsbokning
-  bevisligen är påslagen: utan Calendly faller `öppnaTidsval` vidare till
-  Stripe, och att skicka någon in i en betalning på ett klick är inte samma sak
-  som att visa lediga tider.
-- **Köpet tystar den permanent.** `/coachning/tack` anropar
-  `stopCoachingPrompts()` vid varje bekräftat köp, inte bara det första —
-  `firstConfirmation` är falskt vid en omladdning.
-- Matchen räknas när **resultatet visas**, inte när matchen startas: en
-  påbörjad match som aldrig lämnas in är ingen spelad match. Samma engångsspärr
-  som `match_result_viewed` gäller, så en omladdning räknar inte igen.
-- Mätning: `coaching_prompt_{shown,clicked,dismissed}` med `trigger`
-  (`pageviews` / `matches`). Källan in i Stripe-raden är `source: "popup"` —
-  tillagd i alla tre zod-enumen i `coaching.functions.ts`.
-
-### Lojalitetsrabatten (2026-08-30)
-
-Vid **tredje sessionen** på sajten kommer en ruta upp och ger 20 % på
-studieupplägget med koden `TVAKOMMANOLLAN`. Räkningen bor i
-`src/lib/coaching-discount.ts`, rutan i `CoachingDiscountDialog`, och koden
-renderas av `DiscountCodeChip` på två ytor: i rutan och i kassasteget i
-`CoachingModal`.
-
-- **`CoachingPrompt` äger BÅDA de automatiska rutorna.** Nudgen och rabatten
-  har identiska regler för när de inte får komma upp (`isPromptablePath`,
-  `annanOverlayÖppen`, 2,6 sekunders fördröjning), och två komponenter som var
-  för sig satte samma timer hade kunnat öppna sig i samma bildruta. Rabatten
-  går före nudgen när båda är tröskade; nudgen står kvar tröskad till nästa
-  tillåtna sida. Lägg inte en tredje automatisk ruta någon annanstans.
-- **Sessionen räknas på 30 minuters inaktivitet**, samma fönster som PostHog
-  och GA använder — talet ska betyda samma sak här som i mätningen.
-  `recordSessionActivity()` måste därför anropas vid **varje** sidvisning, inte
-  bara vid sidladdning: utan det räknas den som läser en guide i fyrtio minuter
-  och klickar vidare som två besök, och tre sessioner blir något man når under
-  ett enda besök.
-- **Ett oläsbart `lastSeen` läses som NY session, en framtida som PÅGÅENDE.**
-  Asymmetrin är medveten och tvärtemot `coaching-sweep.ts`: där är den farliga
-  handlingen att avboka någons möte, här är den farliga utgången att funktionen
-  tystnar utan att något felar. En skev klocka ska däremot inte kunna räkna upp
-  sig fram till rabatten.
-- **Koden är INTE en hemlighet.** Den ligger i Stripe som en aktiv promotion
-  code (`promo_1U5hjP…` → kupong `7325Xhy6`, 20 % forever) utan utgångsdatum
-  och utan `max_redemptions`, och `allow_promotion_codes: true` står redan i
-  `buildCoachingCheckoutParams` för alla. Räkningen här styr alltså vem som får
-  **se** erbjudandet, inte vem som kan lösa in det. Ska rabatten begränsas på
-  riktigt görs det i Stripe, inte i den här modulen.
-- **Ingen påhittad utgång i texten.** Rutan säger "koden ligger kvar i kassan"
-  därför att den gör det. En uppdiktad deadline hade varit en osanning som
-  dessutom syns direkt för den som provar koden dagen efter.
-- **Priset räknas ur beloppet Stripe svarade med**, aldrig ur en siffra i
-  koden: `discountedAmount()` + `coachingDiscountedPriceLabel()`. Avrundningen
-  speglar Stripes egen. Verifierat mot skarpa kontot 2026-08-30: en session med
-  koden pålagd går 35 000 → 28 000 öre, alltså exakt de 280 kr rutan visar.
-- **Tidssteget måste visa rabatterat pris när koden är upplåst.** Ordinarie
-  pris där, rakt efter att rutan lovat ett lägre, läses som att rabatten
-  försvann. Samma sak gäller varje ny yta som skriver ut priset.
-- **`discountUnlocked` är skilt från `discountDue` med flit.** Rutan visas en
-  gång, men koden ska gå att hitta igen: den som stänger och köper en vecka
-  senare från startsidan ska inte behöva minnas en sträng. Därför står den i
-  kassan så länge köpet inte är gjort.
-- **Koden matas in för hand i Stripes eget formulär.** Vi sätter medvetet inte
-  `discounts: [...]` på sessionen — det fältet är ömsesidigt uteslutande med
-  `allow_promotion_codes`, och en ogiltig kupong där ger 400 på hela sessionen,
-  alltså ett uteblivet köp i stället för en utebliven rabatt. Ska den
-  auto-appliceras måste uppslaget ske server-side med fallback till
-  `allow_promotion_codes` när något är fel.
-- **Kopieringsknappen har en reserv.** `clipboard-write` går att neka (osäker
-  kontext, företagspolicy, inbäddade webbläsare) och `writeText` kastar då.
-  Utan reserven gjorde knappen ingenting alls i de lägena, vilket läser som en
-  trasig knapp och räknas som en dead click i PostHog. Den markerar nu koden i
-  stället, så att Cmd+C fungerar.
-- **Köpet tystar den permanent.** `/coachning/tack` anropar
-  `stopCoachingDiscount()` bredvid `stopCoachingPrompts()`, vid varje bekräftat
-  köp och inte bara det första.
-- Nyckeln är `tkn-coaching-rabatt`, versionerad som de andra. Mätning:
-  `coaching_discount_{shown,clicked,dismissed}` med `sessions`, plus
-  `coaching_discount_copied` med `source`. `sessions` ska stå på 3 i praktiken;
-  gör den inte det är det sessionsräkningen som är fel.
+- **Det finns inte längre någon väg att visa något ovanpå sidan utan att
+  besökaren bett om det.** Lägg inte tillbaka en komponent som själv avgör när
+  den ska komma upp, och lägg inte en ny ruta i `CoachingPrompt`-stil någon
+  annanstans. Erbjudanden ska ligga i innehållet (korten på startsidan,
+  landningssidan, `/pris`, menyvalet "Coachning" i avatarmenyn) där besökaren
+  kan välja att titta.
+- **Samtyckesbannern är den enda automatiska overlayen kvar.** Den lyder under
+  `isPromptablePath()` i `src/lib/promptable-path.ts` och visas därför aldrig
+  ovanpå ett provpass, en match, träningen eller kassan. Regeln hette tidigare
+  `coaching-prompt.ts` och var nudgens; filen är nu bara vägregeln.
+- **Rabattkoden `TVAKOMMANOLLAN` finns kvar i Stripe** (`promo_1U5hjP…` →
+  kupong `7325Xhy6`, 20 % forever, inget utgångsdatum, ingen
+  `max_redemptions`), och `allow_promotion_codes: true` står kvar i
+  `buildCoachingCheckoutParams`. Den som har koden kan alltså fortfarande
+  lösa in den i Stripes kassa. Det som är borta är bara att sajten själv
+  erbjuder den: ingen ruta, och ingen kodbricka i kassasteget (den hängde på att
+  rutan visats). Ska koden dödas görs det i Stripe.
+- **`source: "popup"` finns kvar i de fyra zod-enumen** (`coaching.functions.ts`
+  tre gånger, `coaching-leads.functions.ts` en) och i `CoachingSource`. Ingen
+  skickar den längre, men äldre rader i `coaching_requests` och historiken i
+  PostHog bär den, och en validering som plötsligt avvisar ett värde som redan
+  finns i tabellen är en risk utan nytta. Ta bort den bara tillsammans med en
+  genomgång av raderna.
+- **`autoStart` på `CoachingModal` är borta.** Det hoppade över
+  erbjudandesteget för nudgens räkning; ingen annan yta använde det.
+- **De borttagna händelserna** (`coaching_prompt_*`, `coaching_discount_*`,
+  `ord_promo_*`) ligger kvar i PostHog som historik men fyras inte mer. En
+  tratt som räknar `coaching_offer_opened` ska nu läsas utan popup-ytan:
+  `source` tar bara `dashboard`, `landing` och `navbar` framåt.
+- **Lokala nycklar som inte längre läses:** `tkn-coaching-prompt`,
+  `tkn-coaching-rabatt`, `tkn-ord-promo` och föregångaren `hpk-coaching-prompt`.
+  De städas inte; de är några hundra byte i besökarens webbläsare.
 
 ### Hela Ordlistan + MEK: paywallen på ORD och MEK (2026-10-02, MEK 2026-10-20)
 
@@ -1587,15 +1519,6 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
   Utan det hade andra köpet dragit pengar utan att låsa upp något.
 - Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
   bekräftar mot Stripe som reserv för webhooken.
-
-- **Ordpåminnelsen är den tredje automatiska rutan** (`ord-promo.ts`,
-  `OrdPromoDialog`, ägd av `CoachingPrompt`). Den kommer MED FLIT ofta: första
-  gången efter 3 sidvisningar, sedan var 4:e sidvisning och tidigast 2 h efter
-  senaste visningen; efter 4 visningar utan klick vilar den ett dygn. Den går
-  efter rabatten och coachningsnudgen, visas aldrig på `/ord` och aldrig för
-  den som köpt (ägandet avgörs av `getOrdAccess`, inte av webbläsaren). Knappen
-  går till `/ord`, där kassan redan finns. Ändra frekvensen i konstanterna i
-  `ord-promo.ts`; testet pinnar dem.
 
 ### Röstning på frågor (2026-10-19)
 
@@ -1691,8 +1614,8 @@ knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
   så att länkar och ranking från ett prov följer med till nästa. Uppdatera
   `updated`, `promoUntil`, `lastmod` i sitemapen och raden i `llms.txt`
   (statisk).
-- **Ingen popup.** Första versionen var en fjärde automatisk ruta i
-  `CoachingPrompt`; Niklas tyckte att rutorna redan störde och den byttes
+- **Ingen popup.** Första versionen var en fjärde automatisk ruta i den
+  (numera borttagna) `CoachingPrompt`; Niklas tyckte att rutorna redan störde och den byttes
   2026-10-20 mot en liten rund knapp, "Efter provet", överst bland valen i
   `HomeDashboard`. Den syns till och med `promoUntil` (`facitKnappSynlig`).
   Lägg inte tillbaka en ruta för det här.
@@ -1900,8 +1823,8 @@ vilket är den allvarligare halvan av det som rättades.
   knappar i matchflödet sätter `min-h-[44px]` explicit. Höjden kommer från
   padding, inte från en fast höjd, så texten fortsätter styra bredden.
 - **Ingenting får läggas ovanpå ett pågående pass.** `isPromptablePath()` i
-  `coaching-prompt.ts` är den gemensamma regeln, och **samtyckesbannern lyder
-  under den sedan 2026-08-21**: på telefon är den full bredd och tog ~40 % av
+  `promptable-path.ts` är regeln, och **samtyckesbannern lyder under den sedan
+  2026-08-21**: på telefon är den full bredd och tog ~40 % av
   skärmen, alltså svarsalternativ D och E plus hela inlämningslisten, medan
   klockan tickade. Att skjuta upp frågan är dessutom integritetsmässigt säkert
   — utan svar laddas ingen analys.
@@ -2049,8 +1972,7 @@ och gäller allt nytt. Kodkommentarer, loggmeddelanden och tester är undantagna
    `PageHeader` och CSS-klassen `.eyebrow` är borta. Rubriken står på egen hand.
    Behövs ett datum eller en räkning skrivs den som vanlig `text-sm`-rad.
 4. **Ingen `uppercase` och ingen `tracking-wide/wider/widest/[Nem]`.** Etiketter
-   skrivs i vanlig gemen text. Undantag: rumskoden i `MatchmakerModal` och
-   rabattkoden i `DiscountCodeChip` (koder, inte etiketter) samt
+   skrivs i vanlig gemen text. Undantag: rumskoden i `MatchmakerModal` (en kod, inte en etikett) samt
    `dropdown-menu.tsx` (biblioteksfil). `tracking-tight` på rubriker är kvar.
 5. **Undertexter finns bara om de ger information.** En `subtitle` som
    parafraserar rubriken tas bort. Skriv sakligt, aldrig rytmiskt: inga

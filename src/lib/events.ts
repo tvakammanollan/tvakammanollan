@@ -26,8 +26,6 @@ export type MatchOutcome = "win" | "loss";
 export type TrainingTrack = "verbal" | "math";
 /** Ytan köpet startade från — samma värden som serverfunktionen validerar. */
 export type CoachingSource = "dashboard" | "landing" | "popup" | "navbar";
-/** Vad som tröskade fram nudgen. Speglar PromptTrigger i coaching-prompt.ts. */
-export type CoachingPromptTrigger = "pageviews" | "matches";
 
 export interface ProductEvents {
   /* ── Samtycke ─────────────────────────────────────────────────────────
@@ -220,29 +218,8 @@ export interface ProductEvents {
     /** Hur avhoppet upptäcktes. `pagehide` = stängd flik eller navigering bort. */
     via: "pagehide" | "unmount";
   };
-  /** Nudgen kom upp av sig själv. `trigger` skiljer sidbläddraren från spelaren. */
-  coaching_prompt_shown: { trigger: CoachingPromptTrigger };
-  /** Klick på nudgens knapp. Kvoten mot `shown` är hela dess existensberättigande. */
-  coaching_prompt_clicked: { trigger: CoachingPromptTrigger };
-  coaching_prompt_dismissed: { trigger: CoachingPromptTrigger };
-
-  /* Lojalitetsrabatten — 20 % vid tredje sessionen. Se coaching-discount.ts.
-
-     `sessions` är räkningen som tröskade fram rutan. Den ska stå på 3 i
-     praktiken; gör den inte det är det sessionsräkningen som är fel, inte
-     rabatten, och det går bara att upptäcka om talet följer med. */
-  /** Påminnelserna om Hela Ordlistan (ord-promo.ts). `answered` är null för utloggade. */
-  ord_promo_shown: { shown_count: number; answered: number | null };
-  ord_promo_clicked: { shown_count: number };
-  ord_promo_dismissed: { shown_count: number };
   /** Den runda "Efter provet"-knappen på startsidan, till /hogskoleprovet-facit. `term` = `2026ht`. */
   facit_button_clicked: { term: string };
-  coaching_discount_shown: { sessions: number };
-  /** Klick på knappen. Kvoten mot `shown` säger om rabatten faktiskt biter. */
-  coaching_discount_clicked: { sessions: number };
-  coaching_discount_dismissed: { sessions: number };
-  /** Koden kopierades. Utan den syns bara "öppnade kassan", inte "tog koden med sig". */
-  coaching_discount_copied: { source: CoachingSource };
 
   /* ── Forum ───────────────────────────────────────────────────────────── */
   forum_thread_created: {

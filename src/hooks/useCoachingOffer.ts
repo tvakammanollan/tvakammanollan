@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { fetchCoachingOffer, type CoachingOffer } from "@/lib/coaching.functions";
 import { formatMoney } from "@/lib/sv-format";
-import { discountedAmount } from "@/lib/coaching-discount";
 
 /**
  * Priset på coachningen, hämtat ur Stripe.
@@ -91,19 +90,4 @@ function periodSuffix(offer: CoachingOffer): string {
 export function coachingPriceLabel(offer: CoachingOffer | null): string | null {
   if (!offer?.available || offer.amount === null) return null;
   return `${formatMoney(offer.amount, offer.currency)}${periodSuffix(offer)}`;
-}
-
-/**
- * Samma pris med lojalitetsrabatten pådragen.
- *
- * Räknas ur beloppet Stripe svarade med, aldrig ur en siffra i koden — annars
- * kan rutan visa en annan summa än den kassan drar, vilket är precis det fel
- * `resolveCoachingPrice` finns för att undvika. Avrundningen speglar Stripes
- * egen, så talet här är talet i kassan.
- */
-export function coachingDiscountedPriceLabel(offer: CoachingOffer | null): string | null {
-  if (!offer?.available || offer.amount === null) return null;
-  const rabatterat = discountedAmount(offer.amount);
-  if (rabatterat === null) return null;
-  return `${formatMoney(rabatterat, offer.currency)}${periodSuffix(offer)}`;
 }
