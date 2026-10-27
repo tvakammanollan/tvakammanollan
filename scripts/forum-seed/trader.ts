@@ -1658,4 +1658,639 @@ Tänk på att **behörighet till en utbildning** är en annan sak än att få sk
 
 Frågor om vem som får skriva i särskilda situationer (t.ex. som yngre elev) bör du ställa direkt till provets arrangör, eftersom reglerna kan ändras.`,
   },
+  /* ── Omgång 3: long-tail (2026-10-27) ────────────────────────── */
+  {
+    category: "kvantitativ",
+    title: "Medelhastighet: varför är det inte medelvärdet av farterna?",
+    question: `Jag kör 60 km/h dit och 40 km/h tillbaka. Är medelhastigheten inte 50 km/h?`,
+    answer: String.raw`Nej, och det är en klassisk fälla. Medelhastighet är **total sträcka delat med total tid**, inte medelvärdet av farterna.
+
+Låt sträckan åt ett håll vara $d$:
+- Tiden dit: $\frac{d}{60}$
+- Tiden tillbaka: $\frac{d}{40}$
+- Total tid: $\frac{d}{60} + \frac{d}{40} = \frac{2d + 3d}{120} = \frac{d}{24}$
+- Total sträcka: $2d$
+
+Medelhastigheten blir $2d \div \frac{d}{24} = 48$ km/h.
+
+Den blir lägre än 50 eftersom du tillbringar **längre tid** i den långsamma farten. Sträckans längd tar ut sig, så du behöver inte veta $d$.
+
+Gäller det två lika långa sträckor går det även att skriva som $\frac{2ab}{a+b}$.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Gemensamt arbete: hur lång tid tar det om två arbetar tillsammans?",
+    question: `A klarar ett jobb på 6 timmar och B på 3 timmar. Hur lång tid tar det tillsammans?`,
+    answer: String.raw`Räkna med **hur stor del av jobbet var och en gör per timme**.
+
+- A: $\frac{1}{6}$ av jobbet per timme
+- B: $\frac{1}{3}$ av jobbet per timme
+- Tillsammans: $\frac{1}{6} + \frac{1}{3} = \frac{1}{2}$ av jobbet per timme
+
+Hela jobbet tar alltså $1 \div \frac{1}{2} = 2$ timmar.
+
+Samma tänk fungerar för kranar som fyller ett badkar, pumpar som tömmer en tank eller kopieringsmaskiner. Är det en som **tömmer** och en som fyller ska du subtrahera i stället för att addera.
+
+Snabbkoll: svaret måste vara kortare än den snabbaste ensam (här under 3 timmar). Alternativ som är längre är direkt fel.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Moms och procent: hur tar man bort 25 % moms?",
+    question: `Priset inklusive 25 % moms är 125 kr. Hur räknar man tillbaka?`,
+    answer: String.raw`Momsen läggs på **priset utan moms**, så du kan inte bara dra bort 25 % av 125 kr.
+
+- Pris utan moms $\times 1{,}25$ = pris med moms.
+- Därför: pris med moms $\div 1{,}25$ = pris utan moms.
+
+$125 \div 1{,}25 = 100$ kr. Momsen är 25 kr, vilket är **20 %** av priset inklusive moms (och 25 % av priset utan).
+
+Samma princip gäller alla uppgifter som går bakåt från en procentuell ändring: dela med förändringsfaktorn, subtrahera inte procenten.
+
+Exempel: en vara kostar 90 kr efter 10 % rabatt. Originalpriset är $90 \div 0{,}9 = 100$ kr, inte 99.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Procent av procent och flera rabatter i rad",
+    question: `Det är 30 % rabatt och sedan ytterligare 10 % på det nedsatta priset. Hur stor är rabatten totalt?`,
+    answer: String.raw`Rabatterna **multipliceras**, de adderas inte.
+
+- 30 % rabatt ger faktorn $0{,}7$.
+- 10 % rabatt ger faktorn $0{,}9$.
+- Tillsammans: $0{,}7 \times 0{,}9 = 0{,}63$
+
+Du betalar 63 % av ursprungspriset, så den totala rabatten är **37 %**, inte 40 %.
+
+**Procent av procent:** 20 % av 50 % är $0{,}2 \times 0{,}5 = 0{,}1$, alltså 10 %. Ett populärt uppgiftsupplägg är "20 % av de 50 % som..." där man ska svara i andel av helheten.
+
+Kontrollera alltid vad procentsatsen räknas **av**: ursprungspriset, det nedsatta priset eller en delgrupp.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Enhetspris: vilket köp är billigast?",
+    question: `Hur jämför man snabbt priset på olika förpackningsstorlekar?`,
+    answer: `Räkna om båda till **pris per samma enhet**.
+
+Exempel: 500 g kostar 25 kr, och 1,2 kg kostar 54 kr.
+- Första: 25 kr / 0,5 kg = 50 kr/kg
+- Andra: 54 kr / 1,2 kg = 45 kr/kg
+
+Den större förpackningen är billigare per kilo.
+
+**Genvägar:**
+- Byt till jämna tal. Ta 2 kg för att slippa decimaler: första 100 kr, andra ungefär 90 kr.
+- Räkna bara så noga som alternativen kräver. Ligger de långt isär räcker en överslagsräkning.
+- Glöm inte att enheterna måste vara desamma (g mot kg, liter mot dl).
+
+På KVA är det här en vanlig uppgiftstyp: "Pris per liter för A" mot "Pris per liter för B".`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Jämföra bråk snabbt: korsmultiplikation och gemensam nämnare",
+    question: `Vilket är störst av 3/7 och 4/9? Finns det ett snabbt sätt?`,
+    answer: String.raw`Korsmultiplicera: multiplicera varje täljare med den andra nämnaren.
+
+$\frac{3}{7}$ mot $\frac{4}{9}$: $3 \times 9 = 27$ och $4 \times 7 = 28$. Den sida som får störst tal är störst, alltså $\frac{4}{9}$.
+
+Fler sätt:
+- **Jämför med $\frac{1}{2}$:** $\frac{3}{7}$ är mindre än hälften (3 är under 3,5), $\frac{4}{9}$ också (4 är under 4,5). Behövs finare jämförelse.
+- **Jämför det som saknas till 1:** $\frac{3}{7}$ saknar $\frac{4}{7}$, $\frac{4}{9}$ saknar $\frac{5}{9}$. Det bråk som saknar minst är störst.
+- **Decimalform** om nämnarna är enkla ($\frac{3}{8} = 0{,}375$).
+
+På KVA slipper du ofta räkna exakt: det räcker att se att ett bråk är större än hälften och det andra mindre.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Kvadrater, kuber och tvåpotenser som är bra att kunna utantill",
+    question: `Vilka tal ska man kunna utantill för att spara tid?`,
+    answer: `Det tar några minuter att lära sig och sparar sekunder på många uppgifter.
+
+**Kvadrater:** $11^2 = 121$, $12^2 = 144$, $13^2 = 169$, $14^2 = 196$, $15^2 = 225$, $16^2 = 256$, $20^2 = 400$, $25^2 = 625$.
+
+**Kuber:** $2^3 = 8$, $3^3 = 27$, $4^3 = 64$, $5^3 = 125$, $10^3 = 1\,000$.
+
+**Tvåpotenser:** 2, 4, 8, 16, 32, 64, 128, 256, 512 och $2^{10} = 1\,024$.
+
+**Primtal under 50:** 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47.
+
+**Bråk och decimaler:** $\frac{1}{8} = 0{,}125$, $\frac{1}{5} = 0{,}2$, $\frac{3}{8} = 0{,}375$.
+
+Rötter och potenser dyker upp i alla fyra kvantdelprov, och kan du dem slipper du bryta ned tal under tidspress.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Överslagsräkning: räkna grovt för att hinna",
+    question: `Hur grovt kan man räkna utan att hamna fel?`,
+    answer: String.raw`Svarsalternativen är ofta tillräckligt långt ifrån varandra för att en grov uppskattning avgör.
+
+Exempel: $49{,}8 \times 20{,}1 \approx 50 \times 20 = 1\,000$. Räkna inte ut decimalerna om alternativen är 100, 1 000, 10 000 och 99 900.
+
+**Regler:**
+1. Avrunda till jämna tal du kan räkna i huvudet.
+2. Tänk på **åt vilket håll** du avrundade. Avrundar du uppåt är det riktiga svaret något lägre.
+3. Titta på alternativen först. Ligger de nära varandra behöver du räkna noggrannare.
+
+**Vanlig användning:**
+- Testa om ett alternativ är rimligt (ett pris, en area, en procent).
+- Strykning av alternativ som ligger långt bort.
+- Kontroll av svar som du räknat fram.
+
+Vid KVA och DTK sparar överslag mest tid, eftersom du ofta bara ska avgöra vilken storhet som är störst.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Linjära ekvationer med bråk: gångra bort nämnarna",
+    question: `Hur löser man x/2 + x/3 = 10 utan att göra fel?`,
+    answer: String.raw`Gångra hela ekvationen med **minsta gemensamma nämnare** för att bli av med bråken.
+
+$\frac{x}{2} + \frac{x}{3} = 10$
+
+Minsta gemensamma nämnare är 6. Multiplicera varje term med 6:
+$3x + 2x = 60$, så $5x = 60$ och $x = 12$.
+
+Kontroll: $\frac{12}{2} + \frac{12}{3} = 6 + 4 = 10$.
+
+**Fällor:**
+- Glöm inte att multiplicera **högerledet** också.
+- Multiplicera varje term, inte bara den första.
+- Vid parenteser: multiplicera in noga, och beakta minustecken framför.
+
+Kontrollera alltid svaret genom att sätta in det. Det tar tio sekunder och fångar de flesta fel.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Koordinatsystem: avstånd, mittpunkt och räta linjens lutning",
+    question: `Vilka formler behöver man för punkter och linjer i ett koordinatsystem?`,
+    answer: String.raw`För punkterna $(x_1, y_1)$ och $(x_2, y_2)$:
+
+- **Avstånd:** $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$. Det är bara Pythagoras sats. Från $(1, 2)$ till $(4, 6)$: $\sqrt{9 + 16} = 5$.
+- **Mittpunkt:** $\left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}\right)$. Mellan $(1, 2)$ och $(4, 6)$ ligger $(2{,}5;\ 4)$.
+- **Lutning:** $k = \frac{y_2 - y_1}{x_2 - x_1}$.
+
+**Linjer:**
+- Parallella linjer har samma $k$.
+- Vinkelräta linjer har $k_1 \cdot k_2 = -1$, till exempel $k = 2$ och $k = -\frac{1}{2}$.
+- Linjen skär y-axeln där $x = 0$, alltså i $m$.
+- Linjen skär x-axeln där $y = 0$.
+
+Rita en snabb skiss. Många uppgifter blir självklara när du ser dem.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Sannolikhet utan återläggning: dra flera kulor ur en påse",
+    question: `Det finns 5 röda och 3 blå kulor. Hur stor är sannolikheten att två dragna kulor båda är röda?`,
+    answer: String.raw`Utan återläggning minskar både antalet kulor och antalet av färgen för varje dragning.
+
+- Första röd: $\frac{5}{8}$
+- Andra röd, när en röd tagits bort: $\frac{4}{7}$
+- Båda röda: $\frac{5}{8} \times \frac{4}{7} = \frac{20}{56} = \frac{5}{14}$
+
+**Med återläggning** hade andra sannolikheten varit $\frac{5}{8}$ igen och svaret $\frac{25}{64}$. Läs noga om kulan läggs tillbaka.
+
+**Minst en av en sort:** räkna ofta komplementet. "Minst en blå" är $1 - P(\text{ingen blå})$.
+
+**"Eller" och "och":**
+- Och (båda händelserna): multiplicera.
+- Eller (någon av två som utesluter varandra): addera.
+
+Skriv ut alla möjligheter med ett träddiagram när det är få dragningar. Det är lättare att gå vilse i huvudet.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "Exponentiell tillväxt och halveringstid",
+    question: `Hur räknar man uppgifter där något halveras eller fördubblas med jämna mellanrum?`,
+    answer: String.raw`Räkna **hur många gånger** det halveras eller fördubblas, inte hur lång tid det gått.
+
+**Halveringstid:** 80 g av ett ämne med halveringstiden 3 dagar. Efter 9 dagar har det gått $9 \div 3 = 3$ halveringar:
+$80 \to 40 \to 20 \to 10$ g, alltså 10 g.
+
+**Fördubbling:** en bakteriekultur på 1 000 som fördubblas varannan timme. Efter 6 timmar har det gått 3 fördubblingar: $1\,000 \times 2^3 = 8\,000$.
+
+Allmänt: start $\times\, 2^{n}$ vid fördubbling, start $\times\, \left(\frac{1}{2}\right)^{n}$ vid halvering, där $n$ är antal perioder.
+
+Uppskatta med tvåpotenser: $2^{10} \approx 1\,000$, vilket ger snabba överslag för stora tal.
+
+Fällan är att räkna **linjärt**: det halveras inte med lika många gram per dag.`,
+  },
+  {
+    category: "kvantitativ",
+    title: "NOG steg för steg med två exempel",
+    question: `Kan någon gå igenom ett par NOG-uppgifter och visa hur man resonerar?`,
+    answer: `**Exempel 1.** Vad är $x$? (1) $x^2 = 9$. (2) $x > 0$.
+
+- Ensamt (1): $x = 3$ eller $x = -3$. Två möjliga svar, räcker inte.
+- Ensamt (2): vet bara att $x$ är positivt. Räcker inte.
+- Tillsammans: $x = 3$. Det räcker, svaret är **C**.
+
+**Exempel 2.** Är heltalet $n$ jämnt? (1) $n + 1$ är udda. (2) $n$ är delbart med 3.
+
+- Ensamt (1): om $n + 1$ är udda måste $n$ vara jämnt. Räcker, så (1) räcker.
+- Ensamt (2): 3 är udda och 6 är jämnt, båda är delbara med 3. Räcker inte.
+- Svaret är **A**.
+
+**Mönstret:**
+1. Avgör vad du ska ta reda på.
+2. Pröva (1) ensamt, sedan (2) ensamt.
+3. Pröva båda tillsammans bara om ingen räckte.
+4. Räkna inte klart. Så fort du ser att det går att få ett entydigt svar är du färdig.
+
+Öva fler i [NOG-guiden](https://tvakommanollan.se/guider/nog).`,
+  },
+  {
+    category: "kvantitativ",
+    title: "DTK: lutning och förändringstakt i diagram",
+    question: `Frågor som "när ökade värdet snabbast" i ett linjediagram, hur avgör man det?`,
+    answer: String.raw`Förändringstakten är **lutningen** på linjen:
+
+$$k = \frac{\Delta y}{\Delta x}$$
+
+En linje genom $(0, 2)$ och $(4, 10)$ har lutningen $\frac{10 - 2}{4 - 0} = 2$ enheter per tidsenhet.
+
+**Att tänka på:**
+- **Brantast linje betyder snabbast ökning**, men bara om skalan på axlarna är den samma. Kolla enheten.
+- **Absolut förändring** (hur många enheter) skiljer sig från **relativ förändring** (hur många procent). Ett litet tal som fördubblas kan öka mer i procent än ett stort tal som växer lite.
+- **Fallande linje** betyder att värdet minskar, men kan ha stor lutning åt andra hållet.
+- **Plan linje** betyder att inget förändras.
+
+Rita ut två punkter med hjälplinjer mot axlarna om du är osäker. Läs av värdena noga innan du jämför.`,
+  },
+  {
+    category: "verbal",
+    title: "Ord för beröm och kritik som ofta förekommer på ORD",
+    question: `Finns det ordgrupper man kan lära sig tillsammans för att det går fortare?`,
+    answer: `Ja, det går fortare att lära sig ord i grupper med liknande betydelse, och ORD testar ofta ord som hör ihop med varandra.
+
+**Beröm och uppskattning:**
+- *eloge*: beröm
+- *hylla*: prisa, uttrycka stor uppskattning
+- *smickra*: berömma för att vinna fördelar
+- *lovorda*: berömma högt
+
+**Kritik och förkastande:**
+- *klandra*: kritisera, förebrå
+- *förkasta*: avvisa
+- *förtala*: sprida osanna, nedsättande uppgifter om någon
+- *tadla*: kritisera, anmärka på
+
+Lär dig orden i par: ord och dess motsats. Då blir ett fel alternativ lättare att känna igen.
+
+Fler ord med förklaringar finns i [ordlistan](https://tvakommanollan.se/ordlista).`,
+  },
+  {
+    category: "verbal",
+    title: "Ord som betyder mycket eller lite på ORD",
+    question: `Vilka ord för mängd och grad är bra att kunna?`,
+    answer: `Mängd och grad är ett vanligt tema.
+
+**Mycket eller många:**
+- *åtskilliga*: ganska många
+- *talrik*: förekommande i stort antal
+- *överflödig*: mer än nödvändigt
+- *rikligt*: i stor mängd
+- *omfattande*: stor i omfång
+
+**Lite eller få:**
+- *ringa*: liten, obetydlig
+- *knapp*: just tillräcklig, snål
+- *sparsam*: som inte använder mycket
+- *fåtalig*: få till antalet
+- *obetydlig*: av liten vikt
+
+**Fällor:** *ringa* betyder liten, inte dålig. *Knapp* kan syfta på tid ("en knapp timme") och på mängd.
+
+Se på alla alternativen: ORD frågar ofta efter ett ord med nästan samma betydelse, och de andra alternativen är ord av samma sort men med olika grad.
+
+Träna dem i [ordövningen](https://tvakommanollan.se/ord).`,
+  },
+  {
+    category: "verbal",
+    title: "Svenska ord som ofta förväxlas på ORD",
+    question: `Finns det ordpar där man lätt tar fel? Jag blandar ihop empati och sympati.`,
+    answer: `Några som ofta förväxlas:
+
+- **Empati** är förmågan att leva sig in i och förstå en annans känslor. **Sympati** är att tycka om eller känna medkänsla för någon.
+- **Ironi** är att säga motsatsen till vad man menar, med antydan. **Sarkasm** är en skarpare, mer sårande ironi.
+- **Förmån** är en särskild fördel eller rättighet. **Fördel** är något som är gynnsamt.
+- **Effektiv** betyder att något ger resultat. **Effektfull** betyder att det gör intryck.
+- **Prestation** är en insats eller ett resultat. **Prestige** är anseende och status.
+- **Eventuell** betyder möjlig, och används ofta fel som "slutlig".
+- **Aggression** är fientlighet eller angrepp. **Ambition** är strävan efter att nå ett mål.
+
+Skillnaderna är små och provet utnyttjar dem. Läs alla alternativen innan du bestämmer dig, och pröva att byta ut ordet i en mening.`,
+  },
+  {
+    category: "verbal",
+    title: "Falska vänner i ELF: engelska ord som liknar svenska men betyder annat",
+    question: `Vilka engelska ord luras man oftast av?`,
+    answer: `Falska vänner är ord som liknar svenska men har en annan betydelse. Några vanliga:
+
+- *actually*: faktiskt (inte "aktuellt")
+- *eventually*: till slut (inte "eventuellt")
+- *sensible*: förnuftig (inte "känslig", det är *sensitive*)
+- *gift*: gåva (inte "gift" i betydelsen *married*)
+- *fabric*: tyg, material (inte "fabrik", det är *factory*)
+- *brave*: modig (inte "snäll")
+- *bad*: dålig (inte "bad", som är *bath*)
+- *chef*: kock, kökschef
+- *become*: bli (inte "bekomma", det är *get*)
+- *fast*: snabb eller fast (beroende på sammanhang)
+
+Fällan är att tolka ordet utifrån det svenska utseendet. Kontrollera alltid mot sammanhanget i texten: passar betydelsen i meningen?
+
+Samla egna falska vänner i en lista när du läser engelska texter. Ett par per vecka räcker långt.`,
+  },
+  {
+    category: "verbal",
+    title: "Ton och attityd på LÄS: ironisk, saklig eller polemisk?",
+    question: `Frågorna om textens ton eller författarens inställning, hur avgör man dem?`,
+    answer: `Frågor som "Vilken är författarens inställning?" prövar att du läser mellan raderna.
+
+**Ledtrådar:**
+- **Värdeladdade ord** (*förfärande*, *lysande*, *tveksam*) visar vad författaren tycker.
+- **Tonen**: saklig (neutral, redovisar fakta), polemisk (angriper en åsikt), ironisk (säger motsatsen), reflekterande (funderar), uppmanande (vill få läsaren att agera).
+- **Hur motsidan beskrivs**. Förvrängs den eller redovisas den rättvist?
+- **Slutet.** Slutklämmen visar ofta riktningen.
+
+**Fällor:**
+- Att blanda ihop vad en person i texten tycker med vad författaren tycker.
+- Alternativ med för starka ord (*hatar*, *förkastar helt*) när texten är försiktig.
+- Att svara utifrån din egen åsikt.
+
+Underlaget för svaret ska gå att peka ut i texten. Kan du inte det, välj ett försiktigare alternativ.
+
+Se också [LÄS-guiden](https://tvakommanollan.se/guider/las).`,
+  },
+  {
+    category: "verbal",
+    title: "Hur skiljer man huvudpåstående från exempel i en längre text?",
+    question: `Jag får svårt att se vad som är textens poäng och vad som bara är exempel.`,
+    answer: `Fråga dig för varje stycke: **säger det här något nytt, eller visar det bara ett fall av något som redan sagts?**
+
+**Tecken på exempel:**
+- Inleds med *till exempel*, *exempelvis*, *ta ... som exempel* eller *så var det med ...*.
+- Är konkret: namn, siffror, platser.
+- Går att stryka utan att resonemanget faller.
+
+**Tecken på huvudpåstående:**
+- Är allmänt hållet.
+- Står ofta i början eller slutet av ett stycke.
+- Följs av belägg eller exempel.
+- Signalord som *alltså*, *poängen är*, *det viktigaste*.
+
+**Ett knep:** sammanfatta varje stycke med fem ord medan du läser. Sätter du ihop sammanfattningarna får du textens struktur.
+
+Frågor om textens syfte kräver att du ser skillnaden. Ett exempel är aldrig huvudtanken.`,
+  },
+  {
+    category: "verbal",
+    title: "Hur mycket tid ska man lägga på varje delprov i verbalt?",
+    question: `Ska man alltid göra delproven i den ordning de står i häftet?`,
+    answer: `Nej. Du får göra uppgifterna i den ordning du vill inom ett pass, och det kan vara en fördel att byta.
+
+**Argument för att ta de snabba först:**
+- ORD och MEK går fortare per poäng än de långa texterna.
+- Du säkrar poäng om tiden skulle ta slut.
+- Du får en lugn start.
+
+**Argument för att ta ordningen i häftet:**
+- Du slipper hoppa och riskera att hamna på fel rad på svarsbladet.
+- Det känns mindre stressigt.
+
+**Tumregel:** välj en ordning som du övat på. Det är sämre att pröva en ny strategi på provdagen.
+
+Tidsfördelning finns i tråden "Hur hinner man klart med det verbala provpasset?". Testa olika ordningar på gamla prov i [gamla prov](https://tvakommanollan.se/gamla-prov) och se vad som ger bäst resultat för dig.`,
+  },
+  {
+    category: "plugg",
+    title: "Pluggar man bäst ensam eller i grupp inför högskoleprovet?",
+    question: `Jag får inte så mycket gjort ensam. Är en pluggkompis värd det?`,
+    answer: `Båda fungerar, men till olika saker.
+
+**Ensam fungerar bäst för:**
+- Prov på tid. Du ska ändå sitta ensam på provdagen.
+- Ordinlärning och repetition.
+- Formler och övningsuppgifter i egen takt.
+
+**I grupp fungerar bäst för:**
+- Genomgång efter ett prov. Förklarar du en lösning för någon annan lär du dig den bättre.
+- Motivation och ansvar. Det är lättare att dyka upp om någon väntar.
+- Att se andra sätt att lösa samma uppgift.
+
+**En blandning är ofta bäst:** skriv provet ensam, gå igenom felen tillsammans.
+
+Har du ingen pluggkompis kan du skriva en lösning i forumet och se om andra löst den annorlunda. Genomgångar av provuppgifter finns under kategorierna för [kvantitativ](https://tvakommanollan.se/forum/kvantitativ) och [verbal](https://tvakommanollan.se/forum/verbal).`,
+  },
+  {
+    category: "plugg",
+    title: "Pluggteknik: korta pass med pauser",
+    question: `Jag orkar inte sitta i flera timmar. Hur lägger man upp ett pass?`,
+    answer: `Koncentrationen sjunker efter en stund, och pauser ger bättre resultat än ett långt pass.
+
+**En enkel modell (ofta kallad pomodoro):**
+1. 25 minuters fokuserad plugg, telefonen i ett annat rum.
+2. 5 minuters paus. Res dig, drick vatten.
+3. Upprepa fyra gånger, ta sedan en längre paus på 15–30 minuter.
+
+**Anpassa efter dig:** prova 40 minuter plugg och 10 minuter paus om 25 känns för kort.
+
+**Variera uppgifterna:** byt mellan ORD, matte och läsning. Hjärnan hinner vila från det du precis gjort.
+
+**Avsluta med att skriva ned vad du kan nu** och vad du ska göra nästa gång. Det gör starten enklare.
+
+Provet är 55 minuter per pass, så träna också på att sitta 55 minuter i sträck vid något tillfälle. Se tråden om att simulera provdagen.`,
+  },
+  {
+    category: "plugg",
+    title: "Vilka uppgifter ska man hoppa över på högskoleprovet?",
+    question: `Hur avgör man att det är dags att släppa en uppgift och gå vidare?`,
+    answer: `Varje uppgift ger samma poäng, så en som tar tre gånger så lång tid tar tid från andra poäng.
+
+**Riktvärde:** ett pass är 40 uppgifter på 55 minuter, alltså ungefär **80 sekunder per uppgift** i snitt. Kvantitativt är det inte jämnt fördelat, men ligger du långt över två minuter på en uppgift är det dags att gå vidare.
+
+**Gör så här:**
+1. Markera uppgiften i häftet (en ring eller ett frågetecken).
+2. Fyll i en gissning direkt så att rutan inte blir tom.
+3. Gå vidare, och återvänd om tid finns.
+
+**Uppgifter att hoppa över först:**
+- Långa texter med många steg
+- Uppgifter där du inte ens ser hur du ska börja
+- Uppgifter som du tidigare tappat tid på
+
+Många förbättrar sitt resultat mer av att bli bra på att släppa än av att kunna mer. Se [guiden om tidspress](https://tvakommanollan.se/guider/tidspress).`,
+  },
+  {
+    category: "plugg",
+    title: "Finns det någon bokstav man ska gissa på?",
+    question: `Om man inte har en aning, finns det något mönster, som att C är vanligast?`,
+    answer: `Nej, det finns inget pålitligt mönster. Rätta svar är utspridda över alternativen, och att gissa på samma bokstav ger ungefär samma chans som slumpen.
+
+**Vad du kan lita på:**
+- **Uteslutning.** Stryk det du vet är fel och gissa bland resten.
+- **Alternativ som skiljer sig från de andra** är sällan bättre eller sämre, men alternativ som är förvrängningar av texten är oftast fel.
+- **Rimlighetskontroll.** På kvant kan en snabb uppskattning ta bort alternativ som ligger för långt bort.
+
+**Vad du inte ska göra:**
+- Räkna ut mönster i facit från förra provet.
+- Byta svar bara för att du har skrivit samma bokstav flera gånger i rad.
+
+Gissa alltid på det du inte hinner, eftersom fel svar inte ger avdrag. Se tråden om att gissa.`,
+  },
+  {
+    category: "plugg",
+    title: "Ska man köpa en bok, en kurs eller bara öva på gamla prov?",
+    question: `Det finns så många sätt att plugga. Vad är värt pengarna?`,
+    answer: `Det beror på var du står och hur du lär dig.
+
+**Gamla prov** är gratis och är den mest realistiska träningen. Provarrangören publicerar proven efter varje tillfälle, och alla ligger i [gamla prov](https://tvakommanollan.se/gamla-prov) med facit. Börja alltid här.
+
+**Böcker** hjälper om du behöver förklaringar av teorin, särskilt matte. De ger sällan nya uppgifter att öva på som gamla prov inte redan ger.
+
+**Kurser** hjälper de som behöver struktur och en lärare. Kolla vad som ingår och hur många gamla prov som gås igenom.
+
+**Appar och webbtjänster** passar för korta pass, särskilt ordinlärning och repetition.
+
+Vi har skrivit en jämförelse av **kategorierna** (utan att nämna enskilda företag) i [Plugga inför högskoleprovet](https://tvakommanollan.se/plugga-infor-hogskoleprovet), inklusive var vår egen tjänst inte räcker till.
+
+Rekommendation: gör ett prov först, se var du tappar poäng och köp sedan det som hjälper just där.`,
+  },
+  {
+    category: "provdagen",
+    title: "Får man använda miniräknare på högskoleprovet?",
+    question: `Kan man ha med en miniräknare eller formelsamling?`,
+    answer: `Nej, **miniräknare och formelsamling är inte tillåtna** på högskoleprovet. Alla uppgifter är gjorda för att kunna lösas för hand, och räkningarna är medvetet enkla.
+
+Det betyder att du behöver träna på att:
+- Räkna i huvudet med bråk och procent.
+- Förenkla rötter och potenser i stället för att räkna ut decimaler.
+- Överslagsräkna.
+- Kunna de formler du behöver (se trådarna om geometri och potenser).
+
+I vissa uppgifter ger provet själv en formel eller ett tabellvärde. Läs uppgiften noga innan du gissar att något saknas.
+
+Reglerna kan ändras. Kontrollera därför informationen från provets arrangör inför varje tillfälle.
+
+Träna utan miniräknare från början, så att det inte blir en överraskning på provdagen.`,
+  },
+  {
+    category: "provdagen",
+    title: "Vad händer om jag kommer för sent till högskoleprovet?",
+    question: `Kan man släppas in efter att provet har börjat?`,
+    answer: `Räkna inte med det. Provet har fasta starttider och oftast släpps man inte in efter att skrivningen har börjat. Kallelsen anger vilken tid du ska vara på plats, som brukar vara en stund före start.
+
+**Så undviker du problem:**
+- Kolla vägen och restiden i förväg.
+- Ta en tidigare buss eller tåg än du tror att du behöver.
+- Ha legitimation och kallelse redo kvällen innan.
+- Ta med extra tid för kö och identitetskontroll.
+
+**Om det ändå händer:** kontakta provets arrangör så snabbt som möjligt, helst redan innan, om du inser att du blir försenad. Vi kan inte säga vad som gäller i ditt fall, eftersom det styrs av arrangörens regler.
+
+Missar du provet får du vänta till nästa tillfälle, och du betalar avgiften igen vid ny anmälan. Se [provdatumsidan](https://tvakommanollan.se/hogskoleprovet-datum).`,
+  },
+  {
+    category: "provdagen",
+    title: "Publiceras provet och facit efter provdagen?",
+    question: `Kan jag få se uppgifterna efter att jag skrivit provet?`,
+    answer: `Ja. Provet i sin helhet publiceras av arrangören efter provtillfället, och det finns facit till alla uppgifter som räknas. Utprövningspasset publiceras inte på samma sätt.
+
+Det betyder att du kan:
+- Gå igenom dina svar och se hur du låg till.
+- Räkna ut ditt antal rätt innan normeringen kommer.
+- Använda provet som träning inför nästa gång.
+
+Alla prov sedan 2012 finns i [gamla prov](https://tvakommanollan.se/gamla-prov) med facit och lösningar. Där kan du skriva dem på tid och få poängen räknad.
+
+Vår uppskattning av normeringen efter varje prov hittar du på [facitsidan](https://tvakommanollan.se/hogskoleprovet-facit). Den är vår egen bedömning, inte arrangörens besked.`,
+  },
+  {
+    category: "provdagen",
+    title: "Hur ofta skrivs högskoleprovet och hur väljer man termin?",
+    question: `Vårprov eller höstprov? Spelar det någon roll för resultatet?`,
+    answer: `Provet skrivs två gånger per år: **vårprovet på en lördag i april** och **höstprovet på en söndag i oktober**. Alla datum finns på [provdatumsidan](https://tvakommanollan.se/hogskoleprovet-datum).
+
+Det spelar ingen roll för *själva poängen*. Varje prov normeras för sig, och ett resultat från våren är värt exakt lika mycket som ett från hösten.
+
+**Det som kan spela roll:**
+- **Antagningstidpunkt.** Resultat måste finnas senast vid ansökningstidens slut. Räkna baklänges från ansökningsdeadline för den utbildning du vill söka.
+- **Din pluggtid.** Välj det tillfälle då du hinner träna.
+- **Anmälningsperioden.** Den är bara en dryg vecka, ett par månader före provet.
+
+Resultatet gäller i åtta år, så du kan skriva tidigt och använda det senare.`,
+  },
+  {
+    category: "allmant",
+    title: "Vilket HP-resultat krävs för civilingenjörsprogram?",
+    question: `Vad behöver man för att komma in på ett civilingenjörsprogram via högskoleprovet?`,
+    answer: `Gränserna varierar mycket mellan lärosäten, program och terminer, och vi ger därför inte ett enskilt tal här. Du hittar de faktiska antagningsgränserna per utbildning på [poäng per utbildning](https://tvakommanollan.se/hogskoleprovet-poang).
+
+Några saker som är bra att veta:
+- Programmen på de mest sökta lärosätena och de med många sökande har ofta högre gränser än mindre program.
+- Många civilingenjörsprogram har **flera urvalsgrupper** (betyg och högskoleprov). Du hamnar i alla du är behörig till.
+- Grundläggande behörighet och särskilda behörighetskrav (matte och fysik) måste du uppfylla oavsett provresultat.
+- Totalpoängen är medelvärdet av verbal och kvantitativ del, så en stark kvantitativ del kan väga upp en svagare verbal.
+
+Titta på gränserna de senaste tre till fyra terminerna för att få en rimlig bild, eftersom de skiftar med antalet sökande.`,
+  },
+  {
+    category: "allmant",
+    title: "Vilket HP-resultat krävs för ekonomprogram?",
+    question: `Hur högt behöver man ligga för att komma in på civilekonom eller ekonomprogram?`,
+    answer: `Det varierar kraftigt mellan lärosäten. Handelshögskolor och populära orter har höga gränser medan andra program är betydligt lättare att komma in på.
+
+Vi ger inget exakt tal, eftersom gränserna ändras varje termin. Hur de såg ut de senaste terminerna för olika program ser du på [poäng per utbildning](https://tvakommanollan.se/hogskoleprovet-poang). Se också tråden om Handelshögskolan i Stockholm.
+
+**Bra att veta:**
+- Många ekonomprogram har särskilda behörighetskrav i matte. Kontrollera dem hos lärosätet.
+- Det kan finnas ett separat urval för program med färre sökande, eller för dem med tidigare studier.
+- Ett bra provresultat kan hjälpa även när betygen räcker, eftersom du konkurrerar i flera grupper.
+
+Om du ligger precis under en gräns lönar det sig ofta att skriva om. Resultatet gäller i åtta år och det bästa räknas.`,
+  },
+  {
+    category: "allmant",
+    title: "Vilket HP-resultat krävs för lärarprogram?",
+    question: `Behöver man högt resultat för att bli lärare?`,
+    answer: `Lärarprogrammen (förskollärare, grundlärare, ämneslärare) varierar mycket i hur svårt det är att komma in, beroende på lärosäte, inriktning och ort. Många kan nås med måttliga resultat medan vissa platser och ämneskombinationer har högre gränser.
+
+Vi ger inga exakta tal här eftersom gränserna ändras varje termin. Titta på [poäng per utbildning](https://tvakommanollan.se/hogskoleprovet-poang) för de senaste terminerna.
+
+**Bra att veta:**
+- Läs programmets **behörighetskrav**. Vissa kräver särskild behörighet eller prov, oavsett poäng.
+- Det kan finnas en särskild antagningsgrupp för yrkeserfarenhet eller andra kvalifikationer.
+- Du kan söka flera orter och inriktningar samtidigt.
+
+Skriver du provet för att kunna söka flera program är det bra att veta att resultatet gäller i åtta år och att det bästa räknas.`,
+  },
+  {
+    category: "allmant",
+    title: "Hur hittar man antagningsgränsen för sin utbildning?",
+    question: `Var ser jag vilken poäng som krävdes förra terminen?`,
+    answer: `Antagningsgränser (ofta kallade antagningspoäng) publiceras efter varje antagningsomgång. De visar den lägsta poäng som räckte till en plats i varje urvalsgrupp.
+
+**Så hittar du dem:**
+1. Gå till antagning.se och sök på utbildningen. Där finns tidigare terminers antagningsstatistik.
+2. Titta på **urvalsgruppen HP**. Den visar högskoleprovspoängen som krävdes.
+3. Jämför flera terminer. En enskild termin kan avvika.
+
+Vi har samlat poängen för många utbildningar på [poäng per utbildning](https://tvakommanollan.se/hogskoleprovet-poang).
+
+**Tänk på:**
+- En antagningsgräns är **historik**, inte ett löfte. Nästa termin kan den bli högre eller lägre.
+- Antalet platser och sökande avgör. En termin med få sökande kan ge en låg gräns.
+- Har utbildningen urval i flera omgångar kan gränsen skilja mellan omgångarna.
+
+Sikta gärna lite över senaste gränsen så har du marginal.`,
+  },
+  {
+    category: "allmant",
+    title: "Räknas högskoleprovet om man redan har högskolestudier?",
+    question: `Jag har läst en termin på universitetet. Kan jag fortfarande söka med högskoleprovet?`,
+    answer: `Ja. Högskoleprovet är ett urvalsinstrument och kan användas oavsett om du har tidigare studier. Du behöver bara uppfylla behörigheten till utbildningen du söker.
+
+**Poängen räknas på samma sätt** oavsett om du har läst på högskola eller inte. Är dina betyg från gymnasiet inte tillräckligt är högskoleprovet ett sätt att konkurrera i en annan urvalsgrupp.
+
+Om du har högskolepoäng kan det finnas **andra urvalsgrupper** som är aktuella för dig, till exempel för tidigare studieresultat. Det varierar mellan utbildningar, så läs på programmets egen sida.
+
+Resultatet gäller i åtta år, och du kan skriva provet hur många gånger du vill. Se tråden om hur länge resultatet gäller.`,
+  },
 ];
