@@ -3,9 +3,9 @@ import { isOrdPlan, type OrdPlan } from "./ord-paywall";
 /**
  * Köpet en utloggad besökare valde på ett betalkort, sparat över
  * inloggningen. Utan det landade den som klickade "Välj 6 månader" på
- * `/ord`, ombads skapa konto, och kom efter registreringen till startsidan
- * i stället för till kassan. Login och onboarding läser den och skickar
- * vidare till `/ord?plan=…`; `/ord` tömmer den när kassan öppnats.
+ * kassan, ombads skapa konto, och kom efter registreringen till startsidan
+ * i stället för tillbaka. Login och onboarding läser den och skickar
+ * vidare till `/kassa?plan=…`; `/kassa` tömmer den för en inloggad.
  *
  * localStorage och inte sessionStorage: bekräftelsemejlet öppnas ofta i en
  * ny flik. Ett val äldre än `MAX_AGE_MS` räknas inte, så ingen skickas till

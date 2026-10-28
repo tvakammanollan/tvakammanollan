@@ -98,7 +98,7 @@ function LoginPage() {
     // Vänta in dot-matrix reverse-animationen innan navigering
     // Valde besökaren ett köp innan inloggningen går den vidare till kassan.
     const plan = readPendingPlan();
-    setTimeout(() => navigate(plan ? { to: "/ord", search: { plan } } : { to: "/" }), 1400);
+    setTimeout(() => navigate(plan ? { to: "/kassa", search: { plan } } : { to: "/" }), 1400);
   };
 
   return (

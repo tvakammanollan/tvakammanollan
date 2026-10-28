@@ -1513,8 +1513,12 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
 - **Två köp sedan 2026-10-26: en månad för 149 kr och sex månader för
   349 kr** (`ORD_PLANS` i `ord-paywall.ts`). Två produkter i Stripe,
   `STRIPE_ORD_PRICE_ID_1M` / `_6M` i `wrangler.jsonc`. Betalkorten på
-  landningen och `/pris` länkar till `/ord?plan=1m|6m`, som öppnar kassan för
-  just det köpet; `OrdPaywall` visar annars båda.
+  landningen och `/pris` länkar till **`/kassa?plan=1m|6m`** (egen sida sedan
+  2026-10-28, noindex), som öppnar Stripes inbäddade kassa direkt. Köpet
+  kräver inte att gratiskvoten är slut; det gör bara spärren i övningsläget,
+  där `OrdPaywall` visar båda köpen. Gamla `/ord?plan=`-länkar skickas
+  vidare till `/kassa`. Utloggade får valet sparat (`pending-plan.ts`,
+  `tkn:kop-plan`) och login/onboarding skickar tillbaka till kassan.
   - **Priserna är satta `tax_behavior: inclusive`.** Kontots standard är
     `exclusive`, och ett pris med `unspecified` (som det gamla 150-priset)
     fick momsen pålagd i kassan, alltså ett högre belopp än på knappen. Ett

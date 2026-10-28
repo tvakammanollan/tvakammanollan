@@ -415,7 +415,7 @@ export function Produktytorna() {
  *
  * De två betalkorten är var sin produkt i Stripe: en månad för 149 kr och sex
  * månader för 349 kr, båda med moms inräknad (`tax_behavior: inclusive`).
- * Varje kort länkar till `/ord?plan=…`, där kassan för just det köpet öppnas.
+ * Varje kort länkar till `/kassa?plan=…`, där kassan för just det köpet öppnas.
  *
  * Beloppen här är skrivna för hand eftersom sektionen är serverrenderad och
  * inte ska vänta på Stripe. Kassan läser sitt eget pris ur Stripe, så ändras
@@ -529,7 +529,7 @@ export function Priset() {
                 </ul>
                 <div className="flex-1" />
                 <Link
-                  to="/ord"
+                  to="/kassa"
                   search={{ plan: k.plan }}
                   className={`mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg px-6 py-3 text-[15px] font-semibold transition ${k.knapp}`}
                 >

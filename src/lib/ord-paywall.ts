@@ -95,7 +95,7 @@ export function purchaseIsActive(
 export type PaywallSubject = "ord" | "mek";
 
 /** Sidorna kassan får skicka tillbaka köparen till. */
-export const PAYWALL_RETURN_PATHS = ["/ord", "/mek-ovning", "/train"] as const;
+export const PAYWALL_RETURN_PATHS = ["/ord", "/mek-ovning", "/train", "/kassa"] as const;
 export type PaywallReturnPath = (typeof PAYWALL_RETURN_PATHS)[number];
 
 export interface OrdAccess {

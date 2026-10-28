@@ -38,7 +38,7 @@ function OnboardingPage() {
   const pendingPlan = readPendingPlan();
   if (profile && !isAutoUsername(profile.username))
     return pendingPlan ? (
-      <Navigate to="/ord" search={{ plan: pendingPlan }} />
+      <Navigate to="/kassa" search={{ plan: pendingPlan }} />
     ) : (
       <Navigate to="/" />
     );
@@ -80,7 +80,7 @@ function OnboardingPage() {
     }
     toast.success(`Välkommen, ${parsed.data}`);
     refreshProfile();
-    navigate(pendingPlan ? { to: "/ord", search: { plan: pendingPlan } } : { to: "/" });
+    navigate(pendingPlan ? { to: "/kassa", search: { plan: pendingPlan } } : { to: "/" });
   };
 
   return (
