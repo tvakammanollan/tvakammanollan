@@ -77,7 +77,7 @@ export function ProvScorePanel({
   const rawTotal = result.verbal.total + result.kvant.total;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+    <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
       <h2 className="flex items-center gap-2 text-xs font-semibold text-[var(--amber)]">
         {title}
       </h2>

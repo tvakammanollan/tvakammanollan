@@ -236,7 +236,6 @@ export function NotificationsBell({ userId }: { userId: string }) {
           <Bell className="h-[18px] w-[18px]" />
           {count > 0 && (
             <span className="absolute -right-0.5 -top-0.5 inline-flex h-4 min-w-[16px] items-center justify-center">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
               <span className="relative inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold tabular-nums text-on-brand shadow-sm">
                 {count > 9 ? "9+" : count}
               </span>
@@ -247,7 +246,7 @@ export function NotificationsBell({ userId }: { userId: string }) {
       <PopoverContent
         align="end"
         sideOffset={8}
-        className="w-80 border-white/10 bg-[rgba(251,246,236,0.92)] p-0 text-[var(--cream)] shadow-[0_12px_40px_rgba(46,30,20,0.4)] backdrop-blur-xl"
+        className="w-80 border-white/10 bg-[rgba(251,246,236,0.92)] p-0 text-[var(--cream)] shadow-[0_12px_40px_rgba(46,30,20,0.4)]"
       >
         <div className="border-b border-white/8 px-4 py-3">
           <p className="text-sm font-semibold" style={{ fontFamily: "var(--font-display)" }}>

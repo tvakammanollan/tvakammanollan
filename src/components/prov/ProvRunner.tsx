@@ -27,7 +27,7 @@ import {
   type ProvProgress,
 } from "@/lib/prov-progress";
 import { saveResult } from "@/lib/prov-results";
-import { formatDateLong, formatInt } from "@/lib/sv-format";
+import { formatDateLong, enhet } from "@/lib/sv-format";
 import { highlightScope } from "@/lib/highlights";
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { delprovFull, hasPassage, passKindLabel, type ProvPass } from "@/types/gamla-prov";
@@ -441,7 +441,7 @@ export function ProvRunner({
   return (
     <div className="min-h-screen pb-28">
       {/* Fastnar under sajtens egen navbar (60 px, sticky top-0 z-50). */}
-      <header className="sticky top-[60px] z-30 border-b border-white/10 bg-[var(--navy)]/92 backdrop-blur">
+      <header className="sticky top-[60px] z-30 border-b border-white/10 bg-[var(--navy)]/92">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:px-6">
           <Link
             to="/gamla-prov/$term"
@@ -494,7 +494,7 @@ export function ProvRunner({
         </div>
         <div className="h-0.5 w-full bg-white/[0.06]">
           <div
-            className="h-full bg-[var(--amber)] transition-all duration-300"
+            className="h-full bg-[var(--amber)]"
             style={{ width: `${((current + 1) / total) * 100}%` }}
           />
         </div>
@@ -507,7 +507,7 @@ export function ProvRunner({
             <AlertDialogDescription>
               {answeredCount < total
                 ? `Du har svarat på ${answeredCount} av ${total} uppgifter. De obesvarade räknas som fel.`
-                : `Alla ${total} uppgifter är besvarade.`}{" "}
+                : `Alla ${enhet(total, "uppgift")} är besvarade.`}{" "}
               Efter inlämning rättas passet och det går inte att ändra svaren.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -632,7 +632,7 @@ export function ProvRunner({
             </div>
 
             <section
-              className={`mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm ${
+              className={`mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 ${
                 showNavigator ? "" : "hidden lg:block"
               }`}
             >
@@ -698,7 +698,7 @@ function ProvIntro({
         Provpass {data.pass}
       </h1>
       <p className="mt-2 text-[15px] text-[var(--text-secondary)]">
-        {passKindLabel(data.kind)}, {formatInt(data.questions.length)} uppgifter, {data.minutes}{" "}
+        {passKindLabel(data.kind)}, {enhet(data.questions.length, "uppgift")}, {data.minutes}{" "}
         minuter
       </p>
 
@@ -706,14 +706,14 @@ function ProvIntro({
         {data.sections.map((s) => (
           <div
             key={s.code}
-            className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 backdrop-blur-sm"
+            className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3"
           >
             <dt className="text-sm font-semibold text-[var(--cream)]">
               <span className="mr-2 text-[var(--amber)]">{s.code}</span>
               {delprovFull(s.code)}
             </dt>
             <dd className="mt-0.5 text-xs text-[var(--text-tertiary)]">
-              {s.count} uppgifter, rekommenderad tid {s.minutes} min
+              {enhet(s.count, "uppgift")}, rekommenderad tid {s.minutes} min
               {hasPassage(s.code) ? ", med lästext" : ""}
             </dd>
           </div>

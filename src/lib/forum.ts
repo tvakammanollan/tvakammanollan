@@ -6,6 +6,7 @@
  * ./forum-markdown.ts, som också är ren.
  */
 import { displayName } from "./guest-name";
+import { enhet } from "@/lib/sv-format";
 
 /** Inlägg per sida i en tråd. Ändras detta ändras även paginerade URL:er. */
 export const POSTS_PER_PAGE = 30;
@@ -166,7 +167,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   FORUM_NO_POST: "Inlägget finns inte längre.",
   FORUM_NOT_OWNER: "Du kan bara redigera dina egna inlägg.",
   FORUM_LOCKED: "Tråden är låst och går inte att svara i.",
-  FORUM_EDIT_WINDOW: `Redigeringsfönstret på ${EDIT_WINDOW_MINUTES} minuter har gått ut.`,
+  FORUM_EDIT_WINDOW: `Redigeringsfönstret på ${enhet(EDIT_WINDOW_MINUTES, "minut")} har gått ut.`,
   FORUM_RATE_THREADS: "Du har startat många trådar den senaste timmen. Vänta en stund.",
   FORUM_RATE_POSTS: "Du har skrivit många inlägg den senaste timmen. Vänta en stund.",
   FORUM_RATE_EDITS: "Du har redigerat väldigt mycket den senaste timmen. Vänta en stund.",

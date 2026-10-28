@@ -55,7 +55,7 @@ export function PassagePane({
 
   if (mobileAccordion) {
     return (
-      <section className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm lg:hidden">
+      <section className="mb-4 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] lg:hidden">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
@@ -68,7 +68,7 @@ export function PassagePane({
             <span className="font-normal text-muted-foreground">(tryck för att läsa)</span>
           </span>
           <ChevronDown
-            className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+            className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-150 ${open ? "rotate-180" : ""}`}
             aria-hidden
           />
         </button>

@@ -7,7 +7,7 @@ import { ProvScoreRow } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, totalQuestions } from "@/lib/prov-data";
 import { passResult, summariseExam, type ProvResults } from "@/lib/prov-results";
-import { formatInt } from "@/lib/sv-format";
+import { enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type ExamSummary } from "@/types/gamla-prov";
 
 /* =====================================================================
@@ -28,10 +28,10 @@ export const Route = createFileRoute("/gamla-prov")({
         path: "/gamla-prov",
         title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}: alla provpass med facit`),
         description:
-          `Skriv ${exams.length} riktiga högskoleprov online: ${formatInt(count)} uppgifter från ` +
+          `Skriv ${exams.length} riktiga högskoleprov online: ${enhet(count, "uppgift")} från ` +
           `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,
         ogTitle: `Gamla högskoleprov ${oldest}–${newest}: Tvåkommanollan`,
-        ogDescription: `${exams.length} provtillfällen, ${formatInt(count)} uppgifter med facit. Gratis.`,
+        ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. Gratis.`,
       }),
       links: pageLinks("/gamla-prov"),
       scripts: [
@@ -72,7 +72,6 @@ export const Route = createFileRoute("/gamla-prov")({
 
 function GamlaProvPage() {
   const exams = allExams();
-  const count = totalQuestions();
 
   // Vad besökaren skrivit ligger i webbläsaren. Sidan är serverrenderad och
   // lika för alla; resultaten läggs ovanpå efter montering.
@@ -98,7 +97,7 @@ function GamlaProvPage() {
           ))}
         </ul>
 
-        <section className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm">
+        <section className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
           <h2
             className="text-lg font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -146,7 +145,7 @@ function ExamCard({ exam, results }: { exam: ExamSummary; results: ProvResults |
     <Link
       to="/gamla-prov/$term"
       params={{ term: exam.term }}
-      className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
+      className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
     >
       <span className="flex items-center justify-between gap-2">
         <span className="text-base font-semibold text-[var(--cream)]">{exam.label}</span>
@@ -154,7 +153,7 @@ function ExamCard({ exam, results }: { exam: ExamSummary; results: ProvResults |
       </span>
       <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
         <span>
-          {exam.passes.length} provpass, {formatInt(exam.questions)} uppgifter
+          {exam.passes.length} provpass, {enhet(exam.questions, "uppgift")}
         </span>
       </span>
       <span className="mt-3 flex flex-wrap gap-x-4 gap-y-1">

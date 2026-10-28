@@ -76,7 +76,7 @@ export function CircularTimer({ totalSeconds, remainingSeconds, onExpire }: Circ
 
   return (
     <div
-      className={pulsing ? "timer-pulse" : ""}
+      className={pulsing ? "" : ""}
       style={{ width: 48, height: 48, position: "relative" }}
       aria-live="polite"
       aria-label={`${mm}:${ss} kvar`}

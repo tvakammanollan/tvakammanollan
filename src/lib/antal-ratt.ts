@@ -6,6 +6,7 @@ import {
   type KravSammanfattning,
   type NivåKrav,
 } from "./normering";
+import { enhet } from "@/lib/sv-format";
 
 /* Texterna som delas av /hogskoleprovet-antal-ratt och nivåsidorna, så att
    sidan, metabeskrivningen och FAQ-schemat säger exakt samma sak. */
@@ -55,7 +56,7 @@ export function faqFörNivå(d: NivåData): Array<{ q: string; a: string }> {
   const ut: Array<{ q: string; a: string }> = [
     {
       q: `Hur många rätt behövs för ${n} på högskoleprovet?`,
-      a: `${kortSvar(d)} Siffrorna kommer ur UHR:s normeringstabeller för ${d.rader.length} provtillfällen. Exakt hur många rätt som krävs bestäms först när normeringen för just ditt prov publiceras.`,
+      a: `${kortSvar(d)} Siffrorna kommer ur UHR:s normeringstabeller för ${enhet(d.rader.length, "provtillfälle")}. Exakt hur många rätt som krävs bestäms först när normeringen för just ditt prov publiceras.`,
     },
   ];
   if (d.senaste) {

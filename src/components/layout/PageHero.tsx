@@ -1,8 +1,5 @@
-import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { type Produktzon, zonDekor } from "@/lib/produktzon";
-import { CyclingTitle } from "./CyclingTitle";
-import { SplitText } from "@/components/landing/MotionFX";
 
 type Variant = "compact" | "content";
 
@@ -12,7 +9,8 @@ type Variant = "compact" | "content";
  * `compact` = workspace pages (lower height).
  * `content` = marketing/long-form pages (taller).
  *
- * Pass `cycleWords` to render the cycling-word animation. `title` är då den
+ * Pass `cycleWords` for a closing word in apple red (only the first is shown; the
+ * cycling animation is gone). `title` är då den
  * fasta delen av meningen och det cyklande ordet står efter den, på samma
  * rad, med ett vanligt mellanslag emellan.
  */
@@ -104,39 +102,33 @@ export function PageHero({
               itu och mellanslaget blev en radbrytning. Mellanslaget är också
               en radbrytningsmöjlighet, så på en smal skärm bryts meningen där
               den ska brytas i stället för att svämma över. */}
-          <SplitText as="span">{title}</SplitText>
+          {title}
           {cycleWords && cycleWords.length > 0 ? (
             <>
               {" "}
-              <CyclingTitle words={cycleWords} />
+              <span className="text-primary">{cycleWords[0]}</span>
             </>
           ) : null}
         </h1>
 
         {subtitle ? (
-          <m.p
-            initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          <p
             className={cn(
               "mt-6 text-[17px] leading-relaxed text-white/65 sm:text-[18px]",
               centered ? "mx-auto max-w-2xl" : "max-w-2xl",
             )}
           >
             {subtitle}
-          </m.p>
+          </p>
         ) : null}
 
         {primaryCta || secondaryCta ? (
-          <m.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          <div
             className={cn("mt-8 flex flex-wrap items-center gap-3", centered && "justify-center")}
           >
             {primaryCta}
             {secondaryCta}
-          </m.div>
+          </div>
         ) : null}
       </div>
     </section>

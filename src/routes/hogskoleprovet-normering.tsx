@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Scale, Table2, TrendingUp } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
-import { formatDateLong } from "@/lib/sv-format";
+import { formatDateLong, enhet } from "@/lib/sv-format";
 import { HP_INFO_URL } from "@/lib/hp-dates";
 import { normeringTerms, officialMinRawFor, officialPartMax } from "@/lib/normering";
 
@@ -95,7 +94,7 @@ export const Route = createFileRoute("/hogskoleprovet-normering")({
           "Ur UHR:s officiella tabeller.",
         ),
         ogTitle: "Så många rätt krävdes för 2,0 på varje högskoleprov",
-        ogDescription: `UHR:s normeringstabeller för ${r.length} provtillfällen, samlade på ett ställe.`,
+        ogDescription: `UHR:s normeringstabeller för ${enhet(r.length, "provtillfälle")}, samlade på ett ställe.`,
       }),
       links: pageLinks(PATH),
       scripts: [
@@ -107,7 +106,7 @@ export const Route = createFileRoute("/hogskoleprovet-normering")({
           "@context": "https://schema.org",
           "@type": "Dataset",
           name: "Normeringstabeller för högskoleprovet",
-          description: `Antal rätt som krävdes för varje normerad poäng (0,0–2,0) på högskoleprovets verbala och kvantitativa del, för ${r.length} provtillfällen från ${äldst.label.toLowerCase()} till ${nyast.label.toLowerCase()}. Sammanställt ur Universitets- och högskolerådets officiella normeringstabeller.`,
+          description: `Antal rätt som krävdes för varje normerad poäng (0,0–2,0) på högskoleprovets verbala och kvantitativa del, för ${enhet(r.length, "provtillfälle")} från ${äldst.label.toLowerCase()} till ${nyast.label.toLowerCase()}. Sammanställt ur Universitets- och högskolerådets officiella normeringstabeller.`,
           url: `https://tvakommanollan.se${PATH}`,
           inLanguage: "sv-SE",
           isAccessibleForFree: true,
@@ -139,10 +138,10 @@ export const Route = createFileRoute("/hogskoleprovet-normering")({
   component: NormeringHub,
 });
 
-function H2({ icon: Icon, children }: { icon: typeof Scale; children: React.ReactNode }) {
+function H2({ children }: { children: React.ReactNode }) {
   return (
     <h2
-      className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+      className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
       style={{ fontFamily: "var(--font-display)" }}
     >
       {children}
@@ -174,7 +173,7 @@ function NormeringHub() {
 
       <header className="mt-4">
         <p className="text-sm text-white/65">
-          {r.length} provtillfällen, UHR:s officiella tabeller
+          {enhet(r.length, "provtillfälle")}, UHR:s officiella tabeller
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -199,7 +198,7 @@ function NormeringHub() {
         ].map(({ rubrik, s }) => (
           <div
             key={rubrik}
-            className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center backdrop-blur-sm"
+            className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center"
           >
             <div className="text-[12px] font-semibold text-white/50">
               {rubrik}
@@ -216,7 +215,7 @@ function NormeringHub() {
       </section>
 
       <section className="mt-12">
-        <H2 icon={Table2}>Vad krävdes på varje prov?</H2>
+        <H2>Vad krävdes på varje prov?</H2>
         <p className="mt-2 text-[14px] text-white/55">
           Minsta antal rätt av 80 för respektive poäng (våren 2012 hade den verbala delen 76
           uppgifter). V = verbal del, K = kvantitativ del.
@@ -291,7 +290,7 @@ function NormeringHub() {
       </section>
 
       <section className="mt-12">
-        <H2 icon={Scale}>Så fungerar normeringen</H2>
+        <H2>Så fungerar normeringen</H2>
         <div className="mt-3 space-y-3 text-[15px] leading-relaxed text-white/65">
           <p>
             Högskoleprovet har 160 uppgifter som räknas: 80 i den verbala delen (ORD, LÄS, MEK och
@@ -311,7 +310,7 @@ function NormeringHub() {
       </section>
 
       <section className="mt-12">
-        <H2 icon={TrendingUp}>Senaste normeringen: {nyast.label.toLowerCase()}</H2>
+        <H2>Senaste normeringen: {nyast.label.toLowerCase()}</H2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           Provet skrevs {formatDateLong(nyast.date)}. Hela tabellen, med vad varje antal rätt gav,
           finns på provets egen sida.
@@ -332,7 +331,7 @@ function NormeringHub() {
         >
           Vanliga frågor om normeringen
         </h2>
-        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {faq().map(({ q, a }) => (
             <div key={q} className="px-5 py-4">
               <dt className="text-[15px] font-semibold text-[var(--cream)]">{q}</dt>

@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
-import { formatDateLong, formatInt } from "@/lib/sv-format";
+import { formatDateLong, formatInt, enhet } from "@/lib/sv-format";
 import { examNeighbours, findExam } from "@/lib/prov-data";
 import { termLabel, normeringDate } from "@/lib/normering";
 import { loadExamOrd } from "@/lib/prov-ord";
@@ -95,7 +95,7 @@ function ProvOrdPage() {
 
       <header className="mt-4">
         <p className="text-sm text-white/65">
-          Delprovet ORD: {formatInt(ord.length)} uppgifter
+          Delprovet ORD: {enhet(ord.length, "uppgift")}
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -127,7 +127,7 @@ function ProvOrdPage() {
                 return (
                   <li
                     key={`${o.pass}-${o.nr}`}
-                    className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm"
+                    className="rounded-2xl border border-white/10 bg-white/[0.02] p-4"
                   >
                     <div className="flex items-baseline justify-between gap-3">
                       <h3 className="text-[18px] font-bold text-[var(--cream)]">

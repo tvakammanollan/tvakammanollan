@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { m } from "framer-motion";
 import { toast } from "sonner";
 import { Clock, Loader2, Trophy, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -116,13 +115,11 @@ export function WaitingForOpponent({
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-      <m.span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-        animate={utgången ? undefined : { scale: [1, 1.08, 1] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+      <span
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-brand"
       >
         {utgången ? <Clock className="h-7 w-7" /> : <Trophy className="h-7 w-7" />}
-      </m.span>
+      </span>
 
       <div>
         <h1
@@ -159,15 +156,6 @@ export function WaitingForOpponent({
           <p className="text-sm text-white/45">
             Du kan lämna sidan. Accepterar {motståndare} hittar du matchen i notisklockan.
           </p>
-          <m.div
-            className="flex gap-1.5"
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {[0, 1, 2].map((i) => (
-              <span key={i} className="h-2 w-2 rounded-full bg-primary" />
-            ))}
-          </m.div>
         </>
       )}
 

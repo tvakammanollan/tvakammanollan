@@ -28,6 +28,32 @@ export function antal(n: number, singular: string, plural: string): string {
   return `${formatInt(n)} ${n === 1 ? singular : plural}`;
 }
 
+/**
+ * Antal + enhet med rätt böjning: `enhet(1, "dag")` → "1 dag", `enhet(2, "dag")`
+ * → "2 dagar". Använd den överallt där ett tal som kan vara 1 står bredvid sin
+ * enhet; pluralformen slås upp i `PLURAL`. Ord som inte böjs (inlägg, svar, ord,
+ * provpass) behöver ingen hjälpare.
+ */
+const PLURAL = {
+  dag: "dagar",
+  uppgift: "uppgifter",
+  fråga: "frågor",
+  tråd: "trådar",
+  minut: "minuter",
+  match: "matcher",
+  vän: "vänner",
+  vecka: "veckor",
+  timme: "timmar",
+  sekund: "sekunder",
+  röst: "röster",
+  utmärkelse: "utmärkelser",
+  provtillfälle: "provtillfällen",
+} as const;
+
+export function enhet(n: number, singular: keyof typeof PLURAL): string {
+  return `${formatInt(n)} ${n === 1 ? singular : PLURAL[singular]}`;
+}
+
 export function formatDecimal(n: number | null | undefined, fractionDigits = 1): string {
   if (n == null || !Number.isFinite(n)) return "–";
   return n.toLocaleString(SV, {

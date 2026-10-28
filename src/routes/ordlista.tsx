@@ -100,7 +100,7 @@ function OrdlistaIndexPage() {
               <Link
                 to="/ordlista/bokstav/$bokstav"
                 params={{ bokstav: letter }}
-                className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-2 py-3 backdrop-blur-sm transition hover:border-primary/50"
+                className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-2 py-3 transition hover:border-primary/50"
               >
                 <span
                   className="text-[20px] font-bold text-[var(--cream)]"
@@ -115,7 +115,7 @@ function OrdlistaIndexPage() {
         </ul>
       </section>
 
-      <section className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5">
         <h2
           className="text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}

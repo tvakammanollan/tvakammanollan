@@ -6,7 +6,7 @@ import { PassScoreBadge, ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
 import { passResult, summariseExam, type PassResult } from "@/lib/prov-results";
-import { formatDateLong, formatInt } from "@/lib/sv-format";
+import { formatDateLong, formatInt, enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type PassSummary } from "@/types/gamla-prov";
 import { normeringDate } from "@/lib/normering";
 
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
         ogTitle: `Högskoleprovet ${exam.label}: provpass & facit`,
-        ogDescription: `${formatInt(exam.questions)} uppgifter med rätta svar. Öva gratis på Tvåkommanollan.`,
+        ogDescription: `${enhet(exam.questions, "uppgift")} med rätta svar. Öva gratis på Tvåkommanollan.`,
       }),
       links: pageLinks(path),
       scripts: [
@@ -174,7 +174,7 @@ function ExamTermPage() {
           {facit.map((f) => (
             <div
               key={f.pass}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm"
+              className="rounded-2xl border border-white/10 bg-white/[0.02] p-4"
             >
               <h3 className="text-sm font-semibold text-[var(--cream)]">Provpass {f.pass}</h3>
               <ul className="mt-3 grid grid-cols-5 gap-1.5 sm:grid-cols-8">
@@ -255,7 +255,7 @@ function PassCard({
     <Link
       to="/gamla-prov/$term/$pass"
       params={{ term, pass: String(pass.pass) }}
-      className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
+      className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
     >
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--amber)]/15 text-lg font-bold tabular-nums text-[var(--amber)]">
         {pass.pass}
@@ -272,7 +272,7 @@ function PassCard({
             <Clock className="h-3.5 w-3.5" aria-hidden />
             {pass.minutes} min
           </span>
-          <span>{pass.questions} uppgifter</span>
+          <span>{enhet(pass.questions, "uppgift")}</span>
           {pass.missing.length > 0 && <span>{pass.missing.join(", ")} saknas</span>}
         </span>
       </span>

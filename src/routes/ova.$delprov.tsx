@@ -214,7 +214,7 @@ function OvaDelprovPage() {
       </header>
 
       {cfg.tips && (
-        <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5">
           <h2
             className="text-[16px] font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
@@ -242,7 +242,7 @@ function OvaDelprovPage() {
             {examples.map((q, i) => (
               <li
                 key={`${q.term}-${q.pass}-${q.nr}`}
-                className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm"
+                className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
               >
                 <div className="text-[13px] font-semibold text-[var(--amber)]">
                   Exempel {i + 1}
@@ -346,7 +346,7 @@ function OvaDelprovPage() {
           Länken står bara här och inte på de sju andra sidorna — de har inget
           motsvarande register, och en länk som inte hör hemma är brus. */}
       {delprov === "ord" && (
-        <section className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <section className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] p-5">
           <h2
             className="text-[18px] font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}

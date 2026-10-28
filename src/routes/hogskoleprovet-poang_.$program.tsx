@@ -1028,7 +1028,7 @@ function ProgramPage() {
         >
           HP-poäng, {cfg.term}
         </h2>
-        <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {rows.map((r) => (
             <li
               key={`${r.label}-${r.sub ?? ""}`}

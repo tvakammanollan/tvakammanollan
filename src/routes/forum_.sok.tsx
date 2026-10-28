@@ -143,7 +143,7 @@ function ForumSearchPage() {
                 <Link
                   to="/forum/$kategori/$trad"
                   params={{ kategori: hit.categorySlug, trad: hit.trad }}
-                  className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm transition-colors hover:border-[var(--amber)]/40 sm:p-5"
+                  className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-[var(--amber)]/40 sm:p-5"
                 >
                   <p className="text-[15px] font-semibold leading-snug text-[var(--cream)]">
                     {hit.title}

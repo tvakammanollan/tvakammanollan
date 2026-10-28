@@ -240,8 +240,8 @@ function PluggaPage() {
               id={m.id}
               className={
                 m.egen
-                  ? "rounded-2xl border border-primary/30 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6"
-                  : "rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6"
+                  ? "rounded-2xl border border-primary/30 bg-white/[0.02] p-5 sm:p-6"
+                  : "rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6"
               }
             >
               <div className="flex flex-wrap items-center gap-2">
@@ -293,13 +293,9 @@ function PluggaPage() {
         <h2 className={H2} style={H2_STYLE}>
           Där Tvåkommanollan inte räcker till
         </h2>
-        <ul className="mt-4 space-y-2.5">
+        <ul className="mt-4 list-disc space-y-2.5 pl-5">
           {BEGRANSNINGAR.map((rad) => (
-            <li key={rad} className="flex gap-2.5 text-[15px] leading-relaxed text-white/70">
-              <span
-                className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--teal)]"
-                aria-hidden
-              />
+            <li key={rad} className="text-[15px] leading-relaxed text-white/70">
               {rad}
             </li>
           ))}
@@ -368,7 +364,7 @@ function PluggaPage() {
         <h2 className={H2} style={H2_STYLE}>
           Vanliga frågor
         </h2>
-        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {faq().map(({ q, a }) => (
             <div key={q} className="px-5 py-4">
               <dt className="text-[15px] font-semibold text-[var(--cream)]">{q}</dt>

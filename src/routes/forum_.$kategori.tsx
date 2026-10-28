@@ -8,7 +8,7 @@ import { ForumPagination } from "@/components/forum/ForumPagination";
 import { EmptyState } from "@/components/EmptyState";
 import { fetchForumCategory } from "@/lib/forum.functions";
 import { pageCount, threadPath } from "@/lib/forum";
-import { antal, formatInt } from "@/lib/sv-format";
+import { antal } from "@/lib/sv-format";
 
 /* =====================================================================
    Trådlistan i en kategori, paginerad med ?sida=N.

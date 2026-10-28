@@ -249,7 +249,7 @@ function FormlerPage() {
             {a.rubrik}
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-white/60">{a.intro}</p>
-          <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+          <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             {a.formler.map((f) => (
               <div key={f.namn} className="grid gap-1 px-5 py-3 sm:grid-cols-[minmax(0,14rem)_1fr]">
                 <dt className="text-[14px] text-white/60">{f.namn}</dt>

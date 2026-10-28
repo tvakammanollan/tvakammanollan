@@ -4,7 +4,6 @@ import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { signInWithUsername } from "@/lib/auth.functions";
 import { useState } from "react";
 import { z } from "zod";
-import { m } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { trackEvent } from "@/lib/events";
@@ -99,15 +98,12 @@ function LoginPage() {
   };
 
   return (
-    <AuthLayout reverse={success}>
+    <AuthLayout>
       {success ? (
         <SuccessScreen />
       ) : (
-        <m.div
+        <div
           key="form"
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-7 text-center"
         >
           <div className="space-y-2">
@@ -145,7 +141,7 @@ function LoginPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? "Loggar in…" : "Logga in"}
               </button>
@@ -170,7 +166,7 @@ function LoginPage() {
             </Link>
             .
           </p>
-        </m.div>
+        </div>
       )}
     </AuthLayout>
   );
@@ -200,18 +196,15 @@ function PillInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       required
-      className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 backdrop-blur-sm transition-colors focus:bg-white/[0.06]"
+      className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 transition-colors focus:bg-white/[0.06]"
     />
   );
 }
 
 export function SuccessScreen() {
   return (
-    <m.div
+    <div
       key="success"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="space-y-6 text-center"
     >
       <div className="space-y-2">
@@ -222,10 +215,7 @@ export function SuccessScreen() {
           Välkommen
         </h1>
       </div>
-      <m.div
-        initial={{ scale: 0.7, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+      <div
         className="py-8"
       >
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-[0_0_32px_rgba(174,47,38,0.55)]">
@@ -242,7 +232,7 @@ export function SuccessScreen() {
             />
           </svg>
         </div>
-      </m.div>
-    </m.div>
+      </div>
+    </div>
   );
 }

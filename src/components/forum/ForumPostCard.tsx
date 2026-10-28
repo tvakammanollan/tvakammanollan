@@ -12,7 +12,6 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import { UserAvatar } from "@/components/UserAvatar";
-import { EloBadge } from "@/components/EloBadge";
 import { ForumBody } from "./ForumBody";
 import { ForumComposer } from "./ForumComposer";
 import { ReportPostDialog } from "./ReportPostDialog";
@@ -120,8 +119,8 @@ export function ForumPostCard({
       id={`inlagg-${post.id}`}
       className={
         post.isAnswer
-          ? "scroll-mt-24 rounded-2xl border border-[var(--success-line)] bg-[var(--success-soft)] p-4 backdrop-blur-sm sm:p-5"
-          : "scroll-mt-24 rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm sm:p-5"
+          ? "scroll-mt-24 rounded-2xl border border-[var(--success-line)] bg-[var(--success-soft)] p-4 sm:p-5"
+          : "scroll-mt-24 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5"
       }
     >
       <header className="flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -129,7 +128,11 @@ export function ForumPostCard({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span className="text-sm font-semibold text-[var(--cream)]">{author}</span>
-            {post.author && post.author.elo > 0 && <EloBadge elo={post.author.elo} size="sm" />}
+            {post.author && post.author.elo > 0 && (
+              <span className="text-xs tabular-nums text-[var(--text-tertiary)]">
+                ELO {post.author.elo}
+              </span>
+            )}
             {post.author?.isAdmin && (
               <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--amber)]">
                 <Shield className="h-3 w-3" aria-hidden />

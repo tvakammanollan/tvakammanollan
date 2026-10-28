@@ -45,7 +45,7 @@ export function ConsentSettings() {
   const granted = record?.choice === "granted";
 
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
       <p className="text-sm font-medium" style={{ color: "var(--cream)" }}>
         Ditt val just nu
       </p>

@@ -5,7 +5,7 @@ import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
 import { ThreadListItem } from "@/components/forum/ThreadListItem";
 import { fetchForumHome } from "@/lib/forum.functions";
-import { antal, formatInt } from "@/lib/sv-format";
+import { antal } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 
 /* =====================================================================
@@ -114,7 +114,7 @@ function ForumHomePage() {
                 <Link
                   to="/forum/$kategori"
                   params={{ kategori: cat.slug }}
-                  className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
+                  className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cream-wash">
                     <Icon className="h-5 w-5 text-[var(--cream-3)]" aria-hidden />

@@ -16,12 +16,10 @@ import { installSupabaseFetchAuth } from "@/integrations/supabase/fetch-auth";
 import { useOAuthErrorToast } from "@/hooks/useOAuthErrorToast";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sounds";
-import { LazyMotion } from "framer-motion";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { FriendInviteListener } from "@/components/FriendInviteListener";
 import { AchievementWatcher } from "@/components/AchievementWatcher";
 import { SafeBoundary } from "@/components/SafeBoundary";
-import { AppMotion } from "@/components/AppMotion";
 import { Footer } from "@/components/Footer";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
@@ -34,10 +32,6 @@ installSupabaseFetchAuth();
 const SUPABASE_ORIGIN =
   import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://tvakommanollan.se";
 
-// Framer-motions animations-runtime laddas asynkront (egen chunk) — se
-// src/lib/motion-features.ts. `strict` gör att en glömd motion.→m.-migrering
-// kastar direkt i dev i stället för att tyst dra in hela runtimen igen.
-const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
 function NotFoundComponent() {
   const POPULAR = [
@@ -416,7 +410,7 @@ function RootComponent() {
       {/* Auth-state finns i EXAKT ett exemplar och ligger ytterst, utanför allt
           som kallar `useAuth()`. Se `useAuth.ts`. */}
       <AuthProvider>
-        <LazyMotion features={loadMotionFeatures} strict>
+        <>
           <div className="min-h-screen bg-background">
             {/* Skip-to-content för tangentbordsanvändare och skärmläsare.
             Visas bara vid keyboard-focus (sr-only:focus). */}
@@ -426,7 +420,6 @@ function RootComponent() {
             >
               Hoppa till innehåll
             </a>
-            <AppMotion />
             <Navbar />
             <SafeBoundary label="zon-band">
               <ZonBand />
@@ -437,7 +430,7 @@ function RootComponent() {
             <SafeBoundary label="email-verification-notice">
               <EmailVerificationNotice />
             </SafeBoundary>
-            <main id="main-content" className="animate-fade-up">
+            <main id="main-content">
               <Outlet />
             </main>
             <Footer />
@@ -453,7 +446,7 @@ function RootComponent() {
             </SafeBoundary>
             <Toaster richColors position="top-center" />
           </div>
-        </LazyMotion>
+        </>
       </AuthProvider>
     </QueryClientProvider>
   );

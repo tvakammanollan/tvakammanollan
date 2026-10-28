@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
 import { useDismissible } from "@/hooks/useDismissible";
-import { RankIcon } from "@/components/ui/RankIcon";
 import type { RankTier } from "@/types";
 
 interface RankUpModalProps {
@@ -41,14 +40,14 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Ny rank"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
+        className="w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
         <h2
@@ -59,13 +58,9 @@ export function RankUpModal({ open, rank, onClose }: RankUpModalProps) {
         </h2>
         <p className="mt-1 text-sm text-white/60">Du är nu rankad som</p>
 
-        <div
-          className="mx-auto mt-5 inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-[15px] font-semibold"
-          style={{ backgroundColor: rank.soft, borderColor: rank.line, color: rank.accent }}
-        >
-          <RankIcon rank={rank} className="h-5 w-5" />
-          <span>{rank.name}</span>
-        </div>
+        <p className="mt-5 text-[22px] font-bold" style={{ color: rank.accent, fontFamily: "var(--font-display)" }}>
+          {rank.name}
+        </p>
 
         <Button
           onClick={onClose}

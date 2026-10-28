@@ -76,7 +76,7 @@ function OrdHub() {
             <Link
               to="/hogskoleprovet-ord/$term"
               params={{ term: e.term }}
-              className="group flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm transition-colors hover:border-primary/50"
+              className="group flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-primary/50"
             >
               <span>
                 <span className="block text-[16px] font-semibold text-[var(--cream)]">

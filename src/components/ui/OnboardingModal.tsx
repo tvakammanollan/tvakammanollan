@@ -3,7 +3,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { RankBadge } from "@/components/ui/RankBadge";
 import {
   Sprout,
   BookMarked,
@@ -131,7 +130,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4"
       role="dialog"
       aria-modal="true"
       aria-label="Kom igång"
@@ -149,7 +148,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
           ))}
         </div>
 
-        <div key={step} className="animate-in slide-in-from-right-4 fade-in duration-300">
+        <div key={step}>
           {step === 0 && (
             <>
               <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
@@ -240,9 +239,6 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
               <p className="mt-1 text-sm text-muted-foreground">
                 Din ELO börjar på 1000, i Silver-rankingen.
               </p>
-              <div className="mt-6 flex justify-center">
-                <RankBadge elo={1000} size="lg" showName />
-              </div>
               <p className="mt-4 text-center text-sm text-muted-foreground">
                 Spela din första match för att se var du hamnar.
               </p>

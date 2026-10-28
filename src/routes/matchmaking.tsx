@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -258,39 +257,15 @@ function MatchmakingPage() {
 
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center">
-      {/* Animated radar / pulse rings */}
       <div className="relative flex h-32 w-32 items-center justify-center">
-        <m.span
-          aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-primary/40"
-          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
-        />
-        <m.span
-          aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-primary/30"
-          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
-          transition={{ duration: 2.2, delay: 0.7, repeat: Infinity, ease: "easeOut" }}
-        />
-        <m.span
-          aria-hidden
-          className="absolute inset-0 rounded-full border-2 border-primary/20"
-          animate={{ scale: [1, 1.8, 1.8], opacity: [0.7, 0, 0] }}
-          transition={{ duration: 2.2, delay: 1.4, repeat: Infinity, ease: "easeOut" }}
-        />
-        <m.span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        <span
+          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary text-on-brand"
         >
           <Trophy className="h-9 w-9" />
-        </m.span>
+        </span>
       </div>
 
-      <m.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+      <div
       >
         <h1
           className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
@@ -304,12 +279,9 @@ function MatchmakingPage() {
             </>
           )}
         </h1>
-      </m.div>
+      </div>
 
-      <m.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+      <div
         className="surface-paper w-full rounded-2xl p-5 text-sm"
       >
         <div className="text-white/65">
@@ -335,7 +307,7 @@ function MatchmakingPage() {
         >
           {mm}:{ss}
         </div>
-      </m.div>
+      </div>
 
       <Button variant="outline" onClick={cancel} disabled={navigating}>
         {navigating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

@@ -43,14 +43,14 @@ export function AchievementCelebration({
 
   return (
     <div
-      className="animate-fade-in fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Ny utmärkelse"
     >
       <div
-        className="animate-scale-in w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
+        className="w-full max-w-sm overflow-hidden rounded-3xl border border-primary/30 bg-[rgba(251,246,236,0.98)] p-7 text-center shadow-[0_24px_70px_rgba(46,30,20,0.5)]"
         onClick={(e) => e.stopPropagation()}
       >
         <p className="text-sm font-semibold text-primary">

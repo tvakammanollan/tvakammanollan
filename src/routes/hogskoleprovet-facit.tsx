@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin } from "@/lib/seo-text";
 import { hpDateLong, hpDateShort } from "@/lib/hp-dates";
-import { formatInt } from "@/lib/sv-format";
+import { formatInt, enhet } from "@/lib/sv-format";
 import { historiskaKrav } from "@/lib/normering";
 import {
   DELPROV,
@@ -16,7 +16,6 @@ import {
   type FacitPass,
   type PassKind,
 } from "@/lib/preliminart-facit";
-import { Calculator, ClipboardCheck, Target } from "lucide-react";
 
 /* =====================================================================
    SEO: "facit högskoleprovet" och "normering högskoleprovet" är de mest
@@ -69,7 +68,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Hur räknas resultatet ut?",
-      a: `Den verbala och den kvantitativa delen har ${PART_LENGTH} uppgifter var och normeras var för sig till en poäng mellan 0,0 och 2,0. Provets totala resultat är medelvärdet av de två, avrundat till närmaste 0,05.`,
+      a: `Den verbala och den kvantitativa delen har ${enhet(PART_LENGTH, "uppgift")} var och normeras var för sig till en poäng mellan 0,0 och 2,0. Provets totala resultat är medelvärdet av de två, avrundat till närmaste 0,05.`,
     },
   ];
 }
@@ -127,10 +126,10 @@ export const Route = createFileRoute("/hogskoleprovet-facit")({
   component: FacitPage,
 });
 
-function H2({ icon: Icon, children }: { icon: typeof Target; children: React.ReactNode }) {
+function H2({ children }: { children: React.ReactNode }) {
   return (
     <h2
-      className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+      className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
       style={{ fontFamily: "var(--font-display)" }}
     >
       {children}
@@ -176,7 +175,7 @@ function FacitPage() {
 
       {grans && (
         <section className="mt-8 rounded-2xl border border-primary/25 bg-primary/[0.06] p-5 sm:p-6">
-          <H2 icon={Target}>Trolig normering</H2>
+          <H2>Trolig normering</H2>
           <div className="mt-4 grid grid-cols-2 gap-3">
             {(["verbal", "kvant"] as const).map((k) => (
               <div
@@ -248,7 +247,7 @@ function FacitPage() {
       <RaknaRatt />
 
       <section className="mt-12">
-        <H2 icon={ClipboardCheck}>{OFFICIELLT ? "Facit" : "Preliminärt facit"}</H2>
+        <H2>{OFFICIELLT ? "Facit" : "Preliminärt facit"}</H2>
         <p className="mt-2 text-[14px] text-white/55">
           Ett av dagens fem pass är ett utprövningspass och räknas inte. Därför finns inget facit
           för provpass 3.
@@ -267,7 +266,7 @@ function FacitPage() {
         >
           Vanliga frågor efter provet
         </h2>
-        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {faq().map(({ q, a }) => (
             <div key={q} className="px-5 py-4">
               <dt className="text-[15px] font-semibold text-[var(--cream)]">{q}</dt>
@@ -328,7 +327,7 @@ function FacitPage() {
 function PassFacit({ pass }: { pass: FacitPass }) {
   const svar = passAnswers(pass);
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm sm:p-5">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5">
       <h3
         className="text-[17px] font-bold text-[var(--cream)]"
         style={{ fontFamily: "var(--font-display)" }}
@@ -373,7 +372,7 @@ function RaknaRatt() {
 
   return (
     <section className="mt-10">
-      <H2 icon={Calculator}>Räkna dina rätt</H2>
+      <H2>Räkna dina rätt</H2>
       <p className="mt-2 text-[14px] text-white/55">
         Rätta mot facit nedan och fyll i antal rätt per provpass.
       </p>

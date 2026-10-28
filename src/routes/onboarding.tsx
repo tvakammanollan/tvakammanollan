@@ -2,7 +2,6 @@ import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { pageTitle } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
-import { m } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
@@ -41,7 +40,7 @@ function OnboardingPage() {
   if (loading || !profileLoaded) {
     return (
       <AuthLayout>
-        <div className="mx-auto h-12 w-full max-w-sm animate-pulse rounded-full bg-white/[0.06]" />
+        <div className="mx-auto h-12 w-full max-w-sm rounded-full bg-white/[0.06]" />
       </AuthLayout>
     );
   }
@@ -77,10 +76,7 @@ function OnboardingPage() {
 
   return (
     <AuthLayout>
-      <m.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      <div
         className="space-y-7 text-center"
       >
         <div className="space-y-2">
@@ -107,19 +103,19 @@ function OnboardingPage() {
             placeholder="t.ex. lina_p"
             maxLength={20}
             required
-            className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 backdrop-blur-sm transition-colors focus:bg-white/[0.06]"
+            className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 transition-colors focus:bg-white/[0.06]"
           />
           <p className="text-xs text-white/45">3–20 tecken. Endast a–z, 0–9, _ och -.</p>
 
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
           </button>
         </form>
-      </m.div>
+      </div>
     </AuthLayout>
   );
 }

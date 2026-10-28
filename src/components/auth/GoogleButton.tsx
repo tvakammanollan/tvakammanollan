@@ -53,7 +53,7 @@ export function GoogleButton({ label = "Fortsätt med Google" }: { label?: strin
       type="button"
       onClick={handleClick}
       disabled={pending}
-      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.04] px-6 text-[15px] font-medium text-white backdrop-blur-sm transition-colors hover:border-white/25 hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.04] px-6 text-[15px] font-medium text-white transition-colors hover:border-white/25 hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-60"
     >
       <GoogleMark />
       {pending ? "Öppnar Google…" : label}

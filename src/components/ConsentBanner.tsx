@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { isPromptablePath } from "@/lib/promptable-path";
-import { m } from "framer-motion";
 import { ChartNoAxesColumn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { analyticsConfigured } from "@/lib/analytics";
@@ -60,16 +59,13 @@ export function ConsentBanner() {
   if (!visible || !isPromptablePath(pathname)) return null;
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+    <div
       role="dialog"
       aria-modal="false"
       aria-labelledby="consent-title"
       className="fixed inset-x-0 bottom-0 z-50 px-3 pt-3 pb-safe sm:px-4 sm:pt-4"
     >
-      <div className="mx-auto flex max-w-3xl flex-col gap-4 rounded-xl border border-white/10 bg-background/95 p-4 shadow-2xl backdrop-blur-sm sm:p-5">
+      <div className="mx-auto flex max-w-3xl flex-col gap-4 rounded-xl border border-white/10 bg-background/95 p-4 shadow-2xl sm:p-5">
         <div className="flex gap-3">
           <ChartNoAxesColumn
             className="mt-0.5 size-5 shrink-0"
@@ -112,6 +108,6 @@ export function ConsentBanner() {
           </Button>
         </div>
       </div>
-    </m.div>
+    </div>
   );
 }

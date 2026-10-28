@@ -1,9 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { pageTitle } from "@/lib/page-meta";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { m } from "framer-motion";
 import confetti from "canvas-confetti";
-import { Reveal } from "@/components/landing/MotionFX";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
@@ -11,7 +9,7 @@ import { createMatch, finalizeMatch } from "@/lib/match.functions";
 import { requestRematch } from "@/lib/friends.functions";
 import { Button } from "@/components/ui/button";
 import { NextStep } from "@/components/layout/NextStep";
-import { antal, displayCategory, formatDecimal, ordText } from "@/lib/sv-format";
+import { antal, displayCategory, formatDecimal, ordText, enhet } from "@/lib/sv-format";
 import { UserAvatar } from "@/components/UserAvatar";
 import {
   Accordion,
@@ -30,10 +28,8 @@ import {
   BookOpen,
   Home,
   Clock,
-  AlertTriangle,
   Share2,
-  Flame,
-} from "lucide-react";
+  } from "lucide-react";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/events";
 import { MathText } from "@/components/MathTextLazy";
@@ -452,13 +448,11 @@ function ResultPage() {
   if (awaitingOpponent) {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-        <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-          animate={{ scale: [1, 1.08, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        <span
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-brand"
         >
           <Trophy className="h-7 w-7" />
-        </m.span>
+        </span>
         <div>
           <h1
             className="mt-1 text-[30px] font-bold leading-tight text-[var(--cream)]"
@@ -506,7 +500,7 @@ function ResultPage() {
 
   // Banner styles
   const bannerClass = won
-    ? "bg-gradient-to-br from-secondary via-background to-card text-[var(--cream)] border-primary/40 shadow-[0_20px_60px_-15px_rgba(174,47,38,0.4)]"
+    ? "bg-secondary text-[var(--cream)] border-primary/40"
     : "bg-white/[0.03] text-[var(--cream)] border-white/12";
   const verdict = won ? "Du vann!" : "Du förlorade";
   const Icon = won ? Trophy : Frown;
@@ -591,48 +585,29 @@ function ResultPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-10">
       <RankUpModal open={!!rankUp} rank={rankUp} onClose={() => setRankUp(null)} />
       {/* Banner */}
-      <m.div
-        initial={{ opacity: 0, y: 30, scale: 0.92, filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+      <div
         className={`relative overflow-hidden rounded-2xl border p-6 text-center sm:p-10 ${bannerClass}`}
       >
-        <m.div
-          initial={{ scale: 0.4, opacity: 0, rotate: won ? -15 : 0 }}
-          animate={{ scale: 1, opacity: 1, rotate: 0 }}
-          transition={{
-            duration: 0.7,
-            delay: 0.2,
-            ease: [0.22, 1, 0.36, 1],
-            type: "spring",
-            stiffness: 220,
-            damping: 16,
-          }}
+        <div
         >
           <Icon className={`mx-auto h-14 w-14 ${won ? "text-primary" : ""}`} />
-        </m.div>
+        </div>
         <h1
-          className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "shimmer-text" : ""}`}
+          className={`mt-3 text-3xl font-bold sm:text-4xl ${won ? "" : ""}`}
           style={{ fontFamily: "var(--font-display)" }}
         >
           {verdict}
         </h1>
-        <m.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 0.8, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+        <p
           className="mt-2 text-sm sm:text-base"
         >
           {subtext}
-        </m.p>
-      </m.div>
+        </p>
+      </div>
 
       {/* Guest signup CTA — direkt under bannern, i det heta ögonblicket */}
       {user?.is_anonymous && (
-        <Reveal
-          delay={0.2}
-          className="mt-5 overflow-hidden rounded-3xl border border-primary/30 bg-primary/[0.06] p-6 sm:p-8"
-        >
+        <div className="mt-5 overflow-hidden rounded-3xl border border-primary/30 bg-primary/[0.06] p-6 sm:p-8">
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:text-left">
             <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-primary/25 bg-primary/10 text-primary">
               <Trophy className="h-7 w-7" />
@@ -657,14 +632,11 @@ function ResultPage() {
               <Link to="/signup">Skapa konto</Link>
             </Button>
           </div>
-        </Reveal>
+        </div>
       )}
 
       {/* Scorecard */}
-      <Reveal
-        delay={0.25}
-        className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6"
-      >
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6">
         <div className="mb-4 text-center text-xs font-semibold text-muted-foreground">
           {match.match_type === "verbal" ? "Verbal" : "Kvantitativ"}, Slutresultat
         </div>
@@ -692,17 +664,19 @@ function ResultPage() {
 
         {eloBefore !== null && eloAfter !== null && eloChange !== null && (
           <div className="mt-5 flex items-center justify-center gap-2 text-sm">
-            <span className="text-muted-foreground">ELO {match.match_type}:</span>
+            <span className="text-muted-foreground">
+              {match.match_type === "verbal" ? "Verbal" : "Kvantitativ"} ELO:
+            </span>
             <span className="font-semibold tabular-nums">{eloBefore}</span>
             <span className="text-muted-foreground">till</span>
             <span className="font-semibold tabular-nums">{eloAfter}</span>
             <span
-              className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${
+              className={`font-semibold tabular-nums ${
                 eloChange > 0
-                  ? "bg-[var(--success-soft)] text-[var(--success)]"
+                  ? "text-[var(--success)]"
                   : eloChange < 0
-                    ? "bg-[var(--danger-soft)] text-[var(--danger)]"
-                    : "bg-muted text-foreground"
+                    ? "text-[var(--destructive)]"
+                    : "text-foreground"
               }`}
             >
               {eloChange >= 0 ? "+" : ""}
@@ -714,9 +688,8 @@ function ResultPage() {
         {/* Streak — förstärk vanan i det heta ögonblicket */}
         {!user?.is_anonymous && (profile?.current_streak ?? 0) > 0 && (
           <div className="mt-3 flex justify-center">
-            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary tabular-nums">
-              <Flame className="h-3.5 w-3.5" />
-              {profile!.current_streak} dagar i rad
+            <span className="text-sm font-semibold text-primary tabular-nums">
+              {enhet(profile!.current_streak ?? 0, "dag")} i rad
               {(profile!.current_streak ?? 0) >= 3 &&
                 profile!.current_streak === profile!.longest_streak && (
                   <span className="font-medium text-white/70">(nytt rekord!)</span>
@@ -751,7 +724,7 @@ function ResultPage() {
               </div>
             );
           })()}
-      </Reveal>
+      </div>
 
       {/* Dela resultat */}
       <Button
@@ -789,7 +762,7 @@ function ResultPage() {
               <span className="flex items-center gap-2">
                 <ChevronDown className="h-4 w-4 opacity-60" />
                 {questions.length > 0
-                  ? `Genomgång av alla ${questions.length} frågor`
+                  ? `Genomgång av alla ${enhet(questions.length, "fråga")}`
                   : "Genomgången är inte tillgänglig"}
                 {(() => {
                   const times = myAnswers
@@ -845,24 +818,17 @@ function ResultPage() {
                         {q.withdrawn && <WithdrawnBadge />}
                         {typeof a?.time_spent_seconds === "number" && a.time_spent_seconds > 0 && (
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] normal-case tracking-normal ${
-                              a.time_spent_seconds > 180
-                                ? "bg-primary/15 text-primary"
-                                : "bg-muted text-muted-foreground"
+                            className={`text-[11px] font-normal ${
+                              a.time_spent_seconds > 180 ? "text-primary" : "text-muted-foreground"
                             }`}
                           >
-                            {a.time_spent_seconds > 180 ? (
-                              <AlertTriangle className="h-3 w-3" />
-                            ) : (
-                              <Clock className="h-3 w-3" />
-                            )}
                             {(() => {
                               const t = a.time_spent_seconds!;
                               const m = Math.floor(t / 60);
                               const s = t % 60;
                               return m > 0 ? `${m} min ${s} sek` : `${s} sek`;
                             })()}
-                            {a.time_spent_seconds > 180 ? ", Lång tid" : ""}
+                            {a.time_spent_seconds > 180 ? ", lång tid" : ""}
                           </span>
                         )}
                         <span className="ml-auto inline-flex items-center gap-1">

@@ -1,4 +1,4 @@
-import { ordText } from "@/lib/sv-format";
+import { ordText, enhet } from "@/lib/sv-format";
 import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovFull, type ProvPass, type ProvQuestion } from "@/types/gamla-prov";
 import type { ProvThreadLink } from "@/lib/forum-prov.functions";
@@ -35,7 +35,7 @@ export function ProvFacitList({
               {delprovFull(section.code)} ({section.code})
             </h3>
             <p className="mt-0.5 text-sm text-[var(--text-tertiary)]">
-              Uppgift {section.first}–{section.last}, {section.minutes} minuter
+              Uppgift {section.first}–{section.last}, {enhet(section.minutes, "minut")}
             </p>
 
             <ol className="mt-4 space-y-4">
@@ -82,7 +82,7 @@ function QuestionEntry({ question, thread }: { question: ProvQuestion; thread?: 
   const isOrd = question.delprov === "ORD";
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
       <p className="text-[13px] font-semibold text-[var(--amber)]">
         Uppgift {question.nr}
       </p>

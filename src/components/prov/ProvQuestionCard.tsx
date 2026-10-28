@@ -68,7 +68,7 @@ export function ProvQuestionCard({
   const cropped = crops && letters.every((l) => crops[l]) ? crops : undefined;
 
   return (
-    <article className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6">
+    <article className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6">
       <header className="mb-4 flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[var(--amber)]/15 text-xs font-bold tabular-nums text-[var(--amber)]">

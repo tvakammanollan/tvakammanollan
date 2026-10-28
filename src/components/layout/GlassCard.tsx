@@ -22,7 +22,7 @@ export function GlassCard({
 }) {
   return (
     <Tag
-      className={cn("rounded-2xl border p-6 backdrop-blur-sm", variantClass[variant], className)}
+      className={cn("rounded-2xl border p-6", variantClass[variant], className)}
     >
       {children}
     </Tag>

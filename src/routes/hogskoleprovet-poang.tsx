@@ -138,25 +138,21 @@ function PoangPage() {
           >
             Hur används HP vid antagning?
           </h2>
-          <ul className="mt-3 space-y-2.5 text-[15px] leading-relaxed text-white/65">
-            <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bark" />
+          <ul className="mt-3 list-disc space-y-2.5 pl-5 text-[15px] leading-relaxed text-white/65">
+            <li>
               Sökande delas in i <strong className="text-white/80">urvalsgrupper</strong>:
               betygsgrupperna och högskoleprovsgruppen (HP). Du tävlar i den grupp där du har störst
               chans.
             </li>
-            <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bark" />
+            <li>
               Minst <strong className="text-white/80">en tredjedel</strong> av platserna på de
               flesta program tillsätts via högskoleprovet.
             </li>
-            <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bark" />
+            <li>
               Ditt resultat är giltigt i <strong className="text-white/80">8 år</strong>. Du kan
               skriva flera gånger, och ditt bästa resultat används.
             </li>
-            <li className="flex gap-2.5">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bark" />
+            <li>
               HP kan bara <strong className="text-white/80">hjälpa</strong> dig. Ett svagt prov
               räknas aldrig emot dina betyg.
             </li>
@@ -175,7 +171,7 @@ function PoangPage() {
             Antagningsgränserna varierar mellan program och mellan terminer, beroende på hur många
             som söker. Som grov fingervisning:
           </p>
-          <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+          <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             {[
               { range: "0,9–1,3", who: "Många program antar inom det här spannet" },
               { range: "1,3–1,7", who: "Populära program, t.ex. civilingenjör och juridik" },

@@ -2,8 +2,6 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { EloBadge } from "@/components/EloBadge";
-import { displayElo, type EloHeadline } from "@/lib/elo";
 import { UserAvatar } from "@/components/UserAvatar";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { SafeBoundary } from "@/components/SafeBoundary";
@@ -37,53 +35,21 @@ import {
   ChevronDown,
   Settings,
   Swords,
-  Sparkles,
   MessagesSquare,
   Tag,
   type LucideIcon,
 } from "lucide-react";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { displayName } from "@/lib/guest-name";
-import { CoachingModal } from "@/components/CoachingModal";
-import { useCoachingOffer, coachingPriceLabel } from "@/hooks/useCoachingOffer";
-
-type EloTrack = EloHeadline["track"];
-
-/** V eller M på märket — utelämnas när grenen inte säger något (båda lika). */
-function trackLabel(track: EloTrack): string | undefined {
-  if (track === "verbal") return "V";
-  if (track === "math") return "M";
-  return undefined;
-}
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
-  // Coachningen ligger i menyn sedan startsidans kort gav plats åt
-  // MEK-övningen. Modalen monteras först vid första klicket: den drar in en
-  // auth-lyssnare och en profil-query, och navbaren finns på varje sida.
-  const [coachingOpen, setCoachingOpen] = useState(false);
-  const [coachingMounted, setCoachingMounted] = useState(false);
-  const openCoaching = () => {
-    setCoachingMounted(true);
-    setCoachingOpen(true);
-  };
-
   const handleSignOut = async () => {
     await signOut();
     navigate({ to: "/" });
   };
-
-  // Ett ELO, inte två. Här stod först `Math.max(elo_verbal, elo_math)` (som
-  // visade mattens orörda 1000 efter en förlorad verbal match), sedan båda
-  // grenarna bredvid varandra — ärligt, men två tal att tolka i en rad man
-  // läser i förbifarten. Nu visas den högsta av de grenar man faktiskt
-  // spelat, med V eller M utsatt så att talet aldrig blir anonymt. Regeln
-  // och varför den räknar matcher i stället för att titta på ELO:t bor i
-  // `displayElo`. Ändrat på begäran 2026-08-24 — gå inte tillbaka till två
-  // märken utan att fråga.
-  const headline: EloHeadline = profile ? displayElo(profile) : { elo: 1000, track: null };
 
   // Scroll-aware: glaset tätnar och lyfter när man scrollar. Helt
   // transparent i toppläget har provats och gjorde att raden flöt ihop
@@ -166,15 +132,7 @@ export function Navbar() {
                   <NotificationsBell userId={user.id} />
                 </SafeBoundary>
               )}
-              {profile && (
-                <AccountMenu
-                  profile={profile}
-                  elo={headline.elo}
-                  track={headline.track}
-                  onSignOut={handleSignOut}
-                  onCoaching={openCoaching}
-                />
-              )}
+              {profile && <AccountMenu profile={profile} onSignOut={handleSignOut} />}
             </>
           ) : (
             <>
@@ -220,13 +178,7 @@ export function Navbar() {
                   <NotificationsBell userId={user.id} />
                 </SafeBoundary>
               )}
-              <MobileMenu
-                profile={profile}
-                elo={headline.elo}
-                track={headline.track}
-                onSignOut={handleSignOut}
-                onCoaching={openCoaching}
-              />
+              <MobileMenu profile={profile} onSignOut={handleSignOut} />
             </>
           ) : (
             <>
@@ -253,11 +205,6 @@ export function Navbar() {
           )}
         </div>
       </div>
-      {coachingMounted && (
-        <SafeBoundary label="navbar-coaching">
-          <CoachingModal open={coachingOpen} onOpenChange={setCoachingOpen} source="navbar" />
-        </SafeBoundary>
-      )}
     </header>
   );
 }
@@ -292,7 +239,7 @@ function NavLink({
       <span>{children}</span>
       {/* Underline — animates in on hover, persists on active */}
       <span
-        className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-[.is-active]:scale-x-100"
+        className="pointer-events-none absolute inset-x-1 -bottom-0.5 h-[2px] origin-left scale-x-0 transition-transform duration-150 group-hover:scale-x-100 group-[.is-active]:scale-x-100"
         style={{ background: "#06040e" }}
       />
     </Link>
@@ -302,29 +249,17 @@ function NavLink({
 /* ─────────── ACCOUNT MENU — allt sekundärt bakom avataren ─────────── */
 function AccountMenu({
   profile,
-  elo,
-  track,
   onSignOut,
-  onCoaching,
 }: {
   profile: NonNullable<ReturnType<typeof useAuth>["profile"]>;
-  elo: number;
-  track: EloTrack;
   onSignOut: () => Promise<void>;
-  onCoaching: () => void;
 }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full border transition-colors hover:brightness-110"
-          style={{
-            borderColor: "var(--line)",
-            background: "rgba(46, 30, 20, 0.06)",
-            padding: "4px 10px 4px 4px",
-            boxShadow: "var(--shadow-sm)",
-          }}
+          className="inline-flex min-h-[40px] items-center gap-2 rounded-lg px-2 transition-colors hover:bg-white/[0.06]"
         >
           <UserAvatar
             name={displayName(profile.username, profile.id)}
@@ -338,15 +273,10 @@ function AccountMenu({
           >
             {displayName(profile.username, profile.id)}
           </span>
-          <EloBadge elo={elo} label={trackLabel(track)} size="sm" />
           <ChevronDown className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cream)" }} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
-        <DropdownMenuItem onSelect={onCoaching} className="p-0 focus:bg-transparent">
-          <CoachingMenuItem />
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <AccountMenuLink to="/stats" icon={BarChart3}>
           Statistik
         </AccountMenuLink>
@@ -393,42 +323,13 @@ function AccountMenuLink({
   );
 }
 
-/**
- * Coachningen i menyn: en grön ruta, inte en rad bland de andra. Priset
- * hämtas när menyn öppnas (rutan monteras först då), ur samma delade anrop
- * som korten använder; utan pris står bara rubriken.
- */
-function CoachingMenuItem() {
-  const { offer } = useCoachingOffer();
-  const pris = coachingPriceLabel(offer);
-  return (
-    <span className="flex w-full items-center gap-3 rounded-xl border border-success-line bg-success-soft px-3 py-2.5 transition-colors hover:border-success">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-success text-on-brand">
-        <Sparkles className="h-4 w-4" aria-hidden />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-bold text-success">Coachning</span>
-        <span className="block text-xs text-muted-foreground">
-          Personligt studieupplägg{pris ? `, ${pris}` : ""}
-        </span>
-      </span>
-    </span>
-  );
-}
-
 /* ─────────── MOBILE MENU — hamburger + sheet drawer ─────────── */
 function MobileMenu({
   profile,
-  elo,
-  track,
   onSignOut,
-  onCoaching,
 }: {
   profile: ReturnType<typeof useAuth>["profile"];
-  elo: number;
-  track: EloTrack;
   onSignOut: () => Promise<void>;
-  onCoaching: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -451,7 +352,7 @@ function MobileMenu({
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-[80vw] max-w-[320px] border-l p-0"
+        className="flex w-[80vw] max-w-[320px] flex-col border-l p-0"
         style={{
           background: "var(--navy)",
           borderColor: "var(--line)",
@@ -459,7 +360,7 @@ function MobileMenu({
         }}
       >
         <SheetHeader
-          className="border-b px-6 pb-4 pt-6 text-left"
+          className="shrink-0 border-b px-6 pb-4 pt-6 text-left"
           style={{ borderColor: "var(--line)" }}
         >
           <SheetTitle style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}>
@@ -480,25 +381,16 @@ function MobileMenu({
                 >
                   {displayName(profile.username, profile.id)}
                 </div>
-                <div className="mt-0.5">
-                  <EloBadge elo={elo} label={trackLabel(track)} size="sm" />
-                </div>
               </div>
             </div>
           )}
         </SheetHeader>
 
-        <nav className="flex flex-col px-2 py-3">
-          <button
-            type="button"
-            onClick={() => {
-              close();
-              onCoaching();
-            }}
-            className="mx-2 mb-2 text-left"
-          >
-            <CoachingMenuItem />
-          </button>
+        {/* Listan är längre än en telefonskärm. Radix låser sidans scroll
+            medan panelen är öppen, så utan en egen skrollyta här går de
+            sista valen inte att nå alls. `overscroll-contain` hindrar att
+            svepet fortsätter ner i sidan bakom när listan tar slut. */}
+        <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-2 py-3">
           <MobileNavLink to="/" onClick={close} icon={Home}>
             Hem
           </MobileNavLink>
@@ -543,7 +435,7 @@ function MobileMenu({
           )}
         </nav>
 
-        <div className="mt-auto border-t px-4 py-4" style={{ borderColor: "var(--line)" }}>
+        <div className="shrink-0 border-t px-4 pt-4 pb-safe" style={{ borderColor: "var(--line)" }}>
           <SheetClose asChild>
             <button
               type="button"

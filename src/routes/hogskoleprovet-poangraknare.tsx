@@ -97,7 +97,7 @@ function PoangraknarePage() {
       </header>
 
       {/* Kalkylator */}
-      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm">
+      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
         <SliderRow
           label="Verbal"
           hint="ORD, LÄS, MEK, ELF"
@@ -139,7 +139,7 @@ function PoangraknarePage() {
           <div className="mt-5">
             <div className="relative h-2.5 w-full rounded-full bg-white/8">
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-deep to-primary"
+                className="absolute inset-y-0 left-0 rounded-full bg-primary"
                 style={{ width: `${pct}%` }}
               />
               <div

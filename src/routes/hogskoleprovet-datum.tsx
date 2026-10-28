@@ -117,7 +117,7 @@ function DatumPage() {
         >
           Kommande provdatum
         </h2>
-        <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {HP_DATES.map((d) => (
             <li key={d.date} className="flex items-center justify-between gap-3 px-5 py-4">
               <div>
@@ -154,7 +154,7 @@ function DatumPage() {
           utprövningspass som inte ger poäng. Med raster och lunch är du på plats i drygt 8
           timmar.
         </p>
-        <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {PROVDAGEN.map((rad) => (
             <li key={rad.tid} className="flex items-baseline gap-4 px-5 py-3">
               <span className="w-14 shrink-0 text-sm font-semibold tabular-nums text-primary">

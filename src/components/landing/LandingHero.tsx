@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { m } from "framer-motion";
 import type { DemoQuestion, LandingStats } from "@/lib/landing.functions";
 import { formatInt } from "@/lib/sv-format";
 
@@ -181,30 +180,21 @@ export function LandingHero({
         <h1 className="sr-only">
           Öva på högskoleprovet gratis
         </h1>
-        <m.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <p
           className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
           style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
         >
           Plugga på de prov som faktiskt har getts.
-        </m.p>
+        </p>
 
-        <m.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.06 }}
+        <p
           className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]"
         >
           Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
           ord med förklaring. Och en duell på 5 minuter när du vill mäta dig mot någon annan.
-        </m.p>
+        </p>
 
-        <m.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.12 }}
+        <div
           className="mt-9 flex flex-wrap items-center justify-center gap-3"
         >
           <Link
@@ -219,15 +209,12 @@ export function LandingHero({
           >
             Se alla gamla prov
           </Link>
-        </m.div>
+        </div>
 
         {/* Siffrorna är riktiga och kommer ur getLandingStats, inte ur en
             konstant. Saknas de visas ingenting, aldrig ett påhittat tal. */}
         {stats ? (
-          <m.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <p
             className="mt-7 text-[13px] text-[var(--cream-3)]"
           >
             <b className="font-semibold tabular-nums text-[var(--cream)]">
@@ -238,15 +225,12 @@ export function LandingHero({
               {formatInt(stats.totalMatches)}
             </b>{" "}
             matcher spelade
-          </m.p>
+          </p>
         ) : null}
       </div>
 
       <div className="relative mx-auto max-w-[720px] px-4 pb-16 sm:pb-24">
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <div
         >
           {fragor.length > 0 ? (
             <LevandeFraga fragor={fragor} />
@@ -264,7 +248,7 @@ export function LandingHero({
               </Link>
             </div>
           )}
-        </m.div>
+        </div>
       </div>
     </section>
   );

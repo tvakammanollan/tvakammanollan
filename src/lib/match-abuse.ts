@@ -1,3 +1,4 @@
+import { enhet } from "@/lib/sv-format";
 /**
  * Spärrar mot matchspam och ELO-odling.
  *
@@ -47,13 +48,13 @@ export function checkMatchQuota(createdLastHour: number, createdLastDay: number)
   if (createdLastDay >= MATCH_QUOTA.perDay) {
     return {
       ok: false,
-      message: `Du har startat ${MATCH_QUOTA.perDay} matcher det senaste dygnet. Ta en paus och kom tillbaka imorgon.`,
+      message: `Du har startat ${enhet(MATCH_QUOTA.perDay, "match")} det senaste dygnet. Ta en paus och kom tillbaka imorgon.`,
     };
   }
   if (createdLastHour >= MATCH_QUOTA.perHour) {
     return {
       ok: false,
-      message: `Du har startat ${MATCH_QUOTA.perHour} matcher den senaste timmen. Vänta en stund innan du startar fler.`,
+      message: `Du har startat ${enhet(MATCH_QUOTA.perHour, "match")} den senaste timmen. Vänta en stund innan du startar fler.`,
     };
   }
   return { ok: true };

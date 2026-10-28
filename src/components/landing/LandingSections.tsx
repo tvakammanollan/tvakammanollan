@@ -1,7 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { m } from "framer-motion";
 import { Check } from "lucide-react";
-import { Reveal } from "@/components/landing/MotionFX";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { rankedName } from "@/lib/username";
@@ -160,25 +158,25 @@ export function EloSkalan() {
       {/* Sidans tes får mest luft och en egen rubriksättning: bred,
           enspaltig, större. De andra sektionerna ska inte se ut så här. */}
       <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
-        <Reveal>
+        <div>
           <h2 className="max-w-[20ch] text-[34px] leading-[1.05] tracking-[-0.04em] sm:text-[52px]">
             Du får veta var du står nu, inte på provdagen.
           </h2>
-        </Reveal>
-        <Reveal delay={0.06}>
+        </div>
+        <div>
           <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-white/70">
             Rättar du ett prov själv får du veta vad du kunde den dagen. Din ELO mäts mot andra som
             pluggar samma sak, flyttas efter varje match, och går att läsa av direkt på provets egen
             skala.
           </p>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.1}>
+        <div>
           <div>
             <Linjal />
             <Teckenforklaring />
           </div>
-        </Reveal>
+        </div>
 
         <div className="grid gap-7 border-t border-white/10 pt-6 sm:grid-cols-2">
           <p className="max-w-[48ch] text-[15px] leading-relaxed text-white/70">
@@ -265,22 +263,22 @@ export function Arkivet() {
     <section id="arkivet" className="border-b border-white/10 bg-secondary">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-          <Reveal>
+          <div>
             <h2 className="max-w-[16ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
               Varje prov som gått att få tag på.
             </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
+          </div>
+          <div>
             <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
               Kör ett helt pass på tid som på riktigt, eller plocka ut det delprov du vill åt. Facit
               på varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en
               del.
             </p>
-          </Reveal>
+          </div>
         </div>
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-16">
-          <Reveal className="min-w-0">
+          <div className="min-w-0">
             <div className="flex flex-wrap gap-1.5">
               {TERMINER.map((t) => (
                 <Link
@@ -297,9 +295,9 @@ export function Arkivet() {
               Vårprovet 2020 ställdes in och skrevs aldrig. Samma häfte användes i oktober samma år,
               och ligger därför under höstprovet.
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.08}>
+          <div>
             <div className="border-t border-white/25">
               {ARKIVFAKTA.map((f) => (
                 <div key={f.t} className="flex items-baseline gap-4 border-b border-white/8 py-3.5">
@@ -310,7 +308,7 @@ export function Arkivet() {
                 </div>
               ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -377,14 +375,14 @@ export function Produktytorna() {
   return (
     <section id="ytorna" className="border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <Reveal>
+        <div>
           <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
             Fyra sätt att plugga. Allt på samma konto.
           </h2>
-        </Reveal>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {YTOR.map((y, i) => (
-            <Reveal key={y.to} delay={i * 0.05} className="min-w-0">
+          {YTOR.map((y) => (
+            <div key={y.to} className="min-w-0">
               <Link
                 to={y.to}
                 className={`flex h-full flex-col rounded-[40px] p-7 transition hover:brightness-[1.03] sm:p-9 ${y.yta}`}
@@ -400,7 +398,7 @@ export function Produktytorna() {
                   {y.cta}
                 </span>
               </Link>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>
@@ -472,13 +470,13 @@ export function Priset() {
   return (
     <section id="priset" className="border-b border-white/10 bg-secondary">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <Reveal>
+        <div>
           <h2 className="mb-10 max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
             Det mesta är gratis. Hela ordlistan och MEK kostar.
           </h2>
-        </Reveal>
+        </div>
         <div className="grid gap-4 lg:grid-cols-3">
-          <Reveal className="min-w-0">
+          <div className="min-w-0">
             <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8">
               <p className="text-xs font-semibold text-white/55">
                 Konto
@@ -505,10 +503,10 @@ export function Priset() {
                 Skapa konto
               </Link>
             </div>
-          </Reveal>
+          </div>
 
           {BETALKORT.map((k, i) => (
-            <Reveal key={k.cta} delay={0.06 * (i + 1)} className="min-w-0">
+            <div key={k.cta} className="min-w-0">
               <div className={`flex h-full flex-col rounded-3xl p-7 sm:p-8 ${k.yta}`}>
                 <p
                   className={`text-xs font-semibold ${k.etikettFarg}`}
@@ -535,7 +533,7 @@ export function Priset() {
                   {k.cta}
                 </Link>
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>
@@ -564,7 +562,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
             behållaren till 420px i en 380px viewport i stället för att
             scrolla, och gav hela sidan 56px sidoscroll. */}
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-16">
-          <Reveal className="min-w-0">
+          <div className="min-w-0">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[420px]">
                 <thead>
@@ -606,9 +604,9 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
                 </tbody>
               </table>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.08}>
+          <div>
             <div>
               <p className="font-mono text-xs text-white/55">
                 Var du hamnar
@@ -624,7 +622,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
                 Se hela topplistan
               </Link>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -637,13 +635,13 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
   return (
     <section className="border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
-        <Reveal>
+        <div>
           <h2 className="max-w-[13ch] text-[38px] leading-[1.02] tracking-[-0.045em] sm:text-[60px]">
             Börja med en match.
           </h2>
-        </Reveal>
+        </div>
         {dagarKvar !== null ? (
-          <Reveal delay={0.06}>
+          <div>
             <div className="mt-6 flex flex-wrap items-baseline gap-4">
               <span className="font-mono text-[46px] font-medium leading-none tabular-nums tracking-[-0.045em] text-primary sm:text-[68px]">
                 {formatInt(dagarKvar)}
@@ -653,9 +651,9 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
                 {datum ? ` den ${datum}` : ""}.
               </span>
             </div>
-          </Reveal>
+          </div>
         ) : null}
-        <Reveal delay={0.12}>
+        <div>
           <Link
             to="/matchmaking"
             search={{ type: "verbal" }}
@@ -663,7 +661,7 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
           >
             Starta en duell
           </Link>
-        </Reveal>
+        </div>
         <p className="mt-4 text-[13.5px] text-white/55">
           En match är 8 frågor på 5 minuter. Inget konto behövs för att testa.
         </p>

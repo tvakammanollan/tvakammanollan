@@ -57,7 +57,7 @@ import { ReportQuestionButton } from "@/components/ui/ReportQuestionButton";
 import { QuestionVoteButtons } from "@/components/ui/QuestionVoteButtons";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
-import { displayCategory, formatInt, ordText } from "@/lib/sv-format";
+import { displayCategory, formatInt, ordText, enhet } from "@/lib/sv-format";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { parseQuestionText } from "@/lib/question-text";
 import { WithdrawnBadge } from "@/components/ui/WithdrawnBadge";
@@ -302,7 +302,7 @@ export function TrainExperience({
     // Visa varning om vi inte fick så många som användaren bad om
     if (pool.length < config.count) {
       toast.warning(
-        `Bara ${pool.length} frågor matchade, kör med dem i stället för ${config.count}`,
+        `Bara ${enhet(pool.length, "fråga")} matchade, kör med dem i stället för ${config.count}`,
       );
     }
     const mapped: TrainQuestion[] = pool.map((q) => {
@@ -407,7 +407,7 @@ export function TrainExperience({
         ? `, ${MEK_ORIGIN_LABEL[config.mekOrigin].toLowerCase()}`
         : "";
     const dölj = config.excludeCorrect ? ", utan frågor du klarat" : "";
-    return `${config.track === "verbal" ? "Svenska" : "Kvantitativ"}, ${subs}${källa}, ${diff}, ${config.count} frågor${dölj}`;
+    return `${config.track === "verbal" ? "Svenska" : "Kvantitativ"}, ${subs}${källa}, ${diff}, ${enhet(config.count, "fråga")}${dölj}`;
   })();
 
   const currentQ = questions[current];
@@ -699,7 +699,7 @@ export function TrainExperience({
                             : "border-white/15 bg-white/[0.03] text-white/80 hover:border-primary/60"
                         }`}
                       >
-                        {n} frågor
+                        {enhet(n, "fråga")}
                       </button>
                     ))}
                   </div>
@@ -717,7 +717,7 @@ export function TrainExperience({
               )}
 
               <div
-                className={`mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm sm:p-6 ${
+                className={`mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6 ${
                   mekLåst && baraMek ? "hidden" : ""
                 }`}
               >
@@ -748,7 +748,7 @@ export function TrainExperience({
   if (phase === "loading") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-12" aria-busy="true">
-        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm sm:p-10">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 sm:p-10">
           <div className="flex flex-col items-center text-center">
             <Spinner size="lg" />
             <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
@@ -812,7 +812,7 @@ export function TrainExperience({
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-primary transition-all duration-500 ease-out"
+                className="h-full bg-primary"
                 style={{ width: `${((current + 1) / questions.length) * 100}%` }}
               />
             </div>
@@ -844,7 +844,7 @@ export function TrainExperience({
 
           <div
             key={currentQ.id}
-            className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6"
             style={{ boxShadow: "var(--shadow-md)" }}
           >
             <div className="mb-2 flex flex-wrap items-center gap-2">

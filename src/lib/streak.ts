@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { stockholmDate, streakStep } from "./streak-dates";
+import { enhet } from "@/lib/sv-format";
 
 export interface StreakResult {
   /** Streak value AFTER update */
@@ -65,10 +66,10 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
   // Toast on streak broken
   if (broken && prevStreak >= 7) {
     toast(
-      `Din streak på ${prevStreak} dagar bröts. Rekordet ${prevLongest} dagar finns kvar, kämpa på!`,
+      `Din streak på ${enhet(prevStreak, "dag")} bröts. Rekordet ${enhet(prevLongest, "dag")} finns kvar, kämpa på!`,
     );
   } else if (broken && prevStreak >= 3) {
-    toast(`Din streak på ${prevStreak} dagar bröts. Börja en ny idag!`);
+    toast(`Din streak på ${enhet(prevStreak, "dag")} bröts. Börja en ny idag!`);
   } else if (continued && newStreak >= 2) {
     toast.success(`${newStreak} dagars streak!`);
   }

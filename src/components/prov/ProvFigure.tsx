@@ -43,7 +43,7 @@ export function ProvFigure({
   return (
     <>
       <figure
-        className={`overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm ${className ?? ""}`}
+        className={`overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] ${className ?? ""}`}
       >
         {(label || collapsible) && (
           <figcaption className="flex items-center justify-between gap-3 px-4 py-2.5">
@@ -95,7 +95,7 @@ export function ProvFigure({
       {/* Lightboxen renderas i en PORTAL till <body>, inte där den står.
           `position: fixed` mäts mot närmaste förfader med `transform`,
           `filter`, `backdrop-filter` eller `perspective` — inte mot fönstret —
-          och frågekorten i duellen och träningen har `backdrop-blur-sm`.
+          och frågekorten i duellen och träningen har ``.
           Utan portalen blev "helskärm" alltså kortets storlek: mätt till
           341×550 px i ett fönster på 375×812, med kontrollerna inne i kortet
           och diagrammet lika litet som förut. */}
@@ -123,7 +123,7 @@ export function ProvFigure({
                 onClick={() => setZoom((z) => Math.max(1, z - 0.5))}
                 disabled={zoom <= 1}
                 aria-label="Zooma ut"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomOut className="h-5 w-5" aria-hidden />
               </button>
@@ -132,7 +132,7 @@ export function ProvFigure({
                 onClick={() => setZoom((z) => Math.min(4, z + 0.5))}
                 disabled={zoom >= 4}
                 aria-label="Zooma in"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand transition-colors hover:bg-[rgba(255,255,255,0.20)] disabled:opacity-40"
               >
                 <ZoomIn className="h-5 w-5" aria-hidden />
               </button>
@@ -140,7 +140,7 @@ export function ProvFigure({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Stäng figuren"
-                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand backdrop-blur transition-colors hover:bg-[rgba(255,255,255,0.20)]"
+                className="rounded-full bg-[rgba(255,255,255,0.10)] p-2 text-on-brand transition-colors hover:bg-[rgba(255,255,255,0.20)]"
               >
                 <X className="h-5 w-5" aria-hidden />
               </button>

@@ -154,7 +154,7 @@ export function QuestionVoteButtons({
           <ThumbsUp className={`h-5 w-5 ${current === 1 ? "fill-current" : ""}`} />
           Bra fråga
           {counts && (
-            <span className="rounded-full bg-black/10 px-2 py-0.5 text-xs tabular-nums">
+            <span className="text-xs tabular-nums">
               {formatInt(counts.up)}
             </span>
           )}
@@ -173,7 +173,7 @@ export function QuestionVoteButtons({
           <ThumbsDown className={`h-5 w-5 ${current === -1 ? "fill-current" : ""}`} />
           Dålig fråga
           {counts && (
-            <span className="rounded-full bg-black/10 px-2 py-0.5 text-xs tabular-nums">
+            <span className="text-xs tabular-nums">
               {formatInt(counts.down)}
             </span>
           )}

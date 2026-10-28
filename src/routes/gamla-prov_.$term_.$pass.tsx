@@ -4,7 +4,7 @@ import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ProvRunner } from "@/components/prov/ProvRunner";
 import { findExam, loadPass } from "@/lib/prov-data";
 import { fetchProvThreads } from "@/lib/forum-prov.functions";
-import { formatInt } from "@/lib/sv-format";
+import { enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel } from "@/types/gamla-prov";
 
 /* =====================================================================
@@ -46,12 +46,12 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         // (13 mars)"), vilket är vad describeWithin gör.
         description: describeWithin(
           `Skriv provpass ${data.pass} från ${data.label} på originaltid: ` +
-            `${formatInt(data.questions.length)} uppgifter i ${delprov} på ${data.minutes} minuter. ` +
+            `${enhet(data.questions.length, "uppgift")} i ${delprov} på ${enhet(data.minutes, "minut")}. ` +
             `Facit och automatisk rättning direkt.`,
           "Gratis och utan inloggning.",
         ),
         ogTitle: `${data.label}: provpass ${data.pass}`,
-        ogDescription: `${formatInt(data.questions.length)} uppgifter i ${delprov} med facit.`,
+        ogDescription: `${enhet(data.questions.length, "uppgift")} i ${delprov} med facit.`,
       }),
       links: pageLinks(path),
       scripts: [

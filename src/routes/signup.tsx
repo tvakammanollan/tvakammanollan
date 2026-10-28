@@ -2,7 +2,6 @@ import { createFileRoute, Link, useNavigate, Navigate } from "@tanstack/react-ro
 import { pageMeta, pageLinks } from "@/lib/page-meta";
 import { useState } from "react";
 import { z } from "zod";
-import { m, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { trackEvent } from "@/lib/events";
@@ -93,22 +92,16 @@ function SignupPage() {
     }
   };
 
-  const reverseShader = success || sentTo !== null;
-
   return (
-    <AuthLayout reverse={reverseShader}>
-      <AnimatePresence mode="wait">
+    <AuthLayout>
+      <>
         {success ? (
           <SuccessScreen key="success" />
         ) : sentTo ? (
           <CheckEmailScreen key="email" address={sentTo} onUseAnother={() => setSentTo(null)} />
         ) : (
-          <m.div
+          <div
             key="form"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-7 text-center"
           >
             <div className="space-y-2">
@@ -149,7 +142,7 @@ function SignupPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 hover:shadow-[0_0_32px_rgba(174,47,38,0.55)] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {submitting ? "Skapar konto…" : "Skapa konto"}
                 </button>
@@ -174,9 +167,9 @@ function SignupPage() {
               </Link>
               .
             </p>
-          </m.div>
+          </div>
         )}
-      </AnimatePresence>
+      </>
     </AuthLayout>
   );
 }
@@ -208,7 +201,7 @@ function PillInput({
       onChange={(e) => onChange(e.target.value)}
       minLength={minLength}
       required
-      className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 backdrop-blur-sm transition-colors focus:bg-white/[0.06]"
+      className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 transition-colors focus:bg-white/[0.06]"
     />
   );
 }
@@ -221,12 +214,8 @@ function CheckEmailScreen({
   onUseAnother: () => void;
 }) {
   return (
-    <m.div
+    <div
       key="email"
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -40 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="space-y-6 text-center"
     >
       <div className="space-y-2">
@@ -240,14 +229,14 @@ function CheckEmailScreen({
       </div>
 
       <div className="flex justify-center py-2">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-sm">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/[0.04]">
           <Mail className="h-6 w-6 text-primary" />
         </div>
       </div>
 
       <div className="space-y-3">
         <p className="text-sm text-white/70">Vi skickade en bekräftelselänk till</p>
-        <p className="break-all rounded-full border border-white/12 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-white">
+        <p className="break-all text-sm font-semibold text-white">
           {address}
         </p>
         <p className="text-xs leading-relaxed text-white/45">
@@ -263,6 +252,6 @@ function CheckEmailScreen({
       >
         Använd en annan e-postadress
       </button>
-    </m.div>
+    </div>
   );
 }

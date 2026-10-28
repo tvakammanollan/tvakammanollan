@@ -9,7 +9,7 @@ import { useCallback, useEffect, useRef } from "react";
  * `coaching_offer_opened`.
  *
  * Returnerar en **callback-ref**, inte ett ref-objekt, och det är avsiktligt:
- * `useInView` i framer-motion (som `Reveal` och resten av MotionFX använder)
+ * `useInView`
  * läser `ref.current` i en effekt vars beroenden inte innehåller elementet. Är
  * elementet inte monterat vid första körningen kopplas observern aldrig, och
  * inget kör igen — vilket är precis fallet här, eftersom HomeDashboard renderar

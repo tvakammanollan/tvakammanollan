@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { Check, Loader2, Send, Sparkles } from "lucide-react";
@@ -420,7 +419,7 @@ export function CoachingQuizCard() {
       )}
 
       {phase === "done" && (
-        <m.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-2">
+        <div className="mt-2">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/15 text-success">
             <Sparkles className="h-5 w-5" />
           </span>
@@ -434,7 +433,7 @@ export function CoachingQuizCard() {
             Vi hör av oss till {savedPhone ? formatPhone(savedPhone) : "dig"} inom ett par dagar.
             Svarar du inte skickar vi ett sms i stället.
           </p>
-        </m.div>
+        </div>
       )}
     </div>
   );
@@ -453,7 +452,7 @@ function QuestionStep({
 }) {
   const step = QUIZ_STEPS[index];
   return (
-    <m.div key={step.id} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }}>
+    <div key={step.id}>
       <div className="mt-2 flex items-baseline justify-between gap-2">
         <h3
           className="text-[17px] font-bold leading-tight text-[var(--cream)]"
@@ -497,6 +496,6 @@ function QuestionStep({
           Tillbaka
         </button>
       )}
-    </m.div>
+    </div>
   );
 }

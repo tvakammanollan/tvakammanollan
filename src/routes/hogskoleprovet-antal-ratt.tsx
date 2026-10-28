@@ -3,6 +3,7 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { nivåSlug, nivåText } from "@/lib/normering";
 import { allaNivåer, kortSvar } from "@/lib/antal-ratt";
+import { enhet } from "@/lib/sv-format";
 
 /* =====================================================================
    ANTAL RÄTT, HUBBEN. Varje poängnivå på en rad: hur många rätt den har
@@ -75,7 +76,7 @@ function AntalRättHub() {
 
       <header className="mt-4">
         <p className="text-sm text-white/65">
-          {antalProv} provtillfällen, UHR:s officiella tabeller
+          {enhet(antalProv, "provtillfälle")}, UHR:s officiella tabeller
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"

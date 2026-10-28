@@ -3,7 +3,6 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { toast } from "sonner";
-import { m } from "framer-motion";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -201,7 +200,7 @@ function DefinitionBlock({
         {open ? "Dölj förklaring" : `Vad betyder "${ordText(word)}"?`}
       </button>
       <div
-        className="grid transition-all duration-300 ease-out"
+        className="grid transition-all duration-150 ease-out"
         style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
@@ -486,10 +485,7 @@ function OrdPracticePage() {
       <main className={`mx-auto max-w-2xl px-4 pb-20 sm:px-6 ${phase === "setup" ? "" : "pt-8"}`}>
         {/* SETUP */}
         {phase === "setup" && (
-          <m.div
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          <div
           >
             {/* Förvalet (10 ord, alla källor, alla nivåer) är redan det de flesta
                 vill ha. Framför första ordet låg tidigare tre längdknappar, tre
@@ -627,7 +623,7 @@ function OrdPracticePage() {
                     </div>
                     <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-bark transition-all duration-700"
+                        className="h-full rounded-full bg-primary"
                         style={{
                           width: `${Math.min(
                             100,
@@ -653,7 +649,7 @@ function OrdPracticePage() {
                 )}
               </GlassCard>
             </div>
-          </m.div>
+          </div>
         )}
 
         {/* PLAYING */}
@@ -670,7 +666,7 @@ function OrdPracticePage() {
             </div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full bg-primary transition-all duration-300"
+                className="h-full bg-primary"
                 style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
               />
             </div>
@@ -678,7 +674,7 @@ function OrdPracticePage() {
             {!current ? (
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
-              <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm sm:p-8">
+              <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
                 <div className="text-[11px] text-muted-foreground">Synonym till</div>
                 <h2
                   className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"

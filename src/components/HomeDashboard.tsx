@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
-import { RankBadge } from "@/components/ui/RankBadge";
-import { RankIcon } from "@/components/ui/RankIcon";
+
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
@@ -14,10 +12,9 @@ import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
 import { getNextHpDate } from "@/lib/hp-dates";
 import {
-  Sparkles,
-  Flame,
-} from "lucide-react";
+  } from "lucide-react";
 import { trackEvent } from "@/lib/events";
+import { enhet } from "@/lib/sv-format";
 
 /* =====================================================================
    HOME DASHBOARD — tre val, inget mer.
@@ -64,22 +61,11 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
     : null;
   const nedräkning =
     nastaProv && dagarKvar !== null
-      ? `${nastaProv.label}, ${dagarKvar} ${dagarKvar === 1 ? "dag" : "dagar"} kvar`
+      ? `${nastaProv.label}, ${enhet(dagarKvar, "dag")} kvar`
       : null;
 
   return (
-    // Två mycket svaga toningar högst upp, en löv och en bark. De ligger
-    // bakom allt och rör inget innehåll, men de tar bort intrycket av en
-    // enda platt cremeyta. Inga klot, ingen kantig gradient — bara en
-    // aning färg som tonar ut inom de första 500 px.
-    <div
-      className="min-h-screen"
-      style={{
-        backgroundImage:
-          "linear-gradient(180deg, rgba(47,107,60,0.05) 0%, rgba(47,107,60,0) 380px), linear-gradient(180deg, rgba(122,82,54,0.04) 0%, rgba(122,82,54,0) 520px)",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="min-h-screen">
       {isGuest && <GuestBanner />}
       <ResumeMatchBanner />
 
@@ -94,11 +80,8 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           trappan olika ut vid varje laddning. Nu rör sig hela skärmen som en
           enhet, och det som fortfarande saknar data har ett skelett i sin egen
           höjd i stället för en egen inflygning. */}
-      <m.div
+      <div
         className="mx-auto max-w-5xl px-4 py-10 sm:py-12"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* ---------- Header: nedräkning, rubrik och en enda statusrad ---------- */}
         <div>
@@ -255,7 +238,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             </SafeBoundary>
           </div>
         </div>
-      </m.div>
+      </div>
 
       <MatchmakerModal open={matchOpen} onOpenChange={setMatchOpen} matchType={matchType} />
       <OnboardingModal
@@ -300,45 +283,28 @@ function StatusRow({ elo, track, streak }: { elo: number; track: MatchType; stre
   const pct = getEloProgressInTier(elo);
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-      <span className="inline-flex items-center gap-2">
-        <RankBadge elo={elo} size="sm" />
-        {/* Vilket ELO som visas måste stå utskrivet — annars ser samma rad
-            olika ut vid två besök utan att något förklarar varför. */}
-        <span className="text-xs font-medium text-white/50">
-          {track === "verbal" ? "verbal" : "kvantitativ"}
-        </span>
+    <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+      {/* Vilket ELO som visas måste stå utskrivet, annars ser samma rad
+          olika ut vid två besök utan att något förklarar varför. */}
+      <span className="font-semibold tabular-nums text-[var(--cream)]">
+        {track === "verbal" ? "Verbal" : "Kvantitativ"} {elo}
       </span>
 
       {streak > 0 && (
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-success tabular-nums">
-          <Flame className="h-3.5 w-3.5" />
-          {streak} dagar
-        </span>
+        <span className="tabular-nums text-white/65">{enhet(streak, "dag")} i rad</span>
       )}
 
       {next ? (
-        <span className="inline-flex min-w-[9rem] flex-1 items-center gap-2 text-[11px] text-white/55">
+        <span className="flex min-w-[12rem] flex-1 items-center gap-3 text-white/65">
           <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-            <span
-              className="block h-full rounded-full transition-all"
-              style={{
-                width: `${pct}%`,
-                background: `linear-gradient(90deg, ${rank.accent}, ${next.accent})`,
-              }}
-            />
+            <span className="block h-full bg-primary" style={{ width: `${pct}%` }} />
           </span>
-          <span className="inline-flex shrink-0 items-center gap-1 tabular-nums">
-            {next.minElo - elo} till
-            <RankIcon rank={next} className="h-3.5 w-3.5" style={{ color: next.accent }} />
-            {next.shortName}
+          <span className="shrink-0 tabular-nums">
+            {next.minElo - elo} poäng kvar till {next.shortName}
           </span>
         </span>
       ) : (
-        <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
-          <RankIcon rank={rank} className="h-3.5 w-3.5" style={{ color: rank.accent }} />
-          Högsta ranken
-        </span>
+        <span className="text-white/65">Högsta ranken, {rank.shortName}</span>
       )}
     </div>
   );

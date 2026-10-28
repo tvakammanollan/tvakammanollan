@@ -11,7 +11,6 @@
  * ──────────────────────────────────────────────────────────────
  */
 import { useEffect, useState } from "react";
-import { m } from "framer-motion";
 import { getNextHpDate, hpDateLong, timeUntil } from "@/lib/hp-dates";
 import { CalendarDays } from "lucide-react";
 
@@ -61,10 +60,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
   }
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    <div
       className="relative overflow-hidden rounded-3xl border p-6 sm:p-7"
       style={{
         borderColor: "var(--line)",
@@ -72,12 +68,6 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
         boxShadow: "var(--shadow-md)",
       }}
     >
-      {/* Decorative amber glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(circle, var(--amber), transparent 70%)" }}
-      />
 
       <div className="relative text-center">
         <div className="flex items-center justify-center gap-2">
@@ -133,7 +123,7 @@ export function HpCountdown({ size = "card" }: HpCountdownProps) {
           {formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)}
         </p>
       </div>
-    </m.div>
+    </div>
   );
 }
 

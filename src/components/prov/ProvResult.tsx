@@ -2,7 +2,7 @@ import { Check, FileText, ListChecks, RotateCcw, Swords, Trophy, X } from "lucid
 import { NextStep } from "@/components/layout/NextStep";
 import { ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
-import { formatDecimal, formatPercent, antal } from "@/lib/sv-format";
+import { formatDecimal, formatPercent, antal, enhet } from "@/lib/sv-format";
 import { HP_TOTAL_QUESTIONS, normeringForPart } from "@/lib/normering";
 import { acceptedAnswers, findExam, isCorrect } from "@/lib/prov-data";
 import { summariseExam } from "@/lib/prov-results";
@@ -71,7 +71,7 @@ export function ProvResult({
 
   return (
     <div className="space-y-5">
-      <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 text-center backdrop-blur-sm">
+      <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 text-center">
         <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--amber)]/18">
           <Trophy className="h-6 w-6 text-[var(--amber)]" aria-hidden />
         </span>
@@ -91,7 +91,7 @@ export function ProvResult({
         </p>
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <h2 className="flex items-center gap-2 text-xs font-semibold text-[var(--amber)]">
           Uppskattad normering
         </h2>
@@ -107,11 +107,11 @@ export function ProvResult({
           delen, så det räcker inte för en riktig normering.{" "}
           {del.official
             ? `Uppslagen i UHR:s egen tabell för ${data.label.toLowerCase()}.`
-            : `UHR:s tabell för ${data.label.toLowerCase()} finns inte att hämta, så siffran kommer ur en generell tabell över ${HP_TOTAL_QUESTIONS} uppgifter.`}
+            : `UHR:s tabell för ${data.label.toLowerCase()} finns inte att hämta, så siffran kommer ur en generell tabell över ${enhet(HP_TOTAL_QUESTIONS, "uppgift")}.`}
         </p>
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <h2 className="mb-3 text-xs font-semibold text-[var(--text-tertiary)]">
           Per delprov
         </h2>
@@ -166,9 +166,9 @@ export function ProvResult({
           blivit rätt eller fel. Det läste som att uppgifter saknades. Vad som
           är rätt och fel syns på varje rad (`ReviewRow`), så grupperingen bar
           ingen information som raden inte redan har. */}
-      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <h2 className="mb-1 text-xs font-semibold text-[var(--text-tertiary)]">
-          Genomgång ({alla.length} uppgifter)
+          Genomgång ({enhet(alla.length, "uppgift")})
         </h2>
         <p className="mb-3 text-xs text-[var(--text-tertiary)]">
           {wrong.length > 0

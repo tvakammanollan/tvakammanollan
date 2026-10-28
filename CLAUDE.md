@@ -1435,8 +1435,7 @@ möttes av två rutor i rad, och den andra åt klicket på fliken man var där f
   besökaren bett om det.** Lägg inte tillbaka en komponent som själv avgör när
   den ska komma upp, och lägg inte en ny ruta i `CoachingPrompt`-stil någon
   annanstans. Erbjudanden ska ligga i innehållet (korten på startsidan,
-  landningssidan, `/pris`, menyvalet "Coachning" i avatarmenyn) där besökaren
-  kan välja att titta.
+  landningssidan, `/pris`) där besökaren kan välja att titta.
 - **Samtyckesbannern är den enda automatiska overlayen kvar.** Den lyder under
   `isPromptablePath()` i `src/lib/promptable-path.ts` och visas därför aldrig
   ovanpå ett provpass, en match, träningen eller kassan. Regeln hette tidigare
@@ -1598,12 +1597,33 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   tidigare hela rader med `.limit(300)` utan ordning, alltså i praktiken de
   300 äldsta. MEK har 698 rader, så de nyare (alla egna uppgifter) kom nästan
   aldrig med. Lägg aldrig tillbaka en oordnad `limit` på urvalet.
-- **Startsidans tredje kort är MEK-övningen**, inte coachningen. Coachningen
-  ligger överst i avatarmenyn och i mobilmenyn (`CoachingMenuItem`,
-  `source: "navbar"`). Kortet säger "2 000 uppgifter" på Niklas
+- **Startsidans tredje kort är MEK-övningen**, inte coachningen. Kortet
+  säger "2 000 uppgifter" på Niklas
   uttryckliga begäran (2026-10-20), fast banken då hade ~1 000; målet är
   2 000 och batcherna fortsätter. `fetchMekStats` räknar den verkliga
   siffran om den ska tillbaka på kortet.
+
+### Coachningen ligger inte i navbaren (2026-10-28)
+
+`CoachingMenuItem` är borta ur både avatarmenyn och mobilmenyn, och
+`CoachingModal` monteras inte längre från `Navbar.tsx` (`source: "navbar"`
+fyras alltså inte mer; värdet står kvar i zod-enumen och i `CoachingSource`
+av samma skäl som `"popup"` gör, se "Inga automatiska rutor"). Coachningen nås
+via korten på startsidan, landningssidan och `/pris`.
+
+- **Mobilmenyn var orsaken.** Den gröna rutan tog två radhöjder överst i en
+  lista som redan var längre än en telefonskärm, och `SheetContent` hade
+  varken `flex-col` eller en skrollyta: Radix låser sidans scroll medan
+  panelen är öppen, så de sista valen (Statistik, Vänner, Träna, Logga ut)
+  gick inte att nå alls på en liten skärm. Rutan togs bort på Niklas begäran
+  2026-10-28; skrollningen rättades i samma omgång och är det riktiga fixet.
+- **Panelen är nu en kolumn**: huvudet och fotraden `shrink-0`, listan
+  `min-h-0 flex-1 overflow-y-auto overscroll-contain`. Lägger du fler val i
+  mobilmenyn behövs ingen ny åtgärd, men ta inte bort `min-h-0` — utan den
+  vägrar flexboxen krympa listan och skrollytan blir verkningslös.
+  `overscroll-contain` hindrar att svepet fortsätter ner i sidan bakom.
+- Fotraden bär `pb-safe` (hemindikatorns gestområde), enligt avsnittet om
+  mobila säkra ytor.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
@@ -1840,11 +1860,6 @@ knapparna.
   i `public/fonts/FamiljenGrotesk-Variable.woff2`. Bytet gjordes för att
   cremevit + högkontrastserif + terrakotta är exakt den look AI-genererad
   design hamnar i som standard. Young Serifs filer är borttagna.
-  - **`CyclingTitle`s klippmask var kalibrerad mot Young Serifs bläckhöjd.**
-    Marginalen var 2,7 px. Familjen Grotesk har kortare ascender och ryms
-    med 43,7 px uppåt och 28,6 px nedåt. Byter du snitt igen: mät om, med
-    canvas `actualBoundingBoxAscent/Descent` mot klippboxens höjd, och kom
-    ihåg att `LÄS.` är värsta fallet uppåt och `Läsning.` nedåt.
 - **`--radius` är `0.75rem` (12px), var `1.25rem` (20px).** Hela skalan
   härleds ur den: sm 8, md 10, lg 12, xl 16, 2xl 20. Med 20px var
   `rounded-md` på en 36px knapp nästan en tablett och kort låg på 28px.
@@ -1917,31 +1932,7 @@ en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
 - `displayCategory()` in `src/lib/sv-format.ts` — always use this to render question category names (maps `"LAS"→"LÄS"`; other codes like ORD, MEK, ELF are already display-safe)
 - Number/date formatting helpers (`formatInt`, `formatDecimal`, `formatRelativeTime`, etc.) are in `src/lib/sv-format.ts` — use these everywhere instead of raw `toLocaleString`
 - `@/` path alias maps to `src/`
-- Animations: use `m.div` etc. from framer-motion (`import { m } from "framer-motion"`), NOT `motion.div` — the app runs under `<LazyMotion strict>` (root) with features async-loaded via `src/lib/motion-features.ts`; `motion.` throws at runtime in this setup
-- **En rubrik får inte byggas av blocknivåboxar.** Webbläsaren lägger en
-  RADBRYTNING i kopierad text vid varje sådan gräns, och tar dessutom med text
-  som ligger osynlig i DOM:en. `CyclingTitle` var en `inline-grid` där alla ord
-  låg i samma cell — att kopiera `/guider`:s rubrik gav
-  `"Bemästra \nOrd.\nLäsning.\nMatte.\nTidspress."`, fem rader varav fyra ord
-  aldrig hade synts. Rutan är nu `position: relative; display: inline-block`
-  med det synliga ordet i flödet och resten absolutpositionerade och
-  `select-none`. Mätt i Chrome: `inline-grid` → radbrytning, `inline-block` →
-  ren rad. `user-select: none` tar bort de osynliga orden men INTE
-  radbrytningen — det är boxtypen som avgör den. `SplitText`s ord är
-  `inline-block` och kopierar därför rent redan.
-- **En klippmask på ett inline-element får ALDRIG vara `overflow: hidden`.** En
-  inline-block vars overflow inte är `visible` tar sin baslinje från
-  **bottenmarginalkanten** i stället för från texten, alltså hamnar ordet
-  ~0,19em för högt mot allt annat på samma rad (12 px vid 64px-rubriken). Det
-  var därför det cyklande röda ordet i `CyclingTitle` såg ut att "hänga lägre"
-  än rubriken på /ord, /om, /train, /leaderboard och /guider — i själva verket
-  satt det röda ordet rätt och `SplitText` satt högt, och samma rubrik stod på
-  två olika höjder beroende på om besökaren hade reduced motion på (då renderas
-  ren text, utan mask). Båda maskerar nu i höjdled med
-  `clip-path: inset(0 -100%)`, som lämnar baslinjen i fred och dessutom inte
-  klipper i sidled. Mät alltid ihop de två: `blackWrap.top === grid.top` på
-  samma rad, och kontrollera att bläcket ryms i fönstret (smalaste marginalen i
-  beståndet är 2,7 px, för "LÄS." uppåt och "betydelser." nedåt).
+- **Animations: there are none.** framer-motion, `LazyMotion`, `Reveal`, `SplitText`, `CyclingTitle`, the smooth-scroll loop and every `@keyframes` are gone (2026-10-27) and the dependency is removed from `package.json`. Do not reintroduce a motion library or an `animate-*` class; see "Copy- och UI-regler" rule 13.
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.
@@ -1999,9 +1990,36 @@ och gäller allt nytt. Kodkommentarer, loggmeddelanden och tester är undantagna
     med `bun run scripts/seed-forum.ts --apply --sync-only --only-topics`
     (märker inläggen som redigerade).
 
+13. **Ingen rörelse som körs av sig själv.** Inga mount-animationer, inga
+    `animate-*` (utom `animate-spin` på en laddikon), inga `@keyframes`, ingen
+    count-up, ingen cyklande rubrik, ingen smooth-scroll, ingen
+    scrollförloppsstapel, ingen shader eller canvas som bakgrund. Kvar finns
+    Radix-primitivernas öppna/stäng (dialog, sheet, popover, dropdown, select,
+    accordion), eftersom användaren utlöser dem, och `hover:`/`focus:`-
+    övergångar på högst 150 ms. `prefers-reduced-motion` är satt globalt i
+    `styles.css` och ska stå kvar.
+14. **Inga gradienter** på knappar, stapeldiagram, text, kanter eller sidbakgrund.
+    En solid färg ur paletten. Inga `shadow-glow-*`, ingen `backdrop-blur`,
+    inga suddiga ljusklot. `--tw-gradient-*`-raderna i remap-lagret finns kvar
+    bara så att en glömd `from-*`-klass inte renderas som rå Tailwind.
+15. **Inga prickar och pluppar.** Små färgade cirklar som statusindikator eller
+    dekoration är borta (live-status finns inte på sajten). Punktlistor är
+    `list-disc`, inte en `<span>` med `rounded-full`. Kvar med motivering: färgnyckeln i
+    diagramförklaringen på `/stats` (färgen är betydelsen) och stegprickarna i
+    `OnboardingModal` (verklig status).
+16. **Ingen pill i pill, ingen badge i knapp.** Räknare inuti `QuestionVoteButtons`
+    är vanlig text. Användarmenyn i headern är avatar, namn och chevron i en
+    vanlig knapp, utan ELO och utan prick; ELO står bara på startsidan.
+17. **Ingen ikon bredvid en siffra eller etikett** (trofé, flamma, diamant, stjärna).
+    `StatCard` har ingen ikon-prop.
+18. **Böj enhet efter antal med `enhet(n, "dag")`** (`sv-format.ts`): "1 dag",
+    "2 dagar". Skriv aldrig `{n} dagar` för ett tal som kan vara 1. `antal()`
+    tar en pluralform som argument för ord som inte finns i tabellen.
+19. **Inga förkortningar i UI** ("V", "M", "XP"). Skriv "Verbal" och "Kvantitativ".
+
 Kontroll efter en ändring: `node scripts/lint-copy.cjs` listar tankstreck,
 mittpunkter och pilar i strängar och JSX-text, och grep på
-`uppercase|tracking-(wide|wider|widest|\[)` ska bara träffa undantagen ovan.
+`uppercase|tracking-(wide|wider|widest|\[)|animate-|gradient|rounded-full` ska bara träffa undantagen ovan.
 
 ### Shared primitives — use these, don't re-roll them
 
@@ -2031,7 +2049,7 @@ with a different look in every copy.
   svarstexten efter status — den som just svarat vill kunna läsa vad ordet var.
 - **Rank:** `RANK_TIERS` in `src/types` is the only rank scale (brons 600–999,
   silver 1000–1199, guld 1200–1399, platina 1400–1599, diamant 1600+). Render it
-  with `RankBadge`, `EloBadge` or `RankIcon` — all three read that one table.
+  as plain text (`Verbal 1253`, `147 poäng kvar till Platina`) or with `RankIcon`; both read that one table. `RankBadge` and `EloBadge` are gone.
   A second scale used to live in `lib/elo.ts` (`eloTier`), which made 1000 ELO
   show as "Brons" in the navbar and "Silver" on the dashboard at the same time.
   `src/lib/elo.test.ts` pins the boundaries.
@@ -2047,14 +2065,6 @@ with a different look in every copy.
 - **Overlays not built on Radix `Dialog`** must call `useDismissible(open, onClose)`
   — it gives Escape-stängning and scroll-lås. Radix does this for you; the four
   hand-rolled overlays did not, and none of them locked the background scroll.
-- **In-view reveals (`Reveal`, `StaggerList`, `whileInView`) take `amount: "some"`,
-  never a fraction.** IntersectionObserver measures the ratio against the
-  *element*, so it can never exceed `(viewport + rootMargin) / elementHeight`.
-  Wrap anything taller than that — the 100-row topplista, a stats panel on a
-  phone — and a `0.2` threshold is unreachable: `inView` never flips, the
-  content stays at `opacity: 0`, and nothing errors. It reads as "loads only
-  sometimes", because a cold load animates in while the skeleton is still short
-  whereas a warm react-query cache renders the full-height table on mount.
 - **Copy:** the unit of play is a **match**, never a "battle". App-språket är
   svenska rakt igenom (`sv-SE`).
 - **Inga tankstreck mitt i en mening** (2026-08-21). Sajten hade 95 stycken i

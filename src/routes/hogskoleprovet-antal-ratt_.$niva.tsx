@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Calculator, Table2 } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ANTAL_RATT_NIVÅER, nivåFrånSlug, nivåSlug, nivåText } from "@/lib/normering";
 import { faqFörNivå, kortSvar, nivåData } from "@/lib/antal-ratt";
+import { enhet } from "@/lib/sv-format";
 
 /* =====================================================================
    HUR MÅNGA RÄTT FÖR X? En sida per poängnivå 0,5–2,0. "Hur många rätt för
@@ -71,10 +71,10 @@ export const Route = createFileRoute("/hogskoleprovet-antal-ratt_/$niva")({
   component: NivåSida,
 });
 
-function H2({ icon: Icon, children }: { icon: typeof Table2; children: React.ReactNode }) {
+function H2({ children }: { children: React.ReactNode }) {
   return (
     <h2
-      className="flex items-center gap-2 text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+      className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
       style={{ fontFamily: "var(--font-display)" }}
     >
       {children}
@@ -107,7 +107,7 @@ function NivåSida() {
 
       <header className="mt-4">
         <p className="text-sm text-white/65">
-          {d.rader.length} provtillfällen, UHR:s officiella tabeller
+          {enhet(d.rader.length, "provtillfälle")}, UHR:s officiella tabeller
         </p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
@@ -125,7 +125,7 @@ function NivåSida() {
         ].map(({ rubrik, s, senast }) => (
           <div
             key={rubrik}
-            className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center backdrop-blur-sm"
+            className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center"
           >
             <div className="text-[12px] font-semibold text-white/50">
               {rubrik}
@@ -149,7 +149,7 @@ function NivåSida() {
       </section>
 
       <section className="mt-12">
-        <H2 icon={Table2}>Gränsen för {n} på varje prov</H2>
+        <H2>Gränsen för {n} på varje prov</H2>
         <p className="mt-2 text-[14px] text-white/55">
           Minsta antal rätt av 80 som gav {n} eller mer. Våren 2012 hade den verbala delen 76
           uppgifter och räknas inte in i spannet ovan.
@@ -196,7 +196,7 @@ function NivåSida() {
         >
           Vanliga frågor
         </h2>
-        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {faq.map(({ q, a }) => (
             <div key={q} className="px-5 py-4">
               <dt className="text-[15px] font-semibold text-[var(--cream)]">{q}</dt>
@@ -230,7 +230,7 @@ function NivåSida() {
       </nav>
 
       <section className="mt-12 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">
-        <H2 icon={Calculator}>Räcker dina rätt till {n}?</H2>
+        <H2>Räcker dina rätt till {n}?</H2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
           Skriv ett gammalt prov på originaltid så räknas ditt resultat om med just det provets
           normering. Eller fyll i dina rätt i poängräknaren.

@@ -3,7 +3,6 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 
 import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { m } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,7 +31,6 @@ import {
 import { isRankable, rankedName } from "@/lib/username";
 import { displayName } from "@/lib/guest-name";
 import { EmptyState } from "@/components/EmptyState";
-import { Reveal } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 
 type MatchType = "verbal" | "math";
@@ -141,7 +139,7 @@ function LeaderboardPage() {
             för att ta en plats på listan.
           </p>
         )}
-        <Reveal delay={0.2}>
+        <div>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
             <TabsList className="grid w-full max-w-md grid-cols-5">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
@@ -172,7 +170,7 @@ function LeaderboardPage() {
               <ProvBoard />
             </TabsContent>
           </Tabs>
-        </Reveal>
+        </div>
       </div>
     </div>
   );
@@ -312,7 +310,7 @@ function Board({
   return (
     <div>
       <ScopeToggle scope={scope} onChange={setScope} />
-      <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+      <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
         <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
           <span className="inline-flex items-center gap-1.5">
             {scope === "week"
@@ -574,10 +572,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       ? "bg-primary/[0.04]"
       : "";
   return (
-    <m.tr
-      initial={{ opacity: 0, x: -16 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(r.rank * 0.02, 0.4), ease: [0.22, 1, 0.36, 1] }}
+    <tr
       className={`group border-t border-white/8 transition-colors ${rowBg} ${
         isMe ? "font-semibold" : "hover:bg-white/[0.03]"
       }`}
@@ -611,7 +606,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
           </span>
         </span>
       </td>
-    </m.tr>
+    </tr>
   );
 }
 
@@ -726,7 +721,7 @@ function BoardShell<T extends BoardRow>({
   const showMe = !!me && !meInTop && !user?.is_anonymous;
 
   return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+    <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-white/8 bg-white/[0.02] px-4 py-2 text-xs text-white/55">
         <span className="whitespace-nowrap">
           {updatedAt ? `Uppdaterad ${formatTime(updatedAt)}` : "–"}

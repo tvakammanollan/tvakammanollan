@@ -16,7 +16,7 @@ export function ThreadListItem({
   const preview = excerpt(thread.excerpt, 140);
 
   return (
-    <li className="group rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm transition-colors hover:border-[var(--amber)]/40 hover:bg-white/[0.04]">
+    <li className="group rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--amber)]/40 hover:bg-white/[0.04]">
       <Link
         to="/forum/$kategori/$trad"
         params={{ kategori: thread.categorySlug, trad: `${thread.id}-${thread.slug}` }}

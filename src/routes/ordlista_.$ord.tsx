@@ -149,7 +149,7 @@ function OrdlistaEntryPage() {
           synonym till ordet, ur UHR:s öppna provmaterial, alltså vårt eget
           svar på frågan. Ordbokens rad står under, kort och källhänvisad:
           hela artikeln hör hemma hos den som äger den, och länken går dit. */}
-      <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5">
         {/* Rubriken bär uppslagsordet och får därför INTE versaliseras.
             `ordText()` skriver ordet gement i datalagret av just det skälet,
             och ett `uppercase` i CSS lägger tillbaka precis det den tog bort:
@@ -298,7 +298,7 @@ function OrdlistaEntryPage() {
         </p>
       )}
 
-      <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+      <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-5">
         <h2
           className="flex items-center gap-1.5 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}

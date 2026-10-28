@@ -51,7 +51,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
     <button
       type="button"
       onClick={() => navigate({ to: "/stats" })}
-      className="group block w-full rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left backdrop-blur-sm transition-colors hover:border-white/15 hover:bg-white/[0.03]"
+      className="group block w-full rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left transition-colors hover:border-white/15 hover:bg-white/[0.03]"
     >
       {/* Label */}
       <div className="flex items-center justify-between gap-2">
@@ -78,7 +78,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       <div className="mt-5">
         <div className="relative h-2.5 w-full rounded-full bg-white/8">
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary-deep to-primary"
+            className="absolute inset-y-0 left-0 rounded-full bg-primary"
             style={{ width: `${pct}%` }}
           />
           {/* marker */}

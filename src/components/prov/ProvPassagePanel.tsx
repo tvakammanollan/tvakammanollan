@@ -67,7 +67,7 @@ export function ProvPassagePanel({
   );
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+    <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
       <button
         type="button"
         onClick={() => collapsible && setOpen((v) => !v)}

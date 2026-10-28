@@ -102,7 +102,7 @@ export function AdminUsageTab() {
 
 function Card({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
       <div className="text-xs font-medium text-muted-foreground">{label}</div>
       <div
         className="mt-1 text-2xl font-bold tabular-nums text-[var(--cream)]"
@@ -123,7 +123,7 @@ function Card({ label, value, hint }: { label: string; value: string; hint?: str
 function PageViewsSection({ views }: { views: PageViewStats | null }) {
   if (!views) {
     return (
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
         <div className="text-sm font-semibold text-[var(--cream)]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">Kunde inte hämta sidvisningar just nu.</p>
       </div>
@@ -132,7 +132,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
 
   if (!views.since) {
     return (
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
         <div className="text-sm font-semibold text-[var(--cream)]">Sidvisningar</div>
         <p className="mt-1 text-xs text-muted-foreground">
           Räkningen är igång men har inte hunnit samla data än. Siffrorna börjar fyllas på från och
@@ -155,7 +155,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
         />
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
         <div className="text-sm font-semibold text-[var(--cream)]">Per dygn</div>
         <div
           className="mt-3 flex h-28 items-end gap-1"
@@ -177,7 +177,7 @@ function PageViewsSection({ views }: { views: PageViewStats | null }) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
         <div className="text-sm font-semibold text-[var(--cream)]">Mest besökta sidor (30 dagar)</div>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full text-sm">

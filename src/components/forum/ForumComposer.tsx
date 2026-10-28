@@ -57,7 +57,7 @@ export function ForumComposer({
   const tooLong = trimmed.length > MAX_BODY_LENGTH;
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)]">
           <SquareFunction className="h-3.5 w-3.5" aria-hidden />

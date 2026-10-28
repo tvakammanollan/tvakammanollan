@@ -167,7 +167,7 @@ function ResultatPage() {
         >
           Vanliga frågor om resultatet
         </h2>
-        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+        <dl className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {faq().map(({ q, a }) => (
             <div key={q} className="px-5 py-4">
               <dt className="text-[15px] font-semibold text-[var(--cream)]">{q}</dt>
@@ -189,7 +189,7 @@ function ResultatPage() {
         </p>
       </section>
 
-      <section className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-sm sm:p-8">
+      <section className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8">
         <h2
           className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}

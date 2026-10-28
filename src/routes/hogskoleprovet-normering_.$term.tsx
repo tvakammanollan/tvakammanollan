@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
-import { formatDateLong, formatDecimal } from "@/lib/sv-format";
+import { formatDateLong, formatDecimal, enhet } from "@/lib/sv-format";
 import { findExam } from "@/lib/prov-data";
 import {
   normeringTerms,
@@ -114,7 +114,7 @@ function Tabell({
   max: number;
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
       <div className="px-4 pt-4">
         <h3
           className="text-[17px] font-bold text-[var(--cream)]"
@@ -123,7 +123,7 @@ function Tabell({
           {rubrik}
         </h3>
         <p className="text-[12.5px] text-white/50">
-          {max} uppgifter, {delprov}
+          {enhet(max, "uppgift")}, {delprov}
         </p>
       </div>
       <table className="mt-3 w-full text-[14px] tabular-nums">

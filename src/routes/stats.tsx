@@ -19,23 +19,17 @@ import {
   Cell,
 } from "recharts";
 import {
-  Trophy,
   Target,
-  BookA,
-  Sigma,
-  Star,
-  Flame,
   TrendingUp,
   Swords,
 } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { displayCategory, formatDate, formatTime } from "@/lib/sv-format";
+import { displayCategory, formatDate, formatTime, enhet } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { outcomeFor } from "@/lib/match-outcome";
 import { buildEloSeries, eloSeriesSpan, eloTickUnit, type EloSeries } from "@/lib/elo-series";
-import { Reveal, StaggerList } from "@/components/landing/MotionFX";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
@@ -323,39 +317,30 @@ function StatsPage() {
       />
       <main className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
         {/* HP score estimate – first section */}
-        <Reveal delay={0.45} className="mb-6">
+        <div className="mb-6">
           <HpScoreWidget eloVerbal={profile.elo_verbal} eloMath={profile.elo_math} size="full" />
-        </Reveal>
+        </div>
 
         {/* Stat cards */}
-        <StaggerList
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
-          delayStep={0.05}
-          y={16}
-        >
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           <StatCard
-            icon={<Target className="h-4 w-4" />}
             label="Matcher"
             value={profile.games_played}
           />
           <StatCard
-            icon={<Trophy className="h-4 w-4" />}
             label="Vinster"
             value={profile.wins}
             sub={winRate !== null ? `${winRate.toFixed(0)}% win rate` : undefined}
           />
           <StatCard
-            icon={<BookA className="h-4 w-4" />}
             label="Snitt verbal"
             value={verbalAvg !== null ? `${verbalAvg.toFixed(1)}/8` : "–"}
           />
           <StatCard
-            icon={<Sigma className="h-4 w-4" />}
             label="Snitt kvantitativ"
             value={mathAvg !== null ? `${mathAvg.toFixed(1)}/8` : "–"}
           />
           <StatCard
-            icon={<Star className="h-4 w-4" />}
             label="Bästa ELO"
             value={Math.max(profile.elo_verbal_peak, profile.elo_math_peak)}
             sub={`Verbal ${profile.elo_verbal_peak}, kvantitativ ${profile.elo_math_peak}`}
@@ -363,19 +348,18 @@ function StatsPage() {
           {/* Ett kort, inte två. "Nuvarande" och "Längsta" är samma begrepp,
               och rekordet betyder bara något i relation till var man står nu. */}
           <StatCard
-            icon={<Flame className="h-4 w-4" />}
             label="Streak"
-            value={`${profile.current_streak ?? 0} dagar`}
-            sub={`Rekord: ${profile.longest_streak ?? 0} dagar`}
+            value={`${enhet(profile.current_streak ?? 0, "dag")}`}
+            sub={`Rekord: ${enhet(profile.longest_streak ?? 0, "dag")}`}
           />
-        </StaggerList>
+        </div>
         {/* Achievements */}
-        <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <AchievementsCard variant="full" />
-        </Reveal>
+        </div>
 
         {/* ELO chart */}
-        <Reveal className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
@@ -538,10 +522,10 @@ function StatsPage() {
               </ResponsiveContainer>
             </div>
           )}
-        </Reveal>
+        </div>
 
         {/* Delprov breakdown */}
-        <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
@@ -613,10 +597,10 @@ function StatsPage() {
               </ResponsiveContainer>
             </div>
           )}
-        </Reveal>
+        </div>
 
         {/* Match history */}
-        <Reveal className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-sm">
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <div className="mb-4 flex items-baseline justify-between">
             <h2
               className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
@@ -624,7 +608,7 @@ function StatsPage() {
             >
               Matchhistorik
             </h2>
-            <span className="text-xs text-muted-foreground">{matchHistory.length} matcher</span>
+            <span className="text-xs text-muted-foreground">{enhet(matchHistory.length, "match")}</span>
           </div>
           {matchHistory.length === 0 ? (
             <EmptyState
@@ -738,7 +722,7 @@ Föregående
               )}
             </>
           )}
-        </Reveal>
+        </div>
 
         {/* GDPR: självservice-radering */}
         <DeleteAccountSection />
@@ -748,22 +732,17 @@ Föregående
 }
 
 function StatCard({
-  icon,
   label,
   value,
   sub,
 }: {
-  icon: React.ReactNode;
   label: string;
   value: number | string;
   sub?: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-sm">
-      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-        {icon}
-        {label}
-      </div>
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+      <div className="mb-1 text-xs font-medium text-muted-foreground">{label}</div>
       <div
         className="text-2xl font-bold tabular-nums"
         style={{ fontFamily: "var(--font-display)" }}

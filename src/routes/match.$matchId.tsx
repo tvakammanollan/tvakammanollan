@@ -18,8 +18,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { m } from "framer-motion";
-import { displayCategory, ordText } from "@/lib/sv-format";
+import { displayCategory, ordText, enhet } from "@/lib/sv-format";
 import { LogOut, Trophy, Timer as TimerIcon } from "lucide-react";
 import { CircularTimer, TimerSoundToggle } from "@/components/ui/CircularTimer";
 import { MathText } from "@/components/MathTextLazy";
@@ -480,7 +479,7 @@ function MatchPage() {
             oppForceStartedRef.current = true;
             setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
-            toast.info(`Motståndaren är klar! Du har ${OPPONENT_GRACE_SECONDS} sekunder kvar.`);
+            toast.info(`Motståndaren är klar! Du har ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} kvar.`);
           }
         },
       )
@@ -733,13 +732,11 @@ function MatchPage() {
   if (!match || questions.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-        <m.span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        <span
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-on-brand"
         >
           <Trophy className="h-7 w-7" />
-        </m.span>
+        </span>
         <p className="text-sm text-white/65">Förbereder arenan…</p>
       </div>
     );
@@ -751,9 +748,7 @@ function MatchPage() {
     return (
       <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
         {connectionLost ? (
-          <m.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-3 text-sm text-destructive"
             role="status"
             aria-live="polite"
@@ -767,25 +762,21 @@ function MatchPage() {
             >
               Visa resultat nu
             </Button>
-          </m.div>
+          </div>
         ) : reconnecting ? (
-          <m.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             className="w-full rounded-xl border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive"
             role="status"
             aria-live="polite"
           >
             Anslutningen bröts. Försöker återansluta…
-          </m.div>
+          </div>
         ) : null}
-        <m.span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-deep text-[var(--cream)] shadow-[var(--shadow-glow-gold)]"
-          animate={{ scale: [1, 1.08, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        <span
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-brand"
         >
           <Trophy className="h-7 w-7" />
-        </m.span>
+        </span>
         <div>
           <h1
             className="mt-1 text-[34px] font-bold leading-tight text-[var(--cream)]"
@@ -802,12 +793,9 @@ function MatchPage() {
           kvar att avsluta…
         </p>
         <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
-          <m.div
+          <div
             className="h-full bg-primary"
-            animate={{
-              width: `${Math.max(0, oppSecondsLeft / OPPONENT_GRACE_SECONDS) * 100}%`,
-            }}
-            transition={{ duration: 0.95, ease: "linear" }}
+            style={{ width: `${Math.max(0, oppSecondsLeft / OPPONENT_GRACE_SECONDS) * 100}%` }}
           />
         </div>
       </div>
@@ -852,7 +840,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-primary transition-all duration-500 ease-out"
+                  className="h-full bg-primary"
                   style={{ width: `${(answers.size / Math.max(1, questions.length)) * 100}%` }}
                 />
               </div>
@@ -868,7 +856,7 @@ function MatchPage() {
               </div>
               <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-bark transition-all duration-700 ease-out"
+                  className="h-full bg-bark"
                   style={{
                     width: `${(Math.min(oppAnswered, questions.length) / Math.max(1, questions.length)) * 100}%`,
                   }}
@@ -946,7 +934,7 @@ function MatchPage() {
       {/* Bottom bar */}
       {/* `pb-safe` i stället för `pb-3`: knappen är appens mest tryckta, och
           utan den låg den i hemindikatorns gestområde. */}
-      <footer className="sticky bottom-0 z-20 border-t border-border bg-background/95 px-4 pt-3 pb-safe backdrop-blur">
+      <footer className="sticky bottom-0 z-20 border-t border-border bg-background/95 px-4 pt-3 pb-safe">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
           {/* Tryckytorna i bottenlisten är minst 44×44. "Avbryt" var 55×16 px
               — mindre än en fingertopp, och granne med den knapp som avslutar
@@ -981,7 +969,7 @@ function MatchPage() {
                 `${questions.length - answers.size} av ${questions.length} frågor är obesvarade. `}
               {match.is_bot_match
                 ? "Resultatet räknas ut direkt."
-                : `Motståndaren får ${OPPONENT_GRACE_SECONDS} sekunder på sig att avsluta.`}
+                : `Motståndaren får ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} på sig att avsluta.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -1047,7 +1035,7 @@ function QuestionCard({
   return (
     <div
       key={currentQ.id}
-      className="animate-slide-in rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm sm:p-6"
+      className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6"
       style={{ boxShadow: "var(--shadow-md)" }}
     >
       {/* Frågenumret står här, inte i stapeln ovanför — den mäter besvarade
