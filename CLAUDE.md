@@ -1435,8 +1435,7 @@ möttes av två rutor i rad, och den andra åt klicket på fliken man var där f
   besökaren bett om det.** Lägg inte tillbaka en komponent som själv avgör när
   den ska komma upp, och lägg inte en ny ruta i `CoachingPrompt`-stil någon
   annanstans. Erbjudanden ska ligga i innehållet (korten på startsidan,
-  landningssidan, `/pris`, menyvalet "Coachning" i avatarmenyn) där besökaren
-  kan välja att titta.
+  landningssidan, `/pris`) där besökaren kan välja att titta.
 - **Samtyckesbannern är den enda automatiska overlayen kvar.** Den lyder under
   `isPromptablePath()` i `src/lib/promptable-path.ts` och visas därför aldrig
   ovanpå ett provpass, en match, träningen eller kassan. Regeln hette tidigare
@@ -1626,12 +1625,33 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   tidigare hela rader med `.limit(300)` utan ordning, alltså i praktiken de
   300 äldsta. MEK har 698 rader, så de nyare (alla egna uppgifter) kom nästan
   aldrig med. Lägg aldrig tillbaka en oordnad `limit` på urvalet.
-- **Startsidans tredje kort är MEK-övningen**, inte coachningen. Coachningen
-  ligger överst i avatarmenyn och i mobilmenyn (`CoachingMenuItem`,
-  `source: "navbar"`). Kortet säger "2 000 uppgifter" på Niklas
+- **Startsidans tredje kort är MEK-övningen**, inte coachningen. Kortet
+  säger "2 000 uppgifter" på Niklas
   uttryckliga begäran (2026-10-20), fast banken då hade ~1 000; målet är
   2 000 och batcherna fortsätter. `fetchMekStats` räknar den verkliga
   siffran om den ska tillbaka på kortet.
+
+### Coachningen ligger inte i navbaren (2026-10-30)
+
+`CoachingMenuItem` är borta ur både avatarmenyn och mobilmenyn, och
+`CoachingModal` monteras inte längre från `Navbar.tsx` (`source: "navbar"`
+fyras alltså inte mer; värdet står kvar i zod-enumen och i `CoachingSource`
+av samma skäl som `"popup"` gör, se "Inga automatiska rutor"). Coachningen nås
+via korten på startsidan, landningssidan och `/pris`.
+
+- **Mobilmenyn var orsaken.** Den gröna rutan tog två radhöjder överst i en
+  lista som redan var längre än en telefonskärm, och `SheetContent` hade
+  varken `flex-col` eller en skrollyta: Radix låser sidans scroll medan
+  panelen är öppen, så de sista valen (Statistik, Vänner, Träna, Logga ut)
+  gick inte att nå alls på en liten skärm. Rutan togs bort på Niklas begäran
+  2026-10-28; skrollningen rättades i samma omgång och är det riktiga fixet.
+- **Panelen är nu en kolumn**: huvudet och fotraden `shrink-0`, listan
+  `min-h-0 flex-1 overflow-y-auto overscroll-contain`. Lägger du fler val i
+  mobilmenyn behövs ingen ny åtgärd, men ta inte bort `min-h-0` — utan den
+  vägrar flexboxen krympa listan och skrollytan blir verkningslös.
+  `overscroll-contain` hindrar att svepet fortsätter ner i sidan bakom.
+- Fotraden bär `pb-safe` (hemindikatorns gestområde), enligt avsnittet om
+  mobila säkra ytor.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
