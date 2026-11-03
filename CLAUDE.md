@@ -1575,7 +1575,8 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
   träningspass. Verifierat 2026-10-19 utan migrationen: passet fungerar,
   tummen säger "Rösten kunde inte sparas" och rullar tillbaka.
 - **De egna MEK-uppgifterna startar på 0–5 tummar upp** (2026-10-20), satta
-  för hand efter genomläsning av alla 550 (snitt 3, 25 st på 5, 31 st på 1).
+  för hand efter genomläsning av de 550 som fanns då (snitt 3, 25 st på 5,
+  31 st på 1). Batcherna efter dem har ingen baslinje, se sista punkten här.
   De ligger i `question_vote_baseline`, inte i `question_votes`, och vyn
   `question_vote_stats` lägger dem på `up`, så siffrorna och urvalet ser dem
   utan kodändring. Betygen står i `scripts/mek-gen/baslinje-betyg.json`.
@@ -1589,6 +1590,11 @@ gäller alla frågor. Regler i `question-votes.ts` (ren, testad), läsning i
 ### Egna MEK-uppgifter (2026-10-20)
 
 Tvåkommanollan skriver egna MEK-uppgifter, 300 i piloten och målet 2 000.
+**1 500 är publicerade sedan 2026-10-30** (räknat i produktionen:
+`category=MEK` med `tkn-genererad` i `tags`, samtliga `clean_status='ok'` och
+alltså i rotation). MEK-tabellen har då 1 898 rader totalt, resten är arkivets.
+Räkna aldrig antalet ur det här dokumentet när det går att räkna i databasen,
+och uppdatera raden här när en ny batch landar.
 Regelverket och pipelinen ligger i `scripts/mek-gen/` (`REGELVERK.md` först),
 reglerna som går att testa i `src/lib/mek-rules.ts`.
 
@@ -1630,8 +1636,8 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
   ligger överst i avatarmenyn och i mobilmenyn (`CoachingMenuItem`,
   `source: "navbar"`). Kortet säger "2 000 uppgifter" på Niklas
   uttryckliga begäran (2026-10-20), fast banken då hade ~1 000; målet är
-  2 000 och batcherna fortsätter. `fetchMekStats` räknar den verkliga
-  siffran om den ska tillbaka på kortet.
+  2 000 och batcherna fortsätter. Vid mätningen 2026-10-30 var det 1 500.
+  `fetchMekStats` räknar den verkliga siffran om den ska tillbaka på kortet.
 
 ### Preliminärt facit: /hogskoleprovet-facit (2026-10-19)
 
@@ -1971,6 +1977,17 @@ en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
   samma rad, och kontrollera att bläcket ryms i fönstret (smalaste marginalen i
   beståndet är 2,7 px, för "LÄS." uppåt och "betydelser." nedåt).
 - Do NOT add extra Vite plugins — `@lovable.dev/vite-tanstack-config` already includes tanstackStart, viteReact, tailwindcss, tsConfigPaths, and cloudflare
+- **OBS: avsnittet nedan beskriver Lunden-paletten och gäller inte på
+  `design/podia`.** Den grenen bytte hela paletten och displaysnittet
+  2026-10-26 (Podia-systemet, Manrope i stället för Familjen Grotesk).
+  Avlästa värden där: botten `#f5f5f5`, kort `#ffffff`, bläck `#06040e`,
+  dämpad text `#06040e` 58 %, kant `#06040e` 14 %, bricka `#e1edf2`, sänkt yta
+  `#d7e5ec`, rätt `#2f6b3c`, destructive `#8c1d18`, produktytor sky `#a5c8d8`,
+  terracotta `#e39a4d`, plum `#1f1738`, lavender `#cbb0eb`, och `--radius`
+  `0.5rem`. **Läs alltid tokens ur körande sajt (`getComputedStyle` på
+  `:root`) innan du bygger något som ska matcha utseendet** — den här filen
+  har legat fel om paletten en gång och gör det tills grenen är mergad och
+  avsnittet skrivet om.
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.
 - **Colour has three jobs.** Apple leads to action (CTA, streak, rank). Bark is structure (borders, secondary, "the opponent" in match bars). Leaf is progress (correct answers, stats, coaching). `--danger` is wrong answers and is **not** an alias for `--destructive` any more — a wrong answer must not look as alarming as deleting your account. Progress-oriented text uses `text-success`; there is no eyebrow component any more (see "Copy- och UI-regler").
