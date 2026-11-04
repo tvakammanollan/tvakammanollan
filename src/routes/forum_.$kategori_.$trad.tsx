@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ForumPostCard } from "@/components/forum/ForumPostCard";
 import { ForumComposer } from "@/components/forum/ForumComposer";
 import { ForumPagination } from "@/components/forum/ForumPagination";
+import { ForumRelatedBlock } from "@/components/forum/ForumRelated";
 import { useForumPermission } from "@/hooks/useForumPermission";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -215,7 +216,7 @@ function discussionSchema({
  * ------------------------------------------------------------------ */
 
 function ForumThreadPage() {
-  const { thread, category, posts, page, total, perPage } = Route.useLoaderData();
+  const { thread, category, posts, page, total, perPage, related } = Route.useLoaderData();
   const router = useRouter();
   const navigate = Route.useNavigate();
   const { profile } = useAuth();
@@ -592,6 +593,8 @@ function ForumThreadPage() {
           </>
         )}
       </section>
+
+      <ForumRelatedBlock related={related} currentId={thread.id} categoryName={category.name} />
 
       <section className="mt-12 border-t border-white/8 pt-6 text-sm">
         <Link

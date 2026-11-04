@@ -980,6 +980,13 @@ route-loaders och aldrig hämtas i klienten.
   rättning. Byts rubrikmallen "…, provpass N, uppgift M (…): lösning" slutar
   kopplingen fungera tyst. Ett forumfel ger inga länkar, aldrig ett trasigt
   provpass.
+- **Trådarna länkar till varandra** (`fetchRelated` i `forum.functions.ts`,
+  `ForumRelated.tsx`, 2026-11-04). En genomgång visar resten av sitt
+  provpass med föregående och nästa uppgift. En vanlig tråd visar tre
+  grannar åt vardera hållet på id i samma kategori, vilket gör kategorin
+  till en kedja som en crawler kan följa hela vägen. Urvalet är
+  deterministiskt, eftersom trådsidan ska ge samma HTML för alla. Fel ger
+  inget block.
 - **Termformen har ett valfritt a/b** (`/^\d{4}(vt|ht)[ab]?$/`): våren 2021 och
   2022 hade två prov. En regex utan `[ab]?` (som `fetchProvThreads` hade fram
   till 2026-10-24) tappar länkarna för de fyra proven utan felmeddelande.
