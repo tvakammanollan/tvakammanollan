@@ -23,7 +23,6 @@ import {
 import {
   Menu,
   LogOut,
-  Zap,
   Loader2,
   Home,
   Target,
@@ -86,7 +85,7 @@ export function Navbar() {
         >
           <span
             aria-hidden
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
+            className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg"
             style={{ background: "#06040e" }}
           >
             {/* Samma märke som faviconen och delningsbilden: talet 2,0. */}
@@ -156,13 +155,9 @@ export function Navbar() {
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1.5 bg-primary text-on-brand font-semibold hover: hover:from-amber-300 hover:to-orange-400 transition-shadow"
+                className="bg-primary font-semibold text-on-brand hover:bg-primary-deep"
               >
-                {guestLoading ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <Zap className="h-3.5 w-3.5" />
-                )}
+                {guestLoading ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
                 Testa gratis
               </Button>
             </>
@@ -194,11 +189,7 @@ export function Navbar() {
                 disabled={guestLoading}
                 className="gap-1 px-3 text-xs bg-primary text-on-brand font-semibold"
               >
-                {guestLoading ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <Zap className="h-3 w-3" />
-                )}
+                {guestLoading ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : null}
                 Testa
               </Button>
             </>

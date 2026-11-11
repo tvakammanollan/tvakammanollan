@@ -44,14 +44,10 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/10 bg-card">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_1px_2px_rgba(6,4,14,0.04),0_24px_48px_-24px_rgba(6,4,14,0.18)]">
       <div className="flex items-center gap-3 border-b border-white/10 bg-secondary px-4 py-3">
-        <span className="font-mono text-xs text-bark">
-          Ordförståelse
-        </span>
-        <span className="ml-auto font-mono text-xs text-white/55">
-          Prova direkt
-        </span>
+        <span className="font-mono text-xs text-bark">Ordförståelse</span>
+        <span className="ml-auto font-mono text-xs text-white/55">Prova direkt</span>
       </div>
 
       <div className="px-4 pb-4 pt-5">
@@ -117,9 +113,7 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
           </button>
         ) : null}
         <span className="ml-auto flex items-baseline gap-2">
-          <span className="font-mono text-xs text-white/55">
-            ELO
-          </span>
+          <span className="font-mono text-xs text-white/55">ELO</span>
           <span className="font-mono text-[22px] font-medium tabular-nums tracking-tight">
             {formatInt(elo)}
           </span>
@@ -145,98 +139,66 @@ export function LandingHero({
   stats: LandingStats | null;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/10">
-      {/* Dekorformerna är bakgrundsatmosfär, aldrig innehåll: 0,6 till 0,9
-          opacitet, ingen interaktion, och de ligger bakom texten. Fyra
-          färger ur DESIGN.md:s dekoruppsättning (terracotta, Sky, Lavender,
-          Cream). Plum är en kortfyllning och används aldrig som form, för
-          en mörk form bakom Ink-text är oläsbar. Se `lib/produktzon.ts`. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute left-[5%] top-12 h-[148px] w-[168px] opacity-75"
-          style={{
-            background: "var(--terracotta)",
-            borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
-          }}
-        />
-        <div
-          className="absolute right-[6%] top-28 h-[172px] w-[196px] opacity-80"
-          style={{
-            background: "var(--lavender)",
-            borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
-          }}
-        />
-        <div
-          className="absolute bottom-6 left-[12%] h-[96px] w-[104px] opacity-70"
-          style={{ background: "var(--sky)", borderRadius: "63% 37% 47% 53% / 41% 59% 41% 59%" }}
-        />
-      </div>
-
-      <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
-        {/* Sidans h1 bär sökordet. Sloganen under är den stora raden, men en
-            <p>: "Plugga på de prov som faktiskt har getts" säger ingenting
-            om vad sajten är för en sökmotor, och startsidans h1 är den
-            starkaste rubriken sajten har. */}
-        <h1 className="sr-only">
-          Öva på högskoleprovet gratis
-        </h1>
-        <p
-          className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
-        >
-          Plugga på de prov som faktiskt har getts.
-        </p>
-
-        <p
-          className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]"
-        >
-          Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
-          ord med förklaring. Och en duell på 5 minuter när du vill mäta dig mot någon annan.
-        </p>
-
-        <div
-          className="mt-9 flex flex-wrap items-center justify-center gap-3"
-        >
-          <Link
-            to="/signup"
-            className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-7 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
+    <section className="border-b border-border">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-28">
+        <div>
+          {/* Sidans h1 bär sökordet. Sloganen under är den stora raden, men en
+              <p>: "Plugga på de prov som faktiskt har getts" säger ingenting
+              om vad sajten är för en sökmotor. */}
+          <h1 className="sr-only">Öva på högskoleprovet gratis</h1>
+          <p
+            className="max-w-[14ch] text-[44px] leading-[0.98] tracking-[-0.035em] text-foreground sm:text-[64px]"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
           >
-            Börja öva gratis
-          </Link>
-          <Link
-            to="/gamla-prov"
-            className="inline-flex min-h-[52px] items-center justify-center px-4 text-[15px] font-semibold text-[var(--cream-3)] transition hover:text-[var(--cream)]"
-          >
-            Se alla gamla prov
-          </Link>
+            Plugga på de prov som faktiskt har getts.
+          </p>
+
+          <p className="mt-7 max-w-[34rem] text-[17px] leading-[1.65] text-[var(--cream-3)]">
+            Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
+            ord med förklaring. Och en duell på 5 minuter när du vill mäta dig mot någon annan.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link
+              to="/signup"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-8 text-[15px] font-semibold text-on-brand transition-colors hover:bg-primary-deep"
+            >
+              Börja öva gratis
+            </Link>
+            <Link
+              to="/gamla-prov"
+              className="inline-flex min-h-[44px] items-center text-[15px] font-semibold text-foreground underline decoration-border decoration-2 underline-offset-[6px] transition-colors hover:decoration-foreground"
+            >
+              Se alla gamla prov
+            </Link>
+          </div>
+
+          {/* Siffrorna är riktiga och kommer ur getLandingStats, inte ur en
+              konstant. Saknas de visas ingenting, aldrig ett påhittat tal. */}
+          {stats ? (
+            <dl className="mt-12 flex gap-10 border-t border-border pt-6">
+              <div>
+                <dt className="text-[13px] text-[var(--cream-3)]">Spelare</dt>
+                <dd className="mt-1 text-[28px] font-bold leading-none tracking-tight tabular-nums">
+                  {formatInt(stats.totalPlayers)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[13px] text-[var(--cream-3)]">Matcher spelade</dt>
+                <dd className="mt-1 text-[28px] font-bold leading-none tracking-tight tabular-nums">
+                  {formatInt(stats.totalMatches)}
+                </dd>
+              </div>
+            </dl>
+          ) : null}
         </div>
 
-        {/* Siffrorna är riktiga och kommer ur getLandingStats, inte ur en
-            konstant. Saknas de visas ingenting, aldrig ett påhittat tal. */}
-        {stats ? (
-          <p
-            className="mt-7 text-[13px] text-[var(--cream-3)]"
-          >
-            <b className="font-semibold tabular-nums text-[var(--cream)]">
-              {formatInt(stats.totalPlayers)}
-            </b>{" "}
-            spelare,{" "}
-            <b className="font-semibold tabular-nums text-[var(--cream)]">
-              {formatInt(stats.totalMatches)}
-            </b>{" "}
-            matcher spelade
-          </p>
-        ) : null}
-      </div>
-
-      <div className="relative mx-auto max-w-[720px] px-4 pb-16 sm:pb-24">
-        <div
-        >
+        <div className="w-full max-w-[560px] lg:justify-self-end">
           {fragor.length > 0 ? (
             <LevandeFraga fragor={fragor} />
           ) : (
             // Databasen svarade inte. Hellre ingen ruta än en tom ruta.
-            <div className="rounded-3xl border border-white/10 bg-card p-6">
+            <div className="rounded-xl border border-border bg-card p-6">
               <p className="text-[15px] text-[var(--cream-3)]">
                 8 delprov, 10&nbsp;000+ ord och 30 hela prov med facit. Börja var du vill.
               </p>

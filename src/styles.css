@@ -86,7 +86,10 @@
 @theme inline {
   --font-display: "Manrope", "Helvetica Neue", Arial, sans-serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Ingen monospace i gränssnittet: DM Mono med överstrukna nollor på
+     rubriksiffror och etiketter är det som får en produkt att läsa som ett
+     utvecklarverktyg. Siffrorna sätts i samma snitt som resten, tabulärt. */
+  --font-mono: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -195,6 +198,9 @@
 }
 
 @layer base {
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
   * {
     border-color: var(--color-border);
   }
@@ -332,52 +338,15 @@
    utan att räkna om.
    ============================================================ */
 .navbar-glass {
-  /* Fallback först: utan backdrop-filter blir en halvgenomskinlig rad
-     oläslig, så då körs den nästan täckande varianten. */
-  background: rgba(246, 239, 226, 0.96);
-  border-bottom: 1px solid rgba(6, 4, 14, 0.089);
-  transition:
-    background 300ms ease,
-    border-color 300ms ease,
-    box-shadow 300ms ease;
+  /* Platt, täckande rad i sidans egen färg. Glaset (blur + beige tint) var
+     en annan kulör än resten av sidan och gjorde att raden såg påklistrad
+     ut. Hårfin linje undertill, och först när sidan skrollats. */
+  background: var(--background);
+  border-bottom: 1px solid transparent;
+  transition: border-color 150ms ease;
 }
-
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .navbar-glass {
-    /* Samma sandton som raden alltid haft, bara genomskinlig. En ljusare,
-       vitare tint gjorde att navbaren bytte färg mot resten av sidan —
-       glaset ska ändra genomsläpp, inte kulör. Platt fyllning av samma
-       skäl: en gradient låter tonen vandra över raden. */
-    background: rgba(246, 239, 226, 0.72);
-    border-bottom-color: rgba(6, 4, 14, 0.071);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-    backdrop-filter: blur(18px) saturate(180%);
-    /* specular överkant + hårfin underkant */
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.25);
-  }
-
-  /* Scrollat: skivan lyfter — tätare, hårdare blur, och en mjuk skugga
-     som skiljer den från innehållet som passerar under. */
-  .navbar-glass[data-scrolled="true"] {
-    background: rgba(240, 228, 206, 0.85);
-    border-bottom-color: rgba(6, 4, 14, 0.124);
-    -webkit-backdrop-filter: blur(28px) saturate(200%);
-    backdrop-filter: blur(28px) saturate(200%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-      0 8px 32px rgba(6, 4, 14, 0.089);
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .navbar-glass,
-  .navbar-glass[data-scrolled="true"] {
-    background: rgba(240, 228, 206, 0.98);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+.navbar-glass[data-scrolled="true"] {
+  border-bottom-color: var(--border);
 }
 
 /* ============================================================
@@ -619,7 +588,13 @@ body {
 svg,
 hr,
 .skeleton-shimmer {
-  background: var(--line);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Laddningsyta: en platt ton, ingen rörelse. */
+.skeleton-shimmer {
+  background: var(--border);
 }
 
 /* Ikonknappar och liknande ska fortfarande gå att klicka och fokusera,
