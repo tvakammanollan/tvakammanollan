@@ -270,7 +270,7 @@ export function Arkivet() {
           </div>
           <div>
             <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Kör ett helt pass på tid som på riktigt, eller plocka ut det delprov du vill åt. Facit
+              Skriv ett helt pass på originaltid, eller plocka ut det delprov du vill åt. Facit
               på varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en
               del.
             </p>
@@ -377,7 +377,7 @@ export function Produktytorna() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <div>
           <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-            Fyra sätt att plugga. Allt på samma konto.
+            Fyra sätt att plugga
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -714,7 +714,7 @@ const RESURSER: Array<{ to: string; titel: string; text: string }> = [
   {
     to: "/hogskoleprovet-formler",
     titel: "Formler",
-    text: "Allt du behöver till XYZ och KVA, med riktiga uppgifter.",
+    text: "Formlerna till XYZ och KVA, med riktiga uppgifter.",
   },
   {
     to: "/ordlista",
@@ -733,7 +733,7 @@ export function Resurser() {
     <section id="resurser" className="border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <h2 className="max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-          Allt om högskoleprovet, på ett ställe.
+          Mer om högskoleprovet
         </h2>
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {RESURSER.map((r) => (

@@ -147,7 +147,7 @@ function TidspressGuidePage() {
           Tidspress känns annorlunda i verkligheten än när du tränar utan klocka. Tvåkommanollans
           live-matcher är designade för att simulera exakt detta: 8 frågor på 5 minuter mot en
           motspelare med samma ELO-rating som du. Samma känsla av klockan som tickar, samma
-          beslutspressen som på riktigt HP. Regelbunden matchträning bygger den mentala vana som gör
+          beslutspress som på provdagen. Regelbunden matchträning bygger den mentala vana som gör
           att du inte fryser under provdagen.
         </p>
 

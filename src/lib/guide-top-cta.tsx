@@ -25,7 +25,7 @@ export function GuideTopCta({ delprov, code }: { delprov: string; code: string }
         className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"
         style={{ color: "var(--amber)" }}
       >
-        Kom igång
+        Börja öva
       </span>
     </Link>
   );

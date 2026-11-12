@@ -130,7 +130,7 @@ function XyzGuidePage() {
           minskar risken vid gissning och bekräftar dina räkningar.
         </p>
         <p>
-          En annan kraftfull teknik: prova enkla tal. Om uppgiften innehåller en okänd variabel,
+          En annan teknik är att prova enkla tal. Om uppgiften innehåller en okänd variabel,
           sätt <em>x = 2</em> eller <em>x = 10</em> och kontrollera vilket alternativ som ger rätt
           resultat. Fungerar utmärkt när algebran annars blir komplex.
         </p>

@@ -63,7 +63,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Läsförståelse",
     h1: "Öva LÄS: läsförståelse inför högskoleprovet",
     intro:
-      "LÄS mäter hur väl du förstår och drar slutsatser ur längre svenska texter. Nyckeln är att läsa aktivt och alltid hitta belägg för svaret i texten. Här tränar du på riktiga LÄS-uppgifter med facit.",
+      "LÄS mäter hur väl du förstår och drar slutsatser ur längre svenska texter. Svaret ska alltid gå att belägga i texten. Här tränar du på riktiga LÄS-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna LÄS utan tidspress",
   },
@@ -91,7 +91,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Kvantitativa jämförelser",
     h1: "Öva KVA: kvantitativa jämförelser inför högskoleprovet",
     intro:
-      "KVA ber dig avgöra vilken av två storheter som är störst, eller om det inte går att avgöra. Det handlar om att tänka smart snarare än att räkna ut allt. Öva på riktiga KVA-uppgifter med facit.",
+      "KVA ber dig avgöra vilken av två storheter som är störst, eller om det inte går att avgöra. Ofta går det att avgöra utan att räkna ut hela uttrycket. Öva på riktiga KVA-uppgifter med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna KVA utan tidspress",
     tips: 'Räkna aldrig ut båda storheterna fullständigt om du kan slippa. Förkorta det som är lika i båda leden först, så jämför du bara det som skiljer. Sätt in enkla testvärden (0, 1, ett negativt tal) när uppgiften innehåller en variabel: svaret "går inte att avgöra" är rätt så fort två testvärden ger olika resultat. Var extra vaksam på negativa tal och bråk, det är där jämförelser oftast vänds fel.',

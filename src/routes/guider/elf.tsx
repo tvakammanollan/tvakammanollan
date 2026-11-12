@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/elf")({
       ...guideArticleMeta("/guider/elf"),
       title: "ELF-guide: engelsk läsförståelse på HP",
       description:
-        "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen. Med riktiga HP-frågor från Tvåkommanollan.",
+        "Guide till ELF-delprovet: engelska texter, frågetyper och strategi. Med riktiga ELF-uppgifter att öva på.",
       ogTitle: "Tvåkommanollan | ELF-guiden",
       ogDescription:
         "Engelsk läsförståelse på HP: akademiskt ordförråd, strategi och skillnader mot LÄS.",
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/guider/elf")({
         guideArticleJsonLd({
           headline: "ELF-guide: engelsk läsförståelse på Högskoleprovet",
           description:
-            "Guide till ELF-delprovet: engelska texter, frågetyper och strategi för att maximera poängen.",
+            "Guide till ELF-delprovet: engelska texter, frågetyper och strategi.",
           url: "https://tvakommanollan.se/guider/elf",
         }),
       ),
@@ -87,11 +87,10 @@ function ElfGuidePage() {
         </h2>
         <p>
           Strategin för ELF är i princip identisk med LÄS: läs frågorna först, lokalisera relevanta
-          avsnitt, eliminera felaktiga alternativ. Men det finns en avgörande skillnad: texterna i
+          avsnitt, eliminera felaktiga alternativ. Skillnaden är att texterna i
           ELF är ofta mer avancerade och akademiska än de svenska LÄS-texterna. Lång mening, komplex
-          bisatsstruktur och fackspecifikt ordförråd på engelska är vanligt. Det innebär att
-          akademiskt engelskt ordförråd är nyckeln till ELF på samma sätt som ordkunskap är nyckeln
-          till ORD.
+          bisatsstruktur och fackspecifikt ordförråd på engelska är vanligt. Därför väger
+          akademiskt engelskt ordförråd lika tungt i ELF som ordkunskap gör i ORD.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

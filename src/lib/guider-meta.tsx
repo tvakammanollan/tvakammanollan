@@ -98,7 +98,7 @@ export const GUIDES: GuideMeta[] = [
     path: "/guider/bra-resultat",
     label: "Hur får man bra HP-resultat?",
     short: "Bra resultat",
-    description: "Komplett strategi för att maximera ditt HP-betyg.",
+    description: "Studieplan och prioriteringar inför provet.",
     published: "2026-05-18",
     modified: "2026-10-26",
   },
@@ -157,7 +157,7 @@ export function RelatedGuides({
           className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-4 transition-colors hover:border-primary/50 hover:bg-primary/[0.1]"
         >
           <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
-            Redo att öva? Kör {ovaSlug.toUpperCase()}-frågor med facit
+            Öva på {ovaSlug.toUpperCase()}-uppgifter med facit
           </span>
           <span
             className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
       ...guideArticleMeta("/guider/bra-resultat"),
       title: fitTitle("Hur får man bra resultat på HP?", "komplett guide"),
       description:
-        "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat. Från 1.0 till 2.0 med rätt strategi.",
+        "Hur du planerar pluggandet, väljer vilka delprov du ska lägga tiden på och övar under provförhållanden.",
       ogTitle: "Tvåkommanollan | Bra resultat på HP",
       ogDescription:
         "Studieplan 6–8 veckor, kartläggning av delprov och mentala tips för provdagen. Från 1.0 till 2.0.",
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
         guideArticleJsonLd({
           headline: "Hur får man bra resultat på HP?: Komplett guide",
           description:
-            "Komplett guide: hur du planerar studier, väljer rätt fokusområden och maximerar ditt HP-resultat.",
+            "Hur du planerar pluggandet, väljer vilka delprov du ska lägga tiden på och övar under provförhållanden.",
           url: "https://tvakommanollan.se/guider/bra-resultat",
         }),
       ),
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
         "@type": "HowTo",
         name: "Studieplan för att lyckas på Högskoleprovet",
         description:
-          "En komplett 6–8 veckors studieplan för att maximera HP-resultatet, från kartläggning till provdagen.",
+          "En studieplan på 6–8 veckor, från kartläggning till provdagen.",
         totalTime: "P8W",
         step: [
           {
@@ -99,9 +99,9 @@ function BraResultatGuidePage() {
 
       <p className="mb-8">
         Det finns inget hemligt recept, men det finns ett systematiskt tillvägagångssätt som
-        konsekvent ger förbättringar. Nyckeln är att träna smart, inte bara hårt: identifiera dina
-        svagaste delprov, lägg fokus där förbättringsmarginalen är störst och simulera
-        provförhållanden regelbundet.
+        konsekvent ger förbättringar. Ta reda på vilka delprov du är
+        svagast i, lägg tiden där du har mest att hämta och skriv hela provpass på tid
+        regelbundet.
       </p>
 
       <section className="space-y-6">
@@ -130,8 +130,8 @@ function BraResultatGuidePage() {
         </p>
         <p>
           Om du är tydligt starkare verbalt eller kvantitativt: gör den sidan nästintill perfekt.
-          Maximera poängen i din styrka och täck upp svagheterna tillräckligt för att inte förlora
-          mer poäng än nödvändigt.
+          Ta så många poäng som möjligt i din starka del och öva den svaga tills den inte drar ned
+          snittet mer än nödvändigt.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>

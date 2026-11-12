@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/mek")({
       ...guideArticleMeta("/guider/mek"),
       title: "MEK-guide: meningskomplettering på HP",
       description:
-        "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från Tvåkommanollan med 10 000+ HP-frågor.",
+        "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden. Med riktiga MEK-uppgifter att öva på.",
       ogTitle: "Tvåkommanollan | MEK-guiden",
       ogDescription:
         "Meningskomplettering på HP: strategi, logikord och hur du undviker distraktorer.",
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/guider/mek")({
         guideArticleJsonLd({
           headline: "MEK-guide: meningskomplettering på Högskoleprovet",
           description:
-            "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition.",
+            "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden.",
           url: "https://tvakommanollan.se/guider/mek",
         }),
       ),

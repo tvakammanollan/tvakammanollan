@@ -141,8 +141,7 @@ function GuiderPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        title="Bemästra"
-        cycleWords={["Ord.", "Läsning.", "Kvantitativ.", "Tidspress."]}
+        title="Guider till högskoleprovet"
         align="center"
         variant="content"
       />
