@@ -26,7 +26,7 @@ export const Route = createFileRoute("/gamla-prov")({
     return {
       meta: pageMeta({
         path: "/gamla-prov",
-        title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}: alla provpass med facit`),
+        title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}`, "med facit", "alla provpass"),
         description:
           `Skriv ${exams.length} riktiga högskoleprov online: ${enhet(count, "uppgift")} från ` +
           `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,

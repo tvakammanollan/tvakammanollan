@@ -75,6 +75,16 @@ export interface PageMetaInput {
   ogImageWidth?: number;
   ogImageHeight?: number;
   noindex?: boolean;
+  /**
+   * `article` för guider och andra sidor med ett publiceringsdatum. Roten
+   * sätter `website`, och det är rätt för verktyg och listor; en guide som
+   * delas med `article` får datum och författare i förhandsvisningen.
+   */
+  ogType?: "website" | "article";
+  /** ISO-datum (YYYY-MM-DD). Blir `article:published_time` när `ogType` är `article`. */
+  datePublished?: string;
+  /** ISO-datum (YYYY-MM-DD). Blir `article:modified_time` när `ogType` är `article`. */
+  dateModified?: string;
 }
 
 export function pageMeta(input: PageMetaInput) {
@@ -104,6 +114,17 @@ export function pageMeta(input: PageMetaInput) {
     }
     if (input.ogImageAlt) {
       meta.push({ property: "og:image:alt", content: input.ogImageAlt });
+    }
+  }
+  if (input.ogType) {
+    meta.push({ property: "og:type", content: input.ogType });
+  }
+  if (input.ogType === "article") {
+    if (input.datePublished) {
+      meta.push({ property: "article:published_time", content: input.datePublished });
+    }
+    if (input.dateModified) {
+      meta.push({ property: "article:modified_time", content: input.dateModified });
     }
   }
   if (input.noindex) {

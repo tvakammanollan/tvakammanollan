@@ -21,7 +21,7 @@ export const Route = createFileRoute("/hogskoleprovet-antal-ratt")({
     return {
       meta: pageMeta({
         path: PATH,
-        title: fitTitle("Hur många rätt på högskoleprovet för varje poäng?", "0,5 till 2,0"),
+        title: fitTitle("Hur många rätt krävs på högskoleprovet?", "0,5 till 2,0"),
         description: describeWithin(
           `Antal rätt som krävts för varje poäng från 0,5 till 2,0 på högskoleprovet. ${kortSvar(två)}`,
           "Ur UHR:s normeringstabeller.",

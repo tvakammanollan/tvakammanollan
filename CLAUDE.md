@@ -1687,6 +1687,33 @@ head: () => ({
 
 Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured data.
 
+**Titelbudgeten räknar med varumärket (2026-11-11).** `pageMeta` sätter
+`Tvåkommanollan | ` (17 tecken) framför `title`, och Google kapar HELA
+titeln runt 60. `fitTitle()` i `seo-text.ts` räknar därför mot
+`PAGE_TITLE_MAX` (43), inte `TITLE_MAX`. Före det stod 20 sidor med 64–76
+tecken i träfflistan fast allt såg rätt ut i koden: en kärna på 50 tecken
+med `fitTitle` runt sig är inte kortare för det. Skriv kärnan kort och lägg
+det umbärliga som svansar (`fitTitle("Öva MEK: meningskomplettering", "på
+högskoleprovet", "med facit")`). Beskrivningen ska hålla sig under
+`DESCRIPTION_MAX` (155); `describeWithin` gör det åt dig.
+
+- **`ogType: "article"` + `datePublished`/`dateModified`** i `pageMeta` ger
+  `og:type` och `article:published_time`/`modified_time`. Guiderna får det
+  via `guideArticleMeta(path)` (`guider-meta.tsx`), som läser datumen ur
+  `GUIDES`; samma datum går in i Article-datan. Flytta fram `modified` när
+  texten ändras i sak.
+- **Roten sätter `robots: index, follow, max-snippet:-1, max-image-preview:large`.**
+  Per-sida `noindex` via `pageMeta` skriver över den (HeadContent dedupar
+  på `name`).
+- **`npm run sitemap:lastmod`** sätter `<lastmod>` i `public/sitemap.xml`
+  ur git-historiken (senaste commit som rört sidans filer, aldrig bakåt).
+  Kör den innan push när sidor ändrats; gamla-prov-delen rörs inte.
+  Datan för en sida som byggs av flera filer står i `filesFor()` i
+  `scripts/sitemap-lastmod.mjs`; ny sida med egen datafil läggs till där.
+- **Font-preloaden i `__root.tsx` måste följa `@font-face` i `styles.css`.**
+  Fram till 2026-11-11 preloadades Young Serif, vars fil tagits bort: en 404
+  på varje sidladdning som inget test såg.
+
 ### IndexNow och AI-sökmotorerna (2026-10-24)
 
 `npm run indexnow` (efter varje deploy med nya sidor) skickar alla adresser i

@@ -5,8 +5,10 @@ import {
   describeWithin,
   fitTitle,
   TITLE_MAX,
+  PAGE_TITLE_MAX,
   DESCRIPTION_MAX,
 } from "./seo-text";
+import { pageTitle } from "./page-meta";
 
 describe("trimToWord", () => {
   it("lämnar text som redan ryms orörd, utan ellips", () => {
@@ -74,22 +76,33 @@ describe("describeWithin", () => {
 
 describe("fitTitle", () => {
   it("tar med allt som ryms", () => {
-    const t = fitTitle("Höstprovet 2025 provpass 1 – XYZ, KVA, NOG, DTK", "med facit");
-    expect(t).toBe("Höstprovet 2025 provpass 1 – XYZ, KVA, NOG, DTK med facit");
-    expect(t.length).toBeLessThanOrEqual(TITLE_MAX);
+    const t = fitTitle("Höstprovet 2025 provpass 1", "med facit");
+    expect(t).toBe("Höstprovet 2025 provpass 1 med facit");
+    expect(t.length).toBeLessThanOrEqual(PAGE_TITLE_MAX);
   });
 
   // Varumärket är svansen som tål att förloras — Google skriver ofta dit
   // sajtnamnet ändå, härlett ur og:site_name.
-  it("offrar den sist angivna svansen först", () => {
-    const t = fitTitle("Vårprovet 2021 (13 mars) provpass 1 – ORD, LÄS, MEK, ELF", "med facit");
-    expect(t.length).toBeLessThanOrEqual(TITLE_MAX);
-    expect(t).toBe("Vårprovet 2021 (13 mars) provpass 1 – ORD, LÄS, MEK, ELF");
+  it("offrar svansarna i tur och ordning när kärnan är lång", () => {
+    // Provpassidans mönster för vårprovet 2021, som har två prov och därför
+    // bär datumet i etiketten.
+    const t = fitTitle("Vårprovet 2021 (13 mars) provpass 1", "(verbal)", "med facit");
+    expect(t.length).toBeLessThanOrEqual(PAGE_TITLE_MAX);
+    expect(t).toBe("Vårprovet 2021 (13 mars) provpass 1");
   });
 
   it("håller sig alltid inom budgeten när kärnan gör det", () => {
     const t = fitTitle("Kort kärna", "med facit", "· Tvåkommanollan");
-    expect(t.length).toBeLessThanOrEqual(TITLE_MAX);
+    expect(t.length).toBeLessThanOrEqual(PAGE_TITLE_MAX);
     expect(t).toContain("Tvåkommanollan");
+  });
+
+  // Det är HELA titeln Google kapar, och `pageMeta` lägger varumärket
+  // framför. Budgeten måste alltså räkna med prefixet, annars står sidan i
+  // träfflistan med 64–76 tecken fast allt såg rätt ut i koden.
+  it("ryms i <title> även med varumärket framför", () => {
+    const t = fitTitle("Gamla högskoleprov 2012–2026", "med facit", "alla provpass");
+    expect(pageTitle(t).length).toBeLessThanOrEqual(TITLE_MAX);
+    expect(t).toBe("Gamla högskoleprov 2012–2026 med facit");
   });
 });

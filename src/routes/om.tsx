@@ -11,7 +11,7 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss: varför sajten finns",
       description:
-        "Alla högskoleprov sedan 2012 med facit, dueller med ELO-ranking och en ordlista över ORD. Läs om grundaren Niklas (1,95 på HP), varför det mesta är gratis och vad som kostar.",
+        "Alla högskoleprov sedan 2012 med facit, dueller med ELO-ranking och en ordlista över ORD. Om grundaren Niklas (1,95 på HP) och varför det mesta är gratis.",
       ogTitle: "Om Tvåkommanollan",
       ogDescription: "Gamla högskoleprov, dueller och ordlista. Varför vi finns.",
     }),

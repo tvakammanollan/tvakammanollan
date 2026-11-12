@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import {
+  GuideFaq,
+  RelatedGuides,
+  guideArticleJsonLd,
+  guideArticleMeta,
+  guideFaqJsonLd,
+} from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
@@ -9,6 +15,7 @@ export const Route = createFileRoute("/guider/ord")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/ord",
+      ...guideArticleMeta("/guider/ord"),
       title: "ORD-guide: ordkunskap på Högskoleprovet",
       description:
         "Lär dig klara ORD-delprovet på HP. Vi förklarar frågetyper, tidsstrategi och hur du snabbt bygger ordförråd med 10 000+ riktiga HP-ord.",

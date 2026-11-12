@@ -21,7 +21,7 @@ export const Route = createFileRoute("/ordlista")({
     return {
       meta: pageMeta({
         path: "/ordlista",
-        title: fitTitle("Ordlista för högskoleprovet: alla ord med förklaring"),
+        title: fitTitle("Ordlista för högskoleprovet", "med förklaring", "alla ord"),
         description:
           `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
           `exempelmening, liknande ord och uppgiften ordet kom ur. Sök på bokstav och plugga gratis.`,

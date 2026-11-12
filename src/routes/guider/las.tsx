@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import {
+  GuideFaq,
+  RelatedGuides,
+  guideArticleJsonLd,
+  guideArticleMeta,
+  guideFaqJsonLd,
+} from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
@@ -9,6 +15,7 @@ export const Route = createFileRoute("/guider/las")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/las",
+      ...guideArticleMeta("/guider/las"),
       title: "LÄS-guide: svensk läsförståelse på HP",
       description:
         "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering. Konkreta tips för läsförståelse på HP. Fungerar för både LÄS och ELF.",

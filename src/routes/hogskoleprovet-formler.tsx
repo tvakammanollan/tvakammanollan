@@ -177,7 +177,7 @@ export const Route = createFileRoute("/hogskoleprovet-formler")({
       path: PATH,
       title: fitTitle("Formler för högskoleprovet", "XYZ och KVA"),
       description:
-        "Formlerna som behövs på högskoleprovets kvantitativa del: bråk, potenser, kvadreringsreglerna, räta linjer, area, volym, sannolikhet och hastighet. Med riktiga provuppgifter.",
+        "Formlerna till högskoleprovets kvantitativa del: bråk, potenser, kvadreringsregler, räta linjer, area, volym och sannolikhet. Med riktiga provuppgifter.",
       ogTitle: "Alla formler du behöver till högskoleprovet",
     }),
     links: pageLinks(PATH),

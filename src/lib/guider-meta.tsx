@@ -11,6 +11,14 @@ export interface GuideMeta {
   label: string;
   short: string;
   description: string;
+  /**
+   * Publicerad och senast ändrad, ISO-datum. Går in i Article-datan och i
+   * `article:published_time`/`modified_time`. Publiceringsdatumet är dagen
+   * route-filen kom in i git; `modified` flyttas fram för hand när texten
+   * ändras i sak, inte vid varje omformatering.
+   */
+  published: string;
+  modified: string;
 }
 
 export const GUIDES: GuideMeta[] = [
@@ -19,62 +27,95 @@ export const GUIDES: GuideMeta[] = [
     label: "ORD: Ordkunskap",
     short: "ORD",
     description: "Synonymer, antonymer och ordförrådsbygge inför HP.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/mek",
     label: "MEK: Meningskomplettering",
     short: "MEK",
     description: "Luckteknik, logikord och så undviker du fällor.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/las",
     label: "LÄS: Svensk läsförståelse",
     short: "LÄS",
     description: "Frågetyper, lässtrategi och tidsdisposition per text.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/elf",
     label: "ELF: Engelsk läsförståelse",
     short: "ELF",
     description: "Akademisk engelska, except/NOT-fällor och strategi.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/xyz",
     label: "XYZ: Matematisk problemlösning",
     short: "XYZ",
     description: "Algebra, geometri, sannolikhet och uppskattning.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/kva",
     label: "KVA: Kvantitativa jämförelser",
     short: "KVA",
     description: "Jämför uttryck och avgör när 'kan ej avgöras' gäller.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/nog",
     label: "NOG: Kvantitativa resonemang",
     short: "NOG",
     description: "Avgör om informationen räcker: strategi och fällor.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/dtk",
     label: "DTK: Diagram, tabeller och kartor",
     short: "DTK",
     description: "Läs grafer snabbt och undvik skala-fällan.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/tidspress",
     label: "Tidspress på HP",
     short: "Tidspress",
     description: "Tidsdisposition per delprov och hoppa-strategin.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
   {
     path: "/guider/bra-resultat",
     label: "Hur får man bra HP-resultat?",
     short: "Bra resultat",
     description: "Komplett strategi för att maximera ditt HP-betyg.",
+    published: "2026-05-18",
+    modified: "2026-10-26",
   },
 ];
+
+/**
+ * Delningsmeta för en guide: `og:type=article` plus publicerings- och
+ * ändringsdatum ur GUIDES. Sprids in i `pageMeta({...})`.
+ */
+export function guideArticleMeta(path: string) {
+  const g = guideByPath(path);
+  return {
+    ogType: "article" as const,
+    datePublished: g?.published,
+    dateModified: g?.modified,
+  };
+}
 
 export function guideByPath(path: string): GuideMeta | undefined {
   return GUIDES.find((g) => g.path === path);
@@ -189,14 +230,18 @@ export function guideArticleJsonLd({
   articleSection?: string;
 }) {
   const keywordValue = Array.isArray(keywords) ? keywords.join(", ") : keywords;
+  // Datumen hämtas ur GUIDES när anroparen inte skickat egna: tio guider
+  // stod utan datePublished/dateModified, och en Article utan datum får
+  // varken datum i träfflistan eller någon färskhetssignal.
+  const guide = guideByPath(url.replace(/^https?:\/\/[^/]+/, ""));
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline,
     description,
     url,
-    datePublished,
-    dateModified,
+    datePublished: datePublished ?? guide?.published,
+    dateModified: dateModified ?? guide?.modified,
     articleSection,
     ...(keywordValue ? { keywords: keywordValue } : {}),
     author: {
@@ -208,9 +253,12 @@ export function guideArticleJsonLd({
       "@type": "Organization",
       name: "Tvåkommanollan",
       url: "https://tvakommanollan.se",
+      // PNG, inte SVG: Googles logotypriktlinjer vill ha ett rasterformat.
       logo: {
         "@type": "ImageObject",
-        url: "https://tvakommanollan.se/favicon.svg",
+        url: "https://tvakommanollan.se/icon-192.png",
+        width: 192,
+        height: 192,
       },
     },
     image: "https://tvakommanollan.se/og-image-5.png",

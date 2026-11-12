@@ -1,3 +1,5 @@
+import { SITE_NAME } from "./page-meta";
+
 /**
  * Titlar och beskrivningar som ryms i ett sökresultat.
  *
@@ -15,6 +17,15 @@
 
 /** Så långt en titel får bli innan Google kapar den. */
 export const TITLE_MAX = 60;
+
+/**
+ * Så lång SIDANS del av titeln får vara. `pageTitle()` i `page-meta.ts`
+ * sätter `"Tvåkommanollan | "` (17 tecken) framför allt som `fitTitle`
+ * ger ifrån sig, och det är hela titeln Google mäter. Fram till 2026-11-11
+ * räknade `fitTitle` mot `TITLE_MAX` rakt av, så 20 sidor stod i träfflistan
+ * med 64–76 tecken och kapades mitt i "med facit" eller i varumärket.
+ */
+export const PAGE_TITLE_MAX = TITLE_MAX - (SITE_NAME.length + 3);
 
 /** Så lång en beskrivning får bli innan Google kapar den. */
 export const DESCRIPTION_MAX = 155;
@@ -92,7 +103,7 @@ export function fitTitle(head: string, ...tails: string[]): string {
   let title = head.trim();
   for (const tail of tails) {
     const candidate = `${title} ${tail.trim()}`.trim();
-    if (candidate.length <= TITLE_MAX) title = candidate;
+    if (candidate.length <= PAGE_TITLE_MAX) title = candidate;
   }
   return title;
 }

@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import {
+  GuideFaq,
+  RelatedGuides,
+  guideArticleJsonLd,
+  guideArticleMeta,
+  guideFaqJsonLd,
+} from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
@@ -9,6 +15,7 @@ export const Route = createFileRoute("/guider/nog")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/nog",
+      ...guideArticleMeta("/guider/nog"),
       title: "NOG-guide: kvantitativa resonemang på HP",
       description:
         "Guide till NOG-delprovet: lär dig avgöra om uppgiften går att lösa med given information. Strategi och vanliga fällor förklaras.",

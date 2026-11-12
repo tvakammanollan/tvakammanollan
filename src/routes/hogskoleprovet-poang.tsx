@@ -13,13 +13,20 @@ import { PROGRAM_LIST } from "./hogskoleprovet-poang_.$program";
    301:as hit i src/server.ts.
    ===================================================================== */
 
+/** Dagen sidan kom in i git, och senaste ändringen i sak. Flytta fram den senare när texten ändras. */
+const POANG_PUBLICERAD = "2026-06-30";
+const POANG_UPPDATERAD = "2026-10-28";
+
 export const Route = createFileRoute("/hogskoleprovet-poang")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poang",
-      title: fitTitle("Högskoleprovet poäng, normering & antagning"),
+      title: fitTitle("Högskoleprovet poäng: normering & antagning"),
       description:
         "Vad högskoleprovets poäng 0,00–2,00 betyder, hur normeringen från råpoäng går till och hur resultatet används vid antagning. Plus urvalsgrupperna.",
+      ogType: "article",
+      datePublished: POANG_PUBLICERAD,
+      dateModified: POANG_UPPDATERAD,
       ogTitle: "Högskoleprovet poäng & antagning: så funkar det",
       ogDescription:
         "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på Tvåkommanollan.",
@@ -37,6 +44,9 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
         description:
           "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,00–2,00 går till och hur resultatet används vid antagning till högskola och universitet.",
         inLanguage: "sv-SE",
+        datePublished: POANG_PUBLICERAD,
+        dateModified: POANG_UPPDATERAD,
+        author: { "@id": "https://tvakommanollan.se/#niklas" },
         about: { "@type": "Thing", name: "Högskoleprovet antagning" },
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
         publisher: { "@id": "https://tvakommanollan.se/#org" },

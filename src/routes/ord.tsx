@@ -53,7 +53,7 @@ export const Route = createFileRoute("/ord")({
       path: "/ord",
       title: "ORD högskoleprovet: öva 10 000+ ord",
       description:
-        "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition och ingen tidspress. De första 40 orden är gratis.",
+        "Träna ordförståelse för högskoleprovet med 10 000+ riktiga ORD-frågor från gamla prov. Spaced repetition och ingen tidspress. De första 40 orden är gratis.",
       ogTitle: "Öva ord: 10 000+ HP-ord",
       ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
     }),

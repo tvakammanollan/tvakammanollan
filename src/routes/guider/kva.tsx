@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import {
+  GuideFaq,
+  RelatedGuides,
+  guideArticleJsonLd,
+  guideArticleMeta,
+  guideFaqJsonLd,
+} from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
@@ -9,6 +15,7 @@ export const Route = createFileRoute("/guider/kva")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/kva",
+      ...guideArticleMeta("/guider/kva"),
       title: "KVA-guide: kvantitativa jämförelser på HP",
       description:
         "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert. Guide med riktiga HP KVA-uppgifter.",

@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { GuideFaq, RelatedGuides, guideArticleJsonLd, guideFaqJsonLd } from "@/lib/guider-meta";
+import {
+  GuideFaq,
+  RelatedGuides,
+  guideArticleJsonLd,
+  guideArticleMeta,
+  guideFaqJsonLd,
+} from "@/lib/guider-meta";
 import { GUIDE_FAQ } from "@/lib/guide-faq";
 import { GuideTopCta } from "@/lib/guide-top-cta";
 
@@ -9,6 +15,7 @@ export const Route = createFileRoute("/guider/mek")({
   head: () => ({
     meta: pageMeta({
       path: "/guider/mek",
+      ...guideArticleMeta("/guider/mek"),
       title: "MEK-guide: meningskomplettering på HP",
       description:
         "Bemästra MEK-delprovet med rätt lässtrategi, luckteknik och tidsdisposition. Riktiga tips från Tvåkommanollan med 10 000+ HP-frågor.",

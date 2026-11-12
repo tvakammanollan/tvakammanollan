@@ -38,7 +38,13 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         // Titeln var 83 tecken och kapades i träfflistan. Varumärket är den
         // svans som tål att falla bort — Google skriver ofta dit sajtnamnet
         // ändå, härlett ur og:site_name.
-        title: fitTitle(`${data.label} provpass ${data.pass}: ${delprov}`, "med facit"),
+        // Delprovslistan ("ORD, LÄS, MEK, ELF") rymdes inte med varumärket
+        // framför; provdelen gör det, och delproven står i beskrivningen.
+        title: fitTitle(
+          `${data.label} provpass ${data.pass}`,
+          `(${passKindLabel(data.kind).toLowerCase()})`,
+          "med facit",
+        ),
         // Två meningar, inte en: `data.label` bär redan ordet provet ("Skriv
         // provpass 1 från högskoleprovet Höstprovet 2025" stammade), och en
         // enda lång mening kan bara kapas mitt i — den andra meningen kan

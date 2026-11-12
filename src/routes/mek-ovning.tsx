@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { pageMeta, pageLinks, breadcrumbScript } from "@/lib/page-meta";
+import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { MEK_ORIGINS } from "@/lib/question-origin";
 import { TrainExperience } from "@/components/train/TrainExperience";
 
@@ -29,6 +29,23 @@ export const Route = createFileRoute("/mek-ovning")({
         { name: "Hem", path: "/" },
         { name: "MEK-övning", path: "/mek-ovning" },
       ]),
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        name: "MEK-övning: meningskomplettering inför högskoleprovet",
+        url: "https://tvakommanollan.se/mek-ovning",
+        description:
+          "Övningsläge för MEK (meningskomplettering): uppgifter ur gamla högskoleprov och Tvåkommanollans egna, med facit och förklaring efter varje svar.",
+        inLanguage: "sv-SE",
+        learningResourceType: "Övningsuppgifter",
+        educationalLevel: "Högskoleförberedande",
+        educationalUse: "Test preparation",
+        isAccessibleForFree: true,
+        about: { "@type": "Thing", name: "Högskoleprovet MEK" },
+        audience: { "@type": "EducationalAudience", educationalRole: "student" },
+        isPartOf: { "@id": "https://tvakommanollan.se/#website" },
+        publisher: { "@id": "https://tvakommanollan.se/#org" },
+      }),
     ],
   }),
 });

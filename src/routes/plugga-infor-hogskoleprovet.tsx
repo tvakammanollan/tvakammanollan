@@ -146,8 +146,10 @@ export const Route = createFileRoute("/plugga-infor-hogskoleprovet")({
       path: PATH,
       title: fitTitle("Hur pluggar man inför högskoleprovet?"),
       description:
-        "Gamla prov, böcker, kurser, appar och Tvåkommanollan jämförda på pris, riktiga provuppgifter, rättning och vem de passar. Med det vi själva inte är bäst på.",
+        "Gamla prov, böcker, kurser, appar och Tvåkommanollan jämförda på pris, riktiga provuppgifter, rättning och vem de passar. Med det vi själva inte är bra på.",
       ogTitle: "Hur pluggar man inför högskoleprovet? Fem sätt jämförda",
+      ogType: "article",
+      dateModified: UPPDATERAD,
     }),
     links: pageLinks(PATH),
     scripts: [

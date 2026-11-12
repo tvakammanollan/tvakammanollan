@@ -59,6 +59,8 @@ export const Route = createFileRoute("/hogskoleprovet-resultat")({
       title: fitTitle("När kommer resultatet på högskoleprovet?"),
       description: `Resultatet på ${SENASTE.label} kommer ${hpDateShort(SENASTE.resultat)}. Så hämtar du det, hur länge det gäller och vilket resultat som räknas vid antagning.`,
       ogTitle: `Resultatet på ${SENASTE.label} kommer ${hpDateShort(SENASTE.resultat)}`,
+      ogType: "article",
+      dateModified: SENASTE.uppdaterad,
     }),
     links: pageLinks(PATH),
     scripts: [

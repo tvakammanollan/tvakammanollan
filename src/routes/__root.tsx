@@ -171,6 +171,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
+      // Snippetlängd och bildstorlek i träfflistan: utan hintarna väljer
+      // Google själv, och för AI-översikter och "People also ask" är det
+      // hela stycket som citeras. Per-sida `noindex` skriver över den här
+      // raden (HeadContent dedupar på `name`).
+      {
+        name: "robots",
+        content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+      },
       { name: "theme-color", content: "#f5f5f5" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -186,24 +194,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
-      // Preload de två snitt som faktiskt syns i första målningen på varje
-      // sida — kroppstexten (Instrument Sans) och alla rubriker (Young
-      // Serif). Utan preload upptäcker webbläsaren dem först när CSS:en
-      // hunnit parsas till @font-face-reglerna, vilket lägger till en hel
-      // request-omgång innan text i rätt snitt kan målas (font-display: swap
-      // gör texten synlig direkt, men i fallback-snittet till dess). De tre
-      // andra vikterna (bold/italic/mono) syns bara längre ner eller mer
-      // sällan och preloadas inte.
+      // Preload det enda snitt som syns i första målningen: Manrope bär
+      // både brödtext och rubriker sedan Podia-systemet (styles.css). Utan
+      // preload upptäcker webbläsaren filen först när CSS:en parsats till
+      // @font-face-regeln, vilket lägger till en hel request-omgång innan
+      // text i rätt snitt kan målas. Fram till 2026-11-11 preloadades
+      // Instrument Sans (inte längre refererad av något token) och Young
+      // Serif (filen borttagen), alltså en 404 på varje sidladdning.
+      // Sökvägen här måste följa med när @font-face i styles.css byts.
       {
         rel: "preload",
-        href: "/fonts/InstrumentSans-Regular.woff2",
-        as: "font",
-        type: "font/woff2",
-        crossOrigin: "anonymous",
-      },
-      {
-        rel: "preload",
-        href: "/fonts/YoungSerif-Regular.woff2",
+        href: "/fonts/Manrope-Variable.woff2",
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
@@ -250,6 +251,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Tvåkommanollan",
           url: "https://tvakommanollan.se",
           logo: "https://tvakommanollan.se/icon-192.png",
+          email: "info@tvakommanollan.se",
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: "info@tvakommanollan.se",
+            contactType: "customer support",
+            availableLanguage: "Swedish",
+            url: "https://tvakommanollan.se/kontakt",
+          },
           areaServed: "SE",
           description:
             "Övning inför Högskoleprovet: alla 30 provtillfällen sedan vårprovet 2012 med facit och normering, realtidsmatcher med ELO-ranking och träning på alla 8 delprov. Det mesta är gratis.",
@@ -379,13 +388,27 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/guider/nog">NOG-guide</a>
           <a href="/guider/dtk">DTK-guide</a>
           <a href="/hogskoleprovet-poang">HP-poäng och antagning</a>
+          <a href="/hogskoleprovet-datum">Högskoleprovet datum</a>
+          <a href="/hogskoleprovet-facit">Facit högskoleprovet</a>
+          <a href="/hogskoleprovet-antal-ratt">Hur många rätt krävs på högskoleprovet?</a>
+          <a href="/hogskoleprovet-poangraknare">Poängräknare högskoleprovet</a>
+          <a href="/plugga-infor-hogskoleprovet">Plugga inför högskoleprovet</a>
+          <a href="/mek-ovning">MEK-övning</a>
+          <a href="/pris">Pris</a>
+          <a href="/ova/ord">Öva ORD</a>
+          <a href="/ova/mek">Öva MEK</a>
+          <a href="/ova/las">Öva LÄS</a>
+          <a href="/ova/elf">Öva ELF</a>
+          <a href="/ova/xyz">Öva XYZ</a>
+          <a href="/ova/kva">Öva KVA</a>
+          <a href="/ova/nog">Öva NOG</a>
+          <a href="/ova/dtk">Öva DTK</a>
           <a href="/hogskoleprovet-normering">Normering högskoleprovet</a>
           <a href="/hogskoleprovet-ord">Orden på högskoleprovet</a>
           <a href="/hogskoleprovet-formler">Formler för högskoleprovet</a>
           <a href="/hogskoleprovet-resultat">Resultatet på högskoleprovet</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
-          <a href="/plugga-infor-hogskoleprovet">Plugga inför högskoleprovet</a>
           <a href="/om">Om Tvåkommanollan</a>
           <a href="/kontakt">Kontakt</a>
         </nav>

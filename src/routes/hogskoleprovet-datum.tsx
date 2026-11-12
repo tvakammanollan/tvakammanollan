@@ -10,6 +10,7 @@ import {
   registrationPeriodText,
 } from "@/lib/hp-event";
 import { FACIT } from "@/lib/preliminart-facit";
+import { GuideFaq, guideFaqJsonLd, type GuideFaqItem } from "@/lib/guider-meta";
 import { ScrollText } from "lucide-react";
 
 /* =====================================================================
@@ -33,11 +34,49 @@ const PROVDAGEN: ReadonlyArray<{ tid: string; vad: string }> = [
   { tid: "16.55", vad: "Information och hemgång" },
 ];
 
+/**
+ * Vanliga frågor, härledda ur HP_DATES så att de aldrig kan säga något annat
+ * än listan ovanför. Samma text går till den synliga listan och till
+ * FAQPage-datan: Google kräver att svaren syns på sidan, och det är de här
+ * formuleringarna AI-sök citerar när någon frågar "när är högskoleprovet".
+ */
+function datumFaq(): GuideFaqItem[] {
+  const kommande = HP_DATES.map(
+    (d) => `${hpDateLong(d.date)} (${d.session === "höst" ? "höstprovet" : "vårprovet"})`,
+  );
+  const anmalan = HP_DATES.filter(hasRegistrationWindow).map(
+    (d) =>
+      `till ${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)} är anmälan öppen ${registrationPeriodText(d)}`,
+  );
+  return [
+    {
+      q: "När är nästa högskoleprov?",
+      a: `Kommande provdatum är ${kommande.join(" och ")}. UHR publicerar senare datum ungefär ett år i förväg.`,
+    },
+    {
+      q: "Hur många gånger om året ges högskoleprovet?",
+      a: "2 gånger: vårprovet på en lördag i april och höstprovet på en söndag i oktober. Du får skriva provet hur många gånger du vill, och det är alltid ditt bästa giltiga resultat som räknas.",
+    },
+    {
+      q: "När öppnar anmälan till högskoleprovet?",
+      a: `Anmälan görs på hogskoleprov.nu och är öppen i ungefär en vecka, ett par månader före provdagen: ${anmalan.join(", och ")}. Efter sista anmälningsdag går det inte att anmäla sig.`,
+    },
+    {
+      q: "Vad kostar högskoleprovet?",
+      a: `Provavgiften är ${HP_FEE_SEK} kronor och betalas i samband med anmälan. Den återbetalas inte om du uteblir.`,
+    },
+    {
+      q: "Hur lång är provdagen?",
+      a: "Provet består av 5 provpass på 55 minuter vardera, varav 4 räknas. Med inpassering, raster och lunch pågår dagen från klockan 08.10 till ungefär 16.55.",
+    },
+  ];
+}
+
 export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: fitTitle("Högskoleprovet datum 2026 & 2027: när är nästa prov?"),
+      title: fitTitle("Högskoleprovet datum 2026 & 2027", "när är nästa prov?"),
       // Datumen stod handskrivna här och skulle bli fel dagen HP_DATES ändras
       // — samma fel som redan städats bort ur FAQ:n och FAQPage-datan. De
       // härleds nu ur listan, och beskrivningen kortas till det Google visar.
@@ -62,6 +101,7 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
         { name: "Högskoleprovet datum", path: "/hogskoleprovet-datum" },
       ]),
       ...hpEvents().map(jsonLdScript),
+      jsonLdScript(guideFaqJsonLd(datumFaq())),
     ],
   }),
   component: DatumPage,
@@ -206,6 +246,8 @@ function DatumPage() {
           .
         </p>
       </section>
+
+      <GuideFaq items={datumFaq()} />
 
       {/* CTA: börja plugga */}
       <section className="mt-12 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">

@@ -31,7 +31,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-poangraknare",
-      title: fitTitle("Högskoleprovet poängräknare: räkna ut din poäng"),
+      title: fitTitle("Högskoleprovet poängräknare", "räkna ut din poäng"),
       description:
         "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
       ogTitle: "Högskoleprovet poängräknare",

@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
       // folk skriver "högskoleprovet", "öva högskoleprovet", "gamla prov".
       title: "Öva högskoleprovet gratis: alla gamla prov",
       description:
-        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Du börjar utan kostnad och behöver inget kreditkort.",
+        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Inget konto krävs för att börja.",
       ogDescription:
         "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
     }),
