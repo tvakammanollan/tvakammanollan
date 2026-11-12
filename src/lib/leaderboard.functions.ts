@@ -1,8 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { limits } from "./rate-limit";
 import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { isRankable } from "./username";
+
+const leaderboardInput = z.object({
+  match_type: z.enum(["verbal", "math"]),
+  limit: z.number().int().min(1).max(500).optional(),
+});
 
 /**
  * Hur många rader topplistan visar. Ett ställe för alla tre listorna på
@@ -37,7 +43,7 @@ export interface WeeklyLeaderboardRow {
  * elo_change per spelare från elo_history (service role, bypassar RLS).
  */
 export const fetchWeeklyLeaderboard = createServerFn({ method: "GET" })
-  .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
+  .inputValidator((input: unknown) => leaderboardInput.parse(input))
   .handler(async ({ data }): Promise<WeeklyLeaderboardRow[]> => {
     // Publik endpoint utan auth — hamringsskydd per IP.
     assertRateLimit(ipKey("lb"), limits.publicRead);
@@ -49,7 +55,10 @@ export const fetchWeeklyLeaderboard = createServerFn({ method: "GET" })
       .select("user_id, elo_change")
       .eq("match_type", data.match_type)
       .gte("created_at", since);
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[leaderboard] kunde inte läsa veckolistan:", error.message);
+      throw new Error("Kunde inte ladda topplistan.");
+    }
 
     const agg = new Map<string, { gain: number; games: number }>();
     for (const r of rows ?? []) {
@@ -108,7 +117,7 @@ const SCAN_MAX_PAGES = 6;
  * listan 2026-08-17.
  */
 export const fetchLeaderboard = createServerFn({ method: "GET" })
-  .inputValidator((data: { match_type: "verbal" | "math"; limit?: number }) => data)
+  .inputValidator((input: unknown) => leaderboardInput.parse(input))
   .handler(async ({ data }) => {
     // Publik endpoint utan auth — hamringsskydd per IP.
     assertRateLimit(ipKey("lb"), limits.publicRead);
