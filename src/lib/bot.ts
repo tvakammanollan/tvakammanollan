@@ -124,10 +124,3 @@ export function getBotName(_botElo: number, seed?: string): string {
       return name;
   }
 }
-
-export function botAccuracyForElo(elo: number, difficulty: number = 1): number {
-  const base = 1 / (1 + Math.exp(-(elo - 1000) / 200));
-  const penalty = (difficulty - 1) * 0.05;
-  const jitter = (Math.random() - 0.5) * 0.1;
-  return Math.max(0.1, Math.min(0.98, base - penalty + jitter));
-}

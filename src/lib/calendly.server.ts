@@ -379,11 +379,6 @@ export async function resolveCoachingEventType(): Promise<CalendlyCoachingEventT
   return value;
 }
 
-/** Bara för tester — nollställer isolatets uppslagscache. */
-export function clearCalendlyEventTypeCache(): void {
-  eventTypeCache = null;
-}
-
 /**
  * Kommande, aktiva bokningar på coachningens event-typ.
  *

@@ -106,25 +106,6 @@ export const saveProvAttempt = createServerFn({ method: "POST" })
     return { score, total };
   });
 
-/** Alla mina skrivna pass. Driver provlistan och provtillfällets sida. */
-export const fetchProvAttempts = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<ProvAttempt[]> => {
-    const { userId } = context;
-    assertRateLimit(`prov-attempts:${userId}`, limits.publicRead);
-    const { data, error } = await supabaseAdmin
-      .from("prov_attempts")
-      .select("term, pass, mode, answers, score, total, duration_s, submitted_at")
-      .eq("user_id", userId)
-      .order("submitted_at", { ascending: false })
-      .limit(200);
-    if (error) {
-      console.error("[prov] kunde inte läsa försöken:", error.message);
-      return [];
-    }
-    return (data ?? []).map((r) => toAttempt(r as Record<string, unknown>));
-  });
-
 /** Ett enskilt försök, med svaren — det som gör en genomgång i efterhand möjlig. */
 export const fetchProvAttempt = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

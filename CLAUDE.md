@@ -1646,6 +1646,17 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
 
 ### Coachningen ligger inte i navbaren (2026-10-30)
 
+**På `design/podia` är köpflödet inte nåbart alls (konstaterat 2026-11-12).**
+`CoachingModal` och `CoachingQuizCard` renderas inte av någon komponent:
+landningssidan säger uttryckligen "Studieupplägget är inte med: vi pivoterar
+bort från det", startsidans tredje kort är MEK-övningen och `/pris` nämner
+inte coachningen. Servern (`coaching.functions.ts`, webhooken, städaren,
+`/coachning/tack`) är kvar och fungerar, så ett köp via en gammal länk bokförs
+fortfarande. Komponenterna är inte raderade: det är ett produktbeslut, inte
+städning. Tas pivoten tillbaka är det `<CoachingModal source="dashboard">` på
+startsidan som saknas, ingenting annat.
+
+
 `CoachingMenuItem` är borta ur både avatarmenyn och mobilmenyn, och
 `CoachingModal` monteras inte längre från `Navbar.tsx` (`source: "navbar"`
 fyras alltså inte mer; värdet står kvar i zod-enumen och i `CoachingSource`
@@ -2128,11 +2139,11 @@ with a different look in every copy.
   svarstexten efter status — den som just svarat vill kunna läsa vad ordet var.
 - **Rank:** `RANK_TIERS` in `src/types` is the only rank scale (brons 600–999,
   silver 1000–1199, guld 1200–1399, platina 1400–1599, diamant 1600+). Render it
-  as plain text (`Verbal 1253`, `147 poäng kvar till Platina`) or with `RankIcon`; both read that one table. `RankBadge` and `EloBadge` are gone.
+  as plain text (`Verbal 1253`, `147 poäng kvar till Platina`) from that one table. `RankBadge`, `EloBadge` and `RankIcon` are gone (the last one 2026-11-12, nothing rendered it).
   A second scale used to live in `lib/elo.ts` (`eloTier`), which made 1000 ELO
   show as "Brons" in the navbar and "Silver" on the dashboard at the same time.
   `src/lib/elo.test.ts` pins the boundaries.
-- **Icons:** `RankIcon`, `AchievementIcon` (keys = achievement `id`),
+- **Icons:** `AchievementIcon` (keys = achievement `id`),
   `PodiumRank` (top-3 medal cell). Achievement/rank data files hold no icons —
   the mapping lives in the UI layer so `lib/` stays server-safe.
 - **Loading:** `Spinner` for full-screen/blocking, `<Loader2 className="animate-spin" />`

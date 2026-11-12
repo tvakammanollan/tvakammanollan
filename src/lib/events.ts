@@ -249,13 +249,6 @@ export interface ProductEvents {
   question_voted: { category: string; vote: -1 | 0 | 1; surface: "train" | "result" };
 }
 
-/** `[[uppgift:2024ht/3/12]]` — samma form som forum-markdown.ts letar efter. */
-const EXAM_QUOTE_RE = /\[\[uppgift:/;
-
-export function hasExamQuote(body: string): boolean {
-  return EXAM_QUOTE_RE.test(body);
-}
-
 /**
  * Skickar en produkthändelse. Best-effort hela vägen: `track` sväljer sina egna
  * fel, och PostHog-bryggan är en no-op utan samtycke.

@@ -183,23 +183,6 @@ export interface ProvExample {
   /** Diagrammet uppgiften hör till, för DTK. */
   figure?: string;
 }
-
-/**
- * "2026vt" → "Vårprovet 2026". Används bara som reserv — provens etiketter
- * kommer normalt från indexfilen, som kan skilja på två prov samma säsong
- * ("Vårprovet 2022 (12 mars)").
- */
-export function termToLabel(term: string): string {
-  const m = term.match(/^(\d{4})(ht|vt)([ab])?$/);
-  if (!m) return term;
-  const season = m[2] === "ht" ? "Höstprovet" : "Vårprovet";
-  // 2021vta och 2021vtb är två skilda provtillfällen samma vår. Utan suffixet
-  // får de identisk etikett och går inte att skilja åt i listor eller länkar.
-  // Bokstaven följer inte datumordning (2022vta är 7 maj, 2022vtb 12 mars), så
-  // reserven påstår ingen ordning — indexets label har det riktiga datumet.
-  return `${season} ${m[1]}${m[3] ? ` (prov ${m[3].toUpperCase()})` : ""}`;
-}
-
 /** "verbal" → "Verbal". */
 export function passKindLabel(kind: "verbal" | "kvant"): string {
   return kind === "verbal" ? "Verbal" : "Kvantitativ";

@@ -157,10 +157,6 @@ export function answerIndex(answer: string): number {
   return LETTERS.indexOf(answer as Answer);
 }
 
-export function keySlots(item: MekItem): string[] {
-  return slots(item.alternatives[answerIndex(item.answer)] ?? "", gapCount(item.text));
-}
-
 /** Ordtokens utan skiljetecken och utan luckor, gemener. */
 export function tokens(text: string): string[] {
   return text

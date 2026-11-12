@@ -119,17 +119,6 @@ export const sounds = {
   open: () => sweep(660, 1100, 0.12, "sine", 0.04),
 };
 
-export function setSoundEnabled(v: boolean) {
-  enabled = v;
-  if (typeof localStorage !== "undefined") {
-    localStorage.setItem("sfx_enabled", v ? "true" : "false");
-  }
-}
-
-export function isSoundEnabled() {
-  return enabled;
-}
-
 // Install global click sound on real buttons. Idempotent.
 let installed = false;
 export function installGlobalClickSound() {

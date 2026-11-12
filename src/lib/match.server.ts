@@ -326,26 +326,6 @@ export function simulateBotMatch(
   return { score: correctIds.length, correctQuestionIds: correctIds, submitTimeSeconds };
 }
 
-// Legacy helpers kept for backward compat — prefer simulateBotMatch.
-export function simulateBotScore(botElo: number): number {
-  let base: number;
-  if (botElo >= 1400) base = 7;
-  else if (botElo >= 1200) base = 6;
-  else if (botElo >= 1000) base = 5;
-  else if (botElo >= 800) base = 3;
-  else base = 2;
-  const variation = Math.floor(Math.random() * 3) - 1;
-  return clamp(base + variation, 0, 8);
-}
-
-export function simulateBotSubmitDelaySec(botElo: number): number {
-  if (botElo >= 1300) return Math.floor(120 + Math.random() * 160);
-  if (botElo >= 900) return Math.floor(280 + Math.random() * 120);
-  return Math.floor(380 + Math.random() * 95);
-}
-
-export { getBotName } from "./bot";
-
 // ---------- ELO ----------
 
 export function kFactor(elo: number) {
