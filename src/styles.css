@@ -619,7 +619,12 @@ body {
 svg,
 hr,
 .skeleton-shimmer {
-  background: var(--line);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.skeleton-shimmer {
+  background: var(--border);
 }
 
 /* Ikonknappar och liknande ska fortfarande gå att klicka och fokusera,
