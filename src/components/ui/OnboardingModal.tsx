@@ -130,135 +130,150 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(46,30,20,0.5)] p-4"
+      className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-[rgba(46,30,20,0.5)]"
       role="dialog"
       aria-modal="true"
       aria-label="Kom igång"
     >
-      <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl sm:p-8">
-        {/* Progress indicator */}
-        <div className="mb-6 flex items-center justify-center gap-2">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                i <= step ? "bg-primary" : "bg-border"
-              }`}
-            />
-          ))}
-        </div>
+      {/* Kortet kan vara högre än en telefonskärm (fem målknappar + rubrik +
+          knapprad), och bakgrunden är skroll-låst av useDismissible. Därför
+          skrollar overlayen själv: min-h-full + items-center centrerar när
+          det får plats och lägger kortet överst när det inte gör det. */}
+      <div className="flex min-h-full items-center justify-center p-4 pt-safe pb-safe">
+        <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl sm:p-8">
+          {/* Progress indicator */}
+          <div className="mb-6 flex items-center justify-center gap-2">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                  i <= step ? "bg-primary" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
 
-        <div key={step}>
-          {step === 0 && (
-            <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-                Välkommen, {displayName(profile.username, profile.id)}!
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">Vad siktar du på för HP-poäng?</p>
-              <div className="mt-5 grid gap-2">
-                {GOALS.map((g) => {
-                  const selected = target === g.value;
-                  return (
-                    <button
-                      key={g.value}
-                      onClick={() => setTarget(g.value)}
-                      className={`flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all ${
-                        selected
-                          ? "border-primary bg-primary/10"
-                          : "border-border bg-card hover:border-foreground/20"
-                      }`}
-                    >
-                      <span className="flex items-center gap-3">
-                        <g.icon className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden />
-                        <span>
-                          <span className="font-semibold tabular-nums">{g.range}</span>{" "}
-                          <span className="text-sm text-muted-foreground">{g.label}</span>
-                        </span>
-                      </span>
-                      {selected && <Check className="h-4 w-4 text-primary" aria-hidden />}
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="mt-6 flex items-center justify-between">
-                <button onClick={skip} className="text-xs text-muted-foreground hover:underline">
-                  Hoppa över onboarding
-                </button>
-                <Button onClick={() => setStep(1)} disabled={target === null}>
-                  Sätt mitt mål
-                </Button>
-              </div>
-            </>
-          )}
-
-          {step === 1 && (
-            <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-                Vad vill du träna på?
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">Du kan alltid byta senare.</p>
-              <div className="mt-5 grid gap-2">
-                {FOCUS.map((f) => {
-                  const selected = focus === f.value;
-                  return (
-                    <button
-                      key={f.value}
-                      onClick={() => setFocus(f.value)}
-                      className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${
-                        selected
-                          ? "border-primary bg-primary/10"
-                          : "border-border bg-card hover:border-foreground/20"
-                      }`}
-                    >
-                      <f.icon className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden />
-                      <span>
-                        <div className="font-semibold">{f.label}</div>
-                        <div className="text-xs text-muted-foreground">{f.sub}</div>
-                      </span>
-                      {selected && <Check className="ml-auto h-4 w-4 text-primary" aria-hidden />}
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="mt-6 flex items-center justify-between">
-                <Button variant="ghost" onClick={() => setStep(0)}>
-                  Tillbaka
-                </Button>
-                <Button onClick={() => setStep(2)} disabled={focus === null}>
-                  Nästa
-                </Button>
-              </div>
-            </>
-          )}
-
-          {step === 2 && (
-            <>
-              <h2 className="text-2xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-                Du är redo!
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Din ELO börjar på 1000, i Silver-rankingen.
-              </p>
-              <p className="mt-4 text-center text-sm text-muted-foreground">
-                Spela din första match för att se var du hamnar.
-              </p>
-              <div className="mt-6 flex flex-col gap-2">
-                <Button
-                  size="lg"
-                  className="w-full bg-primary text-on-brand hover:bg-primary-deep"
-                  disabled={saving}
-                  onClick={() => finish(true)}
+          <div key={step}>
+            {step === 0 && (
+              <>
+                <h2
+                  className="text-2xl font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
-                  <Zap className="h-4 w-4" aria-hidden />
-                  Spela första matchen
-                </Button>
-                <Button variant="outline" disabled={saving} onClick={() => finish(false)}>
-                  <Home className="h-4 w-4" aria-hidden />
-                  Gå till hemskärmen
-                </Button>
-              </div>
-            </>
-          )}
+                  Välkommen, {displayName(profile.username, profile.id)}!
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">Vad siktar du på för HP-poäng?</p>
+                <div className="mt-5 grid gap-2">
+                  {GOALS.map((g) => {
+                    const selected = target === g.value;
+                    return (
+                      <button
+                        key={g.value}
+                        onClick={() => setTarget(g.value)}
+                        className={`flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all ${
+                          selected
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-card hover:border-foreground/20"
+                        }`}
+                      >
+                        <span className="flex items-center gap-3">
+                          <g.icon className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden />
+                          <span>
+                            <span className="font-semibold tabular-nums">{g.range}</span>{" "}
+                            <span className="text-sm text-muted-foreground">{g.label}</span>
+                          </span>
+                        </span>
+                        {selected && <Check className="h-4 w-4 text-primary" aria-hidden />}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="mt-6 flex items-center justify-between">
+                  <button onClick={skip} className="text-xs text-muted-foreground hover:underline">
+                    Hoppa över onboarding
+                  </button>
+                  <Button onClick={() => setStep(1)} disabled={target === null}>
+                    Sätt mitt mål
+                  </Button>
+                </div>
+              </>
+            )}
+
+            {step === 1 && (
+              <>
+                <h2
+                  className="text-2xl font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Vad vill du träna på?
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">Du kan alltid byta senare.</p>
+                <div className="mt-5 grid gap-2">
+                  {FOCUS.map((f) => {
+                    const selected = focus === f.value;
+                    return (
+                      <button
+                        key={f.value}
+                        onClick={() => setFocus(f.value)}
+                        className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${
+                          selected
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-card hover:border-foreground/20"
+                        }`}
+                      >
+                        <f.icon className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden />
+                        <span>
+                          <div className="font-semibold">{f.label}</div>
+                          <div className="text-xs text-muted-foreground">{f.sub}</div>
+                        </span>
+                        {selected && <Check className="ml-auto h-4 w-4 text-primary" aria-hidden />}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="mt-6 flex items-center justify-between">
+                  <Button variant="ghost" onClick={() => setStep(0)}>
+                    Tillbaka
+                  </Button>
+                  <Button onClick={() => setStep(2)} disabled={focus === null}>
+                    Nästa
+                  </Button>
+                </div>
+              </>
+            )}
+
+            {step === 2 && (
+              <>
+                <h2
+                  className="text-2xl font-semibold"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Du är redo!
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Din ELO börjar på 1000, i Silver-rankingen.
+                </p>
+                <p className="mt-4 text-center text-sm text-muted-foreground">
+                  Spela din första match för att se var du hamnar.
+                </p>
+                <div className="mt-6 flex flex-col gap-2">
+                  <Button
+                    size="lg"
+                    className="w-full bg-primary text-on-brand hover:bg-primary-deep"
+                    disabled={saving}
+                    onClick={() => finish(true)}
+                  >
+                    <Zap className="h-4 w-4" aria-hidden />
+                    Spela första matchen
+                  </Button>
+                  <Button variant="outline" disabled={saving} onClick={() => finish(false)}>
+                    <Home className="h-4 w-4" aria-hidden />
+                    Gå till hemskärmen
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
