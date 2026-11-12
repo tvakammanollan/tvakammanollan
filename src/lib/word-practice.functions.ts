@@ -121,8 +121,17 @@ export const getWordProgress = createServerFn({ method: "GET" })
     return { correctCount: correct ?? 0, totalCount: total ?? 0, userId };
   });
 
+export const countOrdQuestions = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = supabaseAdmin;
+  const { count, error } = await supabase
+    .from("questions")
+    .select("id", { count: "exact", head: true })
+    .eq("category", "ORD");
+  if (error) throwDbError(error, "countOrdQuestions");
+  return { count: count ?? 0 };
+});
+
 export const getOrdFilterCounts = createServerFn({ method: "GET" }).handler(async () => {
-  assertRateLimit(ipKey("ord-filter-counts"), limits.publicRead);
   const supabase = supabaseAdmin;
   const base = () =>
     supabase.from("questions").select("id", { count: "exact", head: true }).eq("category", "ORD");
@@ -364,14 +373,13 @@ export type OrdLeaderboardRow = {
 // PUBLIC — no auth required, exactly like the verbal/math `fetchLeaderboard`.
 // The leaderboard page is viewable by logged-out visitors, so requiring auth here
 // caused a 401 that crashed the client with a "reading 'filter'" TypeError.
-// Den egna raden läses ur tokenen (`optionalSupabaseAuth`), aldrig ur ett
-// klientskickat id: med ett fritt `user_id` var fallbacken nedan ett uppslag
-// av vilket kontos ordstatistik som helst, utan inloggning.
+// The signed-in user's id is passed as an optional arg purely to highlight their row.
 export const fetchOrdLeaderboard = createServerFn({ method: "GET" })
-  .middleware([optionalSupabaseAuth])
-  .handler(async ({ context }) => {
-    assertRateLimit(ipKey("lb-ord"), limits.publicRead);
-    const userId = context.userId;
+  .inputValidator((data: { user_id?: string } | undefined) =>
+    z.object({ user_id: z.string().uuid().optional() }).parse(data ?? {}),
+  )
+  .handler(async ({ data }) => {
+    const userId = data.user_id ?? null;
     // Hämta från ord_practice_stats (redan aggregerad per användare).
     // Bypass RPC + filter — alla som har minst 1 svar syns, utom anonyma konton
     // (se username.ts). Hämtar 500 för att fylla listan även när en stor del
