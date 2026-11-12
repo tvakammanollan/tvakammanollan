@@ -5,31 +5,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 import { Button } from "@/components/ui/button";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-  Legend,
-  BarChart,
-  Bar,
-  Cell,
-} from "recharts";
-import {
-  Target,
-  TrendingUp,
-  Swords,
-} from "lucide-react";
+import { Swords } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { displayCategory, formatDate, formatTime, enhet } from "@/lib/sv-format";
+import { formatDate, enhet } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { outcomeFor } from "@/lib/match-outcome";
-import { buildEloSeries, eloSeriesSpan, eloTickUnit, type EloSeries } from "@/lib/elo-series";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
@@ -41,15 +23,12 @@ export const Route = createFileRoute("/stats")({
       path: "/stats",
       title: "Din statistik",
       description:
-        "Följ din HP-progression: ELO-utveckling, win rate, prestanda per delprov och uppskattad normerad HP-poäng.",
+        "Följ din HP-progression: matcher, win rate, matchhistorik och uppskattad normerad HP-poäng.",
       noindex: true,
     }),
     links: pageLinks("/stats"),
   }),
 });
-
-const VERBAL_COLOR = "#06040e";
-const MATH_COLOR = "#10242f";
 
 interface UserRow {
   username: string;
@@ -62,19 +41,6 @@ interface UserRow {
   losses: number;
   current_streak?: number;
   longest_streak?: number;
-}
-
-/**
- * Hur många matcher per del kurvan sträcker sig över. Räknas per del och inte
- * totalt — se hämtningen nedan.
- */
-const ELO_POINTS_PER_TRACK = 50;
-
-interface EloRow {
-  match_type: "verbal" | "math";
-  elo_after: number;
-  elo_change: number;
-  created_at: string;
 }
 
 interface MatchHistRow {
@@ -95,28 +61,16 @@ interface MatchHistRow {
   player2_submitted_at: string | null;
 }
 
-interface AnswerStat {
-  category: string;
-  correct: number;
-  total: number;
-  avgTime: number | null;
-}
-
-const VERBAL_CATS = ["ORD", "MEK", "LAS", "ELF"];
-const MATH_CATS = ["XYZ", "KVA", "NOG", "DTK"];
-
 function StatsPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserRow | null>(null);
-  const [eloSeries, setEloSeries] = useState<EloSeries | null>(null);
   const [matchHistory, setMatchHistory] = useState<MatchHistRow[]>([]);
   const [eloByMatch, setEloByMatch] = useState<Map<string, number>>(new Map());
   const [opponentNames, setOpponentNames] = useState<Map<string, string>>(new Map());
   const [page, setPage] = useState(0);
   const [verbalAvg, setVerbalAvg] = useState<number | null>(null);
   const [mathAvg, setMathAvg] = useState<number | null>(null);
-  const [breakdown, setBreakdown] = useState<AnswerStat[]>([]);
 
   useEffect(() => {
     if (loading) return;
@@ -135,35 +89,6 @@ function StatsPage() {
         .maybeSingle();
       if (cancelled) return;
       setProfile(prof as UserRow);
-
-      // ELO-historik. Hämtas EN GÅNG PER DEL med flit: ett gemensamt
-      // `limit(30)` över hela historiken betyder att den som spelat trettio
-      // mattematcher inte har en enda verbal punkt kvar i urvalet, och den
-      // verbala linjen försvinner utan förklaring.
-      const [verbalRes, mathRes] = await Promise.all([
-        supabase
-          .from("elo_history")
-          .select("match_type, elo_after, elo_change, created_at")
-          .eq("user_id", user.id)
-          .eq("match_type", "verbal")
-          .order("created_at", { ascending: false })
-          .limit(ELO_POINTS_PER_TRACK),
-        supabase
-          .from("elo_history")
-          .select("match_type, elo_after, elo_change, created_at")
-          .eq("user_id", user.id)
-          .eq("match_type", "math")
-          .order("created_at", { ascending: false })
-          .limit(ELO_POINTS_PER_TRACK),
-      ]);
-      if (cancelled) return;
-      setEloSeries(
-        buildEloSeries([
-          ...((verbalRes.data ?? []) as EloRow[]),
-          ...((mathRes.data ?? []) as EloRow[]),
-        ]),
-      );
-
       // Match history – all matches the user has played, finished
       const { data: mh } = await supabase
         .from("matches")
@@ -227,50 +152,6 @@ function StatsPage() {
       }
       setVerbalAvg(cntV ? sumV / cntV : null);
       setMathAvg(cntM ? sumM / cntM : null);
-
-      // Delprov breakdown + average time per category
-      // `selected_answer` måste med: `submitMatch` skriver en rad för VARJE
-      // fråga i matchen, även de som aldrig besvarades (`selected_answer` null,
-      // `is_correct` false). Räknades de med hamnade obesvarade frågor i
-      // nämnaren som felsvar, så den som lämnade in med fyra av åtta hunna fick
-      // 50 % i stället för sin faktiska träffsäkerhet. Andel rätt ska mäta det
-      // man svarat på; hur mycket man hann är tidspress, en annan sak.
-      const { data: ans } = await supabase
-        .from("match_answers")
-        .select("is_correct, selected_answer, time_spent_seconds, questions(category)")
-        .eq("user_id", user.id)
-        .not("selected_answer", "is", null)
-        .limit(2000);
-      const tally = new Map<
-        string,
-        { correct: number; total: number; timeSum: number; timeCount: number }
-      >();
-      for (const row of ans ?? []) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const cat = (row as any).questions?.category as string | undefined;
-        if (!cat) continue;
-        const t = tally.get(cat) ?? { correct: 0, total: 0, timeSum: 0, timeCount: 0 };
-        t.total += 1;
-        if (row.is_correct) t.correct += 1;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const ts = (row as any).time_spent_seconds as number | null;
-        if (typeof ts === "number" && ts > 0) {
-          t.timeSum += ts;
-          t.timeCount += 1;
-        }
-        tally.set(cat, t);
-      }
-      const stats: AnswerStat[] = [];
-      for (const c of [...VERBAL_CATS, ...MATH_CATS]) {
-        const t = tally.get(c);
-        stats.push({
-          category: c,
-          correct: t?.correct ?? 0,
-          total: t?.total ?? 0,
-          avgTime: t && t.timeCount > 0 ? t.timeSum / t.timeCount : null,
-        });
-      }
-      setBreakdown(stats);
     })();
     return () => {
       cancelled = true;
@@ -292,22 +173,12 @@ function StatsPage() {
           ))}
         </div>
         <div className="skeleton-shimmer mt-8 h-72 rounded-2xl" />
-        <div className="skeleton-shimmer mt-6 h-72 rounded-2xl" />
       </main>
     );
   }
 
   const totalPages = Math.max(1, Math.ceil(matchHistory.length / 10));
   const pageRows = matchHistory.slice(page * 10, page * 10 + 10);
-
-  const breakdownData = breakdown.map((b) => ({
-    category: displayCategory(b.category),
-    pct: b.total >= 5 ? Math.round((b.correct / b.total) * 100) : null,
-    enough: b.total >= 5,
-    color: VERBAL_CATS.includes(b.category) ? VERBAL_COLOR : MATH_COLOR,
-    total: b.total,
-    correct: b.correct,
-  }));
 
   return (
     <>
@@ -356,247 +227,6 @@ function StatsPage() {
         {/* Achievements */}
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <AchievementsCard variant="full" />
-        </div>
-
-        {/* ELO chart */}
-        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-          <div className="mb-4 flex items-baseline justify-between">
-            <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              ELO över tid
-            </h2>
-            <span className="text-xs text-muted-foreground">
-              Senaste {ELO_POINTS_PER_TRACK} matcherna per del
-            </span>
-          </div>
-
-          {/* Sammanfattning per del. Kurvan visar utvecklingen, den här raden
-              säger vad den betyder — och den skiljer "har inte spelat matte"
-              från "matte står stilla", vilket en linje inte kan. */}
-          {eloSeries && (
-            <div className="mb-4 flex flex-wrap gap-x-6 gap-y-2 text-xs">
-              {(
-                [
-                  ["verbal", "Verbal", VERBAL_COLOR],
-                  ["math", "Kvantitativ", MATH_COLOR],
-                ] as const
-              ).map(([track, label, color]) => {
-                const span = eloSeries.span[track];
-                const antal = eloSeries.counts[track];
-                return (
-                  <span key={track} className="inline-flex items-center gap-1.5">
-                    <span
-                      aria-hidden
-                      className="h-2 w-2 shrink-0 rounded-full"
-                      style={{ background: color }}
-                    />
-                    <span className="font-medium text-foreground">{label}:</span>
-                    {span && antal > 0 ? (
-                      <span className="tabular-nums text-muted-foreground">
-                        {span.last}
-                        <span
-                          className={
-                            span.last - span.first > 0
-                              ? "ml-1 text-[var(--success)]"
-                              : span.last - span.first < 0
-                                ? "ml-1 text-[var(--danger)]"
-                                : "ml-1"
-                          }
-                        >
-                          ({span.last - span.first >= 0 ? "+" : ""}
-                          {span.last - span.first})
-                        </span>
-                        <span className="ml-1">
-                          på {antal} {antal === 1 ? "match" : "matcher"}
-                        </span>
-                      </span>
-                    ) : (
-                      <span className="text-muted-foreground">inga matcher än</span>
-                    )}
-                  </span>
-                );
-              })}
-            </div>
-          )}
-          {!eloSeries || eloSeries.points.length < 2 ? (
-            <EmptyState
-              icon={TrendingUp}
-              title="Inte tillräckligt med data ännu"
-              subtitle="Spela minst 2 matcher för att se din ELO-kurva börja forma sig."
-              ctaLabel="Spela en match"
-              ctaHref="/"
-            />
-          ) : (
-            <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={eloSeries.points}
-                  margin={{ top: 8, right: 12, left: -10, bottom: 0 }}
-                >
-                  <CartesianGrid
-                    stroke="rgba(255,255,255,0.08)"
-                    strokeDasharray="3 3"
-                    vertical={false}
-                  />
-                  {/* Riktig tidsaxel. Var tidigare matchens ordningsnummer,
-                      så två matcher samma kväll låg lika långt isär som två
-                      med en månad emellan. */}
-                  {/* Etiketternas upplösning följer seriens spann. De var
-                      alltid ett datum, så tre matcher samma kväll gav fyra
-                      identiska etiketter ("21 aug. 21 aug. 21 aug. 21 aug.")
-                      och axeln sa ingenting. Se `eloTickUnit`. */}
-                  <XAxis
-                    dataKey="ts"
-                    type="number"
-                    scale="time"
-                    domain={["dataMin", "dataMax"]}
-                    tickFormatter={(v: number) => {
-                      const enhet = eloTickUnit(eloSeriesSpan(eloSeries.points));
-                      if (enhet === "time") return formatTime(new Date(v));
-                      if (enhet === "month")
-                        return formatDate(new Date(v), { month: "short", year: "numeric" });
-                      return formatDate(new Date(v), { month: "short", day: "numeric" });
-                    }}
-                    stroke="rgba(255,255,255,0.42)"
-                    fontSize={11}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    stroke="rgba(255,255,255,0.42)"
-                    fontSize={11}
-                    tickLine={false}
-                    domain={[
-                      (min: number) => Math.max(600, Math.floor(min - 30)),
-                      (max: number) => Math.ceil(max + 30),
-                    ]}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      borderRadius: 10,
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(251, 246, 236, 0.96)",
-                      color: "#06040e",
-                      fontSize: 12,
-                    }}
-                    labelStyle={{ color: "#06040e" }}
-                    itemStyle={{ color: "#06040e" }}
-                    // Datum OCH klockslag: två matcher samma dag fick annars
-                    // samma rubrik i rutan och gick inte att skilja åt.
-                    labelFormatter={(v) =>
-                      `${formatDate(new Date(Number(v)))} ${formatTime(new Date(Number(v)))}`
-                    }
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    formatter={(value: any, name: any, props: any) => {
-                      // Ändringen hör till den del som faktiskt spelades. Utan
-                      // kontrollen fick BÅDA linjerna samma delta i rutan, så
-                      // en verbal vinst såg ut att ha höjt matte-ELO också.
-                      const p = props?.payload;
-                      const track = name === "Verbal" ? "verbal" : "math";
-                      if (p?.changed !== track || p?.delta == null) return [`${value}`, name];
-                      const sign = p.delta >= 0 ? "+" : "";
-                      return [`${value} (${sign}${p.delta})`, name];
-                    }}
-                  />
-                  <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" />
-                  <Line
-                    type="monotone"
-                    dataKey="verbal"
-                    name="Verbal"
-                    stroke={VERBAL_COLOR}
-                    strokeWidth={2.5}
-                    dot={{ r: 3 }}
-                    connectNulls
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="math"
-                    name="Kvantitativ"
-                    stroke={MATH_COLOR}
-                    strokeWidth={2.5}
-                    dot={{ r: 3 }}
-                    connectNulls
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-        </div>
-
-        {/* Delprov breakdown */}
-        <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-          <div className="mb-4 flex items-baseline justify-between">
-            <h2
-              className="relative text-xl font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-10 after:bg-primary"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Delprov-prestation
-            </h2>
-            <span className="text-xs text-muted-foreground">Min. 5 svar per delprov</span>
-          </div>
-          {breakdownData.every((b) => !b.enough) ? (
-            <EmptyState
-              icon={Target}
-              title="Spela fler matcher"
-              subtitle="Vi behöver mer data för att visa din träffsäkerhet per delprov."
-            />
-          ) : (
-            <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={breakdownData} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
-                  <CartesianGrid
-                    stroke="rgba(255,255,255,0.08)"
-                    strokeDasharray="3 3"
-                    vertical={false}
-                  />
-                  <XAxis
-                    dataKey="category"
-                    stroke="rgba(255,255,255,0.42)"
-                    fontSize={11}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    stroke="rgba(255,255,255,0.42)"
-                    fontSize={11}
-                    tickLine={false}
-                    domain={[0, 100]}
-                    tickFormatter={(v) => `${v}%`}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      borderRadius: 10,
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      background: "rgba(251, 246, 236, 0.96)",
-                      color: "#06040e",
-                      fontSize: 12,
-                    }}
-                    labelStyle={{ color: "#06040e" }}
-                    itemStyle={{ color: "#06040e" }}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    formatter={(value: any, _name: any, props: any) => {
-                      const p = props?.payload;
-                      if (!p?.enough) {
-                        // Skilj "inga svar alls" från "för få för att säga något".
-                        return [
-                          p?.total ? `Bara ${p.total} svar än` : "Inga svar än",
-                          "Andel rätt",
-                        ];
-                      }
-                      // Andelen utan antal säger inget om hur säker den är:
-                      // 80 % av 5 frågor och 80 % av 200 är olika påståenden.
-                      return [`${value}% av ${p.total} svar`, "Andel rätt"];
-                    }}
-                  />
-                  <Bar dataKey="pct" radius={[6, 6, 0, 0]}>
-                    {breakdownData.map((entry, i) => (
-                      <Cell key={i} fill={entry.enough ? entry.color : "rgba(255,255,255,0.12)"} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          )}
         </div>
 
         {/* Match history */}
