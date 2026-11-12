@@ -6,6 +6,7 @@ import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
 import { ordExamTerms } from "@/lib/ord-termer";
 import { useShowChance } from "@/hooks/useShowChance";
+import { ChanceMeter } from "@/components/ChanceMeter";
 
 /* =====================================================================
    ORDLISTAN — ETT UPPSLAG PER SIDA
@@ -215,10 +216,14 @@ function OrdlistaEntryPage() {
               Dölj
             </button>
           </div>
-          <p className="mt-2.5 text-[15px] leading-[1.7] text-white/70">
-            Vi uppskattar chansen till <strong className="font-semibold">{sannolikhet.text}</strong>
-            , ungefär {sannolikhet.ettPa}. {sannolikhet.skal}
-          </p>
+          <div className="mt-4">
+            <ChanceMeter
+              text={sannolikhet.text}
+              ettPa={sannolikhet.ettPa}
+              band={sannolikhet.band}
+            />
+          </div>
+          <p className="mt-4 text-[15px] leading-[1.7] text-white/70">{sannolikhet.skal}</p>
           <p className="mt-3 text-[12px] leading-relaxed text-white/45">
             Det är vår egen beräkning ur alla ORD-uppgifter sedan 1997, inte ett besked från UHR.
             Ordet är ett av {formatInt(total)} i ordlistan och provet har 20 ORD-uppgifter.

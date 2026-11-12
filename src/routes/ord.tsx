@@ -29,6 +29,7 @@ import { ordText, hasOrdDefinition, formatInt } from "@/lib/sv-format";
 import { ordDefinitionParts, definitionSourceLabel } from "@/lib/ord-definition";
 import { sounds } from "@/lib/sounds";
 import { useShowChance } from "@/hooks/useShowChance";
+import { ChanceMeter } from "@/components/ChanceMeter";
 import { trackEvent } from "@/lib/events";
 import { updateStreak } from "@/lib/streak";
 import {
@@ -787,10 +788,13 @@ function OrdPracticePage() {
                 )}
 
                 {picked && showChance && current.chans && (
-                  <p className="mt-4 text-sm text-white/60">
-                    Chans att ordet står på nästa prov: <strong>{current.chans.text}</strong>,
-                    ungefär {current.chans.ettPa}. Vår egen uppskattning.
-                  </p>
+                  <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                    <p className="mb-3 text-xs font-semibold text-white/55">
+                      Chans att ordet står på nästa prov
+                    </p>
+                    <ChanceMeter compact {...current.chans} />
+                    <p className="mt-3 text-xs text-white/45">Vår egen uppskattning.</p>
+                  </div>
                 )}
 
                 {picked && (

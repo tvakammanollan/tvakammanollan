@@ -18,9 +18,11 @@ function throwDbError(error: { message: string }, ctx: string): never {
   throw new Error("Något gick fel. Försök igen om en stund.");
 }
 
-function chansFor(questionText: string): { text: string; ettPa: string; p: number } | null {
+function chansFor(
+  questionText: string,
+): { text: string; ettPa: string; p: number; band: number } | null {
   const s = ordSannolikhet(ordSlug(questionText));
-  return s ? { text: s.text, ettPa: s.ettPa, p: s.p } : null;
+  return s ? { text: s.text, ettPa: s.ettPa, p: s.p, band: s.band } : null;
 }
 
 export type WordQuestion = {
@@ -32,7 +34,7 @@ export type WordQuestion = {
   definition: string | null;
   definition_source: string | null;
   /** Sajtens uppskattade chans att ordet står på nästa prov, färdigformaterad. */
-  chans?: { text: string; ettPa: string; p: number } | null;
+  chans?: { text: string; ettPa: string; p: number; band: number } | null;
 };
 
 export const fetchWordBatch = createServerFn({ method: "GET" })
