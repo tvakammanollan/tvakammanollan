@@ -55,7 +55,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
   useEffect(() => {
     if (mode !== "waiting" || !waitingMatchId) return;
     const channel = supabase
-      .channel(`waiting-${waitingMatchId}`)
+      .channel(`waiting-${waitingMatchId}-${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         {
@@ -65,8 +65,7 @@ export function MatchmakerModal({ open, onOpenChange, matchType }: Props) {
           filter: `id=eq.${waitingMatchId}`,
         },
         (payload) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const row = payload.new as any;
+          const row = payload.new as { status?: string };
           if (row.status === "active") {
             navigate({ to: "/match/$matchId", params: { matchId: waitingMatchId } });
             close();
@@ -210,7 +209,7 @@ Tillbaka
         {mode === "waiting" && (
           <div className="grid gap-4">
             <div className="rounded-xl border border-border bg-background p-5 text-center">
-              <div className="text-xs tracking-wide text-muted-foreground">Rumkod</div>
+              <div className="text-xs text-muted-foreground">Rumkod</div>
               <div className="mt-1 text-3xl font-bold tracking-[0.3em]">{waitingCode}</div>
             </div>
             <div className="flex items-center gap-2">

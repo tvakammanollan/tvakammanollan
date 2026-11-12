@@ -391,13 +391,12 @@ function MatchPage() {
   useEffect(() => {
     if (!match || match.status !== "waiting") return;
     const channel = supabase
-      .channel(`match-waiting-${matchId}`)
+      .channel(`match-waiting-${matchId}-${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
         (payload) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const row = payload.new as any;
+          const row = payload.new as { status?: string; player2_id?: string | null };
           if (row.status === "active" && row.player2_id) {
             // Trigger a full reload of match + questions
             setReloadTick((t) => t + 1);
@@ -464,8 +463,10 @@ function MatchPage() {
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
         (payload) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const row = payload.new as any;
+          const row = payload.new as {
+            player1_submitted_at?: string | null;
+            player2_submitted_at?: string | null;
+          };
           const oppSubmitted =
             match.player1_id === user.id ? row.player2_submitted_at : row.player1_submitted_at;
           // Starta INTE force-nedräkningen innan frågorna laddats (annars riskerar en
@@ -479,7 +480,9 @@ function MatchPage() {
             oppForceStartedRef.current = true;
             setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
-            toast.info(`Motståndaren är klar! Du har ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} kvar.`);
+            toast.info(
+              `Motståndaren är klar! Du har ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} kvar.`,
+            );
           }
         },
       )
@@ -651,7 +654,7 @@ function MatchPage() {
     const connect = () => {
       if (cancelled) return;
       const ch = supabase
-        .channel(`match-${matchId}-${attempts}`)
+        .channel(`match-${matchId}-${Math.random().toString(36).slice(2)}`)
         .on(
           "postgres_changes",
           { event: "UPDATE", schema: "public", table: "matches", filter: `id=eq.${matchId}` },
@@ -732,9 +735,7 @@ function MatchPage() {
   if (!match || questions.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-        <span
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-on-brand"
-        >
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-terracotta text-[var(--cream)]">
           <Trophy className="h-7 w-7" />
         </span>
         <p className="text-sm text-white/65">Förbereder arenan…</p>
@@ -772,9 +773,7 @@ function MatchPage() {
             Anslutningen bröts. Försöker återansluta…
           </div>
         ) : null}
-        <span
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-brand"
-        >
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-terracotta text-[var(--cream)]">
           <Trophy className="h-7 w-7" />
         </span>
         <div>
@@ -805,17 +804,13 @@ function MatchPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
-      <header
-        className="sticky top-0 z-20"
-        style={{
-          // Var rgba(251, 246, 236, 0.92) — det gamla blå-navyt. Matchskärmen är den mest
-          // besökta i appen och hade alltså en blå glasremsa mot brun bakgrund.
-          background: "rgba(251, 246, 236, 0.92)",
-          borderBottom: "1px solid var(--line)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-        }}
-      >
+      {/* Terracotta är duellens yta (`lib/produktzon.ts`), samma som
+          spela-kortet på startsidan och banderollen "Du har en match igång".
+          Listen var tidigare en halvgenomskinlig remsa i Lundens creme
+          (#fbf6ec), hårdkodad, och låg gul mot Podias grå grundyta. Solid
+          färg, ingen blur: det som står på den är Ink och Graphite, som
+          klarar 8,7:1 respektive 5,8:1 mot terracotta. */}
+      <header className="sticky top-0 z-20 bg-terracotta">
         {/* Bara klockan. Raden bar tidigare också "Fråga 3 av 8" och
             "Mot: {namn}" — båda står ordagrant i progressbarerna direkt
             under, så frågepositionen syntes 3 gånger på skärmen och
@@ -833,12 +828,15 @@ function MatchPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-medium text-foreground">Du</span>
-                <span className="tabular-nums text-muted-foreground">
+                <span className="font-medium text-[var(--cream)]">Du</span>
+                <span className="tabular-nums text-[var(--cream-3)]">
                   {answers.size}/{questions.length}
                 </span>
               </div>
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+              {/* Spåret är ljusare än listen, inte mörkare: på en färgad yta
+                  försvinner annars den del som inte fyllts. Samma val som
+                  ämnesväxeln på startsidans spela-kort. */}
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-card/60">
                 <div
                   className="h-full bg-primary"
                   style={{ width: `${(answers.size / Math.max(1, questions.length)) * 100}%` }}
@@ -847,14 +845,14 @@ function MatchPage() {
             </div>
             <div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="truncate font-medium text-foreground">
+                <span className="truncate font-medium text-[var(--cream)]">
                   {opponentName || "Okänd spelare"}
                 </span>
-                <span className="tabular-nums text-muted-foreground">
+                <span className="tabular-nums text-[var(--cream-3)]">
                   {Math.min(oppAnswered, questions.length)}/{questions.length}
                 </span>
               </div>
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-card/60">
                 <div
                   className="h-full bg-bark"
                   style={{
@@ -867,12 +865,8 @@ function MatchPage() {
         </div>
         {oppForceCountdown !== null && (
           <div
-            className="flex items-center justify-center gap-2 border-t px-4 py-2 text-center text-xs font-semibold"
-            style={{
-              borderColor: "var(--danger-line)",
-              background: "var(--danger-soft)",
-              color: "var(--danger)",
-            }}
+            className="flex items-center justify-center gap-2 px-4 py-2 text-center text-xs font-semibold"
+            style={{ background: "var(--danger)", color: "var(--danger-ink)" }}
             role="status"
             aria-live="polite"
           >
@@ -1118,8 +1112,8 @@ function QuestionCard({
               onClick={() => selectAnswer(currentQ.id, letter)}
               className={`flex min-h-[52px] items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                 isSelected
-                  ? "border-2 border-primary bg-primary/15 text-foreground"
-                  : "border border-white/10 bg-white/[0.02] hover:border-primary/60 hover:bg-primary/10"
+                  ? "border-2 border-primary bg-terracotta text-foreground"
+                  : "border border-white/10 bg-white/[0.02] hover:border-primary/60 hover:bg-secondary"
               }`}
             >
               <span
