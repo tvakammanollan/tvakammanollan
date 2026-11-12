@@ -18,6 +18,11 @@ function throwDbError(error: { message: string }, ctx: string): never {
   throw new Error("Något gick fel. Försök igen om en stund.");
 }
 
+function chansFor(questionText: string): { text: string; ettPa: string; p: number } | null {
+  const s = ordSannolikhet(ordSlug(questionText));
+  return s ? { text: s.text, ettPa: s.ettPa, p: s.p } : null;
+}
+
 export type WordQuestion = {
   id: string;
   question_text: string;
@@ -100,10 +105,10 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     const { data: rows, error } = await query;
     if (error) throwDbError(error, "fetchWordBatch");
     const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));
-    const withChance = filtered.map((r) => {
-      const s = ordSannolikhet(ordSlug((r as { question_text: string }).question_text));
-      return { row: r, chans: s ? { text: s.text, ettPa: s.ettPa, p: s.p } : null };
-    });
+    const withChance = filtered.map((r) => ({
+      row: r,
+      chans: chansFor((r as { question_text: string }).question_text),
+    }));
     if (data.order === "probable") {
       // Mest sannolika först, men med brus: strikt sortering ger samma tjugo
       // ord varje pass. Bruset blandar ord vars sannolikhet ligger nära varandra.
@@ -299,7 +304,11 @@ export const fetchFailedWordBatch = createServerFn({ method: "GET" })
       .map((fr: { question_id: string }) => byId.get(fr.question_id))
       .filter(Boolean);
 
-    return { questions: questions as unknown as WordQuestion[] };
+    const withChance = questions.map((q) => ({
+      ...(q as object),
+      chans: chansFor((q as unknown as { question_text: string }).question_text),
+    }));
+    return { questions: withChance as unknown as WordQuestion[] };
   });
 
 // Count how many words this user has in their failed-words list.
