@@ -35,8 +35,12 @@ export function FriendInviteListener() {
             filter: `to_user=eq.${user.id}`,
           },
           async (payload) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const inv = payload.new as any;
+            const inv = payload.new as {
+              id: string;
+              match_id: string;
+              from_user: string;
+              match_type: "verbal" | "math";
+            };
             // Look up sender name
             const { data: sender } = await supabase
               .from("users")

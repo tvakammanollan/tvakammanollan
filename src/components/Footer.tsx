@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import type { LinkProps } from "@tanstack/react-router";
 import { Instagram, Music2, Youtube, Mail } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { BugReportButton } from "@/components/BugReportButton";
 
-const PRODUCT = [
+const PRODUCT: ReadonlyArray<{ label: string; to: LinkProps["to"] }> = [
   { label: "Träna", to: "/train" },
   { label: "Öva ord", to: "/ord" },
   { label: "Ordlista", to: "/ordlista" },
@@ -13,7 +14,7 @@ const PRODUCT = [
   { label: "Guider", to: "/guider" },
 ];
 
-const COMPANY = [
+const COMPANY: ReadonlyArray<{ label: string; to: LinkProps["to"] }> = [
   { label: "Provdatum", to: "/hogskoleprovet-datum" },
   { label: "Facit & normering", to: "/hogskoleprovet-facit" },
   { label: "Poäng & antagning", to: "/hogskoleprovet-poang" },
@@ -23,7 +24,7 @@ const COMPANY = [
   { label: "Kontakt", to: "/kontakt" },
 ];
 
-const LEGAL = [
+const LEGAL: ReadonlyArray<{ label: string; to: LinkProps["to"] }> = [
   { label: "Integritetspolicy", to: "/integritetspolicy" },
   { label: "Användarvillkor", to: "/villkor" },
 ];
@@ -163,11 +164,10 @@ function CompactFooter() {
   );
 }
 
-function FooterMiniLink({ to, children }: { to: string; children: React.ReactNode }) {
+function FooterMiniLink({ to, children }: { to: LinkProps["to"]; children: React.ReactNode }) {
   return (
     <Link
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      to={to as any}
+      to={to}
       className="text-sm text-white/60 transition hover:text-white hover:underline"
     >
       {children}
@@ -180,7 +180,7 @@ function FooterCol({
   items,
 }: {
   title: string;
-  items: ReadonlyArray<{ label: string; to: string }>;
+  items: ReadonlyArray<{ label: string; to: LinkProps["to"] }>;
 }) {
   return (
     <div>

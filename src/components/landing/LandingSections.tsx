@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { LinkProps } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
@@ -680,7 +681,7 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
  * sidfoten. Ingen animation: blocket ska stå färdigt i den serverrenderade
  * HTML:en.
  */
-const RESURSER: Array<{ to: string; titel: string; text: string }> = [
+const RESURSER: Array<{ to: LinkProps["to"]; titel: string; text: string }> = [
   {
     to: "/hogskoleprovet-normering",
     titel: "Normering",
@@ -739,8 +740,7 @@ export function Resurser() {
           {RESURSER.map((r) => (
             <li key={r.to}>
               <Link
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                to={r.to as any}
+                to={r.to}
                 className="block h-full rounded-xl border border-white/10 bg-card p-4 transition-colors hover:border-primary"
               >
                 <span className="block text-[16px] font-semibold text-[var(--cream)]">

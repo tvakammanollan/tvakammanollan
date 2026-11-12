@@ -113,8 +113,6 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
     return (
       <Link
         to="/ord"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        params={{} as any}
         className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40"
       >
         <p className="text-sm font-semibold text-bark">Dagens ord</p>
@@ -139,8 +137,6 @@ export function WordOfTheDay({ initial }: { initial?: Wotd | null }) {
   return (
     <Link
       to="/ord"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      params={{} as any}
       className="group block rounded-2xl border border-bark/20 bg-bark/[0.05] p-5 transition-colors hover:border-bark/40 hover:bg-bark/[0.08]"
     >
       <div className="flex items-center justify-between gap-3">

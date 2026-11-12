@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { type LucideIcon } from "lucide-react";
 
+type LinkTo = React.ComponentProps<typeof Link>["to"];
+
 /* =====================================================================
    NEXT STEP — samma svar på "vad gör jag nu?" på varje slutskärm.
 
@@ -16,7 +18,9 @@ export type Forward =
   | {
       label: string;
       icon: LucideIcon;
-      to: string;
+      to: LinkTo;
+      // Routern härleder params/search ur `to`; en generisk slutskärm kan inte
+      // bära den kopplingen, så de två skickas vidare otypade nedan.
       params?: Record<string, string>;
       search?: Record<string, unknown>;
     }
@@ -27,7 +31,7 @@ type Primary =
   | { primaryLabel: string; onPrimary: () => void; primaryTo?: never; primaryParams?: never }
   | {
       primaryLabel: string;
-      primaryTo: string;
+      primaryTo: LinkTo;
       primaryParams?: Record<string, string>;
       onPrimary?: never;
     };
@@ -46,8 +50,7 @@ export function NextStep({
     <div className="mt-8">
       {primary.primaryTo ? (
         <PrimaryCTA
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          to={primary.primaryTo as any}
+          to={primary.primaryTo}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           params={primary.primaryParams as any}
           className="w-full"
@@ -82,8 +85,7 @@ export function NextStep({
             return (
               <Link
                 key={f.label}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                to={f.to as any}
+                to={f.to}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 params={f.params as any}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

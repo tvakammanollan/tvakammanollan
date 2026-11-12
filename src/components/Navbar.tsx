@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
+import type { LinkProps } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -215,16 +216,14 @@ function NavLink({
   hideOnMobile,
   search,
 }: {
-  to: string;
+  to: LinkProps["to"];
   children: React.ReactNode;
   hideOnMobile?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  search?: any;
+  search?: LinkProps["search"];
 }) {
   return (
     <Link
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      to={to as any}
+      to={to}
       search={search}
       data-cursor="link"
       className={`nav-link group relative inline-block px-2 py-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
@@ -306,16 +305,14 @@ function AccountMenuLink({
   icon: Icon,
   children,
 }: {
-  to: string;
+  to: LinkProps["to"];
   icon: LucideIcon;
   children: React.ReactNode;
 }) {
   // Radix `asChild` kör React.Children.only — håll exakt ett barn här.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const href = to as any;
   return (
     <DropdownMenuItem asChild className="gap-2">
-      <Link to={href}>
+      <Link to={to}>
         <Icon className="h-4 w-4 opacity-70" />
         {children}
       </Link>
@@ -466,17 +463,15 @@ function MobileNavLink({
   onClick,
   search,
 }: {
-  to: string;
+  to: LinkProps["to"];
   icon: LucideIcon;
   children: React.ReactNode;
   onClick?: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  search?: any;
+  search?: LinkProps["search"];
 }) {
   return (
     <Link
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      to={to as any}
+      to={to}
       search={search}
       onClick={onClick}
       className="group flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-colors hover:bg-white/[0.04]"
