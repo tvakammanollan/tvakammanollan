@@ -55,7 +55,12 @@ export const sendFriendRequest = createServerFn({ method: "POST" })
       addressee_id: target.id,
       status: "pending",
     });
-    if (error) throw error;
+    if (error) {
+      // 23505 = förfrågan finns redan åt något håll; det är inget fel för användaren.
+      if (error.code === "23505") return { ok: true };
+      console.error("[friends] kunde inte skapa vänförfrågan:", error.message);
+      throw new Error("Kunde inte skicka vänförfrågan. Försök igen.");
+    }
     return { ok: true };
   });
 
@@ -142,7 +147,10 @@ export const inviteFriendToMatch = createServerFn({ method: "POST" })
       })
       .select()
       .single();
-    if (error || !match) throw error ?? new Error("Kunde inte skapa match");
+    if (error || !match) {
+      console.error("[friends] kunde inte skapa inbjudningsmatch:", error?.message);
+      throw new Error("Kunde inte skapa matchen. Försök igen.");
+    }
 
     // Insert invite
     const { data: invite, error: invErr } = await supabaseAdmin
@@ -217,7 +225,10 @@ export const requestRematch = createServerFn({ method: "POST" })
       })
       .select()
       .single();
-    if (error || !match) throw error ?? new Error("Kunde inte skapa revansch");
+    if (error || !match) {
+      console.error("[friends] kunde inte skapa revansch:", error?.message);
+      throw new Error("Kunde inte skapa revanschen. Försök igen.");
+    }
 
     const { error: invErr } = await supabaseAdmin.from("match_invites").insert({
       from_user: userId,

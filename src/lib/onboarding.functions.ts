@@ -23,7 +23,10 @@ export const completeOnboarding = createServerFn({ method: "POST" })
       })
       .eq("id", context.userId);
 
-    if (error) throw error;
+    if (error) {
+      console.error("[onboarding] kunde inte spara:", error.message);
+      throw new Error("Kunde inte spara dina val. Försök igen.");
+    }
 
     return { ok: true };
   });

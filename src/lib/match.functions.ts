@@ -122,7 +122,10 @@ export const createMatch = createServerFn({ method: "POST" })
             .select()
             .single(),
       );
-      if (error || !match) throw error ?? new Error("Could not create match");
+      if (error || !match) {
+        console.error("[match] kunde inte skapa matchen:", error?.message);
+        throw new Error("Kunde inte starta matchen. Försök igen.");
+      }
 
       await insertMatchQuestions(match.id, questions);
 
@@ -142,7 +145,10 @@ export const createMatch = createServerFn({ method: "POST" })
       })
       .select()
       .single();
-    if (error || !match) throw error ?? new Error("Could not create room");
+    if (error || !match) {
+      console.error("[match] kunde inte skapa rummet:", error?.message);
+      throw new Error("Kunde inte skapa rummet. Försök igen.");
+    }
 
     return { match_id: match.id, room_code };
   });
@@ -162,7 +168,10 @@ export const joinMatch = createServerFn({ method: "POST" })
       .eq("room_code", code)
       .eq("status", "waiting")
       .maybeSingle();
-    if (error) throw error;
+    if (error) {
+      console.error("[match] kunde inte slå upp rummet:", error.message);
+      throw new Error("Kunde inte gå med i rummet. Försök igen.");
+    }
     if (!match) throw new Error("Rummet finns inte eller har redan startat.");
     if (match.player1_id === userId) throw new Error("Du kan inte gå med i ditt eget rum.");
     if (match.player2_id) throw new Error("Rummet är redan fullt.");
@@ -223,8 +232,12 @@ export const submitMatch = createServerFn({ method: "POST" })
       .from("matches")
       .select("*")
       .eq("id", data.matchId)
-      .single();
-    if (error || !match) throw error ?? new Error("Match not found");
+      .maybeSingle();
+    if (error) {
+      console.error("[match] kunde inte läsa matchen:", error.message);
+      throw new Error("Kunde inte läsa matchen. Försök igen.");
+    }
+    if (!match) throw new Error("Matchen finns inte.");
 
     const isP1 = match.player1_id === userId;
     const isP2 = match.player2_id === userId;
@@ -373,8 +386,12 @@ export const finalizeMatch = createServerFn({ method: "POST" })
       .from("matches")
       .select("*")
       .eq("id", data.matchId)
-      .single();
-    if (error || !match) throw error ?? new Error("Match not found");
+      .maybeSingle();
+    if (error) {
+      console.error("[match] kunde inte läsa matchen:", error.message);
+      throw new Error("Kunde inte läsa matchen. Försök igen.");
+    }
+    if (!match) throw new Error("Matchen finns inte.");
 
     const isP1 = match.player1_id === userId;
     const isP2 = match.player2_id === userId;
@@ -440,23 +457,4 @@ export const finalizeMatch = createServerFn({ method: "POST" })
 
     const result = await processMatchResultServer(data.matchId);
     return { ok: true, result, opponentForfeited: true as const };
-  });
-
-export const processMatchResult = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ matchId: z.string().uuid() }).parse(input))
-  .handler(async ({ data, context }) => {
-    const { userId } = context;
-    const { data: m } = await supabaseAdmin
-      .from("matches")
-      .select("player1_id, player2_id")
-      .eq("id", data.matchId)
-      .single();
-    if (!m || (m.player1_id !== userId && m.player2_id !== userId)) {
-      throw new Response("Forbidden", { status: 403 });
-    }
-    // `force`: resultatsidan frågar när den väntat färdigt. Har motparten
-    // aldrig lämnat in räknas matchen på det som hann sparas (se
-    // FORCE_FINISH_AFTER_MS) i stället för att bli stående för evigt.
-    return processMatchResultServer(data.matchId, { force: true });
   });

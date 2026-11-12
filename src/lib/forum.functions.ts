@@ -437,7 +437,10 @@ async function fetchRelated(
         .eq("prov_term", thread.prov_term)
         .eq("category_id", thread.category_id)
         .eq("status", "visible");
-      if (error) throw error;
+      if (error) {
+        console.error("[forum] kunde inte läsa syskontrådar:", error.message);
+        throw new Error("Kunde inte ladda tråden.");
+      }
       const items = (data ?? [])
         .map((t) => ({ t, k: provThreadKey(t.slug) }))
         .filter((x) => x.k?.pass === key.pass)
