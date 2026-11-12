@@ -153,9 +153,35 @@ if (!author?.is_admin) throw new Error(`Kontot ${AUTHOR_USERNAME} saknas eller �
 const cats = await rest<Array<{ id: number; slug: string }>>("forum_categories?select=id,slug");
 const catId = new Map(cats.map((c) => [c.slug, c.id]));
 
-const existing = await rest<
-  Array<{ id: number; category_id: number; title: string; slug: string; prov_term: string | null }>
->("forum_threads?select=id,category_id,title,slug,prov_term");
+// Sidvis: PostgREST ger högst 1 000 rader per anrop. Med ett enda anrop såg
+// skriptet bara de första 1 000 trådarna och hade publicerat resten en gång
+// till som dubbletter (upptäckt 2026-11-04, 214 stycken, innan något skrevs).
+type ExistingThread = {
+  id: number;
+  category_id: number;
+  title: string;
+  slug: string;
+  prov_term: string | null;
+};
+const existing: ExistingThread[] = [];
+for (let from = 0; ; from += 1000) {
+  const page = await rest<ExistingThread[]>(
+    `forum_threads?select=id,category_id,title,slug,prov_term&order=id&offset=${from}&limit=1000`,
+  );
+  existing.push(...page);
+  if (page.length < 1000) break;
+}
+// Kontroll mot det totala antalet, så att ett nytt tak någonstans inte kan
+// göra samma sak tyst igen.
+{
+  const res = await fetch(`${URL_BASE}/rest/v1/forum_threads?select=id`, {
+    headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, Prefer: "count=exact", Range: "0-0" },
+  });
+  const total = Number(res.headers.get("content-range")?.split("/")[1]);
+  if (!Number.isFinite(total) || total !== existing.length) {
+    throw new Error(`Läste ${existing.length} trådar men databasen har ${total}. Avbryter.`);
+  }
+}
 const byTitle = new Map(existing.map((t) => [`${t.category_id}:${t.title.toLowerCase()}`, t]));
 const takenSlug = new Set(existing.map((t) => `${t.category_id}:${t.slug}`));
 

@@ -1019,7 +1019,7 @@ Samma sak gäller åt andra hållet: för att komma tillbaka efter en sänkning 
     question: `Hur räknar man när något ökar med samma procent flera år i rad?`,
     answer: String.raw`Upprepa förändringsfaktorn med en potens. Ökar något med 5 % per år i tre år är den sammanlagda faktorn
 
-$$1{,}05^3 \approx 1{,}16$$
+$1{,}05^3 \approx 1{,}16$
 
 alltså ungefär 16 % mer, inte 15 %. Skillnaden är **räntan på räntan**.
 
@@ -1039,7 +1039,7 @@ Exempel: $x^2 - 6x + 8 = 0$. Talen 2 och 4 har produkten 8 och summan 6, så $x 
 
 Går det inte, använd pq-formeln:
 
-$$x = -\frac{p}{2} \pm \sqrt{\left(\frac{p}{2}\right)^2 - q}$$
+$x = -\frac{p}{2} \pm \sqrt{\left(\frac{p}{2}\right)^2 - q}$
 
 Exempel: $x^2 - 6x + 8 = 0$ ger $x = 3 \pm \sqrt{9 - 8} = 3 \pm 1$.
 
@@ -1253,7 +1253,7 @@ Skriv gärna här vilka DTK-uppgifter du tappat poäng på.`,
     question: `Finns det ett snabbt sätt att räkna ut summan av många tal i rad?`,
     answer: String.raw`Ja. Summan av heltalen från 1 till $n$ är
 
-$$1 + 2 + \dots + n = \frac{n(n+1)}{2}$$
+$1 + 2 + \dots + n = \frac{n(n+1)}{2}$
 
 Exempel: $1 + 2 + \dots + 100 = \frac{100 \cdot 101}{2} = 5050$.
 
@@ -1261,7 +1261,7 @@ Exempel: $1 + 2 + \dots + 100 = \frac{100 \cdot 101}{2} = 5050$.
 
 **Allmän aritmetisk följd** (konstant differens): summan är
 
-$$\text{antal} \cdot \frac{\text{första} + \text{sista}}{2}$$
+$\text{antal} \cdot \frac{\text{första} + \text{sista}}{2}$
 
 Exempel: 5, 8, 11, …, 29 har 9 termer (differens 3). Summan är $9 \cdot \frac{5 + 29}{2} = 153$.
 
@@ -1901,7 +1901,7 @@ Fällan är att räkna **linjärt**: det halveras inte med lika många gram per 
     question: `Frågor som "när ökade värdet snabbast" i ett linjediagram, hur avgör man det?`,
     answer: String.raw`Förändringstakten är **lutningen** på linjen:
 
-$$k = \frac{\Delta y}{\Delta x}$$
+$k = \frac{\Delta y}{\Delta x}$
 
 En linje genom $(0, 2)$ och $(4, 10)$ har lutningen $\frac{10 - 2}{4 - 0} = 2$ enheter per tidsenhet.
 

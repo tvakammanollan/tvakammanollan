@@ -88,10 +88,25 @@ export function threadPath(categorySlug: string, id: number, slug: string): stri
  * `prov_term`. Det är den kopplingen gamla prov länkar till forumet med.
  */
 export function provThreadNr(slug: string, pass: number): number | null {
+  const key = provThreadKey(slug);
+  return key && key.pass === pass ? key.nr : null;
+}
+
+/** Provpass och uppgift ur en genomgångstråds slug, eller null. */
+export function provThreadKey(slug: string): { pass: number; nr: number } | null {
   const m = /(?:^|-)provpass-(\d+)-uppgift-(\d+)(?:-|$)/.exec(slug);
-  if (!m || Number(m[1]) !== pass) return null;
+  if (!m) return null;
+  const pass = Number(m[1]);
   const nr = Number(m[2]);
-  return Number.isSafeInteger(nr) && nr > 0 ? nr : null;
+  if (!Number.isSafeInteger(pass) || pass <= 0) return null;
+  if (!Number.isSafeInteger(nr) || nr <= 0) return null;
+  return { pass, nr };
+}
+
+/** Delprovet ur en genomgångs rubrik, "… uppgift 26 (NOG): lösning" → "NOG". */
+export function provThreadDelprov(title: string): string | null {
+  const m = /\(([A-ZÅÄÖ]{2,4})\): lösning$/.exec(title);
+  return m ? m[1] : null;
 }
 
 /** Plocka ut id ur "482-hur-loser-man-kva". Returnerar null om det inte finns. */

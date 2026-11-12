@@ -211,7 +211,11 @@ const priceCache = new Map<string, { at: number; value: CoachingPrice }>();
 
 /** Default-namnet matchar produkten i Stripe. Kan bytas via env. */
 const DEFAULT_PRODUCT_NAME = "Coachning Studieupplägg";
-const DEFAULT_ORD_PRODUCT_NAME = "Hela Ordlistan";
+/** Produktnamnen i Stripe, reserv när pris-id:t saknas. */
+const ORD_PRODUCT_NAMES = {
+  "1m": "Hela Ordlistan + MEK · 1 månad",
+  "6m": "Hela Ordlistan + MEK · 6 månader",
+} as const;
 
 function toCoachingPrice(price: StripePrice, fallbackName: string): CoachingPrice {
   if (price.unit_amount === null) {
@@ -285,13 +289,14 @@ export function resolveCoachingPrice(): Promise<CoachingPrice> {
   );
 }
 
-/** Priset på "Hela Ordlistan". `STRIPE_ORD_PRICE_ID` om satt, annars produktnamnet. */
-export function resolveOrdPrice(): Promise<CoachingPrice> {
-  return resolvePrice(
-    "ord",
-    process.env.STRIPE_ORD_PRICE_ID?.trim() || undefined,
-    (process.env.STRIPE_ORD_PRODUCT_NAME || DEFAULT_ORD_PRODUCT_NAME).trim(),
-  );
+/**
+ * Priset på ett av ordlisteköpen. `STRIPE_ORD_PRICE_ID_1M` / `_6M` om satt,
+ * annars produktens `default_price`, uppslagen på namn.
+ */
+export function resolveOrdPrice(plan: "1m" | "6m"): Promise<CoachingPrice> {
+  const priceId =
+    plan === "1m" ? process.env.STRIPE_ORD_PRICE_ID_1M : process.env.STRIPE_ORD_PRICE_ID_6M;
+  return resolvePrice(`ord:${plan}`, priceId?.trim() || undefined, ORD_PRODUCT_NAMES[plan]);
 }
 
 /** Bara för tester — tvingar nästa anrop att gå till Stripe igen. */

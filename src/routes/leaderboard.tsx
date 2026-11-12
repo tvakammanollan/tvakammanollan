@@ -628,11 +628,8 @@ interface BoardShellProps<T extends BoardRow> {
 
 function OrdBoard() {
   const fetchOrd = useServerFn(fetchOrdLeaderboard);
-  const { user } = useAuth();
-  const fetchLb = useCallback(
-    () => fetchOrd({ data: user ? { user_id: user.id } : {} }),
-    [fetchOrd, user],
-  );
+  // Den egna raden läses ur tokenen i servern, inte ur ett skickat id.
+  const fetchLb = useCallback(() => fetchOrd(), [fetchOrd]);
   return (
     <PracticeBoard
       fetchLb={fetchLb}

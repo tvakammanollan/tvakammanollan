@@ -10,6 +10,7 @@ import { trackEvent } from "@/lib/events";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
+import { readPendingPlan } from "@/lib/pending-plan";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -94,7 +95,9 @@ function LoginPage() {
     toast.success("Välkommen tillbaka");
     setSuccess(true);
     // Vänta in dot-matrix reverse-animationen innan navigering
-    setTimeout(() => navigate({ to: "/" }), 1400);
+    // Valde besökaren ett köp innan inloggningen går den vidare till kassan.
+    const plan = readPendingPlan();
+    setTimeout(() => navigate(plan ? { to: "/kassa", search: { plan } } : { to: "/" }), 1400);
   };
 
   return (

@@ -15,6 +15,8 @@ import {
   displayAuthor,
   POSTS_PER_PAGE,
   provThreadNr,
+  provThreadKey,
+  provThreadDelprov,
 } from "./forum";
 
 describe("slugifyTitle", () => {
@@ -166,5 +168,20 @@ describe("provTermLabel", () => {
   it("skiljer på vårens två prov 2021 och 2022", () => {
     expect(provTermLabel("2022vta")).toBe("VT 2022 (A)");
     expect(provTermLabel("2021vtb")).toBe("VT 2021 (B)");
+  });
+});
+
+describe("provThreadKey och provThreadDelprov", () => {
+  it("läser provpass och uppgift ur slugen", () => {
+    expect(provThreadKey("hostprovet-2016-provpass-5-uppgift-23-nog-losning")).toEqual({
+      pass: 5,
+      nr: 23,
+    });
+    expect(provThreadKey("tio-tips-infor-hogskoleprovet")).toBeNull();
+  });
+  it("läser delprovet ur rubriken, även LÄS", () => {
+    expect(provThreadDelprov("Vårprovet 2026, provpass 3, uppgift 26 (NOG): lösning")).toBe("NOG");
+    expect(provThreadDelprov("Höstprovet 2024, provpass 2, uppgift 12 (LÄS): lösning")).toBe("LÄS");
+    expect(provThreadDelprov("Tio tips inför högskoleprovet")).toBeNull();
   });
 });

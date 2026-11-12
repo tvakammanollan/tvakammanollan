@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 
 import { useEffect, useState, useCallback, useRef } from "react";
@@ -11,7 +11,7 @@ import { GlassCard } from "@/components/layout/GlassCard";
 import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { OrdPaywall } from "@/components/OrdPaywall";
-import { ACCESS_MONTHS } from "@/lib/ord-paywall";
+import { isOrdPlan } from "@/lib/ord-paywall";
 import {
   confirmOrdCheckout,
   getOrdAccess,
@@ -232,6 +232,13 @@ function OrdPracticePage() {
   const fetchAccess = useServerFn(getOrdAccess);
   const confirmPurchase = useServerFn(confirmOrdCheckout);
   const [access, setAccess] = useState<OrdAccessInfo | null>(null);
+  // `?plan=1m|6m` pekade hit innan kassan fick en egen sida. Länkar som
+  // ligger kvar (delade, cachade) skickas vidare till /kassa.
+  const navigateTo = useNavigate();
+  useEffect(() => {
+    const plan = new URLSearchParams(window.location.search).get("plan");
+    if (isOrdPlan(plan)) void navigateTo({ to: "/kassa", search: { plan }, replace: true });
+  }, [navigateTo]);
   // Varna bara en gång per session om svars-sparandet strular.
   const recordWarnedRef = useRef(false);
 
@@ -509,7 +516,7 @@ function OrdPracticePage() {
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
                   {formatInt(access.freeRemaining)} gratisord kvar. Sedan låser ett köp upp hela
-                  listan i {ACCESS_MONTHS} månader.
+                  listan i en månad eller sex.
                 </p>
               )}
 

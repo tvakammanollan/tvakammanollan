@@ -29,6 +29,8 @@ import {
   forumErrorMessage,
   threadPath,
   excerpt,
+  provThreadKey,
+  provThreadDelprov,
   type BlockReason,
   type CategoryKind,
 } from "./forum";
@@ -389,6 +391,102 @@ export interface ForumThreadData {
   page: number;
   total: number;
   perPage: number;
+  related: ForumRelated | null;
+}
+
+export interface ForumRelatedLink {
+  id: number;
+  slug: string;
+  categorySlug: string;
+  title: string;
+  /** Uppgiftsnummer och delprov, bara för genomgångar. */
+  nr?: number;
+  delprov?: string | null;
+}
+
+/**
+ * Länkarna under en tråd. En genomgång får resten av sitt provpass, med
+ * föregående och nästa uppgift; en vanlig tråd får sina grannar i kategorin.
+ * Båda finns för att över tusen trådar annars bara nås via kategorilistan
+ * och sitemapen: med länkar mellan dem räcker det att en crawler hittar en.
+ */
+export type ForumRelated =
+  | {
+      kind: "prov";
+      term: string;
+      pass: number;
+      prev: ForumRelatedLink | null;
+      next: ForumRelatedLink | null;
+      items: ForumRelatedLink[];
+    }
+  | { kind: "category"; items: ForumRelatedLink[] };
+
+const RELATED_NEIGHBOURS = 3;
+
+/** Kastar aldrig: ett fel här ska bli en tråd utan block, inte en trasig tråd. */
+async function fetchRelated(
+  thread: ThreadRow,
+  category: CategoryRow,
+): Promise<ForumRelated | null> {
+  try {
+    const key = thread.prov_term ? provThreadKey(thread.slug) : null;
+    if (thread.prov_term && key) {
+      const { data, error } = await supabaseAdmin
+        .from("forum_threads")
+        .select("id,title,slug")
+        .eq("prov_term", thread.prov_term)
+        .eq("category_id", thread.category_id)
+        .eq("status", "visible");
+      if (error) throw error;
+      const items = (data ?? [])
+        .map((t) => ({ t, k: provThreadKey(t.slug) }))
+        .filter((x) => x.k?.pass === key.pass)
+        .sort((a, b) => a.k!.nr - b.k!.nr)
+        .map(({ t, k }) => ({
+          id: t.id,
+          slug: t.slug,
+          categorySlug: category.slug,
+          title: t.title,
+          nr: k!.nr,
+          delprov: provThreadDelprov(t.title),
+        }));
+      const at = items.findIndex((i) => i.id === thread.id);
+      return {
+        kind: "prov",
+        term: thread.prov_term,
+        pass: key.pass,
+        prev: at > 0 ? items[at - 1] : null,
+        next: at >= 0 && at < items.length - 1 ? items[at + 1] : null,
+        items,
+      };
+    }
+
+    // Grannar på id, åt båda hållen: deterministiskt (samma HTML för alla),
+    // och varje tråd länkar till nästa, så kategorin blir en kedja utan slut.
+    const base = () =>
+      supabaseAdmin
+        .from("forum_threads")
+        .select("id,title,slug")
+        .eq("category_id", thread.category_id)
+        .eq("status", "visible")
+        .is("prov_term", null);
+    const [before, after] = await Promise.all([
+      base().lt("id", thread.id).order("id", { ascending: false }).limit(RELATED_NEIGHBOURS),
+      base().gt("id", thread.id).order("id", { ascending: true }).limit(RELATED_NEIGHBOURS),
+    ]);
+    if (before.error) throw before.error;
+    if (after.error) throw after.error;
+    const items = [...(before.data ?? []).reverse(), ...(after.data ?? [])].map((t) => ({
+      id: t.id,
+      slug: t.slug,
+      categorySlug: category.slug,
+      title: t.title,
+    }));
+    return items.length > 0 ? { kind: "category", items } : null;
+  } catch (e) {
+    console.error("[forum] relaterade trådar:", e instanceof Error ? e.message : e);
+    return null;
+  }
 }
 
 export const fetchForumThread = createServerFn({ method: "GET" })
@@ -456,7 +554,10 @@ export const fetchForumThread = createServerFn({ method: "GET" })
       }
     }
 
-    const authors = await fetchAuthors([...posts.map((p) => p.author_id), thread.author_id]);
+    const [authors, related] = await Promise.all([
+      fetchAuthors([...posts.map((p) => p.author_id), thread.author_id]),
+      fetchRelated(thread, catRow as CategoryRow),
+    ]);
 
     return {
       thread: {
@@ -486,6 +587,7 @@ export const fetchForumThread = createServerFn({ method: "GET" })
       page: data.page,
       total: count ?? 0,
       perPage: POSTS_PER_PAGE,
+      related,
     };
   });
 

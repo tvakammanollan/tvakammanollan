@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
-  ACCESS_MONTHS,
+  ORD_PLANS,
+  accessMonths,
+  isOrdPlan,
   FREE_MEK_LIMIT,
   TIME_LIMITED_FROM,
   accessExpiresAt,
@@ -60,9 +62,34 @@ describe("cappedBatchSize", () => {
 });
 
 describe("köpets giltighet", () => {
-  it("gäller i sex månader", () => {
-    expect(ACCESS_MONTHS).toBe(6);
+  it("gäller i sex månader när köpet inte bär någon längd", () => {
     expect(accessExpiresAt("2026-11-15T10:00:00Z")?.toISOString()).toBe("2027-05-15T10:00:00.000Z");
+  });
+
+  it("enmånadsköpet gäller en månad, sexmånadersköpet sex", () => {
+    expect(ORD_PLANS["1m"].months).toBe(1);
+    expect(ORD_PLANS["6m"].months).toBe(6);
+    expect(accessExpiresAt("2026-11-15T10:00:00Z", 1)?.toISOString()).toBe(
+      "2026-12-15T10:00:00.000Z",
+    );
+    const paid = "2026-11-15T10:00:00Z";
+    expect(purchaseIsActive(paid, Date.parse("2026-12-15T09:59:59Z"), 1)).toBe(true);
+    expect(purchaseIsActive(paid, Date.parse("2026-12-15T10:00:00Z"), 1)).toBe(false);
+  });
+
+  it("läser en okänd eller saknad längd som sex månader", () => {
+    expect(accessMonths(null)).toBe(6);
+    expect(accessMonths(undefined)).toBe(6);
+    expect(accessMonths(3)).toBe(6);
+    expect(accessMonths("1")).toBe(1);
+    expect(accessMonths(1)).toBe(1);
+  });
+
+  it("känner bara igen de två planerna", () => {
+    expect(isOrdPlan("1m")).toBe(true);
+    expect(isOrdPlan("6m")).toBe(true);
+    expect(isOrdPlan("12m")).toBe(false);
+    expect(isOrdPlan("toString")).toBe(false);
   });
 
   it("släpper vid utgången, inte före", () => {

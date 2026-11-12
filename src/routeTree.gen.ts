@@ -27,6 +27,7 @@ import { Route as MatchmakingRouteImport } from './routes/matchmaking'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as KassaRouteImport } from './routes/kassa'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as HogskoleprovetResultatRouteImport } from './routes/hogskoleprovet-resultat'
 import { Route as HogskoleprovetPoangraknareRouteImport } from './routes/hogskoleprovet-poangraknare'
@@ -166,6 +167,11 @@ const LeaderboardRoute = LeaderboardRouteImport.update({
 const KontaktRoute = KontaktRouteImport.update({
   id: '/kontakt',
   path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KassaRoute = KassaRouteImport.update({
+  id: '/kassa',
+  path: '/kassa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
@@ -439,6 +445,7 @@ export interface FileRoutesByFullPath {
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kassa': typeof KassaRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
@@ -508,6 +515,7 @@ export interface FileRoutesByTo {
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kassa': typeof KassaRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
@@ -578,6 +586,7 @@ export interface FileRoutesById {
   '/hogskoleprovet-poangraknare': typeof HogskoleprovetPoangraknareRoute
   '/hogskoleprovet-resultat': typeof HogskoleprovetResultatRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kassa': typeof KassaRoute
   '/kontakt': typeof KontaktRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
@@ -649,6 +658,7 @@ export interface FileRouteTypes {
     | '/hogskoleprovet-poangraknare'
     | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
+    | '/kassa'
     | '/kontakt'
     | '/leaderboard'
     | '/login'
@@ -718,6 +728,7 @@ export interface FileRouteTypes {
     | '/hogskoleprovet-poangraknare'
     | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
+    | '/kassa'
     | '/kontakt'
     | '/leaderboard'
     | '/login'
@@ -787,6 +798,7 @@ export interface FileRouteTypes {
     | '/hogskoleprovet-poangraknare'
     | '/hogskoleprovet-resultat'
     | '/integritetspolicy'
+    | '/kassa'
     | '/kontakt'
     | '/leaderboard'
     | '/login'
@@ -857,6 +869,7 @@ export interface RootRouteChildren {
   HogskoleprovetPoangraknareRoute: typeof HogskoleprovetPoangraknareRoute
   HogskoleprovetResultatRoute: typeof HogskoleprovetResultatRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
+  KassaRoute: typeof KassaRoute
   KontaktRoute: typeof KontaktRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
@@ -1035,6 +1048,13 @@ declare module '@tanstack/react-router' {
       path: '/kontakt'
       fullPath: '/kontakt'
       preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kassa': {
+      id: '/kassa'
+      path: '/kassa'
+      fullPath: '/kassa'
+      preLoaderRoute: typeof KassaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/integritetspolicy': {
@@ -1401,6 +1421,7 @@ const rootRouteChildren: RootRouteChildren = {
   HogskoleprovetPoangraknareRoute: HogskoleprovetPoangraknareRoute,
   HogskoleprovetResultatRoute: HogskoleprovetResultatRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
+  KassaRoute: KassaRoute,
   KontaktRoute: KontaktRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,

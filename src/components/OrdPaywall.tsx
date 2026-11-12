@@ -3,13 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Lock } from "lucide-react";
 import { GlassCard } from "@/components/layout/GlassCard";
-import { PrimaryCTA } from "@/components/layout/CTAButtons";
+import { PrimaryCTA, SecondaryCTA } from "@/components/layout/CTAButtons";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
 import { startOrdCheckout, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
 import {
-  ACCESS_MONTHS,
   FREE_MEK_LIMIT,
   FREE_ORD_LIMIT,
+  planDuration,
+  type OrdPlan,
   type PaywallReturnPath,
   type PaywallSubject,
 } from "@/lib/ord-paywall";
@@ -21,6 +22,10 @@ import { trackError } from "@/lib/telemetry";
  * Rutan som ersätter "Öva"-knappen när de fria orden eller MEK-uppgifterna är
  * slut. Samma köp låser upp båda, så bara rubriken skiljer sig.
  *
+ * Två köp, en månad och sex månader, med var sin knapp och var sin produkt i
+ * Stripe. `plan` är köpet besökaren redan valt (betalkorten på landningen
+ * länkar hit med `?plan=`): då öppnas kassan för just det direkt.
+ *
  * Kassan renderas inne i rutan när den publicerbara nyckeln finns, annars
  * skickas köparen till Stripe och kommer tillbaka till `returnTo`. Båda vägarna
  * landar på `?kop=klart`, där sidan bekräftar köpet.
@@ -29,10 +34,12 @@ export function OrdPaywall({
   access,
   subject = "ord",
   returnTo = "/ord",
+  plan: chosenPlan,
 }: {
   access: OrdAccessInfo;
   subject?: PaywallSubject;
   returnTo?: PaywallReturnPath;
+  plan?: OrdPlan;
 }) {
   const startCheckout = useServerFn(startOrdCheckout);
   const [busy, setBusy] = useState(false);
@@ -48,16 +55,17 @@ export function OrdPaywall({
     });
   }, [access.answered, subject]);
 
-  const price = access.amount !== null ? formatMoney(access.amount, access.currency) : null;
+  const [busyPlan, setBusyPlan] = useState<OrdPlan | null>(null);
 
-  const buy = async () => {
+  const buy = async (plan: OrdPlan) => {
     setBusy(true);
+    setBusyPlan(plan);
     setError(null);
     try {
-      const handle = await startCheckout({ data: { returnTo } });
+      const handle = await startCheckout({ data: { returnTo, plan } });
       trackEvent(
         subject === "mek" ? "mek_paywall_checkout_started" : "ord_paywall_checkout_started",
-        { embedded: handle.clientSecret !== null },
+        { embedded: handle.clientSecret !== null, plan },
       );
       if (handle.alreadyOwned) {
         window.location.reload();
@@ -70,8 +78,20 @@ export function OrdPaywall({
       setError(e instanceof Error ? e.message : "Kunde inte öppna kassan.");
     } finally {
       setBusy(false);
+      setBusyPlan(null);
     }
   };
+
+  // Valt på förhand: öppna kassan för det köpet så snart priset finns.
+  const autoStarted = useRef(false);
+  const chosenAvailable = access.plans.some((p) => p.plan === chosenPlan);
+  useEffect(() => {
+    if (!chosenPlan || !chosenAvailable || access.isAnonymous || autoStarted.current) return;
+    autoStarted.current = true;
+    void buy(chosenPlan);
+    // `buy` byts varje rendering men gör samma sak; körs en gång.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chosenPlan, chosenAvailable, access.isAnonymous]);
 
   return (
     <GlassCard className="p-6 sm:p-8">
@@ -80,13 +100,15 @@ export function OrdPaywall({
           <Lock className="h-5 w-5" aria-hidden />
         </span>
         <h2 className="mt-4 text-xl font-semibold text-[var(--cream)]">
-          {subject === "mek"
-            ? `Du har klarat de ${FREE_MEK_LIMIT} gratis MEK-uppgifterna`
-            : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
+          {!access.locked
+            ? "Lås upp hela ordlistan och MEK"
+            : subject === "mek"
+              ? `Du har klarat de ${FREE_MEK_LIMIT} gratis MEK-uppgifterna`
+              : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Lås upp hela ordlistan och all MEK-övning i {ACCESS_MONTHS} månader
-          {price ? ` för ${price}` : ""}. Du betalar en gång, och ingenting förnyas automatiskt.
+          Lås upp hela ordlistan och all MEK-övning i en månad eller sex. Priset är med moms, du
+          betalar en gång och ingenting förnyas automatiskt.
         </p>
       </div>
 
@@ -114,20 +136,32 @@ export function OrdPaywall({
           </Link>
         </div>
       ) : (
-        <div className="mt-6">
-          <PrimaryCTA
-            onClick={() => void buy()}
-            disabled={busy || access.amount === null}
-            className="w-full"
-          >
-            {busy ? (
-              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-            ) : price ? (
-              `Lås upp ordlistan och MEK, ${price}`
-            ) : (
-              "Köp är inte tillgängligt just nu"
-            )}
-          </PrimaryCTA>
+        <div className="mt-6 space-y-3">
+          {access.plans.length === 0 ? (
+            <PrimaryCTA disabled className="w-full">
+              Köp är inte tillgängligt just nu
+            </PrimaryCTA>
+          ) : (
+            access.plans.map((p) => {
+              // Det förvalda köpet, annars det längre, bär primärfärgen.
+              const primary = p.plan === (chosenPlan ?? "6m");
+              const Cta = primary ? PrimaryCTA : SecondaryCTA;
+              return (
+                <Cta
+                  key={p.plan}
+                  onClick={() => void buy(p.plan)}
+                  disabled={busy}
+                  className="w-full"
+                >
+                  {busyPlan === p.plan ? (
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                  ) : (
+                    `${planDuration(p.plan).replace(/^./, (c) => c.toUpperCase())}, ${formatMoney(p.amount, access.currency)}`
+                  )}
+                </Cta>
+              );
+            })
+          )}
           {error && (
             <p role="alert" className="mt-3 text-center text-sm text-[var(--destructive)]">
               {error}

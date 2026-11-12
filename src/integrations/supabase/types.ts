@@ -109,6 +109,7 @@ export type Database = {
       }
       ord_purchases: {
         Row: {
+          access_months: number | null
           amount_total: number | null
           currency: string | null
           paid_at: string
@@ -117,6 +118,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          access_months?: number | null
           amount_total?: number | null
           currency?: string | null
           paid_at?: string
@@ -125,6 +127,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          access_months?: number | null
           amount_total?: number | null
           currency?: string | null
           paid_at?: string
