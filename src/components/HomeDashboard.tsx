@@ -128,7 +128,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               aldrig en zonfärg på en bokstav. */}
           <div className="grid gap-4 sm:grid-cols-2">
             {/* ---------- Duellen ---------- */}
-            <section className="flex flex-col rounded-2xl bg-terracotta p-7 sm:p-8">
+            <section className="flex flex-col rounded-[40px] bg-terracotta p-7 sm:p-8">
 
               <h2
                 className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
@@ -163,7 +163,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               <button
                 type="button"
                 onClick={() => setMatchOpen(true)}
-                className="group mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand transition-opacity hover:opacity-90 sm:w-auto sm:self-start sm:px-8"
+                className="group mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand transition hover:brightness-125 sm:w-auto sm:self-start sm:px-8"
               >
                 Spela {matchType === "verbal" ? "verbal" : "kvantitativ"}
               </button>
@@ -172,7 +172,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             {/* ---------- Gamla prov ---------- */}
             <Link
               to="/gamla-prov"
-              className="flex flex-col rounded-2xl bg-sky p-7 transition-opacity hover:opacity-90 sm:p-8"
+              className="flex flex-col rounded-[40px] bg-sky p-7 transition hover:brightness-[1.03] sm:p-8"
             >
               <h2
                 className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
@@ -192,7 +192,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             {/* ---------- Ordlistan ---------- */}
             <Link
               to="/ord"
-              className="flex flex-col rounded-2xl bg-lavender p-7 transition-opacity hover:opacity-90 sm:p-8"
+              className="flex flex-col rounded-[40px] bg-lavender p-7 transition hover:brightness-[1.03] sm:p-8"
             >
               <h2
                 className="display mt-5 text-[24px] font-bold leading-tight text-[var(--cream)]"
@@ -213,7 +213,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
             {/* ---------- MEK ---------- */}
             <Link
               to="/mek-ovning"
-              className="flex flex-col rounded-2xl bg-plum p-7 transition-opacity hover:opacity-90 sm:p-8"
+              className="flex flex-col rounded-[40px] bg-plum p-7 transition hover:brightness-125 sm:p-8"
             >
               <h2
                 className="display mt-5 text-[24px] font-bold leading-tight text-on-brand"
@@ -264,7 +264,7 @@ function GuestBanner() {
         </p>
         <Link
           to="/signup"
-          className="group inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-on-brand transition-opacity hover:opacity-90"
+          className="group inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-on-brand transition hover:brightness-125"
         >
           Skapa konto
         </Link>

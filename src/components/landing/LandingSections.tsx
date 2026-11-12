@@ -385,7 +385,7 @@ export function Produktytorna() {
             <div key={y.to} className="min-w-0">
               <Link
                 to={y.to}
-                className={`flex h-full flex-col rounded-2xl p-7 transition-opacity hover:opacity-90 sm:p-9 ${y.yta}`}
+                className={`flex h-full flex-col rounded-[40px] p-7 transition hover:brightness-[1.03] sm:p-9 ${y.yta}`}
               >
                 <h3 className={`text-[24px] leading-tight tracking-[-0.02em] ${y.rubrikFarg}`}>
                   {y.rubrik}
@@ -498,7 +498,7 @@ export function Priset() {
               <div className="flex-1" />
               <Link
                 to="/signup"
-                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg bg-primary px-6 py-3 text-[15px] font-semibold text-on-brand transition-opacity hover:opacity-90"
+                className="mt-7 inline-flex min-h-[48px] items-center justify-center self-start rounded-lg bg-primary px-6 py-3 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
               >
                 Skapa konto
               </Link>
