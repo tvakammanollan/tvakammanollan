@@ -271,9 +271,8 @@ export function Arkivet() {
           </div>
           <div>
             <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Skriv ett helt pass på originaltid, eller plocka ut det delprov du vill åt. Facit
-              på varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en
-              del.
+              Skriv ett helt pass på originaltid, eller plocka ut det delprov du vill åt. Facit på
+              varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en del.
             </p>
           </div>
         </div>
@@ -467,21 +466,27 @@ const BETALKORT = [
   },
 ] as const;
 
-export function Priset() {
+/**
+ * `kompakt` är /pris-läget: sidans h1 står redan ovanför, så blockets egen
+ * rubrik utelämnas, luften krymps och på mobil läggs gratiskortet sist.
+ * Utan det tog rubrik plus rubrik plus 0 kr-kortet hela första skärmen och
+ * priset syntes först efter en skroll, på en sida som bara handlar om priset.
+ */
+export function Priset({ kompakt = false }: { kompakt?: boolean }) {
   return (
     <section id="priset" className="border-b border-white/10 bg-secondary">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <div>
-          <h2 className="mb-10 max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-            Det mesta är gratis. Hela ordlistan och MEK kostar.
-          </h2>
-        </div>
+      <div className={`mx-auto max-w-6xl px-4 ${kompakt ? "py-6 sm:py-10" : "py-14 sm:py-20"}`}>
+        {kompakt ? null : (
+          <div>
+            <h2 className="mb-10 max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+              Det mesta är gratis. Hela ordlistan och MEK kostar.
+            </h2>
+          </div>
+        )}
         <div className="grid gap-4 lg:grid-cols-3">
-          <div className="min-w-0">
+          <div className={`min-w-0 ${kompakt ? "order-last lg:order-none" : ""}`}>
             <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8">
-              <p className="text-xs font-semibold text-white/55">
-                Konto
-              </p>
+              <p className="text-xs font-semibold text-white/55">Konto</p>
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
@@ -509,11 +514,7 @@ export function Priset() {
           {BETALKORT.map((k, i) => (
             <div key={k.cta} className="min-w-0">
               <div className={`flex h-full flex-col rounded-3xl p-7 sm:p-8 ${k.yta}`}>
-                <p
-                  className={`text-xs font-semibold ${k.etikettFarg}`}
-                >
-                  {k.etikett}
-                </p>
+                <p className={`text-xs font-semibold ${k.etikettFarg}`}>{k.etikett}</p>
                 <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
                   {k.pris}
                 </p>
@@ -610,9 +611,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
 
           <div>
             <div>
-              <p className="font-mono text-xs text-white/55">
-                Var du hamnar
-              </p>
+              <p className="font-mono text-xs text-white/55">Var du hamnar</p>
               <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/70">
                 Alla börjar på 1000. De första matcherna kastar siffran fram och tillbaka, sedan
                 lugnar den sig. Runt tolv matcher in är den värd att lita på.

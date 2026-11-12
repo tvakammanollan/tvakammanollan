@@ -70,13 +70,16 @@ const TANKER = [
 function PrisPage() {
   return (
     <div className="min-h-screen">
+      {/* Kompakt hero med snål underkant: priskorten ska synas utan skroll,
+          också på en telefon. Se `Priset`s kompakt-läge. */}
       <PageHero
         title="Vad som är gratis och vad som kostar"
         align="center"
-        variant="content"
+        variant="compact"
+        className="pb-4 sm:pb-6"
       />
 
-      <Priset />
+      <Priset kompakt />
 
       <section className="border-b border-white/10">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
