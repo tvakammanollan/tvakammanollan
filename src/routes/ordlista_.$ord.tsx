@@ -5,6 +5,7 @@ import { getOrdlistaEntry } from "@/lib/ordlista.functions";
 import { ordLetterLabel } from "@/lib/ord-slug";
 import { formatInt } from "@/lib/sv-format";
 import { ordExamTerms } from "@/lib/ord-termer";
+import { useShowChance } from "@/hooks/useShowChance";
 
 /* =====================================================================
    ORDLISTAN — ETT UPPSLAG PER SIDA
@@ -113,6 +114,7 @@ function OrdlistaEntryPage() {
     total,
     sannolikhet,
   } = entry;
+  const [showChance, setShowChance] = useShowChance();
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
@@ -196,14 +198,23 @@ function OrdlistaEntryPage() {
       {/* Sajtens egen uppskattning, aldrig ett besked. Texten säger det, och
           den säger aldrig att ordet "kommer": det högsta talet i beståndet är
           under en procent. */}
-      {sannolikhet && (
+      {sannolikhet && showChance && (
         <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5">
-          <h2
-            className="text-[18px] font-bold text-[var(--cream)]"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Chans att {word} står på nästa prov
-          </h2>
+          <div className="flex items-start justify-between gap-3">
+            <h2
+              className="text-[18px] font-bold text-[var(--cream)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Chans att {word} står på nästa prov
+            </h2>
+            <button
+              type="button"
+              onClick={() => setShowChance(false)}
+              className="shrink-0 text-xs text-white/55 underline-offset-4 hover:text-[var(--cream)] hover:underline"
+            >
+              Dölj
+            </button>
+          </div>
           <p className="mt-2.5 text-[15px] leading-[1.7] text-white/70">
             Vi uppskattar chansen till <strong className="font-semibold">{sannolikhet.text}</strong>
             , ungefär {sannolikhet.ettPa}. {sannolikhet.skal}
@@ -213,6 +224,16 @@ function OrdlistaEntryPage() {
             Ordet är ett av {formatInt(total)} i ordlistan och provet har 20 ORD-uppgifter.
           </p>
         </section>
+      )}
+
+      {sannolikhet && !showChance && (
+        <button
+          type="button"
+          onClick={() => setShowChance(true)}
+          className="mt-6 text-sm text-white/55 underline-offset-4 hover:text-[var(--cream)] hover:underline"
+        >
+          Visa chans att ordet står på nästa prov
+        </button>
       )}
 
       {related.length > 0 && (

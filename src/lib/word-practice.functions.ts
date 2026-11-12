@@ -9,6 +9,8 @@ import { LEADERBOARD_SIZE } from "./leaderboard.functions";
 import { optionalSupabaseAuth } from "./auth-optional.server";
 import { cappedBatchSize, ordAccess } from "./ord-paywall";
 import { hasOrdAccess } from "./ord-paywall.server";
+import { ordSannolikhet } from "./ord-sannolikhet";
+import { ordSlug } from "./ord-slug";
 
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
@@ -24,6 +26,8 @@ export type WordQuestion = {
   source: string | null;
   definition: string | null;
   definition_source: string | null;
+  /** Sajtens uppskattade chans att ordet står på nästa prov, färdigformaterad. */
+  chans?: { text: string; ettPa: string; p: number } | null;
 };
 
 export const fetchWordBatch = createServerFn({ method: "GET" })
@@ -35,6 +39,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       excludeCorrectForUserId?: string;
       sourceFilter?: "all" | "hp" | "list";
       difficulties?: number[];
+      order?: "random" | "probable";
     }) =>
       z
         .object({
@@ -43,6 +48,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
           excludeCorrectForUserId: z.string().uuid().optional(),
           sourceFilter: z.enum(["all", "hp", "list"]).optional().default("all"),
           difficulties: z.array(z.number().int().min(1).max(3)).optional().default([]),
+          order: z.enum(["random", "probable"]).optional().default("random"),
         })
         .parse(data ?? {}),
   )
@@ -94,12 +100,25 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
     const { data: rows, error } = await query;
     if (error) throwDbError(error, "fetchWordBatch");
     const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));
-    for (let i = filtered.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+    const withChance = filtered.map((r) => {
+      const s = ordSannolikhet(ordSlug((r as { question_text: string }).question_text));
+      return { row: r, chans: s ? { text: s.text, ettPa: s.ettPa, p: s.p } : null };
+    });
+    if (data.order === "probable") {
+      // Mest sannolika först, men med brus: strikt sortering ger samma tjugo
+      // ord varje pass. Bruset blandar ord vars sannolikhet ligger nära varandra.
+      const key = (c: { p: number } | null) => (c ? c.p : 0) * (0.6 + Math.random() * 0.8);
+      withChance.sort((a, b) => key(b.chans) - key(a.chans));
+    } else {
+      for (let i = withChance.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [withChance[i], withChance[j]] = [withChance[j], withChance[i]];
+      }
     }
     return {
-      questions: filtered.slice(0, count) as unknown as WordQuestion[],
+      questions: withChance
+        .slice(0, count)
+        .map((x) => ({ ...x.row, chans: x.chans })) as unknown as WordQuestion[],
       locked,
     };
   });

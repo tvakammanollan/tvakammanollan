@@ -28,6 +28,7 @@ import {
 import { ordText, hasOrdDefinition, formatInt } from "@/lib/sv-format";
 import { ordDefinitionParts, definitionSourceLabel } from "@/lib/ord-definition";
 import { sounds } from "@/lib/sounds";
+import { useShowChance } from "@/hooks/useShowChance";
 import { trackEvent } from "@/lib/events";
 import { updateStreak } from "@/lib/streak";
 import {
@@ -251,6 +252,8 @@ function OrdPracticePage() {
   const [failedCount, setFailedCount] = useState<number | null>(null);
   const [failedWords, setFailedWords] = useState<FailedWordEntry[]>([]);
   const [difficulties, setDifficulties] = useState<number[]>([]);
+  const [order, setOrder] = useState<"random" | "probable">("random");
+  const [showChance, setShowChance] = useShowChance();
   // Setupen visar ett förval och en knapp; allt annat ligger bakom Anpassa.
   // Samma mönster som /train.
   const [customising, setCustomising] = useState(false);
@@ -351,6 +354,7 @@ function OrdPracticePage() {
               excludeCorrectForUserId: excludeCorrect && progress ? progress.userId : undefined,
               sourceFilter,
               difficulties,
+              order,
             },
           });
           questions = res.questions;
@@ -385,6 +389,7 @@ function OrdPracticePage() {
       progress,
       sourceFilter,
       difficulties,
+      order,
       loadProgress,
     ],
   );
@@ -460,7 +465,8 @@ function OrdPracticePage() {
             .map((d) => diffNames[d])
             .join(", ");
     const filtered = excludeCorrect ? ", utan ord du redan kan" : "";
-    return `${target} ord, ${source}, ${diff}${filtered}`;
+    const ordning = order === "probable" ? ", mest sannolika först" : "";
+    return `${target} ord, ${source}, ${diff}${filtered}${ordning}`;
   })();
 
   // Ord som är mogna för repetition just nu. Körs vid varje render, till
@@ -611,6 +617,31 @@ function OrdPracticePage() {
                   </div>
                 </SetupRow>
 
+                <SetupRow title="Ordning" hint="Sannolikheten är vår egen uppskattning">
+                  <div className="grid grid-cols-2 gap-2">
+                    <OptionButton active={order === "random"} onClick={() => setOrder("random")}>
+                      Slumpad
+                    </OptionButton>
+                    <OptionButton
+                      active={order === "probable"}
+                      onClick={() => setOrder("probable")}
+                    >
+                      Mest sannolika först
+                    </OptionButton>
+                  </div>
+                </SetupRow>
+
+                <SetupRow title="Visa chans att ordet kommer på provet">
+                  <div className="grid grid-cols-2 gap-2">
+                    <OptionButton active={showChance} onClick={() => setShowChance(true)}>
+                      På
+                    </OptionButton>
+                    <OptionButton active={!showChance} onClick={() => setShowChance(false)}>
+                      Av
+                    </OptionButton>
+                  </div>
+                </SetupRow>
+
                 {progress && progress.totalCount > 0 && (
                   <SetupRow title="Din ord-bank">
                     <div className="flex items-baseline gap-2">
@@ -753,6 +784,13 @@ function OrdPracticePage() {
                     definition={current.definition}
                     source={current.definition_source}
                   />
+                )}
+
+                {picked && showChance && current.chans && (
+                  <p className="mt-4 text-sm text-white/60">
+                    Chans att ordet står på nästa prov: <strong>{current.chans.text}</strong>,
+                    ungefär {current.chans.ettPa}. Vår egen uppskattning.
+                  </p>
                 )}
 
                 {picked && (
