@@ -22,6 +22,7 @@ import { AchievementWatcher } from "@/components/AchievementWatcher";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { Footer } from "@/components/Footer";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { PageDekor } from "@/components/layout/Dekorformer";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
 import { Analytics } from "@/components/Analytics";
 
@@ -31,7 +32,6 @@ installSupabaseFetchAuth();
 // en saknad env-variabel inte ger en trasig <link>-tagg i <head>.
 const SUPABASE_ORIGIN =
   import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://tvakommanollan.se";
-
 
 function NotFoundComponent() {
   const POPULAR = [
@@ -453,7 +453,13 @@ function RootComponent() {
             <SafeBoundary label="email-verification-notice">
               <EmailVerificationNotice />
             </SafeBoundary>
-            <main id="main-content">
+            {/* `relative isolate`: dekorformerna ligger på z-index -1 inuti
+                main och måste ha ett eget staplingssammanhang, annars hamnar
+                de under sidans botten och syns inte alls. */}
+            <main id="main-content" className="relative isolate">
+              <SafeBoundary label="page-dekor">
+                <PageDekor />
+              </SafeBoundary>
               <Outlet />
             </main>
             <Footer />

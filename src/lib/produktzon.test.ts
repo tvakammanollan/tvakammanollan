@@ -58,6 +58,7 @@ describe("zonForPath", () => {
     expect(zonForPath("/ordlista")).toBe("ord");
     expect(zonForPath("/mek-ovning")).toBe("mek");
     expect(zonForPath("/leaderboard")).toBe("duell");
+    expect(zonForPath("/stats")).toBe("duell");
   });
 
   it("följer med ner i undersidorna", () => {

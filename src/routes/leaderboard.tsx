@@ -122,7 +122,6 @@ function LeaderboardPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        zon="duell"
         title="Se vem som är"
         cycleWords={["bäst.", "snabbast.", "vassast.", "smartast."]}
         align="center"

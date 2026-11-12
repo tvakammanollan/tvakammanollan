@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, Calculator, GraduationCap, MessageSquare, Plus, ScrollText, Search } from "lucide-react";
+import {
+  BookOpen,
+  Calculator,
+  GraduationCap,
+  MessageSquare,
+  Plus,
+  ScrollText,
+  Search,
+} from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { fitTitle } from "@/lib/seo-text";
 import { PageHero } from "@/components/layout/PageHero";
@@ -77,7 +85,6 @@ function ForumHomePage() {
         }
         align="center"
         variant="compact"
-        dekor="cream"
       />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">

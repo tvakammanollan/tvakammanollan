@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { type Produktzon, zonDekor } from "@/lib/produktzon";
 
 type Variant = "compact" | "content";
 
@@ -22,26 +21,11 @@ export function PageHero({
   secondaryCta,
   variant = "compact",
   align = "left",
-  zon,
-  dekor,
   className,
 }: {
-  /**
-   * Produktzonen sidan tillhör. Sätter den färgar heron med zonens
-   * dekorformer, vilket är det enda stället zonfärgen får synas i hero:n.
-   * Formerna ligger bakom innehållet och är rent dekorativa — zonfärgerna
-   * klarar inte 3:1 mot grundytan och kan därför inte bära text, ikoner
-   * eller något annat man ska kunna urskilja. Se `lib/produktzon.ts`.
-   */
-  zon?: Produktzon;
-  /**
-   * Dekorformer för sidor som INTE är en produktyta, t.ex. forumet. Zonens
-   * färger är reserverade för sina ytor: lånar man dem till en sida utan
-   * zon slutar färg betyda yta, och det är hela poängen med systemet.
-   * Cream tillhör ingen zon och är den DESIGN.md listar för dekor.
-   * Ignoreras när `zon` är satt.
-   */
-  dekor?: "cream";
+  /* Dekorformerna ritas inte längre här utan i roten (`PageDekor` i
+     `layout/Dekorformer.tsx`), ur adressen, så att även sidor utan hero får
+     dem. `zon`- och `dekor`-propparna är borttagna av samma skäl. */
   title: string;
   subtitle?: string;
   cycleWords?: string[];
@@ -57,7 +41,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "relative overflow-hidden",
+        "relative",
         // Compact-heron låg 16 px för tätt inpå navbaren. Det syntes mest på
         // /ord, därför att "Öva" börjar på ett Ö: prickarna når 0,99em över
         // baslinjen medan ett vanligt versalt begynnelsebokstav stannar på 0,72,
@@ -67,25 +51,6 @@ export function PageHero({
         className,
       )}
     >
-      {zon || dekor ? (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div
-            className="absolute -top-10 right-[7%] h-[180px] w-[200px] opacity-70"
-            style={{
-              background: zon ? zonDekor[zon] : "var(--cream-wash)",
-              borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
-            }}
-          />
-          <div
-            className="absolute -bottom-12 left-[6%] h-[112px] w-[124px] opacity-60"
-            style={{
-              background: zon ? zonDekor[zon] : "var(--cream-wash)",
-              borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
-            }}
-          />
-        </div>
-      ) : null}
-
       <div className={cn("relative mx-auto max-w-6xl px-4 sm:px-6", centered && "text-center")}>
         <h1
           className={cn(

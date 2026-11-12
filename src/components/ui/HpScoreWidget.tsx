@@ -51,16 +51,15 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
     <button
       type="button"
       onClick={() => navigate({ to: "/stats" })}
-      className="group block w-full rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-left transition-colors hover:border-white/15 hover:bg-white/[0.03]"
+      // Terracotta: siffran räknas ur duellens ELO och är därmed duellens
+      // yta (`lib/produktzon.ts`), samma som spela-kortet på startsidan.
+      // Allt som står på den är Ink eller Graphite; zonfärgen bär aldrig text.
+      className="group block w-full rounded-3xl bg-terracotta p-6 text-left transition hover:brightness-[1.03] sm:p-7"
     >
       {/* Label */}
       <div className="flex items-center justify-between gap-2">
-        <p className="text-xs font-medium text-white/45">
-          Trolig HP-poäng
-        </p>
-        <span className="text-[11px] font-semibold text-primary">
-          {label}
-        </span>
+        <p className="text-xs font-medium text-[var(--cream-3)]">Trolig HP-poäng</p>
+        <span className="text-[11px] font-semibold text-primary">{label}</span>
       </div>
 
       {/* Main score */}
@@ -71,23 +70,23 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
         >
           {sv(combined)}
         </span>
-        <span className="text-lg text-white/40">/ 2,00</span>
+        <span className="text-lg text-[var(--cream-3)]">/ 2,00</span>
       </div>
 
       {/* HP-skala (gauge) */}
       <div className="mt-5">
-        <div className="relative h-2.5 w-full rounded-full bg-white/8">
+        <div className="relative h-2.5 w-full rounded-full bg-card/60">
           <div
             className="absolute inset-y-0 left-0 rounded-full bg-primary"
             style={{ width: `${pct}%` }}
           />
           {/* marker */}
           <div
-            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-primary shadow"
+            className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-card bg-primary"
             style={{ left: `${pct}%` }}
           />
         </div>
-        <div className="mt-1.5 flex justify-between text-[10px] tabular-nums text-white/35">
+        <div className="mt-1.5 flex justify-between text-[10px] tabular-nums text-[var(--cream-3)]">
           <span>0,00</span>
           <span>1,00</span>
           <span>2,00</span>
@@ -95,7 +94,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       </div>
 
       {/* Divider */}
-      <div className="my-5 border-t border-white/8" />
+      <div className="my-5 border-t border-black/10" />
 
       {/* Verbal / Matte */}
       <div className="grid grid-cols-2 gap-5">
@@ -106,10 +105,16 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
           elo={eloVerbal}
           accent={VERBAL}
         />
-        <ScoreCol label="Kvantitativ" score={m.score} desc={m.description} elo={eloMath} accent={MATH} />
+        <ScoreCol
+          label="Kvantitativ"
+          score={m.score}
+          desc={m.description}
+          elo={eloMath}
+          accent={MATH}
+        />
       </div>
 
-      <p className="mt-4 text-[11px] leading-relaxed text-white/35">
+      <p className="mt-4 text-[11px] leading-relaxed text-[var(--cream-3)]">
         Uppskattat från din ELO. Riktig normering varierar med provets svårighet.
       </p>
     </button>
@@ -133,8 +138,8 @@ function ScoreCol({
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="text-xs font-medium text-white/45">{label}</p>
-        <p className="text-[11px] tabular-nums text-white/35">ELO {elo}</p>
+        <p className="text-xs font-medium text-[var(--cream-3)]">{label}</p>
+        <p className="text-[11px] tabular-nums text-[var(--cream-3)]">ELO {elo}</p>
       </div>
       <p
         className="mt-1.5 text-[30px] font-bold leading-none tabular-nums"
@@ -142,10 +147,10 @@ function ScoreCol({
       >
         {sv(score)}
       </p>
-      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/8">
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-card/60">
         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: accent }} />
       </div>
-      <p className="mt-1.5 text-[11px] text-white/40">{desc}</p>
+      <p className="mt-1.5 text-[11px] text-[var(--cream-3)]">{desc}</p>
     </div>
   );
 }

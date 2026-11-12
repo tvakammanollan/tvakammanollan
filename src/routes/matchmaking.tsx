@@ -258,15 +258,12 @@ function MatchmakingPage() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col items-center justify-center gap-8 px-6 py-16 text-center">
       <div className="relative flex h-32 w-32 items-center justify-center">
-        <span
-          className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary text-on-brand"
-        >
+        <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-terracotta text-[var(--cream)]">
           <Trophy className="h-9 w-9" />
         </span>
       </div>
 
-      <div
-      >
+      <div>
         <h1
           className="display mt-2 text-[36px] font-bold leading-tight text-white sm:text-[48px]"
           style={{ fontFamily: "var(--font-display)" }}
@@ -281,9 +278,7 @@ function MatchmakingPage() {
         </h1>
       </div>
 
-      <div
-        className="surface-paper w-full rounded-2xl p-5 text-sm"
-      >
+      <div className="surface-paper w-full rounded-2xl p-5 text-sm">
         <div className="text-white/65">
           {minElo !== null && maxElo !== null ? (
             <>

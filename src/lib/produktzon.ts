@@ -78,7 +78,13 @@ export function zonForPath(path: string): Produktzon | null {
   if (prefix("/gamla-prov")) return "prov";
   if (prefix("/ordlista") || prefix("/ord")) return "ord";
   if (prefix("/mek-ovning")) return "mek";
-  if (prefix("/matchmaking") || prefix("/match") || prefix("/result") || prefix("/leaderboard")) {
+  if (
+    prefix("/matchmaking") ||
+    prefix("/match") ||
+    prefix("/result") ||
+    prefix("/leaderboard") ||
+    prefix("/stats")
+  ) {
     return "duell";
   }
   return null;

@@ -5,14 +5,14 @@ import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
+import { Dekorformer, HEM_FORMER } from "@/components/layout/Dekorformer";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
 import { getNextHpDate } from "@/lib/hp-dates";
-import {
-  } from "lucide-react";
+import {} from "lucide-react";
 import { trackEvent } from "@/lib/events";
 import { enhet } from "@/lib/sv-format";
 
@@ -60,12 +60,13 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
     ? Math.max(0, Math.ceil((nastaProv.date.getTime() - Date.now()) / 86_400_000))
     : null;
   const nedräkning =
-    nastaProv && dagarKvar !== null
-      ? `${nastaProv.label}, ${enhet(dagarKvar, "dag")} kvar`
-      : null;
+    nastaProv && dagarKvar !== null ? `${nastaProv.label}, ${enhet(dagarKvar, "dag")} kvar` : null;
 
   return (
-    <div className="min-h-screen">
+    <div className="relative isolate min-h-screen">
+      {/* Startsidan är den enda sidan som visar alla fyra produktytorna,
+          och därför den enda där formerna får ha alla deras färger. */}
+      <Dekorformer former={HEM_FORMER} />
       {isGuest && <GuestBanner />}
       <ResumeMatchBanner />
 
@@ -80,16 +81,12 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           trappan olika ut vid varje laddning. Nu rör sig hela skärmen som en
           enhet, och det som fortfarande saknar data har ett skelett i sin egen
           höjd i stället för en egen inflygning. */}
-      <div
-        className="mx-auto max-w-5xl px-4 py-10 sm:py-12"
-      >
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
         {/* ---------- Header: nedräkning, rubrik och en enda statusrad ---------- */}
         <div>
           <header>
             <div className="min-w-0">
-              {nedräkning ? (
-                <p className="text-sm font-semibold text-bark">{nedräkning}</p>
-              ) : null}
+              {nedräkning ? <p className="text-sm font-semibold text-bark">{nedräkning}</p> : null}
               {/* Rubriken är en fråga, för det är vad sidan är: ett val
                   mellan fyra aktiviteter. Användarens namn och avatar finns
                   redan i navbaren. */}
@@ -129,7 +126,6 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
           <div className="grid gap-4 sm:grid-cols-2">
             {/* ---------- Duellen ---------- */}
             <section className="flex flex-col rounded-[40px] bg-terracotta p-7 sm:p-8">
-
               <h2
                 className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
                 style={{ fontFamily: "var(--font-display)" }}

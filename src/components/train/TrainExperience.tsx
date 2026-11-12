@@ -531,7 +531,6 @@ export function TrainExperience({
       <div className="min-h-screen">
         {mode === "mek" ? (
           <PageHero
-            zon="mek"
             title="MEK-övning"
             subtitle="Uppgifter ur gamla prov och våra egna. Rösta efter varje fråga så visas de bästa oftare."
             align="center"
@@ -721,19 +720,14 @@ export function TrainExperience({
                   mekLåst && baraMek ? "hidden" : ""
                 }`}
               >
-                <p className="text-xs font-semibold text-white/45">
-                  Ditt pass
-                </p>
+                <p className="text-xs font-semibold text-white/45">Ditt pass</p>
                 <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
                 {mekLåst && (
                   <p className="mt-1.5 text-sm text-white/60">
                     MEK hoppas över: gratisuppgifterna är slut.
                   </p>
                 )}
-                <PrimaryCTA
-                  onClick={startTraining}
-                  className="mt-4 w-full"
-                >
+                <PrimaryCTA onClick={startTraining} className="mt-4 w-full">
                   Starta träning
                 </PrimaryCTA>
               </div>
@@ -828,9 +822,7 @@ export function TrainExperience({
           {showPassage && currentQ.passage_text && (
             <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
               <div className="mb-2 flex items-center justify-between gap-3">
-                <div className="text-xs font-semibold text-muted-foreground">
-                  Textpassage
-                </div>
+                <div className="text-xs font-semibold text-muted-foreground">Textpassage</div>
                 <HighlighterToggle highlighter={passageHighlighter} />
               </div>
               <HighlightableText
@@ -1139,9 +1131,7 @@ export function TrainExperience({
 
           {Object.keys(byCat).length > 1 && (
             <div className="mt-6 border-t border-white/10 pt-4">
-              <div className="mb-2 text-xs font-semibold text-white/45">
-                Per delprov
-              </div>
+              <div className="mb-2 text-xs font-semibold text-white/45">Per delprov</div>
               <div className="grid gap-2">
                 {Object.entries(byCat).map(([cat, v]) => (
                   <div

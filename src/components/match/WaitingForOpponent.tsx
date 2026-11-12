@@ -115,9 +115,7 @@ export function WaitingForOpponent({
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 p-6 text-center">
-      <span
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-brand"
-      >
+      <span className="flex h-16 w-16 items-center justify-center rounded-full bg-terracotta text-[var(--cream)]">
         {utgången ? <Clock className="h-7 w-7" /> : <Trophy className="h-7 w-7" />}
       </span>
 

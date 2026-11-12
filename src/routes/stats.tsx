@@ -182,10 +182,10 @@ function StatsPage() {
 
   return (
     <>
-      <PageHero
-        title="Din utveckling"
-        variant="compact"
-      />
+      {/* Sidan är duellens statistik (ELO, matcher, HP-poäng ur ELO) och
+          räknas till duellzonen i `zonForPath`, så dekorformerna och
+          zonremsan blir terracotta som på /leaderboard. */}
+      <PageHero title="Din utveckling" variant="compact" />
       <main className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
         {/* HP score estimate – first section */}
         <div className="mb-6">
@@ -194,10 +194,7 @@ function StatsPage() {
 
         {/* Stat cards */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <StatCard
-            label="Matcher"
-            value={profile.games_played}
-          />
+          <StatCard label="Matcher" value={profile.games_played} />
           <StatCard
             label="Vinster"
             value={profile.wins}
@@ -225,7 +222,10 @@ function StatsPage() {
           />
         </div>
         {/* Achievements */}
-        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        {/* Cream wash är den dekorfärg som inte tillhör någon zon; här
+            skiljer den utmärkelserna från de vita statkorten ovanför och
+            historiken nedanför utan att låna en produktytas färg. */}
+        <div className="mt-8 rounded-3xl bg-cream-wash p-5 sm:p-6">
           <AchievementsCard variant="full" />
         </div>
 
@@ -238,7 +238,9 @@ function StatsPage() {
             >
               Matchhistorik
             </h2>
-            <span className="text-xs text-muted-foreground">{enhet(matchHistory.length, "match")}</span>
+            <span className="text-xs text-muted-foreground">
+              {enhet(matchHistory.length, "match")}
+            </span>
           </div>
           {matchHistory.length === 0 ? (
             <EmptyState
@@ -295,7 +297,9 @@ function StatsPage() {
                               day: "numeric",
                             })}
                           </td>
-                          <td className="px-2 py-2 capitalize">{m.match_type}</td>
+                          <td className="px-2 py-2">
+                            {m.match_type === "math" ? "Kvantitativ" : "Verbal"}
+                          </td>
                           <td className="px-2 py-2">{oppLabel}</td>
                           <td className="px-2 py-2 font-medium">
                             {outcome === null ? "Pågår" : won ? "Vinst" : "Förlust"}
@@ -335,7 +339,7 @@ function StatsPage() {
                     disabled={page === 0}
                     onClick={() => setPage((p) => Math.max(0, p - 1))}
                   >
-Föregående
+                    Föregående
                   </Button>
                   <span className="text-muted-foreground">
                     Sida {page + 1} av {totalPages}
@@ -361,15 +365,7 @@ Föregående
   );
 }
 
-function StatCard({
-  label,
-  value,
-  sub,
-}: {
-  label: string;
-  value: number | string;
-  sub?: string;
-}) {
+function StatCard({ label, value, sub }: { label: string; value: number | string; sub?: string }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
       <div className="mb-1 text-xs font-medium text-muted-foreground">{label}</div>

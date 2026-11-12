@@ -79,12 +79,7 @@ function GamlaProvPage() {
 
   return (
     <div className="min-h-screen">
-      <PageHero
-        title="Alla gamla högskoleprov"
-        align="center"
-        variant="compact"
-        zon="prov"
-      />
+      <PageHero title="Alla gamla högskoleprov" align="center" variant="compact" />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">
         <ProvResumeCard />
@@ -149,7 +144,6 @@ function ExamCard({ exam, results }: { exam: ExamSummary; results: ProvResults |
     >
       <span className="flex items-center justify-between gap-2">
         <span className="text-base font-semibold text-[var(--cream)]">{exam.label}</span>
-
       </span>
       <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-tertiary)]">
         <span>

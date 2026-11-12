@@ -12,11 +12,7 @@ import { NextStep } from "@/components/layout/NextStep";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
 import { OrdPaywall } from "@/components/OrdPaywall";
 import { isOrdPlan } from "@/lib/ord-paywall";
-import {
-  confirmOrdCheckout,
-  getOrdAccess,
-  type OrdAccessInfo,
-} from "@/lib/ord-paywall.functions";
+import { confirmOrdCheckout, getOrdAccess, type OrdAccessInfo } from "@/lib/ord-paywall.functions";
 
 import {
   Check,
@@ -149,9 +145,7 @@ function DefinitionBody({ definition }: { definition: string | null | undefined 
 
       {related.length > 0 && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-          <span className="text-xs font-semibold text-white/55">
-            Liknande ord
-          </span>
+          <span className="text-xs font-semibold text-white/55">Liknande ord</span>
           {related.map((w) => (
             <span
               key={w}
@@ -163,9 +157,7 @@ function DefinitionBody({ definition }: { definition: string | null | undefined 
         </div>
       )}
 
-      {wordClass && (
-        <p className="mt-2 text-xs text-white/45">{wordClass}</p>
-      )}
+      {wordClass && <p className="mt-2 text-xs text-white/45">{wordClass}</p>}
     </div>
   );
 }
@@ -386,7 +378,15 @@ function OrdPracticePage() {
         setLoading(false);
       }
     },
-    [fetchBatch, fetchFailedBatch, excludeCorrect, progress, sourceFilter, difficulties, loadProgress],
+    [
+      fetchBatch,
+      fetchFailedBatch,
+      excludeCorrect,
+      progress,
+      sourceFilter,
+      difficulties,
+      loadProgress,
+    ],
   );
 
   const current = batch[idx];
@@ -481,7 +481,6 @@ function OrdPracticePage() {
           vecket och man fick skrolla förbi den 30 gånger i rad. */}
       {phase === "setup" && (
         <PageHero
-          zon="ord"
           title="Öva"
           cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
           subtitle="Spaced repetition. Ingen tidspress. De första 40 orden är gratis."
@@ -492,8 +491,7 @@ function OrdPracticePage() {
       <main className={`mx-auto max-w-2xl px-4 pb-20 sm:px-6 ${phase === "setup" ? "" : "pt-8"}`}>
         {/* SETUP */}
         {phase === "setup" && (
-          <div
-          >
+          <div>
             {/* Förvalet (10 ord, alla källor, alla nivåer) är redan det de flesta
                 vill ha. Framför första ordet låg tidigare tre längdknappar, tre
                 källfilter, tre svårighetsknappar, en kryssruta, en lägestoggle
@@ -501,9 +499,7 @@ function OrdPracticePage() {
                 styra öppnar Anpassa, precis som på /train. */}
             {access?.locked && <OrdPaywall access={access} />}
             <GlassCard className={`p-6 text-center sm:p-8 ${access?.locked ? "hidden" : ""}`}>
-              <p className="text-xs font-semibold text-white/45">
-                Ditt pass
-              </p>
+              <p className="text-xs font-semibold text-white/45">Ditt pass</p>
               <p className="mt-1.5 text-[15px] text-[var(--cream)]">{configSummary}</p>
 
               <PrimaryCTA
@@ -798,9 +794,7 @@ function OrdPracticePage() {
             </div>
 
             <div className="mt-6 rounded-xl border border-border bg-muted/30 p-4">
-              <h3 className="mb-3 text-xs font-semibold text-muted-foreground">
-                Genomgång
-              </h3>
+              <h3 className="mb-3 text-xs font-semibold text-muted-foreground">Genomgång</h3>
               <ol className="grid gap-2">
                 {answered.map((a, i) => {
                   const correctOpt = a.question.options.find(

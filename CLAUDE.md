@@ -2024,6 +2024,23 @@ en riktig ORD-uppgift som går att svara på, hämtad i route-loadern.
   `:root`) innan du bygger något som ska matcha utseendet** — den här filen
   har legat fel om paletten en gång och gör det tills grenen är mergad och
   avsnittet skrivet om.
+- **Dekorformerna ritas i roten, inte i `PageHero` (2026-11-12).**
+  `PageDekor` (`components/layout/Dekorformer.tsx`, reglerna i
+  `lib/dekorformer.ts`, testade) läser zonen ur adressen som `ZonBand` och
+  lägger två former i zonens färg plus en liten i cream wash bakom sidans
+  övre del; utanför zonerna blir alla tre cream wash. `/pris` och `/kassa`
+  får ordlistans färg utan att räknas som zon, `/stats` räknas till duellen
+  i `zonForPath`. Startsidan ritar sina egna i alla fyra ljusa färgerna
+  (`HEM_FORMER`), landningssidan har sina i `LandingHero`, och matchen,
+  provpasset och admin får inga. `zon`- och `dekor`-propparna på `PageHero`
+  är borta; en ny sida behöver inte göra något för att få former. Formerna
+  ligger på `z-index: -1` inuti `<main class="relative isolate">`, ta inte
+  bort `isolate`, då hamnar de under sidans botten och syns inte.
+- **Zonfärgen i matchen sitter på detaljerna, aldrig på topplisten.** Ett
+  försök med en solid terracottalist (2026-11-12) blev "en stor orange
+  border där uppe" och togs bort samma dag. Det som är terracotta i duellen:
+  det valda svaret, din förloppsstapel, trofédiskarna och HP-kortet på
+  `/stats`. Listen är `bg-background` med `border-b`.
 - **Design (anti vibe-coded):** the app is **always-light** since the Lunden rebrand (2026-08-17). It was always-dark navy before that; anything you read elsewhere claiming otherwise is stale. Palette: paper `--navy #fbf6ec`, card `--navy-2 #ffffff`, ink `--cream #2e1e14`, apple `--amber #ae2f26`, bark `--teal #7a5236`, leaf `--success #2f6b3c`, error `--danger #d32f2f`, destructive `#8c1d18`. Card surface is still written `border border-white/10 bg-white/[0.02] backdrop-blur-sm` — the remap layer turns those into dark-on-cream, so keep using them. Never hardcode a surface colour; go through tokens. Icons = Lucide SVG, never emoji-as-icon. New interactive elements need visible hover + the global focus ring (now apple red) works automatically.
 - **The `--navy` / `--cream` names are inverted lies**, kept deliberately so 106 components and the whole remap layer did not have to change. Read `--navy` as "the ground surface" and `--cream` as "the text", never as colours.
 - **Colour has three jobs.** Apple leads to action (CTA, streak, rank). Bark is structure (borders, secondary, "the opponent" in match bars). Leaf is progress (correct answers, stats, coaching). `--danger` is wrong answers and is **not** an alias for `--destructive` any more — a wrong answer must not look as alarming as deleting your account. Progress-oriented text uses `text-success`; there is no eyebrow component any more (see "Copy- och UI-regler").

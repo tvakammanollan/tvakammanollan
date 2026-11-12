@@ -72,7 +72,7 @@ function TackPage() {
           <p className="mt-4 text-sm text-white/60">Bekräftar din betalning…</p>
         </div>
       ) : receipt?.paid ? (
-        <>
+        <div className="rounded-3xl bg-cream-wash px-6 py-10 sm:px-10">
           <CheckCircle2 className="mx-auto h-14 w-14 text-success" />
           <h1
             className="mt-5 text-[30px] font-bold leading-tight text-[var(--cream)]"
@@ -107,7 +107,7 @@ function TackPage() {
           >
             Tillbaka till träningen
           </Link>
-        </>
+        </div>
       ) : (
         <>
           <Mail className="mx-auto h-12 w-12 text-bark" />

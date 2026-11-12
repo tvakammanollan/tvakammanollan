@@ -804,13 +804,13 @@ function MatchPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Top bar */}
-      {/* Terracotta är duellens yta (`lib/produktzon.ts`), samma som
-          spela-kortet på startsidan och banderollen "Du har en match igång".
-          Listen var tidigare en halvgenomskinlig remsa i Lundens creme
-          (#fbf6ec), hårdkodad, och låg gul mot Podias grå grundyta. Solid
-          färg, ingen blur: det som står på den är Ink och Graphite, som
-          klarar 8,7:1 respektive 5,8:1 mot terracotta. */}
-      <header className="sticky top-0 z-20 bg-terracotta">
+      {/* Neutral list. Den var tidigare en halvgenomskinlig remsa i Lundens
+          creme (#fbf6ec), hårdkodad, och låg gul mot Podias grå grundyta; ett
+          försök med solid terracotta (2026-11-12) blev ett band som tog över
+          hela skärmen och togs bort på Niklas begäran. Duellens färg sitter i
+          stället där den betyder något: på det valda svaret och i
+          förloppsstaplarna. */}
+      <header className="sticky top-0 z-20 border-b border-border bg-background">
         {/* Bara klockan. Raden bar tidigare också "Fråga 3 av 8" och
             "Mot: {namn}" — båda står ordagrant i progressbarerna direkt
             under, så frågepositionen syntes 3 gånger på skärmen och
@@ -828,31 +828,30 @@ function MatchPage() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-medium text-[var(--cream)]">Du</span>
-                <span className="tabular-nums text-[var(--cream-3)]">
+                <span className="font-medium text-foreground">Du</span>
+                <span className="tabular-nums text-muted-foreground">
                   {answers.size}/{questions.length}
                 </span>
               </div>
-              {/* Spåret är ljusare än listen, inte mörkare: på en färgad yta
-                  försvinner annars den del som inte fyllts. Samma val som
-                  ämnesväxeln på startsidans spela-kort. */}
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-card/60">
+              {/* Din stapel är terracotta (duellens yta), motståndarens djup
+                  teal (strukturfärgen som betyder "den andre" i hela appen). */}
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-primary"
+                  className="h-full bg-terracotta"
                   style={{ width: `${(answers.size / Math.max(1, questions.length)) * 100}%` }}
                 />
               </div>
             </div>
             <div>
               <div className="flex items-center justify-between text-[11px]">
-                <span className="truncate font-medium text-[var(--cream)]">
+                <span className="truncate font-medium text-foreground">
                   {opponentName || "Okänd spelare"}
                 </span>
-                <span className="tabular-nums text-[var(--cream-3)]">
+                <span className="tabular-nums text-muted-foreground">
                   {Math.min(oppAnswered, questions.length)}/{questions.length}
                 </span>
               </div>
-              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-card/60">
+              <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-bark"
                   style={{
@@ -865,8 +864,12 @@ function MatchPage() {
         </div>
         {oppForceCountdown !== null && (
           <div
-            className="flex items-center justify-center gap-2 px-4 py-2 text-center text-xs font-semibold"
-            style={{ background: "var(--danger)", color: "var(--danger-ink)" }}
+            className="flex items-center justify-center gap-2 border-t px-4 py-2 text-center text-xs font-semibold"
+            style={{
+              borderColor: "var(--danger-line)",
+              background: "var(--danger-soft)",
+              color: "var(--danger)",
+            }}
             role="status"
             aria-live="polite"
           >

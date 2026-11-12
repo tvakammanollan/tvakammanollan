@@ -170,12 +170,21 @@ function KassaPage() {
         </p>
 
         {returning ? (
-          <GlassCard className="mt-8 p-6 text-center sm:p-10">
+          <GlassCard
+            className={`mt-8 p-6 text-center sm:p-10 ${
+              // Köpet är klart: kortet får ordlistans färg, samma som
+              // 6-månaderskortet på /pris. Text i Plum, som paletten godkänt
+              // på Lavender.
+              confirmed === "ok" ? "border-transparent bg-lavender" : ""
+            }`}
+          >
             {confirmed === "ok" ? (
               <>
-                <CheckCircle2 className="mx-auto h-10 w-10 text-success" aria-hidden />
-                <h2 className="mt-4 text-2xl font-semibold">Tack! Allt är upplåst</h2>
-                <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
+                <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--plum)]" aria-hidden />
+                <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">
+                  Tack! Allt är upplåst
+                </h2>
+                <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
                   Hela ordlistan och all MEK-övning är ditt nu. Kvittot kommer på mejlen från
                   Stripe.
                 </p>
