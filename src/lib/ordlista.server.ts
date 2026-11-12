@@ -21,6 +21,7 @@ import { ordSlug, ordLetter, ordCollator, ORD_LETTERS, ORD_LETTER_OTHER } from "
 import { ordDefinitionParts, definitionSourceLabel } from "./ord-definition";
 import { trimToWord } from "./seo-text";
 import { ordText } from "./sv-format";
+import { ordSannolikhet, type OrdSannolikhet } from "./ord-sannolikhet";
 import { CANONICAL_HOST } from "./canonical-host";
 
 const ORIGIN = `https://${CANONICAL_HOST}`;
@@ -225,6 +226,8 @@ export type OrdlistaEntry = {
     correctAnswer: string;
     correctText: string | null;
   } | null;
+  /** Sajtens uppskattning att ordet står på nästa prov, se `ord-sannolikhet.ts`. */
+  sannolikhet: OrdSannolikhet | null;
   /** Klarar kvalitetsgrinden (`ordIndexable`); annars `noindex` och ingen sitemap-rad. */
   indexable: boolean;
   /** Hela beståndets storlek — sidan skriver ut den, och den ändras. */
@@ -293,6 +296,7 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
             correctText,
           }
         : null,
+    sannolikhet: ordSannolikhet(slug),
     // Samma villkor som i registret, men på exakt den rad som visas.
     indexable: ordIndexable(sense, options.length),
     total: index.count,

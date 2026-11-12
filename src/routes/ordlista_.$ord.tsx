@@ -111,6 +111,7 @@ function OrdlistaEntryPage() {
     next,
     letter,
     total,
+    sannolikhet,
   } = entry;
 
   return (
@@ -191,6 +192,28 @@ function OrdlistaEntryPage() {
           )}
         </p>
       </section>
+
+      {/* Sajtens egen uppskattning, aldrig ett besked. Texten säger det, och
+          den säger aldrig att ordet "kommer": det högsta talet i beståndet är
+          under en procent. */}
+      {sannolikhet && (
+        <section className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5">
+          <h2
+            className="text-[18px] font-bold text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Chans att {word} står på nästa prov
+          </h2>
+          <p className="mt-2.5 text-[15px] leading-[1.7] text-white/70">
+            Vi uppskattar chansen till <strong className="font-semibold">{sannolikhet.text}</strong>
+            , ungefär {sannolikhet.ettPa}. {sannolikhet.skal}
+          </p>
+          <p className="mt-3 text-[12px] leading-relaxed text-white/45">
+            Det är vår egen beräkning ur alla ORD-uppgifter sedan 1997, inte ett besked från UHR.
+            Ordet är ett av {formatInt(total)} i ordlistan och provet har 20 ORD-uppgifter.
+          </p>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="mt-6">
