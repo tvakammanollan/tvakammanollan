@@ -47,6 +47,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       sourceFilter?: "all" | "hp" | "list";
       difficulties?: number[];
       order?: "random" | "probable";
+      ids?: string[];
     }) =>
       z
         .object({
@@ -56,6 +57,9 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
           sourceFilter: z.enum(["all", "hp", "list"]).optional().default("all"),
           difficulties: z.array(z.number().int().min(1).max(3)).optional().default([]),
           order: z.enum(["random", "probable"]).optional().default("random"),
+          // Besökarens egna flaggade ord. Urvalet görs i webbläsaren, där
+          // flaggorna ligger; servern hämtar bara just de raderna.
+          ids: z.array(z.string().uuid()).max(50).optional(),
         })
         .parse(data ?? {}),
   )
@@ -101,9 +105,13 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
       )
       .eq("category", "ORD")
       .limit(10000);
-    if (data.sourceFilter === "hp") query = query.not("source", "is", null);
-    else if (data.sourceFilter === "list") query = query.is("source", null);
-    if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
+    if (data.ids) {
+      query = query.in("id", data.ids);
+    } else {
+      if (data.sourceFilter === "hp") query = query.not("source", "is", null);
+      else if (data.sourceFilter === "list") query = query.is("source", null);
+      if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
+    }
     const { data: rows, error } = await query;
     if (error) throwDbError(error, "fetchWordBatch");
     const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));

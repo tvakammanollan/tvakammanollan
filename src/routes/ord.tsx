@@ -30,6 +30,20 @@ import { ordDefinitionParts, definitionSourceLabel } from "@/lib/ord-definition"
 import { sounds } from "@/lib/sounds";
 import { useShowChance } from "@/hooks/useShowChance";
 import { ChanceMeter } from "@/components/ChanceMeter";
+import { OrdFlagButtons } from "@/components/OrdFlagButtons";
+import { useOrdFlags } from "@/hooks/useOrdFlags";
+import {
+  FLAG_COLORS,
+  FLAG_DEFAULT_NAMES,
+  FLAG_HEX,
+  FLAG_NAME_MAX,
+  flagCounts,
+  flagName,
+  pickFlagged,
+  renameFlag,
+  toggleFlag,
+  type FlagColor,
+} from "@/lib/ord-flags";
 import { trackEvent } from "@/lib/events";
 import { updateStreak } from "@/lib/streak";
 import {
@@ -255,6 +269,10 @@ function OrdPracticePage() {
   const [difficulties, setDifficulties] = useState<number[]>([]);
   const [order, setOrder] = useState<"random" | "probable">("random");
   const [showChance, setShowChance] = useShowChance();
+  const flags = useOrdFlags();
+  const [flagFilter, setFlagFilter] = useState<FlagColor | null>(null);
+  const flagAntal = flagCounts(flags.state);
+  const activeFlagFilter = flags.enabled ? flagFilter : null;
   // Setupen visar ett förval och en knapp; allt annat ligger bakom Anpassa.
   // Samma mönster som /train.
   const [customising, setCustomising] = useState(false);
@@ -348,8 +366,10 @@ function OrdPracticePage() {
           const res = await fetchFailedBatch({ data: { count: n } });
           questions = res.questions;
         } else {
+          const ids = activeFlagFilter ? pickFlagged(flags.state, activeFlagFilter, n) : undefined;
           const res = await fetchBatch({
             data: {
+              ids,
               count: n,
               exclude: [],
               excludeCorrectForUserId: excludeCorrect && progress ? progress.userId : undefined,
@@ -391,6 +411,8 @@ function OrdPracticePage() {
       sourceFilter,
       difficulties,
       order,
+      activeFlagFilter,
+      flags.state,
       loadProgress,
     ],
   );
@@ -467,6 +489,9 @@ function OrdPracticePage() {
             .join(", ");
     const filtered = excludeCorrect ? ", utan ord du redan kan" : "";
     const ordning = order === "probable" ? ", mest sannolika först" : "";
+    if (activeFlagFilter) {
+      return `${target} ord flaggade ${flagName(flags.state, activeFlagFilter)}${ordning}`;
+    }
     return `${target} ord, ${source}, ${diff}${filtered}${ordning}`;
   })();
 
@@ -643,6 +668,73 @@ function OrdPracticePage() {
                   </div>
                 </SetupRow>
 
+                <SetupRow title="Egna flaggor" hint="Fyra färger som du sorterar orden med">
+                  <div className="grid grid-cols-2 gap-2">
+                    <OptionButton active={flags.enabled} onClick={() => flags.setEnabled(true)}>
+                      På
+                    </OptionButton>
+                    <OptionButton active={!flags.enabled} onClick={() => flags.setEnabled(false)}>
+                      Av
+                    </OptionButton>
+                  </div>
+                  {flags.enabled && (
+                    <>
+                      <p className="mt-3 text-xs text-white/55">
+                        Knapparna visas uppe till höger på varje ord. Färgerna betyder det du
+                        bestämmer, och du kan döpa dem här. Flaggorna sparas i den här webbläsaren.
+                      </p>
+                      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                        {FLAG_COLORS.map((c) => (
+                          <label key={c} className="flex items-center gap-2">
+                            <span
+                              className="block h-6 w-6 shrink-0 rounded-md"
+                              style={{ background: FLAG_HEX[c] }}
+                            />
+                            <input
+                              type="text"
+                              maxLength={FLAG_NAME_MAX}
+                              defaultValue={flags.state.names[c] ?? ""}
+                              placeholder={FLAG_DEFAULT_NAMES[c]}
+                              aria-label={`Namn på ${FLAG_DEFAULT_NAMES[c].toLowerCase()} flagga`}
+                              onBlur={(e) =>
+                                flags.update((st) => renameFlag(st, c, e.target.value))
+                              }
+                              className="min-h-[44px] w-full rounded-lg border border-white/10 bg-white/[0.02] px-3 text-sm text-[var(--cream)]"
+                            />
+                            <span className="shrink-0 text-xs tabular-nums text-white/55">
+                              {formatInt(flagAntal[c])} ord
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </SetupRow>
+
+                {flags.enabled && (
+                  <SetupRow title="Öva bara flaggade ord" hint="Ersätter källa och svårighetsgrad">
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+                      <OptionButton
+                        active={flagFilter === null}
+                        onClick={() => setFlagFilter(null)}
+                      >
+                        Alla ord
+                      </OptionButton>
+                      {FLAG_COLORS.map((c) => (
+                        <OptionButton
+                          key={c}
+                          active={flagFilter === c}
+                          disabled={flagAntal[c] === 0}
+                          onClick={() => setFlagFilter(c)}
+                          hint={`${formatInt(flagAntal[c])} ord`}
+                        >
+                          {flagName(flags.state, c)}
+                        </OptionButton>
+                      ))}
+                    </div>
+                  </SetupRow>
+                )}
+
                 {progress && progress.totalCount > 0 && (
                   <SetupRow title="Din ord-bank">
                     <div className="flex items-baseline gap-2">
@@ -693,7 +785,7 @@ function OrdPracticePage() {
             {/* Progress bar */}
             <div className="mb-4 flex items-center justify-between text-sm">
               <span className="font-medium tabular-nums">
-                Fråga {idx + 1} / {target}
+                Fråga {idx + 1} / {batch.length}
               </span>
               <span className="text-muted-foreground tabular-nums">
                 {correctCount} rätt hittills
@@ -702,7 +794,9 @@ function OrdPracticePage() {
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full bg-primary"
-                style={{ width: `${((idx + (picked ? 1 : 0)) / target) * 100}%` }}
+                style={{
+                  width: `${((idx + (picked ? 1 : 0)) / Math.max(1, batch.length)) * 100}%`,
+                }}
               />
             </div>
 
@@ -710,13 +804,24 @@ function OrdPracticePage() {
               <div className="skeleton-shimmer h-80 rounded-2xl" />
             ) : (
               <article className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
-                <div className="text-[11px] text-muted-foreground">Synonym till</div>
-                <h2
-                  className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {ordText(current.question_text)}
-                </h2>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="text-[11px] text-muted-foreground">Synonym till</div>
+                    <h2
+                      className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {ordText(current.question_text)}
+                    </h2>
+                  </div>
+                  {flags.enabled && (
+                    <OrdFlagButtons
+                      state={flags.state}
+                      current={flags.state.flags[current.id]}
+                      onToggle={(c) => flags.update((st) => toggleFlag(st, current.id, c))}
+                    />
+                  )}
+                </div>
 
                 <div className="mt-6 grid gap-2.5">
                   {current.options.map((opt) => {
@@ -800,7 +905,7 @@ function OrdPracticePage() {
                 {picked && (
                   <div className="mt-6 flex items-center justify-end">
                     <Button onClick={next} className="gap-2">
-                      {idx + 1 >= target ? "Visa resultat" : "Nästa"}{" "}
+                      {idx + 1 >= batch.length ? "Visa resultat" : "Nästa"}{" "}
                     </Button>
                   </div>
                 )}
