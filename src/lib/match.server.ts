@@ -5,6 +5,7 @@ import { loadVoteStats } from "./question-votes.server";
 import { isImplausiblyFast } from "./match-abuse";
 import { decideWinnerSide } from "./match-outcome";
 import { questionIsServable } from "./question-validity";
+import { loadQuestionPool } from "./question-pool.server";
 import type { Database } from "@/integrations/supabase/types";
 
 type UsersUpdate = Database["public"]["Tables"]["users"]["Update"];
@@ -29,49 +30,24 @@ const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
 const QUESTION_COLS =
   "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status, correct_answer, image_url, image_caption";
 
-// PostgREST svarar med högst 1 000 rader per anrop, oavsett `limit`. Fram
-// till 2026-11-13 hämtade urvalet hela rader med `limit(9000)` och fick
-// därför alltid tabellens 1 000 första rader i fysisk ordning: 1 000 av
-// 8 761 ORD-ord och 602 av 1 500 egna MEK-uppgifter var allt en match
-// någonsin kunde visa, och det var samma 1 000 varje gång. Nu hämtas id:na
-// sidvis så att hela beståndet är med, och raderna läses först för de
-// uppgifter som lottats fram. Id-listan cachas per isolat: ORD är tio anrop
-// och ändras bara vid import.
-const POOL_PAGE = 1000;
-const POOL_TTL_MS = 10 * 60 * 1000;
-const poolCache = new Map<string, { ids: string[]; at: number }>();
-
-function poolQuery(category: string, isMath: boolean) {
-  const q = supabaseAdmin
-    .from("questions")
-    .select("id", { count: "exact" })
-    .eq("category", category)
-    .is("passage_id", null);
-  // Matten kräver lyckad textutvinning. Verbala rader står allihop som
-  // "pending" (se train.functions.ts), så där är spärren bara "retired".
-  return isMath ? q.eq("clean_status", "ok") : q.neq("clean_status", "retired");
-}
-
+// Fram till 2026-11-13 hämtade urvalet hela rader med `limit(9000)` och fick
+// alltid tabellens 1 000 första rader (PostgREST:s tak): 1 000 av 8 761
+// ORD-ord och 602 av 1 500 egna MEK-uppgifter var allt en match någonsin
+// kunde visa, och det var samma 1 000 varje gång. Nu hämtas id:na för hela
+// beståndet (`question-pool.server.ts`), och raderna läses först för de
+// uppgifter som lottats fram.
 async function loadPoolIds(category: string, isMath: boolean): Promise<string[]> {
-  const cached = poolCache.get(category);
-  if (cached && Date.now() - cached.at < POOL_TTL_MS) return cached.ids;
-  const head = await poolQuery(category, isMath).range(0, 0);
-  if (head.error) throw head.error;
-  const total = head.count ?? 0;
-  const offsets: number[] = [];
-  for (let from = 0; from < total; from += POOL_PAGE) offsets.push(from);
-  const pages = await Promise.all(
-    offsets.map(async (from) => {
-      const { data, error } = await poolQuery(category, isMath)
-        .order("id")
-        .range(from, from + POOL_PAGE - 1);
-      if (error) throw error;
-      return (data ?? []).map((r) => r.id as string);
-    }),
-  );
-  const ids = pages.flat();
-  poolCache.set(category, { ids, at: Date.now() });
-  return ids;
+  const rows = await loadQuestionPool(`match:${category}`, () => {
+    const q = supabaseAdmin
+      .from("questions")
+      .select("id", { count: "exact" })
+      .eq("category", category)
+      .is("passage_id", null);
+    // Matten kräver lyckad textutvinning. Verbala rader står allihop som
+    // "pending" (se train.functions.ts), så där är spärren bara "retired".
+    return isMath ? q.eq("clean_status", "ok") : q.neq("clean_status", "retired");
+  });
+  return rows.map((r) => r.id);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

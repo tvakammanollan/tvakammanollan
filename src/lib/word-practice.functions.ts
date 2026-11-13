@@ -11,6 +11,7 @@ import { cappedBatchSize, ordAccess } from "./ord-paywall";
 import { hasOrdAccess } from "./ord-paywall.server";
 import { ordSannolikhet } from "./ord-sannolikhet";
 import { ordSlug } from "./ord-slug";
+import { loadQuestionPool } from "./question-pool.server";
 
 /** Logga DB-felet server-side men exponera bara generisk svensk text. */
 function throwDbError(error: { message: string }, ctx: string): never {
@@ -64,7 +65,7 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         .parse(data ?? {}),
   )
   .handler(async ({ data, context }) => {
-    // Publik + tung query (upp till 10k rader) — hamringsskydd per IP.
+    // Publik och tung (hela ORD-beståndet i urvalet) — hamringsskydd per IP.
     assertRateLimit(ipKey("wordbatch"), limits.wordBatch);
     const supabase = supabaseAdmin;
 
@@ -98,26 +99,45 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         .eq("user_id", data.excludeCorrectForUserId);
       for (const r of correctRows ?? []) excludeIds.add(r.question_id as string);
     }
-    let query = supabase
-      .from("questions")
-      .select(
-        "id,question_text,options,correct_answer,source,difficulty,definition,definition_source",
-      )
-      .eq("category", "ORD")
-      .limit(10000);
+    // Urvalet görs på lätta rader (id, ord, källa, svårighet) och hela
+    // raderna läses sedan bara för de ord som valts. Fram till 2026-11-13
+    // hämtades hela rader med `limit(10000)`, och PostgREST kapade svaret vid
+    // 1 000 rader utan att något felade: ordövningen drog ur samma 1 000 ord
+    // av 8 761 varje gång. Hela beståndet hämtas sidvis och cachas per isolat
+    // (`question-pool.server.ts`).
+    type Light = {
+      id: string;
+      question_text: string;
+      source: string | null;
+      difficulty: number | null;
+    };
+    let light: Light[];
     if (data.ids) {
-      query = query.in("id", data.ids);
+      const { data: rows, error } = await supabase
+        .from("questions")
+        .select("id, question_text, source, difficulty")
+        .eq("category", "ORD")
+        .in("id", data.ids);
+      if (error) throwDbError(error, "fetchWordBatch");
+      light = (rows ?? []) as Light[];
     } else {
-      if (data.sourceFilter === "hp") query = query.not("source", "is", null);
-      else if (data.sourceFilter === "list") query = query.is("source", null);
-      if (data.difficulties.length > 0) query = query.in("difficulty", data.difficulties);
+      light = await loadQuestionPool<Light>("ord:light", () =>
+        supabase
+          .from("questions")
+          .select("id, question_text, source, difficulty", { count: "exact" })
+          .eq("category", "ORD"),
+      ).catch((e: { message: string }) => throwDbError(e, "fetchWordBatch pool"));
+      if (data.sourceFilter === "hp") light = light.filter((r) => r.source !== null);
+      else if (data.sourceFilter === "list") light = light.filter((r) => r.source === null);
+      if (data.difficulties.length > 0) {
+        const wanted = new Set<number | null>(data.difficulties);
+        light = light.filter((r) => wanted.has(r.difficulty));
+      }
     }
-    const { data: rows, error } = await query;
-    if (error) throwDbError(error, "fetchWordBatch");
-    const filtered = (rows ?? []).filter((r: { id: string }) => !excludeIds.has(r.id as string));
+    const filtered = light.filter((r) => !excludeIds.has(r.id));
     const withChance = filtered.map((r) => ({
       row: r,
-      chans: chansFor((r as { question_text: string }).question_text),
+      chans: chansFor(r.question_text),
     }));
     if (data.order === "probable") {
       // Mest sannolika först, men med brus: strikt sortering ger samma tjugo
@@ -130,10 +150,26 @@ export const fetchWordBatch = createServerFn({ method: "GET" })
         [withChance[i], withChance[j]] = [withChance[j], withChance[i]];
       }
     }
+    const chosen = withChance.slice(0, count);
+    const byId = new Map<string, Record<string, unknown>>();
+    if (chosen.length > 0) {
+      const { data: rows, error } = await supabase
+        .from("questions")
+        .select(
+          "id,question_text,options,correct_answer,source,difficulty,definition,definition_source",
+        )
+        .in(
+          "id",
+          chosen.map((x) => x.row.id),
+        );
+      if (error) throwDbError(error, "fetchWordBatch");
+      for (const r of rows ?? []) byId.set(r.id, r);
+    }
     return {
-      questions: withChance
-        .slice(0, count)
-        .map((x) => ({ ...x.row, chans: x.chans })) as unknown as WordQuestion[],
+      questions: chosen.flatMap((x) => {
+        const r = byId.get(x.row.id);
+        return r ? [{ ...r, chans: x.chans }] : [];
+      }) as unknown as WordQuestion[],
       locked,
     };
   });

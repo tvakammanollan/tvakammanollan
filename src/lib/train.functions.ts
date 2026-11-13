@@ -6,6 +6,7 @@ import { assertRateLimit, ipKey } from "./rate-limit.server";
 import { questionIsServable } from "./question-validity";
 import { voteWeight, weightedShuffle } from "./question-votes";
 import { loadVoteStats } from "./question-votes.server";
+import { loadQuestionPool } from "./question-pool.server";
 import { optionalSupabaseAuth } from "./auth-optional.server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { GENERATED_TAG, MEK_ORIGINS, type MekOrigin } from "./question-origin";
@@ -50,9 +51,6 @@ const COLS =
  * går alltså inte att räkna; samma kända och accepterade läcka som i ORD.
  */
 const ANON_MEK_PER_BATCH = 10;
-
-/** Hur många id som läses per delprov innan urvalet görs. PostgREST:s radtak. */
-const ID_WINDOW = 1000;
 
 export const fetchTrainingBatch = createServerFn({ method: "GET" })
   .middleware([optionalSupabaseAuth])
@@ -107,8 +105,10 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
     // `.limit(300)` och utan ordning, vilket i praktiken gav de 300 äldsta
     // raderna varje gång. För MEK (698 rader) betydde det att de nyare
     // uppgifterna, alltså alla Tvåkommanollans egna, nästan aldrig kom med.
-    // Ett id-fönster på upp till 1 000 rader per delprov täcker hela MEK och
-    // läggs på en slumpad plats i de större delproven (ORD).
+    // Id:na för hela beståndet hämtas sidvis och cachas per isolat
+    // (`question-pool.server.ts`). Fram till 2026-11-13 låg här ett fönster
+    // på 1 000 id på slumpad plats, så ett pass såg aldrig mer än en niondel
+    // av ORD, och det var olika niondelar varje gång.
     const idsByCategory = await Promise.all(
       categories.map(async (category) => {
         const filtered = () => {
@@ -132,15 +132,10 @@ export const fetchTrainingBatch = createServerFn({ method: "GET" })
           }
           return q;
         };
-        const head = await filtered().range(0, 0);
-        if (head.error) throw head.error;
-        const total = head.count ?? 0;
-        const offset = total > ID_WINDOW ? Math.floor(Math.random() * (total - ID_WINDOW + 1)) : 0;
-        const { data: ids, error } = await filtered()
-          .order("id")
-          .range(offset, offset + ID_WINDOW - 1);
-        if (error) throw error;
-        return (ids ?? []).map((r) => r.id as string);
+        const origin = category === "MEK" ? data.mekOrigin : "";
+        const key = `train:${category}:${data.difficulty ?? "alla"}:${origin}`;
+        const rows = await loadQuestionPool(key, filtered);
+        return rows.map((r) => r.id);
       }),
     ).catch((e: unknown) => {
       console.error("[train] id fetch failed:", e instanceof Error ? e.message : e);

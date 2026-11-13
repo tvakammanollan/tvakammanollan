@@ -315,8 +315,8 @@ ordning. `pickRandom` i `match.server.ts` hämtade hela rader med
 kunde visa. Inget felade, kommentaren i koden sa att 9 000 räckte, och det
 syntes bara när man räknade svaret.
 
-- **Id först, rader sedan.** `loadPoolIds` hämtar id:na sidvis (en räkning,
-  sedan sidorna om 1 000 parallellt), cachat 10 min per isolat. Urvalet
+- **Id först, rader sedan.** Id:na hämtas sidvis (en räkning, sedan
+  sidorna om 1 000 parallellt), cachat 10 min per isolat. Urvalet
   lottas på id-listan med röstvikterna och först därefter läses raderna för
   de valda, i omgångar om `count * 3` som marginal för matteuppgifter som
   faller på `questionIsServable`. Samma mönster som träningsläget.
@@ -325,9 +325,12 @@ syntes bara när man räknade svaret.
 - Uppmätt 2026-11-13 mot produktionen: kall isolat 1,1 s för första matchen,
   sedan ~200 ms per match; 88 % av ORD-dragningarna låg utanför de gamla
   1 000, i linje med andelen av beståndet.
-- **`fetchWordBatch` i `word-practice.functions.ts` har samma tak kvar**
-  (`limit(10000)` på ORD): `/ord` drar ur samma 1 000 ord om inte filtren
-  krymper träffmängden. Inte åtgärdat än.
+- **Hjälparen är `loadQuestionPool` i `question-pool.server.ts`** och
+  används av matchen, ordövningen (`fetchWordBatch`, som hade `limit(10000)`
+  och samma tak) och träningen (`fetchTrainingBatch`, som hade ett fönster på
+  1 000 id på slumpad plats). Nytt urval: bygg frågan med
+  `select(cols, { count: "exact" })` och alla filter, ge den en cache-nyckel
+  som bär filtren, och hämta bara lätta kolumner.
 
 #### Klockan får bara gå på en `active` match (2026-08-21)
 
