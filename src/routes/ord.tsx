@@ -441,7 +441,6 @@ function OrdPracticePage() {
   };
 
   const next = () => {
-    sounds.click();
     if (idx + 1 >= batch.length) {
       setPhase("summary");
       // `answered` fylldes på i onPick, ett klick tidigare — staten har hunnit
@@ -464,7 +463,6 @@ function OrdPracticePage() {
   };
 
   const backToSetup = () => {
-    sounds.click();
     setPhase("setup");
     setBatch([]);
     setAnswered([]);
