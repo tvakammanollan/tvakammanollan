@@ -30,7 +30,10 @@ export function ZonBand() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const zon = zonForPath(path);
 
-  if (!zon) return null;
+  // Ordzonen (/ord, /ordlista) har ingen remsa: Niklas tyckte att den lila
+  // kanten såg barnslig ut 2026-11-13 och ville ha sidan lika ren som /pris.
+  // Zonens färg finns kvar i dekorformerna.
+  if (!zon || zon === "ord") return null;
 
   return <div aria-hidden="true" className="h-1.5 w-full" style={{ background: zonYta[zon] }} />;
 }
