@@ -23,6 +23,14 @@ export interface GuideMeta {
 
 export const GUIDES: GuideMeta[] = [
   {
+    path: "/guider/fran-noll-till-2-0",
+    label: "Komplett guide inför högskoleprovet", // copy-ok
+    short: "Hela vägen",
+    description: "Så skulle Niklas plugga från noll till 2,0: grunder, prioriteringar och provdagen.",
+    published: "2026-11-13",
+    modified: "2026-11-13",
+  },
+  {
     path: "/guider/ord",
     label: "ORD: Ordkunskap",
     short: "ORD",

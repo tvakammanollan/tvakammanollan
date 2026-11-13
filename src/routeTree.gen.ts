@@ -62,6 +62,7 @@ import { Route as GuiderNogRouteImport } from './routes/guider/nog'
 import { Route as GuiderMekRouteImport } from './routes/guider/mek'
 import { Route as GuiderLasRouteImport } from './routes/guider/las'
 import { Route as GuiderKvaRouteImport } from './routes/guider/kva'
+import { Route as GuiderFranNollTill20RouteImport } from './routes/guider/fran-noll-till-2-0'
 import { Route as GuiderElfRouteImport } from './routes/guider/elf'
 import { Route as GuiderDtkRouteImport } from './routes/guider/dtk'
 import { Route as GuiderBraResultatRouteImport } from './routes/guider/bra-resultat'
@@ -348,6 +349,11 @@ const GuiderKvaRoute = GuiderKvaRouteImport.update({
   path: '/guider/kva',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuiderFranNollTill20Route = GuiderFranNollTill20RouteImport.update({
+  id: '/guider/fran-noll-till-2-0',
+  path: '/guider/fran-noll-till-2-0',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuiderElfRoute = GuiderElfRouteImport.update({
   id: '/guider/elf',
   path: '/guider/elf',
@@ -475,6 +481,7 @@ export interface FileRoutesByFullPath {
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
+  '/guider/fran-noll-till-2-0': typeof GuiderFranNollTill20Route
   '/guider/kva': typeof GuiderKvaRoute
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
@@ -545,6 +552,7 @@ export interface FileRoutesByTo {
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
+  '/guider/fran-noll-till-2-0': typeof GuiderFranNollTill20Route
   '/guider/kva': typeof GuiderKvaRoute
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
@@ -616,6 +624,7 @@ export interface FileRoutesById {
   '/guider/bra-resultat': typeof GuiderBraResultatRoute
   '/guider/dtk': typeof GuiderDtkRoute
   '/guider/elf': typeof GuiderElfRoute
+  '/guider/fran-noll-till-2-0': typeof GuiderFranNollTill20Route
   '/guider/kva': typeof GuiderKvaRoute
   '/guider/las': typeof GuiderLasRoute
   '/guider/mek': typeof GuiderMekRoute
@@ -688,6 +697,7 @@ export interface FileRouteTypes {
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
+    | '/guider/fran-noll-till-2-0'
     | '/guider/kva'
     | '/guider/las'
     | '/guider/mek'
@@ -758,6 +768,7 @@ export interface FileRouteTypes {
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
+    | '/guider/fran-noll-till-2-0'
     | '/guider/kva'
     | '/guider/las'
     | '/guider/mek'
@@ -828,6 +839,7 @@ export interface FileRouteTypes {
     | '/guider/bra-resultat'
     | '/guider/dtk'
     | '/guider/elf'
+    | '/guider/fran-noll-till-2-0'
     | '/guider/kva'
     | '/guider/las'
     | '/guider/mek'
@@ -899,6 +911,7 @@ export interface RootRouteChildren {
   GuiderBraResultatRoute: typeof GuiderBraResultatRoute
   GuiderDtkRoute: typeof GuiderDtkRoute
   GuiderElfRoute: typeof GuiderElfRoute
+  GuiderFranNollTill20Route: typeof GuiderFranNollTill20Route
   GuiderKvaRoute: typeof GuiderKvaRoute
   GuiderLasRoute: typeof GuiderLasRoute
   GuiderMekRoute: typeof GuiderMekRoute
@@ -1295,6 +1308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiderKvaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guider/fran-noll-till-2-0': {
+      id: '/guider/fran-noll-till-2-0'
+      path: '/guider/fran-noll-till-2-0'
+      fullPath: '/guider/fran-noll-till-2-0'
+      preLoaderRoute: typeof GuiderFranNollTill20RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guider/elf': {
       id: '/guider/elf'
       path: '/guider/elf'
@@ -1452,6 +1472,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiderBraResultatRoute: GuiderBraResultatRoute,
   GuiderDtkRoute: GuiderDtkRoute,
   GuiderElfRoute: GuiderElfRoute,
+  GuiderFranNollTill20Route: GuiderFranNollTill20Route,
   GuiderKvaRoute: GuiderKvaRoute,
   GuiderLasRoute: GuiderLasRoute,
   GuiderMekRoute: GuiderMekRoute,

@@ -114,6 +114,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
 
         <div className="mt-10">
           {facitKnappSynlig(FACIT) && <EfterProvetKnapp />}
+          <GuideKnapp />
 
           {/* Fyra aktiviteter, en per produktyta, i zonens egen färg. Färgen
               är hela poängen: den lär ut systemet medan man använder det, så
@@ -333,6 +334,31 @@ function SubjectPill({
     >
       {label}
     </button>
+  );
+}
+
+/**
+ * Rund knapp till Niklas egen guide, från noll till 2,0. Ligger ovanför
+ * de fyra korten på Niklas begäran (2026-11-13): den som inte vet var den
+ * ska börja ska hitta guiden utan att leta i menyn.
+ */
+function GuideKnapp() {
+  return (
+    <p className="mb-5">
+      <Link
+        to="/guider/fran-noll-till-2-0"
+        onClick={() => trackEvent("guide_button_clicked", { guide: "fran-noll-till-2-0" })}
+        className="inline-flex min-h-[44px] flex-col items-start justify-center rounded-full border px-5 py-2 transition-colors hover:border-primary/50 hover:bg-white/[0.04]"
+        style={{ borderColor: "var(--line)" }}
+      >
+        <span className="text-sm font-semibold text-[var(--cream)]">
+          {/* copy-ok */}
+          Komplett guide inför högskoleprovet
+        </span>
+        {/* copy-ok */}
+        <span className="text-xs text-[var(--text-secondary)]">Allt du behöver tänka på</span>
+      </Link>
+    </p>
   );
 }
 

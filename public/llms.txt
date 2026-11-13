@@ -77,6 +77,7 @@ Varje sida har exempeluppgifter ur gamla prov med facit, plus en väg vidare til
 - [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, uppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
 - [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Studieplan på 6–8 veckor.
+- [Komplett guide inför högskoleprovet](https://tvakommanollan.se/guider/fran-noll-till-2-0): Grundaren Niklas Pellkvists egen guide, från noll till 2,0: multiplikationstabell, formler och gamla prov för den kvantitativa delen, ORD före LÄS före ELF och MEK för den verbala, och hur man håller fokus på provdagen.
 
 ## Optional
 

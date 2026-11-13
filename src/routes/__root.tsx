@@ -409,6 +409,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           <a href="/hogskoleprovet-resultat">Resultatet på högskoleprovet</a>
           <a href="/guider/tidspress">Tidspress HP</a>
           <a href="/guider/bra-resultat">Få bra HP-resultat</a>
+          <a href="/guider/fran-noll-till-2-0">Guide inför högskoleprovet</a>
           <a href="/om">Om Tvåkommanollan</a>
           <a href="/kontakt">Kontakt</a>
         </nav>

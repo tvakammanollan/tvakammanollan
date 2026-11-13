@@ -130,6 +130,13 @@ export const Route = createFileRoute("/guider/")({
             name: "Få bra HP-resultat",
             url: "https://tvakommanollan.se/guider/bra-resultat",
           },
+          {
+            "@type": "ListItem",
+            position: 11,
+            // copy-ok
+            name: "Komplett guide inför högskoleprovet",
+            url: "https://tvakommanollan.se/guider/fran-noll-till-2-0",
+          },
         ],
       }),
     ],
@@ -306,6 +313,21 @@ function GuiderPage() {
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Studieplan på 6–8 veckor: kartläggning, daglig övning och gamla prov på tid.
+              </div>
+            </Link>
+
+            <Link
+              to="/guider/fran-noll-till-2-0"
+              className="group block rounded-2xl border p-5 transition-all hover:border-primary/50"
+              style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
+            >
+              <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
+                {/* copy-ok */}
+                Komplett guide inför högskoleprovet
+              </div>
+              <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+                Så skulle Niklas plugga från noll till 2,0: grunder, prioriteringar per delprov och
+                fokus på provdagen.
               </div>
             </Link>
           </div>

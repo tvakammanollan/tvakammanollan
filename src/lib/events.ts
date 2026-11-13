@@ -220,6 +220,8 @@ export interface ProductEvents {
   };
   /** Den runda "Efter provet"-knappen på startsidan, till /hogskoleprovet-facit. `term` = `2026ht`. */
   facit_button_clicked: { term: string };
+  /** Den runda guideknappen på startsidan, till /guider/fran-noll-till-2-0. */
+  guide_button_clicked: { guide: string };
 
   /* ── Forum ───────────────────────────────────────────────────────────── */
   forum_thread_created: {
