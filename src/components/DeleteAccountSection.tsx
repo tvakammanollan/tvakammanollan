@@ -36,7 +36,7 @@ export function DeleteAccountSection() {
     try {
       await deleteFn({ data: { confirm: "RADERA" } });
       toast.success("Ditt konto är raderat.", {
-        description: "Tack för den här tiden. Lycka till på provet!",
+        description: "Lycka till på provet.",
       });
       await signOut().catch(() => {});
       navigate({ to: "/" });
@@ -66,13 +66,11 @@ export function DeleteAccountSection() {
         <p>
           <strong className="text-[var(--cream)]">Raderas permanent:</strong> inloggning och e-post,
           ditt användarnamn, vänner och inbjudningar, ordträning, dina svar och din ELO-historik,
-          provförsök, forumprenumerationer och reaktioner, samt dina uppgifter i kontaktlistan för
-          coachning.
+          provförsök, forumprenumerationer och reaktioner.
         </p>
         <p>
           <strong className="text-[var(--cream)]">Behålls:</strong> matchresultat och forumsinlägg,
-          men utan ditt namn. Motståndarens historik och trådarnas läsbarhet ska överleva. Har du
-          köpt studieupplägget behålls köpuppgifterna, eftersom bokföring kräver det.
+          men utan ditt namn. Motståndarens historik och trådarnas läsbarhet ska överleva.
         </p>
         <p>Detta går inte att ångra.</p>
       </div>

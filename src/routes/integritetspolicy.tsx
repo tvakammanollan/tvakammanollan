@@ -30,7 +30,7 @@ function IntegritetspolicyPage() {
       <PageHero
         align="center"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-10-19"
+        subtitle="Senast uppdaterad: 2026-11-13"
         variant="compact"
       />
       <article
@@ -49,8 +49,8 @@ function IntegritetspolicyPage() {
           <p>
             Tvåkommanollan drivs av{" "}
             <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
-            Träningen på sajten är gratis. Det enda som kostar är personlig coachning
-            (studieupplägg), som köps frivilligt. Kontakt:{" "}
+            Det mesta på sajten är gratis. Det som kostar är hela ordlistan och MEK-övningen, som
+            köps frivilligt. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -103,23 +103,20 @@ function IntegritetspolicyPage() {
               alla, även utloggade och sökmotorer.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper
-              coachning: namn, e-postadress, telefonnummer, den tid du bokar och det du själv
-              skriver i frågorna vid bokning och i kassan, samt belopp, valuta och Stripes referens
-              till betalningen.{" "}
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper hela
+              ordlistan och MEK: vilket konto som köpte, vilket köp du valde, tidpunkten, belopp och
+              valuta samt Stripes referens till betalningen.{" "}
               <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em>: vi ser
               aldrig ditt kortnummer.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>
-                Telefonnummer om du ber oss höra av oss:
+                Uppgifter från en tjänst vi slutat sälja:
               </strong>{" "}
-              om du fyller i formuläret &quot;Osäker på om det är något för dig?&quot; sparar vi
-              ditt mobilnummer, samt namn, e-postadress och meddelande om du skrev något av det,
-              dina två svar och tidpunkten du skickade in. Att skicka in numret är ditt samtycke:
-              texten över knappen säger vad numret används till. Uppgifterna används <em>enbart</em>{" "}
-              för att kontakta dig om studieupplägget. Vi hör inte av oss om något annat, och de
-              lämnas inte vidare.
+              sajten sålde tidigare ett personligt studieupplägg. Köpte du det finns namn,
+              e-postadress, telefonnummer, bokad tid och köpuppgifter kvar så länge bokföringen
+              kräver det. Tiden bokades via Calendly. Lämnade du ditt telefonnummer för att bli
+              uppringd finns det kvar tills du ber oss ta bort det.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Teknisk information:</strong> IP-adress och
@@ -142,12 +139,12 @@ function IntegritetspolicyPage() {
           <p>
             Vi behandlar uppgifterna med stöd av{" "}
             <strong style={{ color: "var(--cream)" }}>avtal</strong> (för att leverera tjänsten du
-            har skapat konto för, och den coachning du eventuellt köpt) och{" "}
+            har skapat konto för, och det du eventuellt köpt) och{" "}
             <strong style={{ color: "var(--cream)" }}>berättigat intresse</strong> (för säkerhet,
-            missbrukshantering och produktförbättring). Ditt telefonnummer behandlas med stöd av
-            ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong>, som du lämnar genom
-            att skicka in formuläret, och du kan när som helst be oss radera det genom att mejla
-            adressen ovan. Användningsdata för analys behandlas enbart med stöd av ditt{" "}
+            missbrukshantering och produktförbättring). Ett telefonnummer som lämnats till oss
+            behandlas med stöd av ditt <strong style={{ color: "var(--cream)" }}>samtycke</strong>,
+            och du kan när som helst be oss radera det genom att mejla adressen ovan.
+            Användningsdata för analys behandlas enbart med stöd av ditt{" "}
             <strong style={{ color: "var(--cream)" }}>samtycke:</strong> inget analysskript laddas
             innan du sagt ja, och du kan ta tillbaka valet när som helst längre ned på den här
             sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part för
@@ -187,29 +184,11 @@ function IntegritetspolicyPage() {
               .
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Calendly:</strong> tidsbokning för
-              coachning. Efter ett genomfört köp väljer du en tid, och då skickas ditt namn, din
-              e-postadress och dina svar på bokningsfrågorna till Calendly, som skapar mötet och
-              skickar kalenderinbjudan. Calendly är personuppgiftsansvarig för sin egen behandling
-              och kan överföra uppgifter utanför EU/EES med stöd av EU-kommissionens
+              <strong style={{ color: "var(--cream)" }}>Stripe:</strong> betalningar för hela
+              ordlistan och MEK. Betalningen sker i Stripes kassa; vi får tillbaka belopp, valuta
+              och betalningsstatus, aldrig kortuppgifter. Stripe är personuppgiftsansvarig för sin
+              egen behandling och kan överföra uppgifter utanför EU/EES med stöd av EU-kommissionens
               standardavtalsklausuler. Läs mer i{" "}
-              <a
-                href="https://calendly.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-                style={{ color: "var(--amber)" }}
-              >
-                Calendlys integritetspolicy
-              </a>
-              .
-            </li>
-            <li>
-              <strong style={{ color: "var(--cream)" }}>Stripe:</strong> betalningar för coachning.
-              Själva betalningen sker på Stripes egen sida; vi tar emot namn, e-post, telefonnummer,
-              belopp och betalningsstatus tillbaka, aldrig kortuppgifter. Stripe är
-              personuppgiftsansvarig för sin egen behandling och kan överföra uppgifter utanför
-              EU/EES med stöd av EU-kommissionens standardavtalsklausuler. Läs mer i{" "}
               <a
                 href="https://stripe.com/privacy"
                 target="_blank"
@@ -289,13 +268,11 @@ function IntegritetspolicyPage() {
           </p>
           <p>
             <strong style={{ color: "var(--cream)" }}>Radera kontot själv:</strong> gå till{" "}
-            <strong style={{ color: "var(--cream)" }}>Statistik, sedan Radera konto</strong> när du är
-            inloggad. Det tar bort din inloggning, e-postadress och all personlig historik direkt;
-            matchresultat behålls enbart i anonymiserad form, och har du köpt coachning sparas
-            uppgifterna om det köpet enligt punkten om köpuppgifter ovan. Har du lämnat ditt
-            telefonnummer i det formuläret medan du var inloggad raderas det tillsammans med kontot.
-            Lämnade du numret utan att vara inloggad kan vi inte koppla det till dig automatiskt.
-            Mejla oss, så tar vi bort det. För övriga rättigheter, kontakta oss på{" "}
+            <strong style={{ color: "var(--cream)" }}>Statistik, sedan Radera konto</strong> när du
+            är inloggad. Det tar bort din inloggning, e-postadress och all personlig historik
+            direkt; matchresultat behålls enbart i anonymiserad form. Uppgifter från den tjänst vi
+            slutat sälja (se ovan) raderas inte automatiskt. Mejla oss, så tar vi bort det som inte
+            bokföringen kräver. För övriga rättigheter, kontakta oss på{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"

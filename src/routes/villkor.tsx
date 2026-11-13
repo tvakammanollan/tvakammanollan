@@ -9,7 +9,7 @@ export const Route = createFileRoute("/villkor")({
       path: "/villkor",
       title: "Användarvillkor",
       description:
-        "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton, och villkoren för köp av coachning med 14 dagars ångerrätt.",
+        "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton och villkoren för köp av hela ordlistan och MEK.",
       ogTitle: "Tvåkommanollan | Användarvillkor",
       ogDescription: "Användarvillkoren för Tvåkommanollan.",
     }),
@@ -29,7 +29,7 @@ function VillkorPage() {
       <PageHero
         align="center"
         title="Användarvillkor"
-        subtitle="Senast uppdaterad: 2026-10-20"
+        subtitle="Senast uppdaterad: 2026-11-13"
         variant="compact"
       />
       <article
@@ -40,8 +40,8 @@ function VillkorPage() {
           <p>
             Genom att använda Tvåkommanollan godkänner du dessa villkor. Tjänsten drivs av{" "}
             <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
-            Det mesta på sajten är gratis. Det som kostar är Hela Ordlistan och personlig coachning,
-            som du köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
+            Det mesta på sajten är gratis. Det som kostar är Hela Ordlistan (hela ordlistan och
+            MEK-övningen), som du köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -57,9 +57,9 @@ function VillkorPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              Träningen på Tvåkommanollan är gratis att använda, förutom ordträningen efter de
-              första 40 orden. Den kräver köpet Hela Ordlistan. Coachning är en egen betaltjänst.
-              Båda har egna villkor, se avsnitten om köp nedan.
+              Tvåkommanollan är gratis att använda, förutom ordträningen efter de första 40 orden
+              och MEK-övningen efter de första 40 uppgifterna. De kräver köpet Hela Ordlistan, se
+              avsnittet om köp nedan.
             </li>
             <li>Du måste vara minst 13 år för att skapa konto.</li>
             <li>
@@ -98,27 +98,27 @@ function VillkorPage() {
           <p>
             Den kostnadsfria delen av tjänsten tillhandahålls "i befintligt skick" utan garantier,
             och vi ansvarar inte för indirekta skador som följer av användningen (t.ex. uteblivet
-            provresultat, missade ansökningar). För coachning du har betalat för gäller i stället
-            det som står under Köp av coachning, och i övrigt svensk konsumenträtt.
+            provresultat, missade ansökningar). För det du har betalat för gäller i stället det som
+            står under Köp av Hela Ordlistan, och i övrigt svensk konsumenträtt.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Köp av Hela Ordlistan
           </h2>
           <p>
-            Hela Ordlistan ger ditt konto obegränsad ordträning och MEK-övning i 6 månader från
-            betalningen, utöver de 40 ord och 40 MEK-uppgifter som är gratis. Du betalar en gång,
-            det finns ingen prenumeration och köpet förnyas inte automatiskt. Vill du fortsätta
-            efter 6 månader köper du igen. Avtalet ingås mellan dig och Niklas Pellkvist när du
-            slutför betalningen i kassan. Köpet knyts till det konto du var inloggad med, och
-            gästkonton kan inte köpa. Priset som visas i kassan är det du betalar, och betalningen
-            hanteras av Stripe.
+            Hela Ordlistan ger ditt konto obegränsad ordträning och MEK-övning i en månad eller sex
+            månader från betalningen, beroende på vilket köp du väljer, utöver de 40 ord och 40
+            MEK-uppgifter som är gratis. Du betalar en gång, det finns ingen prenumeration och köpet
+            förnyas inte automatiskt. Vill du fortsätta efter perioden köper du igen. Avtalet ingås
+            mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Köpet knyts till
+            det konto du var inloggad med, och gästkonton kan inte köpa. Priset som visas i kassan
+            är det du betalar, och betalningen hanteras av Stripe.
           </p>
           <p>
-            Åtkomsten gäller i 6 månader, förutsatt att ditt konto inte stängts av enligt dessa
-            villkor. Köp gjorda före den 21 oktober 2026 gäller utan tidsgräns, så länge
-            Tvåkommanollan finns kvar. Läggs tjänsten ned medan ett köp gäller betalar vi tillbaka
-            köpet.
+            Åtkomsten gäller hela den köpta perioden, förutsatt att ditt konto inte stängts av
+            enligt dessa villkor. Köp gjorda före den 21 oktober 2026 gäller utan tidsgräns, så
+            länge Tvåkommanollan finns kvar. Läggs tjänsten ned medan ett köp gäller betalar vi
+            tillbaka köpet.
           </p>
           <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ångerrätt
@@ -136,75 +136,6 @@ function VillkorPage() {
               info@tvakommanollan.se
             </a>{" "}
             så rättar vi det eller betalar tillbaka.
-          </p>
-
-          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Köp av coachning
-          </h2>
-          <p>
-            Coachning (studieupplägg) är en av två betaltjänster på Tvåkommanollan. Avtalet ingås
-            mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Du behöver inte ha
-            ett konto för att köpa.
-          </p>
-          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Vad du får
-          </h3>
-          <p>
-            Ett studieupplägg anpassat efter din nivå och hur lång tid du har kvar till provet,
-            framtaget av en coach som själv skrivit 1,95 eller högre på högskoleprovet. Direkt efter
-            att betalningen gått igenom väljer du en tid för samtalet bland de lediga tiderna, och
-            får en kalenderinbjudan. Går det inte att välja tid just då hör vi av oss inom 24 timmar
-            på den e-postadress eller det telefonnummer du angav i kassan.
-          </p>
-          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Pris och betalning
-          </h3>
-          <p>
-            Priset som visas i kassan är det du betalar. Inga avgifter tillkommer efteråt.
-            Betalningen hanteras av Stripe, som också skickar kvittot. Kortuppgifter passerar aldrig
-            våra egna servrar.
-          </p>
-          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Ångerrätt
-          </h3>
-          <p>
-            Du har <strong style={{ color: "var(--cream)" }}>14 dagars ångerrätt</strong> från köpet
-            enligt lagen (2005:59) om distansavtal och avtal utanför affärslokaler. Du behöver inte
-            ange något skäl. Meddela oss på{" "}
-            <a
-              href="mailto:info@tvakommanollan.se?subject=Ångerrätt%20coachning"
-              className="underline"
-              style={{ color: "var(--amber)" }}
-            >
-              info@tvakommanollan.se
-            </a>{" "}
-            inom fristen, så betalar vi tillbaka hela beloppet inom 14 dagar från att meddelandet
-            kom fram, med samma betalsätt som du använde. Du kan också använda{" "}
-            <a
-              href="https://publikationer.konsumentverket.se/mallar-och-blanketter/angerblankett"
-              className="underline"
-              style={{ color: "var(--amber)" }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Konsumentverkets standardblankett
-            </a>
-            .
-          </p>
-          <p>
-            Vill du att arbetet ska börja direkt, utan att vänta ut ångerfristen, går det bra. Säg
-            bara till när vi hör av oss. Ångrar du dig sedan betalar du för den del av arbetet som
-            hunnit utföras, och resten betalas tillbaka. Ångerrätten upphör helt först när upplägget
-            är levererat i sin helhet och du dessförinnan uttryckligen har gått med på att arbetet
-            påbörjas under fristen och att ångerrätten då faller bort.
-          </p>
-          <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Om något går fel
-          </h3>
-          <p>
-            Kan vi inte leverera det du betalat för, betalar vi tillbaka hela beloppet. Är du inte
-            nöjd med upplägget, hör av dig så gör vi om det eller betalar tillbaka. Klagomål som vi
-            inte kan lösa i samförstånd kan du ta vidare till ARN, se nedan.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
