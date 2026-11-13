@@ -117,7 +117,7 @@ export function Navbar() {
               {/* Duellen är sajtens kärna men saknades helt i navbaren —
                   den nåddes bara via ett kort på startsidan. */}
               <NavLink to="/matchmaking" search={{ type: "verbal" }}>
-                Duell
+                Match
               </NavLink>
               <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
@@ -397,7 +397,7 @@ function MobileMenu({
             onClick={close}
             icon={Swords}
           >
-            Duell
+            Match
           </MobileNavLink>
           <MobileNavLink to="/ord" onClick={close} icon={Type}>
             Ord

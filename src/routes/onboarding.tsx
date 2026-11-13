@@ -96,7 +96,7 @@ function OnboardingPage() {
             Välj användarnamn
           </h1>
           <p className="text-[15px] text-white/65">
-            Det här är namnet andra ser i matcher och toppliston.
+            Det här är namnet andra ser i matcher och på topplistan.
           </p>
         </div>
 

@@ -88,7 +88,7 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
       ),
       ogTitle: "Högskoleprovet datum: när är nästa prov?",
       ogDescription:
-        "Kommande HP-datum, nedräkning och anmälningsinfo. Öva gratis på Tvåkommanollan.",
+        "Kommande provdatum, anmälningsperioder och provavgift.",
       ogImage: HP_EVENT_IMAGES[0],
       ogImageWidth: 1200,
       ogImageHeight: 675,
@@ -128,9 +128,7 @@ function DatumPage() {
         <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Högskoleprovet (HP) hålls 2 gånger om året:{" "}
           <strong className="text-white/80">vårprovet på en lördag i april</strong> och{" "}
-          <strong className="text-white/80">höstprovet på en söndag i oktober</strong>. Här är alla
-          kommande provdatum, en nedräkning till nästa prov, anmälningsperioderna och hur provdagen
-          ser ut.
+          <strong className="text-white/80">höstprovet på en söndag i oktober</strong>. Här står kommande provdatum, anmälningsperioderna och hur provdagen ser ut.
         </p>
       </header>
 
@@ -255,11 +253,10 @@ function DatumPage() {
           className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Börja plugga redan idag
+          Öva inför provet
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Ju tidigare du börjar, desto högre resultat. Öva på riktiga frågor från gamla prov, träna
-          ord och tävla mot andra. Allt är gratis.
+          Skriv gamla prov med facit, öva ord och spela matcher mot andra. Det mesta är gratis.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

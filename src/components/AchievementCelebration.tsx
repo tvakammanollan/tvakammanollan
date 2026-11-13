@@ -60,7 +60,7 @@ export function AchievementCelebration({
           className="mt-1 text-[26px] font-bold leading-tight text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          {many ? "Grymt jobbat!" : "Grattis!"}
+          {many ? "Nya utmärkelser" : "Ny utmärkelse"}
         </h2>
 
         <ul className={`mt-5 grid gap-2.5 ${many ? "max-h-[46vh] overflow-y-auto pr-1" : ""}`}>

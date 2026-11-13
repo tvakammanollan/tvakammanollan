@@ -202,7 +202,7 @@ function FacitPage() {
                 , där gränsen för 2,0 har legat mellan {spann.min} och {spann.max} rätt
               </>
             )}
-            . Den riktiga normeringen sätts först när alla prov är rättade och kommer tillsammans
+            . UHR:s normering sätts först när alla prov är rättade och kommer tillsammans
             med resultaten.
           </p>
           {krav.length > 0 && (
@@ -284,8 +284,7 @@ function FacitPage() {
           Ska du skriva igen i vår?
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Det bästa är att börja medan provet sitter i huvudet. Alla gamla prov sedan 2012 finns
-          här, med facit och uppskattad normering på varje provpass.
+          Alla gamla prov sedan 2012 finns här, med facit och normering.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

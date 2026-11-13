@@ -12,6 +12,7 @@ import { TIER_ACCENT } from "@/types";
    ===================================================================== */
 
 /** Ringen ärver tier-accenten i stället för att upprepa hex-värdena. */
+// copy-ok: typnyckel, inte text.
 function tierRing(tier: AchievementState["tier"]): string {
   return `${TIER_ACCENT[tier]}80`;
 }
@@ -55,7 +56,7 @@ export function AchievementsCard({ variant = "full" }: { variant?: "full" | "com
             Utmärkelser
           </p>
           <p className="mt-2 text-sm text-white/55">
-            Spela din första match för att låsa upp din första utmärkelse.
+            Spela din första match för att få din första utmärkelse.
           </p>
         </div>
       );

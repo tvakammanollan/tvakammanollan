@@ -481,7 +481,7 @@ function MatchPage() {
             setOppForceCountdown(OPPONENT_GRACE_SECONDS);
             sounds.invite();
             toast.info(
-              `Motståndaren är klar! Du har ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} kvar.`,
+              `Motståndaren är klar. Du har ${enhet(OPPONENT_GRACE_SECONDS, "sekund")} kvar.`,
             );
           }
         },

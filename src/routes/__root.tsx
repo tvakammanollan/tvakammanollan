@@ -137,20 +137,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // `pt-safe`/`pb-safe` (se styles.css), annars hamnar det under notchen
       // eller hemindikatorn.
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Gratis ELO-rankade HP-dueller & övningsprov" },
+      { title: "Öva inför högskoleprovet" },
       {
         name: "description",
         content:
-          "Utmana vänner i realtid med HP-frågor. Klättra i ELO-rankingen. Träna gratis på ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
       },
       {
         property: "og:title",
-        content: "Tvåkommanollan: Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan: öva inför högskoleprovet",
       },
       {
         property: "og:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
@@ -158,17 +158,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://tvakommanollan.se/og-image-5.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Tvåkommanollan: Tävla mot vänner i Högskoleprovet" },
+      { property: "og:image:alt", content: "Tvåkommanollan: öva inför högskoleprovet" },
       { property: "og:site_name", content: "Tvåkommanollan" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Tvåkommanollan: Gratis ELO-rankade HP-dueller & övningsprov",
+        content: "Tvåkommanollan: öva inför högskoleprovet",
       },
       {
         name: "twitter:description",
         content:
-          "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
       // Snippetlängd och bildstorlek i träfflistan: utan hintarna väljer
@@ -261,7 +261,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
           areaServed: "SE",
           description:
-            "Övning inför Högskoleprovet: alla 30 provtillfällen sedan vårprovet 2012 med facit och normering, realtidsmatcher med ELO-ranking och träning på alla 8 delprov. Det mesta är gratis.",
+            "Övning inför högskoleprovet: alla 30 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. Det mesta är gratis.",
           founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",
@@ -291,7 +291,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Niklas",
           jobTitle: "Grundare",
           worksFor: { "@id": "https://tvakommanollan.se/#org" },
-          description: "Grundare av Tvåkommanollan. Fick 1,95 på Högskoleprovet.",
+          description: "Grundare av Tvåkommanollan. Fick 1,95 på högskoleprovet.",
         }),
       },
       // OBS: FAQPage-datan låg här och renderades därför på sajtens alla 189
@@ -310,7 +310,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://tvakommanollan.se/#website",
           url: "https://tvakommanollan.se",
           name: "Tvåkommanollan",
-          description: "Realtidsmatcher och ELO-ranking för Högskoleprovet. Gratis.",
+          description: "Gamla prov, ordlista och matcher inför högskoleprovet.",
           inLanguage: "sv-SE",
           publisher: { "@id": "https://tvakommanollan.se/#org" },
         }),

@@ -28,8 +28,8 @@ export const Route = createFileRoute("/gamla-prov")({
         path: "/gamla-prov",
         title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}`, "med facit", "alla provpass"),
         description:
-          `Skriv ${exams.length} riktiga högskoleprov online: ${enhet(count, "uppgift")} från ` +
-          `${oldest} till ${newest} med facit, originaltid och automatisk rättning. Gratis och utan inloggning.`,
+          `Skriv ${exams.length} gamla högskoleprov online: ${enhet(count, "uppgift")} från ` +
+          `${oldest} till ${newest} med facit, på tid och med rättning. Gratis och utan inloggning.`,
         ogTitle: `Gamla högskoleprov ${oldest}–${newest}: Tvåkommanollan`,
         ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. Gratis.`,
       }),
@@ -103,8 +103,7 @@ function GamlaProvPage() {
             <p>
               Ett högskoleprov består av 5 provpass, varav ett är ett utprövningspass som inte
               räknas. De fyra som räknas, två verbala och två kvantitativa, publiceras av
-              Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade
-              precis som i provhäftet och med samma tidsgräns: 55 minuter per pass.
+              Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade som i provhäftet och med samma tidsgräns: 55 minuter per pass.
             </p>
             <p>
               Matematikuppgifterna visas som utsnitt ur originalhäftet, eftersom formler, figurer
@@ -113,9 +112,7 @@ function GamlaProvPage() {
             </p>
             <p>
               Engelsk läsförståelse (ELF) finns med i varje provpass. UHR byter en vecka efter
-              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl, så
-              de flesta sajter saknar den delen. Här är originalhäftena spårade upp, prov för prov.
-              Varje verbalt pass går alltså att skriva i sin helhet.
+              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Här finns originalhäftena, så varje verbalt pass går att skriva i sin helhet.
             </p>
           </div>
         </section>

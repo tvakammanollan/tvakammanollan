@@ -19,7 +19,7 @@ export function GuideTopCta({ delprov, code }: { delprov: string; code: string }
       className="group mb-8 flex items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/[0.06] p-4 transition-colors hover:border-primary/50 hover:bg-primary/[0.1]"
     >
       <span className="text-sm font-semibold" style={{ color: "var(--cream)" }}>
-        Öva riktiga {code}-frågor med facit
+        Öva {code}-uppgifter ur gamla prov, med facit
       </span>
       <span
         className="shrink-0 text-sm font-semibold transition-transform group-hover:translate-x-0.5"

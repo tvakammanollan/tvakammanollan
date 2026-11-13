@@ -12,7 +12,7 @@ export function WithdrawnBadge() {
     <span
       className="text-[11px] font-semibold"
       style={{ color: "var(--destructive)" }}
-      title="Uppgiften ströks ur det riktiga provet i efterhand. Rätt svar gäller, men poängen räknades inte."
+      title="UHR strök uppgiften efter provdagen. Rätt svar gäller, men poängen räknades inte."
     >
       Struken uppgift
     </span>

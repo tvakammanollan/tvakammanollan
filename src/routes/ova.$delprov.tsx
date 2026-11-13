@@ -44,7 +44,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Ordförståelse",
     h1: "Öva ORD: ordförståelse inför högskoleprovet",
     intro:
-      "ORD testar din ordförståelse: du ska hitta synonymen eller den närmaste betydelsen till ett ord. Det är ofta det delprov där man snabbast höjer sitt resultat genom att plugga ord. Här övar du på riktiga ORD-frågor från tidigare högskoleprov, med facit.",
+      "I ORD väljer du det alternativ som betyder samma sak som ett givet ord. Här finns exempel ur gamla högskoleprov med facit, och ordträning med över 10 000 ord.",
     practiceTo: "/ord",
     practiceLabel: "Öva 10 000+ ord nu",
     tips: 'Känner du inte igen ordet, leta efter ett bekant förled eller efterled. Många HP-ord är sammansatta eller släkt med vardagsord ("hemställa" hör ihop med "ställa hem/fram ett önskemål"). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart. Det blir inget avdrag för fel svar.',
@@ -54,7 +54,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Meningskomplettering",
     h1: "Öva MEK: meningskomplettering inför högskoleprovet",
     intro:
-      "I MEK fyller du i de ord som saknas i en mening så att den blir språkligt och innehållsmässigt korrekt. Det belönar både ordförråd och språkkänsla. Öva på riktiga MEK-frågor med facit nedan.",
+      "I MEK fyller du i de ord som saknas i en mening, så att den blir korrekt både språkligt och till innehållet. Här finns MEK-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna MEK utan tidspress",
   },
@@ -63,7 +63,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Läsförståelse",
     h1: "Öva LÄS: läsförståelse inför högskoleprovet",
     intro:
-      "LÄS mäter hur väl du förstår och drar slutsatser ur längre svenska texter. Svaret ska alltid gå att belägga i texten. Här tränar du på riktiga LÄS-uppgifter med facit.",
+      "LÄS prövar hur väl du förstår längre svenska texter. Svaret ska alltid gå att belägga i texten. Här finns LÄS-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna LÄS utan tidspress",
   },
@@ -72,7 +72,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Engelsk läsförståelse",
     h1: "Öva ELF: engelsk läsförståelse inför högskoleprovet",
     intro:
-      "ELF testar din förståelse av engelska texter. Bra engelska och ett strategiskt lässätt ger snabba poäng. Öva på riktiga ELF-frågor från gamla prov med facit.",
+      "ELF prövar hur väl du förstår engelska texter. Här finns ELF-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna ELF utan tidspress",
   },
@@ -81,7 +81,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Matematisk problemlösning",
     h1: "Öva XYZ: matematisk problemlösning inför högskoleprovet",
     intro:
-      "XYZ är matematisk problemlösning där du löser uppgifter och väljer rätt svarsalternativ. Träning på många uppgiftstyper bygger både snabbhet och säkerhet. Öva på riktiga XYZ-uppgifter med facit.",
+      "XYZ är matematisk problemlösning: du löser en uppgift och väljer rätt svarsalternativ. Här finns XYZ-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna XYZ utan tidspress",
     tips: "Räkna baklänges från svarsalternativen när uträkningen låser sig. På flervalsfrågor är det ofta snabbare att testa vilket alternativ som stämmer än att lösa ekvationen från grunden. Runda av grovt först för att se vilken storleksordning svaret borde ligga i, det räcker för att stryka två-tre orimliga alternativ direkt. Och rita: en skiss av en geometriuppgift avslöjar ofta genvägen som algebran gömmer.",
@@ -91,7 +91,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Kvantitativa jämförelser",
     h1: "Öva KVA: kvantitativa jämförelser inför högskoleprovet",
     intro:
-      "KVA ber dig avgöra vilken av två storheter som är störst, eller om det inte går att avgöra. Ofta går det att avgöra utan att räkna ut hela uttrycket. Öva på riktiga KVA-uppgifter med facit.",
+      "I KVA avgör du vilken av två kvantiteter som är störst, eller om det inte går att avgöra. Ofta behöver du inte räkna ut hela uttrycket. Här finns KVA-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna KVA utan tidspress",
     tips: 'Räkna aldrig ut båda storheterna fullständigt om du kan slippa. Förkorta det som är lika i båda leden först, så jämför du bara det som skiljer. Sätt in enkla testvärden (0, 1, ett negativt tal) när uppgiften innehåller en variabel: svaret "går inte att avgöra" är rätt så fort två testvärden ger olika resultat. Var extra vaksam på negativa tal och bråk, det är där jämförelser oftast vänds fel.',
@@ -101,7 +101,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Kvantitativa resonemang",
     h1: "Öva NOG: kvantitativa resonemang inför högskoleprovet",
     intro:
-      "NOG testar om den givna informationen räcker för att lösa ett problem. Du tränar på att avgöra exakt vad som behövs, inte att räkna ut svaret. Öva på riktiga NOG-uppgifter med facit.",
+      "I NOG avgör du om informationen räcker för att lösa ett problem. Du behöver inte räkna ut själva svaret. Här finns NOG-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna NOG utan tidspress",
   },
@@ -110,7 +110,7 @@ const DELPROV: Record<string, Delprov> = {
     name: "Diagram, tabeller och kartor",
     h1: "Öva DTK: diagram, tabeller och kartor inför högskoleprovet",
     intro:
-      "DTK mäter hur snabbt och rätt du läser av data ur diagram, tabeller och kartor. Det är ett tidspressat delprov där vana avgör. Öva på riktiga DTK-uppgifter med facit.",
+      "I DTK läser du av data ur diagram, tabeller och kartor. Tiden är knapp, så det lönar sig att öva. Här finns DTK-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna DTK utan tidspress",
   },
@@ -143,7 +143,7 @@ export const Route = createFileRoute("/ova/$delprov")({
         ),
         description: describeWithin(cfg.intro, "Gratis och utan inloggning."),
         ogTitle: `Öva ${cfg.code} (${cfg.name})`,
-        ogDescription: `Träna ${cfg.code} inför högskoleprovet med riktiga frågor och facit. Gratis.`,
+        ogDescription: `${cfg.code}-uppgifter ur gamla högskoleprov, med facit. Gratis.`,
       }),
       links: pageLinks(path),
       scripts: [
@@ -215,7 +215,7 @@ function OvaDelprovPage() {
             className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
             <ScrollText className="h-4 w-4" />
-            {cfg.code}-guide & strategi
+            Guide till {cfg.code}
           </Link>
         </div>
       </header>
@@ -239,10 +239,10 @@ function OvaDelprovPage() {
             className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Exempelfrågor med facit
+            Exempel med facit
           </h2>
           <p className="mt-1 text-sm text-white/45">
-            Riktiga {cfg.code}-frågor från tidigare högskoleprov.
+            {cfg.code}-uppgifter ur tidigare högskoleprov.
           </p>
 
           <ol className="mt-4 space-y-3">
@@ -358,7 +358,7 @@ function OvaDelprovPage() {
             className="text-[18px] font-bold text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Slå upp orden i stället
+            Ordlistan
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-white/60">
             Varje ord som förekommit på ORD finns i{" "}

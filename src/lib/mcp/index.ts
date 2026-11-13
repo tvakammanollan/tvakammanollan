@@ -8,6 +8,6 @@ export default defineMcp({
   title: "Tvåkommanollan",
   version: "0.1.0",
   instructions:
-    "Verktyg för Tvåkommanollan, en svensk träningsapp för Högskoleprovet. Använd `get_hp_dates` för kommande provdatum, `get_leaderboard` för topplistan (verbal eller matematisk del), och `lookup_word` för att slå upp ord från ORD-delen.",
+    "Verktyg för Tvåkommanollan, en svensk träningsapp för högskoleprovet. Använd `get_hp_dates` för kommande provdatum, `get_leaderboard` för topplistan (verbal eller matematisk del), och `lookup_word` för att slå upp ord från ORD-delen.",
   tools: [getHpDates, getLeaderboard, lookupWord],
 });

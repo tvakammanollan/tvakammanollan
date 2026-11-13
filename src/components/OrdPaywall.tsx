@@ -101,14 +101,14 @@ export function OrdPaywall({
         </span>
         <h2 className="mt-4 text-xl font-semibold text-[var(--cream)]">
           {!access.locked
-            ? "Lås upp hela ordlistan och MEK"
+            ? "Köp hela ordlistan och MEK"
             : subject === "mek"
               ? `Du har klarat de ${FREE_MEK_LIMIT} gratis MEK-uppgifterna`
               : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Lås upp hela ordlistan och all MEK-övning i en månad eller sex. Priset är med moms, du
-          betalar en gång och ingenting förnyas automatiskt.
+          Köpet gäller hela ordlistan och all MEK-övning i en månad eller sex. Priset är med moms,
+          du betalar en gång och ingenting förnyas automatiskt.
         </p>
       </div>
 

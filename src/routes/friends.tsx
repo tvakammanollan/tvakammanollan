@@ -132,7 +132,7 @@ function FriendsPage() {
       const r = await sendReq({ data: { username: name } });
       const r2 = r as { autoAccepted?: boolean };
       sounds.ping();
-      toast.success(r2.autoAccepted ? `Ni är nu vänner!` : `Förfrågan skickad till ${name}`);
+      toast.success(r2.autoAccepted ? `Ni är nu vänner` : `Förfrågan skickad till ${name}`);
       setUsername("");
       setTick((t) => t + 1);
     } catch (err) {
@@ -204,8 +204,8 @@ function FriendsPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        title="Vänner och utmaningar"
-        subtitle="Lägg till vänner via användarnamn och bjud in dem till en snabbmatch."
+        title="Vänner"
+        subtitle="Lägg till vänner via användarnamn och bjud in dem till en match."
         variant="compact"
       />
       <div className="mx-auto max-w-2xl px-4 pb-20 sm:px-6">
@@ -271,7 +271,7 @@ function FriendsPage() {
           </h2>
           {accepted.length === 0 ? (
             <p className="rounded-xl border border-dashed border-border bg-card/50 p-6 text-center text-sm text-muted-foreground">
-              Du har inga vänner än. Lägg till någon ovan!
+              Du har inga vänner än. Lägg till någon med användarnamn ovan.
             </p>
           ) : (
             <ul className="grid gap-2">

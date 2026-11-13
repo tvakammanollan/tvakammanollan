@@ -115,7 +115,7 @@ export function HpScoreWidget({ eloVerbal, eloMath, size = "compact" }: HpScoreW
       </div>
 
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--cream-3)]">
-        Uppskattat från din ELO. Riktig normering varierar med provets svårighet.
+        Uppskattat från din ELO. UHR:s normering varierar med provets svårighet.
       </p>
     </button>
   );

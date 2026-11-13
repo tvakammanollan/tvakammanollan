@@ -24,10 +24,10 @@ export const Route = createFileRoute("/ordlista")({
         title: fitTitle("Ordlista för högskoleprovet", "med förklaring", "alla ord"),
         description:
           `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
-          `exempelmening, liknande ord och uppgiften ordet kom ur. Sök på bokstav och plugga gratis.`,
+          `exempelmening, liknande ord och uppgiften ordet kom ur. Gratis.`,
         ogTitle: "Ordlista för högskoleprovet",
         ogDescription:
-          "Varje ord som dykt upp på ORD, med förklaring och den riktiga HP-uppgiften. Gratis.",
+          "Varje ord som stått på ORD, med förklaring och provuppgiften det kom ur. Gratis.",
       }),
       links: pageLinks("/ordlista"),
       scripts: [
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/ordlista")({
           "@context": "https://schema.org",
           "@type": "DefinedTermSet",
           "@id": "https://tvakommanollan.se/ordlista#set",
-          name: "Ordlista för Högskoleprovet",
+          name: "Ordlista för högskoleprovet",
           description:
             "Ord från ORD-delprovet på högskoleprovet, med betydelse, exempel och den uppgift ordet kom ur.",
           url: "https://tvakommanollan.se/ordlista",
@@ -74,7 +74,7 @@ function OrdlistaIndexPage() {
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           {formatInt(total)} ord som förekommit på ORD-delprovet. Varje ord har sin betydelse, en
-          exempelmening, närliggande ord och uppgiften det faktiskt kom ur, med facit. Gratis och
+          exempelmening, närliggande ord och uppgiften det kom ur, med facit. Gratis och
           utan konto.
         </p>
         <div className="mt-5">
@@ -129,7 +129,7 @@ function OrdlistaIndexPage() {
           <Link to="/guider/ord" className="text-[var(--amber)] underline underline-offset-2">
             ORD-guiden
           </Link>
-          , och riktiga uppgifter att öva på i{" "}
+          , och uppgifter ur gamla prov att öva på i{" "}
           <Link
             to="/ova/$delprov"
             params={{ delprov: "ord" }}

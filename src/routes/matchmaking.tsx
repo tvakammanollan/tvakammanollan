@@ -23,7 +23,7 @@ export const Route = createFileRoute("/matchmaking")({
       {
         name: "description",
         content:
-          "Matchas mot en HP-spelare på din ELO-nivå inom sekunder. Välj verbal eller kvantitativ.",
+          "Spela en match mot någon med ungefär samma ELO. Välj verbal eller kvantitativ.",
       },
       { name: "robots", content: "noindex, follow" },
     ],
@@ -232,7 +232,7 @@ function MatchmakingPage() {
             Kunde inte starta en match
           </h1>
           <p className="mt-2 text-sm text-white/60">
-            Något strular just nu. Försök igen om en stund.
+            Det gick inte att starta matchen. Försök igen om en stund.
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-2">
@@ -269,7 +269,7 @@ function MatchmakingPage() {
           style={{ fontFamily: "var(--font-display)" }}
         >
           {navigating ? (
-            "Motståndare hittad!"
+            "Motståndare hittad"
           ) : (
             <>
               Söker <span className="display-italic font-medium text-primary">motståndare…</span>

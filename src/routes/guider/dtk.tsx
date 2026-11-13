@@ -19,7 +19,7 @@ export const Route = createFileRoute("/guider/dtk")({
       ...guideArticleMeta("/guider/dtk"),
       title: fitTitle("DTK-guide: diagram, tabeller och kartor", "på HP"),
       description:
-        "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet. DTK-guide med strategi och vanliga misstag.",
+        "Guide till DTK-delprovet: vad du ska titta på i diagram, tabeller och kartor innan du läser frågan, och de vanligaste misstagen.",
       ogTitle: "Tvåkommanollan | DTK-guiden",
       ogDescription:
         "Diagram, tabeller och kartor på HP: läs axlarna först, frågetyper och vanliga skalmisstag.",
@@ -33,9 +33,8 @@ export const Route = createFileRoute("/guider/dtk")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "DTK-guide: diagram, tabeller och kartor på Högskoleprovet",
-          description:
-            "Lär dig läsa diagram, tabeller och kartor snabbt och korrekt på Högskoleprovet.",
+          headline: "DTK-guide: diagram, tabeller och kartor på högskoleprovet",
+          description: "Guide till DTK-delprovet: diagram, tabeller och kartor.",
           url: "https://tvakommanollan.se/guider/dtk",
         }),
       ),
@@ -66,11 +65,10 @@ function DtkGuidePage() {
           Vad testar DTK?
         </h2>
         <p>
-          DTK-delprovet presenterar dig med en figur, alltså ett stapeldiagram, linjediagram,
-          cirkeldiagram, kombinerat diagram, tabell eller karta, följt av 3–5 frågor om den figuren.
-          Totalt 12 uppgifter per provpass, kopplade till 3–4 olika figurer. DTK tar vanligtvis
-          längst tid av de kvantitativa delprovens moment eftersom du måste orientera dig i varje ny
-          figur. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          DTK har 12 uppgifter per kvantitativt provpass. Du får ett uppslag med diagram, tabeller
+          eller kartor och några frågor till varje uppslag. DTK brukar ta längst tid av de
+          kvantitativa delproven, eftersom du måste sätta dig in i varje nytt uppslag. Mer om
+          provets uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -83,39 +81,36 @@ function DtkGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Läs axlarna och titeln FÖRST
+          Läs rubrik och axlar först
         </h2>
-        <p>
-          Innan du läser en enda fråga: orientera dig i figuren. Kontrollera alltid dessa fyra
-          saker:
-        </p>
+        <p>Titta på figuren innan du läser frågorna. Kontrollera fyra saker:</p>
         <ul className="list-disc space-y-1 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Vad mäts?</strong> Titel och axeletiketter
-            berättar ämnet och variabeln.
+            <strong style={{ color: "var(--cream)" }}>Vad mäts?</strong> Det står i rubriken och vid
+            axlarna.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Vilken enhet?</strong> Tusental, miljoner,
-            procent? Enhetsskillnader är den vanligaste orsaken till fel.
+            <strong style={{ color: "var(--cream)" }}>Vilken enhet?</strong> Tusental, miljoner
+            eller procent? Fel enhet är det vanligaste misstaget.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Vilket tidsintervall eller intervall?</strong>{" "}
-            Börjar axeln på 0 eller på ett annat värde (trunkerad axel)?
+            <strong style={{ color: "var(--cream)" }}>Vilket intervall?</strong> Börjar axeln på 0
+            eller på ett annat värde?
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Absoluta eller relativa tal?</strong> Antal
-            individer vs. andel i procent ger helt olika svar på förändringsfrågor.
+            och andel ger olika svar på frågor om förändring.
           </li>
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Vanliga frågetyper
         </h2>
-        <p>DTK-frågor faller nästan alltid i ett av dessa mönster:</p>
+        <p>De flesta DTK-frågor är av fyra slag:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Exaktvärde:</strong> "Vad var värdet år X?"
-            Lokalisera stapeln eller punkten, läs av mot y-axeln och ta hänsyn till enheten.
+            <strong style={{ color: "var(--cream)" }}>Läsa av ett värde:</strong> "Vad var värdet år
+            X?" Lokalisera stapeln eller punkten, läs av mot y-axeln och ta hänsyn till enheten.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Jämförelse:</strong> "Vilket land hade störst
@@ -127,9 +122,8 @@ function DtkGuidePage() {
             från år A till år B?" Standardformeln: (nytt − gammalt) / gammalt × 100.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Uppskattning:</strong> ibland krävs bara att
-            du pekar ut rätt storleksordning. Välj det alternativ som är närmast din avläsning, inte
-            det exakta.
+            <strong style={{ color: "var(--cream)" }}>Uppskattning:</strong> ibland räcker det att
+            hamna i rätt storleksordning. Välj det alternativ som ligger närmast din avläsning.
           </li>
         </ul>
 
@@ -139,25 +133,24 @@ function DtkGuidePage() {
         <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong style={{ color: "var(--cream)" }}>Läsa av fel skala vid dubbla y-axlar:</strong>{" "}
-            kombidiagram har ofta en vänster- och en högeraxel för olika serier. Kontrollera alltid
-            vilken axel som gäller för varje serie.
+            ett diagram kan ha en axel till vänster och en till höger för olika serier. Kontrollera
+            vilken axel som hör till vilken serie.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>
               Blanda ihop relativ och absolut förändring :
             </strong>{" "}
-            ett land kan ha störst procentuell ökning men minst absolut ökning om det startar från
-            en lägre bas. Läs frågan noga.
+            ett land kan ha störst ökning i procent men minst i antal, om det börjar från en låg
+            nivå. Läs vad frågan gäller.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Glömma enheter:</strong> om y-axeln visar
-            "tusental" och du svarar i faktiska tal är du 1 000 gånger fel. Notera alltid enheten
-            direkt när du orienterar.
+            <strong style={{ color: "var(--cream)" }}>Glömma enheter:</strong> står det "tusental"
+            vid axeln och du läser talet rakt av blir svaret 1 000 gånger för litet.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Trunkerad axel:</strong> om y-axeln börjar på
-            80 istället för 0 ser en liten skillnad enorm ut visuellt. Räkna alltid med faktiska
-            värden, inte staplars visuella längd.
+            <strong style={{ color: "var(--cream)" }}>Avkortad axel:</strong> börjar y-axeln på 80 i
+            stället för 0 ser en liten skillnad stor ut. Räkna med värdena, inte med staplarnas
+            längd.
           </li>
         </ul>
 
@@ -167,7 +160,7 @@ function DtkGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva DTK-uppgifter gratis på Tvåkommanollan
+            Öva DTK
           </Link>
         </p>
       </section>

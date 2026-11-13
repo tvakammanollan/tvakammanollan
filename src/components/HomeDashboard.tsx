@@ -218,7 +218,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
                 MEK-övning
               </h2>
               <p className="mt-2 text-[15px] leading-relaxed text-[var(--navy-3)]">
-                Uppgifter ur gamla prov och Tvåkommanollans egna. Du röstar efter varje fråga, och
+                Uppgifter ur gamla prov och Tvåkommanollans egna. Du röstar efter varje uppgift, och
                 de som får tummen upp visas oftare.
               </p>
               <div className="flex-1" />

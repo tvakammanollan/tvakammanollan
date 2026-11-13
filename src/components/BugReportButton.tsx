@@ -108,7 +108,7 @@ export function BugReportButton({ variant = "icon" }: { variant?: "icon" | "text
               <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-success/15 text-success">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <DialogTitle className="text-center">Tack! Rapporten är skickad</DialogTitle>
+              <DialogTitle className="text-center">Rapporten är skickad</DialogTitle>
               <DialogDescription className="text-center">
                 Den ligger nu hos oss tillsammans med vilken sida du var på, så vi kan börja leta
                 direkt.

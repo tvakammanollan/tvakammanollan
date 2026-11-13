@@ -125,7 +125,7 @@ function ForumSearchPage() {
         <EmptyState
           icon={Search}
           title={`Inga träffar på "${data.query}"`}
-          subtitle="Prova färre eller andra ord. Hittar du ingenting är det ett bra tecken på att frågan är värd att ställa."
+          subtitle="Prova färre eller andra ord, eller ställ frågan i en ny tråd."
           ctaLabel="Starta en tråd"
           ctaHref="/forum/nytt"
         />

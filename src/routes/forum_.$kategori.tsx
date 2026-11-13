@@ -138,7 +138,7 @@ function ForumCategoryPage() {
         <EmptyState
           icon={MessageSquare}
           title="Inga trådar här än"
-          subtitle="Ställ den första frågan i kategorin. Den blir dessutom lättare att hitta för alla som googlar samma sak."
+          subtitle="Ställ den första frågan i kategorin."
           ctaLabel="Starta en tråd"
           ctaHref="/forum/nytt"
         />

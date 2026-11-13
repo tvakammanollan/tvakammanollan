@@ -161,14 +161,13 @@ export function EloSkalan() {
       <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
         <div>
           <h2 className="max-w-[20ch] text-[34px] leading-[1.05] tracking-[-0.04em] sm:text-[52px]">
-            Du får veta var du står nu, inte på provdagen.
+            Se var du ligger efter varje match
           </h2>
         </div>
         <div>
           <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-white/70">
-            Rättar du ett prov själv får du veta vad du kunde den dagen. Din ELO mäts mot andra som
-            pluggar samma sak, flyttas efter varje match, och går att läsa av direkt på provets egen
-            skala.
+            Din ELO räknas om efter varje match och översätts till provets skala, så att du ser
+            ungefär vilken poäng den motsvarar.
           </p>
         </div>
 
@@ -189,8 +188,7 @@ export function EloSkalan() {
             <b className="font-bold text-foreground">
               Verbalt och kvantitativt räknas var för sig.
             </b>{" "}
-            Glappet mellan dina två siffror syns med en gång, och nästa tiondel ligger nästan alltid
-            i den svagare. Totalpoängen är snittet av delarna, precis som på provet.
+            Då ser du vilken del som är svagast. Totalpoängen är snittet av de två, som på provet.
           </p>
         </div>
       </div>
@@ -250,10 +248,10 @@ const TERMINER = [
 ];
 
 const ARKIVFAKTA = [
-  { n: "30", t: "provtillfällen, alla kompletta" },
+  { n: "30", t: "provtillfällen från 2012 till 2026" },
   { n: "120", t: "provpass à 40 uppgifter" },
   { n: "4 800", t: "uppgifter med facit" },
-  { n: "60", t: "verbala pass med ELF i behåll" },
+  { n: "60", t: "verbala pass med ELF" },
 ];
 
 export function Arkivet() {
@@ -266,12 +264,12 @@ export function Arkivet() {
         <div className="mb-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
           <div>
             <h2 className="max-w-[16ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-              Varje prov som gått att få tag på.
+              Gamla prov med facit
             </h2>
           </div>
           <div>
             <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Skriv ett helt pass på originaltid, eller plocka ut det delprov du vill åt. Facit på
+              Skriv ett helt pass på tid eller välj ett enskilt delprov. Facit på
               varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en del.
             </p>
           </div>
@@ -331,7 +329,7 @@ export function Arkivet() {
 const YTOR = [
   {
     to: "/gamla-prov",
-    rubrik: "Skriv ett helt provpass under tiden det ska ta.",
+    rubrik: "Skriv ett provpass på tid",
     text: "120 provpass à 40 uppgifter, från vårprovet 2012 till vårprovet 2026. Facit på varje uppgift, normering på varje provdel.",
     cta: "Öppna arkivet",
     yta: "bg-sky",
@@ -341,9 +339,9 @@ const YTOR = [
   },
   {
     to: "/matchmaking",
-    rubrik: "En duell är 8 uppgifter på 5 minuter.",
+    rubrik: "En match är 8 uppgifter på 5 minuter",
     text: "Verbalt eller kvantitativt, mot en vän eller mot kön. Vid lika poäng vinner den som lämnade in först.",
-    cta: "Starta en duell",
+    cta: "Spela en match",
     yta: "bg-terracotta",
     textFarg: "text-[var(--cream-3)]",
     rubrikFarg: "text-[var(--cream)]",
@@ -351,7 +349,7 @@ const YTOR = [
   },
   {
     to: "/mek-ovning",
-    rubrik: "Vi skriver egna MEK-uppgifter.",
+    rubrik: "Egna MEK-uppgifter",
     text: "Uppgifter vi skriver själva och blindprövar innan de publiceras. Arkivets MEK ligger kvar bredvid.",
     cta: "Öva på MEK",
     yta: "bg-plum",
@@ -361,8 +359,8 @@ const YTOR = [
   },
   {
     to: "/ordlista",
-    rubrik: "Alla ord förklarade, med provfrågan de kom från.",
-    text: "Över 10\u00a0000 ord med betydelse, exempelmening, liknande ord och ordklass.",
+    rubrik: "Ordlista med över 10\u00a0000 ord",
+    text: "Betydelse, exempelmening, liknande ord och ordklass, och provuppgiften ordet kom från.",
     cta: "Slå upp ett ord",
     yta: "bg-lavender",
     textFarg: "text-[var(--plum)]",
@@ -435,7 +433,7 @@ const BETALKORT = [
     rader: [
       "Över 10\u00a0000 ord i träningsläget",
       "Alla MEK-uppgifter, arkivets och våra egna",
-      "Ett köp låser upp båda",
+      "Ett köp gäller båda",
       "Gäller en månad, engångsköp",
     ],
     cta: "Välj en månad",
@@ -452,8 +450,8 @@ const BETALKORT = [
     pris: "349 kr",
     rader: [
       "Samma innehåll som enmånadsköpet",
-      "Gäller 6 månader, hela vägen till provdagen",
-      "Ett köp låser upp både ordlistan och MEK",
+      "Gäller 6 månader",
+      "Ett köp gäller både ordlistan och MEK",
       "Engångsköp, ingen prenumeration",
     ],
     cta: "Välj 6 månader",
@@ -479,7 +477,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
         {kompakt ? null : (
           <div>
             <h2 className="mb-10 max-w-[20ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-              Det mesta är gratis. Hela ordlistan och MEK kostar.
+              Vad som är gratis och vad som kostar
             </h2>
           </div>
         )}
@@ -491,7 +489,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
                   "Alla 30 provtillfällen med facit",
-                  "Duellerna, båda provdelarna",
+                  "Matcherna, verbalt och kvantitativt",
                   "40 ord och 40 MEK-uppgifter i träningsläget",
                   "Normering, poängräknare, facit och forum",
                 ].map((rad) => (
@@ -555,8 +553,8 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
     <section id="topplistan" className="border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
         <TatRubrik
-          titel="Högst just nu."
-          lede="Verbal ELO, uppdaterad i samma sekund en match tar slut. Du matchas mot någon nära din egen nivå, inte mot den som ligger överst."
+          titel="Topplistan"
+          lede="Verbal ELO, uppdaterad efter varje match. Du möter spelare nära din egen nivå."
         />
 
         {/* `min-w-0` på grid-itemet är inte kosmetik: ett grid-item har
@@ -613,8 +611,8 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
             <div>
               <p className="font-mono text-xs text-white/55">Var du hamnar</p>
               <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/70">
-                Alla börjar på 1000. De första matcherna kastar siffran fram och tillbaka, sedan
-                lugnar den sig. Runt tolv matcher in är den värd att lita på.
+                Alla börjar på 1000. Siffran rör sig mycket de första matcherna och är stabil efter
+                ungefär tolv.
               </p>
               <Link
                 to="/leaderboard"
@@ -638,7 +636,7 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
         <div>
           <h2 className="max-w-[13ch] text-[38px] leading-[1.02] tracking-[-0.045em] sm:text-[60px]">
-            Börja med en match.
+            Börja med en match
           </h2>
         </div>
         {dagarKvar !== null ? (
@@ -660,11 +658,11 @@ export function SlutCta({ dagarKvar, datum }: { dagarKvar: number | null; datum:
             search={{ type: "verbal" }}
             className="mt-8 inline-flex min-h-[52px] items-center justify-center rounded-md bg-primary px-8 text-[15px] font-bold text-on-brand transition-colors hover:bg-primary-deep"
           >
-            Starta en duell
+            Spela en match
           </Link>
         </div>
         <p className="mt-4 text-[13.5px] text-white/55">
-          En match är 8 frågor på 5 minuter. Inget konto behövs för att testa.
+          En match är 8 uppgifter på 5 minuter. Du behöver inget konto för att prova.
         </p>
       </div>
     </section>
@@ -714,7 +712,7 @@ const RESURSER: Array<{ to: LinkProps["to"]; titel: string; text: string }> = [
   {
     to: "/hogskoleprovet-formler",
     titel: "Formler",
-    text: "Formlerna till XYZ och KVA, med riktiga uppgifter.",
+    text: "Formlerna till XYZ och KVA, med uppgifter ur gamla prov.",
   },
   {
     to: "/ordlista",

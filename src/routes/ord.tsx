@@ -51,9 +51,9 @@ export const Route = createFileRoute("/ord")({
       path: "/ord",
       title: "ORD högskoleprovet: öva 10 000+ ord",
       description:
-        "Träna ordförståelse för högskoleprovet med 10 000+ riktiga ORD-frågor från gamla prov. Spaced repetition och ingen tidspress. De första 40 orden är gratis.",
+        "Öva ord inför högskoleprovet: över 10 000 ord med förklaring, utan klocka. Ord du missar kommer tillbaka. De första 40 orden är gratis.",
       ogTitle: "Öva ord: 10 000+ HP-ord",
-      ogDescription: "Lär dig orden som dyker upp på HP. Solo, lugn takt, gratis.",
+      ogDescription: "Över 10 000 ord med förklaring, utan klocka. De första 40 är gratis.",
     }),
     links: pageLinks("/ord"),
     scripts: [
@@ -64,9 +64,9 @@ export const Route = createFileRoute("/ord")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        name: "Öva HP-ord: 10 000+ riktiga ORD-frågor",
+        name: "Öva ord inför högskoleprovet: 10 000+ ord",
         description:
-          "Träna ordförståelse för Högskoleprovet med 10 000+ riktiga ORD-frågor från tidigare HP. Spaced repetition, ingen tidspress.",
+          "Över 10 000 ord med förklaring att öva på inför högskoleprovet, utan klocka. Ord du missar kommer tillbaka med ökande mellanrum.",
         url: "https://tvakommanollan.se/ord",
         inLanguage: "sv-SE",
         learningResourceType: "Övning",
@@ -292,7 +292,7 @@ function OrdPracticePage() {
       .then((r) => {
         if (r.owned) {
           trackEvent("ord_purchase_completed", { via: "return" });
-          toast.success("Hela ordlistan är upplåst. Lycka till!");
+          toast.success("Köpet är klart. Du har nu hela ordlistan och MEK.");
         }
         loadProgress();
       })
@@ -489,8 +489,8 @@ function OrdPracticePage() {
       {phase === "setup" && (
         <PageHero
           title="Öva"
-          cycleWords={["ord.", "synonymer.", "betydelser.", "rötter."]}
-          subtitle="Spaced repetition. Ingen tidspress. De första 40 orden är gratis."
+          cycleWords={["ord."]}
+          subtitle="Ingen klocka. Ord du missar kommer tillbaka. De första 40 orden är gratis."
           align="center"
           variant="compact"
         />
@@ -518,8 +518,8 @@ function OrdPracticePage() {
               </PrimaryCTA>
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
-                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan låser ett köp upp hela
-                  listan i en månad eller sex.
+                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan krävs ett köp, som gäller
+                  hela listan i en månad eller sex.
                 </p>
               )}
 

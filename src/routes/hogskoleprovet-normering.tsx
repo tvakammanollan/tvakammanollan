@@ -349,8 +349,7 @@ function NormeringHub() {
           Se vad du hade fått
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Skriv ett gamla prov på originaltid. Rättningen räknar om ditt resultat med just det
-          provets normering.
+          Skriv ett gammalt prov på tid. Rättningen räknar om ditt resultat med det provets normering.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

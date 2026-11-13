@@ -48,7 +48,7 @@ const AVSNITT: Avsnitt[] = [
     id: "potenser",
     rubrik: "Potenser och rötter",
     intro:
-      "Potenslagarna avgör många XYZ-uppgifter som ser krångliga ut men går på några sekunder.",
+      "Många XYZ-uppgifter som ser krångliga ut går fort med potenslagarna.",
     formler: [
       { namn: "Multiplikation", formel: "aᵐ · aⁿ = aᵐ⁺ⁿ" },
       { namn: "Division", formel: "aᵐ / aⁿ = aᵐ⁻ⁿ" },
@@ -67,7 +67,7 @@ const AVSNITT: Avsnitt[] = [
     id: "algebra",
     rubrik: "Algebra",
     intro:
-      "Att känna igen reglerna åt båda hållen är det som sparar tid. Faktorisera lika ofta som du multiplicerar ut.",
+      "Öva på reglerna åt båda hållen: faktorisera lika ofta som du multiplicerar ut.",
     formler: [
       { namn: "Första kvadreringsregeln", formel: "(a + b)² = a² + 2ab + b²" },
       { namn: "Andra kvadreringsregeln", formel: "(a − b)² = a² − 2ab + b²" },
@@ -99,7 +99,7 @@ const AVSNITT: Avsnitt[] = [
     id: "geometri",
     rubrik: "Area, omkrets och vinklar",
     intro:
-      "Geometrin på provet kräver sällan mer än de här formlerna. Svårigheten ligger i att se vilken figur som döljer sig i uppgiften.",
+      "Geometrin på provet kräver sällan mer än de här formlerna. Det svåra är att se vilken figur uppgiften handlar om.",
     formler: [
       { namn: "Rektangel", formel: "A = b · h" },
       { namn: "Triangel", formel: "A = b · h / 2" },
@@ -177,7 +177,7 @@ export const Route = createFileRoute("/hogskoleprovet-formler")({
       path: PATH,
       title: fitTitle("Formler för högskoleprovet", "XYZ och KVA"),
       description:
-        "Formlerna till högskoleprovets kvantitativa del: bråk, potenser, kvadreringsregler, räta linjer, area, volym och sannolikhet. Med riktiga provuppgifter.",
+        "Formlerna till högskoleprovets kvantitativa del: bråk, potenser, kvadreringsregler, räta linjer, area, volym och sannolikhet. Med uppgifter ur gamla prov.",
       ogTitle: "Alla formler du behöver till högskoleprovet",
     }),
     links: pageLinks(PATH),
@@ -223,8 +223,7 @@ function FormlerPage() {
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Det här är formlerna som återkommer i delproven XYZ och KVA, och ibland i NOG. Varje
-          avsnitt har länkar till riktiga uppgifter ur tidigare prov där formeln behövs, så att du
-          kan pröva direkt.
+          avsnitt har länkar till uppgifter ur tidigare prov där formeln behövs.
         </p>
         <ul className="mt-5 flex flex-wrap gap-2">
           {AVSNITT.map((a) => (
@@ -291,8 +290,7 @@ function FormlerPage() {
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
           Ett kvantitativt provpass är 40 uppgifter på 55 minuter, alltså knappt en och en halv
-          minut per uppgift. Träna formlerna i riktiga uppgifter tills de sitter utan att du behöver
-          tänka.
+          minut per uppgift. Öva formlerna på provuppgifter tills du kan dem utantill.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

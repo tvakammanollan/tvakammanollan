@@ -77,8 +77,7 @@ export function ConsentBanner() {
               Får vi mäta hur sajten används?
             </p>
             <p className="text-[13px] leading-relaxed text-[var(--text-secondary)]">
-              Vi vill förstå vilka delar av Tvåkommanollan som faktiskt hjälper, så att rätt saker
-              byggs vidare. Säger du ja laddas ett analysverktyg (PostHog, hostat i EU) som
+              Vi vill se vilka delar av Tvåkommanollan som används. Säger du ja laddas ett analysverktyg (PostHog, hostat i EU) som
               registrerar sidvisningar, klick och sessioner. Säger du nej laddas det inte alls.
               Sajten fungerar likadant, och du kan ändra dig när du vill.{" "}
               <Link

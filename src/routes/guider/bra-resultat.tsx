@@ -9,12 +9,12 @@ export const Route = createFileRoute("/guider/bra-resultat")({
     meta: pageMeta({
       path: "/guider/bra-resultat",
       ...guideArticleMeta("/guider/bra-resultat"),
-      title: fitTitle("Hur får man bra resultat på HP?", "komplett guide"),
+      title: fitTitle("Hur får man bra resultat på HP?", "studieplan"),
       description:
         "Hur du planerar pluggandet, väljer vilka delprov du ska lägga tiden på och övar under provförhållanden.",
       ogTitle: "Tvåkommanollan | Bra resultat på HP",
       ogDescription:
-        "Studieplan 6–8 veckor, kartläggning av delprov och mentala tips för provdagen. Från 1.0 till 2.0.",
+        "Studieplan på 6–8 veckor: kartlägg dina delprov, öva dagligen och skriv gamla prov på tid.",
     }),
     links: pageLinks("/guider/bra-resultat"),
     scripts: [
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "Hur får man bra resultat på HP?: Komplett guide",
+          headline: "Hur får man bra resultat på HP?",
           description:
             "Hur du planerar pluggandet, väljer vilka delprov du ska lägga tiden på och övar under provförhållanden.",
           url: "https://tvakommanollan.se/guider/bra-resultat",
@@ -35,46 +35,45 @@ export const Route = createFileRoute("/guider/bra-resultat")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "HowTo",
-        name: "Studieplan för att lyckas på Högskoleprovet",
-        description:
-          "En studieplan på 6–8 veckor, från kartläggning till provdagen.",
+        name: "Studieplan för att lyckas på högskoleprovet",
+        description: "En studieplan på 6–8 veckor, från kartläggning till provdagen.",
         totalTime: "P8W",
         step: [
           {
             "@type": "HowToStep",
             position: 1,
             name: "Kartläggning",
-            text: "Gör ett gammalt prov och räkna ut din startnivå per delprov. Identifiera dina svagaste delprov.",
+            text: "Skriv ett gammalt prov och räkna ut din råpoäng per delprov.",
           },
           {
             "@type": "HowToStep",
             position: 2,
             name: "Vecka 1–2: fokusera på svagaste delprov",
-            text: "Lägg träningstiden där förbättringsmarginalen är störst. Verbal eller kvantitativ: välj din starkare sida och gör den perfekt.",
+            text: "Lägg tiden på de delprov där du har flest fel.",
           },
           {
             "@type": "HowToStep",
             position: 3,
             name: "Vecka 3–5: daglig träning",
-            text: "Träna ORD, MEK, LÄS/ELF eller XYZ, KVA, NOG, DTK dagligen via Tvåkommanollan. Kort intensiv träning är mer effektivt än långa pass.",
+            text: "Träna ORD, MEK, LÄS/ELF eller XYZ, KVA, NOG, DTK varje dag. Korta pass varje dag ger mer än långa pass någon gång i veckan.",
           },
           {
             "@type": "HowToStep",
             position: 4,
             name: "Vecka 6–7: gamla prov under tidspress",
-            text: "Skriv hela provpass under riktiga tidsgränser för att vänja dig vid pressen.",
+            text: "Skriv hela provpass på tid, 55 minuter per pass.",
           },
           {
             "@type": "HowToStep",
             position: 5,
-            name: "Vecka 8: vila och mental förberedelse",
-            text: "Lätt repetition, vila och mental förberedelse inför provdagen.",
+            name: "Vecka 8: repetition",
+            text: "Korta pass, sömn och en genomgång av provets regler och tider.",
           },
           {
             "@type": "HowToStep",
             position: 6,
             name: "Provdagen",
-            text: "Frukost och vatten. Var på plats i god tid. Börja med det lättaste delprovet i passet. Hoppa aldrig. Gissa alltid när du kör fast.",
+            text: "Ät frukost och var på plats i god tid. Börja varje pass med det delprov du är säkrast på, och lämna ingen uppgift tom.",
           },
         ],
       }),
@@ -98,10 +97,8 @@ function BraResultatGuidePage() {
       </header>
 
       <p className="mb-8">
-        Det finns inget hemligt recept, men det finns ett systematiskt tillvägagångssätt som
-        konsekvent ger förbättringar. Ta reda på vilka delprov du är
-        svagast i, lägg tiden där du har mest att hämta och skriv hela provpass på tid
-        regelbundet.
+        Ta reda på vilka delprov du är svagast i, lägg tiden där du har mest att hämta och skriv
+        hela provpass på tid regelbundet.
       </p>
 
       <section className="space-y-6">
@@ -109,29 +106,27 @@ function BraResultatGuidePage() {
           Börja med en kartläggning
         </h2>
         <p>
-          Gör ett komplett gammalt prov under riktiga förhållanden, alltså tid, tystnad och inga
-          hjälpmedel, och räkna sedan ut din råpoäng per delprov. Det ger dig en ärlig bild av din
-          startnivå. Identifiera:
+          Skriv ett helt gammalt prov på tid, i tystnad och utan hjälpmedel, och räkna sedan ut din
+          råpoäng per delprov. Då vet du var du börjar. Titta efter:
         </p>
         <ul className="list-disc space-y-1 pl-6">
           <li>Vilket delprov ger dig flest fel?</li>
           <li>Är det tidsbristen eller kunskapsluckor som orsakar felen?</li>
           <li>Är du starkare verbalt eller kvantitativt?</li>
         </ul>
-        <p>Svaret på dessa frågor bestämmer var du ska lägga din tid.</p>
+        <p>Svaren avgör var du ska lägga tiden.</p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Fokusera på rätt delprov
+          Välj delprov
         </h2>
         <p>
-          Förbättringsmarginalen är störst i mitten av betygsskalan. Att gå från 1.0 till 1.5 kräver
-          ungefär lika mycket träning som att gå från 1.5 till 1.8, men att gå från 1.9 till 2.0
-          kräver enorm precision och lämnar mycket lite utrymme för fel.
+          Det är lättast att höja sig i mitten av skalan. Ju närmare 2,0 du kommer, desto färre fel
+          får du göra, så varje tiondel kostar mer övning.
         </p>
         <p>
-          Om du är tydligt starkare verbalt eller kvantitativt: gör den sidan nästintill perfekt.
-          Ta så många poäng som möjligt i din starka del och öva den svaga tills den inte drar ned
-          snittet mer än nödvändigt.
+          Om du är tydligt starkare verbalt eller kvantitativt: börja där. Ta så många poäng som
+          möjligt i din starka del och öva den svaga tills den inte drar ned snittet mer än
+          nödvändigt.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -139,63 +134,54 @@ function BraResultatGuidePage() {
         </h2>
         <ul className="list-none space-y-3 pl-4">
           <li>
-            <strong style={{ color: "var(--cream)" }}>
-              Vecka 1–2: Kartläggning och grundläggning
-            </strong>
+            <strong style={{ color: "var(--cream)" }}>Vecka 1–2: Kartläggning</strong>
             <br />
-            Gör ett gammalt prov, analysera resultaten, läs guiderna för dina svagaste delprov och
-            börja träna dem dagligen i korta pass (20–30 min).
+            Skriv ett gammalt prov, se vilka delprov som gick sämst, läs guiderna till dem och börja
+            öva dem 20–30 minuter om dagen.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Vecka 3–5: Fokusträning</strong>
+            <strong style={{ color: "var(--cream)" }}>Vecka 3–5: Daglig övning</strong>
             <br />
-            Daglig träning med Tvåkommanollan på prioriterade delprov. Varva solo-träning (ostressad
-            teknikövning) med live-matcher (tidspress och konkurrens). Sikta på 30–45 min per dag.
+            Öva varje dag på de delprov du valt. Varva övning utan klocka med matcher på tid. Sikta
+            på 30–45 min per dag.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>
-              Vecka 6–7: Gamla prov under riktiga förhållanden
-            </strong>
+            <strong style={{ color: "var(--cream)" }}>Vecka 6–7: Gamla prov på tid</strong>
             <br />
-            Skriv kompletta gamla prov med äkta tidsgränser. Analysera varje fel. Var det tidsbrist,
-            kunskapslucka eller slarv? Justera fokus baserat på var felen fortfarande uppstår.
+            Skriv hela gamla prov på tid. Gå igenom varje fel: var det tidsbrist, något du inte
+            kunde eller slarv? Lägg tiden där felen fortfarande kommer.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>
-              Vecka 8: Lätt repetition och förberedelse
-            </strong>
+            <strong style={{ color: "var(--cream)" }}>Vecka 8: Repetition</strong>
             <br />
-            Inga nya moment. Korta dagliga träningspass för att hålla formen. Vila, sömn och mental
-            förberedelse. Genomgång av provets format och regler så att inget är oväntat på
-            provdagen.
+            Inga nya moment. Öva korta pass, sov ordentligt och läs igenom provets regler och tider
+            så att inget överraskar dig på provdagen.
           </li>
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Mentala tips provdagen
+          Provdagen
         </h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Frukost och vatten:</strong> blodsockret
-            påverkar koncentrationen. Ät en riktig frukost och ha vatten med dig om det tillåts.
+            <strong style={{ color: "var(--cream)" }}>Frukost och vatten:</strong> provdagen är
+            lång. Ät frukost och ta med vatten och något att äta i pauserna.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Var på plats i god tid:</strong> stressad
-            ankomst sätter kroppen i alarmberedskap och sänker prestationen. Planera buffert.
+            <strong style={{ color: "var(--cream)" }}>Var på plats i god tid:</strong> räkna med
+            marginal för resan, så slipper du börja provet stressad.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Börja med det lättaste:</strong> i varje
-            provpass: starta med det moment du känner dig tryggast i. Det bygger självförtroende och
-            säkerställer tidiga poäng.
+            <strong style={{ color: "var(--cream)" }}>Börja med det lättaste:</strong> börja varje
+            provpass med det delprov du är säkrast på, så har du de poängen klara.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Gissa alltid, lämna aldrig blankt:</strong>{" "}
-            ingen uppgift ska lämnas obesvarad. Inget avdrag för fel.
+            <strong style={{ color: "var(--cream)" }}>Lämna inget tomt:</strong> fel svar ger inget
+            avdrag, så svara på allt.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Lita på din förberedelse:</strong> du har
-            tränat. Övertänk inte enskilda uppgifter. Gå på din första instinkt om du är osäker.
-            Forskning visar att den ofta är rätt.
+            <strong style={{ color: "var(--cream)" }}>Fastna inte:</strong> är du osäker, välj det
+            du tror mest på och gå vidare.
           </li>
         </ul>
 
@@ -207,13 +193,13 @@ function BraResultatGuidePage() {
             <Link to="/train" className="underline" style={{ color: "var(--amber)" }}>
               Tvåkommanollan
             </Link>
-            : gratis live-matcher och solo-träning på riktiga HP-frågor
+            : matcher och träning utan klocka
           </li>
           <li>
             <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
               Gamla prov
             </Link>
-            : skriv kompletta provpass med facit
+            : skriv hela provpass med facit
           </li>
           <li>
             <Link to="/faq" className="underline" style={{ color: "var(--amber)" }}>
@@ -229,7 +215,7 @@ function BraResultatGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Skapa gratis konto och börja träna
+            Skapa konto
           </Link>
         </p>
       </section>

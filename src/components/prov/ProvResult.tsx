@@ -104,7 +104,7 @@ export function ProvResult({
         <p className="mt-1 text-xs leading-relaxed text-[var(--text-tertiary)]">
           Gäller om du fick lika stor andel rätt på hela{" "}
           {data.kind === "verbal" ? "den verbala" : "den kvantitativa"} delen. Ett provpass är halva
-          delen, så det räcker inte för en riktig normering.{" "}
+          delen, så det räcker inte för att normera.{" "}
           {del.official
             ? `Uppslagen i UHR:s egen tabell för ${data.label.toLowerCase()}.`
             : `UHR:s tabell för ${data.label.toLowerCase()} finns inte att hämta, så siffran kommer ur en generell tabell över ${enhet(HP_TOTAL_QUESTIONS, "uppgift")}.`}

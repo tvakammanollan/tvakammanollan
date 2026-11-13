@@ -9,10 +9,9 @@ export const Route = createFileRoute("/guider/")({
       path: "/guider",
       title: "Guider till högskoleprovet: alla 8 delprov",
       description:
-        "Kompletta guider till alla 8 delprov på Högskoleprovet: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK. Plus normering, tidspress och toppresultat.",
-      ogTitle: "Tvåkommanollan | Guider till Högskoleprovet",
-      ogDescription:
-        "Kompletta guider till alla 8 delprov på HP. Strategi, tidspress och normering förklaras.",
+        "Guider till högskoleprovets 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Dessutom normering, tidsplanering och en studieplan.",
+      ogTitle: "Tvåkommanollan | Guider till högskoleprovet",
+      ogDescription: "Guider till alla 8 delprov, plus normering, tidsplanering och en studieplan.",
     }),
     links: pageLinks("/guider"),
     scripts: [
@@ -24,9 +23,9 @@ export const Route = createFileRoute("/guider/")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Course",
-        name: "Tvåkommanollans guidekurs: alla 8 delprov + strategi",
+        name: "Tvåkommanollans guider till högskoleprovet",
         description:
-          "10 fristående guider för Högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus tidspress och en komplett studieplan, samt en genomgång av normering och antagningspoäng. Helt gratis.",
+          "10 fristående guider för högskoleprovet: alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) plus tidsplanering och en studieplan, samt en genomgång av normering och antagningspoäng. Gratis.",
         url: "https://tvakommanollan.se/guider",
         provider: {
           "@type": "Organization",
@@ -140,11 +139,7 @@ export const Route = createFileRoute("/guider/")({
 function GuiderPage() {
   return (
     <div className="min-h-screen">
-      <PageHero
-        title="Guider till högskoleprovet"
-        align="center"
-        variant="content"
-      />
+      <PageHero title="Guider till högskoleprovet" align="center" variant="content" />
       <article
         className="mx-auto max-w-3xl px-4 pb-24 text-[15px] leading-[1.75] sm:px-6"
         style={{ color: "var(--text-secondary)" }}
@@ -163,8 +158,7 @@ function GuiderPage() {
                 ORD: Ordkunskap
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Synonymer och antonymer. Bygg ordförråd och lär dig taktiken för att plocka säkra
-                poäng.
+                Välj ordet med samma betydelse. Hur uppgifterna ser ut och hur du bygger ordförråd.
               </div>
             </Link>
 
@@ -177,8 +171,7 @@ function GuiderPage() {
                 MEK: Meningskomplettering
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Fyll i rätt ord i meningsluckor. Logikord, distraktorer och lässtrategin som sparar
-                tid.
+                Fyll i orden som saknas. Sambandsord, vanliga fällor och hur du läser uppgiften.
               </div>
             </Link>
 
@@ -191,8 +184,7 @@ function GuiderPage() {
                 LÄS: Svensk läsförståelse
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                4 svenska texter per pass. Rätt lästeknik och frågeanalys avgör hur snabbt du
-                hittar svaren.
+                Svenska texter med frågor. Läs frågorna först och känn igen frågetyperna.
               </div>
             </Link>
 
@@ -205,7 +197,7 @@ function GuiderPage() {
                 ELF: Engelsk läsförståelse
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Akademiska engelska texter. Ordstrategier och skillnaden mot LÄS-delprovet.
+                Engelska texter med frågor. Ordförråd och skillnaden mot LÄS.
               </div>
             </Link>
           </div>
@@ -225,8 +217,8 @@ function GuiderPage() {
                 XYZ: Matematisk problemlösning
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Algebra, geometri, sannolikhet och kombinatorik. Lär dig uppskatta och eliminera
-                snabbt.
+                Algebra, geometri, sannolikhet och kombinatorik. Uppskatta, pröva tal och räkna
+                bakåt.
               </div>
             </Link>
 
@@ -239,7 +231,8 @@ function GuiderPage() {
                 KVA: Kvantitativa jämförelser
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Jämför kolumn A och B. Snabbteknik och när du ska välja "kan ej avgöras".
+                Jämför kvantitet I och II. Förenkla i stället för att räkna, och välj "kan ej
+                avgöras" vid rätt tillfälle.
               </div>
             </Link>
 
@@ -265,7 +258,7 @@ function GuiderPage() {
                 DTK: Diagram, tabeller och kartor
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Läs av diagram och tabeller korrekt. Vanliga misstag med skalor och enheter.
+                Läs av diagram, tabeller och kartor. Vanliga misstag med skalor och enheter.
               </div>
             </Link>
           </div>
@@ -285,8 +278,8 @@ function GuiderPage() {
                 Normering, poäng och antagning
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Hur råpoäng omvandlas till betyg 0,00–2,00, historiska gränser och vad som krävs för
-                olika utbildningar.
+                Hur antal rätt blir en poäng mellan 0,00 och 2,00, hur gränserna har sett ut och vad
+                olika utbildningar kräver.
               </div>
             </Link>
 
@@ -296,11 +289,10 @@ function GuiderPage() {
               style={{ borderColor: "var(--line)", background: "var(--navy-2)" }}
             >
               <div className="text-base font-semibold" style={{ color: "var(--cream)" }}>
-                Tidspress och tidsdisposition
+                Tid per delprov
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Hur du fördelar tid per delprov, hoppa-strategin och varför du aldrig ska lämna
-                blankt.
+                Hur du fördelar tiden per delprov och när du ska gissa och gå vidare.
               </div>
             </Link>
 
@@ -313,8 +305,7 @@ function GuiderPage() {
                 Hur får man bra resultat?
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Komplett studieplan 6–8 veckor: kartläggning, fokusträning och mentala tips
-                provdagen.
+                Studieplan på 6–8 veckor: kartläggning, daglig övning och gamla prov på tid.
               </div>
             </Link>
           </div>
@@ -322,10 +313,10 @@ function GuiderPage() {
 
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-            Öva &amp; resurser
+            Öva
           </h2>
           <p className="mb-4 text-sm" style={{ color: "var(--text-secondary)" }}>
-            Läst klart? Gå från teori till handling: öva på riktiga frågor per delprov.
+            Öva per delprov på uppgifter ur gamla prov.
           </p>
           <div className="mb-4 flex flex-wrap gap-2">
             {["ord", "mek", "las", "elf", "xyz", "kva", "nog", "dtk"].map((s) => (
@@ -388,7 +379,7 @@ function GuiderPage() {
                 Träna ord (10 000+ ord)
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Ordträning med spaced repetition och förklaringar till varje ord.
+                Ordträning med förklaring till varje ord. Ord du missar kommer tillbaka.
               </div>
             </Link>
           </div>

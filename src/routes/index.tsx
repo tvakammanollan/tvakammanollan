@@ -39,9 +39,9 @@ export const Route = createFileRoute("/")({
       // folk skriver "högskoleprovet", "öva högskoleprovet", "gamla prov".
       title: "Öva högskoleprovet gratis: alla gamla prov",
       description:
-        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, ORD-träning och dueller i realtid. Inget konto krävs för att börja.",
+        "Öva på högskoleprovet gratis: alla 30 gamla prov med facit och normering, en ordlista och matcher mot andra. Du behöver inget konto för att börja.",
       ogDescription:
-        "Tävla mot vänner i realtid med riktiga HP-frågor. ELO-ranking och alla 8 delprov. Gratis att börja.",
+        "Alla 30 gamla högskoleprov med facit och normering, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
     }),
     links: pageLinks("/"),
     scripts: [
@@ -60,7 +60,7 @@ export const Route = createFileRoute("/")({
         alternateName: "Tvakommanollan",
         url: "https://tvakommanollan.se",
         description:
-          "Tävla mot vänner i realtid med frågor från Högskoleprovet. ELO-ranking och alla 8 delmoment: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK. Gratis att börja.",
+          "Övning inför högskoleprovet: alla 30 gamla prov med facit, alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK), en ordlista och matcher mot andra. Det mesta är gratis.",
         applicationCategory: "EducationalApplication",
         applicationSubCategory: "TestPreparation",
         operatingSystem: "Web",
@@ -73,9 +73,9 @@ export const Route = createFileRoute("/")({
           audienceType: "Gymnasieelev och högskolesökande i Sverige",
         },
         featureList: [
-          "Realtidsmatcher mot vänner",
-          "ELO-ranking med tiers från Brons till Diamant",
-          "Övningsmatcher utan tidsbegränsning",
+          "Matcher mot vänner och andra spelare",
+          "ELO-ranking från Brons till Diamant",
+          "Träning utan klocka",
           "Alla 8 delprov: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK",
           "10 000+ HP-ord i databasen",
         ],

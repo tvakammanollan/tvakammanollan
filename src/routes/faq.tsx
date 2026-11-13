@@ -10,72 +10,68 @@ interface FaqItem {
 
 const FAQ: FaqItem[] = [
   {
-    q: "Är Tvåkommanollan verkligen gratis?",
-    a: "Det mesta är det. Alla gamla prov med facit, duellerna, normeringen, poängräknaren och forumet är gratis, utan kreditkort. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp, ingen prenumeration. Inga annonser. Sajten drivs av grundaren.",
+    q: "Är Tvåkommanollan gratis?",
+    a: "Det mesta. Alla gamla prov med facit, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 40 orden och 40 MEK-uppgifterna i träningsläget. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp utan prenumeration. Priset står på prissidan. Sajten har inga annonser.",
   },
   {
     q: "Hur fungerar ELO-systemet?",
-    a: "ELO är ett rankingsystem från schackvärlden. Du börjar på 1 000. Vinner du mot en starkare spelare får du fler poäng. Förlorar du mot en svagare tappar du mer. Tiers: Brons under 1 000, Silver 1 000–1 199, Guld 1 200–1 399, Platina 1 400–1 599, Diamant 1 600+.",
+    a: "ELO är ett rankingsystem från schack. Alla börjar på 1 000. Slår du någon med högre ELO får du fler poäng, och förlorar du mot någon med lägre tappar du fler. Nivåerna är Brons (under 1 000), Silver (1 000–1 199), Guld (1 200–1 399), Platina (1 400–1 599) och Diamant (1 600 och uppåt).",
   },
   {
-    q: "Är frågorna från riktiga HP?",
-    a: "Ja. Hela ordbanken bygger på publicerade högskoleprov från 1990-talet och framåt. Du kan också skriva hela riktiga provpass under Gamla prov.",
+    q: "Kommer uppgifterna från gamla högskoleprov?",
+    a: "Ja. Under Gamla prov finns alla 30 prov från 2012 till 2026, och matcherna och träningen använder uppgifter därifrån. Ordlistan bygger till största delen på publicerade högskoleprov. MEK-uppgifter som vi skrivit själva är märkta som egna.",
   },
   {
     q: "Kan jag spela utan konto?",
-    a: "Ja. Tryck Testa gratis så skapas ett anonymt gästkonto och du hamnar direkt i en match. Du behöver inte skapa konto för att börja spela, men om du vill behålla din ELO och synas på topplistan behöver du registrera dig.",
+    a: "Ja. Du kan spela en match som gäst utan att registrera dig. Vill du behålla din ELO och synas på topplistan behöver du skapa ett konto.",
   },
   {
-    q: "Hur skapar jag privat match med vänner?",
-    a: "Gå till Vänner och bjud in dina kompisar via deras användarnamn. Du kan också dela en rum-länk som de klickar på för att hoppa rakt in i en match.",
+    q: "Hur spelar jag mot en vän?",
+    a: "Gå till Vänner och bjud in någon via användarnamn, eller dela länken till ett privat rum.",
   },
   {
-    q: "Hur många ord finns i databasen?",
-    a: "Över 10 000 ord från tidigare HP samt en del nyare uttryck som inte testats på HP men som är på samma nivå.",
+    q: "Hur många ord finns i ordlistan?",
+    a: "Över 10 000. De flesta kommer ur tidigare högskoleprov, resten är ord på samma nivå.",
   },
   {
     q: "Vilka delprov kan jag träna?",
     a: "Alla 8 delprov: ORD (ordkunskap), MEK (meningskomplettering), LÄS (svensk läsförståelse), ELF (engelsk läsförståelse), XYZ (matematisk problemlösning), KVA (kvantitativa jämförelser), NOG (kvantitativa resonemang) och DTK (diagram, tabeller och kartor).",
   },
   {
-    q: "Hur länge tar en match?",
-    a: "En match är 8 frågor på 5 minuter. Du kan välja verbal eller kvantitativ. Direkt efter matchen ser du ditt nya ELO och statistik per fråga.",
+    q: "Hur lång är en match?",
+    a: "8 uppgifter på 5 minuter, verbalt eller kvantitativt. Efteråt ser du din nya ELO och vilka uppgifter du hade rätt på.",
   },
   {
-    q: "Hur fungerar Gamla prov-läget?",
-    a: "Du väljer ett provpass från ett gammalt högskoleprov (2012–2026) och skriver alla 40 frågor i din egen takt. Efter att du lämnat in får du facit och en uppskattning av vad det skulle motsvara i normerad HP-poäng.",
+    q: "Hur fungerar Gamla prov?",
+    a: "Du väljer ett provpass ur ett prov från 2012–2026 och skriver dess 40 uppgifter, antingen på tid (provläge) eller utan klocka (övningsläge). När du lämnat in får du facit. När båda passen i en provdel är skrivna får du också en normerad poäng för delen.",
   },
   {
-    q: "När är nästa Högskoleprovet?",
+    q: "När är nästa högskoleprov?",
     a: hpDatesAnswer(),
   },
   {
-    q: "Vad är ett bra resultat på Högskoleprovet?",
-    a: "Medelvärdet ligger kring 0,9. Ett resultat på 1,2 placerar dig över snittet. För att komma in på populära utbildningar (läkare, jurist, civilingenjör i storstäder) brukar man behöva 1,7 eller högre. Ett bra resultat beror på vilken utbildning du söker. Kolla antagningsstatistiken för just din linje.",
+    q: "Vad är ett bra resultat på högskoleprovet?",
+    a: "Medelvärdet ligger kring 0,9. Till populära utbildningar som läkare, jurist och civilingenjör i storstäderna brukar det krävas 1,7 eller mer. Vad som är bra beror på vad du söker, så kolla antagningsstatistiken för just den utbildningen.",
   },
   {
-    q: "Hur länge är HP-resultatet giltigt?",
-    a: "HP-betyget är giltigt i 8 år från provdatumet. Du kan göra provet hur många gånger du vill, och det högsta resultatet bland dina giltiga prov gäller automatiskt vid antagning.",
+    q: "Hur länge gäller ett resultat?",
+    a: "Resultatet gäller i 8 år. Du kan skriva provet hur många gånger du vill, och ditt bästa giltiga resultat används vid antagningen.",
   },
   {
-    q: "Vad kostar det att skriva Högskoleprovet?",
-    a: `Provavgiften är ${HP_FEE_SEK} kronor och betalas i samband med anmälan på hogskoleprov.nu. Avgiften återbetalas inte om du uteblir. Tvåkommanollan kostar däremot ingenting. Sajten finansieras av grundaren.`,
+    q: "Vad kostar det att skriva högskoleprovet?",
+    a: `Provavgiften är ${HP_FEE_SEK} kronor och betalas när du anmäler dig på hogskoleprov.nu. Den betalas inte tillbaka om du uteblir. Avgiften går till UHR och har inget med Tvåkommanollan att göra.`,
   },
   {
     q: "Vad är skillnaden mellan verbal och kvantitativ del?",
-    a: "Verbal = ORD, MEK, LÄS och ELF (totalt 80 uppgifter). Kvantitativ = XYZ, KVA, NOG och DTK (totalt 80 uppgifter). De viktas lika i normeringen, så båda halvorna är lika viktiga för slutbetyget.",
+    a: "Den verbala delen är ORD, MEK, LÄS och ELF, den kvantitativa XYZ, KVA, NOG och DTK. Varje del är 80 uppgifter och de väger lika i slutpoängen.",
   },
   {
-    q: "Hjälper Tvåkommanollan verkligen mot att höja mitt resultat?",
-    a: "Aktivt övande på riktiga HP-frågor är det enskilt mest effektiva sättet att höja resultatet, vilket styrks av studier på testpreparation. Tvåkommanollan ger dig samma typ av frågor som på provet, daglig träning under tidspress och konkret feedback. Hur mycket du höjer beror på hur mycket du tränar och din utgångsnivå.",
+    q: "Höjer man sitt resultat av att öva här?",
+    a: "Det beror på hur mycket du övar och var du börjar. Sajten ger dig uppgifter av samma slag som på provet, övning på tid och facit på varje uppgift, så att du ser var du tappar poäng.",
   },
   {
-    q: "Finns det ett snabbtest för att uppskatta min HP-nivå?",
-    a: "Ja. Skriv ett helt provpass under Gamla prov så får du både råpoäng och en ungefärlig normerad HP-poäng direkt efter inlämning. Det är den mest exakta uppskattningen utan att faktiskt skriva provet.",
-  },
-  {
-    q: "Vad är coachning på Tvåkommanollan?",
-    a: "Ett studieupplägg byggt efter din nivå och tiden du har kvar till provet, av någon som själv fått 1,95 på högskoleprovet. Det är sajtens enda betaltjänst, och priset står i kassan. Direkt efter köpet väljer du en tid för samtalet. All träning på sajten är och förblir gratis.",
+    q: "Hur uppskattar jag min HP-poäng?",
+    a: "Skriv båda provpassen i en provdel under Gamla prov, så får du råpoäng och en normerad poäng för den delen. Skriver du alla fyra passen får du en totalpoäng.",
   },
 ];
 
@@ -84,12 +80,12 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: pageMeta({
       path: "/faq",
-      title: "Vanliga frågor: FAQ",
+      title: "Vanliga frågor",
       description:
-        "Svar på vanliga frågor: är Tvåkommanollan gratis, hur fungerar ELO, är frågorna riktiga, behöver jag konto.",
+        "Svar på vanliga frågor om Tvåkommanollan: vad som är gratis, hur ELO fungerar, var uppgifterna kommer ifrån och om du behöver konto.",
       ogTitle: "Tvåkommanollan | Vanliga frågor",
       ogDescription:
-        "Allt du undrar om Tvåkommanollan: gratis, ELO-ranking, riktiga HP-frågor, gästläge.",
+        "Vad som är gratis, hur ELO fungerar och var uppgifterna kommer ifrån.",
     }),
     links: pageLinks("/faq"),
     // Page-level FAQPage JSON-LD (per-page, distinct from the root one which

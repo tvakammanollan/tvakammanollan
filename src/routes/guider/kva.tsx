@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/kva")({
       ...guideArticleMeta("/guider/kva"),
       title: "KVA-guide: kvantitativa jämförelser på HP",
       description:
-        "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert. Guide med riktiga HP KVA-uppgifter.",
+        "Guide till KVA-delprovet: hur du jämför två kvantiteter utan att räkna ut dem, och när svaret är att det inte går att avgöra.",
       ogTitle: "Tvåkommanollan | KVA-guiden",
       ogDescription:
         "Kvantitativa jämförelser på HP: snabbteknik, 'kan ej avgöras'-regeln och vanliga fällor.",
@@ -32,9 +32,9 @@ export const Route = createFileRoute("/guider/kva")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "KVA-guide: kvantitativa jämförelser på Högskoleprovet",
+          headline: "KVA-guide: kvantitativa jämförelser på högskoleprovet",
           description:
-            "Förstå KVA-delprovet och lär dig jämföra matematiska uttryck snabbt och säkert.",
+            "Guide till KVA-delprovet: hur du jämför två kvantiteter utan att räkna ut dem.",
           url: "https://tvakommanollan.se/guider/kva",
         }),
       ),
@@ -73,11 +73,10 @@ function KvaGuidePage() {
           Vad är KVA?
         </h2>
         <p>
-          KVA-delprovet ber dig jämföra två storheter: kvantitet I och kvantitet II. Det finns fyra
-          möjliga svar: I är större än II, II är större än I, I är lika med II, eller att
-          informationen är otillräcklig. Delprovet innehåller 10 uppgifter per provpass. Poängen per
-          uppgift är densamma som övriga delprov, men rätt strategi gör att du kan svara på
-          KVA-uppgifter snabbare än på XYZ. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          KVA har 10 uppgifter per kvantitativt provpass. I varje uppgift jämför du två kvantiteter,
+          I och II. Det finns fyra svar: I är större än II, II är större än I, de är lika, eller
+          informationen räcker inte. Eftersom du sällan behöver räkna ut något exakt går KVA ofta
+          fortare än XYZ. Mer om provets uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -93,41 +92,38 @@ function KvaGuidePage() {
           "Kan ej avgöras": när och hur?
         </h2>
         <p>
-          Det fjärde alternativet, att relationen beror på omständigheterna, är den vanligaste
-          fällan i KVA. Välj "kan ej avgöras" när du kan konstruera två tillåtna exempel som ger
-          olika svar, till exempel ett där kvantiteterna är lika och ett där I är större. Hittar du
-          bara exempel som alla ger samma relation är svaret inte "kan ej avgöras".
+          Det fjärde alternativet är det som oftast väljs fel. Välj "kan ej avgöras" när du kan
+          hitta två tillåtna exempel som ger olika svar, till exempel ett där kvantiteterna är lika
+          och ett där I är större. Ger alla dina exempel samma svar är det inte "kan ej avgöras".
         </p>
         <p>
-          Praktisk tumregel: konstruera motexempel aktivt. Prova x = 1, x = −1 och x = 0 för varje
-          okänd variabel. Om en av dessa tre ger olika relationer har du bevisat att svaret är "kan
-          ej avgöras".
+          Pröva x = 1, x = −1 och x = 0 för varje variabel. Ger de olika svar är svaret "kan ej
+          avgöras".
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Snabbteknik
+          Förenkla i stället för att räkna
         </h2>
         <p>
-          KVA-uppgifter löses snabbast genom algebraisk förenkling, inte numerisk beräkning.
-          Grundregeln: du får lägga till, dra ifrån, multiplicera och dividera med positiva tal på
-          BÅDA sidor utan att ändra relationen. Subtrahera det minsta uttrycket från båda sidor och
-          se om resten är positiv, negativ eller noll.
+          KVA går fortast om du förenklar uttrycken i stället för att räkna ut dem. Du får lägga
+          till, dra ifrån, multiplicera och dividera med positiva tal på båda sidor utan att
+          jämförelsen ändras. Stryk det som är lika på båda sidor och jämför det som blir kvar.
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Kvadrater och rötter:</strong> om I = x² och
-            II = y² och x, y kan vara negativa går det inte att direkt jämföra rötterna. Ta hänsyn
-            till tecken.
+            <strong style={{ color: "var(--cream)" }}>Kvadrater och rötter:</strong> är I = x² och
+            II = y², och x och y kan vara negativa, kan du inte jämföra x och y direkt. Tänk på
+            tecknen.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Multiplikation med okänt tecken:</strong> om
-            du multiplicerar/dividerar med en variabel vars tecken är okänt kan du inte avgöra om
-            relationen vänds. Det är ett "kan ej avgöras"-tecken.
+            <strong style={{ color: "var(--cream)" }}>Multiplikation med okänt tecken:</strong>{" "}
+            multiplicerar eller dividerar du med en variabel som kan vara negativ vet du inte om
+            olikheten vänds. Det tyder ofta på "kan ej avgöras".
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Symmetri:</strong> om A och B ser likadana ut
-            men med utbytta termer, kontrollera om uttrycken är kommutativa. Ibland är de lika i
-            alla fall.
+            <strong style={{ color: "var(--cream)" }}>Symmetri:</strong> ser I och II likadana ut
+            men med termerna i annan ordning, kontrollera om ordningen spelar roll. Ibland är de
+            lika.
           </li>
         </ul>
 
@@ -139,17 +135,15 @@ function KvaGuidePage() {
             <strong style={{ color: "var(--cream)" }}>
               Glömma att x kan vara negativ eller noll :
             </strong>{" "}
-            om uppgiften inte specificerar att x &gt; 0 måste du testa negativa värden. x = −1
-            ändrar ofta relationen.
+            står det inte att x &gt; 0 måste du pröva negativa värden också.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Anta att figuren är till skala:</strong>{" "}
-            geometriska figurer i KVA är aldrig till skala om det inte uttryckligen anges. Lita inte
-            på ögonmåttet.
+            figurerna behöver inte vara skalenliga. Mät inte med ögat.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Räkna för länge:</strong> KVA är snabbare med
-            algebra än med siffror. Om du räknar mer än 45 sekunder är det förmodligen fel metod.
+            <strong style={{ color: "var(--cream)" }}>Räkna för länge:</strong> har du räknat i mer
+            än 45 sekunder finns det troligen en enklare väg.
           </li>
         </ul>
 
@@ -159,7 +153,7 @@ function KvaGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva KVA-uppgifter gratis på Tvåkommanollan
+            Öva KVA
           </Link>
         </p>
       </section>

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/las")({
       ...guideArticleMeta("/guider/las"),
       title: "LÄS-guide: svensk läsförståelse på HP",
       description:
-        "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering. Konkreta tips för läsförståelse på HP. Fungerar för både LÄS och ELF.",
+        "Guide till LÄS-delprovet: läs frågorna först, känn igen frågetyperna och håll tiden. Samma metod fungerar på ELF.",
       ogTitle: "Tvåkommanollan | LÄS-guiden",
       ogDescription:
         "Svensk läsförståelse på HP: lästeknik, tre frågetyper och hur du disponerar 5 min per text.",
@@ -32,8 +32,9 @@ export const Route = createFileRoute("/guider/las")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "LÄS-guide: svensk läsförståelse på Högskoleprovet",
-          description: "Klara LÄS-delprovet med rätt lästeknik, frågeanalys och tidsplanering.",
+          headline: "LÄS-guide: svensk läsförståelse på högskoleprovet",
+          description:
+            "Guide till LÄS-delprovet: läs frågorna först, känn igen frågetyperna och håll tiden.",
           url: "https://tvakommanollan.se/guider/las",
         }),
       ),
@@ -43,15 +44,15 @@ export const Route = createFileRoute("/guider/las")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "HowTo",
-        name: "Så förbättrar du läsförståelsen på Högskoleprovet",
-        description: "Konkreta steg för att höja resultatet på LÄS och ELF på Högskoleprovet.",
+        name: "Så förbättrar du läsförståelsen på högskoleprovet",
+        description: "Konkreta steg för att höja resultatet på LÄS och ELF på högskoleprovet.",
         totalTime: "PT15M",
         step: [
           {
             "@type": "HowToStep",
             position: 1,
             name: "Läs frågan innan texten",
-            text: "Vet vad du letar efter. Markera nyckelord i frågan så du kan skanna texten effektivt.",
+            text: "Vet vad du letar efter. Markera nyckelord i frågan så att du vet vad du ska leta efter i texten.",
           },
           {
             "@type": "HowToStep",
@@ -105,12 +106,10 @@ function LasGuidePage() {
           Vad testar LÄS?
         </h2>
         <p>
-          LÄS-delprovet består av 4 svenska texter per provpass med 5 frågor per text, totalt
-          20 uppgifter. Texterna är hämtade från vetenskap, samhällsdebatt och kultur och är ofta
-          komplexa med ett akademiskt eller resonerande språk. Frågorna testar inte om du kan
-          memorera texten utan om du kan navigera i den: hitta information, dra slutsatser och
-          förstå vad författaren menar och anser. Läs mer om högskoleprovets uppbyggnad i sin helhet
-          på{" "}
+          LÄS-delprovet har 10 uppgifter per verbalt provpass, 20 på hela provet. Texterna handlar
+          om vetenskap, samhällsfrågor och kultur och är skrivna på ett resonerande språk. Frågorna
+          gäller vad som står i texten, vilka slutsatser som går att dra av den och vad författaren
+          anser. Mer om provets uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -123,50 +122,43 @@ function LasGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Läs frågan FÖRE texten
+          Läs frågorna före texten
         </h2>
         <p>
-          Den kanske viktigaste strategin för LÄS: läs frågorna för en text innan du läser texten.
-          Det ger dig en karta att navigera med. Du vet vad du letar efter och kan markera relevanta
-          stycken direkt när du läser igenom texten. Utan denna förberedelse läser du hela texten
-          och behöver sedan leta upp svaren i efterhand. Det kostar dubbelt så mycket tid.
+          Läs frågorna till en text innan du läser texten. Då vet du vad du letar efter och kan
+          markera rätt stycken medan du läser. Annars får du läsa texten först och leta upp svaren
+          efteråt, och det tar längre tid.
         </p>
         <p>
-          Markera nyckelord i varje fråga (namn, siffror, begrepp) och scanna texten efter just dem
-          när du läser.
+          Markera nyckelord i varje fråga (namn, siffror, begrepp) och leta efter dem när du läser.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Tre frågetyper
         </h2>
-        <p>
-          LÄS-frågor faller nästan alltid in i ett av tre mönster. Identifiera typen snabbt så vet
-          du var i texten svaret finns:
-        </p>
+        <p>De flesta LÄS-frågor är av tre slag. Vet du vilket, vet du var svaret brukar stå:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Faktafråga:</strong> svaret finns direkt i
-            texten, ofta ordagrant eller nära ordagrant. Lokalisera rätt stycke och peka ut
-            informationen.
+            <strong style={{ color: "var(--cream)" }}>Faktafråga:</strong> svaret står i texten,
+            ofta nästan ordagrant. Hitta rätt stycke.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Slutledningsfråga:</strong> svaret kräver att
-            du kombinerar information från två eller fler ställen i texten och drar en slutsats.
-            Ingen av alternativen är citerade direkt.
+            <strong style={{ color: "var(--cream)" }}>Slutledningsfråga:</strong> du behöver lägga
+            ihop uppgifter från flera ställen i texten och dra en slutsats. Inget alternativ står
+            ordagrant i texten.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Attitydfråga:</strong> vad menar, anser eller
-            antyder författaren? Fokusera på ordval, ton och vad som betonas eller tonas ner i
-            texten.
+            <strong style={{ color: "var(--cream)" }}>Attitydfråga:</strong> vad anser eller antyder
+            författaren? Titta på ordval, ton och vad som lyfts fram eller tonas ned.
           </li>
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Identifiera texttypen
+          Texttyper
         </h2>
         <p>
-          Olika texttyper har olika struktur och ger upphov till olika typer av frågor. Avgör
-          texttypen redan i de första meningarna:
+          Olika slags texter är uppbyggda på olika sätt och ger olika slags frågor. Det brukar synas
+          redan i de första meningarna:
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
@@ -176,8 +168,7 @@ function LasGuidePage() {
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Populärvetenskap:</strong> leta efter
-            orsak–verkan-samband och slutsatser. Frågorna testar om du förstår mekanismerna, inte
-            bara fakta.
+            orsak–verkan-samband och slutsatser. Frågorna gäller ofta hur något hänger ihop.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Historisk/kronologisk:</strong> lägg märke
@@ -186,58 +177,55 @@ function LasGuidePage() {
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Elimineringsmetoden
+          Stryk alternativ
         </h2>
         <p>
-          Om du är osäker: arbeta bakifrån. Stryk de alternativ som direkt strider mot texten. Av de
-          kvarvarande väljer du det som <em>bäst</em> stöds av texten. Det rätta svaret behöver inte
-          vara perfekt. Det behöver bara vara bättre än de andra tre.
+          Är du osäker, stryk först de alternativ som strider mot texten. Av dem som är kvar väljer
+          du det som <em>bäst</em> stöds av texten. Rätt svar behöver bara vara bättre än de andra
+          tre.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Hantera svåra ord
+          Svåra ord
         </h2>
         <p>
-          Stöter du på ett ord du inte känner igen: fortsätt läsa. Kontexten runt ordet ger ofta
-          tillräcklig information för att förstå vad meningen säger. Gissa inte ett ords betydelse
-          isolerat. Läs hela meningen och stycket runt om det. Samma teknik fungerar på{" "}
+          Stöter du på ett ord du inte kan, läs vidare. Meningen och stycket runt ordet räcker
+          oftast för att förstå vad som sägs. Samma sak gäller på{" "}
           <Link to="/guider/elf" className="underline" style={{ color: "var(--amber)" }}>
             ELF
           </Link>
-          , där det dessutom hjälper att snabbt analysera ordets morfologi (prefix, rot, suffix).
+          , där det också hjälper att titta på ordets delar (prefix, rot, suffix).
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Tidsdisposition
+          Tid
         </h2>
         <p>
-          Med 20 minuter för LÄS (i ett balanserat upplägg) har du ungefär 5 minuter per text.
-          Fördela dem så: 1 minut att skumma frågorna och notera nyckelord, 3 minuter att läsa
-          texten aktivt och markera, 1 minut att svara på frågorna med stöd i texten.
+          Med ungefär 22 minuter för LÄS har du 4–5 minuter per text. En rimlig fördelning är 1
+          minut på frågorna, 3 minuter på texten och 1 minut på svaren.
         </p>
         <p>
-          Om du kört fast på en fråga efter 30 sekunder: gissa och gå vidare. Återvänd om tid finns.
-          Att lägga 2 minuter på en fråga innebär att du offrar tid på de fyra övriga frågorna till
-          texten.
+          Har du fastnat på en fråga i 30 sekunder, gissa och gå vidare. Gå tillbaka om det blir tid
+          över.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Vanliga feltyper att undvika
+          Vanliga fel
         </h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Välj det som stöds av texten:</strong> inte
-            det som "låter rimligt" utifrån dina egna kunskaper. Svaret måste förankras i texten.
+            <strong style={{ color: "var(--cream)" }}>Svara utifrån egna kunskaper:</strong> ett
+            alternativ kan låta rimligt utan att stå i texten. Svaret ska gå att belägga där.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Missa negationer:</strong> ord som{" "}
-            <em>inte, sällan, knappast, aldrig</em> vänder helt innebörden. Läs långsamt kring
-            negationer.
+            <em>inte, sällan, knappast, aldrig</em> vänder på betydelsen. Läs meningen en gång till.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Välja det "mest sanna" alternativet:</strong>{" "}
-            i verkligheten kan ett alternativ vara sant men ändå fel för frågan om det inte svarar
-            på vad som faktiskt frågades.
+            <strong style={{ color: "var(--cream)" }}>
+              Välja ett sant alternativ som inte svarar på frågan:
+            </strong>{" "}
+            ett alternativ kan stämma med texten och ändå vara fel, om frågan gäller något annat.
           </li>
         </ul>
 
@@ -247,7 +235,7 @@ function LasGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva LÄS-frågor gratis på Tvåkommanollan
+            Öva LÄS
           </Link>
         </p>
       </section>

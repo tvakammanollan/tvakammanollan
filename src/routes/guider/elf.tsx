@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/elf")({
       ...guideArticleMeta("/guider/elf"),
       title: "ELF-guide: engelsk läsförståelse på HP",
       description:
-        "Guide till ELF-delprovet: engelska texter, frågetyper och strategi. Med riktiga ELF-uppgifter att öva på.",
+        "Guide till ELF-delprovet: engelska texter, frågetyper och strategi. Med ELF-uppgifter ur gamla prov att öva på.",
       ogTitle: "Tvåkommanollan | ELF-guiden",
       ogDescription:
         "Engelsk läsförståelse på HP: akademiskt ordförråd, strategi och skillnader mot LÄS.",
@@ -32,9 +32,8 @@ export const Route = createFileRoute("/guider/elf")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "ELF-guide: engelsk läsförståelse på Högskoleprovet",
-          description:
-            "Guide till ELF-delprovet: engelska texter, frågetyper och strategi.",
+          headline: "ELF-guide: engelsk läsförståelse på högskoleprovet",
+          description: "Guide till ELF-delprovet: engelska texter, frågetyper och strategi.",
           url: "https://tvakommanollan.se/guider/elf",
         }),
       ),
@@ -65,12 +64,11 @@ function ElfGuidePage() {
           Vad är ELF?
         </h2>
         <p>
-          ELF (English as a Foreign Language) är läsförståelse på engelska. Du möter 4 texter per
-          provpass hämtade från akademiska tidskrifter, vetenskapsjournalistik, kulturkritik och
-          samhällsdebatt. Texterna är på engelska och frågorna är formulerade på engelska, men de
-          alternativa svaren är noggrant valda för att testa exakt läsförståelse, inte allmänna
-          kunskaper om ämnet. ELF ger lika stort utslag på slutbetyget som LÄS, men bedöms separat i
-          det verbala delprovspasset. Läs mer om högskoleprovets uppbyggnad i sin helhet på{" "}
+          ELF står för engelsk läsförståelse och har 10 uppgifter per verbalt provpass. Texterna
+          kommer ur tidskrifter, vetenskapsjournalistik, kulturkritik och samhällsdebatt. Både
+          texter och frågor är på engelska, och svaren ska gå att belägga i texten. Du behöver inga
+          förkunskaper om ämnet. ELF väger lika tungt i resultatet som LÄS. Mer om provets
+          uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -83,68 +81,64 @@ function ElfGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Viktigaste skillnaden mot LÄS
+          Skillnaden mot LÄS
         </h2>
         <p>
-          Strategin för ELF är i princip identisk med LÄS: läs frågorna först, lokalisera relevanta
-          avsnitt, eliminera felaktiga alternativ. Skillnaden är att texterna i
-          ELF är ofta mer avancerade och akademiska än de svenska LÄS-texterna. Lång mening, komplex
-          bisatsstruktur och fackspecifikt ordförråd på engelska är vanligt. Därför väger
-          akademiskt engelskt ordförråd lika tungt i ELF som ordkunskap gör i ORD.
+          Metoden är densamma som för LÄS: läs frågorna först, hitta stället i texten och stryk de
+          alternativ som inte stämmer. Skillnaden är språket. ELF-texterna har ofta långa meningar
+          och facktermer, så ditt engelska ordförråd spelar stor roll.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Ordtips för ELF
+          Ordförråd
         </h2>
         <p>
-          Du behöver inte kunna varje ord, men du behöver förstå tillräckligt för att följa
-          argumentet. Bygg ditt akademiska engelska ordförråd med dessa strategier:
+          Du behöver inte kunna varje ord, men tillräckligt många för att följa resonemanget. Det
+          här hjälper:
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Prefix- och rotstrategi:</strong> känner du
+            <strong style={{ color: "var(--cream)" }}>Lär dig vanliga orddelar:</strong> känner du
             igen <em>bio-</em> (liv), <em>-ology</em> (läran om), <em>-tion</em> (substantiv),{" "}
-            <em>inter-</em> (mellan), <em>trans-</em> (över/genom) kan du gissa dig till ordets
-            betydelse även om du aldrig sett det exakt.
+            <em>inter-</em> (mellan), <em>trans-</em> (över/genom) kan du ofta gissa vad ett nytt
+            ord betyder.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Läs engelsk vetenskapsjournalistik:</strong>{" "}
-            The Atlantic, The Economist och Quanta Magazine är utmärkta källor vars språknivå och
-            ämnesbredd matchar ELF-texterna väl.
+            The Atlantic, The Economist och Quanta Magazine har ungefär samma språknivå och
+            ämnesbredd som ELF-texterna.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Studera Academic Word List (AWL):</strong> de
-            570 vanligaste akademiska engelska orden täcker en stor del av det ordförråd som dyker
-            upp i ELF-texterna.
+            <strong style={{ color: "var(--cream)" }}>Gå igenom Academic Word List (AWL):</strong>{" "}
+            listan har 570 ordfamiljer som är vanliga i akademisk engelska.
           </li>
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Strategi
+          Så läser du
         </h2>
         <p>
-          Använd samma grundteknik som för LÄS: läs frågorna och markera nyckelord innan du läser
-          texten. Lokalisera relevanta avsnitt i texten och svara med stöd i dem.
+          Läs frågorna och markera nyckelord innan du läser texten. Hitta sedan stället frågan
+          gäller och svara utifrån det.
         </p>
-        <p>Var extra noga med följande ord i ELF-frågor. De vänder hela frågeinnebörden:</p>
+        <p>Se upp med de här orden i frågorna. De ändrar vad som efterfrågas:</p>
         <ul className="list-disc space-y-1 pl-6">
           <li>
-            <em>except</em> / <em>NOT</em>: du söker det alternativ som INTE stämmer
+            <em>except</em> / <em>NOT</em>: du söker det alternativ som inte stämmer
           </li>
           <li>
             <em>least likely</em> / <em>least probable</em>: välj det svagast stödda
           </li>
           <li>
-            <em>primarily</em> / <em>mainly</em>: fokus på det centrala, inte detaljer
+            <em>primarily</em> / <em>mainly</em>: frågan gäller huvudsaken
           </li>
           <li>
-            <em>implies</em> / <em>suggests</em>: svaret är inte explicit, du ska sluta dig till det
+            <em>implies</em> / <em>suggests</em>: svaret står inte rakt ut, du ska dra en slutsats
           </li>
         </ul>
         <p>
-          Engelskans meningsstruktur kan vara mer komplex än svenska. Om en mening är svår att
-          förstå, dela upp den: hitta subjekt, predikat och objekt, och ignorera parentetiska
-          inskjutna fraser tills grundstrukturen är klar.
+          Är en mening svår att förstå, dela upp den: hitta subjekt, verb och objekt, och hoppa över
+          inskotten tills du ser huvudsatsen.
         </p>
 
         <p className="mt-8">
@@ -153,7 +147,7 @@ function ElfGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva ELF-frågor gratis på Tvåkommanollan
+            Öva ELF
           </Link>
         </p>
       </section>

@@ -27,9 +27,9 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       ogType: "article",
       datePublished: POANG_PUBLICERAD,
       dateModified: POANG_UPPDATERAD,
-      ogTitle: "Högskoleprovet poäng & antagning: så funkar det",
+      ogTitle: "Högskoleprovet: poäng och antagning",
       ogDescription:
-        "Så används HP-poängen vid antagning till högskola: urvalsgrupper, andel platser och vad som krävs. Öva gratis på Tvåkommanollan.",
+        "Hur poängen på högskoleprovet används vid antagningen: urvalsgrupper, andel platser och vad olika utbildningar kräver.",
     }),
     links: pageLinks("/hogskoleprovet-poang"),
     scripts: [
@@ -40,9 +40,9 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       jsonLdScript({
         "@context": "https://schema.org",
         "@type": "Article",
-        headline: "Högskoleprovet poäng, normering och antagning: så funkar det",
+        headline: "Högskoleprovet: poäng, normering och antagning",
         description:
-          "Vad högskoleprovets poäng betyder, hur normeringen från råpoäng till betyg 0,00–2,00 går till och hur resultatet används vid antagning till högskola och universitet.",
+          "Vad högskoleprovets poäng betyder, hur antal rätt räknas om till en poäng mellan 0,00 och 2,00 och hur resultatet används vid antagning till högskola och universitet.",
         inLanguage: "sv-SE",
         datePublished: POANG_PUBLICERAD,
         dateModified: POANG_UPPDATERAD,
@@ -77,9 +77,7 @@ function PoangPage() {
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Högskoleprovet ger ett resultat mellan{" "}
-          <strong className="text-white/80">0,0 och 2,0</strong>. Här går vi igenom vad poängen
-          betyder, hur den används vid antagning till högskola och universitet, och ungefär vad som
-          krävs för olika utbildningar.
+          <strong className="text-white/80">0,0 och 2,0</strong>. Här står vad poängen betyder, hur den används vid antagningen och ungefär vad olika utbildningar kräver.
         </p>
       </header>
 
@@ -95,8 +93,7 @@ function PoangPage() {
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Resultatet är ett normerat värde mellan 0,00 och 2,00, i steg om 0,05. Medelresultatet
             brukar ligga kring 0,9–1,0. Poängen baseras på hur många rätt du har jämfört med alla
-            andra som skrev samma prov. Felaktiga svar ger inga minuspoäng, så det lönar sig alltid
-            att gissa.
+            andra som skrev samma prov. Fel svar ger inga minuspoäng, så det lönar sig att gissa.
           </p>
         </section>
 
@@ -109,12 +106,8 @@ function PoangPage() {
             Hur räknas poängen ut? (normering)
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
-            Högskoleprovet ger inte ett enkelt procentresultat. Du kan maximalt få{" "}
-            <strong className="text-white/80">160 råpoäng</strong>, ett per uppgift. UHR räknar
-            sedan ut hur råpoängen fördelar sig bland alla provdeltagare och fastställer
-            normgränser, som justeras ungefär 2–5 råpoäng per tillfälle för att kompensera för att
-            proven är olika svåra. Samma antal rätt kan därför ge olika betyg beroende på vilket
-            prov du skrev.
+            Provet har{" "}
+            <strong className="text-white/80">160 uppgifter</strong>, 80 verbala och 80 kvantitativa. Varje del normeras för sig: UHR räknar om antalet rätt till en poäng mellan 0,0 och 2,0 utifrån hur alla som skrev provet klarade sig. Slutresultatet är medelvärdet av de två delarna. Samma antal rätt kan därför ge olika poäng på olika prov.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Exakt vad varje antal rätt gav på varje prov sedan 2012 finns samlat ur UHR:s officiella
@@ -128,9 +121,7 @@ function PoangPage() {
             , med en egen sida och hela tabellen för varje provtillfälle.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-white/65">
-            Verbal och kvantitativ del väger lika tungt (80 uppgifter var) och du får ett samlat
-            betyg, inget separat delbetyg. Fördelningen syns däremot i ditt resultatintyg, och den
-            säger vilken del som ger mest att förbättra.
+            Verbal och kvantitativ del väger lika tungt. Poängen för varje del står i ditt resultatbesked, och visar vilken del du har mest att hämta på.
           </p>
           <Link
             to="/hogskoleprovet-poangraknare"
@@ -179,7 +170,7 @@ function PoangPage() {
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Antagningsgränserna varierar mellan program och mellan terminer, beroende på hur många
-            som söker. Som grov fingervisning:
+            som söker. Ungefär så här:
           </p>
           <ul className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
             {[
@@ -249,11 +240,10 @@ function PoangPage() {
           className="text-center text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Öva gratis och höj din poäng
+          Öva inför provet
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Det säkraste sättet att klättra är att öva på riktiga frågor. Träna delprov, plugga ord
-          och se din uppskattade HP-poäng växa.
+          Öva på uppgifter ur gamla prov, delprov för delprov, och se vilken poäng det motsvarar.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

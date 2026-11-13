@@ -502,15 +502,15 @@ function ResultPage() {
   const bannerClass = won
     ? "bg-secondary text-[var(--cream)] border-primary/40"
     : "bg-white/[0.03] text-[var(--cream)] border-white/12";
-  const verdict = won ? "Du vann!" : "Du förlorade";
+  const verdict = won ? "Du vann" : "Du förlorade";
   const Icon = won ? Trophy : Frown;
   const subtext = decidedOnTime
     ? won
       ? "Lika många rätt. Du lämnade in först."
       : "Lika många rätt. Motståndaren lämnade in först."
     : won
-      ? "Snyggt jobbat. Spela igen och fortsätt klättra."
-      : "Bra kämpa! Varje match gör dig bättre.";
+      ? "Du hade flest rätt."
+      : "Motståndaren hade fler rätt.";
 
   const isPvp = !match.is_bot_match && !!match.player2_id;
 
@@ -557,7 +557,7 @@ function ResultPage() {
         await navigator.share({ title: "Tvåkommanollan", text, url });
       } else {
         await navigator.clipboard.writeText(`${text}\nSpela gratis: ${url}`);
-        toast.success("Resultatet kopierat! Klistra in var du vill.");
+        toast.success("Resultatet är kopierat.");
       }
     } catch {
       /* användaren avbröt delningen */
@@ -617,12 +617,12 @@ function ResultPage() {
                 className="text-[22px] font-bold leading-tight text-[var(--cream)]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Bra spelat! Vill du komma in på topplistan?
+                Vill du in på topplistan?
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                 Skapa ett gratis konto för att{" "}
-                <strong className="text-[var(--cream)]">spara din ELO</strong>, klättra i rankingen
-                och utmana dina vänner. Tar 30 sekunder.
+                <strong className="text-[var(--cream)]">spara din ELO</strong>, synas på topplistan
+                och utmana vänner.
               </p>
             </div>
             <Button
@@ -718,8 +718,8 @@ function ResultPage() {
                   </span>
                 </div>
                 <p className="mt-1 text-[11px] text-muted-foreground">
-                  Uppskattning baserat på din andel rätt. Riktiga HP-normeringen varierar med
-                  provets svårighet.
+                  Uppskattning utifrån din andel rätt. UHR:s normering varierar med provets
+                  svårighet.
                 </p>
               </div>
             );

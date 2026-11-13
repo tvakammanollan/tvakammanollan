@@ -97,8 +97,8 @@ function ForumRulesPage() {
         <Section title="Så skriver du">
           <List
             items={[
-              "Skriv en rubrik som säger vad frågan gäller. Den är det andra googlar.",
-              "Visa hur du tänkt, inte bara vad svaret blev. Det är därför folk kommer tillbaka.",
+              "Skriv en rubrik som säger vad frågan gäller.",
+              "Skriv hur du kom fram till svaret, så att andra kan följa med.",
               "Svara på frågan som ställdes. Går diskussionen åt ett annat håll: starta en ny tråd.",
               "Formler skrivs mellan dollartecken: $x^2$, $\\frac{3}{4}$.",
             ]}
@@ -130,8 +130,7 @@ function ForumRulesPage() {
             att registrera dig, kan inte skriva.
           </p>
           <p>
-            Det är inte krångel för krånglets skull: utan den spärren kan vem som helst skapa
-            obegränsat med konton på några sekunder, och forumet vore spammat inom en vecka.
+            Utan den spärren kan vem som helst skapa obegränsat med konton på några sekunder, och forumet skulle fyllas med spam.
           </p>
           <p>
             Nya konton har lite hårdare gränser de första inläggen. Bland annat hamnar inlägg med

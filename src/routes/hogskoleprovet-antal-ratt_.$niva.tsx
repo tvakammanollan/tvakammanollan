@@ -232,8 +232,7 @@ function NivåSida() {
       <section className="mt-12 rounded-2xl border border-primary/25 bg-primary/[0.06] p-6 sm:p-8">
         <H2>Räcker dina rätt till {n}?</H2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Skriv ett gammalt prov på originaltid så räknas ditt resultat om med just det provets
-          normering. Eller fyll i dina rätt i poängräknaren.
+          Skriv ett gammalt prov på tid, så räknas ditt resultat om med det provets normering. Du kan också fylla i dina rätt i poängräknaren.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

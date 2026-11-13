@@ -499,6 +499,7 @@ function ForumThreadPage() {
           />
           <ModButton
             icon={Lock}
+            // copy-ok: tråden låses upp, det är inget köp.
             label={thread.isLocked ? "Lås upp" : "Lås"}
             onClick={() => runModeration({ threadId: thread.id, locked: !thread.isLocked })}
           />
@@ -586,7 +587,7 @@ function ForumThreadPage() {
               submitLabel="Publicera svar"
               placeholder={
                 isQa
-                  ? "Visa gärna hur du tänker, inte bara svaret. Det är det folk kommer tillbaka för."
+                  ? "Skriv gärna hur du kom fram till svaret."
                   : "Skriv ditt svar…"
               }
             />

@@ -78,7 +78,7 @@ function TackPage() {
             className="mt-5 text-[30px] font-bold leading-tight text-[var(--cream)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Tack för ditt köp!
+            Tack för ditt köp
           </h1>
           <p className="mt-4 text-[15px] leading-relaxed text-white/70">
             {receipt.amount !== null && (

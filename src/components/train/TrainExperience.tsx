@@ -115,9 +115,9 @@ const MEK_ORIGIN_LABEL: Record<MekOrigin, string> = {
 };
 
 const MEK_ORIGIN_HINT: Record<MekOrigin, string> = {
-  all: "Blandat, både riktiga provuppgifter och våra egna.",
-  archive: "Uppgifter ur högskoleprov som skrivits på riktigt.",
-  tkn: "Nyskrivna uppgifter i samma format. Din röst avgör vilka som blir kvar.",
+  all: "Uppgifter ur gamla prov blandat med våra egna.",
+  archive: "Bara uppgifter ur gamla högskoleprov.",
+  tkn: "Uppgifter vi skrivit själva, i samma format. Rösta på dem så sållar vi bort de sämsta.",
 };
 
 /**
@@ -223,7 +223,7 @@ export function TrainExperience({
       .then((r) => {
         if (r.owned) {
           trackEvent("mek_purchase_completed", { via: "return" });
-          toast.success("Ordlistan och MEK är upplåsta. Lycka till!");
+          toast.success("Köpet är klart. Du har nu hela ordlistan och MEK.");
         }
         loadMekAccess();
       })
@@ -407,7 +407,7 @@ export function TrainExperience({
         ? `, ${MEK_ORIGIN_LABEL[config.mekOrigin].toLowerCase()}`
         : "";
     const dölj = config.excludeCorrect ? ", utan frågor du klarat" : "";
-    return `${config.track === "verbal" ? "Svenska" : "Kvantitativ"}, ${subs}${källa}, ${diff}, ${enhet(config.count, "fråga")}${dölj}`;
+    return `${config.track === "verbal" ? "Verbal" : "Kvantitativ"}, ${subs}${källa}, ${diff}, ${enhet(config.count, "fråga")}${dölj}`;
   })();
 
   const currentQ = questions[current];
@@ -532,7 +532,7 @@ export function TrainExperience({
         {mode === "mek" ? (
           <PageHero
             title="MEK-övning"
-            subtitle="Uppgifter ur gamla prov och våra egna. Rösta efter varje fråga så visas de bästa oftare."
+            subtitle="Uppgifter ur gamla prov och våra egna. Rösta efter varje uppgift, så visas de bästa oftare."
             align="center"
             variant="compact"
           />
@@ -552,7 +552,7 @@ export function TrainExperience({
               <span className="font-semibold text-[var(--cream)]">
                 Du har {formatInt(mekAccessInfo.freeRemaining)} kvar.
               </span>{" "}
-              Sedan låser ett köp upp all MEK och hela ordlistan i en månad eller sex.
+              Sedan krävs ett köp, som gäller all MEK och hela ordlistan i en månad eller sex.
             </p>
           )}
           {/* STEG 1 — vad. Ligger öppet och inte bakom en "Anpassa"-knapp:
@@ -747,7 +747,7 @@ export function TrainExperience({
             <Spinner size="lg" />
             <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Plockar fram en uppsättning som matchar dina inställningar.
+              Hämtar frågor efter dina val.
             </p>
           </div>
         </div>

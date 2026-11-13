@@ -122,9 +122,23 @@ touching production; use it for anything you cannot check locally.
   HSTS-huvudet (`max-age=31536000`) kräver att zonen behåller giltigt
   certifikat. Google vill ha 301:an kvar i minst ett år efter adressändringen.
 - Både `info@hpkampen.se` och `info@tvakommanollan.se` är levande brevlådor
-  under övergången; koden hänvisar till den nya. **Varken domänen har SPF-post**
-  trots `_dmarc p=reject` — utgående mejl riskerar därför att avvisas. Fixas med
-  en TXT på apex i respektive zon.
+  under övergången; koden hänvisar till den nya. **Mejl-DNS (kontrollerat
+  2026-11-12):** båda zonerna har MX `smtp.rzone.de`, SPF
+  `v=spf1 include:_spf.strato.com ~all` på apex, `_dmarc p=reject` och
+  `autoconfig` → `autoconfigure.strato.de`. **DKIM saknas** (ingen
+  `strato-dkim-000N._domainkey`-post) — med `p=reject` faller därför allt som
+  vidarebefordras via tredje part (SPF bryts av forwarding). Slå på DKIM i
+  Stratos kundportal och lägg in CNAME:en de ger i Cloudflare, **DNS only**.
+  Själva brevlådorna skapas och läses i Strato (webmail.strato.de, IMAP
+  `imap.strato.de:993`, SMTP `smtp.strato.de:465`), inte i koden.
+  **Sajtens egna utskick (`src/lib/email.server.ts`, Resend) är inte i drift:**
+  `resend._domainkey` saknas i DNS, SPF:en nämner bara Strato, och
+  `/api/health` rapporterar inte mejl, så om `RESEND_API_KEY` finns som Secret
+  syns det bara i Cloudflare. Ordningen för att slå på: verifiera domänen i
+  Resend → DKIM-posterna i Cloudflare (DNS only) → SPF till
+  `v=spf1 include:_spf.resend.com include:_spf.strato.com ~all` → nyckeln som
+  Secret + `versions deploy` → `forum_kraver_verifierad_epost` i `app_config`.
+  Se BUGFIX-LOG punkt 19.
 
 - **CI installs with `bun`, not npm.** The build runs
   `bun install --frozen-lockfile`, so a dependency added with npm updates
@@ -1646,6 +1660,18 @@ reglerna som går att testa i `src/lib/mek-rules.ts`.
 
 ### Coachningen ligger inte i navbaren (2026-10-30)
 
+**Pivoten är slutgiltig sedan 2026-11-13 (Niklas beslut): ingen text om
+coachning eller studieupplägg får stå på sajten.** Borttaget ur FAQ:n,
+kontaktsidan, villkoren (hela avsnittet "Köp av coachning"), kontoraderingen
+och `llms.txt`. Två undantag, båda med flit: integritetspolicyn har en punkt
+"Uppgifter från en tjänst vi slutat sälja", eftersom namn, telefonnummer och
+köpuppgifter från tidigare köp fortfarande lagras och policyn måste vara sann,
+och `/coachning/tack` finns kvar för den som kommer dit via en gammal länk.
+Servern och komponenterna är orörda. Integritetspolicyn beskrev fram till
+samma dag bara coachningsköp och sa att träningen var gratis; den beskriver nu
+köpet av hela ordlistan och MEK. Villkoren sa "6 månader" om ett köp som finns
+i två längder och säger nu "en månad eller sex".
+
 **På `design/podia` är köpflödet inte nåbart alls (konstaterat 2026-11-12).**
 `CoachingModal` och `CoachingQuizCard` renderas inte av någon komponent:
 landningssidan säger uttryckligen "Studieupplägget är inte med: vi pivoterar
@@ -2124,8 +2150,39 @@ och gäller allt nytt. Kodkommentarer, loggmeddelanden och tester är undantagna
     tar en pluralform som argument för ord som inte finns i tabellen.
 19. **Inga förkortningar i UI** ("V", "M", "XP"). Skriv "Verbal" och "Kvantitativ".
 
+Punkt 20–27 är ordvalen (2026-11-12). Tecknen ovan var redan rena, men texten
+läste ändå som maskinskriven: "riktiga" stod på ett sextiotal ställen, rubriker
+var teser och meta-texter var uppradade fragment.
+
+20. **Säg vad saken är, inte att den är äkta.** "riktiga HP-frågor" heter
+    "uppgifter ur gamla prov". "Riktig" får bara stå där det skiljer något från
+    en uppskattning, och då är det oftast bättre att skriva vems det är
+    ("UHR:s normering").
+21. **Rubriken namnger det som står under.** "Gamla prov", "Topplistan", "Pris".
+    Ingen tes, ingen kläm och ingen punkt i rubriken.
+22. **Ingen "X, inte Y"-kläm.** Skriv bara X.
+23. **Tal i stället för adjektiv.** "30 prov med facit". Aldrig "komplett",
+    "smart", "effektiv", "snabbt och säkert", "helt gratis", "utmärkt".
+24. **Hela meningar, även i meta-beskrivningar.** Inga uppradade fragment
+    ("ELO-ranking. Alla 8 delprov. Gratis.").
+25. **Inga utropstecken och inga påståenden som inte går att belägga**
+    ("styrks av studier", "ju tidigare du börjar, desto högre resultat").
+26. **Kan meningen strykas utan att något försvinner, stryk den.**
+27. **En term per sak:** match (aldrig duell eller live-match), uppgift på prov
+    och i beskrivande text (i match- och träningsflödets knappar står "fråga"
+    kvar), poäng eller resultat (aldrig betyg), högskoleprovet med litet h i
+    löptext, nivå (aldrig tier), "köp" (aldrig "lås upp"), och "ord du missar
+    kommer tillbaka" i stället för spaced repetition.
+
+Sakuppgifter i guiderna ska stämma med provdatan: ett verbalt provpass är
+ORD 10, MEK 10, LÄS 10 och ELF 10 uppgifter, ett kvantitativt XYZ 12, KVA 10,
+NOG 6 och DTK 12, båda på 55 minuter. ELF står för engelsk läsförståelse och
+ORD har bara synonymuppgifter. Guiderna sa annat fram till 2026-11-12.
+
 Kontroll efter en ändring: `node scripts/lint-copy.cjs` listar tankstreck,
-mittpunkter och pilar i strängar och JSX-text, och grep på
+mittpunkter och pilar i strängar och JSX-text, `node scripts/lint-copy.cjs --ord`
+listar ordvalen i punkt 20–27 (ska ge noll träffar; en rad undantas med
+kommentaren `copy-ok`), och grep på
 `uppercase|tracking-(wide|wider|widest|\[)|animate-|gradient|rounded-full` ska bara träffa undantagen ovan.
 
 ### Shared primitives — use these, don't re-roll them

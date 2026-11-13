@@ -182,10 +182,10 @@ function KassaPage() {
               <>
                 <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--plum)]" aria-hidden />
                 <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">
-                  Tack! Allt är upplåst
+                  Tack för köpet
                 </h2>
                 <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                  Hela ordlistan och all MEK-övning är ditt nu. Kvittot kommer på mejlen från
+                  Du har nu hela ordlistan och all MEK-övning. Kvittot kommer på mejlen från
                   Stripe.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -197,7 +197,7 @@ function KassaPage() {
               <>
                 <h2 className="text-xl font-semibold">Vi kunde inte bekräfta köpet ännu</h2>
                 <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-                  Har du betalat låses allt upp inom någon minut. Ladda om sidan, eller hör av dig
+                  Har du betalat brukar det synas inom någon minut. Ladda om sidan, eller hör av dig
                   till info@tvakommanollan.se om det dröjer.
                 </p>
               </>

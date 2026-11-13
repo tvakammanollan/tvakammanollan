@@ -137,7 +137,7 @@ export function QuestionVoteButtons({
     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
       <p className="text-sm font-semibold text-foreground">Var det här en bra fråga?</p>
       <p className="mt-0.5 text-xs text-muted-foreground">
-        Din röst avgör vilka frågor som visas oftare och vilka som sållas bort.
+        Frågor med många tummar upp visas oftare, och de med många ned tas bort.
       </p>
       <div className="mt-3 flex gap-2" role="group" aria-label="Betygsätt frågan">
         <button

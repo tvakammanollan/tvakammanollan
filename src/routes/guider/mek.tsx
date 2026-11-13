@@ -18,7 +18,7 @@ export const Route = createFileRoute("/guider/mek")({
       ...guideArticleMeta("/guider/mek"),
       title: "MEK-guide: meningskomplettering på HP",
       description:
-        "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden. Med riktiga MEK-uppgifter att öva på.",
+        "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden. Med MEK-uppgifter ur gamla prov att öva på.",
       ogTitle: "Tvåkommanollan | MEK-guiden",
       ogDescription:
         "Meningskomplettering på HP: strategi, logikord och hur du undviker distraktorer.",
@@ -32,9 +32,8 @@ export const Route = createFileRoute("/guider/mek")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "MEK-guide: meningskomplettering på Högskoleprovet",
-          description:
-            "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden.",
+          headline: "MEK-guide: meningskomplettering på högskoleprovet",
+          description: "Så löser du MEK: lässtrategi, luckteknik och hur du fördelar tiden.",
           url: "https://tvakommanollan.se/guider/mek",
         }),
       ),
@@ -65,12 +64,10 @@ function MekGuidePage() {
           Vad är MEK?
         </h2>
         <p>
-          I MEK-delprovet presenteras du med en mening som har en eller två luckor markerade med
-          streck. Din uppgift är att välja de ord eller fraser från alternativen som passar bäst i
-          meningens sammanhang. Delprovet testar din förmåga att förstå textens logiska flöde,
-          ordets grammatiska roll och hela meningens semantiska helhet. En mening kan ha flera ord
-          som grammatiskt fungerar, men bara ett som passar logiken och tonen. Läs mer om
-          högskoleprovets uppbyggnad i sin helhet på{" "}
+          MEK har 10 uppgifter per verbalt provpass. Varje uppgift är en kort text med en eller
+          flera luckor, och du väljer det alternativ vars ord passar i luckorna. Flera alternativ
+          kan fungera grammatiskt, men bara ett passar både innehållet och tonen. Mer om provets
+          uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -83,78 +80,71 @@ function MekGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Strategi: läs meningen först
+          Läs meningen först
         </h2>
         <p>
-          Det effektivaste sättet att angripa MEK är att täcka över alternativen och läsa meningen
-          med luckan. Gissa mentalt vilket ord eller vilken typ av ord som hör hemma där. Formulera
-          en hypotes baserat på meningens logik innan du tittar på alternativen. Sedan matchar du
-          din hypotes mot listan. Det förhindrar att distraktorer förvirrar dig och gör urvalet
-          snabbare.
+          Börja med att täcka över alternativen och läsa texten med luckan. Fundera på vilket ord,
+          eller vilken sorts ord, som borde stå där. Titta sedan på alternativen och välj det som
+          ligger närmast. Då blir du inte lika lätt lurad av alternativ som bara låter bra.
         </p>
         <p>
-          Vid tvåluckade meningar: fyll i den lucka du är säkrast på först. Det begränsar
-          möjligheterna för den andra luckan och gör valet enklare.
+          Har texten flera luckor: börja med den du är säkrast på. Det utesluter ofta flera
+          alternativ direkt.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Logikord att känna igen
+          Sambandsord
         </h2>
         <p>
-          Många MEK-uppgifter kretsar kring konnektiver, alltså ord som signalerar relationen mellan
-          meningars delar. Att känna igen dem reflexmässigt sparar sekunder:
+          Många MEK-uppgifter hänger på sambandsord, alltså ord som visar hur två led förhåller sig
+          till varandra:
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Adversativa (kontrast):</strong> dock,
-            däremot, men, trots att, icke desto mindre, likväl
+            <strong style={{ color: "var(--cream)" }}>Kontrast:</strong> dock, däremot, men, trots
+            att, icke desto mindre, likväl
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Kausala (orsak/följd):</strong> eftersom,
-            därför, följaktligen, till följd av, härav
+            <strong style={{ color: "var(--cream)" }}>Orsak och följd:</strong> eftersom, därför,
+            följaktligen, till följd av, härav
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Additiva (tillägg):</strong> dessutom, likaså,
-            vidare, därtill, inte minst
+            <strong style={{ color: "var(--cream)" }}>Tillägg:</strong> dessutom, likaså, vidare,
+            därtill, inte minst
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Koncessiva (medgivande):</strong> visserligen,
-            förvisso, om än, även om
+            <strong style={{ color: "var(--cream)" }}>Medgivande:</strong> visserligen, förvisso, om
+            än, även om
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Temporala (tid):</strong> sedan, tidigare,
-            hädanefter, numera, alltsedan
+            <strong style={{ color: "var(--cream)" }}>Tid:</strong> sedan, tidigare, hädanefter,
+            numera, alltsedan
           </li>
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Hur undviker man fällor?
+          Vanliga fällor
         </h2>
         <p>
-          HP-konstruktörerna är skickliga på att skapa distraktorer som låter bra isolerat men
-          bryter mot meningens helhet. Vanliga fällor:
+          De felaktiga alternativen är valda för att låta rimliga var för sig. De vanligaste
+          typerna:
         </p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Felaktig konnektiv:</strong> ett alternativ
-            har rätt innehållsord men fel logisk relation. En adversativ mening med "dessutom" låter
-            fel även om ordet i sig är vanligt.
+            <strong style={{ color: "var(--cream)" }}>Fel sambandsord:</strong> ordet passar ämnet
+            men ger fel samband. Står det en kontrast i texten kan luckan inte fyllas med
+            "dessutom".
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Liknande form, fel valör:</strong> ord som
-            "försiggå" och "förekomma" liknar varandra men har olika stilnivå och passar i olika
-            sammanhang.
+            <strong style={{ color: "var(--cream)" }}>Liknande ord, annan användning:</strong> ord
+            som "försiggå" och "förekomma" liknar varandra men används i olika sammanhang.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Felaktig ton:</strong> en formell akademisk
-            mening kräver ett formellt alternativ. Väljer du ett alltför vardagligt ord bryter det
-            meningens register.
+            <strong style={{ color: "var(--cream)" }}>Fel stilnivå:</strong> en formell text kräver
+            ett formellt ord. Ett vardagligt ord sticker ut även om betydelsen stämmer.
           </li>
         </ul>
-        <p>
-          Testa alltid det valda alternativet sist: läs hela meningen högt i huvudet med ditt svar
-          infogt. Låter det konstigt? Välj om.
-        </p>
+        <p>Läs till sist hela texten med ditt svar insatt. Låter det konstigt, välj om.</p>
 
         <p className="mt-8">
           <Link
@@ -162,7 +152,7 @@ function MekGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Träna MEK gratis
+            Öva MEK
           </Link>
         </p>
       </section>

@@ -87,8 +87,7 @@ function VerifyPage() {
             Adressen är bekräftad.
           </h1>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Tack! Nu kan du också skriva i forumet. Ditt konto har fungerat hela tiden. Det här var
-            bara sista pusselbiten.
+            Nu kan du också skriva i forumet.
           </p>
           <Button asChild>
             <Link to="/">Till startsidan</Link>

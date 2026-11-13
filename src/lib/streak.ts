@@ -66,12 +66,12 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
   // Toast on streak broken
   if (broken && prevStreak >= 7) {
     toast(
-      `Din streak på ${enhet(prevStreak, "dag")} bröts. Rekordet ${enhet(prevLongest, "dag")} finns kvar, kämpa på!`,
+      `Din streak på ${enhet(prevStreak, "dag")} bröts. Rekordet ${enhet(prevLongest, "dag")} står kvar.`,
     );
   } else if (broken && prevStreak >= 3) {
-    toast(`Din streak på ${enhet(prevStreak, "dag")} bröts. Börja en ny idag!`);
+    toast(`Din streak på ${enhet(prevStreak, "dag")} bröts.`);
   } else if (continued && newStreak >= 2) {
-    toast.success(`${newStreak} dagars streak!`);
+    toast.success(`${newStreak} dagar i rad`);
   }
 
   return {

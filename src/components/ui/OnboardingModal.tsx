@@ -57,7 +57,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
   const [focus, setFocus] = useState<"verbal" | "math" | "both" | null>(null);
   const [saving, setSaving] = useState(false);
 
-  // Bara scroll-lås, ingen Escape-stängning: "Hoppa över onboarding" sparar
+  // Bara scroll-lås, ingen Escape-stängning: "Hoppa över" sparar
   // att onboardingen är avklarad. En tyst Esc hade stängt rutan utan att
   // spara, så den dykt upp igen vid nästa sidladdning.
   useDismissible(open && !!user && !!profile);
@@ -190,7 +190,7 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                 </div>
                 <div className="mt-6 flex items-center justify-between">
                   <button onClick={skip} className="text-xs text-muted-foreground hover:underline">
-                    Hoppa över onboarding
+                    Hoppa över
                   </button>
                   <Button onClick={() => setStep(1)} disabled={target === null}>
                     Sätt mitt mål
@@ -248,13 +248,13 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                   className="text-2xl font-semibold"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  Du är redo!
+                  Klart
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Din ELO börjar på 1000, i Silver-rankingen.
+                  Din ELO börjar på 1000, i Silver.
                 </p>
                 <p className="mt-4 text-center text-sm text-muted-foreground">
-                  Spela din första match för att se var du hamnar.
+                  Den ändras efter din första match.
                 </p>
                 <div className="mt-6 flex flex-col gap-2">
                   <Button

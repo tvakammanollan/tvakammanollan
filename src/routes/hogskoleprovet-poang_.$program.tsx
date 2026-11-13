@@ -62,7 +62,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     h1: "Läkarprogrammet: HP-poäng per lärosäte",
     intro:
       "Läkarprogrammet finns vid 8 lärosäten i Sverige och hör till de mest sökta utbildningarna i landet. Här är den senaste antagningspoängen i högskoleprovsgruppen (HP) för de största.",
-    note: "Karolinska Institutet antar dessutom en del av sina platser genom PIL (prov- och intervjubaserat urval), ett separat spår med kognitivt test och intervjuer, där ett starkt högskoleprovsresultat är biljetten in till steg två. PIL ersätter inte HP-kvoten ovan, det är en tredje väg vid sidan av den.",
+    note: "Karolinska Institutet antar dessutom en del av sina platser genom PIL (prov- och intervjubaserat urval), ett separat spår med kognitivt test och intervjuer, där ett högt högskoleprovsresultat krävs för att gå vidare till steg två. PIL ersätter inte HP-kvoten ovan, det är en tredje väg vid sidan av den.",
     labelHeader: "Lärosäte",
     schools: [
       { label: "Lunds universitet", sub: "Lund", hp: 1.8, prev: 1.75 },
@@ -319,7 +319,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
     name: "Veterinärprogrammet",
     h1: "Veterinärprogrammet: HP-poäng",
     intro:
-      "Veterinärprogrammet ges bara vid Sveriges lantbruksuniversitet (SLU) i Uppsala, så det finns en enda gräns att slå.",
+      "Veterinärprogrammet ges bara vid Sveriges lantbruksuniversitet (SLU) i Uppsala, så det finns bara en gräns.",
     labelHeader: "Lärosäte",
     schools: [{ label: "Sveriges lantbruksuniversitet (SLU)", sub: "Uppsala", hp: 1.5, prev: 1.5 }],
     term: "HT 2026",
@@ -1072,7 +1072,7 @@ function ProgramPage() {
             {cfg.sourceLabel}
           </a>
           , kontrollerad {cfg.verifiedAt}. Gränserna sätts om varje antagningsomgång och kan både
-          stiga och sjunka. Använd talen som en fingervisning, inte ett facit för nästa termin.
+          stiga och sjunka. Talen visar läget den omgången, inte vad som krävs nästa termin.
         </p>
         {trend && (
           <p className="mt-4 text-[14px] leading-relaxed text-white/60">
@@ -1091,11 +1091,10 @@ function ProgramPage() {
           className="text-[20px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Öva upp din HP-poäng
+          Öva inför provet
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Aktivt övande på riktiga HP-frågor är det mest effektiva sättet att höja resultatet. Räkna
-          ut var du ligger i dag, öva sedan på riktiga uppgifter från gamla prov.
+          Räkna ut var du ligger i dag och öva sedan på uppgifter ur gamla prov.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

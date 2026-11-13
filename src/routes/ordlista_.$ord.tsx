@@ -88,7 +88,7 @@ export const Route = createFileRoute("/ordlista_/$ord")({
           inDefinedTermSet: {
             "@type": "DefinedTermSet",
             "@id": "https://tvakommanollan.se/ordlista#set",
-            name: "Ordlista för Högskoleprovet",
+            name: "Ordlista för högskoleprovet",
             url: "https://tvakommanollan.se/ordlista",
           },
         }),
@@ -352,11 +352,10 @@ function OrdlistaEntryPage() {
           className="flex items-center gap-1.5 text-[18px] font-bold text-[var(--cream)]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Plugga orden i stället för att slå upp dem
+          Öva orden
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-          {word} är ett av {formatInt(total)} ord ur tidigare högskoleprov. I ordträningen kommer de
-          tillbaka med växande mellanrum tills de sitter. Gratis, utan konto.
+          {word} är ett av {formatInt(total)} ord i ordträningen. Ord du missar kommer tillbaka med växande mellanrum tills du kan dem.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link
@@ -369,7 +368,7 @@ function OrdlistaEntryPage() {
             to="/guider/ord"
             className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >
-            ORD-guide & strategi
+            Guide till ORD
           </Link>
         </div>
       </section>

@@ -137,8 +137,7 @@ function ResultatPage() {
           Räkna ut ditt resultat redan nu
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-          Du behöver inte vänta för att få en bra uppskattning. Rätta dig mot facit, räkna antal
-          rätt per del och jämför med normeringen på tidigare prov.
+          Rätta dig mot facit, räkna antal rätt per del och jämför med normeringen på tidigare prov, så får du en uppskattning innan resultatet kommer.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link

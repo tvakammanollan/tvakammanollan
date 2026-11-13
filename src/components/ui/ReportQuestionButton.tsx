@@ -92,7 +92,7 @@ export function ReportQuestionButton({
     setOpen(false);
     setReason(null);
     setComment("");
-    toast.success("Tack! Din rapport har skickats.");
+    toast.success("Rapporten är skickad.");
   };
 
   if (reported) {

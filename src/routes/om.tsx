@@ -11,9 +11,9 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss: varför sajten finns",
       description:
-        "Alla högskoleprov sedan 2012 med facit, dueller med ELO-ranking och en ordlista över ORD. Om grundaren Niklas (1,95 på HP) och varför det mesta är gratis.",
+        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher med ELO-ranking och en ordlista. Om grundaren Niklas och varför det mesta är gratis.",
       ogTitle: "Om Tvåkommanollan",
-      ogDescription: "Gamla högskoleprov, dueller och ordlista. Varför vi finns.",
+      ogDescription: "Vem som driver sajten och varför det mesta är gratis.",
     }),
     links: pageLinks("/om"),
     scripts: [
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/om")({
         name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om Tvåkommanollan: övning inför högskoleprovet med alla gamla prov sedan 2012, dueller med ELO-ranking och en ordlista. Grundad av Niklas som fick 1,95 på Högskoleprovet.",
+          "Om Tvåkommanollan: övning inför högskoleprovet med alla gamla prov sedan 2012, matcher med ELO-ranking och en ordlista. Grundad av Niklas, som fick 1,95 på högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
@@ -39,8 +39,7 @@ function OmPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        title="Vi gör HP"
-        cycleWords={["enklare.", "roligare.", "öppnare.", "modernt."]}
+        title="Om Tvåkommanollan"
         align="center"
         variant="content"
       />
@@ -54,26 +53,22 @@ function OmPage() {
           </h2>
           <p>
             Jag heter <strong style={{ color: "var(--cream)" }}>Niklas</strong> och fick 1,95 på
-            Högskoleprovet. Innan jag tog provet använde jag allt jag kunde komma över: gamla prov,
-            ordlistor, YouTube-genomgångar och dyra kursplattformar. Det fungerade, men det var
-            spretigt, dyrt och oftast tråkigt. Det fanns ingenting som gjorde att jag faktiskt ville
-            fortsätta plugga en kväll till.
+            högskoleprovet. När jag pluggade använde jag gamla prov, ordlistor, YouTube-genomgångar
+            och betalkurser. Det fungerade, men materialet låg på många ställen och det var svårt
+            att hålla i gång pluggandet kväll efter kväll.
           </p>
           <p>
-            Tvåkommanollan är vad jag önskat fanns när jag pluggade: ett ställe där du kan träna
-            riktiga HP-frågor under riktig tidspress, mot någon på din nivå, och se ditt resultat
-            klättra över veckorna. Konkurrensen gör att du orkar längre. ELO-systemet ger en ärlig
-            bild av var du står. Och det mesta är gratis: varje gammalt prov, duellerna, normeringen
-            och forumet. Ordlistan och MEK har en gratisdel och kostar sedan ett engångsköp.
+            Tvåkommanollan är det jag själv hade velat ha: gamla prov som går att skriva på tid,
+            matcher mot någon på ungefär samma nivå och en siffra som visar hur det går över
+            veckorna. Det mesta är gratis: alla gamla prov, matcherna, normeringen och forumet.
+            Ordlistan och MEK har en gratisdel och kostar sedan ett engångsköp.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Varför är det mesta gratis?
           </h2>
           <p>
-            Att plugga inför Högskoleprovet borde inte kosta tusenlappar. De officiella materialen
-            är gratis men spridda; privata kursplattformar tar 2 000–10 000 kr för paket som i
-            grunden bygger på samma frågor som finns på{" "}
+            De gamla proven är UHR:s eget material och finns öppet på{" "}
             <a
               className="underline"
               style={{ color: "var(--amber)" }}
@@ -83,47 +78,43 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Tvåkommanollan finansieras av grundaren. Det finns inga annonser. Gamla prov,
-            duellerna, normeringen och forumet är gratis, och de första 40 orden och MEK-uppgifterna
-            också, så att du kan prova. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp.{" "}
+            , så dem tar vi inte betalt för. Sajten har inga annonser och drivs av mig. Gamla prov,
+            matcherna, normeringen och forumet är gratis, liksom de första 40 orden och 40
+            MEK-uppgifterna. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp.{" "}
             <Link to="/pris" className="underline" style={{ color: "var(--amber)" }}>
-              Så tänker vi kring priset
+              Mer om priset
             </Link>
-            . Du betalar aldrig med din uppmärksamhet.
+            .
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Vad vi tror på
+            Hur sajten är tänkt
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              <strong style={{ color: "var(--cream)" }}>Riktiga frågor.</strong> Hela ordbanken
-              bygger på publicerade högskoleprov från 1990-talet och framåt. Inga uppdiktade
-              exempel.
+              <strong style={{ color: "var(--cream)" }}>Uppgifter ur gamla prov.</strong>{" "}
+              Provarkivet är UHR:s egna prov, och ordlistan bygger till största delen på
+              publicerade högskoleprov. Uppgifter vi skrivit själva är märkta.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Konkurrens motiverar.</strong> Det är
-              roligare att plugga mot någon. Och du orkar längre.
+              <strong style={{ color: "var(--cream)" }}>Matcher.</strong> Det är lättare att
+              fortsätta plugga när man har någon att möta.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>ELO är ärligt.</strong> Du ser exakt var du
-              står, inte vad en kursplattform vill att du ska tro att du är värd.
+              <strong style={{ color: "var(--cream)" }}>ELO.</strong> Siffran räknas om efter varje
+              match och visar hur du ligger till mot andra som övar.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Gratis ska vara gratis.</strong> Det som är
-              gratis är det på riktigt: inga annonser, ingen dold gräns och inget kreditkort. Det
-              som kostar står tydligt på prissidan.
+              <strong style={{ color: "var(--cream)" }}>Gratis utan villkor.</strong> Det som är
+              gratis har inga annonser och kräver inget kort. Det som kostar står på prissidan.
             </li>
           </ul>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Vart vi är på väg
+            Önskemål och buggar
           </h2>
           <p>
-            Tvåkommanollan växer organiskt. Vi lägger till fler funktioner när de efterfrågas och
-            förbättrar det som inte funkar tillräckligt bra. Närmast på listan: fler gamla prov,
-            bättre statistik per delprov, och studiegrupper för dig som vill plugga med vänner
-            regelbundet. Har du önskemål eller hittat en bugg?{" "}
+            Saknar du något eller har du hittat en bugg?{" "}
             <Link to="/kontakt" className="underline" style={{ color: "var(--amber)" }}>
               Hör av dig
             </Link>

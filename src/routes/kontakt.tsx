@@ -10,9 +10,9 @@ export const Route = createFileRoute("/kontakt")({
       path: "/kontakt",
       title: "Kontakt",
       description:
-        "Hör av dig till Tvåkommanollan. E-post, buggrapporter och feedback. Vi svarar oftast inom 1 vardag.",
+        "Kontakta Tvåkommanollan via e-post eller skicka en buggrapport. Vi svarar oftast inom en vardag.",
       ogTitle: "Tvåkommanollan | Kontakt",
-      ogDescription: "Hör av dig. E-post, buggrapporter och feedback.",
+      ogDescription: "E-post och buggrapporter. Vi svarar oftast inom en vardag.",
     }),
     links: pageLinks("/kontakt"),
     scripts: [
@@ -70,8 +70,8 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Buggrapport</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Använd bug-knappen i appen (kräver inloggning), så får vi med rätt context
-                  automatiskt. Annars mejla{" "}
+                  Använd buggknappen i sidfoten när du är inloggad, så följer uppgifter om felet
+                  med automatiskt. Annars mejla{" "}
                   <a
                     href="mailto:info@tvakommanollan.se?subject=Bugg-rapport"
                     className="underline"
@@ -96,9 +96,9 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Vem driver Tvåkommanollan?</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Sajten drivs av Niklas Pellkvist som privatperson. Allt pluggmaterial är gratis
-                  och vi visar inga annonser. Det enda som kostar pengar är personlig coachning
-                  (studieupplägget), och den är helt frivillig. Mer om varför sajten finns:{" "}
+                  Sajten drivs av Niklas Pellkvist som privatperson. Det mesta är gratis och vi
+                  visar inga annonser. Det som kostar är hela ordlistan och MEK-övningen. Mer om
+                  sajten:{" "}
                   <Link to="/om" className="underline" style={{ color: "var(--amber)" }}>
                     /om
                   </Link>
@@ -124,7 +124,7 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Niklas Pellkvist på LinkedIn</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Samarbeten, frågor om sajten eller bara connecta.
+                  Samarbeten och frågor om sajten.
                 </span>
               </span>
             </a>
@@ -132,8 +132,8 @@ function KontaktPage() {
         </ul>
 
         <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
-          Vi svarar normalt inom en vardag på mejl. Bug-rapporter via knappen i appen hanteras
-          oftast snabbare eftersom de innehåller felkontext.
+          Buggrapporter via knappen går oftast fortare än mejl, eftersom de innehåller uppgifter
+          om felet.
         </p>
       </article>
     </div>

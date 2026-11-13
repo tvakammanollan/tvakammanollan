@@ -791,7 +791,7 @@ function ProvIntro({
             Provläge
           </span>
           <span className="mt-1.5 block text-xs leading-relaxed text-[var(--text-secondary)]">
-            {data.minutes} minuters nedräkning, precis som på provdagen. Facit visas när du lämnar
+            {data.minutes} minuter, som på provdagen. Facit visas när du lämnar
             in.
           </span>
         </button>

@@ -32,7 +32,7 @@ export const Route = createFileRoute("/guider/xyz")({
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "XYZ-guide: matematisk problemlösning på Högskoleprovet",
+          headline: "XYZ-guide: matematisk problemlösning på högskoleprovet",
           description:
             "Lär dig lösa XYZ-uppgifter snabbare med rätt metod. Algebra, geometri, sannolikhet och kombinatorik förklaras steg för steg.",
           url: "https://tvakommanollan.se/guider/xyz",
@@ -73,12 +73,9 @@ function XyzGuidePage() {
           Vad testar XYZ?
         </h2>
         <p>
-          XYZ-delprovet innehåller 12 uppgifter per provpass. Det är klassisk matematisk
-          problemlösning på gymnasienivå: du får ett problem formulerat i text eller med en figur
-          och ska välja rätt svar bland 4 alternativ. Ingen formelsamling tillåts och inga
-          hjälpmedel. Matematik på HP testar inte avancerad kalkyl. Det testar om du kan tillämpa
-          grundläggande matematik snabbt och säkert. Läs mer om högskoleprovets uppbyggnad i sin
-          helhet på{" "}
+          XYZ har 12 uppgifter per kvantitativt provpass. Du får ett problem i text eller med en
+          figur och väljer rätt svar bland 4 alternativ. Matematiken är på gymnasienivå, och du får
+          varken använda miniräknare eller formelsamling. Mer om provets uppbyggnad finns på{" "}
           <a
             href="https://www.studera.nu/hogskoleprov/om/intro/"
             target="_blank"
@@ -91,14 +88,13 @@ function XyzGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Huvudmoment
+          Det här behöver du kunna
         </h2>
-        <p>Dessa moment återkommer provärs efter provärs. Prioritera dem i din träning:</p>
+        <p>De här områdena kommer på nästan varje prov:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong style={{ color: "var(--cream)" }}>Procent och förändringsfaktor:</strong>{" "}
-            procentuell förändring, tillväxtfaktor, rabatt och prisökning. Vanligast förekommande
-            moment på XYZ.
+            procentuell förändring, förändringsfaktor, rabatt och prisökning.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Andragradsekvationer:</strong> lösning med
@@ -122,31 +118,29 @@ function XyzGuidePage() {
         </ul>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Strategin: eliminera och uppskatta
+          Uppskatta och stryk
         </h2>
         <p>
-          XYZ har alltid 4 svarsalternativ, och minst ett av dem är uppenbart orimligt. Börja med
-          att uppskatta storleksordningen på svaret och stryk alternativ som avviker kraftigt. Det
-          minskar risken vid gissning och bekräftar dina räkningar.
+          Uppskatta först ungefär hur stort svaret bör vara och stryk de alternativ som ligger långt
+          ifrån. Det gör en gissning bättre och fångar räknefel.
         </p>
         <p>
-          En annan teknik är att prova enkla tal. Om uppgiften innehåller en okänd variabel,
-          sätt <em>x = 2</em> eller <em>x = 10</em> och kontrollera vilket alternativ som ger rätt
-          resultat. Fungerar utmärkt när algebran annars blir komplex.
+          Du kan också pröva med enkla tal. Har uppgiften en variabel, sätt <em>x = 2</em> eller{" "}
+          <em>x = 10</em> och kontrollera vilket alternativ som ger rätt resultat. Det går ofta
+          fortare än att lösa uppgiften algebraiskt.
         </p>
         <p>
-          Bakåträkning är också effektivt: plugga in svarsalternativen i uppgiftens villkor och se
-          vilket som stämmer, istället för att lösa ekvationen från grunden.
+          Ett tredje sätt är att räkna bakåt: sätt in svarsalternativen i uppgiften och se vilket
+          som stämmer.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Tidspress
+          Tid
         </h2>
         <p>
-          12 uppgifter på ungefär 15 minuter ger dig 75 sekunder per uppgift. Det är tillräckligt
-          för de flesta XYZ-uppgifter om du väljer rätt metod direkt. Hoppa-regeln: om du inte
-          hittar ett angreppssätt inom 90 sekunder: markera och gå vidare. En svår uppgift är inte
-          värd mer poäng än en enkel. Återvänd med eventuell restid.
+          12 uppgifter på ungefär 15 minuter är 75 sekunder per uppgift. Ser du inte hur uppgiften
+          ska lösas inom 90 sekunder, markera den och gå vidare. En svår uppgift ger inte mer poäng
+          än en lätt.
         </p>
 
         <p className="mt-8">
@@ -155,7 +149,7 @@ function XyzGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Öva XYZ-uppgifter gratis på Tvåkommanollan
+            Öva XYZ
           </Link>
         </p>
       </section>

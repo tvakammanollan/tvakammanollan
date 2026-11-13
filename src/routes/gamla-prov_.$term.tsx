@@ -43,9 +43,9 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         title: fitTitle(`${exam.label}: alla provpass med facit`),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
-          `uppgifter med facit, på originaltid och med automatisk rättning. Gratis, utan inloggning.`,
+          `uppgifter med facit, på tid och med rättning. Gratis och utan inloggning.`,
         ogTitle: `Högskoleprovet ${exam.label}: provpass & facit`,
-        ogDescription: `${enhet(exam.questions, "uppgift")} med rätta svar. Öva gratis på Tvåkommanollan.`,
+        ogDescription: `${enhet(exam.questions, "uppgift")} med rätta svar.`,
       }),
       links: pageLinks(path),
       scripts: [

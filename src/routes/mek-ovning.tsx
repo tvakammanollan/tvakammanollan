@@ -21,7 +21,7 @@ export const Route = createFileRoute("/mek-ovning")({
       path: "/mek-ovning",
       title: "MEK-övning: meningskomplettering med facit",
       description:
-        "Öva MEK inför högskoleprovet: uppgifter ur gamla prov och Tvåkommanollans egna, med facit och förklaring. Rösta fram de bästa frågorna.",
+        "Öva MEK inför högskoleprovet: uppgifter ur gamla prov och Tvåkommanollans egna, med facit och förklaring efter varje svar.",
     }),
     links: pageLinks("/mek-ovning"),
     scripts: [

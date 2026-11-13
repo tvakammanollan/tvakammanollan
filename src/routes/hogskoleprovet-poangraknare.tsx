@@ -33,10 +33,10 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
       path: "/hogskoleprovet-poangraknare",
       title: fitTitle("Högskoleprovet poängräknare", "räkna ut din poäng"),
       description:
-        "Gratis poängräknare för högskoleprovet: fyll i antal rätt på den verbala och kvantitativa delen och få din uppskattade normerade poäng (0,00–2,00) direkt.",
+        "Poängräknare för högskoleprovet: fyll i antal rätt på den verbala och den kvantitativa delen och få en uppskattad normerad poäng mellan 0,00 och 2,00.",
       ogTitle: "Högskoleprovet poängräknare",
       ogDescription:
-        "Räkna ut din uppskattade HP-poäng (0,00–2,00) från antal rätt. Gratis normeringskalkylator.",
+        "Räkna ut din uppskattade HP-poäng från antal rätt.",
     }),
     links: pageLinks("/hogskoleprovet-poangraknare"),
     scripts: [
@@ -55,7 +55,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
         isAccessibleForFree: true,
         offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
         description:
-          "Interaktiv normeringskalkylator som uppskattar din HP-poäng (0,00–2,00) utifrån antal rätt.",
+          "Räknare som uppskattar din HP-poäng (0,00–2,00) utifrån antal rätt.",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
       }),
     ],
@@ -91,7 +91,7 @@ function PoangraknarePage() {
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Fyll i hur många rätt du hade på den verbala respektive kvantitativa delen (80 uppgifter
-          var) så får du din uppskattade normerade poäng direkt. Skalan går från 0,00 till 2,00 i
+          var) så får du en uppskattad normerad poäng. Skalan går från 0,00 till 2,00 i
           steg om 0,05.
         </p>
       </header>
@@ -163,7 +163,7 @@ function PoangraknarePage() {
       <p className="mt-3 text-xs leading-relaxed text-white/40">
         Poängen är en <strong className="text-white/60">uppskattning</strong>. Universitets- och
         högskolerådet normerar varje prov för sig, så de exakta gränserna varierar mellan olika
-        provtillfällen. Använd siffran som en fingervisning.
+        provtillfällen. Siffran är ungefärlig.
       </p>
 
       <section className="mt-10">
@@ -175,19 +175,17 @@ function PoangraknarePage() {
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           Normeringen är inte linjär. UHR omvandlar antalet rätt till en normerad poäng mellan 0,00
-          och 2,00 utifrån hur alla som skrev just det provtillfället faktiskt presterade, inte
-          efter en fast mall. Det gör att samma antal rätt kan ge olika poäng på olika
-          provtillfällen, och att ett par rätt extra i mitten av skalan ofta ger mer poäng än samma
+          och 2,00 utifrån hur alla som skrev det provet klarade sig. Därför kan samma antal rätt kan ge olika poäng på olika prov, och ett par rätt extra i mitten av skalan ger ofta mer poäng än samma
           antal nära toppen eller botten.
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Räknaren ovan använder en generell tabell byggd på flera arkiverade provtillfällen, så den
-          ger en bra fingervisning men aldrig ditt exakta facit. Vill du se hur normeringen slog för
-          ett riktigt prov, med rätta svar på varje uppgift, finns{" "}
+          ger en uppskattning och inget exakt svar. Vill du se normeringen för ett visst prov, med
+          rätta svar på varje uppgift, finns{" "}
           <Link to="/gamla-prov" className="text-[var(--amber)] underline underline-offset-2">
             alla arkiverade provtillfällen
           </Link>{" "}
-          att skriva gratis. Hur många rätt varje poäng har krävt på riktiga prov står i{" "}
+          att skriva gratis. Hur många rätt varje poäng har krävt på tidigare prov står i{" "}
           <Link
             to="/hogskoleprovet-antal-ratt"
             className="text-[var(--amber)] underline underline-offset-2"
@@ -214,7 +212,7 @@ function PoangraknarePage() {
           Vill du höja poängen?
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-          Öva på riktiga frågor från gamla prov och se din poäng klättra.
+          Öva på uppgifter ur gamla prov.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

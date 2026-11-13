@@ -89,9 +89,9 @@ export const Route = createFileRoute("/leaderboard")({
       path: "/leaderboard",
       title: "Topplista: ELO-ranking",
       description:
-        "Se de bästa HP-spelarna i Sverige. ELO-ranking för verbal och kvantitativ, plus topplistor för ord och MEK. Uppdateras live efter varje match. Helt gratis.",
+        "Topplistan på Tvåkommanollan: ELO för verbal och kvantitativ del, plus listor för ord, MEK och gamla prov. Uppdateras efter varje match.",
       ogTitle: "Tvåkommanollan | Topplista",
-      ogDescription: "ELO-rankning av Sveriges vassaste HP-spelare. Uppdateras live.",
+      ogDescription: "ELO för verbal och kvantitativ del, plus listor för ord, MEK och gamla prov.",
     }),
     links: pageLinks("/leaderboard"),
     scripts: [
@@ -122,8 +122,7 @@ function LeaderboardPage() {
   return (
     <div className="min-h-screen">
       <PageHero
-        title="Se vem som är"
-        cycleWords={["bäst.", "snabbast.", "vassast.", "smartast."]}
+        title="Topplista"
         align="center"
         variant="compact"
       />
@@ -453,7 +452,7 @@ function WeeklyTable({
       <EmptyState
         icon={CalendarDays}
         title="Ingen har spelat än den här veckan"
-        subtitle="Veckolistan nollställs varje måndag. Spela en match så tar du förstaplatsen."
+        subtitle="Veckolistan nollställs varje måndag."
         ctaLabel="Spela nu"
         ctaHref="/"
       />

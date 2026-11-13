@@ -53,7 +53,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
         description: describeWithin(
           `Skriv provpass ${data.pass} från ${data.label} på originaltid: ` +
             `${enhet(data.questions.length, "uppgift")} i ${delprov} på ${enhet(data.minutes, "minut")}. ` +
-            `Facit och automatisk rättning direkt.`,
+            `Facit och rättning när du lämnat in.`,
           "Gratis och utan inloggning.",
         ),
         ogTitle: `${data.label}: provpass ${data.pass}`,

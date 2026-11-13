@@ -11,7 +11,7 @@ export const Route = createFileRoute("/guider/tidspress")({
       ...guideArticleMeta("/guider/tidspress"),
       title: fitTitle("Tidspress på HP: strategi för varje delprov"),
       description:
-        "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart med Tvåkommanollan.",
+        "Så fördelar du tiden på högskoleprovet: minuter per delprov, när du ska gissa och gå vidare, och hur du övar på tid.",
       ogTitle: "Tvåkommanollan | Tidspress på HP",
       ogDescription:
         "Tidsdisposition för alla 8 delprov, hoppa-strategin och varför du aldrig ska lämna blankt.",
@@ -21,13 +21,13 @@ export const Route = createFileRoute("/guider/tidspress")({
       breadcrumbScript([
         { name: "Hem", path: "/" },
         { name: "Guider", path: "/guider" },
-        { name: "Tidspress på Högskoleprovet", path: "/guider/tidspress" },
+        { name: "Tidspress på högskoleprovet", path: "/guider/tidspress" },
       ]),
       jsonLdScript(
         guideArticleJsonLd({
-          headline: "Tidspress på Högskoleprovet: strategi för varje delprov",
+          headline: "Tidspress på högskoleprovet: strategi för varje delprov",
           description:
-            "Lär dig hantera tidspressen på HP. Tidsdisposition per delprov, hoppa-strategin och hur du tränar fart.",
+            "Så fördelar du tiden på högskoleprovet: minuter per delprov, när du ska gissa och gå vidare, och hur du övar på tid.",
           url: "https://tvakommanollan.se/guider/tidspress",
         }),
       ),
@@ -46,54 +46,47 @@ function TidspressGuidePage() {
           className="mt-2 text-3xl font-bold sm:text-4xl"
           style={{ color: "var(--cream)", fontFamily: "var(--font-display)" }}
         >
-          Tidspress på Högskoleprovet
+          Tidspress på högskoleprovet
         </h1>
       </header>
 
       <p className="mb-8">
-        Tid är den knappaste resursen på HP. Varje provpass är 55 minuter och innehåller ungefär 40
-        uppgifter. Det ger dig lite drygt en minut per uppgift. Med rätt strategi hinner du alla
-        uppgifter och har restid kvar. Utan strategi riskerar du att lägga för lång tid på svåra
-        uppgifter och missa enkla poäng längre fram.
+        Varje provpass är 55 minuter och har 40 uppgifter, alltså drygt en minut per uppgift.
+        Fastnar du på en svår uppgift hinner du inte med lättare uppgifter längre fram, så det lönar
+        sig att bestämma i förväg hur tiden ska fördelas.
       </p>
 
       <section className="space-y-6">
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Tidgränser per delprov
+          Tid per delprov
         </h2>
-        <p>
-          Nedan är rekommenderade tidsgränser för ett balanserat provpass. Anpassa efter dina egna
-          starka och svaga sidor:
-        </p>
+        <p>Ett förslag på fördelning. Flytta minuter till de delprov du har svårast för:</p>
 
         <div className="mt-4 space-y-4">
           <div>
             <p className="font-semibold" style={{ color: "var(--cream)" }}>
-              Verbalt provpass (55 min, ≈ 40–60 uppgifter)
+              Verbalt provpass (55 min, 40 uppgifter)
             </p>
             <ul className="mt-2 list-none space-y-1 pl-4">
               <li>
-                <strong style={{ color: "var(--cream)" }}>ORD:</strong> 10 uppgifter ≈ 10 min (1
-                min/uppgift)
+                <strong style={{ color: "var(--cream)" }}>ORD:</strong> 10 uppgifter ≈ 3 min (20
+                sek/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>MEK:</strong> 10 uppgifter ≈ 10 min (1
-                min/uppgift)
+                <strong style={{ color: "var(--cream)" }}>MEK:</strong> 10 uppgifter ≈ 8 min
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>LÄS:</strong> 20 uppgifter ≈ 20 min (5
-                min/text)
+                <strong style={{ color: "var(--cream)" }}>LÄS:</strong> 10 uppgifter ≈ 22 min
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>ELF:</strong> 20 uppgifter ≈ 20 min (5
-                min/text)
+                <strong style={{ color: "var(--cream)" }}>ELF:</strong> 10 uppgifter ≈ 22 min
               </li>
             </ul>
           </div>
 
           <div>
             <p className="font-semibold" style={{ color: "var(--cream)" }}>
-              Kvantitativt provpass (55 min, ≈ 40 uppgifter)
+              Kvantitativt provpass (55 min, 40 uppgifter)
             </p>
             <ul className="mt-2 list-none space-y-1 pl-4">
               <li>
@@ -109,46 +102,40 @@ function TidspressGuidePage() {
                 sek/uppgift)
               </li>
               <li>
-                <strong style={{ color: "var(--cream)" }}>DTK:</strong> 12 uppgifter ≈ 22 min (3–5
-                frågor per figur)
+                <strong style={{ color: "var(--cream)" }}>DTK:</strong> 12 uppgifter ≈ 22 min
               </li>
             </ul>
           </div>
         </div>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Hoppa-strategin
+          Gå vidare när du fastnar
         </h2>
         <p>
-          Om du lagt mer än 90 sekunder på en uppgift utan att komma fram till ett svar: gissa och
-          hoppa. Markera uppgiften mentalt (eller i marginalen om du skriver på papper) och återvänd
-          med restiden.
+          Har du lagt 90 sekunder på en uppgift utan att komma fram till ett svar, gissa och gå
+          vidare. Markera uppgiften och gå tillbaka om det blir tid över.
         </p>
         <p>
-          Varför? Alla uppgifter på HP är lika värda: en poäng var, oavsett svårighet. Att lägga 3
-          minuter på en svår uppgift kostar dig samma tid som du hade kunnat använda till tre enkla
-          uppgifter. Svåra uppgifter är värda exakt lika mycket som lätta.
+          Alla uppgifter ger en poäng var, hur svåra de än är. Tre minuter på en svår uppgift är tid
+          som hade räckt till tre lätta.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
           Gissa alltid
         </h2>
         <p>
-          HP har inget avdrag för fel svar. Det finns ingen anledning att någonsin lämna en uppgift
-          obesvarad. Om du kör fast: gissa. Med 4 alternativ är sannolikheten 25 % per ren
-          gissning, och med eliminering av ett eller två orimliga alternativ stiger oddsen kraftigt.
-          En blank ruta ger alltid noll poäng.
+          Fel svar ger inget avdrag, så lämna aldrig en uppgift tom. Med 4 alternativ ger en ren
+          gissning rätt en gång av fyra, och kan du stryka ett eller två alternativ först blir
+          chansen bättre.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          Träna tidspressen
+          Öva på tid
         </h2>
         <p>
-          Tidspress känns annorlunda i verkligheten än när du tränar utan klocka. Tvåkommanollans
-          live-matcher är designade för att simulera exakt detta: 8 frågor på 5 minuter mot en
-          motspelare med samma ELO-rating som du. Samma känsla av klockan som tickar, samma
-          beslutspress som på provdagen. Regelbunden matchträning bygger den mentala vana som gör
-          att du inte fryser under provdagen.
+          Att svara på tid är något annat än att öva utan klocka. En match på Tvåkommanollan är 8
+          uppgifter på 5 minuter mot någon med ungefär samma ELO, så du får öva på att bestämma dig
+          fort. Hela provpass på tid finns under Gamla prov.
         </p>
 
         <p className="mt-8">
@@ -158,7 +145,7 @@ function TidspressGuidePage() {
             className="inline-flex items-center gap-1.5 underline"
             style={{ color: "var(--amber)" }}
           >
-            Spela live-match under tidspress
+            Spela en match
           </Link>
         </p>
       </section>

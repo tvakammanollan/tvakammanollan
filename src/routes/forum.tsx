@@ -163,7 +163,7 @@ function ForumHomePage() {
             <EmptyState
               icon={MessageSquare}
               title="Inga trådar än"
-              subtitle="Bli den första som ställer en fråga. Den som svarar sitter förmodligen och pluggar just nu."
+              subtitle="Ställ den första frågan."
               ctaLabel="Starta en tråd"
               ctaHref="/forum/nytt"
             />
@@ -186,8 +186,7 @@ function ForumHomePage() {
           <div className="mt-3 space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
             <p>
               Forumet är öppet att läsa för alla. För att skriva behövs ett konto med bekräftad
-              mejladress. Det är enda sättet att hålla spam borta från ett forum som annars går att
-              skapa hur många konton som helst i.
+              mejladress. Annars går det inte att hålla spam borta.
             </p>
             <p>
               Klistra inte in hela lästexter eller provuppgifter ur UHR:s häften. De är

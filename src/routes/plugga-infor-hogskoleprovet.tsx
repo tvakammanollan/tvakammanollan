@@ -50,7 +50,7 @@ const METODER: Metod[] = [
     rattning:
       "Du rättar själv mot facit i PDF och slår upp poängen i normeringstabellen för samma prov.",
     forklaringar: "Inga. Facit anger bara rätt bokstav.",
-    styrka: "Det är originalet. Alla andra som visar riktiga provuppgifter hämtar dem härifrån.",
+    styrka: "Det är originalet. Alla andra som visar provuppgifter hämtar dem härifrån.",
     tankPa:
       "I de häften som ligger kvar efter provet saknas ofta den engelska läsförståelsen (ELF), av upphovsrättsskäl.",
     passar: "Den som vill ha källan direkt och gärna skriver ut och rättar för hand.",
@@ -63,7 +63,7 @@ const METODER: Metod[] = [
     rattning: "Du rättar själv mot facit i boken.",
     forklaringar: "Ofta utförliga. Det är böckernas styrka.",
     styrka:
-      "Strategi och lösningsmetoder förklarade i lugn takt, i en ordning som bygger på sig själv.",
+      "Lösningsmetoderna förklaras steg för steg.",
     tankPa:
       "Titta på utgivningsåret. Provet fick en ny uppläggning 2011, och en gammal upplaga kan beskriva delprov som inte längre ser ut så.",
     passar: "Den som lär sig bäst av att läsa en förklaring innan den övar.",
@@ -91,30 +91,30 @@ const METODER: Metod[] = [
     styrka: "Går att öva i korta pass, på bussen eller mellan lektionerna.",
     tankPa:
       "Ta reda på varifrån uppgifterna kommer. Egna uppgifter kan vara bra övning, men de är inte samma sak som provets.",
-    passar: "Den som vill nöta ord och korta uppgifter lite varje dag.",
+    passar: "Den som vill öva ord och korta uppgifter lite varje dag.",
   },
   {
     id: "tkn",
     namn: "Tvåkommanollan",
     egen: true,
     kostar:
-      "Gamla prov, facit, normering, dueller och forum är gratis. Träning på ORD och MEK utöver de första 40 uppgifterna kostar.",
+      "Gamla prov, facit, normering, matcher och forum är gratis. Träning på ORD och MEK utöver de första 40 uppgifterna kostar.",
     uppgifter:
       "Alla 30 provtillfällen från vårprovet 2012 till vårprovet 2026: 4 800 uppgifter med facit. MEK-träningen har dessutom egna uppgifter, märkta som sådana.",
-    rattning: "Automatisk, med originaltid och uppskattad normering per provdel.",
+    rattning: "Automatisk, på tid och med normering per provdel.",
     forklaringar:
       "Genomgångar av kvantitativa uppgifter i forumet, och en förklaring till varje ord i ordlistan.",
     styrka:
-      "De riktiga proven samlade på ett ställe, med ELF i alla 60 verbala provpass, och med poäng direkt när du lämnat in.",
+      "Alla gamla prov på ett ställe, med ELF i alla 60 verbala provpass och poäng när du lämnat in.",
     tankPa: "Ingen lärare följer dig vecka för vecka, och sajten drivs av en person.",
-    passar: "Den som vill skriva många riktiga prov och se exakt var poängen tappas.",
+    passar: "Den som vill skriva många gamla prov och se var poängen tappas.",
   },
 ];
 
 const BEGRANSNINGAR = [
   "Ingen lärare följer upp din plan. Behöver du någon som håller dig till ett schema är en kurs bättre.",
   "Guiderna går igenom strategi per delprov, men en bok går djupare för den som vill läsa sig till metoderna.",
-  "Vårprovet 2012 har kvantitativa uppgifter som saknar sina figurer. Originalbilderna finns inte kvar någonstans, och kortet säger det rakt ut.",
+  "Vårprovet 2012 har kvantitativa uppgifter som saknar sina figurer. Originalbilderna finns inte kvar, och det står på uppgiften.",
   "ORD- och MEK-träningen kostar efter de första 40 uppgifterna. Ordlistans uppslag och alla gamla prov är fortfarande gratis.",
   "Sajten drivs av en person. Hittar du ett fel vill vi gärna veta det.",
 ];
@@ -131,7 +131,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Kan man plugga inför högskoleprovet gratis?",
-      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går alla 30 provtillfällen sedan 2012 att skriva på originaltid med automatisk rättning, utan konto och utan att betala.",
+      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går alla 30 provtillfällen sedan 2012 att skriva på tid med rättning, utan konto och utan att betala.",
     },
     {
       q: "Var hittar man gamla högskoleprov med facit?",
@@ -146,7 +146,7 @@ export const Route = createFileRoute("/plugga-infor-hogskoleprovet")({
       path: PATH,
       title: fitTitle("Hur pluggar man inför högskoleprovet?"),
       description:
-        "Gamla prov, böcker, kurser, appar och Tvåkommanollan jämförda på pris, riktiga provuppgifter, rättning och vem de passar. Med det vi själva inte är bra på.",
+        "Gamla prov, böcker, kurser, appar och Tvåkommanollan jämförda på pris, uppgifter, rättning och vem de passar. Även det vi själva är sämre på.",
       ogTitle: "Hur pluggar man inför högskoleprovet? Fem sätt jämförda",
       ogType: "article",
       dateModified: UPPDATERAD,
@@ -220,7 +220,7 @@ function PluggaPage() {
             <p className="mt-1.5 text-[14.5px] leading-relaxed text-white/65">
               Det är den förberedelse som liknar provet mest, och den är gratis. Kurser, böcker och
               appar är bra komplement när du vet vilka delprov du tappar poäng på, men de ersätter
-              inte de riktiga proven.
+              inte gamla prov.
             </p>
           </div>
         </div>

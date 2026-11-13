@@ -1,6 +1,6 @@
 # Tvåkommanollan
 
-> Sveriges plattform för Högskoleprovet (HP). Tävla mot andra spelare i realtidsmatcher, klättra i en ELO-ranking och träna alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK) med riktiga HP-frågor. Det mesta är gratis, inga annonser, inget kreditkort för att börja.
+> Tvåkommanollan är en svensk sajt för övning inför högskoleprovet (HP): alla gamla prov sedan 2012 med facit och normering, en ordlista med över 10 000 ord, matcher med ELO-ranking och övning på alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). Det mesta är gratis, och sajten har inga annonser.
 
 Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP och vill att bra HP-träning ska vara gratis för alla.
 
@@ -25,23 +25,23 @@ Senast uppdaterad: 2026-11-11
 - [Hem](https://tvakommanollan.se/): Startsida. Hitta en match, se din ELO och kom igång på 30 sekunder.
 - [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, kvantitativ, ord, MEK och skrivna provpass.
 - [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
-- [Öva ord](https://tvakommanollan.se/ord): 10 000+ riktiga ORD-frågor från tidigare högskoleprov. Spaced repetition. De första 40 orden är gratis.
+- [Öva ord](https://tvakommanollan.se/ord): Över 10 000 ord med förklaring. Ord man missar kommer tillbaka med ökande mellanrum. De första 40 orden är gratis.
 - [MEK-övning](https://tvakommanollan.se/mek-ovning): Meningskomplettering med facit och förklaring, ur gamla prov och Tvåkommanollans egna uppgifter. De första 40 uppgifterna är gratis.
-- [Pris](https://tvakommanollan.se/pris): Vad som är gratis (gamla prov, dueller, normering, forum, guider, ordlistan som uppslagsverk) och vad som kostar (Hela Ordlistan + MEK som engångsköp, studieupplägget). Priset står i kassan.
+- [Pris](https://tvakommanollan.se/pris): Vad som är gratis (gamla prov, matcher, normering, forum, guider, ordlistan som uppslagsverk) och vad som kostar (Hela Ordlistan + MEK som engångsköp). Priset står i kassan.
 - [Ordlista](https://tvakommanollan.se/ordlista): Uppslagsverk över varje ord som förekommit på ORD-delprovet: 8 760 sidor, en per ord, med betydelse, exempelmening, liknande ord och den HP-uppgift ordet kom ur. Adresser: /ordlista/<ord> (t.ex. /ordlista/viskös) och bokstavsregister på /ordlista/bokstav/<bokstav>.
 - [Gamla prov](https://tvakommanollan.se/gamla-prov): Alla 30 provtillfällen som går att få tag på (Vårprovet 2012–Vårprovet 2026), 4 800 uppgifter med facit (30 provtillfällen × 4 räknade provpass × 40 uppgifter). Varje provpass går att skriva på originaltid med rättning och uppskattad normering. Engelsk läsförståelse (ELF) finns i samtliga 60 verbala provpass. Adresser: /gamla-prov/<termin> (t.ex. 2025vt) och /gamla-prov/<termin>/<provpass>.
 - [Skapa konto](https://tvakommanollan.se/signup): Gratis registrering med e-post (eller Google), tar under en minut.
 - [Logga in](https://tvakommanollan.se/login): Logga in på ditt befintliga konto.
 - [Facit och trolig normering](https://tvakommanollan.se/hogskoleprovet-facit): Facit till senaste högskoleprovet (höstprovet 18 oktober 2026, provpass 1, 2, 4 och 5), kontrollerat mot UHR:s officiella facit från 21 oktober 2026, uppskattad trolig normering för 2,0 (76 av 80 rätt på båda delarna, en bedömning gjord mot UHR:s normering för de senaste proven) och en tabell över vad 2,0 krävt tidigare.
 - [Resultatet på högskoleprovet](https://tvakommanollan.se/hogskoleprovet-resultat): När resultatet kommer (höstprovet 2026: 25 november enligt UHR), var man hämtar det, att det gäller i åtta år och att bästa giltiga resultat räknas vid urval.
-- [Formler för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-formler): Formlerna som behövs i XYZ och KVA (bråk, potenser, kvadreringsregler, räta linjer, area, volym, sannolikhet, hastighet), med länkar till riktiga provuppgifter.
+- [Formler för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-formler): Formlerna som behövs i XYZ och KVA (bråk, potenser, kvadreringsregler, räta linjer, area, volym, sannolikhet, hastighet), med länkar till uppgifter ur gamla prov.
 - [Orden på högskoleprovet](https://tvakommanollan.se/hogskoleprovet-ord): Alla ORD-uppgifter från varje högskoleprov sedan 2012 med svarsalternativ och rätt svar, ett prov per sida: /hogskoleprovet-ord/<termin> (t.ex. /hogskoleprovet-ord/2025ht).
 - [Normering](https://tvakommanollan.se/hogskoleprovet-normering): UHR:s officiella normeringstabeller för 30 provtillfällen sedan 2012, med hur många rätt som krävdes för 2,0, 1,5 och 1,0 på varje prov. En sida per prov med hela tabellen: /hogskoleprovet-normering/<termin> (t.ex. /hogskoleprovet-normering/2025ht).
 - [Provdatum för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-datum): Nästa provdatum (höstprovet 18 oktober 2026, vårprovet 10 april 2027), anmälningsperiod, provavgift och hur provdagen ser ut, med nedräkning och vanliga frågor.
 - [Poängräknare](https://tvakommanollan.se/hogskoleprovet-poangraknare): Räkna om råpoäng till normerat resultat 0,00–2,00.
 - [Forum](https://tvakommanollan.se/forum): Öppet diskussionsforum om högskoleprovet: frågor, svar, uppgiftshjälp och plugg. Kategorier: /forum/allmant, /forum/verbal, /forum/kvantitativ, /forum/provdagen, /forum/plugg.
-- [Vanliga frågor](https://tvakommanollan.se/faq): FAQ om Tvåkommanollan: gratis, ELO, riktiga HP-frågor, gästläge och mer.
-- [Guider till HP](https://tvakommanollan.se/guider): Index över 10 kompletta guider till alla 8 delprov plus strategi.
+- [Vanliga frågor](https://tvakommanollan.se/faq): Vanliga frågor om Tvåkommanollan: vad som är gratis, hur ELO fungerar, var uppgifterna kommer ifrån och gästläget.
+- [Guider till HP](https://tvakommanollan.se/guider): Guider till alla 8 delprov, plus tidsplanering och en studieplan.
 - [Om Tvåkommanollan](https://tvakommanollan.se/om): Varför sajten finns, vem som byggt den och vart vi är på väg.
 - [Kontakt](https://tvakommanollan.se/kontakt): E-post, buggrapporter och feedback. Svar inom en vardag.
 
@@ -58,7 +58,7 @@ Senast uppdaterad: 2026-11-11
 
 ## Övningssidor per delprov
 
-Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg vidare till träningsläget.
+Varje sida har exempeluppgifter ur gamla prov med facit, plus en väg vidare till träningsläget.
 
 - [Öva ORD](https://tvakommanollan.se/ova/ord): Ordförståelse.
 - [Öva MEK](https://tvakommanollan.se/ova/mek): Meningskomplettering.
@@ -74,9 +74,9 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 - [Antal rätt per poäng](https://tvakommanollan.se/hogskoleprovet-antal-ratt): Hur många rätt som krävts för varje poäng från 0,5 till 2,0 på båda delarna, med lägsta, högsta och median över alla prov sedan 2012. En sida per poäng med gränsen på varje enskilt prov.
 - [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Från råpoäng till betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet, systemvetenskap, logopedprogrammet, biomedicinprogrammet, biomedicinsk-analytiker, kriminologi, medicinsk-teknik, elektroteknik, samhallsbyggnad, personalvetarprogrammet, politices-kandidat, receptarieprogrammet, tandhygienistprogrammet, teknisk-matematik, tekniskt-basar och journalistprogrammet.
-- [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, riktiga provuppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
+- [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, uppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.
-- [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Komplett 6–8-veckors studieplan.
+- [Få bra HP-resultat](https://tvakommanollan.se/guider/bra-resultat): Studieplan på 6–8 veckor.
 
 ## Optional
 
@@ -88,14 +88,13 @@ Varje sida har riktiga exempeluppgifter från gamla prov med facit, plus en väg
 
 ## Key facts
 
-- Det mesta är gratis: gamla prov, duellerna, normering, poängräknare och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Inga annonser, inget kreditkort för att spela.
-- Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp: 149 kr för en månad eller 349 kr för sex månader, moms inräknad (ingen prenumeration). Därutöver finns ett personligt studieupplägg (coachning), också som engångsköp. Priset står alltid i kassan.
+- Det mesta är gratis: gamla prov, matcherna, normering, poängräknare och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Inga annonser, inget kreditkort för att spela.
+- Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp: 149 kr för en månad eller 349 kr för sex månader, moms inräknad (ingen prenumeration). Priset står alltid i kassan.
 - En match består av 8 frågor på 5 minuter.
 - ELO-systemet liknar schackets: börja på 1 000, vinn poäng mot starkare spelare, tappa mot svagare.
 - Tiers: Brons (<1 000), Silver (1 000–1 199), Guld (1 200–1 399), Platina (1 400–1 599), Diamant (1 600+).
 - Du kan spela som gäst utan konto, men då sparas ingen ELO.
 - Bot-träning finns när det är få spelare online.
-- Coachning: ett personligt studieupplägg byggt av någon som själv fått 1,95 på provet. Betaltjänst, engångsköp, med tidsbokning direkt efter köpet.
 
 ## De 8 delproven på Högskoleprovet
 
@@ -124,10 +123,10 @@ Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. 
 ## FAQ
 
 **Vad är Tvåkommanollan?**
-En svensk plattform, gratis att börja på, där du tävlar mot andra HP-spelare i realtid, klättrar i ELO och tränar alla åtta delprov.
+En svensk sajt för övning inför högskoleprovet, med alla gamla prov sedan 2012, en ordlista, matcher mot andra med ELO-ranking och övning på alla 8 delprov.
 
 **Kostar det något?**
-Det mesta är gratis: matcher, alla gamla prov, guider, normering och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp. Inga annonser och inget kreditkort för att börja. Därutöver finns ett personligt studieupplägg (coachning) som engångsköp; priset står i kassan.
+Det mesta är gratis: matcher, alla gamla prov, guider, normering och forum. De första 40 orden och 40 MEK-uppgifterna i träningsläget är också gratis. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp. Inga annonser och inget kreditkort för att börja.
 
 **Behöver jag konto?**
 Du kan spela som gäst, men då sparas ingen ELO och du syns inte på topplistan. Konto tar 30 sekunder med e-post eller Google.
@@ -142,7 +141,7 @@ Rankingsystem från schack. Du börjar på 1 000. Vinst mot starkare ger fler po
 Alla 8: ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK.
 
 **Var kommer frågorna ifrån?**
-Riktiga frågor från gamla högskoleprov (offentligt material från UHR) och kvalitetskontrollerade övningsfrågor.
+Från gamla högskoleprov (offentligt material från UHR). MEK-övningen har dessutom egna uppgifter, som är märkta som egna.
 
 **Finns sajten som app?**
 Det är en PWA (Progressive Web App). Lägg till på hemskärmen från Safari/Chrome för app-känsla.
@@ -153,4 +152,4 @@ E-post: info@tvakommanollan.se. Svar oftast inom en vardag. Mer info på [/konta
 
 ## Ägare
 
-Tvåkommanollan drivs av Niklas Pellkvist som privatperson. Det mesta är gratis; sajten säljer hela ordlistan och MEK som engångsköp, plus ett personligt studieupplägg. Niklas fick 1,95 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara tillgänglig för alla. Sajten har inga annonser. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.
+Tvåkommanollan drivs av Niklas Pellkvist som privatperson. Det mesta är gratis; sajten säljer hela ordlistan och MEK som engångsköp. Niklas fick 1,95 på Högskoleprovet och byggde sajten för att bra HP-träning ska vara tillgänglig för alla. Sajten har inga annonser. Besöksstatistik samlas via PostHog, men bara för besökare som samtyckt, se integritetspolicyn.

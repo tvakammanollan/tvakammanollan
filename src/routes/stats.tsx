@@ -23,7 +23,7 @@ export const Route = createFileRoute("/stats")({
       path: "/stats",
       title: "Din statistik",
       description:
-        "Följ din HP-progression: matcher, win rate, matchhistorik och uppskattad normerad HP-poäng.",
+        "Din statistik: matcher, andel vinster, matchhistorik och uppskattad HP-poäng.",
       noindex: true,
     }),
     links: pageLinks("/stats"),
@@ -246,7 +246,7 @@ function StatsPage() {
             <EmptyState
               icon={Swords}
               title="Inga matcher ännu"
-              subtitle="Du har inte spelat någon match ännu. Spela din första så dyker den upp här."
+              subtitle="Dina matcher visas här när du har spelat en."
               ctaLabel="Spela en match"
               ctaHref="/"
             />

@@ -132,7 +132,7 @@ export function Footer() {
           <p className="text-xs text-white/45">
             © {new Date().getFullYear()} Tvåkommanollan. Gratis. Alltid.
           </p>
-          <p className="text-xs text-white/45">Byggt i Sverige för svenska HP-pluggare.</p>
+          <p className="text-xs text-white/45">Övning inför högskoleprovet.</p>
         </div>
       </div>
     </footer>

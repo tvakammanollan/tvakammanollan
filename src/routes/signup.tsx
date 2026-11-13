@@ -18,11 +18,11 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: pageMeta({
       path: "/signup",
-      title: "Skapa konto: gratis HP-träning",
+      title: "Skapa konto",
       description:
-        "Skapa gratis konto på Tvåkommanollan på 30 sekunder. Inget kreditkort. Börja tävla direkt.",
-      ogTitle: "Tvåkommanollan | Skapa konto gratis",
-      ogDescription: "Tävla mot vänner i realtid. ELO-ranking. Alla 8 delprov. Gratis.",
+        "Skapa ett gratis konto på Tvåkommanollan med e-post eller Google. Du behöver inget kort.",
+      ogTitle: "Tvåkommanollan | Skapa konto",
+      ogDescription: "Skapa ett gratis konto för att spara din ELO och synas på topplistan.",
       noindex: true,
     }),
     links: pageLinks("/signup"),
@@ -69,7 +69,11 @@ function SignupPage() {
 
     if (error) {
       trackEvent("signup_failed", { from_guest: fromGuest });
-      toast.error("Kunde inte skapa konto", { description: error.message });
+      toast.error("Kunde inte skapa konto", {
+        description: /already|registered|exists/i.test(error.message)
+          ? "Det finns redan ett konto med den e-postadressen. Logga in i stället."
+          : "Kontrollera e-postadressen och försök igen.",
+      });
       return;
     }
     trackEvent("signup_completed", {
