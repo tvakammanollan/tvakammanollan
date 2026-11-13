@@ -305,6 +305,30 @@ Matches have two types: `"verbal"` (ORD, MEK, LAS, ELF) and `"math"` (XYZ, KVA, 
 
 Ranked matchmaking uses a `matchmaking_queue` table and is handled in `src/lib/ranked.functions.ts`. Bot time and score are simulated server-side in `simulateBotMatch` (`src/lib/match.server.ts`).
 
+#### Urvalet till matcherna läser hela beståndet (2026-11-13)
+
+PostgREST svarar med högst 1 000 rader per anrop, oavsett vilket `limit` man
+skickar, och en fråga utan `order` ger tabellens 1 000 första rader i fysisk
+ordning. `pickRandom` i `match.server.ts` hämtade hela rader med
+`limit(9000)` och fick alltså **samma 1 000 rader varje gång**: 1 000 av
+8 761 ORD-ord och 602 av 1 500 egna MEK-uppgifter var allt en match någonsin
+kunde visa. Inget felade, kommentaren i koden sa att 9 000 räckte, och det
+syntes bara när man räknade svaret.
+
+- **Id först, rader sedan.** `loadPoolIds` hämtar id:na sidvis (en räkning,
+  sedan sidorna om 1 000 parallellt), cachat 10 min per isolat. Urvalet
+  lottas på id-listan med röstvikterna och först därefter läses raderna för
+  de valda, i omgångar om `count * 3` som marginal för matteuppgifter som
+  faller på `questionIsServable`. Samma mönster som träningsläget.
+- **Lägg aldrig tillbaka ett `limit` på fler än 1 000 rader som urvalsmetod.**
+  Det ser ut som att det fungerar. Verifiera med antalet rader i svaret.
+- Uppmätt 2026-11-13 mot produktionen: kall isolat 1,1 s för första matchen,
+  sedan ~200 ms per match; 88 % av ORD-dragningarna låg utanför de gamla
+  1 000, i linje med andelen av beståndet.
+- **`fetchWordBatch` i `word-practice.functions.ts` har samma tak kvar**
+  (`limit(10000)` på ORD): `/ord` drar ur samma 1 000 ord om inte filtren
+  krymper träffmängden. Inte åtgärdat än.
+
 #### Klockan får bara gå på en `active` match (2026-08-21)
 
 Steg 3 ovan skriver **frågorna först och statusen sedan**. Mellan de två

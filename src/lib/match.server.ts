@@ -26,87 +26,123 @@ const MATH_CATEGORIES = new Set(["XYZ", "KVA", "NOG", "DTK"]);
 
 // ---------- Question selection ----------
 
-async function pickRandom(
-  category: string,
-  count: number,
-  excludeIds: Set<string>,
-): Promise<SelectedQuestion[]> {
-  const isMath = MATH_CATEGORIES.has(category);
-  // Fetch a pool then shuffle in JS (avoids heavy ORDER BY random on large tables).
-  // Verbal ORD pool is large (10 000+ words) so we use a higher limit to ensure
-  // word-list questions (source=null) are reachable, not just the first 500.
-  const poolLimit = isMath ? 600 : 9000;
-  let q = supabaseAdmin
+const QUESTION_COLS =
+  "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status, correct_answer, image_url, image_caption";
+
+// PostgREST svarar med högst 1 000 rader per anrop, oavsett `limit`. Fram
+// till 2026-11-13 hämtade urvalet hela rader med `limit(9000)` och fick
+// därför alltid tabellens 1 000 första rader i fysisk ordning: 1 000 av
+// 8 761 ORD-ord och 602 av 1 500 egna MEK-uppgifter var allt en match
+// någonsin kunde visa, och det var samma 1 000 varje gång. Nu hämtas id:na
+// sidvis så att hela beståndet är med, och raderna läses först för de
+// uppgifter som lottats fram. Id-listan cachas per isolat: ORD är tio anrop
+// och ändras bara vid import.
+const POOL_PAGE = 1000;
+const POOL_TTL_MS = 10 * 60 * 1000;
+const poolCache = new Map<string, { ids: string[]; at: number }>();
+
+function poolQuery(category: string, isMath: boolean) {
+  const q = supabaseAdmin
     .from("questions")
-    .select(
-      "id, category, question_text, passage_text, passage_id, options, difficulty, cleaned_question_text, cleaned_options, clean_status, correct_answer, image_url, image_caption",
-    )
+    .select("id", { count: "exact" })
     .eq("category", category)
-    .is("passage_id", null)
-    .limit(poolLimit);
-  if (isMath) q = q.eq("clean_status", "ok");
-  const { data, error } = await q;
-  if (error) throw error;
-  let all = data ?? [];
+    .is("passage_id", null);
+  // Matten kräver lyckad textutvinning. Verbala rader står allihop som
+  // "pending" (se train.functions.ts), så där är spärren bara "retired".
+  return isMath ? q.eq("clean_status", "ok") : q.neq("clean_status", "retired");
+}
+
+async function loadPoolIds(category: string, isMath: boolean): Promise<string[]> {
+  const cached = poolCache.get(category);
+  if (cached && Date.now() - cached.at < POOL_TTL_MS) return cached.ids;
+  const head = await poolQuery(category, isMath).range(0, 0);
+  if (head.error) throw head.error;
+  const total = head.count ?? 0;
+  const offsets: number[] = [];
+  for (let from = 0; from < total; from += POOL_PAGE) offsets.push(from);
+  const pages = await Promise.all(
+    offsets.map(async (from) => {
+      const { data, error } = await poolQuery(category, isMath)
+        .order("id")
+        .range(from, from + POOL_PAGE - 1);
+      if (error) throw error;
+      return (data ?? []).map((r) => r.id as string);
+    }),
+  );
+  const ids = pages.flat();
+  poolCache.set(category, { ids, at: Date.now() });
+  return ids;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toSelected(r: any, isMath: boolean): SelectedQuestion | null {
   // `clean_status="ok"` betyder att textutvinningen lyckades, inte att
   // uppgiften faktiskt går att visa — en beskärning kan sakna sin
   // bildproportion eller vara halvfärdig (se `question-validity.ts`) och
   // renderar då fel skuren eller helt tom. Filtrerat mot samma regel som
   // renderingen faktiskt använder: `useCleaned` här matchar exakt logiken i
   // `match.$matchId.tsx` (crops nollas när den städade texten används).
+  const useCleaned = isMath && !!r.cleaned_question_text;
   if (isMath) {
-    all = all.filter((row) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const r = row as any;
-      const useCleaned = !!r.cleaned_question_text;
-      return questionIsServable({
-        id: r.id,
-        category: r.category,
-        question_text: useCleaned ? r.cleaned_question_text : r.question_text,
-        options: useCleaned ? r.cleaned_options : r.options,
-        correct_answer: r.correct_answer,
-        image_url: useCleaned ? null : r.image_url,
-        image_caption: useCleaned ? null : r.image_caption,
-      });
-    });
-  }
-  // Try with full exclusion first; if not enough, allow recently-seen as fallback.
-  let filtered = all.filter((row) => !excludeIds.has(row.id));
-  if (filtered.length < count) {
-    // Fallback: include all (sorted so least-recently-seen would appear first).
-    // We don't have per-question last-seen sorting cheaply here, so just shuffle all.
-    filtered = all;
-  }
-  const pool = filtered.map((row) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const r = row as any;
-    if (isMath && r.cleaned_question_text) {
-      return {
-        id: r.id,
-        category: r.category,
-        question_text: r.cleaned_question_text,
-        passage_text: r.passage_text,
-        passage_id: r.passage_id,
-        options: r.cleaned_options ?? r.options,
-        difficulty: r.difficulty,
-      } as SelectedQuestion;
-    }
-    return {
+    const servable = questionIsServable({
       id: r.id,
       category: r.category,
-      question_text: r.question_text,
-      passage_text: r.passage_text,
-      passage_id: r.passage_id,
-      options: r.options,
-      difficulty: r.difficulty,
-    } as SelectedQuestion;
-  });
+      question_text: useCleaned ? r.cleaned_question_text : r.question_text,
+      options: useCleaned ? r.cleaned_options : r.options,
+      correct_answer: r.correct_answer,
+      image_url: useCleaned ? null : r.image_url,
+      image_caption: useCleaned ? null : r.image_caption,
+    });
+    if (!servable) return null;
+  }
+  return {
+    id: r.id,
+    category: r.category,
+    question_text: useCleaned ? r.cleaned_question_text : r.question_text,
+    passage_text: r.passage_text,
+    passage_id: r.passage_id,
+    options: useCleaned ? (r.cleaned_options ?? r.options) : r.options,
+    difficulty: r.difficulty,
+  };
+}
+
+async function pickRandom(
+  category: string,
+  count: number,
+  excludeIds: Set<string>,
+): Promise<SelectedQuestion[]> {
+  const isMath = MATH_CATEGORIES.has(category);
+  const all = await loadPoolIds(category, isMath);
+  // Try with full exclusion first; if not enough, allow recently-seen as fallback.
+  let candidates = all.filter((id) => !excludeIds.has(id));
+  if (candidates.length < count) candidates = all;
   // Rösterna styr dragningen: frågor många med säkerhet ogillar faller bort,
   // de många gillar dras oftare (`question-votes.ts`). Utan röster, eller om
   // röstvyn inte går att läsa, är vikten 1 för alla och det här är en vanlig
   // blandning.
   const votes = await loadVoteStats();
-  return weightedShuffle(pool, (q) => voteWeight(votes.get(q.id))).slice(0, count);
+  const shuffled = weightedShuffle(candidates, (id) => voteWeight(votes.get(id)));
+  const out: SelectedQuestion[] = [];
+  // Raderna läses i omgångar med marginal för matteuppgifter som faller på
+  // spelbarhetskontrollen; en omgång räcker nästan alltid.
+  const batch = Math.max(count * 3, 1);
+  for (let from = 0; from < shuffled.length && out.length < count; from += batch) {
+    const ids = shuffled.slice(from, from + batch);
+    const { data, error } = await supabaseAdmin
+      .from("questions")
+      .select(QUESTION_COLS)
+      .in("id", ids);
+    if (error) throw error;
+    const byId = new Map((data ?? []).map((r) => [r.id as string, r]));
+    for (const id of ids) {
+      const row = byId.get(id);
+      if (!row) continue;
+      const q = toSelected(row, isMath);
+      if (q) out.push(q);
+      if (out.length === count) break;
+    }
+  }
+  return out;
 }
 
 async function pickPassage(
