@@ -182,7 +182,7 @@ function DefinitionBlock({
   word,
   definition,
   source,
-  defaultOpen = true,
+  defaultOpen = false,
 }: {
   word: string;
   // Nullbar: anropssidan grindar på hasOrdDefinition(), och ordDefinition()
@@ -190,9 +190,8 @@ function DefinitionBlock({
   definition: string | null | undefined;
   source?: string | null;
   /**
-   * Öppen från start, precis som ExplanationBlock. Öppnades tidigare bara när
-   * svaret var fel, så samma ruta betedde sig olika beroende på hur det gick —
-   * och en tur-gissning är just när man bäst behöver läsa definitionen.
+   * Stängd från start (Niklas beslut 2026-11-13): förklaringen fälls ut först
+   * när man trycker på den. Den var tidigare öppen efter varje svar.
    */
   defaultOpen?: boolean;
 }) {
