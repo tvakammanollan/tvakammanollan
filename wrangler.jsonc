@@ -22,6 +22,15 @@
   // varje deploy. Endast krypterade Secrets (SUPABASE_SERVICE_ROLE_KEY)
   // överlever och sätts i dashboarden — den får aldrig ligga i git.
   // Nycklarna nedan är publika (samma värden ligger redan i .env i repot).
+  // Statiska filer i public/. `html_handling: "none"` finns för att Workers
+  // Assets annars 307:ar `/x.html` till `/x` (auto-trailing-slash), vilket
+  // gjorde att Googles verifieringsfil `google45df19af67197c32.html` svarade
+  // 307 i stället för 200 och Search Console-ägarskapet kunde tappas. Nitro
+  // skriver `binding` och `directory` själv i .output/server/wrangler.json;
+  // kontrollera där att den här nyckeln följer med efter ett bygge.
+  "assets": {
+    "html_handling": "none"
+  },
   "vars": {
     "SUPABASE_URL": "https://plrvjpoicbassjtgmzpx.supabase.co",
     "SUPABASE_PUBLISHABLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBscnZqcG9pY2Jhc3NqdGdtenB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDU2NzcsImV4cCI6MjEwMjEyMTY3N30.ftmYGKTjzwmO_gz6UxQqAqCtRouKJCwR03m9e2hZ_V0",

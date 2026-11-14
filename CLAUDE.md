@@ -184,6 +184,15 @@ touching production; use it for anything you cannot check locally.
   version, so adding a secret does not affect the running one. `wrangler secret put`
   refuses outright when the newest version is not deployed. Use
   `wrangler versions secret put <NAME>` then `wrangler versions deploy "<id>@100%"`.
+- **Workers Assets 307:ar `/x.html` till `/x` om inte `html_handling` är
+  `"none"`** (2026-11-14). Googles verifieringsfil
+  `public/google45df19af67197c32.html` svarade därför 307 i produktionen, och
+  Search Console kräver 200 på exakt den adressen för att ägarskapet ska
+  hålla. `assets.html_handling` står nu i `wrangler.jsonc`; nitro lägger till
+  `binding` och `directory` själv och behåller nyckeln (kontrollerat i
+  `.output/server/wrangler.json`). Assets-lagret svarar FÖRE `src/server.ts`
+  på sökvägar som finns i `public/`, så en route i koden kan inte rädda en fil
+  som assets-lagret redan omdirigerat.
 - **`env` is always empty in `src/server.ts`.** nitro wraps the Worker and does not
   forward the `env` argument — read `process.env` instead. Bindings *do* reach
   `process.env`.
