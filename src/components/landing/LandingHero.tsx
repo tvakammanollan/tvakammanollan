@@ -46,12 +46,8 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
   return (
     <div className="overflow-hidden rounded-xl border border-white/10 bg-card">
       <div className="flex items-center gap-3 border-b border-white/10 bg-secondary px-4 py-3">
-        <span className="font-mono text-xs text-bark">
-          Ordförståelse
-        </span>
-        <span className="ml-auto font-mono text-xs text-white/55">
-          Prova direkt
-        </span>
+        <span className="font-mono text-xs text-bark">Ordförståelse</span>
+        <span className="ml-auto font-mono text-xs text-white/55">Prova direkt</span>
       </div>
 
       <div className="px-4 pb-4 pt-5">
@@ -117,9 +113,7 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
           </button>
         ) : null}
         <span className="ml-auto flex items-baseline gap-2">
-          <span className="font-mono text-xs text-white/55">
-            ELO
-          </span>
+          <span className="font-mono text-xs text-white/55">ELO</span>
           <span className="font-mono text-[22px] font-medium tabular-nums tracking-tight">
             {formatInt(elo)}
           </span>
@@ -153,21 +147,21 @@ export function LandingHero({
           en mörk form bakom Ink-text är oläsbar. Se `lib/produktzon.ts`. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div
-          className="absolute left-[5%] top-12 h-[148px] w-[168px] opacity-75"
+          className="absolute left-[5%] top-12 h-[118px] w-[134px] sm:h-[148px] sm:w-[168px] opacity-75"
           style={{
             background: "var(--terracotta)",
             borderRadius: "58% 42% 37% 63% / 45% 55% 45% 55%",
           }}
         />
         <div
-          className="absolute right-[6%] top-28 h-[172px] w-[196px] opacity-80"
+          className="absolute right-[6%] top-28 h-[138px] w-[157px] sm:h-[172px] sm:w-[196px] opacity-80"
           style={{
             background: "var(--lavender)",
             borderRadius: "42% 58% 61% 39% / 52% 38% 62% 48%",
           }}
         />
         <div
-          className="absolute bottom-6 left-[12%] h-[96px] w-[104px] opacity-70"
+          className="absolute bottom-6 left-[12%] hidden h-[96px] w-[104px] opacity-70 sm:block"
           style={{ background: "var(--sky)", borderRadius: "63% 37% 47% 53% / 41% 59% 41% 59%" }}
         />
       </div>
@@ -177,9 +171,7 @@ export function LandingHero({
             <p>: "Alla högskoleprov sedan 2012, med facit" säger ingenting
             om vad sajten är för en sökmotor, och startsidans h1 är den
             starkaste rubriken sajten har. */}
-        <h1 className="sr-only">
-          Öva på högskoleprovet gratis
-        </h1>
+        <h1 className="sr-only">Öva på högskoleprovet gratis</h1>
         <p
           className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
           style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
@@ -187,16 +179,12 @@ export function LandingHero({
           Alla högskoleprov sedan 2012, med facit.
         </p>
 
-        <p
-          className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]"
-        >
+        <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
           Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
           ord med förklaring. Och matcher på 5 minuter mot andra som pluggar.
         </p>
 
-        <div
-          className="mt-9 flex flex-wrap items-center justify-center gap-3"
-        >
+        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/signup"
             className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-7 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
@@ -214,9 +202,7 @@ export function LandingHero({
         {/* Siffrorna är riktiga och kommer ur getLandingStats, inte ur en
             konstant. Saknas de visas ingenting, aldrig ett påhittat tal. */}
         {stats ? (
-          <p
-            className="mt-7 text-[13px] text-[var(--cream-3)]"
-          >
+          <p className="mt-7 text-[13px] text-[var(--cream-3)]">
             <b className="font-semibold tabular-nums text-[var(--cream)]">
               {formatInt(stats.totalPlayers)}
             </b>{" "}
@@ -230,8 +216,7 @@ export function LandingHero({
       </div>
 
       <div className="relative mx-auto max-w-[720px] px-4 pb-16 sm:pb-24">
-        <div
-        >
+        <div>
           {fragor.length > 0 ? (
             <LevandeFraga fragor={fragor} />
           ) : (

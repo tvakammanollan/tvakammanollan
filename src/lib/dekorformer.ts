@@ -20,14 +20,27 @@ const RUND = [
   "51% 49% 38% 62% / 60% 44% 56% 40%",
 ] as const;
 
-/** Två former i zonens färg och en liten i cream wash. */
+/**
+ * Två former i zonens färg och en liten i cream wash. Den lilla är dold
+ * under `sm`: på en telefon ryms inte tre former på 390 px utan att de
+ * kläms ihop, så varje uppsättning ritar en form färre där och de som är kvar är
+ * en femtedel mindre.
+ */
 function zonFormer(farg: string): Dekorform[] {
   return [
-    { farg, className: "-top-10 right-[7%] h-[180px] w-[200px] opacity-70", radius: RUND[0] },
-    { farg, className: "top-[230px] left-[5%] h-[112px] w-[124px] opacity-60", radius: RUND[1] },
+    {
+      farg,
+      className: "-top-10 right-[7%] h-[144px] w-[160px] sm:h-[180px] sm:w-[200px] opacity-70",
+      radius: RUND[0],
+    },
+    {
+      farg,
+      className: "top-[230px] left-[5%] h-[90px] w-[99px] sm:h-[112px] sm:w-[124px] opacity-60",
+      radius: RUND[1],
+    },
     {
       farg: "var(--cream-wash)",
-      className: "top-[70px] left-[58%] h-[64px] w-[76px] opacity-80",
+      className: "top-[70px] left-[58%] hidden h-[64px] w-[76px] opacity-80 sm:block",
       radius: RUND[2],
     },
   ];
@@ -37,17 +50,17 @@ function zonFormer(farg: string): Dekorform[] {
 export const CREAM_FORMER: Dekorform[] = [
   {
     farg: "var(--cream-wash)",
-    className: "-top-10 right-[7%] h-[180px] w-[200px] opacity-90",
+    className: "-top-10 right-[7%] h-[144px] w-[160px] sm:h-[180px] sm:w-[200px] opacity-90",
     radius: RUND[0],
   },
   {
     farg: "var(--cream-wash)",
-    className: "top-[230px] left-[5%] h-[112px] w-[124px] opacity-80",
+    className: "top-[230px] left-[5%] h-[90px] w-[99px] sm:h-[112px] sm:w-[124px] opacity-80",
     radius: RUND[1],
   },
   {
     farg: "var(--cream-wash)",
-    className: "top-[90px] left-[62%] h-[56px] w-[68px] opacity-90",
+    className: "top-[90px] left-[62%] hidden h-[56px] w-[68px] opacity-90 sm:block",
     radius: RUND[2],
   },
 ];
@@ -59,22 +72,22 @@ export const CREAM_FORMER: Dekorform[] = [
 export const HEM_FORMER: Dekorform[] = [
   {
     farg: "var(--terracotta)",
-    className: "-top-12 right-[3%] h-[190px] w-[220px] opacity-70",
+    className: "-top-12 right-[3%] h-[152px] w-[176px] sm:h-[190px] sm:w-[220px] opacity-70",
     radius: RUND[0],
   },
   {
     farg: "var(--sky)",
-    className: "top-[200px] -left-6 h-[130px] w-[150px] opacity-70",
+    className: "top-[200px] -left-6 h-[104px] w-[120px] sm:h-[130px] sm:w-[150px] opacity-70",
     radius: RUND[1],
   },
   {
     farg: "var(--lavender)",
-    className: "top-[120px] right-[22%] h-[90px] w-[104px] opacity-70",
+    className: "top-[120px] right-[22%] h-[72px] w-[83px] sm:h-[90px] sm:w-[104px] opacity-70",
     radius: RUND[2],
   },
   {
     farg: "var(--cream-wash)",
-    className: "top-[10px] left-[40%] h-[72px] w-[84px] opacity-90",
+    className: "top-[10px] left-[40%] hidden h-[72px] w-[84px] opacity-90 sm:block",
     radius: RUND[3],
   },
 ];
