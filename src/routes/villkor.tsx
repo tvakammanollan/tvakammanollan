@@ -107,12 +107,12 @@ function VillkorPage() {
           </h2>
           <p>
             Hela Ordlistan ger ditt konto obegränsad ordträning och MEK-övning utöver de 40 ord och
-            40 MEK-uppgifter som är gratis. Den finns som två köp: en prenumeration per månad, och 6
-            månader som engångsköp. Sexmånadersköpet gäller 6 månader från betalningen och förnyas
-            inte. Vill du fortsätta efter perioden köper du igen. Avtalet ingås
-            mellan dig och Niklas Pellkvist när du slutför betalningen i kassan. Köpet knyts till
-            det konto du var inloggad med, och gästkonton kan inte köpa. Priset som visas i kassan
-            är det du betalar, och betalningen hanteras av Stripe.
+            40 MEK-uppgifter som är gratis. Den finns som två köp: en prenumeration per månad, och
+            ett köp som gäller i 6 månader. Sexmånadersköpet gäller 6 månader från betalningen och
+            förnyas inte. Vill du fortsätta efter perioden köper du igen. Avtalet ingås mellan dig
+            och Niklas Pellkvist när du slutför betalningen i kassan. Köpet knyts till det konto du
+            var inloggad med, och gästkonton kan inte köpa. Priset som visas i kassan är det du
+            betalar, och betalningen hanteras av Stripe.
           </p>
           <p>
             Åtkomsten gäller hela den köpta perioden, förutsatt att ditt konto inte stängts av
@@ -125,10 +125,10 @@ function VillkorPage() {
           </h3>
           <p>
             Månadsköpet är en prenumeration. Priset dras i förskott när du köper och sedan samma dag
-            varje månad, tills du säger upp. Du säger upp när som helst under Ditt köp på
-            statistiksidan, utan uppsägningstid. Tillgången gäller då månaden ut och inga fler
-            dragningar görs. En påbörjad månad betalas inte tillbaka. Fram till att månaden tagit
-            slut kan du ångra uppsägningen på samma ställe.
+            varje månad, tills du säger upp. Du säger upp när som helst på sidan Abonnemang, som du
+            når från menyn under ditt användarnamn, utan uppsägningstid. Tillgången gäller då
+            månaden ut och inga fler dragningar görs. En påbörjad månad betalas inte tillbaka. Fram
+            till att månaden tagit slut kan du ångra uppsägningen på samma ställe.
           </p>
           <p>
             Går en dragning inte igenom försöker Stripe igen under några dagar, och tillgången
@@ -136,9 +136,9 @@ function VillkorPage() {
             avslutas prenumerationen. Raderar du kontot avslutas prenumerationen direkt.
           </p>
           <p>
-            Använder du en rabattkod gäller den det som står i kassan. En kod som gör första
-            månaden gratis gör inte de följande gratis: från andra månaden dras det vanliga priset
-            om du inte säger upp innan dess.
+            Använder du en rabattkod gäller den det som står i kassan. En kod som gör första månaden
+            gratis gör inte de följande gratis: från andra månaden dras det vanliga priset om du
+            inte säger upp innan dess.
           </p>
           <h3 className="mt-6 font-semibold text-center" style={{ color: "var(--cream)" }}>
             Ångerrätt
@@ -147,8 +147,8 @@ function VillkorPage() {
             Hela Ordlistan är digitalt innehåll som blir tillgängligt direkt efter betalningen.
             Genom att slutföra köpet går du uttryckligen med på att leveransen börjar direkt och
             godkänner att ångerrätten då faller bort. Det gäller det första köpet; en förnyelse av
-            prenumerationen ger ingen ny ångerrätt, men du kan säga upp när som helst. Är något fel, eller fungerar inte åtkomsten,
-            hör av dig till{" "}
+            prenumerationen ger ingen ny ångerrätt, men du kan säga upp när som helst. Är något fel,
+            eller fungerar inte åtkomsten, hör av dig till{" "}
             <a
               href="mailto:info@tvakommanollan.se?subject=Hela%20Ordlistan"
               className="underline"

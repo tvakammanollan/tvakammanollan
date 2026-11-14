@@ -44,6 +44,7 @@ import { Route as ForumSitemapDotxmlRouteImport } from './routes/forum-sitemap[.
 import { Route as ForumRouteImport } from './routes/forum'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AbonnemangRouteImport } from './routes/abonnemang'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuiderIndexRouteImport } from './routes/guider/index'
 import { Route as ResultMatchIdRouteImport } from './routes/result.$matchId'
@@ -256,6 +257,11 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AbonnemangRoute = AbonnemangRouteImport.update({
+  id: '/abonnemang',
+  path: '/abonnemang',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -435,6 +441,7 @@ const Char91DotmcpChar93InvokeToolToolRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
@@ -506,6 +513,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
@@ -578,6 +586,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
@@ -651,6 +660,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/abonnemang'
     | '/admin'
     | '/faq'
     | '/forum'
@@ -722,6 +732,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/abonnemang'
     | '/admin'
     | '/faq'
     | '/forum'
@@ -793,6 +804,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/abonnemang'
     | '/admin'
     | '/faq'
     | '/forum'
@@ -865,6 +877,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AbonnemangRoute: typeof AbonnemangRoute
   AdminRoute: typeof AdminRoute
   FaqRoute: typeof FaqRoute
   ForumRoute: typeof ForumRoute
@@ -1182,6 +1195,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/abonnemang': {
+      id: '/abonnemang'
+      path: '/abonnemang'
+      fullPath: '/abonnemang'
+      preLoaderRoute: typeof AbonnemangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -1425,6 +1445,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AbonnemangRoute: AbonnemangRoute,
   AdminRoute: AdminRoute,
   FaqRoute: FaqRoute,
   ForumRoute: ForumRoute,

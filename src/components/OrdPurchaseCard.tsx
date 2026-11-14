@@ -39,7 +39,17 @@ function datum(iso: string): string {
  * Hämtas i webbläsaren: kortet är privat, och sidorna det står på
  * serverrenderas lika för alla. Utan köp renderas ingenting.
  */
-export function OrdPurchaseCard({ className = "" }: { className?: string }) {
+export function OrdPurchaseCard({
+  className = "",
+  onLoaded,
+  manageLink = false,
+}: {
+  className?: string;
+  /** Anropas när köpet lästs eller ändrats. `failed` = kunde inte läsa. */
+  onLoaded?: (status: OrdPurchaseStatus | null, failed: boolean) => void;
+  /** Visa länken till /abonnemang (på /stats och i kassan, inte på sidan själv). */
+  manageLink?: boolean;
+}) {
   const { user } = useAuth();
   const getStatus = useServerFn(getOrdPurchaseStatus);
   const cancelFn = useServerFn(cancelOrdSubscription);
@@ -53,15 +63,21 @@ export function OrdPurchaseCard({ className = "" }: { className?: string }) {
     let alive = true;
     getStatus()
       .then((s) => {
-        if (alive) setStatus(s);
+        if (!alive) return;
+        setStatus(s);
+        onLoaded?.(s, false);
       })
       .catch(() => {
         // Kortet är information, inte ett flöde. Saknas det kan köpet
         // fortfarande användas och sägas upp en annan gång.
+        if (alive) onLoaded?.(null, true);
       });
     return () => {
       alive = false;
     };
+    // `onLoaded` är med flit inte ett beroende: en ny funktion per rendering
+    // hos föräldern hade läst om köpet i en loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, getStatus]);
 
   if (!user || !status) return null;
@@ -72,6 +88,7 @@ export function OrdPurchaseCard({ className = "" }: { className?: string }) {
     try {
       const next = await (cancel ? cancelFn() : resumeFn());
       setStatus(next);
+      onLoaded?.(next, false);
       setOpen(false);
       if (cancel) {
         toast.success("Prenumerationen är uppsagd.", {
@@ -93,7 +110,8 @@ export function OrdPurchaseCard({ className = "" }: { className?: string }) {
   };
 
   const until = status.expiresAt ? datum(status.expiresAt) : null;
-  const price = status.monthlyAmount !== null ? `${formatMoney(status.monthlyAmount)} per månad. ` : "";
+  const price =
+    status.monthlyAmount !== null ? `${formatMoney(status.monthlyAmount)} per månad. ` : "";
   const isSub = status.kind === "subscription";
 
   let line: string;
@@ -145,10 +163,13 @@ export function OrdPurchaseCard({ className = "" }: { className?: string }) {
           Ångra uppsägningen
         </Button>
       )}
-      {!status.active && (
+      {manageLink && (
         <p className="mt-3 text-sm">
-          <Link to="/kassa" className="font-semibold text-primary underline-offset-2 hover:underline">
-            Köp igen
+          <Link
+            to="/abonnemang"
+            className="font-semibold text-primary underline-offset-2 hover:underline"
+          >
+            {status.active ? "Hantera abonnemang" : "Köp igen"}
           </Link>
         </p>
       )}

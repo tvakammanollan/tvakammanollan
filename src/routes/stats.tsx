@@ -361,7 +361,7 @@ function StatsPage() {
 
         {/* Köpet och uppsägningen av månadsprenumerationen. Renderar
             ingenting för den som inte köpt. */}
-        <OrdPurchaseCard className="mt-10" />
+        <OrdPurchaseCard className="mt-10" manageLink />
 
         {/* GDPR: självservice-radering */}
         <DeleteAccountSection />

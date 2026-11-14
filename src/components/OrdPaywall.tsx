@@ -108,7 +108,7 @@ export function OrdPaywall({
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
           Köpet gäller hela ordlistan och all MEK-övning. Månadsköpet förnyas varje månad tills du
-          säger upp det, och 6 månader betalas en gång. Priset är med moms.
+          säger upp det. Priset är med moms.
         </p>
       </div>
 

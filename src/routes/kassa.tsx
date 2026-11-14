@@ -56,16 +56,16 @@ const INGAR = [
   "Moms ingår, inget läggs på i kassan",
 ];
 
-/** Sista raden i listan beror på köpet: prenumeration eller engångsköp. */
-const VILLKORSRAD: Record<OrdPlan, string> = {
-  "1m": "Förnyas varje månad tills du säger upp, vilket du gör på statistiksidan",
-  "6m": "Engångsköp, ingenting förnyas automatiskt",
+/** Extra rad för månadsköpet, så att förnyelsen står innan man betalar. */
+const VILLKORSRAD: Record<OrdPlan, string | null> = {
+  "1m": "Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn",
+  "6m": null,
 };
 
 /** Planknappens rubrik och underrad. */
 const PLAN_TEXT: Record<OrdPlan, { rubrik: string; under: string }> = {
   "1m": { rubrik: "Per månad", under: "inklusive moms, säg upp när du vill" },
-  "6m": { rubrik: "6 månader", under: "inklusive moms, engångsköp" },
+  "6m": { rubrik: "6 månader", under: "inklusive moms" },
 };
 
 function KassaPage() {
@@ -195,18 +195,15 @@ function KassaPage() {
             {confirmed === "ok" ? (
               <>
                 <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--plum)]" aria-hidden />
-                <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">
-                  Tack för köpet
-                </h2>
+                <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">Tack för köpet</h2>
                 <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                  Du har nu hela ordlistan och all MEK-övning. Kvittot kommer på mejlen från
-                  Stripe.
+                  Du har nu hela ordlistan och all MEK-övning. Kvittot kommer på mejlen från Stripe.
                 </p>
                 {confirmedKind === "subscription" && (
                   <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                    Prenumerationen förnyas varje månad. Du säger upp den under Ditt köp på{" "}
-                    <Link to="/stats" className="underline underline-offset-2">
-                      statistiksidan
+                    Prenumerationen förnyas varje månad. Du säger upp den när som helst under{" "}
+                    <Link to="/abonnemang" className="underline underline-offset-2">
+                      Abonnemang
                     </Link>
                     .
                   </p>
@@ -244,9 +241,7 @@ function KassaPage() {
                     }`}
                   >
                     <span>
-                      <span className="block text-[17px] font-semibold">
-                        {PLAN_TEXT[p].rubrik}
-                      </span>
+                      <span className="block text-[17px] font-semibold">{PLAN_TEXT[p].rubrik}</span>
                       <span className="text-[13px] text-white/60">{PLAN_TEXT[p].under}</span>
                     </span>
                     <span className="text-[22px] tracking-[-0.02em]">{price(p)}</span>
@@ -254,7 +249,7 @@ function KassaPage() {
                 );
               })}
               <ul className="space-y-2.5 pt-3 text-[14px] text-white/70">
-                {[...INGAR, VILLKORSRAD[plan]].map((rad) => (
+                {[...INGAR, ...(VILLKORSRAD[plan] ? [VILLKORSRAD[plan]] : [])].map((rad) => (
                   <li key={rad} className="flex gap-2.5">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
                     {rad}
@@ -289,7 +284,7 @@ function KassaPage() {
                   <h2 className="mt-4 text-xl font-semibold">
                     Du har redan hela ordlistan och MEK
                   </h2>
-                  <OrdPurchaseCard className="mx-auto mt-6 max-w-md text-left" />
+                  <OrdPurchaseCard className="mx-auto mt-6 max-w-md text-left" manageLink />
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>
                     <PrimaryCTA to="/mek-ovning">Öva MEK</PrimaryCTA>

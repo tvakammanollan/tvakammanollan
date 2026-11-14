@@ -451,10 +451,9 @@ const BETALKORT = [
     etikett: "Ordlistan och MEK: 6 månader",
     pris: "349 kr",
     rader: [
-      "Samma innehåll som enmånadsköpet",
+      "Samma innehåll som månadsköpet",
       "Gäller 6 månader",
       "Ett köp gäller både ordlistan och MEK",
-      "Engångsköp, ingen prenumeration",
     ],
     cta: "Välj 6 månader",
     yta: "bg-lavender",

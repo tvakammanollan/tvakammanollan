@@ -59,7 +59,7 @@ const TANKER = [
   },
   {
     rubrik: "Per månad eller 6 månader",
-    text: "Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör på statistiksidan. 6 månader kostar 349 kr och betalas en gång. Köpet gäller både ordlistan och MEK.",
+    text: "Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr. Köpet gäller både ordlistan och MEK.",
   },
   {
     rubrik: "Du behöver ett konto för att köpa",
@@ -115,13 +115,12 @@ function PrisPage() {
 
       <section>
         <div className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
-          <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">
-            Pris
-          </h2>
+          <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">Pris</h2>
           <p className="mt-4 text-[16px] leading-relaxed text-white/70">
-            149 kr per månad eller 349 kr för 6 månader, med moms inräknad. Inget läggs på i
-            kassan. Månadsköpet går att säga upp när som helst och gäller då månaden ut. Provavgiften på {HP_FEE_SEK} kronor när du anmäler dig till själva provet går
-            till UHR och inte till oss.
+            149 kr per månad eller 349 kr för 6 månader, med moms inräknad. Inget läggs på i kassan.
+            Månadsköpet går att säga upp när som helst och gäller då månaden ut. Provavgiften på{" "}
+            {HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till
+            oss.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

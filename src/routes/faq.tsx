@@ -11,7 +11,7 @@ interface FaqItem {
 const FAQ: FaqItem[] = [
   {
     q: "Är Tvåkommanollan gratis?",
-    a: "Det mesta. Alla gamla prov med facit, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 40 orden och 40 MEK-uppgifterna i träningsläget. Hela ordlistan och alla MEK-uppgifter kostar 149 kr per månad, som du kan säga upp när som helst, eller 349 kr för 6 månader som engångsköp. Sajten har inga annonser.",
+    a: "Det mesta. Alla gamla prov med facit, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 40 orden och 40 MEK-uppgifterna i träningsläget. Hela ordlistan och alla MEK-uppgifter kostar 149 kr per månad, som du kan säga upp när som helst, eller 349 kr för 6 månader. Sajten har inga annonser.",
   },
   {
     q: "Hur fungerar ELO-systemet?",
@@ -84,8 +84,7 @@ export const Route = createFileRoute("/faq")({
       description:
         "Svar på vanliga frågor om Tvåkommanollan: vad som är gratis, hur ELO fungerar, var uppgifterna kommer ifrån och om du behöver konto.",
       ogTitle: "Tvåkommanollan | Vanliga frågor",
-      ogDescription:
-        "Vad som är gratis, hur ELO fungerar och var uppgifterna kommer ifrån.",
+      ogDescription: "Vad som är gratis, hur ELO fungerar och var uppgifterna kommer ifrån.",
     }),
     links: pageLinks("/faq"),
     // Page-level FAQPage JSON-LD (per-page, distinct from the root one which
@@ -114,11 +113,7 @@ export const Route = createFileRoute("/faq")({
 function FaqPage() {
   return (
     <div className="min-h-screen">
-      <PageHero
-        title="Vanliga frågor"
-        align="center"
-        variant="content"
-      />
+      <PageHero title="Vanliga frågor" align="center" variant="content" />
       <article
         className="mx-auto max-w-3xl px-4 pb-24 text-[15px] leading-[1.75] sm:px-6"
         style={{ color: "var(--text-secondary)" }}

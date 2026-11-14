@@ -32,6 +32,7 @@ import {
   Trophy,
   Users,
   BarChart3,
+  CreditCard,
   Type,
   ChevronDown,
   Settings,
@@ -281,6 +282,9 @@ function AccountMenu({
         <AccountMenuLink to="/stats" icon={BarChart3}>
           Statistik
         </AccountMenuLink>
+        <AccountMenuLink to="/abonnemang" icon={CreditCard}>
+          Abonnemang
+        </AccountMenuLink>
         <AccountMenuLink to="/friends" icon={Users}>
           Vänner
         </AccountMenuLink>
@@ -420,6 +424,9 @@ function MobileMenu({
               Guider och FAQ nås via footern. */}
           <MobileNavLink to="/stats" onClick={close} icon={BarChart3}>
             Statistik
+          </MobileNavLink>
+          <MobileNavLink to="/abonnemang" onClick={close} icon={CreditCard}>
+            Abonnemang
           </MobileNavLink>
           <MobileNavLink to="/friends" onClick={close} icon={Users}>
             Vänner
