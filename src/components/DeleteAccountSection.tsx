@@ -66,7 +66,8 @@ export function DeleteAccountSection() {
         <p>
           <strong className="text-[var(--cream)]">Raderas permanent:</strong> inloggning och e-post,
           ditt användarnamn, vänner och inbjudningar, ordträning, dina svar och din ELO-historik,
-          provförsök, forumprenumerationer och reaktioner.
+          provförsök, forumprenumerationer och reaktioner, och ditt köp av ordlistan. En pågående
+          prenumeration avslutas direkt och dras inte igen.
         </p>
         <p>
           <strong className="text-[var(--cream)]">Behålls:</strong> matchresultat och forumsinlägg,

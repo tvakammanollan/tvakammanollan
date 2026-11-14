@@ -79,6 +79,10 @@ export const limits = {
   coachingCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
   /** Öppna kassan för Hela Ordlistan. Per användare, och en kassa räcker länge. */
   ordCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
+  /** Läsa sitt eget köp ("Ditt köp" på /stats och /kassa). */
+  ordStatus: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
+  /** Säga upp eller ångra uppsägningen. Varje anrop går till Stripe. */
+  ordCancel: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
   /** Prisuppslaget bakom coachningskortet — cachat i isolatet, men publikt. */
   coachingOffer: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
   /**

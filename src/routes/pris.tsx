@@ -12,7 +12,7 @@ export const Route = createFileRoute("/pris")({
       path: "/pris",
       title: "Pris: vad som är gratis och vad som kostar",
       description:
-        "Gamla högskoleprov, matcherna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar 149 kr för en månad eller 349 kr för sex, moms inräknad.",
+        "Gamla högskoleprov, matcherna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar 149 kr per månad eller 349 kr för 6 månader, moms inräknad.",
       ogTitle: "Pris på Tvåkommanollan",
       ogDescription: "Vad som är gratis och vad som kostar.",
     }),
@@ -58,8 +58,8 @@ const TANKER = [
     text: "Ordlistan har över 10 000 ord med förklaring, och MEK-banken innehåller uppgifter vi skriver själva och blindprövar innan de publiceras. De första 40 orden och de första 40 MEK-uppgifterna är gratis, så att du kan prova innan du betalar.",
   },
   {
-    rubrik: "Engångsköp, ingen prenumeration",
-    text: "Du väljer en månad eller sex och betalar en gång. Inget förnyas automatiskt. Köpet gäller både ordlistan och MEK.",
+    rubrik: "Per månad eller 6 månader",
+    text: "Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör på statistiksidan. 6 månader kostar 349 kr och betalas en gång. Köpet gäller både ordlistan och MEK.",
   },
   {
     rubrik: "Du behöver ett konto för att köpa",
@@ -119,8 +119,8 @@ function PrisPage() {
             Pris
           </h2>
           <p className="mt-4 text-[16px] leading-relaxed text-white/70">
-            149 kr för en månad och 349 kr för sex månader, med moms inräknad. Inget läggs på i
-            kassan. Provavgiften på {HP_FEE_SEK} kronor när du anmäler dig till själva provet går
+            149 kr per månad eller 349 kr för 6 månader, med moms inräknad. Inget läggs på i
+            kassan. Månadsköpet går att säga upp när som helst och gäller då månaden ut. Provavgiften på {HP_FEE_SEK} kronor när du anmäler dig till själva provet går
             till UHR och inte till oss.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

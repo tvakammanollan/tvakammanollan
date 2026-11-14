@@ -267,6 +267,12 @@ async function stripeWebhook(request: Request): Promise<Response> {
     "checkout.session.completed",
     "checkout.session.async_payment_succeeded",
   ]);
+  const SUBSCRIPTION_EVENTS = new Set([
+    "invoice.paid",
+    "invoice.payment_failed",
+    "customer.subscription.updated",
+    "customer.subscription.deleted",
+  ]);
 
   try {
     // Kassan gick ut utan betalning. Är en tid bokad ska den släppas nu och
@@ -286,6 +292,32 @@ async function stripeWebhook(request: Request): Promise<Response> {
         const { releaseBookingForExpiredCheckout } = await import("./lib/coaching-sweep.server");
         await releaseBookingForExpiredCheckout(requestId);
       }
+    }
+
+    // Månadsköpet av ordlistan är en prenumeration. Förnyelser, misslyckade
+    // dragningar och uppsägningar kommer som de här händelserna. Objektet i
+    // händelsen används bara för att hitta prenumerationens id; läget hämtas
+    // färskt ur Stripe, så att ordningen händelserna kommer i inte spelar
+    // någon roll. Kräver att händelserna är påslagna på webhook-endpointen.
+    if (event.type && SUBSCRIPTION_EVENTS.has(event.type)) {
+      const { subscriptionIdOf, retrieveSubscription } = await import("./lib/stripe.server");
+      const subscriptionId = subscriptionIdOf(event.data?.object);
+      if (subscriptionId) {
+        const { syncOrdSubscription } = await import("./lib/ord-paywall.server");
+        const sub = await retrieveSubscription(subscriptionId);
+        const hit = await syncOrdSubscription(sub);
+        console.log(
+          JSON.stringify({
+            type: "metric",
+            message: "ord_subscription_webhook",
+            context: { event: event.type, status: sub.status, hit },
+          }),
+        );
+      }
+      return new Response(JSON.stringify({ received: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
     }
 
     if (event.type && PAID_EVENTS.has(event.type)) {

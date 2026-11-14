@@ -552,7 +552,8 @@ export function TrainExperience({
               <span className="font-semibold text-[var(--cream)]">
                 Du har {formatInt(mekAccessInfo.freeRemaining)} kvar.
               </span>{" "}
-              Sedan krävs ett köp, som gäller all MEK och hela ordlistan i en månad eller sex.
+              Sedan krävs ett köp, per månad eller för 6 månader, som gäller all MEK och hela
+              ordlistan.
             </p>
           )}
           {/* STEG 1 — vad. Ligger öppet och inte bakom en "Anpassa"-knapp:

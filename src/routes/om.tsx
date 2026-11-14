@@ -61,7 +61,8 @@ function OmPage() {
             Tvåkommanollan är det jag själv hade velat ha: gamla prov som går att skriva på tid,
             matcher mot någon på ungefär samma nivå och en siffra som visar hur det går över
             veckorna. Det mesta är gratis: alla gamla prov, matcherna, normeringen och forumet.
-            Ordlistan och MEK har en gratisdel och kostar sedan ett engångsköp.
+            Ordlistan och MEK har en gratisdel och kostar sedan 149 kr per månad eller 349 kr för 6
+            månader.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
@@ -80,7 +81,8 @@ function OmPage() {
             </a>
             , så dem tar vi inte betalt för. Sajten har inga annonser och drivs av mig. Gamla prov,
             matcherna, normeringen och forumet är gratis, liksom de första 40 orden och 40
-            MEK-uppgifterna. Hela ordlistan och alla MEK-uppgifter kostar ett engångsköp.{" "}
+            MEK-uppgifterna. Hela ordlistan och alla MEK-uppgifter kostar 149 kr per månad eller 349 kr
+            för 6 månader.{" "}
             <Link to="/pris" className="underline" style={{ color: "var(--amber)" }}>
               Mer om priset
             </Link>

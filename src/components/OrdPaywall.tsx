@@ -9,7 +9,7 @@ import { startOrdCheckout, type OrdAccessInfo } from "@/lib/ord-paywall.function
 import {
   FREE_MEK_LIMIT,
   FREE_ORD_LIMIT,
-  planDuration,
+  planPriceLabel,
   type OrdPlan,
   type PaywallReturnPath,
   type PaywallSubject,
@@ -107,8 +107,8 @@ export function OrdPaywall({
               : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Köpet gäller hela ordlistan och all MEK-övning i en månad eller sex. Priset är med moms,
-          du betalar en gång och ingenting förnyas automatiskt.
+          Köpet gäller hela ordlistan och all MEK-övning. Månadsköpet förnyas varje månad tills du
+          säger upp det, och 6 månader betalas en gång. Priset är med moms.
         </p>
       </div>
 
@@ -156,7 +156,7 @@ export function OrdPaywall({
                   {busyPlan === p.plan ? (
                     <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                   ) : (
-                    `${planDuration(p.plan).replace(/^./, (c) => c.toUpperCase())}, ${formatMoney(p.amount, access.currency)}`
+                    planPriceLabel(p.plan, formatMoney(p.amount, access.currency))
                   )}
                 </Cta>
               );

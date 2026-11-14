@@ -1,7 +1,8 @@
 /**
  * Övningspaywallen: de första 40 orden och de första 40 MEK-uppgifterna är
- * gratis, resten kostar ett köp som gäller en eller sex månader (`ORD_PLANS`;
- * köp gjorda före `TIME_LIMITED_FROM` gäller för alltid). Samma köp ("Hela Ordlistan + MEK")
+ * gratis, resten kostar ett köp (`ORD_PLANS`): en månadsprenumeration som
+ * förnyas tills den sägs upp, eller sex månader som engångsköp. Köp gjorda
+ * före `TIME_LIMITED_FROM` gäller för alltid. Samma köp ("Hela Ordlistan + MEK")
  * låser upp båda, så den som köpte ordlistan innan MEK låstes fick MEK på
  * köpet.
  *
@@ -90,6 +91,93 @@ export function purchaseIsActive(
 ): boolean {
   const end = accessExpiresAt(paidAt, months);
   return end === null || now < end.getTime();
+}
+
+/**
+ * Raden i `ord_purchases` så som åtkomstregeln behöver den. Prenumerations-
+ * fälten är valfria: de kom i `20261114120000_ordlistan_prenumeration.sql`,
+ * och innan den körts saknas de i svaret.
+ */
+export interface OrdPurchaseRow {
+  paid_at: string;
+  access_months?: number | null;
+  stripe_subscription_id?: string | null;
+  subscription_status?: string | null;
+  current_period_end?: string | null;
+  cancel_at_period_end?: boolean | null;
+}
+
+export interface OrdPurchaseAccess {
+  kind: "one_time" | "subscription";
+  active: boolean;
+  /** null = gäller för alltid (köp före `TIME_LIMITED_FROM`). */
+  expiresAt: Date | null;
+  /** true när nästa period kommer att dras. */
+  renews: boolean;
+  cancelAtPeriodEnd: boolean;
+  status: string | null;
+}
+
+/** Statusar där Stripe fortsätter att dra pengar om ingen säger upp. */
+const RENEWING_STATUSES = new Set(["active", "trialing", "past_due"]);
+
+/**
+ * Gäller köpet, och hur länge. Månadsköpet är en prenumeration sedan
+ * 2026-11 och känns igen på att `stripe_subscription_id` är satt. För den
+ * gäller periodslutet i Stripe, inte `paid_at` plus längden.
+ *
+ * En prenumeration med misslyckad dragning (`past_due`) släpps igenom till
+ * periodens slut: Stripe försöker igen under tiden, och den som betalat för
+ * månaden ska inte bli utelåst för att förnyelsen strular. En avslutad
+ * (`canceled`) faller ut av sig själv när periodslutet passerats.
+ *
+ * Saknas periodslutet (migrationen inte körd, eller synken inte hunnit)
+ * används `paid_at` plus en månad. `paid_at` flyttas fram vid varje
+ * förnyelse, så reserven ligger nära rätt.
+ */
+export function purchaseAccess(row: OrdPurchaseRow, now: number = Date.now()): OrdPurchaseAccess {
+  const status = row.subscription_status ?? null;
+  const cancelAtPeriodEnd = row.cancel_at_period_end === true;
+  if (!row.stripe_subscription_id) {
+    const expiresAt = accessExpiresAt(row.paid_at, accessMonths(row.access_months));
+    return {
+      kind: "one_time",
+      active: expiresAt === null || now < expiresAt.getTime(),
+      expiresAt,
+      renews: false,
+      cancelAtPeriodEnd: false,
+      status,
+    };
+  }
+  const periodEnd = row.current_period_end ? Date.parse(row.current_period_end) : NaN;
+  let expiresAt: Date | null;
+  if (Number.isFinite(periodEnd)) {
+    expiresAt = new Date(periodEnd);
+  } else {
+    const paid = Date.parse(row.paid_at);
+    if (Number.isFinite(paid)) {
+      expiresAt = new Date(paid);
+      expiresAt.setUTCMonth(expiresAt.getUTCMonth() + ORD_PLANS["1m"].months);
+    } else {
+      // Samma princip som `accessExpiresAt`: ett oläsbart datum får inte
+      // låsa ute någon som betalar. Nästa webhook skriver rätt slut.
+      expiresAt = null;
+    }
+  }
+  const active = expiresAt === null || now < expiresAt.getTime();
+  return {
+    kind: "subscription",
+    active,
+    expiresAt,
+    renews: active && !cancelAtPeriodEnd && status !== null && RENEWING_STATUSES.has(status),
+    cancelAtPeriodEnd,
+    status,
+  };
+}
+
+/** "149 kr per månad" / "349 kr för 6 månader". `money` är det formaterade beloppet. */
+export function planPriceLabel(plan: OrdPlan, money: string): string {
+  return plan === "1m" ? `${money} per månad` : `${money} för 6 månader`;
 }
 
 export type PaywallSubject = "ord" | "mek";

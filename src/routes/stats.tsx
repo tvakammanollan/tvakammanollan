@@ -14,6 +14,7 @@ import { displayName } from "@/lib/guest-name";
 import { outcomeFor } from "@/lib/match-outcome";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
+import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
 
 export const Route = createFileRoute("/stats")({
@@ -357,6 +358,10 @@ function StatsPage() {
             </>
           )}
         </div>
+
+        {/* Köpet och uppsägningen av månadsprenumerationen. Renderar
+            ingenting för den som inte köpt. */}
+        <OrdPurchaseCard className="mt-10" />
 
         {/* GDPR: självservice-radering */}
         <DeleteAccountSection />

@@ -30,7 +30,7 @@ function IntegritetspolicyPage() {
       <PageHero
         align="center"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-11-13"
+        subtitle="Senast uppdaterad: 2026-11-14"
         variant="compact"
       />
       <article
@@ -105,7 +105,9 @@ function IntegritetspolicyPage() {
             <li>
               <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper hela
               ordlistan och MEK: vilket konto som köpte, vilket köp du valde, tidpunkten, belopp och
-              valuta samt Stripes referens till betalningen.{" "}
+              valuta samt Stripes referenser till betalningen och till dig som kund. För
+              månadsprenumerationen även Stripes referens till prenumerationen, om den är uppsagd och
+              när den aktuella perioden tar slut.{" "}
               <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em>: vi ser
               aldrig ditt kortnummer.
             </li>
@@ -222,10 +224,11 @@ function IntegritetspolicyPage() {
               max 30 dagar, övrig användningsstatistik max 12 månader
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> sparas så länge de
-              behövs för bokföring och för att kunna hantera frågor om köpet. De raderas därför inte
-              automatiskt när du raderar ditt konto. Vill du veta exakt vad som finns sparat om ett
-              köp, mejla oss.
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> uppgifterna om ditt
+              köp av ordlistan och MEK raderas med kontot, och en pågående prenumeration avslutas då
+              direkt. Betalningen, kvittot och fakturan finns kvar hos Stripe så länge
+              bokföringslagen kräver. Uppgifter från en tjänst vi slutat sälja sparas så länge de
+              behövs för bokföringen. Vill du veta exakt vad som finns sparat om ett köp, mejla oss.
             </li>
           </ul>
 

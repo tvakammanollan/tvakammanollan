@@ -3,6 +3,8 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { assertRateLimit } from "./rate-limit.server";
+import { readOrdPurchase } from "./ord-paywall.server";
+import { cancelSubscriptionNow, retrieveSubscription } from "./stripe.server";
 
 /**
  * GDPR art. 17 — radera konto (självservice).
@@ -20,6 +22,11 @@ import { assertRateLimit } from "./rate-limit.server";
  *      Kvar med flit: `coaching_requests` (köp — bokföringsgrund, och
  *      integritetspolicyn säger det uttryckligen) samt forumtrådar och
  *      forumsvar, som anonymiseras via users-raden precis som matcherna.
+ *
+ *      `ord_purchases` raderas: raden är en åtkomstpost, och betalningen
+ *      finns kvar hos Stripe för bokföringen. En löpande månadsprenumeration
+ *      avslutas i Stripe FÖRST (steg 0), annars hade den fortsatt dra pengar
+ *      från ett konto som inte längre finns och inte går att säga upp.
  *   2. users-raden anonymiseras (username → "" döljer den från topplistor,
  *      e-post → null) men behålls så matchers FK inte bryts.
  *   3. Auth-användaren hårdraderas (login + e-post försvinner). Om det
@@ -36,7 +43,39 @@ export const deleteAccount = createServerFn({ method: "POST" })
     const { userId } = context;
     assertRateLimit(`delacc:${userId}`, { max: 3, windowMs: 60 * 60 * 1000 });
 
+    // 0) Avsluta en löpande prenumeration på ordlistan. Går det inte stoppas
+    //    raderingen: utan raden finns ingen väg att säga upp, och Stripe
+    //    fortsätter dra. Ett nytt försök kostar användaren en minut.
+    const { row: purchase, failed: purchaseReadFailed } = await readOrdPurchase(userId);
+    if (purchaseReadFailed) {
+      throw new Error(
+        "Vi kunde inte kontrollera ditt köp just nu. Försök igen om en stund, eller mejla info@tvakommanollan.se.",
+      );
+    }
+    const subscriptionId = purchase?.stripe_subscription_id;
+    const finished = new Set(["canceled", "incomplete_expired"]);
+    if (subscriptionId && !finished.has(purchase?.subscription_status ?? "")) {
+      try {
+        await cancelSubscriptionNow(subscriptionId);
+      } catch (e) {
+        // Raden kan ligga efter Stripe: är prenumerationen redan avslutad
+        // där svarar Stripe med fel, och då finns inget att stoppa.
+        const already = await retrieveSubscription(subscriptionId)
+          .then((sub) => finished.has(sub.status))
+          .catch(() => false);
+        if (!already) {
+          console.error("[account] kunde inte avsluta prenumerationen:", e);
+          throw new Error(
+            "Vi kunde inte avsluta din prenumeration hos Stripe just nu. Försök igen om en stund, eller mejla info@tvakommanollan.se.",
+          );
+        }
+      }
+    }
+
     // 1) Personliga sidotabeller — ren radering.
+    // Köpraden skulle försvinna med auth-användaren ändå (ON DELETE CASCADE),
+    // men inte om steg 3 faller tillbaka på avstängning.
+    await supabaseAdmin.from("ord_purchases").delete().eq("user_id", userId);
     await supabaseAdmin.from("user_word_failed").delete().eq("user_id", userId);
     await supabaseAdmin.from("user_word_correct").delete().eq("user_id", userId);
     await supabaseAdmin.from("ord_practice_stats").delete().eq("user_id", userId);

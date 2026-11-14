@@ -111,28 +111,43 @@ export type Database = {
         Row: {
           access_months: number | null
           amount_total: number | null
+          cancel_at_period_end: boolean
           currency: string | null
+          current_period_end: string | null
           paid_at: string
+          stripe_customer_id: string | null
           stripe_payment_intent: string | null
           stripe_session_id: string
+          stripe_subscription_id: string | null
+          subscription_status: string | null
           user_id: string
         }
         Insert: {
           access_months?: number | null
           amount_total?: number | null
+          cancel_at_period_end?: boolean
           currency?: string | null
+          current_period_end?: string | null
           paid_at?: string
+          stripe_customer_id?: string | null
           stripe_payment_intent?: string | null
           stripe_session_id: string
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
           user_id: string
         }
         Update: {
           access_months?: number | null
           amount_total?: number | null
+          cancel_at_period_end?: boolean
           currency?: string | null
+          current_period_end?: string | null
           paid_at?: string
+          stripe_customer_id?: string | null
           stripe_payment_intent?: string | null
           stripe_session_id?: string
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
           user_id?: string
         }
         Relationships: []

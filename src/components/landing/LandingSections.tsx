@@ -409,8 +409,9 @@ export function Produktytorna() {
 /**
  * Vad som kostar och vad som inte gör det.
  *
- * De två betalkorten är var sin produkt i Stripe: en månad för 149 kr och sex
- * månader för 349 kr, båda med moms inräknad (`tax_behavior: inclusive`).
+ * De två betalkorten är var sin produkt i Stripe: en månadsprenumeration för
+ * 149 kr per månad och sex månader för 349 kr som engångsköp, båda med moms
+ * inräknad (`tax_behavior: inclusive`).
  * Varje kort länkar till `/kassa?plan=…`, där kassan för just det köpet öppnas.
  *
  * Beloppen här är skrivna för hand eftersom sektionen är serverrenderad och
@@ -428,15 +429,16 @@ export function Produktytorna() {
 const BETALKORT = [
   {
     plan: "1m",
-    etikett: "Ordlistan och MEK: en månad",
+    etikett: "Ordlistan och MEK: per månad",
     pris: "149 kr",
+    prisEnhet: "per månad",
     rader: [
       "Över 10\u00a0000 ord i träningsläget",
       "Alla MEK-uppgifter, arkivets och våra egna",
       "Ett köp gäller båda",
-      "Gäller en månad, engångsköp",
+      "Förnyas varje månad, säg upp när du vill",
     ],
-    cta: "Välj en månad",
+    cta: "Välj per månad",
     yta: "bg-card border border-white/10",
     etikettFarg: "text-white/55",
     prisFarg: "",
@@ -516,7 +518,9 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
                 <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
                   {k.pris}
                 </p>
-                <p className={`mt-2 text-[13px] ${k.radFarg}`}>inklusive moms</p>
+                <p className={`mt-2 text-[13px] ${k.radFarg}`}>
+                  {"prisEnhet" in k ? `${k.prisEnhet}, inklusive moms` : "inklusive moms"}
+                </p>
                 <ul className={`mt-6 space-y-3 text-[15px] leading-relaxed ${k.radFarg}`}>
                   {k.rader.map((rad) => (
                     <li key={rad} className="flex gap-2.5">

@@ -11,6 +11,8 @@ import {
   cappedBatchSize,
   mekAccess,
   ordAccess,
+  planPriceLabel,
+  purchaseAccess,
 } from "./ord-paywall";
 
 describe("mekAccess", () => {
@@ -106,5 +108,98 @@ describe("köpets giltighet", () => {
 
   it("ett oläsbart datum låser inte ute någon", () => {
     expect(purchaseIsActive("inte ett datum", Date.parse("2030-01-01"))).toBe(true);
+  });
+});
+
+describe("purchaseAccess", () => {
+  const paid = "2026-11-15T10:00:00Z";
+  const end = "2026-12-15T10:00:00Z";
+  const before = Date.parse("2026-12-15T09:59:59Z");
+  const after = Date.parse("2026-12-15T10:00:01Z");
+
+  it("läser engångsköp precis som förut", () => {
+    const a = purchaseAccess({ paid_at: paid, access_months: 6 }, before);
+    expect(a).toMatchObject({ kind: "one_time", active: true, renews: false });
+    expect(a.expiresAt?.toISOString()).toBe("2027-05-15T10:00:00.000Z");
+    expect(purchaseAccess({ paid_at: paid, access_months: 1 }, after).active).toBe(false);
+    expect(purchaseAccess({ paid_at: "2026-09-01T00:00:00Z" }, after)).toMatchObject({
+      active: true,
+      expiresAt: null,
+    });
+  });
+
+  it("låter en aktiv prenumeration gälla till periodslutet och förnyas", () => {
+    const row = {
+      paid_at: paid,
+      access_months: 1,
+      stripe_subscription_id: "sub_1",
+      subscription_status: "active",
+      current_period_end: end,
+      cancel_at_period_end: false,
+    };
+    expect(purchaseAccess(row, before)).toMatchObject({
+      kind: "subscription",
+      active: true,
+      renews: true,
+      cancelAtPeriodEnd: false,
+    });
+    expect(purchaseAccess(row, after)).toMatchObject({ active: false, renews: false });
+  });
+
+  it("räknar en uppsagd prenumeration som aktiv perioden ut men utan förnyelse", () => {
+    const a = purchaseAccess(
+      {
+        paid_at: paid,
+        stripe_subscription_id: "sub_1",
+        subscription_status: "active",
+        current_period_end: end,
+        cancel_at_period_end: true,
+      },
+      before,
+    );
+    expect(a).toMatchObject({ active: true, renews: false, cancelAtPeriodEnd: true });
+  });
+
+  it("släpper igenom past_due till periodslutet", () => {
+    const row = {
+      paid_at: paid,
+      stripe_subscription_id: "sub_1",
+      subscription_status: "past_due",
+      current_period_end: end,
+    };
+    expect(purchaseAccess(row, before)).toMatchObject({ active: true, renews: true });
+    expect(purchaseAccess(row, after).active).toBe(false);
+  });
+
+  it("stänger en avslutad prenumeration när periodslutet passerats", () => {
+    const row = {
+      paid_at: paid,
+      stripe_subscription_id: "sub_1",
+      subscription_status: "canceled",
+      current_period_end: end,
+    };
+    expect(purchaseAccess(row, before)).toMatchObject({ active: true, renews: false });
+    expect(purchaseAccess(row, after).active).toBe(false);
+  });
+
+  it("faller tillbaka på paid_at plus en månad när periodslutet saknas", () => {
+    const row = { paid_at: paid, access_months: 1, stripe_subscription_id: "sub_1" };
+    expect(purchaseAccess(row, before).active).toBe(true);
+    expect(purchaseAccess(row, after).active).toBe(false);
+    // Även med access_months NULL: en prenumeration är aldrig sex månader.
+    expect(purchaseAccess({ ...row, access_months: null }, after).active).toBe(false);
+  });
+
+  it("låser inte ute någon för ett oläsbart datum", () => {
+    expect(
+      purchaseAccess({ paid_at: "trasigt", stripe_subscription_id: "sub_1" }, after).active,
+    ).toBe(true);
+  });
+});
+
+describe("planPriceLabel", () => {
+  it("skriver per månad för prenumerationen och längden för engångsköpet", () => {
+    expect(planPriceLabel("1m", "149 kr")).toBe("149 kr per månad");
+    expect(planPriceLabel("6m", "349 kr")).toBe("349 kr för 6 månader");
   });
 });

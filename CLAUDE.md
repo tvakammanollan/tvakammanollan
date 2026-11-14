@@ -1595,6 +1595,46 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
 - Köparen kommer tillbaka till `/ord?kop=klart&session_id=…`, där sidan
   bekräftar mot Stripe som reserv för webhooken.
 
+**Månadsköpet är en prenumeration sedan 2026-11-14.** 149 kr per månad som
+förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
+
+- **Läget följer priset, inte planen.** `startOrdCheckout` sätter
+  `mode: "subscription"` när det upplösta priset är `recurring`, annars
+  `"payment"`. Bytet görs alltså genom att peka `STRIPE_ORD_PRICE_ID_1M` på
+  ett återkommande pris, och koden kan rullas ut före bytet. I
+  prenumerationsläge bär `subscription_data.metadata` köpets metadata;
+  `payment_intent_data` och `customer_creation` avvisas där av Stripe.
+- **En rad med `stripe_subscription_id` är en prenumeration**, och för den
+  gäller `current_period_end`, inte `paid_at` plus `access_months`
+  (`purchaseAccess` i `ord-paywall.ts`, testad). `past_due` släpps igenom till
+  periodens slut. Saknas periodslutet gäller `paid_at` plus en månad, och
+  `paid_at` flyttas fram till periodstarten vid varje förnyelse så att
+  reserven håller. Prenumerationsrader får `access_months = 1`: NULL betyder
+  sex månader. Kolumnerna kom i `20261114120000_ordlistan_prenumeration.sql`.
+- **Webhooken lyssnar på fyra händelser till**: `invoice.paid`,
+  `invoice.payment_failed`, `customer.subscription.updated` och
+  `customer.subscription.deleted`. De måste vara påslagna på endpointen i
+  Stripe, annars ser raden ut att förnyas aldrig och åtkomsten går ut efter
+  första månaden medan Stripe fortsätter dra. Objektet i händelsen används
+  bara för id:t; `syncOrdSubscription` hämtar prenumerationen färsk ur
+  Stripe, så ordningen händelserna kommer i spelar ingen roll.
+- **Periodslutet ligger på `items.data[0]`**, inte på prenumerationen, på
+  kontots API-version (flyttat 2025-03-31). `subscriptionPeriod` läser båda.
+- **Uppsägningen sker på sajten**, kortet "Ditt köp" (`OrdPurchaseCard`) på
+  `/stats` och i `/kassa`. Den sätter `cancel_at_period_end`; tillgången
+  gäller månaden ut och kan ångras till dess. Det finns ingen Stripe-kundportal.
+- **Kontoradering avslutar prenumerationen först** och stoppas om Stripe inte
+  svarar. Utan det hade den fortsatt dras från ett konto som inte går att
+  logga in på. Köpraden raderas med kontot; betalningen finns kvar i Stripe.
+- **Kunden återanvänds.** Har användaren köpt förut skickas `customer` och
+  `customer_update[address|name]=auto` (krävs av automatisk moms). Det är det
+  som gör att kampanjkoder med `first_time_transaction` bara går att lösa in
+  en gång per person. `TVAHUNDRA` (100 %, `duration: once`, bara
+  månadsprodukten) är en sådan; utan kundåteranvändningen hade den gått att
+  ta varje månad genom att säga upp och teckna igen.
+- **Kampanjkoder får bara innehålla a–z, 0–9 och bindestreck.** Därför heter
+  den `TVAHUNDRA` och inte `TVÅHUNDRA`. Koderna är skiftlägesokänsliga.
+
 ### Röstning på frågor (2026-10-19)
 
 Tumme upp/ned efter svaret, i `/train` och på resultatsidan

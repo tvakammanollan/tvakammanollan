@@ -540,8 +540,8 @@ function OrdPracticePage() {
               </PrimaryCTA>
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
-                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan krävs ett köp, som gäller
-                  hela listan i en månad eller sex.
+                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan krävs ett köp, per månad
+                  eller för 6 månader.
                 </p>
               )}
 

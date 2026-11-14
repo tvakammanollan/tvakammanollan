@@ -6,8 +6,12 @@ import {
   customFieldValue,
   resolveCoachingPrice,
   clearCoachingPriceCache,
+  subscriptionPeriod,
+  subscriptionIdOf,
+  subscriptionCancelsAtPeriodEnd,
+  stripeIdOf,
 } from "./stripe.server";
-import type { StripeCheckoutSession } from "./stripe.server";
+import type { StripeCheckoutSession, StripeSubscription } from "./stripe.server";
 
 /**
  * Signaturen räknas med WebCrypto i koden och med node:crypto här — två olika
@@ -253,5 +257,64 @@ describe("verifyStripeSignature — flera hemligheter", () => {
 
   it("en lista med bara skräptecken godkänner ingenting", async () => {
     expect(await verifyStripeSignature(body, sign(hpk, t, body), " , , ", 300, now)).toBe(false);
+  });
+});
+
+describe("prenumerationsfälten", () => {
+  const base: StripeSubscription = {
+    id: "sub_1",
+    status: "active",
+    customer: "cus_1",
+    cancel_at_period_end: false,
+    metadata: null,
+  };
+
+  it("läser perioden från item, som kontots API-version skickar den", () => {
+    const sub = {
+      ...base,
+      items: { data: [{ id: "si_1", current_period_start: 1_700_000_000, current_period_end: 1_702_592_000 }] },
+    };
+    expect(subscriptionPeriod(sub)).toEqual({ start: 1_700_000_000_000, end: 1_702_592_000_000 });
+  });
+
+  it("faller tillbaka på toppnivån för äldre API-versioner", () => {
+    const sub = { ...base, current_period_start: 10, current_period_end: 20, items: { data: [] } };
+    expect(subscriptionPeriod(sub)).toEqual({ start: 10_000, end: 20_000 });
+    expect(subscriptionPeriod(base)).toEqual({ start: null, end: null });
+  });
+
+  it("räknar både cancel_at_period_end och cancel_at som uppsagd", () => {
+    expect(subscriptionCancelsAtPeriodEnd(base)).toBe(false);
+    expect(subscriptionCancelsAtPeriodEnd({ ...base, cancel_at_period_end: true })).toBe(true);
+    expect(subscriptionCancelsAtPeriodEnd({ ...base, cancel_at: 1_702_592_000 })).toBe(true);
+  });
+
+  it("hittar prenumerations-id i faktura och prenumeration", () => {
+    expect(
+      subscriptionIdOf({
+        object: "invoice",
+        parent: { subscription_details: { subscription: "sub_new" } },
+      }),
+    ).toBe("sub_new");
+    expect(subscriptionIdOf({ object: "invoice", subscription: "sub_old" })).toBe("sub_old");
+    expect(subscriptionIdOf({ object: "subscription", id: "sub_self" })).toBe("sub_self");
+    expect(subscriptionIdOf({ object: "invoice", subscription: null, parent: null })).toBeNull();
+    expect(subscriptionIdOf(null)).toBeNull();
+    expect(subscriptionIdOf("sub_1")).toBeNull();
+  });
+
+  it("läser id ur både sträng och utfällt objekt", () => {
+    expect(stripeIdOf("cus_1")).toBe("cus_1");
+    expect(stripeIdOf({ id: "cus_2" })).toBe("cus_2");
+    expect(stripeIdOf("")).toBeNull();
+    expect(stripeIdOf(null)).toBeNull();
+  });
+
+  it("kodar prenumerationens metadata nästlat", () => {
+    expect(
+      encodeStripeForm({ subscription_data: { metadata: { user_id: "u1", product: "ord_access" } } }),
+    ).toBe(
+      "subscription_data%5Bmetadata%5D%5Buser_id%5D=u1&subscription_data%5Bmetadata%5D%5Bproduct%5D=ord_access",
+    );
   });
 });

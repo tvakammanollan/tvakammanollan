@@ -89,7 +89,7 @@ export function stripePublishableKey(): string | null {
 }
 
 async function stripeRequest<T>(
-  method: "GET" | "POST",
+  method: "GET" | "POST" | "DELETE",
   path: string,
   params?: Record<string, StripeParam>,
 ): Promise<T> {
@@ -178,6 +178,12 @@ export interface StripeCheckoutSession {
   currency: string | null;
   client_reference_id: string | null;
   payment_intent: string | null;
+  /** `subscription` för månadsköpet sedan 2026-11, annars `payment`. */
+  mode?: "payment" | "subscription" | "setup";
+  /** Kund-id. Satt i prenumerationsläge, och i betalläge när en kund skapats. */
+  customer?: string | { id: string } | null;
+  /** Prenumerationens id, bara i prenumerationsläge. */
+  subscription?: string | { id: string } | null;
   metadata: Record<string, string> | null;
   custom_fields?: StripeCustomField[] | null;
   customer_details: {
@@ -314,6 +320,102 @@ export async function createCheckoutSession(
 
 export async function retrieveCheckoutSession(id: string): Promise<StripeCheckoutSession> {
   return stripeRequest<StripeCheckoutSession>("GET", `/checkout/sessions/${id}`);
+}
+
+/* ===================== Prenumerationer ===================== */
+
+export interface StripeSubscription {
+  id: string;
+  status:
+    | "incomplete"
+    | "incomplete_expired"
+    | "trialing"
+    | "active"
+    | "past_due"
+    | "canceled"
+    | "unpaid"
+    | "paused";
+  customer: string | { id: string } | null;
+  cancel_at_period_end: boolean;
+  /** Satt när prenumerationen är uppsagd till ett datum (nyare API-versioner). */
+  cancel_at?: number | null;
+  /** Bara API-versioner före 2025-03-31. Läs via `subscriptionPeriod`. */
+  current_period_start?: number;
+  current_period_end?: number;
+  items?: {
+    data: { id: string; current_period_start?: number; current_period_end?: number }[];
+  };
+  metadata: Record<string, string> | null;
+}
+
+/** Id:t ur ett fält som Stripe skickar som sträng eller som utfällt objekt. */
+export function stripeIdOf(value: unknown): string | null {
+  if (typeof value === "string" && value) return value;
+  if (value && typeof value === "object" && typeof (value as { id?: unknown }).id === "string") {
+    return (value as { id: string }).id;
+  }
+  return null;
+}
+
+/**
+ * Periodens start och slut i millisekunder. Sedan API-versionen 2025-03-31
+ * ligger perioden på prenumerationens item, inte på prenumerationen, och
+ * kontot kör en nyare version än så. Toppnivån läses som reserv så att ett
+ * byte av API-version åt något håll inte tyst ger "ingen period".
+ */
+export function subscriptionPeriod(sub: StripeSubscription): {
+  start: number | null;
+  end: number | null;
+} {
+  const item = sub.items?.data?.[0];
+  const start = item?.current_period_start ?? sub.current_period_start;
+  const end = item?.current_period_end ?? sub.current_period_end;
+  return {
+    start: typeof start === "number" ? start * 1000 : null,
+    end: typeof end === "number" ? end * 1000 : null,
+  };
+}
+
+/** Uppsagd till periodens slut. Nyare versioner sätter `cancel_at` i stället. */
+export function subscriptionCancelsAtPeriodEnd(sub: StripeSubscription): boolean {
+  return sub.cancel_at_period_end === true || typeof sub.cancel_at === "number";
+}
+
+/**
+ * Prenumerations-id:t ur ett webhookobjekt: en faktura (nyare versioner
+ * lägger det under `parent.subscription_details`, äldre direkt på fakturan)
+ * eller prenumerationen själv. Null för allt annat.
+ */
+export function subscriptionIdOf(obj: unknown): string | null {
+  if (!obj || typeof obj !== "object") return null;
+  const o = obj as {
+    object?: unknown;
+    id?: unknown;
+    subscription?: unknown;
+    parent?: { subscription_details?: { subscription?: unknown } | null } | null;
+  };
+  if (o.object === "subscription") return stripeIdOf(o.id);
+  return stripeIdOf(o.parent?.subscription_details?.subscription) ?? stripeIdOf(o.subscription);
+}
+
+export async function retrieveSubscription(id: string): Promise<StripeSubscription> {
+  return stripeRequest<StripeSubscription>("GET", `/subscriptions/${encodeURIComponent(id)}`);
+}
+
+export async function updateSubscription(
+  id: string,
+  params: Record<string, StripeParam>,
+): Promise<StripeSubscription> {
+  return stripeRequest<StripeSubscription>(
+    "POST",
+    `/subscriptions/${encodeURIComponent(id)}`,
+    params,
+  );
+}
+
+/** Avslutar direkt, utan att vänta in periodens slut. Används vid kontoradering. */
+export async function cancelSubscriptionNow(id: string): Promise<StripeSubscription> {
+  return stripeRequest<StripeSubscription>("DELETE", `/subscriptions/${encodeURIComponent(id)}`);
 }
 
 /* ===================== Webhook-signatur ===================== */

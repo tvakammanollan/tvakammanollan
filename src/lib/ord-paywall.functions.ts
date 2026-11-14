@@ -13,6 +13,7 @@ import {
   type OrdPlan,
   mekAccess,
   ordAccess,
+  purchaseAccess,
   type OrdAccess,
 } from "./ord-paywall";
 import {
@@ -20,6 +21,9 @@ import {
   hasOrdAccess,
   isOrdSession,
   markOrdPaid,
+  readOrdPurchase,
+  syncOrdSubscription,
+  type StoredOrdPurchase,
 } from "./ord-paywall.server";
 import {
   createCheckoutSession,
@@ -27,6 +31,7 @@ import {
   retrieveCheckoutSession,
   stripeConfigured,
   stripePublishableKey,
+  updateSubscription,
   type StripeParam,
 } from "./stripe.server";
 import { EMBEDDED_UI_MODE, sessionIsPaid } from "./coaching.server";
@@ -181,45 +186,63 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
       plan: data.plan,
       access_months: String(ORD_PLANS[data.plan].months),
     };
+    // Läget följer priset i Stripe, inte planen: månadspriset är återkommande
+    // sedan 2026-11, och ett byte av pris-id i `wrangler.jsonc` vänder då
+    // beteendet utan kodändring. `payment_intent_data` avvisas av Stripe i
+    // prenumerationsläge; där bär `subscription_data` metadatan i stället, så
+    // att varje förnyelse går att knyta till rätt konto.
     const base = {
-      mode: "payment",
+      mode: price.recurring ? "subscription" : "payment",
       line_items: [{ price: price.priceId, quantity: 1 }],
       locale: "sv",
       client_reference_id: userId,
       allow_promotion_codes: true,
       metadata,
-      payment_intent_data: { metadata },
+      ...(price.recurring
+        ? { subscription_data: { metadata } }
+        : { payment_intent_data: { metadata } }),
     } satisfies Record<string, StripeParam>;
 
-    let embedded = stripePublishableKey() !== null;
-    if (embedded) {
+    // Den som köpt förut har en kund i Stripe. Återanvänds den gäller
+    // kampanjkoder som bara får lösas in vid första köpet på riktigt: utan
+    // det kan vem som helst säga upp, teckna igen och ta koden varje månad.
+    // `customer_update` krävs av automatisk moms när `customer` skickas.
+    // Går kunden inte att använda (raderad i Stripe) görs ett försök utan.
+    const { row } = await readOrdPurchase(userId);
+    const customer = row?.stripe_customer_id ?? null;
+    const variants: Record<string, StripeParam>[] = customer
+      ? [{ ...base, customer, customer_update: { address: "auto", name: "auto" } }, base]
+      : [base];
+
+    for (const params of variants) {
+      if (stripePublishableKey() !== null) {
+        try {
+          const s = await createCheckoutSession({
+            ...params,
+            ui_mode: EMBEDDED_UI_MODE,
+            return_url: returnUrl,
+          });
+          if (s.client_secret)
+            return { clientSecret: s.client_secret, url: null, alreadyOwned: false };
+        } catch (e) {
+          // Samma reträtt som coachningen: ett ui_mode-namnbyte får kosta
+          // bekvämlighet, inte försäljning.
+          console.error("[ord-paywall] inbäddad kassa gick inte att skapa, faller tillbaka:", e);
+        }
+      }
       try {
         const s = await createCheckoutSession({
-          ...base,
-          ui_mode: EMBEDDED_UI_MODE,
-          return_url: returnUrl,
+          ...params,
+          success_url: returnUrl,
+          cancel_url: `${origin}${data.returnTo}`,
         });
-        if (s.client_secret)
-          return { clientSecret: s.client_secret, url: null, alreadyOwned: false };
+        if (!s.url) throw new Error("session utan url");
+        return { clientSecret: null, url: s.url, alreadyOwned: false };
       } catch (e) {
-        // Samma reträtt som coachningen: ett ui_mode-namnbyte får kosta
-        // bekvämlighet, inte försäljning.
-        console.error("[ord-paywall] inbäddad kassa gick inte att skapa, faller tillbaka:", e);
+        console.error("[ord-paywall] Stripe vägrade skapa kassan:", e);
       }
-      embedded = false;
     }
-    try {
-      const s = await createCheckoutSession({
-        ...base,
-        success_url: returnUrl,
-        cancel_url: `${origin}${data.returnTo}`,
-      });
-      if (!s.url) throw new Error("session utan url");
-      return { clientSecret: null, url: s.url, alreadyOwned: false };
-    } catch (e) {
-      console.error("[ord-paywall] Stripe vägrade skapa kassan:", e);
-      throw new Error(CHECKOUT_ERROR);
-    }
+    throw new Error(CHECKOUT_ERROR);
   });
 
 /**
@@ -232,18 +255,131 @@ export const confirmOrdCheckout = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z.object({ sessionId: z.string().min(10).max(200) }).parse(input),
   )
-  .handler(async ({ data, context }): Promise<{ owned: boolean }> => {
+  .handler(
+    async ({
+      data,
+      context,
+    }): Promise<{ owned: boolean; kind: "subscription" | "one_time" | null }> => {
+      const { userId } = context;
+      assertRateLimit(`ord-confirm:${userId}`, limits.ordCheckout);
+      const session = await retrieveCheckoutSession(data.sessionId);
+      if (
+        !isOrdSession(session) ||
+        !sessionIsPaid(session) ||
+        session.metadata?.user_id !== userId
+      ) {
+        return { owned: await hasOrdAccess(userId), kind: null };
+      }
+      try {
+        await markOrdPaid(session);
+      } catch (e) {
+        // Betalningen är gjord oavsett; webhooken försöker igen.
+        console.error("[ord-paywall] bokföring vid återvändande misslyckades:", e);
+      }
+      return { owned: true, kind: session.mode === "subscription" ? "subscription" : "one_time" };
+    },
+  );
+
+/* ===================== Ditt köp och uppsägningen ===================== */
+
+export interface OrdPurchaseStatus {
+  kind: "one_time" | "subscription";
+  active: boolean;
+  /** ISO-datum, null = gäller utan tidsgräns. */
+  expiresAt: string | null;
+  renews: boolean;
+  cancelAtPeriodEnd: boolean;
+  status: string | null;
+  /** Månadspriset i ören, för raden "149 kr per månad". Null om Stripe inte svarar. */
+  monthlyAmount: number | null;
+}
+
+async function toStatus(row: StoredOrdPurchase): Promise<OrdPurchaseStatus> {
+  const a = purchaseAccess(row);
+  let monthlyAmount: number | null = null;
+  if (a.kind === "subscription" && stripeConfigured()) {
+    monthlyAmount = await resolveOrdPrice("1m")
+      .then((p) => (p.recurring ? p.amount : null))
+      .catch(() => null);
+  }
+  return {
+    kind: a.kind,
+    active: a.active,
+    expiresAt: a.expiresAt ? a.expiresAt.toISOString() : null,
+    renews: a.renews,
+    cancelAtPeriodEnd: a.cancelAtPeriodEnd,
+    status: a.status,
+    monthlyAmount,
+  };
+}
+
+/**
+ * Användarens köp, för kortet "Ditt köp". Null när det inte finns något köp,
+ * och också när raden inte gick att läsa: kortet ska då hellre saknas än
+ * visa fel datum.
+ */
+export const getOrdPurchaseStatus = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<OrdPurchaseStatus | null> => {
     const { userId } = context;
-    assertRateLimit(`ord-confirm:${userId}`, limits.ordCheckout);
-    const session = await retrieveCheckoutSession(data.sessionId);
-    if (!isOrdSession(session) || !sessionIsPaid(session) || session.metadata?.user_id !== userId) {
-      return { owned: await hasOrdAccess(userId) };
-    }
-    try {
-      await markOrdPaid(session);
-    } catch (e) {
-      // Betalningen är gjord oavsett; webhooken försöker igen.
-      console.error("[ord-paywall] bokföring vid återvändande misslyckades:", e);
-    }
-    return { owned: true };
+    assertRateLimit(`ord-status:${userId}`, limits.ordStatus);
+    const { row } = await readOrdPurchase(userId);
+    return row ? toStatus(row) : null;
+  });
+
+const CANCEL_ERROR =
+  "Det gick inte att ändra prenumerationen just nu. Försök igen om en stund, eller mejla info@tvakommanollan.se.";
+
+/**
+ * Säger upp eller ångrar uppsägningen. Uppsägningen gäller vid periodens
+ * slut: den som betalat för månaden har kvar tillgången till dess, och inga
+ * fler dragningar görs. Raden läses på den inloggade användarens id, så
+ * ingen kan säga upp någon annans prenumeration.
+ */
+async function setCancelAtPeriodEnd(userId: string, cancel: boolean): Promise<OrdPurchaseStatus> {
+  const { row, failed } = await readOrdPurchase(userId);
+  if (failed) throw new Error(CANCEL_ERROR);
+  const subscriptionId = row?.stripe_subscription_id;
+  if (!row || !subscriptionId) {
+    throw new Error("Ditt köp är ingen prenumeration, så det finns inget att säga upp.");
+  }
+  if (!cancel && purchaseAccess(row).active === false) {
+    throw new Error("Prenumerationen har redan gått ut. Köp igen i kassan för att fortsätta.");
+  }
+  let sub;
+  try {
+    sub = await updateSubscription(subscriptionId, { cancel_at_period_end: cancel });
+  } catch (e) {
+    console.error("[ord-paywall] Stripe vägrade ändra prenumerationen:", e);
+    throw new Error(CANCEL_ERROR);
+  }
+  if (sub.metadata?.user_id && sub.metadata.user_id !== userId) {
+    // Ska inte kunna hända: id:t kommer ur användarens egen rad. Loggas om
+    // raderna någon gång blandats ihop.
+    console.error(`[ord-paywall] prenumeration ${sub.id} hör inte till ${userId}`);
+  }
+  try {
+    await syncOrdSubscription(sub);
+  } catch (e) {
+    // Stripe har redan ändrat; webhooken skriver raden strax.
+    console.error("[ord-paywall] kunde inte skriva uppsägningen till raden:", e);
+  }
+  const fresh = await readOrdPurchase(userId);
+  return toStatus(fresh.row ?? row);
+}
+
+export const cancelOrdSubscription = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<OrdPurchaseStatus> => {
+    const { userId } = context;
+    assertRateLimit(`ord-cancel:${userId}`, limits.ordCancel);
+    return setCancelAtPeriodEnd(userId, true);
+  });
+
+export const resumeOrdSubscription = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<OrdPurchaseStatus> => {
+    const { userId } = context;
+    assertRateLimit(`ord-cancel:${userId}`, limits.ordCancel);
+    return setCancelAtPeriodEnd(userId, false);
   });
