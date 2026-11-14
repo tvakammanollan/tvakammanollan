@@ -141,7 +141,7 @@ function LeaderboardPage() {
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
             <TabsList className="grid w-full max-w-md grid-cols-5">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
-              <TabsTrigger value="math">Matte</TabsTrigger>
+              <TabsTrigger value="math">Kvantitativ</TabsTrigger>
               <TabsTrigger value="ord">Ord</TabsTrigger>
               <TabsTrigger value="mek">MEK</TabsTrigger>
               <TabsTrigger value="prov">Prov</TabsTrigger>
@@ -316,8 +316,8 @@ function Board({
               : scope === "friends"
                 ? "Du och dina vänner"
                 : updatedAt
-                  ? `Live, uppdaterad ${formatTime(updatedAt)}`
-                  : "Live"}
+                  ? `Uppdaterad ${formatTime(updatedAt)}`
+                  : "Alla spelare med valt användarnamn"}
           </span>
           <button
             onClick={headerRefresh}

@@ -88,7 +88,7 @@ export interface PageMetaInput {
 }
 
 export function pageMeta(input: PageMetaInput) {
-  const url = ORIGIN + input.path;
+  const url = ORIGIN + encodePath(input.path);
   const fullTitle = pageTitle(input.title);
   // `ogTitle` ärver den FORMATERADE titeln, inte den råa — annars saknar en
   // delning som inte satt en egen rubrik varumärket helt.
@@ -133,8 +133,22 @@ export function pageMeta(input: PageMetaInput) {
   return meta;
 }
 
+/**
+ * Procentkodar tecken utanför ASCII. Registersidorna för å, ä och ö skickade
+ * in sin sökväg okodad, så canonical sa `/ordlista/bokstav/å` medan länkarna
+ * och sitemapen sa `%C3%A5`: två adresser för samma sida. En redan kodad
+ * sökväg lämnas som den är.
+ */
+function encodePath(path: string): string {
+  try {
+    return encodeURI(decodeURI(path));
+  } catch {
+    return path;
+  }
+}
+
 export function pageLinks(path: string) {
-  return [{ rel: "canonical", href: ORIGIN + path }];
+  return [{ rel: "canonical", href: ORIGIN + encodePath(path) }];
 }
 
 /**

@@ -25,6 +25,7 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import { PageDekor } from "@/components/layout/Dekorformer";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
 import { Analytics } from "@/components/Analytics";
+import { StreakVisit } from "@/components/StreakVisit";
 
 installSupabaseFetchAuth();
 
@@ -35,13 +36,13 @@ const SUPABASE_ORIGIN =
 
 function NotFoundComponent() {
   const POPULAR = [
-    { to: "/gamla-prov", label: "Gamla prov", desc: "Skriv hela HP-pass 2012–2026" },
-    { to: "/train", label: "Träna", desc: "Alla 8 delprov i lugn takt" },
-    { to: "/leaderboard", label: "Topplista", desc: "Sveriges vassaste HP-spelare" },
-    { to: "/guider", label: "Guider", desc: "Strategi per delprov" },
-    { to: "/ordlista", label: "Ordlista", desc: "Alla HP-ord med förklaring" },
-    { to: "/forum", label: "Forum", desc: "Fråga och svara om HP" },
-    { to: "/faq", label: "Vanliga frågor", desc: "Svar på det vanligaste" },
+    { to: "/gamla-prov", label: "Gamla prov", desc: "30 prov från 2012 till 2026, med facit" },
+    { to: "/train", label: "Träna", desc: "Uppgifter ur alla 8 delprov, utan klocka" },
+    { to: "/leaderboard", label: "Topplista", desc: "De 50 högst rankade spelarna" },
+    { to: "/guider", label: "Guider", desc: "En guide för varje delprov" },
+    { to: "/ordlista", label: "Ordlista", desc: "Över 10 000 ord med förklaring" },
+    { to: "/forum", label: "Forum", desc: "Frågor och svar om högskoleprovet" },
+    { to: "/faq", label: "Vanliga frågor", desc: "Svar om provet och om sajten" },
   ] as const;
 
   return (
@@ -55,8 +56,7 @@ function NotFoundComponent() {
         </h1>
         <h2 className="mt-3 text-xl font-semibold sm:text-2xl">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Den här sidan finns inte, men din ELO väntar. Här är några populära ställen att gå till
-          istället:
+          Adressen leder ingenstans. Sidan kan ha flyttats eller tagits bort.
         </p>
 
         <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2">
@@ -467,6 +467,9 @@ function RootComponent() {
             <FriendInviteListener />
             <SafeBoundary label="achievement-watcher">
               <AchievementWatcher />
+            </SafeBoundary>
+            <SafeBoundary label="streak-visit">
+              <StreakVisit />
             </SafeBoundary>
             <SafeBoundary label="analytics">
               <Analytics />

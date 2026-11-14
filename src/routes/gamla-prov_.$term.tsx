@@ -40,7 +40,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         path,
         // Stod som "Högskoleprovet Höstprovet 2025 – …" på alla 30 sidorna:
         // `label` bär redan ordet provet, så prefixet stammade.
-        title: fitTitle(`${exam.label}: alla provpass med facit`),
+        title: fitTitle(`${exam.label}: alla provpass`, "med facit"),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på tid och med rättning. Gratis och utan inloggning.`,

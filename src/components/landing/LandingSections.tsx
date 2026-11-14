@@ -3,6 +3,7 @@ import type { LinkProps } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
+import { allExams } from "@/lib/prov-data";
 import { rankedName } from "@/lib/username";
 
 /**
@@ -83,7 +84,7 @@ export function BevisRemsan() {
  * procentenheter isär och kan inte kollidera.
  */
 const MARKORER = [
-  { pos: 43, ton: "apple" as const, varde: 1.15, ord: "Efter tolv matcher" },
+  { pos: 43, ton: "apple" as const, varde: 1.15, ord: "Efter 12 matcher" },
   { pos: 78, ton: "bark" as const, varde: 1.75, ord: "Högst på sajten" },
 ];
 
@@ -216,36 +217,15 @@ function TatRubrik({ titel, lede }: { titel: string; lede: string }) {
 
 /* --------------------------------------------------------------- arkivet */
 
-const TERMINER = [
-  "2012vt",
-  "2012ht",
-  "2013vt",
-  "2013ht",
-  "2014vt",
-  "2014ht",
-  "2015vt",
-  "2015ht",
-  "2016vt",
-  "2016ht",
-  "2017vt",
-  "2017ht",
-  "2018vt",
-  "2018ht",
-  "2019vt",
-  "2019ht",
-  "2020ht",
-  "2021vt",
-  "2021ht",
-  "2022vt",
-  "2022ht",
-  "2023vt",
-  "2023ht",
-  "2024vt",
-  "2024ht",
-  "2025vt",
-  "2025ht",
-  "2026vt",
-];
+// Läses ur arkivets eget index. Listan stod tidigare handskriven och pekade
+// på "2021vt" och "2022vt", som inte finns: de vårarna hade två prov var
+// (2021vta/2021vtb), så två av rutorna gav 404 och fyra prov saknades.
+const TERMINER = [...allExams()].reverse().map((e) => ({
+  term: e.term,
+  // "2021vta" skrivs "2021 vt a" så att de två vårproven går att skilja åt.
+  text: `${e.term.slice(0, 4)} ${e.term.slice(4, 6)}${e.term.length > 6 ? ` ${e.term.slice(6)}` : ""}`,
+  label: e.label,
+}));
 
 const ARKIVFAKTA = [
   { n: "30", t: "provtillfällen från 2012 till 2026" },
@@ -280,12 +260,13 @@ export function Arkivet() {
             <div className="flex flex-wrap gap-1.5">
               {TERMINER.map((t) => (
                 <Link
-                  key={t}
+                  key={t.term}
                   to="/gamla-prov/$term"
-                  params={{ term: t }}
+                  params={{ term: t.term }}
+                  title={t.label}
                   className="inline-flex min-h-[44px] items-center rounded-sm border border-white/10 bg-card px-3 font-mono text-[12.5px] tabular-nums text-white/70 transition-colors hover:border-primary hover:text-primary"
                 >
-                  {t.slice(0, 4)} {t.slice(4)}
+                  {t.text}
                 </Link>
               ))}
             </div>
@@ -375,7 +356,7 @@ export function Produktytorna() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <div>
           <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-            Fyra sätt att plugga
+            4 sätt att plugga
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -720,7 +701,7 @@ const RESURSER: Array<{ to: LinkProps["to"]; titel: string; text: string }> = [
   {
     to: "/ordlista",
     titel: "Ordlista",
-    text: "Varje ord som förekommit på provet, med betydelse.",
+    text: "Över 10 000 ord med betydelse, exempelmening och liknande ord.",
   },
   {
     to: "/forum",

@@ -1903,6 +1903,27 @@ prov). Skriv aldrig att "samma ord återkommer" i text som besökare läser.
 `questions`-tabellens 8 761 ORD-rader är inte alla ur prov (taggar som
 `lektion-64`), så kalla dem inte "ord ur gamla prov" heller.
 
+### Crawlfynd (2026-11-14)
+
+En crawl av dev-servern (alla interna länkar, status, titel, beskrivning,
+canonical, h1) hittade fel som varken tsc, tester eller copy-lint ser:
+
+- **Skriv aldrig en lista över provterminer för hand.** Landningssidans
+  `TERMINER` hade `2021vt` och `2022vt`, som inte finns (de vårarna heter
+  `2021vta`/`vtb`), så två rutor gav 404 och fyra prov saknades. Listan läses
+  nu ur `allExams()`.
+- **`source` i provdatan är inte alltid en adress.** Vårprovet 2012 byggdes ur
+  lokala filer och har en sökväg på importmaskinen där. `ProvRunner` visar
+  länken till original-PDF:en bara när värdet börjar med `http`.
+- **`pageMeta`/`pageLinks` procentkodar sökvägen själva** (`encodePath`).
+  Registersidorna för å, ä och ö hade okodad canonical men kodade länkar.
+- **`fitTitle` kortar inte kärnan**, bara svansarna. En kärna över 43 tecken
+  går rakt igenom. Lägg det umbärliga som svans.
+- **CSP:n behöver `https://*.adtrafficquality.google`** för AdSense, annars
+  ett konsolfel per sidladdning.
+- `grep` på sidans HTML i det här skalet ger tomt svar på strängar med å, ä
+  eller ö. Kontrollera med `node -e` och `fetch` i stället.
+
 ### Provdatum och Event-data (2026-08-20)
 
 Search Console rapporterade fyra "mindre allvarliga" Event-varningar på

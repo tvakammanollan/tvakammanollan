@@ -12,7 +12,7 @@ const PATH = "/guider/fran-noll-till-2-0";
 const URL = `https://tvakommanollan.se${PATH}`;
 const HEADLINE = "Komplett guide inför högskoleprovet"; // copy-ok
 const DESCRIPTION =
-  "Så skulle jag plugga från noll till 2,0 på högskoleprovet: vad du gör innan plugget börjar, vad du prioriterar i den kvantitativa och den verbala delen, och hur du håller fokus på provdagen.";
+  "Så skulle jag plugga från noll till 2,0 på högskoleprovet: vad du gör innan plugget börjar, vad du prioriterar i varje provdel och hur du håller fokus på provdagen.";
 
 export const Route = createFileRoute("/guider/fran-noll-till-2-0")({
   component: FranNollGuidePage,

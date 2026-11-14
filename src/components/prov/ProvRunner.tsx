@@ -811,15 +811,22 @@ function ProvIntro({
       </div>
 
       <p className="mt-6 text-xs text-[var(--text-tertiary)]">
-        Uppgifterna kommer från UHR:s publicerade provhäfte.{" "}
-        <a
-          href={data.source}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--amber)] underline-offset-2 hover:underline"
-        >
-          Öppna original-PDF:en
-        </a>
+        Uppgifterna kommer från UHR:s publicerade provhäfte.
+        {/* Vårprovet 2012 byggdes ur lokala filer, och `source` är då en
+            sökväg på importmaskinen. Länken visas bara när den är en adress. */}
+        {/^https?:\/\//.test(data.source) && (
+          <>
+            {" "}
+            <a
+              href={data.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--amber)] underline-offset-2 hover:underline"
+            >
+              Öppna original-PDF:en
+            </a>
+          </>
+        )}
       </p>
 
       {/* Innehållet ligger i serverrenderad HTML även hopfällt, så uppgifterna

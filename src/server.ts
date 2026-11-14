@@ -91,9 +91,9 @@ function withSecurityHeaders(response: Response): Response {
   const ADS_SCRIPT =
     "https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.googleadservices.com https://*.googletagservices.com https://*.doubleclick.net https://*.google.com";
   const ADS_CONNECT =
-    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.gstatic.com";
+    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.gstatic.com https://*.adtrafficquality.google";
   const ADS_FRAME =
-    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://www.google.com";
+    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://www.google.com https://*.adtrafficquality.google";
   // CSP — supabase + lovable analytics tillåts, strikt i övrigt.
   // (Google Fonts-posterna borttagna 2026-07 — fonterna laddas inte längre.)
   //

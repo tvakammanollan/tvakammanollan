@@ -90,7 +90,7 @@ function OrdHub() {
         ))}
       </ul>
       <p className="mt-10 text-[14px] text-white/55">
-        Vill du slå upp ett enskilt ord? Alla ord som förekommit på provet finns i{" "}
+        Vill du slå upp ett enskilt ord? Orden finns också i{" "}
         <Link to="/ordlista" className="underline underline-offset-2 hover:text-[var(--cream)]">
           ordlistan
         </Link>

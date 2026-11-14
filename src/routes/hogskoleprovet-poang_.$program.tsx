@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
-import { fitTitle } from "@/lib/seo-text";
+import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { formatDecimal } from "@/lib/sv-format";
 import { Info } from "lucide-react";
 
@@ -932,10 +932,11 @@ export const Route = createFileRoute("/hogskoleprovet-poang_/$program")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`${cfg.name}: HP-poäng ${cfg.term}`),
-        description:
-          `Antagningspoäng i högskoleprovsgruppen för ${cfg.name} (${cfg.term}), lärosäte för lärosäte. ` +
-          `Källa: ${cfg.sourceLabel}. Uppdaterat ${cfg.verifiedAt}.`,
+        title: fitTitle(`${cfg.name}: HP-poäng`, cfg.term),
+        description: describeWithin(
+          `Antagningspoäng i högskoleprovsgruppen för ${cfg.name}, lärosäte för lärosäte. Källa: ${cfg.sourceLabel}.`,
+          `Uppdaterat ${cfg.verifiedAt}.`,
+        ),
         ogTitle: `${cfg.name}: vad krävs på högskoleprovet?`,
         ogDescription: `HP-poäng ${cfg.term} för ${cfg.name}, lärosäte för lärosäte. Källa: ${cfg.sourceLabel}.`,
       }),
