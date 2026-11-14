@@ -264,7 +264,7 @@ export interface ForumHomeData {
 
 export const fetchForumHome = createServerFn({ method: "GET" }).handler(
   async (): Promise<ForumHomeData> => {
-    assertRateLimit(ipKey("forum-home"), limits.publicRead);
+    assertRateLimit(ipKey("forum-home"), limits.publicPage);
 
     const cats = await loadCategories();
     const catById = new Map(cats.map((c) => [c.id, c]));
@@ -338,7 +338,7 @@ export const fetchForumCategory = createServerFn({ method: "GET" })
       .parse(input),
   )
   .handler(async ({ data }): Promise<ForumCategoryData | null> => {
-    assertRateLimit(ipKey("forum-category"), limits.publicRead);
+    assertRateLimit(ipKey("forum-category"), limits.publicPage);
 
     const cats = await loadCategories();
     const catById = new Map(cats.map((c) => [c.id, c]));
@@ -502,7 +502,7 @@ export const fetchForumThread = createServerFn({ method: "GET" })
       .parse(input),
   )
   .handler(async ({ data }): Promise<ForumThreadData | null> => {
-    assertRateLimit(ipKey("forum-thread"), limits.publicRead);
+    assertRateLimit(ipKey("forum-thread"), limits.publicPage);
 
     const { data: threadRow, error: threadError } = await supabaseAdmin
       .from("forum_threads")
@@ -597,7 +597,7 @@ export const fetchForumThread = createServerFn({ method: "GET" })
 /** Kategorierna, för formuläret på /forum/nytt. */
 export const fetchForumCategories = createServerFn({ method: "GET" }).handler(
   async (): Promise<ForumCategory[]> => {
-    assertRateLimit(ipKey("forum-cats"), limits.publicRead);
+    assertRateLimit(ipKey("forum-cats"), limits.publicPage);
     return (await loadCategories()).map(toCategory);
   },
 );

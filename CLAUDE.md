@@ -2416,6 +2416,7 @@ is a different selector from `bg-red-500` and needs its own entry.
 `src/lib/rate-limit.ts` (pure limiter + `limits.*` configs) + `src/lib/rate-limit.server.ts` (`assertRateLimit`, `ipKey`). Rules:
 - Authenticated mutations: `assertRateLimit(\`thing:${userId}\`, limits.xxx)` first in the handler.
 - Public GET endpoints: `assertRateLimit(ipKey("thing"), limits.publicRead)` (keys on `cf-connecting-ip`).
+- **Route-loaders för indexerbara sidor använder `limits.publicPage` (600/min), inte `publicRead`.** Gränsen kastar i loadern och blir en 500 för sökroboten. Med 120/min svarade ordlistesidorna 500 ("För många försök") vid en lokal crawl i två trådar (2026-11-14); en robot som går igenom 8 800 adresser från ett fåtal IP når samma tak.
 - Per-isolate on Cloudflare — it's a hammering brake, not an exact global quota.
 - **Volymkvoter måste räknas i databasen.** Av precis det skälet: forumet räknar
   rader i RPC:erna, och matcher räknas i `matches` via `checkMatchQuota`

@@ -26,7 +26,7 @@ export const getOrdlistaEntry = createServerFn({ method: "GET" })
     z.object({ slug: z.string().min(1).max(120) }).parse(data),
   )
   .handler(async ({ data }) => {
-    assertRateLimit(ipKey("ordlista"), limits.publicRead);
+    assertRateLimit(ipKey("ordlista"), limits.publicPage);
     return fetchOrdEntry(data.slug);
   });
 
@@ -35,7 +35,7 @@ export const getOrdlistaLetter = createServerFn({ method: "GET" })
     z.object({ letter: z.string().min(1).max(16) }).parse(data),
   )
   .handler(async ({ data }) => {
-    assertRateLimit(ipKey("ordlista"), limits.publicRead);
+    assertRateLimit(ipKey("ordlista"), limits.publicPage);
     // Grinden här och inte i `fetchOrdLetter`: registret är en Map med fasta
     // nycklar, så en okänd bokstav ger ändå null — men att avvisa tidigt
     // slipper bygga registret för en adress som ändå ska 404:a.
@@ -44,7 +44,7 @@ export const getOrdlistaLetter = createServerFn({ method: "GET" })
   });
 
 export const getOrdlistaOverview = createServerFn({ method: "GET" }).handler(async () => {
-  assertRateLimit(ipKey("ordlista"), limits.publicRead);
+  assertRateLimit(ipKey("ordlista"), limits.publicPage);
   return fetchOrdlistaOverview();
 });
 
@@ -60,7 +60,7 @@ export const getOrdlistaKnownSlugs = createServerFn({ method: "GET" })
     z.object({ slugs: z.array(z.string().min(1).max(120)).max(200) }).parse(data),
   )
   .handler(async ({ data }) => {
-    assertRateLimit(ipKey("ordlista"), limits.publicRead);
+    assertRateLimit(ipKey("ordlista"), limits.publicPage);
     try {
       const index = await getOrdIndex();
       return data.slugs.filter((s) => index.bySlug.has(s));

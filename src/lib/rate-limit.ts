@@ -68,6 +68,15 @@ export const limits = {
   matchInvite: { max: 30, windowMs: 60 * 60 * 1000 } as LimitConfig, // 30/hour
   /** Publika läs-endpoints (topplistor m.m.) — per IP, stoppar hamring. */
   publicRead: { max: 120, windowMs: 60 * 1000 } as LimitConfig, // 120/min
+  /**
+   * Route-loaders för indexerbara sidor (ordlistan, forumet). Högre än
+   * `publicRead` med flit: gränsen kastar i loadern, och ett kast där blir
+   * en 500 för den som crawlar. Ordlistans sitemap har ~8 800 adresser och
+   * en sökrobot kommer från ett fåtal IP, så 120/min räckte inte (2026-11-14,
+   * uppmätt lokalt: sidorna svarade 500 med "För många försök"). 600/min är
+   * fortfarande en broms mot hamring men inget en riktig crawler når.
+   */
+  publicPage: { max: 600, windowMs: 60 * 1000 } as LimitConfig, // 600/min
   /** Ordbatch-hämtning (tung query) — per IP. */
   wordBatch: { max: 30, windowMs: 60 * 1000 } as LimitConfig, // 30/min
   /**

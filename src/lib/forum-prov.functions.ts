@@ -28,7 +28,7 @@ export const fetchProvThreads = createServerFn({ method: "GET" })
       .parse(input),
   )
   .handler(async ({ data }): Promise<Record<number, ProvThreadLink>> => {
-    assertRateLimit(ipKey("prov-threads"), limits.publicRead);
+    assertRateLimit(ipKey("prov-threads"), limits.publicPage);
     const [threads, cats] = await Promise.all([
       supabaseAdmin
         .from("forum_threads")
