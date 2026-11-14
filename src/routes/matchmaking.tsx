@@ -14,6 +14,10 @@ import { toast } from "sonner";
 
 const search = z.object({ type: z.enum(["verbal", "math"]).default("verbal") });
 
+// Väntan innan botmatchen skapas. Se effekten i komponenten.
+const BOT_WAIT_MIN_MS = 3000;
+const BOT_WAIT_MAX_MS = 6000;
+
 export const Route = createFileRoute("/matchmaking")({
   validateSearch: (s) => search.parse(s),
   component: MatchmakingPage,
@@ -51,6 +55,8 @@ function MatchmakingPage() {
   const navigatedRef = useRef(false);
   const botFiredRef = useRef(false);
   const botAttemptsRef = useRef(0);
+  const [botDue, setBotDue] = useState(false);
+  const [botRound, setBotRound] = useState(0);
   const guestSignInRef = useRef(false);
 
   // No session yet? Sign in as an anonymous guest instead of bouncing to /login.
@@ -109,10 +115,20 @@ function MatchmakingPage() {
     return () => clearInterval(id);
   }, []);
 
-  // Auto-match with bot after 6s if no human found — seamless, no indication it's a bot
+  // Botmatchen startar efter en slumpad väntan, så att sökningen inte tar
+  // exakt lika lång tid varje gång. Skapandet tar ungefär en sekund till,
+  // så 3–6 s här ger 4–7 s från klick till match.
+  useEffect(() => {
+    setBotDue(false);
+    const delay = BOT_WAIT_MIN_MS + Math.random() * (BOT_WAIT_MAX_MS - BOT_WAIT_MIN_MS);
+    const id = setTimeout(() => setBotDue(true), delay);
+    return () => clearTimeout(id);
+  }, [botRound]);
+
+  // Auto-match with bot if no human found — seamless, no indication it's a bot
   useEffect(() => {
     if (failed) return;
-    if (elapsed >= 6 && !navigatedRef.current && !botFiredRef.current && !navigating) {
+    if (botDue && !navigatedRef.current && !botFiredRef.current && !navigating) {
       botFiredRef.current = true;
       void (async () => {
         try {
@@ -140,7 +156,7 @@ function MatchmakingPage() {
       })();
     }
     if (elapsed === 30 && range === 200) setRange(400);
-  }, [elapsed, range, navigating, failed, cancelFn, createFn, type, navigate]);
+  }, [elapsed, botDue, range, navigating, failed, cancelFn, createFn, type, navigate]);
 
   // Polling for match
   useEffect(() => {
@@ -243,6 +259,7 @@ function MatchmakingPage() {
               cancelledRef.current = false;
               setFailed(false);
               setElapsed(0);
+              setBotRound((r) => r + 1);
             }}
           >
             Försök igen
