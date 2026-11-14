@@ -1849,8 +1849,16 @@ head: () => ({
 
 Use `breadcrumbScript()` and `jsonLdScript()` from the same file for structured data.
 
+**Varumärket står SIST i titeln sedan 2026-11-14** (`Sidan | Tvåkommanollan`,
+`pageTitle()` i `page-meta.ts`). Det stod först tidigare, med motiveringen att
+träfflistan kapar från höger, vilket är skälet till motsatsen: med varumärket
+först var det sidans egen beskrivning som kapades, på alla 1 300 forumtrådar
+och programsidorna. Blir titeln över 60 tecken med varumärket släpps det, så
+en lång forumrubrik står hel. Handskrivna `ogTitle` med `Tvåkommanollan | `
+först är delningsrubriker och rör inte träfflistan.
+
 **Titelbudgeten räknar med varumärket (2026-11-11).** `pageMeta` sätter
-`Tvåkommanollan | ` (17 tecken) framför `title`, och Google kapar HELA
+` | Tvåkommanollan` (17 tecken) efter `title`, och Google kapar HELA
 titeln runt 60. `fitTitle()` i `seo-text.ts` räknar därför mot
 `PAGE_TITLE_MAX` (43), inte `TITLE_MAX`. Före det stod 20 sidor med 64–76
 tecken i träfflistan fast allt såg rätt ut i koden: en kärna på 50 tecken

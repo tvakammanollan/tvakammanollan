@@ -19,9 +19,10 @@ import { SITE_NAME } from "./page-meta";
 export const TITLE_MAX = 60;
 
 /**
- * Så lång SIDANS del av titeln får vara. `pageTitle()` i `page-meta.ts`
- * sätter `"Tvåkommanollan | "` (17 tecken) framför allt som `fitTitle`
- * ger ifrån sig, och det är hela titeln Google mäter. Fram till 2026-11-11
+ * Så lång SIDANS del av titeln får vara för att varumärket ska få plats.
+ * `pageTitle()` i `page-meta.ts` lägger `" | Tvåkommanollan"` (17 tecken)
+ * efter allt som `fitTitle` ger ifrån sig, och det är hela titeln Google
+ * mäter. (Längre kärnor tappar varumärket i stället för att kapas.) Fram till 2026-11-11
  * räknade `fitTitle` mot `TITLE_MAX` rakt av, så 20 sidor stod i träfflistan
  * med 64–76 tecken och kapades mitt i "med facit" eller i varumärket.
  */
@@ -90,8 +91,8 @@ export function describeWithin(body: string, tail: string, max = DESCRIPTION_MAX
  *
  * **Lägg aldrig till `"· Tvåkommanollan"` som svans här.** Resultatet går
  * (nästan alltid) rakt in i `pageMeta({ title })`, och `pageTitle()` i
- * `page-meta.ts` sätter redan `"Tvåkommanollan | "` framför — en svans med
- * varumärket dubblerar det till "Tvåkommanollan | … · Tvåkommanollan" så fort
+ * `page-meta.ts` lägger redan `" | Tvåkommanollan"` efter: en svans med
+ * varumärket dubblerar det till "… · Tvåkommanollan | Tvåkommanollan" så fort
  * kärnan är kort nog för att svansen får plats (hände på riktigt på två
  * sidor, båda flaggade för för lång titel). När den inte fick plats försvann
  * bufferten i tysthet i stället, och togs då från kärnans egen budget —

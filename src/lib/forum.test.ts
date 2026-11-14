@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   slugifyTitle,
+  threadDescription,
   provTermLabel,
   threadPath,
   parseThreadParam,
@@ -183,5 +184,26 @@ describe("provThreadKey och provThreadDelprov", () => {
     expect(provThreadDelprov("Vårprovet 2026, provpass 3, uppgift 26 (NOG): lösning")).toBe("NOG");
     expect(provThreadDelprov("Höstprovet 2024, provpass 2, uppgift 12 (LÄS): lösning")).toBe("LÄS");
     expect(provThreadDelprov("Tio tips inför högskoleprovet")).toBeNull();
+  });
+});
+
+describe("threadDescription", () => {
+  it("fyller ut en kort fråga med början av svaret", () => {
+    const d = threadDescription(
+      "Kan man ha med en miniräknare eller formelsamling?",
+      "Nej. Miniräknare, formelsamling och linjal är inte tillåtna på något provpass, och det gäller både den verbala och den kvantitativa delen.",
+    )!;
+    expect(d.startsWith("Kan man ha med en miniräknare eller formelsamling? Nej.")).toBe(true);
+    expect(d.length).toBeLessThanOrEqual(155);
+  });
+
+  it("låter en lång fråga stå ensam", () => {
+    const q = "a ".repeat(70).trim();
+    expect(threadDescription(q, "svar")).toBe(q);
+  });
+
+  it("ger null utan startinlägg och bara frågan utan svar", () => {
+    expect(threadDescription(undefined, "x")).toBeNull();
+    expect(threadDescription("Kort fråga?", undefined)).toBe("Kort fråga?");
   });
 });

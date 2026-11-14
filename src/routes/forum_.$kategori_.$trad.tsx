@@ -26,7 +26,7 @@ import { moderateForumThread, type ThreadModerationInput } from "@/lib/forum-mod
 import {
   buildQuote,
   displayAuthor,
-  excerpt,
+  threadDescription,
   pageCount,
   parseThreadParam,
   provTermLabel,
@@ -74,19 +74,18 @@ export const Route = createFileRoute("/forum_/$kategori_/$trad")({
     const path = page > 1 ? `${base}?sida=${page}` : base;
     const suffix = page > 1 ? `, sida ${page}` : "";
     const first = posts[0];
-    const description = first
-      ? excerpt(first.body, 155)
-      : `Diskussion om högskoleprovet i ${category.name}.`;
-
     const answer = posts.find((p) => p.isAnswer);
+    const description =
+      threadDescription(first?.body, (answer ?? posts[1])?.body) ??
+      `Diskussion om högskoleprovet i ${category.name}.`;
+
     const isQa = category.kind === "qa";
 
     return {
       meta: pageMeta({
         path,
-        // "Tvåkommanollan | " står redan först. Upprepat varumärke i svansen
-        // knuffade ut trådens egen rubrik ur träfflistan, så det blir bara
-        // "Forum", och inte ens det när rubriken redan är lång.
+        // pageMeta lägger varumärket sist och släpper det när rubriken är
+        // lång. Korta rubriker får "Forum" som svans.
         title: `${thread.title}${suffix}${thread.title.length + suffix.length <= 35 ? ": Forum" : ""}`,
         description,
         ogTitle: thread.title,

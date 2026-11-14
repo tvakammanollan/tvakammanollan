@@ -165,6 +165,25 @@ export function excerpt(body: string, max = 155): string {
   return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd() + "…";
 }
 
+/**
+ * Meta-beskrivningen för en tråd. Startinlägget räcker när det är långt,
+ * men en fråga är ofta en enda mening ("Kan man ha med en miniräknare?",
+ * 50 tecken) och då visar träfflistan frågan och inget mer. Är frågan kort
+ * fylls resten av utrymmet med början av svaret, eftersom det är svaret
+ * sökaren letar efter.
+ */
+export function threadDescription(
+  firstBody: string | undefined,
+  replyBody: string | undefined,
+  max = 155,
+): string | null {
+  if (!firstBody) return null;
+  const question = excerpt(firstBody, max);
+  const room = max - question.length - 1;
+  if (!replyBody || question.length >= 110 || room < 30) return question;
+  return `${question} ${excerpt(replyBody, room)}`;
+}
+
 /** Bygg citatblocket som klistras in i skrivrutan när man citerar ett inlägg. */
 export function buildQuote(author: string, body: string): string {
   const quoted = stripMarkup(body).slice(0, 600);

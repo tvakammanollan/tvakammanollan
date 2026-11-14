@@ -31,26 +31,33 @@ const ORIGIN = "https://tvakommanollan.se";
 export const SITE_NAME = "Tvåkommanollan";
 
 /**
- * Titelmallen: `Tvåkommanollan | <sidans egen titel>`.
+ * Titelmallen: `<sidans egen titel> | Tvåkommanollan`.
  *
- * Vertikalstreck, inte tankstreck eller kolon — CLAUDE.md:s regel om
+ * Vertikalstreck, inte tankstreck eller kolon: CLAUDE.md:s regel om
  * tankstreck i text som en människa läser gäller `<title>` precis som allt
- * annat, och `·` (mittpunkt) hade krockat med sitens egen separator inuti
- * sidtitlar ("Guider · alla 8 delprov"). Varumärket FÖRST: sökmotorers
- * träfflistor kapar titeln från höger, så det som riskerar att försvinna ska
- * vara den del som redan står i domänen och webbplatsnamnet, inte sidans
- * egen beskrivning.
+ * annat.
  *
- * `page` ska vara UNDER 43 tecken — "Tvåkommanollan | " är 17, och hela
- * titeln bör hålla sig under 60 för att inte kapas i en träfflista.
+ * Varumärket SIST (ändrat 2026-11-14). Träfflistan kapar titeln från höger,
+ * så det som får försvinna ska vara varumärket, som redan står i Googles
+ * sajtnamnsrad ovanför titeln. Med varumärket först var det sidans egen
+ * beskrivning som kapades, och varje träff började med ett ord ingen söker på.
+ *
+ * Blir titeln längre än `TITLE_MAX` med varumärket släpps varumärket, så att
+ * en lång forumrubrik står kvar hel i stället för att kapas mitt i frågan.
+ * `page` bör ändå hålla sig under `PAGE_TITLE_MAX` (43) där det går, så att
+ * varumärket får plats.
  */
 export function pageTitle(page: string): string {
-  return `${SITE_NAME} | ${page}`;
+  const full = `${page} | ${SITE_NAME}`;
+  return full.length <= TITLE_LIMIT ? full : page;
 }
+
+/** Samma tal som `TITLE_MAX` i `seo-text.ts`; den filen importerar härifrån. */
+const TITLE_LIMIT = 60;
 
 export interface PageMetaInput {
   path: string; // e.g. "/train"
-  /** BARA sidans egen del — `Tvåkommanollan | ` läggs på av `pageMeta`. */
+  /** BARA sidans egen del: ` | Tvåkommanollan` läggs på av `pageMeta`. */
   title: string;
   description: string;
   /**
