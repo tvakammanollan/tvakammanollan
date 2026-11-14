@@ -147,17 +147,19 @@ export function Navbar() {
                 <NavLink to="/guider">Guider</NavLink>
                 <NavLink to="/pris">Pris</NavLink>
               </span>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/login">Logga in</Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild className="hidden lg:inline-flex">
-                <Link to="/signup">Skapa konto</Link>
-              </Button>
+              {/* Samma NavLink som resten av raden. De låg som Button
+                  size="sm" (12 px, full svärta) bredvid länkar på 14 px i
+                  dämpad ton, och såg därför ut att vara satta i ett annat
+                  typsnitt. */}
+              <NavLink to="/login">Logga in</NavLink>
+              <span className="hidden lg:contents">
+                <NavLink to="/signup">Skapa konto</NavLink>
+              </span>
               <Button
                 size="sm"
                 onClick={() => playAsGuest("verbal")}
                 disabled={guestLoading}
-                className="gap-1.5 bg-primary text-on-brand font-semibold hover: hover:from-amber-300 hover:to-orange-400 transition-shadow"
+                className="ml-1 gap-1.5 bg-primary text-sm font-medium text-on-brand"
               >
                 {guestLoading ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
