@@ -55,3 +55,43 @@ export function canonicalRedirect(url: URL): string | null {
 export function canonicalRedirectEnabled(): boolean {
   return process.env.CANONICAL_REDIRECT?.trim().toLowerCase() === "on";
 }
+
+/** Värdnamn där sajten serveras skarpt. Allt annat (localhost, förhandsvisningar) lämnas i fred. */
+const OWN_HOSTS = new Set([CANONICAL_HOST, `www.${CANONICAL_HOST}`]);
+
+/**
+ * Den enda adress en sida får svara 200 på, eller null när begäran redan
+ * ligger där (2026-11-14).
+ *
+ * Fram till dess svarade samma sida 200 på fyra adresser: med och utan www,
+ * över http och https. Canonical-taggen pekade rätt, men Google måste då
+ * hämta varje kopia för att läsa taggen, och varje kopia hamnar i Search
+ * Console som "Alternativ sida med korrekt kanonisk tagg" eller "Dubblett".
+ * Avslutande snedstreck gav dessutom 307 (tillfällig) från routern, vilket
+ * Google läser som att adressen med snedstreck ska behållas.
+ *
+ * - www på den egna domänen flyttas ALLTID, utan grinden: målet är samma
+ *   Worker på samma zon, så det finns inget läge där www svarar men apex
+ *   inte gör det. Grinden gäller bara den gamla domänen.
+ * - http flyttas bara när `x-forwarded-proto` uttryckligen säger http.
+ *   nitro ligger mellan Cloudflare och den här koden; skulle URL:en någon
+ *   gång byggas om med fel schema får det inte bli en evig omdirigering.
+ * - `/api/` rörs aldrig, av samma skäl som i canonicalRedirect().
+ */
+export function canonicalLocation(
+  url: URL,
+  opts: { legacyEnabled: boolean; forwardedProto?: string | null },
+): string | null {
+  if (url.pathname === "/api" || url.pathname.startsWith("/api/")) return null;
+
+  const legacy = opts.legacyEnabled ? canonicalRedirect(url) : null;
+  const own = OWN_HOSTS.has(url.hostname);
+  if (!legacy && !own) return null;
+
+  const path = url.pathname.replace(/\/+$/, "") || "/";
+  const insecure = url.protocol === "http:" && opts.forwardedProto?.trim().toLowerCase() === "http";
+  const wrongHost = legacy !== null || url.hostname !== CANONICAL_HOST;
+  if (!wrongHost && !insecure && path === url.pathname) return null;
+
+  return `https://${CANONICAL_HOST}${path}${url.search}`;
+}

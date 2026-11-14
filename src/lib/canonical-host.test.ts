@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import { canonicalRedirect, canonicalRedirectEnabled } from "./canonical-host";
+import { canonicalLocation, canonicalRedirect, canonicalRedirectEnabled } from "./canonical-host";
 
 const at = (href: string) => canonicalRedirect(new URL(href));
 
@@ -68,5 +68,55 @@ describe("canonicalRedirectEnabled", () => {
       process.env.CANONICAL_REDIRECT = v;
       expect(canonicalRedirectEnabled(), v).toBe(false);
     }
+  });
+});
+
+describe("canonicalLocation", () => {
+  const loc = (href: string, legacyEnabled = false, forwardedProto: string | null = "https") =>
+    canonicalLocation(new URL(href), { legacyEnabled, forwardedProto });
+
+  it("rör inte en adress som redan är kanonisk", () => {
+    expect(loc("https://tvakommanollan.se/")).toBeNull();
+    expect(loc("https://tvakommanollan.se/forum/kvantitativ?sida=2")).toBeNull();
+  });
+
+  it("flyttar www till apex även när grinden är av", () => {
+    expect(loc("https://www.tvakommanollan.se/ordlista?x=1")).toBe(
+      "https://tvakommanollan.se/ordlista?x=1",
+    );
+  });
+
+  it("flyttar http till https bara när Cloudflare säger http", () => {
+    expect(loc("http://tvakommanollan.se/gamla-prov", false, "http")).toBe(
+      "https://tvakommanollan.se/gamla-prov",
+    );
+    expect(loc("http://tvakommanollan.se/gamla-prov", false, "https")).toBeNull();
+    expect(loc("http://tvakommanollan.se/gamla-prov", false, null)).toBeNull();
+  });
+
+  it("tar bort avslutande snedstreck men låter roten vara", () => {
+    expect(loc("https://tvakommanollan.se/forum/")).toBe("https://tvakommanollan.se/forum");
+    expect(loc("https://tvakommanollan.se/ordlista//?a=b")).toBe(
+      "https://tvakommanollan.se/ordlista?a=b",
+    );
+    expect(loc("https://tvakommanollan.se/")).toBeNull();
+  });
+
+  it("gör allt i ett hopp", () => {
+    expect(loc("http://www.tvakommanollan.se/forum/", false, "http")).toBe(
+      "https://tvakommanollan.se/forum",
+    );
+  });
+
+  it("låter gamla domänen vara tills grinden slås på", () => {
+    expect(loc("https://hpkampen.se/forum/")).toBeNull();
+    expect(loc("https://hpkampen.se/forum/", true)).toBe("https://tvakommanollan.se/forum");
+  });
+
+  it("rör aldrig /api/ och aldrig främmande värdar", () => {
+    expect(loc("https://www.tvakommanollan.se/api/stripe/webhook")).toBeNull();
+    expect(loc("http://tvakommanollan.se/api/health", false, "http")).toBeNull();
+    expect(loc("http://localhost:8080/forum/", false, "http")).toBeNull();
+    expect(loc("https://abc-tvakammanollan.workers.dev/forum/")).toBeNull();
   });
 });

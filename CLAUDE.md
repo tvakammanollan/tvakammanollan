@@ -110,9 +110,23 @@ touching production; use it for anything you cannot check locally.
   nedan är hela poängen med att den är testbar.
 - **`CANONICAL_REDIRECT` är en grind, inte en flagga att städa bort.** Den stod
   `off` tills apex bevisligen svarade 200; med den `on` samtidigt som apex var
-  nere hade *hela* sajten 301:at till en död värd. Den är `on` sedan
-  2026-08-18 13:18. Ska målvärdnamnet någonsin flyttas igen: sätt `off`, byt
+  nere hade *hela* sajten 301:at till en död värd. Den var `on`
+  2026-08-18 till 2026-09-21 och är `off` sedan dess (`7f59a35`). Ska målvärdnamnet någonsin flyttas igen: sätt `off`, byt
   route, verifiera 200, sätt `on` — i den ordningen, två deployer.
+- **En sida svarar 200 på exakt en adress (2026-11-14).** `canonicalLocation()`
+  301:ar www, http och avslutande snedstreck till `https://tvakommanollan.se`
+  i ett hopp, oberoende av grinden (den gäller bara `hpkampen.se`). Före det
+  svarade varje sida 200 på fyra adresser och snedstrecket gav routerns 307,
+  vilket Search Console redovisar som dubbletter och "Sida med omdirigering".
+  http flyttas bara när `x-forwarded-proto` säger http, så att ett fel schema
+  i URL:en aldrig kan bli en slinga. Vite dev avvisar främmande `Host` med
+  403; testa i stället den byggda Workern med
+  `npx wrangler dev -c .output/server/wrangler.json --host www.tvakommanollan.se`.
+- **`hpkampen.se` saknar A-post sedan någon gång före 2026-11-14.** Zonen
+  ligger kvar i Cloudflare (NS och MX svarar) men värdnamnet går inte att
+  slå upp, så flytt-301:an når ingen och gamla länkar är döda. Ska flytten
+  fungera: lägg tillbaka proxade A/AAAA-poster för apex och www, och sätt
+  sedan grinden `on`.
 - **`/api/` undantas från flytt-301:an.** Stripe följer inte 3xx: en webhook som
   fortfarande pekar på `hpkampen.se` hade läst 301 som misslyckande och slutat
   bokföra köp, tyst, medan kassan såg ut att fungera. Undantaget gör en

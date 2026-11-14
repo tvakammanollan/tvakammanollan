@@ -1,7 +1,7 @@
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
-import { CANONICAL_HOST, canonicalRedirect, canonicalRedirectEnabled } from "./lib/canonical-host";
+import { CANONICAL_HOST, canonicalLocation, canonicalRedirectEnabled } from "./lib/canonical-host";
 import { posthogCspOrigins } from "./lib/analytics-host";
 import { renderErrorPage } from "./lib/error-page";
 
@@ -579,15 +579,20 @@ export default {
     // så att en gammal adress till en sammanslagen sida tar ett hopp och inte
     // två — en 301-kedja läcker länkkraft och Google följer bara ett fåtal.
     const mergedPath = PERMANENT_REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
-    // Grinden först: utan den släcker en utrullning sajten om målvärdnamnet
-    // ännu inte har en Worker-route. Se canonicalRedirectEnabled().
-    const canonicalHost =
-      canonicalRedirectEnabled() && canonicalRedirect(url) ? `https://${CANONICAL_HOST}` : "";
-    if (mergedPath || canonicalHost) {
+    // www, http och avslutande snedstreck flyttas alltid; gamla domänen bara
+    // när grinden är på. Se canonicalLocation().
+    const canonical = canonicalLocation(url, {
+      legacyEnabled: canonicalRedirectEnabled(),
+      forwardedProto: request.headers.get("x-forwarded-proto"),
+    });
+    if (mergedPath || canonical) {
+      const location = mergedPath
+        ? (canonical ? `https://${CANONICAL_HOST}` : "") + mergedPath + url.search
+        : canonical!;
       return new Response(null, {
         status: 301,
         headers: {
-          location: canonicalHost + (mergedPath ?? url.pathname) + url.search,
+          location,
           // withSecurityHeaders() gäller bara text/html, och den här 301:an
           // har ingen body alls — den träffas aldrig av den. Utan HSTS här
           // saknar just www.tvakommanollan.se (första hoppet i domänflytten)
