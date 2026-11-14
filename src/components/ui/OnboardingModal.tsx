@@ -25,7 +25,7 @@ import { toast } from "sonner";
 
 const GOALS: ReadonlyArray<{ icon: LucideIcon; range: string; label: string; value: number }> = [
   { icon: Sprout, range: "0,5–0,9", label: "Grundläggande", value: 0.7 },
-  { icon: BookMarked, range: "1,0–1,2", label: "Godkänt", value: 1.1 },
+  { icon: BookMarked, range: "1,0–1,2", label: "Runt medel", value: 1.1 },
   { icon: Target, range: "1,3–1,5", label: "Bra resultat", value: 1.4 },
   { icon: Trophy, range: "1,6–1,8", label: "Mycket bra", value: 1.7 },
   { icon: Gem, range: "1,9–2,0", label: "Toppresultat", value: 1.95 },

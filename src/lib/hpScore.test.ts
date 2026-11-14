@@ -19,8 +19,8 @@ describe("combinedHpScore", () => {
 
 describe("hpScoreLabel", () => {
   it("etiketter per gräns", () => {
-    expect(hpScoreLabel(0.5)).toBe("Under godkänt");
-    expect(hpScoreLabel(0.9)).toBe("Godkänt");
+    expect(hpScoreLabel(0.5)).toBe("Under medel");
+    expect(hpScoreLabel(0.9)).toBe("Runt medel");
     expect(hpScoreLabel(1.3)).toBe("Bra resultat");
     expect(hpScoreLabel(1.5)).toBe("Mycket bra");
     expect(hpScoreLabel(1.7)).toBe("Utmärkt");

@@ -19,11 +19,15 @@ export interface StreakResult {
  * Uppdaterar dagsstreaken. Räknar som mest en gång per kalenderdag, i svensk
  * tid — se `streak-dates.ts` för varför tidszonen är hela poängen.
  *
- * Anropas från allt som räknas som ett pass: match, träning, ordövning och
+ * Anropas vid varje besök som inloggad (`StreakVisit` i roten, tyst) och
+ * från allt som räknas som ett pass: match, träning, ordövning och
  * inlämnat provpass. Tidigare bara från match och träning, vilket gjorde att
  * en dag med bara ordövning inte syntes i streaken alls.
  */
-export async function updateStreak(userId: string): Promise<StreakResult | null> {
+export async function updateStreak(
+  userId: string,
+  opts: { silent?: boolean } = {},
+): Promise<StreakResult | null> {
   const { data: profile, error } = await supabase
     .from("users")
     .select("current_streak, longest_streak, last_active_date")
@@ -54,7 +58,7 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
   const newLongest = Math.max(newStreak, prevLongest);
   const broken = step.kind === "restarted" && step.broken;
 
-  await supabase
+  const { error: writeError } = await supabase
     .from("users")
     .update({
       current_streak: newStreak,
@@ -63,8 +67,14 @@ export async function updateStreak(userId: string): Promise<StreakResult | null>
     })
     .eq("id", userId);
 
+  // Skrivningen lästes tidigare inte: gick den fel returnerades ändå den nya
+  // streaken, som om den sparats.
+  if (writeError) return null;
+
   // Toast on streak broken
-  if (broken && prevStreak >= 7) {
+  if (opts.silent) {
+    // Ett besök räknar dagen men säger inget; siffran står på startsidan.
+  } else if (broken && prevStreak >= 7) {
     toast(
       `Din streak på ${enhet(prevStreak, "dag")} bröts. Rekordet ${enhet(prevLongest, "dag")} står kvar.`,
     );
