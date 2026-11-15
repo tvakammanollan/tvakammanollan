@@ -60,10 +60,11 @@ upp igen är det något som kopierats från en gammal gren.
   `tvakommanollan` — en URL eller ett npm-namn tål inte å. JSON-LD har
   `alternateName: "Tvakommanollan"` just för att det är så folk skriver det när
   de söker.
-- **`hpkampen.se` i koden är inte namnet, det är den gamla domänen** och ska
-  ligga kvar: `LEGACY_HOSTS` i `canonical-host.ts`, dess test, och de två
-  routerna i `wrangler.jsonc`. Att "städa bort" dem släcker 301:an som Google
-  ska följa i minst ett år till. Se avsnitten ovan.
+- **`hpkampen.se` i koden är inte namnet, det är den gamla domänen**:
+  `LEGACY_HOSTS` i `canonical-host.ts`, dess test, och de två routerna i
+  `wrangler.jsonc`. Domänen är avvecklad med flit (se "hpkampen.se är död"
+  nedan), så de är numera dödvikt och får tas bort, men ingenting går
+  sönder av att de ligger kvar.
 - **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
   `tkn-analytics-consent`, `tkn:ach:v1:<uid>`,
   `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:consent-changed`,
@@ -122,19 +123,23 @@ touching production; use it for anything you cannot check locally.
   i URL:en aldrig kan bli en slinga. Vite dev avvisar främmande `Host` med
   403; testa i stället den byggda Workern med
   `npx wrangler dev -c .output/server/wrangler.json --host www.tvakommanollan.se`.
-- **`hpkampen.se` saknar A-post sedan någon gång före 2026-11-14.** Zonen
-  ligger kvar i Cloudflare (NS och MX svarar) men värdnamnet går inte att
-  slå upp, så flytt-301:an når ingen och gamla länkar är döda. Ska flytten
-  fungera: lägg tillbaka proxade A/AAAA-poster för apex och www, och sätt
-  sedan grinden `on`.
+- **`hpkampen.se` är död, och det är meningen (Niklas beslut 2026-11-15).**
+  Värdnamnet saknar A-post sedan före 2026-11-14 och domänen ska avvecklas,
+  inte väckas till liv. Gamla länkar dit går ingenstans, och det är
+  accepterat. **Lägg inte tillbaka A/AAAA-posterna och slå inte på
+  `CANONICAL_REDIRECT` för att "laga" flytten.** Allt i den här filen som
+  säger att 301:an ska ligga kvar ett år, eller att zonen ska behållas för
+  certifikatets skull, är skrivet före beslutet. Två saker att kontrollera
+  innan zonen tas bort helt: att Stripe-webhooken och andra tredjepartsadresser
+  pekar på `tvakommanollan.se`, och vad som ska hända med brevlådan
+  `info@hpkampen.se` (MX svarade fortfarande 2026-11-14).
 - **`/api/` undantas från flytt-301:an.** Stripe följer inte 3xx: en webhook som
   fortfarande pekar på `hpkampen.se` hade läst 301 som misslyckande och slutat
   bokföra köp, tyst, medan kassan såg ut att fungera. Undantaget gör en
   kvarglömd endpoint hos tredje part ofarlig. Ta inte bort det utan att först
   kontrollera var Stripe-webhooken faktiskt pekar.
-- **`hpkampen.se` ska ligga kvar registrerad och i Cloudflare.** 301:an och
-  HSTS-huvudet (`max-age=31536000`) kräver att zonen behåller giltigt
-  certifikat. Google vill ha 301:an kvar i minst ett år efter adressändringen.
+- ~~`hpkampen.se` ska ligga kvar registrerad och i Cloudflare~~: gäller inte
+  längre, domänen är avvecklad (se ovan).
 - Både `info@hpkampen.se` och `info@tvakommanollan.se` är levande brevlådor
   under övergången; koden hänvisar till den nya. **Mejl-DNS (kontrollerat
   2026-11-12):** båda zonerna har MX `smtp.rzone.de`, SPF
