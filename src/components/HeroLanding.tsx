@@ -5,7 +5,7 @@ import {
   Arkivet,
   BevisRemsan,
   BorjaHar,
-  EloSkalan,
+  Omdomen,
   Priset,
   Produktytorna,
   Resurser,
@@ -25,16 +25,13 @@ import {
  * (`index.tsx`) och inte i en effekt, så att en crawler ser hela sidan
  * inklusive topplistan och en riktig uppgift.
  *
- * **Omdömena och studieuppläggets säljsektion är borta (2026-10-26).**
- * Studieupplägget plockades ur landningen när sajten pivoterade från det,
- * och omdömena togs bort med det. Tre saker hänger ihop och måste röras
- * tillsammans om omdömena någonsin kommer tillbaka:
- *  - `OMDOMEN`/`SNITTBETYG` i `@/data/omdomen` ligger kvar som ren data.
- *  - JSON-LD:s `aggregateRating`/`review` i `index.tsx` är BORTTAGNA. De
- *    deklarerar recensioner, och Google kräver att de syns på just den
- *    sidan. Att låta dem ligga kvar utan sektionen vore ogiltig markup.
- *  - Stjärnbetyget i hjälten är borta av samma skäl.
- * Läggs sektionen tillbaka: lägg tillbaka alla tre i samma commit.
+ * **Tre omdömeskort ligger före priset sedan 2026-11-15** (`Omdomen`,
+ * datan i `@/data/omdomen`). ELO-skalan ("Se var du ligger efter varje
+ * match") togs bort samma dag på Niklas begäran. Korten har ingen JSON-LD:
+ * `aggregateRating`/`review` i `index.tsx` är fortfarande borttagna och ska
+ * förbli det, eftersom två av de tre har byggt sajten och Google inte
+ * godtar att en organisation recenserar sig själv. Studieuppläggets
+ * säljsektion är borta sedan 2026-10-26.
  *
  * `CoachingModal` lever kvar i navbaren och på startsidan. Den är inte en
  * del av den här sidan och rördes inte.
@@ -60,8 +57,8 @@ export function HeroLanding({
       <Arkivet />
       {/* Priset före matcherna: ELO-skalan och topplistan handlar om det
           som är gratis och låg tidigare mellan besökaren och priset. */}
+      <Omdomen />
       <Priset />
-      <EloSkalan />
       <Topplistan stats={stats} />
       <Resurser />
       <SlutCta dagarKvar={dagarKvar} datum={next ? hpDateShort(next.entry.date) : null} />

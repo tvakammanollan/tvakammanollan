@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import type { LinkProps } from "@tanstack/react-router";
-import { Check } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import type { LandingStats } from "@/lib/landing.functions";
-import { formatDecimal, formatInt } from "@/lib/sv-format";
+import { formatInt } from "@/lib/sv-format";
+import { OMDOMESKORT } from "@/data/omdomen";
 import { allExams } from "@/lib/prov-data";
 import { FREE_EXAM_COUNT } from "@/lib/prov-access";
 import { FREE_MEK_LIMIT, FREE_ORD_LIMIT, PREMIUM_RADER } from "@/lib/ord-paywall";
@@ -71,134 +72,85 @@ export function BevisRemsan() {
   );
 }
 
-/* ----------------------------------------------------------------- skalan */
+/* --------------------------------------------------------------- omdömen */
 
 /**
- * Signaturen: provets egen skala 0,6–2,0 som en linjal.
+ * Tre personer som skrivit provet, med resultat och egna ord.
  *
- * ALLT SOM SITTER PÅ LINJEN ÄR CENTRERAT PÅ SIN POSITION, alltså sticker
- * det ut med halva sin bredd i ändarna. Första versionen löste det med
- * `overflow-hidden` på behållaren, vilket inte flyttar in något utan bara
- * KLIPPER det: `0,6` kapades 12px och `2,0` 10px på varje skärmbredd,
- * desktop inkluderad, och den högra markören 16px till vid 380px.
+ * Datan ligger i `@/data/omdomen` och är från riktiga personer. Två av de
+ * tre har byggt sajten, och det står på korten: ett omdöme från grundaren
+ * som inte säger att det är grundaren vore vilseledande.
  *
- * Lösningen är sidopadding på behållaren i stället för klippning. Linjen
- * blir 16px kortare i vardera änden, vilket är precis det utrymme en
- * centrerad ändpunktsetikett behöver (halva "0,6" är ~12px).
+ * Ingen JSON-LD (`review`/`aggregateRating`) byggs av de här. Google godtar
+ * inte recensionsmarkup där en organisation recenserar sig själv, och
+ * två av tre röster är våra egna.
  *
- * Av samma skäl bär markörerna bara sitt VÄRDE på linjen (~30px breda,
- * ryms överallt) medan orden står i teckenförklaringen under. Det tog
- * också bort behovet av två stjälkhöjder: "1,15" och "1,75" ligger 35
- * procentenheter isär och kan inte kollidera.
+ * Resultatet står på en färgklick i en av produktfärgerna, samma formspråk
+ * som dekorformerna. Stjärnorna är fem därför att alla tre gav fem.
  */
-const MARKORER = [
-  { pos: 43, ton: "apple" as const, varde: 1.15, ord: "Efter 12 matcher" },
-  { pos: 78, ton: "bark" as const, varde: 1.75, ord: "Högst på sajten" },
-];
+const KORTFARG = ["var(--terracotta)", "var(--lavender)", "var(--sky)"] as const;
+const KLICKFORM = [
+  "58% 42% 37% 63% / 45% 55% 45% 55%",
+  "42% 58% 61% 39% / 52% 38% 62% 48%",
+  "63% 37% 47% 53% / 41% 59% 41% 59%",
+] as const;
 
-function Linjal() {
-  const streck = Array.from({ length: 15 }, (_, i) => 0.6 + i * 0.1);
+export function Omdomen() {
   return (
-    <div className="relative px-4 pb-10 pt-16">
-      <div className="relative h-[2px] bg-foreground">
-        {streck.map((v) => {
-          const stor = Math.round(v * 10) % 2 === 0;
-          return (
-            <span
-              key={v.toFixed(1)}
-              className={`absolute top-0 -translate-x-1/2 ${stor ? "h-5 w-[2px] bg-foreground" : "h-[11px] w-px bg-white/25"}`}
-              style={{ left: `${((v - 0.6) / 1.4) * 100}%` }}
+    <section id="omdomen" className="border-b border-white/10">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+        <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+          Tre som skrivit provet
+        </h2>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {OMDOMESKORT.map((o, i) => (
+            <figure
+              key={o.namn}
+              className="flex min-w-0 flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8"
             >
-              {stor ? (
-                <span className="absolute left-0 top-6 -translate-x-1/2 whitespace-nowrap font-mono text-[12.5px] font-medium tabular-nums">
-                  {formatDecimal(v, 1)}
-                </span>
+              <div className="flex items-center gap-4">
+                <div className="relative grid h-[84px] w-[96px] shrink-0 place-items-center">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{ background: KORTFARG[i % 3], borderRadius: KLICKFORM[i % 3] }}
+                  />
+                  <span className="relative text-[30px] leading-none tracking-[-0.03em]">
+                    {o.resultat}
+                  </span>
+                </div>
+                <div className="min-w-0 text-[14px] leading-relaxed text-white/70">
+                  <p className="font-semibold text-[var(--cream)]">{o.prov}</p>
+                  {o.detalj ? <p>{o.detalj}</p> : null}
+                </div>
+              </div>
+
+              <div
+                className="mt-6 flex gap-1 text-[var(--cream)]"
+                role="img"
+                aria-label="5 av 5 stjärnor"
+              >
+                {Array.from({ length: 5 }, (_, n) => (
+                  <Star key={n} className="h-4 w-4" fill="currentColor" aria-hidden="true" />
+                ))}
+              </div>
+
+              <blockquote className="mt-4 text-[16px] leading-relaxed">”{o.citat}”</blockquote>
+              {o.bakgrund ? (
+                <p className="mt-3 text-[14px] leading-relaxed text-white/70">{o.bakgrund}</p>
               ) : null}
-            </span>
-          );
-        })}
-        {MARKORER.map((m) => (
-          <Markor key={m.ord} pos={m.pos} ton={m.ton} varde={m.varde} />
-        ))}
-      </div>
-    </div>
-  );
-}
 
-function Markor({ pos, varde, ton }: { pos: number; varde: number; ton: "apple" | "bark" }) {
-  const farg = ton === "apple" ? "bg-primary" : "bg-bark";
-  return (
-    <span
-      className="absolute bottom-[calc(100%+6px)] -translate-x-1/2 whitespace-nowrap text-center"
-      style={{ left: `${pos}%` }}
-    >
-      <span
-        className={`inline-block rounded-sm px-2 py-1 font-mono text-[12.5px] font-medium tabular-nums text-on-brand ${farg}`}
-      >
-        {formatDecimal(varde, 2)}
-      </span>
-      <span className={`mx-auto block h-[18px] w-[2px] ${farg}`} />
-    </span>
-  );
-}
-
-/** Orden till markörerna. På linjen får bara siffran plats. */
-function Teckenforklaring() {
-  return (
-    <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-      {MARKORER.map((m) => (
-        <span key={m.ord} className="inline-flex items-center gap-2 text-[14px] text-white/70">
-          <span
-            className={`h-2.5 w-2.5 shrink-0 rounded-sm ${m.ton === "apple" ? "bg-primary" : "bg-bark"}`}
-            aria-hidden
-          />
-          {m.ord}
-          <b className="font-mono font-medium tabular-nums text-foreground">
-            {formatDecimal(m.varde, 2)}
-          </b>
-        </span>
-      ))}
-    </div>
-  );
-}
-
-export function EloSkalan() {
-  return (
-    <section id="skalan" className="border-b border-white/10">
-      {/* Sidans tes får mest luft och en egen rubriksättning: bred,
-          enspaltig, större. De andra sektionerna ska inte se ut så här. */}
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
-        <div>
-          <h2 className="max-w-[20ch] text-[34px] leading-[1.05] tracking-[-0.04em] sm:text-[52px]">
-            Se var du ligger efter varje match
-          </h2>
-        </div>
-        <div>
-          <p className="mt-5 max-w-[62ch] text-[17px] leading-relaxed text-white/70">
-            Din ELO räknas om efter varje match och översätts till provets skala, så att du ser
-            ungefär vilken poäng den motsvarar.
-          </p>
-        </div>
-
-        <div>
-          <div>
-            <Linjal />
-            <Teckenforklaring />
-          </div>
-        </div>
-
-        <div className="grid gap-7 border-t border-white/10 pt-6 sm:grid-cols-2">
-          <p className="max-w-[48ch] text-[15px] leading-relaxed text-white/70">
-            <b className="font-bold text-foreground">Att vinna uppåt ger mer.</b> Slår du någon som
-            ligger över dig stiger siffran mer än annars. Ju högre upp du kommer desto trögare rör
-            den sig, så de sista tiondelarna kostar långt fler matcher än de första.
-          </p>
-          <p className="max-w-[48ch] text-[15px] leading-relaxed text-white/70">
-            <b className="font-bold text-foreground">
-              Verbalt och kvantitativt räknas var för sig.
-            </b>{" "}
-            Då ser du vilken del som är svagast. Totalpoängen är snittet av de två, som på provet.
-          </p>
+              <div className="flex-1" />
+              <figcaption className="mt-6 border-t border-white/10 pt-4 text-[14px] leading-relaxed text-white/70">
+                <p className="text-[16px] font-semibold text-[var(--cream)]">
+                  {o.namn}, {o.alder}
+                </p>
+                {o.roller.map((r) => (
+                  <p key={r}>{r}</p>
+                ))}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>
