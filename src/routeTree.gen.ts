@@ -43,6 +43,7 @@ import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as ForumSitemapDotxmlRouteImport } from './routes/forum-sitemap[.]xml'
 import { Route as ForumRouteImport } from './routes/forum'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as AvregistreraRouteImport } from './routes/avregistrera'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AbonnemangRouteImport } from './routes/abonnemang'
 import { Route as IndexRouteImport } from './routes/index'
@@ -252,6 +253,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvregistreraRoute = AvregistreraRouteImport.update({
+  id: '/avregistrera',
+  path: '/avregistrera',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -443,6 +449,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
+  '/avregistrera': typeof AvregistreraRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
@@ -515,6 +522,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
+  '/avregistrera': typeof AvregistreraRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
@@ -588,6 +596,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/abonnemang': typeof AbonnemangRoute
   '/admin': typeof AdminRoute
+  '/avregistrera': typeof AvregistreraRoute
   '/faq': typeof FaqRoute
   '/forum': typeof ForumRoute
   '/forum-sitemap.xml': typeof ForumSitemapDotxmlRoute
@@ -662,6 +671,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abonnemang'
     | '/admin'
+    | '/avregistrera'
     | '/faq'
     | '/forum'
     | '/forum-sitemap.xml'
@@ -734,6 +744,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abonnemang'
     | '/admin'
+    | '/avregistrera'
     | '/faq'
     | '/forum'
     | '/forum-sitemap.xml'
@@ -806,6 +817,7 @@ export interface FileRouteTypes {
     | '/'
     | '/abonnemang'
     | '/admin'
+    | '/avregistrera'
     | '/faq'
     | '/forum'
     | '/forum-sitemap.xml'
@@ -879,6 +891,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AbonnemangRoute: typeof AbonnemangRoute
   AdminRoute: typeof AdminRoute
+  AvregistreraRoute: typeof AvregistreraRoute
   FaqRoute: typeof FaqRoute
   ForumRoute: typeof ForumRoute
   ForumSitemapDotxmlRoute: typeof ForumSitemapDotxmlRoute
@@ -1188,6 +1201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/avregistrera': {
+      id: '/avregistrera'
+      path: '/avregistrera'
+      fullPath: '/avregistrera'
+      preLoaderRoute: typeof AvregistreraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -1447,6 +1467,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AbonnemangRoute: AbonnemangRoute,
   AdminRoute: AdminRoute,
+  AvregistreraRoute: AvregistreraRoute,
   FaqRoute: FaqRoute,
   ForumRoute: ForumRoute,
   ForumSitemapDotxmlRoute: ForumSitemapDotxmlRoute,

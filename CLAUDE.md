@@ -2633,6 +2633,27 @@ starta gästläge"**.
   isär utan att något felar.
 - Error messages to clients must be generic Swedish — log the raw DB error server-side (`throwDbError` pattern in `word-practice.functions.ts`).
 
+### Utskick kräver samtycke (2026-11-15)
+
+Reklam via e-post till privatpersoner kräver ja i förväg (marknadsföringslagen
+19 §). `users.email_opt_in` är false för alla tills användaren själv kryssat i
+rutan: i onboardingen (dit både e-post- och Google-registreringen går), på
+`/stats` (`EmailOptInCard`) eller på `/avregistrera`.
+
+- **Mejla aldrig reklam till hela `users`-listan.** De 281 konton som fanns
+  2026-11-15 fick aldrig frågan. `node scripts/export-mejl.mjs` skriver bara
+  dem som sagt ja till `.hp-cache/mejl/utskick.txt` (gitignorerad). `--alla`
+  är för servicemejl (ändrade villkor, driftfel).
+- **Varje utskick slutar med länken `https://tvakommanollan.se/avregistrera`.**
+  Utskicken görs för hand med mottagarna i hemlig kopia, så länken kan inte
+  bära en personlig nyckel; sidan tar adressen i ett fält och svarar likadant
+  vare sig adressen finns eller inte. Byggs utskick via Resend senare, lägg en
+  nyckel per mottagare i länken och en `List-Unsubscribe`-header.
+- **Rutan är tom från början** och får aldrig förkryssas.
+- Migration: `20261115120000_utskick_samtycke.sql`. Utan den läses alla som
+  nej, kortet på `/stats` syns inte och rutan i onboardingen sparar ingenting,
+  tyst. Kontrollera att kolumnen finns innan du litar på exporten.
+
 ### DB migrations
 
 - **En kolumn-`REVOKE` mot en tabellbred `GRANT` gör ingenting.**

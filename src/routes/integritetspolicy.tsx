@@ -30,7 +30,7 @@ function IntegritetspolicyPage() {
       <PageHero
         align="center"
         title="Integritetspolicy"
-        subtitle="Senast uppdaterad: 2026-11-14"
+        subtitle="Senast uppdaterad: 2026-11-15"
         variant="compact"
       />
       <article
@@ -151,6 +151,17 @@ function IntegritetspolicyPage() {
             innan du sagt ja, och du kan ta tillbaka valet när som helst längre ned på den här
             sidan. Vi säljer aldrig dina uppgifter och delar dem inte med tredje part för
             marknadsföring.
+          </p>
+          <p>
+            <strong style={{ color: "var(--cream)" }}>Mejl om nyheter</strong> (nya prov, facit och
+            funktioner) skickar vi bara till den som själv har kryssat i rutan för det, alltså med
+            stöd av <strong style={{ color: "var(--cream)" }}>samtycke</strong>. Vi sparar ditt val
+            och när du gjorde det. Du tar tillbaka det när du vill på sidan{" "}
+            <Link to="/avregistrera" className="underline" style={{ color: "var(--amber)" }}>
+              Avregistrera
+            </Link>
+            , som också är länkad sist i varje sådant mejl. Mejl som rör ditt konto eller ett köp
+            (bekräftelse av adressen, kvitto, ändrade villkor) skickas oavsett.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>

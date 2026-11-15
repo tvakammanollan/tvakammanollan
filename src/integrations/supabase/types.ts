@@ -1349,6 +1349,8 @@ export type Database = {
           elo_verbal: number
           elo_verbal_peak: number
           email: string | null
+          email_opt_in: boolean
+          email_opt_in_at: string | null
           email_verified_at: string | null
           forum_ban_reason: string | null
           forum_banned_until: string | null
@@ -1376,6 +1378,8 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          email_opt_in?: boolean
+          email_opt_in_at?: string | null
           email_verified_at?: string | null
           forum_ban_reason?: string | null
           forum_banned_until?: string | null
@@ -1403,6 +1407,8 @@ export type Database = {
           elo_verbal?: number
           elo_verbal_peak?: number
           email?: string | null
+          email_opt_in?: boolean
+          email_opt_in_at?: string | null
           email_verified_at?: string | null
           forum_ban_reason?: string | null
           forum_banned_until?: string | null

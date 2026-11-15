@@ -15,6 +15,7 @@ import { outcomeFor } from "@/lib/match-outcome";
 import { PageHero } from "@/components/layout/PageHero";
 import { AchievementsCard } from "@/components/AchievementsCard";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
+import { EmailOptInCard } from "@/components/EmailOptInCard";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
 
 export const Route = createFileRoute("/stats")({
@@ -362,6 +363,9 @@ function StatsPage() {
         {/* Köpet och uppsägningen av månadsprenumerationen. Renderar
             ingenting för den som inte köpt. */}
         <OrdPurchaseCard className="mt-10" manageLink />
+
+        {/* Samtycke till utskick. Renderar ingenting för gäster. */}
+        <EmailOptInCard className="mt-6" />
 
         {/* GDPR: självservice-radering */}
         <DeleteAccountSection />

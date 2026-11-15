@@ -8,6 +8,9 @@ import { isAutoUsername } from "@/lib/username";
 import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { readPendingPlan } from "@/lib/pending-plan";
+import { useServerFn } from "@tanstack/react-start";
+import { setEmailOptIn } from "@/lib/email-optin.functions";
+import { EMAIL_OPT_IN_LABEL } from "@/components/EmailOptInCard";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -31,6 +34,9 @@ function OnboardingPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  // Samtycke till utskick. Rutan är tom från början: ett ja ska vara ett val.
+  const [optIn, setOptIn] = useState(false);
+  const saveOptIn = useServerFn(setEmailOptIn);
 
   if (!loading && !user) return <Navigate to="/login" />;
   // Ett köp som valdes före registreringen går vidare till kassan.
@@ -77,6 +83,8 @@ function OnboardingPage() {
       }
       return;
     }
+    // Får aldrig stoppa registreringen: valet går att göra om på /stats.
+    if (optIn) void saveOptIn({ data: { optIn: true } }).catch(() => {});
     toast.success(`Välkommen, ${parsed.data}`);
     refreshProfile();
     navigate(pendingPlan ? { to: "/kassa", search: { plan: pendingPlan } } : { to: "/" });
@@ -114,6 +122,18 @@ function OnboardingPage() {
             className="h-12 w-full rounded-full border border-input bg-white/[0.04] px-5 text-center text-[15px] text-white placeholder:text-white/45 transition-colors focus:bg-white/[0.06]"
           />
           <p className="text-xs text-white/45">3–20 tecken. Endast a–z, 0–9, _ och -.</p>
+
+          {user?.email && (
+            <label className="flex min-h-[44px] cursor-pointer items-start gap-3 text-left text-sm leading-relaxed text-white/70">
+              <input
+                type="checkbox"
+                checked={optIn}
+                onChange={(e) => setOptIn(e.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 accent-[var(--primary)]"
+              />
+              <span>{EMAIL_OPT_IN_LABEL} Du kan säga nej när som helst.</span>
+            </label>
+          )}
 
           <button
             type="submit"

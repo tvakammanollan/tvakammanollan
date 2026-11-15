@@ -113,6 +113,10 @@ export const limits = {
    * användar-id och inte IP: två personer på samma skolnät ska inte kunna
    * låsa varandra ute från sitt eget konto.
    */
+  // Samtycke till utskick: den inloggades eget val, och avregistrering utan
+  // inloggning (per IP, eftersom den tar emot en godtycklig adress).
+  emailOptIn: { max: 20, windowMs: 60 * 60 * 1000 } as LimitConfig, // 20/h
+  emailUnsubscribe: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
   verificationEmail: { max: 5, windowMs: 60 * 60 * 1000 } as LimitConfig, // 5/h
   /**
    * Inlösen av verifieringslänk. Per IP, och rundligt tilltaget — en riktig
