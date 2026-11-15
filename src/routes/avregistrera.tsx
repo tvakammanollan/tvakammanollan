@@ -5,17 +5,15 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { unsubscribeEmail } from "@/lib/email-optin.functions";
 import { pageMeta } from "@/lib/page-meta";
-import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { EmailOptInCard } from "@/components/EmailOptInCard";
 
 /* =====================================================================
    Avregistrering från utskick. Länken står sist i varje mejl.
 
    Kräver ingen inloggning: mejlet öppnas ofta på en enhet där man inte är
    inloggad. Utskicken går med mottagarna i hemlig kopia, så länken är
-   densamma för alla och adressen skrivs i fältet. Den som är inloggad får
-   dessutom sitt eget val som en ruta.
+   densamma för alla och adressen skrivs i fältet. Sidan har med flit ingen
+   ruta för att säga ja till utskick: den som kommer hit vill bort.
    ===================================================================== */
 
 export const Route = createFileRoute("/avregistrera")({
@@ -33,7 +31,6 @@ export const Route = createFileRoute("/avregistrera")({
 const emailSchema = z.string().trim().email().max(255);
 
 function UnsubscribePage() {
-  const { user } = useAuth();
   const unsubscribe = useServerFn(unsubscribeEmail);
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -100,8 +97,6 @@ function UnsubscribePage() {
           </Button>
         </form>
       )}
-
-      {user && <EmailOptInCard />}
     </main>
   );
 }

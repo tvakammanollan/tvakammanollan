@@ -2637,8 +2637,9 @@ starta gästläge"**.
 
 Reklam via e-post till privatpersoner kräver ja i förväg (marknadsföringslagen
 19 §). `users.email_opt_in` är false för alla tills användaren själv kryssat i
-rutan: i onboardingen (dit både e-post- och Google-registreringen går), på
-`/stats` (`EmailOptInCard`) eller på `/avregistrera`.
+rutan: i onboardingen (dit både e-post- och Google-registreringen går) eller på
+`/stats` (`EmailOptInCard`). `/avregistrera` har bara avregistreringen, aldrig
+en ruta för att säga ja (Niklas beslut 2026-11-15).
 
 - **Mejla aldrig reklam till hela `users`-listan.** De 281 konton som fanns
   2026-11-15 fick aldrig frågan. `node scripts/export-mejl.mjs` skriver bara
