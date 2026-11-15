@@ -89,7 +89,7 @@ function withSecurityHeaders(response: Response): Response {
   // annonsyta plus en rad i konsolen, ingenting kastas. Värdnamnen är Googles
   // egen CSP-rekommendation för AdSense.
   const ADS_SCRIPT =
-    "https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.googleadservices.com https://*.googletagservices.com https://*.doubleclick.net https://*.google.com";
+    "https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.googleadservices.com https://*.googletagservices.com https://*.doubleclick.net https://*.google.com https://*.adtrafficquality.google";
   const ADS_CONNECT =
     "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.gstatic.com https://*.adtrafficquality.google";
   const ADS_FRAME =
