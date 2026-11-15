@@ -1961,6 +1961,11 @@ vilket är den allvarligare halvan av det som rättades.
   rubrik och titel byggs ur `upcomingHpYears()`. **`llms.txt` är statisk och
   måste rättas för hand dagen efter varje prov**, liksom `HP_DATES` när UHR
   publicerat nästa datum (höstprovet 2027 var inte inlagt 2026-11-14).
+- **Anropa aldrig datumfunktionerna på modulnivå.** I en Cloudflare Worker
+  står klockan på 1970 medan modulen laddas, så `const FAQ = [{ a:
+  hpDatesAnswer() }]` i `faq.tsx` räknade höstprovet 2026 som kommande i
+  produktionen fast `vite dev` visade rätt. Räkna i `head()` och i
+  komponenten. Syns bara i den utrullade Workern (2026-11-15).
 - **Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober**
   (söndag sedan 2022). Listan hade lördagsdatum för båda och låg 6 dagar fel
   på höstprovet 2026. Testet i `hp-dates.test.ts` pinnar veckodagen per

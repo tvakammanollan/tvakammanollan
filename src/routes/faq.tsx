@@ -8,7 +8,13 @@ interface FaqItem {
   a: string;
 }
 
-const FAQ: FaqItem[] = [
+/**
+ * En funktion, inte en konstant: listan bär svaret på "när är nästa prov",
+ * som beror på dagens datum. På modulnivå i en Cloudflare Worker står
+ * klockan på 1970, så en konstant räknade höstprovet 2026 som kommande i
+ * produktionen fast det såg rätt ut lokalt (2026-11-15).
+ */
+const faq = (): FaqItem[] => [
   {
     q: "Är Tvåkommanollan gratis?",
     a: "Det mesta. Alla gamla prov med facit, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 40 orden och 40 MEK-uppgifterna i träningsläget. Hela ordlistan och alla MEK-uppgifter kostar 149 kr per månad, som du kan säga upp när som helst, eller 349 kr för 6 månader. Sajten har inga annonser.",
@@ -99,7 +105,7 @@ export const Route = createFileRoute("/faq")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: FAQ.map(({ q, a }) => ({
+          mainEntity: faq().map(({ q, a }) => ({
             "@type": "Question",
             name: q,
             acceptedAnswer: { "@type": "Answer", text: a },
@@ -129,7 +135,7 @@ function FaqPage() {
         </div>
 
         <div className="space-y-3">
-          {FAQ.map(({ q, a }, i) => (
+          {faq().map(({ q, a }, i) => (
             <details
               key={q}
               // Open de första 2 så sidan inte ser tom ut — resten kan användaren
