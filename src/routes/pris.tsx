@@ -12,7 +12,7 @@ export const Route = createFileRoute("/pris")({
       path: "/pris",
       title: "Pris: vad som är gratis och vad som kostar",
       description:
-        "Gamla högskoleprov, matcherna, normeringen och forumet är gratis. Hela ordlistan och MEK kostar 149 kr per månad eller 349 kr för 6 månader, moms inräknad.",
+        "Premium ger dig alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter för 149 kr per månad eller 349 kr för 6 månader. De två senaste proven och matcherna är gratis.",
       ogTitle: "Pris på Tvåkommanollan",
       ogDescription: "Vad som är gratis och vad som kostar.",
     }),
@@ -39,27 +39,37 @@ export const Route = createFileRoute("/pris")({
  * motiven är inte något koden kan intyga.
  */
 
+const PREMIUM = [
+  "Alla 31 gamla prov att skriva, 124 provpass och 4 960 uppgifter",
+  "Provläge på tid och övningsläge, med rättning och poäng på varje prov",
+  "Hela ordlistan i träningsläget, över 10 000 ord med förklaring",
+  "Alla MEK-uppgifter, arkivets och våra egna",
+  "Allt som är gratis ingår också",
+];
+
 const GRATIS = [
-  "Alla 31 provtillfällen med facit, 4 960 uppgifter",
+  "De 2 senaste proven att skriva, med facit och rättning",
+  "Facit till alla 31 prov",
   "Matcherna, verbalt och kvantitativt",
   "Normeringstabeller, poängräknare och preliminärt facit",
   "Forumet och alla genomgångar",
   "Ordlistans uppslagssidor, med betydelse och exempel",
-  "De första 40 orden och 40 MEK-uppgifterna i träningsläget",
+  "De första 20 orden och 10 MEK-uppgifterna i träningsläget",
+  "Träningsläget för övriga delprov",
 ];
 
 const TANKER = [
   {
-    rubrik: "Gamla prov är gratis",
-    text: "Gamla prov är UHR:s eget material och finns öppet. Vi har lagt till facit på varje uppgift, normering och möjligheten att skriva dem på tid, och tar inte betalt för det.",
+    rubrik: "De två senaste proven är gratis",
+    text: "Höstprovet 2026 och vårprovet 2026 går att skriva utan köp och utan konto. De 29 äldre proven ingår i Premium. Facit till alla prov står öppet på varje provs sida. När ett nytt prov läggs in blir det gratis, och det äldsta av de två gratisproven flyttas till Premium.",
   },
   {
-    rubrik: "Hela ordlistan och MEK kostar",
-    text: "Ordlistan har över 10 000 ord med förklaring, och MEK-banken innehåller uppgifter vi skriver själva och blindprövar innan de publiceras. De första 40 orden och de första 40 MEK-uppgifterna är gratis, så att du kan prova innan du betalar.",
+    rubrik: "Ordlistan och MEK har en gratisdel",
+    text: "Ordlistan har över 10 000 ord med förklaring, och MEK-banken innehåller uppgifter vi skriver själva och blindprövar innan de publiceras. De första 20 orden och de första 10 MEK-uppgifterna är gratis, så att du kan prova innan du betalar. Resten ingår i Premium.",
   },
   {
     rubrik: "Per månad eller 6 månader",
-    text: "Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr. Köpet gäller både ordlistan och MEK.",
+    text: `Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr och förnyas inte. Båda köpen ger samma sak: allt på sajten. Moms är inräknad och inget läggs på i kassan. Provavgiften på ${HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till oss.`,
   },
   {
     rubrik: "Du behöver ett konto för att köpa",
@@ -81,19 +91,35 @@ function PrisPage() {
 
       <Priset kompakt />
 
+      {/* En sektion med två spalter. Det var två sektioner med var sin rubrik
+          och samma punkter som priskorten ovanför; nu står det som skiljer
+          Premium från gratis sida vid sida, en gång. */}
       <section className="border-b border-white/10">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
           <h2 className="mb-8 max-w-[22ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-            Det här kostar inget
+            Vad som ingår
           </h2>
-          <ul className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
-            {GRATIS.map((rad) => (
-              <li key={rad} className="flex gap-2.5 text-[16px] leading-relaxed text-white/70">
-                <Check className="mt-1 h-4 w-4 shrink-0 text-success" />
-                {rad}
-              </li>
+          <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+            {[
+              { rubrik: "Premium", rader: PREMIUM },
+              { rubrik: "Utan köp", rader: GRATIS },
+            ].map((spalt) => (
+              <div key={spalt.rubrik}>
+                <h3 className="mb-4 text-[20px] leading-snug tracking-[-0.02em]">{spalt.rubrik}</h3>
+                <ul className="space-y-3">
+                  {spalt.rader.map((rad) => (
+                    <li
+                      key={rad}
+                      className="flex gap-2.5 text-[16px] leading-relaxed text-white/70"
+                    >
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-success" />
+                      {rad}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -113,27 +139,24 @@ function PrisPage() {
         </div>
       </section>
 
+      {/* Slutet upprepade priset en tredje gång och hade, som gratiskortet
+          ovanför, en knapp till "Skapa konto". Nu leder sidans sista knapp
+          till kassan, och gratisvägen står bredvid. */}
       <section>
         <div className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
-          <h2 className="text-[24px] leading-tight tracking-[-0.03em] sm:text-[30px]">Pris</h2>
-          <p className="mt-4 text-[16px] leading-relaxed text-white/70">
-            149 kr per månad eller 349 kr för 6 månader, med moms inräknad. Inget läggs på i kassan.
-            Månadsköpet går att säga upp när som helst och gäller då månaden ut. Provavgiften på{" "}
-            {HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till
-            oss.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3">
             <Link
-              to="/signup"
+              to="/kassa"
+              search={{ plan: "1m" }}
               className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-primary px-6 py-3 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
             >
-              Skapa konto
+              Välj Premium
             </Link>
             <Link
               to="/gamla-prov"
               className="inline-flex min-h-[48px] items-center justify-center rounded-lg px-4 py-3 text-[15px] font-semibold text-[var(--cream-3)] transition hover:text-[var(--cream)]"
             >
-              Börja med gamla prov
+              Börja med ett gratisprov
             </Link>
           </div>
         </div>

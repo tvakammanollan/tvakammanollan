@@ -2,7 +2,8 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { ProvRunner } from "@/components/prov/ProvRunner";
-import { findExam, loadPass } from "@/lib/prov-data";
+import { allExams, findExam, loadPass } from "@/lib/prov-data";
+import { isFreeExam } from "@/lib/prov-access";
 import { fetchProvThreads } from "@/lib/forum-prov.functions";
 import { enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel } from "@/types/gamla-prov";
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
     if (!data) return {};
     const path = `/gamla-prov/${data.term}/${data.pass}`;
     const delprov = data.sections.map((s) => s.code).join(", ");
+    const free = isFreeExam(data.term, allExams());
     return {
       meta: pageMeta({
         path,
@@ -54,7 +56,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
           `Skriv provpass ${data.pass} från ${data.label} på originaltid: ` +
             `${enhet(data.questions.length, "uppgift")} i ${delprov} på ${enhet(data.minutes, "minut")}. ` +
             `Facit och rättning när du lämnat in.`,
-          "Gratis och utan inloggning.",
+          free ? "Gratis och utan inloggning." : "Ingår i Premium.",
         ),
         ogTitle: `${data.label}: provpass ${data.pass}`,
         ogDescription: `${enhet(data.questions.length, "uppgift")} i ${delprov} med facit.`,
@@ -73,7 +75,7 @@ export const Route = createFileRoute("/gamla-prov_/$term_/$pass")({
           name: `${data.label}: provpass ${data.pass} (${passKindLabel(data.kind)})`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
-          isAccessibleForFree: true,
+          isAccessibleForFree: free,
           educationalLevel: "Högskoleförberedande",
           educationalUse: "Test preparation",
           timeRequired: `PT${data.minutes}M`,

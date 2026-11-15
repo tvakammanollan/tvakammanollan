@@ -275,7 +275,8 @@ function DatumPage() {
           Öva inför provet
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Skriv gamla prov med facit, öva ord och spela matcher mot andra. Det mesta är gratis.
+          Skriv gamla prov med facit, öva ord och spela matcher mot andra. De två senaste proven är
+          gratis.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

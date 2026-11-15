@@ -235,7 +235,7 @@ export function TrainExperience({
       .then((r) => {
         if (r.owned) {
           trackEvent("mek_purchase_completed", { via: "return" });
-          toast.success("Köpet är klart. Du har nu hela ordlistan och MEK.");
+          toast.success("Köpet är klart. Du har nu Premium.");
         }
         loadMekAccess();
       })

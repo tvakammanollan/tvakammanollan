@@ -143,7 +143,7 @@ export function OrdPurchaseCard({
         Ditt köp
       </h2>
       <p className="mt-1.5 text-sm text-[var(--cream)]">
-        Hela ordlistan och MEK{isSub ? ", månadsprenumeration" : ""}
+        Premium{isSub ? ", månadsprenumeration" : ""}
       </p>
       <p className="mt-1 max-w-xl text-sm leading-relaxed text-white/55">{line}</p>
 
@@ -179,8 +179,8 @@ export function OrdPurchaseCard({
           <AlertDialogHeader>
             <AlertDialogTitle>Säg upp prenumerationen?</AlertDialogTitle>
             <AlertDialogDescription>
-              Du har kvar hela ordlistan och MEK till den {until}. Efter det dras inga fler pengar.
-              Du kan ångra uppsägningen fram till dess.
+              Du har kvar Premium till den {until}. Efter det dras inga fler pengar. Du kan ångra
+              uppsägningen fram till dess.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -42,7 +42,7 @@ export const Route = createFileRoute("/hogskoleprovet-ord_/$term")({
         title: fitTitle(`Orden på högskoleprovet ${label}`, "med svar"),
         description: describeWithin(
           `Alla ${ord.length} ORD-uppgifter från högskoleprovet ${label} med svarsalternativ och rätt svar: ${exempel} med flera.`,
-          "Öva sedan på hela provet gratis.",
+          "Hela provet går att skriva på tid.",
         ),
         ogTitle: `Alla ${ord.length} ORD från högskoleprovet ${label}`,
         ogDescription: `${exempel} … Vilka kan du?`,
@@ -94,9 +94,7 @@ function ProvOrdPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-sm text-white/65">
-          Delprovet ORD: {enhet(ord.length, "uppgift")}
-        </p>
+        <p className="text-sm text-white/65">Delprovet ORD: {enhet(ord.length, "uppgift")}</p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}

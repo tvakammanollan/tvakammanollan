@@ -35,8 +35,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
       description:
         "Poängräknare för högskoleprovet: fyll i antal rätt på den verbala och den kvantitativa delen och få en uppskattad normerad poäng mellan 0,00 och 2,00.",
       ogTitle: "Högskoleprovet poängräknare",
-      ogDescription:
-        "Räkna ut din uppskattade HP-poäng från antal rätt.",
+      ogDescription: "Räkna ut din uppskattade HP-poäng från antal rätt.",
     }),
     links: pageLinks("/hogskoleprovet-poangraknare"),
     scripts: [
@@ -54,8 +53,7 @@ export const Route = createFileRoute("/hogskoleprovet-poangraknare")({
         inLanguage: "sv-SE",
         isAccessibleForFree: true,
         offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
-        description:
-          "Räknare som uppskattar din HP-poäng (0,00–2,00) utifrån antal rätt.",
+        description: "Räknare som uppskattar din HP-poäng (0,00–2,00) utifrån antal rätt.",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
       }),
     ],
@@ -91,19 +89,14 @@ function PoangraknarePage() {
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Fyll i hur många rätt du hade på den verbala respektive kvantitativa delen (80 uppgifter
-          var) så får du en uppskattad normerad poäng. Skalan går från 0,00 till 2,00 i
-          steg om 0,05.
+          var) så får du en uppskattad normerad poäng. Skalan går från 0,00 till 2,00 i steg om
+          0,05.
         </p>
       </header>
 
       {/* Kalkylator */}
       <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-        <SliderRow
-          label="Verbal"
-          hint="ORD, LÄS, MEK, ELF"
-          value={verbal}
-          onChange={setVerbal}
-        />
+        <SliderRow label="Verbal" hint="ORD, LÄS, MEK, ELF" value={verbal} onChange={setVerbal} />
         <div className="mt-6">
           <SliderRow
             label="Kvantitativ"
@@ -117,9 +110,7 @@ function PoangraknarePage() {
         <div className="mt-8 border-t border-white/8 pt-6">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <p className="text-xs font-medium text-white/45">
-                Uppskattad poäng
-              </p>
+              <p className="text-xs font-medium text-white/45">Uppskattad poäng</p>
               <div className="mt-1 flex items-baseline gap-2">
                 <span
                   className="text-[56px] font-bold leading-none tabular-nums text-primary"
@@ -130,9 +121,7 @@ function PoangraknarePage() {
                 <span className="text-lg text-white/40">/ 2,00</span>
               </div>
             </div>
-            <span className="text-xs font-semibold text-primary">
-              {label}
-            </span>
+            <span className="text-xs font-semibold text-primary">{label}</span>
           </div>
 
           {/* gauge */}
@@ -175,8 +164,9 @@ function PoangraknarePage() {
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           Normeringen är inte linjär. UHR omvandlar antalet rätt till en normerad poäng mellan 0,00
-          och 2,00 utifrån hur alla som skrev det provet klarade sig. Därför kan samma antal rätt kan ge olika poäng på olika prov, och ett par rätt extra i mitten av skalan ger ofta mer poäng än samma
-          antal nära toppen eller botten.
+          och 2,00 utifrån hur alla som skrev det provet klarade sig. Därför kan samma antal rätt
+          kan ge olika poäng på olika prov, och ett par rätt extra i mitten av skalan ger ofta mer
+          poäng än samma antal nära toppen eller botten.
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Räknaren ovan använder en generell tabell byggd på flera arkiverade provtillfällen, så den
@@ -185,7 +175,7 @@ function PoangraknarePage() {
           <Link to="/gamla-prov" className="text-[var(--amber)] underline underline-offset-2">
             alla arkiverade provtillfällen
           </Link>{" "}
-          att skriva gratis. Hur många rätt varje poäng har krävt på tidigare prov står i{" "}
+          att skriva. Hur många rätt varje poäng har krävt på tidigare prov står i{" "}
           <Link
             to="/hogskoleprovet-antal-ratt"
             className="text-[var(--amber)] underline underline-offset-2"

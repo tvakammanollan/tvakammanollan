@@ -11,9 +11,9 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss: varför sajten finns",
       description:
-        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher med ELO-ranking och en ordlista. Om grundaren Niklas och varför det mesta är gratis.",
+        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher med ELO-ranking och en ordlista. Om grundaren Niklas, vad som är gratis och vad som ingår i Premium.",
       ogTitle: "Om Tvåkommanollan",
-      ogDescription: "Vem som driver sajten och varför det mesta är gratis.",
+      ogDescription: "Vem som driver sajten, vad som är gratis och vad som kostar.",
     }),
     links: pageLinks("/om"),
     scripts: [
@@ -38,11 +38,7 @@ export const Route = createFileRoute("/om")({
 function OmPage() {
   return (
     <div className="min-h-screen">
-      <PageHero
-        title="Om Tvåkommanollan"
-        align="center"
-        variant="content"
-      />
+      <PageHero title="Om Tvåkommanollan" align="center" variant="content" />
       <article
         className="mx-auto max-w-3xl px-4 pb-24 text-[15px] leading-[1.75] sm:px-6"
         style={{ color: "var(--text-secondary)" }}
@@ -60,16 +56,16 @@ function OmPage() {
           <p>
             Tvåkommanollan är det jag själv hade velat ha: gamla prov som går att skriva på tid,
             matcher mot någon på ungefär samma nivå och en siffra som visar hur det går över
-            veckorna. Det mesta är gratis: alla gamla prov, matcherna, normeringen och forumet.
-            Ordlistan och MEK har en gratisdel och kostar sedan 149 kr per månad eller 349 kr för 6
-            månader.
+            veckorna. De två senaste proven, matcherna, normeringen och forumet är gratis. Premium
+            ger alla gamla prov, hela ordlistan och alla MEK-uppgifter och kostar 149 kr per månad
+            eller 349 kr för 6 månader.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Varför är det mesta gratis?
+            Vad är gratis och vad kostar?
           </h2>
           <p>
-            De gamla proven är UHR:s eget material och finns öppet på{" "}
+            De gamla proven är UHR:s eget material och finns som PDF på{" "}
             <a
               className="underline"
               style={{ color: "var(--amber)" }}
@@ -79,10 +75,10 @@ function OmPage() {
             >
               studera.nu
             </a>
-            , så dem tar vi inte betalt för. Sajten har inga annonser och drivs av mig. Gamla prov,
-            matcherna, normeringen och forumet är gratis, liksom de första 40 orden och 40
-            MEK-uppgifterna. Hela ordlistan och alla MEK-uppgifter kostar 149 kr per månad eller 349 kr
-            för 6 månader.{" "}
+            . Här går de att skriva på tid med rättning och poäng. De två senaste proven är gratis
+            att skriva, liksom matcherna, normeringen, forumet, de första 20 orden och de första 10
+            MEK-uppgifterna. Premium ger alla 31 prov, hela ordlistan och alla MEK-uppgifter och
+            kostar 149 kr per månad eller 349 kr för 6 månader. Sajten drivs av mig.{" "}
             <Link to="/pris" className="underline" style={{ color: "var(--amber)" }}>
               Mer om priset
             </Link>
@@ -95,8 +91,8 @@ function OmPage() {
           <ul className="list-disc space-y-2 pl-6">
             <li>
               <strong style={{ color: "var(--cream)" }}>Uppgifter ur gamla prov.</strong>{" "}
-              Provarkivet är UHR:s egna prov, och ordlistan bygger till största delen på
-              publicerade högskoleprov. Uppgifter vi skrivit själva är märkta.
+              Provarkivet är UHR:s egna prov, och ordlistan bygger till största delen på publicerade
+              högskoleprov. Uppgifter vi skrivit själva är märkta.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Matcher.</strong> Det är lättare att
@@ -174,9 +170,7 @@ function OmPage() {
         </section>
 
         <div className="mt-16 flex justify-center">
-          <PrimaryCTA to="/train">
-            Börja träna gratis
-          </PrimaryCTA>
+          <PrimaryCTA to="/train">Börja träna gratis</PrimaryCTA>
         </div>
       </article>
     </div>

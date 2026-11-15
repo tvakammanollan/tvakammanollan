@@ -48,9 +48,9 @@ function IntegritetspolicyPage() {
           </h2>
           <p>
             Tvåkommanollan drivs av{" "}
-            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
-            Det mesta på sajten är gratis. Det som kostar är hela ordlistan och MEK-övningen, som
-            köps frivilligt. Kontakt:{" "}
+            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson. En
+            del av sajten är gratis. Det som kostar är Premium (alla gamla prov, hela ordlistan och
+            MEK-övningen), som köps frivilligt. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
               className="underline"
@@ -103,11 +103,11 @@ function IntegritetspolicyPage() {
               alla, även utloggade och sökmotorer.
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper hela
-              ordlistan och MEK: vilket konto som köpte, vilket köp du valde, tidpunkten, belopp och
-              valuta samt Stripes referenser till betalningen och till dig som kund. För
-              månadsprenumerationen även Stripes referens till prenumerationen, om den är uppsagd och
-              när den aktuella perioden tar slut.{" "}
+              <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> om du köper Premium:
+              vilket konto som köpte, vilket köp du valde, tidpunkten, belopp och valuta samt
+              Stripes referenser till betalningen och till dig som kund. För månadsprenumerationen
+              även Stripes referens till prenumerationen, om den är uppsagd och när den aktuella
+              perioden tar slut.{" "}
               <em>Kortuppgifter hanteras av Stripe och passerar aldrig våra servrar</em>: vi ser
               aldrig ditt kortnummer.
             </li>
@@ -197,10 +197,10 @@ function IntegritetspolicyPage() {
               .
             </li>
             <li>
-              <strong style={{ color: "var(--cream)" }}>Stripe:</strong> betalningar för hela
-              ordlistan och MEK. Betalningen sker i Stripes kassa; vi får tillbaka belopp, valuta
-              och betalningsstatus, aldrig kortuppgifter. Stripe är personuppgiftsansvarig för sin
-              egen behandling och kan överföra uppgifter utanför EU/EES med stöd av EU-kommissionens
+              <strong style={{ color: "var(--cream)" }}>Stripe:</strong> betalningar för Premium.
+              Betalningen sker i Stripes kassa; vi får tillbaka belopp, valuta och betalningsstatus,
+              aldrig kortuppgifter. Stripe är personuppgiftsansvarig för sin egen behandling och kan
+              överföra uppgifter utanför EU/EES med stöd av EU-kommissionens
               standardavtalsklausuler. Läs mer i{" "}
               <a
                 href="https://stripe.com/privacy"
@@ -236,10 +236,10 @@ function IntegritetspolicyPage() {
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Köpuppgifter:</strong> uppgifterna om ditt
-              köp av ordlistan och MEK raderas med kontot, och en pågående prenumeration avslutas då
-              direkt. Betalningen, kvittot och fakturan finns kvar hos Stripe så länge
-              bokföringslagen kräver. Uppgifter från en tjänst vi slutat sälja sparas så länge de
-              behövs för bokföringen. Vill du veta exakt vad som finns sparat om ett köp, mejla oss.
+              köp av Premium raderas med kontot, och en pågående prenumeration avslutas då direkt.
+              Betalningen, kvittot och fakturan finns kvar hos Stripe så länge bokföringslagen
+              kräver. Uppgifter från en tjänst vi slutat sälja sparas så länge de behövs för
+              bokföringen. Vill du veta exakt vad som finns sparat om ett köp, mejla oss.
             </li>
           </ul>
 

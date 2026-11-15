@@ -141,7 +141,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. De två senaste proven är gratis.",
       },
       {
         property: "og:title",
@@ -150,7 +150,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. De två senaste proven är gratis.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
@@ -168,7 +168,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:description",
         content:
-          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. Det mesta är gratis.",
+          "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. De två senaste proven är gratis.",
       },
       { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
       // Snippetlängd och bildstorlek i träfflistan: utan hintarna väljer
@@ -261,7 +261,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
           areaServed: "SE",
           description:
-            "Övning inför högskoleprovet: alla 31 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. Det mesta är gratis.",
+            "Övning inför högskoleprovet: alla 31 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. De två senaste proven och matcherna är gratis, resten ingår i Premium.",
           founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",

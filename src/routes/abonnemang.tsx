@@ -59,7 +59,7 @@ const PLANER: {
     plan: "6m",
     rubrik: "6 månader",
     enhet: "för 6 månader",
-    rader: ["Hela ordlistan och all MEK i 6 månader", "Ett köp gäller både ordlistan och MEK"],
+    rader: ["Allt på sajten i 6 månader", "Engångsköp som inte förnyas"],
     yta: "border-2 border-plum bg-lavender",
     knapp: "bg-plum text-[var(--on-brand)] hover:brightness-110",
   },
@@ -95,8 +95,9 @@ function AbonnemangPage() {
       <main className="mx-auto max-w-3xl px-4 pb-20 pt-10 sm:pt-14">
         <h1 className="text-[32px] leading-tight tracking-[-0.035em] sm:text-[40px]">Abonnemang</h1>
         <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/70">
-          Hela ordlistan och all MEK-övning. De första {FREE_ORD_LIMIT} orden och {FREE_MEK_LIMIT}{" "}
-          MEK-uppgifterna är gratis, och allt annat på sajten är gratis utan köp.
+          Premium ger dig alla gamla prov, hela ordlistan och alla MEK-uppgifter. Utan köp kan du
+          skriva de 2 senaste proven och öva på {FREE_ORD_LIMIT} ord och {FREE_MEK_LIMIT}{" "}
+          MEK-uppgifter.
         </p>
 
         {/* Kortet läser köpet själv och säger till sidan vad det hittade. */}

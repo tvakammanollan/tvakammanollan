@@ -1,10 +1,11 @@
 /**
- * Övningspaywallen: de första 40 orden och de första 40 MEK-uppgifterna är
- * gratis, resten kostar ett köp (`ORD_PLANS`): en månadsprenumeration som
+ * Övningspaywallen: de första 20 orden och de första 10 MEK-uppgifterna är
+ * gratis (40 och 40 fram till 2026-11-15), resten kostar ett köp (`ORD_PLANS`): en månadsprenumeration som
  * förnyas tills den sägs upp, eller sex månader som engångsköp. Köp gjorda
- * före `TIME_LIMITED_FROM` gäller för alltid. Samma köp ("Hela Ordlistan + MEK")
- * låser upp båda, så den som köpte ordlistan innan MEK låstes fick MEK på
- * köpet.
+ * före `TIME_LIMITED_FROM` gäller för alltid. Köpet heter Premium i text
+ * besökare läser och gäller allt som kostar: ordlistan, MEK och de gamla
+ * prov som inte är gratis (`prov-access.ts`). I Stripe heter produkten
+ * fortfarande "Hela Ordlistan + MEK".
  *
  * Ren logik, ingen databas. Räkningen är antalet SVAR (ORD:
  * `ord_practice_stats.total_count`, MEK: träningssvar i `match_answers`), inte
@@ -14,10 +15,10 @@
  */
 
 /** Så många ord är gratis. Ändras den här ändras allt som visar siffran. */
-export const FREE_ORD_LIMIT = 40;
+export const FREE_ORD_LIMIT = 20;
 
 /** Så många MEK-uppgifter i träningsläget är gratis. */
-export const FREE_MEK_LIMIT = 40;
+export const FREE_MEK_LIMIT = 10;
 
 /**
  * Taggen på Stripe-sessionen. Heter `ord_access` även sedan köpet också

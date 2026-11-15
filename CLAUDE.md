@@ -1559,6 +1559,36 @@ möttes av två rutor i rad, och den andra åt klicket på fliken man var där f
   `tkn-coaching-rabatt`, `tkn-ord-promo` och föregångaren `hpk-coaching-prompt`.
   De städas inte; de är några hundra byte i besökarens webbläsare.
 
+### Premium (2026-11-15): gränserna sänkta och gamla prov låsta
+
+Köpet heter **Premium** i all text besökare läser och gäller allt som kostar.
+Avsnittet nedan beskriver mekaniken och stämmer fortfarande, utom talen.
+
+- **Gratis är 20 ord och 10 MEK-uppgifter** (`FREE_ORD_LIMIT`,
+  `FREE_MEK_LIMIT`), mot 40 och 40 tidigare. Den som redan svarat på fler
+  möter spärren direkt.
+- **Bara de två senaste proven går att skriva utan Premium.** Regeln är
+  `isFreeExam` i `src/lib/prov-access.ts` (testad) och räknas ur provlistan:
+  ett nytt prov blir gratis av sig självt och det äldsta gratisprovet låses.
+  Låset sitter i `ProvRunner` (`usePremium`, `ProvLocked`).
+- **Låset är en spärr i gränssnittet, inte i datan.** Provpassen är statiska
+  chunkar och sidorna serverrenderas utan att veta vem som frågar. Den som
+  letar i nätverksfliken kommer åt filen.
+- **Uppgiftslistan med facit visas även på låsta provpass** (Niklas beslut
+  2026-11-15). Uppgifterna är UHR:s och finns öppet ändå; det som säljs är
+  provvyn med klocka, rättning och poäng. Listan ligger kvar i serverrenderad
+  HTML så att de 116 låsta provpassidorna behåller sin sökbarhet. Göm den inte
+  bakom köpet utan att fråga.
+- **I Stripe heter produkterna fortfarande "Hela Ordlistan + MEK"**
+  (`ORD_PRODUCT_NAMES` i `stripe.server.ts` är reservuppslaget på namn). Byts
+  namnet i Stripe måste konstanten med. Villkoren säger att köpet kan heta så
+  på kvittot.
+- **"Det mesta är gratis" och "alla gamla prov gratis" är borttaget överallt**
+  (meta, FAQ, `/om`, `/pris`, villkor, `llms.txt`, footern). Skriv inte
+  tillbaka det. Vad som är gratis står uppräknat i `GRATIS` på `/pris`.
+- Talen "31", "29", "höstprovet 2026 och vårprovet 2026" står för hand på
+  `/pris`, i priskorten och i `llms.txt` och måste ändras när ett prov läggs till.
+
 ### Hela Ordlistan + MEK: paywallen på ORD och MEK (2026-10-02, MEK 2026-10-20)
 
 De första 40 orden och de första 40 MEK-uppgifterna i träningsläget är

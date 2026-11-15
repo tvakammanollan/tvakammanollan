@@ -70,8 +70,8 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Buggrapport</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Använd buggknappen i sidfoten när du är inloggad, så följer uppgifter om felet
-                  med automatiskt. Annars mejla{" "}
+                  Använd buggknappen i sidfoten när du är inloggad, så följer uppgifter om felet med
+                  automatiskt. Annars mejla{" "}
                   <a
                     href="mailto:info@tvakommanollan.se?subject=Bugg-rapport"
                     className="underline"
@@ -96,8 +96,8 @@ function KontaktPage() {
               <span>
                 <span className="block font-semibold">Vem driver Tvåkommanollan?</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Sajten drivs av Niklas Pellkvist som privatperson. Det mesta är gratis och vi
-                  visar inga annonser. Det som kostar är hela ordlistan och MEK-övningen. Mer om
+                  Sajten drivs av Niklas Pellkvist som privatperson. Vi visar inga annonser. Det som
+                  kostar är Premium: alla gamla prov, hela ordlistan och MEK-övningen. Mer om
                   sajten:{" "}
                   <Link to="/om" className="underline" style={{ color: "var(--amber)" }}>
                     /om
@@ -132,8 +132,8 @@ function KontaktPage() {
         </ul>
 
         <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
-          Buggrapporter via knappen går oftast fortare än mejl, eftersom de innehåller uppgifter
-          om felet.
+          Buggrapporter via knappen går oftast fortare än mejl, eftersom de innehåller uppgifter om
+          felet.
         </p>
       </article>
     </div>

@@ -249,8 +249,8 @@ export function Arkivet() {
           </div>
           <div>
             <p className="max-w-[46ch] text-[16px] leading-relaxed text-white/70">
-              Skriv ett helt pass på tid eller välj ett enskilt delprov. Facit på
-              varje uppgift, och poängen räknas ut åt dig så snart du skrivit båda passen i en del.
+              Skriv ett helt pass på tid eller välj ett enskilt delprov. Facit på varje uppgift, och
+              poängen räknas ut åt dig så snart du skrivit båda passen i en del.
             </p>
           </div>
         </div>
@@ -410,13 +410,13 @@ export function Produktytorna() {
 const BETALKORT = [
   {
     plan: "1m",
-    etikett: "Ordlistan och MEK: per månad",
+    etikett: "Premium: allt på sajten, per månad",
     pris: "149 kr",
     prisEnhet: "per månad",
     rader: [
+      "Alla 31 gamla prov att skriva på tid, med rättning och poäng",
       "Över 10\u00a0000 ord i träningsläget",
       "Alla MEK-uppgifter, arkivets och våra egna",
-      "Ett köp gäller båda",
       "Förnyas varje månad, säg upp när du vill",
     ],
     cta: "Välj per månad",
@@ -429,12 +429,14 @@ const BETALKORT = [
   },
   {
     plan: "6m",
-    etikett: "Ordlistan och MEK: 6 månader",
+    etikett: "Premium: allt på sajten, 6 månader",
     pris: "349 kr",
+    prisEnhet: "för 6 månader",
     rader: [
-      "Samma innehåll som månadsköpet",
-      "Gäller 6 månader",
-      "Ett köp gäller både ordlistan och MEK",
+      "Alla 31 gamla prov att skriva på tid, med rättning och poäng",
+      "Över 10\u00a0000 ord i träningsläget",
+      "Alla MEK-uppgifter, arkivets och våra egna",
+      "Engångsköp som inte förnyas",
     ],
     cta: "Välj 6 månader",
     yta: "bg-lavender",
@@ -470,9 +472,9 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
-                  "Alla 31 provtillfällen med facit",
+                  "De 2 senaste proven med facit och rättning",
                   "Matcherna, verbalt och kvantitativt",
-                  "40 ord och 40 MEK-uppgifter i träningsläget",
+                  "20 ord och 10 MEK-uppgifter i träningsläget",
                   "Normering, poängräknare, facit och forum",
                 ].map((rad) => (
                   <li key={rad} className="flex gap-2.5">
@@ -498,9 +500,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
                 <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
                   {k.pris}
                 </p>
-                <p className={`mt-2 text-[13px] ${k.radFarg}`}>
-                  {"prisEnhet" in k ? `${k.prisEnhet}, inklusive moms` : "inklusive moms"}
-                </p>
+                <p className={`mt-2 text-[13px] ${k.radFarg}`}>{k.prisEnhet}, inklusive moms</p>
                 <ul className={`mt-6 space-y-3 text-[15px] leading-relaxed ${k.radFarg}`}>
                   {k.rader.map((rad) => (
                     <li key={rad} className="flex gap-2.5">

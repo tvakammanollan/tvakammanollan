@@ -65,9 +65,9 @@ export const Route = createFileRoute("/ord")({
       path: "/ord",
       title: "ORD högskoleprovet: öva 10 000+ ord",
       description:
-        "Öva ord inför högskoleprovet: över 10 000 ord med förklaring, utan klocka. Ord du missar kommer tillbaka. De första 40 orden är gratis.",
+        "Öva ord inför högskoleprovet: över 10 000 ord med förklaring, utan klocka. Ord du missar kommer tillbaka. De första 20 orden är gratis.",
       ogTitle: "Öva ord: 10 000+ HP-ord",
-      ogDescription: "Över 10 000 ord med förklaring, utan klocka. De första 40 är gratis.",
+      ogDescription: "Över 10 000 ord med förklaring, utan klocka. De första 20 är gratis.",
     }),
     links: pageLinks("/ord"),
     scripts: [
@@ -309,7 +309,7 @@ function OrdPracticePage() {
       .then((r) => {
         if (r.owned) {
           trackEvent("ord_purchase_completed", { via: "return" });
-          toast.success("Köpet är klart. Du har nu hela ordlistan och MEK.");
+          toast.success("Köpet är klart. Du har nu Premium.");
         }
         loadProgress();
       })
@@ -512,7 +512,7 @@ function OrdPracticePage() {
         <PageHero
           title="Öva"
           cycleWords={["ord."]}
-          subtitle="Ingen klocka. Ord du missar kommer tillbaka. De första 40 orden är gratis."
+          subtitle="Ingen klocka. Ord du missar kommer tillbaka. De första 20 orden är gratis."
           align="center"
           variant="compact"
         />
@@ -540,7 +540,7 @@ function OrdPracticePage() {
               </PrimaryCTA>
               {access && access.freeRemaining !== null && !access.locked && (
                 <p className="mt-3 text-xs text-white/55">
-                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan krävs ett köp, per månad
+                  {formatInt(access.freeRemaining)} gratisord kvar. Sedan krävs Premium, per månad
                   eller för 6 månader.
                 </p>
               )}

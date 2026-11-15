@@ -5,6 +5,7 @@ import { fitTitle } from "@/lib/seo-text";
 import { PassScoreBadge, ProvScorePanel } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
+import { isFreeExam } from "@/lib/prov-access";
 import { passResult, summariseExam, type PassResult } from "@/lib/prov-results";
 import { formatDateLong, formatInt, enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type PassSummary } from "@/types/gamla-prov";
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
     const exam = loaderData?.exam;
     if (!exam) return {};
     const path = `/gamla-prov/${exam.term}`;
+    const free = isFreeExam(exam.term, allExams());
     return {
       meta: pageMeta({
         path,
@@ -43,7 +45,10 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         title: fitTitle(`${exam.label}: alla provpass`, "med facit"),
         description:
           `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
-          `uppgifter med facit, på tid och med rättning. Gratis och utan inloggning.`,
+          `uppgifter med facit, på tid och med rättning. ` +
+          (free
+            ? "Gratis och utan inloggning."
+            : "Provet ingår i Premium, facit är öppet för alla."),
         ogTitle: `Högskoleprovet ${exam.label}: provpass & facit`,
         ogDescription: `${enhet(exam.questions, "uppgift")} med rätta svar.`,
       }),
@@ -61,7 +66,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
           description: `Samtliga ${exam.passes.length} provpass från ${exam.label} med rätta svar.`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
-          isAccessibleForFree: true,
+          isAccessibleForFree: free,
           learningResourceType: "Exam",
           educationalLevel: "Högskoleförberedande",
           datePublished: exam.date,
@@ -81,6 +86,7 @@ function ExamTermPage() {
   const verbalCount = exam.passes.filter((p) => p.kind === "verbal").length;
   const kvantCount = exam.passes.filter((p) => p.kind === "kvant").length;
   const delprov = [...new Set(exam.passes.flatMap((p) => p.delprov))];
+  const free = isFreeExam(exam.term, allExams());
 
   // Skrivna provpass ligger i webbläsaren, inte hos oss — sidan är
   // serverrenderad och identisk för alla, det här lägger sig ovanpå.
@@ -114,6 +120,19 @@ function ExamTermPage() {
           att skriva det på tid med automatisk rättning, eller läs rätta svaren längre ned.
         </p>
         <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
+          {free ? (
+            "Det här provet är gratis att skriva och kräver inget konto."
+          ) : (
+            <>
+              Att skriva det här provet kräver{" "}
+              <Link to="/pris" className="underline underline-offset-2 hover:text-white/80">
+                Premium
+              </Link>
+              . De två senaste proven är gratis, och facit nedan är öppet för alla.
+            </>
+          )}
+        </p>
+        <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
           {verbalCount} {verbalCount === 1 ? "pass är verbalt" : "pass är verbala"} och {kvantCount}{" "}
           {kvantCount === 1 ? "är kvantitativt" : "är kvantitativa"}, och tillsammans täcker de{" "}
           {delprov.map(delprovFull).join(", ")}.
@@ -132,6 +151,7 @@ function ExamTermPage() {
             <PassCard
               term={exam.term}
               pass={p}
+              free={free}
               result={results ? passResult(results, exam.term, p.pass) : undefined}
             />
           </li>
@@ -172,10 +192,7 @@ function ExamTermPage() {
         </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {facit.map((f) => (
-            <div
-              key={f.pass}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] p-4"
-            >
+            <div key={f.pass} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
               <h3 className="text-sm font-semibold text-[var(--cream)]">Provpass {f.pass}</h3>
               <ul className="mt-3 grid grid-cols-5 gap-1.5 sm:grid-cols-8">
                 {f.answers.map((a) => (
@@ -245,10 +262,12 @@ function ExamTermPage() {
 function PassCard({
   term,
   pass,
+  free,
   result,
 }: {
   term: string;
   pass: PassSummary;
+  free: boolean;
   result?: PassResult;
 }) {
   return (
@@ -274,10 +293,10 @@ function PassCard({
           </span>
           <span>{enhet(pass.questions, "uppgift")}</span>
           {pass.missing.length > 0 && <span>{pass.missing.join(", ")} saknas</span>}
+          {!free && <span>Premium</span>}
         </span>
       </span>
       {result && <PassScoreBadge result={result} />}
-
     </Link>
   );
 }

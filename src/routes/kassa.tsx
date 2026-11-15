@@ -64,8 +64,8 @@ const VILLKORSRAD: Record<OrdPlan, string | null> = {
 
 /** Planknappens rubrik och underrad. */
 const PLAN_TEXT: Record<OrdPlan, { rubrik: string; under: string }> = {
-  "1m": { rubrik: "Per månad", under: "inklusive moms, säg upp när du vill" },
-  "6m": { rubrik: "6 månader", under: "inklusive moms" },
+  "1m": { rubrik: "Per månad", under: "Mest populär. Inklusive moms, säg upp när du vill" },
+  "6m": { rubrik: "6 månader", under: "inklusive moms, 58 kr per månad" },
 };
 
 function KassaPage() {
@@ -176,11 +176,11 @@ function KassaPage() {
     <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:pt-14">
         <h1 className="text-[32px] leading-tight tracking-[-0.035em] sm:text-[44px]">
-          Hela ordlistan och MEK
+          Premium: allt på Tvåkommanollan
         </h1>
         <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/70">
-          Välj hur länge du vill ha tillgång och betala direkt här. Du behöver inte ha använt upp
-          gratisorden först.
+          Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha tillgång
+          och betala direkt här.
         </p>
 
         {returning ? (
@@ -197,7 +197,8 @@ function KassaPage() {
                 <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--plum)]" aria-hidden />
                 <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">Tack för köpet</h2>
                 <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                  Du har nu hela ordlistan och all MEK-övning. Kvittot kommer på mejlen från Stripe.
+                  Du har nu Premium: alla gamla prov, hela ordlistan och alla MEK-uppgifter. Kvittot
+                  kommer på mejlen från Stripe.
                 </p>
                 {confirmedKind === "subscription" && (
                   <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
@@ -281,9 +282,7 @@ function KassaPage() {
               ) : access?.owned ? (
                 <div className="py-10 text-center">
                   <CheckCircle2 className="mx-auto h-10 w-10 text-success" aria-hidden />
-                  <h2 className="mt-4 text-xl font-semibold">
-                    Du har redan hela ordlistan och MEK
-                  </h2>
+                  <h2 className="mt-4 text-xl font-semibold">Du har redan Premium</h2>
                   <OrdPurchaseCard className="mx-auto mt-6 max-w-md text-left" manageLink />
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>

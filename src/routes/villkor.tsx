@@ -9,7 +9,7 @@ export const Route = createFileRoute("/villkor")({
       path: "/villkor",
       title: "Användarvillkor",
       description:
-        "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton och villkoren för köp av hela ordlistan och MEK.",
+        "Användarvillkoren för Tvåkommanollan. Vad du får göra, hur vi hanterar konton och villkoren för köp av Premium.",
       ogTitle: "Tvåkommanollan | Användarvillkor",
       ogDescription: "Användarvillkoren för Tvåkommanollan.",
     }),
@@ -39,8 +39,8 @@ function VillkorPage() {
         <section className="space-y-6">
           <p>
             Genom att använda Tvåkommanollan godkänner du dessa villkor. Tjänsten drivs av{" "}
-            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson.
-            Det mesta på sajten är gratis. Det som kostar är Hela Ordlistan (hela ordlistan och
+            <strong style={{ color: "var(--cream)" }}>Niklas Pellkvist</strong> som privatperson. En
+            del av sajten är gratis. Det som kostar är Premium (alla gamla prov, hela ordlistan och
             MEK-övningen), som du köper frivilligt och som har egna villkor längre ned. Kontakt:{" "}
             <a
               href="mailto:info@tvakommanollan.se"
@@ -57,9 +57,10 @@ function VillkorPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              Tvåkommanollan är gratis att använda, förutom ordträningen efter de första 40 orden
-              och MEK-övningen efter de första 40 uppgifterna. De kräver köpet Hela Ordlistan, se
-              avsnittet om köp nedan.
+              Gratis är de två senaste gamla proven, matcherna, normeringen, forumet, de första 20
+              orden i ordträningen och de första 10 uppgifterna i MEK-övningen. Övriga gamla prov,
+              resten av ordträningen och resten av MEK-övningen kräver köpet Premium, se avsnittet
+              om köp nedan.
             </li>
             <li>Du måste vara minst 13 år för att skapa konto.</li>
             <li>
@@ -99,20 +100,21 @@ function VillkorPage() {
             Den kostnadsfria delen av tjänsten tillhandahålls "i befintligt skick" utan garantier,
             och vi ansvarar inte för indirekta skador som följer av användningen (t.ex. uteblivet
             provresultat, missade ansökningar). För det du har betalat för gäller i stället det som
-            står under Köp av Hela Ordlistan, och i övrigt svensk konsumenträtt.
+            står under Köp av Premium, och i övrigt svensk konsumenträtt.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Köp av Hela Ordlistan
+            Köp av Premium
           </h2>
           <p>
-            Hela Ordlistan ger ditt konto obegränsad ordträning och MEK-övning utöver de 40 ord och
-            40 MEK-uppgifter som är gratis. Den finns som två köp: en prenumeration per månad, och
-            ett köp som gäller i 6 månader. Sexmånadersköpet gäller 6 månader från betalningen och
-            förnyas inte. Vill du fortsätta efter perioden köper du igen. Avtalet ingås mellan dig
-            och Niklas Pellkvist när du slutför betalningen i kassan. Köpet knyts till det konto du
-            var inloggad med, och gästkonton kan inte köpa. Priset som visas i kassan är det du
-            betalar, och betalningen hanteras av Stripe.
+            Premium ger ditt konto alla gamla prov att skriva, utöver de två senaste som är gratis,
+            och obegränsad ordträning och MEK-övning utöver de 20 ord och 10 MEK-uppgifter som är
+            gratis. Köpet hette tidigare Hela Ordlistan och kan stå så på kvittot. Det finns som två
+            köp: en prenumeration per månad, och ett köp som gäller i 6 månader. Sexmånadersköpet
+            gäller 6 månader från betalningen och förnyas inte. Vill du fortsätta efter perioden
+            köper du igen. Avtalet ingås mellan dig och Niklas Pellkvist när du slutför betalningen
+            i kassan. Köpet knyts till det konto du var inloggad med, och gästkonton kan inte köpa.
+            Priset som visas i kassan är det du betalar, och betalningen hanteras av Stripe.
           </p>
           <p>
             Åtkomsten gäller hela den köpta perioden, förutsatt att ditt konto inte stängts av
@@ -144,11 +146,11 @@ function VillkorPage() {
             Ångerrätt
           </h3>
           <p>
-            Hela Ordlistan är digitalt innehåll som blir tillgängligt direkt efter betalningen.
-            Genom att slutföra köpet går du uttryckligen med på att leveransen börjar direkt och
-            godkänner att ångerrätten då faller bort. Det gäller det första köpet; en förnyelse av
-            prenumerationen ger ingen ny ångerrätt, men du kan säga upp när som helst. Är något fel,
-            eller fungerar inte åtkomsten, hör av dig till{" "}
+            Premium är digitalt innehåll som blir tillgängligt direkt efter betalningen. Genom att
+            slutföra köpet går du uttryckligen med på att leveransen börjar direkt och godkänner att
+            ångerrätten då faller bort. Det gäller det första köpet; en förnyelse av prenumerationen
+            ger ingen ny ångerrätt, men du kan säga upp när som helst. Är något fel, eller fungerar
+            inte åtkomsten, hör av dig till{" "}
             <a
               href="mailto:info@tvakommanollan.se?subject=Hela%20Ordlistan"
               className="underline"

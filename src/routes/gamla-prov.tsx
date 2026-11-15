@@ -6,6 +6,7 @@ import { ProvResumeCard } from "@/components/prov/ProvResumeCard";
 import { ProvScoreRow } from "@/components/prov/ProvScore";
 import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, totalQuestions } from "@/lib/prov-data";
+import { isFreeExam } from "@/lib/prov-access";
 import { passResult, summariseExam, type ProvResults } from "@/lib/prov-results";
 import { enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type ExamSummary } from "@/types/gamla-prov";
@@ -29,9 +30,9 @@ export const Route = createFileRoute("/gamla-prov")({
         title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}`, "med facit", "alla provpass"),
         description:
           `Skriv ${exams.length} gamla högskoleprov online: ${enhet(count, "uppgift")} från ` +
-          `${oldest} till ${newest} med facit, på tid och med rättning. Gratis och utan inloggning.`,
+          `${oldest} till ${newest} med facit, på tid och med rättning. De två senaste proven är gratis, övriga ingår i Premium.`,
         ogTitle: `Gamla högskoleprov ${oldest}–${newest}: Tvåkommanollan`,
-        ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. Gratis.`,
+        ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. De två senaste är gratis.`,
       }),
       links: pageLinks("/gamla-prov"),
       scripts: [
@@ -46,7 +47,7 @@ export const Route = createFileRoute("/gamla-prov")({
           description: `Samtliga provpass från högskoleprovet ${oldest}–${newest}, med facit och rättning i webbläsaren.`,
           url: "https://tvakommanollan.se/gamla-prov",
           inLanguage: "sv-SE",
-          isAccessibleForFree: true,
+          isAccessibleForFree: false,
           learningResourceType: "Practice exam",
           educationalUse: "Test preparation",
           educationalLevel: "Gymnasieelev och högskolesökande",
@@ -85,7 +86,7 @@ function GamlaProvPage() {
         title="Alla gamla högskoleprov"
         subtitle={
           oldest && newest
-            ? `Här finns ${exams.length} högskoleprov med facit, från ${oldest.label.toLowerCase()} till ${newest.label.toLowerCase()}: ${enhet(totalQuestions(), "uppgift")} i ${exams.length * 4} provpass. Varje provpass skrivs på 55 minuter och rättas direkt, utan konto.`
+            ? `Här finns ${exams.length} högskoleprov med facit, från ${oldest.label.toLowerCase()} till ${newest.label.toLowerCase()}: ${enhet(totalQuestions(), "uppgift")} i ${exams.length * 4} provpass. Varje provpass skrivs på 55 minuter och rättas direkt. De två senaste proven är gratis, övriga ingår i Premium.`
             : undefined
         }
         align="center"
@@ -159,6 +160,7 @@ function ExamCard({ exam, results }: { exam: ExamSummary; results: ProvResults |
         <span>
           {exam.passes.length} provpass, {enhet(exam.questions, "uppgift")}
         </span>
+        <span>{isFreeExam(exam.term, allExams()) ? "Gratis" : "Premium"}</span>
       </span>
       <span className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
         {exam.passes.map((p) => {

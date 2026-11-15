@@ -70,7 +70,7 @@ export const GUIDE_FAQ: Record<string, GuideFaqItem[]> = {
     { q: "Hur många svarsalternativ har ELF?", a: "Fyra, A till D." },
     {
       q: "Var hittar man gamla ELF-uppgifter?",
-      a: "UHR tar bort ELF-texterna ur de häften som läggs ut efter provet, av upphovsrättsskäl. I arkivet här finns ELF med i alla 60 verbala provpass sedan 2012.",
+      a: "UHR tar bort ELF-texterna ur de häften som läggs ut efter provet, av upphovsrättsskäl. I arkivet här finns ELF med i alla 62 verbala provpass sedan 2012.",
     },
   ],
   xyz: [

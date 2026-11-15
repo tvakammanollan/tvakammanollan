@@ -62,8 +62,7 @@ const METODER: Metod[] = [
     uppgifter: "Varierar. En del använder UHR:s uppgifter, andra är skrivna av författaren.",
     rattning: "Du rättar själv mot facit i boken.",
     forklaringar: "Ofta utförliga. Det är böckernas styrka.",
-    styrka:
-      "Lösningsmetoderna förklaras steg för steg.",
+    styrka: "Lösningsmetoderna förklaras steg för steg.",
     tankPa:
       "Titta på utgivningsåret. Provet fick en ny uppläggning 2011, och en gammal upplaga kan beskriva delprov som inte längre ser ut så.",
     passar: "Den som lär sig bäst av att läsa en förklaring innan den övar.",
@@ -98,14 +97,14 @@ const METODER: Metod[] = [
     namn: "Tvåkommanollan",
     egen: true,
     kostar:
-      "Gamla prov, facit, normering, matcher och forum är gratis. Träning på ORD och MEK utöver de första 40 uppgifterna kostar.",
+      "De två senaste proven, facit, normering, matcher och forum är gratis. Äldre prov, hela ordlistan och all MEK-träning ingår i Premium, se prissidan.",
     uppgifter:
       "Alla 31 provtillfällen från vårprovet 2012 till höstprovet 2026: 4 960 uppgifter med facit. MEK-träningen har dessutom egna uppgifter, märkta som sådana.",
     rattning: "Automatisk, på tid och med normering per provdel.",
     forklaringar:
       "Genomgångar av kvantitativa uppgifter i forumet, och en förklaring till varje ord i ordlistan.",
     styrka:
-      "Alla gamla prov på ett ställe, med ELF i alla 60 verbala provpass och poäng när du lämnat in.",
+      "Alla gamla prov på ett ställe, med ELF i alla 62 verbala provpass och poäng när du lämnat in.",
     tankPa: "Ingen lärare följer dig vecka för vecka, och sajten drivs av en person.",
     passar: "Den som vill skriva många gamla prov och se var poängen tappas.",
   },
@@ -115,7 +114,7 @@ const BEGRANSNINGAR = [
   "Ingen lärare följer upp din plan. Behöver du någon som håller dig till ett schema är en kurs bättre.",
   "Guiderna går igenom strategi per delprov, men en bok går djupare för den som vill läsa sig till metoderna.",
   "Vårprovet 2012 har kvantitativa uppgifter som saknar sina figurer. Originalbilderna finns inte kvar, och det står på uppgiften.",
-  "ORD- och MEK-träningen kostar efter de första 40 uppgifterna. Ordlistans uppslag och alla gamla prov är fortfarande gratis.",
+  "Bara de två senaste proven är gratis att skriva här. Äldre prov kräver Premium, liksom ORD-träningen efter 20 ord och MEK-träningen efter 10 uppgifter. Hos UHR är alla prov gratis som PDF.",
   "Sajten drivs av en person. Hittar du ett fel vill vi gärna veta det.",
 ];
 
@@ -131,7 +130,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Kan man plugga inför högskoleprovet gratis?",
-      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går alla 31 provtillfällen sedan 2012 att skriva på tid med rättning, utan konto och utan att betala.",
+      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går de två senaste proven att skriva på tid med rättning, utan konto och utan att betala. Övriga prov sedan 2012 ingår i Premium.",
     },
     {
       q: "Var hittar man gamla högskoleprov med facit?",
@@ -196,9 +195,7 @@ function PluggaPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-sm text-white/65">
-          Uppdaterat {hpDateShort(UPPDATERAD)}
-        </p>
+        <p className="text-sm text-white/65">Uppdaterat {hpDateShort(UPPDATERAD)}</p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
@@ -218,9 +215,9 @@ function PluggaPage() {
               Skriv gamla prov på tid och rätta dig mot facit.
             </p>
             <p className="mt-1.5 text-[14.5px] leading-relaxed text-white/65">
-              Det är den förberedelse som liknar provet mest, och den är gratis. Kurser, böcker och
-              appar är bra komplement när du vet vilka delprov du tappar poäng på, men de ersätter
-              inte gamla prov.
+              Det är den förberedelse som liknar provet mest, och proven är gratis hos UHR. Kurser,
+              böcker och appar är bra komplement när du vet vilka delprov du tappar poäng på, men de
+              ersätter inte gamla prov.
             </p>
           </div>
         </div>
@@ -249,9 +246,7 @@ function PluggaPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-[18px] font-bold text-[var(--cream)]">{m.namn}</h3>
                 {m.egen && (
-                  <span className="text-[11px] font-semibold text-primary">
-                    Det här är vi
-                  </span>
+                  <span className="text-[11px] font-semibold text-primary">Det här är vi</span>
                 )}
               </div>
               <dl className="mt-3 grid gap-x-6 gap-y-2.5 text-[14.5px] leading-relaxed sm:grid-cols-[9rem_1fr]">

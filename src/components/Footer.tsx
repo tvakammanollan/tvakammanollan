@@ -75,9 +75,7 @@ export function Footer() {
           <FooterCol title="Företag" items={COMPANY} />
           <FooterCol title="Juridik" items={LEGAL} />
           <div>
-            <h4 className="text-xs font-bold text-white/45">
-              Hör av dig
-            </h4>
+            <h4 className="text-xs font-bold text-white/45">Hör av dig</h4>
             <ul className="mt-4 space-y-2">
               <li>
                 <a
@@ -111,9 +109,7 @@ export function Footer() {
 
         {/* Öva per delprov — sitewide intern länkning */}
         <div className="mt-10 border-t border-white/8 pt-8">
-          <h4 className="text-xs font-bold text-white/45">
-            Öva per delprov
-          </h4>
+          <h4 className="text-xs font-bold text-white/45">Öva per delprov</h4>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
             {OVA.map((o) => (
               <Link
@@ -129,9 +125,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-white/45">
-            © {new Date().getFullYear()} Tvåkommanollan. Gratis. Alltid.
-          </p>
+          <p className="text-xs text-white/45">© {new Date().getFullYear()} Tvåkommanollan</p>
           <p className="text-xs text-white/45">Övning inför högskoleprovet.</p>
         </div>
       </div>
@@ -166,10 +160,7 @@ function CompactFooter() {
 
 function FooterMiniLink({ to, children }: { to: LinkProps["to"]; children: React.ReactNode }) {
   return (
-    <Link
-      to={to}
-      className="text-sm text-white/60 transition hover:text-white hover:underline"
-    >
+    <Link to={to} className="text-sm text-white/60 transition hover:text-white hover:underline">
       {children}
     </Link>
   );

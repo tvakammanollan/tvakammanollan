@@ -16,10 +16,10 @@ import {
 } from "./ord-paywall";
 
 describe("mekAccess", () => {
-  it("släpper igenom de första 40 MEK-uppgifterna och låser sedan", () => {
-    expect(FREE_MEK_LIMIT).toBe(40);
-    expect(mekAccess(39, false)).toMatchObject({ locked: false, freeRemaining: 1 });
-    expect(mekAccess(40, false)).toMatchObject({ locked: true, freeRemaining: 0 });
+  it("släpper igenom de första 10 MEK-uppgifterna och låser sedan", () => {
+    expect(FREE_MEK_LIMIT).toBe(10);
+    expect(mekAccess(9, false)).toMatchObject({ locked: false, freeRemaining: 1 });
+    expect(mekAccess(10, false)).toMatchObject({ locked: true, freeRemaining: 0 });
   });
 
   it("ordlisteköpet låser upp MEK", () => {
@@ -27,18 +27,18 @@ describe("mekAccess", () => {
   });
 
   it("kapar en MEK-batch vid gratisgränsen", () => {
-    expect(cappedBatchSize(20, mekAccess(32, false))).toBe(8);
+    expect(cappedBatchSize(20, mekAccess(2, false))).toBe(8);
   });
 });
 
 describe("ordAccess", () => {
-  it("släpper igenom de första 40 orden", () => {
+  it("släpper igenom de första 20 orden", () => {
     expect(ordAccess(0, false)).toMatchObject({ locked: false, freeRemaining: FREE_ORD_LIMIT });
-    expect(ordAccess(39, false)).toMatchObject({ locked: false, freeRemaining: 1 });
+    expect(ordAccess(19, false)).toMatchObject({ locked: false, freeRemaining: 1 });
   });
 
-  it("låser vid det fyrtionde svaret", () => {
-    expect(ordAccess(40, false)).toMatchObject({ locked: true, freeRemaining: 0 });
+  it("låser vid det tjugonde svaret", () => {
+    expect(ordAccess(20, false)).toMatchObject({ locked: true, freeRemaining: 0 });
     expect(ordAccess(500, false).locked).toBe(true);
   });
 
@@ -54,8 +54,8 @@ describe("ordAccess", () => {
 
 describe("cappedBatchSize", () => {
   it("kapar en batch vid gratisgränsen", () => {
-    expect(cappedBatchSize(20, ordAccess(35, false))).toBe(5);
-    expect(cappedBatchSize(20, ordAccess(40, false))).toBe(0);
+    expect(cappedBatchSize(20, ordAccess(15, false))).toBe(5);
+    expect(cappedBatchSize(20, ordAccess(20, false))).toBe(0);
   });
 
   it("rör inte batchen för den som köpt", () => {

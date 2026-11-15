@@ -10,6 +10,7 @@ import {
   Pause,
   Play,
   Send,
+  Loader2,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -19,7 +20,9 @@ import { fetchProvAttempt, saveProvAttempt } from "@/lib/prov-attempts.functions
 import { useAuth } from "@/hooks/useAuth";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
-import { isCorrect } from "@/lib/prov-data";
+import { allExams, isCorrect } from "@/lib/prov-data";
+import { isFreeExam } from "@/lib/prov-access";
+import { usePremium, type PremiumState } from "@/hooks/usePremium";
 import {
   clearProgress,
   loadProgress,
@@ -40,6 +43,7 @@ import type { ProvThreadLink } from "@/lib/forum-prov.functions";
 import { ProvResult } from "./ProvResult";
 import { ProvFigure } from "./ProvFigure";
 import { ProvFacitList } from "./ProvFacitList";
+import { ProvLocked } from "./ProvLocked";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -104,6 +108,12 @@ export function ProvRunner({
   // Provpasset ska räknas som dagens aktivitet. Gamla prov fungerar utan
   // konto, så användaren är ofta null — då finns ingen streak att uppdatera.
   const { user } = useAuth();
+
+  // Bara de två senaste proven går att skriva utan köp (`prov-access.ts`).
+  // Gratisproven frågar aldrig servern.
+  const free = isFreeExam(data.term, allExams());
+  const premium = usePremium(!free);
+  const access: PremiumState = free ? "owned" : premium;
 
   const questions = data.questions;
   const question = questions[current];
@@ -431,10 +441,12 @@ export function ProvRunner({
 
   /* ── Vyer ────────────────────────────────────────────────────── */
 
-  if (phase === "intro") {
+  // Ett låst prov visar bara startvyn, vad som än ligger sparat i webbläsaren.
+  if (phase === "intro" || access !== "owned") {
     return (
       <ProvIntro
         data={data}
+        access={access}
         threads={threads}
         resumable={resumable}
         savedAttempt={savedAttempt}
@@ -745,6 +757,7 @@ function formatClock(seconds: number): string {
 
 function ProvIntro({
   data,
+  access,
   threads,
   resumable,
   savedAttempt,
@@ -754,6 +767,7 @@ function ProvIntro({
   onDiscard,
 }: {
   data: ProvPass;
+  access: PremiumState;
   threads: Record<number, ProvThreadLink>;
   resumable: ProvProgress | null;
   savedAttempt: { answers: Record<number, string>; mode: ProvMode; submittedAt: string } | null;
@@ -813,85 +827,96 @@ function ProvIntro({
         </p>
       )}
 
-      {/* Ett tidigare inlämnat pass. Visas bara när det INTE finns ett
+      {access === "loading" ? (
+        <div className="mt-8 flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-[var(--text-tertiary)]" aria-hidden />
+        </div>
+      ) : access === "none" ? (
+        <ProvLocked label={data.label} />
+      ) : (
+        <>
+          {/* Ett tidigare inlämnat pass. Visas bara när det INTE finns ett
           påbörjat försök i webbläsaren — det senare är färskare och ska
           erbjudas först. */}
-      {!resumable && savedAttempt && (
-        <section className="mt-6 rounded-2xl border border-[var(--success-line)] bg-[var(--success-soft)] p-5">
-          <h2 className="text-sm font-semibold text-[var(--cream)]">
-            Du har redan skrivit det här passet
-          </h2>
-          <p className="mt-1 text-xs text-[var(--text-secondary)]">
-            Inlämnat {formatDateLong(savedAttempt.submittedAt)}
-            {savedAttempt.mode === "ova" ? " i övningsläge" : ""}. Dina svar finns kvar, så
-            genomgången visar vad du svarade och vad som var rätt.
-          </p>
-          <button
-            type="button"
-            onClick={onReviewSaved}
-            className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[var(--success)] px-4 py-2 text-sm font-semibold text-[var(--success-ink)] transition hover:brightness-110"
-          >
-            <ListChecks className="h-4 w-4" aria-hidden />
-            Se din rättning
-          </button>
-        </section>
-      )}
+          {!resumable && savedAttempt && (
+            <section className="mt-6 rounded-2xl border border-[var(--success-line)] bg-[var(--success-soft)] p-5">
+              <h2 className="text-sm font-semibold text-[var(--cream)]">
+                Du har redan skrivit det här passet
+              </h2>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
+                Inlämnat {formatDateLong(savedAttempt.submittedAt)}
+                {savedAttempt.mode === "ova" ? " i övningsläge" : ""}. Dina svar finns kvar, så
+                genomgången visar vad du svarade och vad som var rätt.
+              </p>
+              <button
+                type="button"
+                onClick={onReviewSaved}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[var(--success)] px-4 py-2 text-sm font-semibold text-[var(--success-ink)] transition hover:brightness-110"
+              >
+                <ListChecks className="h-4 w-4" aria-hidden />
+                Se din rättning
+              </button>
+            </section>
+          )}
 
-      {resumable && (
-        <section className="mt-6 rounded-2xl border border-[var(--amber)]/40 bg-[var(--amber)]/[0.07] p-5">
-          <h2 className="text-sm font-semibold text-[var(--cream)]">Du har ett påbörjat försök</h2>
-          <p className="mt-1 text-xs text-[var(--text-secondary)]">
-            {answered} av {data.questions.length} uppgifter besvarade
-            {resumable.submittedAt ? ", redan inlämnat" : resumable.pausedAt ? ", pausat" : ""}.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          {resumable && (
+            <section className="mt-6 rounded-2xl border border-[var(--amber)]/40 bg-[var(--amber)]/[0.07] p-5">
+              <h2 className="text-sm font-semibold text-[var(--cream)]">
+                Du har ett påbörjat försök
+              </h2>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
+                {answered} av {data.questions.length} uppgifter besvarade
+                {resumable.submittedAt ? ", redan inlämnat" : resumable.pausedAt ? ", pausat" : ""}.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => onResume(resumable)}
+                  className="rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
+                >
+                  {resumable.submittedAt ? "Visa resultatet" : "Fortsätt"}
+                </button>
+                <button
+                  type="button"
+                  onClick={onDiscard}
+                  className="rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
+                >
+                  Börja om
+                </button>
+              </div>
+            </section>
+          )}
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <button
               type="button"
-              onClick={() => onResume(resumable)}
-              className="rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
+              onClick={() => onStart("prov")}
+              className="rounded-2xl border border-[var(--amber)]/40 bg-[var(--amber)]/[0.08] p-5 text-left transition hover:border-[var(--amber)] hover:bg-[var(--amber)]/[0.12]"
             >
-              {resumable.submittedAt ? "Visa resultatet" : "Fortsätt"}
+              <span className="flex items-center gap-2 text-sm font-semibold text-[var(--cream)]">
+                <Play className="h-4 w-4 text-[var(--amber)]" aria-hidden />
+                Provläge
+              </span>
+              <span className="mt-1.5 block text-xs leading-relaxed text-[var(--text-secondary)]">
+                {data.minutes} minuter, som på provdagen. Facit visas när du lämnar in.
+              </span>
             </button>
             <button
               type="button"
-              onClick={onDiscard}
-              className="rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
+              onClick={() => onStart("ova")}
+              className="rounded-2xl border border-white/12 bg-white/[0.02] p-5 text-left transition hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
             >
-              Börja om
+              <span className="flex items-center gap-2 text-sm font-semibold text-[var(--cream)]">
+                <ListChecks className="h-4 w-4 text-[var(--teal)]" aria-hidden />
+                Övningsläge
+              </span>
+              <span className="mt-1.5 block text-xs leading-relaxed text-[var(--text-secondary)]">
+                Ingen klocka. Rätt svar visas direkt när du svarat, en uppgift i taget.
+              </span>
             </button>
           </div>
-        </section>
+        </>
       )}
-
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <button
-          type="button"
-          onClick={() => onStart("prov")}
-          className="rounded-2xl border border-[var(--amber)]/40 bg-[var(--amber)]/[0.08] p-5 text-left transition hover:border-[var(--amber)] hover:bg-[var(--amber)]/[0.12]"
-        >
-          <span className="flex items-center gap-2 text-sm font-semibold text-[var(--cream)]">
-            <Play className="h-4 w-4 text-[var(--amber)]" aria-hidden />
-            Provläge
-          </span>
-          <span className="mt-1.5 block text-xs leading-relaxed text-[var(--text-secondary)]">
-            {data.minutes} minuter, som på provdagen. Facit visas när du lämnar
-            in.
-          </span>
-        </button>
-        <button
-          type="button"
-          onClick={() => onStart("ova")}
-          className="rounded-2xl border border-white/12 bg-white/[0.02] p-5 text-left transition hover:border-[var(--amber)]/50 hover:bg-white/[0.04]"
-        >
-          <span className="flex items-center gap-2 text-sm font-semibold text-[var(--cream)]">
-            <ListChecks className="h-4 w-4 text-[var(--teal)]" aria-hidden />
-            Övningsläge
-          </span>
-          <span className="mt-1.5 block text-xs leading-relaxed text-[var(--text-secondary)]">
-            Ingen klocka. Rätt svar visas direkt när du svarat, en uppgift i taget.
-          </span>
-        </button>
-      </div>
 
       <p className="mt-6 text-xs text-[var(--text-tertiary)]">
         Uppgifterna kommer från UHR:s publicerade provhäfte.
@@ -913,7 +938,9 @@ function ProvIntro({
       </p>
 
       {/* Innehållet ligger i serverrenderad HTML även hopfällt, så uppgifterna
-          är läsbara för sökmotorer utan att begrava startvyn. */}
+          är läsbara för sökmotorer utan att begrava startvyn. Listan visas
+          också på låsta prov: det är provvyn med klocka och rättning som
+          kräver Premium, uppgifterna är UHR:s och finns öppet ändå. */}
       <details className="group mt-10 border-t border-white/8 pt-8">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
           <h2
@@ -928,7 +955,8 @@ function ProvIntro({
           />
         </summary>
         <p className="mt-1 text-sm text-[var(--text-tertiary)]">
-          Rätt svar är markerat. Vill du rätta dig själv i stället, börja med provläge ovan.
+          Rätt svar är markerat.
+          {access === "owned" && " Vill du rätta dig själv i stället, börja med provläge ovan."}
         </p>
         <div className="mt-6">
           <ProvFacitList data={data} threads={threads} />
