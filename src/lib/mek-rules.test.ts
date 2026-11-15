@@ -63,8 +63,8 @@ const tvåluckor = (över: Partial<MekItem> = {}): MekItem => ({
 describe("arkivet som facit", () => {
   const items = archive();
 
-  it("har 600 uppgifter", () => {
-    expect(items).toHaveLength(600);
+  it("har 620 uppgifter", () => {
+    expect(items).toHaveLength(620);
   });
 
   // En formatregel som underkänner en riktig UHR-uppgift är fel regel.
@@ -77,7 +77,7 @@ describe("arkivet som facit", () => {
 
   it("har UHR:s luckfördelning 40/40/20", () => {
     const r = bankReport(items);
-    expect(r.gaps).toEqual({ 1: 240, 2: 240, 3: 120 });
+    expect(r.gaps).toEqual({ 1: 248, 2: 248, 3: 124 });
   });
 
   it("har nyckeln i texten i högst 3 % (kvoten är satt efter arkivet)", () => {

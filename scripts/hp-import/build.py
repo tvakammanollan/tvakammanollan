@@ -322,6 +322,12 @@ def build_pass(
             if q.get("image"):
                 item["image"] = q["image"]
                 item["altCount"] = q.get("altCount", 4)
+                # Beskärningarna räknas redan ut av kvant.py. Utan dem ritar
+                # kortet tomma bokstavsknappar under en bild som redan har
+                # alternativen (det add_crops.py lagade i efterhand).
+                for field in ("crops", "imageAspect"):
+                    if q.get(field) is not None:
+                        item[field] = q[field]
                 if q.get("text"):
                     item["text"] = q["text"]
             else:

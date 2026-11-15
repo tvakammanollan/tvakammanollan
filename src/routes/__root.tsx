@@ -36,7 +36,7 @@ const SUPABASE_ORIGIN =
 
 function NotFoundComponent() {
   const POPULAR = [
-    { to: "/gamla-prov", label: "Gamla prov", desc: "30 prov från 2012 till 2026, med facit" },
+    { to: "/gamla-prov", label: "Gamla prov", desc: "31 prov från 2012 till 2026, med facit" },
     { to: "/train", label: "Träna", desc: "Uppgifter ur alla 8 delprov, utan klocka" },
     { to: "/leaderboard", label: "Topplista", desc: "De 50 högst rankade spelarna" },
     { to: "/guider", label: "Guider", desc: "En guide för varje delprov" },
@@ -261,7 +261,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
           areaServed: "SE",
           description:
-            "Övning inför högskoleprovet: alla 30 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. Det mesta är gratis.",
+            "Övning inför högskoleprovet: alla 31 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. Det mesta är gratis.",
           founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",

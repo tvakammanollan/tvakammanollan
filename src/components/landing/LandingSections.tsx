@@ -10,7 +10,7 @@ import { rankedName } from "@/lib/username";
  * Landningssidans sektioner nedanför hjälten.
  *
  * Siffrorna är kontrollerade mot databasen och provarkivet 2026-08-30:
- * arkivet 4 800 (src/data/prov, 30 × 160), 120 provpass, 8 delprov.
+ * arkivet 4 960 (src/data/prov, 31 × 160), 124 provpass, 8 delprov.
  *
  * ORDBANKEN ÄR 8 761 RADER i databasen (questions där category='ORD',
  * alla med definition). Sidan skriver ändå "10 000+", vilket är Niklas
@@ -21,7 +21,7 @@ import { rankedName } from "@/lib/username";
  * säger sajten två olika saker om samma sak.
  *
  * Observera skillnaden mellan ordbanken och arkivets ORD-del: arkivet har
- * 600 ORD-uppgifter som en del av sina 4 800. Att skriva ordbankens tal i
+ * 620 ORD-uppgifter som en del av sina 4 960. Att skriva ordbankens tal i
  * delprovstabellen vore alltså fel oavsett vilket tal som används.
  */
 
@@ -29,7 +29,7 @@ import { rankedName } from "@/lib/username";
 
 const BEVIS = [
   { v: "10\u00a0000+", k: "ord med förklaring" },
-  { v: "4 800", k: "uppgifter i arkivet" },
+  { v: "4 960", k: "uppgifter i arkivet" },
   { v: "30", k: "provtillfällen" },
   { v: "120", k: "provpass med facit" },
   { v: "8", k: "delprov" },
@@ -230,7 +230,7 @@ const TERMINER = [...allExams()].reverse().map((e) => ({
 const ARKIVFAKTA = [
   { n: "30", t: "provtillfällen från 2012 till 2026" },
   { n: "120", t: "provpass à 40 uppgifter" },
-  { n: "4 800", t: "uppgifter med facit" },
+  { n: "4 960", t: "uppgifter med facit" },
   { n: "60", t: "verbala pass med ELF" },
 ];
 
@@ -311,7 +311,7 @@ const YTOR = [
   {
     to: "/gamla-prov",
     rubrik: "Skriv ett provpass på tid",
-    text: "120 provpass à 40 uppgifter, från vårprovet 2012 till vårprovet 2026. Facit på varje uppgift, normering på varje provdel.",
+    text: "124 provpass à 40 uppgifter, från vårprovet 2012 till höstprovet 2026. Facit på varje uppgift, normering på varje provdel.",
     cta: "Öppna arkivet",
     yta: "bg-sky",
     textFarg: "text-bark",
@@ -470,7 +470,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
-                  "Alla 30 provtillfällen med facit",
+                  "Alla 31 provtillfällen med facit",
                   "Matcherna, verbalt och kvantitativt",
                   "40 ord och 40 MEK-uppgifter i träningsläget",
                   "Normering, poängräknare, facit och forum",
@@ -691,7 +691,7 @@ const RESURSER: Array<{ to: LinkProps["to"]; titel: string; text: string }> = [
   {
     to: "/hogskoleprovet-ord",
     titel: "Orden på varje prov",
-    text: "Alla ORD-uppgifter från 30 prov, med rätt svar.",
+    text: "Alla ORD-uppgifter från 31 prov, med rätt svar.",
   },
   {
     to: "/hogskoleprovet-formler",

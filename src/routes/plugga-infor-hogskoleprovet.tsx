@@ -100,7 +100,7 @@ const METODER: Metod[] = [
     kostar:
       "Gamla prov, facit, normering, matcher och forum är gratis. Träning på ORD och MEK utöver de första 40 uppgifterna kostar.",
     uppgifter:
-      "Alla 30 provtillfällen från vårprovet 2012 till vårprovet 2026: 4 800 uppgifter med facit. MEK-träningen har dessutom egna uppgifter, märkta som sådana.",
+      "Alla 31 provtillfällen från vårprovet 2012 till höstprovet 2026: 4 960 uppgifter med facit. MEK-träningen har dessutom egna uppgifter, märkta som sådana.",
     rattning: "Automatisk, på tid och med normering per provdel.",
     forklaringar:
       "Genomgångar av kvantitativa uppgifter i forumet, och en förklaring till varje ord i ordlistan.",
@@ -131,11 +131,11 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Kan man plugga inför högskoleprovet gratis?",
-      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går alla 30 provtillfällen sedan 2012 att skriva på tid med rättning, utan konto och utan att betala.",
+      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går alla 31 provtillfällen sedan 2012 att skriva på tid med rättning, utan konto och utan att betala.",
     },
     {
       q: "Var hittar man gamla högskoleprov med facit?",
-      a: "Hos UHR på studera.nu, som PDF. På Tvåkommanollan finns samma prov, 4 800 uppgifter från vårprovet 2012 till vårprovet 2026, med facit på varje uppgift och ELF i alla verbala provpass.",
+      a: "Hos UHR på studera.nu, som PDF. På Tvåkommanollan finns samma prov, 4 960 uppgifter från vårprovet 2012 till höstprovet 2026, med facit på varje uppgift och ELF i alla verbala provpass.",
     },
   ];
 }

@@ -28,7 +28,7 @@ export const GUIDE_FAQ: Record<string, GuideFaqItem[]> = {
     },
     {
       q: "Vilka ord har kommit på tidigare prov?",
-      a: "Alla ORD-uppgifter från de 30 proven sedan 2012 finns samlade på sidan Orden på högskoleprovet, ett prov per sida. Varje ord som förekommit finns också i ordlistan med betydelse.",
+      a: "Alla ORD-uppgifter från de 31 proven sedan 2012 finns samlade på sidan Orden på högskoleprovet, ett prov per sida. Varje ord som förekommit finns också i ordlistan med betydelse.",
     },
   ],
   mek: [

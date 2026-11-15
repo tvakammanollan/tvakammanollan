@@ -25,7 +25,7 @@ const faq = (): FaqItem[] => [
   },
   {
     q: "Kommer uppgifterna från gamla högskoleprov?",
-    a: "Ja. Under Gamla prov finns alla 30 prov från 2012 till 2026, och matcherna och träningen använder uppgifter därifrån. Ordlistan bygger till största delen på publicerade högskoleprov. MEK-uppgifter som vi skrivit själva är märkta som egna.",
+    a: "Ja. Under Gamla prov finns alla 31 prov från 2012 till 2026, och matcherna och träningen använder uppgifter därifrån. Ordlistan bygger till största delen på publicerade högskoleprov. MEK-uppgifter som vi skrivit själva är märkta som egna.",
   },
   {
     q: "Kan jag spela utan konto?",

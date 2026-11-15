@@ -40,7 +40,7 @@ export const Route = createFileRoute("/pris")({
  */
 
 const GRATIS = [
-  "Alla 30 provtillfällen med facit, 4 800 uppgifter",
+  "Alla 31 provtillfällen med facit, 4 960 uppgifter",
   "Matcherna, verbalt och kvantitativt",
   "Normeringstabeller, poängräknare och preliminärt facit",
   "Forumet och alla genomgångar",

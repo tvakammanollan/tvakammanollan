@@ -180,7 +180,7 @@ export function LandingHero({
         </p>
 
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
-          Alla 30 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
+          Alla 31 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
           ord med förklaring. Och matcher på 5 minuter mot andra som pluggar.
         </p>
 
@@ -223,7 +223,7 @@ export function LandingHero({
             // Databasen svarade inte. Hellre ingen ruta än en tom ruta.
             <div className="rounded-3xl border border-white/10 bg-card p-6">
               <p className="text-[15px] text-[var(--cream-3)]">
-                8 delprov, 10&nbsp;000+ ord och 30 prov med facit.
+                8 delprov, 10&nbsp;000+ ord och 31 prov med facit.
               </p>
               <Link
                 to="/ord"

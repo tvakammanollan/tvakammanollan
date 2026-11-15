@@ -466,15 +466,15 @@ Rank tiers (Brons → Silver → Guld → Platina → Diamant) are defined in `s
 
 ### Gamla prov — arkivet och importen
 
-Alla provtillfällen som går att få tag på finns i appen: 30 stycken
-(VT2012–VT2026), 120 provpass, 4 800 uppgifter, facit på varje.
+Alla provtillfällen som går att få tag på finns i appen: 31 stycken
+(VT2012–HT2026), 124 provpass, 4 960 uppgifter, facit på varje.
 
 **Arkivet är komplett sedan 2026-08-17.** Varje prov har sina fyra räknade
-provpass à 40 uppgifter — 30 × 160 = 4 800 — och ELF finns i samtliga 60
+provpass à 40 uppgifter — 31 × 160 = 4 960 — och ELF finns i samtliga 62
 verbala pass. Att ett provpass har 30 uppgifter, eller att ett prov saknar
 ELF, är därför inte längre något normalt utan ett tecken på att importen
-gått fel. Motsvarande gäller delproven: ORD, LÄS, MEK och ELF ska vara 600
-var, XYZ och DTK 720, KVA 600, NOG 360.
+gått fel. Motsvarande gäller delproven: ORD, LÄS, MEK och ELF ska vara 620
+var, XYZ och DTK 744, KVA 620, NOG 372.
 
 Datan är **genererad** — redigera aldrig `src/data/prov/` för hand, kör om
 importen.
@@ -496,10 +496,30 @@ Pipelinen är i Python (PyMuPDF + Pillow) därför att textextraktionen behöver
 koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
 återanvänds bilder som redan finns, vilket tar bygget till några sekunder.
 
-- **Läggs ett nytt prov upp hos UHR** räcker det att köra båda scripten: `fetch.py`
-  läser provlistan på studera.nu, och `build.py` skriver om `index.json`,
-  `exempel.json` och gamla-prov-delen av `public/sitemap.xml` (mellan
-  markörkommentarerna — resten av sitemapen är handskriven).
+- **Läggs ett nytt prov upp hos UHR: `fetch.py`, sedan `add_exam.py <term>`**
+  (torrkörning, `--apply` för att skriva). `add_exam.py` bygger bara det nya
+  provet med `build.py`s funktioner, kräver fyra provpass med 40 uppgifter
+  och facit, och rör inga befintliga provfiler; `index.json`, `exempel.json`
+  och gamla-prov-delen av `public/sitemap.xml` skrivs om ur indexet. Kör
+  aldrig `build.py` för det här (se nedan). Så kom höstprovet 2026 in
+  2026-11-15.
+  - **Hämta originalhäftena med ELF före importen**, till
+    `.hp-cache/<term>/passN-verbal-full.pdf`. UHR länkar hela häftet
+    (`provpass-N-verb.pdf`) första veckan och byter sedan till
+    `-utan-elf.pdf`; originalet för 2026ht var borta från servern men låg i
+    Internet Archive, fångat tre dagar efter provdagen. `fetch_elf.py` hittar
+    det via sidans arkiverade kopia, men **Internet Archive svarar ibland
+    "Temporarily Offline" och det läses som "finns inte"**. Kör om innan du
+    ger upp.
+  - **Efteråt, för hand:** `ord_termer.py`, navets `<lastmod>` i sitemapen
+    (skriptet sätter provdatumet), och talen som står i text: landningssidan,
+    `/om`, `/pris`, `/faq`, `/plugga-infor-hogskoleprovet`, `__root.tsx`,
+    `index.tsx`, `guide-faq.ts` och `llms.txt` (antal prov, provpass,
+    uppgifter och "till höstprovet 2026").
+  - **XYZ och KVA i ett nytt prov är bildutsnitt med `crops`** tills någon
+    skriver om dem till text (`apply_quant_text.py`). `exempel.json` behåller
+    därför de äldre textexemplen för de delproven. Normeringen kommer senare
+    än häftena; 2026ht saknade den vid importen.
 - **Matten i `questions` kommer ur arkivet sedan 2026-08-19.**
   `scripts/import-prov-questions.ts` (torrkörning som standard, `--apply` för att
   skriva) flyttar över alla matteuppgifter: 2 343 rader — XYZ 696, KVA 580,
@@ -1919,7 +1939,7 @@ reklam och citeras inte. Av samma skäl är "Sveriges enda …" borttaget ur
 organisationsdatan och `/om`: ett superlativ som inte går att belägga
 skadar trovärdigheten i just de källor AI-motorerna väger.
 
-**ORD-ord kommer inte tillbaka.** Av de 600 orden på proven 2012–2026 har
+**ORD-ord kommer inte tillbaka.** Av de 620 orden på proven 2012–2026 har
 inget testats två gånger (12 har dykt upp som svarsalternativ på ett annat
 prov). Skriv aldrig att "samma ord återkommer" i text som besökare läser.
 `questions`-tabellens 8 761 ORD-rader är inte alla ur prov (taggar som

@@ -137,7 +137,7 @@ function OmPage() {
               <Link to="/gamla-prov" className="underline" style={{ color: "var(--amber)" }}>
                 Gamla prov 2012–2026
               </Link>
-              : alla 30 provtillfällen, 120 provpass och 4 800 uppgifter. Skriv hela provpass med
+              : alla 31 provtillfällen, 124 provpass och 4 960 uppgifter. Skriv hela provpass med
               facit och normering
             </li>
             <li>
