@@ -249,7 +249,7 @@ export const fetchLandingDemoQuestions = createServerFn({ method: "GET" }).handl
     // som bildutsnitt och hör inte hemma i ett hjältekort.
     const { data, error } = await supabaseAdmin
       .from("questions")
-      .select("question_text,options,correct_answer")
+      .select("question_text,options,correct_answer,definition")
       .eq("category", "ORD")
       // clean_status="ok" gäller matteimporten och sätts ALDRIG på ORD —
       // noll av 8 761 rader har det värdet, så det filtret gav tom lista.

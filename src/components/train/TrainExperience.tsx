@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -110,6 +110,10 @@ interface TrainConfig {
 
 type Phase = "setup" | "loading" | "session" | "result";
 
+/** Så många uppgifter går att öva utloggad innan sidan ber om ett konto. */
+const GAST_SVAR_MAX = 10;
+const GAST_SVAR_KEY = "tkn:trana-gast";
+
 const MEK_ORIGIN_LABEL: Record<MekOrigin, string> = {
   all: "Alla",
   archive: "Gamla prov",
@@ -202,10 +206,38 @@ export function TrainExperience({
     setPausedAt(null);
   };
 
+  // Utloggade skickades tidigare rakt till /login. Landningssidans MEK-kort
+  // går hit, så en ny besökare möttes av "Fortsätt där du slutade" utan att
+  // ha fått veta vad sidan var. Nu visas en förklaring med vägen till konto
+  // (se `utloggad` före startvyn). Passet kräver fortfarande konto: svaren
+  // sparas per användare och gratisgränsen räknas på dem.
+  const utloggad = !authLoading && !user;
+  // Utloggade får prova: servern delar ut uppgifter utan konto (högst 10 MEK
+  // per anrop, `train.functions.ts`). Svaren räknas här i webbläsaren, och
+  // när gränsen är nådd visas vägen till konto i stället för startvyn.
+  // Räknaren går att nollställa av den som vill; läckan är densamma som i
+  // ordövningen och accepterad. Läses i en effekt, inte vid första
+  // renderingen, eftersom sidan serverrenderas.
+  const [gastSvar, setGastSvar] = useState(0);
   useEffect(() => {
-    if (authLoading) return;
-    if (!user) navigate({ to: "/login" });
-  }, [authLoading, user, navigate]);
+    try {
+      setGastSvar(Number(localStorage.getItem(GAST_SVAR_KEY)) || 0);
+    } catch {
+      // Lagringen kan vara avstängd. Då räknas bara det här besöket.
+    }
+  }, []);
+  const raknaGastSvar = () => {
+    setGastSvar((n) => {
+      const next = n + 1;
+      try {
+        localStorage.setItem(GAST_SVAR_KEY, String(next));
+      } catch {
+        // Se ovan.
+      }
+      return next;
+    });
+  };
+  const gastSlut = utloggad && gastSvar >= GAST_SVAR_MAX;
 
   // MEK-paywallen (`ord-paywall.ts`). Servern är grinden; det här är bara vad
   // startvyn visar: gratisuppgifter kvar, eller köprutan när de är slut.
@@ -447,6 +479,8 @@ export function TrainExperience({
       void saveAnswer({
         data: { questionId: currentQ.id, selected: letter, timeSpentSeconds: questionSeconds() },
       }).catch((e) => console.error("[train] svaret sparades inte", e));
+    } else {
+      raknaGastSvar();
     }
   };
 
@@ -539,13 +573,51 @@ export function TrainExperience({
         )
       : null;
 
+  if (gastSlut && phase === "setup") {
+    return (
+      <div className="min-h-screen">
+        <PageHero
+          title={mode === "mek" ? "MEK-övning" : "Träna"}
+          subtitle={`Du har övat ${gastSvar} uppgifter utan konto.`}
+          align="center"
+          variant="compact"
+        />
+        <div className="mx-auto max-w-xl px-4 pb-20">
+          <GlassCard className="p-6 text-center sm:p-8">
+            <h2 className="text-xl font-semibold">Skapa ett konto för att fortsätta</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Kontot är gratis och sparar vilka uppgifter du klarat.
+              {mode === "mek"
+                ? ` Med konto får du ${FREE_MEK_LIMIT} MEK-uppgifter till utan att betala.`
+                : ""}
+            </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to="/signup"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-primary px-6 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
+              >
+                Skapa konto
+              </Link>
+              <Link
+                to="/login"
+                className="inline-flex min-h-[48px] items-center justify-center px-4 text-[15px] font-semibold text-muted-foreground transition hover:text-foreground"
+              >
+                Logga in
+              </Link>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    );
+  }
+
   if (phase === "setup") {
     return (
       <div className="min-h-screen">
         {mode === "mek" ? (
           <PageHero
             title="MEK-övning"
-            subtitle="Uppgifter ur gamla prov och våra egna. Rösta efter varje uppgift, så visas de bästa oftare."
+            subtitle="MEK står för meningskomplettering: en mening med luckor, och du väljer orden som passar. Det är 20 av provets 160 uppgifter."
             align="center"
             variant="compact"
           />
@@ -760,9 +832,7 @@ export function TrainExperience({
           <div className="flex flex-col items-center text-center">
             <Spinner size="lg" />
             <p className="mt-4 text-base font-medium text-foreground">Laddar frågor…</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Hämtar frågor efter dina val.
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Hämtar frågor efter dina val.</p>
           </div>
         </div>
       </div>

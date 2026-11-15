@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import type { DemoQuestion, LandingStats } from "@/lib/landing.functions";
 import { formatInt } from "@/lib/sv-format";
+import { allExams } from "@/lib/prov-data";
+import { FREE_EXAM_COUNT } from "@/lib/prov-access";
 
 /**
  * Hjälten: en riktig uppgift man kan svara på, inte ett löfte om en.
@@ -11,17 +13,19 @@ import { formatInt } from "@/lib/sv-format";
  * ORD-uppgift med sina 5 alternativ, och ingen provpass-chunk dras in i
  * landningsbundlen.
  *
- * ELO-siffran här är en demonstration av mekaniken, inte ett påstående om
- * besökaren. Den börjar på 1000, samma startvärde som ett riktigt konto.
+ * Räknaren i kortets fot är antalet rätta svar. Där stod tidigare en
+ * ELO-siffra, men en ny besökare vet inte vad ELO är, och matcherna är
+ * inte det hjälten handlar om.
  */
 
-const START_ELO = 1000;
+/** Efter så många besvarade ord visas vägen vidare till ordövningen. */
+const DEMO_ORD_FORE_KNAPP = 3;
 
 function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
   const [idx, setIdx] = useState(0);
   const [valt, setValt] = useState<string | null>(null);
-  const [elo, setElo] = useState(START_ELO);
-  const [delta, setDelta] = useState<number | null>(null);
+  const [antalRatt, setAntalRatt] = useState(0);
+  const [besvarade, setBesvarade] = useState(0);
 
   const fraga = fragor[idx % fragor.length];
   const svarat = valt !== null;
@@ -30,17 +34,13 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
   function svara(id: string) {
     if (svarat) return;
     setValt(id);
-    // Storleksordningen speglar K-faktorn för ett nytt konto (<1500 → 96),
-    // men det här är en demonstration och inte en riktig uträkning.
-    const d = id === fraga.ratt ? 14 : -11;
-    setDelta(d);
-    setElo((e) => e + d);
+    setBesvarade((n) => n + 1);
+    if (id === fraga.ratt) setAntalRatt((n) => n + 1);
   }
 
   function nasta() {
     setIdx((i) => i + 1);
     setValt(null);
-    setDelta(null);
   }
 
   return (
@@ -92,6 +92,47 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
             );
           })}
         </div>
+
+        {/* Förklaringen är det som skiljer ordträningen från ett facit, och
+            den syntes inte alls här förut: besökaren fick "Rätt." och en
+            ELO-siffra. Den står under alternativen så att inget flyttar sig
+            ovanför det man just tryckte på. */}
+        {svarat && fraga.betydelse ? (
+          <div className="mt-4 rounded-md bg-secondary px-4 py-3 text-left">
+            <p className="text-[15px] leading-relaxed">
+              <span className="font-semibold">{fraga.ord}:</span> {fraga.betydelse}
+            </p>
+            {fraga.exempel ? (
+              <p className="mt-1.5 text-[14px] leading-relaxed text-white/70">
+                Exempel: {fraga.exempel}
+              </p>
+            ) : null}
+            {fraga.slug ? (
+              <Link
+                to="/ordlista/$ord"
+                params={{ ord: fraga.slug }}
+                className="mt-2 inline-flex min-h-[44px] items-center text-[14px] font-semibold text-primary hover:underline"
+              >
+                Hela uppslaget i ordlistan
+              </Link>
+            ) : null}
+          </div>
+        ) : null}
+
+        {svarat && besvarade >= DEMO_ORD_FORE_KNAPP ? (
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-md border border-white/10 px-4 py-3 text-left">
+            <p className="min-w-[200px] flex-1 text-[14px] leading-relaxed text-white/70">
+              Det här var {besvarade} av över 10&nbsp;000 ord. I ordövningen kommer orden du missar
+              tillbaka tills du kan dem.
+            </p>
+            <Link
+              to="/ord"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-primary px-5 text-[14px] font-semibold text-on-brand transition hover:brightness-125"
+            >
+              Fortsätt öva ord
+            </Link>
+          </div>
+        ) : null}
       </div>
 
       <div className="flex min-h-[60px] flex-wrap items-center gap-3 border-t border-white/10 px-4 py-3">
@@ -112,20 +153,11 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
             Nästa ord
           </button>
         ) : null}
-        <span className="ml-auto flex items-baseline gap-2">
-          <span className="font-mono text-xs text-white/55">ELO</span>
-          <span className="font-mono text-[22px] font-medium tabular-nums tracking-tight">
-            {formatInt(elo)}
+        {besvarade > 0 ? (
+          <span className="ml-auto font-mono text-[14px] tabular-nums text-white/70">
+            {antalRatt} av {besvarade} rätt
           </span>
-          {delta !== null ? (
-            <span
-              className={`font-mono text-[13px] font-medium ${delta > 0 ? "text-success" : "text-destructive"}`}
-            >
-              {delta > 0 ? "+" : ""}
-              {delta}
-            </span>
-          ) : null}
-        </span>
+        ) : null}
       </div>
     </div>
   );
@@ -176,20 +208,24 @@ export function LandingHero({
           className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
           style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
         >
-          Alla högskoleprov sedan 2012, med facit.
+          Gamla högskoleprov på tid, med din poäng.
         </p>
 
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
-          Alla 31 provtillfällen från 2012 till 2026, med facit på varje uppgift. Över 10&nbsp;000
-          ord med förklaring. Och matcher på 5 minuter mot andra som pluggar.
+          Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Här skriver du proven
+          från 2012 till 2026 på tid, får din poäng och övar på det du tappar poäng på. De{" "}
+          {FREE_EXAM_COUNT} senaste proven är gratis.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          {/* Knappen gick till registreringen. Det senaste provet är gratis
+              och kräver inget konto, så den som vill börja får börja. */}
           <Link
-            to="/signup"
+            to="/gamla-prov/$term"
+            params={{ term: allExams()[0].term }}
             className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-7 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
           >
-            Börja öva gratis
+            Skriv ett gratisprov
           </Link>
           <Link
             to="/gamla-prov"

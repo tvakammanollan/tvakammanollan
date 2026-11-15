@@ -190,20 +190,21 @@ export function Navbar() {
                 <Link to="/forum">Forum</Link>
               </Button>
               <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
+                <Link to="/pris">Pris</Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
                 <Link to="/login">Logga in</Link>
               </Button>
+              {/* Knappen hette "Testa" och startade en gästmatch direkt, utan
+                  att säga det. Nu leder den till stegen på landningssidan. */}
               <Button
                 size="sm"
-                onClick={() => playAsGuest("verbal")}
-                disabled={guestLoading}
-                className="gap-1 px-3 text-xs bg-primary text-on-brand font-semibold"
+                asChild
+                className="px-3 text-xs bg-primary text-on-brand font-semibold"
               >
-                {guestLoading ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <Zap className="h-3 w-3" />
-                )}
-                Testa
+                <Link to="/" hash="borja-har">
+                  Börja
+                </Link>
               </Button>
             </>
           )}

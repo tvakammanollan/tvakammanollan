@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Lock } from "lucide-react";
+import { Check, Loader2, Lock } from "lucide-react";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { PrimaryCTA, SecondaryCTA } from "@/components/layout/CTAButtons";
 import { StripeCheckoutEmbed } from "@/components/StripeCheckoutEmbed";
@@ -10,11 +10,14 @@ import {
   FREE_MEK_LIMIT,
   FREE_ORD_LIMIT,
   planPriceLabel,
+  POPULAR_PLAN,
+  PREMIUM_RADER,
   type OrdPlan,
   type PaywallReturnPath,
   type PaywallSubject,
 } from "@/lib/ord-paywall";
 import { formatMoney } from "@/lib/sv-format";
+import { AngerRad } from "@/components/landing/LandingSections";
 import { trackEvent } from "@/lib/events";
 import { trackError } from "@/lib/telemetry";
 
@@ -110,6 +113,14 @@ export function OrdPaywall({
           Premium ger dig alla gamla prov, hela ordlistan och alla MEK-uppgifter. Månadsköpet
           förnyas varje månad tills du säger upp det. Priset är med moms.
         </p>
+        <ul className="mx-auto mt-4 max-w-md space-y-2 text-left text-[14px] leading-relaxed text-white/70">
+          {PREMIUM_RADER.map((rad) => (
+            <li key={rad} className="flex gap-2.5">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
+              {rad}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {secret && access.publishableKey ? (
@@ -143,22 +154,26 @@ export function OrdPaywall({
             </PrimaryCTA>
           ) : (
             access.plans.map((p) => {
-              // Det förvalda köpet, annars det längre, bär primärfärgen.
-              const primary = p.plan === (chosenPlan ?? "6m");
+              // Det förvalda köpet, annars det som märks "Mest populär", bär
+              // primärfärgen. Raden under knappen säger varför man väljer den:
+              // märket för månadsköpet, priset per månad för 6 månader.
+              const primary = p.plan === (chosenPlan ?? POPULAR_PLAN);
+              const under =
+                p.plan === POPULAR_PLAN
+                  ? "Mest populär"
+                  : `${formatMoney(Math.round(p.amount / 6), access.currency)} per månad`;
               const Cta = primary ? PrimaryCTA : SecondaryCTA;
               return (
-                <Cta
-                  key={p.plan}
-                  onClick={() => void buy(p.plan)}
-                  disabled={busy}
-                  className="w-full"
-                >
-                  {busyPlan === p.plan ? (
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-                  ) : (
-                    planPriceLabel(p.plan, formatMoney(p.amount, access.currency))
-                  )}
-                </Cta>
+                <div key={p.plan}>
+                  <Cta onClick={() => void buy(p.plan)} disabled={busy} className="w-full">
+                    {busyPlan === p.plan ? (
+                      <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                    ) : (
+                      planPriceLabel(p.plan, formatMoney(p.amount, access.currency))
+                    )}
+                  </Cta>
+                  <p className="mt-1 text-center text-[13px] text-white/60">{under}</p>
+                </div>
               );
             })
           )}
@@ -167,6 +182,7 @@ export function OrdPaywall({
               {error}
             </p>
           )}
+          <AngerRad className="pt-2 text-center text-[13px] leading-relaxed text-white/60" />
         </div>
       )}
     </GlassCard>

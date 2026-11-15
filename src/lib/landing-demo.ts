@@ -7,11 +7,19 @@
  */
 
 import { ordText } from "./sv-format";
+import { ordDefinitionParts } from "./ord-definition";
+import { ordSlug } from "./ord-slug";
 
 export interface DemoQuestion {
   ord: string;
   alternativ: { id: string; text: string }[];
   ratt: string;
+  /** Första betydelsen ur ordförklaringen, visad efter svaret. */
+  betydelse?: string;
+  /** En exempelmening, om ordboken hade någon. */
+  exempel?: string;
+  /** Uppslagets slug i `/ordlista`. */
+  slug?: string;
 }
 
 /** En rad som den kommer ur `questions`. */
@@ -19,6 +27,7 @@ export interface RaOrdrad {
   question_text: string;
   options: unknown;
   correct_answer: string;
+  definition?: string | null;
 }
 
 /** Längsta ord som får plats i hjältens rubrikstorlek utan att brytas. */
@@ -54,7 +63,21 @@ export function dugligaDemofragor(rader: RaOrdrad[]): DemoQuestion[] {
     if (/^-|-$/.test(ord)) return [];
     if (alternativ.some((a) => a.text.length > MAX_ALTERNATIVLANGD)) return [];
 
-    return [{ ord, alternativ, ratt: r.correct_answer }];
+    // Förklaringen är det sajten har utöver facit, och den visas när
+    // besökaren svarat. Saknas den visas uppgiften ändå, utan raden.
+    const delar = ordDefinitionParts(r.definition);
+    const betydelse = delar.senses[0];
+    const exempel = delar.examples[0];
+
+    return [
+      {
+        ord,
+        alternativ,
+        ratt: r.correct_answer,
+        ...(betydelse ? { betydelse, slug: ordSlug(r.question_text) } : {}),
+        ...(betydelse && exempel ? { exempel } : {}),
+      },
+    ];
   });
 }
 

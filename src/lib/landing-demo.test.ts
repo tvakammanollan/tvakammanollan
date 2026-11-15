@@ -29,6 +29,19 @@ describe("dugligaDemofragor", () => {
     expect(ut[0]).toEqual({ ord: "vederhäftig", alternativ: femAlt(), ratt: "B" });
   });
 
+  // Förklaringen visas i hjälten efter svaret. Den är valfri: en rad utan
+  // definition ska fortfarande duga som uppgift.
+  it("tar med första betydelsen, ett exempel och sluggen när definitionen finns", () => {
+    const ut = dugligaDemofragor([
+      rad({
+        definition: "1. Pålitlig och trovärdig.\nExempel: en vederhäftig källa\nOrdklass: adjektiv",
+      }),
+    ]);
+    expect(ut[0].betydelse).toBe("Pålitlig och trovärdig.");
+    expect(ut[0].exempel).toBe("en vederhäftig källa");
+    expect(ut[0].slug).toBe("vederhäftig");
+  });
+
   // Beståndet har uppslag som "karne-", "herb-" och "mort-". De är riktiga
   // uppgifter men förklarar ingenting för någon som ser sajten först gången.
   it("sållar bort affix i båda ändar", () => {

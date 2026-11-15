@@ -4,8 +4,8 @@
  * förnyas tills den sägs upp, eller sex månader som engångsköp. Köp gjorda
  * före `TIME_LIMITED_FROM` gäller för alltid. Köpet heter Premium i text
  * besökare läser och gäller allt som kostar: ordlistan, MEK och de gamla
- * prov som inte är gratis (`prov-access.ts`). I Stripe heter produkten
- * fortfarande "Hela Ordlistan + MEK".
+ * prov som inte är gratis (`prov-access.ts`). Produkterna i Stripe heter
+ * "Premium, 1 månad" och "Premium, 6 månader" sedan 2026-11-15.
  *
  * Ren logik, ingen databas. Räkningen är antalet SVAR (ORD:
  * `ord_practice_stats.total_count`, MEK: träningssvar i `match_answers`), inte
@@ -177,6 +177,20 @@ export function purchaseAccess(row: OrdPurchaseRow, now: number = Date.now()): O
 }
 
 /** "149 kr per månad" / "349 kr för 6 månader". `money` är det formaterade beloppet. */
+/**
+ * Vad Premium innehåller, i tre rader. Samma rader står på priskorten
+ * (landningen, /pris) och i spärrutan i övningsläget, så att köpet beskrivs
+ * likadant var det än erbjuds.
+ */
+export const PREMIUM_RADER = [
+  "Alla 31 gamla prov att skriva på tid, med rättning och poäng",
+  "Ordövning med över 10\u00a0000 ord. ORD är 20 av provets 160 uppgifter",
+  "Alla uppgifter i MEK (meningskomplettering), också 20 av provets 160",
+] as const;
+
+/** Planen som märks "Mest populär" (Niklas beslut 2026-11-15). */
+export const POPULAR_PLAN: OrdPlan = "1m";
+
 export function planPriceLabel(plan: OrdPlan, money: string): string {
   return plan === "1m" ? `${money} per månad` : `${money} för 6 månader`;
 }

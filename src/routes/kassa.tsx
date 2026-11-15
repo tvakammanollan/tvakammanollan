@@ -17,6 +17,9 @@ import {
 import { ORD_PLAN_IDS, type OrdPlan } from "@/lib/ord-paywall";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
 import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
+import { GoogleButton } from "@/components/auth/GoogleButton";
+import { AngerRad } from "@/components/landing/LandingSections";
+import { isAutoUsername } from "@/lib/username";
 import { formatMoney } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
 import { trackError } from "@/lib/telemetry";
@@ -71,7 +74,7 @@ const PLAN_TEXT: Record<OrdPlan, { rubrik: string; under: string }> = {
 function KassaPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
-  const { user, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const fetchAccess = useServerFn(getOrdAccess);
   const startCheckout = useServerFn(startOrdCheckout);
   const confirmPurchase = useServerFn(confirmOrdCheckout);
@@ -213,6 +216,16 @@ function KassaPage() {
                   <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>
                   <PrimaryCTA to="/mek-ovning">Öva MEK</PrimaryCTA>
                 </div>
+                {/* Den som kom hit rakt från registreringen hoppade över
+                    namnvalet (se onboarding.tsx) och har ett auto-namn. */}
+                {profile && isAutoUsername(profile.username) ? (
+                  <p className="mx-auto mt-5 max-w-md text-[14px] text-[var(--plum)]">
+                    Du har inget användarnamn än.{" "}
+                    <Link to="/onboarding" className="underline underline-offset-2">
+                      Välj användarnamn
+                    </Link>
+                  </p>
+                ) : null}
               </>
             ) : confirmed === "failed" ? (
               <>
@@ -257,6 +270,7 @@ function KassaPage() {
                   </li>
                 ))}
               </ul>
+              <AngerRad className="pt-2 text-[13px] leading-relaxed text-white/60" />
             </div>
 
             <GlassCard className="min-h-[320px] p-4 sm:p-6">
@@ -267,10 +281,17 @@ function KassaPage() {
                   <h2 className="text-xl font-semibold">Skapa ett konto för att köpa</h2>
                   <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
                     Köpet knyts till ditt konto så att det följer med dig mellan enheter. När du är
-                    inloggad kommer du tillbaka hit till kassan.
+                    inloggad kommer du tillbaka hit till kassan, och användarnamn väljer du efter
+                    köpet.
                   </p>
-                  <div className="mt-6 flex flex-wrap justify-center gap-3">
-                    <PrimaryCTA to="/signup">Skapa konto</PrimaryCTA>
+                  {/* Google direkt här: ett tryck i stället för att gå via
+                      registreringssidan. Valet av köp är redan sparat
+                      (`rememberPendingPlan`), så returen hamnar i kassan. */}
+                  <div className="mx-auto mt-6 max-w-sm">
+                    <GoogleButton />
+                  </div>
+                  <div className="mt-4 flex flex-wrap justify-center gap-3">
+                    <PrimaryCTA to="/signup">Skapa konto med e-post</PrimaryCTA>
                     <Link
                       to="/login"
                       className="inline-flex min-h-[44px] items-center px-4 text-sm font-semibold text-white/70 transition hover:text-[var(--cream)]"

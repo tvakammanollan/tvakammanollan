@@ -115,7 +115,7 @@ function SignupPage() {
               >
                 Skapa konto
               </h1>
-              <p className="text-[16px] text-white/65">Gratis. Inga kort, bara matcher.</p>
+              <p className="text-[16px] text-white/65">Kontot är gratis och kräver inget kort.</p>
             </div>
 
             <div className="space-y-4">

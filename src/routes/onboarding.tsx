@@ -15,10 +15,7 @@ import { EMAIL_OPT_IN_LABEL } from "@/components/EmailOptInCard";
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
   head: () => ({
-    meta: [
-      { title: pageTitle("Välkommen") },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: pageTitle("Välkommen") }, { name: "robots", content: "noindex, nofollow" }],
   }),
 });
 
@@ -41,12 +38,12 @@ function OnboardingPage() {
   if (!loading && !user) return <Navigate to="/login" />;
   // Ett köp som valdes före registreringen går vidare till kassan.
   const pendingPlan = readPendingPlan();
-  if (profile && !isAutoUsername(profile.username))
-    return pendingPlan ? (
-      <Navigate to="/kassa" search={{ plan: pendingPlan }} />
-    ) : (
-      <Navigate to="/" />
-    );
+  // Den som är på väg att köpa skickas dit direkt, även utan valt namn:
+  // namnformuläret låg mellan registreringen och kassan. Kassan tömmer det
+  // sparade valet för en inloggad, så nästa besök här visar formuläret, och
+  // kassans tacksida länkar hit.
+  if (profile && pendingPlan) return <Navigate to="/kassa" search={{ plan: pendingPlan }} />;
+  if (profile && !isAutoUsername(profile.username)) return <Navigate to="/" />;
 
   // Google-inloggningen landar här (se GoogleButton), och den som redan valt
   // namn skickas vidare av guarden ovan — men först när profilen kommit hem.
@@ -92,9 +89,7 @@ function OnboardingPage() {
 
   return (
     <AuthLayout>
-      <div
-        className="space-y-7 text-center"
-      >
+      <div className="space-y-7 text-center">
         <div className="space-y-2">
           <p className="text-sm text-white/65">Steg 2 av 2</p>
           <h1

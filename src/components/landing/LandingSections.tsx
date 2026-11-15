@@ -4,6 +4,9 @@ import { Check } from "lucide-react";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatDecimal, formatInt } from "@/lib/sv-format";
 import { allExams } from "@/lib/prov-data";
+import { FREE_EXAM_COUNT } from "@/lib/prov-access";
+import { FREE_MEK_LIMIT, FREE_ORD_LIMIT, PREMIUM_RADER } from "@/lib/ord-paywall";
+import { HP_DAY_START, hpDateLong, hpDateTime, upcomingHpDates } from "@/lib/hp-dates";
 import { rankedName } from "@/lib/username";
 
 /**
@@ -27,13 +30,18 @@ import { rankedName } from "@/lib/username";
 
 /* ---------------------------------------------------------------- remsan */
 
+// Antalet prov räknas ur arkivet. Det stod "30" och "120" här i tre veckor
+// efter att höstprovet 2026 lagts in, medan hjälten på samma sida sa 31 och
+// 124. Varje prov har 4 provpass, varav 2 verbala (alla med ELF).
+const ANTAL_PROV = allExams().length;
+
 const BEVIS = [
   { v: "10\u00a0000+", k: "ord med förklaring" },
   { v: "4 960", k: "uppgifter i arkivet" },
-  { v: "30", k: "provtillfällen" },
-  { v: "120", k: "provpass med facit" },
+  { v: String(ANTAL_PROV), k: "provtillfällen" },
+  { v: String(ANTAL_PROV * 4), k: "provpass med facit" },
   { v: "8", k: "delprov" },
-  { v: "60", k: "verbala pass med ELF" },
+  { v: String(ANTAL_PROV * 2), k: "verbala pass med ELF" },
 ];
 
 export function BevisRemsan() {
@@ -228,10 +236,10 @@ const TERMINER = [...allExams()].reverse().map((e) => ({
 }));
 
 const ARKIVFAKTA = [
-  { n: "30", t: "provtillfällen från 2012 till 2026" },
-  { n: "120", t: "provpass à 40 uppgifter" },
+  { n: String(ANTAL_PROV), t: "provtillfällen från 2012 till 2026" },
+  { n: String(ANTAL_PROV * 4), t: "provpass à 40 uppgifter" },
   { n: "4 960", t: "uppgifter med facit" },
-  { n: "60", t: "verbala pass med ELF" },
+  { n: String(ANTAL_PROV * 2), t: "verbala pass med ELF" },
 ];
 
 export function Arkivet() {
@@ -330,8 +338,8 @@ const YTOR = [
   },
   {
     to: "/mek-ovning",
-    rubrik: "Egna MEK-uppgifter",
-    text: "Uppgifter vi skriver själva och blindprövar innan de publiceras. Arkivets MEK ligger kvar bredvid.",
+    rubrik: "Öva MEK, meningskomplettering",
+    text: "En mening med luckor, och du väljer orden som passar. Uppgifter ur gamla prov och uppgifter vi skrivit själva, med förklaring efter varje svar.",
     cta: "Öva på MEK",
     yta: "bg-plum",
     textFarg: "text-[var(--navy-3)]",
@@ -349,6 +357,66 @@ const YTOR = [
     knapp: "border-2 border-[var(--plum)] text-[var(--plum)]",
   },
 ] as const;
+
+/* ------------------------------------------------------------- börja här */
+
+/**
+ * Vägen in för den som inte vet något om provet. Sidan räknade tidigare upp
+ * fyra ytor utan att säga var man börjar. Stegen följer planen i
+ * `/plugga-infor-hogskoleprovet`: mål, nuläge, övning. Siffrorna för
+ * gratisdelen kommer ur samma konstanter som spärrarna läser.
+ */
+const STEG: { rubrik: string; text: string; cta: string; to: LinkProps["to"] }[] = [
+  {
+    rubrik: "Se vad utbildningen kräver",
+    text: "Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Resultatet är en poäng mellan 0,0 och 2,0. Slå upp vilken poäng som räckte till ditt program senast.",
+    cta: "Poäng per program",
+    to: "/hogskoleprovet-poang",
+  },
+  {
+    rubrik: "Skriv ett gammalt prov på tid",
+    text: `De ${FREE_EXAM_COUNT} senaste proven är gratis och kräver inget konto. När du lämnat in får du din poäng, och ser hur långt du har kvar.`,
+    cta: "Välj ett prov",
+    to: "/gamla-prov",
+  },
+  {
+    rubrik: "Öva på det du tappar poäng på",
+    text: `Ord och meningskomplettering (MEK) är 40 av provets 160 uppgifter och går att öva i korta pass. De första ${FREE_ORD_LIMIT} orden och ${FREE_MEK_LIMIT} MEK-uppgifterna är gratis.`,
+    cta: "Öva ord",
+    to: "/ord",
+  },
+];
+
+export function BorjaHar() {
+  return (
+    <section id="borja-har" className="border-b border-white/10">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+        <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+          Börja här
+        </h2>
+        <ol className="grid gap-4 lg:grid-cols-3">
+          {STEG.map((s, i) => (
+            <li
+              key={s.rubrik}
+              className="flex min-w-0 flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8"
+            >
+              <p className="font-mono text-[13px] text-white/55">Steg {i + 1}</p>
+              <h3 className="mt-3 text-[22px] leading-tight tracking-[-0.02em]">{s.rubrik}</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/70">{s.text}</p>
+              <div className="flex-1" />
+              <Link
+                to={s.to}
+                className="mt-6 inline-flex min-h-[44px] items-center self-start text-[15px] font-semibold text-primary hover:underline"
+              >
+                {s.cta}
+              </Link>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
 
 export function Produktytorna() {
   return (
@@ -407,46 +475,42 @@ export function Produktytorna() {
  *
  * Studieupplägget är inte med: vi pivoterar bort från det.
  */
+// Månadsköpet är det markerade kortet: terracotta, med raden "Mest populär"
+// (Niklas beslut 2026-11-15). 6 månader är ett vanligt vitt kort, så att
+// bara ett kort ropar.
 const BETALKORT = [
   {
     plan: "1m",
+    marke: "Mest populär",
     etikett: "Premium: allt på sajten, per månad",
     pris: "149 kr",
-    prisEnhet: "per månad",
-    rader: [
-      "Alla 31 gamla prov att skriva på tid, med rättning och poäng",
-      "Över 10\u00a0000 ord i träningsläget",
-      "Alla MEK-uppgifter, arkivets och våra egna",
-      "Förnyas varje månad, säg upp när du vill",
-    ],
+    prisEnhet: "per månad, inklusive moms",
+    rader: [...PREMIUM_RADER, "Förnyas varje månad, säg upp när du vill"],
     cta: "Välj per månad",
-    yta: "bg-card border border-white/10",
-    etikettFarg: "text-white/55",
-    prisFarg: "",
-    radFarg: "text-white/70",
-    ikon: "text-success",
-    knapp: "bg-terracotta text-[var(--cream)] hover:brightness-110",
+    yta: "bg-terracotta",
+    etikettFarg: "text-[var(--cream)]",
+    radFarg: "text-[var(--cream)]",
+    ikon: "text-[var(--cream)]",
+    knapp: "bg-primary text-on-brand hover:brightness-125",
   },
   {
     plan: "6m",
+    marke: null,
     etikett: "Premium: allt på sajten, 6 månader",
     pris: "349 kr",
-    prisEnhet: "för 6 månader",
-    rader: [
-      "Alla 31 gamla prov att skriva på tid, med rättning och poäng",
-      "Över 10\u00a0000 ord i träningsläget",
-      "Alla MEK-uppgifter, arkivets och våra egna",
-      "Engångsköp som inte förnyas",
-    ],
+    prisEnhet: "för 6 månader, inklusive moms. Det blir 58 kr per månad",
+    rader: [...PREMIUM_RADER, "Engångsköp som inte förnyas"],
     cta: "Välj 6 månader",
-    yta: "bg-lavender",
-    etikettFarg: "text-[var(--plum)]",
-    prisFarg: "text-[var(--cream)]",
-    radFarg: "text-[var(--plum)]",
-    ikon: "text-[var(--plum)]",
+    yta: "bg-card border border-white/10",
+    etikettFarg: "text-white/55",
+    radFarg: "text-white/70",
+    ikon: "text-success",
     knapp: "bg-plum text-on-brand hover:brightness-125",
   },
 ] as const;
+
+/** Så länge gäller 6-månadersköpet, i dagar (för raden om provdagen). */
+const SEX_MANADER_DAGAR = 182;
 
 /**
  * `kompakt` är /pris-läget: sidans h1 står redan ovanför, så blockets egen
@@ -455,6 +519,17 @@ const BETALKORT = [
  * priset syntes först efter en skroll, på en sida som bara handlar om priset.
  */
 export function Priset({ kompakt = false }: { kompakt?: boolean }) {
+  // Räknas vid rendering, aldrig på modulnivå (Workerns klocka står på 1970
+  // medan modulen laddas). Raden visas bara när nästa prov ligger inom de
+  // 6 månader köpet gäller.
+  const nastaProv = upcomingHpDates()[0];
+  const dagarTillProv = nastaProv
+    ? (new Date(hpDateTime(nastaProv.date, HP_DAY_START)).getTime() - Date.now()) / 86_400_000
+    : null;
+  const rackerTillProvet =
+    nastaProv && dagarTillProv !== null && dagarTillProv < SEX_MANADER_DAGAR
+      ? `Räcker till provet ${hpDateLong(nastaProv.date)}`
+      : null;
   return (
     <section id="priset" className="border-b border-white/10 bg-secondary">
       <div className={`mx-auto max-w-6xl px-4 ${kompakt ? "py-6 sm:py-10" : "py-14 sm:py-20"}`}>
@@ -493,16 +568,22 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
             </div>
           </div>
 
-          {BETALKORT.map((k, i) => (
+          {BETALKORT.map((k) => (
             <div key={k.cta} className="min-w-0">
               <div className={`flex h-full flex-col rounded-3xl p-7 sm:p-8 ${k.yta}`}>
-                <p className={`text-xs font-semibold ${k.etikettFarg}`}>{k.etikett}</p>
-                <p className={`mt-4 text-[40px] leading-none tracking-[-0.03em] ${k.prisFarg}`}>
-                  {k.pris}
+                <p className={`text-xs font-semibold ${k.etikettFarg}`}>
+                  {k.marke ? (
+                    <span className="mb-1 block text-[15px] font-bold">{k.marke}</span>
+                  ) : null}
+                  {k.etikett}
                 </p>
-                <p className={`mt-2 text-[13px] ${k.radFarg}`}>{k.prisEnhet}, inklusive moms</p>
+                <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">{k.pris}</p>
+                <p className={`mt-2 text-[13px] ${k.radFarg}`}>{k.prisEnhet}</p>
                 <ul className={`mt-6 space-y-3 text-[15px] leading-relaxed ${k.radFarg}`}>
-                  {k.rader.map((rad) => (
+                  {[
+                    ...k.rader,
+                    ...(k.plan === "6m" && rackerTillProvet ? [rackerTillProvet] : []),
+                  ].map((rad) => (
                     <li key={rad} className="flex gap-2.5">
                       <Check className={`mt-0.5 h-4 w-4 shrink-0 ${k.ikon}`} />
                       {rad}
@@ -521,8 +602,27 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
             </div>
           ))}
         </div>
+        <AngerRad className="mt-6 text-[13px] leading-relaxed text-white/60" />
       </div>
     </section>
+  );
+}
+
+/**
+ * Vad som gäller om man ångrar sig, med villkorens ord (`/villkor`,
+ * avsnittet Ångerrätt). Står under priskorten, i kassan och i spärrutan.
+ * Ändras villkoren ska den här raden ändras med dem.
+ */
+export function AngerRad({ className }: { className?: string }) {
+  return (
+    <p className={className}>
+      Premium blir tillgängligt direkt efter betalningen, och ångerrätten gäller därför inte.
+      Månadsköpet säger du upp när du vill och behåller då månaden ut. Hela texten står i{" "}
+      <Link to="/villkor" className="underline underline-offset-2">
+        villkoren
+      </Link>
+      .
+    </p>
   );
 }
 

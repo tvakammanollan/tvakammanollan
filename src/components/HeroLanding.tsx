@@ -4,6 +4,7 @@ import { LandingHero } from "@/components/landing/LandingHero";
 import {
   Arkivet,
   BevisRemsan,
+  BorjaHar,
   EloSkalan,
   Priset,
   Produktytorna,
@@ -53,12 +54,15 @@ export function HeroLanding({
   return (
     <div className="w-full">
       <LandingHero fragor={fragor} stats={stats} />
+      <BorjaHar />
       <Produktytorna />
       <BevisRemsan />
-      <EloSkalan />
       <Arkivet />
-      <Topplistan stats={stats} />
+      {/* Priset före matcherna: ELO-skalan och topplistan handlar om det
+          som är gratis och låg tidigare mellan besökaren och priset. */}
       <Priset />
+      <EloSkalan />
+      <Topplistan stats={stats} />
       <Resurser />
       <SlutCta dagarKvar={dagarKvar} datum={next ? hpDateShort(next.entry.date) : null} />
     </div>
