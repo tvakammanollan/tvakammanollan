@@ -7,6 +7,8 @@ import {
   hpDateShort,
   hpDateTime,
   hpDatesAnswer,
+  upcomingHpDates,
+  upcomingHpYears,
   stockholmOffset,
 } from "./hp-dates";
 
@@ -79,13 +81,42 @@ describe("getNextHpDate", () => {
   });
 });
 
+describe("upcomingHpDates", () => {
+  it("tar med alla prov innan det första skrivits", () => {
+    expect(upcomingHpDates(new Date("2026-09-01T00:00:00Z"))).toHaveLength(HP_DATES.length);
+  });
+
+  it("ett prov är kommande under provdagen och borta efter den", () => {
+    const underProvet = upcomingHpDates(new Date("2026-10-18T10:00:00Z"));
+    expect(underProvet.map((d) => d.date)).toContain("2026-10-18");
+    const kvallen = upcomingHpDates(new Date("2026-10-18T18:00:00Z"));
+    expect(kvallen.map((d) => d.date)).not.toContain("2026-10-18");
+  });
+
+  it("åren följer de prov som återstår", () => {
+    expect(upcomingHpYears(new Date("2026-09-01T00:00:00Z"))).toBe("2026 & 2027");
+    expect(upcomingHpYears(new Date("2026-11-14T00:00:00Z"))).toBe("2027");
+    expect(upcomingHpYears(new Date("2030-01-01T00:00:00Z"))).toBe("");
+  });
+});
+
 describe("hpDatesAnswer", () => {
-  const svar = hpDatesAnswer();
+  const svar = hpDatesAnswer(new Date("2026-09-01T00:00:00Z"));
 
   it("räknar upp varje provdatum ur listan", () => {
     for (const d of HP_DATES) {
       expect(svar).toContain(hpDateShort(d.date));
     }
+  });
+
+  it("nämner inte ett prov som redan skrivits", () => {
+    const efter = hpDatesAnswer(new Date("2026-11-14T00:00:00Z"));
+    expect(efter).not.toContain("18 oktober 2026");
+    expect(efter).toContain("10 april 2027");
+  });
+
+  it("säger rakt ut när inget datum är publicerat", () => {
+    expect(hpDatesAnswer(new Date("2030-01-01T00:00:00Z"))).toContain("inte publicerat");
   });
 
   it("hänvisar till hogskoleprov.nu och inte till antagning.se", () => {

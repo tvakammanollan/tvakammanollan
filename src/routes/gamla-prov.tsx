@@ -72,6 +72,8 @@ export const Route = createFileRoute("/gamla-prov")({
 
 function GamlaProvPage() {
   const exams = allExams();
+  const oldest = exams[exams.length - 1];
+  const newest = exams[0];
 
   // Vad besökaren skrivit ligger i webbläsaren. Sidan är serverrenderad och
   // lika för alla; resultaten läggs ovanpå efter montering.
@@ -79,7 +81,16 @@ function GamlaProvPage() {
 
   return (
     <div className="min-h-screen">
-      <PageHero title="Alla gamla högskoleprov" align="center" variant="compact" />
+      <PageHero
+        title="Alla gamla högskoleprov"
+        subtitle={
+          oldest && newest
+            ? `Här finns ${exams.length} högskoleprov med facit, från ${oldest.label.toLowerCase()} till ${newest.label.toLowerCase()}: ${enhet(totalQuestions(), "uppgift")} i ${exams.length * 4} provpass. Varje provpass skrivs på 55 minuter och rättas direkt, utan konto.`
+            : undefined
+        }
+        align="center"
+        variant="compact"
+      />
 
       <div className="mx-auto max-w-4xl px-4 pb-24 sm:px-6">
         <ProvResumeCard />
@@ -103,7 +114,8 @@ function GamlaProvPage() {
             <p>
               Ett högskoleprov består av 5 provpass, varav ett är ett utprövningspass som inte
               räknas. De fyra som räknas, två verbala och två kvantitativa, publiceras av
-              Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade som i provhäftet och med samma tidsgräns: 55 minuter per pass.
+              Universitets- och högskolerådet efter provdagen. Det är dem du hittar här, uppdelade
+              som i provhäftet och med samma tidsgräns: 55 minuter per pass.
             </p>
             <p>
               Matematikuppgifterna visas som utsnitt ur originalhäftet, eftersom formler, figurer
@@ -112,7 +124,8 @@ function GamlaProvPage() {
             </p>
             <p>
               Engelsk läsförståelse (ELF) finns med i varje provpass. UHR byter en vecka efter
-              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Här finns originalhäftena, så varje verbalt pass går att skriva i sin helhet.
+              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Här
+              finns originalhäftena, så varje verbalt pass går att skriva i sin helhet.
             </p>
           </div>
         </section>

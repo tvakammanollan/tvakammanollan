@@ -2,11 +2,10 @@ import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
 import {
   HP_DATES,
-  HP_DAY_START,
   HP_FEE_SEK,
   HP_REGISTRATION_URL,
   getNextHpDate,
-  hpDateTime,
+  upcomingHpDates,
 } from "@/lib/hp-dates";
 
 export default defineTool({
@@ -23,10 +22,7 @@ export default defineTool({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ include_past }) => {
     const now = Date.now();
-    const dates = HP_DATES.filter((d) => {
-      if (include_past) return true;
-      return new Date(hpDateTime(d.date, HP_DAY_START)).getTime() > now;
-    });
+    const dates = include_past ? [...HP_DATES] : upcomingHpDates();
     const next = getNextHpDate();
     const daysUntilNext = next ? Math.ceil((next.date.getTime() - now) / 86400000) : null;
     const payload = {

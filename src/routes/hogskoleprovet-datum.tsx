@@ -2,7 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { HpCountdown } from "@/components/ui/HpCountdown";
-import { HP_DATES, HP_FEE_SEK, HP_REGISTRATION_URL, hpDateLong, hpDateShort } from "@/lib/hp-dates";
+import {
+  HP_FEE_SEK,
+  HP_REGISTRATION_URL,
+  hpDateLong,
+  hpDateShort,
+  upcomingHpDates,
+  upcomingHpYears,
+} from "@/lib/hp-dates";
 import {
   HP_EVENT_IMAGES,
   hasRegistrationWindow,
@@ -41,17 +48,22 @@ const PROVDAGEN: ReadonlyArray<{ tid: string; vad: string }> = [
  * formuleringarna AI-sök citerar när någon frågar "när är högskoleprovet".
  */
 function datumFaq(): GuideFaqItem[] {
-  const kommande = HP_DATES.map(
+  const dates = upcomingHpDates();
+  const kommande = dates.map(
     (d) => `${hpDateLong(d.date)} (${d.session === "höst" ? "höstprovet" : "vårprovet"})`,
   );
-  const anmalan = HP_DATES.filter(hasRegistrationWindow).map(
-    (d) =>
-      `till ${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)} är anmälan öppen ${registrationPeriodText(d)}`,
-  );
+  const anmalan = dates
+    .filter(hasRegistrationWindow)
+    .map(
+      (d) =>
+        `till ${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)} är anmälan öppen ${registrationPeriodText(d)}`,
+    );
   return [
     {
       q: "När är nästa högskoleprov?",
-      a: `Kommande provdatum är ${kommande.join(" och ")}. UHR publicerar senare datum ungefär ett år i förväg.`,
+      a: kommande.length
+        ? `${kommande.length > 1 ? "Kommande provdatum är" : "Nästa högskoleprov är"} ${kommande.join(" och ")}. Senaste provet var ${FACIT.label.toLowerCase()}. UHR publicerar senare datum ungefär ett år i förväg.`
+        : `Nästa provdatum är inte publicerat av UHR ännu. Senaste provet var ${FACIT.label.toLowerCase()}.`,
     },
     {
       q: "Hur många gånger om året ges högskoleprovet?",
@@ -59,7 +71,7 @@ function datumFaq(): GuideFaqItem[] {
     },
     {
       q: "När öppnar anmälan till högskoleprovet?",
-      a: `Anmälan görs på hogskoleprov.nu och är öppen i ungefär en vecka, ett par månader före provdagen: ${anmalan.join(", och ")}. Efter sista anmälningsdag går det inte att anmäla sig.`,
+      a: `Anmälan görs på hogskoleprov.nu och är öppen i ungefär en vecka, ett par månader före provdagen${anmalan.length ? `: ${anmalan.join(", och ")}` : ""}. Efter sista anmälningsdag går det inte att anmäla sig.`,
     },
     {
       q: "Vad kostar högskoleprovet?",
@@ -72,23 +84,32 @@ function datumFaq(): GuideFaqItem[] {
   ];
 }
 
+/** "Högskoleprovet datum 2027": åren följer de prov som faktiskt återstår. */
+function rubrik(): string {
+  return `Högskoleprovet datum ${upcomingHpYears()}`.trim();
+}
+
 export const Route = createFileRoute("/hogskoleprovet-datum")({
   head: () => ({
     meta: pageMeta({
       path: "/hogskoleprovet-datum",
-      title: fitTitle("Högskoleprovet datum 2026 & 2027", "när är nästa prov?"),
+      title: fitTitle(rubrik(), "när är nästa prov?"),
       // Datumen stod handskrivna här och skulle bli fel dagen HP_DATES ändras
       // — samma fel som redan städats bort ur FAQ:n och FAQPage-datan. De
       // härleds nu ur listan, och beskrivningen kortas till det Google visar.
       description: describeWithin(
-        `Alla kommande datum för högskoleprovet: ${HP_DATES.map(
-          (d) => `${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)}`,
-        ).join(" och ")}.`,
+        upcomingHpDates().length
+          ? `Kommande datum för högskoleprovet: ${upcomingHpDates()
+              .map(
+                (d) =>
+                  `${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)}`,
+              )
+              .join(" och ")}.`
+          : "Provdatum för högskoleprovet.",
         "Nedräkning, anmälningsperiod och provavgift.",
       ),
       ogTitle: "Högskoleprovet datum: när är nästa prov?",
-      ogDescription:
-        "Kommande provdatum, anmälningsperioder och provavgift.",
+      ogDescription: "Kommande provdatum, anmälningsperioder och provavgift.",
       ogImage: HP_EVENT_IMAGES[0],
       ogImageWidth: 1200,
       ogImageHeight: 675,
@@ -123,12 +144,13 @@ function DatumPage() {
           className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
-          Högskoleprovet datum 2026 &amp; 2027
+          {rubrik()}
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Högskoleprovet (HP) hålls 2 gånger om året:{" "}
           <strong className="text-white/80">vårprovet på en lördag i april</strong> och{" "}
-          <strong className="text-white/80">höstprovet på en söndag i oktober</strong>. Här står kommande provdatum, anmälningsperioderna och hur provdagen ser ut.
+          <strong className="text-white/80">höstprovet på en söndag i oktober</strong>. Här står
+          kommande provdatum, anmälningsperioderna och hur provdagen ser ut.
         </p>
       </header>
 
@@ -156,7 +178,7 @@ function DatumPage() {
           Kommande provdatum
         </h2>
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
-          {HP_DATES.map((d) => (
+          {upcomingHpDates().map((d) => (
             <li key={d.date} className="flex items-center justify-between gap-3 px-5 py-4">
               <div>
                 <div className="text-[15px] font-semibold text-[var(--cream)] first-letter:uppercase">
@@ -167,9 +189,7 @@ function DatumPage() {
                   {hasRegistrationWindow(d) && <>, Anmälan {registrationPeriodText(d)}</>}
                 </div>
               </div>
-              <span className="shrink-0 text-xs font-semibold text-primary">
-                {d.label}
-              </span>
+              <span className="shrink-0 text-xs font-semibold text-primary">{d.label}</span>
             </li>
           ))}
         </ul>
@@ -188,9 +208,8 @@ function DatumPage() {
           Så ser provdagen ut
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
-          Provet består av 5 provpass på 55 minuter vardera. Fyra räknas, ett är ett
-          utprövningspass som inte ger poäng. Med raster och lunch är du på plats i drygt 8
-          timmar.
+          Provet består av 5 provpass på 55 minuter vardera. Fyra räknas, ett är ett utprövningspass
+          som inte ger poäng. Med raster och lunch är du på plats i drygt 8 timmar.
         </p>
         <ul className="mt-4 divide-y divide-white/8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
           {PROVDAGEN.map((rad) => (

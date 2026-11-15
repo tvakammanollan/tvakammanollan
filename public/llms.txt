@@ -5,7 +5,7 @@
 Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP och vill att bra HP-träning ska vara gratis för alla.
 
 Officiell domän: https://tvakommanollan.se
-Senast uppdaterad: 2026-11-11
+Senast uppdaterad: 2026-11-14
 
 ## Fakta i korthet
 
@@ -37,7 +37,7 @@ Senast uppdaterad: 2026-11-11
 - [Formler för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-formler): Formlerna som behövs i XYZ och KVA (bråk, potenser, kvadreringsregler, räta linjer, area, volym, sannolikhet, hastighet), med länkar till uppgifter ur gamla prov.
 - [Orden på högskoleprovet](https://tvakommanollan.se/hogskoleprovet-ord): Alla ORD-uppgifter från varje högskoleprov sedan 2012 med svarsalternativ och rätt svar, ett prov per sida: /hogskoleprovet-ord/<termin> (t.ex. /hogskoleprovet-ord/2025ht).
 - [Normering](https://tvakommanollan.se/hogskoleprovet-normering): UHR:s officiella normeringstabeller för 30 provtillfällen sedan 2012, med hur många rätt som krävdes för 2,0, 1,5 och 1,0 på varje prov. En sida per prov med hela tabellen: /hogskoleprovet-normering/<termin> (t.ex. /hogskoleprovet-normering/2025ht).
-- [Provdatum för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-datum): Nästa provdatum (höstprovet 18 oktober 2026, vårprovet 10 april 2027), anmälningsperiod, provavgift och hur provdagen ser ut, med nedräkning och vanliga frågor.
+- [Provdatum för högskoleprovet](https://tvakommanollan.se/hogskoleprovet-datum): Nästa provdatum (vårprovet 10 april 2027; senaste provet var höstprovet 18 oktober 2026), anmälningsperiod, provavgift och hur provdagen ser ut, med nedräkning och vanliga frågor.
 - [Poängräknare](https://tvakommanollan.se/hogskoleprovet-poangraknare): Räkna om råpoäng till normerat resultat 0,00–2,00.
 - [Forum](https://tvakommanollan.se/forum): Öppet diskussionsforum om högskoleprovet: frågor, svar, uppgiftshjälp och plugg. Kategorier: /forum/allmant, /forum/verbal, /forum/kvantitativ, /forum/provdagen, /forum/plugg.
 - [Vanliga frågor](https://tvakommanollan.se/faq): Vanliga frågor om Tvåkommanollan: vad som är gratis, hur ELO fungerar, var uppgifterna kommer ifrån och gästläget.
@@ -116,10 +116,11 @@ Högskoleprovet ger ett resultat mellan 0,00 och 2,00, i steg om 0,05. Resultate
 
 ## Kommande HP-datum
 
-- söndag 18 oktober 2026 (höstprovet)
 - lördag 10 april 2027 (vårprovet)
 
-Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. Anmälan görs på hogskoleprov.nu, inte på antagning.se. Perioden är kort, ungefär en vecka, ett par månader före provdagen: 11–18 augusti 2026 respektive 7–14 januari 2027. Provavgiften är 550 kronor. Senare provdatum publiceras av UHR ungefär ett år i förväg.
+Senaste provet var höstprovet söndag 18 oktober 2026. Det är skrivet och är inte längre ett kommande datum.
+
+Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober. Anmälan görs på hogskoleprov.nu, inte på antagning.se. Perioden är kort, ungefär en vecka, ett par månader före provdagen: 7–14 januari 2027 för vårprovet 2027. Provavgiften är 550 kronor. Senare provdatum publiceras av UHR ungefär ett år i förväg.
 
 ## FAQ
 

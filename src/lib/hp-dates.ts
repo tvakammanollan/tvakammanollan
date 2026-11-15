@@ -139,6 +139,28 @@ export function hpDateShort(isoDate: string): string {
 }
 
 /**
+ * Provtillfällen som inte är skrivna ännu.
+ *
+ * `HP_DATES` får innehålla passerade prov: andra ytor (facit, resultat)
+ * hänvisar till dem. Men allt som kallar sig "kommande" eller "nästa" ska gå
+ * hit och aldrig läsa listan rakt av. Den 14 november 2026 stod höstprovet
+ * 18 oktober kvar som kommande datum i listan, i FAQ-svaret, i
+ * meta-beskrivningen och i Event-datan, och en AI-sökmotor citerade det.
+ *
+ * Ett prov räknas som kommande till provdagens slut, så att sidan inte
+ * tappar dagens prov medan det skrivs.
+ */
+export function upcomingHpDates(now: Date = new Date()): HpExamDate[] {
+  const nowTime = now.getTime();
+  return HP_DATES.filter((d) => new Date(hpDateTime(d.date, HP_DAY_END)).getTime() > nowTime);
+}
+
+/** "2027" eller "2027 & 2028": åren som de kommande proven ligger i. */
+export function upcomingHpYears(now: Date = new Date()): string {
+  return [...new Set(upcomingHpDates(now).map((d) => d.date.slice(0, 4)))].join(" & ");
+}
+
+/**
  * Svaret på "När är nästa högskoleprov?", byggt ur listan.
  *
  * Samma mening stod handskriven på tre ställen — FAQ-sidan, FAQPage-datan i
@@ -148,17 +170,20 @@ export function hpDateShort(isoDate: string): string {
  *
  * `llms.txt` är en statisk fil och måste fortfarande rättas för hand.
  */
-export function hpDatesAnswer(): string {
-  const parts = HP_DATES.map(
+export function hpDatesAnswer(now: Date = new Date()): string {
+  const parts = upcomingHpDates(now).map(
     (d) => `${hpDateShort(d.date)} (${d.session === "höst" ? "höstprovet" : "vårprovet"})`,
   );
   const list =
     parts.length > 1
       ? `${parts.slice(0, -1).join(", ")} och ${parts[parts.length - 1]}`
       : (parts[0] ?? "");
+  const kommande = list
+    ? `Kommande datum: ${list}.`
+    : "Nästa provdatum är inte publicerat av UHR ännu.";
   return (
     "Högskoleprovet ges 2 gånger per år: vårprovet på en lördag i april och " +
-    `höstprovet på en söndag i oktober. Kommande datum: ${list}. Anmälan görs på ` +
+    `höstprovet på en söndag i oktober. ${kommande} Anmälan görs på ` +
     `hogskoleprov.nu under en kort period ett par månader före provdagen och ` +
     `provavgiften är ${HP_FEE_SEK} kronor.`
   );

@@ -14,7 +14,7 @@
  */
 import {
   HP_CURRENCY,
-  HP_DATES,
+  upcomingHpDates,
   HP_DAY_END,
   HP_DAY_START,
   HP_FEE_SEK,
@@ -154,7 +154,13 @@ export function hpEventJsonLd(
   };
 }
 
-/** Alla provtillfällen som får Event-data (de med publicerad anmälningsperiod). */
+/**
+ * Kommande provtillfällen som får Event-data (de med publicerad
+ * anmälningsperiod). Ett skrivet prov får ingen: Google visar Event-data som
+ * kommande händelser.
+ */
 export function hpEvents(now: Date = new Date()): Record<string, unknown>[] {
-  return HP_DATES.filter(hasRegistrationWindow).map((e) => hpEventJsonLd(e, now));
+  return upcomingHpDates(now)
+    .filter(hasRegistrationWindow)
+    .map((e) => hpEventJsonLd(e, now));
 }

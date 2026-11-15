@@ -1953,6 +1953,14 @@ vilket är den allvarligare halvan av det som rättades.
   Event-datan, alltså i det Google kan visa som provdatum. **Lägg aldrig in
   ett gissat datum.** Kontrollera mot uhr.se:s kalender, studera.nu *och*
   hogskoleprov.nu — alla tre ska säga samma sak.
+- **"Kommande" och "nästa" läser `upcomingHpDates()`, aldrig `HP_DATES` rakt
+  av (2026-11-14).** Höstprovet 18 oktober 2026 stod kvar som kommande datum
+  i listan, FAQ-svaret, meta-beskrivningen, Event-datan och `<title>`
+  ("2026 & 2027") i fyra veckor efter att det skrivits, och en AI-sökmotor
+  citerade det. Ett prov räknas som kommande till provdagens slut. Sidans
+  rubrik och titel byggs ur `upcomingHpYears()`. **`llms.txt` är statisk och
+  måste rättas för hand dagen efter varje prov**, liksom `HP_DATES` när UHR
+  publicerat nästa datum (höstprovet 2027 var inte inlagt 2026-11-14).
 - **Vårprovet ligger på en lördag i april, höstprovet på en söndag i oktober**
   (söndag sedan 2022). Listan hade lördagsdatum för båda och låg 6 dagar fel
   på höstprovet 2026. Testet i `hp-dates.test.ts` pinnar veckodagen per

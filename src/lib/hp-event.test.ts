@@ -107,6 +107,15 @@ describe("registrationPeriodText", () => {
 });
 
 describe("hpEvents", () => {
+  // Före första provet i listan, så att alla provtillfällen är kommande.
+  const FORE = new Date("2026-08-20T10:00:00Z");
+
+  it("ett skrivet prov får ingen Event-data", () => {
+    const starts = hpEvents(new Date("2026-11-14T00:00:00Z")).map((e) => String(e.startDate));
+    expect(starts.some((s) => s.startsWith("2026-10-18"))).toBe(false);
+    expect(starts.some((s) => s.startsWith("2027-04-10"))).toBe(true);
+  });
+
   it("beskrivningen bär provdag, anmälan och avgift", () => {
     const [first] = hpEvents(new Date("2026-08-20T10:00:00Z"));
     expect(first.description).toContain("söndag 18 oktober 2026");
@@ -115,12 +124,13 @@ describe("hpEvents", () => {
   });
 
   it("varje provtillfälle får en egen @id", () => {
-    const ids = hpEvents().map((e) => e["@id"]);
+    const ids = hpEvents(FORE).map((e) => e["@id"]);
+    expect(ids.length).toBeGreaterThan(1);
     expect(new Set(ids).size).toBe(ids.length);
   });
 
   it("hoppar över provtillfällen utan publicerad anmälningsperiod", () => {
-    expect(hpEvents()).toHaveLength(HP_DATES.filter(hasRegistrationWindow).length);
+    expect(hpEvents(FORE)).toHaveLength(HP_DATES.filter(hasRegistrationWindow).length);
     expect(HP_DATES.every(hasRegistrationWindow)).toBe(true);
   });
 });
