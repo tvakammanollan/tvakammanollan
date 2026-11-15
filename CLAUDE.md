@@ -1579,10 +1579,11 @@ Avsnittet nedan beskriver mekaniken och stämmer fortfarande, utom talen.
   provvyn med klocka, rättning och poäng. Listan ligger kvar i serverrenderad
   HTML så att de 116 låsta provpassidorna behåller sin sökbarhet. Göm den inte
   bakom köpet utan att fråga.
-- **I Stripe heter produkterna fortfarande "Hela Ordlistan + MEK"**
-  (`ORD_PRODUCT_NAMES` i `stripe.server.ts` är reservuppslaget på namn). Byts
-  namnet i Stripe måste konstanten med. Villkoren säger att köpet kan heta så
-  på kvittot.
+- **I Stripe heter produkterna "Premium, 1 månad" och "Premium, 6 månader"**
+  sedan 2026-11-15 (hette "Hela Ordlistan + MEK · …"). `ORD_PRODUCT_NAMES` i
+  `stripe.server.ts` är reservuppslaget på namn och används bara om pris-id:t
+  saknas; byts namnet i Stripe måste konstanten med. Kvitton från före bytet
+  bär det gamla namnet, vilket villkoren nämner.
 - **"Det mesta är gratis" och "alla gamla prov gratis" är borttaget överallt**
   (meta, FAQ, `/om`, `/pris`, villkor, `llms.txt`, footern). Skriv inte
   tillbaka det. Vad som är gratis står uppräknat i `GRATIS` på `/pris`.
