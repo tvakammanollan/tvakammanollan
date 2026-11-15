@@ -7,6 +7,7 @@ import {
   Grid3x3,
   Info,
   ListChecks,
+  Pause,
   Play,
   Send,
 } from "lucide-react";
@@ -27,6 +28,7 @@ import {
   type ProvProgress,
 } from "@/lib/prov-progress";
 import { saveResult } from "@/lib/prov-results";
+import { clockNow, pauseShift } from "@/lib/pause-clock";
 import { formatDateLong, enhet } from "@/lib/sv-format";
 import { highlightScope } from "@/lib/highlights";
 import { useHighlighter } from "@/hooks/useHighlighter";
@@ -79,6 +81,9 @@ export function ProvRunner({
   const [endsAt, setEndsAt] = useState<number | null>(null);
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const [now, setNow] = useState(() => Date.now());
+  // Pausen är en tidpunkt, inte en summa: se `pause-clock.ts`. Den sparas med
+  // progressen, så ett pausat pass är fortfarande pausat efter en omladdning.
+  const [pausedAt, setPausedAt] = useState<number | null>(null);
   const [showNavigator, setShowNavigator] = useState(false);
   const [resumable, setResumable] = useState<ProvProgress | null>(null);
   // Inlämningen är oåterkallelig — provet rättas och klockan stannar. En
@@ -154,10 +159,11 @@ export function ProvRunner({
         startedAt,
         endsAt,
         submittedAt,
+        pausedAt,
         ...next,
       });
     },
-    [data.term, data.pass, phase, mode, answers, flagged, startedAt, endsAt, submittedAt],
+    [data.term, data.pass, phase, mode, answers, flagged, startedAt, endsAt, submittedAt, pausedAt],
   );
 
   useEffect(() => {
@@ -167,12 +173,34 @@ export function ProvRunner({
   /* ── Klocka ──────────────────────────────────────────────────── */
 
   useEffect(() => {
-    if (phase !== "running") return;
+    if (phase !== "running" || pausedAt !== null) return;
     const id = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(id);
-  }, [phase]);
+  }, [phase, pausedAt]);
 
-  const remaining = endsAt ? Math.max(0, Math.round((endsAt - now) / 1000)) : null;
+  // Pausat räknas tiden mot pausens början, så klockan står still och passet
+  // kan inte lämnas in av sig självt medan det är pausat.
+  const remaining = endsAt
+    ? Math.max(0, Math.round((endsAt - clockNow(pausedAt, now)) / 1000))
+    : null;
+  const paused = pausedAt !== null && submittedAt === null;
+
+  function pause() {
+    if (submittedAt) return;
+    const at = Date.now();
+    setNow(at);
+    setPausedAt(at);
+    setShowNavigator(false);
+  }
+
+  function unpause() {
+    const at = Date.now();
+    const shift = pauseShift(pausedAt, at);
+    setStartedAt((s) => s + shift);
+    setEndsAt((e) => (e === null ? e : e + shift));
+    setPausedAt(null);
+    setNow(at);
+  }
 
   const submit = useCallback(() => {
     const at = Date.now();
@@ -248,7 +276,7 @@ export function ProvRunner({
 
   const answer = useCallback(
     (letter: string) => {
-      if (submittedAt) return;
+      if (submittedAt || pausedAt !== null) return;
       // I övningsläge visas facit direkt, så svaret låses när det väl är lagt.
       if (mode === "ova" && answers[questions[current].nr]) return;
       setAnswers((prev) => {
@@ -260,6 +288,7 @@ export function ProvRunner({
           startedAt,
           endsAt,
           submittedAt,
+          pausedAt: null,
         });
         return next;
       });
@@ -272,6 +301,7 @@ export function ProvRunner({
       endsAt,
       flagged,
       mode,
+      pausedAt,
       questions,
       startedAt,
       submittedAt,
@@ -284,7 +314,8 @@ export function ProvRunner({
   }, [current, questions]);
 
   useEffect(() => {
-    if (phase !== "running") return;
+    // Pausat är uppgifterna dolda, och då ska tangenterna inte kunna svara.
+    if (phase !== "running" || pausedAt !== null) return;
     function onKey(e: KeyboardEvent) {
       const target = e.target as HTMLElement | null;
       if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
@@ -313,7 +344,7 @@ export function ProvRunner({
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [answer, current, goTo, phase, toggleFlag]);
+  }, [answer, current, goTo, phase, pausedAt, toggleFlag]);
 
   /* ── Start ───────────────────────────────────────────────────── */
 
@@ -327,6 +358,7 @@ export function ProvRunner({
     setStartedAt(at);
     setEndsAt(nextMode === "prov" ? at + data.minutes * 60_000 : null);
     setNow(at);
+    setPausedAt(null);
     setResumable(null);
     loggedRef.current = false;
     setPhase("running");
@@ -354,6 +386,7 @@ export function ProvRunner({
     setStartedAt(saved.startedAt);
     setEndsAt(saved.endsAt);
     setSubmittedAt(saved.submittedAt);
+    setPausedAt(saved.submittedAt ? null : (saved.pausedAt ?? null));
     setNow(Date.now());
     setResumable(null);
     setPhase(saved.submittedAt ? "result" : "running");
@@ -383,6 +416,7 @@ export function ProvRunner({
     setStartedAt(at);
     setEndsAt(null);
     setSubmittedAt(at);
+    setPausedAt(null);
     setNow(Date.now());
     setResumable(null);
     setCurrent(0);
@@ -474,8 +508,24 @@ export function ProvRunner({
             {!submittedAt && (
               <button
                 type="button"
+                onClick={paused ? unpause : pause}
+                aria-label={paused ? "Fortsätt provpasset" : "Pausa provpasset"}
+                title={paused ? "Fortsätt" : "Pausa"}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+              >
+                {paused ? (
+                  <Play className="h-4 w-4" aria-hidden />
+                ) : (
+                  <Pause className="h-4 w-4" aria-hidden />
+                )}
+              </button>
+            )}
+            {!submittedAt && (
+              <button
+                type="button"
                 onClick={() => setConfirmOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+                disabled={paused}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
               >
                 <Send className="h-3.5 w-3.5" aria-hidden />
                 Lämna in
@@ -525,7 +575,34 @@ export function ProvRunner({
         </AlertDialogContent>
       </AlertDialog>
 
-      <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6">
+      {/* Pausat visas varken uppgift eller lästext. Annars vore pausen
+          obegränsad betänketid på uppgiften man står på. */}
+      {paused && (
+        <div className="mx-auto max-w-md px-4 pt-16 text-center sm:px-6">
+          <h2
+            className="text-[24px] font-bold text-[var(--cream)]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Provpasset är pausat
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+            {remaining !== null
+              ? `Klockan står still på ${formatClock(remaining)}. `
+              : "Tiden räknas inte. "}
+            Uppgifterna är dolda tills du fortsätter, och dina svar är sparade.
+          </p>
+          <button
+            type="button"
+            onClick={unpause}
+            autoFocus
+            className="mt-6 inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-6 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+          >
+            Fortsätt
+          </button>
+        </div>
+      )}
+
+      <div className={`mx-auto max-w-6xl px-4 pt-5 sm:px-6 ${paused ? "hidden" : ""}`}>
         <div className={hasPane ? "grid gap-5 lg:grid-cols-12" : ""}>
           {hasPane && (
             <aside className="lg:col-span-5">
@@ -658,6 +735,12 @@ export function ProvRunner({
   );
 }
 
+function formatClock(seconds: number): string {
+  const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const ss = String(seconds % 60).padStart(2, "0");
+  return `${mm}:${ss}`;
+}
+
 /* ── Startvy ───────────────────────────────────────────────────── */
 
 function ProvIntro({
@@ -759,7 +842,7 @@ function ProvIntro({
           <h2 className="text-sm font-semibold text-[var(--cream)]">Du har ett påbörjat försök</h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)]">
             {answered} av {data.questions.length} uppgifter besvarade
-            {resumable.submittedAt ? ", redan inlämnat" : ""}.
+            {resumable.submittedAt ? ", redan inlämnat" : resumable.pausedAt ? ", pausat" : ""}.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <button

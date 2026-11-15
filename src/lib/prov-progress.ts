@@ -18,6 +18,12 @@ export interface ProvProgress {
   /** Tidpunkt då provtiden går ut (bara i provläge). */
   endsAt: number | null;
   submittedAt: number | null;
+  /**
+   * När passet pausades, eller null/utelämnat om klockan går. Se
+   * `pause-clock.ts`: när pausen tar slut flyttas `startedAt` och `endsAt`
+   * fram lika långt som den varade.
+   */
+  pausedAt?: number | null;
 }
 
 const PREFIX = "gamla-prov:";

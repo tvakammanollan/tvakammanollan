@@ -38,11 +38,13 @@ import { HighlightableText, HighlighterToggle } from "@/components/Highlightable
 import { useHighlighter } from "@/hooks/useHighlighter";
 import { highlightScope } from "@/lib/highlights";
 import { sounds } from "@/lib/sounds";
+import { pauseShift } from "@/lib/pause-clock";
 import {
   Check,
   X as XIcon,
   AlertTriangle,
   X,
+  Pause,
   BookOpen,
   Sigma,
   Swords,
@@ -189,6 +191,16 @@ export function TrainExperience({
   const [startedAt, setStartedAt] = useState<number>(0);
   const [endedAt, setEndedAt] = useState<number>(0);
   const [exitOpen, setExitOpen] = useState(false);
+  // Paus: se `pause-clock.ts`. När passet fortsätter flyttas både passets
+  // start och frågans visningstid fram, så att varken tiden på
+  // resultatskärmen eller tid per fråga räknar med pausen.
+  const [pausedAt, setPausedAt] = useState<number | null>(null);
+  const unpause = () => {
+    const shift = pauseShift(pausedAt, Date.now());
+    setStartedAt((s) => s + shift);
+    questionShownAtRef.current += shift;
+    setPausedAt(null);
+  };
 
   useEffect(() => {
     if (authLoading) return;
@@ -375,6 +387,7 @@ export function TrainExperience({
     setRevealed(false);
     setResults([]);
     setStartedAt(Date.now());
+    setPausedAt(null);
     setPhase("session");
     // Först här — allt ovanför kan falla tillbaka till setup, och ett pass som
     // aldrig startade ska inte räknas som startat.
@@ -795,14 +808,27 @@ export function TrainExperience({
             <div className="text-sm font-semibold tabular-nums">
               Fråga {current + 1} av {questions.length}
             </div>
-            <button
-              type="button"
-              onClick={() => setExitOpen(true)}
-              aria-label="Avsluta träning"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
-            >
-              <X className="h-4 w-4" />
-            </button>
+            <div className="flex items-center gap-1">
+              {pausedAt === null && (
+                <button
+                  type="button"
+                  onClick={() => setPausedAt(Date.now())}
+                  aria-label="Pausa träningen"
+                  title="Pausa"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  <Pause className="h-4 w-4" />
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setExitOpen(true)}
+                aria-label="Avsluta träning"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
           </div>
           <div className="mx-auto max-w-3xl px-4 pb-2">
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -819,7 +845,26 @@ export function TrainExperience({
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-[720px] flex-1 px-4 py-6">
+        {/* Pausat döljs frågan, annars vore pausen fri betänketid. */}
+        {pausedAt !== null && (
+          <div className="mx-auto w-full max-w-md flex-1 px-4 pt-16 text-center">
+            <h2 className="text-2xl font-bold" style={{ fontFamily: "var(--font-display)" }}>
+              Träningen är pausad
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Tiden räknas inte. Frågan är dold tills du fortsätter.
+            </p>
+            <Button className="mt-6" onClick={unpause} autoFocus>
+              Fortsätt
+            </Button>
+          </div>
+        )}
+
+        <main
+          className={`mx-auto w-full max-w-[720px] flex-1 px-4 py-6 ${
+            pausedAt !== null ? "hidden" : ""
+          }`}
+        >
           {showPassage && currentQ.passage_text && (
             <section className="mb-6 rounded-xl border border-border bg-card p-5 shadow-card">
               <div className="mb-2 flex items-center justify-between gap-3">
