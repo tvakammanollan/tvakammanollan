@@ -82,7 +82,7 @@ upp igen är det något som kopierats från en gammal gren.
   ordningen ny Worker → flytta routes → verifiera → ta bort den gamla.
   `package.json` heter numera `tvakommanollan` — det är ett lokalt namn och rör
   inte driften.
-- **`public/hpkampen-1778669612-…​.txt`** är en verifieringsfil åt en tredje
+- **`public/hpkampen-1778669612-….txt`** är en verifieringsfil åt en tredje
   part (innehållet = filnamnet). Den är inte ett varumärke och får inte döpas
   om — ta bort den först när du vet vem som frågar efter den.
 **Pushing to `main` changes the live site** — verify before pushing, not after.
@@ -1711,6 +1711,15 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
   en gång per person. `TVAHUNDRA` (100 %, `duration: once`, bara
   månadsprodukten) är en sådan; utan kundåteranvändningen hade den gått att
   ta varje månad genom att säga upp och teckna igen.
+- **`AVON10` och `AVON20`** (2026-11-16, kupong `NqMsk4gM` / `xNY7Ey0x`):
+  10 respektive 20 %, `duration: once`, gäller båda produkterna. På
+  prenumerationen dras rabatten bara på första månaden, på sexmånadersköpet
+  på hela köpet. Bara första köpet (`first_time_transaction`, samma som
+  `TVAHUNDRA`), inget tak. Koderna skapades först utan spärren och byttes
+  samma dag: restriktioner går inte att ändra på en befintlig kod, så den
+  gamla inaktiveras och en ny skapas med samma namn. Spärren bygger på att
+  kassan skickar `customer`, alltså `ord_purchases.stripe_customer_id`;
+  köp före kundåteranvändningen saknar den och känns inte igen.
 - **Kampanjkoder får bara innehålla a–z, 0–9 och bindestreck.** Därför heter
   den `TVAHUNDRA` och inte `TVÅHUNDRA`. Koderna är skiftlägesokänsliga.
 
