@@ -450,7 +450,7 @@ const BETALKORT = [
     marke: null,
     etikett: "Premium: allt på sajten, 6 månader",
     pris: "349 kr",
-    prisEnhet: "för 6 månader, inklusive moms. Det blir 58 kr per månad",
+    prisEnhet: "för 6 månader, inklusive moms. Engångsköp",
     rader: [...PREMIUM_RADER, "Engångsköp som inte förnyas"],
     cta: "Välj 6 månader",
     yta: "bg-card border border-white/10",

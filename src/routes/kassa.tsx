@@ -59,16 +59,22 @@ const INGAR = [
   "Moms ingår, inget läggs på i kassan",
 ];
 
-/** Extra rad för månadsköpet, så att förnyelsen står innan man betalar. */
-const VILLKORSRAD: Record<OrdPlan, string | null> = {
-  "1m": "Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn",
-  "6m": null,
+/**
+ * Vad köpet binder en till, vilket är ingenting. Står först i listan för
+ * båda köpen, så att det syns innan man betalar.
+ */
+const VILLKORSRADER: Record<OrdPlan, string[]> = {
+  "1m": [
+    "Ingen bindningstid. Du kan säga upp redan första dagen",
+    "Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn",
+  ],
+  "6m": ["Ingen bindningstid. Engångsköp som inte förnyas"],
 };
 
 /** Planknappens rubrik och underrad. */
 const PLAN_TEXT: Record<OrdPlan, { rubrik: string; under: string }> = {
-  "1m": { rubrik: "Per månad", under: "Mest populär. Inklusive moms, säg upp när du vill" },
-  "6m": { rubrik: "6 månader", under: "inklusive moms, 58 kr per månad" },
+  "1m": { rubrik: "Per månad", under: "Mest populär. Ingen bindningstid" },
+  "6m": { rubrik: "6 månader", under: "Engångsköp, ingen bindningstid" },
 };
 
 function KassaPage() {
@@ -183,7 +189,7 @@ function KassaPage() {
         </h1>
         <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/70">
           Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha tillgång
-          och betala direkt här.
+          och betala direkt här. Inget av köpen har någon bindningstid.
         </p>
 
         {returning ? (
@@ -263,7 +269,7 @@ function KassaPage() {
                 );
               })}
               <ul className="space-y-2.5 pt-3 text-[14px] text-white/70">
-                {[...INGAR, ...(VILLKORSRAD[plan] ? [VILLKORSRAD[plan]] : [])].map((rad) => (
+                {[...VILLKORSRADER[plan], ...INGAR].map((rad) => (
                   <li key={rad} className="flex gap-2.5">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
                     {rad}

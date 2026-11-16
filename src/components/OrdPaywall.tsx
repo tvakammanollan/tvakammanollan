@@ -110,8 +110,9 @@ export function OrdPaywall({
               : `Du har klarat de ${FREE_ORD_LIMIT} gratis orden`}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-          Premium ger dig alla gamla prov, hela ordlistan och alla MEK-uppgifter. Månadsköpet
-          förnyas varje månad tills du säger upp det. Priset är med moms.
+          Premium ger dig alla gamla prov, hela ordlistan och alla MEK-uppgifter. Inget av köpen har
+          någon bindningstid. Månadsköpet förnyas varje månad tills du säger upp det, och 6 månader
+          är ett engångsköp. Priset är med moms.
         </p>
         <ul className="mx-auto mt-4 max-w-md space-y-2 text-left text-[14px] leading-relaxed text-white/70">
           {PREMIUM_RADER.map((rad) => (
