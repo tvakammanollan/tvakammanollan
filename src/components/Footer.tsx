@@ -11,6 +11,7 @@ const PRODUCT: ReadonlyArray<{ label: string; to: LinkProps["to"] }> = [
   { label: "Gamla prov", to: "/gamla-prov" },
   { label: "Poängräknare", to: "/hogskoleprovet-poangraknare" },
   { label: "Topplista", to: "/leaderboard" },
+  { label: "Forum", to: "/forum" },
   { label: "Guider", to: "/guider" },
 ];
 
@@ -141,6 +142,7 @@ function CompactFooter() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <FooterMiniLink to="/guider">Guider</FooterMiniLink>
+          <FooterMiniLink to="/forum">Forum</FooterMiniLink>
           <FooterMiniLink to="/faq">Vanliga frågor</FooterMiniLink>
           <FooterMiniLink to="/kontakt">Kontakt</FooterMiniLink>
           <FooterMiniLink to="/integritetspolicy">Integritetspolicy</FooterMiniLink>

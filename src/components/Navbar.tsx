@@ -37,7 +37,6 @@ import {
   ChevronDown,
   Settings,
   Swords,
-  MessagesSquare,
   Tag,
   type LucideIcon,
 } from "lucide-react";
@@ -122,7 +121,6 @@ export function Navbar() {
               </NavLink>
               <NavLink to="/ord">Ord</NavLink>
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
-              <NavLink to="/forum">Forum</NavLink>
               <NavLink to="/leaderboard">Topplista</NavLink>
               {/* Bredden räcker inte till sex länkar plus klockan och avatarn
                   mellan md och lg. Mobilmenyn har den alltid. */}
@@ -139,10 +137,9 @@ export function Navbar() {
           ) : (
             <>
               {/* Utloggade är nästan alla som kommer från Google. Utan de här
-                  länkarna var forumet, guiderna och arkivet osynliga för dem
+                  länkarna var guiderna och arkivet osynliga för dem
                   utom via sidfoten. */}
               <NavLink to="/gamla-prov">Gamla prov</NavLink>
-              <NavLink to="/forum">Forum</NavLink>
               {/* Mellan md och lg räcker inte bredden till allt. */}
               <span className="hidden lg:contents">
                 <NavLink to="/guider">Guider</NavLink>
@@ -186,9 +183,6 @@ export function Navbar() {
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
-                <Link to="/forum">Forum</Link>
-              </Button>
               <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
                 <Link to="/pris">Pris</Link>
               </Button>
@@ -411,9 +405,6 @@ function MobileMenu({
           </MobileNavLink>
           <MobileNavLink to="/gamla-prov" onClick={close} icon={FileText}>
             Gamla prov
-          </MobileNavLink>
-          <MobileNavLink to="/forum" onClick={close} icon={MessagesSquare}>
-            Forum
           </MobileNavLink>
           <MobileNavLink to="/leaderboard" onClick={close} icon={Trophy}>
             Topplista

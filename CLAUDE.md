@@ -1096,7 +1096,8 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
 `fetchWeeklyLeaderboard` (`leaderboard.functions.ts`) och `fetchOrdLeaderboard`
 (`word-practice.functions.ts`).
 
-- **MEK-fliken (2026-10-20)** är `fetchMekLeaderboard`
+- **MEK-fliken och veckolistan är borttagna ur `/leaderboard` (2026-11-17, Niklas beslut).** Verbal och Kvantitativ visar bara "Alltid" och "Vänner". `fetchMekLeaderboard` och `fetchWeeklyLeaderboard` ligger kvar oanvända i servern; MCP-verktyg eller annat kan läsa dem. Forumet står inte i navbaren längre, bara i footern (båda varianterna).
+- **MEK-fliken (2026-10-20)** är `fetchMekLeaderboard` (borttagen ur UI:t, se ovan)
   (`mek-leaderboard.functions.ts`): besvarade MEK-uppgifter i träningsläget
   (samma urval som gratisgränsen), rangordnat på rätta som ordlistan. MEK har
   ingen aggregerad tabell, så svaren läses sidvis ur `match_answers` och

@@ -7,29 +7,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  RefreshCw,
-  Users,
-  Medal,
-  CalendarDays,
-  BookA,
-  Puzzle,
-  ClipboardCheck,
-  type LucideIcon,
-} from "lucide-react";
+import { RefreshCw, Users, Medal, BookA, ClipboardCheck, type LucideIcon } from "lucide-react";
 import { formatInt, formatTime } from "@/lib/sv-format";
 import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
-import { fetchMekLeaderboard } from "@/lib/mek-leaderboard.functions";
 import { fetchProvLeaderboard, type ProvLeaderboardRow } from "@/lib/prov-leaderboard.functions";
-import {
-  LEADERBOARD_SIZE,
-  fetchLeaderboard,
-  fetchWeeklyLeaderboard,
-  type WeeklyLeaderboardRow,
-} from "@/lib/leaderboard.functions";
+import { LEADERBOARD_SIZE, fetchLeaderboard } from "@/lib/leaderboard.functions";
 import { isRankable, rankedName } from "@/lib/username";
-import { displayName } from "@/lib/guest-name";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHero } from "@/components/layout/PageHero";
 
@@ -75,7 +59,7 @@ function TableSkeleton() {
 export const Route = createFileRoute("/leaderboard")({
   component: LeaderboardPage,
   // SSR:ar bara standardfliken (verbal, "alltid") — Radix Tabs monterar aldrig
-  // en inaktiv TabsContent, så matte, ord och MEK hämtas fortfarande bara klient-
+  // en inaktiv TabsContent, så matte, ord och prov hämtas fortfarande bara klient-
   // sida precis som förut. Utan den här var sidan tom utan JS: hela listan
   // kom ur en useQuery vars queryFn bara körs i webbläsaren.
   loader: async () => {
@@ -89,9 +73,9 @@ export const Route = createFileRoute("/leaderboard")({
       path: "/leaderboard",
       title: "Topplista: ELO-ranking",
       description:
-        "Topplistan på Tvåkommanollan: ELO för verbal och kvantitativ del, plus listor för ord, MEK och gamla prov. Uppdateras efter varje match.",
+        "Topplistan på Tvåkommanollan: ELO för verbal och kvantitativ del, plus listor för ord och gamla prov. Uppdateras efter varje match.",
       ogTitle: "Tvåkommanollan | Topplista",
-      ogDescription: "ELO för verbal och kvantitativ del, plus listor för ord, MEK och gamla prov.",
+      ogDescription: "ELO för verbal och kvantitativ del, plus listor för ord och gamla prov.",
     }),
     links: pageLinks("/leaderboard"),
     scripts: [
@@ -104,7 +88,7 @@ export const Route = createFileRoute("/leaderboard")({
         "@type": "CollectionPage",
         name: "Topplista: Tvåkommanollan",
         description:
-          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, kvantitativ, ord och MEK. Uppdateras live efter varje match.",
+          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, kvantitativ och ord. Uppdateras live efter varje match.",
         url: "https://tvakommanollan.se/leaderboard",
         inLanguage: "sv-SE",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -117,15 +101,11 @@ export const Route = createFileRoute("/leaderboard")({
 function LeaderboardPage() {
   const { user } = useAuth();
   const { initialVerbalRows } = Route.useLoaderData();
-  const [tab, setTab] = useState<"verbal" | "math" | "ord" | "mek" | "prov">("verbal");
+  const [tab, setTab] = useState<"verbal" | "math" | "ord" | "prov">("verbal");
 
   return (
     <div className="min-h-screen">
-      <PageHero
-        title="Topplista"
-        align="center"
-        variant="compact"
-      />
+      <PageHero title="Topplista" align="center" variant="compact" />
 
       <div className="mx-auto max-w-4xl px-4 pb-20 sm:px-6">
         {user?.is_anonymous && (
@@ -139,11 +119,10 @@ function LeaderboardPage() {
         )}
         <div>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-            <TabsList className="grid w-full max-w-md grid-cols-5">
+            <TabsList className="grid w-full max-w-md grid-cols-4">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
               <TabsTrigger value="math">Kvantitativ</TabsTrigger>
               <TabsTrigger value="ord">Ord</TabsTrigger>
-              <TabsTrigger value="mek">MEK</TabsTrigger>
               <TabsTrigger value="prov">Prov</TabsTrigger>
             </TabsList>
 
@@ -161,9 +140,6 @@ function LeaderboardPage() {
             <TabsContent value="ord">
               <OrdBoard />
             </TabsContent>
-            <TabsContent value="mek">
-              <MekBoard />
-            </TabsContent>
             <TabsContent value="prov">
               <ProvBoard />
             </TabsContent>
@@ -174,12 +150,11 @@ function LeaderboardPage() {
   );
 }
 
-type Scope = "all" | "week" | "friends";
+type Scope = "all" | "friends";
 
 function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) => void }) {
   const opts: { value: Scope; label: string }[] = [
     { value: "all", label: "Alltid" },
-    { value: "week", label: "Denna vecka" },
     { value: "friends", label: "Vänner" },
   ];
   return (
@@ -213,11 +188,8 @@ function Board({
   initialRows?: LbRow[];
 }) {
   const fetchLb = useServerFn(fetchLeaderboard);
-  const fetchWeekly = useServerFn(fetchWeeklyLeaderboard);
-  const [weekly, setWeekly] = useState<WeeklyLeaderboardRow[] | null>(null);
   const [friendIds, setFriendIds] = useState<Set<string> | null>(null);
   const [scope, setScope] = useState<Scope>("all");
-  const [weeklyLoading, setWeeklyLoading] = useState(false);
 
   // react-query-pilot: cache/dedup/refetch utan manuell orkestrering.
   // Server-fn (service-role) returnerar ALLA konton med valt användarnamn,
@@ -268,59 +240,20 @@ function Board({
     };
   }, [currentUserId]);
 
-  // Ladda veckodata first gången "Denna vecka" väljs.
-  useEffect(() => {
-    if (scope !== "week" || weekly !== null) return;
-    let cancelled = false;
-    setWeeklyLoading(true);
-    (async () => {
-      try {
-        // Hämtar mycket mer än listan visar: den som ligger utanför topp 10
-        // ska ändå se sin egen placering under tabellen, och den raden
-        // plockas ur samma svar.
-        const w = await fetchWeekly({ data: { match_type: matchType, limit: 200 } });
-        if (!cancelled) setWeekly(filterLeaderboard(w as WeeklyLeaderboardRow[]));
-      } catch {
-        if (!cancelled) setWeekly([]);
-      } finally {
-        if (!cancelled) setWeeklyLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [scope, weekly, matchType, fetchWeekly]);
-
-  // Weekly nollställs om match_type byts (separat Board-instans per flik,
-  // men säkrare att rensa om komponenten återanvänds).
-  useEffect(() => {
-    setWeekly(null);
-  }, [matchType]);
-
-  const headerRefresh = () => {
-    if (scope === "week") {
-      setWeekly(null);
-    } else {
-      void refetch();
-    }
-  };
-
   return (
     <div>
       <ScopeToggle scope={scope} onChange={setScope} />
       <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
         <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs text-white/55">
           <span className="inline-flex items-center gap-1.5">
-            {scope === "week"
-              ? "Senaste 7 dygnen, störst ELO-klättring"
-              : scope === "friends"
-                ? "Du och dina vänner"
-                : updatedAt
-                  ? `Uppdaterad ${formatTime(updatedAt)}`
-                  : "Alla spelare med valt användarnamn"}
+            {scope === "friends"
+              ? "Du och dina vänner"
+              : updatedAt
+                ? `Uppdaterad ${formatTime(updatedAt)}`
+                : "Alla spelare med valt användarnamn"}
           </span>
           <button
-            onClick={headerRefresh}
+            onClick={() => void refetch()}
             className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-white/55 transition hover:bg-white/[0.05] hover:text-white"
           >
             <RefreshCw className="h-3 w-3" />
@@ -328,19 +261,15 @@ function Board({
           </button>
         </div>
 
-        {scope === "week" ? (
-          <WeeklyTable rows={weekly} loading={weeklyLoading} currentUserId={currentUserId} />
-        ) : (
-          <AllTimeTable
-            rows={rows}
-            loading={loading}
-            error={error}
-            currentUserId={currentUserId}
-            isGuest={isGuest}
-            friendsOnly={scope === "friends"}
-            friendIds={friendIds}
-          />
-        )}
+        <AllTimeTable
+          rows={rows}
+          loading={loading}
+          error={error}
+          currentUserId={currentUserId}
+          isGuest={isGuest}
+          friendsOnly={scope === "friends"}
+          friendIds={friendIds}
+        />
       </div>
     </div>
   );
@@ -437,128 +366,6 @@ function AllTimeTable({
   );
 }
 
-function WeeklyTable({
-  rows,
-  loading,
-  currentUserId,
-}: {
-  rows: WeeklyLeaderboardRow[] | null;
-  loading: boolean;
-  currentUserId: string | undefined;
-}) {
-  if (loading || rows === null) return <TableSkeleton />;
-  if (rows.length === 0)
-    return (
-      <EmptyState
-        icon={CalendarDays}
-        title="Ingen har spelat än den här veckan"
-        subtitle="Veckolistan nollställs varje måndag."
-        ctaLabel="Spela nu"
-        ctaHref="/"
-      />
-    );
-  // Topp 10 i tabellen; den egna raden separat under om man ligger utanför.
-  const top = rows.slice(0, LEADERBOARD_SIZE);
-  const me = currentUserId ? rows.find((r) => r.user_id === currentUserId) : undefined;
-  const meInTop = me && top.some((r) => r.user_id === me.user_id);
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead className="bg-white/[0.03] text-xs text-white/55">
-          <tr>
-            <th className="px-4 py-3 text-left font-semibold">#</th>
-            <th className="px-4 py-3 text-left font-semibold">Spelare</th>
-            <th className="px-4 py-3 text-right font-semibold">ELO denna vecka</th>
-            <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">Matcher</th>
-          </tr>
-        </thead>
-        <tbody>
-          {top.map((r) => {
-            const isMe = !!currentUserId && r.user_id === currentUserId;
-
-            return (
-              <tr
-                key={r.user_id}
-                className={`border-t border-white/8 transition-colors ${
-                  isMe
-                    ? "bg-primary/10 font-semibold ring-1 ring-primary/40"
-                    : "hover:bg-white/[0.03]"
-                }`}
-              >
-                <td className="px-4 py-3.5 tabular-nums">
-                  <PodiumRank rank={r.rank} />
-                </td>
-                <td className="px-4 py-3.5">
-                  <span className="inline-flex items-center gap-2 text-white">
-                    {rankedName(r.username)}
-                    {isMe && <span className="text-xs font-bold text-primary">Du</span>}
-                  </span>
-                </td>
-                <td className="px-4 py-3.5 text-right">
-                  <span
-                    className={`text-[16px] font-bold tabular-nums ${
-                      r.elo_gain > 0
-                        ? "text-emerald-400"
-                        : r.elo_gain < 0
-                          ? "text-rose-400"
-                          : "text-white/55"
-                    }`}
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {r.elo_gain >= 0 ? "+" : ""}
-                    {r.elo_gain}
-                  </span>
-                </td>
-                <td className="hidden px-4 py-3.5 text-right tabular-nums text-white/55 sm:table-cell">
-                  {r.games}
-                </td>
-              </tr>
-            );
-          })}
-          {!meInTop && me && (
-            <>
-              <tr>
-                <td colSpan={4} className="px-3 py-2 text-center text-xs text-white/45">
-                  Din placering: #{me.rank}
-                </td>
-              </tr>
-              <tr className="border-t border-white/8 bg-primary/10 font-semibold ring-1 ring-primary/40">
-                <td className="px-4 py-3.5 tabular-nums">
-                  <PodiumRank rank={me.rank} />
-                </td>
-                <td className="px-4 py-3.5">
-                  <span className="inline-flex items-center gap-2 text-white">
-                    {displayName(me.username)}
-                    <span className="text-xs font-bold text-primary">Du</span>
-                  </span>
-                </td>
-                <td className="px-4 py-3.5 text-right">
-                  <span
-                    className={`text-[16px] font-bold tabular-nums ${
-                      me.elo_gain > 0
-                        ? "text-emerald-400"
-                        : me.elo_gain < 0
-                          ? "text-rose-400"
-                          : "text-white/55"
-                    }`}
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {me.elo_gain >= 0 ? "+" : ""}
-                    {me.elo_gain}
-                  </span>
-                </td>
-                <td className="hidden px-4 py-3.5 text-right tabular-nums text-white/55 sm:table-cell">
-                  {me.games}
-                </td>
-              </tr>
-            </>
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   // Tankstreck, inte 0 %, för den som ännu inte spelat — sedan matchtröskeln
   // togs bort står de på listan, och "0 %" läser som spelat och förlorat allt.
@@ -608,7 +415,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
   );
 }
 
-// ---------- Ord- och MEK-listorna ----------
+// ---------- Ord- och provlistorna ----------
 
 /** Minsta en rad måste ha för att listan ska kunna rendera och numrera den. */
 type BoardRow = { user_id: string; rank: number; username: string };
@@ -640,25 +447,9 @@ function OrdBoard() {
   );
 }
 
-function MekBoard() {
-  const fetchMek = useServerFn(fetchMekLeaderboard);
-  // Den egna raden läses ur tokenen i servern, inte ur ett skickat id.
-  const fetchLb = useCallback(() => fetchMek(), [fetchMek]);
-  return (
-    <PracticeBoard
-      fetchLb={fetchLb}
-      emptyIcon={Puzzle}
-      emptyTitle="Inga MEK-uppgifter lösta ännu"
-      emptySubtitle="MEK-listan rankar efter antal rätta MEK-uppgifter i övningen. Kör ett pass så hamnar du på den."
-      emptyCtaLabel="Öva MEK"
-      emptyCtaHref="/mek-ovning"
-    />
-  );
-}
-
 /**
  * Chromet runt en klienthämtad lista: tidsstämpel, uppdatering, skelett, tomt
- * läge och den egna raden under tabellen. Ord, MEK och prov delar allt det;
+ * läge och den egna raden under tabellen. Ord och prov delar allt det;
  * bara kolumnerna skiljer, och de kommer in som `head` och `renderRow`.
  */
 function BoardShell<T extends BoardRow>({
@@ -704,7 +495,7 @@ function BoardShell<T extends BoardRow>({
     }
   }, [fetchLb]);
 
-  // `user?.id` med: MEK-listan läser identiteten ur tokenen, så den måste
+  // `user?.id` med: listorna läser identiteten ur tokenen, så den måste
   // hämtas om när någon loggar in eller ut.
   useEffect(() => {
     void load();
@@ -775,7 +566,7 @@ function BoardShell<T extends BoardRow>({
 }
 
 /**
- * Ord- och MEK-listorna: samma rad, samma kolumner, bara olika data.
+ * Ord-listan: samma rad, samma kolumner, bara olika data.
  */
 function PracticeBoard(props: BoardShellProps<OrdLeaderboardRow>) {
   return (
