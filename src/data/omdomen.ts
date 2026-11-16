@@ -53,8 +53,8 @@ export const OMDOMEN: Omdome[] = [
 export const SNITTBETYG = OMDOMEN.reduce((summa, o) => summa + (o.betyg ?? 5), 0) / OMDOMEN.length;
 
 /**
- * De tre korten på landningssidan (`Omdomen` i `LandingSections.tsx`),
- * med uppgifter Niklas lämnade 2026-11-15. Texten är rättad för stavning
+ * Korten på landningssidan (`Omdomen` i `LandingSections.tsx`),
+ * med uppgifter Niklas lämnade 2026-11-15 (Daniel 2026-11-16). Texten är rättad för stavning
  * och skiljetecken men säger det personerna sa. Arons kort bär en mening
  * om hans roll i `bakgrund`, skild från citatet, eftersom den är skriven
  * om honom och inte av honom.
@@ -104,5 +104,14 @@ export const OMDOMESKORT: Omdomeskort[] = [
     resultat: "1,9",
     prov: "Höstprovet 2025",
     citat: "Tvåkommanollan har de verktyg som behövs för att skriva högt på högskoleprovet.",
+  },
+  {
+    namn: "Daniel",
+    alder: "21 år",
+    roller: ["Student på Handelshögskolan/Karolinska institutet"],
+    resultat: "1,95",
+    prov: "Vårprovet 2026",
+    citat:
+      "Tvåkommanollan har mycket resurser som tar dig långt i pluggandet inför högskoleprovet.",
   },
 ];

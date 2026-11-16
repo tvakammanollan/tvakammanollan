@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { LinkProps } from "@tanstack/react-router";
-import { Check, Star } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Check, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { LandingStats } from "@/lib/landing.functions";
 import { formatInt } from "@/lib/sv-format";
 import { OMDOMESKORT } from "@/data/omdomen";
@@ -95,18 +96,74 @@ const KLICKFORM = [
   "63% 37% 47% 53% / 41% 59% 41% 59%",
 ] as const;
 
+/**
+ * Omdömena ligger i en rad som skrollas i sidled: tre syns på desktop, två
+ * på surfplatta och ett (plus en bit av nästa) på telefon. Knapparna flyttar
+ * ett kort i taget och släcks i ändarna. Ingenting rör sig av sig självt.
+ */
 export function Omdomen() {
+  const rad = useRef<HTMLDivElement>(null);
+  const [kant, setKant] = useState({ start: true, slut: false });
+
+  const lasKant = useCallback(() => {
+    const el = rad.current;
+    if (!el) return;
+    setKant({
+      start: el.scrollLeft <= 1,
+      slut: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1,
+    });
+  }, []);
+
+  useEffect(() => {
+    lasKant();
+    window.addEventListener("resize", lasKant);
+    return () => window.removeEventListener("resize", lasKant);
+  }, [lasKant]);
+
+  const flytta = (riktning: 1 | -1) => {
+    const el = rad.current;
+    const kort = el?.firstElementChild as HTMLElement | null;
+    if (!el || !kort) return;
+    el.scrollBy({ left: riktning * (kort.offsetWidth + 16), behavior: "smooth" });
+  };
+
   return (
     <section id="omdomen" className="border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-        <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-          Tre som skrivit provet
-        </h2>
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <h2 className="max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
+            Fyra som skrivit provet
+          </h2>
+          <div className="hidden shrink-0 gap-2 sm:flex">
+            <button
+              type="button"
+              onClick={() => flytta(-1)}
+              disabled={kant.start}
+              aria-label="Föregående omdöme"
+              className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-card transition-colors duration-150 hover:bg-white/[0.06] disabled:opacity-40 disabled:hover:bg-card"
+            >
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={() => flytta(1)}
+              disabled={kant.slut}
+              aria-label="Nästa omdöme"
+              className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-card transition-colors duration-150 hover:bg-white/[0.06] disabled:opacity-40 disabled:hover:bg-card"
+            >
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+        <div
+          ref={rad}
+          onScroll={lasKant}
+          className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto overscroll-x-contain px-4 pb-3"
+        >
           {OMDOMESKORT.map((o, i) => (
             <figure
               key={o.namn}
-              className="flex min-w-0 flex-col rounded-3xl border border-white/10 bg-card p-7 sm:p-8"
+              className="flex w-[85%] min-w-0 shrink-0 snap-start flex-col rounded-3xl border border-white/10 bg-card p-7 sm:w-[calc((100%-1rem)/2)] sm:p-8 lg:w-[calc((100%-2rem)/3)]"
             >
               <div className="flex items-center gap-4">
                 <div className="relative grid h-[84px] w-[96px] shrink-0 place-items-center">
