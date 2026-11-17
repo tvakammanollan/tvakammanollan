@@ -383,7 +383,7 @@ const STEG: { rubrik: string; text: string; cta: string; to: LinkProps["to"] }[]
   },
   {
     rubrik: "Skriv ett gammalt prov på tid",
-    text: `De senaste proven är gratis och kräver inget konto. När du lämnat in får du din poäng, och ser hur långt du har kvar.`,
+    text: `Det finns ${ANTAL_PROV} prov från 2012 till 2026, med facit. Ett provpass tar 55 minuter, och när du lämnat in får du din poäng och ser hur långt du har kvar.`,
     cta: "Välj ett prov",
     to: "/gamla-prov",
   },
@@ -555,7 +555,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
-                  "De senaste proven med facit och rättning",
+                  "Facit till alla gamla prov",
                   "Matcherna, verbalt och kvantitativt",
                   "20 ord och 10 MEK-uppgifter i träningsläget",
                   "Normering, poängräknare, facit och forum",

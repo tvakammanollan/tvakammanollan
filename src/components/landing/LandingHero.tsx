@@ -211,20 +211,21 @@ export function LandingHero({
         </p>
 
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
-          Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Här skriver du proven
-          från 2012 till 2026 på tid, får din poäng och övar på det du tappar poäng på. De senaste
-          proven är gratis.
+          Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Här finns{" "}
+          {allExams().length} prov från 2012 till 2026, med facit. Du skriver dem på tid, får din
+          poäng och övar på det du tappar poäng på.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          {/* Knappen gick till registreringen. Det senaste provet är gratis
-              och kräver inget konto, så den som vill börja får börja. */}
+          {/* Knappen går till det senaste provet, som inte kräver konto.
+              Landningssidan säger inget om vilka prov som är gratis
+              (Niklas beslut 2026-11-17): den visar vad som finns. */}
           <Link
             to="/gamla-prov/$term"
             params={{ term: allExams()[0].term }}
             className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-primary px-7 text-[15px] font-semibold text-on-brand transition hover:brightness-125"
           >
-            Skriv ett gratisprov
+            Skriv ett prov
           </Link>
           <Link
             to="/gamla-prov"

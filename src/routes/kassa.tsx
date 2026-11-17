@@ -65,7 +65,7 @@ const INGAR = [
  */
 const VILLKORSRADER: Record<OrdPlan, string[]> = {
   "1m": [
-    "Ingen bindningstid. Du kan säga upp redan första dagen",
+    "Ingen bindningstid",
     "Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn",
   ],
   "6m": ["Ingen bindningstid. Engångsköp som inte förnyas"],
