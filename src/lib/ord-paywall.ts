@@ -123,6 +123,45 @@ export interface OrdPurchaseAccess {
 const RENEWING_STATUSES = new Set(["active", "trialing", "past_due"]);
 
 /**
+ * Statusar där den löpande perioden inte är betald. `canceled` ingår: en
+ * prenumeration som sägs upp till periodens slut har redan passerat slutet
+ * när den blir `canceled`, så regeln rör bara den som avslutas mitt i en
+ * period, i praktiken efter att alla dragningsförsök misslyckats.
+ */
+const UNPAID_STATUSES = new Set([
+  "past_due",
+  "unpaid",
+  "canceled",
+  "incomplete",
+  "incomplete_expired",
+  "paused",
+]);
+
+/** Väntar Stripe på en betalning som inte kommit? (Inte `canceled`: den är slut.) */
+export function isUnpaidStatus(status: string | null | undefined): boolean {
+  return status === "past_due" || status === "unpaid" || status === "incomplete";
+}
+
+/**
+ * Frist efter att en förnyelse misslyckats: tid att byta kort medan Stripe
+ * försöker igen. Villkoren lovar tillgång till slutet av den betalda
+ * månaden; fristen är en marginal ovanpå det, inte en gratismånad.
+ */
+export const UNPAID_GRACE_MS = 3 * 24 * 60 * 60 * 1000;
+
+/**
+ * När en obetald period slutar ge tillgång: periodens start (= slutet på den
+ * betalda månaden) plus fristen. Starten räknas som slutet minus en månad,
+ * eftersom bara slutet lagras; vid månadsskiften med färre dagar blir det
+ * upp till tre dagar tidigare, alltså aldrig generösare än avsett.
+ */
+export function unpaidAccessEnd(periodEndMs: number): Date {
+  const start = new Date(periodEndMs);
+  start.setUTCMonth(start.getUTCMonth() - ORD_PLANS["1m"].months);
+  return new Date(start.getTime() + UNPAID_GRACE_MS);
+}
+
+/**
  * Gäller köpet, och hur länge. Månadsköpet är en prenumeration sedan
  * 2026-11 och känns igen på att `stripe_subscription_id` är satt. För den
  * gäller periodslutet i Stripe, inte `paid_at` plus längden.
@@ -164,6 +203,14 @@ export function purchaseAccess(row: OrdPurchaseRow, now: number = Date.now()): O
       // låsa ute någon som betalar. Nästa webhook skriver rätt slut.
       expiresAt = null;
     }
+  }
+  // En obetald period ger ingen tillgång utöver fristen. Stripe flyttar fram
+  // periodslutet vid förnyelsen även när dragningen misslyckas, så utan det
+  // här hade ett fryst kort efter gratismånaden gett en månad till gratis
+  // (och för alltid, om Stripe lämnar prenumerationen som past_due).
+  if (status !== null && UNPAID_STATUSES.has(status) && Number.isFinite(periodEnd)) {
+    const cap = unpaidAccessEnd(periodEnd);
+    if (expiresAt === null || cap.getTime() < expiresAt.getTime()) expiresAt = cap;
   }
   const active = expiresAt === null || now < expiresAt.getTime();
   return {

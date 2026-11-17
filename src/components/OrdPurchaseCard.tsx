@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { formatDate, formatMoney } from "@/lib/sv-format";
+import { isUnpaidStatus } from "@/lib/ord-paywall";
 
 /** "14 december 2026", i svensk tid. Kortet renderas bara i webbläsaren. */
 function datum(iso: string): string {
@@ -92,9 +93,10 @@ export function OrdPurchaseCard({
       setOpen(false);
       if (cancel) {
         toast.success("Prenumerationen är uppsagd.", {
-          description: next.expiresAt
-            ? `Du har kvar tillgången till den ${datum(next.expiresAt)}.`
-            : undefined,
+          description:
+            next.active && next.expiresAt
+              ? `Du har kvar tillgången till den ${datum(next.expiresAt)}.`
+              : "Inga fler dragningar görs.",
         });
       } else {
         toast.success("Prenumerationen fortsätter.");
@@ -114,10 +116,16 @@ export function OrdPurchaseCard({
     status.monthlyAmount !== null ? `${formatMoney(status.monthlyAmount)} per månad. ` : "";
   const isSub = status.kind === "subscription";
 
+  // Förnyelsen gick inte igenom och Stripe försöker fortfarande dra.
+  const unpaid = isSub && isUnpaidStatus(status.status);
+
   let line: string;
-  if (!status.active) {
+  if (unpaid && !status.active) {
+    line =
+      "Senaste dragningen gick inte igenom, så Premium är pausat. Stripe försöker dra igen under några dagar. Vill du inte fortsätta kan du säga upp direkt.";
+  } else if (!status.active) {
     line = until ? `Gick ut den ${until}.` : "Köpet gäller inte längre.";
-  } else if (isSub && status.status === "past_due") {
+  } else if (unpaid) {
     line = `Senaste dragningen gick inte igenom, och Stripe försöker igen. Tillgången gäller till den ${until}.`;
   } else if (isSub && status.cancelAtPeriodEnd) {
     line = `Uppsagd. Tillgången gäller till den ${until}, och inga fler dragningar görs.`;
@@ -129,7 +137,8 @@ export function OrdPurchaseCard({
     line = "Gäller utan tidsgräns.";
   }
 
-  const canCancel = isSub && status.active && status.renews && !status.cancelAtPeriodEnd;
+  const canCancel =
+    unpaid || (isSub && status.active && status.renews && !status.cancelAtPeriodEnd);
   const canResume = isSub && status.active && status.cancelAtPeriodEnd;
 
   return (
@@ -179,8 +188,9 @@ export function OrdPurchaseCard({
           <AlertDialogHeader>
             <AlertDialogTitle>Säg upp prenumerationen?</AlertDialogTitle>
             <AlertDialogDescription>
-              Du har kvar Premium till den {until}. Efter det dras inga fler pengar. Du kan ångra
-              uppsägningen fram till dess.
+              {unpaid
+                ? "Prenumerationen avslutas direkt och inga fler försök att dra pengar görs. Vill du ha Premium igen senare köper du på nytt."
+                : `Du har kvar Premium till den ${until}. Efter det dras inga fler pengar. Du kan ångra uppsägningen fram till dess.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

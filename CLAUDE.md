@@ -1739,6 +1739,28 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
   Sexmånadersprodukten heter fortfarande "Premium, 6 månader".
 - **Kampanjkoder får bara innehålla a–z, 0–9 och bindestreck.** Därför heter
   den `TVAHUNDRA` och inte `TVÅHUNDRA`. Koderna är skiftlägesokänsliga.
+- **En obetald period ger bara tre dagars frist** (2026-11-17,
+  `UNPAID_STATUSES` / `unpaidAccessEnd` i `ord-paywall.ts`). Stripe flyttar
+  fram `current_period_end` vid förnyelsen även när dragningen misslyckas,
+  så `past_due` och `canceled` gav tidigare tillgång hela den obetalda
+  månaden: gratismånad + fryst kort = två gratismånader, och med Stripes
+  "lämna som past_due" för alltid. Tillgången slutar nu vid periodens start
+  (räknad som slutet minus en månad) plus `UNPAID_GRACE_MS`.
+- **Ett nytt köp avslutar en gammal levande prenumeration först**
+  (`endLapsedSubscription` i `ord-paywall.functions.ts`). Annars fortsätter
+  Stripe försöka dra den gamla fakturan medan raden pekar på den nya, och
+  dubbeldragningen syns ingenstans. En prenumeration som visar sig vara
+  `active`/`trialing` avslutas aldrig: raden synkas i stället. Går Stripe
+  inte att nå öppnas ingen kassa.
+- **Uppsägning av en obetald prenumeration avslutar den direkt**
+  (`cancelSubscriptionNow`), eftersom `cancel_at_period_end` låter Stripe
+  fortsätta försöka dra den öppna fakturan. Kortet visar "Säg upp" även när
+  tillgången pausats av en misslyckad dragning.
+- **Google-knappen byts mot en notis i appars webbläsare**
+  (`in-app-browser.ts`, `useEmbeddedBrowser`). Google svarar
+  `403 disallowed_useragent` i Instagram, TikTok, Facebook, Snapchat m.fl.,
+  och kampanjtrafik landar nästan alltid där. Mäts som
+  `google_hidden_in_app_browser`.
 
 ### Röstning på frågor (2026-10-19)
 

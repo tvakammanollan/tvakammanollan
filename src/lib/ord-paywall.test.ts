@@ -160,26 +160,66 @@ describe("purchaseAccess", () => {
     expect(a).toMatchObject({ active: true, renews: false, cancelAtPeriodEnd: true });
   });
 
-  it("släpper igenom past_due till periodslutet", () => {
+  // En misslyckad förnyelse: Stripe har flyttat fram perioden till
+  // 15 nov – 15 dec men inte fått betalt för den. Den betalda månaden tog
+  // slut 15 nov, och fristen ger tre dagar till.
+  const graceEnd = "2026-11-18T10:00:00.000Z";
+  const inGrace = Date.parse("2026-11-18T09:59:59Z");
+  const pastGrace = Date.parse("2026-11-18T10:00:01Z");
+
+  it("ger past_due bara fristen, inte den obetalda perioden", () => {
     const row = {
       paid_at: paid,
       stripe_subscription_id: "sub_1",
       subscription_status: "past_due",
       current_period_end: end,
     };
-    expect(purchaseAccess(row, before)).toMatchObject({ active: true, renews: true });
-    expect(purchaseAccess(row, after).active).toBe(false);
+    const a = purchaseAccess(row, inGrace);
+    expect(a).toMatchObject({ active: true, renews: true });
+    expect(a.expiresAt?.toISOString()).toBe(graceEnd);
+    expect(purchaseAccess(row, pastGrace).active).toBe(false);
+    expect(purchaseAccess(row, before).active).toBe(false);
   });
 
-  it("stänger en avslutad prenumeration när periodslutet passerats", () => {
+  it("ger unpaid samma frist", () => {
+    const row = {
+      paid_at: paid,
+      stripe_subscription_id: "sub_1",
+      subscription_status: "unpaid",
+      current_period_end: end,
+    };
+    expect(purchaseAccess(row, inGrace).active).toBe(true);
+    expect(purchaseAccess(row, pastGrace).active).toBe(false);
+  });
+
+  it("stänger en prenumeration som avslutats mitt i en obetald period", () => {
     const row = {
       paid_at: paid,
       stripe_subscription_id: "sub_1",
       subscription_status: "canceled",
       current_period_end: end,
     };
-    expect(purchaseAccess(row, before)).toMatchObject({ active: true, renews: false });
-    expect(purchaseAccess(row, after).active).toBe(false);
+    expect(purchaseAccess(row, inGrace)).toMatchObject({ active: true, renews: false });
+    expect(purchaseAccess(row, pastGrace).active).toBe(false);
+    expect(purchaseAccess(row, before).active).toBe(false);
+  });
+
+  it("låter en betald månad som sagts upp gälla ut, också gratismånaden", () => {
+    // Uppsagd till periodens slut: statusen är active (eller trialing) tills
+    // slutet nås, och då är tillgången slut ändå.
+    for (const status of ["active", "trialing"]) {
+      const a = purchaseAccess(
+        {
+          paid_at: paid,
+          stripe_subscription_id: "sub_1",
+          subscription_status: status,
+          current_period_end: end,
+          cancel_at_period_end: true,
+        },
+        before,
+      );
+      expect(a).toMatchObject({ active: true, renews: false });
+    }
   });
 
   it("faller tillbaka på paid_at plus en månad när periodslutet saknas", () => {

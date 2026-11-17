@@ -10,6 +10,7 @@ import {
   ORD_PLAN_IDS,
   ORD_PRODUCT_TAG,
   PAYWALL_RETURN_PATHS,
+  isUnpaidStatus,
   type OrdPlan,
   mekAccess,
   ordAccess,
@@ -26,8 +27,10 @@ import {
   type StoredOrdPurchase,
 } from "./ord-paywall.server";
 import {
+  cancelSubscriptionNow,
   createCheckoutSession,
   resolveOrdPrice,
+  retrieveSubscription,
   retrieveCheckoutSession,
   stripeConfigured,
   stripePublishableKey,
@@ -209,6 +212,12 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
     // `customer_update` krävs av automatisk moms när `customer` skickas.
     // Går kunden inte att använda (raderad i Stripe) görs ett försök utan.
     const { row } = await readOrdPurchase(userId);
+    if ((await endLapsedSubscription(row)) === "still_paid") {
+      if (await hasOrdAccess(userId)) return { clientSecret: null, url: null, alreadyOwned: true };
+      // Betald prenumeration som ändå inte ger tillgång: öppna ingen andra.
+      console.error(`[ord-paywall] ${userId} har betald prenumeration men ingen tillgång`);
+      throw new Error(CHECKOUT_ERROR);
+    }
     const customer = row?.stripe_customer_id ?? null;
     const variants: Record<string, StripeParam>[] = customer
       ? [{ ...base, customer, customer_update: { address: "auto", name: "auto" } }, base]
@@ -244,6 +253,41 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
     }
     throw new Error(CHECKOUT_ERROR);
   });
+
+/**
+ * Avslutar en gammal prenumeration som fortfarande lever i Stripe innan ett
+ * nytt köp öppnas. Hit kommer bara den som saknar tillgång, alltså i
+ * praktiken en `past_due` vars frist gått ut. Utan det här hade Stripe
+ * fortsatt försöka dra den gamla fakturan efter det nya köpet, och raden
+ * pekar då på den nya prenumerationen, så ingenting hade märkt dubbeldragningen.
+ * Går det inte att avsluta öppnas ingen kassa: hellre ett "försök igen" än
+ * två dragningar.
+ */
+async function endLapsedSubscription(
+  row: StoredOrdPurchase | null,
+): Promise<"ended" | "still_paid"> {
+  const subscriptionId = row?.stripe_subscription_id;
+  if (!subscriptionId) return "ended";
+  if (row.subscription_status === "canceled" || row.subscription_status === "incomplete_expired") {
+    return "ended";
+  }
+  try {
+    const sub = await retrieveSubscription(subscriptionId);
+    if (sub.status === "canceled" || sub.status === "incomplete_expired") return "ended";
+    if (sub.status === "active" || sub.status === "trialing") {
+      // Raden var inaktuell (en missad webhook), prenumerationen är betald.
+      // Rätta raden i stället för att avsluta något köparen betalar för.
+      await syncOrdSubscription(sub);
+      return "still_paid";
+    }
+    const ended = await cancelSubscriptionNow(subscriptionId);
+    await syncOrdSubscription(ended).catch(() => false);
+    return "ended";
+  } catch (e) {
+    console.error("[ord-paywall] kunde inte avsluta gammal prenumeration före nytt köp:", e);
+    throw new Error(CHECKOUT_ERROR);
+  }
+}
 
 /**
  * Bekräftar köpet när köparen kommer tillbaka till /ord eller MEK-övningen. Reserv för webhooken:
@@ -348,7 +392,13 @@ async function setCancelAtPeriodEnd(userId: string, cancel: boolean): Promise<Or
   }
   let sub;
   try {
-    sub = await updateSubscription(subscriptionId, { cancel_at_period_end: cancel });
+    // En obetald prenumeration avslutas direkt: det finns ingen betald månad
+    // att låta gälla ut, och med `cancel_at_period_end` hade Stripe fortsatt
+    // försöka dra den öppna fakturan. Avslutad slutar Stripe försöka.
+    const unpaid = cancel && isUnpaidStatus(row.subscription_status);
+    sub = unpaid
+      ? await cancelSubscriptionNow(subscriptionId)
+      : await updateSubscription(subscriptionId, { cancel_at_period_end: cancel });
   } catch (e) {
     console.error("[ord-paywall] Stripe vägrade ändra prenumerationen:", e);
     throw new Error(CANCEL_ERROR);
