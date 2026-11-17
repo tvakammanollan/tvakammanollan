@@ -230,9 +230,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // enbart renderblockerande dödvikt.
     ],
     scripts: [
-      // OBS: AdSense-skriptet ligger INTE här. Den här arrayen renderas av
-      // <Scripts /> i <body>, och verifieringstaggen ska stå i <head> — se
-      // RootShell längre ner, där den ligger som ett rått <script>.
       // OBS: Schema.org WebApplication låg här förr och renderades på sajtens
       // alla sidor. Semrush/Google flaggade den som ogiltig "Software App"-
       // markup på 83 sidor: typen kräver aggregateRating/review för att vara
@@ -328,29 +325,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="sv">
       <head>
         <HeadContent />
-        {/* Google AdSense. Ligger som ett rått <script> i <head> och inte i
-            route:ns `scripts`-array, eftersom TanStacks <Scripts /> renderar
-            den arrayen i <body> — Googles verifiering och deras egen
-            dokumentation vill ha taggen i <head>. `async` gör den
-            icke-renderblockerande.
-
-            OBS: skriptet laddas för ALLA besökare, utan samtycke. Det är ett
-            medvetet val av Niklas 2026-09-01, men det är samma sak som togs
-            bort 2026-07 av tre skäl, varav två fortfarande gäller:
-            (1) EU-besökare kräver en Google-certifierad CMP (IAB TCF) före
-                skriptet laddas — vår egen samtyckesbanner är inte det, den
-                gäller PostHog. Utan CMP visar Google antingen inga annonser
-                alls för EU-trafik eller icke-personaliserade sådana.
-            (2) /integritetspolicy måste beskriva att Google sätter cookies.
-            (3) CSP:n blockerade skriptet — det är åtgärdat, se src/server.ts.
-            Det finns fortfarande inga annonsplatser (<ins class="adsbygoogle">)
-            i koden; det här är verifieringstaggen. public/ads.txt är redan
-            ifylld med samma pub-id. */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1685910213641675"
-          crossOrigin="anonymous"
-        />
+        {/* AdSense är borttaget sedan 2026-11-17 (Niklas beslut): skriptet
+            laddades utan samtycke på alla sidor, kassan inräknad, medan
+            sajten och integritetspolicyn lovar "inga annonser". Ska det
+            tillbaka krävs en IAB TCF-certifierad samtyckesruta först. */}
       </head>
       <body>
         {children}

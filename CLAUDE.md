@@ -2040,8 +2040,6 @@ canonical, h1) hittade fel som varken tsc, tester eller copy-lint ser:
   Registersidorna för å, ä och ö hade okodad canonical men kodade länkar.
 - **`fitTitle` kortar inte kärnan**, bara svansarna. En kärna över 43 tecken
   går rakt igenom. Lägg det umbärliga som svans.
-- **CSP:n behöver `https://*.adtrafficquality.google`** för AdSense, annars
-  ett konsolfel per sidladdning.
 - `grep` på sidans HTML i det här skalet ger tomt svar på strängar med å, ä
   eller ö. Kontrollera med `node -e` och `fetch` i stället.
 
@@ -2637,27 +2635,15 @@ starta gästläge"**.
 - `/integritetspolicy` must stay **factually true**. Since 2026-08-15 it documents PostHog analytics behind explicit consent — update it whenever what we collect changes.
 - **Consent gate (added 2026-08-15).** `src/lib/consent.ts` stores the choice (`tkn-analytics-consent` in localStorage, versioned); `src/lib/analytics.ts` loads posthog-js via **dynamic `import()` only after a yes** — never import it statically, that would run the script before the user answers and defeats the whole gate. `<ConsentBanner />` asks, `<ConsentSettings />` (on `/integritetspolicy`) lets the user revoke, `<Analytics />` does identify + SPA `$pageview`. Bump `CONSENT_VERSION` when collection expands — old consents stop counting and the banner returns.
 - Empty `VITE_PUBLIC_POSTHOG_KEY` = analytics off and no banner. `VITE_` vars are inlined **at build time**, so they must be in `.env`; the `wrangler.jsonc` copy alone does nothing for the client bundle.
-- **AdSense-taggen är tillbaka sedan 2026-09-01** (Niklas beslut). Den ligger
-  som ett rått `<script async>` direkt i `<head>` i `RootShell`
-  (`__root.tsx`) — **inte** i route:ns `scripts`-array, eftersom TanStacks
-  `<Scripts />` renderar den arrayen i `<body>` och Google vill ha taggen i
-  huvudet. Pub-id:t är `ca-pub-1685910213641675`, samma som i
-  `public/ads.txt`.
-  - **CSP:n måste släppa fram Google på tre direktiv** (`src/server.ts`:
-    `ADS_SCRIPT`, `ADS_CONNECT`, `ADS_FRAME`). Faller ett bort blir
-    annonsytan tom med en rad i konsolen — ingenting kastar. Det var CSP:n
-    som blockerade skriptet förra gången det låg inne.
-  - **Det finns fortfarande inga annonsplatser** (`<ins class="adsbygoogle">`)
-    i koden. Det här är verifieringstaggen; ingen annons renderas förrän en
-    plats läggs in.
-  - **Två saker är medvetet OGJORDA och båda är GDPR-skulder.** (1) Ingen
-    Google-certifierad IAB TCF-CMP: vår egen samtyckesbanner gäller PostHog
-    och duger inte, så skriptet laddas för alla utan samtycke och Google
-    visar antingen inga eller bara icke-personaliserade annonser för
-    EU-trafik. (2) `/integritetspolicy` beskriver inte att Google sätter
-    cookies. Sätts en annonsplats in måste båda vara lösta först.
-  - `Permissions-Policy: browsing-topics=()` står kvar och stänger av Topics
-    API. Det bryter inte annonserna, bara målgruppsanpassningen.
+- **AdSense är borttaget sedan 2026-11-17** (Niklas beslut). Taggen hade
+  legat i `<head>` på alla sidor sedan 2026-09-01, utan samtycke, och laddade
+  annonsmotorn (`show_ads_impl`) även i kassan, medan FAQ:n och
+  integritetspolicyn lovade "inga annonser". Taggen, CSP-posterna för
+  Googles annonsdomäner och `public/ads.txt` är borta. Ska annonser tillbaka
+  krävs först en IAB TCF-certifierad samtyckesruta (vår egen banner gäller
+  bara PostHog), en rad i integritetspolicyn om Googles cookies, att
+  "inga annonser" stryks överallt, och att skriptet hålls borta från
+  `/kassa`, `/abonnemang`, `/login` och `/signup`.
 - **Product events go through `trackEvent()` in `src/lib/events.ts`** — a typed
   catalogue, not free-form strings. It wraps `track({type:"metric"})`, which
   auto-forwards to PostHog; only `metric` forwards, errors stay in

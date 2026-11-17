@@ -83,17 +83,6 @@ function withSecurityHeaders(response: Response): Response {
   // CSP:n följa med i samma sekund, annars blockerar webbläsaren varje anrop
   // utan att något syns i loggarna. Se src/lib/analytics-host.ts.
   const posthog = posthogCspOrigins();
-  // Google AdSense. Skriptet i <head> (se __root.tsx) laddar i sin tur kod från
-  // flera av Googles domäner och ritar varje annons i en iframe, så alla tre
-  // direktiven nedan behövs — faller ett av dem bort syns det bara som en tom
-  // annonsyta plus en rad i konsolen, ingenting kastas. Värdnamnen är Googles
-  // egen CSP-rekommendation för AdSense.
-  const ADS_SCRIPT =
-    "https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.googleadservices.com https://*.googletagservices.com https://*.doubleclick.net https://*.google.com https://*.adtrafficquality.google";
-  const ADS_CONNECT =
-    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.gstatic.com https://*.adtrafficquality.google";
-  const ADS_FRAME =
-    "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://www.google.com https://*.adtrafficquality.google";
   // CSP — supabase + lovable analytics tillåts, strikt i övrigt.
   // (Google Fonts-posterna borttagna 2026-07 — fonterna laddas inte längre.)
   //
@@ -108,11 +97,11 @@ function withSecurityHeaders(response: Response): Response {
       // js.stripe.com måste laddas från Stripes egen domän — de tillåter inte
       // att v3 speglas eller buntas, och kassan i coachningsmodalen är ritad av
       // det scriptet. Det är enda externa script-källan utöver analysen.
-      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.lovable.app https://*.r2.dev ${ADS_SCRIPT} ${posthog.script.join(" ")}`,
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://*.lovable.app https://*.r2.dev ${posthog.script.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
-      `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://m.stripe.network https://*.lovable.app ${ADS_CONNECT} ${posthog.connect.join(" ")}`,
+      `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://m.stripe.network https://*.lovable.app ${posthog.connect.join(" ")}`,
       // Coachningsmodalens två iframes: Calendlys tidsväljare och Stripes kassa.
       //
       // Calendly behöver bara ramen — deras widget.js används inte, vi lyssnar
@@ -121,7 +110,7 @@ function withSecurityHeaders(response: Response): Response {
       // (3D Secure-steget hos banken) och m.stripe.network (bedrägerikollen som
       // v3 injicerar själv). Faller ett av dem bort syns det bara som en tom
       // eller halv kassa, plus en rad i konsolen — inget kastas.
-      `frame-src https://calendly.com https://js.stripe.com https://checkout.stripe.com https://hooks.stripe.com https://m.stripe.network ${ADS_FRAME}`,
+      `frame-src https://calendly.com https://js.stripe.com https://checkout.stripe.com https://hooks.stripe.com https://m.stripe.network`,
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
