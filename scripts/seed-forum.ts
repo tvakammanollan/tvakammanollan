@@ -115,9 +115,27 @@ function genomgangThread(g: (typeof GENOMGANGAR)[number]): SeedThread {
 
 // --only-topics tar bara ämnestrådarna (trader.ts), inte genomgångarna.
 const ONLY_TOPICS = process.argv.includes("--only-topics");
-const ALL_THREADS: SeedThread[] = ONLY_TOPICS
-  ? SEED_THREADS
-  : [...SEED_THREADS, ...GENOMGANGAR.map(genomgangThread)];
+/**
+ * Bun (1.3.14) skriver om icke-ASCII i `String.raw` till `\uXXXX` i rå
+ * text: `String.raw\`Två\`` blir `Tv\u00E5` under bun men `Två` under node.
+ * Lösningarna är skrivna med String.raw för KaTeX skull, och 902 av 2 574
+ * forumsvar låg därför ute med `\u00E4` i stället för ä (rättat 2026-11-17).
+ * Källfilerna innehåller inga riktiga `\uXXXX`, så allt sådant avkodas.
+ */
+function undoBunRaw(text: string): string {
+  return text.replace(/\\u([0-9A-Fa-f]{4})/g, (_, hex: string) =>
+    String.fromCharCode(parseInt(hex, 16)),
+  );
+}
+
+const ALL_THREADS: SeedThread[] = (
+  ONLY_TOPICS ? SEED_THREADS : [...SEED_THREADS, ...GENOMGANGAR.map(genomgangThread)]
+).map((t) => ({
+  ...t,
+  title: undoBunRaw(t.title),
+  question: undoBunRaw(t.question),
+  answer: undoBunRaw(t.answer),
+}));
 
 // --dump skriver ut trådarna som JSON utan att röra databasen, för kontroll
 // av texterna (parser, KaTeX) innan något publiceras.

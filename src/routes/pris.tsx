@@ -12,7 +12,7 @@ export const Route = createFileRoute("/pris")({
       path: "/pris",
       title: "Pris: vad som är gratis och vad som kostar",
       description:
-        "Premium ger dig alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter för 149 kr per månad eller 349 kr för 6 månader. De senaste proven och matcherna är gratis.",
+        "Premium ger alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter för 149 kr i månaden eller 349 kr för 6 månader. Matcherna är gratis.",
       ogTitle: "Pris på Tvåkommanollan",
       ogDescription: "Vad som är gratis och vad som kostar.",
     }),

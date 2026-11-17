@@ -1056,6 +1056,12 @@ route-loaders och aldrig hämtas i klienten.
   bokstav inte är facit eller om uppgiften är en bilduppgift. Nya
   genomgångar: lägg till en post och kör skriptet igen. `--dump` ger
   trådarna som JSON utan att röra databasen.
+- **Bun gör om å, ä och ö i `String.raw` till `\u00E5` och liknande** (bun 1.3.14,
+  node gör det inte). Genomgångarna och ämnestrådarna är skrivna med
+  `String.raw`, så 902 av 2 574 forumsvar låg ute med `\u00E4` i texten och i
+  meta-beskrivningen tills 2026-11-17. `undoBunRaw` i `seed-forum.ts` avkodar
+  nu allt sådant innan något skrivs. Ta inte bort den så länge skriptet körs
+  med `bun run`; kontrollera med `--dump` att inga `\u` finns kvar.
 - **Publicera genomgångarna i takt** (2026-10-24): `bun run scripts/seed-forum.ts --apply --limit 50`
   ungefär en gång i veckan. Det finns 1 149 genomgångar (2026-10-24): alla
   kvantitativa textuppgifter 2012–2026 utom de vars arkivtext är trasig (mest

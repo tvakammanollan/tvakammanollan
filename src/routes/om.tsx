@@ -11,7 +11,7 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss: varför sajten finns",
       description:
-        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher med ELO-ranking och en ordlista. Om grundaren Niklas, vad som är gratis och vad som ingår i Premium.",
+        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher och en ordlista. Här står vem som driver sajten och vad som ingår i Premium.",
       ogTitle: "Om Tvåkommanollan",
       ogDescription: "Vem som driver sajten, vad som är gratis och vad som kostar.",
     }),
