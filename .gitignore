@@ -58,3 +58,6 @@ scripts/mek-gen/out/
 # Python-bytecode från scripts/hp-import
 __pycache__/
 *.pyc
+
+# Lanseringsvideon från /brag (73 MB, behövs inte för sajten)
+brag-output/
