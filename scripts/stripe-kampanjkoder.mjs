@@ -76,6 +76,8 @@ const CODES = [
   { code: "KTDRL30", coupon: "tkn-ktdrl30-6man" },
   { code: "DONNER100", coupon: "tkn-gratis-1man" },
   { code: "DONNER600", coupon: "tkn-gratis-6man", max_redemptions: 7 },
+  // HARORG100 hette HÄRÖRG100 i beställningen; Stripe tar inte å, ä, ö.
+  ...["LUND100", "KALMAR100", "HARORG100"].map((code) => ({ code, coupon: "tkn-gratis-1man" })),
   ...["DIESEL100", "FISK100", "FLEN100", "LJUNG100", "NYNAS100"].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",
