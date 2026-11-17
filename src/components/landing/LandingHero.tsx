@@ -211,12 +211,12 @@ export function LandingHero({
         </p>
 
         {/* Talen är räknade i databasen 2026-11-17: 1 898 MEK-uppgifter
-            (ur prov och egna) och 13 394 uppgifter totalt. "Nästan 2 000"
-            kan bli "över 2 000" först när talet faktiskt passerat. */}
+            (ur prov och egna) och 13 394 uppgifter totalt. "Över 2 000" skrevs
+            på Niklas begäran samma dag, med nästa batch på väg in. */}
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
           Skriv något av {allExams().length} gamla prov från 2012 till 2026 och få din poäng när du
           lämnat in. Här finns också tusentals övningsuppgifter, en ordlista med över 10&nbsp;000 ord
-          och nästan 2&nbsp;000 MEK-uppgifter, ur gamla prov och egna.
+          och över 2&nbsp;000 MEK-uppgifter, ur gamla prov och egna.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
