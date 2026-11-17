@@ -16,6 +16,7 @@ import {
 } from "@/lib/ord-paywall.functions";
 import { ORD_PLAN_IDS, POPULAR_PLAN, type OrdPlan } from "@/lib/ord-paywall";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
+import { PremiumWelcome } from "@/components/PremiumWelcome";
 import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { isAutoUsername } from "@/lib/username";
@@ -99,7 +100,6 @@ function KassaPage() {
   const [confirmed, setConfirmed] = useState<"pending" | "ok" | "failed" | null>(
     returning ? "pending" : null,
   );
-  const [confirmedKind, setConfirmedKind] = useState<"subscription" | "one_time" | null>(null);
 
   const isGuest = !authLoading && (!user || access?.isAnonymous === true);
 
@@ -130,7 +130,6 @@ function KassaPage() {
     void confirmPurchase({ data: { sessionId: search.session_id! } })
       .then((r) => {
         setConfirmed(r.owned ? "ok" : "failed");
-        setConfirmedKind(r.kind);
         if (r.owned) trackEvent("ord_purchase_completed", { via: "return" });
       })
       .catch(() => setConfirmed("failed"));
@@ -185,179 +184,134 @@ function KassaPage() {
   return (
     <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:pt-14">
-        <h1 className="text-[28px] leading-tight tracking-[-0.035em] sm:text-[44px]">
-          Premium: allt på Tvåkommanollan
-        </h1>
-        {/* Ingressen göms på mobil: listan under kassan säger samma sak, och
-            på en telefon ska planvalet och kassan synas utan skroll. */}
-        <p className="mt-3 hidden max-w-xl text-[16px] leading-relaxed text-white/70 sm:block">
-          Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha tillgång
-          och betala direkt här.
-        </p>
-
         {returning ? (
-          <GlassCard
-            className={`mt-8 p-6 text-center sm:p-10 ${
-              // Köpet är klart: kortet får ordlistans färg, samma som
-              // 6-månaderskortet på /pris. Text i Plum, som paletten godkänt
-              // på Lavender.
-              confirmed === "ok" ? "border-transparent bg-lavender" : ""
-            }`}
-          >
-            {confirmed === "ok" ? (
-              <>
-                <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--plum)]" aria-hidden />
-                <h2 className="mt-4 text-2xl font-semibold text-[var(--cream)]">Tack för köpet</h2>
-                <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                  Du har nu Premium: alla gamla prov, hela ordlistan och alla MEK-uppgifter. Kvittot
-                  kommer på mejlen från Stripe.
-                </p>
-                {confirmedKind === "subscription" && (
-                  <p className="mx-auto mt-2 max-w-md text-[15px] text-[var(--plum)]">
-                    Prenumerationen förnyas varje månad. Du säger upp den när som helst under{" "}
-                    <Link to="/abonnemang" className="underline underline-offset-2">
-                      Abonnemang
-                    </Link>
-                    .
-                  </p>
-                )}
-                <div className="mt-6 flex flex-wrap justify-center gap-3">
-                  <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>
-                  <PrimaryCTA to="/mek-ovning">Öva MEK</PrimaryCTA>
-                </div>
-                {/* Den som kom hit rakt från registreringen hoppade över
-                    namnvalet (se onboarding.tsx) och har ett auto-namn. */}
-                {profile && isAutoUsername(profile.username) ? (
-                  <p className="mx-auto mt-5 max-w-md text-[14px] text-[var(--plum)]">
-                    Du har inget användarnamn än.{" "}
-                    <Link to="/onboarding" className="underline underline-offset-2">
-                      Välj användarnamn
-                    </Link>
-                  </p>
-                ) : null}
-              </>
-            ) : confirmed === "failed" ? (
-              <>
-                <h2 className="text-xl font-semibold">Vi kunde inte bekräfta köpet ännu</h2>
-                <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-                  Har du betalat brukar det synas inom någon minut. Ladda om sidan, eller hör av dig
-                  till info@tvakommanollan.se om det dröjer.
-                </p>
-              </>
-            ) : (
-              <Loader2 className="mx-auto h-6 w-6 animate-spin text-white/55" aria-hidden />
-            )}
-          </GlassCard>
+          <PremiumWelcome
+            state={confirmed ?? "pending"}
+            needsUsername={!!profile && isAutoUsername(profile.username)}
+          />
         ) : (
-          // Ordningen i DOM:en är mobilens: planval, kassan, sedan vad som
-          // ingår. På dator lägger gridden kassan i högerkolumnen över båda
-          // raderna, och planval och lista står till vänster som förut.
-          <div className="mt-5 grid gap-5 sm:mt-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-6 lg:gap-y-3">
-            <div className="space-y-2.5 sm:space-y-3 lg:col-start-1 lg:row-start-1">
-              {ORD_PLAN_IDS.map((p) => {
-                const vald = p === plan;
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => choose(p)}
-                    aria-pressed={vald}
-                    className={`flex w-full items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition sm:px-5 sm:py-4 ${
-                      vald ? PLAN_STYLE[p].vald : "border-white/10 bg-card hover:border-white/25"
-                    }`}
-                  >
-                    <span>
-                      <span className="block text-[17px] font-semibold">{PLAN_TEXT[p].rubrik}</span>
-                      <span className="text-[13px] text-white/60">{PLAN_TEXT[p].under}</span>
-                    </span>
-                    <span className="text-[22px] tracking-[-0.02em]">{price(p)}</span>
-                  </button>
-                );
-              })}
-            </div>
+          <>
+            <h1 className="text-[28px] leading-tight tracking-[-0.035em] sm:text-[44px]">
+              Premium: allt på Tvåkommanollan
+            </h1>
+            {/* Ingressen göms på mobil: listan under kassan säger samma sak, och
+            på en telefon ska planvalet och kassan synas utan skroll. */}
+            <p className="mt-3 hidden max-w-xl text-[16px] leading-relaxed text-white/70 sm:block">
+              Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha
+              tillgång och betala direkt här.
+            </p>
+            // Ordningen i DOM:en är mobilens: planval, kassan, sedan vad som // ingår. På dator
+            lägger gridden kassan i högerkolumnen över båda // raderna, och planval och lista står
+            till vänster som förut.
+            <div className="mt-5 grid gap-5 sm:mt-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-6 lg:gap-y-3">
+              <div className="space-y-2.5 sm:space-y-3 lg:col-start-1 lg:row-start-1">
+                {ORD_PLAN_IDS.map((p) => {
+                  const vald = p === plan;
+                  return (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => choose(p)}
+                      aria-pressed={vald}
+                      className={`flex w-full items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition sm:px-5 sm:py-4 ${
+                        vald ? PLAN_STYLE[p].vald : "border-white/10 bg-card hover:border-white/25"
+                      }`}
+                    >
+                      <span>
+                        <span className="block text-[17px] font-semibold">
+                          {PLAN_TEXT[p].rubrik}
+                        </span>
+                        <span className="text-[13px] text-white/60">{PLAN_TEXT[p].under}</span>
+                      </span>
+                      <span className="text-[22px] tracking-[-0.02em]">{price(p)}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            <GlassCard className="min-h-[280px] p-4 sm:min-h-[320px] sm:p-6 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-              {authLoading || (user && !access && !accessFailed) ? (
-                <Spinnerruta />
-              ) : isGuest ? (
-                <div className="py-6 text-center sm:py-10">
-                  <h2 className="text-xl font-semibold">Skapa ett konto för att köpa</h2>
-                  <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-                    Köpet knyts till ditt konto så att du har det på alla enheter. Efteråt kommer du
-                    tillbaka hit, och användarnamn väljer du efter köpet.
-                  </p>
-                  {/* Google direkt här: ett tryck i stället för att gå via
+              <GlassCard className="min-h-[280px] p-4 sm:min-h-[320px] sm:p-6 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                {authLoading || (user && !access && !accessFailed) ? (
+                  <Spinnerruta />
+                ) : isGuest ? (
+                  <div className="py-6 text-center sm:py-10">
+                    <h2 className="text-xl font-semibold">Skapa ett konto för att köpa</h2>
+                    <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
+                      Köpet knyts till ditt konto så att du har det på alla enheter. Efteråt kommer
+                      du tillbaka hit, och användarnamn väljer du efter köpet.
+                    </p>
+                    {/* Google direkt här: ett tryck i stället för att gå via
                       registreringssidan. Valet av köp är redan sparat
                       (`rememberPendingPlan`), så returen hamnar i kassan. */}
-                  <div className="mx-auto mt-6 max-w-sm">
-                    <GoogleButton />
+                    <div className="mx-auto mt-6 max-w-sm">
+                      <GoogleButton />
+                    </div>
+                    <div className="mt-4 flex flex-wrap justify-center gap-3">
+                      <PrimaryCTA to="/signup">Skapa konto med e-post</PrimaryCTA>
+                      <Link
+                        to="/login"
+                        className="inline-flex min-h-[44px] items-center px-4 text-sm font-semibold text-white/70 transition hover:text-[var(--cream)]"
+                      >
+                        Logga in
+                      </Link>
+                    </div>
                   </div>
-                  <div className="mt-4 flex flex-wrap justify-center gap-3">
-                    <PrimaryCTA to="/signup">Skapa konto med e-post</PrimaryCTA>
-                    <Link
-                      to="/login"
-                      className="inline-flex min-h-[44px] items-center px-4 text-sm font-semibold text-white/70 transition hover:text-[var(--cream)]"
-                    >
-                      Logga in
-                    </Link>
+                ) : access?.owned ? (
+                  <div className="py-10 text-center">
+                    <CheckCircle2 className="mx-auto h-10 w-10 text-success" aria-hidden />
+                    <h2 className="mt-4 text-xl font-semibold">Du har redan Premium</h2>
+                    <OrdPurchaseCard className="mx-auto mt-6 max-w-md text-left" manageLink />
+                    <div className="mt-6 flex flex-wrap justify-center gap-3">
+                      <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>
+                      <PrimaryCTA to="/mek-ovning">Öva MEK</PrimaryCTA>
+                    </div>
                   </div>
-                </div>
-              ) : access?.owned ? (
-                <div className="py-10 text-center">
-                  <CheckCircle2 className="mx-auto h-10 w-10 text-success" aria-hidden />
-                  <h2 className="mt-4 text-xl font-semibold">Du har redan Premium</h2>
-                  <OrdPurchaseCard className="mx-auto mt-6 max-w-md text-left" manageLink />
-                  <div className="mt-6 flex flex-wrap justify-center gap-3">
-                    <PrimaryCTA to="/ord">Öva ord</PrimaryCTA>
-                    <PrimaryCTA to="/mek-ovning">Öva MEK</PrimaryCTA>
-                  </div>
-                </div>
-              ) : secret && access?.publishableKey ? (
-                <StripeCheckoutEmbed
-                  key={secret}
-                  clientSecret={secret}
-                  publishableKey={access.publishableKey}
-                  onError={(msg) => {
-                    setSecret(null);
-                    setError(msg);
-                  }}
-                />
-              ) : error || accessFailed || (access && !canBuy) ? (
-                <div className="py-10 text-center">
-                  <p role="alert" className="text-[15px] text-[var(--destructive)]">
-                    {error ?? "Kassan går inte att öppna just nu. Försök igen om en stund."}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setError(null);
-                      if (!access || accessFailed) {
-                        setAccessFailed(false);
-                        void fetchAccess({})
-                          .then(setAccess)
-                          .catch(() => setAccessFailed(true));
-                      }
-                      setAttempt((n) => n + 1);
+                ) : secret && access?.publishableKey ? (
+                  <StripeCheckoutEmbed
+                    key={secret}
+                    clientSecret={secret}
+                    publishableKey={access.publishableKey}
+                    onError={(msg) => {
+                      setSecret(null);
+                      setError(msg);
                     }}
-                    className="mt-4 inline-flex min-h-[44px] items-center rounded-lg border border-white/25 px-5 text-sm font-semibold transition hover:bg-secondary"
-                  >
-                    Försök igen
-                  </button>
-                </div>
-              ) : busy || !secret ? (
-                <Spinnerruta />
-              ) : null}
-            </GlassCard>
+                  />
+                ) : error || accessFailed || (access && !canBuy) ? (
+                  <div className="py-10 text-center">
+                    <p role="alert" className="text-[15px] text-[var(--destructive)]">
+                      {error ?? "Kassan går inte att öppna just nu. Försök igen om en stund."}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError(null);
+                        if (!access || accessFailed) {
+                          setAccessFailed(false);
+                          void fetchAccess({})
+                            .then(setAccess)
+                            .catch(() => setAccessFailed(true));
+                        }
+                        setAttempt((n) => n + 1);
+                      }}
+                      className="mt-4 inline-flex min-h-[44px] items-center rounded-lg border border-white/25 px-5 text-sm font-semibold transition hover:bg-secondary"
+                    >
+                      Försök igen
+                    </button>
+                  </div>
+                ) : busy || !secret ? (
+                  <Spinnerruta />
+                ) : null}
+              </GlassCard>
 
-            <ul className="space-y-2.5 text-[14px] text-white/70 lg:col-start-1 lg:row-start-2">
-              {[...VILLKORSRADER[plan], ...INGAR].map((rad) => (
-                <li key={rad} className="flex gap-2.5">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
-                  {rad}
-                </li>
-              ))}
-            </ul>
-          </div>
+              <ul className="space-y-2.5 text-[14px] text-white/70 lg:col-start-1 lg:row-start-2">
+                {[...VILLKORSRADER[plan], ...INGAR].map((rad) => (
+                  <li key={rad} className="flex gap-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
+                    {rad}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
         )}
       </main>
     </div>
