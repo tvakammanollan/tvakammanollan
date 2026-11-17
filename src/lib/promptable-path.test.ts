@@ -31,6 +31,9 @@ describe("isPromptablePath", () => {
       "/onboarding",
       "/coachning/tack",
       "/pris",
+      "/kassa",
+      "/abonnemang",
+      "/mek-ovning",
       "/admin",
       "/gamla-prov/2024ht/3",
     ]) {

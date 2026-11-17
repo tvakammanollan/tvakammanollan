@@ -549,7 +549,7 @@ function OrdPracticePage() {
                 type="button"
                 onClick={() => setCustomising((v) => !v)}
                 aria-expanded={customising}
-                className="mx-auto mt-3 flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[var(--cream)]"
+                className="mx-auto mt-1 flex min-h-[44px] items-center gap-1.5 px-3 text-sm text-white/55 transition-colors hover:text-[var(--cream)]"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 {customising ? "Dölj inställningar" : "Anpassa"}
@@ -913,7 +913,7 @@ function OrdPracticePage() {
               <button
                 type="button"
                 onClick={backToSetup}
-                className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                className="inline-flex min-h-[44px] items-center px-3 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
               >
                 Avbryt pass
               </button>

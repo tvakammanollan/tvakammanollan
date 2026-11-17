@@ -69,7 +69,7 @@ export function NextStep({
         </PrimaryCTA>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4">
         {forward.map((f) => {
           const Icon = f.icon;
           const inner = (
@@ -79,7 +79,7 @@ export function NextStep({
             </>
           );
           const className =
-            "group inline-flex items-center gap-1.5 text-sm text-white/55 transition-colors hover:text-[var(--cream)]";
+            "group inline-flex min-h-[44px] items-center gap-1.5 px-1 text-sm text-white/55 transition-colors hover:text-[var(--cream)]";
 
           if ("to" in f) {
             return (

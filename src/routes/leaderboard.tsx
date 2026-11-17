@@ -119,7 +119,7 @@ function LeaderboardPage() {
         )}
         <div>
           <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)}>
-            <TabsList className="grid w-full max-w-md grid-cols-4">
+            <TabsList className="grid h-12 w-full max-w-md grid-cols-4 [&>*]:h-full">
               <TabsTrigger value="verbal">Verbal</TabsTrigger>
               <TabsTrigger value="math">Kvantitativ</TabsTrigger>
               <TabsTrigger value="ord">Ord</TabsTrigger>
@@ -164,7 +164,7 @@ function ScopeToggle({ scope, onChange }: { scope: Scope; onChange: (s: Scope) =
           key={o.value}
           type="button"
           onClick={() => onChange(o.value)}
-          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+          className={`min-h-[40px] rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
             scope === o.value ? "bg-primary text-on-brand" : "text-white/55 hover:text-white"
           }`}
         >

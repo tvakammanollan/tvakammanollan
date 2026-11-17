@@ -183,15 +183,17 @@ export function ProvRunner({
   /* ── Klocka ──────────────────────────────────────────────────── */
 
   useEffect(() => {
-    if (phase !== "running" || pausedAt !== null) return;
+    if (phase !== "running" || pausedAt !== null || submittedAt !== null) return;
     const id = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(id);
-  }, [phase, pausedAt]);
+  }, [phase, pausedAt, submittedAt]);
 
   // Pausat räknas tiden mot pausens början, så klockan står still och passet
-  // kan inte lämnas in av sig självt medan det är pausat.
+  // kan inte lämnas in av sig självt medan det är pausat. Inlämnat står den
+  // på inlämningen: genomgången efteråt kör i "running", och en klocka som
+  // gick vidare där lämnade in passet en gång till när den nådde noll.
   const remaining = endsAt
-    ? Math.max(0, Math.round((endsAt - clockNow(pausedAt, now)) / 1000))
+    ? Math.max(0, Math.round((endsAt - (submittedAt ?? clockNow(pausedAt, now))) / 1000))
     : null;
   const paused = pausedAt !== null && submittedAt === null;
 
@@ -271,8 +273,8 @@ export function ProvRunner({
   ]);
 
   useEffect(() => {
-    if (phase === "running" && remaining === 0) submit();
-  }, [phase, remaining, submit]);
+    if (phase === "running" && remaining === 0 && submittedAt === null) submit();
+  }, [phase, remaining, submit, submittedAt]);
 
   /* ── Styrning ────────────────────────────────────────────────── */
 
@@ -486,8 +488,10 @@ export function ProvRunner({
 
   return (
     <div className="min-h-screen pb-28">
-      {/* Fastnar under sajtens egen navbar (60 px, sticky top-0 z-50). */}
-      <header className="sticky top-[60px] z-30 border-b border-white/10 bg-[var(--navy)]/92">
+      {/* Fastnar under sajtens egen navbar (--nav-h, sticky top-0 z-50).
+          Täckande botten: halvgenomskinlig syntes uppgiften igenom bakom
+          knapparna när man skrollade. */}
+      <header className="sticky top-[var(--nav-h)] z-30 border-b border-white/10 bg-[var(--navy)]">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:px-6">
           <Link
             to="/gamla-prov/$term"
@@ -661,7 +665,7 @@ export function ProvRunner({
             </aside>
           )}
 
-          <main className={hasPane ? "lg:col-span-7" : "mx-auto max-w-2xl"}>
+          <main className={hasPane ? "min-w-0 lg:col-span-7" : "mx-auto min-w-0 max-w-2xl"}>
             <ProvQuestionCard
               question={question}
               index={current}
@@ -679,7 +683,7 @@ export function ProvRunner({
                 type="button"
                 onClick={() => goTo(current - 1)}
                 disabled={current === 0}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 disabled:opacity-30"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 min-h-[44px] px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 disabled:opacity-30"
               >
                 <ChevronLeft className="h-4 w-4" aria-hidden />
                 Föregående
@@ -688,7 +692,7 @@ export function ProvRunner({
                 type="button"
                 onClick={() => setShowNavigator((v) => !v)}
                 aria-expanded={showNavigator}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 lg:hidden"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 min-h-[44px] px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 lg:hidden"
               >
                 <Grid3x3 className="h-4 w-4" aria-hidden />
                 Översikt
@@ -703,7 +707,7 @@ export function ProvRunner({
                   <button
                     type="button"
                     onClick={() => goTo(current + 1)}
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
+                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
                   >
                     Nästa
                     <ChevronRight className="h-4 w-4" aria-hidden />
@@ -712,7 +716,7 @@ export function ProvRunner({
                   <button
                     type="button"
                     onClick={submittedAt ? () => setPhase("result") : () => setConfirmOpen(true)}
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+                    className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
                   >
                     {submittedAt ? "Till resultatet" : "Lämna in"}
                   </button>
@@ -872,14 +876,14 @@ function ProvIntro({
                 <button
                   type="button"
                   onClick={() => onResume(resumable)}
-                  className="rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
+                  className="min-h-[44px] rounded-full bg-[var(--amber)] px-4 py-2 text-sm font-semibold text-[var(--navy)] transition hover:brightness-110"
                 >
                   {resumable.submittedAt ? "Visa resultatet" : "Fortsätt"}
                 </button>
                 <button
                   type="button"
                   onClick={onDiscard}
-                  className="rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
+                  className="min-h-[44px] rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50"
                 >
                   Börja om
                 </button>

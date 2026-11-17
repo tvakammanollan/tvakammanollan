@@ -43,7 +43,13 @@ export function EmailVerificationNotice() {
 
   useEffect(() => {
     // Gäster har ingen adress att bekräfta, och utloggade ser inget alls.
-    if (loading || !user || user.is_anonymous) return;
+    // Statusen töms vid utloggning: annars stod förra användarens adress
+    // kvar i remsan tills sidan laddades om.
+    if (loading) return;
+    if (!user || user.is_anonymous) {
+      setStatus(null);
+      return;
+    }
     let cancelled = false;
     (async () => {
       try {
@@ -58,7 +64,7 @@ export function EmailVerificationNotice() {
     };
   }, [user, loading, getStatus]);
 
-  if (!status?.needsVerification || dismissed) return null;
+  if (!user || user.is_anonymous || !status?.needsVerification || dismissed) return null;
 
   const close = () => {
     setDismissed(true);
@@ -94,14 +100,14 @@ export function EmailVerificationNotice() {
     >
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-3 gap-y-1.5 text-sm">
         <Mail className="h-4 w-4 shrink-0 text-bark" aria-hidden />
-        <span className="min-w-0 flex-1 text-[var(--cream)]">
+        <span className="min-w-0 flex-1 text-[var(--cream)] [overflow-wrap:anywhere]">
           Bekräfta <strong>{status.email}</strong> när du får en stund. Allt fungerar under tiden.
         </span>
         <button
           type="button"
           onClick={() => void resend()}
           disabled={sending}
-          className="shrink-0 rounded-full border border-bark/40 px-3 py-1 text-xs font-semibold text-bark transition-colors hover:bg-bark/10 disabled:opacity-60"
+          className="inline-flex min-h-[44px] shrink-0 items-center rounded-full border border-bark/40 px-3 py-1 text-xs font-semibold text-bark transition-colors hover:bg-bark/10 disabled:opacity-60"
         >
           {sending ? "Skickar…" : "Skicka mejlet igen"}
         </button>
@@ -109,7 +115,7 @@ export function EmailVerificationNotice() {
           type="button"
           onClick={close}
           aria-label="Dölj påminnelsen"
-          className="shrink-0 rounded-full p-1 text-bark transition-colors hover:bg-bark/10"
+          className="-mr-2 grid h-11 w-11 shrink-0 place-items-center rounded-full text-bark transition-colors hover:bg-bark/10"
         >
           <X className="h-4 w-4" aria-hidden />
         </button>

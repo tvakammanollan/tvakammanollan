@@ -23,6 +23,9 @@ const BLOCKED_PREFIXES = [
   "/onboarding",
   "/coachning",
   "/pris",
+  "/kassa",
+  "/abonnemang",
+  "/mek-ovning",
   "/admin",
 ];
 

@@ -860,14 +860,7 @@ export function TrainExperience({
     return (
       <div className="flex min-h-screen flex-col bg-background">
         {/* Top bar */}
-        <header
-          className="sticky top-0 z-20 border-b border-border"
-          style={{
-            background: "rgba(251, 246, 236,0.85)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-          }}
-        >
+        <header className="sticky top-[var(--nav-h)] z-20 border-b border-border bg-background">
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 pt-3 pb-2">
             <div
               className="text-sm text-muted-foreground"

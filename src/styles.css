@@ -1626,6 +1626,20 @@ button,
    en ny. Använd dem på allt som ligger an mot en skärmkant: sticky/fixed
    listor upptill och nedtill.
    ===================================================================== */
+/* Navbarens höjd: 56/60 px rad + 1 px kant + notchen. Sticky listor som ska
+   fastna UNDER navbaren (provpasset, träningen, matchen) läser den här i
+   stället för en egen siffra. Med en hårdkodad top-[60px] blev det 3 px
+   glapp på mobil, och med top-0 gled klockan in under navbaren när man
+   skrollade en lång uppgift. Ändras radens höjd i Navbar.tsx ändras den här. */
+:root {
+  --nav-h: calc(57px + env(safe-area-inset-top, 0px));
+}
+@media (min-width: 640px) {
+  :root {
+    --nav-h: calc(61px + env(safe-area-inset-top, 0px));
+  }
+}
+
 @layer utilities {
   .pb-safe {
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));

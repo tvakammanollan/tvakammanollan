@@ -810,7 +810,7 @@ function MatchPage() {
           hela skärmen och togs bort på Niklas begäran. Duellens färg sitter i
           stället där den betyder något: på det valda svaret och i
           förloppsstaplarna. */}
-      <header className="sticky top-0 z-20 border-b border-border bg-background">
+      <header className="sticky top-[var(--nav-h)] z-20 border-b border-border bg-background">
         {/* Bara klockan. Raden bar tidigare också "Fråga 3 av 8" och
             "Mot: {namn}" — båda står ordagrant i progressbarerna direkt
             under, så frågepositionen syntes 3 gånger på skärmen och

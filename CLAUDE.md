@@ -2156,6 +2156,40 @@ vilket är den allvarligare halvan av det som rättades.
   klockan tickade. Att skjuta upp frågan är dessutom integritetsmässigt säkert
   — utan svar laddas ingen analys.
 
+### Mobiltest av hela flödet (2026-11-17)
+
+Hela vägen kördes i Chrome på 390×844 med riktiga tryck på koordinater:
+landning → gratisprov → registrering → onboarding → match → meny → ord
+(förbi spärren) → MEK → kassa → utloggning → inloggning med namn → radering.
+
+- **Sticky listor under navbaren läser `--nav-h`** (`styles.css`): 57 px på
+  mobil, 61 px från `sm`, plus notchen. Provpassets lista satt på
+  `top-[60px]` (3 px glapp på mobil) och träningens och matchens på `top-0`,
+  alltså gled klockan in under navbaren så fort man skrollade. Ändras
+  navbarens höjd ändras variabeln, ingen annanstans.
+- **En grid-cell krymper inte under sitt innehåll utan `min-w-0`.** Provpass
+  med lästext lägger uppgiften i ett grid, och knappraden Föregående/Översikt/
+  Nästa (420 px) sköt "Nästa" 46 px utanför skärmen på varje LÄS-, ELF- och
+  DTK-uppgift. Utan lästext syntes inget, så ORD såg rätt ut.
+- **Provpassets klocka står still efter inlämningen.** Genomgången efteråt
+  kör i fasen `running`, och klockan gick vidare där tills den nådde noll och
+  lämnade in passet en gång till.
+- **`isPromptablePath` måste känna till varje ny tratt-sida.** `/kassa`,
+  `/mek-ovning` och `/abonnemang` kom till efter regeln, och samtyckesbannern
+  låg över halva Stripe-kassan på telefon.
+- **Kontoraderingen gick aldrig igenom** före migrationen
+  `20261117120000_kontoradering_far_tomma_epost.sql`: triggern
+  `users_prevent_immutable_changes` stoppade `email: null` även för service
+  role. Anonymiseringen ligger nu först, så ett fel där inte lämnar ett halvt
+  raderat konto.
+- **Testverktyg:** `Runtime.evaluate` + `getBoundingClientRect` direkt efter
+  `scrollIntoView` mäter mitt i den mjuka scrollningen; vänta eller använd
+  `behavior: "instant"`. Tryck via `Input.dispatchTouchEvent` och kontrollera
+  `elementFromPoint` först, annars syns inte en ruta som ligger över knappen.
+  `/matchmaking` skapar ett gästkonto bara av att öppnas, och `vite dev`
+  bäddar aldrig in kassan (den publika Stripe-nyckeln står bara i
+  `wrangler.jsonc`), så den inbäddade kassan provas mot produktionen.
+
 ### Designsystemet efter ombyggnaden (2026-08-30)
 
 Tre ändringar som rör **varje skärm**, gjorda i samma omgång som

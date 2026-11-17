@@ -72,7 +72,28 @@ export const deleteAccount = createServerFn({ method: "POST" })
       }
     }
 
-    // 1) Personliga sidotabeller — ren radering.
+    // 1) Anonymisera users-raden (behålls för matchernas FK; tomt username
+    //    filtreras bort från alla topplistor). Görs FÖRE sidotabellerna:
+    //    fallerar den ska ingenting ha hunnit raderas. Fram till 2026-11-17
+    //    låg den efter, och triggern `users_prevent_immutable_changes`
+    //    stoppade `email: null` (se migrationen 20261117120000), så varje
+    //    radering slutade med ett felmeddelande och ett halvt raderat konto.
+    const { error: anonErr } = await supabaseAdmin
+      .from("users")
+      .update({
+        username: "",
+        email: null,
+        current_streak: 0,
+        longest_streak: 0,
+        last_active_date: null,
+      })
+      .eq("id", userId);
+    if (anonErr) {
+      console.error("[account] anonymisering misslyckades:", anonErr.message);
+      throw new Error("Kunde inte radera kontot. Försök igen eller mejla info@tvakommanollan.se.");
+    }
+
+    // 2) Personliga sidotabeller — ren radering.
     // Köpraden skulle försvinna med auth-användaren ändå (ON DELETE CASCADE),
     // men inte om steg 3 faller tillbaka på avstängning.
     await supabaseAdmin.from("ord_purchases").delete().eq("user_id", userId);
@@ -111,23 +132,6 @@ export const deleteAccount = createServerFn({ method: "POST" })
     // radera dem hade skrivit om en siffra som redan visats. Kopplingen till
     // personen försvinner, vilket är det radering handlar om.
     await supabaseAdmin.from("audit_log").update({ user_id: null }).eq("user_id", userId);
-
-    // 2) Anonymisera users-raden (behålls för matchernas FK; tomt username
-    //    filtreras bort från alla topplistor).
-    const { error: anonErr } = await supabaseAdmin
-      .from("users")
-      .update({
-        username: "",
-        email: null,
-        current_streak: 0,
-        longest_streak: 0,
-        last_active_date: null,
-      })
-      .eq("id", userId);
-    if (anonErr) {
-      console.error("[account] anonymisering misslyckades:", anonErr.message);
-      throw new Error("Kunde inte radera kontot. Försök igen eller mejla info@tvakommanollan.se.");
-    }
 
     // 3) Radera auth-användaren (tar bort inloggning + e-post ur auth-systemet).
     const { error: authErr } = await supabaseAdmin.auth.admin.deleteUser(userId);

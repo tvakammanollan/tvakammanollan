@@ -37,7 +37,7 @@ const FOCUS: ReadonlyArray<{
   label: string;
   sub: string;
 }> = [
-  { value: "verbal", icon: BookOpen, label: "Svenska", sub: "ORD, MEK, LÄS, ELF" },
+  { value: "verbal", icon: BookOpen, label: "Verbal", sub: "ORD, MEK, LÄS, ELF" },
   { value: "math", icon: Sigma, label: "Kvantitativ", sub: "XYZ, KVA, NOG, DTK" },
   { value: "both", icon: Library, label: "Båda", sub: "Träna allt" },
 ];
@@ -189,7 +189,11 @@ export function OnboardingModal({ open, onClose, onStartFirstMatch }: Props) {
                   })}
                 </div>
                 <div className="mt-6 flex items-center justify-between">
-                  <button onClick={skip} className="text-xs text-muted-foreground hover:underline">
+                  <button
+                    type="button"
+                    onClick={skip}
+                    className="-ml-3 inline-flex min-h-[44px] items-center px-3 text-sm text-muted-foreground hover:underline"
+                  >
                     Hoppa över
                   </button>
                   <Button onClick={() => setStep(1)} disabled={target === null}>
