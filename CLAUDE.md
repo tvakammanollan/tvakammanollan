@@ -2596,6 +2596,37 @@ sker efter filtreringen, annars får listan hål i numreringen.
 Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
 `limits.guestSignup` är 5/h **per IP**.
 
+### Gästkonto blir riktigt konto (2026-11-17)
+
+Den som registrerar sig med e-post **medan den är inloggad som gäst** får sitt
+gästkonto omgjort, inte ett nytt: `upgradeGuest` i `signup.tsx` kör
+`updateUser({ email })`, sedan `updateUser({ password })`, sedan
+`refreshSession()`. Id:t är detsamma, så ELO, matcher, ordframsteg och
+utmärkelser följer med. Före 2026-11-17 skapade `signUp` ett nytt konto och
+gästens framsteg försvann.
+
+- **Ordningen är nödvändig.** Supabase vägrar lösenord på en anonym användare
+  utan adress, så adressen först. "Confirm email" är av, så bytet gäller
+  direkt och `is_anonymous` blir falskt.
+- **`refreshSession()` får inte tas bort.** Servern läser `is_anonymous` ur
+  tokenen (`startOrdCheckout` vägrar gäster), och tokenen från före bytet
+  säger fortfarande gäst. Utan förnyelsen hade kassan svarat "Skapa ett konto
+  först" till någon som just gjort det.
+- **`public.users.email` skrivs av `syncProfileEmail`**
+  (`guest-upgrade.functions.ts`). Triggern kopierar adressen bara när raden
+  skapas, och för en gäst var den då tom. Adressen läses ur `auth.users` med
+  service role, aldrig ur klienten.
+- **Går bytet inte** (en inställning i Supabase ändrad, eller bekräftelse
+  krävs) faller sidan tillbaka på `signUp` som förut. Registreringen ska aldrig
+  stå still; framstegen följer då inte med. `signup_completed.kept_progress`
+  visar i PostHog vilken väg det blev.
+- **Google-knappen gör inte om gästen** (den skapar ett nytt konto). Det kräver
+  `linkIdentity` och "Manual linking" påslaget i Supabase.
+- **Vakterna i `/login` och `/signup` väntar på `leaving`.** Utan den slog
+  `<Navigate to="/" />` till i samma ögonblick som sessionen kom, före sidans
+  egen navigering, och den som var på väg till kassan hamnade på startsidan.
+  Gällde både login och registrering fram till 2026-11-17.
+
 ### Gästnamnet får aldrig skrivas till `users.username` (2026-08-20)
 
 `users.username` är **UNIQUE**, och `guestName()` lottar ur en lista på **20

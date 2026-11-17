@@ -36,7 +36,11 @@ export interface ProductEvents {
 
   /* ── Konto & konvertering ────────────────────────────────────────────── */
   signup_submitted: { from_guest: boolean };
-  signup_completed: { from_guest: boolean; needs_email_confirm: boolean };
+  /**
+   * `kept_progress`: gästkontot gjordes om till det riktiga kontot, så ELO,
+   * matcher och ordframsteg följde med. Falskt när ett nytt konto skapades.
+   */
+  signup_completed: { from_guest: boolean; needs_email_confirm: boolean; kept_progress?: boolean };
   signup_failed: { from_guest: boolean };
   login_completed: { from_guest: boolean };
   /** Google-knappen ersattes av en notis: sidan öppnades i en apps webbläsare. */

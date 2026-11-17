@@ -45,8 +45,13 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  // Sant från det att formuläret skickats tills vi själva navigerat vidare.
+  // Utan den slår vakten nedan till i samma ögonblick som inloggningen går
+  // igenom och skickar till startsidan, så den som var på väg att köpa kom
+  // aldrig tillbaka till kassan.
+  const [leaving, setLeaving] = useState(false);
 
-  if (!loading && user && !isGuestUser(user)) return <Navigate to="/" />;
+  if (!loading && user && !isGuestUser(user) && !leaving) return <Navigate to="/" />;
 
   /**
    * Namnvägen: servern slår upp adressen och loggar in åt oss (se
@@ -77,6 +82,7 @@ function LoginPage() {
     }
 
     setSubmitting(true);
+    setLeaving(true);
     // Läses av innan gästsessionen slängs, annars är svaret alltid nej.
     const fromGuest = isGuestUser(user);
     if (fromGuest) {
@@ -87,6 +93,7 @@ function LoginPage() {
       : await signInByUsername(id.toLowerCase(), pw);
     setSubmitting(false);
     if (failure) {
+      setLeaving(false);
       trackEvent("login_failed");
       toast.error("Kunde inte logga in", { description: failure });
       return;
@@ -94,10 +101,12 @@ function LoginPage() {
     trackEvent("login_completed", { from_guest: fromGuest });
     toast.success("Välkommen tillbaka");
     setSuccess(true);
-    // Vänta in dot-matrix reverse-animationen innan navigering
     // Valde besökaren ett köp innan inloggningen går den vidare till kassan.
     const plan = readPendingPlan();
-    setTimeout(() => navigate(plan ? { to: "/kassa", search: { plan } } : { to: "/" }), 1400);
+    setTimeout(
+      () => navigate(plan ? { to: "/kassa", search: { plan } } : { to: "/" }),
+      AUTH_SUCCESS_DELAY_MS,
+    );
   };
 
   return (
@@ -203,6 +212,12 @@ function PillInput({
     />
   );
 }
+
+/**
+ * Hur länge "Välkommen"-skärmen står innan login och registrering går
+ * vidare. Den ska hinna läsas, inte hålla kvar någon på väg till kassan.
+ */
+export const AUTH_SUCCESS_DELAY_MS = 700;
 
 export function SuccessScreen() {
   return (

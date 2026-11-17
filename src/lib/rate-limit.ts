@@ -123,6 +123,11 @@ export const limits = {
   emailUnsubscribe: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
   verificationEmail: { max: 5, windowMs: 60 * 60 * 1000 } as LimitConfig, // 5/h
   /**
+   * Gästkonto som blir riktigt konto: profilens e-post skrivs efter bytet.
+   * Ett lyckat byte anropar den en gång; taket finns bara mot loopar.
+   */
+  guestUpgrade: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
+  /**
    * Inlösen av verifieringslänk. Per IP, och rundligt tilltaget — en riktig
    * användare klickar en gång, men mejlklienter förhandshämtar länkar.
    * Gissning av token är ändå ogörligt (32 byte slump).

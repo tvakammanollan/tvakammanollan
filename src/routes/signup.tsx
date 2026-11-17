@@ -11,7 +11,8 @@ import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
 import { useServerFn } from "@tanstack/react-start";
 import { sendVerificationEmail } from "@/lib/email-verification.functions";
-import { SuccessScreen } from "@/routes/login";
+import { AUTH_SUCCESS_DELAY_MS, SuccessScreen } from "@/routes/login";
+import { syncProfileEmail } from "@/lib/guest-upgrade.functions";
 
 export const Route = createFileRoute("/signup")({
   component: SignupPage,
@@ -34,6 +35,44 @@ const schema = z.object({
   password: z.string().min(6, "Lösenordet måste vara minst 6 tecken").max(128),
 });
 
+/**
+ * Gör det inloggade gästkontot till ett riktigt konto, med samma id. ELO,
+ * matcher, ordframsteg och utmärkelser ligger på id:t och följer därför med.
+ *
+ * Två steg med flit: Supabase släpper inte igenom ett lösenord på en anonym
+ * användare som saknar adress, så adressen sätts först. "Confirm email" är
+ * avslaget, så bytet gäller direkt och `is_anonymous` blir falskt i samma
+ * anrop. Sessionen förnyas efteråt: servern läser `is_anonymous` ur tokenen
+ * (kassan vägrar gäster), och den gamla tokenen säger fortfarande gäst.
+ *
+ * - "ok": kontot är riktigt och inloggat.
+ * - "exists": adressen hör redan till ett annat konto.
+ * - "fallback": bytet gick inte (inställning i Supabase, eller bekräftelse
+ *   krävs). Anroparen skapar då ett nytt konto som förut, så att
+ *   registreringen aldrig står still; framstegen följer inte med.
+ */
+async function upgradeGuest(
+  email: string,
+  password: string,
+): Promise<"ok" | "exists" | "fallback"> {
+  const first = await supabase.auth.updateUser({ email });
+  if (first.error) {
+    return /already|registered|exists/i.test(first.error.message) ||
+      first.error.code === "email_exists"
+      ? "exists"
+      : "fallback";
+  }
+  const updated = first.data.user;
+  if (!updated || updated.is_anonymous || updated.email?.toLowerCase() !== email.toLowerCase()) {
+    return "fallback";
+  }
+  const second = await supabase.auth.updateUser({ password });
+  if (second.error) throw second.error;
+  const refreshed = await supabase.auth.refreshSession();
+  if (refreshed.error) throw refreshed.error;
+  return "ok";
+}
+
 function SignupPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -42,9 +81,34 @@ function SignupPage() {
   const [submitting, setSubmitting] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  // Sant från det att formuläret skickats tills vi själva navigerat vidare.
+  // Utan den slår vakten nedan till i samma ögonblick som kontot loggas in
+  // och skickar till startsidan, förbi namnvalet och tillbaka-till-kassan.
+  const [leaving, setLeaving] = useState(false);
   const sendVerification = useServerFn(sendVerificationEmail);
+  const syncEmail = useServerFn(syncProfileEmail);
 
-  if (!loading && user && !user.is_anonymous) return <Navigate to="/" />;
+  if (!loading && user && !user.is_anonymous && !leaving) return <Navigate to="/" />;
+
+  const finish = (fromGuest: boolean, keptProgress: boolean) => {
+    trackEvent("signup_completed", {
+      from_guest: fromGuest,
+      needs_email_confirm: false,
+      kept_progress: keptProgress,
+    });
+    // Kontot är inloggat direkt — verifieringen är en påminnelse, inte en
+    // vägg (se BUGFIX-LOG punkt 2). Mejlet skickas i bakgrunden: går det
+    // inte fram ska registreringen ändå vara klar, och remsan under
+    // navbaren har en "skicka igen"-knapp.
+    void sendVerification().catch(() => {});
+    toast.success(
+      keptProgress
+        ? "Konto skapat. Din ELO och dina framsteg är sparade"
+        : "Konto skapat. Välj ditt användarnamn",
+    );
+    setSuccess(true);
+    setTimeout(() => navigate({ to: "/onboarding" }), AUTH_SUCCESS_DELAY_MS);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,10 +118,43 @@ function SignupPage() {
       return;
     }
     setSubmitting(true);
-    // Gäst → konto är sajtens viktigaste konvertering. Läses av före signUp,
-    // eftersom sessionen byts ut på vägen.
+    setLeaving(true);
+    // Gäst → konto är sajtens viktigaste konvertering. Läses av före bytet,
+    // eftersom `user` ändras på vägen.
     const fromGuest = isGuestUser(user);
     trackEvent("signup_submitted", { from_guest: fromGuest });
+    const failed = (description: string) => {
+      setSubmitting(false);
+      setLeaving(false);
+      trackEvent("signup_failed", { from_guest: fromGuest });
+      toast.error("Kunde inte skapa konto", { description });
+    };
+    const EXISTS = "Det finns redan ett konto med den e-postadressen. Logga in i stället.";
+
+    if (fromGuest && user) {
+      let result: "ok" | "exists" | "fallback";
+      try {
+        result = await upgradeGuest(parsed.data.email, parsed.data.password);
+      } catch {
+        failed("Något gick fel när kontot skulle sparas. Försök igen.");
+        return;
+      }
+      if (result === "exists") {
+        failed(EXISTS);
+        return;
+      }
+      if (result === "ok") {
+        // Profilens adress måste vara på plats innan verifieringsmejlet
+        // skickas, annars går det till ingen. Ett fel här stoppar inte
+        // registreringen: kontot är redan riktigt.
+        await syncEmail().catch(() => {});
+        setSubmitting(false);
+        finish(true, true);
+        return;
+      }
+      // "fallback": skapa ett nytt konto som förut.
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: parsed.data.email,
       password: parsed.data.password,
@@ -68,30 +165,20 @@ function SignupPage() {
     setSubmitting(false);
 
     if (error) {
-      trackEvent("signup_failed", { from_guest: fromGuest });
-      toast.error("Kunde inte skapa konto", {
-        description: /already|registered|exists/i.test(error.message)
-          ? "Det finns redan ett konto med den e-postadressen. Logga in i stället."
+      failed(
+        /already|registered|exists/i.test(error.message)
+          ? EXISTS
           : "Kontrollera e-postadressen och försök igen.",
-      });
+      );
       return;
     }
-    trackEvent("signup_completed", {
-      from_guest: fromGuest,
-      needs_email_confirm: !data.session,
-    });
     if (data.session) {
-      // Kontot är inloggat direkt — verifieringen är en påminnelse, inte en
-      // vägg (se BUGFIX-LOG punkt 2). Mejlet skickas i bakgrunden: går det
-      // inte fram ska registreringen ändå vara klar, och remsan under
-      // navbaren har en "skicka igen"-knapp.
-      void sendVerification().catch(() => {});
-      toast.success("Konto skapat. Välj ditt användarnamn");
-      setSuccess(true);
-      setTimeout(() => navigate({ to: "/onboarding" }), 1400);
+      finish(fromGuest, false);
     } else {
       // Hit kommer vi bara om "Confirm email" råkar vara påslaget i Supabase
       // igen. Skärmen står kvar som säkerhetsnät men ska inte nås i drift.
+      trackEvent("signup_completed", { from_guest: fromGuest, needs_email_confirm: true });
+      setLeaving(false);
       setSentTo(parsed.data.email);
     }
   };
