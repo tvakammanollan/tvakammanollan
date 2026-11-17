@@ -69,7 +69,7 @@ const TANKER = [
   },
   {
     rubrik: "Per månad eller 6 månader",
-    text: `Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr och förnyas inte. Båda köpen ger samma sak: allt på sajten. Moms är inräknad och inget läggs på i kassan. Provavgiften på ${HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till oss.`,
+    text: `Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr och förnyas inte. Båda köpen ger samma sak: allt på sajten. Provavgiften på ${HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till oss.`,
   },
   {
     rubrik: "Du behöver ett konto för att köpa",

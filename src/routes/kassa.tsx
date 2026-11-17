@@ -192,7 +192,7 @@ function KassaPage() {
             på en telefon ska planvalet och kassan synas utan skroll. */}
         <p className="mt-3 hidden max-w-xl text-[16px] leading-relaxed text-white/70 sm:block">
           Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha tillgång
-          och betala direkt här. Inget av köpen har någon bindningstid.
+          och betala direkt här.
         </p>
 
         {returning ? (
