@@ -1725,6 +1725,18 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
   gamla inaktiveras och en ny skapas med samma namn. Spärren bygger på att
   kassan skickar `customer`, alltså `ord_purchases.stripe_customer_id`;
   köp före kundåteranvändningen saknar den och känns inte igen.
+- **Skol- och bibliotekskoderna (2026-11-17)** skapas av
+  `node scripts/stripe-kampanjkoder.mjs` (torrkörning, `--apply` för att
+  skriva, idempotent). Fyra kuponger med fasta id: `tkn-gratis-1man`
+  (RUDBECK100, KTDRL100, DONNER100), `tkn-gratis-6man` (RUDBECK600,
+  DONNER600, max 7 inlösen per kod), `tkn-ktdrl30-6man` (KTDRL30, 30 % bara
+  på sexmånadersköpet) och `tkn-bibliotek-1man` (DIESEL100, FISK100, FLEN100,
+  LJUNG100, NYNAS100, slutar gälla 2027-01-31 23:59 svensk tid).
+  **Kupongerna för en gratis månad gäller bara månadsprodukten**: på
+  sexmånadersköpet hade 100 % gett sex gratis månader.
+- **Månadsprodukten heter bara "Premium" sedan 2026-11-17**, så att kassans
+  rubrik blir "Abonnera på Premium" (intervallet står under ändå).
+  Sexmånadersprodukten heter fortfarande "Premium, 6 månader".
 - **Kampanjkoder får bara innehålla a–z, 0–9 och bindestreck.** Därför heter
   den `TVAHUNDRA` och inte `TVÅHUNDRA`. Koderna är skiftlägesokänsliga.
 

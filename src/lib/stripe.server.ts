@@ -219,7 +219,7 @@ const priceCache = new Map<string, { at: number; value: CoachingPrice }>();
 const DEFAULT_PRODUCT_NAME = "Coachning Studieupplägg";
 /** Produktnamnen i Stripe, reserv när pris-id:t saknas. */
 const ORD_PRODUCT_NAMES = {
-  "1m": "Premium, 1 månad",
+  "1m": "Premium",
   "6m": "Premium, 6 månader",
 } as const;
 
