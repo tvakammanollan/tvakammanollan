@@ -189,16 +189,21 @@ export function Navbar() {
               <Button variant="ghost" size="sm" asChild className="px-2 text-xs">
                 <Link to="/login">Logga in</Link>
               </Button>
-              {/* Knappen hette "Testa" och startade en gästmatch direkt, utan
-                  att säga det. Nu leder den till stegen på landningssidan. */}
+              {/* Startar en gästmatch direkt, som desktopknappen. Den var en
+                  stund en länk till "Börja här" på landningssidan (4888bd8),
+                  men knappen ska kasta besökaren rakt in i en match. */}
               <Button
                 size="sm"
-                asChild
-                className="px-3 text-xs bg-primary text-on-brand font-semibold"
+                onClick={() => playAsGuest("verbal")}
+                disabled={guestLoading}
+                className="gap-1 px-3 text-xs bg-primary text-on-brand font-semibold"
               >
-                <Link to="/" hash="borja-har">
-                  Börja
-                </Link>
+                {guestLoading ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Zap className="h-3 w-3" />
+                )}
+                Testa
               </Button>
             </>
           )}
