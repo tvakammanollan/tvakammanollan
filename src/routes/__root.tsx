@@ -160,6 +160,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "Tvåkommanollan, öva inför högskoleprovet" },
       { property: "og:site_name", content: "Tvåkommanollan" },
+      // LinkedIn läser författaren härifrån och skriver annars "No author
+      // found". Startsidan får inget publiceringsdatum: den är ingen artikel,
+      // och guiderna har redan sina riktiga datum via guideArticleMeta.
+      { name: "author", content: "Tvåkommanollan" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
