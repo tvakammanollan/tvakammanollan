@@ -86,8 +86,12 @@ export const limits = {
    * även till utloggade besökare.
    */
   coachingCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
-  /** Öppna kassan för Hela Ordlistan. Per användare, och en kassa räcker länge. */
-  ordCheckout: { max: 5, windowMs: 10 * 60 * 1000 } as LimitConfig, // 5/10min
+  /**
+   * Öppna kassan för Premium, och bekräfta köpet efteråt. Per användare.
+   * Varje byte av plan och varje omladdning av /kassa öppnar en ny session,
+   * så 5 räckte inte för den som växlar några gånger innan beslutet.
+   */
+  ordCheckout: { max: 20, windowMs: 10 * 60 * 1000 } as LimitConfig, // 20/10min
   /** Läsa sitt eget köp ("Ditt köp" på /stats och /kassa). */
   ordStatus: { max: 60, windowMs: 60 * 1000 } as LimitConfig, // 60/min
   /** Säga upp eller ångra uppsägningen. Varje anrop går till Stripe. */
