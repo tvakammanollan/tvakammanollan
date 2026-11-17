@@ -14,7 +14,7 @@ import {
   startOrdCheckout,
   type OrdAccessInfo,
 } from "@/lib/ord-paywall.functions";
-import { ORD_PLAN_IDS, type OrdPlan } from "@/lib/ord-paywall";
+import { ORD_PLAN_IDS, POPULAR_PLAN, type OrdPlan } from "@/lib/ord-paywall";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
 import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
 import { GoogleButton } from "@/components/auth/GoogleButton";
@@ -83,7 +83,10 @@ function KassaPage() {
   const startCheckout = useServerFn(startOrdCheckout);
   const confirmPurchase = useServerFn(confirmOrdCheckout);
 
-  const plan: OrdPlan = search.plan ?? "6m";
+  // Utan plan i länken är månadsköpet förvalt (Niklas beslut 2026-11-17):
+  // kampanjkoden för gratismånaden gäller bara den produkten, och en länk
+  // utan `?plan=` hade annars öppnat sexmånadersköpet där koden avvisas.
+  const plan: OrdPlan = search.plan ?? POPULAR_PLAN;
   const returning = search.kop === "klart" && !!search.session_id;
 
   const [access, setAccess] = useState<OrdAccessInfo | null>(null);
