@@ -207,13 +207,16 @@ export function LandingHero({
           className="mx-auto max-w-[16ch] text-[44px] leading-none tracking-[-0.03em] sm:text-[60px]"
           style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
         >
-          Gamla högskoleprov på tid, med din poäng.
+          Vad hade du fått på högskoleprovet?
         </p>
 
+        {/* Talen är räknade i databasen 2026-11-17: 1 500 egna MEK-uppgifter
+            (tkn-genererad, clean_status ok) och 13 394 uppgifter totalt.
+            Skriv inte ett högre tal här än det som finns. */}
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
-          Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Här finns{" "}
-          {allExams().length} prov från 2012 till 2026, med facit. Du skriver dem på tid, får din
-          poäng och övar på det du tappar poäng på.
+          Skriv något av {allExams().length} gamla prov från 2012 till 2026 och få din poäng när du
+          lämnat in. Här finns också tusentals övningsuppgifter, en ordlista med över 10&nbsp;000 ord
+          och 1&nbsp;500 MEK-uppgifter som vi skrivit själva.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
