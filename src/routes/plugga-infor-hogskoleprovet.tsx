@@ -97,7 +97,7 @@ const METODER: Metod[] = [
     namn: "Tvåkommanollan",
     egen: true,
     kostar:
-      "De två senaste proven, facit, normering, matcher och forum är gratis. Äldre prov, hela ordlistan och all MEK-träning ingår i Premium, se prissidan.",
+      "De senaste proven, facit, normering, matcher och forum är gratis. Äldre prov, hela ordlistan och all MEK-träning ingår i Premium, se prissidan.",
     uppgifter:
       "Alla 31 provtillfällen från vårprovet 2012 till höstprovet 2026: 4 960 uppgifter med facit. MEK-träningen har dessutom egna uppgifter, märkta som sådana.",
     rattning: "Automatisk, på tid och med normering per provdel.",
@@ -114,7 +114,7 @@ const BEGRANSNINGAR = [
   "Ingen lärare följer upp din plan. Behöver du någon som håller dig till ett schema är en kurs bättre.",
   "Guiderna går igenom strategi per delprov, men en bok går djupare för den som vill läsa sig till metoderna.",
   "Vårprovet 2012 har kvantitativa uppgifter som saknar sina figurer. Originalbilderna finns inte kvar, och det står på uppgiften.",
-  "Bara de två senaste proven är gratis att skriva här. Äldre prov kräver Premium, liksom ORD-träningen efter 20 ord och MEK-träningen efter 10 uppgifter. Hos UHR är alla prov gratis som PDF.",
+  "De senaste proven är gratis att skriva här. Äldre prov kräver Premium, liksom ORD-träningen efter 20 ord och MEK-träningen efter 10 uppgifter. Hos UHR är alla prov gratis som PDF.",
   "Sajten drivs av en person. Hittar du ett fel vill vi gärna veta det.",
 ];
 
@@ -130,7 +130,7 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "Kan man plugga inför högskoleprovet gratis?",
-      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går de två senaste proven att skriva på tid med rättning, utan konto och utan att betala. Övriga prov sedan 2012 ingår i Premium.",
+      a: "Ja. UHR publicerar gamla prov med facit på studera.nu. På Tvåkommanollan går de senaste proven att skriva på tid med rättning, utan konto och utan att betala. Övriga prov sedan 2012 ingår i Premium.",
     },
     {
       q: "Var hittar man gamla högskoleprov med facit?",

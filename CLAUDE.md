@@ -1568,9 +1568,13 @@ Avsnittet nedan beskriver mekaniken och stämmer fortfarande, utom talen.
 - **Gratis är 20 ord och 10 MEK-uppgifter** (`FREE_ORD_LIMIT`,
   `FREE_MEK_LIMIT`), mot 40 och 40 tidigare. Den som redan svarat på fler
   möter spärren direkt.
-- **Bara de två senaste proven går att skriva utan Premium.** Regeln är
-  `isFreeExam` i `src/lib/prov-access.ts` (testad) och räknas ur provlistan:
-  ett nytt prov blir gratis av sig självt och det äldsta gratisprovet låses.
+- **De tio senaste proven går att skriva utan Premium** (`FREE_EXAM_COUNT`,
+  höjt från två 2026-11-17). Regeln är `isFreeExam` i `src/lib/prov-access.ts`
+  (testad) och räknas ur provlistan: ett nytt prov blir gratis av sig självt
+  och det äldsta gratisprovet låses.
+- **Antalet gratisprov skrivs aldrig ut i copyn** (Niklas beslut
+  2026-11-17). Texten säger "de senaste proven är gratis", aldrig "två",
+  "tio" eller vilka terminer. Besökaren ser själv vilka som är öppna.
   Låset sitter i `ProvRunner` (`usePremium`, `ProvLocked`).
 - **Låset är en spärr i gränssnittet, inte i datan.** Provpassen är statiska
   chunkar och sidorna serverrenderas utan att veta vem som frågar. Den som
@@ -1588,8 +1592,8 @@ Avsnittet nedan beskriver mekaniken och stämmer fortfarande, utom talen.
 - **"Det mesta är gratis" och "alla gamla prov gratis" är borttaget överallt**
   (meta, FAQ, `/om`, `/pris`, villkor, `llms.txt`, footern). Skriv inte
   tillbaka det. Vad som är gratis står uppräknat i `GRATIS` på `/pris`.
-- Talen "31", "29", "höstprovet 2026 och vårprovet 2026" står för hand på
-  `/pris`, i priskorten och i `llms.txt` och måste ändras när ett prov läggs till.
+- Talet "31" står för hand på `/pris`, i priskorten och i `llms.txt` och
+  måste ändras när ett prov läggs till.
 
 ### Hela Ordlistan + MEK: paywallen på ORD och MEK (2026-10-02, MEK 2026-10-20)
 

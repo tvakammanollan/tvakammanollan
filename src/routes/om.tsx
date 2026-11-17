@@ -56,7 +56,7 @@ function OmPage() {
           <p>
             Tvåkommanollan är det jag själv hade velat ha: gamla prov som går att skriva på tid,
             matcher mot någon på ungefär samma nivå och en siffra som visar hur det går över
-            veckorna. De två senaste proven, matcherna, normeringen och forumet är gratis. Premium
+            veckorna. De senaste proven, matcherna, normeringen och forumet är gratis. Premium
             ger alla gamla prov, hela ordlistan och alla MEK-uppgifter och kostar 149 kr per månad
             eller 349 kr för 6 månader.
           </p>
@@ -75,7 +75,7 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Här går de att skriva på tid med rättning och poäng. De två senaste proven är gratis
+            . Här går de att skriva på tid med rättning och poäng. De senaste proven är gratis
             att skriva, liksom matcherna, normeringen, forumet, de första 20 orden och de första 10
             MEK-uppgifterna. Premium ger alla 31 prov, hela ordlistan och alla MEK-uppgifter och
             kostar 149 kr per månad eller 349 kr för 6 månader. Sajten drivs av mig.{" "}

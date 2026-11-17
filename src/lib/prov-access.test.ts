@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import { allExams } from "./prov-data";
 import { FREE_EXAM_COUNT, freeExams, isFreeExam } from "./prov-access";
 
-const exams = [{ term: "2026ht" }, { term: "2026vt" }, { term: "2025ht" }, { term: "2012vt" }];
+const exams = allExams().map((e) => ({ term: e.term }));
 
 describe("isFreeExam", () => {
-  it("släpper de två senaste proven och låser resten", () => {
-    expect(FREE_EXAM_COUNT).toBe(2);
-    expect(isFreeExam("2026ht", exams)).toBe(true);
-    expect(isFreeExam("2026vt", exams)).toBe(true);
-    expect(isFreeExam("2025ht", exams)).toBe(false);
+  it("släpper de senaste proven och låser resten", () => {
+    expect(FREE_EXAM_COUNT).toBe(10);
+    expect(isFreeExam(exams[0].term, exams)).toBe(true);
+    expect(isFreeExam(exams[9].term, exams)).toBe(true);
+    expect(isFreeExam(exams[10].term, exams)).toBe(false);
     expect(isFreeExam("2012vt", exams)).toBe(false);
   });
 

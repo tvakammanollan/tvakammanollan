@@ -57,7 +57,7 @@ function VillkorPage() {
           </h2>
           <ul className="list-disc space-y-2 pl-6">
             <li>
-              Gratis är de två senaste gamla proven, matcherna, normeringen, forumet, de första 20
+              Gratis är de senaste gamla proven, matcherna, normeringen, forumet, de första 20
               orden i ordträningen och de första 10 uppgifterna i MEK-övningen. Övriga gamla prov,
               resten av ordträningen och resten av MEK-övningen kräver köpet Premium, se avsnittet
               om köp nedan.
@@ -107,7 +107,7 @@ function VillkorPage() {
             Köp av Premium
           </h2>
           <p>
-            Premium ger ditt konto alla gamla prov att skriva, utöver de två senaste som är gratis,
+            Premium ger ditt konto alla gamla prov att skriva, utöver de senaste som är gratis,
             och obegränsad ordträning och MEK-övning utöver de 20 ord och 10 MEK-uppgifter som är
             gratis. Köpet hette tidigare Hela Ordlistan och kan stå så på kvittot. Det finns som två
             köp: en prenumeration per månad, och ett köp som gäller i 6 månader. Sexmånadersköpet

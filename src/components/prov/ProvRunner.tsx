@@ -109,7 +109,7 @@ export function ProvRunner({
   // konto, så användaren är ofta null — då finns ingen streak att uppdatera.
   const { user } = useAuth();
 
-  // Bara de två senaste proven går att skriva utan köp (`prov-access.ts`).
+  // Bara de senaste proven går att skriva utan köp (`prov-access.ts`).
   // Gratisproven frågar aldrig servern.
   const free = isFreeExam(data.term, allExams());
   const premium = usePremium(!free);

@@ -128,7 +128,7 @@ function ExamTermPage() {
               <Link to="/pris" className="underline underline-offset-2 hover:text-white/80">
                 Premium
               </Link>
-              . De två senaste proven är gratis, och facit nedan är öppet för alla.
+              . De senaste proven är gratis, och facit nedan är öppet för alla.
             </>
           )}
         </p>

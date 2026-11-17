@@ -12,7 +12,7 @@ export const Route = createFileRoute("/pris")({
       path: "/pris",
       title: "Pris: vad som är gratis och vad som kostar",
       description:
-        "Premium ger dig alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter för 149 kr per månad eller 349 kr för 6 månader. De två senaste proven och matcherna är gratis.",
+        "Premium ger dig alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter för 149 kr per månad eller 349 kr för 6 månader. De senaste proven och matcherna är gratis.",
       ogTitle: "Pris på Tvåkommanollan",
       ogDescription: "Vad som är gratis och vad som kostar.",
     }),
@@ -48,7 +48,7 @@ const PREMIUM = [
 ];
 
 const GRATIS = [
-  "De 2 senaste proven att skriva, med facit och rättning",
+  "De senaste proven att skriva, med facit och rättning",
   "Facit till alla 31 prov",
   "Matcherna, verbalt och kvantitativt",
   "Normeringstabeller, poängräknare och preliminärt facit",
@@ -60,8 +60,8 @@ const GRATIS = [
 
 const TANKER = [
   {
-    rubrik: "De två senaste proven är gratis",
-    text: "Höstprovet 2026 och vårprovet 2026 går att skriva utan köp och utan konto. De 29 äldre proven ingår i Premium. Facit till alla prov står öppet på varje provs sida. När ett nytt prov läggs in blir det gratis, och det äldsta av de två gratisproven flyttas till Premium.",
+    rubrik: "De senaste proven är gratis",
+    text: "De senaste proven går att skriva utan köp och utan konto. De äldre proven ingår i Premium. Facit till alla prov står öppet på varje provs sida. När ett nytt prov läggs in blir det gratis.",
   },
   {
     rubrik: "Ordlistan och MEK har en gratisdel",

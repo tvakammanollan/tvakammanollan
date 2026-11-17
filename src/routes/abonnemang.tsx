@@ -96,7 +96,7 @@ function AbonnemangPage() {
         <h1 className="text-[32px] leading-tight tracking-[-0.035em] sm:text-[40px]">Abonnemang</h1>
         <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/70">
           Premium ger dig alla gamla prov, hela ordlistan och alla MEK-uppgifter. Utan köp kan du
-          skriva de 2 senaste proven och öva på {FREE_ORD_LIMIT} ord och {FREE_MEK_LIMIT}{" "}
+          skriva de senaste proven och öva på {FREE_ORD_LIMIT} ord och {FREE_MEK_LIMIT}{" "}
           MEK-uppgifter.
         </p>
 

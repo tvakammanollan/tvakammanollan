@@ -6,7 +6,6 @@ import type { LandingStats } from "@/lib/landing.functions";
 import { formatInt } from "@/lib/sv-format";
 import { OMDOMESKORT } from "@/data/omdomen";
 import { allExams } from "@/lib/prov-data";
-import { FREE_EXAM_COUNT } from "@/lib/prov-access";
 import { FREE_MEK_LIMIT, FREE_ORD_LIMIT, PREMIUM_RADER } from "@/lib/ord-paywall";
 import { HP_DAY_START, hpDateLong, hpDateTime, upcomingHpDates } from "@/lib/hp-dates";
 import { rankedName } from "@/lib/username";
@@ -384,7 +383,7 @@ const STEG: { rubrik: string; text: string; cta: string; to: LinkProps["to"] }[]
   },
   {
     rubrik: "Skriv ett gammalt prov på tid",
-    text: `De ${FREE_EXAM_COUNT} senaste proven är gratis och kräver inget konto. När du lämnat in får du din poäng, och ser hur långt du har kvar.`,
+    text: `De senaste proven är gratis och kräver inget konto. När du lämnat in får du din poäng, och ser hur långt du har kvar.`,
     cta: "Välj ett prov",
     to: "/gamla-prov",
   },
@@ -556,7 +555,7 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
-                  "De 2 senaste proven med facit och rättning",
+                  "De senaste proven med facit och rättning",
                   "Matcherna, verbalt och kvantitativt",
                   "20 ord och 10 MEK-uppgifter i träningsläget",
                   "Normering, poängräknare, facit och forum",
@@ -618,17 +617,16 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
 }
 
 /**
- * Vad som gäller om man ångrar sig, med villkorens ord (`/villkor`,
- * avsnittet Ångerrätt). Står under priskorten, i kassan och i spärrutan.
- * Ändras villkoren ska den här raden ändras med dem.
+ * Raden under priskorten, i kassan och i spärrutan. Ångerrätten nämns inte
+ * här med flit (Niklas beslut 2026-11-17): den står i villkoren, men under
+ * priset skrämde den bort köpare.
  */
 export function AngerRad({ className }: { className?: string }) {
   return (
     <p className={className}>
-      Premium blir tillgängligt direkt efter betalningen, och ångerrätten gäller därför inte.
-      Månadsköpet säger du upp när du vill och behåller då månaden ut. Hela texten står i{" "}
-      <Link to="/villkor" className="underline underline-offset-2">
-        villkoren
+      Ingen bindningstid. Du säger upp månadsköpet under{" "}
+      <Link to="/abonnemang" className="underline underline-offset-2">
+        Abonnemang
       </Link>
       .
     </p>

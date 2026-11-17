@@ -30,9 +30,9 @@ export const Route = createFileRoute("/gamla-prov")({
         title: fitTitle(`Gamla högskoleprov ${oldest}–${newest}`, "med facit", "alla provpass"),
         description:
           `Skriv ${exams.length} gamla högskoleprov online: ${enhet(count, "uppgift")} från ` +
-          `${oldest} till ${newest} med facit, på tid och med rättning. De två senaste proven är gratis, övriga ingår i Premium.`,
+          `${oldest} till ${newest} med facit, på tid och med rättning. De senaste proven är gratis, övriga ingår i Premium.`,
         ogTitle: `Gamla högskoleprov ${oldest}–${newest}: Tvåkommanollan`,
-        ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. De två senaste är gratis.`,
+        ogDescription: `${enhet(exams.length, "provtillfälle")}, ${enhet(count, "uppgift")} med facit. De senaste är gratis.`,
       }),
       links: pageLinks("/gamla-prov"),
       scripts: [
@@ -86,7 +86,7 @@ function GamlaProvPage() {
         title="Alla gamla högskoleprov"
         subtitle={
           oldest && newest
-            ? `Här finns ${exams.length} högskoleprov med facit, från ${oldest.label.toLowerCase()} till ${newest.label.toLowerCase()}: ${enhet(totalQuestions(), "uppgift")} i ${exams.length * 4} provpass. Varje provpass skrivs på 55 minuter och rättas direkt. De två senaste proven är gratis, övriga ingår i Premium.`
+            ? `Här finns ${exams.length} högskoleprov med facit, från ${oldest.label.toLowerCase()} till ${newest.label.toLowerCase()}: ${enhet(totalQuestions(), "uppgift")} i ${exams.length * 4} provpass. Varje provpass skrivs på 55 minuter och rättas direkt. De senaste proven är gratis, övriga ingår i Premium.`
             : undefined
         }
         align="center"

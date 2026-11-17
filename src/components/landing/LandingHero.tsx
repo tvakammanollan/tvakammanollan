@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import type { DemoQuestion, LandingStats } from "@/lib/landing.functions";
 import { formatInt } from "@/lib/sv-format";
 import { allExams } from "@/lib/prov-data";
-import { FREE_EXAM_COUNT } from "@/lib/prov-access";
 
 /**
  * Hjälten: en riktig uppgift man kan svara på, inte ett löfte om en.
@@ -213,8 +212,8 @@ export function LandingHero({
 
         <p className="mx-auto mt-6 max-w-[600px] text-[18px] leading-relaxed text-[var(--cream-3)]">
           Högskoleprovet är en egen väg in på högskolan, vid sidan av betygen. Här skriver du proven
-          från 2012 till 2026 på tid, får din poäng och övar på det du tappar poäng på. De{" "}
-          {FREE_EXAM_COUNT} senaste proven är gratis.
+          från 2012 till 2026 på tid, får din poäng och övar på det du tappar poäng på. De senaste
+          proven är gratis.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

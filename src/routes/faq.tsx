@@ -17,7 +17,7 @@ interface FaqItem {
 const faq = (): FaqItem[] => [
   {
     q: "Är Tvåkommanollan gratis?",
-    a: "Delvis. De två senaste gamla proven, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 20 orden och 10 MEK-uppgifterna i träningsläget. Premium ger alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter och kostar 149 kr per månad, som du kan säga upp när som helst, eller 349 kr för 6 månader. Sajten har inga annonser.",
+    a: "Delvis. De senaste gamla proven, matcherna, normeringen, poängräknaren och forumet är gratis, liksom de första 20 orden och 10 MEK-uppgifterna i träningsläget. Premium ger alla 31 gamla prov, hela ordlistan och alla MEK-uppgifter och kostar 149 kr per månad, som du kan säga upp när som helst, eller 349 kr för 6 månader. Sajten har inga annonser.",
   },
   {
     q: "Hur fungerar ELO-systemet?",
