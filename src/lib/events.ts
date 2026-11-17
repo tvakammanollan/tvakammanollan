@@ -39,6 +39,8 @@ export interface ProductEvents {
   signup_completed: { from_guest: boolean; needs_email_confirm: boolean };
   signup_failed: { from_guest: boolean };
   login_completed: { from_guest: boolean };
+  /** Google-knappen ersattes av en notis: sidan öppnades i en apps webbläsare. */
+  google_hidden_in_app_browser: Record<string, never>;
   login_failed: Record<string, never>;
   onboarding_completed: {
     skipped: boolean;

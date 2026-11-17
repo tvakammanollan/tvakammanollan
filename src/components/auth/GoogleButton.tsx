@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useEmbeddedBrowser } from "@/hooks/useEmbeddedBrowser";
+import { trackEvent } from "@/lib/events";
 
 /**
  * "Fortsätt med Google" för /login och /signup.
@@ -27,6 +29,15 @@ import { toast } from "sonner";
 export function GoogleButton({ label = "Fortsätt med Google" }: { label?: string }) {
   const { user } = useAuth();
   const [pending, setPending] = useState(false);
+  const embedded = useEmbeddedBrowser();
+
+  useEffect(() => {
+    if (embedded) trackEvent("google_hidden_in_app_browser", {});
+  }, [embedded]);
+
+  // I en apps webbläsare svarar Google med en felsida. Visa i stället hur
+  // man kommer vidare; e-postvägen bredvid fungerar som vanligt.
+  if (embedded) return <InAppBrowserNote />;
 
   const handleClick = async () => {
     setPending(true);
@@ -58,6 +69,20 @@ export function GoogleButton({ label = "Fortsätt med Google" }: { label?: strin
       <GoogleMark />
       {pending ? "Öppnar Google…" : label}
     </button>
+  );
+}
+
+/**
+ * Står där Google-knappen annars står, i en apps webbläsare. Kort, för den
+ * som läser den är mitt i ett köp eller en registrering.
+ */
+function InAppBrowserNote() {
+  return (
+    <p className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-left text-[13px] leading-relaxed text-white/70">
+      Google-inloggning fungerar inte i appens webbläsare. Skapa konto med e-post, eller öppna sidan
+      i Safari eller Chrome via menyn <span aria-hidden>(⋯)</span> uppe i hörnet för att använda
+      Google.
+    </p>
   );
 }
 
