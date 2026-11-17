@@ -68,7 +68,7 @@ export interface PageMetaInput {
   ogTitle?: string;
   ogDescription?: string;
   /**
-   * Optional per-page OG/Twitter image override. Defaults to /og-image-5.png
+   * Optional per-page OG/Twitter image override. Defaults to /og-image-6.png
    * set in __root.tsx. Pass a relative path like "/og-faq.png" or an
    * absolute URL.
    *

@@ -1,5 +1,5 @@
 {
-  "name": "Tvåkommanollan | Öva inför högskoleprovet",
+  "name": "Tvåkommanollan",
   "short_name": "Tvåkommanollan",
   "description": "Gamla högskoleprov med facit, ordlista och matcher med ELO-ranking. Alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK).",
   "start_url": "/",
@@ -11,8 +11,8 @@
     "standalone"
   ],
   "orientation": "portrait-primary",
-  "background_color": "#fbf6ec",
-  "theme_color": "#fbf6ec",
+  "background_color": "#f5f5f5",
+  "theme_color": "#f5f5f5",
   "lang": "sv-SE",
   "dir": "ltr",
   "categories": [
@@ -22,33 +22,27 @@
   ],
   "icons": [
     {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "/og-image-5.png",
+      "src": "/og-image-6.png",
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",

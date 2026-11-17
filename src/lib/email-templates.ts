@@ -57,7 +57,7 @@ function layout({ heading, paragraphs, cta, footer }: LayoutInput): string {
 
   return `<div style="margin:0;padding:24px;background:${PAPER};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
   <div style="max-width:520px;margin:0 auto;background:#ffffff;border:1px solid rgba(46,30,20,0.12);border-radius:16px;padding:28px;">
-    <p style="margin:0 0 20px;font-size:18px;font-weight:800;letter-spacing:-0.04em;color:${APPLE};">2,0</p>
+    <p style="margin:0 0 20px;"><img src="${SITE}/Tvakommanollan-logga.png" alt="Tvåkommanollan" width="148" height="36" style="display:block;height:36px;width:auto;border:0;"></p>
     <h1 style="margin:0 0 16px;font-size:22px;line-height:1.25;color:${INK};">${esc(heading)}</h1>
     ${body}
     ${button}

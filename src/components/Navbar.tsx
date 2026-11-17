@@ -73,38 +73,29 @@ export function Navbar() {
       data-scrolled={scrolled}
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
-        {/* Märket OCH namnet. Märket satt tidigare ensamt, med motiveringen
-            att det bär namnet självt — men en 36 px röd ruta med "2,0" i
-            läser inte som ett sajtnamn för den som kommer utifrån, och
-            hörnet såg tomt ut. Ordmärket står i display-snittet och med å,
-            precis som i all annan text (se CLAUDE.md: å i text, a i teknik).
-            Det döljs under sm så att raden inte trängs på en liten skärm —
-            aria-label på länken bär namnet för skärmläsare oavsett. */}
+        {/* Loggan är SVG-filen som den är (public/Tvakommanollan-logga.svg),
+            inte ombyggd i HTML. 36 px hög på mobil, 44 px från sm. Under
+            380 px räcker inte bredden till ordmärket, och då står bara
+            märket (2,0 på klicken). */}
         <Link
           to="/"
           aria-label="Tvåkommanollan, till startsidan"
-          className="group inline-flex shrink-0 items-center gap-2"
+          className="inline-flex shrink-0 items-center"
         >
-          <span
-            aria-hidden
-            className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl shadow-sm transition-transform group-hover:rotate-3 group-hover:scale-105"
-            style={{ background: "#06040e" }}
-          >
-            {/* Samma märke som faviconen och delningsbilden: talet 2,0. */}
-            <span
-              className="relative text-[15px] font-black leading-none tracking-[-0.08em] text-on-brand"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              2,0
-            </span>
-          </span>
-          <span
-            aria-hidden
-            className="hidden text-[17px] font-bold leading-none tracking-[-0.02em] text-[var(--cream)] transition-colors group-hover:text-primary sm:inline"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Tvåkommanollan
-          </span>
+          <img
+            src="/Tvakommanollan-marke.svg"
+            alt="Tvåkommanollan"
+            width={46}
+            height={36}
+            className="block h-9 w-auto min-[380px]:hidden"
+          />
+          <img
+            src="/Tvakommanollan-logga.svg"
+            alt="Tvåkommanollan"
+            width={147}
+            height={36}
+            className="hidden h-9 w-auto min-[380px]:block sm:h-11"
+          />
         </Link>
 
         {/* ===== DESKTOP NAV (≥ md) ===== */}

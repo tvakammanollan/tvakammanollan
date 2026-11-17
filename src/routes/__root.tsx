@@ -155,10 +155,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://tvakommanollan.se/" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://tvakommanollan.se/og-image-5.png" },
+      { property: "og:image", content: "https://tvakommanollan.se/og-image-6.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Tvåkommanollan: öva inför högskoleprovet" },
+      { property: "og:image:alt", content: "Tvåkommanollan, öva inför högskoleprovet" },
       { property: "og:site_name", content: "Tvåkommanollan" },
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -170,7 +170,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Öva inför högskoleprovet med alla gamla prov sedan 2012, en ordlista med över 10 000 ord och matcher mot andra. De senaste proven är gratis.",
       },
-      { name: "twitter:image", content: "https://tvakommanollan.se/og-image-5.png" },
+      { name: "twitter:image", content: "https://tvakommanollan.se/og-image-6.png" },
       // Snippetlängd och bildstorlek i träfflistan: utan hintarna väljer
       // Google själv, och för AI-översikter och "People also ask" är det
       // hela stycket som citeras. Per-sida `noindex` skriver över den här
@@ -186,13 +186,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
     ],
     links: [
-      // SVG först för moderna klienter, PNG som reserv. Google och
-      // Androids "lägg till på hemskärmen" tar inte SVG, så utan
-      // PNG-varianterna föll de tillbaka på en skalad skärmdump.
+      // Google kräver en kvadratisk favicon på minst 48 px som går att
+      // crawla: favicon.ico bär 16/32/48. SVG för moderna webbläsare.
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: "/icon-32.png" },
-      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
       // Preload det enda snitt som syns i första målningen: Manrope bär
       // både brödtext och rubriker sedan Podia-systemet (styles.css). Utan
@@ -247,7 +245,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://tvakommanollan.se/#org",
           name: "Tvåkommanollan",
           url: "https://tvakommanollan.se",
-          logo: "https://tvakommanollan.se/icon-192.png",
+          logo: "https://tvakommanollan.se/icon-512.png",
           email: "info@tvakommanollan.se",
           contactPoint: {
             "@type": "ContactPoint",

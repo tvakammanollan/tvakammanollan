@@ -2107,6 +2107,18 @@ vilket är den allvarligare halvan av det som rättades.
 
 ### Märket, delningsbilden och omdömena (2026-08-18)
 
+**Varumärkesfilerna är levererade färdiga sedan 2026-11-17** och ersätter det
+som står längre ner om ritade bilder: lila klick bakom 2,0. Navbaren visar
+`public/Tvakommanollan-logga.svg` som `<img>` (36 px, 44 px från `sm`) och
+bara `Tvakommanollan-marke.svg` under 380 px. Favicon: `favicon.ico`
+(16/32/48, Googles krav är kvadratisk ≥ 48 px) + `favicon.svg` +
+`apple-touch-icon.png`; manifestet har `icon-192`/`icon-512`. JSON-LD-loggan
+är `icon-512.png`. Delningsbilden heter `og-image-6.png` (nästa byte: `-7`)
+och är **inte** ritad av `build-og-image.py` längre; skriptet och
+`brand_image.py` ritar den gamla rundade rutan. Mejlmallen visar
+`Tvakommanollan-logga.png`. `-vit`-varianterna är till mörk botten, som
+sajten i dag inte har.
+
 - **Märket är talet 2,0**, inte "HP" i en ruta. Det sitter i navbaren, i
   `public/favicon.svg` och i delningsbilden, och faviconen är ritad för 16 px:
   bara talet i en ton, kommat som form. PNG-varianterna (`icon-32`, `icon-192`,

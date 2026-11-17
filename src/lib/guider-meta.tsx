@@ -264,12 +264,12 @@ export function guideArticleJsonLd({
       // PNG, inte SVG: Googles logotypriktlinjer vill ha ett rasterformat.
       logo: {
         "@type": "ImageObject",
-        url: "https://tvakommanollan.se/icon-192.png",
+        url: "https://tvakommanollan.se/icon-512.png",
         width: 192,
         height: 192,
       },
     },
-    image: "https://tvakommanollan.se/og-image-5.png",
+    image: "https://tvakommanollan.se/og-image-6.png",
     inLanguage: "sv-SE",
     isAccessibleForFree: true,
     mainEntityOfPage: {
