@@ -18,7 +18,6 @@ import { ORD_PLAN_IDS, type OrdPlan } from "@/lib/ord-paywall";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
 import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
 import { GoogleButton } from "@/components/auth/GoogleButton";
-import { AngerRad } from "@/components/landing/LandingSections";
 import { isAutoUsername } from "@/lib/username";
 import { formatMoney } from "@/lib/sv-format";
 import { trackEvent } from "@/lib/events";
@@ -54,21 +53,20 @@ const PLAN_STYLE: Record<OrdPlan, { vald: string; ikon: string }> = {
 };
 
 const INGAR = [
+  "Alla gamla prov att skriva på tid, med rättning och poäng",
   "Över 10 000 ord i träningsläget",
   "Alla MEK-uppgifter, arkivets och våra egna",
   "Moms ingår, inget läggs på i kassan",
 ];
 
 /**
- * Vad köpet binder en till, vilket är ingenting. Står först i listan för
- * båda köpen, så att det syns innan man betalar.
+ * Vad köpet binder en till. Står först i listan, så att det syns innan man
+ * betalar. "Ingen bindningstid" står redan på planknappen; samma rad tre
+ * gånger på en skärm läste som att vi försökte övertyga.
  */
 const VILLKORSRADER: Record<OrdPlan, string[]> = {
-  "1m": [
-    "Ingen bindningstid",
-    "Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn",
-  ],
-  "6m": ["Ingen bindningstid. Engångsköp som inte förnyas"],
+  "1m": ["Förnyas varje månad tills du säger upp, vilket du gör under Abonnemang i menyn"],
+  "6m": ["Engångsköp som inte förnyas"],
 };
 
 /** Planknappens rubrik och underrad. */
@@ -183,11 +181,13 @@ function KassaPage() {
 
   return (
     <div className="min-h-screen">
-      <main className="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:pt-14">
-        <h1 className="text-[32px] leading-tight tracking-[-0.035em] sm:text-[44px]">
+      <main className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:pt-14">
+        <h1 className="text-[28px] leading-tight tracking-[-0.035em] sm:text-[44px]">
           Premium: allt på Tvåkommanollan
         </h1>
-        <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-white/70">
+        {/* Ingressen göms på mobil: listan under kassan säger samma sak, och
+            på en telefon ska planvalet och kassan synas utan skroll. */}
+        <p className="mt-3 hidden max-w-xl text-[16px] leading-relaxed text-white/70 sm:block">
           Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha tillgång
           och betala direkt här. Inget av köpen har någon bindningstid.
         </p>
@@ -246,8 +246,11 @@ function KassaPage() {
             )}
           </GlassCard>
         ) : (
-          <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
-            <div className="space-y-3">
+          // Ordningen i DOM:en är mobilens: planval, kassan, sedan vad som
+          // ingår. På dator lägger gridden kassan i högerkolumnen över båda
+          // raderna, och planval och lista står till vänster som förut.
+          <div className="mt-5 grid gap-5 sm:mt-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-6 lg:gap-y-3">
+            <div className="space-y-2.5 sm:space-y-3 lg:col-start-1 lg:row-start-1">
               {ORD_PLAN_IDS.map((p) => {
                 const vald = p === plan;
                 return (
@@ -256,7 +259,7 @@ function KassaPage() {
                     type="button"
                     onClick={() => choose(p)}
                     aria-pressed={vald}
-                    className={`flex w-full items-center justify-between rounded-2xl border-2 px-5 py-4 text-left transition ${
+                    className={`flex w-full items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition sm:px-5 sm:py-4 ${
                       vald ? PLAN_STYLE[p].vald : "border-white/10 bg-card hover:border-white/25"
                     }`}
                   >
@@ -268,27 +271,17 @@ function KassaPage() {
                   </button>
                 );
               })}
-              <ul className="space-y-2.5 pt-3 text-[14px] text-white/70">
-                {[...VILLKORSRADER[plan], ...INGAR].map((rad) => (
-                  <li key={rad} className="flex gap-2.5">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
-                    {rad}
-                  </li>
-                ))}
-              </ul>
-              <AngerRad className="pt-2 text-[13px] leading-relaxed text-white/60" />
             </div>
 
-            <GlassCard className="min-h-[320px] p-4 sm:p-6">
+            <GlassCard className="min-h-[280px] p-4 sm:min-h-[320px] sm:p-6 lg:col-start-2 lg:row-span-2 lg:row-start-1">
               {authLoading || (user && !access && !accessFailed) ? (
                 <Spinnerruta />
               ) : isGuest ? (
-                <div className="py-10 text-center">
+                <div className="py-6 text-center sm:py-10">
                   <h2 className="text-xl font-semibold">Skapa ett konto för att köpa</h2>
                   <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-                    Köpet knyts till ditt konto så att det följer med dig mellan enheter. När du är
-                    inloggad kommer du tillbaka hit till kassan, och användarnamn väljer du efter
-                    köpet.
+                    Köpet knyts till ditt konto så att du har det på alla enheter. Efteråt kommer du
+                    tillbaka hit, och användarnamn väljer du efter köpet.
                   </p>
                   {/* Google direkt här: ett tryck i stället för att gå via
                       registreringssidan. Valet av köp är redan sparat
@@ -352,6 +345,15 @@ function KassaPage() {
                 <Spinnerruta />
               ) : null}
             </GlassCard>
+
+            <ul className="space-y-2.5 text-[14px] text-white/70 lg:col-start-1 lg:row-start-2">
+              {[...VILLKORSRADER[plan], ...INGAR].map((rad) => (
+                <li key={rad} className="flex gap-2.5">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
+                  {rad}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </main>
