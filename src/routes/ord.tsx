@@ -511,7 +511,7 @@ function OrdPracticePage() {
       {phase === "setup" && (
         <PageHero
           title="Öva"
-          cycleWords={["ord."]}
+          cycleWords={["ord"]}
           subtitle="Ingen klocka. Ord du missar kommer tillbaka. De första 20 orden är gratis."
           align="center"
           variant="compact"

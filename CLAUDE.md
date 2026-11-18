@@ -968,6 +968,19 @@ och resultatskärmen efter ett inlämnat pass.
   är fyrtio uppgifter av åttio, och en normering ur halva underlaget hade sett
   ut som ett provresultat utan att vara det. Rutan skriver därför ut vad som
   saknas ("1 av 2 pass") i stället för att bara utelämna siffran.
+- **Uppskattad delpoäng efter ett pass (2026-11-18).** `PartResult.estimate`
+  och `ExamResult.estimate` räknas ur de pass som är skrivna, med samma
+  uppräkning som `officialNormering` redan gör. `normering` står kvar som
+  `null` tills delen är hel, så regeln ovan gäller fortfarande för den
+  riktiga poängen; uppskattningen visas dämpad och märkt "uppskattad" i
+  `ProvScorePanel` och som "cirka" i provlistans rad. Resultatskärmen efter
+  ett pass har redan en egen ruta för passets uppskattning och skickar
+  `showEstimates={false}`, annars stod samma siffra två gånger.
+- **Startsidans provkort är `ProvHomeCard`** (2026-11-18): ett påbörjat pass
+  ("Fortsätt provpass N", besvarade och tid kvar), annars senaste resultatet
+  och nästa pass, helst det som gör delen hel. Reglerna i `prov-next.ts`
+  (testad). Allt läses ur localStorage efter första renderingen, så servern
+  visar alltid det vanliga kortet.
 - **`useProvResults` returnerar `null` fram till första effekten.** Sidorna är
   serverrenderade och identiska för alla; läses lagringen redan under första
   renderingen blir det en hydreringsmiss på varje kort som har ett resultat.
@@ -2206,6 +2219,28 @@ sajten i dag inte har.
   klockan tickade. Att skjuta upp frågan är dessutom integritetsmässigt säkert
   — utan svar laddas ingen analys.
 
+### Provpassets fokusläge och startsidans blink (2026-11-18)
+
+- **Fokusläget** är knappen längst till vänster i provpassets list. Den
+  sätter `data-fokus` på `<html>` medan uppgifterna visas, och CSS:en döljer
+  allt som bär `data-chrome` (navbaren, zonremsan, båda sidfötterna) och
+  sätter `--nav-h` till bara den säkra ytan. Valet minns i
+  `tkn:prov-fokus`. Nytt element som ska försvinna i fokusläget: ge det
+  `data-chrome`.
+- **Inloggade såg landningssidan tills React hydrerat.** Servern renderar `/`
+  som landningssida för alla. Ett inline-skript i `<head>` (`__root.tsx`)
+  sätter `data-session` på `<html>` om det finns en `sb-…-auth-token`, och
+  CSS:en visar då ett skelett (`data-session-skeleton`) i stället för
+  landningen (`data-landing`) redan i serverns HTML. `index.tsx` tar bort
+  markeringen när auth svarat utan användare, annars blev landningssidan
+  osynlig för den vars session gått ut. CSP:n tillåter inline-skript.
+- **Provpasset scrollar upp vid start och vid byte av uppgift** om
+  uppgiftens början ligger ovanför passets list. Förr startade passet där
+  startvyn var scrollad, och på mobil syntes alternativen men inte ordet.
+- **Knappraden under uppgiften** är under `sm` en pil, Översikt och en
+  Nästa-knapp som tar resten av raden. Med tre textknappar var den ~420 px
+  och Nästa låg an mot skärmkanten.
+
 ### Mobiltest av hela flödet (2026-11-17)
 
 Hela vägen kördes i Chrome på 390×844 med riktiga tryck på koordinater:
@@ -2459,6 +2494,14 @@ var teser och meta-texter var uppradade fragment.
     kvar), poäng eller resultat (aldrig betyg), högskoleprovet med litet h i
     löptext, nivå (aldrig tier), "köp" (aldrig "lås upp"), och "ord du missar
     kommer tillbaka" i stället för spaced repetition.
+
+**Godkända undantag (Niklas beslut 2026-11-18).** Två saker på startsidan
+bryter mot reglerna ovan med flit och ska stå kvar: guideknappen
+"Komplett guide inför högskoleprovet" med underraden "Allt du behöver tänka
+på" (`GuideKnapp` i `HomeDashboard.tsx`, rund knapp trots regel 8 och
+adjektivet trots regel 23; raderna bär `copy-ok`), och nedräkningen
+"HP Vår 2027, N dagar kvar" (förkortningen HP trots regel 19). Flagga dem
+inte i en granskning och skriv inte om dem.
 
 Sakuppgifter i guiderna ska stämma med provdatan: ett verbalt provpass är
 ORD 10, MEK 10, LÄS 10 och ELF 10 uppgifter, ett kvantitativt XYZ 12, KVA 10,

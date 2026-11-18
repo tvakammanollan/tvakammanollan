@@ -232,6 +232,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // enbart renderblockerande dödvikt.
     ],
     scripts: [
+      // Markerar <html data-session> innan första målningen om webbläsaren har
+      // en sparad Supabase-session. Startsidan serverrenderas som
+      // landningssida för alla, och utan markeringen hann en inloggad
+      // besökare se hela landningssidan tills React hydrerat. CSS:en i
+      // styles.css visar då startsidans skelett i stället. Samma test som
+      // `useHasStoredSession` (`sb-<ref>-auth-token`); `index.tsx` tar bort
+      // markeringen om sessionen visar sig vara ogiltig.
+      {
+        children:
+          "try{for(var i=0;i<localStorage.length;i++){if(/^sb-.+-auth-token$/.test(localStorage.key(i)||'')){document.documentElement.setAttribute('data-session','');break}}}catch(e){}",
+      },
       // OBS: Schema.org WebApplication låg här förr och renderades på sajtens
       // alla sidor. Semrush/Google flaggade den som ogiltig "Software App"-
       // markup på 83 sidor: typen kräver aggregateRating/review för att vara
@@ -324,7 +335,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="sv">
+    // suppressHydrationWarning: skriptet i <head> sätter `data-session` innan
+    // React hydrerar, och det ska stå kvar. Gäller bara <html>-elementets egna
+    // attribut, inte barnen.
+    <html lang="sv" suppressHydrationWarning>
       <head>
         <HeadContent />
         {/* AdSense är borttaget sedan 2026-11-17 (Niklas beslut): skriptet

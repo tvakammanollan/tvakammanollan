@@ -1640,6 +1640,30 @@ button,
   }
 }
 
+/* Fokusläget i provpasset (knappen i passets egen list, `ProvRunner`):
+   navbaren, zonremsan och sidfoten bär `data-chrome` och göms, och listor
+   som fastnar under navbaren fastnar i stället i överkanten. Notchen finns
+   kvar, så --nav-h blir bara den säkra ytan. */
+html[data-fokus] [data-chrome] {
+  display: none;
+}
+html[data-fokus] {
+  --nav-h: env(safe-area-inset-top, 0px);
+}
+
+/* Startsidan för den som har en sparad session (se skriptet i __root.tsx):
+   den serverrenderade landningssidan göms och skelettet visas tills React
+   tagit över. Utan sparad session är skelettet alltid dolt. */
+[data-session-skeleton] {
+  display: none;
+}
+html[data-session] [data-session-skeleton] {
+  display: block;
+}
+html[data-session] [data-landing] {
+  display: none;
+}
+
 @layer utilities {
   .pb-safe {
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));

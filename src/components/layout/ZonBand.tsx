@@ -35,5 +35,12 @@ export function ZonBand() {
   // Zonens färg finns kvar i dekorformerna.
   if (!zon || zon === "ord") return null;
 
-  return <div aria-hidden="true" className="h-1.5 w-full" style={{ background: zonYta[zon] }} />;
+  return (
+    <div
+      aria-hidden="true"
+      data-chrome
+      className="h-1.5 w-full"
+      style={{ background: zonYta[zon] }}
+    />
+  );
 }

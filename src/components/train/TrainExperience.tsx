@@ -624,7 +624,7 @@ export function TrainExperience({
         ) : (
           <PageHero
             title="Träna"
-            cycleWords={["ORD.", "MEK.", "LÄS.", "ELF.", "XYZ.", "KVA.", "NOG.", "DTK."]}
+            cycleWords={["ORD", "MEK", "LÄS", "ELF", "XYZ", "KVA", "NOG", "DTK"]}
             align="center"
             variant="compact"
           />

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useAuth, useHasStoredSession } from "@/hooks/useAuth";
 import { isAutoUsername } from "@/lib/username";
@@ -134,10 +135,32 @@ function Index() {
   // så en inloggad besökare mötte marknadsföringssidan → skelett → dashboard,
   // tre olika layouter i rad. SSR:en påverkas inte: `useHasStoredSession` ger
   // `false` på servern.
-  if (loading && !user)
-    return harSession ? <DashboardSkeleton /> : <HeroLanding fragor={fragor} stats={stats} />;
+  //
+  // Före hydreringen räcker inte det: servern skickar landningssidan, och den
+  // syns tills React tagit över. Därför bär landningen `data-landing` och har
+  // ett dolt skelett bredvid sig. Skriptet i __root.tsx sätter
+  // `data-session` på <html> innan första målningen, och CSS:en byter då
+  // landningssidan mot skelettet redan i serverns HTML.
+  const landing = (
+    <>
+      <div data-session-skeleton aria-hidden="true">
+        <DashboardSkeleton />
+      </div>
+      <div data-landing>
+        <HeroLanding fragor={fragor} stats={stats} />
+      </div>
+    </>
+  );
 
-  if (!user) return <HeroLanding fragor={fragor} stats={stats} />;
+  // En sparad session som visar sig vara ogiltig (utgången, utloggad i en
+  // annan flik): markeringen tas bort, annars förblev landningssidan dold.
+  useEffect(() => {
+    if (!loading && !user) document.documentElement.removeAttribute("data-session");
+  }, [loading, user]);
+
+  if (loading && !user) return harSession ? <DashboardSkeleton /> : landing;
+
+  if (!user) return landing;
 
   // Got user but profile still loading — show a soft skeleton instead of plain
   // text so the dashboard frame is visible immediately.

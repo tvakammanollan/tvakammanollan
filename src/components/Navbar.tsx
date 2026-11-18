@@ -71,6 +71,7 @@ export function Navbar() {
       // i en inline-style. Scrolläget är ett data-attribut av samma skäl.
       className="navbar-glass sticky top-0 z-50 pt-safe px-safe"
       data-scrolled={scrolled}
+      data-chrome
     >
       <div className="mx-auto flex h-[56px] max-w-6xl items-center justify-between gap-2 px-3 sm:h-[60px] sm:px-5">
         {/* Loggan är SVG-filen som den är (public/Tvakommanollan-logga.svg),

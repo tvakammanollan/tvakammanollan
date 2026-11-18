@@ -65,6 +65,7 @@ export function Footer() {
 
   return (
     <footer
+      data-chrome
       className="relative"
       style={{
         background: "#e1edf2",
@@ -138,7 +139,7 @@ export function Footer() {
    bort ur mobilmenyn; bugg-rapporten flyttade hit från navbaren. */
 function CompactFooter() {
   return (
-    <footer className="border-t border-white/8">
+    <footer data-chrome className="border-t border-white/8">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <FooterMiniLink to="/guider">Guider</FooterMiniLink>

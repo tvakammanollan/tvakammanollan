@@ -11,6 +11,8 @@ import {
   Play,
   Send,
   Loader2,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -93,6 +95,12 @@ export function ProvRunner({
   // Inlämningen är oåterkallelig — provet rättas och klockan stannar. En
   // felklickad "Lämna in" på uppgift 12 av 40 kostar hela passet.
   const [confirmOpen, setConfirmOpen] = useState(false);
+  // Fokusläget döljer sajtens navbar och sidfot medan passet pågår. Valet
+  // minns i webbläsaren, så den som vill skriva utan meny slipper välja om
+  // för varje pass.
+  const [fokus, setFokus] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const questionRef = useRef<HTMLElement>(null);
 
   const logUsage = useServerFn(logUsageEvent);
   const logStart = useServerFn(logProvStart);
@@ -179,6 +187,54 @@ export function ProvRunner({
   useEffect(() => {
     if (phase !== "intro") persist({});
   }, [phase, persist]);
+
+  /* ── Fokusläge och scroll ─────────────────────────────────────── */
+
+  useEffect(() => {
+    try {
+      setFokus(window.localStorage.getItem(FOKUS_KEY) === "1");
+    } catch {
+      /* Blockerad lagring: fokusläget börjar avslaget. */
+    }
+  }, []);
+
+  function toggleFokus() {
+    setFokus((on) => {
+      const next = !on;
+      try {
+        window.localStorage.setItem(FOKUS_KEY, next ? "1" : "0");
+      } catch {
+        /* Valet gäller då bara den här sidvisningen. */
+      }
+      return next;
+    });
+  }
+
+  // Bara medan uppgifterna visas. Startvyn och resultatet ska ha menyn kvar,
+  // och attributet tas alltid bort när komponenten försvinner.
+  useEffect(() => {
+    if (phase !== "running" || !fokus) return;
+    const root = document.documentElement;
+    root.setAttribute("data-fokus", "");
+    return () => root.removeAttribute("data-fokus");
+  }, [phase, fokus]);
+
+  // Passet startas längst ner i startvyn, och utan det här låg sidan kvar där:
+  // på mobil syntes svarsalternativen men inte ordet uppgiften gällde.
+  useEffect(() => {
+    if (phase === "running") window.scrollTo({ top: 0 });
+  }, [phase]);
+
+  // Byte av uppgift med knapparna under kortet: har man skrollat förbi
+  // uppgiftens början (lång lästext, långt alternativ) flyttas den upp under
+  // passets list igen. Står den redan i bild rör sig ingenting.
+  useEffect(() => {
+    const card = questionRef.current;
+    if (!card) return;
+    const listBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
+    const top = card.getBoundingClientRect().top;
+    if (top < listBottom) window.scrollTo({ top: window.scrollY + top - listBottom - 12 });
+  }, [current]);
 
   /* ── Klocka ──────────────────────────────────────────────────── */
 
@@ -491,28 +547,55 @@ export function ProvRunner({
       {/* Fastnar under sajtens egen navbar (--nav-h, sticky top-0 z-50).
           Täckande botten: halvgenomskinlig syntes uppgiften igenom bakom
           knapparna när man skrollade. */}
-      <header className="sticky top-[var(--nav-h)] z-30 border-b border-white/10 bg-[var(--navy)]">
+      <header
+        ref={headerRef}
+        className="sticky top-[var(--nav-h)] z-30 border-b border-white/10 bg-[var(--navy)]"
+      >
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2.5 sm:px-6">
           <Link
             to="/gamla-prov/$term"
             params={{ term: data.term }}
-            className="inline-flex items-center gap-1 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--cream)]"
+            aria-label={`Tillbaka till ${data.label.toLowerCase()}`}
+            className="-ml-2 inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center gap-1 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--cream)] sm:ml-0 sm:min-w-0 sm:justify-start"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden />
+            {/* Under sm bara pilen: listen har fyra knappar till, och på
+                320 px trängdes räknaren ihop med dem. */}
             <span className="hidden sm:inline">{data.label}</span>
-            <span className="sm:hidden">Tillbaka</span>
           </Link>
 
           <div className="min-w-0 flex-1 text-center">
-            <p className="truncate text-xs text-[var(--text-tertiary)]">
+            {/* Under sm ryms inte rubriken bredvid fyra knappar; den blev
+                "Provpa…". Passet står redan i startvyn och i Tillbaka-länkens
+                mål, så på telefon räcker räknaren. */}
+            <p className="hidden truncate text-xs text-[var(--text-tertiary)] sm:block">
               Provpass {data.pass}: {passKindLabel(data.kind)}
             </p>
-            <p className="text-xs tabular-nums text-[var(--cream)]">
-              {answeredCount} av {total} besvarade
+            <p className="whitespace-nowrap text-xs tabular-nums text-[var(--cream)]">
+              <span className="sm:hidden" aria-hidden="true">
+                {answeredCount}/{total}
+              </span>
+              <span className="sr-only sm:not-sr-only">
+                {answeredCount} av {total} besvarade
+              </span>
             </p>
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleFokus}
+              aria-pressed={fokus}
+              aria-label={fokus ? "Visa sajtens meny" : "Dölj sajtens meny"}
+              title={fokus ? "Visa menyn" : "Dölj menyn"}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] transition-colors hover:text-[var(--cream)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+            >
+              {fokus ? (
+                <Minimize2 className="h-4 w-4" aria-hidden />
+              ) : (
+                <Maximize2 className="h-4 w-4" aria-hidden />
+              )}
+            </button>
             {remaining !== null ? (
               <CircularTimer totalSeconds={data.minutes * 60} remainingSeconds={remaining} />
             ) : (
@@ -527,7 +610,7 @@ export function ProvRunner({
                 onClick={paused ? unpause : pause}
                 aria-label={paused ? "Fortsätt provpasset" : "Pausa provpasset"}
                 title={paused ? "Fortsätt" : "Pausa"}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12 text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
               >
                 {paused ? (
                   <Play className="h-4 w-4" aria-hidden />
@@ -541,7 +624,7 @@ export function ProvRunner({
                 type="button"
                 onClick={() => setConfirmOpen(true)}
                 disabled={paused}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[var(--amber)] px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2 disabled:opacity-40"
               >
                 <Send className="h-3.5 w-3.5" aria-hidden />
                 Lämna in
@@ -622,7 +705,7 @@ export function ProvRunner({
         <div className={hasPane ? "grid gap-5 lg:grid-cols-12" : ""}>
           {hasPane && (
             <aside className="lg:col-span-5">
-              <div className="lg:sticky lg:top-[132px] lg:max-h-[calc(100vh-150px)] lg:overflow-y-auto">
+              <div className="lg:sticky lg:top-[calc(var(--nav-h)+71px)] lg:max-h-[calc(100vh-var(--nav-h)-89px)] lg:overflow-y-auto">
                 {passage && (
                   <>
                     <div className="lg:hidden">
@@ -665,7 +748,10 @@ export function ProvRunner({
             </aside>
           )}
 
-          <main className={hasPane ? "min-w-0 lg:col-span-7" : "mx-auto min-w-0 max-w-2xl"}>
+          <main
+            ref={questionRef}
+            className={hasPane ? "min-w-0 lg:col-span-7" : "mx-auto min-w-0 max-w-2xl"}
+          >
             <ProvQuestionCard
               question={question}
               index={current}
@@ -678,31 +764,37 @@ export function ProvRunner({
               thread={threads[question.nr]}
             />
 
-            <div className="mt-4 flex items-center justify-between gap-3">
+            {/* Raden fick inte plats på en telefon: tre knappar med text
+                var ~420 px och "Nästa" låg an mot skärmkanten. Under sm är
+                Föregående bara en pil och Nästa tar resten av raden, så den
+                ryms ned till 320 px utan att något krymper under 44 px. */}
+            <div className="mt-4 flex items-center gap-2 sm:justify-between sm:gap-3">
               <button
                 type="button"
                 onClick={() => goTo(current - 1)}
                 disabled={current === 0}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 min-h-[44px] px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 disabled:opacity-30"
+                aria-label="Föregående uppgift"
+                className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/12 px-3 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 disabled:opacity-30 sm:px-4"
               >
                 <ChevronLeft className="h-4 w-4" aria-hidden />
-                Föregående
+                <span className="hidden sm:inline">Föregående</span>
               </button>
               <button
                 type="button"
                 onClick={() => setShowNavigator((v) => !v)}
                 aria-expanded={showNavigator}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/12 min-h-[44px] px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 lg:hidden"
+                className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-white/12 px-4 py-2 text-sm font-medium text-[var(--cream)] transition-colors hover:border-[var(--amber)]/50 lg:hidden"
               >
                 <Grid3x3 className="h-4 w-4" aria-hidden />
                 Översikt
               </button>
-              {/* Nästa och Lämna in delar EN plats med fast bredd. Knappen är
-                  primär (röd) hela vägen: den är det man gör 39 gånger av 40,
-                  och en outline-knapp bredvid "Föregående" gav ingen ledtråd
-                  om vilken av dem som förde provet framåt. Fast bredd så att
-                  raden inte hoppar när texten byts på sista uppgiften. */}
-              <div className="flex w-[9.5rem] justify-end">
+              {/* Nästa och Lämna in delar EN plats. Knappen är primär hela
+                  vägen: den är det man gör 39 gånger av 40, och en
+                  outline-knapp bredvid "Föregående" gav ingen ledtråd om
+                  vilken av dem som förde provet framåt. Från sm fast bredd så
+                  att raden inte hoppar när texten byts på sista uppgiften;
+                  under sm tar den resten av raden, som inte heller ändras. */}
+              <div className="flex min-w-0 flex-1 justify-end sm:w-[9.5rem] sm:flex-none">
                 {current < total - 1 ? (
                   <button
                     type="button"
@@ -750,6 +842,8 @@ export function ProvRunner({
     </div>
   );
 }
+
+const FOKUS_KEY = "tkn:prov-fokus";
 
 function formatClock(seconds: number): string {
   const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -803,12 +897,12 @@ function ProvIntro({
         minuter
       </p>
 
-      <dl className="mt-6 grid gap-3 sm:grid-cols-2">
+      {/* En vanlig lista, inte kort: med ram och bakgrund såg delproven ut
+          som knappar, men de går inte att trycka på. Det man trycker på är
+          lägesknapparna längre ner. */}
+      <dl className="mt-6 grid border-t border-white/10 sm:grid-cols-2 sm:gap-x-6">
         {data.sections.map((s) => (
-          <div
-            key={s.code}
-            className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3"
-          >
+          <div key={s.code} className="border-b border-white/10 py-3">
             <dt className="text-sm font-semibold text-[var(--cream)]">
               <span className="mr-2 text-[var(--amber)]">{s.code}</span>
               {delprovFull(s.code)}

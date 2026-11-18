@@ -941,7 +941,7 @@ function MatchPage() {
             to="/"
             className="-ml-2 inline-flex min-h-[44px] items-center gap-1 px-2 text-xs text-muted-foreground hover:text-foreground"
           >
-            <LogOut className="h-3.5 w-3.5" /> Avbryt
+            <LogOut className="h-3.5 w-3.5" aria-hidden /> Lämna matchen
           </Link>
           <Button
             onClick={() => setConfirmOpen(true)}
@@ -970,7 +970,7 @@ function MatchPage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Avbryt</AlertDialogCancel>
+            <AlertDialogCancel>Fortsätt spela</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
                 setConfirmOpen(false);
