@@ -80,7 +80,18 @@ const CODES = [
   { code: "GUNILLA600", coupon: "tkn-gratis-6man", max_redemptions: 7 },
   // HARORG100 hette HÄRÖRG100 i beställningen; Stripe tar inte å, ä, ö.
   ...["LUND100", "KALMAR100", "HARORG100"].map((code) => ({ code, coupon: "tkn-gratis-1man" })),
-  ...["DIESEL100", "FISK100", "FLEN100", "LJUNG100", "NYNAS100"].map((code) => ({
+  // SARNA100 hette SÄRNA100 i beställningen.
+  ...[
+    "DIESEL100",
+    "FISK100",
+    "FLEN100",
+    "LJUNG100",
+    "NYNAS100",
+    "IDRE100",
+    "SARNA100",
+    "KARLSKOGA100",
+    "PERSTORP100",
+  ].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",
     expires_at: BIBLIOTEK_SLUT,

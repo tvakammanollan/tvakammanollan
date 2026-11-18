@@ -1750,7 +1750,8 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
   (RUDBECK100, KTDRL100, DONNER100, LUND100, KALMAR100, HARORG100, GUNILLA100), `tkn-gratis-6man` (RUDBECK600,
   DONNER600, GUNILLA600, max 7 inlösen per kod), `tkn-ktdrl30-6man` (KTDRL30, 30 % bara
   på sexmånadersköpet) och `tkn-bibliotek-1man` (DIESEL100, FISK100, FLEN100,
-  LJUNG100, NYNAS100, slutar gälla 2027-01-31 23:59 svensk tid).
+  LJUNG100, NYNAS100, IDRE100, SARNA100,
+  KARLSKOGA100, PERSTORP100, slutar gälla 2027-01-31 23:59 svensk tid).
   **Kupongerna för en gratis månad gäller bara månadsprodukten**: på
   sexmånadersköpet hade 100 % gett sex gratis månader.
 - **Månadsprodukten heter bara "Premium" sedan 2026-11-17**, så att kassans
