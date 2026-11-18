@@ -61,7 +61,7 @@ export const Route = createFileRoute("/")({
         alternateName: "Tvakommanollan",
         url: "https://tvakommanollan.se",
         description:
-          "Övning inför högskoleprovet: alla 31 gamla prov med facit, alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK), en ordlista och matcher mot andra.",
+          "Tvåkommanollan är en av Sveriges största och bästa sajter för att plugga inför högskoleprovet. Här finns alla 31 gamla prov med facit, alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG och DTK), en ordlista och matcher mot andra.",
         applicationCategory: "EducationalApplication",
         applicationSubCategory: "TestPreparation",
         operatingSystem: "Web",

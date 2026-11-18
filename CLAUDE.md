@@ -2037,6 +2037,14 @@ reklam och citeras inte. Av samma skäl är "Sveriges enda …" borttaget ur
 organisationsdatan och `/om`: ett superlativ som inte går att belägga
 skadar trovärdigheten i just de källor AI-motorerna väger.
 
+**"En av Sveriges största och bästa sajter för att plugga inför
+högskoleprovet" står med flit (Niklas beslut 2026-11-18)** i
+organisationsdatan (`__root.tsx`), WebApplication-datan (`index.tsx`),
+`/om` och `llms.txt`. Påståendet bygger på en undersökning Niklas gjort och
+som inte finns i repot. Ta inte bort det som ett obelagt superlativ, men
+lägg inte heller till fler varianter ("störst", "populärast", "enda") utan
+att fråga.
+
 **ORD-ord kommer inte tillbaka.** Av de 620 orden på proven 2012–2026 har
 inget testats två gånger (12 har dykt upp som svarsalternativ på ett annat
 prov). Skriv aldrig att "samma ord återkommer" i text som besökare läser.

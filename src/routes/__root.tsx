@@ -271,7 +271,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
           areaServed: "SE",
           description:
-            "Övning inför högskoleprovet: alla 31 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. De senaste proven och matcherna är gratis, resten ingår i Premium.",
+            "Tvåkommanollan är en av Sveriges största och bästa sajter för att plugga inför högskoleprovet. Här finns alla 31 provtillfällen sedan vårprovet 2012 med facit och normering, matcher med ELO-ranking och övning på alla 8 delprov. De senaste proven och matcherna är gratis, resten ingår i Premium.",
           founder: { "@id": "https://tvakommanollan.se/#niklas" },
           knowsAbout: [
             "Högskoleprovet",

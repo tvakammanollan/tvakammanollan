@@ -11,7 +11,7 @@ export const Route = createFileRoute("/om")({
       path: "/om",
       title: "Om oss: varför sajten finns",
       description:
-        "Tvåkommanollan har alla högskoleprov sedan 2012 med facit, matcher och en ordlista. Här står vem som driver sajten och vad som ingår i Premium.",
+        "Tvåkommanollan är en av Sveriges största och bästa sajter för att plugga inför högskoleprovet. Här står vem som driver den och varför.",
       ogTitle: "Om Tvåkommanollan",
       ogDescription: "Vem som driver sajten, vad som är gratis och vad som kostar.",
     }),
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/om")({
         name: "Om Tvåkommanollan",
         url: "https://tvakommanollan.se/om",
         description:
-          "Om Tvåkommanollan: övning inför högskoleprovet med alla gamla prov sedan 2012, matcher med ELO-ranking och en ordlista. Grundad av Niklas, som fick 1,95 på högskoleprovet.",
+          "Om Tvåkommanollan, en av Sveriges största och bästa sajter för att plugga inför högskoleprovet: alla gamla prov sedan 2012, matcher med ELO-ranking och en ordlista. Grundad av Niklas, som fick 1,95 på högskoleprovet.",
         publisher: { "@id": "https://tvakommanollan.se/#org" },
         about: { "@id": "https://tvakommanollan.se/#niklas" },
       }),
