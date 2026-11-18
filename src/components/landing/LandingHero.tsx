@@ -112,7 +112,7 @@ function LevandeFraga({ fragor }: { fragor: DemoQuestion[] }) {
                 params={{ ord: fraga.slug }}
                 className="mt-2 inline-flex min-h-[44px] items-center text-[14px] font-semibold text-primary hover:underline"
               >
-                Hela uppslaget i ordlistan
+                Se ordet i ordlistan
               </Link>
             ) : null}
           </div>
