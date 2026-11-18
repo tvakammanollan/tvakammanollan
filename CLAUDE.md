@@ -2240,6 +2240,9 @@ sajten i dag inte har.
 - **Knappraden under uppgiften** är under `sm` en pil, Översikt och en
   Nästa-knapp som tar resten av raden. Med tre textknappar var den ~420 px
   och Nästa låg an mot skärmkanten.
+- **ORD-uppgifter visar ordlistans betydelse när facit visas**
+  (`ProvOrdExplain`, via `getOrdlistaEntry`). Saknas ordet i ordlistan visas
+  ingenting. Länken öppnas i ny flik så att passet står kvar.
 
 ### Mobiltest av hela flödet (2026-11-17)
 

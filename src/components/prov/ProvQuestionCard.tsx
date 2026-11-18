@@ -5,6 +5,7 @@ import { delprovShort, type ProvQuestion } from "@/types/gamla-prov";
 import { CropView, type Crop } from "@/components/question/CropView";
 import { ProvFigure } from "./ProvFigure";
 import { ProvDiscussLink } from "./ProvDiscussLink";
+import { ProvOrdExplain } from "./ProvOrdExplain";
 import type { ProvThreadLink } from "@/lib/forum-prov.functions";
 import { MathText } from "@/components/MathTextLazy";
 
@@ -219,6 +220,8 @@ export function ProvQuestionCard({
           UHR strök den här uppgiften efter provdagen. Den räknades inte i provresultatet.
         </p>
       )}
+
+      {revealed && isOrd && question.text && <ProvOrdExplain word={question.text} />}
 
       {revealed && <ProvDiscussLink thread={thread} />}
     </article>
