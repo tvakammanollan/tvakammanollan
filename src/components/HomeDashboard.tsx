@@ -7,12 +7,12 @@ import { OnboardingModal } from "@/components/ui/OnboardingModal";
 import { ResumeMatchBanner } from "@/components/ui/ResumeMatchBanner";
 import { Dekorformer, HEM_FORMER } from "@/components/layout/Dekorformer";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
+import { ProvHomeCard } from "@/components/prov/ProvHomeCard";
 import type { WordOfTheDay as Wotd } from "@/lib/word-practice.functions";
 import { SafeBoundary } from "@/components/SafeBoundary";
 import { getRankForElo, getNextRank, getEloProgressInTier } from "@/types";
 import { FACIT, facitKnappSynlig } from "@/lib/preliminart-facit";
 import { getNextHpDate } from "@/lib/hp-dates";
-import {} from "lucide-react";
 import { trackEvent } from "@/lib/events";
 import { enhet } from "@/lib/sv-format";
 
@@ -166,25 +166,12 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
               </button>
             </section>
 
-            {/* ---------- Gamla prov ---------- */}
-            <Link
-              to="/gamla-prov"
-              className="flex flex-col rounded-[40px] bg-sky p-7 transition hover:brightness-[1.03] sm:p-8"
-            >
-              <h2
-                className="display mt-5 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[32px]"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Skriv ett provpass
-              </h2>
-              <p className="mt-2 text-[15px] leading-relaxed text-bark">
-                40 uppgifter på tid, med facit på varje uppgift.
-              </p>
-              <div className="flex-1" />
-              <span className="mt-6 inline-flex min-h-[48px] items-center justify-center gap-2 self-start rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-on-brand">
-                Välj provtillfälle
-              </span>
-            </Link>
+            {/* ---------- Gamla prov ----------
+                Fortsätt ett påbörjat pass, annars senaste resultatet och
+                nästa pass att skriva. Se `ProvHomeCard`. */}
+            <SafeBoundary label="prov-home-card">
+              <ProvHomeCard />
+            </SafeBoundary>
 
             {/* ---------- Ordlistan ---------- */}
             <Link
