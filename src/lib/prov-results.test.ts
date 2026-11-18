@@ -67,6 +67,34 @@ describe("summariseExam", () => {
     expect(hel.normering).toBeNull();
   });
 
+  // Ett pass ger en siffra direkt, men som uppskattning och aldrig som
+  // delens poäng. Den riktiga står kvar som null tills båda passen är skrivna.
+  it("ger en uppskattad delpoäng efter ett pass, men ingen riktig", () => {
+    const halv = summariseExam(EXAM, { "2020ht:1": result(36, "verbal") });
+    expect(halv.verbal.normering).toBeNull();
+    // 36 av 40 räknas upp till 72 av 80, vilket är 1,8 i höstprovets tabell.
+    expect(halv.verbal.estimate).toBe(1.8);
+    expect(halv.kvant.estimate).toBeNull();
+    // En del räcker inte till någon total, inte ens uppskattad.
+    expect(halv.estimate).toBeNull();
+
+    const hel = summariseExam(EXAM, {
+      "2020ht:1": result(36, "verbal"),
+      "2020ht:5": result(36, "verbal"),
+    });
+    expect(hel.verbal.estimate).toBeNull();
+    expect(hel.verbal.normering).toBe(1.8);
+  });
+
+  it("ger en uppskattad total när båda delarna har ett pass", () => {
+    const r = summariseExam(EXAM, {
+      "2020ht:1": result(36, "verbal"),
+      "2020ht:2": result(36, "kvant"),
+    });
+    expect(r.normering).toBeNull();
+    expect(r.estimate).not.toBeNull();
+  });
+
   // Exemplet som funktionen finns för: verbalt 1,90 och kvantitativt 2,00 ska
   // ge 1,95 — medelvärdet — inte något tredje tal ur normeringstabellen.
   it("hela provet ger delpoäng och en totalpoäng som är snittet av dem", () => {

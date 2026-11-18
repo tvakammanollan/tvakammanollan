@@ -150,7 +150,11 @@ export function ProvResult({
       </section>
 
       {examResult && (
-        <ProvScorePanel result={examResult} title={`Hela ${data.label.toLowerCase()}`} />
+        <ProvScorePanel
+          result={examResult}
+          title={`Hela ${data.label.toLowerCase()}`}
+          showEstimates={false}
+        />
       )}
 
       {/* Genomgången. Låg tidigare bara som en lista över FELEN, vilket gjorde

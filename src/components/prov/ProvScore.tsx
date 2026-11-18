@@ -51,7 +51,11 @@ function PartChip({ part }: { part: PartResult }) {
   ) : (
     <span className="inline-flex items-baseline gap-1.5 text-[11px] text-[var(--text-tertiary)]">
       {label}
-      <span className="tabular-nums">{partProgress(part)}</span>
+      <span className="tabular-nums">
+        {part.estimate !== null
+          ? `cirka ${formatDecimal(part.estimate, 2)}, ${partProgress(part)}`
+          : partProgress(part)}
+      </span>
     </span>
   );
 }
@@ -64,15 +68,32 @@ function PartChip({ part }: { part: PartResult }) {
  * totalpoäng ännu; utan den raden ser sidan bara ut att sakna en siffra.
  */
 export function ProvScorePanel({
-  result,
+  result: given,
   title = "Ditt resultat",
+  showEstimates = true,
 }: {
   result: ExamResult;
   title?: string;
+  /**
+   * Av på resultatskärmen efter ett pass: där står passets uppskattning redan
+   * i en egen ruta ovanför, och samma siffra två gånger på en skärm läses som
+   * två olika siffror.
+   */
+  showEstimates?: boolean;
 }) {
-  if (result.done === 0) return null;
+  if (given.done === 0) return null;
+  const result: ExamResult = showEstimates
+    ? given
+    : {
+        ...given,
+        estimate: null,
+        verbal: { ...given.verbal, estimate: null },
+        kvant: { ...given.kvant, estimate: null },
+      };
 
   const complete = result.normering !== null;
+  const estimated =
+    !complete && (result.verbal.estimate !== null || result.kvant.estimate !== null);
   const rawScore = result.verbal.score + result.kvant.score;
   const rawTotal = result.verbal.total + result.kvant.total;
 
@@ -87,11 +108,22 @@ export function ProvScorePanel({
         <PartCell part={result.kvant} />
         <Cell
           label="Totalt"
-          value={complete ? formatDecimal(result.normering, 2) : null}
+          value={
+            complete
+              ? formatDecimal(result.normering, 2)
+              : result.estimate !== null
+                ? formatDecimal(result.estimate, 2)
+                : null
+          }
           sub={
-            complete ? `${rawScore} av ${rawTotal} rätt` : `${result.done} av ${result.passes} pass`
+            complete
+              ? `${rawScore} av ${rawTotal} rätt`
+              : result.estimate !== null
+                ? `uppskattad, ${result.done} av ${result.passes} pass`
+                : `${result.done} av ${result.passes} pass`
           }
           accent
+          estimated={!complete && result.estimate !== null}
         />
       </div>
 
@@ -102,7 +134,9 @@ export function ProvScorePanel({
             används UHR:s egen tabell när den finns, och texten säger vilket
             det är. */}
         {!complete
-          ? "Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."
+          ? estimated
+            ? "Uppskattad poäng räknas ur de pass du skrivit hittills, som om resten av delen gick likadant, och kan flytta sig åt båda hållen. Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."
+            : "Poängen för en del visas när båda dess provpass är skrivna, och totalpoängen när alla fyra är det."
           : result.official
             ? "Poängen är hämtad ur UHR:s egen normeringstabell för det här provtillfället. Totalpoängen är medelvärdet av delarnas. Så räknas provet."
             : "UHR:s normeringstabell för det här provtillfället finns inte att hämta, så poängen är uppskattad ur en generell tabell. Gränserna sätts efter provdagen och skiljer sig mellan provtillfällen."}
@@ -115,12 +149,26 @@ export function ProvScorePanel({
 function PartCell({ part }: { part: PartResult }) {
   if (part.passes === 0) return null;
   const complete = part.normering !== null;
+  const estimated = !complete && part.estimate !== null;
 
   return (
     <Cell
       label={PART_LABEL[part.kind]}
-      value={complete ? formatDecimal(part.normering, 2) : null}
-      sub={complete ? `${part.score} av ${part.total} rätt` : partProgress(part)}
+      value={
+        complete
+          ? formatDecimal(part.normering, 2)
+          : estimated
+            ? formatDecimal(part.estimate, 2)
+            : null
+      }
+      sub={
+        complete
+          ? `${part.score} av ${part.total} rätt`
+          : estimated
+            ? `uppskattad, ${partProgress(part)}`
+            : partProgress(part)
+      }
+      estimated={estimated}
     />
   );
 }
@@ -130,11 +178,14 @@ function Cell({
   value,
   sub,
   accent,
+  estimated,
 }: {
   label: string;
   value: string | null;
   sub: string;
   accent?: boolean;
+  /** Uppskattad siffra: dämpad, så att den inte läses som provets poäng. */
+  estimated?: boolean;
 }) {
   return (
     <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 text-center">
@@ -145,9 +196,11 @@ function Cell({
         className={`mt-0.5 text-2xl font-bold tabular-nums ${
           value === null
             ? "text-[var(--text-tertiary)]"
-            : accent
-              ? "text-[var(--amber)]"
-              : "text-[var(--cream)]"
+            : estimated
+              ? "text-[var(--text-secondary)]"
+              : accent
+                ? "text-[var(--amber)]"
+                : "text-[var(--cream)]"
         }`}
         style={{ fontFamily: "var(--font-display)" }}
       >

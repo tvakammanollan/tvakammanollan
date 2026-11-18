@@ -147,6 +147,15 @@ export interface PartResult {
   /** Normerad poäng — sätts först när hela delen är skriven. */
   normering: number | null;
   /**
+   * Uppskattad poäng ur de pass som är skrivna, när delen INTE är hel än.
+   * Finns för att den som skrivit ett pass ska få en siffra direkt, i stället
+   * för att vänta ett pass till (55 minuter) på någon återkoppling alls.
+   * Gränssnittet måste märka den som uppskattad: ett pass är halva
+   * underlaget, och det andra passet kan flytta poängen åt båda hållen.
+   * `null` när delen är hel (då gäller `normering`) eller orörd.
+   */
+  estimate: number | null;
+  /**
    * Sant när poängen kommer ur UHR:s EGEN tabell för just det här
    * provtillfället, falskt när den är en uppskattning ur den generella
    * approximationen. Gränssnittet måste skriva ut skillnaden: en officiell
@@ -164,6 +173,12 @@ export interface ExamResult {
   passes: number;
   /** Sammanlagd poäng — först när båda delarna är hela. */
   normering: number | null;
+  /**
+   * Uppskattad totalpoäng när båda delarna har minst ett skrivet pass men
+   * provet inte är helt. Ur en enda del räknas ingen total: verbal poäng är
+   * inte en provpoäng.
+   */
+  estimate: number | null;
   /** Sant bara när BÅDA delarna räknats ur officiella tabeller. */
   official: boolean;
   /** Sant om något av passen skrevs i övningsläge, alltså utan klocka. */
@@ -198,6 +213,12 @@ export function summariseExam(exam: ExamSummary, results: ProvResults): ExamResu
     // annat år — så en gemensam tabell för alla prov är i praktiken att normera
     // mot fel prov.
     const normering = complete ? normeringForPart(exam.term, kind, score, total) : null;
+    // Samma uträkning på halva underlaget: `officialNormering` räknar upp de
+    // skrivna passen till tabellens skala.
+    const estimate =
+      !complete && written.length > 0 && total > 0
+        ? normeringForPart(exam.term, kind, score, total).value
+        : null;
 
     return {
       kind,
@@ -206,21 +227,26 @@ export function summariseExam(exam: ExamSummary, results: ProvResults): ExamResu
       score,
       total,
       normering: normering?.value ?? null,
+      estimate,
       official: normering?.official ?? false,
     };
   };
 
   const verbal = part("verbal");
   const kvant = part("kvant");
+  const verbalValue = verbal.normering ?? verbal.estimate;
+  const kvantValue = kvant.normering ?? kvant.estimate;
+  const complete = verbal.normering !== null && kvant.normering !== null;
 
   return {
     verbal,
     kvant,
     done: done.length,
     passes: exam.passes.length,
-    normering:
-      verbal.normering !== null && kvant.normering !== null
-        ? normeringFromParts(verbal.normering, kvant.normering)
+    normering: complete ? normeringFromParts(verbal.normering!, kvant.normering!) : null,
+    estimate:
+      !complete && verbalValue !== null && kvantValue !== null
+        ? normeringFromParts(verbalValue, kvantValue)
         : null,
     // Hela provet är officiellt bara om båda delarna är det. En officiell
     // verbal poäng snittad med en uppskattad kvantitativ är en uppskattning.
