@@ -68,7 +68,7 @@ export function ProvOrdExplain({ word }: { word: string }) {
         rel="noopener"
         className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-[var(--amber)] hover:underline"
       >
-        Hela uppslaget i ordlistan
+        Se ordet i ordlistan
       </Link>
     </div>
   );
