@@ -106,6 +106,7 @@ const CODES = [
     "MARIA100",
     // AKERS100 hette ÅKERS100 i beställningen.
     "AKERS100",
+    "HAGFORS100",
   ].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",
