@@ -97,7 +97,7 @@ function VillkorPage() {
             svar är felfria. Hittar du fel, rapportera via bug-knappen så fixar vi det.
           </p>
           <p>
-            Den kostnadsfria delen av tjänsten tillhandahålls "i befintligt skick" utan garantier,
+            Den kostnadsfria delen av tjänsten tillhandahålls ”i befintligt skick” utan garantier,
             och vi ansvarar inte för indirekta skador som följer av användningen (t.ex. uteblivet
             provresultat, missade ansökningar). För det du har betalat för gäller i stället det som
             står under Köp av Premium, och i övrigt svensk konsumenträtt.

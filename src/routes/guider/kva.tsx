@@ -89,16 +89,16 @@ function KvaGuidePage() {
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
-          "Kan ej avgöras": när och hur?
+          ”Kan ej avgöras”: när och hur?
         </h2>
         <p>
-          Det fjärde alternativet är det som oftast väljs fel. Välj "kan ej avgöras" när du kan
+          Det fjärde alternativet är det som oftast väljs fel. Välj ”kan ej avgöras” när du kan
           hitta två tillåtna exempel som ger olika svar, till exempel ett där kvantiteterna är lika
-          och ett där I är större. Ger alla dina exempel samma svar är det inte "kan ej avgöras".
+          och ett där I är större. Ger alla dina exempel samma svar är det inte ”kan ej avgöras”.
         </p>
         <p>
-          Pröva x = 1, x = −1 och x = 0 för varje variabel. Ger de olika svar är svaret "kan ej
-          avgöras".
+          Pröva x = 1, x = −1 och x = 0 för varje variabel. Ger de olika svar är svaret ”kan ej
+          avgöras”.
         </p>
 
         <h2 className="mt-10 text-xl font-semibold" style={{ color: "var(--cream)" }}>
@@ -118,7 +118,7 @@ function KvaGuidePage() {
           <li>
             <strong style={{ color: "var(--cream)" }}>Multiplikation med okänt tecken:</strong>{" "}
             multiplicerar eller dividerar du med en variabel som kan vara negativ vet du inte om
-            olikheten vänds. Det tyder ofta på "kan ej avgöras".
+            olikheten vänds. Det tyder ofta på ”kan ej avgöras”.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Symmetri:</strong> ser I och II likadana ut

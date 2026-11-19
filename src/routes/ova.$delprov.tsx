@@ -47,7 +47,7 @@ const DELPROV: Record<string, Delprov> = {
       "I ORD väljer du det alternativ som betyder samma sak som ett givet ord. Här finns exempel ur gamla högskoleprov med facit, och ordträning med över 10 000 ord.",
     practiceTo: "/ord",
     practiceLabel: "Öva 10 000+ ord nu",
-    tips: 'Känner du inte igen ordet, leta efter ett bekant förled eller efterled. Många HP-ord är sammansatta eller släkt med vardagsord ("hemställa" hör ihop med "ställa hem/fram ett önskemål"). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart. Det blir inget avdrag för fel svar.',
+    tips: "Känner du inte igen ordet, leta efter ett bekant förled eller efterled. Många HP-ord är sammansatta eller släkt med vardagsord (”hemställa” hör ihop med ”ställa hem/fram ett önskemål”). Uteslut sedan alternativ som betyder nästan rätt sak: HP:s vanligaste fälla är ett alternativ som stämmer i sammanhanget men inte är själva ordets betydelse. Gissa alltid om du inte hinner klart. Det blir inget avdrag för fel svar.",
   },
   mek: {
     code: "MEK",
@@ -94,7 +94,7 @@ const DELPROV: Record<string, Delprov> = {
       "I KVA avgör du vilken av två kvantiteter som är störst, eller om det inte går att avgöra. Ofta behöver du inte räkna ut hela uttrycket. Här finns KVA-uppgifter ur gamla högskoleprov med facit.",
     practiceTo: "/train",
     practiceLabel: "Träna KVA utan tidspress",
-    tips: 'Räkna aldrig ut båda storheterna fullständigt om du kan slippa. Förkorta det som är lika i båda leden först, så jämför du bara det som skiljer. Sätt in enkla testvärden (0, 1, ett negativt tal) när uppgiften innehåller en variabel: svaret "går inte att avgöra" är rätt så fort två testvärden ger olika resultat. Var extra vaksam på negativa tal och bråk, det är där jämförelser oftast vänds fel.',
+    tips: "Räkna aldrig ut båda storheterna fullständigt om du kan slippa. Förkorta det som är lika i båda leden först, så jämför du bara det som skiljer. Sätt in enkla testvärden (0, 1, ett negativt tal) när uppgiften innehåller en variabel: svaret ”går inte att avgöra” är rätt så fort två testvärden ger olika resultat. Var extra vaksam på negativa tal och bråk, det är där jämförelser oftast vänds fel.",
   },
   nog: {
     code: "NOG",

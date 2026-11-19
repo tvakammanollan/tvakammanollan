@@ -132,8 +132,7 @@ function ForumSearchPage() {
       ) : (
         <>
           <p className="mt-6 text-xs tabular-nums text-[var(--text-tertiary)]">
-            {formatInt(data.total)} {data.total === 1 ? "träff" : "träffar"} på &quot;{data.query}
-            &quot;
+            {formatInt(data.total)} {data.total === 1 ? "träff" : "träffar"} på ”{data.query}”
             {pages > 1 ? `, sida ${data.page} av ${pages}` : ""}
           </p>
 

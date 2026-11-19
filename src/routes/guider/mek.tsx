@@ -133,11 +133,11 @@ function MekGuidePage() {
           <li>
             <strong style={{ color: "var(--cream)" }}>Fel sambandsord:</strong> ordet passar ämnet
             men ger fel samband. Står det en kontrast i texten kan luckan inte fyllas med
-            "dessutom".
+            ”dessutom”.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Liknande ord, annan användning:</strong> ord
-            som "försiggå" och "förekomma" liknar varandra men används i olika sammanhang.
+            som ”försiggå” och ”förekomma” liknar varandra men används i olika sammanhang.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Fel stilnivå:</strong> en formell text kräver

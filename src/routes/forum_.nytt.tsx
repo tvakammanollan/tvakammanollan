@@ -113,8 +113,8 @@ function NewThreadPage() {
         Ny tråd
       </h1>
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
-        Skriv en rubrik som säger vad frågan gäller. Det är den som andra googlar. "KVA med rötter,
-        uppgift 12 VT2024" hittas; "hjälp!!!" gör det inte.
+        Skriv en rubrik som säger vad frågan gäller. Det är den som andra googlar. ”KVA med rötter,
+        uppgift 12 VT2024” hittas; ”hjälp!!!” gör det inte.
       </p>
 
       <div className="mt-8 space-y-5">

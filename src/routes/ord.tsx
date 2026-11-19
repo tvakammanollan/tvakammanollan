@@ -975,7 +975,7 @@ function OrdPracticePage() {
 
             {answered.some((a) => !a.isCorrect) && (
               <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-2.5 text-center text-xs text-red-300">
-                {answered.filter((a) => !a.isCorrect).length} ord sparade till "Felaktiga ord". Öva
+                {answered.filter((a) => !a.isCorrect).length} ord sparade till ”Felaktiga ord”. Öva
                 dem igen nästa gång
               </p>
             )}

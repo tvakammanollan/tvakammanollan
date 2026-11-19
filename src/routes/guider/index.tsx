@@ -239,8 +239,8 @@ function GuiderPage() {
                 KVA: Kvantitativa jämförelser
               </div>
               <div className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                Jämför kvantitet I och II. Förenkla i stället för att räkna, och välj "kan ej
-                avgöras" vid rätt tillfälle.
+                Jämför kvantitet I och II. Förenkla i stället för att räkna, och välj ”kan ej
+                avgöras” vid rätt tillfälle.
               </div>
             </Link>
 

@@ -143,9 +143,9 @@ function OmPage() {
             >
               info@tvakommanollan.se
             </a>
-            . Har du hittat en bugg eller har ett önskemål? Använd gärna knappen &quot;Rapportera
-            bugg&quot; längst ner på sidan. Då följer det med vilken sida du var på, vilket gör att
-            vi kan börja leta direkt.
+            . Har du hittat en bugg eller har ett önskemål? Använd gärna knappen ”Rapportera bugg”
+            längst ner på sidan. Då följer det med vilken sida du var på, vilket gör att vi kan
+            börja leta direkt.
           </p>
 
           {/* Versionen läses ur package.json (se app-version.ts). Stod

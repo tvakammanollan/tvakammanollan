@@ -53,7 +53,7 @@ Senast uppdaterad: 2026-11-19
 - [LÄS-guide](https://tvakommanollan.se/guider/las): Frågetyper, lässtrategi och 5 min/text-disposition.
 - [ELF-guide](https://tvakommanollan.se/guider/elf): Akademisk engelska, AWL, except/NOT-fällor.
 - [XYZ-guide](https://tvakommanollan.se/guider/xyz): Algebra, geometri, sannolikhet, elimineringstaktik.
-- [KVA-guide](https://tvakommanollan.se/guider/kva): "Kan ej avgöras"-regeln och algebraiska genvägar.
+- [KVA-guide](https://tvakommanollan.se/guider/kva): ”Kan ej avgöras”-regeln och algebraiska genvägar.
 - [NOG-guide](https://tvakommanollan.se/guider/nog): De 5 svarsalternativen och testordningen.
 - [DTK-guide](https://tvakommanollan.se/guider/dtk): Axlarna först, vanliga skala-fällor.
 
