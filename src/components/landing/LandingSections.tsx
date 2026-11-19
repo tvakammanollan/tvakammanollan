@@ -327,7 +327,7 @@ const YTOR = [
   {
     to: "/gamla-prov",
     rubrik: "Skriv ett provpass på tid",
-    text: "124 provpass à 40 uppgifter, från vårprovet 2012 till höstprovet 2026. Facit på varje uppgift, normering på varje provdel.",
+    text: "Välj ett provpass och skriv det på 55 minuter, som på provdagen. Facit på varje uppgift och normering på varje provdel.",
     cta: "Öppna arkivet",
     yta: "bg-sky",
     textFarg: "text-bark",
@@ -432,7 +432,7 @@ export function Produktytorna() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
         <div>
           <h2 className="mb-10 max-w-[18ch] text-[30px] leading-tight tracking-[-0.035em] sm:text-[42px]">
-            4 sätt att plugga
+            Så kan du öva
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -490,7 +490,7 @@ const BETALKORT = [
   {
     plan: "1m",
     marke: "Mest populär",
-    etikett: "Premium: allt på sajten, per månad",
+    etikett: "Premium per månad",
     pris: "149 kr",
     prisEnhet: "per månad, inklusive moms",
     rader: [...PREMIUM_RADER, "Förnyas varje månad, säg upp när du vill"],
@@ -504,7 +504,7 @@ const BETALKORT = [
   {
     plan: "6m",
     marke: null,
-    etikett: "Premium: allt på sajten, 6 månader",
+    etikett: "Premium i 6 månader",
     pris: "349 kr",
     prisEnhet: "för 6 månader, inklusive moms. Engångsköp",
     rader: [...PREMIUM_RADER, "Engångsköp som inte förnyas"],
@@ -555,10 +555,10 @@ export function Priset({ kompakt = false }: { kompakt?: boolean }) {
               <p className="mt-4 text-[40px] leading-none tracking-[-0.03em]">0 kr</p>
               <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/70">
                 {[
-                  "Facit till alla gamla prov",
+                  "De senaste proven att skriva på tid",
                   "Matcherna, verbalt och kvantitativt",
                   "20 ord och 10 MEK-uppgifter i träningsläget",
-                  "Normering, poängräknare, facit och forum",
+                  "Facit till alla prov, normering, poängräknare och forum",
                 ].map((rad) => (
                   <li key={rad} className="flex gap-2.5">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
@@ -702,8 +702,8 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
             <div>
               <p className="font-mono text-xs text-white/55">Var du hamnar</p>
               <p className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/70">
-                Alla börjar på 1000. Siffran rör sig mycket de första matcherna och är stabil efter
-                ungefär tolv.
+                Alla börjar på 1&nbsp;000. Siffran rör sig mycket de första matcherna och är stabil
+                efter ungefär tolv.
               </p>
               <Link
                 to="/leaderboard"

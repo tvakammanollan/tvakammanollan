@@ -680,7 +680,7 @@ export function TrainExperience({
               </p>
               <div className="space-y-4">
                 <TrackGroup
-                  label="Svenska"
+                  label="Verbal"
                   icon={BookOpen}
                   subs={VERBAL_SUBS}
                   mixLabel="Hela verbala delen"

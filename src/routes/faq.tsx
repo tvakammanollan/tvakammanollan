@@ -25,7 +25,7 @@ const faq = (): FaqItem[] => [
   },
   {
     q: "Kommer uppgifterna från gamla högskoleprov?",
-    a: "Ja. Under Gamla prov finns alla 31 prov från 2012 till 2026, och matcherna och träningen använder uppgifter därifrån. Ordlistan bygger till största delen på publicerade högskoleprov. MEK-uppgifter som vi skrivit själva är märkta som egna.",
+    a: "Ja. Under Gamla prov finns alla 31 prov från 2012 till 2026, och matcherna och träningen använder uppgifter därifrån. Ordlistan har ord ur tidigare prov och övningsord på samma nivå. MEK-uppgifter som vi skrivit själva är märkta som egna.",
   },
   {
     q: "Kan jag spela utan konto?",
@@ -37,7 +37,7 @@ const faq = (): FaqItem[] => [
   },
   {
     q: "Hur många ord finns i ordlistan?",
-    a: "Över 10 000. De flesta kommer ur tidigare högskoleprov, resten är ord på samma nivå.",
+    a: "Över 10 000. Ungefär 950 av dem har stått på ORD-delprovet på tidigare prov, resten är övningsord på samma nivå.",
   },
   {
     q: "Vilka delprov kan jag träna?",

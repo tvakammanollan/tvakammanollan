@@ -56,9 +56,7 @@ function OmPage() {
           <p>
             Tvåkommanollan är det jag själv hade velat ha: gamla prov som går att skriva på tid,
             matcher mot någon på ungefär samma nivå och en siffra som visar hur det går över
-            veckorna. De senaste proven, matcherna, normeringen och forumet är gratis. Premium
-            ger alla gamla prov, hela ordlistan och alla MEK-uppgifter och kostar 149 kr per månad
-            eller 349 kr för 6 månader.
+            veckorna.
           </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
@@ -75,10 +73,10 @@ function OmPage() {
             >
               studera.nu
             </a>
-            . Här går de att skriva på tid med rättning och poäng. De senaste proven är gratis
-            att skriva, liksom matcherna, normeringen, forumet, de första 20 orden och de första 10
+            . Här går de att skriva på tid med rättning och poäng. De senaste proven är gratis att
+            skriva, liksom matcherna, normeringen, forumet, de första 20 orden och de första 10
             MEK-uppgifterna. Premium ger alla 31 prov, hela ordlistan och alla MEK-uppgifter och
-            kostar 149 kr per månad eller 349 kr för 6 månader. Sajten drivs av mig.{" "}
+            kostar 149 kr per månad eller 349 kr för 6 månader.{" "}
             <Link to="/pris" className="underline" style={{ color: "var(--amber)" }}>
               Mer om priset
             </Link>
@@ -91,8 +89,8 @@ function OmPage() {
           <ul className="list-disc space-y-2 pl-6">
             <li>
               <strong style={{ color: "var(--cream)" }}>Uppgifter ur gamla prov.</strong>{" "}
-              Provarkivet är UHR:s egna prov, och ordlistan bygger till största delen på publicerade
-              högskoleprov. Uppgifter vi skrivit själva är märkta.
+              Provarkivet är UHR:s egna prov, och ordlistan har ord ur tidigare prov plus övningsord
+              på samma nivå. Uppgifter vi skrivit själva är märkta.
             </li>
             <li>
               <strong style={{ color: "var(--cream)" }}>Matcher.</strong> Det är lättare att
@@ -107,17 +105,6 @@ function OmPage() {
               gratis har inga annonser och kräver inget kort. Det som kostar står på prissidan.
             </li>
           </ul>
-
-          <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
-            Önskemål och buggar
-          </h2>
-          <p>
-            Saknar du något eller har du hittat en bugg?{" "}
-            <Link to="/kontakt" className="underline" style={{ color: "var(--amber)" }}>
-              Hör av dig
-            </Link>
-            .
-          </p>
 
           <h2 className="mt-8 text-xl font-semibold text-center" style={{ color: "var(--cream)" }}>
             Resurser

@@ -101,7 +101,7 @@ export const Route = createFileRoute("/hogskoleprovet-normering")({
         path: PATH,
         title: fitTitle("Normering högskoleprovet", "alla tabeller"),
         description: describeWithin(
-          `Normeringen för alla högskoleprov från ${äldst.label.toLowerCase()} till ${nyast.label.toLowerCase()}: hur många rätt som krävdes för 2,0, 1,5 och 1,0 på varje prov.`,
+          `Hur många rätt som krävdes för 2,0, 1,5 och 1,0 på varje högskoleprov från ${äldst.label.toLowerCase()} till ${nyast.label.toLowerCase()}.`,
           "Ur UHR:s officiella tabeller.",
         ),
         ogTitle: "Så många rätt krävdes för 2,0 på varje högskoleprov",
@@ -231,9 +231,7 @@ function NormeringHub() {
             key={rubrik}
             className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-center"
           >
-            <div className="text-[12px] font-semibold text-white/50">
-              {rubrik}
-            </div>
+            <div className="text-[12px] font-semibold text-white/50">{rubrik}</div>
             <div
               className="mt-1 text-[26px] font-bold tabular-nums text-[var(--cream)]"
               style={{ fontFamily: "var(--font-display)" }}
@@ -380,7 +378,8 @@ function NormeringHub() {
           Se vad du hade fått
         </h2>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Skriv ett gammalt prov på tid. Rättningen räknar om ditt resultat med det provets normering.
+          Skriv ett gammalt prov på tid. Rättningen räknar om ditt resultat med det provets
+          normering.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
           <Link

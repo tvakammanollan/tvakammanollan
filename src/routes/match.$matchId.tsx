@@ -738,7 +738,7 @@ function MatchPage() {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-terracotta text-[var(--cream)]">
           <Trophy className="h-7 w-7" />
         </span>
-        <p className="text-sm text-white/65">Förbereder arenan…</p>
+        <p className="text-sm text-white/65">Laddar matchen…</p>
       </div>
     );
   }

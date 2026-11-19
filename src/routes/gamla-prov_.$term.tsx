@@ -7,7 +7,7 @@ import { useProvResults } from "@/hooks/useProvResults";
 import { allExams, examNeighbours, findExam, loadPass } from "@/lib/prov-data";
 import { isFreeExam } from "@/lib/prov-access";
 import { passResult, summariseExam, type PassResult } from "@/lib/prov-results";
-import { formatDateLong, formatInt, enhet } from "@/lib/sv-format";
+import { displayCategory, formatDateLong, formatInt, enhet } from "@/lib/sv-format";
 import { delprovFull, passKindLabel, type PassSummary } from "@/types/gamla-prov";
 import { normeringDate } from "@/lib/normering";
 
@@ -44,12 +44,12 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         // `label` bär redan ordet provet, så prefixet stammade.
         title: fitTitle(`${exam.label}: alla provpass`, "med facit"),
         description:
-          `Skriv ${exam.label} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
+          `Skriv ${exam.label.toLowerCase()} online: ${exam.passes.length} provpass och ${formatInt(exam.questions)} ` +
           `uppgifter med facit, på tid och med rättning. ` +
           (free
             ? "Gratis och utan inloggning."
             : "Provet ingår i Premium, facit är öppet för alla."),
-        ogTitle: `Högskoleprovet ${exam.label}: provpass & facit`,
+        ogTitle: `${exam.label} på högskoleprovet: provpass och facit`,
         ogDescription: `${enhet(exam.questions, "uppgift")} med rätta svar.`,
       }),
       links: pageLinks(path),
@@ -62,7 +62,7 @@ export const Route = createFileRoute("/gamla-prov_/$term")({
         jsonLdScript({
           "@context": "https://schema.org",
           "@type": "LearningResource",
-          name: `Högskoleprovet ${exam.label}: provpass med facit`,
+          name: `${exam.label} på högskoleprovet: provpass med facit`,
           description: `Samtliga ${exam.passes.length} provpass från ${exam.label} med rätta svar.`,
           url: `https://tvakommanollan.se${path}`,
           inLanguage: "sv-SE",
@@ -112,7 +112,7 @@ function ExamTermPage() {
           className="text-[30px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
         >
-          Högskoleprovet {exam.label}
+          {exam.label}
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Provdagen var {formatDateLong(exam.date)}. Här finns alla {formatInt(exam.questions)}{" "}
@@ -134,8 +134,8 @@ function ExamTermPage() {
         </p>
         <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-white/60">
           {verbalCount} {verbalCount === 1 ? "pass är verbalt" : "pass är verbala"} och {kvantCount}{" "}
-          {kvantCount === 1 ? "är kvantitativt" : "är kvantitativa"}, och tillsammans täcker de{" "}
-          {delprov.map(delprovFull).join(", ")}.
+          {kvantCount === 1 ? "är kvantitativt" : "är kvantitativa"}, med delproven{" "}
+          {delprov.map(displayCategory).join(", ")}.
         </p>
       </header>
 

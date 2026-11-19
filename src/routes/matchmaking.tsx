@@ -26,8 +26,7 @@ export const Route = createFileRoute("/matchmaking")({
       { title: pageTitle("Hitta match") },
       {
         name: "description",
-        content:
-          "Spela en match mot någon med ungefär samma ELO. Välj verbal eller kvantitativ.",
+        content: "Spela en match mot någon med ungefär samma ELO. Välj verbal eller kvantitativ.",
       },
       { name: "robots", content: "noindex, follow" },
     ],
@@ -305,7 +304,7 @@ function MatchmakingPage() {
               </span>
             </>
           ) : (
-            "Joinar kön…"
+            "Ställer dig i kön…"
           )}
         </div>
         {myElo !== null && (

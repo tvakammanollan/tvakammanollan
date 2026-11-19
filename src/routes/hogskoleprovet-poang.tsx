@@ -23,7 +23,7 @@ export const Route = createFileRoute("/hogskoleprovet-poang")({
       path: "/hogskoleprovet-poang",
       title: fitTitle("Högskoleprovet poäng: normering & antagning"),
       description:
-        "Vad högskoleprovets poäng 0,00–2,00 betyder, hur normeringen från råpoäng går till och hur resultatet används vid antagning. Plus urvalsgrupperna.",
+        "Vad högskoleprovets poäng 0,00–2,00 betyder, hur normeringen från råpoäng går till och hur resultatet används vid antagning.",
       ogType: "article",
       datePublished: POANG_PUBLICERAD,
       dateModified: POANG_UPPDATERAD,
@@ -77,7 +77,8 @@ function PoangPage() {
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
           Högskoleprovet ger ett resultat mellan{" "}
-          <strong className="text-white/80">0,0 och 2,0</strong>. Här står vad poängen betyder, hur den används vid antagningen och ungefär vad olika utbildningar kräver.
+          <strong className="text-white/80">0,0 och 2,0</strong>. Här står vad poängen betyder, hur
+          den används vid antagningen och ungefär vad olika utbildningar kräver.
         </p>
       </header>
 
@@ -106,8 +107,10 @@ function PoangPage() {
             Hur räknas poängen ut? (normering)
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
-            Provet har{" "}
-            <strong className="text-white/80">160 uppgifter</strong>, 80 verbala och 80 kvantitativa. Varje del normeras för sig: UHR räknar om antalet rätt till en poäng mellan 0,0 och 2,0 utifrån hur alla som skrev provet klarade sig. Slutresultatet är medelvärdet av de två delarna. Samma antal rätt kan därför ge olika poäng på olika prov.
+            Provet har <strong className="text-white/80">160 uppgifter</strong>, 80 verbala och 80
+            kvantitativa. Varje del normeras för sig: UHR räknar om antalet rätt till en poäng
+            mellan 0,0 och 2,0 utifrån hur alla som skrev provet klarade sig. Slutresultatet är
+            medelvärdet av de två delarna. Samma antal rätt kan därför ge olika poäng på olika prov.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-white/65">
             Exakt vad varje antal rätt gav på varje prov sedan 2012 finns samlat ur UHR:s officiella
@@ -121,7 +124,8 @@ function PoangPage() {
             , med en egen sida och hela tabellen för varje provtillfälle.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-white/65">
-            Verbal och kvantitativ del väger lika tungt. Poängen för varje del står i ditt resultatbesked, och visar vilken del du har mest att hämta på.
+            Verbal och kvantitativ del väger lika tungt. Poängen för varje del står i ditt
+            resultatbesked, och visar vilken del du har mest att hämta på.
           </p>
           <Link
             to="/hogskoleprovet-poangraknare"

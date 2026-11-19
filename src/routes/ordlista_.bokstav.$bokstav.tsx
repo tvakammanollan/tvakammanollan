@@ -36,7 +36,7 @@ export const Route = createFileRoute("/ordlista_/bokstav/$bokstav")({
         path,
         title: fitTitle(`Ord på ${label}: ordlista för högskoleprovet`),
         description: trimToWord(
-          `${formatInt(count)} ord på ${label} från ORD-delprovet, med betydelse och den uppgift de kom ur. ` +
+          `${formatInt(count)} ord på ${label} för högskoleprovet, med betydelse och en ORD-uppgift till varje ord. ` +
             `Bland dem: ${sample}.`,
           DESCRIPTION_MAX,
         ),
@@ -93,8 +93,7 @@ function OrdlistaLetterPage() {
           HP-ord på {label}
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
-          {formatInt(count)} ord som förekommit på ORD-delprovet, hämtade ur tidigare högskoleprovs
-          ORD-uppgifter. Bland dem{" "}
+          {formatInt(count)} ord på högskoleprovets nivå. Bland dem{" "}
           {sample.map((w, i) => (
             <span key={w.slug}>
               {i > 0 && (i === sample.length - 1 ? " och " : ", ")}
@@ -107,7 +106,7 @@ function OrdlistaLetterPage() {
               </Link>
             </span>
           ))}
-          . Klicka på ett ord för betydelse, exempelmening och uppgiften det kom ur.
+          . Klicka på ett ord för betydelse, exempelmening och en ORD-uppgift.
         </p>
       </header>
 
@@ -157,7 +156,7 @@ function OrdlistaLetterPage() {
         <Link to="/ordlista" className="text-[var(--amber)] underline underline-offset-2">
           Tillbaka till ordlistan
         </Link>{" "}
-       , eller{" "}
+        , eller{" "}
         <Link to="/ord" className="text-[var(--amber)] underline underline-offset-2">
           träna orden med upprepning
         </Link>

@@ -135,7 +135,7 @@ function OnboardingPage() {
             disabled={submitting}
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-[15px] font-semibold text-on-brand shadow-[0_0_24px_rgba(174,47,38,0.35)] transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {submitting ? "Sparar…" : "Klart, ta mig till arenan"}
+            {submitting ? "Sparar…" : "Spara och fortsätt"}
           </button>
         </form>
       </div>

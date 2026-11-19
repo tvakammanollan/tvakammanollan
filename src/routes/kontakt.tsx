@@ -97,10 +97,9 @@ function KontaktPage() {
                 <span className="block font-semibold">Vem driver Tvåkommanollan?</span>
                 <span className="mt-1 block text-xs" style={{ color: "var(--text-tertiary)" }}>
                   Sajten drivs av Niklas Pellkvist som privatperson. Vi visar inga annonser. Det som
-                  kostar är Premium: alla gamla prov, hela ordlistan och MEK-övningen. Mer om
-                  sajten:{" "}
+                  kostar är Premium: alla gamla prov, hela ordlistan och MEK-övningen.{" "}
                   <Link to="/om" className="underline" style={{ color: "var(--amber)" }}>
-                    /om
+                    Mer om sajten
                   </Link>
                   .
                 </span>
@@ -130,11 +129,6 @@ function KontaktPage() {
             </a>
           </li>
         </ul>
-
-        <p className="mt-10 text-sm" style={{ color: "var(--text-tertiary)" }}>
-          Buggrapporter via knappen går oftast fortare än mejl, eftersom de innehåller uppgifter om
-          felet.
-        </p>
       </article>
     </div>
   );

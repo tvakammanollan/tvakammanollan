@@ -124,9 +124,10 @@ function GamlaProvPage() {
               dem sökbara och lästa av skärmläsare.
             </p>
             <p>
-              Engelsk läsförståelse (ELF) finns med i varje provpass. UHR byter en vecka efter
-              provdagen ut häftet mot en version utan den engelska texten, av upphovsrättsskäl. Här
-              finns originalhäftena, så varje verbalt pass går att skriva i sin helhet.
+              Engelsk läsförståelse (ELF) finns med i varje verbalt provpass. UHR byter en vecka
+              efter provdagen ut häftet mot en version utan den engelska texten, av
+              upphovsrättsskäl. Här finns originalhäftena, så varje verbalt pass går att skriva i
+              sin helhet.
             </p>
           </div>
         </section>

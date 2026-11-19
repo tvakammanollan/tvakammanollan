@@ -23,11 +23,11 @@ export const Route = createFileRoute("/ordlista")({
         path: "/ordlista",
         title: fitTitle("Ordlista för högskoleprovet", "med förklaring", "alla ord"),
         description:
-          `Alla ${total ? formatInt(total) + " " : ""}ord som förekommit på ORD-delprovet, med betydelse, ` +
-          `exempelmening, liknande ord och uppgiften ordet kom ur. Gratis.`,
+          `${total ? formatInt(total) + " " : ""}ord på högskoleprovets nivå, med betydelse, exempelmening, ` +
+          `liknande ord och en ORD-uppgift till varje ord. Gratis.`,
         ogTitle: "Ordlista för högskoleprovet",
         ogDescription:
-          "Varje ord som stått på ORD, med förklaring och provuppgiften det kom ur. Gratis.",
+          "Ord på högskoleprovets nivå, med förklaring och en ORD-uppgift till varje ord. Gratis.",
       }),
       links: pageLinks("/ordlista"),
       scripts: [
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/ordlista")({
           "@id": "https://tvakommanollan.se/ordlista#set",
           name: "Ordlista för högskoleprovet",
           description:
-            "Ord från ORD-delprovet på högskoleprovet, med betydelse, exempel och den uppgift ordet kom ur.",
+            "Ord på högskoleprovets nivå, med betydelse, exempel och en ORD-uppgift till varje ord.",
           url: "https://tvakommanollan.se/ordlista",
           inLanguage: "sv-SE",
           isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -73,9 +73,8 @@ function OrdlistaIndexPage() {
           Ordlista för högskoleprovet
         </h1>
         <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/60">
-          {formatInt(total)} ord som förekommit på ORD-delprovet. Varje ord har sin betydelse, en
-          exempelmening, närliggande ord och uppgiften det kom ur, med facit. Gratis och
-          utan konto.
+          {formatInt(total)} ord på högskoleprovets nivå. Varje ord har sin betydelse, en
+          exempelmening, närliggande ord och en ORD-uppgift med facit. Gratis och utan konto.
         </p>
         <div className="mt-5">
           <Link
@@ -123,9 +122,10 @@ function OrdlistaIndexPage() {
           Var kommer orden ifrån?
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-          Orden är hämtade ur ORD-delprovet på tidigare högskoleprov, som UHR publicerar öppet.
-          Betydelserna kommer från svenska ordböcker och är källhänvisade på varje sida. Vill du
-          förstå hur delprovet är uppbyggt finns{" "}
+          Ungefär 950 av orden har stått på ORD-delprovet på tidigare högskoleprov, och för dem
+          visar sidan uppgiften som den såg ut på provet. Övriga är övningsord av samma slag, med en
+          uppgift i samma form. Betydelserna kommer från svenska ordböcker och är källhänvisade på
+          varje sida. Vill du förstå hur delprovet är uppbyggt finns{" "}
           <Link to="/guider/ord" className="text-[var(--amber)] underline underline-offset-2">
             ORD-guiden
           </Link>

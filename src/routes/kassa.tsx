@@ -200,9 +200,9 @@ function KassaPage() {
               Alla gamla prov, hela ordlistan och alla MEK-uppgifter. Välj hur länge du vill ha
               tillgång och betala direkt här.
             </p>
-            // Ordningen i DOM:en är mobilens: planval, kassan, sedan vad som // ingår. På dator
-            lägger gridden kassan i högerkolumnen över båda // raderna, och planval och lista står
-            till vänster som förut.
+            {/* Ordningen i DOM:en är mobilens: planval, kassan, sedan vad som ingår. På
+                dator lägger gridden kassan i högerkolumnen över båda raderna, och planval
+                och lista står till vänster som förut. */}
             <div className="mt-5 grid gap-5 sm:mt-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-6 lg:gap-y-3">
               <div className="space-y-2.5 sm:space-y-3 lg:col-start-1 lg:row-start-1">
                 {ORD_PLAN_IDS.map((p) => {

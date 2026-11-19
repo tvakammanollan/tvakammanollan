@@ -151,8 +151,7 @@ function OrdGuidePage() {
           <Link to="/ordlista" className="underline" style={{ color: "var(--amber)" }}>
             ordlistan
           </Link>
-          : varje ord som förekommit på ORD, med betydelse, exempelmening och den uppgift det kom
-          ur.
+          : över 8 000 ord med betydelse, exempelmening och en ORD-uppgift till varje ord.
         </p>
 
         <p className="mt-8">

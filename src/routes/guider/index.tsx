@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
 import { PageHero } from "@/components/layout/PageHero";
+import { displayCategory } from "@/lib/sv-format";
 
 export const Route = createFileRoute("/guider/")({
   component: GuiderPage,
@@ -349,7 +350,7 @@ function GuiderPage() {
                 className="rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:border-primary/50 hover:text-primary"
                 style={{ borderColor: "var(--line)", color: "var(--cream)" }}
               >
-                Öva {s.toUpperCase()}
+                Öva {displayCategory(s.toUpperCase())}
               </Link>
             ))}
           </div>

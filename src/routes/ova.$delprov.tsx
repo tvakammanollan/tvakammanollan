@@ -251,9 +251,7 @@ function OvaDelprovPage() {
                 key={`${q.term}-${q.pass}-${q.nr}`}
                 className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
               >
-                <div className="text-[13px] font-semibold text-[var(--amber)]">
-                  Exempel {i + 1}
-                </div>
+                <div className="text-[13px] font-semibold text-[var(--amber)]">Exempel {i + 1}</div>
                 {q.passage && (
                   <p className="mt-2 text-[13px] leading-relaxed text-white/55">{q.passage}</p>
                 )}
@@ -361,11 +359,11 @@ function OvaDelprovPage() {
             Ordlistan
           </h2>
           <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-            Varje ord som förekommit på ORD finns i{" "}
+            Orden finns också i{" "}
             <Link to="/ordlista" className="text-[var(--amber)] underline underline-offset-2">
               ordlistan
             </Link>
-            , med betydelse, exempelmening, liknande ord och uppgiften det kom ur.
+            , med betydelse, exempelmening, liknande ord och en ORD-uppgift.
           </p>
         </section>
       )}

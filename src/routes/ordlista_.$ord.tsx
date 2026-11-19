@@ -60,11 +60,16 @@ export const Route = createFileRoute("/ordlista_/$ord")({
         title: fitTitle(`Vad betyder ${word}?`, "Ordlista"),
         // Kvalitetsgrinden, se `ordIndexable` i ordlista.server.ts.
         noindex: !loaderData.indexable,
-        description: describeWithin(body, "Se uppgiften ordet kom ur på högskoleprovet."),
+        description: describeWithin(
+          body,
+          question?.fromExam
+            ? "Se uppgiften ordet kom ur på högskoleprovet."
+            : "Öva på ordet med en ORD-uppgift.",
+        ),
         ogTitle: `Vad betyder ${word}?`,
         ogDescription:
           trimToWord(question?.correctText ?? sense, 140) ||
-          `${word}: förklaring, exempel och HP-uppgiften ordet kom ur.`,
+          `${word}: förklaring, exempel och en ORD-uppgift.`,
       }),
       links: pageLinks(path),
       scripts: [
@@ -283,11 +288,14 @@ function OrdlistaEntryPage() {
             className="text-[20px] font-bold text-[var(--cream)] sm:text-[22px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            {word} på högskoleprovet
+            {question.fromExam ? `${word} på högskoleprovet` : `Öva på ${word}`}
           </h2>
           <p className="mt-1 text-sm text-white/45">
-            Så här såg ORD-uppgiften ut. Rätt svar är markerat, och alternativ som har en egen sida
-            i ordlistan går att klicka vidare på.
+            {question.fromExam
+              ? "Så här såg ORD-uppgiften ut på provet."
+              : "En uppgift i samma form som ORD på provet."}{" "}
+            Rätt svar är markerat, och alternativ som har en egen sida i ordlistan går att klicka
+            vidare på.
           </p>
           <ul className="mt-3 grid gap-1.5">
             {question.options.map((o) => {
@@ -355,7 +363,8 @@ function OrdlistaEntryPage() {
           Öva orden
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
-          {word} är ett av {formatInt(total)} ord i ordträningen. Ord du missar kommer tillbaka med växande mellanrum tills du kan dem.
+          {word} är ett av {formatInt(total)} ord i ordträningen. Ord du missar kommer tillbaka med
+          växande mellanrum tills du kan dem.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link

@@ -164,18 +164,19 @@ function PoangraknarePage() {
         </h2>
         <p className="mt-2 text-[15px] leading-relaxed text-white/60">
           Normeringen är inte linjär. UHR omvandlar antalet rätt till en normerad poäng mellan 0,00
-          och 2,00 utifrån hur alla som skrev det provet klarade sig. Därför kan samma antal rätt
-          kan ge olika poäng på olika prov, och ett par rätt extra i mitten av skalan ger ofta mer
-          poäng än samma antal nära toppen eller botten.
+          och 2,00 utifrån hur alla som skrev det provet klarade sig. Därför kan samma antal rätt ge
+          olika poäng på olika prov, och ett par rätt extra i mitten av skalan ger ofta mer poäng än
+          samma antal nära toppen eller botten.
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-white/60">
           Räknaren ovan använder en generell tabell byggd på flera arkiverade provtillfällen, så den
-          ger en uppskattning och inget exakt svar. Vill du se normeringen för ett visst prov, med
-          rätta svar på varje uppgift, finns{" "}
+          ger en uppskattning och inget exakt svar. Vill du ha ett exakt resultat för ett visst prov
+          kan du skriva{" "}
           <Link to="/gamla-prov" className="text-[var(--amber)] underline underline-offset-2">
-            alla arkiverade provtillfällen
-          </Link>{" "}
-          att skriva. Hur många rätt varje poäng har krävt på tidigare prov står i{" "}
+            ett gammalt prov
+          </Link>
+          , så räknas poängen med just det provets tabell. Hur många rätt varje poäng har krävt på
+          tidigare prov står i{" "}
           <Link
             to="/hogskoleprovet-antal-ratt"
             className="text-[var(--amber)] underline underline-offset-2"

@@ -212,8 +212,14 @@ export type OrdlistaEntry = {
   sourceLabel: string;
   /** Uppslaget hos källan, när den har en publik adress att hänvisa till. */
   sourceUrl: string | null;
-  /** Uppgiften som ordet faktiskt kom ur — sajtens eget, unika innehåll. */
+  /**
+   * Uppgiften till ordet. Bara en del av beståndet (~950 av 8 760) kommer ur
+   * ett högskoleprov; resten är övningsord (`lektion-N` i `tags`) med en
+   * uppgift i samma form. `fromExam` skiljer dem, så att sidan aldrig säger
+   * "så här såg uppgiften ut på provet" om ett ord som inte stått där.
+   */
   question: {
+    fromExam: boolean;
     /**
      * Alternativen, med slug för dem som själva är uppslag i ordlistan.
      *
@@ -248,7 +254,7 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
 
   const { data, error } = await supabaseAdmin
     .from("questions")
-    .select("question_text,options,correct_answer,definition,definition_source")
+    .select("question_text,options,correct_answer,definition,definition_source,tags")
     .eq("category", "ORD")
     .eq("question_text", word)
     .limit(1)
@@ -291,6 +297,7 @@ export async function fetchOrdEntry(slugInput: string): Promise<OrdlistaEntry | 
     question:
       options.length >= 2
         ? {
+            fromExam: !(data.tags ?? []).some((t) => t.startsWith("lektion")),
             options: options.map((o) => ({ ...o, text: ordText(o.text), slug: linkSlug(o.text) })),
             correctAnswer: data.correct_answer,
             correctText,

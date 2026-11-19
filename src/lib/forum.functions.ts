@@ -282,7 +282,11 @@ export const fetchForumHome = createServerFn({ method: "GET" }).handler(
             .eq("status", "visible"),
           supabaseAdmin
             .from("forum_posts")
-            .select("id,forum_threads!inner(category_id,status)", {
+            // Relationen måste namnges: forum_threads.answer_post_id pekar
+            // också på forum_posts, och utan namnet svarar PostgREST PGRST201
+            // (tvetydig inbäddning). Felet lästes inte, så räkningen blev
+            // null och forumet visade "0 inlägg" i varje kategori.
+            .select("id,forum_threads!forum_posts_thread_id_fkey!inner(category_id,status)", {
               count: "exact",
               head: true,
             })
