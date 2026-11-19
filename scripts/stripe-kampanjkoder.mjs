@@ -84,8 +84,6 @@ const CODES = [
   { code: "RYTMUS600", coupon: "tkn-gratis-6man", max_redemptions: 7 },
   { code: "DBGY100", coupon: "tkn-gratis-1man" },
   { code: "DBGY600", coupon: "tkn-gratis-6man", max_redemptions: 7 },
-  { code: "JORDBRO100", coupon: "tkn-gratis-1man" },
-  { code: "MARIA100", coupon: "tkn-gratis-1man" },
   // HARORG100 hette HÄRÖRG100 i beställningen; Stripe tar inte å, ä, ö.
   ...["LUND100", "KALMAR100", "HARORG100"].map((code) => ({ code, coupon: "tkn-gratis-1man" })),
   // SARNA100 hette SÄRNA100 i beställningen.
@@ -100,6 +98,12 @@ const CODES = [
     "KARLSKOGA100",
     "PERSTORP100",
     "MARIESTAD100",
+    // JORDBRO100 och MARIA100 skapades först utan slutdatum (2026-11-19);
+    // de koderna är inaktiverade och dessa ersätter dem.
+    "JORDBRO100",
+    "MARIA100",
+    // AKERS100 hette ÅKERS100 i beställningen.
+    "AKERS100",
   ].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",
