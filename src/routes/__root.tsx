@@ -192,9 +192,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       // Google kräver en kvadratisk favicon på minst 48 px som går att
       // crawla: favicon.ico bär 16/32/48. SVG för moderna webbläsare.
-      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      // `?v=2` sedan 2026-11-19: Google cachar ikonen på adressen och visade
+      // den gamla röda 2,0:an i träfflistan två dagar efter bytet. Byts
+      // ikonen igen: höj siffran på alla rader samtidigt.
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png?v=2" },
+      { rel: "icon", href: "/favicon.ico?v=2", sizes: "48x48" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg?v=2" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=2" },
       { rel: "manifest", href: "/manifest.json" },
       // Preload det enda snitt som syns i första målningen: Manrope bär
       // både brödtext och rubriker sedan Podia-systemet (styles.css). Utan
