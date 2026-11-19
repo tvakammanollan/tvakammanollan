@@ -91,6 +91,7 @@ const CODES = [
     "SARNA100",
     "KARLSKOGA100",
     "PERSTORP100",
+    "MARIESTAD100",
   ].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",
