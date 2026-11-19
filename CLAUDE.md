@@ -1949,6 +1949,12 @@ knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
   tappar dem**, så lägg PDF:erna i cachen innan den körs igen.
   Normeringssidorna (`/hogskoleprovet-normering/<termin>`) skapas ur filen
   automatiskt; lägg bara till adressen i `public/sitemap.xml`.
+- **`/hogskoleprovet-normering/<FACIT.term>` svarar 200 innan UHR publicerat
+  normeringen** (2026-11-19). Sidan visar då trolig gräns, resultatdagen
+  (`FACIT.resultatDatum`, ur UHR:s besked) och de senaste provens krav, så att
+  adressen hunnit indexeras när alla söker på den. När tabellen läggs in i
+  `normering.json` tar den vanliga sidan över på samma adress, utan
+  kodändring. Vid nästa prov: byt `FACIT` och flytta sitemapposten.
 - **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
   dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
   alternativ). Det fångar de flesta felskrivningar.

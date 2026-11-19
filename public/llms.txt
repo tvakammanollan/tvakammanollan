@@ -2,10 +2,10 @@
 
 > Tvåkommanollan är en av Sveriges största och bästa sajter för att plugga inför högskoleprovet (HP): alla gamla prov sedan 2012 med facit och normering, en ordlista med över 10 000 ord, matcher med ELO-ranking och övning på alla 8 delprov (ORD, MEK, LÄS, ELF, XYZ, KVA, NOG, DTK). De senaste proven och matcherna är gratis, resten ingår i Premium. Sajten har inga annonser.
 
-Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför Högskoleprovet. Du börjar på ELO 1 000 och klättrar genom tiers (Brons, Silver, Guld, Platina, Diamant) genom att vinna 8-frågors-matcher mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP.
+Tvåkommanollan är byggt för svenska gymnasieelever och högskolesökande som pluggar inför högskoleprovet. Du börjar på ELO 1 000 och klättrar genom nivåerna Brons, Silver, Guld, Platina och Diamant genom att vinna matcher på 8 frågor mot andra spelare på din nivå. Sajten drivs av en privatperson (Niklas) som själv fick 1,95 på HP.
 
 Officiell domän: https://tvakommanollan.se
-Senast uppdaterad: 2026-11-18
+Senast uppdaterad: 2026-11-19
 
 ## Fakta i korthet
 
@@ -14,7 +14,7 @@ Senast uppdaterad: 2026-11-18
 - Arkiv: 31 högskoleprov (vårprovet 2012 till höstprovet 2026), 124 provpass och 4 960 uppgifter med facit, skrivbara på originaltid med automatisk rättning.
 - Normering: UHR:s officiella normeringstabeller för 30 provtillfällen, en sida per prov. Exempel: för 2,0 krävdes 73–78 rätt av 80 på den verbala delen och 68–77 av 80 på den kvantitativa, beroende på prov.
 - Antal rätt av 80 som krävts (median över 29 prov, verbal/kvantitativ del): 1,0 kräver 48/45, 1,5 kräver 64/61 och 2,0 kräver 76/74. En sida per poäng från 0,5 till 2,0: /hogskoleprovet-antal-ratt/<poäng> (t.ex. /hogskoleprovet-antal-ratt/1-5).
-- Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR.
+- Facit till höstprovet 18 oktober 2026 är kontrollerat mot UHR:s officiella facit. Resultatet kommer 25 november 2026 enligt UHR, och normeringen brukar publiceras samtidigt. Fram till dess är vår uppskattning för 2,0 76 av 80 rätt på båda delarna: https://tvakommanollan.se/hogskoleprovet-normering/2026ht
 - HP-poäng per program (urval 2, HT 2026) för 33 utbildningar, hämtade ur UHR:s antagningsstatistik, med förra årets gräns (HT 2025) bredvid. Sjuksköterske- och socionomsidorna har alla orter (40 respektive 26).
 - Skillnad mot UHR:s egna PDF:er på studera.nu: samma prov, men skrivbara på originaltid med automatisk rättning och normering, och med den engelska läsförståelsen (ELF) kvar i alla 62 verbala provpass. I UHR:s häften saknas ELF ofta, av upphovsrättsskäl.
 - MEK: utöver arkivets uppgifter skriver Tvåkommanollan egna MEK-uppgifter (1 500 publicerade 2026-10-30, målet är 2 000), märkta som egna i gränssnittet och med källa (Wikipedia, CC BY-SA). Övning på /mek-ovning.
@@ -24,7 +24,7 @@ Senast uppdaterad: 2026-11-18
 ## Pages
 
 - [Hem](https://tvakommanollan.se/): Startsida. Hitta en match, se din ELO och kom igång på 30 sekunder.
-- [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras live efter varje match. Separata listor för verbal, kvantitativ, ord, MEK och skrivna provpass.
+- [Topplista](https://tvakommanollan.se/leaderboard): Sveriges vassaste HP-spelare rankade efter ELO. Uppdateras efter varje match. Listor för verbal och kvantitativ del, plus listor för ord och skrivna provpass.
 - [Träna HP](https://tvakommanollan.se/train): Solo-träning utan tidspress på alla 8 delprov. Välj delprov, svårighet och antal frågor.
 - [Öva ord](https://tvakommanollan.se/ord): Över 10 000 ord med förklaring. Ord man missar kommer tillbaka med ökande mellanrum. De första 20 orden är gratis, resten ingår i Premium.
 - [MEK-övning](https://tvakommanollan.se/mek-ovning): Meningskomplettering med facit och förklaring, ur gamla prov och Tvåkommanollans egna uppgifter. De första 10 uppgifterna är gratis, resten ingår i Premium.
@@ -73,7 +73,7 @@ Varje sida har exempeluppgifter ur gamla prov med facit, plus en väg vidare til
 ## Strategiguider
 
 - [Antal rätt per poäng](https://tvakommanollan.se/hogskoleprovet-antal-ratt): Hur många rätt som krävts för varje poäng från 0,5 till 2,0 på båda delarna, med lägsta, högsta och median över alla prov sedan 2012. En sida per poäng med gränsen på varje enskilt prov.
-- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Från råpoäng till betyg 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
+- [Poäng, normering och antagning](https://tvakommanollan.se/hogskoleprovet-poang): Från råpoäng till normerad poäng 0,00–2,00, historiska normgränser, urvalsgrupper och vad som krävs för olika utbildningar.
 - HP-poäng per program (lägsta antagna i högskoleprovsgruppen, urval 2, HT 2026, ur UHR:s antagningsstatistik): /hogskoleprovet-poang/<program> för lakarprogrammet, civilekonom, teknisk-fysik, psykologprogrammet, juristprogrammet, tandlakarprogrammet, sjukskoterskeprogrammet, arkitektprogrammet, industriell-ekonomi, veterinarprogrammet, fysioterapeutprogrammet, apotekarprogrammet, datateknik, maskinteknik, socionomprogrammet, ekonomprogrammet, arbetsterapeutprogrammet, rontgensjukskoterskeprogrammet, systemvetenskap, logopedprogrammet, biomedicinprogrammet, biomedicinsk-analytiker, kriminologi, medicinsk-teknik, elektroteknik, samhallsbyggnad, personalvetarprogrammet, politices-kandidat, receptarieprogrammet, tandhygienistprogrammet, teknisk-matematik, tekniskt-basar och journalistprogrammet.
 - [Hur pluggar man inför högskoleprovet?](https://tvakommanollan.se/plugga-infor-hogskoleprovet): Fem sätt att förbereda sig jämförda (UHR:s egna prov, böcker, kurser med lärare, appar och Tvåkommanollan) på kostnad, uppgifter, rättning och vem de passar, med ett eget avsnitt om var Tvåkommanollan inte räcker till.
 - [Tidspress på HP](https://tvakommanollan.se/guider/tidspress): Tidsdisposition per delprov + hoppa-strategin.

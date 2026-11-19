@@ -4,6 +4,12 @@ import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { formatDateLong, enhet } from "@/lib/sv-format";
 import { HP_INFO_URL } from "@/lib/hp-dates";
 import { normeringTerms, officialMinRawFor, officialPartMax } from "@/lib/normering";
+import { FACIT } from "@/lib/preliminart-facit";
+
+/** Senaste provet, om UHR ännu inte publicerat dess normering. */
+function väntande() {
+  return normeringTerms().some((t) => t.term === FACIT.term) ? null : FACIT;
+}
 
 /* =====================================================================
    NORMERING, HUBBEN. "normering högskoleprovet" och "normering <termin>"
@@ -71,7 +77,12 @@ function faq(): Array<{ q: string; a: string }> {
     },
     {
       q: "När kommer normeringen för senaste högskoleprovet?",
-      a: "UHR publicerar normeringstabellerna tillsammans med resultaten, några veckor efter provdagen. Fram till dess finns vår preliminära uppskattning på facitsidan.",
+      a: (() => {
+        const v = väntande();
+        return v?.resultatDatum
+          ? `UHR publicerar normeringstabellerna tillsammans med resultaten. För ${v.label.toLowerCase()} kommer resultatet ${formatDateLong(v.resultatDatum)}. Fram till dess finns vår preliminära uppskattning på facitsidan.`
+          : "UHR publicerar normeringstabellerna tillsammans med resultaten, några veckor efter provdagen. Fram till dess finns vår preliminära uppskattning på facitsidan.";
+      })(),
     },
     {
       q: "Var kommer siffrorna ifrån?",
@@ -187,6 +198,26 @@ function NormeringHub() {
           2,0, 1,5 och 1,0 på den verbala och den kvantitativa delen. Klicka på ett prov för hela
           tabellen, poäng för poäng.
         </p>
+        {(() => {
+          const v = väntande();
+          if (!v) return null;
+          return (
+            <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+              Normeringen för {v.label.toLowerCase()}{" "}
+              {v.resultatDatum
+                ? `kommer ${formatDateLong(v.resultatDatum)}, tillsammans med resultatet.`
+                : "är inte publicerad ännu."}{" "}
+              <Link
+                to="/hogskoleprovet-normering/$term"
+                params={{ term: v.term }}
+                className="underline underline-offset-2 hover:text-[var(--cream)]"
+              >
+                Normering {v.period}
+              </Link>
+              .
+            </p>
+          );
+        })()}
       </header>
 
       <section className="mt-8 grid grid-cols-2 gap-3">

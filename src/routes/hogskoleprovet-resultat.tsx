@@ -1,3 +1,4 @@
+import { FACIT } from "@/lib/preliminart-facit";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarCheck } from "lucide-react";
 import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-meta";
@@ -145,6 +146,13 @@ function ResultatPage() {
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
           >
             Facit och trolig normering
+          </Link>
+          <Link
+            to="/hogskoleprovet-normering/$term"
+            params={{ term: FACIT.term }}
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
+          >
+            Normering {FACIT.period}
           </Link>
           <Link
             to="/hogskoleprovet-normering"

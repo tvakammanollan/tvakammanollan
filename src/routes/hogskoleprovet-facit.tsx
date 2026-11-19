@@ -306,6 +306,13 @@ function FacitPage() {
             När kommer resultatet?
           </Link>
           <Link
+            to="/hogskoleprovet-normering/$term"
+            params={{ term: FACIT.term }}
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
+          >
+            Normering {FACIT.period}
+          </Link>
+          <Link
             to="/hogskoleprovet-normering"
             className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-white/12 px-5 py-2.5 text-sm font-semibold text-[var(--cream)] transition hover:border-primary/50"
           >

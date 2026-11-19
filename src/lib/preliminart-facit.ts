@@ -52,6 +52,12 @@ export interface PreliminartFacit {
    * jämförelse rad för rad.
    */
   officielltFacit: string | null;
+  /**
+   * Dagen UHR publicerar resultatet, ur UHR:s eget besked (samma datum som
+   * `SENASTE.resultat` i hogskoleprovet-resultat.tsx). Normeringen brukar
+   * komma samtidigt. Gissa aldrig: `null` tar bort datumet ur texten.
+   */
+  resultatDatum: string | null;
 }
 
 /** Antal uppgifter per provpass och per provdel. */
@@ -91,6 +97,7 @@ export const FACIT: PreliminartFacit = {
   // Jämfört 2026-10-24 mot hogskoleprovet-facit-26b.pdf på studera.nu:
   // alla 4 provpass identiska, inga uppgifter utgår.
   officielltFacit: "2026-10-21",
+  resultatDatum: "2026-11-25",
 };
 
 /** Delprovet en uppgift hör till. */

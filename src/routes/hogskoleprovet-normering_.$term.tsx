@@ -3,7 +3,9 @@ import { pageMeta, pageLinks, breadcrumbScript, jsonLdScript } from "@/lib/page-
 import { describeWithin, fitTitle } from "@/lib/seo-text";
 import { formatDateLong, formatDecimal, enhet } from "@/lib/sv-format";
 import { findExam } from "@/lib/prov-data";
+import { FACIT } from "@/lib/preliminart-facit";
 import {
+  historiskaKrav,
   normeringTerms,
   officialMinRawFor,
   officialPartMax,
@@ -34,9 +36,17 @@ export const Route = createFileRoute("/hogskoleprovet-normering_/$term")({
   loader: ({ params }) => {
     const terms = normeringTerms();
     const i = terms.findIndex((t) => t.term === params.term);
-    if (i === -1) throw notFound();
+    if (i === -1) {
+      // Senaste provet innan UHR publicerat normeringen: adressen ska svara
+      // redan nu, så att den hunnit indexeras när alla söker på den. När
+      // tabellen lagts in i normering.json tar den vanliga sidan över av
+      // sig själv, på samma adress.
+      if (params.term === FACIT.term) return { pending: true as const };
+      throw notFound();
+    }
     const t = terms[i];
     return {
+      pending: false as const,
       ...t,
       newer: i > 0 ? terms[i - 1] : null,
       older: i < terms.length - 1 ? terms[i + 1] : null,
@@ -45,6 +55,7 @@ export const Route = createFileRoute("/hogskoleprovet-normering_/$term")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
+    if (loaderData.pending) return pendingHead();
     const { term, label, date } = loaderData;
     const path = `/hogskoleprovet-normering/${term}`;
     const v = officialMinRawFor(term, "verbal", 2.0);
@@ -152,7 +163,19 @@ function Tabell({
 }
 
 function NormeringTermPage() {
-  const { term, label, date, newer, older, hasExam } = Route.useLoaderData();
+  const data = Route.useLoaderData();
+  if (data.pending) return <PendingPage />;
+  return <OfficialPage {...data} />;
+}
+
+function OfficialPage({
+  term,
+  label,
+  date,
+  newer,
+  older,
+  hasExam,
+}: Extract<ReturnType<typeof Route.useLoaderData>, { pending: false }>) {
   const delar = KINDS.map((k) => ({
     ...k,
     rows: officialTable(term, k.kind),
@@ -176,9 +199,7 @@ function NormeringTermPage() {
       </nav>
 
       <header className="mt-4">
-        <p className="text-sm text-white/65">
-          UHR:s officiella normering
-        </p>
+        <p className="text-sm text-white/65">UHR:s officiella normering</p>
         <h1
           className="mt-2 text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
           style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
@@ -332,6 +353,200 @@ function NormeringTermPage() {
           </Link>
           .
         </p>
+      </section>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------
+   Normeringen för det senaste provet, innan UHR publicerat den.
+   Allt som står här är antingen UHR:s besked (provdag, resultatdag) eller
+   uttryckligen märkt som sajtens uppskattning (FACIT.troligGrans).
+   --------------------------------------------------------------------- */
+
+function pendingHead() {
+  const f = FACIT;
+  const path = `/hogskoleprovet-normering/${f.term}`;
+  const namn = `Normering högskoleprovet ${f.period}`;
+  const när = f.resultatDatum
+    ? `UHR:s normering kommer ${formatDateLong(f.resultatDatum)}.`
+    : "UHR har inte publicerat normeringen ännu.";
+  const trolig = f.troligGrans
+    ? `Trolig gräns för 2,0: ${f.troligGrans.verbal}/80 verbalt och ${f.troligGrans.kvant}/80 kvantitativt. `
+    : "";
+  return {
+    meta: pageMeta({
+      path,
+      title: fitTitle(namn),
+      description: describeWithin(`${trolig}${när}`, "Räkna dina rätt med facit."),
+      ogTitle: namn,
+      ogDescription: när,
+    }),
+    links: pageLinks(path),
+    scripts: [
+      breadcrumbScript([
+        { name: "Hem", path: "/" },
+        { name: "Normering", path: "/hogskoleprovet-normering" },
+        { name: f.label, path },
+      ]),
+    ],
+  };
+}
+
+function PendingPage() {
+  const f = FACIT;
+  const tidigare = historiskaKrav(6);
+  const andra = normeringTerms();
+
+  return (
+    <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6">
+      <nav className="text-xs text-white/45" aria-label="Brödsmulor">
+        <Link to="/" className="hover:text-white/70">
+          Hem
+        </Link>
+        <span className="px-1.5">/</span>
+        <Link to="/hogskoleprovet-normering" className="hover:text-white/70">
+          Normering
+        </Link>
+        <span className="px-1.5">/</span>
+        <span className="text-white/70">{f.label}</span>
+      </nav>
+
+      <header className="mt-4">
+        <h1
+          className="text-[28px] font-bold leading-tight text-[var(--cream)] sm:text-[40px]"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.02em" }}
+        >
+          Normering högskoleprovet {f.period}
+        </h1>
+        <p className="mt-3 text-[15px] leading-relaxed text-white/60">
+          Högskoleprovet skrevs {formatDateLong(f.date)}.{" "}
+          {f.resultatDatum
+            ? `UHR publicerar normeringen i samband med resultatet, som kommer ${formatDateLong(f.resultatDatum)}. Då står hela tabellen på den här sidan.`
+            : "UHR har inte publicerat normeringen ännu. När den kommer står hela tabellen på den här sidan."}
+        </p>
+      </header>
+
+      {f.troligGrans && (
+        <section className="mt-8 rounded-2xl border border-primary/25 bg-primary/[0.06] p-5 sm:p-6">
+          <h2
+            className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Trolig gräns för 2,0
+          </h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-white/70">
+            Vår uppskattning är {f.troligGrans.verbal} av 80 rätt på den verbala delen och{" "}
+            {f.troligGrans.kvant} av 80 på den kvantitativa. Det är en bedömning gjord mot UHR:s
+            normering för de senaste proven, inte UHR:s besked.
+          </p>
+          <Link
+            to="/hogskoleprovet-facit"
+            className="mt-5 inline-flex min-h-[44px] items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-on-brand transition hover:brightness-110"
+          >
+            Räkna dina rätt med facit
+          </Link>
+        </section>
+      )}
+
+      {tidigare.length > 0 && (
+        <section className="mt-12">
+          <h2
+            className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Vad 2,0 krävde på de senaste proven
+          </h2>
+          <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
+            <table className="w-full text-[14px] tabular-nums">
+              <caption className="sr-only">Antal rätt av 80 som krävdes för 2,0</caption>
+              <thead>
+                <tr className="bg-white/[0.03] text-left text-[12px] text-white/50">
+                  <th className="px-4 py-2 font-semibold">Prov</th>
+                  <th className="px-4 py-2 text-right font-semibold">Verbal</th>
+                  <th className="px-4 py-2 text-right font-semibold">Kvantitativ</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/8">
+                {tidigare.map((t) => (
+                  <tr key={t.term}>
+                    <td className="px-4 py-2">
+                      <Link
+                        to="/hogskoleprovet-normering/$term"
+                        params={{ term: t.term }}
+                        className="text-white/75 underline underline-offset-2 hover:text-[var(--cream)]"
+                      >
+                        {t.label}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-2 text-right text-white/75">{t.verbal}/80</td>
+                    <td className="px-4 py-2 text-right text-white/75">{t.kvant}/80</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-[12px] text-white/45">
+            Källa: Universitets- och högskolerådets (UHR) normeringstabeller.
+          </p>
+        </section>
+      )}
+
+      <section className="mt-12">
+        <h2
+          className="text-[20px] font-bold text-[var(--cream)] sm:text-[24px]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Medan du väntar
+        </h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-relaxed text-white/70">
+          <li>
+            <Link
+              to="/hogskoleprovet-resultat"
+              className="underline underline-offset-2 hover:text-[var(--cream)]"
+            >
+              När resultatet kommer och var du hämtar det
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/gamla-prov/$term"
+              params={{ term: f.term }}
+              className="underline underline-offset-2 hover:text-[var(--cream)]"
+            >
+              Skriv om {f.label.toLowerCase()} på tid med rättning
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/hogskoleprovet-poangraknare"
+              className="underline underline-offset-2 hover:text-[var(--cream)]"
+            >
+              Poängräknaren: från antal rätt till normerad poäng
+            </Link>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mt-14 border-t border-white/8 pt-8">
+        <h2
+          className="text-[18px] font-bold text-[var(--cream)]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Normering för andra prov
+        </h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {andra.map((t) => (
+            <Link
+              key={t.term}
+              to="/hogskoleprovet-normering/$term"
+              params={{ term: t.term }}
+              className="rounded-full border border-white/12 px-3.5 py-1.5 text-sm text-white/70 transition hover:border-[var(--amber)]/50 hover:text-[var(--cream)]"
+            >
+              {t.label}
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );
