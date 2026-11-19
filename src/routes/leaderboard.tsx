@@ -8,7 +8,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { RefreshCw, Users, Medal, BookA, ClipboardCheck, type LucideIcon } from "lucide-react";
-import { formatInt, formatTime } from "@/lib/sv-format";
+import { formatInt, formatPercentInt, formatTime } from "@/lib/sv-format";
 import { PodiumRank } from "@/components/ui/PodiumRank";
 import { fetchOrdLeaderboard, type OrdLeaderboardRow } from "@/lib/word-practice.functions";
 import { fetchProvLeaderboard, type ProvLeaderboardRow } from "@/lib/prov-leaderboard.functions";
@@ -88,7 +88,7 @@ export const Route = createFileRoute("/leaderboard")({
         "@type": "CollectionPage",
         name: "Topplista: Tvåkommanollan",
         description:
-          "ELO-rankning av Sveriges vassaste HP-spelare i verbal, kvantitativ och ord. Uppdateras live efter varje match.",
+          "ELO-ranking av Sveriges vassaste HP-spelare i verbal, kvantitativ och ord. Uppdateras live efter varje match.",
         url: "https://tvakommanollan.se/leaderboard",
         inLanguage: "sv-SE",
         isPartOf: { "@id": "https://tvakommanollan.se/#website" },
@@ -331,7 +331,7 @@ function AllTimeTable({
               <th className="px-4 py-3 text-left font-semibold">Spelare</th>
               <th className="px-4 py-3 text-right font-semibold">ELO</th>
               <th className="hidden px-4 py-3 text-right font-semibold sm:table-cell">Matcher</th>
-              <th className="px-4 py-3 text-right font-semibold">Win %</th>
+              <th className="px-4 py-3 text-right font-semibold">Vunna</th>
             </tr>
           </thead>
           <tbody>
@@ -407,7 +407,7 @@ function Row({ r, isMe }: { r: LbRow; isMe: boolean }) {
       <td className="px-4 py-4 text-right">
         <span className="inline-flex items-center justify-end gap-1.5">
           <span className="text-sm font-semibold tabular-nums text-white">
-            {wr === null ? "–" : `${wr}%`}
+            {formatPercentInt(wr)}
           </span>
         </span>
       </td>
@@ -614,7 +614,9 @@ function OrdRow({ r, isMe }: { r: OrdLeaderboardRow; isMe: boolean }) {
       <td className="hidden px-3 py-2.5 text-right tabular-nums text-white/70 sm:table-cell">
         {r.total_count}
       </td>
-      <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
+      <td className="px-3 py-2.5 text-right tabular-nums text-white/85">
+        {formatPercentInt(r.accuracy)}
+      </td>
     </tr>
   );
 }
@@ -711,7 +713,9 @@ function ProvRow({
         {formatInt(r.passes)}
       </td>
       {visaTräffsäkerhet && (
-        <td className="px-3 py-2.5 text-right tabular-nums text-white/85">{r.accuracy}%</td>
+        <td className="px-3 py-2.5 text-right tabular-nums text-white/85">
+          {formatPercentInt(r.accuracy)}
+        </td>
       )}
     </tr>
   );

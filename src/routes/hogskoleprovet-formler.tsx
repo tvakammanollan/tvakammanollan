@@ -175,7 +175,7 @@ export const Route = createFileRoute("/hogskoleprovet-formler")({
   head: () => ({
     meta: pageMeta({
       path: PATH,
-      title: fitTitle("Formler för högskoleprovet", "XYZ och KVA"),
+      title: fitTitle("Formler för XYZ och KVA på högskoleprovet"),
       description:
         "Formlerna till högskoleprovets kvantitativa del: bråk, potenser, kvadreringsregler, räta linjer, area, volym och sannolikhet. Med uppgifter ur gamla prov.",
       ogTitle: "Alla formler du behöver till högskoleprovet",

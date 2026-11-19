@@ -1173,7 +1173,7 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
   aldrig spelat en match och syntes därför inte alls, vilket gjorde listan
   kortare än antalet registrerade — 65 rader på 605 konton. Tröskeln har nu
   ändrats medvetet två gånger; återinför den inte utan att fråga.
-- **Listan visar 50 rader**, `LEADERBOARD_SIZE` i `leaderboard.functions.ts`,
+- **Listan visar 10 rader** (var 50 före `b3dac4d`), `LEADERBOARD_SIZE` i `leaderboard.functions.ts`,
   och talet styr alla tre flikarna (verbal, matte, ord). `limit` i anropen
   måste förbli **större** än det: den som ligger utanför toppen får ändå se sin
   egen placering under tabellen, och den raden plockas ur samma svar.

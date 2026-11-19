@@ -39,7 +39,7 @@ export const Route = createFileRoute("/hogskoleprovet-ord_/$term")({
     return {
       meta: pageMeta({
         path,
-        title: fitTitle(`Orden på högskoleprovet ${label}`, "med svar"),
+        title: fitTitle(`Orden på högskoleprovet ${label}`),
         description: describeWithin(
           `Alla ${ord.length} ORD-uppgifter från högskoleprovet ${label} med svarsalternativ och rätt svar: ${exempel} med flera.`,
           "Hela provet går att skriva på tid.",

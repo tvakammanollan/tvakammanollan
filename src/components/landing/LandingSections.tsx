@@ -650,13 +650,15 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
 
         {/* `min-w-0` på grid-itemet är inte kosmetik: ett grid-item har
             `min-width: auto` och kan därför inte krympa under sitt innehåll.
-            Tabellen har `min-w-[420px]`, så utan detta växte den scrollande
+            Tabellen hade `min-w-[420px]`, så utan detta växte den scrollande
             behållaren till 420px i en 380px viewport i stället för att
-            scrolla, och gav hela sidan 56px sidoscroll. */}
+            scrolla, och gav hela sidan 56px sidoscroll. Formstapeln döljs nu
+            under `sm` i stället: med den kvar låg ELO-kolumnen utanför
+            skärmen på telefon och gick bara att se genom att svepa. */}
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-16">
           <div className="min-w-0">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px]">
+              <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/25">
                     <th className="w-[46px] pb-2.5 text-left font-mono text-xs font-normal text-white/55">
@@ -665,10 +667,10 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
                     <th className="pb-2.5 pr-3 text-left font-mono text-xs font-normal text-white/55">
                       Spelare
                     </th>
-                    <th className="w-[150px] pb-2.5 pr-3 text-left font-mono text-xs font-normal text-white/55">
+                    <th className="hidden w-[150px] pb-2.5 pr-3 text-left font-mono text-xs font-normal text-white/55 sm:table-cell">
                       Form
                     </th>
-                    <th className="w-[90px] pb-2.5 text-right font-mono text-xs font-normal text-white/55">
+                    <th className="w-[72px] pb-2.5 text-right font-mono text-xs font-normal text-white/55">
                       ELO
                     </th>
                   </tr>
@@ -680,7 +682,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
                         {i + 1}
                       </td>
                       <td className="py-3 pr-3 text-[15px] font-bold">{rankedName(p.username)}</td>
-                      <td className="py-3 pr-3">
+                      <td className="hidden py-3 pr-3 sm:table-cell">
                         <span className="block h-1.5 min-w-[70px] overflow-hidden rounded-sm bg-secondary">
                           <span
                             className={`block h-full ${i === 0 ? "bg-primary" : "bg-bark"}`}
@@ -689,7 +691,7 @@ export function Topplistan({ stats }: { stats: LandingStats | null }) {
                         </span>
                       </td>
                       <td className="py-3 text-right font-mono text-[14.5px] font-medium tabular-nums">
-                        {formatInt(p.elo)}
+                        {p.elo}
                       </td>
                     </tr>
                   ))}

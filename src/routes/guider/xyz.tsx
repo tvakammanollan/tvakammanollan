@@ -99,7 +99,7 @@ function XyzGuidePage() {
           <li>
             <strong style={{ color: "var(--cream)" }}>Andragradsekvationer:</strong> lösning med
             kvadratkomplettering eller andragradssatsen. Ibland som villkor ("för vilka x gäller
-            att...").
+            att …").
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Geometri:</strong> area och volym av

@@ -38,7 +38,7 @@ export function ProvLocked({ label }: { label: string }) {
         Gratis att skriva:{" "}
         {free.map((e, i) => (
           <span key={e.term}>
-            {i > 0 && " och "}
+            {i === 0 ? null : i === free.length - 1 ? " och " : ", "}
             <Link
               to="/gamla-prov/$term"
               params={{ term: e.term }}

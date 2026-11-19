@@ -19,7 +19,7 @@ export const Route = createFileRoute("/hogskoleprovet-ord")({
     return {
       meta: pageMeta({
         path: PATH,
-        title: fitTitle("Orden på högskoleprovet", "alla prov"),
+        title: fitTitle("Orden på högskoleprovet", "från alla prov"),
         description: `Alla ORD-ord från ${exams.length} högskoleprov sedan 2012, med svarsalternativ och rätt svar. Ett prov per sida, med länkar till ordlistan.`,
         ogTitle: "Alla ORD-ord från varje högskoleprov sedan 2012",
       }),
