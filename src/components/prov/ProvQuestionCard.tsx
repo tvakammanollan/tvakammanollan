@@ -221,7 +221,9 @@ export function ProvQuestionCard({
         </p>
       )}
 
-      {revealed && isOrd && question.text && <ProvOrdExplain word={question.text} />}
+      {revealed && isOrd && question.text && question.explain && (
+        <ProvOrdExplain word={question.text} explain={question.explain} />
+      )}
 
       {revealed && <ProvDiscussLink thread={thread} />}
     </article>

@@ -511,6 +511,19 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
     det via sidans arkiverade kopia, men **Internet Archive svarar ibland
     "Temporarily Offline" och det läses som "finns inte"**. Kör om innan du
     ger upp.
+  - **Kör sedan `fix_passages.py --apply` och `bun run scripts/ord-forklaringar.ts --apply`**
+    (2026-11-20). `verbal.py` tappar den första texten när en LÄS-uppgift
+    har två texter med var sin rubrik (en dikt och en prosatext, "Två
+    texter av …"): andra rubriken startar om lästexten. Så försvann
+    Södergrans dikt ur 2026ht-2, Thorvalls "Ångestmaskerad" ur 2023vt-3 och
+    "Säkerhetslina" ur 2025ht-3. Läggs en ny sådan till: en post i `FIXES`
+    i `fix_passages.py` (texterna får `parts`, dikter behåller `\n`). Skriptet
+    städar också tomsidor, avklippta stycken och ELF-alternativ, och
+    `--check` listar rader i häftet som saknas i arkivet.
+    `ord-forklaringar.ts` skriver `explain` på varje ORD-uppgift (ordlistans
+    betydelse, annars `scripts/ord-forklaringar-egna.json`) och vägrar om
+    ett ord saknar förklaring. Utan den får det nya provets ORD ingen ruta
+    under facit.
   - **Efteråt, för hand:** `ord_termer.py`, navets `<lastmod>` i sitemapen
     (skriptet sätter provdatumet), och talen som står i text: landningssidan,
     `/om`, `/pris`, `/faq`, `/plugga-infor-hogskoleprovet`, `__root.tsx`,

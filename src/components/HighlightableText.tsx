@@ -1,4 +1,4 @@
-import { useCallback, useRef, type ReactNode } from "react";
+import { Fragment, useCallback, useRef, type ReactNode } from "react";
 import { Highlighter as HighlighterIcon, Eraser } from "lucide-react";
 import { segmentParagraph } from "@/lib/highlights";
 import type { Highlighter } from "@/hooks/useHighlighter";
@@ -77,12 +77,15 @@ export function HighlightableText({
   className = "",
   paragraphClassName = "",
   decorate,
+  before,
 }: {
   paragraphs: string[];
   highlighter: Highlighter;
   className?: string;
   paragraphClassName?: string;
   decorate?: (text: string) => ReactNode;
+  /** Det som ska stå före stycke i (rubriken på nästa text). Räknas inte som stycke. */
+  before?: (i: number) => ReactNode;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { active, ranges, add, erase } = highlighter;
@@ -122,23 +125,26 @@ export function HighlightableText({
       className={`${className} ${active ? "cursor-text selection:bg-[var(--amber)]/30" : ""}`}
     >
       {paragraphs.map((para, i) => (
-        <p key={i} data-hp-para={i} className={paragraphClassName}>
-          {segmentParagraph(para, ranges, i).map((seg, j) =>
-            seg.marked ? (
-              <mark
-                key={j}
-                className="hp-highlight"
-                // Med pennan aktiv suddar ett klick i fältet bort det.
-                onClick={active ? () => erase(i, seg.start) : undefined}
-                style={active ? { cursor: "pointer" } : undefined}
-              >
-                {seg.text}
-              </mark>
-            ) : (
-              <span key={j}>{decorate ? decorate(seg.text) : seg.text}</span>
-            ),
-          )}
-        </p>
+        <Fragment key={i}>
+          {before?.(i)}
+          <p data-hp-para={i} className={paragraphClassName}>
+            {segmentParagraph(para, ranges, i).map((seg, j) =>
+              seg.marked ? (
+                <mark
+                  key={j}
+                  className="hp-highlight"
+                  // Med pennan aktiv suddar ett klick i fältet bort det.
+                  onClick={active ? () => erase(i, seg.start) : undefined}
+                  style={active ? { cursor: "pointer" } : undefined}
+                >
+                  {seg.text}
+                </mark>
+              ) : (
+                <span key={j}>{decorate ? decorate(seg.text) : seg.text}</span>
+              ),
+            )}
+          </p>
+        </Fragment>
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
 import { BookOpen, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import type { ProvPassage } from "@/types/gamla-prov";
 import { HighlightableText, HighlighterToggle } from "@/components/HighlightableText";
 import type { Highlighter } from "@/hooks/useHighlighter";
@@ -38,14 +38,18 @@ export function ProvPassagePanel({
           paragraphs={passage.paragraphs}
           highlighter={highlighter}
           className="space-y-4"
-          paragraphClassName="text-[15px] leading-[1.75] text-[var(--cream)]"
+          paragraphClassName="whitespace-pre-line text-[15px] leading-[1.75] text-[var(--cream)]"
           decorate={gapNumber ? (text) => highlightGap(text, gapNumber) : undefined}
+          before={(i) => <PassagePartBreak passage={passage} index={i} />}
         />
       ) : (
         passage.paragraphs.map((para, i) => (
-          <p key={i} className="text-[15px] leading-[1.75] text-[var(--cream)]">
-            {gapNumber ? highlightGap(para, gapNumber) : para}
-          </p>
+          <Fragment key={i}>
+            <PassagePartBreak passage={passage} index={i} />
+            <p className="whitespace-pre-line text-[15px] leading-[1.75] text-[var(--cream)]">
+              {gapNumber ? highlightGap(para, gapNumber) : para}
+            </p>
+          </Fragment>
         ))
       )}
 
@@ -111,6 +115,46 @@ export function ProvPassagePanel({
         </div>
       )}
     </section>
+  );
+}
+
+/**
+ * Gränsen mellan två texter i samma lästext: källan till texten som just
+ * slutade och rubriken på den som börjar. Renderar ingenting för vanliga
+ * lästexter med en enda text.
+ */
+export function PassagePartBreak({
+  passage,
+  index,
+  compact = false,
+}: {
+  passage: ProvPassage;
+  index: number;
+  compact?: boolean;
+}) {
+  const parts = passage.parts;
+  if (!parts) return null;
+  const k = parts.findIndex((part) => part.start === index);
+  if (k < 0) return null;
+  const previous = k > 0 ? parts[k - 1] : undefined;
+  const title = parts[k].title;
+  return (
+    <>
+      {previous?.byline && (
+        <p className={`italic text-[var(--text-tertiary)] ${compact ? "text-xs" : "pt-1 text-sm"}`}>
+          {previous.byline}
+        </p>
+      )}
+      {title && (
+        <h3
+          className={`font-semibold text-[var(--cream)] ${
+            compact ? "mt-3 text-sm first:mt-0" : k > 0 ? "pt-4 text-base" : "text-base"
+          }`}
+        >
+          {title}
+        </h3>
+      )}
+    </>
   );
 }
 

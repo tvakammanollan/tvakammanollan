@@ -112,6 +112,18 @@ export interface ProvQuestion {
    * den visas som vanligt — men det ska framgå att den inte gav poäng.
    */
   utgar?: boolean;
+  /**
+   * ORD: ordets betydelse, visad när facit visas. Skrivs av
+   * `scripts/ord-forklaringar.ts` på varje ORD-uppgift. `slug` finns när
+   * ordet har en sida i ordlistan.
+   */
+  explain?: ProvOrdExplanation;
+}
+
+export interface ProvOrdExplanation {
+  sense: string;
+  source: string;
+  slug?: string;
 }
 
 export interface ProvGlossEntry {
@@ -119,10 +131,23 @@ export interface ProvGlossEntry {
   definition: string;
 }
 
+/**
+ * En av flera texter som hör till samma uppgifter ("Två texter av …", en dikt
+ * och en prosatext). `start` är indexet i `paragraphs` där texten börjar.
+ * Sista delens källa står i passagens egen `byline`.
+ */
+export interface ProvPassagePart {
+  start: number;
+  title?: string;
+  byline?: string;
+}
+
 export interface ProvPassage {
   title?: string;
+  /** Ett stycke med `\n` är en dikt: raderna står kvar. */
   paragraphs: string[];
   byline?: string;
+  parts?: ProvPassagePart[];
   /** Ordförklaringarna som står i en ruta under texten i provhäftet. */
   glossary?: ProvGlossEntry[];
 }
