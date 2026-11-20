@@ -65,7 +65,7 @@ function NogGuidePage() {
           Vad är NOG?
         </h2>
         <p>
-          NOG skiljer sig från de andra delproven. Du får en fråga (t.ex. "Hur stor är vinkeln x?")
+          NOG skiljer sig från de andra delproven. Du får en fråga (t.ex. ”Hur stor är vinkeln x?”)
           följt av 2 påståenden: (1) och (2). Du ska inte räkna ut svaret, bara avgöra om
           informationen i påståendena räcker för att besvara frågan. NOG har 6 uppgifter per
           kvantitativt provpass. De fem svarsalternativen är alltid desamma:

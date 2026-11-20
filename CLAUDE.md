@@ -67,7 +67,7 @@ upp igen är det något som kopierats från en gammal gren.
   sönder av att de ligger kvar.
 - **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
   `tkn-analytics-consent`, `tkn:ach:v1:<uid>`,
-  `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:consent-changed`,
+  `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:ljud`, `tkn:consent-changed`,
   `tkn:achievements:check`.
   Samtyckesnyckeln flyttas över från sin `hpk-`-föregångare: modulen läser den
   gamla nyckeln en gång och skriver om den — utan flytten hade varje besökare
@@ -511,6 +511,19 @@ koordinater per rad och sida; `pip install pymupdf pillow`. Utan `--fresh`
     det via sidans arkiverade kopia, men **Internet Archive svarar ibland
     "Temporarily Offline" och det läses som "finns inte"**. Kör om innan du
     ger upp.
+  - **Kör sedan `fix_passages.py --apply` och `bun run scripts/ord-forklaringar.ts --apply`**
+    (2026-11-20). `verbal.py` tappar den första texten när en LÄS-uppgift
+    har två texter med var sin rubrik (en dikt och en prosatext, "Två
+    texter av …"): andra rubriken startar om lästexten. Så försvann
+    Södergrans dikt ur 2026ht-2, Thorvalls "Ångestmaskerad" ur 2023vt-3 och
+    "Säkerhetslina" ur 2025ht-3. Läggs en ny sådan till: en post i `FIXES`
+    i `fix_passages.py` (texterna får `parts`, dikter behåller `\n`). Skriptet
+    städar också tomsidor, avklippta stycken och ELF-alternativ, och
+    `--check` listar rader i häftet som saknas i arkivet.
+    `ord-forklaringar.ts` skriver `explain` på varje ORD-uppgift (ordlistans
+    betydelse, annars `scripts/ord-forklaringar-egna.json`) och vägrar om
+    ett ord saknar förklaring. Utan den får det nya provets ORD ingen ruta
+    under facit.
   - **Efteråt, för hand:** `ord_termer.py`, navets `<lastmod>` i sitemapen
     (skriptet sätter provdatumet), och talen som står i text: landningssidan,
     `/om`, `/pris`, `/faq`, `/plugga-infor-hogskoleprovet`, `__root.tsx`,
@@ -1173,7 +1186,7 @@ Tre listor, alla i serverfunktioner med service role: `fetchLeaderboard` +
   aldrig spelat en match och syntes därför inte alls, vilket gjorde listan
   kortare än antalet registrerade — 65 rader på 605 konton. Tröskeln har nu
   ändrats medvetet två gånger; återinför den inte utan att fråga.
-- **Listan visar 50 rader**, `LEADERBOARD_SIZE` i `leaderboard.functions.ts`,
+- **Listan visar 10 rader** (var 50 före `b3dac4d`), `LEADERBOARD_SIZE` i `leaderboard.functions.ts`,
   och talet styr alla tre flikarna (verbal, matte, ord). `limit` i anropen
   måste förbli **större** än det: den som ligger utanför toppen får ändå se sin
   egen placering under tabellen, och den raden plockas ur samma svar.
@@ -1958,6 +1971,18 @@ knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
 - **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
   dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
   alternativ). Det fångar de flesta felskrivningar.
+
+### Ljud (2026-11-19)
+
+Alla ljud syntetiseras i `src/lib/sounds.ts` (Web Audio, inga filer). Rätt/fel
+spelas i `/ord`, `/train`, `/mek-ovning` och gamla prov i **övningsläget**,
+aldrig i provläget (det hade avslöjat facit före inlämningen). Matchen har en
+påminnelse vid 30 s kvar och tick de sista fem; resultatsidan spelar vinst
+eller förlust, utmärkelser ett klockspel. Av/på: `useSoundEnabled()`,
+knappen ligger i kontomenyn, mobilmenyn och provpassets list (övningsläget,
+eftersom utloggade inte har någon meny). Nyckeln `tkn:ljud` ersatte
+`sfx_enabled`, som flyttas över en gång. Knappar med `data-sfx="off"` får inget
+globalt klickljud.
 
 ### Streak
 

@@ -109,17 +109,17 @@ function DtkGuidePage() {
         <p>De flesta DTK-frågor är av fyra slag:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            <strong style={{ color: "var(--cream)" }}>Läsa av ett värde:</strong> "Vad var värdet år
-            X?" Lokalisera stapeln eller punkten, läs av mot y-axeln och ta hänsyn till enheten.
+            <strong style={{ color: "var(--cream)" }}>Läsa av ett värde:</strong> ”Vad var värdet år
+            X?” Lokalisera stapeln eller punkten, läs av mot y-axeln och ta hänsyn till enheten.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Jämförelse:</strong> "Vilket land hade störst
-            ökning?" Identifiera de två relevanta värdena och räkna differensen. Var noga med om
+            <strong style={{ color: "var(--cream)" }}>Jämförelse:</strong> ”Vilket land hade störst
+            ökning?” Identifiera de två relevanta värdena och räkna differensen. Var noga med om
             frågan gäller absolut eller relativ förändring.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Beräkning:</strong> "Hur många procent ökade X
-            från år A till år B?" Standardformeln: (nytt − gammalt) / gammalt × 100.
+            <strong style={{ color: "var(--cream)" }}>Beräkning:</strong> ”Hur många procent ökade X
+            från år A till år B?” Standardformeln: (nytt − gammalt) / gammalt × 100.
           </li>
           <li>
             <strong style={{ color: "var(--cream)" }}>Uppskattning:</strong> ibland räcker det att
@@ -144,7 +144,7 @@ function DtkGuidePage() {
             nivå. Läs vad frågan gäller.
           </li>
           <li>
-            <strong style={{ color: "var(--cream)" }}>Glömma enheter:</strong> står det "tusental"
+            <strong style={{ color: "var(--cream)" }}>Glömma enheter:</strong> står det ”tusental”
             vid axeln och du läser talet rakt av blir svaret 1 000 gånger för litet.
           </li>
           <li>

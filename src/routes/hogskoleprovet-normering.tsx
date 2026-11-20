@@ -99,7 +99,7 @@ export const Route = createFileRoute("/hogskoleprovet-normering")({
     return {
       meta: pageMeta({
         path: PATH,
-        title: fitTitle("Normering högskoleprovet", "alla tabeller"),
+        title: fitTitle("Normering högskoleprovet: alla tabeller"),
         description: describeWithin(
           `Hur många rätt som krävdes för 2,0, 1,5 och 1,0 på varje högskoleprov från ${äldst.label.toLowerCase()} till ${nyast.label.toLowerCase()}.`,
           "Ur UHR:s officiella tabeller.",

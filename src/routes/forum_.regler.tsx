@@ -82,7 +82,7 @@ function ForumRulesPage() {
           </p>
           <p>
             Raderar du ditt konto avidentifieras din användarrad, och dina inlägg står kvar utan
-            namn (märkta "Borttagen användare") så att trådarna förblir läsbara. Vill du ha ett
+            namn (märkta ”Borttagen användare”) så att trådarna förblir läsbara. Vill du ha ett
             enskilt inlägg borttaget: hör av dig.
           </p>
           <p>

@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Swords } from "lucide-react";
 import { HpScoreWidget } from "@/components/ui/HpScoreWidget";
-import { formatDate, enhet } from "@/lib/sv-format";
+import { formatDate, enhet, formatPercentInt } from "@/lib/sv-format";
 import { EmptyState } from "@/components/EmptyState";
 import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
@@ -200,7 +200,9 @@ function StatsPage() {
           <StatCard
             label="Vinster"
             value={profile.wins}
-            sub={winRate !== null ? `${winRate.toFixed(0)}% win rate` : undefined}
+            sub={
+              winRate !== null ? `${formatPercentInt(Math.round(winRate))} av matcherna` : undefined
+            }
           />
           <StatCard
             label="Snitt verbal"
@@ -218,7 +220,7 @@ function StatsPage() {
           {/* Ett kort, inte två. "Nuvarande" och "Längsta" är samma begrepp,
               och rekordet betyder bara något i relation till var man står nu. */}
           <StatCard
-            label="Streak"
+            label="Spelat i rad"
             value={`${enhet(profile.current_streak ?? 0, "dag")}`}
             sub={`Rekord: ${enhet(profile.longest_streak ?? 0, "dag")}`}
           />

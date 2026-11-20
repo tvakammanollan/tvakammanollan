@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  uppräkning,
   ordDefinition,
   ordText,
   displayCategory,
@@ -110,5 +111,14 @@ describe("displayCategory", () => {
   it("lämnar redan visningsklara koder orörda", () => {
     expect(displayCategory("ORD")).toBe("ORD");
     expect(displayCategory("MEK")).toBe("MEK");
+  });
+});
+
+describe("uppräkning", () => {
+  it("binder ihop sista ledet med och, resten med komma", () => {
+    expect(uppräkning([])).toBe("");
+    expect(uppräkning(["A"])).toBe("A");
+    expect(uppräkning(["A", "B"])).toBe("A och B");
+    expect(uppräkning(["A", "B", "C"])).toBe("A, B och C");
   });
 });

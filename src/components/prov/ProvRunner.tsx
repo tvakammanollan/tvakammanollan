@@ -13,7 +13,10 @@ import {
   Loader2,
   Maximize2,
   Minimize2,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
+import { useSoundEnabled } from "@/hooks/useSoundEnabled";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CircularTimer } from "@/components/ui/CircularTimer";
@@ -23,6 +26,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { updateStreak } from "@/lib/streak";
 import { trackEvent } from "@/lib/events";
 import { allExams, isCorrect } from "@/lib/prov-data";
+import { sounds } from "@/lib/sounds";
 import { isFreeExam } from "@/lib/prov-access";
 import { usePremium, type PremiumState } from "@/hooks/usePremium";
 import {
@@ -198,6 +202,8 @@ export function ProvRunner({
     }
   }, []);
 
+  const [ljud, setLjud] = useSoundEnabled();
+
   function toggleFokus() {
     setFokus((on) => {
       const next = !on;
@@ -272,6 +278,7 @@ export function ProvRunner({
 
   const submit = useCallback(() => {
     const at = Date.now();
+    sounds.submit();
     setSubmittedAt(at);
     setPhase("result");
     persist({ submittedAt: at });
@@ -347,6 +354,12 @@ export function ProvRunner({
       if (submittedAt || pausedAt !== null) return;
       // I övningsläge visas facit direkt, så svaret låses när det väl är lagt.
       if (mode === "ova" && answers[questions[current].nr]) return;
+      // Ljud för rätt/fel bara i övningsläget. I provläget hade det avslöjat
+      // facit innan inlämningen.
+      if (mode === "ova") {
+        if (isCorrect(questions[current], letter)) sounds.correct();
+        else sounds.wrong();
+      }
       setAnswers((prev) => {
         const next = { ...prev, [questions[current].nr]: letter };
         saveProgress(data.term, data.pass, {
@@ -596,6 +609,28 @@ export function ProvRunner({
                 <Maximize2 className="h-4 w-4" aria-hidden />
               )}
             </button>
+            {/* Ljudet för rätt och fel finns bara i övningsläget, och utloggade
+                har ingen meny att stänga av det i. */}
+            {mode === "ova" && (
+              <button
+                type="button"
+                data-sfx="off"
+                onClick={() => {
+                  setLjud(!ljud);
+                  if (!ljud) sounds.ping();
+                }}
+                aria-pressed={ljud}
+                aria-label={ljud ? "Stäng av ljudet" : "Slå på ljudet"}
+                title={ljud ? "Stäng av ljudet" : "Slå på ljudet"}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] transition-colors hover:text-[var(--cream)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--amber)] focus-visible:ring-offset-2"
+              >
+                {ljud ? (
+                  <Volume2 className="h-4 w-4" aria-hidden />
+                ) : (
+                  <VolumeX className="h-4 w-4" aria-hidden />
+                )}
+              </button>
+            )}
             {remaining !== null ? (
               <CircularTimer totalSeconds={data.minutes * 60} remainingSeconds={remaining} />
             ) : (

@@ -1,5 +1,5 @@
 import { Check, Flag, X } from "lucide-react";
-import { ordText } from "@/lib/sv-format";
+import { ordText, uppräkning } from "@/lib/sv-format";
 import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovShort, type ProvQuestion } from "@/types/gamla-prov";
 import { CropView, type Crop } from "@/components/question/CropView";
@@ -211,7 +211,7 @@ export function ProvQuestionCard({
 
       {revealed && correct.length > 1 && (
         <p className="mt-3 text-xs text-[var(--text-tertiary)]">
-          UHR har i efterhand godkänt flera svar på den här uppgiften ({correct.join(" och ")}).
+          UHR har i efterhand godkänt flera svar på den här uppgiften ({uppräkning(correct)}).
         </p>
       )}
 
@@ -221,7 +221,9 @@ export function ProvQuestionCard({
         </p>
       )}
 
-      {revealed && isOrd && question.text && <ProvOrdExplain word={question.text} />}
+      {revealed && isOrd && question.text && question.explain && (
+        <ProvOrdExplain word={question.text} explain={question.explain} />
+      )}
 
       {revealed && <ProvDiscussLink thread={thread} />}
     </article>

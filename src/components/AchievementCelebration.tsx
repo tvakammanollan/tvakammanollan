@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useDismissible } from "@/hooks/useDismissible";
 import { AchievementIcon } from "@/components/ui/AchievementIcon";
 import { TIER_ACCENT } from "@/types";
+import { sounds } from "@/lib/sounds";
 import type { AchievementState } from "@/lib/achievements";
 
 /**
@@ -19,6 +20,7 @@ export function AchievementCelebration({
 }) {
   useEffect(() => {
     if (items.length === 0) return;
+    sounds.achievement();
     const fire = (particleRatio: number, opts: confetti.Options) => {
       confetti({
         origin: { y: 0.55 },

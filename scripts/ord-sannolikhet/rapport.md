@@ -1,12 +1,12 @@
 # Ordsannolikheten: backtest
 
-Genererad av `modell.ts`. 56 prov 1997vt–2026vt, 8761 ord i banken.
+Genererad av `modell.ts`. 57 prov 1997vt–2026ht, 8761 ord i banken.
 
 ## Provlikheten
 
-Tränad på provord före 2020 mot övriga bankord. Prövad på de 219 bankord som stod på ett prov för första gången 2020–, mot 7320 som aldrig gjort det.
+Tränad på provord före 2020 mot övriga bankord. Prövad på de 233 bankord som stod på ett prov för första gången 2020–, mot 7306 som aldrig gjort det.
 
-AUC 0.676 (0,5 är slump).
+AUC 0.680 (0,5 är slump).
 
 | Särdrag | Odds |
 | --- | --- |
@@ -27,13 +27,13 @@ Bland redan testade ord går provlikheten inte att pröva: de 28 som kommit till
 
 ## Återkomst efter ålder
 
-Mätt på de 14 proven 2020ht–2026vt.
+Mätt på de 15 proven 2020ht–2026ht.
 
 | Sedan senaste prov | Ord-prov-par | Återkom | Per ord och prov |
 | --- | --- | --- | --- |
-| under 10 år | 5477 | 0 | 0,009 % |
-| 10–16 år | 5536 | 6 | 0,108 % |
-| över 16 år | 9347 | 17 | 0,182 % |
+| under 10 år | 5877 | 0 | 0,009 % |
+| 10–16 år | 5794 | 6 | 0,104 % |
+| över 16 år | 10280 | 17 | 0,165 % |
 
 ## Aldrig testade ord
 
@@ -41,11 +41,11 @@ Mätt på de 14 proven 2020ht–2026vt.
 
 ## Utfall utanför träningsdatan
 
-Modellen tränad på 2020ht–2022ht, prövad på 2023vt–2026vt (7 prov).
+Modellen tränad på 2020ht–2022ht, prövad på 2023vt–2026ht (8 prov).
 
 | | Väntat | Faktiskt |
 | --- | --- | --- |
-| Testade ord som återkom | 12,7 | 10 |
+| Testade ord som återkom | 14,6 | 10 |
 | Aldrig testade ord som kom (rena prov) | 3,5 | 7 |
 
 | Modellens topp | Träffar | Slumpen hade gett |
@@ -57,20 +57,20 @@ Modellen tränad på 2020ht–2022ht, prövad på 2023vt–2026vt (7 prov).
 | Sannolikhet | Ord-prov-par | Väntade träffar | Faktiska |
 | --- | --- | --- | --- |
 | 0,00 % till 0,01 % | 39956 | 1,9 | 3 |
-| 0,01 % till 0,05 % | 13852 | 2,1 | 4 |
-| 0,05 % till 0,15 % | 3029 | 3,6 | 2 |
-| 0,15 % till  | 4015 | 8,6 | 8 |
+| 0,01 % till 0,05 % | 14213 | 2,2 | 4 |
+| 0,05 % till 0,15 % | 3499 | 4,1 | 2 |
+| 0,15 % till  | 4625 | 9,9 | 8 |
 
 ## Inför nästa prov
 
-Summan över banken är 2,56 väntade ord av provets 20. Resten väntas ligga utanför banken.
+Summan över banken är 2,50 väntade ord av provets 20. Resten väntas ligga utanför banken.
 
 | Band | Sannolikhet per prov | Antal ord |
 | --- | --- | --- |
-| 5 | minst 0,150 % | 530 |
-| 4 | 0,050 % till 0,150 % | 556 |
-| 3 | 0,015 % till 0,050 % | 1601 |
-| 2 | 0,005 % till 0,015 % | 5088 |
-| 1 | 0,000 % till 0,005 % | 985 |
+| 5 | minst 0,150 % | 524 |
+| 4 | 0,050 % till 0,150 % | 601 |
+| 3 | 0,015 % till 0,050 % | 1591 |
+| 2 | 0,005 % till 0,015 % | 5038 |
+| 1 | 0,000 % till 0,005 % | 1006 |
 
-De 25 högsta: gå-i-bräschen-för (0,33 %), inte-ha-något-till-övers-för (0,33 %), komma-till-korta (0,33 %), ligga-i-sin-linda (0,33 %), ligga-i-träda (0,33 %), låta-påskina (0,33 %), stick-i-stäv (0,33 %), stryka-medhårs (0,33 %), ta-bladet-från-munnen (0,33 %), vara-i-faggorna (0,33 %), vara-i-ropet (0,33 %), vara-på-upphällningen (0,33 %), föresätta-sig (0,31 %), förkovra-sig (0,31 %), vinnlägga-sig (0,31 %), gått-i-stå (0,31 %), helt-sonika (0,31 %), inte-oäven (0,31 %), pocka-på (0,31 %), utan-omsvep (0,31 %), hemfalla-åt (0,29 %), borgenär (0,29 %), diskrepans (0,29 %), diskretion (0,29 %), förehavanden (0,29 %).
+De 25 högsta: gå-i-bräschen-för (0,31 %), inte-ha-något-till-övers-för (0,31 %), komma-på-obestånd (0,31 %), komma-till-korta (0,31 %), ligga-i-sin-linda (0,31 %), ligga-i-träda (0,31 %), låta-påskina (0,31 %), stick-i-stäv (0,31 %), stryka-medhårs (0,31 %), ta-bladet-från-munnen (0,31 %), vara-i-faggorna (0,31 %), vara-i-ropet (0,31 %), vara-på-upphällningen (0,31 %), föresätta-sig (0,29 %), förkovra-sig (0,29 %), tillskansa-sig (0,29 %), urskulda-sig (0,29 %), vinnlägga-sig (0,29 %), gått-i-stå (0,29 %), helt-sonika (0,29 %), inte-oäven (0,29 %), pocka-på (0,29 %), så-split (0,29 %), utan-omsvep (0,29 %), borga-för (0,27 %).

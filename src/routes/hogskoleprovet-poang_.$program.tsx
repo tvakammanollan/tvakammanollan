@@ -83,7 +83,7 @@ const PROGRAM: Record<string, ProgramConfig> = {
   },
   civilekonom: {
     name: "Civilekonomprogrammet, Handelshögskolan i Stockholm",
-    h1: "Handelshögskolan: HP-poäng för Civilekonomprogrammet",
+    h1: "Handelshögskolan: HP-poäng för civilekonomprogrammet",
     intro:
       "Handelshögskolan i Stockholm (SSE) är en fristående högskola och en av de mest sökta ekonomutbildningarna i landet. Sedan 2025 antas de flesta platserna via gymnasiebetyg med meritpoäng, men en HP-kvot finns kvar, och kravet har stigit varje år.",
     note: "Från och med 2025 räknar Handelshögskolan in meritpoäng i betygsurvalet (max meritvärde höjt från 20,0 till 22,5), vilket är varför BI/BII-poängen ovan inte är direkt jämförbara mellan 2024 och 2025. HP-kravet påverkas inte av den ändringen.",

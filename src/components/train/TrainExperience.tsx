@@ -461,7 +461,8 @@ export function TrainExperience({
   const handleSelect = (letter: string) => {
     if (revealed || !currentQ) return;
     const isCorrect = letter === currentQ.correct_answer;
-    sounds.ping();
+    if (isCorrect) sounds.correct();
+    else sounds.wrong();
     setSelected(letter);
     setRevealed(true);
     setResults((r) => [

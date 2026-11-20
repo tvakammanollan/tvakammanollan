@@ -1,8 +1,10 @@
+import { Fragment } from "react";
 import { ordText, enhet } from "@/lib/sv-format";
 import { acceptedAnswers, altCount } from "@/lib/prov-data";
 import { delprovFull, type ProvPass, type ProvQuestion } from "@/types/gamla-prov";
 import type { ProvThreadLink } from "@/lib/forum-prov.functions";
 import { ProvDiscussLink } from "./ProvDiscussLink";
+import { PassagePartBreak } from "./ProvPassagePanel";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -56,13 +58,18 @@ export function ProvFacitList({
                           </p>
                         )}
                         {showPassage.paragraphs.map((para, pi) => (
-                          <p
-                            key={pi}
-                            className="mb-2 text-sm leading-relaxed text-white/70 last:mb-0"
-                          >
-                            {para}
-                          </p>
+                          <Fragment key={pi}>
+                            <PassagePartBreak passage={showPassage} index={pi} compact />
+                            <p className="mb-2 whitespace-pre-line text-sm leading-relaxed text-white/70 last:mb-0">
+                              {para}
+                            </p>
+                          </Fragment>
                         ))}
+                        {showPassage.byline && (
+                          <p className="text-xs italic text-[var(--text-tertiary)]">
+                            {showPassage.byline}
+                          </p>
+                        )}
                       </div>
                     )}
                     <QuestionEntry question={q} thread={threads[q.nr]} />
@@ -83,9 +90,7 @@ function QuestionEntry({ question, thread }: { question: ProvQuestion; thread?: 
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[13px] font-semibold text-[var(--amber)]">
-        Uppgift {question.nr}
-      </p>
+      <p className="text-[13px] font-semibold text-[var(--amber)]">Uppgift {question.nr}</p>
       {question.text && !question.image && (
         <p className="mt-1 text-[15px] font-medium leading-relaxed text-[var(--cream)]">
           {isOrd ? ordText(question.text) : question.text}

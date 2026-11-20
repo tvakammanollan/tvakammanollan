@@ -38,8 +38,12 @@ import {
   Settings,
   Swords,
   Tag,
+  Volume2,
+  VolumeX,
   type LucideIcon,
 } from "lucide-react";
+import { useSoundEnabled } from "@/hooks/useSoundEnabled";
+import { sounds } from "@/lib/sounds";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { displayName } from "@/lib/guest-name";
 
@@ -289,12 +293,53 @@ function AccountMenu({
           </AccountMenuLink>
         )}
         <DropdownMenuSeparator />
+        <SoundMenuItem />
         <DropdownMenuItem onSelect={() => void onSignOut()} className="gap-2">
           <LogOut className="h-4 w-4 opacity-70" />
           Logga ut
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+/** Ljud av/på. Menyn står kvar öppen så att man ser att valet tog. */
+function SoundMenuItem() {
+  const [on, setOn] = useSoundEnabled();
+  const Icon = on ? Volume2 : VolumeX;
+  return (
+    <DropdownMenuItem
+      onSelect={(e) => {
+        e.preventDefault();
+        setOn(!on);
+        if (!on) sounds.ping();
+      }}
+      className="gap-2"
+    >
+      <Icon className="h-4 w-4 opacity-70" />
+      {on ? "Ljud på" : "Ljud av"}
+    </DropdownMenuItem>
+  );
+}
+
+function MobileSoundToggle() {
+  const [on, setOn] = useSoundEnabled();
+  const Icon = on ? Volume2 : VolumeX;
+  return (
+    <button
+      type="button"
+      data-sfx="off"
+      aria-pressed={on}
+      onClick={() => {
+        setOn(!on);
+        if (!on) sounds.ping();
+      }}
+      className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-[15px] font-medium transition-colors hover:bg-white/[0.04]"
+      style={{ color: "var(--cream)" }}
+    >
+      <Icon className="h-[18px] w-[18px] shrink-0 opacity-70" aria-hidden />
+      {on ? "Ljud på" : "Ljud av"}
+    </button>
   );
 }
 
@@ -428,6 +473,7 @@ function MobileMenu({
               Admin
             </MobileNavLink>
           )}
+          <MobileSoundToggle />
         </nav>
 
         <div className="shrink-0 border-t px-4 pt-4 pb-safe" style={{ borderColor: "var(--line)" }}>

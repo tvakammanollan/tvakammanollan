@@ -9,7 +9,7 @@ export const Route = createFileRoute("/guider/bra-resultat")({
     meta: pageMeta({
       path: "/guider/bra-resultat",
       ...guideArticleMeta("/guider/bra-resultat"),
-      title: fitTitle("Hur får man bra resultat på HP?", "studieplan"),
+      title: fitTitle("Bra resultat på högskoleprovet: studieplan"),
       description:
         "Hur du planerar pluggandet, väljer vilka delprov du ska lägga tiden på och övar under provförhållanden.",
       ogTitle: "Tvåkommanollan | Bra resultat på HP",

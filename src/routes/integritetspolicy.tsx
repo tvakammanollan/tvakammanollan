@@ -258,7 +258,7 @@ function IntegritetspolicyPage() {
           </p>
           <p>
             Raderar du ditt konto avidentifieras din användarrad och inläggen står kvar utan namn,
-            märkta "Borttagen användare", så att trådarna förblir läsbara för dem som svarat. Vill
+            märkta ”Borttagen användare”, så att trådarna förblir läsbara för dem som svarat. Vill
             du i stället ha enskilda inlägg borttagna: mejla oss, så tar vi bort dem.
           </p>
           <p>

@@ -82,7 +82,7 @@ function ProvRelated({
 
       <ul className="mt-3 flex flex-wrap gap-2">
         {items.map((item) => {
-          const label = item.delprov ? `${item.nr} · ${item.delprov}` : `${item.nr}`;
+          const label = item.delprov ? `${item.nr} ${item.delprov}` : `${item.nr}`;
           if (item.id === currentId) {
             return (
               <li key={item.id}>

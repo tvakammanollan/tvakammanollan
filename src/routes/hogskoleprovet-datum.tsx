@@ -17,6 +17,7 @@ import {
   registrationPeriodText,
 } from "@/lib/hp-event";
 import { FACIT } from "@/lib/preliminart-facit";
+import { uppräkning } from "@/lib/sv-format";
 import { GuideFaq, guideFaqJsonLd, type GuideFaqItem } from "@/lib/guider-meta";
 import { ScrollText } from "lucide-react";
 
@@ -62,7 +63,7 @@ function datumFaq(): GuideFaqItem[] {
     {
       q: "När är nästa högskoleprov?",
       a: kommande.length
-        ? `${kommande.length > 1 ? "Kommande provdatum är" : "Nästa högskoleprov är"} ${kommande.join(" och ")}. Senaste provet var ${FACIT.label.toLowerCase()}. UHR publicerar senare datum ungefär ett år i förväg.`
+        ? `${kommande.length > 1 ? "Kommande provdatum är" : "Nästa högskoleprov är"} ${uppräkning(kommande)}. Senaste provet var ${FACIT.label.toLowerCase()}. UHR publicerar senare datum ungefär ett år i förväg.`
         : `Nästa provdatum är inte publicerat av UHR ännu. Senaste provet var ${FACIT.label.toLowerCase()}.`,
     },
     {
@@ -99,12 +100,12 @@ export const Route = createFileRoute("/hogskoleprovet-datum")({
       // härleds nu ur listan, och beskrivningen kortas till det Google visar.
       description: describeWithin(
         upcomingHpDates().length
-          ? `Kommande datum för högskoleprovet: ${upcomingHpDates()
-              .map(
+          ? `Kommande datum för högskoleprovet: ${uppräkning(
+              upcomingHpDates().map(
                 (d) =>
                   `${d.session === "höst" ? "höstprovet" : "vårprovet"} ${hpDateShort(d.date)}`,
-              )
-              .join(" och ")}.`
+              ),
+            )}.`
           : "Provdatum för högskoleprovet.",
         "Nedräkning, anmälningsperiod och provavgift.",
       ),

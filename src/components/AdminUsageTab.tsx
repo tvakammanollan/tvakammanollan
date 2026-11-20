@@ -91,10 +91,10 @@ export function AdminUsageTab() {
       <PageViewsSection views={views} />
 
       <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-        <strong>Om "aktiv tid":</strong> sidan har ingen heartbeat-mätning, så siffran är summan av
+        <strong>Om ”aktiv tid”:</strong> sidan har ingen heartbeat-mätning, så siffran är summan av
         tid spenderad per besvarad fråga (match-svar historiskt; tränings-svar och gamla
         prov-sessioner spåras från och med nu). Det är medvetet ett mått på{" "}
-        <em>aktivt pluggande</em>, inte "flik öppen i bakgrunden".
+        <em>aktivt pluggande</em>, inte ”flik öppen i bakgrunden”.
       </p>
     </div>
   );

@@ -54,6 +54,17 @@ export function enhet(n: number, singular: keyof typeof PLURAL): string {
   return `${formatInt(n)} ${n === 1 ? singular : PLURAL[singular]}`;
 }
 
+/**
+ * Svensk uppräkning: `uppräkning(["A", "B", "C"])` → "A, B och C".
+ *
+ * Skriven för att `join(" och ")` gav "A och B och C" så fort listan fick
+ * tre led, vilket stod på provsidorna när gratisproven blev fler än två.
+ */
+export function uppräkning(items: readonly string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  return `${items.slice(0, -1).join(", ")} och ${items[items.length - 1]}`;
+}
+
 export function formatDecimal(n: number | null | undefined, fractionDigits = 1): string {
   if (n == null || !Number.isFinite(n)) return "–";
   return n.toLocaleString(SV, {
