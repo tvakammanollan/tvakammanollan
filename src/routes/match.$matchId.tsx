@@ -507,6 +507,14 @@ function MatchPage() {
     });
   }, [match, user, answers.size, questions.length]);
 
+  // Klockans ljud: en påminnelse vid 30 sekunder kvar och ett tick per
+  // sekund de sista fem. Tyst när matchen är inlämnad.
+  useEffect(() => {
+    if (submittedRef.current || questions.length === 0) return;
+    if (secondsLeft === 30) sounds.warning();
+    else if (secondsLeft >= 1 && secondsLeft <= 5) sounds.tick();
+  }, [secondsLeft, questions.length]);
+
   // 30s forced countdown when opponent submitted
   useEffect(() => {
     if (oppForceCountdown === null) return;
@@ -600,6 +608,7 @@ function MatchPage() {
         await persistAnswer(a.question_id, a.selected_answer);
       }
       const res = await submitFn({ data: { matchId, answers: payload } });
+      sounds.submit();
       // Produkthändelse för funnel/retention. No-op utan samtycke, och den
       // ligger efter submitFn med flit — bara matcher som faktiskt gick igenom
       // ska räknas.

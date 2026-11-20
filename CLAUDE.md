@@ -67,7 +67,7 @@ upp igen är det något som kopierats från en gammal gren.
   sönder av att de ligger kvar.
 - **Lagringsnycklarna och de egna eventen heter `tkn`** sedan namnbytet:
   `tkn-analytics-consent`, `tkn:ach:v1:<uid>`,
-  `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:consent-changed`,
+  `tkn:wotd:<datum>`, `tkn:prov-resultat:v1`, `tkn:ljud`, `tkn:consent-changed`,
   `tkn:achievements:check`.
   Samtyckesnyckeln flyttas över från sin `hpk-`-föregångare: modulen läser den
   gamla nyckeln en gång och skriver om den — utan flytten hade varje besökare
@@ -1971,6 +1971,18 @@ knappen läser ur **ett** objekt, `FACIT` i `src/lib/preliminart-facit.ts`.
 - **Facit är strängar på 40 bokstäver**, valideras i testet, och testet kräver
   dessutom att `E` bara står i ORD och NOG (de enda delproven med fem
   alternativ). Det fångar de flesta felskrivningar.
+
+### Ljud (2026-11-19)
+
+Alla ljud syntetiseras i `src/lib/sounds.ts` (Web Audio, inga filer). Rätt/fel
+spelas i `/ord`, `/train`, `/mek-ovning` och gamla prov i **övningsläget**,
+aldrig i provläget (det hade avslöjat facit före inlämningen). Matchen har en
+påminnelse vid 30 s kvar och tick de sista fem; resultatsidan spelar vinst
+eller förlust, utmärkelser ett klockspel. Av/på: `useSoundEnabled()`,
+knappen ligger i kontomenyn, mobilmenyn och provpassets list (övningsläget,
+eftersom utloggade inte har någon meny). Nyckeln `tkn:ljud` ersatte
+`sfx_enabled`, som flyttas över en gång. Knappar med `data-sfx="off"` får inget
+globalt klickljud.
 
 ### Streak
 

@@ -43,6 +43,7 @@ import { getBotName } from "@/lib/bot";
 import { displayName } from "@/lib/guest-name";
 import { normeringForAccuracy } from "@/lib/hpScore";
 import { outcomeFor, scoresFor } from "@/lib/match-outcome";
+import { sounds } from "@/lib/sounds";
 import { isImageQuestion, optionHasOwnText } from "@/lib/math-question";
 import { cropStyle, isCrop, type Crop } from "@/lib/option-crop";
 import { parseOptionsImage, type OptionsImage } from "@/components/question/examCrops";
@@ -384,8 +385,14 @@ function ResultPage() {
   // Confetti for winner
   useEffect(() => {
     if (!match || !user || confettiFiredRef.current) return;
-    if (outcomeFor(user.id, match) !== "win") return;
+    const outcome = outcomeFor(user.id, match);
+    if (!outcome) return;
     confettiFiredRef.current = true;
+    if (outcome === "loss") {
+      sounds.defeat();
+      return;
+    }
+    sounds.victory();
     const fire = (origin: { x: number; y: number }) =>
       confetti({
         particleCount: 90,
