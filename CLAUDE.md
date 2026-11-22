@@ -1760,8 +1760,9 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
 - **Skol- och bibliotekskoderna (2026-11-17)** skapas av
   `node scripts/stripe-kampanjkoder.mjs` (torrkörning, `--apply` för att
   skriva, idempotent). Fyra kuponger med fasta id: `tkn-gratis-1man`
-  (RUDBECK100, KTDRL100, DONNER100, LUND100, KALMAR100, HARORG100, GUNILLA100, MARINA100, RYTMUS100, DBGY100, KATDRL100, ALVGY100), `tkn-gratis-6man` (RUDBECK600,
-  DONNER600, GUNILLA600, MARINA600, RYTMUS600, DBGY600, KATDRL600, ALVGY600, max 7 inlösen per kod), `tkn-ktdrl30-6man` (KTDRL30, 30 % bara
+  (RUDBECK100, KTDRL100, DONNER100, LUND100, KALMAR100, HARORG100, GUNILLA100, MARINA100, RYTMUS100, DBGY100, KATDRL100, ALVGY100, NTI100,
+  NYBRO100, KLARA100), `tkn-gratis-6man` (RUDBECK600,
+  DONNER600, GUNILLA600, MARINA600, RYTMUS600, DBGY600, KATDRL600, ALVGY600, NTI600, NYBRO600, KLARA600, max 7 inlösen per kod), `tkn-ktdrl30-6man` (KTDRL30, 30 % bara
   på sexmånadersköpet) och `tkn-bibliotek-1man` (DIESEL100, FISK100, FLEN100,
   LJUNG100, NYNAS100, IDRE100, SARNA100,
   KARLSKOGA100, PERSTORP100, MARIESTAD100, JORDBRO100,
