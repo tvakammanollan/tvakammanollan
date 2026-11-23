@@ -117,6 +117,10 @@ const CODES = [
     // AKERS100 hette ÅKERS100 i beställningen.
     "AKERS100",
     "HAGFORS100",
+    "MOLNLYCKE100",
+    "ESKILSTUNA100",
+    "GRASTORP100",
+    "MALMO100",
   ].map((code) => ({
     code,
     coupon: "tkn-bibliotek-1man",

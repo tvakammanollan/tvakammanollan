@@ -1766,7 +1766,8 @@ förnyas tills den sägs upp; 6 månader är fortfarande engångsköp.
   på sexmånadersköpet) och `tkn-bibliotek-1man` (DIESEL100, FISK100, FLEN100,
   LJUNG100, NYNAS100, IDRE100, SARNA100,
   KARLSKOGA100, PERSTORP100, MARIESTAD100, JORDBRO100,
-  MARIA100, AKERS100, HAGFORS100, slutar gälla 2027-01-31 23:59 svensk tid).
+  MARIA100, AKERS100, HAGFORS100, MOLNLYCKE100,
+  ESKILSTUNA100, GRASTORP100, MALMO100, slutar gälla 2027-01-31 23:59 svensk tid).
   **Kupongerna för en gratis månad gäller bara månadsprodukten**: på
   sexmånadersköpet hade 100 % gett sex gratis månader.
 - **Månadsprodukten heter bara "Premium" sedan 2026-11-17**, så att kassans
