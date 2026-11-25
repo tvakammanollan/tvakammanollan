@@ -29,7 +29,7 @@ function VillkorPage() {
       <PageHero
         align="center"
         title="Användarvillkor"
-        subtitle="Senast uppdaterad: 2026-11-14"
+        subtitle="Senast uppdaterad: 2026-11-25"
         variant="compact"
       />
       <article
@@ -113,8 +113,12 @@ function VillkorPage() {
             köp: en prenumeration per månad, och ett köp som gäller i 6 månader. Sexmånadersköpet
             gäller 6 månader från betalningen och förnyas inte. Vill du fortsätta efter perioden
             köper du igen. Avtalet ingås mellan dig och Niklas Pellkvist när du slutför betalningen
-            i kassan. Köpet knyts till det konto du var inloggad med, och gästkonton kan inte köpa.
-            Priset som visas i kassan är det du betalar, och betalningen hanteras av Stripe.
+            i kassan. Köpet knyts till det konto du var inloggad med. Är du inte inloggad när du
+            betalar knyts köpet till ett gästkonto i webbläsaren, och efter betalningen skapar du
+            ett konto eller loggar in, så att köpet följer med dig till andra enheter. Gör du inte
+            det finns köpet bara i den webbläsaren, och loggar du ut eller rensas webbläsaren går
+            det inte att nå där. Mejla oss i så fall, så flyttar vi köpet till ditt konto. Priset
+            som visas i kassan är det du betalar, och betalningen hanteras av Stripe.
           </p>
           <p>
             Åtkomsten gäller hela den köpta perioden, förutsatt att ditt konto inte stängts av

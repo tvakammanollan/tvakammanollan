@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isEmbeddedBrowser } from "./in-app-browser";
+import { isCrawler, isEmbeddedBrowser } from "./in-app-browser";
 
 const SAFARI_IOS =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1";
@@ -48,5 +48,41 @@ describe("isEmbeddedBrowser", () => {
   it("räknar en saknad user agent som en vanlig webbläsare", () => {
     expect(isEmbeddedBrowser(null)).toBe(false);
     expect(isEmbeddedBrowser("")).toBe(false);
+  });
+});
+
+describe("isCrawler", () => {
+  it("känner igen sökrobotar och förhandsvisningar", () => {
+    for (const ua of [
+      "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.204 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+      "Mozilla/5.0 (compatible; Google-InspectionTool/1.0;)",
+      "Mozilla/5.0 (compatible; AdsBot-Google; +http://www.google.com/adsbot.html)",
+      "WhatsApp/2.23.20.0 A",
+      "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Chrome-Lighthouse",
+      "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+      "Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)",
+      "curl/8.7.1",
+    ]) {
+      expect(isCrawler(ua)).toBe(true);
+    }
+  });
+
+  it("släpper igenom vanliga webbläsare och appars webbvyer", () => {
+    for (const ua of [
+      SAFARI_IOS,
+      CHROME_IOS,
+      CHROME_ANDROID,
+      DESKTOP,
+      INSTAGRAM_IOS,
+      TIKTOK_ANDROID,
+      // Märket heter Cubot: "bot" i en user agent betyder inte robot.
+      "Mozilla/5.0 (Linux; Android 10; CUBOT X30) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    ]) {
+      expect(isCrawler(ua)).toBe(false);
+    }
+    expect(isCrawler(null)).toBe(false);
+    expect(isCrawler("")).toBe(false);
   });
 });

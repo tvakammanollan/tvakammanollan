@@ -68,7 +68,10 @@ export interface OrdAccessInfo extends OrdAccess {
   amount: number | null;
   currency: string;
   publishableKey: string | null;
-  /** Gästkonton kan inte köpa: köpet hade försvunnit med kontot. */
+  /**
+   * Gäst. Gäster kan köpa sedan 2026-11-25 (köpet knyts till gästens id), och
+   * flaggan styr steget efter betalningen där gästen skapar sitt konto.
+   */
   isAnonymous: boolean;
 }
 
@@ -169,9 +172,12 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
     const { userId, claims } = context;
     assertRateLimit(`ord-checkout:${userId}`, limits.ordCheckout);
 
-    if ((claims as { is_anonymous?: boolean } | undefined)?.is_anonymous === true) {
-      throw new Error("Skapa ett konto först, så följer köpet med dig.");
-    }
+    // Gäster får köpa sedan 2026-11-25. Köpet knyts till gästens id precis som
+    // till ett kontos, och efter betalningen görs gästen om till ett riktigt
+    // konto med samma id (eller loggar in, och köpet flyttas). Se
+    // `guest-claim.ts`. `guest` i metadatan säger i Stripe att köparen inte
+    // hade något konto när kassan öppnades.
+    const isGuest = (claims as { is_anonymous?: boolean } | undefined)?.is_anonymous === true;
     if (await hasOrdAccess(userId)) {
       return { clientSecret: null, url: null, alreadyOwned: true };
     }
@@ -183,11 +189,12 @@ export const startOrdCheckout = createServerFn({ method: "POST" })
     });
     const origin = siteOrigin();
     const returnUrl = `${origin}${data.returnTo}?kop=klart&session_id={CHECKOUT_SESSION_ID}`;
-    const metadata = {
+    const metadata: Record<string, string> = {
       product: ORD_PRODUCT_TAG,
       user_id: userId,
       plan: data.plan,
       access_months: String(ORD_PLANS[data.plan].months),
+      ...(isGuest ? { guest: "1" } : {}),
     };
     // Läget följer priset i Stripe, inte planen: månadspriset är återkommande
     // sedan 2026-11, och ett byte av pris-id i `wrangler.jsonc` vänder då
@@ -289,6 +296,13 @@ async function endLapsedSubscription(
   }
 }
 
+export interface OrdCheckoutConfirmation {
+  owned: boolean;
+  kind: "subscription" | "one_time" | null;
+  /** E-postadressen från kassan, bara när sessionen hör till den som frågar. */
+  email: string | null;
+}
+
 /**
  * Bekräftar köpet när köparen kommer tillbaka till /ord eller MEK-övningen. Reserv för webhooken:
  * sessionen måste vara betald, vara ordlistans och höra till just den här
@@ -299,30 +313,28 @@ export const confirmOrdCheckout = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) =>
     z.object({ sessionId: z.string().min(10).max(200) }).parse(input),
   )
-  .handler(
-    async ({
-      data,
-      context,
-    }): Promise<{ owned: boolean; kind: "subscription" | "one_time" | null }> => {
-      const { userId } = context;
-      assertRateLimit(`ord-confirm:${userId}`, limits.ordCheckout);
-      const session = await retrieveCheckoutSession(data.sessionId);
-      if (
-        !isOrdSession(session) ||
-        !sessionIsPaid(session) ||
-        session.metadata?.user_id !== userId
-      ) {
-        return { owned: await hasOrdAccess(userId), kind: null };
-      }
-      try {
-        await markOrdPaid(session);
-      } catch (e) {
-        // Betalningen är gjord oavsett; webhooken försöker igen.
-        console.error("[ord-paywall] bokföring vid återvändande misslyckades:", e);
-      }
-      return { owned: true, kind: session.mode === "subscription" ? "subscription" : "one_time" };
-    },
-  );
+  .handler(async ({ data, context }): Promise<OrdCheckoutConfirmation> => {
+    const { userId } = context;
+    assertRateLimit(`ord-confirm:${userId}`, limits.ordCheckout);
+    const session = await retrieveCheckoutSession(data.sessionId);
+    if (!isOrdSession(session) || !sessionIsPaid(session) || session.metadata?.user_id !== userId) {
+      return { owned: await hasOrdAccess(userId), kind: null, email: null };
+    }
+    try {
+      await markOrdPaid(session);
+    } catch (e) {
+      // Betalningen är gjord oavsett; webhooken försöker igen.
+      console.error("[ord-paywall] bokföring vid återvändande misslyckades:", e);
+    }
+    return {
+      owned: true,
+      kind: session.mode === "subscription" ? "subscription" : "one_time",
+      // Adressen köparen skrev i Stripes kassa. Lämnas bara ut till den som
+      // köpet hör till (villkoret ovan), och fyller i fältet när en gäst
+      // skapar sitt konto efter köpet.
+      email: session.customer_details?.email ?? null,
+    };
+  });
 
 /* ===================== Ditt köp och uppsägningen ===================== */
 

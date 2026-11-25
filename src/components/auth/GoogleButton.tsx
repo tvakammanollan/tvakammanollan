@@ -4,6 +4,7 @@ import { isGuestUser, useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useEmbeddedBrowser } from "@/hooks/useEmbeddedBrowser";
 import { trackEvent } from "@/lib/events";
+import { rememberGuestForClaim } from "@/lib/guest-upgrade";
 
 /**
  * "Fortsätt med Google" för /login och /signup.
@@ -42,9 +43,13 @@ export function GoogleButton({ label = "Fortsätt med Google" }: { label?: strin
   const handleClick = async () => {
     setPending(true);
 
-    // Gästsessionen måste bort först, annars ligger den anonyma identiteten
-    // kvar när vi kommer tillbaka. Lösenordsvägen i login.tsx gör detsamma.
-    if (isGuestUser(user)) await supabase.auth.signOut();
+    // Gästen loggas inte ut (sedan 2026-11-25): Googles retur sparar den nya
+    // sessionen över gästens, och avbryter man hos Google är man kvar som
+    // gäst i stället för utloggad. En utloggning hade dessutom avslutat
+    // gästsessionen hos Supabase. Gästens token sparas, så att ett
+    // Premium-köp gjort som gäst flyttas till Google-kontot när vi kommer
+    // tillbaka (GuestPurchaseClaimer i roten).
+    if (isGuestUser(user)) await rememberGuestForClaim();
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

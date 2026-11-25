@@ -49,9 +49,15 @@ const ZON_UNDERTEXT: Record<Produktzon, string> = {
 export function PremiumWelcome({
   state,
   needsUsername,
+  guestUnsaved = false,
+  claimConflict = false,
 }: {
   state: "pending" | "ok" | "failed";
   needsUsername: boolean;
+  /** Köpt som gäst och hoppat över kontot: köpet finns bara i den här webbläsaren. */
+  guestUnsaved?: boolean;
+  /** Gästen loggade in på ett konto som redan hade Premium, så köpet flyttades inte. */
+  claimConflict?: boolean;
 }) {
   if (state === "pending") {
     return (
@@ -84,6 +90,19 @@ export function PremiumWelcome({
 
   return (
     <div className="mx-auto max-w-3xl pt-4 sm:pt-10">
+      {claimConflict && (
+        <p
+          role="status"
+          className="mb-8 rounded-2xl border border-white/12 bg-white/[0.04] p-4 text-center text-[15px] leading-relaxed text-[var(--cream)]"
+        >
+          Kontot du loggade in på hade redan Premium, så köpet du just gjorde flyttades inte dit. Du
+          har alltså betalat två gånger. Mejla{" "}
+          <a href="mailto:info@tvakommanollan.se" className="font-semibold underline">
+            info@tvakommanollan.se
+          </a>{" "}
+          så hjälper vi dig med det.
+        </p>
+      )}
       <div className="text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-success" aria-hidden />
         <h1 className="mt-5 text-[32px] leading-[1.1] tracking-[-0.035em] sm:text-[48px]">
@@ -124,7 +143,14 @@ export function PremiumWelcome({
           Kortet renderar ingenting förrän köpet lästs. */}
       <OrdPurchaseCard className="mt-8" manageLink />
 
-      {needsUsername ? (
+      {guestUnsaved ? (
+        <p className="mt-6 text-center text-[14px] text-white/65">
+          Du har inget konto än, så köpet finns bara i den här webbläsaren.{" "}
+          <Link to="/signup" className="font-semibold underline underline-offset-2">
+            Skapa konto
+          </Link>
+        </p>
+      ) : needsUsername ? (
         <p className="mt-6 text-center text-[14px] text-white/65">
           Du har inget användarnamn än.{" "}
           <Link to="/onboarding" className="font-semibold underline underline-offset-2">

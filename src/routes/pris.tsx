@@ -72,8 +72,8 @@ const TANKER = [
     text: `Månadsköpet kostar 149 kr per månad och förnyas tills du säger upp det, vilket du gör med en knapp under Abonnemang i menyn. 6 månader kostar 349 kr och förnyas inte. Båda köpen ger samma sak: allt på sajten. Provavgiften på ${HP_FEE_SEK} kronor när du anmäler dig till själva provet går till UHR och inte till oss.`,
   },
   {
-    rubrik: "Du behöver ett konto för att köpa",
-    text: "Som gäst kan du inte köpa, eftersom köpet skulle försvinna med gästkontot. Allt som är gratis går att prova som gäst.",
+    rubrik: "Konto skapar du efter betalningen",
+    text: "Du kan betala utan att vara inloggad och skapa ditt konto direkt efteråt, med samma e-postadress som i kassan. Kontot gör att köpet följer med dig till andra enheter. Har du redan ett konto loggar du in i stället, så flyttas köpet dit. Allt som är gratis går att prova utan konto.",
   },
 ];
 

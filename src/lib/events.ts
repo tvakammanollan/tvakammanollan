@@ -104,8 +104,20 @@ export interface ProductEvents {
     difficulty_count: number;
   };
   ord_paywall_shown: { answered: number };
-  ord_paywall_checkout_started: { embedded: boolean; plan: "1m" | "6m" };
-  ord_purchase_completed: { via: "return" };
+  // `is_guest`: köparen hade inget konto när kassan öppnades (sedan 2026-11-25).
+  ord_paywall_checkout_started: { embedded: boolean; plan: "1m" | "6m"; is_guest?: boolean };
+  ord_purchase_completed: { via: "return"; is_guest?: boolean };
+  /**
+   * Ett köp gjort som gäst hamnade på ett riktigt konto. `upgrade`: gästen
+   * blev själv kontot (samma id). `claim`: gästen loggade in på ett annat
+   * konto och köpet flyttades dit. Nämnaren är `ord_purchase_completed` med
+   * `is_guest`; skillnaden är köp som bara finns i en webbläsare.
+   */
+  guest_purchase_saved: { via: "upgrade" | "claim" };
+  /** "Gör det senare" i steget efter ett köp som gäst. */
+  guest_purchase_save_skipped: Record<string, never>;
+  /** Kontot hade redan Premium, så gästköpet flyttades inte (dubbelköp). */
+  guest_purchase_claim_conflict: Record<string, never>;
   // MEK-paywallen säljer samma köp som ordlistans, därför egna namn: tratten
   // ska gå att dela på vilken spärr som ledde till köpet.
   mek_paywall_shown: { answered: number };

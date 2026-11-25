@@ -13,6 +13,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { sendVerificationEmail } from "@/lib/email-verification.functions";
 import { AUTH_SUCCESS_DELAY_MS, SuccessScreen } from "@/routes/login";
 import { syncProfileEmail } from "@/lib/guest-upgrade.functions";
+import { rememberGuestForClaim, upgradeGuest } from "@/lib/guest-upgrade";
 
 export const Route = createFileRoute("/signup")({
   component: SignupPage,
@@ -34,44 +35,6 @@ const schema = z.object({
   email: z.string().trim().email("Ogiltig e-postadress").max(255),
   password: z.string().min(6, "Lösenordet måste vara minst 6 tecken").max(128),
 });
-
-/**
- * Gör det inloggade gästkontot till ett riktigt konto, med samma id. ELO,
- * matcher, ordframsteg och utmärkelser ligger på id:t och följer därför med.
- *
- * Två steg med flit: Supabase släpper inte igenom ett lösenord på en anonym
- * användare som saknar adress, så adressen sätts först. "Confirm email" är
- * avslaget, så bytet gäller direkt och `is_anonymous` blir falskt i samma
- * anrop. Sessionen förnyas efteråt: servern läser `is_anonymous` ur tokenen
- * (kassan vägrar gäster), och den gamla tokenen säger fortfarande gäst.
- *
- * - "ok": kontot är riktigt och inloggat.
- * - "exists": adressen hör redan till ett annat konto.
- * - "fallback": bytet gick inte (inställning i Supabase, eller bekräftelse
- *   krävs). Anroparen skapar då ett nytt konto som förut, så att
- *   registreringen aldrig står still; framstegen följer inte med.
- */
-async function upgradeGuest(
-  email: string,
-  password: string,
-): Promise<"ok" | "exists" | "fallback"> {
-  const first = await supabase.auth.updateUser({ email });
-  if (first.error) {
-    return /already|registered|exists/i.test(first.error.message) ||
-      first.error.code === "email_exists"
-      ? "exists"
-      : "fallback";
-  }
-  const updated = first.data.user;
-  if (!updated || updated.is_anonymous || updated.email?.toLowerCase() !== email.toLowerCase()) {
-    return "fallback";
-  }
-  const second = await supabase.auth.updateUser({ password });
-  if (second.error) throw second.error;
-  const refreshed = await supabase.auth.refreshSession();
-  if (refreshed.error) throw refreshed.error;
-  return "ok";
-}
 
 function SignupPage() {
   const { user, loading } = useAuth();
@@ -152,7 +115,10 @@ function SignupPage() {
         finish(true, true);
         return;
       }
-      // "fallback": skapa ett nytt konto som förut.
+      // "fallback": skapa ett nytt konto som förut. Det får ett annat id än
+      // gästen, så gästens token sparas: ett Premium-köp gjort som gäst
+      // flyttas då till det nya kontot (GuestPurchaseClaimer i roten).
+      await rememberGuestForClaim();
     }
 
     const { data, error } = await supabase.auth.signUp({

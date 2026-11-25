@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
+import { useGuestPremium } from "@/hooks/useGuestPremium";
 import { MatchmakerModal, type MatchType } from "@/components/MatchmakerModal";
 
 import { OnboardingModal } from "@/components/ui/OnboardingModal";
@@ -32,6 +33,7 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
   const [matchOpen, setMatchOpen] = useState(false);
   const [matchType, setMatchType] = useState<MatchType>("verbal");
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
+  const guestPremium = useGuestPremium();
 
   if (!user || !profile) {
     return (
@@ -67,7 +69,9 @@ export function HomeDashboard({ wordOfTheDay }: { wordOfTheDay?: Wotd | null }) 
       {/* Startsidan är den enda sidan som visar alla fyra produktytorna,
           och därför den enda där formerna får ha alla deras färger. */}
       <Dekorformer former={HEM_FORMER} />
-      {isGuest && <GuestBanner />}
+      {/* En gäst med Premium ser remsan under navbaren om köpet i stället;
+          två rutor om samma konto på samma skärm är en för mycket. */}
+      {isGuest && !guestPremium && <GuestBanner />}
       <ResumeMatchBanner />
 
       {/* EN övergång för hela skärmen, inte en per kort.

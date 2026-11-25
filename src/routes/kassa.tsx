@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { Check, CheckCircle2, Loader2 } from "lucide-react";
 import { pageTitle } from "@/lib/page-meta";
+import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { PrimaryCTA } from "@/components/layout/CTAButtons";
@@ -17,10 +18,13 @@ import {
 import { ORD_PLAN_IDS, POPULAR_PLAN, type OrdPlan } from "@/lib/ord-paywall";
 import { OrdPurchaseCard } from "@/components/OrdPurchaseCard";
 import { PremiumWelcome } from "@/components/PremiumWelcome";
+import { SaveGuestPurchase, type SaveGuestOutcome } from "@/components/SaveGuestPurchase";
 import { clearPendingPlan, rememberPendingPlan } from "@/lib/pending-plan";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { isAutoUsername } from "@/lib/username";
 import { formatMoney } from "@/lib/sv-format";
+import { isCrawler } from "@/lib/in-app-browser";
+import { announcePremiumChanged } from "@/lib/guest-claim";
 import { trackEvent } from "@/lib/events";
 import { trackError } from "@/lib/telemetry";
 
@@ -32,6 +36,13 @@ import { trackError } from "@/lib/telemetry";
  *
  * Kassan tar tillbaka köparen hit (`?kop=klart&session_id=…`), där köpet
  * bekräftas mot Stripe som reserv för webhooken.
+ *
+ * Inget konto krävs för att betala (sedan 2026-11-25). En utloggad besökare
+ * får ett gästkonto i tysthet, som /matchmaking ger, och köpet knyts till
+ * det. Efter betalningen ber `SaveGuestPurchase` om kontot: gästen görs om
+ * till ett riktigt konto med samma id, eller loggar in och köpet flyttas.
+ * Att kräva ett konto före betalningen var det som stod mellan "Välj
+ * 6 månader" och kassan, och det tog fler steg än själva köpet.
  *
  * noindex: sidan är en kassa, inte innehåll.
  */
@@ -101,15 +112,56 @@ function KassaPage() {
     returning ? "pending" : null,
   );
 
-  const isGuest = !authLoading && (!user || access?.isAnonymous === true);
+  /** Adressen från Stripes kassa, till kontoformuläret efter ett köp som gäst. */
+  const [purchaseEmail, setPurchaseEmail] = useState<string | null>(null);
+  /**
+   * Steget efter ett köp som gäst. Bestäms när köpet bekräftats och lever
+   * sedan oberoende av inloggningen: den som loggar in i steget byter konto
+   * mitt i, och steget får inte försvinna innan köpet hunnit flyttas.
+   */
+  const [saveStep, setSaveStep] = useState<"show" | "done">("done");
+  const [saveOutcome, setSaveOutcome] = useState<SaveGuestOutcome | "skipped" | null>(null);
+  /** Gästkontot åt en utloggad besökare. `failed`: visa kontovägarna i stället. */
+  const [guestStart, setGuestStart] = useState<"idle" | "starting" | "failed">("idle");
+
+  // Gäst och inte utloggad: `isGuestUser` räknar också konton utan adress,
+  // och kassan ska bara behandla gästkonton som gäster.
+  const isGuest = !!user && user.is_anonymous === true;
 
   // Utloggad eller gäst: kom ihåg valet, så att login och onboarding skickar
-  // tillbaka hit i stället för till startsidan.
+  // tillbaka hit om besökaren väljer att logga in före köpet. Tömms när köpet
+  // är gjort, annars hade varje senare inloggning landat i kassan.
   useEffect(() => {
-    if (authLoading) return;
-    if (isGuest) rememberPendingPlan(plan);
-    else if (user) clearPendingPlan();
-  }, [authLoading, isGuest, user, plan]);
+    if (authLoading || returning) return;
+    if (access?.owned) clearPendingPlan();
+    else if (!user || isGuest) rememberPendingPlan(plan);
+    else clearPendingPlan();
+  }, [authLoading, returning, isGuest, user, plan, access?.owned]);
+
+  // Utloggad: skapa ett gästkonto så att kassan kan öppnas direkt. Robotar
+  // som kör sidans skript får inget; de ser kontovägarna.
+  useEffect(() => {
+    if (authLoading || user || returning || guestStart !== "idle") return;
+    if (isCrawler(navigator.userAgent)) {
+      setGuestStart("failed");
+      return;
+    }
+    setGuestStart("starting");
+    // Inget username i metadatan, se useGuestPlay: namnen är unika och
+    // gästnamnen för få. Triggern sätter ett auto-namn.
+    void supabase.auth
+      .signInAnonymously()
+      .then(({ error: guestError }) => {
+        if (guestError) {
+          trackError(guestError, { where: "kassa_guest_start" });
+          setGuestStart("failed");
+        }
+      })
+      .catch((e) => {
+        trackError(e, { where: "kassa_guest_start" });
+        setGuestStart("failed");
+      });
+  }, [authLoading, user, returning, guestStart]);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -122,15 +174,29 @@ function KassaPage() {
       });
   }, [authLoading, user, fetchAccess]);
 
-  // Tillbaka från Stripe: bekräfta köpet.
+  // Tillbaka från Stripe: bekräfta köpet. Utan session går det inte: köpet
+  // hör till kontot som betalade, och det är inte inloggat i den här
+  // webbläsaren. Då visas reservtexten med vart man mejlar.
   const confirmedRef = useRef(false);
   useEffect(() => {
-    if (!returning || authLoading || !user || confirmedRef.current) return;
+    if (!returning || authLoading || confirmedRef.current) return;
     confirmedRef.current = true;
+    if (!user) {
+      setConfirmed("failed");
+      return;
+    }
+    const boughtAsGuest = user.is_anonymous === true;
     void confirmPurchase({ data: { sessionId: search.session_id! } })
       .then((r) => {
         setConfirmed(r.owned ? "ok" : "failed");
-        if (r.owned) trackEvent("ord_purchase_completed", { via: "return" });
+        if (!r.owned) return;
+        trackEvent("ord_purchase_completed", { via: "return", is_guest: boughtAsGuest });
+        clearPendingPlan();
+        announcePremiumChanged();
+        if (boughtAsGuest) {
+          setPurchaseEmail(r.email);
+          setSaveStep("show");
+        }
       })
       .catch(() => setConfirmed("failed"));
   }, [returning, authLoading, user, confirmPurchase, search.session_id]);
@@ -138,11 +204,7 @@ function KassaPage() {
   // Öppna kassan för valt köp så snart priset finns. Ett byte av plan ger en
   // ny session; den gamla går ut av sig själv hos Stripe.
   const openedFor = useRef<string | null>(null);
-  const canBuy =
-    access !== null &&
-    !access.owned &&
-    !access.isAnonymous &&
-    access.plans.some((p) => p.plan === plan);
+  const canBuy = access !== null && !access.owned && access.plans.some((p) => p.plan === plan);
   useEffect(() => {
     const key = `${plan}:${attempt}`;
     if (returning || !canBuy || openedFor.current === key) return;
@@ -155,6 +217,7 @@ function KassaPage() {
         trackEvent("ord_paywall_checkout_started", {
           embedded: handle.clientSecret !== null,
           plan,
+          is_guest: access?.isAnonymous === true,
         });
         if (handle.alreadyOwned) {
           void fetchAccess({}).then(setAccess);
@@ -168,7 +231,7 @@ function KassaPage() {
         setError(e instanceof Error ? e.message : "Kunde inte öppna kassan.");
       })
       .finally(() => setBusy(false));
-  }, [returning, canBuy, plan, attempt, startCheckout, fetchAccess]);
+  }, [returning, canBuy, plan, attempt, startCheckout, fetchAccess, access?.isAnonymous]);
 
   const choose = (p: OrdPlan) => {
     if (p === plan) return;
@@ -184,10 +247,24 @@ function KassaPage() {
   return (
     <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:pt-14">
-        {returning ? (
+        {returning && confirmed === "ok" && saveStep === "show" ? (
+          <SaveGuestPurchase
+            defaultEmail={purchaseEmail}
+            onDone={(outcome) => {
+              setSaveOutcome(outcome);
+              setSaveStep("done");
+            }}
+            onSkip={() => {
+              setSaveOutcome("skipped");
+              setSaveStep("done");
+            }}
+          />
+        ) : returning ? (
           <PremiumWelcome
             state={confirmed ?? "pending"}
-            needsUsername={!!profile && isAutoUsername(profile.username)}
+            needsUsername={!isGuest && !!profile && isAutoUsername(profile.username)}
+            guestUnsaved={isGuest}
+            claimConflict={saveOutcome === "conflict"}
           />
         ) : (
           <>
@@ -230,14 +307,27 @@ function KassaPage() {
               </div>
 
               <GlassCard className="min-h-[280px] p-4 sm:min-h-[320px] sm:p-6 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-                {authLoading || (user && !access && !accessFailed) ? (
+                {/* Gästen kan ha ett konto sedan tidigare. Loggar den in nu hamnar
+                    köpet där direkt; gör den det efter köpet flyttas det dit. */}
+                {isGuest && access && !access.owned && (
+                  <p className="mb-3 text-center text-[13px] text-white/60">
+                    Har du redan ett konto?{" "}
+                    <Link to="/login" className="font-semibold text-primary hover:underline">
+                      Logga in
+                    </Link>{" "}
+                    först, så hamnar köpet där direkt.
+                  </p>
+                )}
+                {authLoading ||
+                (!user && guestStart !== "failed") ||
+                (user && !access && !accessFailed) ? (
                   <Spinnerruta />
-                ) : isGuest ? (
+                ) : !user ? (
                   <div className="py-6 text-center sm:py-10">
                     <h2 className="text-xl font-semibold">Skapa ett konto för att köpa</h2>
                     <p className="mx-auto mt-2 max-w-md text-[15px] text-white/65">
-                      Köpet knyts till ditt konto så att du har det på alla enheter. Efteråt kommer
-                      du tillbaka hit, och användarnamn väljer du efter köpet.
+                      Kassan gick inte att öppna utan konto just nu. Skapa ett konto eller logga in,
+                      så kommer du tillbaka hit och kan betala direkt.
                     </p>
                     {/* Google direkt här: ett tryck i stället för att gå via
                       registreringssidan. Valet av köp är redan sparat

@@ -155,15 +155,12 @@ function AbonnemangPage() {
             </div>
             {!loggedIn && (
               <p className="mt-4 text-sm text-white/60">
-                Du behöver ett konto för att köpa, så att köpet följer med dig.{" "}
+                Har du redan ett konto?{" "}
                 <Link to="/login" className="font-semibold text-primary hover:underline">
                   Logga in
                 </Link>{" "}
-                eller{" "}
-                <Link to="/signup" className="font-semibold text-primary hover:underline">
-                  skapa ett konto
-                </Link>
-                .
+                innan du köper, så hamnar köpet där direkt. Annars skapar du kontot efter
+                betalningen.
               </p>
             )}
           </section>

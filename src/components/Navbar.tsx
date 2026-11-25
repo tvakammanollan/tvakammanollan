@@ -46,12 +46,25 @@ import { useSoundEnabled } from "@/hooks/useSoundEnabled";
 import { sounds } from "@/lib/sounds";
 import { useGuestPlay } from "@/hooks/useGuestPlay";
 import { displayName } from "@/lib/guest-name";
+import { useGuestPremium } from "@/hooks/useGuestPremium";
 
 export function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const { play: playAsGuest, loading: guestLoading } = useGuestPlay();
+  const guestPremium = useGuestPremium();
   const handleSignOut = async () => {
+    // En gäst som köpt Premium har köpet bara i den här webbläsarens
+    // gästsession. Utloggad finns ingen väg tillbaka till det, så frågan
+    // ställs först. Ett riktigt konto loggar ut utan fråga, som förut.
+    if (
+      guestPremium &&
+      !window.confirm(
+        "Du har Premium men inget konto. Loggar du ut kommer du inte åt köpet igen. Vill du logga ut ändå?",
+      )
+    ) {
+      return;
+    }
     await signOut();
     navigate({ to: "/" });
   };

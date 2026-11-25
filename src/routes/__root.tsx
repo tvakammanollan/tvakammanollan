@@ -24,6 +24,8 @@ import { Footer } from "@/components/Footer";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { PageDekor } from "@/components/layout/Dekorformer";
 import { EmailVerificationNotice } from "@/components/EmailVerificationNotice";
+import { GuestPremiumNotice } from "@/components/GuestPremiumNotice";
+import { GuestPurchaseClaimer } from "@/components/GuestPurchaseClaimer";
 import { Analytics } from "@/components/Analytics";
 import { StreakVisit } from "@/components/StreakVisit";
 
@@ -452,6 +454,10 @@ function RootComponent() {
             <SafeBoundary label="email-verification-notice">
               <EmailVerificationNotice />
             </SafeBoundary>
+            {/* Köpt som gäst utan konto: köpet finns bara i den här webbläsaren. */}
+            <SafeBoundary label="guest-premium-notice">
+              <GuestPremiumNotice />
+            </SafeBoundary>
             {/* `relative isolate`: dekorformerna ligger på z-index -1 inuti
                 main och måste ha ett eget staplingssammanhang, annars hamnar
                 de under sidans botten och syns inte alls. */}
@@ -468,6 +474,10 @@ function RootComponent() {
             </SafeBoundary>
             <SafeBoundary label="streak-visit">
               <StreakVisit />
+            </SafeBoundary>
+            {/* Flyttar ett gästköp till kontot gästen just loggade in på. */}
+            <SafeBoundary label="guest-purchase-claimer">
+              <GuestPurchaseClaimer />
             </SafeBoundary>
             <SafeBoundary label="analytics">
               <Analytics />

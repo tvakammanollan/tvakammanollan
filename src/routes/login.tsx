@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { AuthDivider, GoogleButton } from "@/components/auth/GoogleButton";
 import { readPendingPlan } from "@/lib/pending-plan";
+import { rememberGuestForClaim } from "@/lib/guest-upgrade";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -83,11 +84,15 @@ function LoginPage() {
 
     setSubmitting(true);
     setLeaving(true);
-    // Läses av innan gästsessionen slängs, annars är svaret alltid nej.
+    // Läses av innan gästsessionen byts ut, annars är svaret alltid nej.
     const fromGuest = isGuestUser(user);
-    if (fromGuest) {
-      await supabase.auth.signOut();
-    }
+    // Gästen loggas INTE ut först (sedan 2026-11-25). Inloggningen byter ut
+    // gästsessionen när den lyckas, och misslyckas den är gästen kvar.
+    // Tidigare loggades gästen ut innan lösenordet ens prövats, så ett
+    // felskrivet lösenord tog med sig gästkontot, ett Premium-köp gjort som
+    // gäst inräknat. Tokenen sparas så att ett sådant köp flyttas till kontot
+    // som loggar in (GuestPurchaseClaimer i roten).
+    if (fromGuest) await rememberGuestForClaim();
     const failure = looksLikeEmail(id)
       ? (await supabase.auth.signInWithPassword({ email: id, password: pw })).error?.message
       : await signInByUsername(id.toLowerCase(), pw);

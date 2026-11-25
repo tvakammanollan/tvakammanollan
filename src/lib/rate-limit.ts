@@ -128,6 +128,12 @@ export const limits = {
    */
   guestUpgrade: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
   /**
+   * Flytt av ett gästköp till det konto som just loggade in. Körs en gång per
+   * inloggning från ett gästkonto; taket finns mot loopar och mot att någon
+   * provar tokens.
+   */
+  guestClaim: { max: 10, windowMs: 60 * 60 * 1000 } as LimitConfig, // 10/h
+  /**
    * Inlösen av verifieringslänk. Per IP, och rundligt tilltaget — en riktig
    * användare klickar en gång, men mejlklienter förhandshämtar länkar.
    * Gissning av token är ändå ogörligt (32 byte slump).

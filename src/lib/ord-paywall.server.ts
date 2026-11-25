@@ -225,6 +225,55 @@ async function writeNewPurchase(row: PurchaseInsert, sessionId: string): Promise
   return true;
 }
 
+/**
+ * Flyttar köpraden från ett gästkonto till det konto gästen loggade in på
+ * (se `guest-claim.ts`). Beslutet om flytten ska göras fattas av
+ * `decideGuestClaim` före anropet; här görs bara själva skrivningen.
+ *
+ * `staleSessionId` är kontots egen rad när den finns och har gått ut. Den
+ * raderas först, av samma skäl som `writeNewPurchase` skriver över en sådan
+ * rad vid ett nytt köp: `user_id` är primärnyckel. Raderingen sker på
+ * session-id:t och inte bara på användaren, så att två samtidiga flyttar
+ * aldrig kan radera raden som den första just flyttade dit.
+ *
+ * Själva flytten är en enda UPDATE av primärnyckeln, alltså allt eller
+ * inget. Returnerar true när en rad flyttades och false när det inte fanns
+ * något kvar att flytta (en annan flytt hann före).
+ */
+export async function moveOrdPurchase(
+  fromUserId: string,
+  toUserId: string,
+  staleSessionId: string | null,
+): Promise<boolean> {
+  if (staleSessionId) {
+    const { error } = await supabaseAdmin
+      .from("ord_purchases")
+      .delete()
+      .eq("user_id", toUserId)
+      .eq("stripe_session_id", staleSessionId);
+    if (error) {
+      console.error(
+        "[ord-paywall] kunde inte ta bort kontots gamla köp före flytten:",
+        error.message,
+      );
+      throw new Error("Kunde inte flytta köpet.");
+    }
+  }
+  const { data, error } = await supabaseAdmin
+    .from("ord_purchases")
+    .update({ user_id: toUserId })
+    .eq("user_id", fromUserId)
+    .select("user_id");
+  if (error) {
+    // Kontot fick en egen rad mellan läsningen och flytten. Gästköpet ligger
+    // då kvar orört, vilket är rätt: två köp slås aldrig ihop tyst.
+    if (error.code === "23505") return false;
+    console.error("[ord-paywall] kunde inte flytta köpet:", error.message);
+    throw new Error("Kunde inte flytta köpet.");
+  }
+  return (data?.length ?? 0) > 0;
+}
+
 /** Hör prenumerationen till ordlistan? Metadata sätts av `startOrdCheckout`. */
 export function isOrdSubscription(sub: StripeSubscription): boolean {
   return sub.metadata?.product === ORD_PRODUCT_TAG;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Check, Loader2, Lock } from "lucide-react";
 import { GlassCard } from "@/components/layout/GlassCard";
@@ -32,6 +32,10 @@ import { trackError } from "@/lib/telemetry";
  * Kassan renderas inne i rutan när den publicerbara nyckeln finns, annars
  * skickas köparen till Stripe och kommer tillbaka till `returnTo`. Båda vägarna
  * landar på `?kop=klart`, där sidan bekräftar köpet.
+ *
+ * En gäst skickas i stället till /kassa med valt köp. Gäster får köpa sedan
+ * 2026-11-25, och steget där kontot skapas efter betalningen finns bara där;
+ * att bygga det i /ord, MEK-övningen och /train också hade gett tre kopior.
  */
 export function OrdPaywall({
   access,
@@ -45,6 +49,7 @@ export function OrdPaywall({
   plan?: OrdPlan;
 }) {
   const startCheckout = useServerFn(startOrdCheckout);
+  const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const [secret, setSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -61,6 +66,10 @@ export function OrdPaywall({
   const [busyPlan, setBusyPlan] = useState<OrdPlan | null>(null);
 
   const buy = async (plan: OrdPlan) => {
+    if (access.isAnonymous) {
+      void navigate({ to: "/kassa", search: { plan } });
+      return;
+    }
     setBusy(true);
     setBusyPlan(plan);
     setError(null);
@@ -89,12 +98,12 @@ export function OrdPaywall({
   const autoStarted = useRef(false);
   const chosenAvailable = access.plans.some((p) => p.plan === chosenPlan);
   useEffect(() => {
-    if (!chosenPlan || !chosenAvailable || access.isAnonymous || autoStarted.current) return;
+    if (!chosenPlan || !chosenAvailable || autoStarted.current) return;
     autoStarted.current = true;
     void buy(chosenPlan);
     // `buy` byts varje rendering men gör samma sak; körs en gång.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chosenPlan, chosenAvailable, access.isAnonymous]);
+  }, [chosenPlan, chosenAvailable]);
 
   return (
     <GlassCard className="p-6 sm:p-8">
@@ -134,18 +143,6 @@ export function OrdPaywall({
               setError(msg);
             }}
           />
-        </div>
-      ) : access.isAnonymous ? (
-        <div className="mt-6 text-center">
-          <p className="text-sm text-white/65">
-            Skapa ett konto först, så följer köpet med dig om du byter enhet.
-          </p>
-          <Link
-            to="/signup"
-            className="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full bg-primary px-6 text-sm font-semibold text-[var(--on-brand)] transition hover:brightness-110"
-          >
-            Skapa konto
-          </Link>
         </div>
       ) : (
         <div className="mt-6 space-y-3">

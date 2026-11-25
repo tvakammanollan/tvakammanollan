@@ -1672,7 +1672,8 @@ kassan i `ord-paywall.functions.ts` och rutan i `components/OrdPaywall.tsx`.
   2026-10-02 till 10-05: båda vägarna föll, så köparen fick bara "Kunde inte
   öppna kassan". Testa nya sessionsparametrar med ett riktigt `curl` mot
   `/v1/checkout/sessions` innan push; typkontrollen ser dem inte.
-- **Gästkonton kan inte köpa** (köpet hade försvunnit med kontot).
+- **Gäster kan köpa sedan 2026-11-25**, se "Köp som gäst" nedan. Före det
+  kunde de inte, eftersom köpet hade försvunnit med gästkontot.
 - **Två köp sedan 2026-10-26: en månad för 149 kr och sex månader för
   349 kr** (`ORD_PLANS` i `ord-paywall.ts`). Två produkter i Stripe,
   `STRIPE_ORD_PRICE_ID_1M` / `_6M` i `wrangler.jsonc`. Betalkorten på
@@ -2313,13 +2314,23 @@ landning → gratisprov → registrering → onboarding → match → meny → o
   `users_prevent_immutable_changes` stoppade `email: null` även för service
   role. Anonymiseringen ligger nu först, så ett fel där inte lämnar ett halvt
   raderat konto.
+  **Migrationen var INTE körd i produktionen 2026-11-25.** Verifierat på ett
+  testkonto: en PATCH av `users.email` med service role svarade 400 "email is
+  immutable via this table". Tills den körs i SQL-editorn faller
+  kontoraderingen för alla som har en adress i profilen, och
+  `syncProfileEmail` skriver ingenting (en gäst som gjorts om till konto får
+  `users.email` tom). Kontrollera efteråt med samma PATCH på ett testkonto.
 - **Testverktyg:** `Runtime.evaluate` + `getBoundingClientRect` direkt efter
   `scrollIntoView` mäter mitt i den mjuka scrollningen; vänta eller använd
   `behavior: "instant"`. Tryck via `Input.dispatchTouchEvent` och kontrollera
   `elementFromPoint` först, annars syns inte en ruta som ligger över knappen.
   `/matchmaking` skapar ett gästkonto bara av att öppnas, och `vite dev`
-  bäddar aldrig in kassan (den publika Stripe-nyckeln står bara i
-  `wrangler.jsonc`), så den inbäddade kassan provas mot produktionen.
+  bäddar inte in kassan av sig själv (den publika Stripe-nyckeln står bara i
+  `wrangler.jsonc`). Starta dev med `STRIPE_PUBLISHABLE_KEY`,
+  `STRIPE_ORD_PRICE_ID_1M` och `_6M` från `wrangler.jsonc` i miljön, så
+  renderas den inbäddade kassan lokalt (gjort 2026-11-25). Det är skarpa
+  nycklar: sessioner som öppnas i testet ska avslutas med
+  `POST /v1/checkout/sessions/<id>/expire`.
 
 ### Designsystemet efter ombyggnaden (2026-08-30)
 
@@ -2706,7 +2717,8 @@ Kvarstående hål: gästkonton går fortfarande att skapa i obegränsat antal.
 ### Gästkonto blir riktigt konto (2026-11-17)
 
 Den som registrerar sig med e-post **medan den är inloggad som gäst** får sitt
-gästkonto omgjort, inte ett nytt: `upgradeGuest` i `signup.tsx` kör
+gästkonto omgjort, inte ett nytt: `upgradeGuest` (`src/lib/guest-upgrade.ts`
+sedan 2026-11-25, används också efter ett köp som gäst) kör
 `updateUser({ email })`, sedan `updateUser({ password })`, sedan
 `refreshSession()`. Id:t är detsamma, så ELO, matcher, ordframsteg och
 utmärkelser följer med. Före 2026-11-17 skapade `signUp` ett nytt konto och
@@ -2716,9 +2728,8 @@ gästens framsteg försvann.
   utan adress, så adressen först. "Confirm email" är av, så bytet gäller
   direkt och `is_anonymous` blir falskt.
 - **`refreshSession()` får inte tas bort.** Servern läser `is_anonymous` ur
-  tokenen (`startOrdCheckout` vägrar gäster), och tokenen från före bytet
-  säger fortfarande gäst. Utan förnyelsen hade kassan svarat "Skapa ett konto
-  först" till någon som just gjort det.
+  tokenen (`claimGuestPurchase` svarar `not_ready` till en gäst), och tokenen
+  från före bytet säger fortfarande gäst.
 - **`public.users.email` skrivs av `syncProfileEmail`**
   (`guest-upgrade.functions.ts`). Triggern kopierar adressen bara när raden
   skapas, och för en gäst var den då tom. Adressen läses ur `auth.users` med
@@ -2728,11 +2739,69 @@ gästens framsteg försvann.
   stå still; framstegen följer då inte med. `signup_completed.kept_progress`
   visar i PostHog vilken väg det blev.
 - **Google-knappen gör inte om gästen** (den skapar ett nytt konto). Det kräver
-  `linkIdentity` och "Manual linking" påslaget i Supabase.
+  `linkIdentity` och "Manual linking" påslaget i Supabase. Ett Premium-köp
+  följer ändå med, se "Köp som gäst".
 - **Vakterna i `/login` och `/signup` väntar på `leaving`.** Utan den slog
   `<Navigate to="/" />` till i samma ögonblick som sessionen kom, före sidans
   egen navigering, och den som var på väg till kassan hamnade på startsidan.
   Gällde både login och registrering fram till 2026-11-17.
+
+### Köp som gäst (2026-11-25)
+
+Kassan kräver inget konto. Tidigare stod "Skapa ett konto för att köpa"
+mellan betalkortet och Stripe, och det var fler steg än själva köpet. Nu
+betalar besökaren först och skapar kontot efteråt.
+
+- **En utloggad besökare på `/kassa` får ett gästkonto i tysthet**
+  (`signInAnonymously`, som `/matchmaking`), och köpet knyts till gästens id
+  precis som till ett kontos. `startOrdCheckout` släpper igenom gäster och
+  sätter `guest: "1"` i metadatan, så att gästköp syns i Stripe. Robotar
+  som kör sidans skript (`isCrawler` i `in-app-browser.ts`, testad) får
+  inget konto utan ser kontovägarna. Spärren i `/ord`, MEK-övningen och
+  `/train` skickar gäster till `/kassa?plan=…` i stället för att öppna
+  kassan i rutan, så att steget efter köpet bara finns på ett ställe.
+- **Efter betalningen visar `/kassa?kop=klart` `SaveGuestPurchase`**, med
+  adressen från Stripes kassa ifylld (`confirmOrdCheckout` lämnar ut den, bara
+  till köparen). "Skapa konto" kör `upgradeGuest`: samma id, så köpet följer
+  med utan att något flyttas. Finns adressen redan byter rutan till
+  inloggning, och köpet flyttas till det kontot. "Gör det senare" går att
+  välja; då påminner remsan `GuestPremiumNotice` under navbaren på varje sida
+  (utom `/login`, `/signup`, `/onboarding` och tacksidan), och utloggningen
+  frågar först (`useGuestPremium` i Navbar).
+- **Flytten till ett annat konto** (`claimGuestPurchase` i
+  `guest-upgrade.functions.ts`, reglerna i `guest-claim.ts`, testade) kräver
+  två bevis: det nya kontots token i Authorization och gästens token i bodyn.
+  Gästens id måste dessutom vara ett gästkonto just nu enligt `auth.users`,
+  så ett riktigt konto kan aldrig tömmas. Tokenen sparas i `tkn:gast-overtag`
+  (en timme) av `rememberGuestForClaim` innan sessionen byts: i `/login`,
+  i `GoogleButton` och i registreringens reservväg. `GuestPurchaseClaimer` i
+  roten skickar den när ett riktigt konto väl är inloggat, var inloggningen
+  än landade (Google kommer tillbaka till `/onboarding`).
+- **Två köp som gäller slås aldrig ihop.** Har kontot redan Premium ligger
+  gästköpet kvar orört, besökaren får en ruta om att mejla, och servern
+  loggar `[guest-claim] <konto> har redan Premium; gästköpet <session> på
+  <gäst> flyttades inte`. Det är en dubbelbetalning att återbetala för hand.
+- **Inloggningen loggar inte ut gästen först längre** (`login.tsx` och
+  `GoogleButton`). Den byter ut sessionen när den lyckas. Förr loggades
+  gästen ut innan lösenordet prövats, så ett felskrivet lösenord tog med sig
+  gästkontot. Det hade nu varit ett betalt köp. En utloggning hade dessutom
+  avslutat gästsessionen hos Supabase, och då hade tokenen inte gått att
+  verifiera (projektet signerar med ES256, så `getClaims` kontrollerar
+  signaturen lokalt, men lita inte på det).
+- **Radera aldrig gästkonton i klump.** `ord_purchases.user_id` har `ON DELETE
+  CASCADE` mot `auth.users`, så ett gästköp som ingen sparat på ett konto
+  försvinner med gästkontot. Sålla bort alla id med en rad i `ord_purchases`
+  först. (`ord_practice_stats` har ingen kaskad alls och blir kvar.)
+- **Ett gästköp som behöver flyttas för hand:** kontrollera att kontot inte
+  har ett köp som gäller, sedan `update ord_purchases set user_id = '<konto>'
+  where user_id = '<gäst>'`, och för en prenumeration `metadata[user_id]` på
+  den i Stripe. Köparens adress står i Stripe-sessionen
+  (`customer_details.email`), inte i databasen.
+- **Testat 2026-11-25 mot dev med skarpa nycklar** (headless Chrome över
+  CDP): betalningen simulerades genom att skriva köpraden som webhooken gör
+  och gå tillbaka med en avslutad sessions id. `confirmOrdCheckout` svarar då
+  med `hasOrdAccess`, så steget efter köpet visas. Själva betalningen i
+  Stripe och webhooken är samma kod som för inloggade och provades inte.
 
 ### Gästnamnet får aldrig skrivas till `users.username` (2026-08-20)
 

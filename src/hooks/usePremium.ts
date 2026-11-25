@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useAuth } from "@/hooks/useAuth";
 import { getOrdAccess } from "@/lib/ord-paywall.functions";
+import { PREMIUM_CHANGED_EVENT } from "@/lib/guest-claim";
 
 export type PremiumState = "loading" | "owned" | "none";
 
@@ -19,6 +20,14 @@ export function usePremium(enabled = true): PremiumState {
   const fetchAccess = useServerFn(getOrdAccess);
   const [state, setState] = useState<PremiumState>(enabled ? "loading" : "owned");
   const userId = user?.id ?? null;
+  // Ett köp som bekräftas eller flyttas från ett gästkonto medan sidan står
+  // öppen ska synas utan omladdning.
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const onChange = () => setTick((t) => t + 1);
+    window.addEventListener(PREMIUM_CHANGED_EVENT, onChange);
+    return () => window.removeEventListener(PREMIUM_CHANGED_EVENT, onChange);
+  }, []);
 
   useEffect(() => {
     if (!enabled) return setState("owned");
@@ -32,7 +41,7 @@ export function usePremium(enabled = true): PremiumState {
     return () => {
       cancelled = true;
     };
-  }, [enabled, loading, userId, fetchAccess]);
+  }, [enabled, loading, userId, fetchAccess, tick]);
 
   return state;
 }
