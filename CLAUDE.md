@@ -863,11 +863,19 @@ om något liknande dyker upp:
   "Anvisningar" och kapade uppgiften mitt itu. En rad får bara räknas som
   sidhuvud när den inte redan tolkats som innehåll — samma sak gäller
   InDesign-sidfötter (`Ord 09A.indd 2`) som annars klistrades sist i alternativ E.
-- **Inskannade prov.** Allt t.o.m. 1996 plus h1997–h1998 saknar textlager helt
-  och kräver OCR. `h1999` har läsbara frågor men inskannat facit — utan
-  verifierade rättsvar importeras de inte. Fyra terminer (h1982, v1983, h1984,
-  h1988) har döda länkar på källsidan. Scriptet redovisar varje utelämnad termin
-  med orsak i slutet av körningen i stället för att gissa.
+- **Inskannade prov (OCR:ade 2026-11-25).** Allt t.o.m. 1996 plus h1997–h1998
+  saknar textlager, och `h1999` har inskannat facit. Skrapan hoppar fortfarande
+  över dem; de ligger i stället i `scraper/ord-ocr-questions.json` (980
+  uppgifter, 31 provtillfällen 1980–1999), som `seed-ord-old.ts` och
+  ordsannolikhetens `historik.ts` läser. OCR:en gjordes med macOS Vision på
+  400 dpi; allt som inte klarade en ordlistekontroll lästes om mot bilden, de
+  svåraste häftena skrevs av helt, och facit lästes för hand ur de skannade
+  facitbladen. Varje rättsvar stämdes mot uppgiften. Våren 1992 saknar facit
+  och ligger i `ord-ocr-utan-facit.json` (bara historiken läser den). Döda
+  länkar som inte heller finns i Internet Archive: 1977–1979, h1982, v1983,
+  h1984, h1988, v1994. **Filen är handgranskad: generera den aldrig om
+  automatiskt.** Samma seedning lade också in ~140 ord från 1997–2005 som
+  skrapats men aldrig seedats; beståndet är sedan dess 8 988 ORD-rader.
 - **h2011, v2012 och h2012 finns inte alls** — gamla listan slutar vid v2011 och
   nya börjar vid v2013.
 ### Ordlistan — /ordlista (2026-08-20)
@@ -2800,8 +2808,25 @@ betalar besökaren först och skapar kontot efteråt.
 - **Testat 2026-11-25 mot dev med skarpa nycklar** (headless Chrome över
   CDP): betalningen simulerades genom att skriva köpraden som webhooken gör
   och gå tillbaka med en avslutad sessions id. `confirmOrdCheckout` svarar då
-  med `hasOrdAccess`, så steget efter köpet visas. Själva betalningen i
-  Stripe och webhooken är samma kod som för inloggade och provades inte.
+  med `hasOrdAccess`, så steget efter köpet visas.
+- **Och 2026-11-26 i produktionen med ett riktigt köp för 0 kr**: gäst,
+  inbäddad kassa, en tillfällig kod på `tkn-gratis-6man` (en inlösen, sedan
+  avstängd), betalning, retur till steget med adressen ifylld, konto med
+  samma id. Testkontona raderades; köpet och en testkund ("Test Gästköp")
+  står kvar i Stripe.
+- **Stripe avvisar kampanjkoder från headless Chrome.** I en automatiserad
+  webbläsare svarar kassan "Den här koden är ogiltig" även på koder som
+  fungerar (AVON10, en nyskapad kod på skolkupongen), för gäster och konton
+  lika. Starta Chrome med `--disable-blink-features=AutomationControlled`
+  och en vanlig user agent, så tas koden emot. Pröva en kod via API:t med
+  `discounts[0][promotion_code]` när du vill veta om det är koden eller
+  webbläsaren som är felet.
+- **Även vid 0 kr kräver kassan namn och faktureringsadress** (momsen i
+  Managed Payments). Fälten heter `billingName`, `billingAddressLine1`,
+  `billingPostalCode` och `billingLocality`, och adressen skrivs för hand
+  efter "Ange adressen manuellt". Stripes fält ligger i iframes vars adress
+  är tom när CDP fäster vid dem: pröva alla ramar, och ge varje anrop en
+  tidsgräns, för en ram som stängts svarar aldrig.
 
 ### Gästnamnet får aldrig skrivas till `users.username` (2026-08-20)
 
